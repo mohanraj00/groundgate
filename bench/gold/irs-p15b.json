@@ -1,0 +1,206 @@
+{
+ "doc": "irs-p15b",
+ "kind": "irs",
+ "fields": {
+  "qualified_parking_exclusion_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 monthly exclusion for qualified parking."
+  },
+  "transit_exclusion_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 monthly exclusion for commuter highway vehicles and transit passes."
+  },
+  "health_fsa_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "2026 health FSA salary reduction limit."
+  },
+  "dependent_care_fsa_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 dependent care FSA limit (not married filing separately)."
+  },
+  "dependent_care_fsa_limit_separate_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same limit, married filing separately."
+  },
+  "student_loan_payment_exclusion": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Exclusion for employer payments of student loans."
+  },
+  "supplemental_withholding_rate": {
+   "schema": {
+    "type": "integer",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Withholding rate on supplemental wages (up to $1 million), in percent."
+  },
+  "supplemental_wage_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "gt",
+    "minimum": "0"
+   },
+   "description": "Supplemental wages above which the 37% rate applies, in dollars."
+  },
+  "business_mileage_rate_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 business standard mileage rate, in cents per mile."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "qualified_parking_exclusion_2026",
+   "value": "340",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3406,
+     "end": 3410
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "transit_exclusion_2026",
+   "value": "340",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3505,
+     "end": 3509
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "health_fsa_limit_2026",
+   "value": "3400",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3784,
+     "end": 3790
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "dependent_care_fsa_limit_2026",
+   "value": "7500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7871,
+     "end": 7877
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "dependent_care_fsa_limit_separate_2026",
+   "value": "3750",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7889,
+     "end": 7895
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "student_loan_payment_exclusion",
+   "value": "5250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 8498,
+     "end": 8504
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "supplemental_withholding_rate",
+   "value": "22",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 5373,
+     "end": 5376
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "supplemental_wage_threshold",
+   "value": "1000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5458,
+     "end": 5468
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "business_mileage_rate_2026": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

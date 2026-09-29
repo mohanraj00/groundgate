@@ -1,0 +1,426 @@
+Aviation Investigation Final Report
+
+Location:
+
+Oshkosh, Wisconsin
+
+Accident Number:
+
+CEN23LA323
+
+Date & Time:
+
+July 20, 2023, 18:45 Local
+
+Registration:
+
+N917CM
+
+Aircraft:
+
+Vans RV-10
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Hard landing
+
+Injuries:
+
+2 None
+
+Flight Conducted Under:
+
+Part 91: General aviation - Personal
+
+Analysis
+
+According to the pilot, he was landing on runway 27 at or beyond the green dot. The pilot
+reduced engine power after he reached the green dot. The airplane impacted the runway hard
+and both main landing gear collapsed. The airplane sustained substantial damage to the
+fuselage. The pilot stated that there were no preaccident mechanical malfunctions or failures
+with the airplane that would have precluded normal operation.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot’s improper landing flare which resulted in a hard landing.
+
+Findings
+
+Aircraft
+
+Landing flare - Not attained/maintained
+
+Personnel issues
+
+Aircraft control - Pilot
+
+Page 1 of 4
+Factual Information
+
+History of Flight
+
+Landing-flare/touchdown
+
+Hard landing (Defining event)
+
+Landing-flare/touchdown
+
+Landing gear collapse
+
+Pilot Information
+
+Certificate:
+
+Private
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+None
+
+Instructor Rating(s):
+
+None
+
+Age:
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+66,Male
+
+Left
+
+4-point
+
+No
+
+Medical Certification:
+
+Class 3 With waivers/limitations
+
+Last FAA Medical Exam:
+
+January 5, 2023
+
+Occupational Pilot:
+
+No
+
+Last Flight Review or Equivalent:
+
+March 20, 2023
+
+Flight Time:
+
+728 hours (Total, all aircraft), 114 hours (Total, this make and model), 630 hours (Pilot In
+Command, all aircraft), 30 hours (Last 90 days, all aircraft), 8 hours (Last 30 days, all aircraft), 6
+hours (Last 24 hours, all aircraft)
+
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Year of Manufacture:
+
+Vans
+
+RV-10
+
+2022
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+Airworthiness Certificate:
+
+Experimental (Special)
+
+Serial Number:
+
+Landing Gear Type:
+
+Tricycle
+
+Seats:
+
+N917CM
+
+Airplane
+
+Yes
+
+41171
+
+4
+
+Date/Type of Last Inspection: March 7, 2023 Condition
+
+Certified Max Gross Wt.:
+
+2700 lbs
+
+Time Since Last Inspection:
+
+Engines:
+
+1 Reciprocating
+
+Airframe Total Time:
+
+109.4 Hrs at time of accident Engine Manufacturer:
+
+Lycoming
+
+ELT:
+
+Registered Owner:
+
+Operator:
+
+Installed
+
+On file
+
+On file
+
+Engine Model/Series:
+
+IO-540-C4B5
+
+Rated Power:
+
+Operating Certificate(s)
+Held:
+
+250
+
+None
+
+Page 2 of 4
+
+CEN23LA323
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KOSH,808 ft msl
+
+Distance from Accident Site:
+
+Observation Time:
+
+18:00 Local
+
+Direction from Accident Site:
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Clear
+
+None
+
+Wind Speed/Gusts:
+
+12 knots / 20 knots
+
+Wind Direction:
+
+310°
+
+Visibility
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+/
+
+/
+
+Altimeter Setting:
+
+29.89 inches Hg
+
+Temperature/Dew Point:
+
+25°C / 14.4°C
+
+Precipitation and Obscuration:
+
+Departure Point:
+
+DeKalb, IL (KDKB)
+
+Type of Flight Plan Filed:
+
+None
+
+Destination:
+
+Oshkosh, WI (KOSH)
+
+Type of Clearance:
+
+Departure Time:
+
+17:31 Local
+
+Type of Airspace:
+
+VFR
+
+Class D
+
+Airport Information
+
+Airport:
+
+Wittman Regional Airport KOSH
+
+Runway Surface Type:
+
+Airport Elevation:
+
+808 ft msl
+
+Runway Used:
+
+27
+
+Runway Surface Condition:
+
+Dry
+
+IFR Approach:
+
+None
+
+Runway Length/Width:
+
+6179 ft / 150 ft
+
+VFR Approach/Landing:
+
+Full stop;Traffic pattern
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 None
+
+Passenger Injuries:
+
+1 None
+
+Ground Injuries:
+
+Aircraft Damage:
+
+Substantial
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+2 None
+
+Latitude, Longitude:
+
+43.984371,-88.557043(est)
+
+Page 3 of 4
+
+CEN23LA323
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Rodi, Jennifer
+
+Additional Participating
+Persons:
+
+Peter Hupfer; FAA FSDO; Milwaukee, WI
+
+Original Publish Date:
+
+February 8, 2024
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192707
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 4 of 4
+
+CEN23LA323

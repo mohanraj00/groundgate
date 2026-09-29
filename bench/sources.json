@@ -1,0 +1,315 @@
+{
+  "retrieved": "2026-09-29",
+  "sources": [
+    {
+      "id": "fda-lisinopril",
+      "kind": "fda",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/f2e09150-22f2-4028-b214-917d686200ad.xml",
+      "sha256": "62ff28a6a89f2b50c3fb38412b8a1846cf1d25060a0ec6b304a038eeea324018",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      }
+    },
+    {
+      "id": "fda-atorvastatin",
+      "kind": "fda",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/09c6c750-ae05-459f-83e8-4a9e4fd85212.xml",
+      "sha256": "e48806f8dc530110bbf8fa499a1ea50df11a3ee826c3489f42465e55cf5b10b4",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      }
+    },
+    {
+      "id": "fda-sertraline",
+      "kind": "fda",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/4cf8d5c8-842b-4e7c-9a99-3f41ef8abbdb.xml",
+      "sha256": "72a3f0685539c207354fe15c568a74f1498bb58ac2bf486278e9136107f23584",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      }
+    },
+    {
+      "id": "fda-amlodipine",
+      "kind": "fda",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/44f7e13f-b90f-477b-86cf-21667d90f9a9.xml",
+      "sha256": "baa30e56f262da33b05d01b4b83e5eccfd0f99c2c91a69ae03b62f3761ecff7c",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      }
+    },
+    {
+      "id": "fda-levothyroxine",
+      "kind": "fda",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/31a31756-68aa-4e01-bbb1-9d181f8d9181.xml",
+      "sha256": "d2598890e4f2fcbef964ac9f3ec6d52884f0f63b2b6faddb1fadb59bfc9d9df3",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      }
+    },
+    {
+      "id": "fda-gabapentin",
+      "kind": "fda",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/1f1203f4-2184-4e13-e063-6394a90a4330.xml",
+      "sha256": "bddb5f773a37b371af05aa2dc63748918b9d7d32337b6d590a296f8d1f997822",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      }
+    },
+    {
+      "id": "fda-losartan",
+      "kind": "fda",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/7a945396-dd71-4b16-bfab-947982407f36.xml",
+      "sha256": "1a115beb3936255f92d9742632c94f3331c8b0e8bc5a5962ca0a946a36a097bf",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      }
+    },
+    {
+      "id": "fda-metoprolol-succinate",
+      "kind": "fda",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/a34ba95a-a2d5-400e-8757-58c7bd20cad7.xml",
+      "sha256": "84ab0e32c7150018beb66db075378b796cf979027b5d4ea3ace98f67721994f8",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      }
+    },
+    {
+      "id": "fda-simvastatin",
+      "kind": "fda",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/3f6fad0b-0278-433f-86db-761b673a5803.xml",
+      "sha256": "65ac165f9c118c29ad42bba3f8b5c99a44e701c9cf61a597a3326529a78f5260",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      }
+    },
+    {
+      "id": "fda-escitalopram",
+      "kind": "fda",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/0ef807d2-5d66-40c2-be3e-ff6176a35295.xml",
+      "sha256": "93e0d3f47a5f76d7a7fb640bc6fefe1ab550bd28d011c4e27d51f0ff67c7db0b",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      }
+    },
+    {
+      "id": "ntsb-192700",
+      "kind": "ntsb",
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192700/pdf",
+      "sha256": "074eea99d1a878f6f35a595ecbcccf2937c0b2262aed7a818122d24b9d6335f2",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192703",
+      "kind": "ntsb",
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192703/pdf",
+      "sha256": "d7ac111ca6092b56d5452822a6e91e4c296580256845da78c50e86ed608441c3",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192705",
+      "kind": "ntsb",
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192705/pdf",
+      "sha256": "166a04a2d0f27e29421b5b60a6a239e94840090d788c8861b7352cd14e5bec47",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192706",
+      "kind": "ntsb",
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192706/pdf",
+      "sha256": "12b8a7cba2091dc4d177cd3565ea165852ad90d06384b96576ff77698b60d38f",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192707",
+      "kind": "ntsb",
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192707/pdf",
+      "sha256": "e01d9f866acfc30b8dd8d744dd599cb822064e57d59ead7c791593ccb932ba99",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192708",
+      "kind": "ntsb",
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192708/pdf",
+      "sha256": "dd06e4fb9f846af87b220dbeb8c2f953c7fb34f0266c21e6deca13daa45857e7",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192709",
+      "kind": "ntsb",
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192709/pdf",
+      "sha256": "dd55ea1f8cc78be80491bfb93109e856ab44077d7460cac85649e11b8d6a540d",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192715",
+      "kind": "ntsb",
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192715/pdf",
+      "sha256": "a3dde2c21d87a4038cac7dde7bb5b4252d08785d615361b64e828472e42fe225",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192716",
+      "kind": "ntsb",
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192716/pdf",
+      "sha256": "8937328a0b389d8d6ece0953f528be4cd20db5f7baad8bd7e480d8cd5c9a72f7",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192717",
+      "kind": "ntsb",
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192717/pdf",
+      "sha256": "c05291a10c63c19c66b94402a5fb416903e3193bf7b040c4171d01721f3be756",
+      "select": {}
+    },
+    {
+      "id": "irs-p501",
+      "kind": "irs",
+      "url": "https://www.irs.gov/pub/irs-pdf/p501.pdf",
+      "sha256": "288b62a4917f3bc3df0bade7a22c23a8ae648ba9eb5086df5b8b50e881148ff6",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p505",
+      "kind": "irs",
+      "url": "https://www.irs.gov/pub/irs-pdf/p505.pdf",
+      "sha256": "c69e87caa93cdefa4493f0ec1d8478b1ff9ec1329ee18c7b9d442f2dcb79c621",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p970",
+      "kind": "irs",
+      "url": "https://www.irs.gov/pub/irs-pdf/p970.pdf",
+      "sha256": "167f3d6df0d9370a3980b25b7a2e7b479ab7f336cce763d1f0c1c4962b18285e",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p596",
+      "kind": "irs",
+      "url": "https://www.irs.gov/pub/irs-pdf/p596.pdf",
+      "sha256": "29e8c6695912318253743210fcd68aaa10ad874c76edcab4aa7dc4b23ff51dbf",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p463",
+      "kind": "irs",
+      "url": "https://www.irs.gov/pub/irs-pdf/p463.pdf",
+      "sha256": "ddc3bb15e437bd65c37da2036debdae78c1a0bf5a080b19d5301c81f5ec5ae5d",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p15",
+      "kind": "irs",
+      "url": "https://www.irs.gov/pub/irs-pdf/p15.pdf",
+      "sha256": "b46c3622439d8521e3a0faca4cd5b5ece3451b526f65f06a5e38d5c9f804c88b",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p560",
+      "kind": "irs",
+      "url": "https://www.irs.gov/pub/irs-pdf/p560.pdf",
+      "sha256": "1f1f7abe9ba6ade003036a47b2baa6bddbeac82f81d2220abf9f704778d6809f",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p571",
+      "kind": "irs",
+      "url": "https://www.irs.gov/pub/irs-pdf/p571.pdf",
+      "sha256": "b5aea6559b1080ddb3a8e144de6779f93a9d1d4879ee5a7ad91813b628e496bf",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p554",
+      "kind": "irs",
+      "url": "https://www.irs.gov/pub/irs-pdf/p554.pdf",
+      "sha256": "c844b0308788bf89072eab6590ae814653223c3cbf153d619883159aefc10eb7",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p15b",
+      "kind": "irs",
+      "url": "https://www.irs.gov/pub/irs-pdf/p15b.pdf",
+      "sha256": "a0af8513d6f45e65620bfd3eaa564cde7a6912781b9cb1c5b03dcd77b639ec46",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    }
+  ]
+}

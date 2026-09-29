@@ -1,0 +1,230 @@
+{
+ "doc": "fda-levothyroxine",
+ "kind": "fda",
+ "fields": {
+  "adult_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mcg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Usual recommended starting dose for adults, for the first indication in section 2. If the label gives a range, its lower bound."
+  },
+  "adult_max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mcg",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum recommended daily dose for adults, for the first indication in section 2. Doses that were only studied or used are not a recommendation."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "tablet_strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mcg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet strength listed in section 3 (one extraction per strength)."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mcg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for patients with hepatic impairment, when the label gives a number."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "tablet_strengths",
+   "value": "25",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11113,
+     "end": 11119
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "tablet_strengths",
+   "value": "50",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11139,
+     "end": 11145
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "tablet_strengths",
+   "value": "75",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11165,
+     "end": 11171
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "tablet_strengths",
+   "value": "88",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11192,
+     "end": 11198
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "tablet_strengths",
+   "value": "100",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11218,
+     "end": 11225
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "tablet_strengths",
+   "value": "112",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11246,
+     "end": 11253
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "tablet_strengths",
+   "value": "125",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11272,
+     "end": 11279
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "tablet_strengths",
+   "value": "137",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11297,
+     "end": 11304
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "tablet_strengths",
+   "value": "150",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11328,
+     "end": 11335
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "tablet_strengths",
+   "value": "175",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11354,
+     "end": 11361
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "tablet_strengths",
+   "value": "200",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11381,
+     "end": 11388
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "tablet_strengths",
+   "value": "300",
+   "unit": "mcg",
+   "evidence": [
+    {
+     "start": 11407,
+     "end": 11414
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "adult_starting_dose": "draft",
+  "adult_max_daily_dose": "draft",
+  "pediatric_min_age": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

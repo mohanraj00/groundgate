@@ -1,0 +1,260 @@
+{
+ "doc": "irs-p596",
+ "kind": "irs",
+ "fields": {
+  "eic_limit_three_children": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "2025 EIC AGI limit, three or more qualifying children, not joint."
+  },
+  "eic_limit_three_children_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "The same limit, married filing jointly."
+  },
+  "eic_limit_two_children": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "2025 EIC AGI limit, two qualifying children, not joint."
+  },
+  "eic_limit_two_children_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "The same limit, married filing jointly."
+  },
+  "eic_limit_one_child": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "2025 EIC AGI limit, one qualifying child, not joint."
+  },
+  "eic_limit_one_child_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "The same limit, married filing jointly."
+  },
+  "eic_limit_no_child": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "2025 EIC AGI limit, no qualifying child, not joint."
+  },
+  "eic_limit_no_child_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "The same limit, married filing jointly."
+  },
+  "eic_investment_income_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum investment income for the EIC."
+  },
+  "eic_max_credit_three_children": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Maximum 2025 EIC with three or more qualifying children."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "eic_limit_three_children",
+   "value": "61555",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3659,
+     "end": 3666
+    },
+    {
+     "start": 5330,
+     "end": 5337
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "eic_limit_three_children_joint",
+   "value": "68675",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3440,
+     "end": 3447
+    },
+    {
+     "start": 3668,
+     "end": 3675
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "eic_limit_two_children",
+   "value": "57310",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3802,
+     "end": 3809
+    },
+    {
+     "start": 5447,
+     "end": 5454
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "eic_limit_two_children_joint",
+   "value": "64430",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3811,
+     "end": 3818
+    },
+    {
+     "start": 5456,
+     "end": 5463
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "eic_limit_one_child",
+   "value": "50434",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3909,
+     "end": 3916
+    },
+    {
+     "start": 5554,
+     "end": 5561
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "eic_limit_one_child_joint",
+   "value": "57554",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3918,
+     "end": 3925
+    },
+    {
+     "start": 5563,
+     "end": 5570
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "eic_limit_no_child",
+   "value": "19104",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4016,
+     "end": 4023
+    },
+    {
+     "start": 5661,
+     "end": 5668
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "eic_limit_no_child_joint",
+   "value": "26214",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4025,
+     "end": 4032
+    },
+    {
+     "start": 5670,
+     "end": 5677
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "eic_investment_income_limit",
+   "value": "11950",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4506,
+     "end": 4513
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "eic_max_credit_three_children": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

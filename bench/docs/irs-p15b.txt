@@ -1,0 +1,217 @@
+Publication 15-B
+
+Employer’s Tax
+Guide to
+Fringe
+Benefits
+For use in 2026
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Contents
+
+What’s New . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Reminders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+1. Fringe Benefit Overview . . . . . . . . . . . . . . . . . . . 3
+
+2. Fringe Benefit Exclusion Rules . . . . . . . . . . . . . . 5
+Accident and Health Benefits . . . . . . . . . . . . . . . . 7
+Achievement Awards . . . . . . . . . . . . . . . . . . . . . 8
+Adoption Assistance . . . . . . . . . . . . . . . . . . . . . . 9
+Athletic Facilities . . . . . . . . . . . . . . . . . . . . . . . . . 9
+De Minimis (Minimal) Benefits . . . . . . . . . . . . . . 10
+Dependent Care Assistance . . . . . . . . . . . . . . . 10
+Educational Assistance . . . . . . . . . . . . . . . . . . . 11
+Employee Discounts . . . . . . . . . . . . . . . . . . . . . 12
+Employee Stock Options . . . . . . . . . . . . . . . . . . 13
+Employer-Provided Cell Phones . . . . . . . . . . . . . 14
+Group-Term Life Insurance Coverage . . . . . . . . . 14
+Health Savings Accounts (HSAs) . . . . . . . . . . . . 17
+Lodging on Your Business Premises . . . . . . . . . . 18
+Meals . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+No-Additional-Cost Services . . . . . . . . . . . . . . . 20
+Retirement Planning Services . . . . . . . . . . . . . . 21
+Transportation (Commuting) Benefits . . . . . . . . . 21
+Tuition Reduction . . . . . . . . . . . . . . . . . . . . . . . 23
+Working Condition Benefits . . . . . . . . . . . . . . . . 23
+
+3. Fringe Benefit Valuation Rules . . . . . . . . . . . . . 26
+General Valuation Rule . . . . . . . . . . . . . . . . . . . 26
+Cents-per-Mile Rule . . . . . . . . . . . . . . . . . . . . . 26
+Commuting Rule . . . . . . . . . . . . . . . . . . . . . . . . 27
+Lease Value Rule . . . . . . . . . . . . . . . . . . . . . . . 28
+Unsafe Conditions Commuting Rule . . . . . . . . . . 30
+
+4. Rules for Withholding, Depositing, and
+
+Reporting . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+
+How To Get Tax Help . . . . . . . . . . . . . . . . . . . . . . . 33
+
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+
+Future Developments
+For the latest information about developments related to
+Pub. 15-B, such as legislation enacted after it was
+published, go to IRS.gov/Pub15B.
+
+What’s New
+Cents-per-mile rule. The business mileage rate for 2026
+hasn’t yet published at the time this publication was pub-
+lished. Go to IRS.gov/Pub15B for the updated mileage
+rate for 2026. You may use this rate to reimburse an em-
+ployee for business use of a personal vehicle, and under
+
+Dec 23, 2025
+
+Publication 15-B (2026) Catalog Number 29744N
+Department of the Treasury Internal Revenue Service www.irs.gov
+certain conditions, you may use the rate under the
+cents-per-mile rule to value the personal use of a vehicle
+you provide to an employee. See Cents-per-Mile Rule in
+section 3.
+Qualified parking exclusion and commuter transpor-
+tation benefit. For 2026, the monthly exclusion for quali-
+fied parking is $340 and the monthly exclusion for com-
+muter highway vehicle transportation and transit passes is
+$340. See Qualified Transportation Benefits in section 2.
+Contribution limit on a health flexible spending ar-
+rangement (FSA). For plan years beginning in 2026, a
+cafeteria plan may not allow an employee to request sal-
+ary reduction contributions for a health FSA in excess of
+$3,400.
+Moving expense reimbursement. P.L. 119-21, com-
+monly known as the One Big Beautiful Bill Act, perma-
+nently eliminates the exclusion for qualified moving ex-
+pense reimbursements from your employee's income.
+However, the exclusion is available in the case of a mem-
+ber of the U.S. Armed Forces on active duty who moves
+because of a permanent change of station due to a mili-
+tary order. The exclusion applies only to reimbursement of
+moving expenses that the member could deduct if they
+had paid or incurred them without reimbursement. See
+Moving Expenses in Pub. 3, Armed Forces’ Tax Guide, for
+the definition of what constitutes a permanent change of
+station and to learn which moving expenses are deducti-
+ble.
+
+P.L. 119-21 also makes the exclusion available to an
+employee or new appointee of the intelligence community
+(as defined in section 3 of the National Security Act of
+1947 (50 U.S.C. 3003)) (other than a member of the
+Armed Forces of the United States) who moves pursuant
+to a change in assignment which requires relocation. The
+exclusion applies only to reimbursement of moving expen-
+ses that an intelligence community employee or appointee
+could deduct if they had paid or incurred them without re-
+imbursement.
+Bicycle commuting reimbursements. P.L. 119-21 per-
+manently eliminates the exclusion of qualified bicycle
+commuting reimbursements from your employee’s income
+for tax years beginning after 2025. See Qualified bicycle
+commuting reimbursement eliminated, later.
+Withholding on supplemental wages. The withholding
+rate on supplemental wages remains 22% (37% if supple-
+mental wages paid to an employee during the calendar
+year exceed $1 million) because P.L. 119-21 permanently
+extended the individual tax rates enacted in P.L. 115-97,
+Tax Cuts and Jobs Act. See section 7 in Pub. 15 for more
+information about supplemental wages.
+Artificial intelligence (AI) literacy and AI development
+programs. Executive Order (EO) 14179, “Removing Bar-
+riers to American Leadership in Artificial Intelligence”
+(January 2025), and the subsequently published Winning
+the Race: America’s AI Action Plan (July 2025), were is-
+sued to promote AI
+literacy and development. Em-
+ployer-provided AI literacy and skill development pro-
+grams may be tax-free as working condition fringe
+benefits if they maintain or improve employee job skills at
+their current job. See Working Condition Benefits, later.
+
+Direct deposit of employment tax refunds now availa-
+ble. EO 14247, Modernizing Payments To and From
+America’s Bank Account, issued on March 25, 2025, pro-
+motes operational efficiency by mandating the transition to
+electronic payments for all federal disbursements. Accord-
+ingly, the IRS will now issue employment tax return re-
+funds by direct deposit. Direct deposit is a fast, simple,
+safe, and secure way to have your refund deposited auto-
+matically to your checking or savings account. Instead of a
+direct deposit refund, you can still choose to have your
+overpayment applied to your next return by checking the
+appropriate box on your employment tax return. For more
+information, see the instructions for your employment tax
+return.
+Make balance due payments electronically. EO 14247
+also promotes operational efficiency by mandating the
+transition to electronic payments for all payments made to
+the federal government. Therefore, pay your balance due
+on your employment tax return electronically. There are
+several easy, safe, and secure ways to pay your balance
+due electronically. For more information, see the instruc-
+tions for your employment tax return.
+Employment tax return transcripts are now available
+electronically. You can now access Form 940, Form 941,
+Form 943, Form 944, and Form 945 return transcripts for
+tax years 2023 and later using your IRS business tax ac-
+count. For more
+IRS.gov/
+information,
+BusinessesTranscript. To access your IRS business tax
+account, go to IRS.gov/BusinessAccount.
+Dependent care assistance exclusion from wages.
+For the 2026 tax year, the annual dependent care FSA
+limit was raised from $5,000 to $7,500 ($2,500 to $3,750
+for married filing separately). See Exclusion from wages,
+later.
+Employer’s meal deduction. For amounts incurred or
+paid after 2025, the employer can no longer deduct ex-
+penses associated with providing food and beverages to
+employees through an eating facility that meets the re-
+quirements for de minimis fringe benefits or for the con-
+venience of the employer. The 50% deduction that applied
+through 2025 has been eliminated as part of a scheduled
+change in the 2017 Tax Cuts and Jobs Act. See De Mini-
+mis Meals, later.
+Employer payments of student loans. P.L. 119-21 per-
+manently extends the $5,250 exclusion from income for
+employer-provided educational assistance for payments
+made after 2025. See Exclusion for employer payments of
+student loans, later.
+
+go
+
+to
+
+Reminders
+Form 1099-NEC, Nonemployee Compensation. Use
+Form 1099-NEC to report nonemployee compensation
+paid in 2025. The 2025 Form 1099-NEC is due February
+2, 2026.
+Additional permitted election changes for health cov-
+erage under a cafeteria plan. Notice 2014-55, 2014-41
+I.R.B.
+IRS.gov/irb/
+2014-41_IRB#NOT-2014-55, expands the application of
+
+available
+
+672,
+
+at
+
+2
+
+Publication 15-B (2026)

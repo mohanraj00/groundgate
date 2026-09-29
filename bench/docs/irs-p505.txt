@@ -1,0 +1,386 @@
+Publication 505
+
+Tax
+Withholding
+and Estimated
+Tax
+
+For use in 2026
+
+Get forms and other information faster and easier at:
+• IRS.gov/Korean (한국어)
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Chinese (中文)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Introduction
+The federal income tax is a pay-as-you-go tax.
+You must pay the tax as you earn or receive in-
+come during the year. There are two ways to
+pay as you go.
+
+• Withholding. If you are an employee, your
+employer probably withholds income tax
+from your pay. In addition, tax may be with-
+held from certain other income, such as
+pensions, bonuses, commissions, and
+gambling winnings. The amount withheld is
+paid to the IRS in your name.
+
+• Estimated tax. If you don’t pay your tax
+through withholding or don’t pay enough
+tax that way, you might have to pay estima-
+ted tax. People who are in business for
+themselves will generally have to pay their
+tax this way. You may have to pay estima-
+ted tax if you receive income such as divi-
+dends, interest, capital gains, rents, and
+royalties. Estimated tax is used to pay not
+only income tax but other taxes such as
+self-employment tax and alternative mini-
+mum tax.
+
+This publication explains both of these meth-
+ods. It also explains how to take credit on your
+return for the tax that was withheld and for your
+estimated tax payments.
+
+If you didn’t pay enough tax during the year,
+either through withholding or by making estima-
+ted tax payments, you may have to pay a pen-
+alty. Generally, the IRS can figure this penalty
+for you.
+
+Nonresident aliens. Before completing
+Form W-4, nonresident alien employees should
+see Notice 1392, Supplemental Form W-4 In-
+structions for Nonresident Aliens (Rev. January
+2020), which provides nonresident aliens who
+are not exempt from withholding instructions for
+completing Form W-4, and the Instructions for
+Form 8233, Exemption From Withholding on
+Compensation for Independent (and Certain
+Dependent) Personal Services of a Nonresident
+Alien Individual. Also, see chapter 8 of Pub.
+519.
+
+Final regulations on income tax with-
+holding. Final regulations on income tax with-
+holding were published in the Federal Register
+on October 6, 2020 (at 85 FR 63019). The regu-
+lations implement changes made by the Tax
+Cuts and Jobs Act and reflect the redesigned
+withholding certificate (Form W-4). See the reg-
+ulations for detailed information on income tax
+withholding.
+
+Comments and suggestions. We welcome
+your comments about this publication and sug-
+gestions for future editions.
+
+You can send us comments
+
+through
+IRS.gov/FormComments. Or, you can write to
+the Internal Revenue Service, Tax Forms and
+Publications, 1111 Constitution Ave. NW,
+IR-6526, Washington, DC 20224.
+
+Although we can’t respond individually to
+each comment received, we do appreciate your
+feedback and will consider your comments and
+suggestions as we revise our tax forms, instruc-
+tions, and publications. Don’t send tax ques-
+tions, tax returns, or payments to the above ad-
+dress.
+
+Mar 31, 2026
+
+Publication 505 (2026) Catalog Number 15008E
+Department of the Treasury Internal Revenue Service www.irs.gov
+Getting answers to your tax questions.
+If you have a tax question not answered by this
+publication or the How To Get Tax Help section
+at the end of this publication, go to the IRS In-
+IRS.gov/
+teractive Tax Assistant page at
+Help/ITA where you can find topics by using the
+search feature or viewing the categories listed.
+
+Getting tax forms, instructions, and pub-
+lications. Go to IRS.gov/Forms to download
+current and prior-year forms, instructions, and
+publications.
+
+Ordering tax forms, instructions, and
+publications. Go to IRS.gov/OrderForms to or-
+der current forms, instructions, and publica-
+tions; call 800-829-3676 to order prior-year
+forms and instructions. The IRS will process
+your order for forms and publications as soon
+as possible. Don’t resubmit requests you’ve al-
+ready sent us. You can get forms and publica-
+tions faster online.
+
+What’s New for 2026
+Use your 2025 tax return as a guide in figuring
+to
+your 2026 estimated
+consider the following.
+
+tax, but be sure
+
+Standard deduction amount increased. For
+2026, the standard deduction amount has been
+increased for all filers, and the amounts are as
+follows.
+
+• Single or Married filing sepa-
+
+rately—$16,100.
+
+• Married filing jointly or Qualifying surviving
+
+spouse—$32,200.
+
+• Head of household—$24,150.
+
+Retirement savings contribution credit in-
+come limits increased. In order to claim this
+credit for 2026, your MAGI must not be more
+than $40,250 ($80,500 if Married filing jointly;
+$60,375 if Head of household).
+
+Adoption credit or exclusion. The maximum
+adoption credit or exclusion for employer-provi-
+ded adoption benefits has
+to
+$17,670. In order to claim either the credit or ex-
+clusion, your MAGI must be less than $305,080.
+For 2026, up to $5,120 of the adoption credit is
+now refundable. The refundable portion is de-
+termined per child.
+
+increased
+
+Changes to QBID. Recent legislation made
+the qualified business income deduction (QBID)
+permanent. In addition, beginning in 2026, if
+you have a minimum of $1,000 in total qualified
+business income from an active trade or busi-
+ness, you may be able to claim a minimum
+QBID of $400. Also, the phase-in range for tax-
+payers who are married filing jointly will in-
+crease to $150,000 and to $75,000 for all other
+filing statuses.
+
+Casualty loss deduction made permanent
+and expanded. The deduction for certain per-
+sonal casualty losses has been made perma-
+nent. In addition, beginning in 2026, a personal
+casualty loss deduction can also include losses
+associated with a state-declared disaster. For
+more information, see the Instructions for Form
+4684 and Pub. 547.
+
+Deduction for educator expenses. Begin-
+ning in 2026, if you are an eligible educator with
+qualifying expenses, you may be able to claim a
+deduction for those expenses on Form 1040,
+Schedule 1, as well as an itemized deduction
+
+2
+
+on Schedule A (Form 1040). You will take the
+deduction on Schedule 1 (Form 1040) and then
+determine the amount of any itemized deduc-
+tion you can take on Schedule A. The type of
+expenses that qualify for each deduction is
+slightly different.
+
+Mortgage insurance premiums. Beginning in
+2026, the election to deduct qualified mortgage
+insurance premiums paid under a mortgage in-
+surance contract issued after December 31,
+2006, in connection with a home acquisition
+debt that was secured by a first or second home
+has been made permanent.
+
+Limit on itemized deductions. For 2026, your
+overall itemized deductions may be reduced. If
+your taxable income is more than the following
+amounts, your itemized deductions will be re-
+duced by 5.4% of the lesser of (1) your total
+itemized deductions or (2) the amount your tax-
+following
+able
+amounts.
+
+is more
+
+income
+
+than
+
+the
+
+• $768,700 if Married filing jointly or Qualify-
+
+ing surviving spouse,
+
+• $640,600 if Head of household or Single,
+
+or
+
+• $384,350 if Married filing separately.
+
+The limitation will be applied after any other
+applicable limitations on your itemized deduc-
+tions and will not apply when figuring any QBID.
+
+Moving expense deduction for members of
+the
+in
+intelligence community. Beginning
+2026, in addition to members of the Armed
+Forces, members of the intelligence community
+may be able to deduct their moving expenses
+on Schedule 1 (Form 1040). For more informa-
+tion, see the instructions for Schedule 1 (Form
+1040).
+
+Limitation on deductible gambling losses.
+Beginning in 2026, your gambling loss deduc-
+tion on Schedule A (Form 1040) will be limited
+to lesser of (1) 90% of your gambling losses or
+(2) your gambling winnings.
+
+Changes to the child and dependent care
+credit. For 2026, recent legislation has en-
+hanced the credit for qualifying child and de-
+pendent care expenses paid for the care of an
+eligible child. The credit amount remains $3,000
+($6,000 for two or more qualifying children) but
+the maximum credit rate has increased from
+35% to 50% of your qualifying expenses.
+
+Charitable contribution deduction
+for
+non-itemizers. Beginning in 2026, you can
+claim a deduction for cash contributions made
+to eligible tax-exempt organizations. You don’t
+have to itemize to take the deduction. The maxi-
+mum deduction is $1,000 ($2,000 for married
+filing jointly) with certain other limitations.
+
+Charitable contribution deduction floor for
+itemized deductions. Beginning in 2026, if
+you itemize, you can only deduct charitable
+contributions that are more than 0.5% of your
+adjusted gross income. Any amount that falls
+under the 0.5% floor can’t be deducted in 2026.
+This limitation is in addition to the overall limit on
+itemized deductions.
+
+Expiration of credits. The following credits
+have expired and you can no longer claim them
+on your return in 2026.
+
+• Credit for energy efficient home improve-
+
+ments.
+
+• Credit for residential clean energy systems.
+
+The credit for alternative refueling property
+in 2026 for property acquired and
+
+expires
+placed in service after June 30, 2026.
+
+SSN required for education credits. Begin-
+ning in 2026, a valid social security number is-
+sued before the due date of the return (includ-
+ing extensions) is required in order to be eligible
+to claim the American Opportunity Credit and
+Lifetime Learning Credit. If you are claiming the
+American Opportunity Credit, you must include
+the EIN of the institution to which you paid quali-
+fied tuition and related expenses on Form 8863.
+
+Changes to the premium tax credit. Begin-
+ning in 2026, the following changes apply to the
+premium tax credit.
+
+• If your household income is more than
+
+400% of the federal poverty line, you are
+no longer eligible for the premium tax
+credit.
+
+• There is no longer a limit on the amount
+you will have to pay back if you received
+too much in advanced credit; this is true
+even if your household income is less than
+400% of the federal poverty line.
+
+Changes to information returns for quali-
+fied tips. If you received qualified tips in 2026,
+these tips should be reported to you as follows.
+
+• Form W-2, box 12, code “TP.”
+• Form 1099-MISC, box 13a.
+• Form 1099-NEC, box 1b.
+• Form 1099-K, box 1c.
+
+The Treasury Tipped Occupation Code(s)
+for the occupation in which you earned the
+qualified tips should be reported to you as fol-
+lows.
+
+• Form W-2, box 14b.
+• Form 1099-MISC, box 13b.
+• Form 1099-NEC, box 1c.
+• Form 1099-K, box 1d.
+
+You can use this information when figuring
+your 2026 deduction for qualified tips on Sched-
+ule 1-A (Form 1040). Also, see
+IRS.gov/
+TippedOccupations.
+
+Changes to information returns for quali-
+fied overtime. If you received qualified over-
+time in 2026, the amount should be reported to
+you as follows.
+
+• Form W-2, box 12, code “TT.”
+• Form 1099-MISC, box 14.
+• Form 1099-NEC, box 1d.
+
+You can use this information when figuring
+your 2026 deduction for qualified overtime on
+Schedule 1-A (Form 1040).
+
+Increase in threshold for backup withhold-
+ing. Beginning in 2026, the amount of winnings
+subject to backup withholding and information
+reporting has increased. If you have winnings of
+at least $2,000 from bingo or slot machines,
+keno, and certain other gambling winnings, the
+payer will withhold a flat 24%.
+
+Reminders
+Future developments. The IRS has created a
+page on IRS.gov for information about Pub. 505
+at IRS.gov/Pub505. Information about any fu-
+ture developments affecting Pub. 505 (such as
+legislation enacted after we release it) will be
+posted on that page.
+
+Social security tax. Generally, each employer
+for whom you work during the tax year must
+
+Publication 505 (2026)

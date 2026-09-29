@@ -1,0 +1,254 @@
+{
+ "doc": "irs-p501",
+ "kind": "irs",
+ "fields": {
+  "senior_deduction_max": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Maximum enhanced deduction for seniors, per person."
+  },
+  "senior_deduction_max_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Maximum enhanced deduction for seniors, married filing jointly with both spouses eligible."
+  },
+  "trump_account_pilot_contribution": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Trump account pilot program contribution."
+  },
+  "filing_threshold_single_under_65": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "2025 gross income filing threshold, single, under 65."
+  },
+  "filing_threshold_single_65_or_older": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "2025 gross income filing threshold, single, 65 or older."
+  },
+  "filing_threshold_hoh_under_65": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "2025 gross income filing threshold, head of household, under 65."
+  },
+  "filing_threshold_joint_both_under_65": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "2025 gross income filing threshold, married filing jointly, both spouses under 65."
+  },
+  "filing_threshold_separate": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "2025 gross income filing threshold, married filing separately, any age."
+  },
+  "ss_benefits_income_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "gt",
+    "minimum": "0"
+   },
+   "description": "Income above which social security benefits must be counted in gross income (not married filing jointly)."
+  },
+  "ss_benefits_income_threshold_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "gt",
+    "minimum": "0"
+   },
+   "description": "The same threshold for married filing jointly."
+  },
+  "dependent_standard_deduction_min": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Minimum standard deduction for a dependent."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "senior_deduction_max",
+   "value": "6000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1738,
+     "end": 1744
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "senior_deduction_max_joint",
+   "value": "12000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1746,
+     "end": 1753
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "trump_account_pilot_contribution",
+   "value": "1000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2294,
+     "end": 2300
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "filing_threshold_single_under_65",
+   "value": "15750",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3195,
+     "end": 3202
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "filing_threshold_single_65_or_older",
+   "value": "17750",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3204,
+     "end": 3211
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "filing_threshold_hoh_under_65",
+   "value": "23625",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3213,
+     "end": 3220
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "filing_threshold_joint_both_under_65",
+   "value": "31500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3231,
+     "end": 3238
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "filing_threshold_separate",
+   "value": "5",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3258,
+     "end": 3260
+    },
+    {
+     "start": 4720,
+     "end": 4722
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "ss_benefits_income_threshold",
+   "value": "25000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4072,
+     "end": 4079
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "ss_benefits_income_threshold_joint",
+   "value": "32000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4081,
+     "end": 4088
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "dependent_standard_deduction_min": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

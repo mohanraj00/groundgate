@@ -1,0 +1,272 @@
+{
+ "doc": "irs-p571",
+ "kind": "irs",
+ "fields": {
+  "savers_credit_limit_joint_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 saver's credit AGI limit, married filing jointly."
+  },
+  "savers_credit_limit_joint_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same limit for 2026."
+  },
+  "savers_credit_limit_hoh_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 saver's credit AGI limit, head of household."
+  },
+  "savers_credit_limit_hoh_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same limit for 2026."
+  },
+  "savers_credit_limit_single_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 saver's credit AGI limit, single and similar filers."
+  },
+  "savers_credit_limit_single_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same limit for 2026."
+  },
+  "elective_deferral_limit_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 limit on elective deferrals."
+  },
+  "elective_deferral_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 limit on elective deferrals."
+  },
+  "annual_additions_limit_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 limit on annual additions."
+  },
+  "annual_additions_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 limit on annual additions."
+  },
+  "catch_up_age_60_to_63_floor": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Dollar floor of the higher catch-up for ages 60 to 63."
+  },
+  "catch_up_limit_age_50_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 age-50 catch-up contribution limit for 403(b) plans."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "savers_credit_limit_joint_2025",
+   "value": "79000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 732,
+     "end": 739
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "savers_credit_limit_joint_2026",
+   "value": "80500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 743,
+     "end": 750
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "savers_credit_limit_hoh_2025",
+   "value": "59250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 791,
+     "end": 798
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "savers_credit_limit_hoh_2026",
+   "value": "60375",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 802,
+     "end": 809
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "savers_credit_limit_single_2025",
+   "value": "39500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 849,
+     "end": 856
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "savers_credit_limit_single_2026",
+   "value": "40250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 860,
+     "end": 867
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "elective_deferral_limit_2025",
+   "value": "23500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1161,
+     "end": 1168
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "elective_deferral_limit_2026",
+   "value": "24500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1172,
+     "end": 1179
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "annual_additions_limit_2025",
+   "value": "70000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1269,
+     "end": 1276
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "annual_additions_limit_2026",
+   "value": "72000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1280,
+     "end": 1287
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "catch_up_age_60_to_63_floor",
+   "value": "10000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 521,
+     "end": 528
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "catch_up_limit_age_50_2026": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

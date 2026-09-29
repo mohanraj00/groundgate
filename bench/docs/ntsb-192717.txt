@@ -1,0 +1,482 @@
+Aviation Investigation Final Report
+
+Location:
+
+Red Lodge, Montana
+
+Accident Number:
+
+WPR23LA284
+
+Date & Time:
+
+July 22, 2023, 10:00 Local
+
+Registration:
+
+N53132
+
+Aircraft:
+
+Boeing A75N1
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Loss of control on ground
+
+Injuries:
+
+2 None
+
+Flight Conducted Under:
+
+Part 91: General aviation - Personal
+
+Analysis
+
+The pilot reported that, while landing a tailwheel airplane, a gust of wind pushed the tail
+to the right. The pilot attempted to correct with rudder and differential braking; however,
+the airplane ground looped to the left and veered off the left side of the runway
+impacting a fence and substantially damaging the left wings. The pilot reported that
+there were no preimpact mechanical failures or malfunctions with the airplane that
+would have precluded normal operation.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot’s loss of directional control during landing with wind gusts, which resulted in a
+ground loop and collision with a fence.
+
+Page 1 of 6
+Findings
+
+Aircraft
+
+Directional control - Not attained/maintained
+
+Personnel issues
+
+Aircraft control - Pilot
+
+Environmental issues
+
+Gusts - Ability to respond/compensate
+
+Environmental issues
+
+Fence/fence post - Contributed to outcome
+
+Page 2 of 6
+
+WPR23LA284
+Factual Information
+
+History of Flight
+
+Landing-flare/touchdown
+
+Loss of control on ground (Defining event)
+
+Pilot Information
+
+Certificate:
+
+Airline transport
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land; Multi-engine
+land
+
+Seat Occupied:
+
+57,Male
+
+Rear
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+Airplane
+
+Instructor Rating(s):
+
+None
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+Medical Certification:
+
+Class 1 With waivers/limitations
+
+Last FAA Medical Exam:
+
+June 5, 2023
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+November 30, 2022
+
+Flight Time:
+
+(Estimated) 19200 hours (Total, all aircraft), 105 hours (Total, this make and model), 8195 hours
+(Pilot In Command, all aircraft), 201 hours (Last 90 days, all aircraft), 33 hours (Last 30 days, all
+aircraft), 0 hours (Last 24 hours, all aircraft)
+
+Passenger Information
+
+Certificate:
+
+Airplane Rating(s):
+
+Other Aircraft Rating(s):
+
+Instrument Rating(s):
+
+Instructor Rating(s):
+
+Medical Certification:
+
+Occupational Pilot:
+
+Flight Time:
+
+Front
+
+Age:
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+Last FAA Medical Exam:
+
+Last Flight Review or Equivalent:
+
+Page 3 of 6
+
+WPR23LA284
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Year of Manufacture:
+
+Boeing
+
+A75N1
+
+1942
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+N53132
+
+Airplane
+
+Airworthiness Certificate:
+
+Normal
+
+Serial Number:
+
+75-2923
+
+Landing Gear Type:
+
+Tailwheel
+
+Seats:
+
+2
+
+Date/Type of Last Inspection: November 19, 2022 Annual
+
+Certified Max Gross Wt.:
+
+3510 lbs
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+2693.4 Hrs at time of
+accident
+
+Engines:
+
+1 Reciprocating
+
+Engine Manufacturer:
+
+Pratt & Whitney
+
+ELT:
+
+C91A installed, not activated
+
+Engine Model/Series:
+
+R-985
+
+Registered Owner:
+
+Operator:
+
+On file
+
+On file
+
+Rated Power:
+
+450 Horsepower
+
+Operating Certificate(s)
+Held:
+
+None
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KPOY,5092 ft msl
+
+Distance from Accident Site:
+
+27 Nautical Miles
+
+Observation Time:
+
+10:35 Local
+
+Direction from Accident Site:
+
+134°
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Clear
+
+None
+
+Wind Speed/Gusts:
+
+5 knots / 10 knots
+
+Wind Direction:
+
+230°
+
+Visibility
+
+10 miles
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+None / None
+
+N/A / N/A
+
+Altimeter Setting:
+
+30.18 inches Hg
+
+Temperature/Dew Point:
+
+27°C / 2°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Red Lodge, MT (KRED)
+
+Type of Flight Plan Filed:
+
+Destination:
+
+Red Lodge, MT
+
+Type of Clearance:
+
+None
+
+None
+
+Departure Time:
+
+09:40 Local
+
+Type of Airspace:
+
+Class G
+
+Page 4 of 6
+
+WPR23LA284
+Airport Information
+
+Airport:
+
+RED LODGE RED
+
+Runway Surface Type:
+
+Grass/turf
+
+Airport Elevation:
+
+5762 ft msl
+
+Runway Used:
+
+16
+
+Runway Surface Condition:
+
+Dry
+
+IFR Approach:
+
+None
+
+Runway Length/Width:
+
+4000 ft / 75 ft
+
+VFR Approach/Landing:
+
+Full stop;Traffic pattern
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 None
+
+Passenger Injuries:
+
+1 None
+
+Ground Injuries:
+
+Aircraft Damage:
+
+Substantial
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+2 None
+
+Latitude, Longitude:
+
+45.184833,-109.25771
+
+Page 5 of 6
+
+WPR23LA284
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Johnson, Scott
+
+Additional Participating
+Persons:
+
+Casey Stevens; Federal Aviation Administration; Helena, MT
+
+Original Publish Date:
+
+November 2, 2023
+
+Last Revision Date:
+
+December 13, 2024
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192717
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+WPR23LA284

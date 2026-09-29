@@ -1,0 +1,240 @@
+{
+ "doc": "irs-p463",
+ "kind": "irs",
+ "fields": {
+  "standard_mileage_rate": {
+   "schema": {
+    "type": "integer",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 business standard mileage rate, in cents per mile."
+  },
+  "car_depreciation_year1_bonus": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 first-year depreciation limit for passenger automobiles with the section 168(k) bonus."
+  },
+  "car_depreciation_year2": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Second-year depreciation limit (bonus table)."
+  },
+  "car_depreciation_year3": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Third-year depreciation limit (bonus table)."
+  },
+  "car_depreciation_later_years": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Limit for each succeeding year (bonus table)."
+  },
+  "car_depreciation_year1_no_bonus": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "First-year limit when no section 168(k) bonus applies."
+  },
+  "section_179_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 section 179 expense limit."
+  },
+  "section_179_suv_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Section 179 limit for a sport utility vehicle."
+  },
+  "section_179_phaseout_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "gt",
+    "minimum": "0"
+   },
+   "description": "Cost of section 179 property above which the limit is reduced."
+  },
+  "standard_mileage_rate_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 business standard mileage rate, in cents per mile."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "standard_mileage_rate",
+   "value": "70",
+   "unit": "cents",
+   "evidence": [
+    {
+     "start": 2271,
+     "end": 2279
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "car_depreciation_year1_bonus",
+   "value": "20200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2674,
+     "end": 2681
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "car_depreciation_year2",
+   "value": "19600",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2700,
+     "end": 2707
+    },
+    {
+     "start": 3090,
+     "end": 3097
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "car_depreciation_year3",
+   "value": "11800",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2725,
+     "end": 2732
+    },
+    {
+     "start": 3115,
+     "end": 3122
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "car_depreciation_later_years",
+   "value": "7060",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2760,
+     "end": 2766
+    },
+    {
+     "start": 3152,
+     "end": 3158
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "car_depreciation_year1_no_bonus",
+   "value": "12200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3064,
+     "end": 3071
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "section_179_limit",
+   "value": "2500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3497,
+     "end": 3507
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "section_179_suv_limit",
+   "value": "31300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3618,
+     "end": 3625
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "section_179_phaseout_threshold",
+   "value": "4000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3801,
+     "end": 3811
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "standard_mileage_rate_2026": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

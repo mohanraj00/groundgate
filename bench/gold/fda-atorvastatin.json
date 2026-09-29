@@ -1,0 +1,170 @@
+{
+ "doc": "fda-atorvastatin",
+ "kind": "fda",
+ "fields": {
+  "adult_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Usual recommended starting dose for adults, for the first indication in section 2. If the label gives a range, its lower bound."
+  },
+  "adult_max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum recommended daily dose for adults, for the first indication in section 2. Doses that were only studied or used are not a recommendation."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "tablet_strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet strength listed in section 3 (one extraction per strength)."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for patients with hepatic impairment, when the label gives a number."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "adult_starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 267,
+     "end": 269
+    },
+    {
+     "start": 1329,
+     "end": 1334
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "adult_max_daily_dose",
+   "value": "80",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 316,
+     "end": 321
+    },
+    {
+     "start": 1385,
+     "end": 1390
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "pediatric_min_age",
+   "value": "10",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 430,
+     "end": 438
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "tablet_strengths",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 3536,
+     "end": 3541
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "tablet_strengths",
+   "value": "20",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 3543,
+     "end": 3548
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "tablet_strengths",
+   "value": "40",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 3550,
+     "end": 3555
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "tablet_strengths",
+   "value": "80",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 3556,
+     "end": 3561
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

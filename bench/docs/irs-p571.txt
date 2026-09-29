@@ -1,0 +1,232 @@
+Publication 571
+(Rev. January 2026)
+
+Tax-Sheltered
+Annuity Plans
+(403(b) Plans)
+For Employees of Public
+Schools and Certain
+Tax-Exempt
+Organizations
+
+Future Developments
+For the latest information about developments related to
+Pub. 571, such as
+it was
+published, go to IRS.gov/Pub571.
+
+legislation enacted after
+
+What’s New for 2025
+Catch-up contributions. Beginning 2025, people who
+reached the ages of 60, 61, 62, or 63 before the end of the
+tax year shall attain higher catch-up contributions between
+the greater of $10,000 or 150% of the previous catch-up
+limit, $7,500, in their 403(b) plans.
+
+What’s New for 2026
+Retirement savings contributions credit. For 2026,
+the adjusted gross income limitations have increased from
+$79,000 to $80,500 for married filing jointly filers; from
+$59,250 to $60,375 for head of household filers; and from
+$39,500 to $40,250 for single, married filing separately, or
+qualifying surviving spouse with dependent child filers.
+See chapter 10, Retirement Savings Contributions Credit
+(Saver's Credit), for additional information.
+Limit on elective deferrals. For 2026, the limit on elec-
+tive deferrals has increased from $23,500 to $24,500.
+Limit on annual additions. For 2026, the limit on an-
+nual additions has increased from $70,000 to $72,000.
+
+Reminders
+Pension-Linked Emergency Savings Accounts. Sec-
+tion 127 of the SECURE 2.0 Act of 2022 allows employers
+to add an optional feature to provide short-term savings
+accounts established and maintained in connection with a
+defined contribution retirement plan, including certain
+403(b) plans, and are treated as a type of designated Roth
+account. Section 127 of the SECURE 2.0 Act of 2022 pro-
+vides for the creation of Pension-Linked Emergency Sav-
+ings Accounts (PLESAs) effective for plan years beginning
+after December 31, 2023.
+Safe harbor deferral-only section 403(b) plans. Sec-
+tion 121(b) of the SECURE 2.0 Act of 2022 permits certain
+eligible employers to have a safe harbor deferral-only sec-
+tion 403(b) plan for plan years beginning after December
+31, 2023.
+Military spouse retirement plan eligibility credit. Sec-
+tion 112 of the SECURE 2.0 Act of 2022 provides a busi-
+ness credit for an eligible employer for participation and
+benefits to a military spouse within 2 months of being
+hired.
+Matching contributions on account of qualified stu-
+dent loan payments. Section 110 of the SECURE 2.0
+Act of 2022 allows employers to include an optional fea-
+to make matching
+ture
+
+that would enable
+
+them
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Jan 7, 2026
+
+Publication 571 (Rev. 1-2026) Catalog Number 46581C
+Department of the Treasury Internal Revenue Service www.irs.gov
+contributions on account of employees’ qualified student
+loan payments under certain defined contribution retire-
+ment plans, including 403(b) plans. Section 110 of the SE-
+CURE 2.0 Act of 2022 applies to contributions made for
+plan years beginning after December 31, 2023.
+Credit for employer contributions. Section 102 of the
+SECURE 2.0 Act of 2022 adds an increased small em-
+ployer pension plan startup cost credit for qualifying small
+employers with no more than 50 employees and a new
+credit based on matching and nonelective contributions
+made by qualifying small employers with no more than
+100 employees.
+Qualified disaster recovery distributions. A qualified
+disaster recovery distribution is a distribution that meets
+certain criteria as described in the SECURE 2.0 Act of
+2022. It is a distribution made from an eligible retirement
+plan to an individual whose main home was in a qualified
+disaster area. You must have sustained an economic loss
+because of the disaster to receive a qualified disaster re-
+covery distribution. For more information, see Pub. 575,
+Pension and Annuity Income.
+De minimis financial incentives. For plan years begin-
+ning after December 29, 2022, section 113 of the SE-
+CURE 2.0 Act of 2022 permits employers to offer their em-
+ployees de minimis financial incentives if they make
+elective deferrals.
+Distributions for emergency personal expenses. Be-
+ginning with distributions made after December 31, 2023,
+a distribution for an emergency personal expense is not
+subject to the 10% additional tax on early distributions.
+Distributions to a domestic abuse victim. For distribu-
+tions made after December 31, 2023, a distribution made
+to a domestic abuse victim is not subject to the 10% addi-
+tional tax on early distributions.
+Terminally ill individual. The 10% additional tax on
+early distributions doesn't apply to distributions made to
+terminally ill individuals.
+Designated Roth nonelective contributions. Section
+604 of the SECURE 2.0 Act of 2022 permits certain non-
+elective contributions that are made after December 29,
+2022, to be designated as Roth contributions.
+Photographs of missing children. The IRS is a proud
+partner with the National Center for Missing & Exploited
+Children® (NCMEC). Photographs of missing children se-
+lected by the Center may appear in this publication on pa-
+ges that would otherwise be blank. You can help bring
+these children home by looking at the photographs and
+calling 1-800-THE-LOST (1-800-843-5678) if you recog-
+nize a child.
+
+Introduction
+This publication can help you better understand the tax
+rules that apply to your 403(b) (tax-sheltered annuity)
+plan.
+
+In this publication, you will find information to help you
+
+do the following.
+
+• Determine the maximum amount that can be contrib-
+
+uted to your 403(b) account in 2026.
+
+• Determine the maximum amount that could have been
+
+contributed to your 403(b) account in 2025.
+
+• Identify excess contributions.
+• Understand the basic rules for claiming the retirement
+
+savings contributions credit.
+
+• Understand the basic rules for distributions and roll-
+
+overs from 403(b) accounts.
+
+This publication doesn’t provide specific information on
+
+the following topics.
+• Distributions from 403(b) accounts. This is covered in
+
+Pub. 575, Pension and Annuity Income.
+
+• Rollovers. This is covered in Pub. 590-A, Contributions
+to Individual Retirement Arrangements (IRAs); and
+Pub. 590-B, Distributions from Individual Retirement
+Arrangements (IRAs).
+
+How to use this publication. This publication is organ-
+ized into chapters to help you find information easily.
+
+Chapter 1 answers questions frequently asked by
+
+403(b) plan participants.
+
+Chapters 2 through 6 explain the rules and terms you
+need to know to figure the maximum amount that could
+have been contributed to your 403(b) account for 2025
+and the maximum amount that can be contributed to your
+403(b) account in 2026.
+
+Chapter 7 provides general information on the preven-
+tion and correction of excess contributions to your 403(b)
+account.
+
+Chapter 8 provides general information on distributions,
+
+transfers, and rollovers.
+
+Chapter 9 provides blank worksheets that you will need
+to accurately and actively participate in your 403(b) plan.
+Filled-in samples of most of these worksheets can be
+found throughout this publication.
+
+Chapter 10 explains the rules for claiming the retire-
+
+ment savings contributions credit (saver's credit).
+
+Comments and suggestions. We welcome your com-
+ments about this publication and suggestions for future
+editions.
+
+You can send us comments
+
+IRS.gov/
+FormComments. Or, you can write to the Internal Revenue
+Service, Tax Forms and Publications, 1111 Constitution
+Ave. NW, IR-6526, Washington, DC 20224.
+
+through
+
+Although we can’t respond individually to each com-
+ment received, we do appreciate your feedback and will
+consider your comments and suggestions as we revise
+our tax forms, instructions, and publications. Don’t send
+tax questions, tax returns, or payments to the above ad-
+dress.
+
+Getting answers to your tax questions. If you have
+a tax question not answered by this publication or the How
+To Get Tax Help section at the end of this publication, go
+to the IRS Interactive Tax Assistant page at IRS.gov/
+Help/ITA where you can find topics by using the search
+feature or by viewing the categories listed.
+
+2
+
+Publication 571 (1-2026)

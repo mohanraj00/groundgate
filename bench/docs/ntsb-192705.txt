@@ -1,0 +1,554 @@
+Aviation Investigation Final Report
+
+Location:
+
+New London, North Carolina
+
+Accident Number:
+
+ERA23LA310
+
+Date & Time:
+
+July 24, 2023, 16:30 Local
+
+Registration:
+
+N98134
+
+Aircraft:
+
+Piper PA-28-140
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Loss of engine power (partial)
+
+Injuries:
+
+1 Serious, 1 Minor
+
+Flight Conducted Under:
+
+Part 91: General aviation - Instructional
+
+Analysis
+
+The student pilot and flight instructor reported that the engine lost partial power after takeoff,
+when the airplane was climbing. The instructor assumed control of the airplane, attempted to
+restore power, and performed a forced landing. The airplane contacted trees and a powerline
+during the landing.
+
+Postaccident examination of the engine revealed that the exhaust valve in the No. 4 cylinder
+was stuck in the open position. Based on this finding, it is likely that the partial loss of engine
+power was the result of the No. 4 cylinder’s stuck exhaust valve.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+A partial loss of engine power due to the No. 4 cylinder’s stuck exhaust valve.
+
+Recip engine power section - Damaged/degraded
+
+Findings
+
+Aircraft
+
+Page 1 of 6
+Factual Information
+
+History of Flight
+
+Enroute-climb to cruise
+
+Loss of engine power (partial) (Defining event)
+
+Emergency descent
+
+Off-field or emergency landing
+
+On July 24, 2023, about 1630 eastern daylight time, a Piper PA-28-140, N98134, was
+substantially damaged when it was involved in an accident near New London, North Carolina.
+The flight instructor sustained minor injuries and the student pilot was seriously injured. The
+airplane was operated as a Title 14 Code of Federal Regulations Part 91 instructional flight.
+
+The instructional flight departed from Stanly County Airport (VUJ), Albemarle, North Carolina.
+According to the flight instructor, everything was normal and “in the green” during the preflight
+inspection, engine run-up and takeoff. During the subsequent climb, upon reaching 1,900 ft
+mean sea level, the engine rpm started to drop. The flight instructor immediately took control
+of the airplane and pitched for best glide speed while attempting to troubleshoot via the
+checklist, but was unable to regain full power. The engine power remained at 1,000 rpm while
+the propeller continued to rotate.
+
+The flight instructor attempted to return to VUJ; however, the airplane was descending too
+quickly, and he was unable to reach the airport. The instructor initiated a forced landing to a
+field that was bordered by trees. The airplane impacted the treetops, then struck electrical
+transmission wires and terrain before coming to rest on its nose partially inverted.
+
+A Federal Aviation Administration inspector examined the wreckage and confirmed there was
+substantial damage to the wings and fuselage. The right wing separated during impact and the
+fuel tanks were breached. The fuselage was crushed forward from the engine compartment
+into the cockpit. The airplane came to rest on its nose in an inverted attitude. The engine and
+propeller were partially canted upwards and aft into the cockpit instrument panel. The
+empennage was suspended by electrical transmission wires that were wrapped around the
+stabilator.
+
+Postaccident examination of the airframe and engine revealed that the engine crankcase was
+intact. The oil filter was opened revealing no foreign deposits or ferrous material. The oil
+appeared dark brown in color and all lubricated components appeared to be well lubricated.
+
+The fuel system was compromised during impact. The fuel selector was removed and tested
+yielding normal action through its rotation and indents. No blockages were observed in the fuel
+lines from the wings to the gascolator.
+
+Page 2 of 6
+
+ERA23LA310
+During the engine continuity check, compression was obtained on cylinder Nos. 1, 2, and 3; no
+compression was obtained on No. 4. The No. 4 cylinder exhaust valve was stuck in the open
+position but became unstuck during manipulation. There was no thermal or impact damage
+noted to the left side of the engine. Additionally, the Nos. 3 and 4 spark plugs contained minor
+carbon build-up on the electrodes. The remainder of the spark plugs had normal coloration as
+compared to the Champion Aerospace AV-27 Check-A-Plug chart. The magnetos were
+mechanically manipulated with a drill and produced blue/purple spark at each of the posts.
+
+The 2-blade metal propeller blades showed evidence of minor chordwise scraping and one
+blade was bent uniformly aft mid span. The propeller remained attached to the flange and
+crankshaft and the propeller spinner was crushed inwards in a relatively flat pattern indicative
+of reduced power.
+
+No additional evidence was discovered to indicate a preexisting mechanical malfunction or
+failure that would have precluded normal operation. The airplane’s maintenance logs indicated
+that during the last annual inspection eight months before the accident, the engine passed a
+cylinder compression check, and all spark plugs were serviced. A week before the accident, the
+Nos. 1 and 3 pushrod seals were replaced, and leak tested, and a new left magneto was
+installed. At that time, the engine had a total operating time of 3,040 hours and the time since
+the last major overhaul was 847 hours.
+
+Flight instructor Information
+
+Certificate:
+
+Commercial; Flight instructor
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s):
+
+Instrument Rating(s):
+
+Airplane
+
+Instructor Rating(s):
+
+Airplane single-engine; Instrument
+airplane
+
+Medical Certification:
+
+Class 1 Without
+waivers/limitations
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+21,Male
+
+Right
+
+Lap only
+
+Yes
+
+Last FAA Medical Exam:
+
+November 9, 2022
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+Flight Time:
+
+672 hours (Total, all aircraft), 39 hours (Total, this make and model), 615 hours (Pilot In
+Command, all aircraft), 232 hours (Last 90 days, all aircraft), 83 hours (Last 30 days, all aircraft),
+1 hours (Last 24 hours, all aircraft)
+
+Page 3 of 6
+
+ERA23LA310
+Student pilot Information
+
+Certificate:
+
+Student
+
+Airplane Rating(s):
+
+None
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+None
+
+Instructor Rating(s):
+
+None
+
+Age:
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+32,Male
+
+Left
+
+Lap only
+
+Yes
+
+Medical Certification:
+
+Class 1 With waivers/limitations
+
+Last FAA Medical Exam:
+
+July 6, 2023
+
+Occupational Pilot:
+
+No
+
+Last Flight Review or Equivalent:
+
+Flight Time:
+
+38 hours (Total, all aircraft), 3 hours (Total, this make and model), 1 hours (Pilot In Command,
+all aircraft), 38 hours (Last 90 days, all aircraft)
+
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Piper
+
+PA-28-140
+
+Year of Manufacture:
+
+1969
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+N98134
+
+Airplane
+
+Airworthiness Certificate:
+
+Normal
+
+Serial Number:
+
+28-26064
+
+Landing Gear Type:
+
+Tricycle
+
+Seats:
+
+4
+
+Date/Type of Last Inspection:
+
+July 11, 2023 Annual
+
+Certified Max Gross Wt.:
+
+2150 lbs
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+ELT:
+
+Installed, activated, did not
+aid in locating accident
+
+Registered Owner:
+
+Operator:
+
+On file
+
+On file
+
+Engines:
+
+1 Reciprocating
+
+Engine Manufacturer:
+
+Lycoming
+
+Engine Model/Series:
+
+O-320
+
+Rated Power:
+
+160 Horsepower
+
+Operating Certificate(s)
+Held:
+
+None
+
+Page 4 of 6
+
+ERA23LA310
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+VUJ,609 ft msl
+
+Distance from Accident Site:
+
+0 Nautical Miles
+
+Observation Time:
+
+16:25 Local
+
+Direction from Accident Site:
+
+331°
+
+Lowest Cloud Condition:
+
+Scattered / 3700 ft AGL
+
+Visibility
+
+10 miles
+
+Lowest Ceiling:
+
+Wind Speed/Gusts:
+
+4 knots / None
+
+Wind Direction:
+
+250°
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+None / None
+
+N/A / N/A
+
+Altimeter Setting:
+
+30.12 inches Hg
+
+Temperature/Dew Point:
+
+31°C / 21°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Albemarle, NC (VUJ)
+
+Type of Flight Plan Filed:
+
+Destination:
+
+Albemarle, NC (VUJ)
+
+Type of Clearance:
+
+None
+
+None
+
+Departure Time:
+
+16:15 Local
+
+Type of Airspace:
+
+Class D
+
+Airport Information
+
+Airport:
+
+STANLY COUNTY VUJ
+
+Runway Surface Type:
+
+Asphalt
+
+Airport Elevation:
+
+609 ft msl
+
+Runway Used:
+
+4R/22L
+
+Runway Surface Condition:
+
+Rough;Vegetation
+
+IFR Approach:
+
+None
+
+Runway Length/Width:
+
+5499 ft / 100 ft
+
+VFR Approach/Landing:
+
+Forced landing
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 Serious, 1 Minor
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+Ground Injuries:
+
+N/A
+
+N/A
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 Serious, 1 Minor
+
+Latitude, Longitude:
+
+35.416694,-80.150791(est)
+
+Page 5 of 6
+
+ERA23LA310
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Mccarter, Lawrence
+
+Additional Participating
+Persons:
+
+Bruce Codwise; FAA/FSDO; Charlotte, NC
+
+Original Publish Date:
+
+September 18, 2024
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 3
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192705
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+ERA23LA310

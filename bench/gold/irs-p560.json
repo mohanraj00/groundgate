@@ -1,0 +1,316 @@
+{
+ "doc": "irs-p560",
+ "kind": "irs",
+ "fields": {
+  "compensation_limit_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 maximum compensation for contributions and benefits."
+  },
+  "compensation_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same limit for 2026."
+  },
+  "elective_deferral_limit_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 elective deferral limit, excluding catch-up."
+  },
+  "elective_deferral_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same limit for 2026."
+  },
+  "defined_contribution_limit_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 defined contribution plan limit, excluding catch-up."
+  },
+  "defined_contribution_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same limit for 2026."
+  },
+  "defined_benefit_limit_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 defined benefit plan annual benefit limit."
+  },
+  "defined_benefit_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same limit for 2026."
+  },
+  "simple_deferral_limit_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 SIMPLE plan salary reduction limit (general, not the higher limit)."
+  },
+  "simple_deferral_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same limit for 2026."
+  },
+  "catch_up_limit_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 catch-up limit for defined contribution plans other than SIMPLE plans."
+  },
+  "catch_up_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same limit for 2026."
+  },
+  "catch_up_limit_age_60_to_63": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Higher catch-up limit for ages 60 to 63 (not SIMPLE)."
+  },
+  "ira_contribution_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 traditional IRA contribution limit."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "compensation_limit_2025",
+   "value": "350000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3191,
+     "end": 3199
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "compensation_limit_2026",
+   "value": "360000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3225,
+     "end": 3233
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "elective_deferral_limit_2025",
+   "value": "23500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3360,
+     "end": 3367
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "elective_deferral_limit_2026",
+   "value": "24500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3381,
+     "end": 3388
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "defined_contribution_limit_2025",
+   "value": "70000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3699,
+     "end": 3706
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "defined_contribution_limit_2026",
+   "value": "72000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3733,
+     "end": 3740
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "defined_benefit_limit_2025",
+   "value": "280000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3870,
+     "end": 3878
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "defined_benefit_limit_2026",
+   "value": "290000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3905,
+     "end": 3913
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "simple_deferral_limit_2025",
+   "value": "16500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4078,
+     "end": 4085
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "simple_deferral_limit_2026",
+   "value": "17000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4112,
+     "end": 4119
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "catch_up_limit_2025",
+   "value": "7500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4658,
+     "end": 4664
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "catch_up_limit_2026",
+   "value": "8000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4678,
+     "end": 4684
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f13",
+   "field": "catch_up_limit_age_60_to_63",
+   "value": "11250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5805,
+     "end": 5812
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "ira_contribution_limit_2026": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

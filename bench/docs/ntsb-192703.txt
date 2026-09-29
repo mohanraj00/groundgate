@@ -1,0 +1,448 @@
+Aviation Investigation Final Report
+
+Location:
+
+Plains, Kansas
+
+Accident Number:
+
+CEN23LA321
+
+Date & Time:
+
+July 21, 2023, 11:30 Local
+
+Registration:
+
+N602AA
+
+Aircraft:
+
+AIR TRACTOR INC AT-602
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Loss of control on ground
+
+Injuries:
+
+1 None
+
+Flight Conducted Under:
+
+Part 91: General aviation - Personal
+
+Analysis
+
+Prior to flight, the pilot noted that rain had made the turf airstrip too wet to conduct aerial
+application flights. The middle of the airstrip had standing water, but the edges of the runway
+had fewer areas of water. The pilot took off at a reduced weight, without an aerial load, to fly to
+another location. During the takeoff, the airplane contacted the water on the runway, and the
+pilot lost control. The airplane subsequently veered off the runway resulting in the wing’s spray
+booms getting entangled in high weeds. The airplane spun and came to rest. Substantial
+damage was sustained to the left wing and empennage.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot’s failure to maintain control during takeoff from a water-contaminated runway.
+
+Findings
+
+Personnel issues
+
+Aircraft control - Pilot
+
+Aircraft
+
+Directional control - Not attained/maintained
+
+Environmental issues
+
+Wet surface - Effect on equipment
+
+Page 1 of 5
+Page 2 of 5
+
+CEN23LA321
+Factual Information
+
+History of Flight
+
+Takeoff
+
+Takeoff
+
+Takeoff
+
+Pilot Information
+
+Loss of control on ground (Defining event)
+
+Runway excursion
+
+Collision during takeoff/land
+
+Certificate:
+
+Commercial
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+Airplane
+
+Instructor Rating(s):
+
+None
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+50,
+
+Single
+
+4-point
+
+No
+
+Medical Certification:
+
+Class 2 With waivers/limitations
+
+Last FAA Medical Exam:
+
+September 15, 2022
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+February 20, 2023
+
+Flight Time:
+
+30948 hours (Total, all aircraft), 5240 hours (Total, this make and model), 340 hours (Last 90
+days, all aircraft), 7 hours (Last 24 hours, all aircraft)
+
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Year of Manufacture:
+
+AIR TRACTOR INC
+
+Registration:
+
+AT-602
+
+2010
+
+Aircraft Category:
+
+Amateur Built:
+
+N602AA
+
+Airplane
+
+Airworthiness Certificate:
+
+Restricted (Special)
+
+Serial Number:
+
+602-1194
+
+Landing Gear Type:
+
+Tailwheel
+
+Seats:
+
+1
+
+Date/Type of Last Inspection:
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+ELT:
+
+Certified Max Gross Wt.:
+
+Engines:
+
+1 Turbo prop
+
+Engine Manufacturer:
+
+Pratt & Whitney Canada
+
+Engine Model/Series:
+
+PT6A-60AG
+
+Registered Owner:
+
+DICKSON SHANNON
+
+Rated Power:
+
+1050 Horsepower
+
+Operator:
+
+DICKSON SHANNON
+
+Operating Certificate(s)
+Held:
+
+Agricultural aircraft (137)
+
+Operator Does Business As:
+
+Operator Designator Code:
+
+RHSG
+
+Page 3 of 5
+
+CEN23LA321
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KLBL,2873 ft msl
+
+Distance from Accident Site:
+
+22 Nautical Miles
+
+Observation Time:
+
+11:07 Local
+
+Direction from Accident Site:
+
+235°
+
+Lowest Cloud Condition:
+
+Scattered / 1200 ft AGL
+
+Visibility
+
+10 miles
+
+Lowest Ceiling:
+
+Broken / 2100 ft AGL
+
+Visibility (RVR):
+
+Wind Speed/Gusts:
+
+10 knots / None
+
+Wind Direction:
+
+10°
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+/
+
+/
+
+Altimeter Setting:
+
+30.22 inches Hg
+
+Temperature/Dew Point:
+
+0°C / 0°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Destination:
+
+Departure Time:
+
+Plains, KS
+
+Plains, KS
+
+Type of Flight Plan Filed:
+
+Type of Clearance:
+
+None
+
+None
+
+Type of Airspace:
+
+Class G
+
+Airport Information
+
+Airport:
+
+Private Airstrip 00
+
+Runway Surface Type:
+
+Grass/turf
+
+Airport Elevation:
+
+2762 ft msl
+
+Runway Surface Condition:
+
+Standing water;Wet
+
+Runway Used:
+
+35
+
+IFR Approach:
+
+Runway Length/Width:
+
+3200 ft / 25 ft
+
+VFR Approach/Landing:
+
+None
+
+None
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 None
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+Ground Injuries:
+
+N/A
+
+N/A
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 None
+
+Latitude, Longitude:
+
+37.266948,-100.58374(est)
+
+Page 4 of 5
+
+CEN23LA321
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Aguilera, Jason
+
+Additional Participating
+Persons:
+
+John George; FAA FSDO; Wichita, KS
+
+Original Publish Date:
+
+November 9, 2023
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192703
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 5 of 5
+
+CEN23LA321

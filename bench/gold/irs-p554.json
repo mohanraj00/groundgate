@@ -1,0 +1,272 @@
+{
+ "doc": "irs-p554",
+ "kind": "irs",
+ "fields": {
+  "senior_deduction_max": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Maximum enhanced deduction for seniors, per person."
+  },
+  "senior_deduction_max_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same, married filing jointly with both eligible."
+  },
+  "standard_deduction_single": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 standard deduction, single or married filing separately."
+  },
+  "standard_deduction_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 standard deduction, married filing jointly."
+  },
+  "standard_deduction_hoh": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 standard deduction, head of household."
+  },
+  "amt_exemption": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "AMT exemption amount (single and other filers)."
+  },
+  "amt_exemption_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "AMT exemption, married filing jointly."
+  },
+  "amt_exemption_separate": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "AMT exemption, married filing separately."
+  },
+  "eic_limit_no_child": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "EIC earned income limit, no qualifying child, not joint."
+  },
+  "eic_limit_three_children_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "EIC earned income limit, three or more children, married filing jointly."
+  },
+  "medical_mileage_rate": {
+   "schema": {
+    "type": "integer",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 medical standard mileage rate, in cents per mile."
+  },
+  "standard_deduction_single_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 standard deduction, single."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "senior_deduction_max",
+   "value": "6000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 676,
+     "end": 682
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "senior_deduction_max_joint",
+   "value": "12000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 695,
+     "end": 702
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "standard_deduction_single",
+   "value": "15750",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1004,
+     "end": 1011
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "standard_deduction_joint",
+   "value": "31500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1074,
+     "end": 1081
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "standard_deduction_hoh",
+   "value": "23625",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1112,
+     "end": 1119
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "amt_exemption",
+   "value": "88100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1214,
+     "end": 1221
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "amt_exemption_joint",
+   "value": "137000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1223,
+     "end": 1231
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "amt_exemption_separate",
+   "value": "68500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1290,
+     "end": 1297
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "eic_limit_no_child",
+   "value": "19104",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1494,
+     "end": 1501
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "eic_limit_three_children_joint",
+   "value": "68675",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1814,
+     "end": 1821
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "medical_mileage_rate",
+   "value": "21",
+   "unit": "cents",
+   "evidence": [
+    {
+     "start": 2094,
+     "end": 2102
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "standard_deduction_single_2026": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

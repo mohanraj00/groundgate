@@ -1,0 +1,232 @@
+Publication 560
+
+Retirement
+Plans
+for Small
+Business
+(SEP, SIMPLE, and
+Qualified Plans)
+
+For use in preparing
+2025 Returns
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Contents
+
+What's New . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Reminders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+Chapter 1. Definitions You Need To Know . . . . . . . 6
+
+Chapter 2. Simplified Employee
+
+Pensions (SEPs) . . . . . . . . . . . . . . . . . . . . . . . . 8
+Setting up a SEP . . . . . . . . . . . . . . . . . . . . . . . . 9
+How Much Can I Contribute? . . . . . . . . . . . . . . . 10
+Deducting Contributions . . . . . . . . . . . . . . . . . . 10
+Salary Reduction Simplified Employee
+
+. . . . . . . . . . . . . . . . . . 11
+Pensions (SARSEPs)
+. . . . . . . . . . . . . . . . 13
+Distributions (Withdrawals)
+Additional Taxes . . . . . . . . . . . . . . . . . . . . . . . . 13
+Reporting and Disclosure Requirements . . . . . . . 13
+
+Chapter 3. SIMPLE Plans . . . . . . . . . . . . . . . . . . 14
+SIMPLE IRA Plan . . . . . . . . . . . . . . . . . . . . . . . 14
+SIMPLE 401(k) Plan . . . . . . . . . . . . . . . . . . . . . 18
+
+Chapter 4. Qualified Plans . . . . . . . . . . . . . . . . . 18
+Kinds of Plans . . . . . . . . . . . . . . . . . . . . . . . . . 19
+Qualification Rules . . . . . . . . . . . . . . . . . . . . . . 20
+Setting up a Qualified Plan . . . . . . . . . . . . . . . . 22
+Minimum Funding Requirement
+. . . . . . . . . . . . . 23
+Contributions . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+Employer Deduction . . . . . . . . . . . . . . . . . . . . . 24
+Elective Deferrals (401(k) Plans)
+. . . . . . . . . . . . 25
+Qualified Roth Contribution Program . . . . . . . . . 29
+Distributions . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+Prohibited Transactions . . . . . . . . . . . . . . . . . . . 35
+Reporting Requirements . . . . . . . . . . . . . . . . . . 37
+
+Chapter 5. Table and Worksheets for the
+
+Self-Employed . . . . . . . . . . . . . . . . . . . . . . . . 38
+
+Chapter 6. How To Get Tax Help . . . . . . . . . . . . . 43
+
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+
+Future Developments
+For the latest information about developments related to
+Pub. 560, such as
+it was
+published, go to IRS.gov/Pub560.
+
+legislation enacted after
+
+What's New
+Automatic enrollment. Section 101 of the SECURE 2.0
+Act of 2022 provides that, subject to certain exceptions,
+employers with 401(k) plans and 403(b) plans established
+on or after December 29, 2022, must automatically enroll
+employees who are eligible to participate in such plans,
+effective for plan years beginning after 2024.
+
+Feb 18, 2026
+
+Publication 560 (2025) Catalog Number 46574N
+Department of the Treasury Internal Revenue Service www.irs.gov
+Compensation limits for 2025 and 2026. For 2025, the
+maximum compensation used for figuring contributions
+and benefits is $350,000. This limit increases to $360,000
+for 2026.
+
+Elective deferral limits for 2025 and 2026. The limit on
+elective deferrals, other than catch-up contributions, is
+$23,500 for 2025 and $24,500 for 2026. These limits ap-
+ply for participants in SARSEPs, 401(k) plans (excluding
+SIMPLE plans), section 403(b) plans, and section 457(b)
+plans.
+
+Defined contribution limits for 2025 and 2026. The
+limit on contributions, other than catch-up contributions,
+for a participant in a defined contribution plan is $70,000
+for 2025 and increases to $72,000 for 2026.
+
+Defined benefit limits for 2025 and 2026. The limit on
+annual benefits for a participant in a defined benefit plan is
+$280,000 for 2025 and increases to $290,000 for 2026.
+
+SIMPLE plan salary reduction contribution limits for
+2025 and 2026. The limit on salary reduction contribu-
+tions, other than catch-up contributions, is $16,500 for
+2025 and increases to $17,000 for 2026. Pursuant to sec-
+tion 117 of the SECURE 2.0 Act of 2022, a higher limit
+($18,100 for 2025) may apply to participants in certain
+SIMPLE plans, effective for tax years beginning after
+2023.
+
+Catch-up contribution limits for 2025 and 2026. A
+plan can permit participants who are age 50 or over at the
+end of the calendar year to make catch-up contributions in
+addition to elective deferrals and SIMPLE plan salary re-
+duction contributions. The catch-up contribution limit for
+defined contribution plans other than SIMPLE plans is
+$7,500 for 2025 and $8,000 for 2026. The catch-up contri-
+bution limit for SIMPLE plans is generally $3,500 for 2025
+and $4,000 for 2026. Pursuant to section 117(b) of the
+SECURE 2.0 Act, a higher catch-up limit ($3,850 for 2025
+and 2026) may apply to participants in certain SIMPLE
+plans, effective for tax years beginning after 2023.
+
+A participant's catch-up contributions for a year can't
+
+exceed the lesser of the following amounts.
+
+• The catch-up contribution limit.
+• The excess of the participant's compensation over the
+elective deferrals that aren’t catch-up contributions.
+
+See Catch-up contributions under Contribution Limits and
+Limit on Elective Deferrals in chapters 3 and 4, respec-
+tively, for more information.
+
+Higher catch-up contribution limit for ages 60 to 63.
+Beginning in 2025, section 109 of the SECURE 2.0 Act of
+2022 permits a deferred compensation plan (including
+most 401(k) and 403(b) plans) to allow participants to
+make a higher amount of catch-up contributions in a tax
+year in which they attain age 60, 61, 62, or 63. For 2025
+and 2026, the higher limit on catch-up contributions for
+such participants is $11,250 ($5,250 for SIMPLE plans).
+
+Distributions from Roth accounts. Life-time required
+minimum distributions to a participant are no longer re-
+quired from a designated Roth account in a qualified plan.
+Required minimum distributions are required from a desig-
+in a qualified plan following a
+nated Roth account
+
+participant’s death. For this purpose, a qualified plan in-
+cludes qualified retirement plans, tax-sheltered annuities
+and custodial accounts, retirement income accounts, and
+eligible deferred compensation plans under section
+457(b).
+
+Reminders
+Small employer automatic enrollment credit. The Fur-
+ther Consolidated Appropriations Act, 2020, P.L. 116-94,
+added section 45T. An eligible employer may claim a tax
+credit if it includes an eligible automatic contribution ar-
+rangement under a qualified employer plan. The credit
+equals $500 per year over a 3-year period beginning with
+the first tax year in which it includes the automatic contri-
+bution arrangement.
+
+Increase in credit limitation for small employer plan
+startup costs. The Further Consolidated Appropriations
+Act, 2020, P.L. 116-94, amended section 45E. For tax
+years beginning after 2019, eligible employers can claim a
+tax credit for the first credit year and each of the 2 tax
+years immediately following. The credit equals 50% of
+qualified startup costs, up to the greater of the limit of (a)
+$500; or (b) the lesser of (i) $250 for each employee who
+is not a “highly compensated employee” eligible to partici-
+pate in the employer plan, or (ii) $5,000.
+
+Note: The SECURE 2.0 Act further amended section
+45E to increase the credit for tax years beginning after
+2022. See What’s New, earlier.
+
+See the instructions for Form 3800 and Form 8881 for
+more information on the small employer automatic enroll-
+ment credit and the small employer startup cost credit.
+
+Restriction on conditions of participation. Effective
+for plan years beginning after 2020, a 401(k) plan can’t re-
+quire, as a condition of participation, that an employee
+complete a period of service that extends beyond the
+close of the earlier of (a) 1 year of service, or (b) the first
+period of 3 consecutive 12-month periods (excluding
+12-month periods beginning before 2021) during each of
+which the employee has completed at least 500 hours of
+service. Effective for plan years beginning after 2024, 3
+consecutive 12-month periods are reduced to 2 consecu-
+tive 12-month periods.
+
+Retirement savings contributions credit. Retirement
+individuals)
+plan participants (including self-employed
+who make contributions to their plans may qualify for the
+retirement savings contributions credit. The maximum
+contribution eligible for the credit is $2,000. To take the
+credit, use Form 8880, Credit for Qualified Retirement
+Savings Contributions. For more information on who is eli-
+gible for the credit, retirement plan contributions eligible
+for the credit, and how to figure the credit, see Form 8880
+and its instructions or go to IRS.gov/Retirement-Plans/
+Plan-Participant-Employee/Retirement-Savings-
+Contributions-Savers-Credit.
+
+Photographs of missing children. The IRS is a proud
+partner with the National Center for Missing & Exploited
+Children® (NCMEC). Photographs of missing children
+
+2
+
+Publication 560 (2025)

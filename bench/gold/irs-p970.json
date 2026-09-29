@@ -1,0 +1,266 @@
+{
+ "doc": "irs-p970",
+ "kind": "irs",
+ "fields": {
+  "trump_account_pilot_contribution": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Trump account pilot program contribution."
+  },
+  "student_loan_phaseout_start": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "range",
+    "minimum": "0"
+   },
+   "description": "2025 MAGI where the student loan interest deduction phase-out starts (not joint)."
+  },
+  "student_loan_phaseout_end": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "range",
+    "minimum": "0"
+   },
+   "description": "MAGI where that phase-out ends (not joint)."
+  },
+  "student_loan_phaseout_start_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "range",
+    "minimum": "0"
+   },
+   "description": "The same start, joint return."
+  },
+  "student_loan_phaseout_end_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "range",
+    "minimum": "0"
+   },
+   "description": "The same end, joint return."
+  },
+  "savings_bond_phaseout_start": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "range",
+    "minimum": "0"
+   },
+   "description": "2025 MAGI where the education savings bond exclusion phase-out starts (not joint)."
+  },
+  "savings_bond_phaseout_end": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "range",
+    "minimum": "0"
+   },
+   "description": "MAGI where that phase-out ends (not joint)."
+  },
+  "savings_bond_phaseout_start_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "range",
+    "minimum": "0"
+   },
+   "description": "The same start, joint return."
+  },
+  "savings_bond_phaseout_end_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "range",
+    "minimum": "0"
+   },
+   "description": "The same end, joint return."
+  },
+  "education_mileage_rate": {
+   "schema": {
+    "type": "integer",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 deductible rate per mile for work-related education, in cents."
+  },
+  "american_opportunity_credit_max": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Maximum American opportunity credit per student."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "trump_account_pilot_contribution",
+   "value": "1000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 937,
+     "end": 943
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "student_loan_phaseout_start",
+   "value": "85000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1413,
+     "end": 1420
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "student_loan_phaseout_end",
+   "value": "100000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1425,
+     "end": 1433
+    },
+    {
+     "start": 1536,
+     "end": 1544
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "student_loan_phaseout_start_joint",
+   "value": "170000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1435,
+     "end": 1443
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "student_loan_phaseout_end_joint",
+   "value": "200000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1448,
+     "end": 1456
+    },
+    {
+     "start": 1554,
+     "end": 1562
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "savings_bond_phaseout_start",
+   "value": "99500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1778,
+     "end": 1785
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "savings_bond_phaseout_end",
+   "value": "114500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1790,
+     "end": 1798
+    },
+    {
+     "start": 1907,
+     "end": 1915
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "savings_bond_phaseout_start_joint",
+   "value": "149250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1800,
+     "end": 1808
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "savings_bond_phaseout_end_joint",
+   "value": "179250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1813,
+     "end": 1821
+    },
+    {
+     "start": 1925,
+     "end": 1933
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "education_mileage_rate",
+   "value": "70",
+   "unit": "cents",
+   "evidence": [
+    {
+     "start": 2245,
+     "end": 2253
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "american_opportunity_credit_max": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

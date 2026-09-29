@@ -1,0 +1,308 @@
+{
+ "doc": "ntsb-192707",
+ "kind": "ntsb",
+ "fields": {
+  "pilot_age": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Age of the pilot in command (the flight instructor on instructional flights)."
+  },
+  "pilot_total_hours": {
+   "schema": {
+    "type": "number",
+    "unit": "hours",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pilot in command's total flight time, all aircraft."
+  },
+  "pilot_make_model_hours": {
+   "schema": {
+    "type": "number",
+    "unit": "hours",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pilot in command's total flight time in this make and model."
+  },
+  "pilot_last_90_days_hours": {
+   "schema": {
+    "type": "number",
+    "unit": "hours",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pilot in command's flight time in the last 90 days, all aircraft."
+  },
+  "aircraft_year": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Aircraft year of manufacture."
+  },
+  "airframe_total_hours": {
+   "schema": {
+    "type": "number",
+    "unit": "hours",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Airframe total time."
+  },
+  "airport_elevation": {
+   "schema": {
+    "type": "integer",
+    "unit": "ft",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Elevation of the airport in the Airport Information table (not the weather station's elevation)."
+  },
+  "runway_length": {
+   "schema": {
+    "type": "integer",
+    "unit": "ft",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Length of the runway used."
+  },
+  "visibility": {
+   "schema": {
+    "type": "number",
+    "unit": "miles",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Visibility in the weather observation."
+  },
+  "wind_speed": {
+   "schema": {
+    "type": "integer",
+    "unit": "knots",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Wind speed in the weather observation (not gusts)."
+  },
+  "temperature": {
+   "schema": {
+    "type": "number",
+    "unit": "C",
+    "comparator": "eq"
+   },
+   "description": "Temperature in the weather observation (not dew point), in degrees Celsius."
+  },
+  "altimeter_setting": {
+   "schema": {
+    "type": "number",
+    "unit": "inHg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Altimeter setting, in inches of mercury."
+  }
+ },
+ "units": {
+  "hours": {
+   "suffix": [
+    "hours",
+    "hour",
+    "Hrs",
+    "hrs"
+   ]
+  },
+  "ft": {
+   "suffix": [
+    "ft",
+    "feet",
+    "-ft",
+    "-foot"
+   ]
+  },
+  "miles": {
+   "suffix": [
+    "miles",
+    "mile"
+   ]
+  },
+  "knots": {
+   "suffix": [
+    "knots",
+    "knot",
+    "kts"
+   ]
+  },
+  "C": {
+   "suffix": [
+    "°C",
+    "° C"
+   ]
+  },
+  "inHg": {
+   "suffix": [
+    "inches Hg",
+    "in Hg",
+    "inHg"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "pilot_age",
+   "value": "66",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 1485,
+     "end": 1487
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "pilot_total_hours",
+   "value": "728",
+   "unit": "hours",
+   "evidence": [
+    {
+     "start": 1702,
+     "end": 1711
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "pilot_make_model_hours",
+   "value": "114",
+   "unit": "hours",
+   "evidence": [
+    {
+     "start": 1735,
+     "end": 1744
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "pilot_last_90_days_hours",
+   "value": "30",
+   "unit": "hours",
+   "evidence": [
+    {
+     "start": 1819,
+     "end": 1827
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "aircraft_year",
+   "value": "2022",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 2042,
+     "end": 2046
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "airframe_total_hours",
+   "value": "109.4",
+   "unit": "hours",
+   "evidence": [
+    {
+     "start": 2407,
+     "end": 2416
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "airport_elevation",
+   "value": "808",
+   "unit": "ft",
+   "evidence": [
+    {
+     "start": 3539,
+     "end": 3545
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "runway_length",
+   "value": "6179",
+   "unit": "ft",
+   "evidence": [
+    {
+     "start": 3644,
+     "end": 3651
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "wind_speed",
+   "value": "12",
+   "unit": "knots",
+   "evidence": [
+    {
+     "start": 2983,
+     "end": 2991
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "temperature",
+   "value": "25",
+   "unit": "C",
+   "evidence": [
+    {
+     "start": 3198,
+     "end": 3203
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "altimeter_setting",
+   "value": "29.89",
+   "unit": "inHg",
+   "evidence": [
+    {
+     "start": 3157,
+     "end": 3172
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "visibility": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

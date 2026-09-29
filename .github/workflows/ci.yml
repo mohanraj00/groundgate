@@ -40,3 +40,5 @@ jobs:
       - uses: astral-sh/setup-uv@v6
       - run: uv sync --python 3.12 --group langextract
       - run: uv run --group langextract pytest tests/test_langextract.py
+      - name: Benchmark results rescore byte for byte from the cached runs and gold
+        run: uv run --group langextract python bench/score.py --check

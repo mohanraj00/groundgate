@@ -1,0 +1,233 @@
+Publication 15
+
+(Circular E),
+Employer’s Tax
+Guide
+For use in 2026
+
+Contents
+
+What’s New . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Reminders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+Calendar . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+1. Employer Identification Number (EIN)
+
+. . . . . . . 13
+
+2. Who Are Employees? . . . . . . . . . . . . . . . . . . . . 14
+
+3. Family Employees . . . . . . . . . . . . . . . . . . . . . . 16
+
+4. Employee’s Social Security Number (SSN)
+
+. . . 17
+
+5. Wages and Other Compensation . . . . . . . . . . . 18
+
+6. Tips . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+
+7. Supplemental Wages . . . . . . . . . . . . . . . . . . . . 23
+
+8. Payroll Period . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+
+9. Withholding From Employees’ Wages . . . . . . . 25
+
+10. Required Notice to Employees About the
+
+Earned Income Credit (EIC) . . . . . . . . . . . . . . 31
+
+11. Depositing Taxes . . . . . . . . . . . . . . . . . . . . . . 31
+
+12. Filing Forms 941, Form 943, Form 944, or
+
+Form 945 . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+
+13. Reporting Adjustments to Forms 941, Form
+
+943, or Form 944 . . . . . . . . . . . . . . . . . . . . . . 40
+
+14. Federal Unemployment (FUTA) Tax . . . . . . . . 43
+
+15. Special Rules for Various Types of Services
+
+and Payments . . . . . . . . . . . . . . . . . . . . . . . . . 46
+
+16. Third-Party Payer Arrangements . . . . . . . . . . 53
+
+17. Federal Agency Certifying Requirements of
+
+Federal Income Taxes Withheld From U.S.
+Government Employees Working in, or
+Federal Pension Recipients Residing in,
+American Samoa, the CNMI, and Guam . . . . . 54
+
+How To Get Tax Help . . . . . . . . . . . . . . . . . . . . . . . 56
+
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 59
+
+Future Developments
+For the latest information about developments related to
+Pub. 15, such as
+it was
+published, go to IRS.gov/Pub15.
+
+legislation enacted after
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+What’s New
+Social security and Medicare taxes for 2026. The rate
+of social security tax on taxable wages is 6.2% each for
+
+Dec 15, 2025
+
+Publication 15 (2026) Catalog Number 10000W
+Department of the Treasury Internal Revenue Service www.irs.gov
+the employer and employee. The social security wage
+base limit is $184,500.
+
+The Medicare tax rate is 1.45% each for the employee
+and employer, unchanged from 2025. There is no wage
+base limit for Medicare tax.
+
+Social security and Medicare taxes apply to the wages
+of household workers you pay $3,000 or more in cash wa-
+ges in 2026. Social security and Medicare taxes apply to
+election workers who are paid $2,500 or more in cash or
+an equivalent form of compensation in 2026.
+
+Permanent extension of individual tax rates. P.L.
+119-21, commonly known as the One Big Beautiful Bill
+Act, permanently extends the individual income tax rates
+enacted by the Tax Cuts and Jobs Act (P.L. 115-97). Em-
+ployers will continue to use Pub. 15-T, Federal Income Tax
+Withholding Methods, to figure federal income tax with-
+holding.
+
+Withholding on supplemental wages. The withholding
+rate on supplemental wages remains 22% (37% if supple-
+mental wages paid to an employee during the calendar
+year exceed $1 million) because P.L. 119-21 permanently
+extended the individual tax rates enacted in P.L. 115-97.
+See section 7 for more information about supplemental
+wages.
+
+Backup withholding. The backup withholding rate re-
+mains 24% because P.L. 119-21 permanently extended
+the individual tax rates enacted in P.L. 115-97. For report-
+able payments made under section 6041(a) or 6041A(a)
+that are made in calendar year 2026 and subject to
+backup withholding, P.L. 119-21 increases the aggregate
+reportable payment threshold from $600 to $2,000. This
+threshold will be adjusted for inflation for each calendar
+year after 2026. For more information on backup withhold-
+ing, see Backup withholding, later.
+
+Information reporting threshold increased for certain
+payments. For payments made after calendar year 2025,
+P.L. 119-21 increases the information reporting (for exam-
+ple, Forms 1099-MISC and Forms 1099-NEC) payment
+threshold from $600 to $2,000 in a calendar year for cer-
+tain payments to persons engaged in a trade or business
+and payments for services. The threshold also increases
+to $2,000 for wage reporting (Forms W-2, Wage and Tax
+Statement) if no federal income, social security, or Medi-
+care tax was withheld. This threshold will be adjusted for
+inflation for each calendar year after 2026. For more infor-
+mation, see the General Instructions for Forms W-2 and
+W-3 and the General Instructions for Certain Information
+Returns.
+
+Withholding on qualified tips. For tax years beginning
+after 2024 and ending before 2029, P.L. 119-21 allows
+employees and self-employed individuals to deduct up to
+$25,000 of qualified tips received in occupations that cus-
+tomarily and regularly received tips on or before Decem-
+ber 31, 2024, on their income tax returns. Qualified tips
+are cash tips, which include voluntary cash or charged tips
+received from customers or, in the case of employees,
+through tip-sharing arrangements. Mandatory service
+charges added to the bill are not qualified tips. Employers
+must use an employee’s updated Form W-4, Employee’s
+
+Withholding Certificate, if one is submitted by the em-
+ployee, and the federal income tax withholding proce-
+dures in Pub. 15-T to allow the employee to account for
+their expected deduction and receive more money in each
+paycheck instead of waiting until filing their income tax re-
+turn to receive the full benefit of this deduction. Tips are
+still generally subject to both the employer share and em-
+ployee share of social security tax and Medicare tax if the
+tips received are $20 or more per month.
+
+Employers and other payers must file information re-
+turns
+(for example, Forms W-2, 1099-MISC, and
+1099-NEC) with the Social Security Administration (SSA)
+or IRS, as applicable, and furnish statements to tip recipi-
+ents showing cash tips received and the Treasury Tipped
+Occupation Code(s) of the tip recipient. However, the IRS
+has provided transition relief to employers and payers for
+the tax year 2025 reporting requirements. For more infor-
+mation, see Notice 2025-62, 2025-48 I.R.B. 740, available
+at IRS.gov/irb/2025-48_IRB#NOT-2025-62.
+Withholding on qualified overtime compensation.
+For tax years beginning after 2024 and ending before
+2029, P.L. 119-21 allows individuals (employees and other
+workers not treated as employees) to deduct up to
+$12,500 ($25,000 if married filing jointly) of qualified over-
+time compensation from their income subject to federal in-
+come tax on their income tax returns. Qualified overtime is
+compensation that exceeds the regular rate of pay (such
+as the “half” portion of time-and-a-half compensation) that
+is required to be paid to an individual under section 7 of
+the Fair Labor Standards Act (FLSA) of 1938. The FLSA
+provides that employers must generally pay covered, non-
+exempt employees at least one-and-a-half times their reg-
+ular rate of pay for hours worked over 40 hours per week.
+For more information about overtime compensation, go to
+dol.gov/agencies/whd/overtime. Employers must use an
+employee’s updated Form W-4, if one is submitted by the
+employee, and the federal income tax withholding proce-
+dures in Pub. 15-T to allow the employee to account for
+their expected deduction and receive more money in each
+paycheck instead of waiting until filing their income tax re-
+turn to receive the full benefit of this deduction. Overtime
+compensation is still generally subject to both the em-
+ployer share and employee share of social security tax
+and Medicare tax.
+
+Employers and other payers must file information re-
+turns
+(for example, Forms W-2, 1099-MISC, and
+1099-NEC) with the SSA or IRS, as applicable, and fur-
+nish statements to overtime recipients showing qualified
+overtime compensation paid during the year. However, the
+IRS has provided transition relief to employers and payers
+for the tax year 2025 reporting requirements. For more in-
+formation, see Notice 2025-62.
+Moving expense reimbursement. P.L. 119-21 perma-
+nently eliminates the exclusion for qualified moving ex-
+pense reimbursements from your employee’s income.
+However, the exclusion is available in the case of a mem-
+ber of the U.S. Armed Forces on active duty who moves
+because of a permanent change of station due to a mili-
+tary order. The exclusion applies only to reimbursement of
+moving expenses that the member could deduct if they
+had paid or incurred them without reimbursement. See
+
+2
+
+Publication 15 (2026)

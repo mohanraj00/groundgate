@@ -62,6 +62,7 @@ known-local-folder = ["pdfgen"]
 
 [tool.ruff.lint.per-file-ignores]
 "conformance/build.py" = ["E501"]  # vector data reads better unwrapped
+"bench/gold/prelabels.py" = ["E501", "RUF001"]  # contexts are copied verbatim from documents
 
 [tool.mypy]
 strict = true

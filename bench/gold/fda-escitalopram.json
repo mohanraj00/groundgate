@@ -1,0 +1,146 @@
+{
+ "doc": "fda-escitalopram",
+ "kind": "fda",
+ "fields": {
+  "adult_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Usual recommended starting dose for adults, for the first indication in section 2. If the label gives a range, its lower bound."
+  },
+  "adult_max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum recommended daily dose for adults, for the first indication in section 2. Doses that were only studied or used are not a recommendation."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "tablet_strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet strength listed in section 3 (one extraction per strength)."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for patients with hepatic impairment, when the label gives a number."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "adult_starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 109,
+     "end": 114
+    },
+    {
+     "start": 1023,
+     "end": 1028
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "adult_max_daily_dose",
+   "value": "20",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 167,
+     "end": 172
+    },
+    {
+     "start": 1356,
+     "end": 1361
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "pediatric_min_age",
+   "value": "7",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 2058,
+     "end": 2065
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "tablet_strengths",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 4503,
+     "end": 4508
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "hepatic_starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 806,
+     "end": 811
+    },
+    {
+     "start": 2924,
+     "end": 2929
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {},
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

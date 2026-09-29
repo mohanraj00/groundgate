@@ -1,0 +1,521 @@
+Aviation Investigation Final Report
+
+Location:
+
+Roanoke, Virginia
+
+Accident Number:
+
+ERA23LA312
+
+Date & Time:
+
+July 21, 2023, 10:40 Local
+
+Registration:
+
+N524DS
+
+Aircraft:
+
+DIAMOND AIRCRAFT IND INC DA
+40
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Loss of control on ground
+
+Injuries:
+
+2 None
+
+Flight Conducted Under:
+
+Part 91: General aviation - Instructional
+
+Analysis
+
+The flight instructor and student pilot were practicing crosswind landings in the traffic pattern.
+On the first landing attempt, the student pilot crabbed into the wind and as the airplane was
+over the runway, he applied left aileron in order to straighten the airplane over centerline and
+the flight instructor called to perform a go around maneuver. While in the traffic pattern, the
+flight instructor explained that using the rudder was normal practice to straighten out the
+airplane instead of the aileron and to try again on the second landing. During the second
+landing attempt, the student applied left rudder to straighten out over runway centerline.
+Before the airplane touched down, he added more left rudder. Again, the flight instructor called
+to perform a go around maneuver, however, the wheels touched down and the airplane
+bounced to the left. The student pilot applied full engine power and the airplane veered to the
+left.
+
+The flight instructor took over the flight controls and attempted to correct the turn by applying
+right rudder, however the airplane continued to drift to the left. The airplane continued off the
+side of the runway and impacted the ground, resulting in the nose landing gear collapsing and
+the empennage partially separating from the airplane. The airplane slid and came to rest on a
+taxiway. The airplane incurred substantial damage to the empennage.
+
+After the accident, the flight instructor remarked that the student pilot might have had his foot
+on the left rudder, which may have been why the instructor's right rudder input was not
+sufficient. Furthermore, a Federal Aviation Administration inspector asked the student pilot if
+he released the left rudder when the flight instructor took control of the airplane and he noted
+that he was unsure, since the accident sequence happened so quickly. The flight instructor
+
+Page 1 of 6
+reported no preimpact mechanical malfunctions or failures with the airplane that would have
+precluded normal operation.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The student pilot’s failure to maintain directional control during the landing, and the flight
+instructor’s inadequate remedial action.
+
+Findings
+
+Aircraft
+
+Directional control - Not attained/maintained
+
+Personnel issues
+
+Aircraft control - Student/instructed pilot
+
+Personnel issues
+
+Delayed action - Instructor/check pilot
+
+Page 2 of 6
+
+ERA23LA312
+Factual Information
+
+History of Flight
+
+Landing-aborted after
+touchdown
+
+Loss of control on ground (Defining event)
+
+Flight instructor Information
+
+Certificate:
+
+Commercial; Flight instructor
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land; Multi-engine
+land
+
+Seat Occupied:
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+Airplane
+
+Restraint Used:
+
+Second Pilot Present:
+
+Instructor Rating(s):
+
+Airplane single-engine
+
+Toxicology Performed:
+
+22
+
+Right
+
+3-point
+
+Yes
+
+Medical Certification:
+
+Class 1 Without
+waivers/limitations
+
+Last FAA Medical Exam:
+
+January 14, 2019
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+Flight Time:
+
+324 hours (Total, all aircraft), 303 hours (Total, this make and model), 190 hours (Pilot In
+Command, all aircraft), 44 hours (Last 90 days, all aircraft), 32 hours (Last 30 days, all aircraft),
+2 hours (Last 24 hours, all aircraft)
+
+Student pilot Information
+
+Certificate:
+
+Airplane Rating(s):
+
+None
+
+None
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+None
+
+Instructor Rating(s):
+
+None
+
+Medical Certification:
+
+None
+
+Age:
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+Last FAA Medical Exam:
+
+33,Male
+
+Left
+
+3-point
+
+Yes
+
+Occupational Pilot:
+
+No
+
+Last Flight Review or Equivalent:
+
+Flight Time:
+
+Page 3 of 6
+
+ERA23LA312
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+DIAMOND AIRCRAFT IND
+INC
+
+Registration:
+
+N524DS
+
+Model/Series:
+
+Year of Manufacture:
+
+DA 40
+
+2003
+
+Airworthiness Certificate:
+
+Normal
+
+Aircraft Category:
+
+Airplane
+
+Amateur Built:
+
+Serial Number:
+
+40.260
+
+4
+
+Landing Gear Type:
+
+Tricycle
+
+Seats:
+
+Date/Type of Last Inspection:
+
+July 19, 2023 100 hour
+
+Certified Max Gross Wt.:
+
+2535 lbs
+
+Time Since Last Inspection:
+
+4 Hrs
+
+Engines:
+
+1 Reciprocating
+
+Airframe Total Time:
+
+3813.5 Hrs at time of
+accident
+
+Engine Manufacturer:
+
+Lycoming
+
+ELT:
+
+Registered Owner:
+
+Operator:
+
+On file
+
+On file
+
+Engine Model/Series:
+
+IO-360-M1A
+
+Rated Power:
+
+180 Horsepower
+
+Operating Certificate(s)
+Held:
+
+None
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+ROA,1176 ft msl
+
+Distance from Accident Site:
+
+1 Nautical Miles
+
+Observation Time:
+
+09:54 Local
+
+Direction from Accident Site:
+
+170°
+
+Lowest Cloud Condition:
+
+Scattered / 4500 ft AGL
+
+Visibility
+
+10 miles
+
+Lowest Ceiling:
+
+None
+
+Wind Speed/Gusts:
+
+5 knots / None
+
+Wind Direction:
+
+250°
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+/
+
+/
+
+Altimeter Setting:
+
+29.89 inches Hg
+
+Temperature/Dew Point:
+
+28°C / 20°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Destination:
+
+Departure Time:
+
+Roanoke, VA
+
+Roanoke, VA
+
+Type of Flight Plan Filed:
+
+None
+
+Type of Clearance:
+
+VFR
+
+Type of Airspace:
+
+Page 4 of 6
+
+ERA23LA312
+Airport Information
+
+Airport:
+
+ROANOKE-BLACKSBURG
+RGNL/WOODRUM FLD ROA
+
+Runway Surface Type:
+
+Asphalt
+
+Airport Elevation:
+
+1175 ft msl
+
+Runway Used:
+
+24
+
+Runway Surface Condition:
+
+Dry
+
+IFR Approach:
+
+None
+
+Runway Length/Width:
+
+6800 ft / 150 ft
+
+VFR Approach/Landing:
+
+Go around;Traffic pattern
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+2 None
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+Ground Injuries:
+
+N/A
+
+N/A
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+2 None
+
+Latitude, Longitude:
+
+37.327507,-79.976343(est)
+
+Page 5 of 6
+
+ERA23LA312
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Kemner, Heidi
+
+Additional Participating
+Persons:
+
+Steven Harness; FAA/FSDO; Richmond, VA
+
+Original Publish Date:
+
+August 31, 2023
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192709
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+ERA23LA312

@@ -17,3 +17,6 @@ htmlcov/
 # spike raw sources (fetched and hash-verified by spikes/m0_5/fetch.py)
 spikes/*/sources/*.pdf
 spikes/*/sources/*.xml
+
+# benchmark downloads (hash-pinned in bench/sources.json)
+bench/.cache/

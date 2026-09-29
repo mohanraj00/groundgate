@@ -1,0 +1,331 @@
+Publication 501
+
+Dependents,
+Standard
+Deduction,
+and Filing
+Information
+
+For use in preparing
+2025 Returns
+
+Get forms and other information faster and easier at:
+• IRS.gov/Korean (한국어)
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Chinese (中文)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Contents
+
+What’s New . . . . . . . . . . . . . . . . . . 1
+
+Reminders . . . . . . . . . . . . . . . . . . . 2
+
+Introduction . . . . . . . . . . . . . . . . . . 2
+
+Who Must File . . . . . . . . . . . . . . . . . 3
+
+Who Should File
+
+. . . . . . . . . . . . . . . 5
+
+Filing Status . . . . . . . . . . . . . . . . . . 5
+
+Dependents . . . . . . . . . . . . . . . . . 11
+
+Social Security Numbers (SSNs) for
+
+Dependents . . . . . . . . . . . . . . 23
+
+Standard Deduction . . . . . . . . . . . . 23
+
+2025 Standard Deduction Tables . . . . 24
+
+Enhanced Deduction for Seniors . . . . 26
+
+How To Get Tax Help . . . . . . . . . . . . 26
+
+Index
+
+. . . . . . . . . . . . . . . . . . . . . 30
+
+What’s New
+Who must file. In some cases, the amount of
+income you can receive before you must file a
+tax return has increased. Table 1 shows the fil-
+ing requirements for most taxpayers.
+
+Standard deduction increased. The stand-
+ard deduction for taxpayers who don’t itemize
+their deductions on Schedule A (Form 1040) is
+higher for 2025 than it was for 2024. The
+amount depends on your filing status. You can
+use the 2025 Standard Deduction Tables near
+the end of this publication to figure your stand-
+ard deduction.
+
+Enhanced deduction for seniors. Beginning
+in 2025, taxpayers who are age 65 or older may
+be eligible for the enhanced deduction for se-
+niors. The maximum amount of the deduction is
+$6,000 ($12,000 if married filing jointly and both
+spouses are eligible). See Enhanced Deduction
+for Seniors, later, for more information.
+
+Trump accounts and new Form 4547. Re-
+cent legislation allows parents, guardians, and
+other authorized individuals to elect to establish
+a new type of individual retirement account,
+called a Trump account, for the exclusive benefit
+of certain children. If the child was born after
+2024 and before 2029, is a U.S. citizen, and
+meets certain other requirements, the author-
+ized individual may also elect to receive a
+$1,000 pilot program contribution to the child’s
+Trump account. Both elections can be made on
+Form 4547, which can be filed at the same time
+as the authorized individual’s 2025 income tax
+return. For more information on Trump ac-
+counts, and to learn how to make these elec-
+tions, see Form 4547 and its instructions.
+
+Feb 4, 2026
+
+Publication 501 (2025) Catalog Number 15000U
+Department of the Treasury Internal Revenue Service www.irs.gov
+Table 1. 2025 Filing Requirements Chart for Most Taxpayers
+
+AND at the end of 2025 you
+were...^*
+
+THEN file a return
+if your gross
+income was at
+least...^**
+
+IF your filing status is...
+
+single
+
+head of household
+
+under 65
+
+65 or older
+
+under 65
+
+65 or older
+
+married filing jointly^***
+
+under 65 (both spouses)
+
+65 or older (one spouse)
+
+65 or older (both spouses)
+
+married filing separately
+
+any age
+
+qualifying surviving spouse
+
+under 65
+
+65 or older
+
+$15,750
+
+$17,750
+
+$23,625
+
+$25,625
+
+$31,500
+
+$33,100
+
+$34,700
+
+$5
+
+$31,500
+
+$33,100
+
+* If you were born before January 2, 1961, you’re considered to be 65 or older at the
+end of 2025. (If your spouse died in 2025, see Death of spouse, later. If you’re
+preparing a return for someone who died in 2025, see Death of taxpayer, later.)
+
+** Gross income means all income you receive in the form of money, goods,
+property, and services that isn’t exempt from tax, including any income from sources
+outside the United States or from the sale of your main home (even if you can exclude
+part or all of it). Don’t include any social security benefits unless (a) you’re married
+filing a separate return and you lived with your spouse at any time during 2025, or (b)
+one-half of your social security benefits plus your other gross income and any
+tax-exempt interest is more than $25,000 ($32,000 if married filing jointly). If (a) or (b)
+applies, see the Instructions for Form 1040 to figure the taxable part of social security
+benefits you must include in gross income. Gross income includes gains, but not
+losses, reported on Form 8949 or Schedule D. Gross income from a business means,
+for example, the amount on Schedule C, line 7; or Schedule F, line 9. But in figuring
+gross income, don’t reduce your income by any losses, including any loss on
+Schedule C, line 7; or Schedule F, line 9.
+
+*** If you didn’t live with your spouse at the end of 2025 (or on the date your spouse
+died) and your gross income was at least $5, you must file a return regardless of your
+age.
+
+Reminders
+Future developments. Information about any
+future developments affecting Pub. 501 (such
+as legislation enacted after we release it) will be
+posted at IRS.gov/Pub501.
+
+Taxpayer identification number for aliens. If
+you are a nonresident or resident alien and you
+don’t have and aren’t eligible to get a social se-
+curity number (SSN), you must apply for an indi-
+vidual taxpayer identification number (ITIN).
+Your spouse may also need an ITIN if your
+spouse doesn’t have and isn’t eligible to get an
+SSN. See Form W-7, Application for IRS Indi-
+vidual Taxpayer Identification Number. Also see
+Social Security Numbers (SSNs) for Depend-
+ents, later.
+
+Photographs of missing children. The Inter-
+nal Revenue Service is a proud partner with the
+National Center
+for Missing & Exploited
+Children® (NCMEC). Photographs of missing
+children selected by the Center may appear in
+this publication on pages that would otherwise
+be blank. You can help bring these children
+home by looking at the photographs and calling
+
+1-800-THE-LOST (1-800-843-5678) if you rec-
+ognize a child.
+
+Introduction
+This publication discusses some tax rules that
+affect every person who may have to file a fed-
+eral income tax return. It answers some basic
+questions: who must file, who should file, what
+filing status to use, who qualifies as a depend-
+ent, and the amount of the standard deduction.
+
+Who Must File explains who must file an in-
+come tax return. If you have little or no gross in-
+come, reading this section will help you decide
+if you have to file a return.
+
+Who Should File helps you decide if you
+should file a return, even if you aren’t required to
+do so.
+
+Filing Status helps you determine which fil-
+ing status to use. Filing status is important in
+determining whether you must file a return and
+whether you may claim certain deductions and
+credits. It also helps determine your standard
+deduction and tax rate.
+
+Dependents explains
+
+the difference be-
+tween a qualifying child and a qualifying rela-
+tive. Other topics include the SSN requirement
+
+for dependents, the rules for multiple support
+agreements, and the rules for divorced or sepa-
+rated parents.
+
+Standard Deduction gives the rules and dol-
+lar amounts for the standard deduction—a ben-
+efit for taxpayers who don’t itemize their deduc-
+tions. This section also discusses the standard
+deduction for taxpayers who are blind or age 65
+or older, the enhanced deduction for seniors, as
+well as special rules that limit the standard de-
+duction available to dependents. In addition,
+this section helps you decide whether you
+would be better off taking the standard deduc-
+tion or itemizing your deductions.
+
+How To Get Tax Help explains how to get tax
+
+help from the IRS.
+
+This publication is for U.S. citizens and resi-
+dent aliens only. If you are a resident alien for
+the entire year, you must follow the same tax
+rules that apply to U.S. citizens. The rules to de-
+termine if you are a resident or nonresident
+alien are discussed in chapter 1 of Pub. 519.
+
+Nonresident aliens. If you were a nonresident
+alien at any time during the year, the rules and
+tax forms that apply to you may be different from
+those that apply to U.S. citizens. See Pub. 519.
+
+Comments and suggestions. We welcome
+your comments about this publication and sug-
+gestions for future editions.
+
+You can send us comments
+
+through
+IRS.gov/FormComments. Or, you can write to
+the Internal Revenue Service, Tax Forms and
+Publications, 1111 Constitution Ave. NW,
+IR-6526, Washington, DC 20224.
+
+Although we can’t respond individually to
+each comment received, we do appreciate your
+feedback and will consider your comments and
+suggestions as we revise our tax forms, instruc-
+tions, and publications. Don’t send tax ques-
+tions, tax returns, or payments to the above ad-
+dress.
+
+Getting answers to your tax questions.
+If you have a tax question not answered by this
+publication or the How To Get Tax Help section
+at the end of this publication, go to the IRS In-
+teractive Tax Assistant page at
+IRS.gov/
+Help/ITA where you can find topics by using the
+search feature or viewing the categories listed.
+
+Getting tax forms, instructions, and pub-
+lications. Go to IRS.gov/Forms to download
+current and prior-year forms, instructions, and
+publications.
+
+Ordering tax forms, instructions, and
+publications. Go to IRS.gov/OrderForms to or-
+der current forms, instructions, and publica-
+tions; call 800-829-3676 to order prior-year
+forms and instructions. The IRS will process
+your order for forms and publications as soon
+as possible. Don’t resubmit requests you’ve al-
+ready sent us. You can get forms and publica-
+tions faster online.
+
+Useful Items
+You may want to see:
+
+Publication
+
+559
+
+559 Survivors, Executors, and
+Administrators
+
+2
+
+Publication 501 (2025)

@@ -1,0 +1,294 @@
+{
+ "doc": "irs-p505",
+ "kind": "irs",
+ "fields": {
+  "standard_deduction_single_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 standard deduction, single or married filing separately."
+  },
+  "standard_deduction_joint_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 standard deduction, married filing jointly."
+  },
+  "standard_deduction_hoh_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 standard deduction, head of household."
+  },
+  "savers_credit_magi_limit_single_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "2026 retirement savings contribution credit MAGI limit, single."
+  },
+  "savers_credit_magi_limit_joint_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "The same limit, married filing jointly."
+  },
+  "adoption_credit_max_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2026 maximum adoption credit or exclusion."
+  },
+  "adoption_credit_magi_limit_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "lt",
+    "minimum": "0"
+   },
+   "description": "MAGI the taxpayer must be under to claim the adoption credit or exclusion."
+  },
+  "adoption_credit_refundable_max_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Refundable portion of the adoption credit."
+  },
+  "minimum_qbid_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Minimum qualified business income deduction."
+  },
+  "itemized_limit_threshold_joint_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "gt",
+    "minimum": "0"
+   },
+   "description": "Taxable income above which itemized deductions are reduced, married filing jointly."
+  },
+  "charitable_nonitemizer_max_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Maximum charitable deduction for non-itemizers."
+  },
+  "charitable_nonitemizer_max_joint_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "The same maximum, married filing jointly."
+  },
+  "standard_deduction_single_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 standard deduction, single."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "standard_deduction_single_2026",
+   "value": "16100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4387,
+     "end": 4394
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "standard_deduction_joint_2026",
+   "value": "32200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4458,
+     "end": 4465
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "standard_deduction_hoh_2026",
+   "value": "24150",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4492,
+     "end": 4499
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "savers_credit_magi_limit_single_2026",
+   "value": "40250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4640,
+     "end": 4647
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "savers_credit_magi_limit_joint_2026",
+   "value": "80500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4649,
+     "end": 4656
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "adoption_credit_max_2026",
+   "value": "17670",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4836,
+     "end": 4843
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "adoption_credit_magi_limit_2026",
+   "value": "305080",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4925,
+     "end": 4933
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "adoption_credit_refundable_max_2026",
+   "value": "5120",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4951,
+     "end": 4957
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "minimum_qbid_2026",
+   "value": "400",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5339,
+     "end": 5343
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "itemized_limit_threshold_joint_2026",
+   "value": "768700",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6938,
+     "end": 6946
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "charitable_nonitemizer_max_2026",
+   "value": "1000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 8374,
+     "end": 8380
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "charitable_nonitemizer_max_joint_2026",
+   "value": "2000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 8382,
+     "end": 8388
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "standard_deduction_single_2025": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}
