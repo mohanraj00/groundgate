@@ -156,8 +156,9 @@ appendix lists every real case.
   final prompt.
 - **Dropped chunks.** When a model's reply for a chunk isn't valid JSON, LangExtract logs a
   warning and skips the chunk. In an early trial GPT-OSS 120B in plan mode wrote a plan file and
-  replied with a link to it instead of JSON, and Haiku 4.5 answered some chunks that hold only a table of
-  contents with a note that it saw no document, instead of an empty list. Those facts count against recall for every rule equally. The
+  replied with a link to it instead of JSON. Haiku 4.5 and Sonnet 4.6 answered some IRS chunks,
+  mostly tables of contents, with a note that they saw no document, or with prose before the
+  JSON, instead of an empty list. Those facts count against recall for every rule equally. The
   raw replies are in the run files, with home directory paths replaced by `~`.
 - **"Cited the right place" is only as good as the gold evidence.** A label often states the
   same value in several places. A citation counts as right only when the checker listed that

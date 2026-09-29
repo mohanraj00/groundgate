@@ -48,6 +48,8 @@ All 22 admitted here cite another place where the same text appears without the 
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | Claude Haiku 4.5 @ 1000 | 30 | 336 | 12 | 100.0% (12/12) | 100.0% (12/12) | 8.3% (1/12) [1, 35] | 91.7% (11/12) | 0.3% (1/324) | 16.4% (55/336) | 84.4% (233/276) | 96.4% (266/276) |
 | Claude Haiku 4.5 @ 4000 | 30 | 292 | 8 | 100.0% (8/8) | 100.0% (8/8) | 12.5% (1/8) [2, 47] | 50.0% (4/8) | 0.7% (2/284) | 11.3% (33/292) | 87.3% (241/276) | 97.5% (269/276) |
+| Claude Sonnet 4.6 @ 1000 | 30 | 336 | 11 | 100.0% (11/11) | 100.0% (11/11) | 0.0% (0/11) [0, 26] | 81.8% (9/11) | 0.3% (1/325) | 14.3% (48/336) | 87.7% (242/276) | 97.8% (270/276) |
+| Claude Sonnet 4.6 @ 4000 | 30 | 294 | 6 | 100.0% (6/6) | 100.0% (6/6) | 0.0% (0/6) [0, 39] | 33.3% (2/6) | 0.4% (1/288) | 9.2% (27/294) | 89.9% (248/276) | 98.6% (272/276) |
 | Claude Sonnet 5.5 @ 1000 | 30 | 343 | 13 | 100.0% (13/13) | 92.3% (12/13) | 7.7% (1/13) [1, 33] | 84.6% (11/13) | 0.3% (1/330) | 13.7% (47/343) | 89.1% (246/276) | 98.9% (273/276) |
 | Claude Sonnet 5.5 @ 4000 | 30 | 289 | 2 | 100.0% (2/2) | 100.0% (2/2) | 0.0% (0/2) [0, 66] | 100.0% (2/2) | 0.4% (1/287) | 10.0% (29/289) | 89.5% (247/276) | 98.9% (273/276) |
 | GPT-5.6 Luna (Medium) @ 1000 | 30 | 340 | 18 | 100.0% (18/18) | 100.0% (18/18) | 5.6% (1/18) [1, 26] | 88.9% (16/18) | 0.0% (0/322) | 16.8% (57/340) | 85.1% (235/276) | 96.7% (267/276) |
@@ -65,6 +67,8 @@ All 22 admitted here cite another place where the same text appears without the 
 |---|---:|---:|---:|---:|
 | Claude Haiku 4.5 @ 1000 | 11 | 1 | 0 | 0 |
 | Claude Haiku 4.5 @ 4000 | 7 | 1 | 0 | 0 |
+| Claude Sonnet 4.6 @ 1000 | 11 | 0 | 0 | 0 |
+| Claude Sonnet 4.6 @ 4000 | 4 | 2 | 0 | 0 |
 | Claude Sonnet 5.5 @ 1000 | 11 | 2 | 0 | 0 |
 | Claude Sonnet 5.5 @ 4000 | 2 | 0 | 0 | 0 |
 | GPT-5.6 Luna (Medium) @ 1000 | 15 | 2 | 0 | 1 |
@@ -84,6 +88,8 @@ The first reason code on each wrong extraction groundgate rejected or sent to re
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Claude Haiku 4.5 @ 1000 | 10 | 1 | 0 | 0 | 0 | 0 | 0 |
 | Claude Haiku 4.5 @ 4000 | 4 | 0 | 0 | 0 | 0 | 1 | 2 |
+| Claude Sonnet 4.6 @ 1000 | 8 | 1 | 0 | 0 | 0 | 0 | 2 |
+| Claude Sonnet 4.6 @ 4000 | 2 | 0 | 0 | 0 | 1 | 1 | 2 |
 | Claude Sonnet 5.5 @ 1000 | 10 | 1 | 0 | 0 | 0 | 1 | 0 |
 | Claude Sonnet 5.5 @ 4000 | 2 | 0 | 0 | 0 | 0 | 0 | 0 |
 | GPT-5.6 Luna (Medium) @ 1000 | 14 | 2 | 0 | 1 | 0 | 0 | 0 |
@@ -103,6 +109,8 @@ Correct values groundgate admitted whose evidence does not overlap any gold evid
 |---|---:|---:|
 | Claude Haiku 4.5 @ 1000 | 14.2% (38/267) | 3.7% (12/324) |
 | Claude Haiku 4.5 @ 4000 | 10.0% (25/251) | 0.7% (2/284) |
+| Claude Sonnet 4.6 @ 1000 | 13.6% (37/273) | 3.7% (12/325) |
+| Claude Sonnet 4.6 @ 4000 | 10.4% (27/260) | 0.7% (2/288) |
 | Claude Sonnet 5.5 @ 1000 | 16.2% (47/290) | 0.9% (3/330) |
 | Claude Sonnet 5.5 @ 4000 | 9.7% (25/258) | 0.4% (1/287) |
 | GPT-5.6 Luna (Medium) @ 1000 | 14.8% (40/270) | 3.4% (11/322) |
@@ -123,6 +131,10 @@ Correct values groundgate admitted whose evidence does not overlap any gold evid
 | Claude Haiku 4.5 @ 4000 | fda | 2 | 100.0% (2/2) | 0.0% (0/2) |
 | Claude Haiku 4.5 @ 4000 | ntsb | 4 | 100.0% (4/4) | 25.0% (1/4) |
 | Claude Haiku 4.5 @ 4000 | irs | 2 | 100.0% (2/2) | 0.0% (0/2) |
+| Claude Sonnet 4.6 @ 1000 | fda | 5 | 100.0% (5/5) | 0.0% (0/5) |
+| Claude Sonnet 4.6 @ 1000 | ntsb | 6 | 100.0% (6/6) | 0.0% (0/6) |
+| Claude Sonnet 4.6 @ 4000 | fda | 3 | 100.0% (3/3) | 0.0% (0/3) |
+| Claude Sonnet 4.6 @ 4000 | ntsb | 3 | 100.0% (3/3) | 0.0% (0/3) |
 | Claude Sonnet 5.5 @ 1000 | fda | 9 | 88.9% (8/9) | 11.1% (1/9) |
 | Claude Sonnet 5.5 @ 1000 | ntsb | 4 | 100.0% (4/4) | 0.0% (0/4) |
 | Claude Sonnet 5.5 @ 4000 | fda | 1 | 100.0% (1/1) | 0.0% (0/1) |
@@ -156,6 +168,8 @@ Chunks whose reply LangExtract could not parse are skipped by `lx.extract` and c
 |---|---|---:|---:|---:|---:|
 | Claude Haiku 4.5 @ 1000 | claude-cli | 248 | 32 | 0 | 42 |
 | Claude Haiku 4.5 @ 4000 | claude-cli | 72 | 4 | 0 | 33 |
+| Claude Sonnet 4.6 @ 1000 | claude-cli | 248 | 28 | 0 | 34 |
+| Claude Sonnet 4.6 @ 4000 | claude-cli | 72 | 2 | 0 | 13 |
 | Claude Sonnet 5.5 @ 1000 | claude-cli | 248 | 1 | 0 | 16 |
 | Claude Sonnet 5.5 @ 4000 | claude-cli | 72 | 0 | 0 | 7 |
 | GPT-5.6 Luna (Medium) @ 1000 | codex | 248 | 0 | 0 | 22 |
@@ -173,11 +187,17 @@ Each group's candidates go into one `admit` call per document, so a disagreement
 
 | Models | docs | wrong | escaped, together | escaped, separately | review load, together | review load, separately | recall, admitted |
 |---|---:|---:|---:|---:|---:|---:|---:|
+| Claude Haiku 4.5 + Claude Sonnet 4.6 @ 1000 | 30 | 23 | 4.3% (1/23) [1, 21] | 4.3% (1/23) | 15.6% (105/672) | 15.3% (103/672) | 87.7% (242/276) |
 | Claude Haiku 4.5 + Claude Sonnet 5.5 @ 1000 | 30 | 25 | 8.0% (2/25) [2, 25] | 8.0% (2/25) | 15.2% (103/679) | 15.0% (102/679) | 88.8% (245/276) |
 | Claude Haiku 4.5 + GPT-5.6 Luna (Medium) @ 1000 | 30 | 30 | 6.7% (2/30) [2, 21] | 6.7% (2/30) | 17.5% (118/676) | 16.6% (112/676) | 86.2% (238/276) |
 | Claude Haiku 4.5 + GPT-5.6 Terra (Medium) @ 1000 | 30 | 24 | 8.3% (2/24) [2, 26] | 8.3% (2/24) | 16.4% (106/647) | 15.9% (103/647) | 88.0% (243/276) |
 | Claude Haiku 4.5 + Gemini 3.6 Flash (Medium) @ 1000 | 30 | 25 | 8.0% (2/25) [2, 25] | 8.0% (2/25) | 14.9% (101/679) | 14.6% (99/679) | 88.8% (245/276) |
 | Claude Haiku 4.5 + Gemini 3.8 Flash (Low) @ 1000 | 30 | 20 | 5.0% (1/20) [1, 24] | 5.0% (1/20) | 14.7% (98/666) | 14.3% (95/666) | 88.4% (244/276) |
+| Claude Sonnet 4.6 + Claude Sonnet 5.5 @ 1000 | 30 | 24 | 4.2% (1/24) [1, 20] | 4.2% (1/24) | 14.1% (96/679) | 14.0% (95/679) | 89.1% (246/276) |
+| Claude Sonnet 4.6 + GPT-5.6 Luna (Medium) @ 1000 | 30 | 29 | 3.5% (1/29) [1, 17] | 3.5% (1/29) | 16.0% (108/676) | 15.5% (105/676) | 87.3% (241/276) |
+| Claude Sonnet 4.6 + GPT-5.6 Terra (Medium) @ 1000 | 30 | 23 | 4.3% (1/23) [1, 21] | 4.3% (1/23) | 14.8% (96/647) | 14.8% (96/647) | 88.4% (244/276) |
+| Claude Sonnet 4.6 + Gemini 3.6 Flash (Medium) @ 1000 | 30 | 24 | 4.2% (1/24) [1, 20] | 4.2% (1/24) | 13.6% (92/679) | 13.6% (92/679) | 89.5% (247/276) |
+| Claude Sonnet 4.6 + Gemini 3.8 Flash (Low) @ 1000 | 30 | 19 | 0.0% (0/19) [0, 17] | 0.0% (0/19) | 13.7% (91/666) | 13.2% (88/666) | 89.1% (246/276) |
 | Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) @ 1000 | 30 | 31 | 6.5% (2/31) [2, 21] | 6.5% (2/31) | 16.0% (109/683) | 15.2% (104/683) | 88.0% (243/276) |
 | Claude Sonnet 5.5 + GPT-5.6 Terra (Medium) @ 1000 | 30 | 25 | 8.0% (2/25) [2, 25] | 8.0% (2/25) | 14.8% (97/654) | 14.5% (95/654) | 89.1% (246/276) |
 | Claude Sonnet 5.5 + Gemini 3.6 Flash (Medium) @ 1000 | 30 | 26 | 7.7% (2/26) [2, 24] | 7.7% (2/26) | 13.4% (92/686) | 13.3% (91/686) | 89.1% (246/276) |
@@ -188,8 +208,8 @@ Each group's candidates go into one `admit` call per document, so a disagreement
 | GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) @ 1000 | 30 | 25 | 8.0% (2/25) [2, 25] | 8.0% (2/25) | 14.1% (92/654) | 14.1% (92/654) | 89.5% (247/276) |
 | GPT-5.6 Terra (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 30 | 20 | 5.0% (1/20) [1, 24] | 5.0% (1/20) | 14.3% (92/641) | 13.7% (88/641) | 88.8% (245/276) |
 | Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 30 | 21 | 4.8% (1/21) [1, 23] | 4.8% (1/21) | 12.9% (87/673) | 12.5% (84/673) | 89.1% (246/276) |
-| Claude Haiku 4.5 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 30 | 76 | 6.6% (5/76) [3, 14] | 6.6% (5/76) | 15.9% (318/2003) | 14.5% (291/2003) | 87.7% (242/276) |
-| Claude Haiku 4.5 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 4000 | 30 | 27 | 18.5% (5/27) [8, 37] | 22.2% (6/27) | 9.9% (170/1717) | 9.3% (160/1717) | 89.5% (247/276) |
+| Claude Haiku 4.5 + Claude Sonnet 4.6 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 30 | 87 | 5.8% (5/87) [2, 13] | 5.8% (5/87) | 15.9% (371/2339) | 14.5% (339/2339) | 87.7% (242/276) |
+| Claude Haiku 4.5 + Claude Sonnet 4.6 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 4000 | 30 | 33 | 15.2% (5/33) [7, 31] | 18.2% (6/33) | 9.9% (199/2011) | 9.3% (187/2011) | 89.5% (247/276) |
 
 ## Appendix: wrong and admitted
 

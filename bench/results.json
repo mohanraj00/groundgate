@@ -163,60 +163,61 @@
  },
  "track_b": {
   "all_models": {
-   "Claude Haiku 4.5 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 1000": {
+   "Claude Haiku 4.5 + Claude Sonnet 4.6 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 1000": {
     "accepted_correct_citing_wrong_place": {
      "ci95": [
-      0.1381,
-      0.1733
+      0.1365,
+      0.1688
      ],
-     "k": 252,
-     "n": 1627,
-     "rate": 0.1549
+     "k": 288,
+     "n": 1895,
+     "rate": 0.152
     },
-    "candidates": 2003,
-    "correct": 1927,
+    "candidates": 2339,
+    "correct": 2252,
     "correct_sent_to_review": {
      "ci95": [
-      0.116,
-      0.146
+      0.1177,
+      0.1456
      ],
-     "k": 251,
-     "n": 1927,
-     "rate": 0.1303
+     "k": 295,
+     "n": 2252,
+     "rate": 0.131
     },
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0284,
-      0.1449
+      0.0248,
+      0.1276
      ],
      "k": 5,
-     "n": 76,
-     "rate": 0.0658
+     "n": 87,
+     "rate": 0.0575
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0284,
-      0.1449
+      0.0248,
+      0.1276
      ],
      "k": 5,
-     "n": 76,
-     "rate": 0.0658
+     "n": 87,
+     "rate": 0.0575
     },
     "escaped_by_class": {
      "absent_field": 5
     },
     "false_reject": {
      "ci95": [
-      0.0005,
+      0.0007,
       0.0046
      ],
-     "k": 3,
-     "n": 1927,
-     "rate": 0.0016
+     "k": 4,
+     "n": 2252,
+     "rate": 0.0018
     },
     "models": [
      "Claude Haiku 4.5",
+     "Claude Sonnet 4.6",
      "Claude Sonnet 5.5",
      "GPT-5.6 Luna (Medium)",
      "GPT-5.6 Terra (Medium)",
@@ -245,86 +246,86 @@
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0179,
-      0.0317
+      0.02,
+      0.0331
      ],
-     "k": 46,
-     "n": 1927,
-     "rate": 0.0239
+     "k": 58,
+     "n": 2252,
+     "rate": 0.0258
     },
     "review_load": {
      "ci95": [
-      0.1434,
-      0.1754
+      0.1444,
+      0.174
      ],
-     "k": 318,
-     "n": 2003,
-     "rate": 0.1588
+     "k": 371,
+     "n": 2339,
+     "rate": 0.1586
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1305,
-      0.1614
+      0.1312,
+      0.1598
      ],
-     "k": 291,
-     "n": 2003,
-     "rate": 0.1453
+     "k": 339,
+     "n": 2339,
+     "rate": 0.1449
     },
-    "wrong": 76,
+    "wrong": 87,
     "wrong_by_class": {
      "absent_field": 8,
      "unparsable": 2,
-     "wrong_value": 66
+     "wrong_value": 77
     },
     "wrong_sent_to_review": {
      "ci95": [
-      0.79,
-      0.9364
+      0.7876,
+      0.9279
      ],
-     "k": 67,
-     "n": 76,
-     "rate": 0.8816
+     "k": 76,
+     "n": 87,
+     "rate": 0.8736
     }
    },
-   "Claude Haiku 4.5 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 4000": {
+   "Claude Haiku 4.5 + Claude Sonnet 4.6 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 4000": {
     "accepted_correct_citing_wrong_place": {
      "ci95": [
-      0.0903,
-      0.1212
+      0.0913,
+      0.1198
      ],
-     "k": 159,
-     "n": 1518,
+     "k": 186,
+     "n": 1776,
      "rate": 0.1047
     },
-    "candidates": 1717,
-    "correct": 1690,
+    "candidates": 2011,
+    "correct": 1978,
     "correct_sent_to_review": {
      "ci95": [
-      0.0789,
-      0.1064
+      0.0801,
+      0.1056
      ],
-     "k": 155,
-     "n": 1690,
-     "rate": 0.0917
+     "k": 182,
+     "n": 1978,
+     "rate": 0.092
     },
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0818,
-      0.367
+      0.0665,
+      0.3092
      ],
      "k": 5,
-     "n": 27,
-     "rate": 0.1852
+     "n": 33,
+     "rate": 0.1515
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.1061,
-      0.4076
+      0.0861,
+      0.3439
      ],
      "k": 6,
-     "n": 27,
-     "rate": 0.2222
+     "n": 33,
+     "rate": 0.1818
     },
     "escaped_by_class": {
      "absent_field": 2,
@@ -332,15 +333,16 @@
     },
     "false_reject": {
      "ci95": [
-      0.0016,
-      0.0077
+      0.0017,
+      0.0073
      ],
-     "k": 6,
-     "n": 1690,
-     "rate": 0.0036
+     "k": 7,
+     "n": 1978,
+     "rate": 0.0035
     },
     "models": [
      "Claude Haiku 4.5",
+     "Claude Sonnet 4.6",
      "Claude Sonnet 5.5",
      "GPT-5.6 Luna (Medium)",
      "GPT-5.6 Terra (Medium)",
@@ -369,45 +371,45 @@
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0036,
-      0.0116
+      0.0038,
+      0.0112
      ],
-     "k": 11,
-     "n": 1690,
-     "rate": 0.0065
+     "k": 13,
+     "n": 1978,
+     "rate": 0.0066
     },
     "review_load": {
      "ci95": [
-      0.0858,
-      0.114
+      0.0867,
+      0.1128
      ],
-     "k": 170,
-     "n": 1717,
+     "k": 199,
+     "n": 2011,
      "rate": 0.099
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0803,
-      0.1079
+      0.0811,
+      0.1065
      ],
-     "k": 160,
-     "n": 1717,
-     "rate": 0.0932
+     "k": 187,
+     "n": 2011,
+     "rate": 0.093
     },
-    "wrong": 27,
+    "wrong": 33,
     "wrong_by_class": {
-     "absent_field": 3,
+     "absent_field": 5,
      "unparsable": 1,
-     "wrong_value": 23
+     "wrong_value": 27
     },
     "wrong_sent_to_review": {
      "ci95": [
-      0.3731,
-      0.7241
+      0.3522,
+      0.675
      ],
-     "k": 15,
-     "n": 27,
-     "rate": 0.5556
+     "k": 17,
+     "n": 33,
+     "rate": 0.5152
     }
    }
   },
@@ -543,6 +545,242 @@
    }
   ],
   "pairs": {
+   "Claude Haiku 4.5 + Claude Sonnet 4.6 @ 1000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.111,
+      0.1692
+     ],
+     "k": 74,
+     "n": 538,
+     "rate": 0.1375
+    },
+    "candidates": 672,
+    "correct": 649,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.1072,
+      0.1591
+     ],
+     "k": 85,
+     "n": 649,
+     "rate": 0.131
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0077,
+      0.2099
+     ],
+     "k": 1,
+     "n": 23,
+     "rate": 0.0435
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0077,
+      0.2099
+     ],
+     "k": 1,
+     "n": 23,
+     "rate": 0.0435
+    },
+    "escaped_by_class": {
+     "absent_field": 1
+    },
+    "false_reject": {
+     "ci95": [
+      0.0008,
+      0.0112
+     ],
+     "k": 2,
+     "n": 649,
+     "rate": 0.0031
+    },
+    "models": [
+     "Claude Haiku 4.5",
+     "Claude Sonnet 4.6"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8328,
+       0.9105
+      ],
+      "k": 242,
+      "n": 276,
+      "rate": 0.8768
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.9633,
+       0.9944
+      ],
+      "k": 272,
+      "n": 276,
+      "rate": 0.9855
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.025,
+      0.0544
+     ],
+     "k": 24,
+     "n": 649,
+     "rate": 0.037
+    },
+    "review_load": {
+     "ci95": [
+      0.1308,
+      0.1856
+     ],
+     "k": 105,
+     "n": 672,
+     "rate": 0.1562
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.128,
+      0.1825
+     ],
+     "k": 103,
+     "n": 672,
+     "rate": 0.1533
+    },
+    "wrong": 23,
+    "wrong_by_class": {
+     "absent_field": 1,
+     "wrong_value": 22
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.6787,
+      0.9546
+     ],
+     "k": 20,
+     "n": 23,
+     "rate": 0.8696
+    }
+   },
+   "Claude Haiku 4.5 + Claude Sonnet 4.6 @ 4000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.0788,
+      0.1315
+     ],
+     "k": 52,
+     "n": 509,
+     "rate": 0.1022
+    },
+    "candidates": 586,
+    "correct": 572,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.0762,
+      0.125
+     ],
+     "k": 56,
+     "n": 572,
+     "rate": 0.0979
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0127,
+      0.3147
+     ],
+     "k": 1,
+     "n": 14,
+     "rate": 0.0714
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0127,
+      0.3147
+     ],
+     "k": 1,
+     "n": 14,
+     "rate": 0.0714
+    },
+    "escaped_by_class": {
+     "wrong_value": 1
+    },
+    "false_reject": {
+     "ci95": [
+      0.0018,
+      0.0153
+     ],
+     "k": 3,
+     "n": 572,
+     "rate": 0.0052
+    },
+    "models": [
+     "Claude Haiku 4.5",
+     "Claude Sonnet 4.6"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8491,
+       0.9228
+      ],
+      "k": 246,
+      "n": 276,
+      "rate": 0.8913
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.9633,
+       0.9944
+      ],
+      "k": 272,
+      "n": 276,
+      "rate": 0.9855
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.0027,
+      0.0178
+     ],
+     "k": 4,
+     "n": 572,
+     "rate": 0.007
+    },
+    "review_load": {
+     "ci95": [
+      0.0834,
+      0.1333
+     ],
+     "k": 62,
+     "n": 586,
+     "rate": 0.1058
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.0804,
+      0.1296
+     ],
+     "k": 60,
+     "n": 586,
+     "rate": 0.1024
+    },
+    "wrong": 14,
+    "wrong_by_class": {
+     "absent_field": 3,
+     "wrong_value": 11
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.2138,
+      0.6741
+     ],
+     "k": 6,
+     "n": 14,
+     "rate": 0.4286
+    }
+   },
    "Claude Haiku 4.5 + Claude Sonnet 5.5 @ 1000": {
     "accepted_correct_citing_wrong_place": {
      "ci95": [
@@ -1726,6 +1964,1183 @@
      "k": 5,
      "n": 9,
      "rate": 0.5556
+    }
+   },
+   "Claude Sonnet 4.6 + Claude Sonnet 5.5 @ 1000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.1207,
+      0.1794
+     ],
+     "k": 83,
+     "n": 562,
+     "rate": 0.1477
+    },
+    "candidates": 679,
+    "correct": 655,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.0937,
+      0.1428
+     ],
+     "k": 76,
+     "n": 655,
+     "rate": 0.116
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0074,
+      0.2024
+     ],
+     "k": 1,
+     "n": 24,
+     "rate": 0.0417
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0074,
+      0.2024
+     ],
+     "k": 1,
+     "n": 24,
+     "rate": 0.0417
+    },
+    "escaped_by_class": {
+     "absent_field": 1
+    },
+    "false_reject": {
+     "ci95": [
+      0.0008,
+      0.0111
+     ],
+     "k": 2,
+     "n": 655,
+     "rate": 0.0031
+    },
+    "models": [
+     "Claude Sonnet 4.6",
+     "Claude Sonnet 5.5"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8491,
+       0.9228
+      ],
+      "k": 246,
+      "n": 276,
+      "rate": 0.8913
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.974,
+       0.998
+      ],
+      "k": 274,
+      "n": 276,
+      "rate": 0.9928
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.0139,
+      0.0374
+     ],
+     "k": 15,
+     "n": 655,
+     "rate": 0.0229
+    },
+    "review_load": {
+     "ci95": [
+      0.1172,
+      0.1696
+     ],
+     "k": 96,
+     "n": 679,
+     "rate": 0.1414
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.1158,
+      0.168
+     ],
+     "k": 95,
+     "n": 679,
+     "rate": 0.1399
+    },
+    "wrong": 24,
+    "wrong_by_class": {
+     "absent_field": 2,
+     "wrong_value": 22
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.6415,
+      0.9332
+     ],
+     "k": 20,
+     "n": 24,
+     "rate": 0.8333
+    }
+   },
+   "Claude Sonnet 4.6 + Claude Sonnet 5.5 @ 4000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.0774,
+      0.1293
+     ],
+     "k": 52,
+     "n": 518,
+     "rate": 0.1004
+    },
+    "candidates": 583,
+    "correct": 575,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.0696,
+      0.1167
+     ],
+     "k": 52,
+     "n": 575,
+     "rate": 0.0904
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0,
+      0.3244
+     ],
+     "k": 0,
+     "n": 8,
+     "rate": 0.0
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0,
+      0.3244
+     ],
+     "k": 0,
+     "n": 8,
+     "rate": 0.0
+    },
+    "escaped_by_class": {},
+    "false_reject": {
+     "ci95": [
+      0.001,
+      0.0126
+     ],
+     "k": 2,
+     "n": 575,
+     "rate": 0.0035
+    },
+    "models": [
+     "Claude Sonnet 4.6",
+     "Claude Sonnet 5.5"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8573,
+       0.9289
+      ],
+      "k": 248,
+      "n": 276,
+      "rate": 0.8986
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.9685,
+       0.9963
+      ],
+      "k": 273,
+      "n": 276,
+      "rate": 0.9891
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.0018,
+      0.0152
+     ],
+     "k": 3,
+     "n": 575,
+     "rate": 0.0052
+    },
+    "review_load": {
+     "ci95": [
+      0.0747,
+      0.1227
+     ],
+     "k": 56,
+     "n": 583,
+     "rate": 0.0961
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.0747,
+      0.1227
+     ],
+     "k": 56,
+     "n": 583,
+     "rate": 0.0961
+    },
+    "wrong": 8,
+    "wrong_by_class": {
+     "absent_field": 2,
+     "wrong_value": 6
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.2152,
+      0.7848
+     ],
+     "k": 4,
+     "n": 8,
+     "rate": 0.5
+    }
+   },
+   "Claude Sonnet 4.6 + GPT-5.6 Luna (Medium) @ 1000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.1156,
+      0.1746
+     ],
+     "k": 77,
+     "n": 540,
+     "rate": 0.1426
+    },
+    "candidates": 676,
+    "correct": 647,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.1047,
+      0.1563
+     ],
+     "k": 83,
+     "n": 647,
+     "rate": 0.1283
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0061,
+      0.1718
+     ],
+     "k": 1,
+     "n": 29,
+     "rate": 0.0345
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0061,
+      0.1718
+     ],
+     "k": 1,
+     "n": 29,
+     "rate": 0.0345
+    },
+    "escaped_by_class": {
+     "absent_field": 1
+    },
+    "false_reject": {
+     "ci95": [
+      0.0003,
+      0.0087
+     ],
+     "k": 1,
+     "n": 647,
+     "rate": 0.0015
+    },
+    "models": [
+     "Claude Sonnet 4.6",
+     "GPT-5.6 Luna (Medium)"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8287,
+       0.9074
+      ],
+      "k": 241,
+      "n": 276,
+      "rate": 0.8732
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.9633,
+       0.9944
+      ],
+      "k": 272,
+      "n": 276,
+      "rate": 0.9855
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.0238,
+      0.0528
+     ],
+     "k": 23,
+     "n": 647,
+     "rate": 0.0355
+    },
+    "review_load": {
+     "ci95": [
+      0.1341,
+      0.1893
+     ],
+     "k": 108,
+     "n": 676,
+     "rate": 0.1598
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.13,
+      0.1846
+     ],
+     "k": 105,
+     "n": 676,
+     "rate": 0.1553
+    },
+    "wrong": 29,
+    "wrong_by_class": {
+     "absent_field": 2,
+     "unparsable": 1,
+     "wrong_value": 26
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.6944,
+      0.945
+     ],
+     "k": 25,
+     "n": 29,
+     "rate": 0.8621
+    }
+   },
+   "Claude Sonnet 4.6 + GPT-5.6 Luna (Medium) @ 4000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.0824,
+      0.1361
+     ],
+     "k": 54,
+     "n": 508,
+     "rate": 0.1063
+    },
+    "candidates": 582,
+    "correct": 568,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.072,
+      0.12
+     ],
+     "k": 53,
+     "n": 568,
+     "rate": 0.0933
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0401,
+      0.3994
+     ],
+     "k": 2,
+     "n": 14,
+     "rate": 0.1429
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0401,
+      0.3994
+     ],
+     "k": 2,
+     "n": 14,
+     "rate": 0.1429
+    },
+    "escaped_by_class": {
+     "absent_field": 1,
+     "wrong_value": 1
+    },
+    "false_reject": {
+     "ci95": [
+      0.001,
+      0.0127
+     ],
+     "k": 2,
+     "n": 568,
+     "rate": 0.0035
+    },
+    "models": [
+     "Claude Sonnet 4.6",
+     "GPT-5.6 Luna (Medium)"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8532,
+       0.9258
+      ],
+      "k": 247,
+      "n": 276,
+      "rate": 0.8949
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.9633,
+       0.9944
+      ],
+      "k": 272,
+      "n": 276,
+      "rate": 0.9855
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.0038,
+      0.0204
+     ],
+     "k": 5,
+     "n": 568,
+     "rate": 0.0088
+    },
+    "review_load": {
+     "ci95": [
+      0.0779,
+      0.1267
+     ],
+     "k": 58,
+     "n": 582,
+     "rate": 0.0997
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.0733,
+      0.121
+     ],
+     "k": 55,
+     "n": 582,
+     "rate": 0.0945
+    },
+    "wrong": 14,
+    "wrong_by_class": {
+     "absent_field": 3,
+     "unparsable": 1,
+     "wrong_value": 10
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.1634,
+      0.6124
+     ],
+     "k": 5,
+     "n": 14,
+     "rate": 0.3571
+    }
+   },
+   "Claude Sonnet 4.6 + GPT-5.6 Terra (Medium) @ 1000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.116,
+      0.176
+     ],
+     "k": 75,
+     "n": 523,
+     "rate": 0.1434
+    },
+    "candidates": 647,
+    "correct": 624,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.0984,
+      0.1498
+     ],
+     "k": 76,
+     "n": 624,
+     "rate": 0.1218
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0077,
+      0.2099
+     ],
+     "k": 1,
+     "n": 23,
+     "rate": 0.0435
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0077,
+      0.2099
+     ],
+     "k": 1,
+     "n": 23,
+     "rate": 0.0435
+    },
+    "escaped_by_class": {
+     "absent_field": 1
+    },
+    "false_reject": {
+     "ci95": [
+      0.0003,
+      0.009
+     ],
+     "k": 1,
+     "n": 624,
+     "rate": 0.0016
+    },
+    "models": [
+     "Claude Sonnet 4.6",
+     "GPT-5.6 Terra (Medium)"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8409,
+       0.9167
+      ],
+      "k": 244,
+      "n": 276,
+      "rate": 0.8841
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.9633,
+       0.9944
+      ],
+      "k": 272,
+      "n": 276,
+      "rate": 0.9855
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.026,
+      0.0566
+     ],
+     "k": 24,
+     "n": 624,
+     "rate": 0.0385
+    },
+    "review_load": {
+     "ci95": [
+      0.1231,
+      0.1778
+     ],
+     "k": 96,
+     "n": 647,
+     "rate": 0.1484
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.1231,
+      0.1778
+     ],
+     "k": 96,
+     "n": 647,
+     "rate": 0.1484
+    },
+    "wrong": 23,
+    "wrong_by_class": {
+     "absent_field": 1,
+     "wrong_value": 22
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.6787,
+      0.9546
+     ],
+     "k": 20,
+     "n": 23,
+     "rate": 0.8696
+    }
+   },
+   "Claude Sonnet 4.6 + GPT-5.6 Terra (Medium) @ 4000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.0776,
+      0.1304
+     ],
+     "k": 51,
+     "n": 505,
+     "rate": 0.101
+    },
+    "candidates": 575,
+    "correct": 563,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.0711,
+      0.1191
+     ],
+     "k": 52,
+     "n": 563,
+     "rate": 0.0924
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0149,
+      0.3539
+     ],
+     "k": 1,
+     "n": 12,
+     "rate": 0.0833
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.047,
+      0.448
+     ],
+     "k": 2,
+     "n": 12,
+     "rate": 0.1667
+    },
+    "escaped_by_class": {
+     "absent_field": 1
+    },
+    "false_reject": {
+     "ci95": [
+      0.0003,
+      0.01
+     ],
+     "k": 1,
+     "n": 563,
+     "rate": 0.0018
+    },
+    "models": [
+     "Claude Sonnet 4.6",
+     "GPT-5.6 Terra (Medium)"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8532,
+       0.9258
+      ],
+      "k": 247,
+      "n": 276,
+      "rate": 0.8949
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.9633,
+       0.9944
+      ],
+      "k": 272,
+      "n": 276,
+      "rate": 0.9855
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.0038,
+      0.0206
+     ],
+     "k": 5,
+     "n": 563,
+     "rate": 0.0089
+    },
+    "review_load": {
+     "ci95": [
+      0.0788,
+      0.1282
+     ],
+     "k": 58,
+     "n": 575,
+     "rate": 0.1009
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.0742,
+      0.1224
+     ],
+     "k": 55,
+     "n": 575,
+     "rate": 0.0957
+    },
+    "wrong": 12,
+    "wrong_by_class": {
+     "absent_field": 3,
+     "wrong_value": 9
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.2538,
+      0.7462
+     ],
+     "k": 6,
+     "n": 12,
+     "rate": 0.5
+    }
+   },
+   "Claude Sonnet 4.6 + Gemini 3.6 Flash (Medium) @ 1000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.1263,
+      0.1858
+     ],
+     "k": 87,
+     "n": 566,
+     "rate": 0.1537
+    },
+    "candidates": 679,
+    "correct": 655,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.0896,
+      0.1379
+     ],
+     "k": 73,
+     "n": 655,
+     "rate": 0.1115
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0074,
+      0.2024
+     ],
+     "k": 1,
+     "n": 24,
+     "rate": 0.0417
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0074,
+      0.2024
+     ],
+     "k": 1,
+     "n": 24,
+     "rate": 0.0417
+    },
+    "escaped_by_class": {
+     "absent_field": 1
+    },
+    "false_reject": {
+     "ci95": [
+      0.0003,
+      0.0086
+     ],
+     "k": 1,
+     "n": 655,
+     "rate": 0.0015
+    },
+    "models": [
+     "Claude Sonnet 4.6",
+     "Gemini 3.6 Flash (Medium)"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8532,
+       0.9258
+      ],
+      "k": 247,
+      "n": 276,
+      "rate": 0.8949
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.974,
+       0.998
+      ],
+      "k": 274,
+      "n": 276,
+      "rate": 0.9928
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.0139,
+      0.0374
+     ],
+     "k": 15,
+     "n": 655,
+     "rate": 0.0229
+    },
+    "review_load": {
+     "ci95": [
+      0.1118,
+      0.1633
+     ],
+     "k": 92,
+     "n": 679,
+     "rate": 0.1355
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.1118,
+      0.1633
+     ],
+     "k": 92,
+     "n": 679,
+     "rate": 0.1355
+    },
+    "wrong": 24,
+    "wrong_by_class": {
+     "absent_field": 2,
+     "unparsable": 1,
+     "wrong_value": 21
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.5953,
+      0.9076
+     ],
+     "k": 19,
+     "n": 24,
+     "rate": 0.7917
+    }
+   },
+   "Claude Sonnet 4.6 + Gemini 3.6 Flash (Medium) @ 4000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.0834,
+      0.1365
+     ],
+     "k": 56,
+     "n": 523,
+     "rate": 0.1071
+    },
+    "candidates": 582,
+    "correct": 574,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.0606,
+      0.1052
+     ],
+     "k": 46,
+     "n": 574,
+     "rate": 0.0801
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0224,
+      0.4709
+     ],
+     "k": 1,
+     "n": 8,
+     "rate": 0.125
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0224,
+      0.4709
+     ],
+     "k": 1,
+     "n": 8,
+     "rate": 0.125
+    },
+    "escaped_by_class": {
+     "wrong_value": 1
+    },
+    "false_reject": {
+     "ci95": [
+      0.001,
+      0.0126
+     ],
+     "k": 2,
+     "n": 574,
+     "rate": 0.0035
+    },
+    "models": [
+     "Claude Sonnet 4.6",
+     "Gemini 3.6 Flash (Medium)"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8573,
+       0.9289
+      ],
+      "k": 248,
+      "n": 276,
+      "rate": 0.8986
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.9685,
+       0.9963
+      ],
+      "k": 273,
+      "n": 276,
+      "rate": 0.9891
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.0018,
+      0.0153
+     ],
+     "k": 3,
+     "n": 574,
+     "rate": 0.0052
+    },
+    "review_load": {
+     "ci95": [
+      0.0643,
+      0.1096
+     ],
+     "k": 49,
+     "n": 582,
+     "rate": 0.0842
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.0628,
+      0.1077
+     ],
+     "k": 48,
+     "n": 582,
+     "rate": 0.0825
+    },
+    "wrong": 8,
+    "wrong_by_class": {
+     "absent_field": 2,
+     "wrong_value": 6
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.1368,
+      0.6943
+     ],
+     "k": 3,
+     "n": 8,
+     "rate": 0.375
+    }
+   },
+   "Claude Sonnet 4.6 + Gemini 3.8 Flash (Low) @ 1000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.1176,
+      0.1761
+     ],
+     "k": 80,
+     "n": 554,
+     "rate": 0.1444
+    },
+    "candidates": 666,
+    "correct": 647,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.0921,
+      0.1412
+     ],
+     "k": 74,
+     "n": 647,
+     "rate": 0.1144
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0,
+      0.1682
+     ],
+     "k": 0,
+     "n": 19,
+     "rate": 0.0
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0,
+      0.1682
+     ],
+     "k": 0,
+     "n": 19,
+     "rate": 0.0
+    },
+    "escaped_by_class": {},
+    "false_reject": {
+     "ci95": [
+      0.0008,
+      0.0112
+     ],
+     "k": 2,
+     "n": 647,
+     "rate": 0.0031
+    },
+    "models": [
+     "Claude Sonnet 4.6",
+     "Gemini 3.8 Flash (Low)"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8491,
+       0.9228
+      ],
+      "k": 246,
+      "n": 276,
+      "rate": 0.8913
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.974,
+       0.998
+      ],
+      "k": 274,
+      "n": 276,
+      "rate": 0.9928
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.0165,
+      0.0417
+     ],
+     "k": 17,
+     "n": 647,
+     "rate": 0.0263
+    },
+    "review_load": {
+     "ci95": [
+      0.1126,
+      0.1648
+     ],
+     "k": 91,
+     "n": 666,
+     "rate": 0.1366
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.1085,
+      0.16
+     ],
+     "k": 88,
+     "n": 666,
+     "rate": 0.1321
+    },
+    "wrong": 19,
+    "wrong_by_class": {
+     "wrong_value": 19
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.6861,
+      0.9706
+     ],
+     "k": 17,
+     "n": 19,
+     "rate": 0.8947
+    }
+   },
+   "Claude Sonnet 4.6 + Gemini 3.8 Flash (Low) @ 4000": {
+    "accepted_correct_citing_wrong_place": {
+     "ci95": [
+      0.0847,
+      0.1386
+     ],
+     "k": 56,
+     "n": 515,
+     "rate": 0.1087
+    },
+    "candidates": 573,
+    "correct": 566,
+    "correct_sent_to_review": {
+     "ci95": [
+      0.0615,
+      0.1067
+     ],
+     "k": 46,
+     "n": 566,
+     "rate": 0.0813
+    },
+    "documents": 30,
+    "escape": {
+     "ci95": [
+      0.0,
+      0.3543
+     ],
+     "k": 0,
+     "n": 7,
+     "rate": 0.0
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
+      0.0,
+      0.3543
+     ],
+     "k": 0,
+     "n": 7,
+     "rate": 0.0
+    },
+    "escaped_by_class": {},
+    "false_reject": {
+     "ci95": [
+      0.001,
+      0.0128
+     ],
+     "k": 2,
+     "n": 566,
+     "rate": 0.0035
+    },
+    "models": [
+     "Claude Sonnet 4.6",
+     "Gemini 3.8 Flash (Low)"
+    ],
+    "recall": {
+     "accepted": {
+      "ci95": [
+       0.8573,
+       0.9289
+      ],
+      "k": 248,
+      "n": 276,
+      "rate": 0.8986
+     },
+     "accepted_or_review": {
+      "ci95": [
+       0.9685,
+       0.9963
+      ],
+      "k": 273,
+      "n": 276,
+      "rate": 0.9891
+     }
+    },
+    "rejected_right_value_wrong_place": {
+     "ci95": [
+      0.0018,
+      0.0155
+     ],
+     "k": 3,
+     "n": 566,
+     "rate": 0.0053
+    },
+    "review_load": {
+     "ci95": [
+      0.0653,
+      0.1113
+     ],
+     "k": 49,
+     "n": 573,
+     "rate": 0.0855
+    },
+    "review_load_when_admitted_separately": {
+     "ci95": [
+      0.0638,
+      0.1093
+     ],
+     "k": 48,
+     "n": 573,
+     "rate": 0.0838
+    },
+    "wrong": 7,
+    "wrong_by_class": {
+     "absent_field": 2,
+     "wrong_value": 5
+    },
+    "wrong_sent_to_review": {
+     "ci95": [
+      0.1582,
+      0.7495
+     ],
+     "k": 3,
+     "n": 7,
+     "rate": 0.4286
     }
    },
    "Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) @ 1000": {
@@ -5776,6 +7191,1651 @@
       ],
       "k": 0,
       "n": 8,
+      "rate": 0.0
+     }
+    }
+   },
+   "Claude Sonnet 4.6 @ 1000": {
+    "by_kind": {
+     "fda": {
+      "groundgate": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.3314,
+         0.5464
+        ],
+        "k": 34,
+        "n": 78,
+        "rate": 0.4359
+       },
+       "candidates": 115,
+       "correct": 110,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.1209,
+         0.2642
+        ],
+        "k": 20,
+        "n": 110,
+        "rate": 0.1818
+       },
+       "escape": {
+        "ci95": [
+         0.0,
+         0.4345
+        ],
+        "k": 0,
+        "n": 5,
+        "rate": 0.0
+       },
+       "escaped_by_class": {},
+       "false_reject": {
+        "ci95": [
+         0.0,
+         0.0337
+        ],
+        "k": 0,
+        "n": 110,
+        "rate": 0.0
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0635,
+         0.1811
+        ],
+        "k": 12,
+        "n": 110,
+        "rate": 0.1091
+       },
+       "review_load": {
+        "ci95": [
+         0.1518,
+         0.3012
+        ],
+        "k": 25,
+        "n": 115,
+        "rate": 0.2174
+       },
+       "wrong": 5,
+       "wrong_by_class": {
+        "wrong_value": 5
+       },
+       "wrong_sent_to_review": {
+        "ci95": [
+         0.5655,
+         1.0
+        ],
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       }
+      },
+      "lx_exact": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.3366,
+         0.5319
+        ],
+        "k": 41,
+        "n": 95,
+        "rate": 0.4316
+       },
+       "candidates": 115,
+       "correct": 110,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.0,
+         0.0337
+        ],
+        "k": 0,
+        "n": 110,
+        "rate": 0.0
+       },
+       "escape": {
+        "ci95": [
+         0.5655,
+         1.0
+        ],
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "escaped_by_class": {
+        "wrong_value": 5
+       },
+       "false_reject": {
+        "ci95": [
+         0.005,
+         0.0639
+        ],
+        "k": 2,
+        "n": 110,
+        "rate": 0.0182
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0704,
+         0.1918
+        ],
+        "k": 13,
+        "n": 110,
+        "rate": 0.1182
+       },
+       "review_load": {
+        "ci95": [
+         0.0,
+         0.0323
+        ],
+        "k": 0,
+        "n": 115,
+        "rate": 0.0
+       },
+       "wrong": 5,
+       "wrong_by_class": {
+        "wrong_value": 5
+       },
+       "wrong_sent_to_review": {
+        "ci95": [
+         0.0,
+         0.4345
+        ],
+        "k": 0,
+        "n": 5,
+        "rate": 0.0
+       }
+      }
+     },
+     "irs": {
+      "groundgate": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.006,
+         0.0758
+        ],
+        "k": 2,
+        "n": 92,
+        "rate": 0.0217
+       },
+       "candidates": 108,
+       "correct": 108,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.086,
+         0.2166
+        ],
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
+       },
+       "escape": {
+        "ci95": null,
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "escaped_by_class": {},
+       "false_reject": {
+        "ci95": [
+         0.0016,
+         0.0506
+        ],
+        "k": 1,
+        "n": 108,
+        "rate": 0.0093
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
+        "rate": 0.0
+       },
+       "review_load": {
+        "ci95": [
+         0.086,
+         0.2166
+        ],
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
+       },
+       "wrong": 0,
+       "wrong_by_class": {},
+       "wrong_sent_to_review": {
+        "ci95": null,
+        "k": 0,
+        "n": 0,
+        "rate": null
+       }
+      },
+      "lx_exact": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.0051,
+         0.065
+        ],
+        "k": 2,
+        "n": 108,
+        "rate": 0.0185
+       },
+       "candidates": 108,
+       "correct": 108,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
+        "rate": 0.0
+       },
+       "escape": {
+        "ci95": null,
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "escaped_by_class": {},
+       "false_reject": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
+        "rate": 0.0
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
+        "rate": 0.0
+       },
+       "review_load": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
+        "rate": 0.0
+       },
+       "wrong": 0,
+       "wrong_by_class": {},
+       "wrong_sent_to_review": {
+        "ci95": null,
+        "k": 0,
+        "n": 0,
+        "rate": null
+       }
+      }
+     },
+     "ntsb": {
+      "groundgate": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.0017,
+         0.053
+        ],
+        "k": 1,
+        "n": 103,
+        "rate": 0.0097
+       },
+       "candidates": 113,
+       "correct": 107,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.0146,
+         0.0922
+        ],
+        "k": 4,
+        "n": 107,
+        "rate": 0.0374
+       },
+       "escape": {
+        "ci95": [
+         0.0,
+         0.3903
+        ],
+        "k": 0,
+        "n": 6,
+        "rate": 0.0
+       },
+       "escaped_by_class": {},
+       "false_reject": {
+        "ci95": [
+         0.0,
+         0.0347
+        ],
+        "k": 0,
+        "n": 107,
+        "rate": 0.0
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0,
+         0.0347
+        ],
+        "k": 0,
+        "n": 107,
+        "rate": 0.0
+       },
+       "review_load": {
+        "ci95": [
+         0.0363,
+         0.1335
+        ],
+        "k": 8,
+        "n": 113,
+        "rate": 0.0708
+       },
+       "wrong": 6,
+       "wrong_by_class": {
+        "wrong_value": 6
+       },
+       "wrong_sent_to_review": {
+        "ci95": [
+         0.3,
+         0.9032
+        ],
+        "k": 4,
+        "n": 6,
+        "rate": 0.6667
+       }
+      },
+      "lx_exact": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.0018,
+         0.0567
+        ],
+        "k": 1,
+        "n": 96,
+        "rate": 0.0104
+       },
+       "candidates": 113,
+       "correct": 107,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.0,
+         0.0347
+        ],
+        "k": 0,
+        "n": 107,
+        "rate": 0.0
+       },
+       "escape": {
+        "ci95": [
+         0.6097,
+         1.0
+        ],
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "escaped_by_class": {
+        "wrong_value": 6
+       },
+       "false_reject": {
+        "ci95": [
+         0.0584,
+         0.1748
+        ],
+        "k": 11,
+        "n": 107,
+        "rate": 0.1028
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0,
+         0.0347
+        ],
+        "k": 0,
+        "n": 107,
+        "rate": 0.0
+       },
+       "review_load": {
+        "ci95": [
+         0.0,
+         0.0329
+        ],
+        "k": 0,
+        "n": 113,
+        "rate": 0.0
+       },
+       "wrong": 6,
+       "wrong_by_class": {
+        "wrong_value": 6
+       },
+       "wrong_sent_to_review": {
+        "ci95": [
+         0.0,
+         0.3903
+        ],
+        "k": 0,
+        "n": 6,
+        "rate": 0.0
+       }
+      }
+     }
+    },
+    "caught_by": {
+     "CONFLICTING_CANDIDATES": 8,
+     "QUALIFIED_VALUE": 1,
+     "VALUE_NOT_IN_EVIDENCE": 2
+    },
+    "documents": 30,
+    "groundgate": {
+     "accepted_correct_citing_wrong_place": {
+      "ci95": [
+       0.1,
+       0.1812
+      ],
+      "k": 37,
+      "n": 273,
+      "rate": 0.1355
+     },
+     "candidates": 336,
+     "correct": 325,
+     "correct_sent_to_review": {
+      "ci95": [
+       0.089,
+       0.1598
+      ],
+      "k": 39,
+      "n": 325,
+      "rate": 0.12
+     },
+     "escape": {
+      "ci95": [
+       0.0,
+       0.2588
+      ],
+      "k": 0,
+      "n": 11,
+      "rate": 0.0
+     },
+     "escaped_by_class": {},
+     "false_reject": {
+      "ci95": [
+       0.0005,
+       0.0172
+      ],
+      "k": 1,
+      "n": 325,
+      "rate": 0.0031
+     },
+     "recall": {
+      "accepted": {
+       "ci95": [
+        0.8328,
+        0.9105
+       ],
+       "k": 242,
+       "n": 276,
+       "rate": 0.8768
+      },
+      "accepted_or_review": {
+       "ci95": [
+        0.9534,
+        0.99
+       ],
+       "k": 270,
+       "n": 276,
+       "rate": 0.9783
+      }
+     },
+     "rejected_right_value_wrong_place": {
+      "ci95": [
+       0.0212,
+       0.0634
+      ],
+      "k": 12,
+      "n": 325,
+      "rate": 0.0369
+     },
+     "review_load": {
+      "ci95": [
+       0.1095,
+       0.1843
+      ],
+      "k": 48,
+      "n": 336,
+      "rate": 0.1429
+     },
+     "wrong": 11,
+     "wrong_by_class": {
+      "wrong_value": 11
+     },
+     "wrong_sent_to_review": {
+      "ci95": [
+       0.523,
+       0.9486
+      ],
+      "k": 9,
+      "n": 11,
+      "rate": 0.8182
+     }
+    },
+    "harness": {
+     "chunks": 248,
+     "discarded": 0,
+     "provider": "claude-cli",
+     "seconds": 1005,
+     "unusable_chunks": 28
+    },
+    "lx_aligned": {
+     "accepted_correct_citing_wrong_place": {
+      "ci95": [
+       0.1141,
+       0.1928
+      ],
+      "k": 47,
+      "n": 315,
+      "rate": 0.1492
+     },
+     "candidates": 336,
+     "correct": 325,
+     "correct_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.0117
+      ],
+      "k": 0,
+      "n": 325,
+      "rate": 0.0
+     },
+     "escape": {
+      "ci95": [
+       0.7412,
+       1.0
+      ],
+      "k": 11,
+      "n": 11,
+      "rate": 1.0
+     },
+     "escaped_by_class": {
+      "wrong_value": 11
+     },
+     "false_reject": {
+      "ci95": [
+       0.0,
+       0.0117
+      ],
+      "k": 0,
+      "n": 325,
+      "rate": 0.0
+     },
+     "recall": {
+      "accepted": {
+       "ci95": [
+        0.9633,
+        0.9944
+       ],
+       "k": 272,
+       "n": 276,
+       "rate": 0.9855
+      },
+      "accepted_or_review": {
+       "ci95": [
+        0.9633,
+        0.9944
+       ],
+       "k": 272,
+       "n": 276,
+       "rate": 0.9855
+      }
+     },
+     "rejected_right_value_wrong_place": {
+      "ci95": [
+       0.0168,
+       0.0557
+      ],
+      "k": 10,
+      "n": 325,
+      "rate": 0.0308
+     },
+     "review_load": {
+      "ci95": [
+       0.0,
+       0.0113
+      ],
+      "k": 0,
+      "n": 336,
+      "rate": 0.0
+     },
+     "wrong": 11,
+     "wrong_by_class": {
+      "wrong_value": 11
+     },
+     "wrong_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.2588
+      ],
+      "k": 0,
+      "n": 11,
+      "rate": 0.0
+     }
+    },
+    "lx_all": {
+     "accepted_correct_citing_wrong_place": {
+      "ci95": [
+       0.1379,
+       0.2205
+      ],
+      "k": 57,
+      "n": 325,
+      "rate": 0.1754
+     },
+     "candidates": 336,
+     "correct": 325,
+     "correct_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.0117
+      ],
+      "k": 0,
+      "n": 325,
+      "rate": 0.0
+     },
+     "escape": {
+      "ci95": [
+       0.7412,
+       1.0
+      ],
+      "k": 11,
+      "n": 11,
+      "rate": 1.0
+     },
+     "escaped_by_class": {
+      "wrong_value": 11
+     },
+     "false_reject": {
+      "ci95": [
+       0.0,
+       0.0117
+      ],
+      "k": 0,
+      "n": 325,
+      "rate": 0.0
+     },
+     "recall": {
+      "accepted": {
+       "ci95": [
+        0.9633,
+        0.9944
+       ],
+       "k": 272,
+       "n": 276,
+       "rate": 0.9855
+      },
+      "accepted_or_review": {
+       "ci95": [
+        0.9633,
+        0.9944
+       ],
+       "k": 272,
+       "n": 276,
+       "rate": 0.9855
+      }
+     },
+     "rejected_right_value_wrong_place": {
+      "ci95": [
+       0.0,
+       0.0117
+      ],
+      "k": 0,
+      "n": 325,
+      "rate": 0.0
+     },
+     "review_load": {
+      "ci95": [
+       0.0,
+       0.0113
+      ],
+      "k": 0,
+      "n": 336,
+      "rate": 0.0
+     },
+     "wrong": 11,
+     "wrong_by_class": {
+      "wrong_value": 11
+     },
+     "wrong_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.2588
+      ],
+      "k": 0,
+      "n": 11,
+      "rate": 0.0
+     }
+    },
+    "lx_exact": {
+     "accepted_correct_citing_wrong_place": {
+      "ci95": [
+       0.1115,
+       0.1918
+      ],
+      "k": 44,
+      "n": 299,
+      "rate": 0.1472
+     },
+     "candidates": 336,
+     "correct": 325,
+     "correct_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.0117
+      ],
+      "k": 0,
+      "n": 325,
+      "rate": 0.0
+     },
+     "escape": {
+      "ci95": [
+       0.7412,
+       1.0
+      ],
+      "k": 11,
+      "n": 11,
+      "rate": 1.0
+     },
+     "escaped_by_class": {
+      "wrong_value": 11
+     },
+     "false_reject": {
+      "ci95": [
+       0.0235,
+       0.0672
+      ],
+      "k": 13,
+      "n": 325,
+      "rate": 0.04
+     },
+     "recall": {
+      "accepted": {
+       "ci95": [
+        0.9079,
+        0.964
+       ],
+       "k": 260,
+       "n": 276,
+       "rate": 0.942
+      },
+      "accepted_or_review": {
+       "ci95": [
+        0.9079,
+        0.964
+       ],
+       "k": 260,
+       "n": 276,
+       "rate": 0.942
+      }
+     },
+     "rejected_right_value_wrong_place": {
+      "ci95": [
+       0.0235,
+       0.0672
+      ],
+      "k": 13,
+      "n": 325,
+      "rate": 0.04
+     },
+     "review_load": {
+      "ci95": [
+       0.0,
+       0.0113
+      ],
+      "k": 0,
+      "n": 336,
+      "rate": 0.0
+     },
+     "wrong": 11,
+     "wrong_by_class": {
+      "wrong_value": 11
+     },
+     "wrong_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.2588
+      ],
+      "k": 0,
+      "n": 11,
+      "rate": 0.0
+     }
+    }
+   },
+   "Claude Sonnet 4.6 @ 4000": {
+    "by_kind": {
+     "fda": {
+      "groundgate": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.2616,
+         0.4954
+        ],
+        "k": 23,
+        "n": 62,
+        "rate": 0.371
+       },
+       "candidates": 76,
+       "correct": 73,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.0662,
+         0.218
+        ],
+        "k": 9,
+        "n": 73,
+        "rate": 0.1233
+       },
+       "escape": {
+        "ci95": [
+         0.0,
+         0.5615
+        ],
+        "k": 0,
+        "n": 3,
+        "rate": 0.0
+       },
+       "escaped_by_class": {},
+       "false_reject": {
+        "ci95": [
+         0.0,
+         0.05
+        ],
+        "k": 0,
+        "n": 73,
+        "rate": 0.0
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0075,
+         0.0945
+        ],
+        "k": 2,
+        "n": 73,
+        "rate": 0.0274
+       },
+       "review_load": {
+        "ci95": [
+         0.0731,
+         0.2255
+        ],
+        "k": 10,
+        "n": 76,
+        "rate": 0.1316
+       },
+       "wrong": 3,
+       "wrong_by_class": {
+        "absent_field": 2,
+        "wrong_value": 1
+       },
+       "wrong_sent_to_review": {
+        "ci95": [
+         0.0615,
+         0.7923
+        ],
+        "k": 1,
+        "n": 3,
+        "rate": 0.3333
+       }
+      },
+      "lx_exact": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.2847,
+         0.5044
+        ],
+        "k": 28,
+        "n": 72,
+        "rate": 0.3889
+       },
+       "candidates": 76,
+       "correct": 73,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.0,
+         0.05
+        ],
+        "k": 0,
+        "n": 73,
+        "rate": 0.0
+       },
+       "escape": {
+        "ci95": [
+         0.4385,
+         1.0
+        ],
+        "k": 3,
+        "n": 3,
+        "rate": 1.0
+       },
+       "escaped_by_class": {
+        "absent_field": 2,
+        "wrong_value": 1
+       },
+       "false_reject": {
+        "ci95": [
+         0.0,
+         0.05
+        ],
+        "k": 0,
+        "n": 73,
+        "rate": 0.0
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0024,
+         0.0736
+        ],
+        "k": 1,
+        "n": 73,
+        "rate": 0.0137
+       },
+       "review_load": {
+        "ci95": [
+         0.0,
+         0.0481
+        ],
+        "k": 0,
+        "n": 76,
+        "rate": 0.0
+       },
+       "wrong": 3,
+       "wrong_by_class": {
+        "absent_field": 2,
+        "wrong_value": 1
+       },
+       "wrong_sent_to_review": {
+        "ci95": [
+         0.0,
+         0.5615
+        ],
+        "k": 0,
+        "n": 3,
+        "rate": 0.0
+       }
+      }
+     },
+     "irs": {
+      "groundgate": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.006,
+         0.0758
+        ],
+        "k": 2,
+        "n": 92,
+        "rate": 0.0217
+       },
+       "candidates": 108,
+       "correct": 108,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.086,
+         0.2166
+        ],
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
+       },
+       "escape": {
+        "ci95": null,
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "escaped_by_class": {},
+       "false_reject": {
+        "ci95": [
+         0.0016,
+         0.0506
+        ],
+        "k": 1,
+        "n": 108,
+        "rate": 0.0093
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
+        "rate": 0.0
+       },
+       "review_load": {
+        "ci95": [
+         0.086,
+         0.2166
+        ],
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
+       },
+       "wrong": 0,
+       "wrong_by_class": {},
+       "wrong_sent_to_review": {
+        "ci95": null,
+        "k": 0,
+        "n": 0,
+        "rate": null
+       }
+      },
+      "lx_exact": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.0051,
+         0.065
+        ],
+        "k": 2,
+        "n": 108,
+        "rate": 0.0185
+       },
+       "candidates": 108,
+       "correct": 108,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
+        "rate": 0.0
+       },
+       "escape": {
+        "ci95": null,
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "escaped_by_class": {},
+       "false_reject": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
+        "rate": 0.0
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
+        "rate": 0.0
+       },
+       "review_load": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
+        "rate": 0.0
+       },
+       "wrong": 0,
+       "wrong_by_class": {},
+       "wrong_sent_to_review": {
+        "ci95": null,
+        "k": 0,
+        "n": 0,
+        "rate": null
+       }
+      }
+     },
+     "ntsb": {
+      "groundgate": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.0052,
+         0.0662
+        ],
+        "k": 2,
+        "n": 106,
+        "rate": 0.0189
+       },
+       "candidates": 110,
+       "correct": 107,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.0017,
+         0.0511
+        ],
+        "k": 1,
+        "n": 107,
+        "rate": 0.0093
+       },
+       "escape": {
+        "ci95": [
+         0.0,
+         0.5615
+        ],
+        "k": 0,
+        "n": 3,
+        "rate": 0.0
+       },
+       "escaped_by_class": {},
+       "false_reject": {
+        "ci95": [
+         0.0,
+         0.0347
+        ],
+        "k": 0,
+        "n": 107,
+        "rate": 0.0
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0,
+         0.0347
+        ],
+        "k": 0,
+        "n": 107,
+        "rate": 0.0
+       },
+       "review_load": {
+        "ci95": [
+         0.005,
+         0.0639
+        ],
+        "k": 2,
+        "n": 110,
+        "rate": 0.0182
+       },
+       "wrong": 3,
+       "wrong_by_class": {
+        "wrong_value": 3
+       },
+       "wrong_sent_to_review": {
+        "ci95": [
+         0.0615,
+         0.7923
+        ],
+        "k": 1,
+        "n": 3,
+        "rate": 0.3333
+       }
+      },
+      "lx_exact": {
+       "accepted_correct_citing_wrong_place": {
+        "ci95": [
+         0.0063,
+         0.08
+        ],
+        "k": 2,
+        "n": 87,
+        "rate": 0.023
+       },
+       "candidates": 110,
+       "correct": 107,
+       "correct_sent_to_review": {
+        "ci95": [
+         0.0,
+         0.0347
+        ],
+        "k": 0,
+        "n": 107,
+        "rate": 0.0
+       },
+       "escape": {
+        "ci95": [
+         0.4385,
+         1.0
+        ],
+        "k": 3,
+        "n": 3,
+        "rate": 1.0
+       },
+       "escaped_by_class": {
+        "wrong_value": 3
+       },
+       "false_reject": {
+        "ci95": [
+         0.1244,
+         0.2712
+        ],
+        "k": 20,
+        "n": 107,
+        "rate": 0.1869
+       },
+       "rejected_right_value_wrong_place": {
+        "ci95": [
+         0.0,
+         0.0347
+        ],
+        "k": 0,
+        "n": 107,
+        "rate": 0.0
+       },
+       "review_load": {
+        "ci95": [
+         0.0,
+         0.0337
+        ],
+        "k": 0,
+        "n": 110,
+        "rate": 0.0
+       },
+       "wrong": 3,
+       "wrong_by_class": {
+        "wrong_value": 3
+       },
+       "wrong_sent_to_review": {
+        "ci95": [
+         0.0,
+         0.5615
+        ],
+        "k": 0,
+        "n": 3,
+        "rate": 0.0
+       }
+      }
+     }
+    },
+    "caught_by": {
+     "CONFLICTING_CANDIDATES": 2,
+     "UNIT_INVALID": 1,
+     "UNIT_NOT_IN_EVIDENCE": 1,
+     "VALUE_NOT_IN_EVIDENCE": 2
+    },
+    "documents": 30,
+    "groundgate": {
+     "accepted_correct_citing_wrong_place": {
+      "ci95": [
+       0.0724,
+       0.1469
+      ],
+      "k": 27,
+      "n": 260,
+      "rate": 0.1038
+     },
+     "candidates": 294,
+     "correct": 288,
+     "correct_sent_to_review": {
+      "ci95": [
+       0.0595,
+       0.125
+      ],
+      "k": 25,
+      "n": 288,
+      "rate": 0.0868
+     },
+     "escape": {
+      "ci95": [
+       0.0,
+       0.3903
+      ],
+      "k": 0,
+      "n": 6,
+      "rate": 0.0
+     },
+     "escaped_by_class": {},
+     "false_reject": {
+      "ci95": [
+       0.0006,
+       0.0194
+      ],
+      "k": 1,
+      "n": 288,
+      "rate": 0.0035
+     },
+     "recall": {
+      "accepted": {
+       "ci95": [
+        0.8573,
+        0.9289
+       ],
+       "k": 248,
+       "n": 276,
+       "rate": 0.8986
+      },
+      "accepted_or_review": {
+       "ci95": [
+        0.9633,
+        0.9944
+       ],
+       "k": 272,
+       "n": 276,
+       "rate": 0.9855
+      }
+     },
+     "rejected_right_value_wrong_place": {
+      "ci95": [
+       0.0019,
+       0.025
+      ],
+      "k": 2,
+      "n": 288,
+      "rate": 0.0069
+     },
+     "review_load": {
+      "ci95": [
+       0.0639,
+       0.1303
+      ],
+      "k": 27,
+      "n": 294,
+      "rate": 0.0918
+     },
+     "wrong": 6,
+     "wrong_by_class": {
+      "absent_field": 2,
+      "wrong_value": 4
+     },
+     "wrong_sent_to_review": {
+      "ci95": [
+       0.0968,
+       0.7
+      ],
+      "k": 2,
+      "n": 6,
+      "rate": 0.3333
+     }
+    },
+    "harness": {
+     "chunks": 72,
+     "discarded": 0,
+     "provider": "claude-cli",
+     "seconds": 395,
+     "unusable_chunks": 2
+    },
+    "lx_aligned": {
+     "accepted_correct_citing_wrong_place": {
+      "ci95": [
+       0.0828,
+       0.1566
+      ],
+      "k": 33,
+      "n": 288,
+      "rate": 0.1146
+     },
+     "candidates": 294,
+     "correct": 288,
+     "correct_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.0132
+      ],
+      "k": 0,
+      "n": 288,
+      "rate": 0.0
+     },
+     "escape": {
+      "ci95": [
+       0.6097,
+       1.0
+      ],
+      "k": 6,
+      "n": 6,
+      "rate": 1.0
+     },
+     "escaped_by_class": {
+      "absent_field": 2,
+      "wrong_value": 4
+     },
+     "false_reject": {
+      "ci95": [
+       0.0,
+       0.0132
+      ],
+      "k": 0,
+      "n": 288,
+      "rate": 0.0
+     },
+     "recall": {
+      "accepted": {
+       "ci95": [
+        0.9798,
+        0.9994
+       ],
+       "k": 275,
+       "n": 276,
+       "rate": 0.9964
+      },
+      "accepted_or_review": {
+       "ci95": [
+        0.9798,
+        0.9994
+       ],
+       "k": 275,
+       "n": 276,
+       "rate": 0.9964
+      }
+     },
+     "rejected_right_value_wrong_place": {
+      "ci95": [
+       0.0,
+       0.0132
+      ],
+      "k": 0,
+      "n": 288,
+      "rate": 0.0
+     },
+     "review_load": {
+      "ci95": [
+       0.0,
+       0.0129
+      ],
+      "k": 0,
+      "n": 294,
+      "rate": 0.0
+     },
+     "wrong": 6,
+     "wrong_by_class": {
+      "absent_field": 2,
+      "wrong_value": 4
+     },
+     "wrong_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.3903
+      ],
+      "k": 0,
+      "n": 6,
+      "rate": 0.0
+     }
+    },
+    "lx_all": {
+     "accepted_correct_citing_wrong_place": {
+      "ci95": [
+       0.0828,
+       0.1566
+      ],
+      "k": 33,
+      "n": 288,
+      "rate": 0.1146
+     },
+     "candidates": 294,
+     "correct": 288,
+     "correct_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.0132
+      ],
+      "k": 0,
+      "n": 288,
+      "rate": 0.0
+     },
+     "escape": {
+      "ci95": [
+       0.6097,
+       1.0
+      ],
+      "k": 6,
+      "n": 6,
+      "rate": 1.0
+     },
+     "escaped_by_class": {
+      "absent_field": 2,
+      "wrong_value": 4
+     },
+     "false_reject": {
+      "ci95": [
+       0.0,
+       0.0132
+      ],
+      "k": 0,
+      "n": 288,
+      "rate": 0.0
+     },
+     "recall": {
+      "accepted": {
+       "ci95": [
+        0.9798,
+        0.9994
+       ],
+       "k": 275,
+       "n": 276,
+       "rate": 0.9964
+      },
+      "accepted_or_review": {
+       "ci95": [
+        0.9798,
+        0.9994
+       ],
+       "k": 275,
+       "n": 276,
+       "rate": 0.9964
+      }
+     },
+     "rejected_right_value_wrong_place": {
+      "ci95": [
+       0.0,
+       0.0132
+      ],
+      "k": 0,
+      "n": 288,
+      "rate": 0.0
+     },
+     "review_load": {
+      "ci95": [
+       0.0,
+       0.0129
+      ],
+      "k": 0,
+      "n": 294,
+      "rate": 0.0
+     },
+     "wrong": 6,
+     "wrong_by_class": {
+      "absent_field": 2,
+      "wrong_value": 4
+     },
+     "wrong_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.3903
+      ],
+      "k": 0,
+      "n": 6,
+      "rate": 0.0
+     }
+    },
+    "lx_exact": {
+     "accepted_correct_citing_wrong_place": {
+      "ci95": [
+       0.0862,
+       0.1643
+      ],
+      "k": 32,
+      "n": 267,
+      "rate": 0.1199
+     },
+     "candidates": 294,
+     "correct": 288,
+     "correct_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.0132
+      ],
+      "k": 0,
+      "n": 288,
+      "rate": 0.0
+     },
+     "escape": {
+      "ci95": [
+       0.6097,
+       1.0
+      ],
+      "k": 6,
+      "n": 6,
+      "rate": 1.0
+     },
+     "escaped_by_class": {
+      "absent_field": 2,
+      "wrong_value": 4
+     },
+     "false_reject": {
+      "ci95": [
+       0.0454,
+       0.1048
+      ],
+      "k": 20,
+      "n": 288,
+      "rate": 0.0694
+     },
+     "recall": {
+      "accepted": {
+       "ci95": [
+        0.8865,
+        0.9497
+       ],
+       "k": 255,
+       "n": 276,
+       "rate": 0.9239
+      },
+      "accepted_or_review": {
+       "ci95": [
+        0.8865,
+        0.9497
+       ],
+       "k": 255,
+       "n": 276,
+       "rate": 0.9239
+      }
+     },
+     "rejected_right_value_wrong_place": {
+      "ci95": [
+       0.0006,
+       0.0194
+      ],
+      "k": 1,
+      "n": 288,
+      "rate": 0.0035
+     },
+     "review_load": {
+      "ci95": [
+       0.0,
+       0.0129
+      ],
+      "k": 0,
+      "n": 294,
+      "rate": 0.0
+     },
+     "wrong": 6,
+     "wrong_by_class": {
+      "absent_field": 2,
+      "wrong_value": 4
+     },
+     "wrong_sent_to_review": {
+      "ci95": [
+       0.0,
+       0.3903
+      ],
+      "k": 0,
+      "n": 6,
       "rate": 0.0
      }
     }
