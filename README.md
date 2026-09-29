@@ -1,13 +1,200 @@
 # groundgate
 
-LLMs propose facts; groundgate decides which ones you can trust.
+**LLMs propose facts. groundgate decides which ones you can trust.**
 
-groundgate is a deterministic admission layer for LLM document extraction. Every extracted
-fact is **admitted**, flagged **needs_verification** with the exact place a person should look,
-or **rejected** with a stable reason code, and every run produces a receipt anyone can re-verify.
+groundgate is a deterministic admission layer for LLM document extraction. You give it a
+document, a schema, and the facts an extractor proposed. Every fact comes back with one of three
+outcomes:
 
-> Status: pre-alpha, under active development. Not yet published to PyPI.
+- **admitted**: every check passed;
+- **needs_verification**: nothing failed, but a person should look, and the decision says where;
+- **rejected**: a check failed, with a stable reason code.
+
+Every run writes a receipt with hashes of every input. Anyone can re-derive it byte for byte.
+
+![The groundgate review page for IRS Publication 590-A. Left: a Roth IRA limit flagged QUALIFIED_VALUE because the model cited the spousal-deduction sentence ("more than $236,000"). Right: the source text, with that citation outlined in amber and the correct Roth sentence, admitted, highlighted in green below it.](docs/report.png)
+
+## Why this exists
+
+Grounded extraction tools check that the quoted **text** exists in the source. They don't check
+the **value** you asked for.
+
+LangExtract is the clearest example, and a good tool. It aligns each `extraction_text` to the
+source and reports `MATCH_EXACT`, `MATCH_FUZZY` and so on. It never looks at the attributes that
+hold the typed value. So this passes as an exact match:
+
+```text
+extraction_text: "$8,000"     found in the source: MATCH_EXACT
+value:           "80000"      not what the source says
+```
+
+Here is what that looks like on a real document. I ran Gemini 3.6 Flash and GPT-OSS 120B through
+LangExtract on two pages of IRS Publication 590-A. LangExtract aligned all 48 extractions as
+`MATCH_EXACT`. groundgate then:
+
+- **rejected** Gemini's reading of a misprinted `$252,0000` as 2,520,000;
+- **flagged** two GPT-OSS facts that took a Roth IRA limit from the spousal-deduction sentence;
+  the numbers match, but the text says "more than" where the field says "at least";
+- **listed** a required field both models missed;
+- **admitted** 44 facts, all with the right value.
+
+One admitted fact still cites the wrong rule. Its number is correct, its comparator matches, and
+no span check can tell. I checked every decision by hand; the details are in
+[examples/irs-590a](examples/irs-590a), which is also the page in the screenshot.
+
+I measured the gap on purpose before writing the library. On 51 facts from two public-domain
+government documents, LangExtract's strictest setting (`MATCH_EXACT` only) accepted **100%** of
+planted value and unit errors whose quote was correct. groundgate caught **all** of them and
+rejected **none** of the correct facts. The method and full tables are in
+[spikes/m0_5](spikes/m0_5/README.md).
+
+To be clear about scale: on clean text, current models rarely get a value wrong. In that spike, 84
+real extractions had no value errors at all. The point is not that models are bad. It is that when
+one is wrong, nothing downstream should have to trust it, and every fact that is admitted comes
+with proof you can re-check.
+
+LangExtract verifies the text. groundgate verifies the value.
+
+## Quickstart
+
+```bash
+pip install "groundgate[pdf] @ git+https://github.com/mohanraj00/groundgate"
+```
+
+The core has no dependencies. `[pdf]` adds pdfminer.six for PDF text; `[langextract]` installs
+LangExtract.
+
+### With LangExtract
+
+```python
+import langextract as lx
+from groundgate.adapters.langextract import admit_document
+
+result = lx.extract(text_or_documents=text, prompt_description=prompt, examples=examples)
+
+schema = {
+    "fields": {
+        "ira_limit_2025": {"type": "integer", "unit": "USD", "required": True},
+        "roth_phaseout_single_2025_start": {"type": "integer", "unit": "USD", "comparator": "ge"},
+    }
+}
+receipt = admit_document(result, schema)
+
+for d in receipt.decisions:
+    print(d.outcome, d.field, d.value, d.codes)
+```
+
+Each extraction's `value` and `unit` attributes are checked at the location LangExtract found.
+An extraction LangExtract could not align is rejected `NO_EVIDENCE`.
+
+### With any extractor
+
+A candidate is a small JSON object. Evidence is a UTF-8 byte span into the document:
+
+```python
+import groundgate as gg
+
+text = "The IRA contribution limit remains $7,000 ($8,000 for individuals age 50 or older)."
+start = text.encode().index(b"$8,000")
+candidate = {
+    "field": "ira_limit_2025",
+    "value": "8000",
+    "unit": "USD",
+    "evidence": {"start": start, "end": start + 6, "text": "$8,000"},
+}
+receipt = gg.admit(text, schema, [candidate])
+```
+
+That fact is admitted. It is also the wrong one: $8,000 is the age-50 limit. The span checks
+can't see that; see [what it does not do](#what-it-does-not-do).
+
+### From the command line
+
+```bash
+groundgate extract p590a.pdf --pages 1-2 -o doc.txt --layout layout.json
+groundgate admit   doc.txt schema.json candidates.json -o receipt.json
+groundgate verify  receipt.json doc.txt schema.json candidates.json
+groundgate report  receipt.json doc.txt schema.json candidates.json --layout layout.json -o report.html
+```
+
+`extract` turns a PDF, HTML, XML or text file into the NFC text everything else reads, and
+records the page and box of every word. Text a reader can't see (proof marks drawn off the page,
+hidden HTML) is dropped, and superscripts are marked so that 10⁹ reads `10^9`, never `109`. Pass
+`-` as the document to read it from a pipe. `report` refuses to render a receipt that doesn't
+re-derive from its inputs. [examples/irs-590a](examples/irs-590a) runs the whole pipeline on an
+IRS publication with cached model output, so it reproduces without an API key.
+
+## What it checks
+
+Checks run in a fixed order. The first failure rejects the fact.
+
+| Code | Rejects when |
+|---|---|
+| `CANDIDATE_INVALID` | the candidate is malformed |
+| `FIELD_UNKNOWN` | the field is not in the schema |
+| `NULL_STRING_LITERAL` | the value is `"null"`, `"none"`, `"n/a"` |
+| `TYPE_INVALID` | the value does not parse as the field's type |
+| `RANGE_INVALID` | the value is outside the field's bounds |
+| `UNIT_INVALID` | the unit is not the field's unit |
+| `NO_EVIDENCE` | no evidence is cited |
+| `SPAN_INVALID` | the span is outside the document or splits a character |
+| `VALUE_NOT_IN_EVIDENCE` | no number in the span equals the value |
+| `UNIT_NOT_IN_EVIDENCE` | the value is there, but not with the field's unit |
+
+A fact that passes every check can still be flagged for a person:
+
+| Code | Flags when |
+|---|---|
+| `NON_VERBATIM_EVIDENCE` | the quote differs from the text at the span |
+| `QUALIFIED_VALUE` | "up to", "approximately", "or more" changes the value, and the schema didn't declare it |
+| `SCALE_WORD` | "million", "lakh" and similar follow the value |
+| `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
+| `CONFLICTING_CANDIDATES` | another proposal for the same field has a different value |
+
+Number matching is collision-safe. The span `500 mg` inside `1,500 mg` never reads as 500, and a
+malformed number like the `$252,0000` printed in IRS Publication 590-A never equals 252,000 or
+2,520,000. When a span misses the value but its quote occurs exactly once elsewhere with the right
+value and unit, groundgate moves the evidence there and records `EVIDENCE_REANCHORED`.
+
+The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 16 language-neutral
+vectors that pin every code, so another implementation can prove it agrees.
+
+## Receipts
+
+```json
+{"groundgate": "0.1",
+ "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:387c5991b989..."},
+ "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
+ "decisions": [{"candidate_id": "Gemini_3.6_Flash_Medium/0", "field": "ira_limit_2025",
+                "outcome": "admitted", "codes": [], "value": "7000", "unit": "USD",
+                "evidence": {"start": 2634, "end": 2640}, "candidate_sha256": "sha256:37e4fbb8..."},
+               "..."],
+ "coverage": [{"field": "roth_phaseout_joint_2026_end", "code": "REQUIRED_FIELD_MISSING"}],
+ "summary": {"admitted": 50, "needs_verification": 0, "rejected": 2},
+ "receipt_sha256": "sha256:..."}
+```
+
+Hashes are SHA-256 over RFC 8785 canonical JSON, so a receipt means the same thing in any
+language. `groundgate verify` re-runs every decision from the inputs and fails on any difference:
+a changed document, schema, policy, candidate or outcome.
+
+## What it does not do
+
+- **It does not judge meaning.** If the model reports a number that really is in the sentence but
+  belongs to another field, every span check passes. The quickstart's $8,000 is that case. The
+  countermeasure is two independent proposers plus `CONFLICTING_CANDIDATES`; how well that works
+  is what the benchmark will measure.
+- **No dates, arrays of records, or cross-document checks** in spec v0.1.
+- **No OCR.** Scanned PDFs need a text layer first (for example `ocrmypdf`).
+- **No model calls.** groundgate never asks an LLM whether an LLM was right.
+
+## Status
+
+Pre-alpha. The spec is a v0.1 draft and may change before 0.1.0 ships on PyPI. Next up is a
+benchmark on public-domain FDA, NTSB and IRS documents with person-checked labels: how often real
+models produce each error class, how many groundgate catches, and how many correct facts it sends
+to review.
 
 ## License
 
-Apache-2.0. See [LICENSE](LICENSE).
+Apache-2.0.

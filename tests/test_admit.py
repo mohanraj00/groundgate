@@ -161,3 +161,21 @@ def test_schema_defaults_are_hashed() -> None:
         DOC, {"fields": {"limit": {"unit": "USD", "type": "number", "required": False}}}, []
     )
     assert a.schema_sha256 == b.schema_sha256
+
+
+def test_flag_order_and_code_descriptions_are_pinned() -> None:
+    from groundgate import codes
+    from groundgate.admit import FLAG_ORDER
+
+    assert FLAG_ORDER == (
+        "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "LOW_CONFIDENCE",
+        "CONFLICTING_CANDIDATES",
+    )  # fmt: skip
+    assert tuple(codes.FLAG) == FLAG_ORDER
+    assert len(codes.REJECT) == 10 and set(codes.INFO) == {"EVIDENCE_REANCHORED"}
+    assert set(codes.COVERAGE) == {"REQUIRED_FIELD_MISSING"}
+
+
+def test_verify_rejects_a_receipt_that_is_not_an_object() -> None:
+    with pytest.raises(gg.PacketError):
+        gg.verify([], DOC, SCHEMA, CANDS)  # type: ignore[arg-type]

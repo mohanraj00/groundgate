@@ -24,6 +24,10 @@ classifiers = [
 ]
 keywords = ["llm", "extraction", "grounding", "verification", "langextract"]
 
+[project.optional-dependencies]
+pdf = ["pdfminer.six>=20231228"]
+langextract = ["langextract>=1.0"]
+
 [project.scripts]
 groundgate = "groundgate.cli:main"
 
@@ -38,7 +42,9 @@ dev = [
   "mypy>=1.10",
   "ruff>=0.6",
   "rfc8785>=0.1.4",
+  "pdfminer.six>=20231228",
 ]
+langextract = ["langextract>=1.0"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/groundgate"]
@@ -50,6 +56,9 @@ extend-exclude = ["spikes"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.ruff.lint.isort]
+known-local-folder = ["pdfgen"]
 
 [tool.ruff.lint.per-file-ignores]
 "conformance/build.py" = ["E501"]  # vector data reads better unwrapped

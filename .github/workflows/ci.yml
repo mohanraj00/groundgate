@@ -17,6 +17,8 @@ jobs:
       - run: uv run mypy
       - name: Conformance vectors are up to date
         run: uv run python conformance/build.py && git diff --exit-code conformance/
+      - name: The example rebuilds byte for byte from its cached model runs
+        run: uv run python examples/irs-590a/build.py && git diff --exit-code examples/
 
   test:
     strategy:
@@ -30,3 +32,11 @@ jobs:
       - uses: astral-sh/setup-uv@v6
       - run: uv sync --python ${{ matrix.python }}
       - run: uv run pytest --cov --cov-report=term-missing
+
+  langextract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --python 3.12 --group langextract
+      - run: uv run --group langextract pytest tests/test_langextract.py

@@ -1,0 +1,674 @@
+[
+  {
+    "id": "GPT-OSS_120B_Medium/0",
+    "field": "ira_limit_2025",
+    "value": "7000",
+    "extraction_class": "ira_limit_2025",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 2317,
+      "end": 2323,
+      "text": "$7,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/1",
+    "field": "ira_limit_age_50_2025",
+    "value": "8000",
+    "extraction_class": "ira_limit_age_50_2025",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 2325,
+      "end": 2331,
+      "text": "$8,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/2",
+    "field": "trump_account_pilot_contribution",
+    "value": "1000",
+    "extraction_class": "trump_account_pilot_contribution",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 2785,
+      "end": 2791,
+      "text": "$1,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/3",
+    "field": "traditional_phaseout_joint_2025_start",
+    "value": "126000",
+    "extraction_class": "traditional_phaseout_joint_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 3468,
+      "end": 3476,
+      "text": "$126,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/4",
+    "field": "traditional_phaseout_joint_2025_end",
+    "value": "146000",
+    "extraction_class": "traditional_phaseout_joint_2025_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 3491,
+      "end": 3499,
+      "text": "$146,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/5",
+    "field": "traditional_phaseout_single_2025_start",
+    "value": "79000",
+    "extraction_class": "traditional_phaseout_single_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 3594,
+      "end": 3601,
+      "text": "$79,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/6",
+    "field": "traditional_phaseout_single_2025_end",
+    "value": "89000",
+    "extraction_class": "traditional_phaseout_single_2025_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 3616,
+      "end": 3623,
+      "text": "$89,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/7",
+    "field": "roth_phaseout_joint_2025_start",
+    "value": "236000",
+    "extraction_class": "roth_phaseout_joint_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 4016,
+      "end": 4024,
+      "text": "$236,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/8",
+    "field": "roth_phaseout_joint_2025_end",
+    "value": "246000",
+    "extraction_class": "roth_phaseout_joint_2025_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 4067,
+      "end": 4075,
+      "text": "$246,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/9",
+    "field": "roth_phaseout_single_2025_start",
+    "value": "150000",
+    "extraction_class": "roth_phaseout_single_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 4748,
+      "end": 4756,
+      "text": "$150,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/10",
+    "field": "ira_limit_2026",
+    "value": "7500",
+    "extraction_class": "ira_limit_2026",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5204,
+      "end": 5210,
+      "text": "$7,500"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/11",
+    "field": "ira_limit_age_50_2026",
+    "value": "8600",
+    "extraction_class": "ira_limit_age_50_2026",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5212,
+      "end": 5218,
+      "text": "$8,600"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/12",
+    "field": "traditional_phaseout_joint_2026_start",
+    "value": "129000",
+    "extraction_class": "traditional_phaseout_joint_2026_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5551,
+      "end": 5559,
+      "text": "$129,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/13",
+    "field": "traditional_phaseout_joint_2026_end",
+    "value": "149000",
+    "extraction_class": "traditional_phaseout_joint_2026_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5574,
+      "end": 5582,
+      "text": "$149,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/14",
+    "field": "traditional_phaseout_single_2026_start",
+    "value": "81000",
+    "extraction_class": "traditional_phaseout_single_2026_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5677,
+      "end": 5684,
+      "text": "$81,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/15",
+    "field": "traditional_phaseout_single_2026_end",
+    "value": "91000",
+    "extraction_class": "traditional_phaseout_single_2026_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5699,
+      "end": 5706,
+      "text": "$91,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/16",
+    "field": "spousal_phaseout_2025_start",
+    "value": "236000",
+    "extraction_class": "spousal_phaseout_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6125,
+      "end": 6133,
+      "text": "$236,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/17",
+    "field": "spousal_phaseout_2025_end",
+    "value": "246000",
+    "extraction_class": "spousal_phaseout_2025_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6176,
+      "end": 6184,
+      "text": "$246,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/18",
+    "field": "spousal_phaseout_2026_start",
+    "value": "242000",
+    "extraction_class": "spousal_phaseout_2026_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6107,
+      "end": 6115,
+      "text": "$242,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/19",
+    "field": "spousal_phaseout_2026_end",
+    "value": "252000",
+    "extraction_class": "spousal_phaseout_2026_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6220,
+      "end": 6228,
+      "text": "$252,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/20",
+    "field": "roth_phaseout_joint_2026_start",
+    "value": "242000",
+    "extraction_class": "roth_phaseout_joint_2026_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6578,
+      "end": 6586,
+      "text": "$242,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "GPT-OSS_120B_Medium/21",
+    "field": "roth_phaseout_joint_2026_end",
+    "value": "252000",
+    "extraction_class": "roth_phaseout_joint_2026_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6220,
+      "end": 6228,
+      "text": "$252,000"
+    },
+    "proposer": "GPT-OSS 120B (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/0",
+    "field": "ira_limit_2025",
+    "value": "7000",
+    "extraction_class": "ira_limit_2025",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 2317,
+      "end": 2323,
+      "text": "$7,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/1",
+    "field": "ira_limit_age_50_2025",
+    "value": "8000",
+    "extraction_class": "ira_limit_age_50_2025",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 2325,
+      "end": 2331,
+      "text": "$8,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/2",
+    "field": "trump_account_pilot_contribution",
+    "value": "1000",
+    "extraction_class": "trump_account_pilot_contribution",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 2785,
+      "end": 2791,
+      "text": "$1,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/3",
+    "field": "traditional_phaseout_joint_2025_start",
+    "value": "126000",
+    "extraction_class": "traditional_phaseout_joint_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 3468,
+      "end": 3476,
+      "text": "$126,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/4",
+    "field": "traditional_phaseout_joint_2025_end",
+    "value": "146000",
+    "extraction_class": "traditional_phaseout_joint_2025_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 3491,
+      "end": 3499,
+      "text": "$146,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/5",
+    "field": "traditional_phaseout_single_2025_start",
+    "value": "79000",
+    "extraction_class": "traditional_phaseout_single_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 3594,
+      "end": 3601,
+      "text": "$79,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/6",
+    "field": "traditional_phaseout_single_2025_end",
+    "value": "89000",
+    "extraction_class": "traditional_phaseout_single_2025_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 3616,
+      "end": 3623,
+      "text": "$89,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/7",
+    "field": "spousal_phaseout_2025_start",
+    "value": "236000",
+    "extraction_class": "spousal_phaseout_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 4016,
+      "end": 4024,
+      "text": "$236,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/8",
+    "field": "spousal_phaseout_2025_end",
+    "value": "246000",
+    "extraction_class": "spousal_phaseout_2025_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 4067,
+      "end": 4075,
+      "text": "$246,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/9",
+    "field": "roth_phaseout_joint_2025_start",
+    "value": "236000",
+    "extraction_class": "roth_phaseout_joint_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 4477,
+      "end": 4485,
+      "text": "$236,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/10",
+    "field": "roth_phaseout_joint_2025_end",
+    "value": "246000",
+    "extraction_class": "roth_phaseout_joint_2025_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 4552,
+      "end": 4560,
+      "text": "$246,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/11",
+    "field": "roth_phaseout_single_2025_start",
+    "value": "150000",
+    "extraction_class": "roth_phaseout_single_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 4748,
+      "end": 4756,
+      "text": "$150,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/12",
+    "field": "ira_limit_2026",
+    "value": "7500",
+    "extraction_class": "ira_limit_2026",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5204,
+      "end": 5210,
+      "text": "$7,500"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/13",
+    "field": "ira_limit_age_50_2026",
+    "value": "8600",
+    "extraction_class": "ira_limit_age_50_2026",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5212,
+      "end": 5218,
+      "text": "$8,600"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/14",
+    "field": "traditional_phaseout_joint_2026_start",
+    "value": "129000",
+    "extraction_class": "traditional_phaseout_joint_2026_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5551,
+      "end": 5559,
+      "text": "$129,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/15",
+    "field": "traditional_phaseout_joint_2026_end",
+    "value": "149000",
+    "extraction_class": "traditional_phaseout_joint_2026_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5574,
+      "end": 5582,
+      "text": "$149,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/16",
+    "field": "traditional_phaseout_single_2026_start",
+    "value": "81000",
+    "extraction_class": "traditional_phaseout_single_2026_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5677,
+      "end": 5684,
+      "text": "$81,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/17",
+    "field": "traditional_phaseout_single_2026_end",
+    "value": "91000",
+    "extraction_class": "traditional_phaseout_single_2026_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 5699,
+      "end": 5706,
+      "text": "$91,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/18",
+    "field": "spousal_phaseout_2026_start",
+    "value": "242000",
+    "extraction_class": "spousal_phaseout_2026_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6107,
+      "end": 6115,
+      "text": "$242,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/19",
+    "field": "spousal_phaseout_2025_start",
+    "value": "236000",
+    "extraction_class": "spousal_phaseout_2025_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6125,
+      "end": 6133,
+      "text": "$236,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/20",
+    "field": "spousal_phaseout_2026_end",
+    "value": "252000",
+    "extraction_class": "spousal_phaseout_2026_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6158,
+      "end": 6166,
+      "text": "$252,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/21",
+    "field": "spousal_phaseout_2025_end",
+    "value": "246000",
+    "extraction_class": "spousal_phaseout_2025_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6176,
+      "end": 6184,
+      "text": "$246,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/22",
+    "field": "roth_phaseout_joint_2026_start",
+    "value": "242000",
+    "extraction_class": "roth_phaseout_joint_2026_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6578,
+      "end": 6586,
+      "text": "$242,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/23",
+    "field": "roth_phaseout_joint_2026_end",
+    "value": "2520000",
+    "extraction_class": "roth_phaseout_joint_2026_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6653,
+      "end": 6662,
+      "text": "$252,0000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/24",
+    "field": "roth_phaseout_single_2026_start",
+    "value": "153000",
+    "extraction_class": "roth_phaseout_single_2026_start",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6850,
+      "end": 6858,
+      "text": "$153,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  },
+  {
+    "id": "Gemini_3.6_Flash_Medium/25",
+    "field": "roth_phaseout_single_2026_end",
+    "value": "168000",
+    "extraction_class": "roth_phaseout_single_2026_end",
+    "alignment_status": "match_exact",
+    "unit": "USD",
+    "evidence": {
+      "start": 6927,
+      "end": 6935,
+      "text": "$168,000"
+    },
+    "proposer": "Gemini 3.6 Flash (Medium) via LangExtract 1.7.0"
+  }
+]

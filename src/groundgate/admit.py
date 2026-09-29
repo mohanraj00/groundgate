@@ -24,7 +24,7 @@ from .text import (
 )
 
 NULL_LITERALS = {"null", "none", "nil", "n/a"}
-FLAG_ORDER = (
+FLAG_ORDER = (  # SPEC §3 table order; it is part of every receipt hash
     "NON_VERBATIM_EVIDENCE",
     "QUALIFIED_VALUE",
     "SCALE_WORD",
@@ -306,6 +306,8 @@ def verify(
     policy: Policy | Mapping[str, Any] | None = None,
 ) -> Verification:
     """Re-derive the receipt from its inputs and compare it with ``receipt``."""
+    if not isinstance(receipt, Mapping):
+        raise PacketError("receipt must be a JSON object")
     problems = []
     body = {k: v for k, v in receipt.items() if k != "receipt_sha256"}
     if digest("receipt", body) != receipt.get("receipt_sha256"):
