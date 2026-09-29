@@ -11,6 +11,9 @@ Providers:
   gemini      LangExtract's native Gemini provider (GEMINI_API_KEY)
   agy         the Antigravity CLI in print mode, plan mode, sandboxed, with a no-tools preamble
   claude-cli  the Claude Code CLI in print mode with every tool disabled
+  codex       the Codex CLI: `codex exec` in an empty directory, read-only sandbox, user config,
+              rules and AGENTS.md ignored, no session saved; a reply that used any tool is
+              discarded and retried
 The CLI providers run a logged-in agent harness rather than a raw API call, so the harness's
 own system prompt wraps ours. The benchmark reports which provider produced each run.
 """
@@ -24,6 +27,7 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
 import time
 from collections.abc import Iterator, Sequence
 from concurrent.futures import ThreadPoolExecutor
@@ -46,12 +50,12 @@ KIND = {
 
 PROMPT = """Extract the fields listed below from {kind}.
 Only extract a field when the text itself states its value. Do not compute, infer, or use
-outside knowledge. If the text does not state a field, do not extract it.
-extraction_class must be one of the field names below, exactly.
-extraction_text must be copied verbatim from the text: the number as written, with its unit or
-$ sign when they are adjacent.
-attributes: "value" is the plain number without $, commas or units; "unit" is the unit code
-given for the field.
+outside knowledge. If the text does not state a field, leave it out.
+Answer in exactly the JSON layout the examples use. Each extraction is keyed by one of the field
+names below, and its text is copied verbatim from the source: the number as written, with its
+unit or $ sign when they are adjacent. The matching "<field name>_attributes" object holds
+"value", the plain number without $, commas or units, and "unit", the unit code given for the
+field. Leave "unit" out for a field that has no unit code.
 
 Fields (name [unit code]: meaning):
 {fields}
@@ -84,10 +88,11 @@ EXAMPLES = {
     "ntsb": [
         lx.data.ExampleData(
             text=(
-                "Flight Time:\n\n1500 hours (Total, all aircraft), 200 hours (Total, this make "
-                "and model)\n\nWind Speed/Gusts:\n\n9 knots / None"
+                "Age:\n\n38,Female\n\nFlight Time:\n\n1500 hours (Total, all aircraft), 200 "
+                "hours (Total, this make and model)\n\nWind Speed/Gusts:\n\n9 knots / None"
             ),
             extractions=[
+                lx.data.Extraction("pilot_age", "38", attributes={"value": "38"}),
                 lx.data.Extraction(
                     "pilot_total_hours", "1500 hours", attributes={"value": "1500", "unit": "hours"}
                 ),
@@ -144,19 +149,101 @@ def _strip_fence(out: str) -> str:
 class CLIModel(base_model.BaseLanguageModel):
     """A LangExtract provider that shells out to a logged-in model CLI with tools disabled."""
 
-    def __init__(self, provider: str, model: str, workers: int) -> None:
+    def __init__(self, provider: str, model: str, workers: int, effort: str | None) -> None:
         super().__init__()
-        self.provider, self.model, self.workers = provider, model, workers
-        self.raw: list[dict[str, str]] = []  # every response, in chunk order
+        self.provider, self.model, self.workers, self.effort = provider, model, workers, effort
+        self.raw: list[dict[str, Any]] = []  # every response, in chunk order
+        self.empty = tempfile.mkdtemp(prefix="groundgate-bench-")  # codex's working root
 
-    def _one(self, prompt: str) -> str:
+    def command(self) -> list[str]:
+        """The codex command line; the prompt goes on stdin."""
+        cmd = [
+            "codex",
+            "exec",
+            "-m",
+            self.model,
+            "--json",
+            "--ephemeral",
+            "--ignore-user-config",
+            "--ignore-rules",
+            "--skip-git-repo-check",
+            "-s",
+            "read-only",
+            "-C",
+            self.empty,
+            "-c",
+            "project_doc_max_bytes=0",
+        ]
+        if self.effort:
+            cmd += ["-c", f'model_reasoning_effort="{self.effort}"']
+        return [*cmd, "-"]
+
+    def _codex(self, prompt: str) -> tuple[str, int]:
+        """(reply, tool items seen). Raises on a failed call."""
+        proc = subprocess.run(
+            self.command(),
+            input=AGY_PREFIX + prompt,
+            capture_output=True,
+            text=True,
+            timeout=600,
+            check=False,
+        )
+        reply, tools, error = "", 0, proc.stderr[-300:]
+        for line in proc.stdout.splitlines():
+            event = json.loads(line) if line.startswith("{") else {}
+            item = event.get("item") or {}
+            if event.get("type") == "turn.failed":
+                error = str(event.get("error", {}).get("message", ""))[-300:]
+            if event.get("type") == "item.completed" and item.get("type") == "agent_message":
+                reply = item.get("text", "")
+            elif event.get("type") == "item.completed" and item.get("type") != "reasoning":
+                tools += 1
+        if proc.returncode != 0:
+            raise RuntimeError(error)
+        return reply, tools
+
+    def _one(self, prompt: str) -> tuple[str, dict[str, Any]]:
+        notes: dict[str, Any] = {}
+        if self.provider == "codex":
+            for attempt in range(3):
+                try:
+                    out, tools = self._codex(prompt)
+                except (RuntimeError, subprocess.TimeoutExpired) as e:
+                    notes.setdefault("failed_calls", []).append(str(e)[-200:])
+                    time.sleep(10 * (attempt + 1))
+                    continue
+                if tools:  # the answer may lean on something other than the prompt
+                    notes["discarded_for_tool_use"] = notes.get("discarded_for_tool_use", 0) + 1
+                    continue
+                if out.strip():
+                    return _strip_fence(out), notes
+            raise RuntimeError(f"codex failed 3 times: {notes}")
         if self.provider == "agy":
-            cmd = ["agy", "--model", self.model, "--mode", "plan", "--sandbox",
-                   "--print-timeout", "300s", "-p", AGY_PREFIX + prompt]  # fmt: skip
+            cmd = [
+                "agy",
+                "--model",
+                self.model,
+                "--mode",
+                "plan",
+                "--sandbox",
+                "--print-timeout",
+                "300s",
+                "-p",
+                AGY_PREFIX + prompt,
+            ]
             stdin = None
         else:
-            cmd = ["claude", "-p", "--model", self.model, "--tools", "",
-                   "--no-session-persistence", "--output-format", "json"]  # fmt: skip
+            cmd = [
+                "claude",
+                "-p",
+                "--model",
+                self.model,
+                "--tools",
+                "",
+                "--no-session-persistence",
+                "--output-format",
+                "json",
+            ]
             stdin = prompt
         for attempt in range(3):
             proc = subprocess.run(
@@ -167,7 +254,7 @@ class CLIModel(base_model.BaseLanguageModel):
                 res = json.loads(out)
                 out = "" if res.get("is_error") else res["result"]
             if proc.returncode == 0 and out.strip():
-                return _strip_fence(out)
+                return _strip_fence(out), notes
             time.sleep(10 * (attempt + 1))
         raise RuntimeError(f"{self.provider} failed 3 times: {proc.stderr[-300:]}")
 
@@ -175,17 +262,21 @@ class CLIModel(base_model.BaseLanguageModel):
         self, batch_prompts: Sequence[str], **kwargs: Any
     ) -> Iterator[Sequence[lx_types.ScoredOutput]]:
         with ThreadPoolExecutor(self.workers) as pool:
-            for prompt, out in zip(batch_prompts, pool.map(self._one, batch_prompts), strict=True):
+            results = pool.map(self._one, batch_prompts)
+            for prompt, (out, notes) in zip(batch_prompts, results, strict=True):
                 digest = hashlib.sha256(prompt.encode()).hexdigest()
                 # agents sometimes answer with a link to a file they wrote; keep home paths out
-                self.raw.append({"prompt_sha256": digest, "output": out.replace(HOME, "~")})
+                entry = {"prompt_sha256": digest, "output": out.replace(HOME, "~")}
+                self.raw.append(entry | ({"harness": notes} if notes else {}))
                 print(".", end="", flush=True)
                 yield [lx_types.ScoredOutput(score=1.0, output=out)]
 
 
 def prompt_for(gold: dict[str, Any]) -> str:
     lines = [
-        f"- {name} [{spec['schema']['unit'] or 'none'}]: {spec['description']}"
+        f"- {name} [{unit}]: {spec['description']}"
+        if (unit := spec["schema"]["unit"])
+        else f"- {name}: {spec['description']}"
         for name, spec in gold["fields"].items()
     ]
     return PROMPT.format(kind=KIND[gold["kind"]], fields="\n".join(lines))
@@ -197,20 +288,23 @@ def safe(name: str) -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--provider", choices=["gemini", "agy", "claude-cli"], required=True)
+    ap.add_argument("--provider", choices=["gemini", "agy", "claude-cli", "codex"], required=True)
     ap.add_argument("--model", required=True)
     ap.add_argument("--buffer", type=int, default=1000, help="LangExtract max_char_buffer")
     ap.add_argument("--workers", type=int, default=3, help="parallel CLI calls")
     ap.add_argument("--only", nargs="*", help="document ids")
+    ap.add_argument("--effort", help="codex reasoning effort (low, medium, high)")
+    ap.add_argument("--label", help='name in the results, e.g. "GPT-6 Luna (Medium)"')
     args = ap.parse_args()
+    label = args.label or args.model
 
-    out_dir = HERE / "runs" / safe(args.model) / str(args.buffer)
+    out_dir = HERE / "runs" / safe(label) / str(args.buffer)
     out_dir.mkdir(parents=True, exist_ok=True)
     kw: dict[str, Any] = {}
     if args.provider == "gemini":
         kw["model_id"] = args.model
     else:
-        kw["model"] = CLIModel(args.provider, args.model, args.workers)
+        kw["model"] = CLIModel(args.provider, args.model, args.workers, args.effort)
     for path in sorted((HERE / "gold").glob("*.json")):
         gold = json.loads(path.read_text(encoding="utf-8"))
         doc_id = gold["doc"]
@@ -236,17 +330,26 @@ def main() -> None:
             )
         except Exception as e:  # keep going; a rerun retries the failed document
             print(f" FAILED: {type(e).__name__}: {e}", file=sys.stderr)
+            if "not supported" in str(e):
+                raise SystemExit(4) from None  # this account cannot use the model
+            if any(w in str(e) for w in ("RESOURCE_EXHAUSTED", "quota", "usage limit", "429")):
+                raise SystemExit(3) from None  # out of quota: stop, a later pass resumes
             continue
         result.document_id = doc_id
         record = {
             "provider": args.provider,
-            "model": args.model,
+            "model": label,
+            "model_id": args.model,
+            "effort": args.effort,
             "langextract": importlib.metadata.version("langextract"),
             "max_char_buffer": args.buffer,
             "seconds": round(time.time() - t0),
             "document": data_lib.annotated_document_to_dict(result),
         }
         if isinstance(kw.get("model"), CLIModel):
+            if args.provider == "codex":
+                cmd = kw["model"].command()
+                record["harness"] = ["<empty dir>" if a.startswith("/") else a for a in cmd]
             record["raw_outputs"] = kw["model"].raw
         target.write_text(json.dumps(record, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f" {len(result.extractions or [])} extractions, {record['seconds']}s")

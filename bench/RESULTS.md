@@ -11,19 +11,34 @@ Gold: 30 documents, 276 facts, 34 fields confirmed absent (draft (model-written,
 
 ![Planted errors let through](charts/track_a.svg)
 
+**Correct extractions (higher is better).** Share accepted without review.
+
 | Planted | n | LangExtract, all | aligned | MATCH_EXACT | groundgate admitted | review | rejected |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | correct value, verbatim text | 276 | 100.0% | 100.0% | 100.0% | 91.3% | 7.6% | 1.1% |
 | correct value, paraphrased text | 276 | 100.0% | 64.5% | 1.1% | 1.1% | 60.1% | 38.8% |
+
+**Errors in the extraction (lower is better).** Share accepted without review.
+
+| Planted | n | LangExtract, all | aligned | MATCH_EXACT | groundgate admitted | review | rejected |
+|---|---:|---:|---:|---:|---:|---:|---:|
 | value attribute x10, text right | 275 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 100.0% |
 | value and text x10 | 275 | 100.0% | 25.5% | 0.4% | 0.0% | 0.0% | 100.0% |
 | one digit changed | 276 | 100.0% | 44.9% | 3.3% | 2.2% | 0.7% | 97.1% |
+| decimal point dropped (0.4 read as 4) | 20 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 100.0% |
+| comma read as a decimal point (184,500 as 184.5) | 87 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 100.0% |
 | wrong unit | 256 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 100.0% |
 | "null" as the value | 276 | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 100.0% |
 | a nearby number with the same unit | 195 | 100.0% | 98.5% | 95.9% | 81.0% | 15.9% | 3.1% |
 
-Percentages are the share accepted without review. For the first two rows higher is
-better; for the rest lower is better.
+**Errors in meaning: the text qualifies the value (lower is better).** Share accepted without review.
+
+| Planted | n | LangExtract, all | aligned | MATCH_EXACT | groundgate admitted | review | rejected |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| "more than" written before the value | 271 | 100.0% | 100.0% | 100.0% | 8.1% | 91.1% | 0.7% |
+| "million" written after the value | 114 | 100.0% | 100.0% | 100.0% | 0.0% | 99.1% | 0.9% |
+
+All 22 admitted here cite another place where the same text appears without the planted word. LangExtract aligned the quote there, and that place does state the value.
 
 ## Track B: real model runs
 
@@ -31,43 +46,82 @@ better; for the rest lower is better.
 
 | Run | docs | candidates | wrong | escaped, LangExtract all | escaped, MATCH_EXACT | escaped, groundgate | wrong sent to review | false rejects | review load | recall, admitted | recall, admitted or review |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Claude Sonnet 4.6 (Thinking) @ 1000 | 6 | 85 | 7 | 100.0% (7/7) | 100.0% (7/7) | 0.0% (0/7) [0, 35] | 85.7% (6/7) | 0.0% (0/78) | 20.0% (17/85) | 84.1% (37/44) | 97.7% (43/44) |
-| GPT-OSS 120B (Medium) @ 1000 | 8 | 124 | 47 | 100.0% (47/47) | 31.9% (15/47) | 6.4% (3/47) [2, 17] | 27.7% (13/47) | 0.0% (0/77) | 21.8% (27/124) | 66.7% (36/54) | 88.9% (48/54) |
-| Gemini 3.6 Flash (Medium) @ 1000 | 9 | 113 | 9 | 100.0% (9/9) | 100.0% (9/9) | 11.1% (1/9) [2, 44] | 77.8% (7/9) | 0.0% (0/104) | 22.1% (25/113) | 83.3% (50/60) | 98.3% (59/60) |
-
-### By source
-
-| Run | source | wrong | escaped, MATCH_EXACT | escaped, groundgate |
-|---|---|---:|---:|---:|
-| Claude Sonnet 4.6 (Thinking) @ 1000 | fda | 7 | 100.0% (7/7) | 0.0% (0/7) |
-| GPT-OSS 120B (Medium) @ 1000 | fda | 47 | 31.9% (15/47) | 6.4% (3/47) |
-| Gemini 3.6 Flash (Medium) @ 1000 | fda | 9 | 100.0% (9/9) | 11.1% (1/9) |
+| GPT-5.6 Luna (Medium) @ 1000 | 22 | 250 | 14 | 100.0% (14/14) | 100.0% (14/14) | 7.1% (1/14) [1, 31] | 85.7% (12/14) | 0.0% (0/236) | 19.6% (49/250) | 81.0% (154/190) | 95.8% (182/190) |
+| GPT-5.6 Terra (Medium) @ 1000 | 5 | 61 | 2 | 100.0% (2/2) | 100.0% (2/2) | 0.0% (0/2) [0, 66] | 100.0% (2/2) | 0.0% (0/59) | 18.0% (11/61) | 86.1% (31/36) | 97.2% (35/36) |
+| Gemini 3.6 Flash (Medium) @ 1000 | 4 | 42 | 2 | 100.0% (2/2) | 100.0% (2/2) | 0.0% (0/2) [0, 66] | 100.0% (2/2) | 0.0% (0/40) | 21.4% (9/42) | 87.5% (21/24) | 100.0% (24/24) |
+| Gemini 3.8 Flash (Low) @ 1000 | 4 | 38 | 1 | 100.0% (1/1) | 100.0% (1/1) | 0.0% (0/1) [0, 79] | 100.0% (1/1) | 0.0% (0/37) | 23.7% (9/38) | 75.0% (18/24) | 87.5% (21/24) |
 
 ### What the wrong extractions were
 
 | Run | wrong value | field absent from the document | wrong unit | not a number |
 |---|---:|---:|---:|---:|
-| Claude Sonnet 4.6 (Thinking) @ 1000 | 6 | 1 | 0 | 0 |
-| GPT-OSS 120B (Medium) @ 1000 | 43 | 4 | 0 | 0 |
-| Gemini 3.6 Flash (Medium) @ 1000 | 7 | 2 | 0 | 0 |
+| GPT-5.6 Luna (Medium) @ 1000 | 11 | 2 | 0 | 1 |
+| GPT-5.6 Terra (Medium) @ 1000 | 2 | 0 | 0 | 0 |
+| Gemini 3.6 Flash (Medium) @ 1000 | 2 | 0 | 0 | 0 |
+| Gemini 3.8 Flash (Low) @ 1000 | 1 | 0 | 0 | 0 |
 
-### Two models through one gate
+### What stopped them
 
-Both models' candidates go into one `admit` call, so a disagreement on a single-valued field is flagged `CONFLICTING_CANDIDATES`.
+The first reason code on each wrong extraction groundgate rejected or sent to review.
 
-| Models | docs | wrong | escaped | review load | recall, admitted |
-|---|---:|---:|---:|---:|---:|
-| Claude Sonnet 4.6 (Thinking) + GPT-OSS 120B (Medium) @ 1000 | 6 | 43 | 4.7% (2/43) [1, 15] | 21.6% (41/190) | 81.8% (36/44) |
-| Claude Sonnet 4.6 (Thinking) + Gemini 3.6 Flash (Medium) @ 1000 | 6 | 13 | 0.0% (0/13) [0, 23] | 20.1% (34/169) | 84.1% (37/44) |
-| GPT-OSS 120B (Medium) + Gemini 3.6 Flash (Medium) @ 1000 | 8 | 55 | 7.3% (4/55) [3, 17] | 21.9% (49/224) | 83.3% (45/54) |
+| Run | `CONFLICTING_CANDIDATES` | `QUALIFIED_VALUE` | `TYPE_INVALID` |
+|---|---:|---:|---:|
+| GPT-5.6 Luna (Medium) @ 1000 | 10 | 2 | 1 |
+| GPT-5.6 Terra (Medium) @ 1000 | 2 | 0 | 0 |
+| Gemini 3.6 Flash (Medium) @ 1000 | 2 | 0 | 0 |
+| Gemini 3.8 Flash (Low) @ 1000 | 1 | 0 | 0 |
+
+### Right value, wrong place
+
+Correct values groundgate admitted whose evidence does not overlap any gold evidence span, and correct values rejected because LangExtract aligned them to the wrong place.
+
+| Run | admitted, cited elsewhere | rejected, cited elsewhere |
+|---|---:|---:|
+| GPT-5.6 Luna (Medium) @ 1000 | 20.2% (38/188) | 4.7% (11/236) |
+| GPT-5.6 Terra (Medium) @ 1000 | 33.3% (13/39) | 18.6% (11/59) |
+| Gemini 3.6 Flash (Medium) @ 1000 | 40.6% (13/32) | 2.5% (1/40) |
+| Gemini 3.8 Flash (Low) @ 1000 | 42.3% (11/26) | 8.1% (3/37) |
+
+### By source
+
+| Run | source | wrong | escaped, MATCH_EXACT | escaped, groundgate |
+|---|---|---:|---:|---:|
+| GPT-5.6 Luna (Medium) @ 1000 | fda | 9 | 100.0% (9/9) | 11.1% (1/9) |
+| GPT-5.6 Luna (Medium) @ 1000 | ntsb | 1 | 100.0% (1/1) | 0.0% (0/1) |
+| GPT-5.6 Luna (Medium) @ 1000 | irs | 4 | 100.0% (4/4) | 0.0% (0/4) |
+| GPT-5.6 Terra (Medium) @ 1000 | fda | 2 | 100.0% (2/2) | 0.0% (0/2) |
+| Gemini 3.6 Flash (Medium) @ 1000 | fda | 2 | 100.0% (2/2) | 0.0% (0/2) |
+| Gemini 3.8 Flash (Low) @ 1000 | fda | 1 | 100.0% (1/1) | 0.0% (0/1) |
+
+### Harness
+
+Chunks whose reply LangExtract could not parse are skipped by `lx.extract` and count against recall. Codex replies that used a tool were discarded and retried.
+
+| Run | provider | chunks | unusable replies | replies discarded for tool use | seconds per document |
+|---|---|---:|---:|---:|---:|
+| GPT-5.6 Luna (Medium) @ 1000 | codex | 174 | 0 | 0 | 22 |
+| GPT-5.6 Terra (Medium) @ 1000 | codex | 31 | 0 | 0 | 18 |
+| Gemini 3.6 Flash (Medium) @ 1000 | agy | 18 | 0 | 0 | 110 |
+| Gemini 3.8 Flash (Low) @ 1000 | agy | 18 | 0 | 0 | 72 |
+
+### Several models through one gate
+
+Each group's candidates go into one `admit` call per document, so a disagreement on a single-valued field is flagged `CONFLICTING_CANDIDATES`. "Separately" admits the same candidates one model at a time. Pairs at 4,000 characters are in results.json.
+
+| Models | docs | wrong | escaped, together | escaped, separately | review load, together | review load, separately | recall, admitted |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) @ 1000 | 5 | 5 | 0.0% (0/5) [0, 43] | 0.0% (0/5) | 19.1% (24/126) | 19.1% (24/126) | 88.9% (32/36) |
+| GPT-5.6 Luna (Medium) + Gemini 3.6 Flash (Medium) @ 1000 | 4 | 5 | 0.0% (0/5) [0, 43] | 0.0% (0/5) | 25.0% (21/84) | 25.0% (21/84) | 87.5% (21/24) |
+| GPT-5.6 Luna (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 4 | 4 | 0.0% (0/4) [0, 49] | 0.0% (0/4) | 26.2% (21/80) | 26.2% (21/80) | 87.5% (21/24) |
+| GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) @ 1000 | 4 | 4 | 0.0% (0/4) [0, 49] | 0.0% (0/4) | 23.8% (19/80) | 23.8% (19/80) | 87.5% (21/24) |
+| GPT-5.6 Terra (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 4 | 3 | 0.0% (0/3) [0, 56] | 0.0% (0/3) | 25.0% (19/76) | 25.0% (19/76) | 83.3% (20/24) |
+| Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 4 | 3 | 0.0% (0/3) [0, 56] | 0.0% (0/3) | 22.5% (18/80) | 22.5% (18/80) | 87.5% (21/24) |
+| GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 4 | 8 | 0.0% (0/8) [0, 32] | 0.0% (0/8) | 25.0% (40/160) | 25.0% (40/160) | 87.5% (21/24) |
 
 ## Appendix: wrong and admitted
 
 Every wrong candidate groundgate admitted without review.
 
 | Run | doc | field | value | gold | why wrong | text around the evidence |
-|---|---|---|---:|---|---|---|
-| GPT-OSS 120B (Medium), 1000 | fda-escitalopram | tablet_strengths | 20 | 10 | wrong_value | scitalopram, but failed to demonstrate a greater benefit of 20 mg over 10 mg [ see Clinical Studies ( 14. |
-| GPT-OSS 120B (Medium), 1000 | fda-escitalopram | tablet_strengths | 20 | 10 | wrong_value | osage may be increased to the maximum recommended dosage of 20 mg once daily at an interval of no less th |
-| GPT-OSS 120B (Medium), 1000 | fda-metoprolol-succinate | adult_max_daily_dose | 200 | absent | absent_field | the highest dosage level tolerated by the patient or up to 200 mg of metoprolol succinate extended-releas |
-| Gemini 3.6 Flash (Medium), 1000 | fda-metoprolol-succinate | adult_max_daily_dose | 200 | absent | absent_field | the highest dosage level tolerated by the patient or up to 200 mg of metoprolol succinate extended-releas |
+|---|---|---|---|---|---|---|
+| GPT-5.6 Luna (Medium), 1000 | fda-metoprolol-succinate | adult_max_daily_dose | 200 | absent | absent_field | the highest dosage level tolerated by the patient or up to 200 mg of metoprolol succinate extended-releas |

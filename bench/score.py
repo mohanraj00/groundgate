@@ -27,7 +27,7 @@ import json
 import math
 import sys
 from collections import Counter, defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from decimal import Decimal
 from itertools import combinations
 from pathlib import Path
@@ -186,19 +186,40 @@ def rows_for(g: Gold, cands: list[dict[str, Any]], model: str, buffer: int) -> l
     return out
 
 
-def load_runs(golds: dict[str, Gold]) -> dict[tuple[str, int], dict[str, list[dict[str, Any]]]]:
-    """(model, buffer) -> doc -> candidates."""
-    runs: dict[tuple[str, int], dict[str, list[dict[str, Any]]]] = defaultdict(dict)
+Runs = dict[tuple[str, int], dict[str, list[dict[str, Any]]]]
+
+
+def load_runs(golds: dict[str, Gold]) -> tuple[Runs, dict[tuple[str, int], dict[str, Any]]]:
+    """(model, buffer) -> doc -> candidates, and (model, buffer) -> harness health."""
+    import warnings
+
+    from langextract import resolver as lx_resolver
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        parse = lx_resolver.Resolver(fence_output=False)
+    runs: Runs = defaultdict(dict)
+    health: dict[tuple[str, int], Counter[str]] = defaultdict(Counter)
+    providers: dict[tuple[str, int], str] = {}
     for path in sorted((HERE / "runs").glob("*/*/*.json")):
         rec = json.loads(path.read_text(encoding="utf-8"))
         doc = rec["document"]["document_id"]
         if doc not in golds:
             continue
-        cands = to_candidates(rec["document"])
-        for c in cands:
-            c["model"] = rec["model"]
-        runs[(rec["model"], rec["max_char_buffer"])][doc] = cands
-    return runs
+        key = (rec["model"], rec["max_char_buffer"])
+        runs[key][doc] = to_candidates(rec["document"])
+        providers[key] = rec["provider"]
+        h = health[key]
+        h["seconds"] += rec["seconds"]
+        for raw in rec.get("raw_outputs", []):
+            h["chunks"] += 1
+            h["discarded_for_tool_use"] += raw.get("harness", {}).get("discarded_for_tool_use", 0)
+            try:
+                parse.resolve(raw["output"], suppress_parse_errors=False)
+            except Exception:  # LangExtract skipped this chunk
+                h["unusable_chunks"] += 1
+    meta = {k: {"provider": providers[k], **dict(sorted(h.items()))} for k, h in health.items()}
+    return runs, meta
 
 
 def wilson(k: int, n: int) -> tuple[float, float]:
@@ -292,20 +313,27 @@ def recall(golds: dict[str, Gold], rows: list[Row], config: str, docs: set[str])
 
 
 def track_b(golds: dict[str, Gold]) -> dict[str, Any]:
-    runs = load_runs(golds)
-    out: dict[str, Any] = {"runs": {}, "pairs": {}, "escapes": [], "coverage": {}}
-    all_rows: dict[tuple[str, int], list[Row]] = {}
+    runs, health = load_runs(golds)
+    out: dict[str, Any] = {"runs": {}, "pairs": {}, "all_models": {}, "escapes": []}
     for (model, buffer), docs in sorted(runs.items()):
         rows = [
             r for doc, cands in docs.items() for r in rows_for(golds[doc], cands, model, buffer)
         ]
-        all_rows[(model, buffer)] = rows
-        per: dict[str, Any] = {"documents": len(docs)}
+        per: dict[str, Any] = {"documents": len(docs), "harness": health[(model, buffer)]}
         for config in (*LX_CONFIGS, "groundgate"):
             m = Metrics()
             for r in rows:
                 m.add(r, decide(config, r))
             per[config] = m.summary() | {"recall": recall(golds, rows, config, set(docs))}
+        per["caught_by"] = dict(
+            sorted(
+                Counter(
+                    r.codes[0]
+                    for r in rows
+                    if r.label in WRONG and decide("groundgate", r) != "accept" and r.codes
+                ).items()
+            )
+        )
         per["by_kind"] = {}
         for kind in ("fda", "ntsb", "irs"):
             sub = [r for r in rows if r.kind == kind]
@@ -319,23 +347,37 @@ def track_b(golds: dict[str, Gold]) -> dict[str, Any]:
         for r in rows:
             if r.label in WRONG and decide("groundgate", r) == "accept":
                 out["escapes"].append(_row_json(golds, r))
-    # two independent models through one gate
+    # several independent models through one gate: disagreements become CONFLICTING_CANDIDATES
     by_buffer: dict[int, list[str]] = defaultdict(list)
     for model, buffer in runs:
         by_buffer[buffer].append(model)
     for buffer, models in sorted(by_buffer.items()):
-        for a, b in combinations(sorted(models), 2):
-            m, rows = Metrics(), []
-            docs = set(runs[(a, buffer)]) & set(runs[(b, buffer)])
+        groups = [tuple(p) for p in combinations(sorted(models), 2)]
+        if len(models) > 2:
+            groups.append(tuple(sorted(models)))
+        for group in groups:
+            docs = set.intersection(*(set(runs[(m, buffer)]) for m in group))
+            together, apart = Metrics(), Metrics()
+            rows: list[Row] = []
             for doc in sorted(docs):
-                cands = runs[(a, buffer)][doc] + runs[(b, buffer)][doc]
-                rows += rows_for(golds[doc], cands, f"{a} + {b}", buffer)
+                name = " + ".join(group)
+                rows += rows_for(
+                    golds[doc], [c for m in group for c in runs[(m, buffer)][doc]], name, buffer
+                )
+                for m in group:
+                    for r in rows_for(golds[doc], runs[(m, buffer)][doc], m, buffer):
+                        apart.add(r, decide("groundgate", r))
             for r in rows:
-                m.add(r, decide("groundgate", r))
-            out["pairs"][f"{a} + {b} @ {buffer}"] = m.summary() | {
+                together.add(r, decide("groundgate", r))
+            entry = together.summary() | {
                 "documents": len(docs),
+                "models": list(group),
                 "recall": recall(golds, rows, "groundgate", docs),
+                "escape_when_admitted_separately": apart.summary()["escape"],
+                "review_load_when_admitted_separately": apart.summary()["review_load"],
             }
+            target = out["all_models"] if len(group) > 2 else out["pairs"]
+            target[f"{' + '.join(group)} @ {buffer}"] = entry
     return out
 
 
@@ -397,9 +439,13 @@ PLANTED = (
     "value_x10",
     "text_and_value_x10",
     "near_miss_digit",
+    "decimal_dropped",
+    "comma_as_decimal",
     "adjacent_value",
     "unit_swap",
     "null_literal",
+    "qualifier_in_text",
+    "scale_word_in_text",
 )
 CORRECT_CLASSES = ("clean", "paraphrase")
 
@@ -410,21 +456,24 @@ def track_a(golds: dict[str, Gold]) -> dict[str, Any]:
     The proposal is built from the gold evidence, so the extraction text is what a model that
     read the right place would write. LangExtract's Resolver aligns it inside the same
     1,000-character chunk lx.extract would have sent. No model is called.
-    """
-    from langextract import chunking
-    from langextract import resolver as lx_resolver
-    from langextract import tokenizer as lx_tokenizer
-    from langextract.core import data
 
+    Most classes change the extraction. The last two change the document instead: a qualifier
+    or a scale word is written next to the value, so the unchanged extraction no longer says
+    what the text says.
+    """
     results: dict[str, Counter[str]] = {c: Counter() for c in PLANTED}
+
+    def record(cls: str, row: Row) -> None:
+        results[cls]["n"] += 1
+        results[cls][f"judged:{row.label}"] += 1
+        for config in (*LX_CONFIGS, "groundgate"):
+            results[cls][f"{config}:{decide(config, row)}"] += 1
+        for code in row.codes:
+            results[cls][f"code:{code}"] += 1
+
     for g in golds.values():
         text, raw = g.text, g.text.encode()
-        chunk_list = [
-            (c.char_interval.start_pos, c.char_interval.end_pos, c.token_interval.start_index)
-            for c in chunking.ChunkIterator(
-                text, max_char_buffer=1000, tokenizer_impl=lx_tokenizer.RegexTokenizer()
-            )
-        ]
+        chunk_list = _chunks(text)
         for (name, value), spans in sorted(g.evidence.items()):
             if value not in g.values.get(name, ()):
                 continue
@@ -441,26 +490,73 @@ def track_a(golds: dict[str, Gold]) -> dict[str, Any]:
                 ):
                     results[cls]["skipped_planted_value_is_gold"] += 1
                     continue
-                attrs = {"value": v} | ({"unit": unit} if unit else {})
-                ext = data.Extraction(
-                    extraction_class=name, extraction_text=quote, attributes=attrs
-                )
-                aligned = next(
-                    iter(
-                        lx_resolver.Resolver().align(
-                            [ext], text[chunk[0] : chunk[1]], chunk[2], chunk[0]
-                        )
-                    )
-                )
-                (cand,) = to_candidates({"text": text, "extractions": [aligned]})
-                (row,) = rows_for(g, [cand], "planted", 1000)
-                results[cls]["n"] += 1
-                results[cls][f"judged:{row.label}"] += 1
-                for config in (*LX_CONFIGS, "groundgate"):
-                    results[cls][f"{config}:{decide(config, row)}"] += 1
-                for code in row.codes:
-                    results[cls][f"code:{code}"] += 1
+                record(cls, _aligned_row(g, text, chunk, name, quote, v, unit))
+            for cls, (new_text, at, grown) in _plant_text(g, text, name, num).items():
+                s2 = s + grown if at <= s else s
+                e2 = e + grown
+                chunk2 = next((c for c in _chunks(new_text) if c[0] <= s2 and e2 <= c[1]), None)
+                if chunk2 is None:
+                    continue
+                moved = replace(g, text=new_text)
+                quote = new_text[s2:e2]
+                row = _aligned_row(moved, new_text, chunk2, name, quote, value, field_unit(g, name))
+                record(cls, replace(row, label="wrong_meaning"))
+                b0, b1 = len(new_text[:s2].encode()), len(new_text[:e2].encode())
+                cited_here = row.span is not None and row.span[0] < b1 and b0 < row.span[1]
+                if row.outcome == "admitted" and not cited_here:
+                    results[cls]["groundgate:accept_cited_elsewhere"] += 1
     return {c: dict(sorted(v.items())) for c, v in results.items() if v}
+
+
+def _chunks(text: str) -> list[tuple[int, int, int]]:
+    """The chunks lx.extract sends at its default max_char_buffer: (start, end, first token)."""
+    from langextract import chunking
+    from langextract import tokenizer as lx_tokenizer
+
+    it = chunking.ChunkIterator(
+        text, max_char_buffer=1000, tokenizer_impl=lx_tokenizer.RegexTokenizer()
+    )
+    return [
+        (c.char_interval.start_pos, c.char_interval.end_pos, c.token_interval.start_index)
+        for c in it
+    ]
+
+
+def _aligned_row(
+    g: Gold,
+    text: str,
+    chunk: tuple[int, int, int],
+    name: str,
+    quote: str,
+    value: str,
+    unit: str | None,
+) -> Row:
+    """The candidate LangExtract would produce for this extraction, decided by groundgate."""
+    from langextract import resolver as lx_resolver
+    from langextract.core import data
+
+    attrs = {"value": value} | ({"unit": unit} if unit else {})
+    ext = data.Extraction(extraction_class=name, extraction_text=quote, attributes=attrs)
+    aligned = next(
+        iter(lx_resolver.Resolver().align([ext], text[chunk[0] : chunk[1]], chunk[2], chunk[0]))
+    )
+    (cand,) = to_candidates({"text": text, "extractions": [aligned]})
+    (row,) = rows_for(g, [cand], "planted", 1000)
+    return row
+
+
+def _plant_text(g: Gold, text: str, name: str, num: Any) -> dict[str, tuple[str, int, int]]:
+    """class -> (changed document, insertion point, characters inserted)."""
+    f = g.schema["fields"][name]
+    out = {}
+    if f.get("comparator", "eq") != "gt":
+        at = num.start  # before a currency sign too: "more than $184,500"
+        while at > 0 and text[at - 1] in "$€£":
+            at -= 1
+        out["qualifier_in_text"] = (text[:at] + "more than " + text[at:], at, len("more than "))
+    if f["unit"] in (None, "USD"):
+        out["scale_word_in_text"] = (text[: num.end] + " million" + text[num.end :], num.end, 8)
+    return out
 
 
 def _plant(
@@ -484,6 +580,10 @@ def _plant(
         "near_miss_digit": (rewrite(near), canonical(near), unit),
         "null_literal": ("null", "null", unit),
     }
+    if "." in value:
+        out["decimal_dropped"] = (quote, value.replace(".", "").lstrip("0") or "0", unit)
+    if quote[ns:ne].count(",") == 1:
+        out["comma_as_decimal"] = (quote, canonical(Decimal(quote[ns:ne].replace(",", "."))), unit)
     if unit in SWAP:
         out["unit_swap"] = (quote, value, SWAP[unit])
     adj = _adjacent(g, text, chunk, s, gold, unit)

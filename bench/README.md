@@ -53,9 +53,19 @@ It then plants one error at a time:
 | value attribute x10, text right | the value attribute only |
 | value and text x10 | both, consistently |
 | one digit changed | both; the second digit moves by 2 |
+| decimal point dropped | the value attribute: 0.4 hours read as 4 |
+| comma read as a decimal point | the value attribute: $184,500 read as 184.5 |
 | wrong unit | the unit attribute (mg to mcg, USD to cents, and so on) |
 | "null" as the value | the text and value become the literal `null` |
 | a nearby number with the same unit | both become another real number from the same chunk |
+
+Two more classes leave the extraction alone and change the document instead, so the value is
+no longer what the text means:
+
+| Planted | What changes |
+|---|---|
+| "more than" written before the value | the document; skipped for fields whose comparator is already "more than" |
+| "million" written after the value | the document; dollar and unitless fields only |
 
 Two controls stay correct: the clean extraction, and one whose text is paraphrased ("10
 milligrams" for "10 mg"). Plantings that happen to land on another gold value for the field
@@ -81,8 +91,23 @@ Each extraction is scored under four rules:
   LangExtract offers, and the fair comparison.
 - **groundgate**: accept what it admits, send what it flags to review, drop what it rejects.
 
-Two models' candidates also go through one `admit` call together, so a disagreement on a
-single-valued field is flagged `CONFLICTING_CANDIDATES`.
+Groups of models also go through one `admit` call together (every pair, and all models), so
+a disagreement on a single-valued field is flagged `CONFLICTING_CANDIDATES`. Each group is
+compared with the same candidates admitted one model at a time.
+
+| Model | Through | Setting |
+|---|---|---|
+| Gemini 3.6 Flash | Antigravity CLI | Medium |
+| Gemini 3.8 Flash | Antigravity CLI | Low, the cheapest setting of the newest Flash |
+| GPT-OSS 120B | Antigravity CLI | Medium |
+| Claude Sonnet 4.6 | Antigravity CLI | Thinking |
+| GPT-5.6 Luna | Codex CLI | medium reasoning effort |
+| GPT-5.6 Terra | Codex CLI | medium reasoning effort |
+
+`RESULTS.md` also reports, per run: which reason code stopped each wrong extraction, how often
+a correct value was admitted or rejected while citing a place the gold does not list, results
+by source, and harness health (chunks, replies LangExtract could not parse, replies discarded
+for tool use, seconds per document).
 
 The metrics:
 
@@ -99,7 +124,8 @@ Rates carry 95% Wilson intervals. With a few dozen wrong extractions per run, th
 groundgate checks that the value is in the cited text with the right unit and no qualifier the
 field doesn't allow. It cannot tell whether that text is the right place. When a model cites a
 real "20 mg" as the tablet strength and the label only sells 10 mg tablets, every check passes.
-Track A's last row measures this directly, and the Track B appendix lists every real case.
+Track A's "nearby number with the same unit" row measures this directly, and the Track B
+appendix lists every real case.
 
 ## Caveats
 
@@ -111,15 +137,29 @@ Track A's last row measures this directly, and the Track B appendix lists every 
   rules on the test data. Fixes go into a later spec version and get measured on new documents.
 - **Who drafted the gold.** Claude drafted it, and Claude Sonnet 4.6 is one of the benchmarked
   models. A person checked every fact without seeing model output, but drafts anchor judgment.
-- **How the models were called.** The three models ran through the Antigravity CLI in its
-  sandboxed plan mode, not a raw API. The harness adds its own system prompt, and temperature is
-  not under my control, so a rerun gives different extractions. The cached runs are what was
+- **How the models were called.** Every model ran through a logged-in agent CLI, not a raw API.
+  Antigravity runs in its sandboxed plan mode with a no-tools preamble. Codex runs `codex exec`
+  in an empty directory with a read-only sandbox, my user config, rules and AGENTS.md ignored,
+  and no saved session; its event stream shows every tool call, and a reply that used one is
+  discarded and retried. Both harnesses add their own system prompt, and temperature is not
+  under my control, so a rerun gives different extractions. The cached runs are what was
   scored. `propose.py` also supports LangExtract's native Gemini provider.
+- **The prompt changed once, before the full runs.** The first prompt described the output
+  with the words `extraction_class` and `extraction_text`, and GPT-5.6 answered in that shape
+  instead of the one LangExtract parses, so its chunks were dropped. The final prompt describes
+  the layout the examples use and says to leave `unit` out for unitless fields. I discarded
+  every run made with the first prompt, about 30 documents, and reran all models on the same
+  final prompt.
 - **Dropped chunks.** When a model's reply for a chunk isn't valid JSON, LangExtract logs a
   warning and skips the chunk. GPT-OSS in plan mode sometimes wrote a plan file and replied with
   a link to it instead of JSON. Those facts count against recall for every rule equally. The
   raw replies are in the run files, with home directory paths replaced by `~`.
-- **Small n.** 30 documents and three models is enough to show where the failure classes are,
+- **"Cited the right place" is only as good as the gold evidence.** A label often states the
+  same value in several places. A citation counts as right only when the checker listed that
+  place, so this rate is a lower bound.
+- **Not every model I tried was available.** GPT-6 Luna is not offered to a ChatGPT account in
+  Codex, so GPT-5.6 Terra took its place.
+- **Small n.** 30 documents and six models is enough to show where the failure classes are,
   not to rank models.
 
 ## Reproduce

@@ -15,7 +15,7 @@ from typing import Any
 import pytest
 
 BENCH = Path(__file__).parent.parent / "bench"
-sys.path[:0] = [str(BENCH), str(BENCH / "label")]
+sys.path[:0] = [str(BENCH), str(BENCH / "label")]  # bench scripts are not a package
 
 import app  # noqa: E402  (bench/label/app.py)
 import score  # noqa: E402  (bench/score.py)
@@ -186,3 +186,72 @@ def test_save_rules(served: tuple[int, dict], tmp_path: Path) -> None:
     assert saved["checked"]["by"] == "person"
     assert saved["seconds_spent"] == 90
     assert saved["facts"][0]["unit"] == "mg"  # units always come from the field
+
+
+# ---------------------------------------------------------------------------- planting
+
+
+def test_text_plants_qualify_the_value_where_it_is_written() -> None:
+    g = gold()
+    text = "The fee is $1,500 per year."
+    (num,) = [t for t in score.tokens(text) if t.value is not None]
+    g.schema["fields"]["fee"] = {"type": "number", "unit": "USD"}
+    plants = score._plant_text(g, text, "fee", num)
+    assert plants["qualifier_in_text"][0] == "The fee is more than $1,500 per year."
+    assert plants["scale_word_in_text"][0] == "The fee is $1,500 million per year."
+    g.schema["fields"]["fee"]["comparator"] = "gt"
+    assert "qualifier_in_text" not in score._plant_text(g, text, "fee", num)
+    assert "scale_word_in_text" not in score._plant_text(g, TEXT, "max_dose", score.tokens(TEXT)[0])
+
+
+def test_extraction_plants() -> None:
+    pytest.importorskip("langextract")
+    g = gold()
+    text = "Flight time: 0.4 hours. Wage base: 184,500 dollars."
+    g.schema["fields"]["t"] = {"type": "number", "unit": "hours"}
+    g.schema["fields"]["w"] = {"type": "number", "unit": "USD"}
+    (chunk,) = score._chunks(text)
+    for name, value, quote in (("t", "0.4", "0.4 hours"), ("w", "184500", "184,500 dollars")):
+        s = text.index(quote)
+        num = score.tokens(text, s, s + len(quote))[0]
+        plants = score._plant(g, text, chunk, name, value, s, s + len(quote), num)
+        if name == "t":
+            assert plants["decimal_dropped"][1] == "4"
+            assert "comma_as_decimal" not in plants
+        else:
+            assert plants["comma_as_decimal"][1] == "184.5"
+            assert "decimal_dropped" not in plants
+
+
+# ---------------------------------------------------------------------------- codex harness
+
+
+def test_codex_replies_that_used_a_tool_are_counted(monkeypatch: pytest.MonkeyPatch) -> None:
+    pytest.importorskip("langextract")
+    import subprocess
+
+    import propose
+
+    events = [
+        {"type": "item.completed", "item": {"type": "reasoning", "text": "..."}},
+        {"type": "item.completed", "item": {"type": "command_execution", "command": "cat x"}},
+        {
+            "type": "item.completed",
+            "item": {"type": "agent_message", "text": '{"extractions": []}'},
+        },
+    ]
+    done = subprocess.CompletedProcess([], 0, "\n".join(json.dumps(e) for e in events), "")
+    monkeypatch.setattr(propose.subprocess, "run", lambda *a, **k: done)
+    model = propose.CLIModel("codex", "m", 1, "low")
+    assert model._codex("prompt") == ('{"extractions": []}', 1)
+    assert 'model_reasoning_effort="low"' in model.command()
+    assert model.command()[model.command().index("-s") + 1] == "read-only"
+
+    failed = {"type": "turn.failed", "error": {"message": "model is not supported"}}
+    monkeypatch.setattr(
+        propose.subprocess,
+        "run",
+        lambda *a, **k: subprocess.CompletedProcess([], 1, json.dumps(failed), ""),
+    )
+    with pytest.raises(RuntimeError, match="not supported"):
+        model._codex("prompt")

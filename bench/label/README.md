@@ -18,7 +18,10 @@ document. Your job is to make that true.
 - **A draft value is right.** Press `y` (or click ✓). Check the evidence chip too: it should
   point at the place in the text that states the value. If the same number is stated for the
   same field somewhere else, click its `+` chip under the fact to add that place as evidence.
-  An extraction that cites any listed place counts as citing the right place.
+  An extraction that cites any listed place counts as citing the right place, and one that
+  cites a place you did not list counts as citing the wrong one, so add every place that
+  states this field's value. A dose that happens to equal the tablet strength is not a place
+  that states the tablet strength.
 - **A draft value is wrong.** Fix the number in the box if the right one is in the text, or
   press `n` (✗) to reject it. If you reject the only value of a field, either add the right one
   or click **Not in document**. A field left with neither is not scored.
