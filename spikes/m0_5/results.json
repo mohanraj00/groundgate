@@ -1,0 +1,9348 @@
+{
+ "facts": 51,
+ "rows": [
+  {
+   "fact": "irs01",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$7,000",
+   "value": "7000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2634,
+    2640
+   ],
+   "gold_span": [
+    2634,
+    2640
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs01",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "7000 dollars",
+   "value": "7000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    2634,
+    2640
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs01",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$7,000",
+   "value": "70000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2634,
+    2640
+   ],
+   "gold_span": [
+    2634,
+    2640
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs01",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$70,000",
+   "value": "70000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    2634,
+    2635
+   ],
+   "gold_span": [
+    2634,
+    2640
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs01",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$7,200",
+   "value": "7200",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    2634,
+    2637
+   ],
+   "gold_span": [
+    2634,
+    2640
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs01",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$8,000",
+   "value": "8000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2643,
+    2649
+   ],
+   "gold_span": [
+    2634,
+    2640
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs01",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    2634,
+    2640
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs02",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$8,000",
+   "value": "8000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2643,
+    2649
+   ],
+   "gold_span": [
+    2643,
+    2649
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs02",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "8000 dollars",
+   "value": "8000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    2643,
+    2649
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs02",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$8,000",
+   "value": "80000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2643,
+    2649
+   ],
+   "gold_span": [
+    2643,
+    2649
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs02",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$80,000",
+   "value": "80000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    2634,
+    2635
+   ],
+   "gold_span": [
+    2643,
+    2649
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs02",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$8,200",
+   "value": "8200",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    2643,
+    2646
+   ],
+   "gold_span": [
+    2643,
+    2649
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs02",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$7,000",
+   "value": "7000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2634,
+    2640
+   ],
+   "gold_span": [
+    2643,
+    2649
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs02",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    2643,
+    2649
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs03",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$1,000",
+   "value": "1000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3129,
+    3135
+   ],
+   "gold_span": [
+    3129,
+    3135
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs03",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "1000 dollars",
+   "value": "1000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3129,
+    3135
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs03",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$1,000",
+   "value": "10000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3129,
+    3135
+   ],
+   "gold_span": [
+    3129,
+    3135
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs03",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$10,000",
+   "value": "10000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    3129,
+    3130
+   ],
+   "gold_span": [
+    3129,
+    3135
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs03",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$1,200",
+   "value": "1200",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    3129,
+    3132
+   ],
+   "gold_span": [
+    3129,
+    3135
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs03",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3129,
+    3135
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs04",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$126,000",
+   "value": "126000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4067,
+    4075
+   ],
+   "gold_span": [
+    4067,
+    4075
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs04",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "126000 dollars",
+   "value": "126000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4067,
+    4075
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs04",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$126,000",
+   "value": "1260000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4067,
+    4075
+   ],
+   "gold_span": [
+    4067,
+    4075
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs04",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$1,260,000",
+   "value": "1260000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4067,
+    4075
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs04",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$146,000",
+   "value": "146000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4090,
+    4098
+   ],
+   "gold_span": [
+    4067,
+    4075
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs04",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$146,000",
+   "value": "146000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4090,
+    4098
+   ],
+   "gold_span": [
+    4067,
+    4075
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs04",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4067,
+    4075
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs05",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$146,000",
+   "value": "146000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4090,
+    4098
+   ],
+   "gold_span": [
+    4090,
+    4098
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs05",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "146000 dollars",
+   "value": "146000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4090,
+    4098
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs05",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$146,000",
+   "value": "1460000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4090,
+    4098
+   ],
+   "gold_span": [
+    4090,
+    4098
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs05",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$1,460,000",
+   "value": "1460000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4090,
+    4098
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs05",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$166,000",
+   "value": "166000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    4067,
+    4068
+   ],
+   "gold_span": [
+    4090,
+    4098
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs05",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$126,000",
+   "value": "126000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4067,
+    4075
+   ],
+   "gold_span": [
+    4090,
+    4098
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs05",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4090,
+    4098
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs06",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$79,000",
+   "value": "79000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4192,
+    4199
+   ],
+   "gold_span": [
+    4192,
+    4199
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs06",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "79000 dollars",
+   "value": "79000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4192,
+    4199
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs06",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$79,000",
+   "value": "790000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4192,
+    4199
+   ],
+   "gold_span": [
+    4192,
+    4199
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs06",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$790,000",
+   "value": "790000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    4067,
+    4068
+   ],
+   "gold_span": [
+    4192,
+    4199
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs06",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$71,000",
+   "value": "71000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    4067,
+    4068
+   ],
+   "gold_span": [
+    4192,
+    4199
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs06",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$89,000",
+   "value": "89000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4214,
+    4221
+   ],
+   "gold_span": [
+    4192,
+    4199
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs06",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4192,
+    4199
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs07",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$89,000",
+   "value": "89000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4214,
+    4221
+   ],
+   "gold_span": [
+    4214,
+    4221
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs07",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "89000 dollars",
+   "value": "89000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4214,
+    4221
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs07",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$89,000",
+   "value": "890000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4214,
+    4221
+   ],
+   "gold_span": [
+    4214,
+    4221
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs07",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$890,000",
+   "value": "890000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    4067,
+    4068
+   ],
+   "gold_span": [
+    4214,
+    4221
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs07",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$81,000",
+   "value": "81000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    4067,
+    4068
+   ],
+   "gold_span": [
+    4214,
+    4221
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs07",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$79,000",
+   "value": "79000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4192,
+    4199
+   ],
+   "gold_span": [
+    4214,
+    4221
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs07",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4214,
+    4221
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs08",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$236,000",
+   "value": "236000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4637,
+    4645
+   ],
+   "gold_span": [
+    4637,
+    4645
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs08",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "236000 dollars",
+   "value": "236000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4637,
+    4645
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs08",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$236,000",
+   "value": "2360000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4637,
+    4645
+   ],
+   "gold_span": [
+    4637,
+    4645
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs08",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$2,360,000",
+   "value": "2360000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4637,
+    4645
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs08",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$256,000",
+   "value": "256000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    4067,
+    4068
+   ],
+   "gold_span": [
+    4637,
+    4645
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs08",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$230,000",
+   "value": "230000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4658,
+    4666
+   ],
+   "gold_span": [
+    4637,
+    4645
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs08",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4637,
+    4645
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs09",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$230,000",
+   "value": "230000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4658,
+    4666
+   ],
+   "gold_span": [
+    4658,
+    4666
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs09",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "230000 dollars",
+   "value": "230000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4658,
+    4666
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs09",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$230,000",
+   "value": "2300000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4658,
+    4666
+   ],
+   "gold_span": [
+    4658,
+    4666
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs09",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$2,300,000",
+   "value": "2300000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4658,
+    4666
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs09",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$250,000",
+   "value": "250000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    4067,
+    4068
+   ],
+   "gold_span": [
+    4658,
+    4666
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs09",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$236,000",
+   "value": "236000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4637,
+    4645
+   ],
+   "gold_span": [
+    4658,
+    4666
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs09",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4658,
+    4666
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs10",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$246,000",
+   "value": "246000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4697,
+    4705
+   ],
+   "gold_span": [
+    4697,
+    4705
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs10",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "246000 dollars",
+   "value": "246000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4697,
+    4705
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs10",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$246,000",
+   "value": "2460000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4697,
+    4705
+   ],
+   "gold_span": [
+    4697,
+    4705
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs10",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$2,460,000",
+   "value": "2460000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4697,
+    4705
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs10",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$266,000",
+   "value": "266000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    4067,
+    4068
+   ],
+   "gold_span": [
+    4697,
+    4705
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs10",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$240,000",
+   "value": "240000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4718,
+    4726
+   ],
+   "gold_span": [
+    4697,
+    4705
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs10",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4697,
+    4705
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs11",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$240,000",
+   "value": "240000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4718,
+    4726
+   ],
+   "gold_span": [
+    4718,
+    4726
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs11",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "240000 dollars",
+   "value": "240000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4718,
+    4726
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs11",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$240,000",
+   "value": "2400000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4718,
+    4726
+   ],
+   "gold_span": [
+    4718,
+    4726
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs11",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$2,400,000",
+   "value": "2400000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4718,
+    4726
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs11",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$260,000",
+   "value": "260000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    4067,
+    4068
+   ],
+   "gold_span": [
+    4718,
+    4726
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs11",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$246,000",
+   "value": "246000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    4697,
+    4705
+   ],
+   "gold_span": [
+    4718,
+    4726
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs11",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    4718,
+    4726
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs12",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$236,000",
+   "value": "236000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5127,
+    5135
+   ],
+   "gold_span": [
+    5127,
+    5135
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs12",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "236000 dollars",
+   "value": "236000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5127,
+    5135
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs12",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$236,000",
+   "value": "2360000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5127,
+    5135
+   ],
+   "gold_span": [
+    5127,
+    5135
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs12",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$2,360,000",
+   "value": "2360000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5127,
+    5135
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs12",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$256,000",
+   "value": "256000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5127,
+    5128
+   ],
+   "gold_span": [
+    5127,
+    5135
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs12",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$246,000",
+   "value": "246000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5201,
+    5209
+   ],
+   "gold_span": [
+    5127,
+    5135
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs12",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5127,
+    5135
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs13",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$246,000",
+   "value": "246000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5201,
+    5209
+   ],
+   "gold_span": [
+    5201,
+    5209
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs13",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "246000 dollars",
+   "value": "246000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5201,
+    5209
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs13",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$246,000",
+   "value": "2460000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5201,
+    5209
+   ],
+   "gold_span": [
+    5201,
+    5209
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs13",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$2,460,000",
+   "value": "2460000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5201,
+    5209
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs13",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$266,000",
+   "value": "266000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5127,
+    5128
+   ],
+   "gold_span": [
+    5201,
+    5209
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs13",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$236,000",
+   "value": "236000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5127,
+    5135
+   ],
+   "gold_span": [
+    5201,
+    5209
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs13",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5201,
+    5209
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs14",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$150,000",
+   "value": "150000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5395,
+    5403
+   ],
+   "gold_span": [
+    5395,
+    5403
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs14",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "150000 dollars",
+   "value": "150000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5395,
+    5403
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs14",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$150,000",
+   "value": "1500000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5395,
+    5403
+   ],
+   "gold_span": [
+    5395,
+    5403
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs14",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$1,500,000",
+   "value": "1500000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5395,
+    5403
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs14",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$170,000",
+   "value": "170000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5127,
+    5128
+   ],
+   "gold_span": [
+    5395,
+    5403
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs14",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$165,000",
+   "value": "165000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5470,
+    5478
+   ],
+   "gold_span": [
+    5395,
+    5403
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs14",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5395,
+    5403
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs15",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$165,000",
+   "value": "165000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5470,
+    5478
+   ],
+   "gold_span": [
+    5470,
+    5478
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs15",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "165000 dollars",
+   "value": "165000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5470,
+    5478
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs15",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$165,000",
+   "value": "1650000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5470,
+    5478
+   ],
+   "gold_span": [
+    5470,
+    5478
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs15",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$1,650,000",
+   "value": "1650000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5470,
+    5478
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs15",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$185,000",
+   "value": "185000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5127,
+    5128
+   ],
+   "gold_span": [
+    5470,
+    5478
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs15",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$150,000",
+   "value": "150000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5395,
+    5403
+   ],
+   "gold_span": [
+    5470,
+    5478
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs15",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5470,
+    5478
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs16",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$7,500",
+   "value": "7500",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5863,
+    5869
+   ],
+   "gold_span": [
+    5863,
+    5869
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs16",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "7500 dollars",
+   "value": "7500",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5863,
+    5869
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs16",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$7,500",
+   "value": "75000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5863,
+    5869
+   ],
+   "gold_span": [
+    5863,
+    5869
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs16",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$75,000",
+   "value": "75000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5863,
+    5864
+   ],
+   "gold_span": [
+    5863,
+    5869
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs16",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$7,700",
+   "value": "7700",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5863,
+    5866
+   ],
+   "gold_span": [
+    5863,
+    5869
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs16",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$8,600",
+   "value": "8600",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5872,
+    5878
+   ],
+   "gold_span": [
+    5863,
+    5869
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs16",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5863,
+    5869
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs17",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$8,600",
+   "value": "8600",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5872,
+    5878
+   ],
+   "gold_span": [
+    5872,
+    5878
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs17",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "8600 dollars",
+   "value": "8600",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5872,
+    5878
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs17",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$8,600",
+   "value": "86000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5872,
+    5878
+   ],
+   "gold_span": [
+    5872,
+    5878
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs17",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$86,000",
+   "value": "86000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5863,
+    5864
+   ],
+   "gold_span": [
+    5872,
+    5878
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs17",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$8,800",
+   "value": "8800",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5872,
+    5875
+   ],
+   "gold_span": [
+    5872,
+    5878
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs17",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$7,500",
+   "value": "7500",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    5863,
+    5869
+   ],
+   "gold_span": [
+    5872,
+    5878
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs17",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    5872,
+    5878
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs18",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$129,000",
+   "value": "129000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6237,
+    6245
+   ],
+   "gold_span": [
+    6237,
+    6245
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs18",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "129000 dollars",
+   "value": "129000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6237,
+    6245
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs18",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$129,000",
+   "value": "1290000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6237,
+    6245
+   ],
+   "gold_span": [
+    6237,
+    6245
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs18",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$1,290,000",
+   "value": "1290000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6237,
+    6245
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs18",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$149,000",
+   "value": "149000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6260,
+    6268
+   ],
+   "gold_span": [
+    6237,
+    6245
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs18",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$149,000",
+   "value": "149000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6260,
+    6268
+   ],
+   "gold_span": [
+    6237,
+    6245
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs18",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6237,
+    6245
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs19",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$149,000",
+   "value": "149000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6260,
+    6268
+   ],
+   "gold_span": [
+    6260,
+    6268
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs19",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "149000 dollars",
+   "value": "149000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6260,
+    6268
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs19",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$149,000",
+   "value": "1490000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6260,
+    6268
+   ],
+   "gold_span": [
+    6260,
+    6268
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs19",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$1,490,000",
+   "value": "1490000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6260,
+    6268
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs19",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$169,000",
+   "value": "169000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5863,
+    5864
+   ],
+   "gold_span": [
+    6260,
+    6268
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs19",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$129,000",
+   "value": "129000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6237,
+    6245
+   ],
+   "gold_span": [
+    6260,
+    6268
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs19",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6260,
+    6268
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs20",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$81,000",
+   "value": "81000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6362,
+    6369
+   ],
+   "gold_span": [
+    6362,
+    6369
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs20",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "81000 dollars",
+   "value": "81000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6362,
+    6369
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs20",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$81,000",
+   "value": "810000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6362,
+    6369
+   ],
+   "gold_span": [
+    6362,
+    6369
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs20",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$810,000",
+   "value": "810000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5863,
+    5864
+   ],
+   "gold_span": [
+    6362,
+    6369
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs20",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$83,000",
+   "value": "83000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5863,
+    5864
+   ],
+   "gold_span": [
+    6362,
+    6369
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs20",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$91,000",
+   "value": "91000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6384,
+    6391
+   ],
+   "gold_span": [
+    6362,
+    6369
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs20",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6362,
+    6369
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs21",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$91,000",
+   "value": "91000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6384,
+    6391
+   ],
+   "gold_span": [
+    6384,
+    6391
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs21",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "91000 dollars",
+   "value": "91000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6384,
+    6391
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs21",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$91,000",
+   "value": "910000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6384,
+    6391
+   ],
+   "gold_span": [
+    6384,
+    6391
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs21",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$910,000",
+   "value": "910000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5863,
+    5864
+   ],
+   "gold_span": [
+    6384,
+    6391
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs21",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$93,000",
+   "value": "93000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    5863,
+    5864
+   ],
+   "gold_span": [
+    6384,
+    6391
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs21",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$81,000",
+   "value": "81000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6362,
+    6369
+   ],
+   "gold_span": [
+    6384,
+    6391
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs21",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6384,
+    6391
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs22",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$242,000",
+   "value": "242000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6830,
+    6838
+   ],
+   "gold_span": [
+    6830,
+    6838
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs22",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "242000 dollars",
+   "value": "242000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6830,
+    6838
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs22",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$242,000",
+   "value": "2420000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6830,
+    6838
+   ],
+   "gold_span": [
+    6830,
+    6838
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs22",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$2,420,000",
+   "value": "2420000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6830,
+    6838
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs22",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$262,000",
+   "value": "262000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    6830,
+    6831
+   ],
+   "gold_span": [
+    6830,
+    6838
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs22",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$236,000",
+   "value": "236000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6851,
+    6859
+   ],
+   "gold_span": [
+    6830,
+    6838
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs22",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6830,
+    6838
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs23",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$252,000",
+   "value": "252000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6890,
+    6898
+   ],
+   "gold_span": [
+    6890,
+    6898
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs23",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "252000 dollars",
+   "value": "252000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6890,
+    6898
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs23",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$252,000",
+   "value": "2520000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6890,
+    6898
+   ],
+   "gold_span": [
+    6890,
+    6898
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs23",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$2,520,000",
+   "value": "2520000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6890,
+    6898
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs23",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$272,000",
+   "value": "272000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    6830,
+    6831
+   ],
+   "gold_span": [
+    6890,
+    6898
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs23",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$246,000",
+   "value": "246000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    6910,
+    6918
+   ],
+   "gold_span": [
+    6890,
+    6898
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs23",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    6890,
+    6898
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs24",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$153,000",
+   "value": "153000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    7589,
+    7597
+   ],
+   "gold_span": [
+    7589,
+    7597
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs24",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "153000 dollars",
+   "value": "153000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    7589,
+    7597
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs24",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$153,000",
+   "value": "1530000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    7589,
+    7597
+   ],
+   "gold_span": [
+    7589,
+    7597
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs24",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$1,530,000",
+   "value": "1530000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    7589,
+    7597
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs24",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$173,000",
+   "value": "173000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    7589,
+    7590
+   ],
+   "gold_span": [
+    7589,
+    7597
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs24",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$168,000",
+   "value": "168000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    7664,
+    7672
+   ],
+   "gold_span": [
+    7589,
+    7597
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs24",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    7589,
+    7597
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs25",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$168,000",
+   "value": "168000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    7664,
+    7672
+   ],
+   "gold_span": [
+    7664,
+    7672
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs25",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "168000 dollars",
+   "value": "168000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    7664,
+    7672
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs25",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$168,000",
+   "value": "1680000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    7664,
+    7672
+   ],
+   "gold_span": [
+    7664,
+    7672
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs25",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$1,680,000",
+   "value": "1680000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    7664,
+    7672
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs25",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$188,000",
+   "value": "188000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    7589,
+    7590
+   ],
+   "gold_span": [
+    7664,
+    7672
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs25",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$153,000",
+   "value": "153000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    7589,
+    7597
+   ],
+   "gold_span": [
+    7664,
+    7672
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "irs25",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    7664,
+    7672
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs26",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$14,000",
+   "value": "14000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    43129,
+    43136
+   ],
+   "gold_span": [
+    43129,
+    43136
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs26",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "14000 dollars",
+   "value": "14000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    43129,
+    43136
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs26",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$14,000",
+   "value": "140000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    43129,
+    43136
+   ],
+   "gold_span": [
+    43129,
+    43136
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs26",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$140,000",
+   "value": "140000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    43129,
+    43130
+   ],
+   "gold_span": [
+    43129,
+    43136
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs26",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$16,000",
+   "value": "16000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    43194,
+    43201
+   ],
+   "gold_span": [
+    43129,
+    43136
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs26",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$15,000",
+   "value": "15000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    43139,
+    43146
+   ],
+   "gold_span": [
+    43129,
+    43136
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs26",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    43129,
+    43136
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "irs27",
+   "doc": "irs-p590a",
+   "kind": "clean",
+   "correct": true,
+   "text": "$16,000",
+   "value": "16000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    43194,
+    43201
+   ],
+   "gold_span": [
+    43194,
+    43201
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs27",
+   "doc": "irs-p590a",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "16000 dollars",
+   "value": "16000",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    43194,
+    43201
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "irs27",
+   "doc": "irs-p590a",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "$16,000",
+   "value": "160000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    43194,
+    43201
+   ],
+   "gold_span": [
+    43194,
+    43201
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs27",
+   "doc": "irs-p590a",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "$160,000",
+   "value": "160000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    43129,
+    43130
+   ],
+   "gold_span": [
+    43194,
+    43201
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs27",
+   "doc": "irs-p590a",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "$18,000",
+   "value": "18000",
+   "unit": "USD",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    43129,
+    43130
+   ],
+   "gold_span": [
+    43194,
+    43201
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "irs27",
+   "doc": "irs-p590a",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "$15,000",
+   "value": "15000",
+   "unit": "USD",
+   "lx_status": "match_exact",
+   "lx_span": [
+    43139,
+    43146
+   ],
+   "gold_span": [
+    43194,
+    43201
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "irs27",
+   "doc": "irs-p590a",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "USD",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    43194,
+    43201
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda01",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "500 mg",
+   "value": "500",
+   "unit": "mg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    1986,
+    1992
+   ],
+   "gold_span": [
+    1986,
+    1992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda01",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "500 milligrams",
+   "value": "500",
+   "unit": "mg",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    1986,
+    1989
+   ],
+   "gold_span": [
+    1986,
+    1992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda01",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "500 mg",
+   "value": "5000",
+   "unit": "mg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    1986,
+    1992
+   ],
+   "gold_span": [
+    1986,
+    1992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda01",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "5,000 mg",
+   "value": "5000",
+   "unit": "mg",
+   "lx_status": "match_fuzzy",
+   "lx_span": [
+    2167,
+    2174
+   ],
+   "gold_span": [
+    1986,
+    1992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda01",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "520 mg",
+   "value": "520",
+   "unit": "mg",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    1986,
+    1992
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda01",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "2,000 mg",
+   "value": "2000",
+   "unit": "mg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2166,
+    2174
+   ],
+   "gold_span": [
+    1986,
+    1992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda01",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "500 mg",
+   "value": "500",
+   "unit": "mcg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    1986,
+    1992
+   ],
+   "gold_span": [
+    1986,
+    1992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda01",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mg",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    1986,
+    1992
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda02",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "500 mg",
+   "value": "500",
+   "unit": "mg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    1986,
+    1992
+   ],
+   "gold_span": [
+    2070,
+    2076
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda02",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "500 milligrams",
+   "value": "500",
+   "unit": "mg",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    1986,
+    1989
+   ],
+   "gold_span": [
+    2070,
+    2076
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda02",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "500 mg",
+   "value": "5000",
+   "unit": "mg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    1986,
+    1992
+   ],
+   "gold_span": [
+    2070,
+    2076
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda02",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "5,000 mg",
+   "value": "5000",
+   "unit": "mg",
+   "lx_status": "match_fuzzy",
+   "lx_span": [
+    2167,
+    2174
+   ],
+   "gold_span": [
+    2070,
+    2076
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda02",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "520 mg",
+   "value": "520",
+   "unit": "mg",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    2070,
+    2076
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda02",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "2,000 mg",
+   "value": "2000",
+   "unit": "mg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2166,
+    2174
+   ],
+   "gold_span": [
+    2070,
+    2076
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda02",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "500 mg",
+   "value": "500",
+   "unit": "mcg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    1986,
+    1992
+   ],
+   "gold_span": [
+    2070,
+    2076
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda02",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mg",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    2070,
+    2076
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda03",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "2,000 mg",
+   "value": "2000",
+   "unit": "mg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2166,
+    2174
+   ],
+   "gold_span": [
+    2166,
+    2174
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda03",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "2000 milligrams",
+   "value": "2000",
+   "unit": "mg",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    2166,
+    2174
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda03",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "2,000 mg",
+   "value": "20000",
+   "unit": "mg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2166,
+    2174
+   ],
+   "gold_span": [
+    2166,
+    2174
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda03",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "20,000 mg",
+   "value": "20000",
+   "unit": "mg",
+   "lx_status": "match_fuzzy",
+   "lx_span": [
+    2167,
+    2174
+   ],
+   "gold_span": [
+    2166,
+    2174
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda03",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "2,200 mg",
+   "value": "2200",
+   "unit": "mg",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    2166,
+    2168
+   ],
+   "gold_span": [
+    2166,
+    2174
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda03",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "500 mg",
+   "value": "500",
+   "unit": "mg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    1986,
+    1992
+   ],
+   "gold_span": [
+    2166,
+    2174
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda03",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "2,000 mg",
+   "value": "2000",
+   "unit": "mcg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    2166,
+    2174
+   ],
+   "gold_span": [
+    2166,
+    2174
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda03",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mg",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    2166,
+    2174
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda04",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "30",
+   "value": "30",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3044,
+    3046
+   ],
+   "gold_span": [
+    3044,
+    3046
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda04",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "30 mL/min/1.73m2",
+   "value": "30",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    3044,
+    3050
+   ],
+   "gold_span": [
+    3044,
+    3046
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda04",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "30",
+   "value": "300",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3044,
+    3046
+   ],
+   "gold_span": [
+    3044,
+    3046
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda04",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "300",
+   "value": "300",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3044,
+    3046
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda04",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "32",
+   "value": "32",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3044,
+    3046
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda04",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "45",
+   "value": "45",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3169,
+    3171
+   ],
+   "gold_span": [
+    3044,
+    3046
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda04",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "30",
+   "value": "30",
+   "unit": "mg/dL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3044,
+    3046
+   ],
+   "gold_span": [
+    3044,
+    3046
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda04",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3044,
+    3046
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda05",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "30",
+   "value": "30",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3044,
+    3046
+   ],
+   "gold_span": [
+    3163,
+    3165
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ]
+  },
+  {
+   "fact": "fda05",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "30 mL/min/1.73m2",
+   "value": "30",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    3044,
+    3050
+   ],
+   "gold_span": [
+    3163,
+    3165
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda05",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "30",
+   "value": "300",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3044,
+    3046
+   ],
+   "gold_span": [
+    3163,
+    3165
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda05",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "300",
+   "value": "300",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3163,
+    3165
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda05",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "32",
+   "value": "32",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3163,
+    3165
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda05",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "45",
+   "value": "45",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3169,
+    3171
+   ],
+   "gold_span": [
+    3163,
+    3165
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda05",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "30",
+   "value": "30",
+   "unit": "mg/dL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3044,
+    3046
+   ],
+   "gold_span": [
+    3163,
+    3165
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda05",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3163,
+    3165
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda06",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "45",
+   "value": "45",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3169,
+    3171
+   ],
+   "gold_span": [
+    3169,
+    3171
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda06",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "45 mL/min/1.73m2",
+   "value": "45",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_fuzzy",
+   "lx_span": [
+    3169,
+    3189
+   ],
+   "gold_span": [
+    3169,
+    3171
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda06",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "45",
+   "value": "450",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3169,
+    3171
+   ],
+   "gold_span": [
+    3169,
+    3171
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda06",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "450",
+   "value": "450",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3169,
+    3171
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda06",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "47",
+   "value": "47",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3169,
+    3171
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda06",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "30",
+   "value": "30",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3044,
+    3046
+   ],
+   "gold_span": [
+    3169,
+    3171
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ]
+  },
+  {
+   "fact": "fda06",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "45",
+   "value": "45",
+   "unit": "mg/dL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3169,
+    3171
+   ],
+   "gold_span": [
+    3169,
+    3171
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda06",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3169,
+    3171
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda07",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "45",
+   "value": "45",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3169,
+    3171
+   ],
+   "gold_span": [
+    3308,
+    3310
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda07",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "45 mL/min/1.73m2",
+   "value": "45",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_fuzzy",
+   "lx_span": [
+    3169,
+    3189
+   ],
+   "gold_span": [
+    3308,
+    3310
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda07",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "45",
+   "value": "450",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3169,
+    3171
+   ],
+   "gold_span": [
+    3308,
+    3310
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda07",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "450",
+   "value": "450",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3308,
+    3310
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda07",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "47",
+   "value": "47",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3308,
+    3310
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda07",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "30",
+   "value": "30",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3044,
+    3046
+   ],
+   "gold_span": [
+    3308,
+    3310
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda07",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "45",
+   "value": "45",
+   "unit": "mg/dL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3169,
+    3171
+   ],
+   "gold_span": [
+    3308,
+    3310
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda07",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3308,
+    3310
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda08",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "30",
+   "value": "30",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3794,
+    3796
+   ],
+   "gold_span": [
+    3794,
+    3796
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda08",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "30 mL/min/1.73m2",
+   "value": "30",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    3794,
+    3796
+   ],
+   "gold_span": [
+    3794,
+    3796
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda08",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "30",
+   "value": "300",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3794,
+    3796
+   ],
+   "gold_span": [
+    3794,
+    3796
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda08",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "300",
+   "value": "300",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3794,
+    3796
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda08",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "32",
+   "value": "32",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3794,
+    3796
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda08",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "60",
+   "value": "60",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3801,
+    3803
+   ],
+   "gold_span": [
+    3794,
+    3796
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda08",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "30",
+   "value": "30",
+   "unit": "mg/dL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3794,
+    3796
+   ],
+   "gold_span": [
+    3794,
+    3796
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda08",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3794,
+    3796
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda09",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "60",
+   "value": "60",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3801,
+    3803
+   ],
+   "gold_span": [
+    3801,
+    3803
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda09",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "60 mL/min/1.73m2",
+   "value": "60",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    3801,
+    3807
+   ],
+   "gold_span": [
+    3801,
+    3803
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda09",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "60",
+   "value": "600",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3801,
+    3803
+   ],
+   "gold_span": [
+    3801,
+    3803
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda09",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "600",
+   "value": "600",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3801,
+    3803
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda09",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "62",
+   "value": "62",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3801,
+    3803
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda09",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "30",
+   "value": "30",
+   "unit": "mL/min/1.73m2",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3794,
+    3796
+   ],
+   "gold_span": [
+    3801,
+    3803
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda09",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "60",
+   "value": "60",
+   "unit": "mg/dL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3801,
+    3803
+   ],
+   "gold_span": [
+    3801,
+    3803
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda09",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mL/min/1.73m2",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3801,
+    3803
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda10",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "48",
+   "value": "48",
+   "unit": "hours",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3989,
+    3991
+   ],
+   "gold_span": [
+    3989,
+    3991
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda10",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "48 hrs",
+   "value": "48",
+   "unit": "hours",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    3989,
+    3991
+   ],
+   "gold_span": [
+    3989,
+    3991
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda10",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "48",
+   "value": "480",
+   "unit": "hours",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3989,
+    3991
+   ],
+   "gold_span": [
+    3989,
+    3991
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda10",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "480",
+   "value": "480",
+   "unit": "hours",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3989,
+    3991
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda10",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "40",
+   "value": "40",
+   "unit": "hours",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3989,
+    3991
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda10",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "48",
+   "value": "48",
+   "unit": "days",
+   "lx_status": "match_exact",
+   "lx_span": [
+    3989,
+    3991
+   ],
+   "gold_span": [
+    3989,
+    3991
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda10",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "hours",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    3989,
+    3991
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda11",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "5",
+   "value": "5",
+   "unit": "mmol/L",
+   "lx_status": "match_exact",
+   "lx_span": [
+    451,
+    452
+   ],
+   "gold_span": [
+    451,
+    452
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda11",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "5 mmol/L",
+   "value": "5",
+   "unit": "mmol/L",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    451,
+    458
+   ],
+   "gold_span": [
+    451,
+    452
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda11",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "5",
+   "value": "50",
+   "unit": "mmol/L",
+   "lx_status": "match_exact",
+   "lx_span": [
+    451,
+    452
+   ],
+   "gold_span": [
+    451,
+    452
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda11",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "50",
+   "value": "50",
+   "unit": "mmol/L",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    451,
+    452
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda11",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "6",
+   "value": "6",
+   "unit": "mmol/L",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    451,
+    452
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda11",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "5",
+   "value": "5",
+   "unit": "mg/dL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    451,
+    452
+   ],
+   "gold_span": [
+    451,
+    452
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda11",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mmol/L",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    451,
+    452
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda12",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "5",
+   "value": "5",
+   "unit": "mcg/mL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    451,
+    452
+   ],
+   "gold_span": [
+    607,
+    608
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [
+    "EVIDENCE_REANCHORED"
+   ],
+   "gg_flags": "admitted",
+   "gg_flags_codes": [
+    "EVIDENCE_REANCHORED"
+   ]
+  },
+  {
+   "fact": "fda12",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "5 mcg/mL",
+   "value": "5",
+   "unit": "mcg/mL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    607,
+    615
+   ],
+   "gold_span": [
+    607,
+    608
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda12",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "5",
+   "value": "50",
+   "unit": "mcg/mL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    451,
+    452
+   ],
+   "gold_span": [
+    607,
+    608
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda12",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "50",
+   "value": "50",
+   "unit": "mcg/mL",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    607,
+    608
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda12",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "6",
+   "value": "6",
+   "unit": "mcg/mL",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    607,
+    608
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda12",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "5",
+   "value": "5",
+   "unit": "mg/mL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    451,
+    452
+   ],
+   "gold_span": [
+    607,
+    608
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda12",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mcg/mL",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    607,
+    608
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda13",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "65",
+   "value": "65",
+   "unit": "years",
+   "lx_status": "match_exact",
+   "lx_span": [
+    829,
+    831
+   ],
+   "gold_span": [
+    829,
+    831
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda13",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "65 years",
+   "value": "65",
+   "unit": "years",
+   "lx_status": "match_exact",
+   "lx_span": [
+    829,
+    837
+   ],
+   "gold_span": [
+    829,
+    831
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda13",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "65",
+   "value": "650",
+   "unit": "years",
+   "lx_status": "match_exact",
+   "lx_span": [
+    829,
+    831
+   ],
+   "gold_span": [
+    829,
+    831
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda13",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "650",
+   "value": "650",
+   "unit": "years",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    829,
+    831
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda13",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "67",
+   "value": "67",
+   "unit": "years",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    829,
+    831
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda13",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "65",
+   "value": "65",
+   "unit": "months",
+   "lx_status": "match_exact",
+   "lx_span": [
+    829,
+    831
+   ],
+   "gold_span": [
+    829,
+    831
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda13",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "years",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    829,
+    831
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda14",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "7",
+   "value": "7",
+   "unit": "hours",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26734,
+    26735
+   ],
+   "gold_span": [
+    26734,
+    26735
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE",
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda14",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "7 hrs",
+   "value": "7",
+   "unit": "hours",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    26734,
+    26735
+   ],
+   "gold_span": [
+    26734,
+    26735
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda14",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "7",
+   "value": "70",
+   "unit": "hours",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26734,
+    26735
+   ],
+   "gold_span": [
+    26734,
+    26735
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda14",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "70",
+   "value": "70",
+   "unit": "hours",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    26734,
+    26735
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda14",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "8",
+   "value": "8",
+   "unit": "hours",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26739,
+    26740
+   ],
+   "gold_span": [
+    26734,
+    26735
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda14",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "8",
+   "value": "8",
+   "unit": "hours",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26739,
+    26740
+   ],
+   "gold_span": [
+    26734,
+    26735
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda14",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "7",
+   "value": "7",
+   "unit": "days",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26734,
+    26735
+   ],
+   "gold_span": [
+    26734,
+    26735
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda14",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "hours",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    26734,
+    26735
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda15",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "35",
+   "value": "35",
+   "unit": "%",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26949,
+    26951
+   ],
+   "gold_span": [
+    26949,
+    26951
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda15",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "35 percent",
+   "value": "35",
+   "unit": "%",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    26949,
+    26951
+   ],
+   "gold_span": [
+    26949,
+    26951
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda15",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "35",
+   "value": "350",
+   "unit": "%",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26949,
+    26951
+   ],
+   "gold_span": [
+    26949,
+    26951
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda15",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "350",
+   "value": "350",
+   "unit": "%",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    26949,
+    26951
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda15",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "37",
+   "value": "37",
+   "unit": "%",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    26949,
+    26951
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda15",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "35",
+   "value": "35",
+   "unit": "mg",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26949,
+    26951
+   ],
+   "gold_span": [
+    26949,
+    26951
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda15",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "%",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    26949,
+    26951
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda16",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "24",
+   "value": "24",
+   "unit": "hours",
+   "lx_status": "match_exact",
+   "lx_span": [
+    27168,
+    27170
+   ],
+   "gold_span": [
+    27168,
+    27170
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda16",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "24 hrs",
+   "value": "24",
+   "unit": "hours",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    27168,
+    27170
+   ],
+   "gold_span": [
+    27168,
+    27170
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda16",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "24",
+   "value": "240",
+   "unit": "hours",
+   "lx_status": "match_exact",
+   "lx_span": [
+    27168,
+    27170
+   ],
+   "gold_span": [
+    27168,
+    27170
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda16",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "240",
+   "value": "240",
+   "unit": "hours",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    27168,
+    27170
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda16",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "26",
+   "value": "26",
+   "unit": "hours",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    27168,
+    27170
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda16",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "48",
+   "value": "48",
+   "unit": "hours",
+   "lx_status": "match_exact",
+   "lx_span": [
+    27174,
+    27176
+   ],
+   "gold_span": [
+    27168,
+    27170
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda16",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "24",
+   "value": "24",
+   "unit": "days",
+   "lx_status": "match_exact",
+   "lx_span": [
+    27168,
+    27170
+   ],
+   "gold_span": [
+    27168,
+    27170
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda16",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "hours",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    27168,
+    27170
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda17",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "1",
+   "value": "1",
+   "unit": "mcg/mL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26550,
+    26551
+   ],
+   "gold_span": [
+    27202,
+    27203
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [
+    "EVIDENCE_REANCHORED"
+   ],
+   "gg_flags": "admitted",
+   "gg_flags_codes": [
+    "EVIDENCE_REANCHORED"
+   ]
+  },
+  {
+   "fact": "fda17",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "1 mcg/mL",
+   "value": "1",
+   "unit": "mcg/mL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    27202,
+    27210
+   ],
+   "gold_span": [
+    27202,
+    27203
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda17",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "1",
+   "value": "10",
+   "unit": "mcg/mL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26550,
+    26551
+   ],
+   "gold_span": [
+    27202,
+    27203
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda17",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "10",
+   "value": "10",
+   "unit": "mcg/mL",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    27202,
+    27203
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda17",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "2",
+   "value": "2",
+   "unit": "mcg/mL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26560,
+    26561
+   ],
+   "gold_span": [
+    27202,
+    27203
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda17",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "1",
+   "value": "1",
+   "unit": "mg/mL",
+   "lx_status": "match_exact",
+   "lx_span": [
+    26550,
+    26551
+   ],
+   "gold_span": [
+    27202,
+    27203
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda17",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mcg/mL",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    27202,
+    27203
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda18",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "450",
+   "value": "450",
+   "unit": "mg/kg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    33554,
+    33557
+   ],
+   "gold_span": [
+    33554,
+    33557
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda18",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "450 mg/kg/day",
+   "value": "450",
+   "unit": "mg/kg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    33554,
+    33567
+   ],
+   "gold_span": [
+    33554,
+    33557
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda18",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "450",
+   "value": "4500",
+   "unit": "mg/kg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    33554,
+    33557
+   ],
+   "gold_span": [
+    33554,
+    33557
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda18",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "4,500",
+   "value": "4500",
+   "unit": "mg/kg/day",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    33661,
+    33663
+   ],
+   "gold_span": [
+    33554,
+    33557
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda18",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "470",
+   "value": "470",
+   "unit": "mg/kg/day",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    33554,
+    33557
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda18",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "300",
+   "value": "300",
+   "unit": "mg/kg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    33545,
+    33548
+   ],
+   "gold_span": [
+    33554,
+    33557
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda18",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "450",
+   "value": "450",
+   "unit": "mg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    33554,
+    33557
+   ],
+   "gold_span": [
+    33554,
+    33557
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda18",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mg/kg/day",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    33554,
+    33557
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda19",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "1,200",
+   "value": "1200",
+   "unit": "mg/kg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    33600,
+    33605
+   ],
+   "gold_span": [
+    33600,
+    33605
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda19",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "1200 mg/kg/day",
+   "value": "1200",
+   "unit": "mg/kg/day",
+   "lx_status": "match_fuzzy",
+   "lx_span": [
+    33558,
+    33567
+   ],
+   "gold_span": [
+    33600,
+    33605
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda19",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "1,200",
+   "value": "12000",
+   "unit": "mg/kg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    33600,
+    33605
+   ],
+   "gold_span": [
+    33600,
+    33605
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda19",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "12,000",
+   "value": "12000",
+   "unit": "mg/kg/day",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    33696,
+    33699
+   ],
+   "gold_span": [
+    33600,
+    33605
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda19",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "1,400",
+   "value": "1400",
+   "unit": "mg/kg/day",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    33600,
+    33602
+   ],
+   "gold_span": [
+    33600,
+    33605
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda19",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "900",
+   "value": "900",
+   "unit": "mg/kg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    33591,
+    33594
+   ],
+   "gold_span": [
+    33600,
+    33605
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda19",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "1,200",
+   "value": "1200",
+   "unit": "mg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    33600,
+    33605
+   ],
+   "gold_span": [
+    33600,
+    33605
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda19",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mg/kg/day",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    33600,
+    33605
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda20",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "600",
+   "value": "600",
+   "unit": "mg/kg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    34368,
+    34371
+   ],
+   "gold_span": [
+    34368,
+    34371
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda20",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "600 mg/kg/day",
+   "value": "600",
+   "unit": "mg/kg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    34368,
+    34381
+   ],
+   "gold_span": [
+    34368,
+    34371
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda20",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "600",
+   "value": "6000",
+   "unit": "mg/kg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    34368,
+    34371
+   ],
+   "gold_span": [
+    34368,
+    34371
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda20",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "6,000",
+   "value": "6000",
+   "unit": "mg/kg/day",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    34368,
+    34371
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda20",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "620",
+   "value": "620",
+   "unit": "mg/kg/day",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    34368,
+    34371
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda20",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "600",
+   "value": "600",
+   "unit": "mg/day",
+   "lx_status": "match_exact",
+   "lx_span": [
+    34368,
+    34371
+   ],
+   "gold_span": [
+    34368,
+    34371
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda20",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "mg/kg/day",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    34368,
+    34371
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda21",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "3",
+   "value": "3",
+   "unit": "times",
+   "lx_status": "match_exact",
+   "lx_span": [
+    34406,
+    34407
+   ],
+   "gold_span": [
+    34406,
+    34407
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ]
+  },
+  {
+   "fact": "fda21",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "3 times",
+   "value": "3",
+   "unit": "times",
+   "lx_status": "match_exact",
+   "lx_span": [
+    34406,
+    34413
+   ],
+   "gold_span": [
+    34406,
+    34407
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ]
+  },
+  {
+   "fact": "fda21",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "3",
+   "value": "30",
+   "unit": "times",
+   "lx_status": "match_exact",
+   "lx_span": [
+    34406,
+    34407
+   ],
+   "gold_span": [
+    34406,
+    34407
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda21",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "30",
+   "value": "30",
+   "unit": "times",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    34406,
+    34407
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda21",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "4",
+   "value": "4",
+   "unit": "times",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    34406,
+    34407
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda21",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "times",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    34406,
+    34407
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda22",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "338",
+   "value": "338",
+   "unit": "count",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35118,
+    35121
+   ],
+   "gold_span": [
+    35118,
+    35121
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda22",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "338 count",
+   "value": "338",
+   "unit": "count",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    35118,
+    35121
+   ],
+   "gold_span": [
+    35118,
+    35121
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda22",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "338",
+   "value": "3380",
+   "unit": "count",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35118,
+    35121
+   ],
+   "gold_span": [
+    35118,
+    35121
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda22",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "3,380",
+   "value": "3380",
+   "unit": "count",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    35118,
+    35121
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda22",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "358",
+   "value": "358",
+   "unit": "count",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    35118,
+    35121
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda22",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "368",
+   "value": "368",
+   "unit": "count",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35364,
+    35367
+   ],
+   "gold_span": [
+    35118,
+    35121
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda22",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "count",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    35118,
+    35121
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda23",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "6",
+   "value": "6",
+   "unit": "weeks",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35589,
+    35590
+   ],
+   "gold_span": [
+    35589,
+    35590
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "admitted",
+   "gg_flags_codes": []
+  },
+  {
+   "fact": "fda23",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "6 wks",
+   "value": "6",
+   "unit": "weeks",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    35589,
+    35590
+   ],
+   "gold_span": [
+    35589,
+    35590
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda23",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "6",
+   "value": "60",
+   "unit": "weeks",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35589,
+    35590
+   ],
+   "gold_span": [
+    35589,
+    35590
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda23",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "60",
+   "value": "60",
+   "unit": "weeks",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    35589,
+    35590
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda23",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "7",
+   "value": "7",
+   "unit": "weeks",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    35589,
+    35590
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda23",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "3",
+   "value": "3",
+   "unit": "weeks",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35752,
+    35753
+   ],
+   "gold_span": [
+    35589,
+    35590
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ]
+  },
+  {
+   "fact": "fda23",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "6",
+   "value": "6",
+   "unit": "days",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35589,
+    35590
+   ],
+   "gold_span": [
+    35589,
+    35590
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda23",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "weeks",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    35589,
+    35590
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  },
+  {
+   "fact": "fda24",
+   "doc": "fda-metformin-er",
+   "kind": "clean",
+   "correct": true,
+   "text": "21",
+   "value": "21",
+   "unit": "weeks",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35990,
+    35992
+   ],
+   "gold_span": [
+    35990,
+    35992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "MULTIPLE_VALUES_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda24",
+   "doc": "fda-metformin-er",
+   "kind": "paraphrase",
+   "correct": true,
+   "text": "21 wks",
+   "value": "21",
+   "unit": "weeks",
+   "lx_status": "match_lesser",
+   "lx_span": [
+    35990,
+    35992
+   ],
+   "gold_span": [
+    35990,
+    35992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "EVIDENCE_TEXT_MISMATCH"
+   ]
+  },
+  {
+   "fact": "fda24",
+   "doc": "fda-metformin-er",
+   "kind": "value_attr_x10",
+   "correct": false,
+   "text": "21",
+   "value": "210",
+   "unit": "weeks",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35990,
+    35992
+   ],
+   "gold_span": [
+    35990,
+    35992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ]
+  },
+  {
+   "fact": "fda24",
+   "doc": "fda-metformin-er",
+   "kind": "text_value_x10",
+   "correct": false,
+   "text": "210",
+   "value": "210",
+   "unit": "weeks",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    35990,
+    35992
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda24",
+   "doc": "fda-metformin-er",
+   "kind": "near_miss_digit",
+   "correct": false,
+   "text": "23",
+   "value": "23",
+   "unit": "weeks",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    35990,
+    35992
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ]
+  },
+  {
+   "fact": "fda24",
+   "doc": "fda-metformin-er",
+   "kind": "adjacent_value",
+   "correct": false,
+   "text": "3",
+   "value": "3",
+   "unit": "weeks",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35752,
+    35753
+   ],
+   "gold_span": [
+    35990,
+    35992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "admitted",
+   "gg_strict_codes": [],
+   "gg_flags": "needs_verification",
+   "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ]
+  },
+  {
+   "fact": "fda24",
+   "doc": "fda-metformin-er",
+   "kind": "unit_swap",
+   "correct": false,
+   "text": "21",
+   "value": "21",
+   "unit": "days",
+   "lx_status": "match_exact",
+   "lx_span": [
+    35990,
+    35992
+   ],
+   "gold_span": [
+    35990,
+    35992
+   ],
+   "lx_aligned": true,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "UNIT_INVALID"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "UNIT_INVALID"
+   ]
+  },
+  {
+   "fact": "fda24",
+   "doc": "fda-metformin-er",
+   "kind": "null_literal",
+   "correct": false,
+   "text": "null",
+   "value": "null",
+   "unit": "weeks",
+   "lx_status": null,
+   "lx_span": null,
+   "gold_span": [
+    35990,
+    35992
+   ],
+   "lx_aligned": false,
+   "gg_strict": "rejected",
+   "gg_strict_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_flags": "rejected",
+   "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ]
+  }
+ ]
+}

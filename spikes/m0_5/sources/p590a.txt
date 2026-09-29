@@ -1,0 +1,1675 @@
+AH XSL/XML Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+Userid: CPM
+
+Schema: tipx Leadpct: 100% Pt. size: 10
+
+Page 1 of 62  
+
+ Draft 
+
+ Ok to Print
+
+(Init. & Date) _______
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+Publication 590-A
+
+Contributions 
+to Individual
+Retirement
+Arrangements
+(IRAs)
+
+For use in preparing
+2025 Returns
+
+Get forms and other information faster and easier at:
+• IRS.gov (English) 
+• IRS.gov/Spanish (Español) 
+• IRS.gov/Chinese (中文) 
+
+• IRS.gov/Korean (한국어) 
+• IRS.gov/Russian (Pусский) 
+• IRS.gov/Vietnamese (Tiếng Việt) 
+
+Contents
+
+Future Developments . . . . . . . . . . . . . . . . . . . . . . . 1
+
+What’s New for 2025 . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+What’s New for 2026 . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+Reminders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+Chapter  1.  Traditional IRAs . . . . . . . . . . . . . . . . . . 6
+Who Can Open a Traditional IRA? . . . . . . . . . . . . 6
+When Can a Traditional IRA Be Opened? . . . . . . . 7
+How Can a Traditional IRA Be Opened? . . . . . . . . 7
+How Much Can Be Contributed? . . . . . . . . . . . . . 9
+When Can Contributions Be Made? . . . . . . . . . . 10
+How Much Can You Deduct? . . . . . . . . . . . . . . . 11
+What if You Inherit an IRA? . . . . . . . . . . . . . . . . 21
+Can You Move Retirement Plan Assets? . . . . . . . 21
+When Can You Withdraw or Use Assets? . . . . . . 31
+What Acts Result in Penalties or Additional 
+
+Taxes? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+
+Chapter  2.  Roth IRAs . . . . . . . . . . . . . . . . . . . . . 38
+What Is a Roth IRA? . . . . . . . . . . . . . . . . . . . . . 39
+When Can a Roth IRA Be Opened? . . . . . . . . . . 39
+Can You Contribute to a Roth IRA? . . . . . . . . . . . 39
+Can You Move Amounts Into a Roth IRA? . . . . . . 44
+
+Chapter  3.  Retirement Savings Contributions 
+
+Credit (Saver's Credit)
+
+. . . . . . . . . . . . . . . . . . 46
+
+How To Get Tax Help . . . . . . . . . . . . . . . . . . . . . . . 48
+
+Appendices . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+
+Future Developments
+For  the  latest  information  about  developments  related  to 
+Pub.  590-A,  such  as  legislation  enacted  after  it  was 
+published, go to IRS.gov/Pub590A.
+
+What’s New for 2025
+IRA contribution limit for 2025.  For 2025, the IRA con-
+tribution  limit  remains  $7,000  ($8,000  for  individuals  age 
+50 or older).
+Trump account and new Form 4547.  Recent legislation 
+allows  parents,  guardians,  and  other  authorized  individu-
+als to elect to establish a new type of individual retirement 
+account, called a Trump account, for the exclusive benefit 
+of certain children. If the child was born after 2024 and be-
+fore  2029,  is  a  U.S.  citizen,  and  meets  certain  other  re-
+quirements, the authorized individual may also elect to re-
+ceive  a  $1,000  pilot  program  contribution  to  the  child’s 
+Trump  account.  Both  elections  can  be  made  on  Form 
+
+Jan 15, 2026
+
+Publication 590-A (2025)  Catalog Number 66302J
+Department of the Treasury  Internal Revenue Service  www.irs.gov
+
+Page 2 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+4547, which can be filed at the same time as the author-
+ized  individual’s  2025  income  tax  return.  For  more  infor-
+mation  on  Trump  accounts,  and  to  learn  how  to  make 
+these elections, see Form 4547 and its instructions.
+
+Modified  AGI  limit  for  traditional  IRA  contributions. 
+For 2025, if you are covered by a retirement plan at work, 
+your  deduction  for  contributions  to  a  traditional  IRA  is  re-
+duced (phased out) if your modified AGI is:
+
+• More than $126,000 but less than $146,000 for a mar-
+ried couple filing a joint return or a qualifying surviving 
+spouse,
+
+• More than $79,000 but less than $89,000 for a single 
+
+individual or head of household, or
+
+• Less than $10,000 for a married individual filing a sep-
+
+arate return.
+
+Modified  AGI  limit  for  certain  married  individuals. 
+If you are married and your spouse is covered by a retire-
+ment  plan  at  work  and  you  aren’t,  and  you  live  with  your 
+spouse or file a joint return, your deduction is phased out if 
+your  modified  AGI  is  more  than  $236,000  (up  from 
+$230,000  for  2024)  but  less  than  $246,000  (up  from 
+$240,000  for  2024).  If  your  modified  AGI  is  $246,000  or 
+more, you can’t take a deduction for contributions to a tra-
+ditional IRA.
+
+Modified  AGI  limit  for  Roth  IRA  contributions.  For 
+2025, your Roth IRA contribution limit is reduced (phased 
+out) in the following situations.
+
+• Your filing status is married filing jointly or qualifying 
+surviving spouse and your modified AGI is at least 
+$236,000. You can’t make a Roth IRA contribution if 
+your modified AGI is $246,000 or more.
+
+• Your filing status is single, head of household, or mar-
+ried filing separately and you didn’t live with your 
+spouse at any time in 2025 and your modified AGI is at 
+least $150,000. You can’t make a Roth IRA contribu-
+tion if your modified AGI is $165,000 or more.
+
+• Your filing status is married filing separately, you lived 
+with your spouse at any time during the year, and your 
+modified AGI is more than zero. You can’t make a Roth 
+IRA contribution if your modified AGI is $10,000 or 
+more.
+
+What’s New for 2026
+IRA  contribution  limit  increased  for  2026.  Beginning 
+in  2026,  the  IRA  contribution  limit  is  increased  to  $7,500 
+($8,600  for  individuals  age  50  or  older)  from  $7,000 
+($8,000 for individuals age 50 or older).
+
+Modified AGI limit for traditional IRA contributions in-
+creased.  For  2026,  if  you  are  covered  by  a  retirement 
+plan  at  work,  your  deduction  for  contributions  to  a  tradi-
+tional IRA is reduced (phased out) if your modified AGI is:
+• More than $129,000 but less than $149,000 for a mar-
+ried couple filing a joint return or a qualifying surviving 
+spouse,
+
+• More than $81,000 but less than $91,000 for a single 
+
+individual or head of household, or
+
+• Less than $10,000 for a married individual filing a sep-
+
+arate return.
+
+Modified  AGI  limit  for  certain  married  individuals 
+increased.  If you are married and your spouse is covered 
+by  a  retirement  plan  at  work  and  you  aren’t,  and  you  live 
+with  your  spouse  or  file  a  joint  return,  your  deduction  is 
+phased  out  if  your  modified  AGI  is  more  than  $242,000 
+(up  from  $236,000  for  2025)  but  less  than  $252,000  (up 
+from $246,000 for 2025). If your modified AGI is $252,000 
+or more, you can’t take a deduction for contributions to a 
+traditional IRA.
+Modified  AGI  limit  for  Roth  IRA  contributions  in-
+creased.  For 2026, your Roth IRA contribution limit is re-
+duced (phased out) in the following situations.
+• Your filing status is married filing jointly or qualifying 
+surviving spouse and your modified AGI is at least 
+$242,000. You can’t make a Roth IRA contribution if 
+your modified AGI is $252,0000 or more.
+
+• Your filing status is single, head of household, or mar-
+ried filing separately and you didn’t live with your 
+spouse at any time in 2026 and your modified AGI is at 
+least $153,000. You can’t make a Roth IRA contribu-
+tion if your modified AGI is $168,000 or more.
+
+• Your filing status is married filing separately, you lived 
+with your spouse at any time during the year, and your 
+modified AGI is more than zero. You can’t make a Roth 
+IRA contribution if your modified AGI is $10,000 or 
+more.
+
+Reminders
+Qualified tuition program rollover to a Roth IRA.  Be-
+ginning with distributions made after December 31, 2023, 
+a beneficiary of a section 529 qualified tuition program is 
+permitted to roll over a distribution from a section 529 ac-
+count into a Roth IRA for the beneficiary if certain require-
+ments are met. See Qualified tuition program rollover to a 
+Roth IRA, later.
+Increase  in  required  minimum  distribution  age.  Indi-
+viduals who reach age 72 after December 31, 2022, may 
+delay  receiving 
+their  required  minimum  distributions 
+(RMDs) until April 1 of the year following the year in which 
+they turn age 73.
+Qualified disaster tax relief.  The special rules that pro-
+vide for tax-favored withdrawals and repayments from cer-
+tain  qualified  plans  for  taxpayers  who  suffered  an  eco-
+nomic  loss  as  a  result  of  a  qualified  disaster  were  made 
+permanent by the SECURE 2.0 Act of 2022.
+
+A qualified disaster is a major disaster that occurred on 
+or after January 26, 2021, and was declared by the Presi-
+dent  after  December  27,  2020,  under  section  401  of  the 
+Robert T. Stafford Disaster Relief and Emergency Act. For 
+more  information,  see  Disaster-Related  Relief  in  Pub. 
+590-B,  Distributions 
+Individual  Retirement 
+from 
+Arrangements (IRAs).
+
+2
+
+Publication 590-A (2025)
+
+Page 3 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+Repayment  of  certain  early  distributions.  Contribu-
+tions made to the eligible retirement plan as a repayment 
+of  emergency  personal  expense  distributions,  domestic 
+abuse distributions, and terminal illness distributions may 
+be eligible for tax-free rollover treatment. See Pub. 590-B 
+for more information.
+
+Certain  corrective  distributions  not  subject  to  10% 
+additional  tax.  Beginning  on  December  29,  2022,  the 
+10% additional tax on early distributions will not apply to a 
+corrective  IRA  distribution,  which  consists  of  an  excess 
+contribution (a contribution greater than the IRA contribu-
+tion limit) and any earnings allocable to the excess contri-
+bution, as long as the corrective distribution is made on or 
+before  the  due  date  (including  extensions)  of  the  income 
+tax return.
+
+Divorce  or  separation 
+instruments  after  2018. 
+Amounts  paid  as  alimony  or  separate  maintenance  pay-
+ments under a divorce or separation instrument executed 
+after  2018  won't  be  deductible  by  the  payer.  Such 
+amounts  also  won't  be  includible  in  the  income  of  the  re-
+cipient. The same is true of alimony paid under a divorce 
+or separation instrument executed before 2019 and modi-
+fied after 2018, if the modification expressly states that the 
+alimony isn't deductible to the payer or includible in the in-
+come of the recipient. For more information, see Pub. 504.
+
+IRA  interest.  Although  interest  earned  from  your  IRA  is 
+generally not taxed in the year earned, it isn’t tax-exempt 
+interest.  Tax  on  your  traditional  IRA  is  generally  deferred 
+until  you  take  a  distribution.  Don’t  report  this  interest  on 
+your  return  as  tax-exempt  interest.  For  more  information 
+on tax-exempt interest, see the instructions for your tax re-
+turn.
+
+Photographs  of  missing  children.  The  IRS  is  a  proud 
+partner  with  the  National  Center  for  Missing  &  Exploited 
+Children® (NCMEC). Photographs of missing children se-
+lected by the Center may appear in this publication on pa-
+ges  that  would  otherwise  be  blank.  You  can  help  bring 
+these  children  home  by  looking  at  the  photographs  and 
+calling  1-800-THE-LOST  (1-800-843-5678)  if  you  recog-
+nize a child.
+
+Introduction
+This  publication  discusses  contributions  to  individual  re-
+tirement  arrangements  (IRAs).  An  IRA  is  a  personal  sav-
+ings  plan  that  gives  you  tax  advantages  for  setting  aside 
+money  for  retirement.  For  information  about  distributions 
+(including rollovers) from an IRA, see Pub. 590-B.
+
+What are some tax advantages of an IRA?  Two tax ad-
+vantages of an IRA are that:
+
+• Contributions you make to an IRA may be fully or parti-
+ally deductible, depending on which type of IRA you 
+have and on your circumstances; and
+
+• Generally, amounts in your IRA (including earnings 
+and gains) aren’t taxed until distributed. In some ca-
+ses, amounts aren’t taxed at all if distributed according 
+to the rules.
+
+What's  in  this  publication?  This  publication  discusses 
+contributions  to  traditional  and  Roth  IRAs.  It  explains  the 
+rules for:
+• Setting up an IRA,
+• Contributing to an IRA,
+• Transferring money or property to and from an IRA, 
+
+and
+
+• Taking a credit for contributions to an IRA.
+
+It  also  explains  the  penalties  and  additional  taxes  that 
+apply when the rules aren’t followed. To assist you in com-
+plying with the tax rules for IRAs, this publication contains 
+worksheets  and  sample  forms,  which  can  be  found 
+throughout  the  publication  and  in  the  appendices  at  the 
+end of the publication.
+
+How  to  use  this  publication.  The  rules  that  you  must 
+follow  depend  on  which  type  of  IRA  you  have.  Use  Table 
+I-1 to help you determine which parts of this publication to 
+read. Also use Table I-1 if you were referred to this publi-
+cation from instructions to a form.
+
+Comments  and  suggestions.  We  welcome  your  com-
+ments  about  this  publication  and  suggestions  for  future 
+editions.
+
+You  can  send  us  comments 
+
+IRS.gov/
+FormComments. Or, you can write to the Internal Revenue 
+Service,  Tax  Forms  and  Publications,  1111  Constitution 
+Ave. NW, IR-6526, Washington, DC 20224.
+
+through 
+
+Although  we  can’t  respond  individually  to  each  com-
+ment  received,  we  do  appreciate  your  feedback  and  will 
+consider  your  comments  and  suggestions  as  we  revise 
+our  tax  forms,  instructions,  and  publications.  Don’t  send 
+tax  questions,  tax  returns,  or  payments  to  the  above  ad-
+dress.
+
+Getting answers to your tax questions.  If you have 
+a tax question not answered by this publication or the How 
+To Get Tax Help section at the end of this publication, go 
+to  the  IRS  Interactive  Tax  Assistant  page  at  IRS.gov/
+Help/ITA  where  you  can  find  topics  by  using  the  search 
+feature or viewing the categories listed.
+
+Getting  tax  forms,  instructions,  and  publications. 
+Go  to  IRS.gov/Forms  to  download  current  and  prior-year 
+forms, instructions, and publications.
+
+Ordering tax forms, instructions, and publications. 
+Go to IRS.gov/OrderForms to order current forms, instruc-
+tions,  and  publications;  call  800-829-3676 
+to  order 
+prior-year  forms  and  instructions.  The  IRS  will  process 
+your order for forms and publications as soon as possible. 
+Don’t  resubmit  requests  you’ve  already  sent  us.  You  can 
+get forms and publications faster online.
+
+Useful Items
+You may want to see:
+
+Publications
+
+  505
+
+505 Tax Withholding and Estimated Tax
+
+Publication 590-A (2025)
+
+3
+
+Page 4 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+  590-B
+
+590-B Distributions from Individual Retirement 
+
+  5305-SIMPLE
+
+5305-SIMPLE Savings Incentive Match Plan for 
+
+Arrangements (IRAs)
+560 Retirement Plans for Small Business (SEP, 
+SIMPLE, and Qualified Plans)
+571 Tax-Sheltered Annuity Plans (403(b) Plans)
+575 Pension and Annuity Income
+939 General Rule for Pensions and Annuities
+
+  560
+
+  571
+  575
+  939
+
+Forms (and Instructions)
+
+  W-4P
+
+W-4P Withholding Certificate for Pension or Annuity 
+
+Payments
+
+  1099-R
+
+1099-R Distributions From Pensions, Annuities, 
+
+Retirement or Profit-Sharing Plans, IRAs, 
+Insurance Contracts, etc.
+
+  5304-SIMPLE
+
+5304-SIMPLE Savings Incentive Match Plan for 
+
+Employees of Small Employers (SIMPLE)—Not 
+for Use With a Designated Financial Institution
+
+  5305-S
+  5305-SA
+
+5305-S SIMPLE Individual Retirement Trust Account
+5305-SA SIMPLE Individual Retirement Custodial 
+
+Account
+
+Table I-1. Using This Publication
+
+Employees of Small Employers (SIMPLE)—for 
+Use With a Designated Financial Institution
+
+  5329
+
+5329 Additional Taxes on Qualified Plans (Including 
+IRAs) and Other Tax-Favored Accounts
+
+  5498
+
+5498 IRA Contribution Information
+
+  8606
+
+8606 Nondeductible IRAs
+
+  8815
+
+8815 Exclusion of Interest From Series EE and I U.S. 
+Savings Bonds Issued After 1989
+
+  8839
+
+8839 Qualified Adoption Expenses
+
+  8880
+
+8880 Credit for Qualified Retirement Savings 
+Contributions
+
+  8915-F
+
+8915-F Qualified Disaster Retirement Plan 
+
+Distributions and Repayments
+
+See How To Get Tax Help near the end of this publication 
+for information about getting these publications and forms.
+
+IF you need information on...
+
+ THEN see... 
+
+traditional IRAs (not including traditional SIMPLE IRAs)
+
+ chapter 1.
+
+Roth IRAs (not including Roth SIMPLE IRAs)
+
+ chapter 2, and parts of 
+ chapter 1.
+
+the credit for qualified retirement savings contributions 
+(saver's credit)
+
+ chapter 3.
+
+how to keep a record of your contributions to, and 
+distributions from, your traditional IRA(s) 
+
+SEP IRAs, SIMPLE IRAs, and 401(k) plans
+
+Coverdell education savings accounts (ESAs) (formerly 
+called education IRAs)
+
+IF for 2025, you:
+• received social security benefits,
+• had taxable compensation,
+• contributed to a traditional IRA, and
+• you or your spouse was covered by an employer 
+
+retirement plan,
+
+ and you want to...
+
+ Appendix A.
+
+ Pub. 560.
+
+ Pub. 970.
+
+ THEN see...
+
+first figure your modified adjusted gross income (AGI)
+
+ Appendix B,  Worksheet 1.
+
+then figure how much of your traditional IRA contribution 
+you can deduct
+
+ Appendix B,  Worksheet 2.
+
+and finally figure how much of your social security is 
+taxable 
+
+ Appendix B,  Worksheet 3.
+
+4
+
+Publication 590-A (2025)
+
+Page 5 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+Table I-2. How Are a Traditional IRA and a Roth IRA Different?
+This table shows the differences between traditional IRAs (not including traditional SIMPLE IRAs) and Roth IRAs (not 
+including Roth SIMPLE IRAs). Answers in the middle column apply to traditional IRAs. Answers in the right column apply 
+to Roth IRAs.
+
+Question
+
+Answer
+
+Traditional IRA?
+
+Roth IRA?
+
+Is there an age limit on when I can open 
+and contribute to a . . . . . . . . . . . . . . . .
+
+If I earned more than $7,000 in 2025 
+($8,000 if I was age 50 or older by the 
+end of 2025), is there a limit on how 
+much I can contribute to a . . . . . . . . . . .
+
+Can I deduct contributions to a . . . . . . .
+
+Do I have to file a form just because I 
+contribute to a . . . . . . . . . . . . . . . . . . . .
+
+No. For tax years after 2019, you are 
+able to contribute to your IRA even if 
+you have reached age 701/2 or older. 
+See Who Can Open a Traditional IRA? 
+in chapter 1.
+
+Yes. For 2025, you can contribute to a 
+traditional IRA up to: 
+
+• $7,000, or
+• $8,000 if you were age 50 or older 
+
+by the end of 2025.
+
+There is no upper limit on how much 
+you can earn and still contribute. See 
+How Much Can Be Contributed? in 
+chapter 1. 
+
+Yes. You may be able to deduct your 
+contributions to a traditional IRA 
+depending on your income, your filing 
+status, whether you are covered by a 
+retirement plan at work, and whether 
+you receive social security benefits. 
+See How Much Can You Deduct? in 
+chapter 1.
+
+Not unless you make nondeductible 
+contributions to your traditional IRA. In 
+that case, you must file Form 8606. See 
+Nondeductible Contributions in 
+chapter 1.
+
+No. You can be any age. See Can You 
+Contribute to a Roth IRA? in chapter 2.
+
+Yes. For 2025, you may be able to 
+contribute to a Roth IRA up to: 
+
+• $7,000, or
+• $8,000 if you were age 50 or older 
+
+by the end of 2025,
+
+but the amount you can contribute may 
+be less than that depending on your 
+income, your filing status, and if you 
+contribute to another IRA. See How 
+Much Can Be Contributed? and Table 
+2-1 in chapter 2.
+
+No. You can never deduct contributions 
+to a Roth IRA. See What Is a Roth IRA? 
+in chapter 2.
+
+No. You don’t have to file a form if you 
+contribute to a Roth IRA. See 
+Contributions not reported in chapter 2.
+
+Publication 590-A (2025)
+
+5
+
+Page 6 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+1.
+
+Traditional IRAs
+
+Reminders
+
+Types of IRAs.  An IRA can be either a traditional IRA or 
+a  Roth  IRA.  In  general,  individuals  may  make  their  own 
+contributions to their traditional IRAs or Roth IRAs. In ad-
+dition, certain employers have arrangements under which 
+the employer may contribute to IRAs of their employees.
+
+Under a SEP arrangement, an employer contributes to 
+traditional IRAs (sometimes referred to as traditional SEP 
+IRAs)  or  Roth  IRAs  (sometimes  referred  to  as  Roth  SEP 
+IRAs)  of  its  employees.  Individuals  may  separately  make 
+their  own  contributions  to  the  same  IRAs  to  which  their 
+employer contributes under a SEP arrangement.
+
+Under  a  SIMPLE  IRA  plan,  an  employer  contributes 
+salary  reduction  contributions  (at  the  election  of  the  em-
+ployee), matching contributions and/or nonelective contri-
+butions to traditional IRAs (sometimes referred to as tradi-
+tional SIMPLE IRAs) or Roth IRAs (sometimes referred to 
+as Roth SIMPLE IRAs) of its employees. However, a SIM-
+PLE  IRA  (whether  a  traditional  SIMPLE  IRA  or  a  Roth 
+SIMPLE  IRA)  is  subject  to  certain  restrictions  that  do  not 
+generally apply to other traditional IRAs or Roth IRAs. For 
+example,  an  individual  cannot  make  their  own  contribu-
+tions  to  a  SIMPLE  IRA.  In  addition,  there  are  various  re-
+strictions  related  to  distributions  and  contributions  during 
+the initial 2 years of participation in the SIMPLE IRA plan.
+
+References in this publication to traditional IRAs gener-
+ally include traditional SEP IRAs but do not include tradi-
+tional  SIMPLE  IRAs,  unless  otherwise  stated.  Likewise, 
+references to Roth IRAs generally include Roth SEP IRAs 
+but  do  not  include  Roth  SIMPLE  IRAs,  unless  otherwise 
+stated.
+
+Introduction
+This  chapter  discusses  the  original  IRA.  In  this  publica-
+tion, the original IRA (sometimes called an ordinary or reg-
+ular IRA) is referred to as a “traditional IRA.” For purposes 
+of this publication, a traditional IRA is any IRA that isn’t a 
+Roth IRA or a SIMPLE IRA. Traditional IRAs include tradi-
+tional  IRAs  that  receive  employer  contributions  from  SEP 
+arrangements. The following are two advantages of a tra-
+ditional IRA.
+
+• You may be able to deduct some or all of your contri-
+butions to it, depending on your circumstances.
+• Generally, amounts in your IRA, including earnings 
+and gains, aren’t taxed until they are distributed.
+
+Roth  IRAs  are  discussed  in  chapter  2.  SIMPLE  IRAs 
+are  discussed  in  Pub.  560.  For  a  traditional  IRA  that  re-
+ceives  employer  contributions  from  a  SEP  arrangement, 
+see Simplified Employee Pension (SEP), later.
+
+Who Can Open a Traditional 
+IRA?
+
+You can open and make contributions to a traditional IRA if 
+you (or, if you file a joint return, your spouse) received tax-
+able compensation during the year.
+
+You  can  have  a  traditional  IRA  whether  or  not  you  are 
+covered  by  any  other  retirement  plan.  However,  you  may 
+not be able to deduct all of your contributions if you or your 
+spouse  is  covered  by  an  employer  retirement  plan.  See 
+How Much Can You Deduct, later.
+
+For tax years beginning after December 31, 2019, 
+the  rule  that  you  are  not  able  to  make  contribu-
+tions  to  your  traditional  IRA  for  the  year  in  which 
+
+you reach age 70½ and all later years has been repealed.
+
+Both  spouses  have  compensation.  If  both  you  and 
+your spouse have compensation, each of you can open an 
+IRA. You can’t both participate in the same IRA. If you file 
+a  joint  return,  only  one  of  you  needs  to  have  compensa-
+tion.
+
+What Is Compensation?
+
+Generally,  compensation  is  what  you  earn  from  working. 
+For  a  summary  of  what  compensation  does  and  doesn’t 
+include,  see  Table  1-1.  Compensation  includes  all  of  the 
+items  discussed  next  (even  if  you  have  more  than  one 
+type).
+
+Wages, salaries, etc.  Wages, salaries, tips, professional 
+fees, bonuses, and other amounts you receive for provid-
+ing  personal  services  are  compensation.  The  IRS  treats 
+as  compensation  any  amount  properly  shown  in  box  1 
+(Wages,  tips,  other  compensation)  of  Form  W-2,  Wage 
+and  Tax  Statement,  provided  that  amount  is  reduced  by 
+any  amount  properly  shown  in  box  11  (Nonqualified 
+plans).  A  scholarship  or  fellowship  is  generally  taxable 
+compensation only if it is in box 1 of your Form W-2. How-
+ever, for tax years beginning after 2019, certain non-tuition 
+fellowship  and  stipend  payments  not  reported  to  you  on 
+Form  W-2  are  treated  as  taxable  compensation  for  IRA 
+purposes.  These  amounts  include  taxable  non-tuition  fel-
+lowship and stipend payments made to aid you in the pur-
+suit of graduate or postdoctoral study and included in your 
+gross  income  under  the  rules  discussed  in  chapter  1  of 
+Pub. 970, Tax Benefits for Education.
+
+Commissions.  An amount you receive that is a percent-
+age of profits or sales price is compensation.
+
+Self-employment  income.  If  you  are  self-employed  (a 
+sole  proprietor  or  a  partner),  compensation  is  the  net 
+
+6
+
+Chapter 1 Traditional IRAs
+
+Publication 590-A (2025)
+
+TIPPage 7 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+earnings  from  your  trade  or  business  (provided  your  per-
+sonal services are a material income-producing factor) re-
+duced by the total of:
+• The deduction for contributions made on your behalf 
+
+to retirement plans, and
+
+• The deduction allowed for the deductible part of your 
+
+self-employment taxes.
+
+Compensation includes earnings from self-employment 
+even if they aren’t subject to self-employment tax because 
+of your religious beliefs.
+
+Self-employment  loss.  If  you  have  a  net  loss  from 
+self-employment, don’t subtract the loss from your salaries 
+or wages when figuring your total compensation.
+
+Alimony  and  separate  maintenance.  For  IRA  purpo-
+ses, compensation includes any taxable alimony and sep-
+arate maintenance payments you receive under a decree 
+of divorce or separate maintenance but only with respect 
+to divorce or separation instruments executed on or before 
+December  31,  2018,  that  have  not  been  modified  to  ex-
+clude such amounts.
+
+Nontaxable  combat  pay.  If  you  were  a  member  of  the 
+U.S. Armed Forces, compensation includes any nontaxa-
+ble  combat  pay  you  received.  This  amount  should  be  re-
+ported in box 12 of your 2025 Form W-2 with code Q.
+
+Graduate  or  postdoctoral  study.  A  scholarship  or  fel-
+lowship  is  generally  taxable  compensation  only  if  it  is  in 
+box 1 of your Form W-2. However, for tax years beginning 
+after 2019, certain non-tuition fellowship and stipend pay-
+ments not reported to you on Form W-2 are treated as tax-
+able  compensation  for  IRA  purposes.  These  amounts  in-
+clude taxable non-tuition fellowship and stipend payments 
+made to aid you in the pursuit of graduate or postdoctoral 
+study  and  included  in  your  gross  income  under  the  rules 
+discussed in chapter 1 of Pub. 970.
+
+Table 1-1.
+
+Compensation for Purposes
+of an IRA
+
+Includes...
+
+Doesn’t include...
+
+ earnings and profits from
+ property.
+
+ interest and
+ dividend income.
+
+ pension or annuity
+ income.
+
+ deferred compensation.
+
+ income from certain 
+ partnerships.
+
+ any amounts you exclude
+ from income.
+
+wages, salaries, etc.
+
+commissions.
+
+self-employment income.
+
+taxable alimony and separate 
+maintenance.
+
+nontaxable combat pay.
+
+taxable non-tuition fellowship and 
+stipend payments.
+
+What Isn’t Compensation?
+
+Compensation doesn’t include any of the following items.
+• Earnings and profits from property, such as rental in-
+
+come, interest income, and dividend income.
+
+• Pension or annuity income.
+• Deferred compensation received (compensation pay-
+
+ments postponed from a past year).
+
+• Income from a partnership for which you don’t provide 
+services that are a material income-producing factor.
+• Conservation Reserve Program (CRP) payments re-
+
+ported on Schedule SE (Form 1040), line 1b.
+
+• Any amounts (other than combat pay) you exclude 
+from income, such as foreign earned income and 
+housing costs.
+
+When Can a Traditional IRA Be 
+Opened?
+
+You  can  open  a  traditional  IRA  at  any  time.  However,  the 
+time  for  making  contributions  for  any  year  is  limited.  See 
+When Can Contributions Be Made, later.
+
+How Can a Traditional IRA Be 
+Opened?
+
+You  can  open  different  kinds  of  IRAs  with  a  variety  of  or-
+ganizations. You can open an IRA at a bank or other finan-
+cial institution or with a mutual fund or life insurance com-
+pany. You can also open an IRA through your stockbroker. 
+Any IRA must meet Internal Revenue Code requirements. 
+The  requirements  for  the  various  arrangements  are  dis-
+cussed below.
+
+Kinds of traditional IRAs.  Your traditional IRA can be an 
+individual retirement account or annuity. It can be an em-
+ployer or employee association trust account. A traditional 
+IRA  can  also  be  used  to  accept  employer  contributions 
+under a SEP arrangement (sometimes referred to as a tra-
+ditional SEP IRA).
+
+Individual Retirement Account
+
+An individual retirement account is a trust or custodial ac-
+count set up in the United States for the exclusive benefit 
+of  you  or  your  beneficiaries.  The  account  is  created  by  a 
+written  document.  The  document  must  show  that  the  ac-
+count meets all of the following requirements.
+
+• The trustee or custodian must be a bank, a federally 
+insured credit union, a savings and loan association, 
+or an entity approved by the IRS to act as trustee or 
+custodian.
+
+• The trustee or custodian generally can’t accept contri-
+butions of more than the deductible amount for the 
+
+Publication 590-A (2025)
+
+Chapter 1 Traditional IRAs
+
+7
+
+Page 8 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+year. However, rollover contributions and employer 
+contributions to a traditional SEP IRA can be more 
+than this amount.
+
+• Contributions, except for rollover contributions, must 
+
+be in cash. See Rollovers, later.
+
+• You must have a nonforfeitable right to the amount at 
+
+all times.
+
+• Money in your account can’t be used to buy a life in-
+
+surance policy.
+
+• Assets in your account can’t be combined with other 
+property, except in a common trust fund or common 
+investment fund.
+
+• You must start receiving distributions by April 1 of the 
+
+year following the year in which you reach age 73. See 
+Pub. 590-B for more information about RMDs and 
+other distribution rules.
+
+Individual Retirement Annuity
+
+You can open an individual retirement annuity by purchas-
+ing an annuity contract or an endowment contract from a 
+life insurance company.
+
+An individual retirement annuity must be issued in your 
+name  as  the  owner,  and  either  you  or  your  beneficiaries 
+who  survive  you  are  the  only  ones  who  can  receive  the 
+benefits or payments.
+
+An  individual  retirement  annuity  must  meet  all  the  fol-
+
+lowing requirements.
+• Your entire interest in the contract must be nonforfeita-
+
+ble.
+
+• The contract must provide that you can’t transfer any 
+
+portion of it to any person other than the issuer.
+
+• There must be flexible premiums so that if your com-
+pensation changes, your payment can also change. 
+This provision applies to contracts issued after No-
+vember 6, 1978.
+
+• The contract must provide that contributions can’t be 
+more than the deductible amount for an IRA for the 
+year, and that you must use any refunded premiums to 
+pay for future premiums or to buy more benefits before 
+the end of the calendar year after the year in which 
+you receive the refund.
+
+• Distributions must begin by April 1 of the year follow-
+ing the year in which you reach age 73. See Pub. 
+590-B for more information about RMDs and other dis-
+tribution rules. 
+
+Individual Retirement Bonds
+
+The sale of individual retirement bonds issued by the fed-
+eral government was suspended after April 30, 1982. The 
+bonds have the following features.
+
+• They stop earning interest when you reach age 701/2. 
+If you die, interest will stop 5 years after your death, or 
+on the date you would have reached age 701/2, 
+whichever is earlier.
+
+• You can’t transfer the bonds.
+If  you  cash  (redeem)  the  bonds  before  the  year  in  which 
+you  reach  age  591/2,  you  may  be  subject  to  a  10%  addi-
+tional tax. See Pub. 590-B for more information about the 
+age 591/2 rule for early distributions and other distribution 
+rules. You can roll over redemption proceeds into IRAs.
+
+SIMPLE IRA Plans and SIMPLE IRAs
+
+A  SIMPLE  IRA  plan  is  a  tax-favored  retirement  plan  that 
+certain small employers (including self-employed employ-
+ees) can set up for the benefit of their employees. Contri-
+butions  to  the  employees’  SIMPLE  IRA  are  made  by  the 
+employers and are made up of salary reduction contribu-
+tions  and  employer  contributions  which  are  either  match-
+ing  contributions  or  nonelective  contributions.  A  SIMPLE 
+IRA can be either a traditional SIMPLE IRA or a Roth SIM-
+PLE  IRA  but  are  subject  to  different  rules  than  traditional 
+or  Roth  IRAs.  See  Pub.  560  for  more  information  about 
+SIMPLE IRA plans and SIMPLE IRAs.
+
+Simplified Employee Pension (SEP) 
+Arrangements and SIMPLE IRAs
+
+A  SEP  arrangement  is  a  written  plan  that  allows  an  em-
+ployer  to  make  contributions  to  an  employee’s  traditional 
+SEP IRA or Roth SEP IRA. Employer contributions to SEP 
+IRAs are subject to different limits than individual contribu-
+tions to traditional and Roth IRAs. Distributions from SEP 
+IRAs  are  subject  to  traditional  and  Roth  IRA  rules.  See 
+Pub.  560  for  more  information  about  SEP  arrangements 
+and SIMPLE IRAs.
+
+Employer and Employee Association 
+Trust Accounts
+
+Your  employer  or  your  labor  union  or  other  employee  as-
+sociation can set up a trust to provide individual retirement 
+accounts for employees or members, provided certain re-
+quirements  are  met  (such  as  separate  accounting).  The 
+requirements  for  individual  retirement  accounts  apply  to 
+these traditional and Roth IRAs.
+
+Required Disclosures
+
+The  trustee  or  issuer  (sometimes  called  the  sponsor)  of 
+your  traditional  IRA  must  generally  give  you  a  disclosure 
+statement at least 7 days before you open your IRA. How-
+ever,  the  sponsor  doesn’t  have  to  give  you  the  statement 
+until  the  date  you  open  (or  purchase,  if  earlier)  your  IRA, 
+provided you are given at least 7 days from that date to re-
+voke the IRA.
+
+The disclosure statement must explain certain items in 
+plain language. For example, the statement should explain 
+when  and  how  you  can  revoke  the  IRA,  and  include  the 
+name,  address,  and  telephone  number  of  the  person  to 
+receive  the  notice  of  cancellation.  This  explanation  must 
+appear at the beginning of the disclosure statement. 
+
+8
+
+Chapter 1 Traditional IRAs
+
+Publication 590-A (2025)
+
+Page 9 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+If you revoke your IRA within the revocation period, the 
+sponsor  must  return  to  you  the  entire  amount  you  paid. 
+The  sponsor  must  report  on  the  appropriate  IRS  forms 
+both your contribution to the IRA (unless it was made by a 
+trustee-to-trustee  transfer)  and  the  amount  returned  to 
+you. These requirements apply to all sponsors.
+
+How Much Can Be 
+Contributed?
+
+• Naval Reserve,
+• Marine Corps Reserve,
+• Air National Guard of the United States,
+• Air Force Reserve,
+• Coast Guard Reserve, or
+• Reserve Corps of the Public Health Service.
+
+Figuring  your  IRA  deduction.  The  repayment  of 
+qualified  reservist  distributions  doesn’t  affect  the  amount 
+you can deduct as an IRA contribution.
+
+There are limits and other rules that affect the amount that 
+can  be  contributed  to  a  traditional  IRA.  These  limits  and 
+rules are explained below.
+
+Reporting the repayment.  If you repay a qualified re-
+servist  distribution,  include  the  amount  of  the  repayment 
+with nondeductible contributions on line 1 of Form 8606.
+
+Community  property  laws.  Except  as  discussed  later 
+under  Kay  Bailey  Hutchison  Spousal  IRA  Limit,  each 
+spouse figures their limit separately, using their own com-
+pensation.  This  is  the  rule  even  in  states  with  community 
+property laws.
+
+Brokers'  commissions.  Brokers'  commissions  paid  in 
+connection with your traditional IRA are subject to the con-
+tribution  limit.  For  information  about  whether  you  can  de-
+duct  brokers'  commissions,  see  Brokers'  commissions, 
+later, under How Much Can You Deduct.
+
+Trustees'  fees.  Trustees'  administrative  fees  aren’t  sub-
+ject to the contribution limit. For information about whether 
+you  can  deduct  trustees'  fees,  see  Trustees'  fees,  later, 
+under How Much Can You Deduct.
+
+Qualified reservist repayments.  If you were a member 
+of a reserve component and you were ordered or called to 
+active duty after September 11, 2001, you may be able to 
+contribute  (repay)  to  an  IRA  amounts  equal  to  any  quali-
+fied  reservist  distributions  (defined  under  Early  Distribu-
+tions in Pub. 590-B) you received. You can make these re-
+payment contributions even if they would cause your total 
+contributions to the IRA to be more than the general limit 
+on  contributions.  To  be  eligible  to  make  these  repayment 
+contributions, you must have received a qualified reservist 
+distribution from an IRA or from a section 401(k) or 403(b) 
+plan  or  a  similar  arrangement.  See  Early  Distributions  in 
+Pub. 590-B for more information on qualified reservist dis-
+tributions.
+
+Limit.  Your  qualified  reservist  repayments  can’t  be 
+
+more than your qualified reservist distributions.
+
+When  repayment  contributions  can  be  made.  You 
+can’t  make  these  repayment  contributions  later  than  the 
+date that is 2 years after your active duty period ends.
+
+No deduction.  You can’t deduct qualified reservist re-
+
+payments.
+
+Reserve  component.  The  term  “reserve  component” 
+
+means the:
+
+• Army National Guard of the United States,
+• Army Reserve,
+
+IRA  contribution 
+
+Example.  In  2025,  your 
+
+is 
+$7,000.  However,  because  of  your  filing  status  and  AGI, 
+the limit on the amount you can deduct is $3,500. You can 
+make  a  nondeductible  contribution  of  $3,500  ($7,000  – 
+$3,500). In an earlier year, you received a $3,000 qualified 
+reservist  distribution,  which  you  would  like  to  repay  this 
+year.
+
+limit 
+
+For 2025, you can contribute a total of $10,000 to your 
+IRA. This is made up of the maximum deductible contribu-
+tion  of  $3,500;  a  nondeductible  contribution  of  $3,500; 
+and a $3,000 qualified reservist repayment. You contribute 
+the  maximum  allowable  for  the  year.  Because  you  are 
+making a nondeductible contribution ($3,500) and a quali-
+fied  reservist  repayment  ($3,000),  you  must  file  Form 
+8606  with  your  return  and  include  $6,500  ($3,500  + 
+$3,000) on line 1 of Form 8606. The qualified reservist re-
+payment isn’t deductible.
+
+Contributions  on  your  behalf  to  a  traditional  IRA 
+reduce  your  limit  for  contributions  to  a  Roth  IRA. 
+See chapter 2 for information about Roth IRAs.
+
+General Limit
+
+For  2025,  the  most  that  can  be  contributed  to  your  tradi-
+tional 
+is  generally  the  smaller  of  the  following 
+amounts.
+
+IRA 
+
+• $7,000 ($8,000 if you are age 50 or older).
+• Your taxable compensation (defined earlier) for the 
+
+year.
+
+Note:  This  limit  is  reduced  by  any  contributions  to  a 
+section 501(c)(18) plan (generally, a pension plan created 
+before June 25, 1959, that is funded entirely by employee 
+contributions).
+
+This  is  the  most  that  can  be  contributed  regardless  of 
+whether  the  contributions  are  to  one  or  more  traditional 
+IRAs or whether all or part of the contributions are nonde-
+ductible.  (See  Nondeductible  Contributions,  later.)  Quali-
+fied reservist repayments don’t affect this limit.
+
+Examples.  Gina, who is 34 years old and single, earns 
+$24,000 in 2025. Her IRA contributions for 2025 are limi-
+ted to $7,000.
+
+Publication 590-A (2025)
+
+Chapter 1 Traditional IRAs
+
+9
+
+CAUTION!Page 10 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+Danny, an unmarried college student working part time, 
+earns  $3,500  in  2025.  His  IRA  contributions  for  2025  are 
+limited to $3,500, the amount of his compensation.
+
+More than one IRA.  If you have more than one IRA, the 
+limit applies to the total contributions made on your behalf 
+to all your traditional IRAs for the year.
+
+Annuity  or  endowment  contracts.  If  you  invest  in  an 
+annuity or endowment contract under an individual retire-
+ment annuity, no more than $7,000 ($8,000 if you are age 
+50 or older) can be contributed toward its cost for the tax 
+year, including the cost of life insurance coverage. If more 
+than this amount is contributed, the annuity or endowment 
+contract is disqualified.
+
+Kay Bailey Hutchison Spousal IRA 
+Limit
+
+For  2025,  if  you  file  a  joint  return  and  your  taxable  com-
+pensation  is  less  than  that  of  your  spouse,  the  most  that 
+can be contributed for the year to your IRA is the smaller 
+of the following two amounts.
+
+1. $7,000 ($8,000 if you are age 50 or older).
+
+2. The total compensation includible in the gross income 
+of both you and your spouse for the year, reduced by 
+the following two amounts.
+
+a. Your spouse's IRA contribution for the year to a 
+
+traditional IRA.
+
+b. Any contributions for the year to a Roth IRA on be-
+
+half of your spouse.
+
+This  means  that  the  total  combined  contributions  that 
+can  be  made  for  the  year  to  your  IRA  and  your  spouse's 
+IRA  can  be  as  much  as  $14,000  ($15,000  if  only  one  of 
+you is age 50 or older, or $16,000 if both of you are age 50 
+or older).
+
+Note:  This  traditional IRA limit is reduced by any con-
+tributions  to  a  section  501(c)(18)  plan  (generally,  a  pen-
+sion plan created before June 25, 1959, that is funded en-
+tirely by employee contributions).
+
+Example.  You  are  a  full-time  student  with  no  taxable 
+compensation and marry during the year. Neither you nor 
+your spouse are at least age 50 by the end of 2025. Your 
+spouse  has  taxable  compensation  of  $30,000.  Your 
+spouse plans to contribute (and deduct) $7,000 to a tradi-
+tional  IRA.  If  you  and  your  spouse  file  a  joint  return,  you 
+and  your  spouse  can  each  contribute  $7,000  to  a  tradi-
+tional  IRA.  Because  you  have  no  compensation,  you  can 
+add your spouse’s compensation, reduced by the amount 
+of  your  spouse’s  IRA  contribution  ($30,000  –  $7,000  = 
+$23,000),  to  your  compensation  (-0-)  to  figure  your  maxi-
+mum contribution to a traditional IRA. In your case, $7,000 
+is  your  contribution  limit,  because  $7,000  is  less  than 
+$23,000 (your compensation for purposes of figuring your 
+contribution limit).
+
+Filing Status
+
+Generally,  except  as  discussed  earlier  under  Kay  Bailey 
+Hutchison Spousal IRA Limit, your filing status has no ef-
+fect on the amount of allowable contributions to your tradi-
+tional  IRA.  However,  if  during  the  year  either  you  or  your 
+spouse was covered by a retirement plan at work, your de-
+duction may be reduced or eliminated, depending on your 
+filing status and income. See How Much Can You Deduct, 
+later.
+
+Example.  You  and  your  spouse  are  both  age  53.  You 
+both work and you both have a traditional IRA. You earned 
+$3,800  and  your  spouse  earned  $48,000  in  2025.  Be-
+cause of the Kay Bailey Hutchison Spousal IRA limit rule, 
+even  though  you  earned  less  than  $8,000,  you  can  con-
+tribute up to $8,000 to your IRA for 2025 if you file a joint 
+return.  Your  spouse  can  contribute  up  to  $8,000  to  their 
+IRA.  If  you  file  separate  returns,  the  amount  that  can  be 
+contributed to your IRA is limited by your earned income, 
+$3,800.
+
+Less Than Maximum Contributions
+
+If contributions to your traditional IRA for a year were less 
+than the limit, you can’t contribute more after the due date 
+of your return for that year to make up the difference.
+
+Example.  You  are  age  40  and  earn  $30,000  in  2025. 
+Although  you  can  contribute  up  to  $7,000  for  2025,  you 
+contribute  only  $3,000.  After  April  15,  2026,  you  can’t 
+make up the difference between your actual contributions 
+for 2025 ($3,000) and your 2025 limit  ($7,000). You can’t 
+contribute $4,000 more than the limit for any later year.
+
+More Than Maximum Contributions
+
+If contributions to your IRA for a year were more than the 
+limit, you can apply the excess contribution in one year to 
+a later year if the contributions for that later year are less 
+than the maximum allowed for that year. However, a pen-
+alty  or  additional  tax  may  apply.  See  Excess  Contribu-
+tions,  later,  under  What  Acts  Result  in  Penalties  or  Addi-
+tional Taxes.
+
+When Can Contributions Be 
+Made?
+
+As  soon  as  you  open  your  traditional  IRA,  contributions 
+can be made to it through your chosen sponsor (trustee or 
+other  administrator).  Contributions  must  be  in  the  form  of 
+money  (cash,  check,  or  money  order).  Property  can’t  be 
+contributed.
+
+Although  property  can’t  be  contributed,  your  IRA  may 
+invest in certain property. For example, your IRA may pur-
+chase shares of stock. For other restrictions on the use of 
+funds in your IRA, see Prohibited Transactions, later in this 
+chapter.  You  may  be  able  to  transfer  or  roll  over  certain 
+
+10
+
+Chapter 1 Traditional IRAs
+
+Publication 590-A (2025)
+
+Page 11 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+property from one retirement plan to another. See the dis-
+cussion of rollovers and other transfers later in this chapter 
+under Can You Move Retirement Plan Assets.
+
+However,  if  you  or  your  spouse  was  covered  by  an  em-
+ployer retirement plan, you may not be able to deduct this 
+amount. See Limit if Covered by Employer Plan, later.
+
+You can make a contribution to your IRA by having 
+your  income  tax  refund  (or  a  portion  of  your  re-
+fund), if any, paid directly to your traditional IRA or 
+Roth IRA. For details, see the instructions for your income 
+tax return or Form 8888, Allocation of Refund.
+
+Contributions  can  be  made  to  your  traditional  IRA  for 
+each year that you receive compensation. For any year in 
+which you don’t work, contributions can’t be made to your 
+IRA unless you receive taxable alimony, nontaxable com-
+bat pay, or military differential pay, or file a joint return with 
+a  spouse  who  has  compensation.  See  Who  Can  Open  a 
+Traditional IRA, earlier. Even if contributions can’t be made 
+for  the  current  year,  the  amounts  contributed  for  years  in 
+which  you  did  qualify  can  remain  in  your  IRA.  Contribu-
+tions can resume for any years that you qualify.
+
+Contributions  must  be  made  by  due  date.  Contribu-
+tions can be made to your traditional IRA for a year at any 
+time during the year or by the due date for filing your return 
+for  that  year,  not  including  extensions.  For  most  people, 
+this  means  that  contributions  for  2025  must  be  made  by 
+April 15, 2026.
+
+For  tax  years  beginning  after  2019,  the  rule  that 
+you are not able to make contributions to your tra-
+ditional  IRA  for  the  year  in  which  you  reach  age 
+
+70½ and all later years has been repealed.
+
+Designating  year  for  which  contribution  is  made.  If 
+an  amount  is  contributed  to  your  traditional  IRA  between 
+January 1 and April 15, you should tell the sponsor which 
+year  (the  current  year  or  the  previous  year)  the  contribu-
+tion is for. If you don’t tell the sponsor which year it is for, 
+the  sponsor  can  assume,  and  report  to  the  IRS,  that  the 
+contribution  is  for  the  current  year  (the  year  the  sponsor 
+received it).
+
+Filing before a contribution is made.  You can file your 
+return  claiming  a  traditional  IRA  contribution  before  the 
+contribution  is  actually  made.  Generally,  the  contribution 
+must be made by the due date of your return, not including 
+extensions.
+
+Contributions  not  required.  You  don’t  have  to  contrib-
+ute  to  your  traditional  IRA  for  every  tax  year,  even  if  you 
+can.
+
+How Much Can You Deduct?
+
+Generally, you can deduct the lesser of:
+
+• The contributions to your traditional IRA for the year, 
+
+or
+
+• The general limit (or the Kay Bailey Hutchison Spousal 
+IRA limit, if applicable) explained earlier under How 
+Much Can Be Contributed.
+
+You may be able to claim a credit for contributions 
+to  your  traditional  IRA.  For  more  information,  see 
+chapter 3.
+
+Trustees' fees.  Trustees' administrative fees that are bil-
+led separately and paid in connection with your traditional 
+IRA  aren’t  deductible  as  IRA  contributions.  You  are  also 
+not able to deduct these fees as an itemized deduction.
+
+Brokers'  commissions.  These  commissions  are  part  of 
+your IRA contribution and, as such, are deductible subject 
+to the limits.
+
+Full  deduction.  If  neither  you  nor  your  spouse  was  cov-
+ered  for  any  part  of  the  year  by  an  employer  retirement 
+plan,  you  can  take  a  deduction  for  total  contributions  to 
+one or more of your traditional IRAs of up to the lesser of:
+
+• $7,000 ($8,000 if you are age 50 or older), or
+• 100% of your compensation.
+
+This  limit  is  reduced  by  any  contributions  made  to  a 
+
+section 501(c)(18) plan on your behalf.
+
+Kay Bailey Hutchison Spousal IRA.  In the case of a 
+married couple with unequal compensation who file a joint 
+return,  the  deduction  for  contributions  to  the  traditional 
+IRA of the spouse with less compensation is limited to the 
+lesser of:
+
+1. $7,000 ($8,000 if the spouse with the lower compen-
+
+sation is age 50 or older), or
+
+2. The total compensation includible in the gross income 
+of both spouses for the year reduced by the following 
+three amounts.
+
+a. The IRA deduction for the year of the spouse with 
+
+the greater compensation.
+
+b. Any designated nondeductible contribution for the 
+
+year made on behalf of the spouse with the 
+greater compensation.
+
+c. Any contributions for the year to a Roth IRA on be-
+half of the spouse with the greater compensation.
+
+This  limit  is  reduced  by  any  contributions  to  a  section 
+501(c)(18)  plan  on  behalf  of  the  spouse  with  the  lesser 
+compensation.
+
+Note:  If  you  were  divorced  or  legally  separated  (and 
+didn’t  remarry)  before  the  end  of  the  year,  you  can’t  de-
+duct  any  contributions  to  your  spouse's  IRA.  After  a  di-
+vorce or legal separation, you can deduct only the contri-
+butions  to  your  own  IRA.  Your  deductions  are  subject  to 
+the rules for single individuals.
+
+Covered  by  an  employer  retirement  plan.  If  you  or 
+your spouse was covered by an employer retirement plan 
+at  any  time  during  the  year  for  which  contributions  were 
+made,  your  deduction  may  be  further  limited.  This  is 
+discussed  later  under  Limit  if  Covered  by  Employer  Plan. 
+
+Publication 590-A (2025)
+
+Chapter 1 Traditional IRAs
+
+11
+
+TIPTIPTIPPage 12 of 62  Fileid: … tion-590-a/2025/a/xml/cycle08/source
+
+10:50 - 15-Jan-2026
+
+The type and rule above prints on all proofs including departmental reproduction proofs. MUST be removed before printing.
+
+Limits  on  the  amount  you  can  deduct  don’t  affect  the 
+amount that can be contributed.
+
+Are You Covered by an Employer 
+Plan?
+
+The Form W-2 you receive from your employer has a box 
+used  to  indicate  whether  you  were  covered  for  the  year. 
+The “Retirement plan” box should be checked if you were 
+covered.
+
+Reservists  and  volunteer  firefighters  should  also  see 
+
+Situations in Which You Aren’t Covered, later.
+
+If you aren’t certain whether you were covered by your 
+employer's retirement plan, you should ask your employer.
+
+Federal judges.  For purposes of the IRA deduction, fed-
+eral judges are covered by an employer plan.
+
+For Which Year(s) Are You Covered?
+
+Special  rules  apply  to  determine  the  tax  years  for  which 
+you  are  covered  by  an  employer  plan.  These  rules  differ 
+depending  on  whether  the  plan  is  a  defined  contribution 
+plan or a defined benefit plan.
+
+Tax  year.  Your  tax  year  is  the  annual  accounting  period 
+you use to keep records and report income and expenses 
+on  your  income  tax  return.  For  almost  all  people,  the  tax 
+year is the calendar year.
+
+Defined  contribution  plan.  Generally,  you  are  covered 
+by a defined contribution plan for a tax year if amounts are 
+contributed or allocated to your account for the plan year 
+that  ends  with  or  within  that  tax  year.  However,  also  see 
+Situations in Which You Aren’t Covered, later.
+
+A defined contribution plan is a plan that provides for a 
+separate account for each person covered by the plan. In 
+a defined contribution plan, the amount to be contributed 
+to  each  participant's  account  is  spelled  out  in  the  plan. 
+The level of benefits actually provided to a participant de-
+pends on the total amount contributed to that participant's 
+account  and  any  earnings  and  losses  on  those  contribu-
+include 
+tions.  Types  of  defined  contribution  plans 
+profit-sharing  plans,  stock  bonus  plans,  and  money  pur-
+chase pension plans.
+
+Example.  Company A has a money purchase pension 
+plan. Its plan year is from July 1 to June 30. The plan pro-
+vides  that  contributions  must  be  allocated  as  of  June  30. 
+An employee leaves Company A on December 31, 2024. 
+The  contribution  for  the  plan  year  ending  on  June  30, 
+2025, is made February 15, 2026. Because an amount is 
+contributed  to  the  employee’s  account  for  the  plan  year, 
+this  employee  is  covered  by  the  plan  for  their  2025  tax 
+year.
+
+Note:  A special rule applies to certain plans in which it 
+isn’t possible to determine if an amount will be contributed 
+to your account for a given plan year. If, for a plan year, no 
+amounts have been allocated to your account that are at-
+employee 
+tributable 
+
+contributions, 
+
+employer 
+
+to 
+
+contributions,  or  forfeitures,  by  the  last  day  of  the  plan 
+year, and contributions are discretionary for the plan year, 
+you aren’t covered for the tax year in which the plan year 
+ends.  If,  after  the  plan  year  ends,  the  employer  makes  a 
+contribution for that plan year, you are covered for the tax 
+year in which the contribution is made.
+
+Example.  You  were  covered  by  a  profit-sharing  plan 
+and  left  the  company  on  December  31,  2024.  The  plan 
+year  runs  from  July  1  to  June  30.  Under  the  terms  of  the 
+plan, employer contributions don’t have to be made, but if 
+they are made, they are contributed to the plan before the 
+due date for filing the company's tax return. Such contribu-
+tions are allocated as of the last day of the plan year, and 
+allocations  are  made  to  the  accounts  of  individuals  who 
+have  any  service  during  the  plan  year.  As  of  June  30, 
+2025,  no  contributions  were  made  that  were  allocated  to 
+the June 30, 2025, plan year, and no forfeitures had been 
+allocated within the plan year. In addition, as of that date, 
+the  company  wasn’t  obligated  to  make  a  contribution  for 
+such  plan  year,  and  it  was  impossible  to  determine 
+whether or not a contribution would be made for the plan 
+year.  On  December  31,  2025,  the  company  decided  to 
+contribute  to  the  plan  for  the  plan  year  ending  June  30, 
+2025. That contribution was made on February 15, 2026. 
+You are an active participant in the plan for your 2026 tax 
+year but not for your 2025 tax year.
+
+No  vested  interest.  If  an  amount  is  allocated  to  your 
+account for a plan year, you are covered by that plan even 
+if  you  have  no  vested  interest  in  (legal  right  to)  the  ac-
+count.
+
+Defined benefit plan.  If you are eligible to participate in 
+your employer's defined benefit plan for the plan year that 
+ends  within  your  tax  year,  you  are  covered  by  the  plan. 
+This rule applies even if you:
+
+• Declined to participate in the plan,
+• Didn’t make a required contribution, or
+• Didn’t perform the minimum service required to accrue 
+
+a benefit for the year.
+
+A  defined  benefit  plan  is  any  plan  that  isn’t  a  defined 
+contribution  plan.  In  a  defined  benefit  plan,  the  level  of 
+benefits to be provided to each participant is spelled out in 
+the  plan.  The  plan  administrator  figures  the  amount  nee-
+ded to provide those benefits, and those amounts are con-
+tributed to the plan. Defined benefit plans include pension 
+plans and annuity plans.
+
+Example.  You are an employee of Company B and are 
+eligible to participate in Company B's defined benefit plan, 
+which has a July 1 to June 30 plan year. You leave Com-
+pany B on December 31, 2024. Because you are eligible 
+to participate in the plan for its year ending June 30, 2025, 
+you are covered by the plan for your 2025 tax year.
+
+No vested interest.  If you accrue a benefit for a plan 
+year, you are covered by that plan even if you have no ves-
+ted interest in (legal right to) the accrual.
+
+12
+
+Chapter 1 Traditional IRAs
+
+Publication 590-A (2025)
+
+
