@@ -317,7 +317,8 @@ def render(res: dict[str, Any]) -> dict[str, str]:
         "### Harness",
         "",
         "Chunks whose reply LangExtract could not parse are skipped by `lx.extract` and count "
-        "against recall. Codex replies that used a tool were discarded and retried.",
+        "against recall. Codex replies that used a tool, and Claude Code replies from another "
+        "model or with more than one turn, were discarded and retried.",
         "",
     ]
     md += table(
@@ -326,7 +327,7 @@ def render(res: dict[str, Any]) -> dict[str, str]:
             "provider",
             "chunks",
             "unusable replies",
-            "replies discarded for tool use",
+            "replies discarded by the harness check",
             "seconds per document",
         ],
         [
@@ -335,7 +336,7 @@ def render(res: dict[str, Any]) -> dict[str, str]:
                 (h := p["harness"])["provider"],
                 h.get("chunks", 0),
                 h.get("unusable_chunks", 0),
-                h.get("discarded_for_tool_use", 0),
+                h.get("discarded", 0),
                 round(h.get("seconds", 0) / p["documents"]),
             ]
             for run, p in runs

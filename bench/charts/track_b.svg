@@ -1,61 +1,141 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 404" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 924" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12">
 <rect width="100%" height="100%" rx="8" fill="#ffffff" stroke="#dddddd"/>
 <text x="16" y="26" font-size="14" font-weight="600" fill="#111">Wrong model extractions accepted without review</text>
-<line x1="250.0" y1="46" x2="250.0" y2="306" stroke="#eeeeee"/>
+<line x1="250.0" y1="46" x2="250.0" y2="826" stroke="#eeeeee"/>
 <text x="250.0" y="42" text-anchor="middle" fill="#777">0%</text>
-<line x1="350.0" y1="46" x2="350.0" y2="306" stroke="#eeeeee"/>
+<line x1="350.0" y1="46" x2="350.0" y2="826" stroke="#eeeeee"/>
 <text x="350.0" y="42" text-anchor="middle" fill="#777">25%</text>
-<line x1="450.0" y1="46" x2="450.0" y2="306" stroke="#eeeeee"/>
+<line x1="450.0" y1="46" x2="450.0" y2="826" stroke="#eeeeee"/>
 <text x="450.0" y="42" text-anchor="middle" fill="#777">50%</text>
-<line x1="550.0" y1="46" x2="550.0" y2="306" stroke="#eeeeee"/>
+<line x1="550.0" y1="46" x2="550.0" y2="826" stroke="#eeeeee"/>
 <text x="550.0" y="42" text-anchor="middle" fill="#777">75%</text>
-<line x1="650.0" y1="46" x2="650.0" y2="306" stroke="#eeeeee"/>
+<line x1="650.0" y1="46" x2="650.0" y2="826" stroke="#eeeeee"/>
 <text x="650.0" y="42" text-anchor="middle" fill="#777">100%</text>
-<text x="240" y="81.5" text-anchor="end" fill="#222">GPT-5.6 Luna (Medium), buffer 1000</text>
+<text x="240" y="81.5" text-anchor="end" fill="#222">Claude Haiku 4.5, buffer 1000</text>
 <rect x="250" y="52" width="400.0" height="14" fill="#b8b8b8"/>
-<line x1="563.9" y1="59.0" x2="650.0" y2="59.0" stroke="#222" stroke-width="1"/>
+<line x1="553.0" y1="59.0" x2="650.0" y2="59.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="63" fill="#333" font-size="11">100%</text>
 <rect x="250" y="69" width="400.0" height="14" fill="#5b6b7f"/>
-<line x1="563.9" y1="76.0" x2="650.0" y2="76.0" stroke="#222" stroke-width="1"/>
+<line x1="553.0" y1="76.0" x2="650.0" y2="76.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="80" fill="#333" font-size="11">100%</text>
-<rect x="250" y="86" width="28.6" height="14" fill="#1f7a4d"/>
-<line x1="255.1" y1="93.0" x2="375.9" y2="93.0" stroke="#222" stroke-width="1"/>
-<text x="380.9" y="97" fill="#333" font-size="11">7%</text>
-<text x="240" y="146.5" text-anchor="end" fill="#222">GPT-5.6 Terra (Medium), buffer 1000</text>
+<rect x="250" y="86" width="33.3" height="14" fill="#1f7a4d"/>
+<line x1="256.0" y1="93.0" x2="391.6" y2="93.0" stroke="#222" stroke-width="1"/>
+<text x="396.6" y="97" fill="#333" font-size="11">8%</text>
+<text x="240" y="146.5" text-anchor="end" fill="#222">Claude Haiku 4.5, buffer 4000</text>
 <rect x="250" y="117" width="400.0" height="14" fill="#b8b8b8"/>
-<line x1="387.0" y1="124.0" x2="650.0" y2="124.0" stroke="#222" stroke-width="1"/>
+<line x1="520.2" y1="124.0" x2="650.0" y2="124.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="128" fill="#333" font-size="11">100%</text>
 <rect x="250" y="134" width="400.0" height="14" fill="#5b6b7f"/>
-<line x1="387.0" y1="141.0" x2="650.0" y2="141.0" stroke="#222" stroke-width="1"/>
+<line x1="520.2" y1="141.0" x2="650.0" y2="141.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="145" fill="#333" font-size="11">100%</text>
-<rect x="250" y="151" width="1.5" height="14" fill="#1f7a4d"/>
-<line x1="250.0" y1="158.0" x2="513.0" y2="158.0" stroke="#222" stroke-width="1"/>
-<text x="518.0" y="162" fill="#333" font-size="11">0%</text>
-<text x="240" y="211.5" text-anchor="end" fill="#222">Gemini 3.6 Flash (Medium), buffer 1000</text>
+<rect x="250" y="151" width="50.0" height="14" fill="#1f7a4d"/>
+<line x1="259.0" y1="158.0" x2="438.4" y2="158.0" stroke="#222" stroke-width="1"/>
+<text x="443.4" y="162" fill="#333" font-size="11">12%</text>
+<text x="240" y="211.5" text-anchor="end" fill="#222">Claude Sonnet 5.5, buffer 1000</text>
 <rect x="250" y="182" width="400.0" height="14" fill="#b8b8b8"/>
-<line x1="387.0" y1="189.0" x2="650.0" y2="189.0" stroke="#222" stroke-width="1"/>
+<line x1="558.8" y1="189.0" x2="650.0" y2="189.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="193" fill="#333" font-size="11">100%</text>
-<rect x="250" y="199" width="400.0" height="14" fill="#5b6b7f"/>
-<line x1="387.0" y1="206.0" x2="650.0" y2="206.0" stroke="#222" stroke-width="1"/>
-<text x="655.0" y="210" fill="#333" font-size="11">100%</text>
-<rect x="250" y="216" width="1.5" height="14" fill="#1f7a4d"/>
-<line x1="250.0" y1="223.0" x2="513.0" y2="223.0" stroke="#222" stroke-width="1"/>
-<text x="518.0" y="227" fill="#333" font-size="11">0%</text>
-<text x="240" y="276.5" text-anchor="end" fill="#222">Gemini 3.8 Flash (Low), buffer 1000</text>
+<rect x="250" y="199" width="369.2" height="14" fill="#5b6b7f"/>
+<line x1="516.8" y1="206.0" x2="644.5" y2="206.0" stroke="#222" stroke-width="1"/>
+<text x="649.5" y="210" fill="#333" font-size="11">92%</text>
+<rect x="250" y="216" width="30.8" height="14" fill="#1f7a4d"/>
+<line x1="255.5" y1="223.0" x2="383.2" y2="223.0" stroke="#222" stroke-width="1"/>
+<text x="388.2" y="227" fill="#333" font-size="11">8%</text>
+<text x="240" y="276.5" text-anchor="end" fill="#222">Claude Sonnet 5.5, buffer 4000</text>
 <rect x="250" y="247" width="400.0" height="14" fill="#b8b8b8"/>
-<line x1="332.6" y1="254.0" x2="650.0" y2="254.0" stroke="#222" stroke-width="1"/>
+<line x1="387.0" y1="254.0" x2="650.0" y2="254.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="258" fill="#333" font-size="11">100%</text>
 <rect x="250" y="264" width="400.0" height="14" fill="#5b6b7f"/>
-<line x1="332.6" y1="271.0" x2="650.0" y2="271.0" stroke="#222" stroke-width="1"/>
+<line x1="387.0" y1="271.0" x2="650.0" y2="271.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="275" fill="#333" font-size="11">100%</text>
 <rect x="250" y="281" width="1.5" height="14" fill="#1f7a4d"/>
-<line x1="250.0" y1="288.0" x2="567.4" y2="288.0" stroke="#222" stroke-width="1"/>
-<text x="572.4" y="292" fill="#333" font-size="11">0%</text>
-<rect x="16" y="320" width="12" height="12" fill="#b8b8b8"/>
-<text x="34" y="330" fill="#222">LangExtract, every extraction</text>
-<rect x="346" y="320" width="12" height="12" fill="#5b6b7f"/>
-<text x="364" y="330" fill="#222">LangExtract, MATCH_EXACT only</text>
-<rect x="16" y="342" width="12" height="12" fill="#1f7a4d"/>
-<text x="34" y="352" fill="#222">groundgate, admitted</text>
-<text x="16" y="370" fill="#666" font-size="11">Track B. Lines are 95% Wilson intervals.</text>
+<line x1="250.0" y1="288.0" x2="513.0" y2="288.0" stroke="#222" stroke-width="1"/>
+<text x="518.0" y="292" fill="#333" font-size="11">0%</text>
+<text x="240" y="341.5" text-anchor="end" fill="#222">GPT-5.6 Luna (Medium), buffer 1000</text>
+<rect x="250" y="312" width="400.0" height="14" fill="#b8b8b8"/>
+<line x1="579.6" y1="319.0" x2="650.0" y2="319.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="323" fill="#333" font-size="11">100%</text>
+<rect x="250" y="329" width="400.0" height="14" fill="#5b6b7f"/>
+<line x1="579.6" y1="336.0" x2="650.0" y2="336.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="340" fill="#333" font-size="11">100%</text>
+<rect x="250" y="346" width="22.2" height="14" fill="#1f7a4d"/>
+<line x1="254.0" y1="353.0" x2="353.0" y2="353.0" stroke="#222" stroke-width="1"/>
+<text x="358.0" y="357" fill="#333" font-size="11">6%</text>
+<text x="240" y="406.5" text-anchor="end" fill="#222">GPT-5.6 Luna (Medium), buffer 4000</text>
+<rect x="250" y="377" width="400.0" height="14" fill="#b8b8b8"/>
+<line x1="520.2" y1="384.0" x2="650.0" y2="384.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="388" fill="#333" font-size="11">100%</text>
+<rect x="250" y="394" width="350.0" height="14" fill="#5b6b7f"/>
+<line x1="461.6" y1="401.0" x2="641.0" y2="401.0" stroke="#222" stroke-width="1"/>
+<text x="646.0" y="405" fill="#333" font-size="11">88%</text>
+<rect x="250" y="411" width="100.0" height="14" fill="#1f7a4d"/>
+<line x1="278.6" y1="418.0" x2="486.3" y2="418.0" stroke="#222" stroke-width="1"/>
+<text x="491.3" y="422" fill="#333" font-size="11">25%</text>
+<text x="240" y="471.5" text-anchor="end" fill="#222">GPT-5.6 Terra (Medium), buffer 1000</text>
+<rect x="250" y="442" width="400.0" height="14" fill="#b8b8b8"/>
+<line x1="553.0" y1="449.0" x2="650.0" y2="449.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="453" fill="#333" font-size="11">100%</text>
+<rect x="250" y="459" width="400.0" height="14" fill="#5b6b7f"/>
+<line x1="553.0" y1="466.0" x2="650.0" y2="466.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="470" fill="#333" font-size="11">100%</text>
+<rect x="250" y="476" width="33.3" height="14" fill="#1f7a4d"/>
+<line x1="256.0" y1="483.0" x2="391.6" y2="483.0" stroke="#222" stroke-width="1"/>
+<text x="396.6" y="487" fill="#333" font-size="11">8%</text>
+<text x="240" y="536.5" text-anchor="end" fill="#222">GPT-5.6 Terra (Medium), buffer 4000</text>
+<rect x="250" y="507" width="400.0" height="14" fill="#b8b8b8"/>
+<line x1="493.9" y1="514.0" x2="650.0" y2="514.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="518" fill="#333" font-size="11">100%</text>
+<rect x="250" y="524" width="400.0" height="14" fill="#5b6b7f"/>
+<line x1="493.9" y1="531.0" x2="650.0" y2="531.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="535" fill="#333" font-size="11">100%</text>
+<rect x="250" y="541" width="133.3" height="14" fill="#1f7a4d"/>
+<line x1="288.7" y1="548.0" x2="530.0" y2="548.0" stroke="#222" stroke-width="1"/>
+<text x="535.0" y="552" fill="#333" font-size="11">33%</text>
+<text x="240" y="601.5" text-anchor="end" fill="#222">Gemini 3.6 Flash (Medium), buffer 1000</text>
+<rect x="250" y="572" width="400.0" height="14" fill="#b8b8b8"/>
+<line x1="558.8" y1="579.0" x2="650.0" y2="579.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="583" fill="#333" font-size="11">100%</text>
+<rect x="250" y="589" width="400.0" height="14" fill="#5b6b7f"/>
+<line x1="558.8" y1="596.0" x2="650.0" y2="596.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="600" fill="#333" font-size="11">100%</text>
+<rect x="250" y="606" width="30.8" height="14" fill="#1f7a4d"/>
+<line x1="255.5" y1="613.0" x2="383.2" y2="613.0" stroke="#222" stroke-width="1"/>
+<text x="388.2" y="617" fill="#333" font-size="11">8%</text>
+<text x="240" y="666.5" text-anchor="end" fill="#222">Gemini 3.6 Flash (Medium), buffer 4000</text>
+<rect x="250" y="637" width="400.0" height="14" fill="#b8b8b8"/>
+<line x1="387.0" y1="644.0" x2="650.0" y2="644.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="648" fill="#333" font-size="11">100%</text>
+<rect x="250" y="654" width="400.0" height="14" fill="#5b6b7f"/>
+<line x1="387.0" y1="661.0" x2="650.0" y2="661.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="665" fill="#333" font-size="11">100%</text>
+<rect x="250" y="671" width="200.0" height="14" fill="#1f7a4d"/>
+<line x1="287.8" y1="678.0" x2="612.2" y2="678.0" stroke="#222" stroke-width="1"/>
+<text x="617.2" y="682" fill="#333" font-size="11">50%</text>
+<text x="240" y="731.5" text-anchor="end" fill="#222">Gemini 3.8 Flash (Low), buffer 1000</text>
+<rect x="250" y="702" width="400.0" height="14" fill="#b8b8b8"/>
+<line x1="520.2" y1="709.0" x2="650.0" y2="709.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="713" fill="#333" font-size="11">100%</text>
+<rect x="250" y="719" width="400.0" height="14" fill="#5b6b7f"/>
+<line x1="520.2" y1="726.0" x2="650.0" y2="726.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="730" fill="#333" font-size="11">100%</text>
+<rect x="250" y="736" width="1.5" height="14" fill="#1f7a4d"/>
+<line x1="250.0" y1="743.0" x2="379.8" y2="743.0" stroke="#222" stroke-width="1"/>
+<text x="384.8" y="747" fill="#333" font-size="11">0%</text>
+<text x="240" y="796.5" text-anchor="end" fill="#222">Gemini 3.8 Flash (Low), buffer 4000</text>
+<rect x="250" y="767" width="400.0" height="14" fill="#b8b8b8"/>
+<line x1="332.6" y1="774.0" x2="650.0" y2="774.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="778" fill="#333" font-size="11">100%</text>
+<rect x="250" y="784" width="400.0" height="14" fill="#5b6b7f"/>
+<line x1="332.6" y1="791.0" x2="650.0" y2="791.0" stroke="#222" stroke-width="1"/>
+<text x="655.0" y="795" fill="#333" font-size="11">100%</text>
+<rect x="250" y="801" width="1.5" height="14" fill="#1f7a4d"/>
+<line x1="250.0" y1="808.0" x2="567.4" y2="808.0" stroke="#222" stroke-width="1"/>
+<text x="572.4" y="812" fill="#333" font-size="11">0%</text>
+<rect x="16" y="840" width="12" height="12" fill="#b8b8b8"/>
+<text x="34" y="850" fill="#222">LangExtract, every extraction</text>
+<rect x="346" y="840" width="12" height="12" fill="#5b6b7f"/>
+<text x="364" y="850" fill="#222">LangExtract, MATCH_EXACT only</text>
+<rect x="16" y="862" width="12" height="12" fill="#1f7a4d"/>
+<text x="34" y="872" fill="#222">groundgate, admitted</text>
+<text x="16" y="890" fill="#666" font-size="11">Track B. Lines are 95% Wilson intervals.</text>
 </svg>

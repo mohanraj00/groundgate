@@ -10,7 +10,10 @@ existing file is skipped, so an interrupted run resumes where it stopped.
 Providers:
   gemini      LangExtract's native Gemini provider (GEMINI_API_KEY)
   agy         the Antigravity CLI in print mode, plan mode, sandboxed, with a no-tools preamble
-  claude-cli  the Claude Code CLI in print mode with every tool disabled
+  claude-cli  the Claude Code CLI in print mode, run in an empty directory with no tools, MCP
+              servers, skills or setting sources (so no CLAUDE.md, hooks or memory), no saved
+              session, and a one-line system prompt in place of the default; a reply from
+              another model, or with more than one turn, is discarded and retried
   codex       the Codex CLI: `codex exec` in an empty directory, read-only sandbox, user config,
               rules and AGENTS.md ignored, no session saved; a reply that used any tool is
               discarded and retried
@@ -133,6 +136,7 @@ EXAMPLES = {
     ],
 }
 
+CLAUDE_SYSTEM = "You extract facts from documents. Answer only from the text you are given."
 AGY_PREFIX = (
     "Answer directly from the text below. Do not use any tools, do not run commands, "
     "and do not read or write files. Output only the JSON requested.\n\n"
@@ -156,7 +160,26 @@ class CLIModel(base_model.BaseLanguageModel):
         self.empty = tempfile.mkdtemp(prefix="groundgate-bench-")  # codex's working root
 
     def command(self) -> list[str]:
-        """The codex command line; the prompt goes on stdin."""
+        """The codex or claude command line; the prompt goes on stdin."""
+        if self.provider == "claude-cli":
+            cmd = [
+                "claude",
+                "-p",
+                "--model",
+                self.model,
+                "--tools",
+                "",
+                "--strict-mcp-config",
+                "--disable-slash-commands",
+                "--setting-sources",
+                "",
+                "--no-session-persistence",
+                "--system-prompt",
+                CLAUDE_SYSTEM,
+                "--output-format",
+                "json",
+            ]
+            return [*cmd, "--effort", self.effort] if self.effort else cmd
         cmd = [
             "codex",
             "exec",
@@ -233,26 +256,28 @@ class CLIModel(base_model.BaseLanguageModel):
             ]
             stdin = None
         else:
-            cmd = [
-                "claude",
-                "-p",
-                "--model",
-                self.model,
-                "--tools",
-                "",
-                "--no-session-persistence",
-                "--output-format",
-                "json",
-            ]
-            stdin = prompt
+            cmd, stdin = self.command(), prompt
         for attempt in range(3):
             proc = subprocess.run(
-                cmd, input=stdin, capture_output=True, text=True, timeout=600, check=False
+                cmd,
+                input=stdin,
+                capture_output=True,
+                text=True,
+                timeout=600,
+                check=False,
+                cwd=self.empty,
             )
             out = proc.stdout
             if proc.returncode == 0 and self.provider == "claude-cli":
                 res = json.loads(out)
-                out = "" if res.get("is_error") else res["result"]
+                clean = (
+                    set(res.get("modelUsage", {})) == {self.model}
+                    and res.get("num_turns") == 1
+                    and not res.get("permission_denials")
+                )
+                if not clean:  # a fallback model, a tool turn or a denied tool call
+                    notes["discarded_for_harness"] = notes.get("discarded_for_harness", 0) + 1
+                out = "" if res.get("is_error") or not clean else res["result"]
             if proc.returncode == 0 and out.strip():
                 return _strip_fence(out), notes
             time.sleep(10 * (attempt + 1))
@@ -347,7 +372,7 @@ def main() -> None:
             "document": data_lib.annotated_document_to_dict(result),
         }
         if isinstance(kw.get("model"), CLIModel):
-            if args.provider == "codex":
+            if args.provider in ("codex", "claude-cli"):
                 cmd = kw["model"].command()
                 record["harness"] = ["<empty dir>" if a.startswith("/") else a for a in cmd]
             record["raw_outputs"] = kw["model"].raw

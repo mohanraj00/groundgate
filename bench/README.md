@@ -99,10 +99,11 @@ compared with the same candidates admitted one model at a time.
 |---|---|---|
 | Gemini 3.6 Flash | Antigravity CLI | Medium |
 | Gemini 3.8 Flash | Antigravity CLI | Low, the cheapest setting of the newest Flash |
-| GPT-OSS 120B | Antigravity CLI | Medium |
-| Claude Sonnet 4.6 | Antigravity CLI | Thinking |
 | GPT-5.6 Luna | Codex CLI | medium reasoning effort |
 | GPT-5.6 Terra | Codex CLI | medium reasoning effort |
+| Claude Sonnet 5.5 | Claude Code CLI | default |
+| Claude Haiku 4.5 | Claude Code CLI | default |
+| Claude Sonnet 4.6 | Claude Code CLI | default; an older model, kept as a baseline |
 
 `RESULTS.md` also reports, per run: which reason code stopped each wrong extraction, how often
 a correct value was admitted or rejected while citing a place the gold does not list, results
@@ -135,14 +136,17 @@ appendix lists every real case.
   field is the limit itself; and "$1 million" is rejected for the value 1000000 because scale
   words only flag. I did not fix them here, because fixing them against this set would tune the
   rules on the test data. Fixes go into a later spec version and get measured on new documents.
-- **Who drafted the gold.** Claude drafted it, and Claude Sonnet 4.6 is one of the benchmarked
-  models. A person checked every fact without seeing model output, but drafts anchor judgment.
+- **Who drafted the gold.** Claude drafted it, and three Claude models (Sonnet 4.6, Sonnet 5.5,
+  Haiku 4.5) are among the benchmarked ones. A person checked every fact without seeing model output, but drafts anchor judgment.
 - **How the models were called.** Every model ran through a logged-in agent CLI, not a raw API.
   Antigravity runs in its sandboxed plan mode with a no-tools preamble. Codex runs `codex exec`
   in an empty directory with a read-only sandbox, my user config, rules and AGENTS.md ignored,
   and no saved session; its event stream shows every tool call, and a reply that used one is
-  discarded and retried. Both harnesses add their own system prompt, and temperature is not
-  under my control, so a rerun gives different extractions. The cached runs are what was
+  discarded and retried. Claude Code runs `claude -p` in an empty directory with no tools, MCP
+  servers, skills or setting sources, so no CLAUDE.md, hooks or memory load, and a one-line
+  system prompt replaces the default; a reply from a fallback model or with more than one turn
+  is discarded. Antigravity and Codex add their own system prompt, and temperature is not
+  under my control in any of them, so a rerun gives different extractions. The cached runs are what was
   scored. `propose.py` also supports LangExtract's native Gemini provider.
 - **The prompt changed once, before the full runs.** The first prompt described the output
   with the words `extraction_class` and `extraction_text`, and GPT-5.6 answered in that shape
@@ -151,15 +155,16 @@ appendix lists every real case.
   every run made with the first prompt, about 30 documents, and reran all models on the same
   final prompt.
 - **Dropped chunks.** When a model's reply for a chunk isn't valid JSON, LangExtract logs a
-  warning and skips the chunk. GPT-OSS in plan mode sometimes wrote a plan file and replied with
-  a link to it instead of JSON. Those facts count against recall for every rule equally. The
+  warning and skips the chunk. In an early trial GPT-OSS 120B in plan mode wrote a plan file and
+  replied with a link to it instead of JSON, and Haiku 4.5 answered some chunks that hold only a table of
+  contents with a note that it saw no document, instead of an empty list. Those facts count against recall for every rule equally. The
   raw replies are in the run files, with home directory paths replaced by `~`.
 - **"Cited the right place" is only as good as the gold evidence.** A label often states the
   same value in several places. A citation counts as right only when the checker listed that
   place, so this rate is a lower bound.
 - **Not every model I tried was available.** GPT-6 Luna is not offered to a ChatGPT account in
   Codex, so GPT-5.6 Terra took its place.
-- **Small n.** 30 documents and six models is enough to show where the failure classes are,
+- **Small n.** 30 documents and seven models is enough to show where the failure classes are,
   not to rank models.
 
 ## Reproduce

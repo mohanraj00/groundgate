@@ -255,3 +255,24 @@ def test_codex_replies_that_used_a_tool_are_counted(monkeypatch: pytest.MonkeyPa
     )
     with pytest.raises(RuntimeError, match="not supported"):
         model._codex("prompt")
+
+
+def test_claude_replies_from_another_model_are_discarded(monkeypatch: pytest.MonkeyPatch) -> None:
+    pytest.importorskip("langextract")
+    import subprocess
+
+    import propose
+
+    def reply(model: str, turns: int = 1) -> subprocess.CompletedProcess[str]:
+        body = {"result": '{"extractions": []}', "modelUsage": {model: {}}, "num_turns": turns}
+        return subprocess.CompletedProcess([], 0, json.dumps(body), "")
+
+    replies = iter([reply("fallback"), reply("m", turns=2), reply("m")])
+    monkeypatch.setattr(propose.subprocess, "run", lambda *a, **k: next(replies))
+    monkeypatch.setattr(propose.time, "sleep", lambda s: None)
+    model = propose.CLIModel("claude-cli", "m", 1, None)
+    out, notes = model._one("prompt")
+    assert out == '{"extractions": []}'
+    assert notes == {"discarded_for_harness": 2}
+    cmd = model.command()
+    assert cmd[cmd.index("--tools") + 1] == "" and cmd[cmd.index("--setting-sources") + 1] == ""

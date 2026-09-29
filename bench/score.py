@@ -213,7 +213,9 @@ def load_runs(golds: dict[str, Gold]) -> tuple[Runs, dict[tuple[str, int], dict[
         h["seconds"] += rec["seconds"]
         for raw in rec.get("raw_outputs", []):
             h["chunks"] += 1
-            h["discarded_for_tool_use"] += raw.get("harness", {}).get("discarded_for_tool_use", 0)
+            notes = raw.get("harness", {})
+            h["discarded"] += notes.get("discarded_for_tool_use", 0)
+            h["discarded"] += notes.get("discarded_for_harness", 0)
             try:
                 parse.resolve(raw["output"], suppress_parse_errors=False)
             except Exception:  # LangExtract skipped this chunk
