@@ -1,0 +1,15 @@
+model: claude-haiku-4-5   extractions: 30   gold facts: 51   gold fields recovered correctly (any config): 30/51
+
+labels: correct=30
+
+                      lx-all  lx-aligned    lx-exact   gg-strict       gg-v2
+correct accepted    30/30       30/30       26/30       26/30       26/30   
+                gg-v2 on correct facts: 4 sent to review, 0 rejected
+
+wrong extractions (what each got wrong, and what groundgate said):
+
+correct extractions groundgate rejected:
+  contrast_egfr_low: text='30 mL/min/1.73m2' lx=match_lesser gg=['EVIDENCE_TEXT_MISMATCH'] v2=needs_verification ['NON_VERBATIM_EVIDENCE']
+  contrast_egfr_high: text='60 mL/min/1.73m2' lx=match_fuzzy gg=['EVIDENCE_TEXT_MISMATCH'] v2=needs_verification ['NON_VERBATIM_EVIDENCE']
+  steady_state_time_low: text='24 hours' lx=match_fuzzy gg=['EVIDENCE_TEXT_MISMATCH'] v2=needs_verification ['NON_VERBATIM_EVIDENCE']
+  tmax_low: text='7 hours' lx=match_fuzzy gg=['EVIDENCE_TEXT_MISMATCH'] v2=needs_verification ['NON_VERBATIM_EVIDENCE', 'QUALIFIED_VALUE']

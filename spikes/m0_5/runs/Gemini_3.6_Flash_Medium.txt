@@ -1,0 +1,13 @@
+model: Gemini 3.6 Flash (Medium)   extractions: 54   gold facts: 51   gold fields recovered correctly (any config): 51/51
+
+labels: correct=54
+
+                      lx-all  lx-aligned    lx-exact   gg-strict       gg-v2
+correct accepted    54/54       54/54       52/54       52/54       51/54   
+                gg-v2 on correct facts: 3 sent to review, 0 rejected
+
+wrong extractions (what each got wrong, and what groundgate said):
+
+correct extractions groundgate rejected:
+  tmax_low: text='7 hours' lx=match_lesser gg=['EVIDENCE_TEXT_MISMATCH'] v2=needs_verification ['NON_VERBATIM_EVIDENCE', 'QUALIFIED_VALUE']
+  steady_state_time_low: text='24 hours' lx=match_lesser gg=['EVIDENCE_TEXT_MISMATCH'] v2=needs_verification ['NON_VERBATIM_EVIDENCE']

@@ -2,20 +2,20 @@ facts: 51  rows: 370
 
 Wrong facts: share ACCEPTED silently (escape rate; lower is better). gg-flags shows accepted / sent to review.
 
-corruption           n       lx-all   lx-aligned     lx-exact    gg-strict     gg-flags
-value_attr_x10      51         100%         100%         100%           0%       0% /0%
-text_value_x10      51         100%          31%           0%           0%       0% /0%
-near_miss_digit     51         100%          61%          10%           8%       0% /8%
-adjacent_value      42         100%         100%         100%         100%     19% /81%
-unit_swap           22         100%         100%         100%           0%       0% /0%
-null_literal        51         100%           0%           0%           0%       0% /0%
-ALL WRONG          268         100%          60%          45%          17%      3% /14%
+corruption           n       lx-all   lx-aligned     lx-exact    gg-strict     gg-flags        gg-v2
+value_attr_x10      51         100%         100%         100%           0%       0% /0%       0% /0%
+text_value_x10      51         100%          31%           0%           0%       0% /0%       0% /0%
+near_miss_digit     51         100%          61%          10%           8%       0% /8%       4% /4%
+adjacent_value      42         100%         100%         100%         100%     19% /81%     69% /31%
+unit_swap           22         100%         100%         100%           0%       0% /0%       0% /0%
+null_literal        51         100%           0%           0%           0%       0% /0%       0% /0%
+ALL WRONG          268         100%          60%          45%          17%      3% /14%      12% /6%
 
 Correct facts: accepted / sent to review / rejected (higher accept is better)
 
-kind                 n            lx-all        lx-aligned          lx-exact         gg-strict          gg-flags
-clean               51        100%/0%/0%        100%/0%/0%        100%/0%/0%        100%/0%/0%        35%/65%/0%
-paraphrase          51        100%/0%/0%        45%/0%/55%        12%/0%/88%        12%/0%/88%         8%/4%/88%
+kind                 n            lx-all        lx-aligned          lx-exact         gg-strict          gg-flags             gg-v2
+clean               51        100%/0%/0%        100%/0%/0%        100%/0%/0%        100%/0%/0%        35%/65%/0%         94%/6%/0%
+paraphrase          51        100%/0%/0%        45%/0%/55%        12%/0%/88%        12%/0%/88%         8%/4%/88%       10%/33%/57%
 
 LangExtract char_interval overlaps the gold location on 46/51 correct facts
 groundgate re-anchored 2/51 correct facts to a unique passing occurrence
@@ -30,12 +30,22 @@ LangExtract alignment status by kind
   null_literal      None=51
   unit_swap         match_exact=22
 
-gg-flags reason codes by kind
+gg_flags reason codes by kind
   clean             MULTIPLE_VALUES_IN_EVIDENCE=31, QUALIFIED_VALUE=3, EVIDENCE_REANCHORED=2
   paraphrase        NO_EVIDENCE_SPAN=28, EVIDENCE_TEXT_MISMATCH=17, MULTIPLE_VALUES_IN_EVIDENCE=1, QUALIFIED_VALUE=1
   value_attr_x10    VALUE_NOT_IN_EVIDENCE=51
   text_value_x10    NO_EVIDENCE_SPAN=35, EVIDENCE_TEXT_MISMATCH=16
   near_miss_digit   EVIDENCE_TEXT_MISMATCH=26, NO_EVIDENCE_SPAN=20, MULTIPLE_VALUES_IN_EVIDENCE=4, QUALIFIED_VALUE=2, UNIT_NOT_IN_EVIDENCE=1
   adjacent_value    MULTIPLE_VALUES_IN_EVIDENCE=31, QUALIFIED_VALUE=13
+  null_literal      NULL_STRING_LITERAL=51
+  unit_swap         UNIT_INVALID=22
+
+gg_v2 reason codes by kind
+  clean             QUALIFIED_VALUE=3, EVIDENCE_REANCHORED=2
+  paraphrase        NO_EVIDENCE_SPAN=28, NON_VERBATIM_EVIDENCE=16, QUALIFIED_VALUE=3, VALUE_NOT_IN_EVIDENCE=1
+  value_attr_x10    VALUE_NOT_IN_EVIDENCE=51
+  text_value_x10    NO_EVIDENCE_SPAN=35, VALUE_NOT_IN_EVIDENCE=16
+  near_miss_digit   VALUE_NOT_IN_EVIDENCE=26, NO_EVIDENCE_SPAN=20, QUALIFIED_VALUE=2, UNIT_NOT_IN_EVIDENCE=1
+  adjacent_value    QUALIFIED_VALUE=13
   null_literal      NULL_STRING_LITERAL=51
   unit_swap         UNIT_INVALID=22

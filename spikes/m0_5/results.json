@@ -24,7 +24,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs01",
@@ -47,6 +49,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -74,6 +80,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -102,6 +112,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -129,6 +143,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -154,7 +172,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs01",
@@ -177,6 +197,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -203,7 +227,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs02",
@@ -226,6 +252,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -253,6 +283,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -281,6 +315,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -308,6 +346,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -333,7 +375,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs02",
@@ -356,6 +400,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -380,7 +428,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs03",
@@ -403,6 +453,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -430,6 +484,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -458,6 +516,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -485,6 +547,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -508,6 +574,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -534,7 +604,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs04",
@@ -557,6 +629,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -585,6 +661,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -608,6 +688,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -635,6 +719,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -661,6 +749,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -684,6 +776,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -710,7 +806,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs05",
@@ -733,6 +831,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -761,6 +863,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -784,6 +890,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -812,6 +922,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -838,6 +952,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -861,6 +979,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -887,7 +1009,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs06",
@@ -910,6 +1034,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -937,6 +1065,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -965,6 +1097,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -992,6 +1128,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1018,6 +1158,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -1041,6 +1185,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -1067,7 +1215,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs07",
@@ -1090,6 +1240,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -1117,6 +1271,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -1145,6 +1303,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1172,6 +1334,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1198,6 +1364,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -1221,6 +1391,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -1247,7 +1421,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs08",
@@ -1270,6 +1446,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -1298,6 +1478,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1321,6 +1505,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -1349,6 +1537,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1374,7 +1566,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs08",
@@ -1397,6 +1591,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -1423,7 +1621,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs09",
@@ -1446,6 +1646,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -1474,6 +1678,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1497,6 +1705,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -1525,6 +1737,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1550,7 +1766,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs09",
@@ -1573,6 +1791,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -1599,7 +1821,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs10",
@@ -1622,6 +1846,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -1650,6 +1878,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1673,6 +1905,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -1701,6 +1937,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1726,7 +1966,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs10",
@@ -1749,6 +1991,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -1775,7 +2021,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs11",
@@ -1798,6 +2046,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -1826,6 +2078,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1849,6 +2105,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -1877,6 +2137,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -1902,7 +2166,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs11",
@@ -1925,6 +2191,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -1949,7 +2219,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs12",
@@ -1972,6 +2244,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -2000,6 +2276,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2023,6 +2303,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -2051,6 +2335,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2074,7 +2362,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs12",
@@ -2097,6 +2387,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -2121,7 +2415,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs13",
@@ -2144,6 +2440,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -2172,6 +2472,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2195,6 +2499,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -2223,6 +2531,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2246,7 +2558,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs13",
@@ -2269,6 +2583,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -2293,7 +2611,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs14",
@@ -2316,6 +2636,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -2344,6 +2668,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2367,6 +2695,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -2395,6 +2727,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2418,7 +2754,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs14",
@@ -2441,6 +2779,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -2465,7 +2807,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs15",
@@ -2488,6 +2832,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -2516,6 +2864,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2539,6 +2891,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -2567,6 +2923,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2590,7 +2950,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs15",
@@ -2613,6 +2975,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -2639,7 +3005,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs16",
@@ -2662,6 +3030,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -2689,6 +3061,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -2717,6 +3093,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2744,6 +3124,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2769,7 +3153,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs16",
@@ -2792,6 +3178,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -2818,7 +3208,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs17",
@@ -2841,6 +3233,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -2868,6 +3264,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -2896,6 +3296,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2923,6 +3327,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -2948,7 +3356,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs17",
@@ -2971,6 +3381,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -2997,7 +3411,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs18",
@@ -3020,6 +3436,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -3048,6 +3468,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -3071,6 +3495,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -3098,6 +3526,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -3124,6 +3556,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -3147,6 +3583,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -3173,7 +3613,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs19",
@@ -3196,6 +3638,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -3224,6 +3670,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -3247,6 +3697,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -3275,6 +3729,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -3301,6 +3759,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -3324,6 +3786,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -3350,7 +3816,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs20",
@@ -3373,6 +3841,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -3400,6 +3872,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -3428,6 +3904,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -3455,6 +3935,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -3481,6 +3965,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -3504,6 +3992,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -3530,7 +4022,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs21",
@@ -3553,6 +4047,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -3580,6 +4078,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -3608,6 +4110,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -3635,6 +4141,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -3661,6 +4171,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -3684,6 +4198,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -3710,7 +4228,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs22",
@@ -3733,6 +4253,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -3761,6 +4285,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -3784,6 +4312,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -3812,6 +4344,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -3837,7 +4373,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs22",
@@ -3860,6 +4398,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -3886,7 +4428,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs23",
@@ -3909,6 +4453,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -3937,6 +4485,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -3960,6 +4512,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -3988,6 +4544,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -4013,7 +4573,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs23",
@@ -4036,6 +4598,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -4060,7 +4626,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs24",
@@ -4083,6 +4651,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -4111,6 +4683,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -4134,6 +4710,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -4162,6 +4742,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -4185,7 +4769,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs24",
@@ -4208,6 +4794,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -4232,7 +4822,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs25",
@@ -4255,6 +4847,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -4283,6 +4879,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -4306,6 +4906,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -4334,6 +4938,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -4357,7 +4965,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs25",
@@ -4380,6 +4990,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -4406,7 +5020,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs26",
@@ -4429,6 +5045,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -4456,6 +5076,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -4484,6 +5108,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -4509,7 +5137,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs26",
@@ -4534,7 +5164,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs26",
@@ -4557,6 +5189,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -4583,7 +5219,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs27",
@@ -4606,6 +5244,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -4633,6 +5275,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -4661,6 +5307,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -4688,6 +5338,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -4713,7 +5367,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "irs27",
@@ -4737,6 +5393,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NULL_STRING_LITERAL"
    ]
   },
   {
@@ -4760,7 +5420,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda01",
@@ -4787,6 +5449,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -4813,6 +5479,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -4841,6 +5511,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -4864,6 +5538,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -4891,6 +5569,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -4918,6 +5600,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -4942,6 +5628,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NULL_STRING_LITERAL"
    ]
   },
   {
@@ -4965,7 +5655,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda02",
@@ -4992,6 +5684,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -5018,6 +5714,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -5046,6 +5746,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -5069,6 +5773,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -5096,6 +5804,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -5123,6 +5835,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -5146,6 +5862,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -5172,7 +5892,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda03",
@@ -5195,6 +5917,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -5222,6 +5948,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -5250,6 +5980,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -5277,6 +6011,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -5300,7 +6038,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda03",
@@ -5327,6 +6067,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -5351,6 +6095,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NULL_STRING_LITERAL"
    ]
   },
   {
@@ -5374,7 +6122,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda04",
@@ -5401,6 +6151,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -5428,6 +6182,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -5452,6 +6210,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -5475,6 +6237,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -5501,7 +6267,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda04",
@@ -5528,6 +6296,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -5551,6 +6323,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -5576,6 +6352,10 @@
    "gg_strict_codes": [],
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
     "QUALIFIED_VALUE"
    ]
   },
@@ -5604,6 +6384,11 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -5631,6 +6416,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -5655,6 +6444,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -5678,6 +6471,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -5704,7 +6501,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda05",
@@ -5731,6 +6530,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -5754,6 +6557,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -5780,7 +6587,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda06",
@@ -5807,6 +6616,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -5834,6 +6647,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -5857,6 +6674,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -5882,6 +6703,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -5906,6 +6731,10 @@
    "gg_strict_codes": [],
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
     "QUALIFIED_VALUE"
    ]
   },
@@ -5934,6 +6763,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -5957,6 +6790,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -5983,7 +6820,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda07",
@@ -6010,6 +6849,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -6037,6 +6880,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -6060,6 +6907,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -6085,6 +6936,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -6108,7 +6963,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda07",
@@ -6135,6 +6992,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -6158,6 +7019,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -6184,7 +7049,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda08",
@@ -6211,6 +7078,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -6238,6 +7109,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -6262,6 +7137,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -6285,6 +7164,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -6311,7 +7194,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda08",
@@ -6338,6 +7223,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -6361,6 +7250,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -6387,7 +7280,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda09",
@@ -6414,6 +7309,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -6441,6 +7340,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -6465,6 +7368,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -6488,6 +7395,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -6514,7 +7425,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda09",
@@ -6541,6 +7454,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -6565,6 +7482,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NULL_STRING_LITERAL"
    ]
   },
   {
@@ -6588,7 +7509,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda10",
@@ -6615,6 +7538,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -6642,6 +7569,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -6666,6 +7597,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -6689,6 +7624,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -6717,6 +7656,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -6741,6 +7684,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NULL_STRING_LITERAL"
    ]
   },
   {
@@ -6764,7 +7711,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda11",
@@ -6791,6 +7740,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -6818,6 +7771,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -6842,6 +7799,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -6865,6 +7826,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -6893,6 +7858,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -6916,6 +7885,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -6944,6 +7917,10 @@
    "gg_flags": "admitted",
    "gg_flags_codes": [
     "EVIDENCE_REANCHORED"
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": [
+    "EVIDENCE_REANCHORED"
    ]
   },
   {
@@ -6967,7 +7944,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda12",
@@ -6994,6 +7973,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -7018,6 +8001,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -7041,6 +8028,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -7069,6 +8060,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -7093,6 +8088,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NULL_STRING_LITERAL"
    ]
   },
   {
@@ -7116,7 +8115,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda13",
@@ -7139,7 +8140,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda13",
@@ -7166,6 +8169,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -7190,6 +8197,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -7213,6 +8224,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -7241,6 +8256,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -7264,6 +8283,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -7291,6 +8314,10 @@
    "gg_flags_codes": [
     "QUALIFIED_VALUE",
     "MULTIPLE_VALUES_IN_EVIDENCE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -7318,6 +8345,11 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -7345,6 +8377,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -7368,6 +8404,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -7394,7 +8434,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda14",
@@ -7419,7 +8461,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda14",
@@ -7446,6 +8490,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -7470,6 +8518,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NULL_STRING_LITERAL"
    ]
   },
   {
@@ -7493,7 +8545,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda15",
@@ -7520,6 +8574,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -7547,6 +8605,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -7571,6 +8633,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -7594,6 +8660,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -7622,6 +8692,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -7645,6 +8719,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -7671,7 +8749,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda16",
@@ -7698,6 +8778,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -7725,6 +8809,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -7749,6 +8837,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -7772,6 +8864,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -7798,7 +8894,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda16",
@@ -7825,6 +8923,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -7848,6 +8950,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -7876,6 +8982,10 @@
    "gg_flags": "admitted",
    "gg_flags_codes": [
     "EVIDENCE_REANCHORED"
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": [
+    "EVIDENCE_REANCHORED"
    ]
   },
   {
@@ -7899,7 +9009,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda17",
@@ -7926,6 +9038,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -7949,6 +9065,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -7977,6 +9097,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -8004,6 +9128,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -8027,6 +9155,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -8053,7 +9185,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda18",
@@ -8078,7 +9212,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda18",
@@ -8104,6 +9240,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -8132,6 +9272,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -8155,6 +9299,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -8181,7 +9329,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda18",
@@ -8208,6 +9358,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -8231,6 +9385,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -8257,7 +9415,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda19",
@@ -8284,6 +9444,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -8310,6 +9474,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "VALUE_NOT_IN_EVIDENCE"
    ]
   },
@@ -8338,6 +9506,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -8365,6 +9537,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -8390,7 +9566,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda19",
@@ -8417,6 +9595,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -8441,6 +9623,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NULL_STRING_LITERAL"
    ]
   },
   {
@@ -8464,7 +9650,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda20",
@@ -8487,7 +9675,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda20",
@@ -8514,6 +9704,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -8538,6 +9732,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -8561,6 +9759,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -8589,6 +9791,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -8612,6 +9818,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -8637,6 +9847,10 @@
    "gg_strict_codes": [],
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
     "QUALIFIED_VALUE"
    ]
   },
@@ -8663,6 +9877,10 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "QUALIFIED_VALUE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "QUALIFIED_VALUE"
    ]
   },
   {
@@ -8690,6 +9908,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -8713,6 +9935,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -8738,6 +9964,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -8761,6 +9991,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -8787,7 +10021,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda22",
@@ -8814,6 +10050,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -8841,6 +10081,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -8865,6 +10109,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -8888,6 +10136,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -8914,7 +10166,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda22",
@@ -8937,6 +10191,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -8961,7 +10219,9 @@
    "gg_strict": "admitted",
    "gg_strict_codes": [],
    "gg_flags": "admitted",
-   "gg_flags_codes": []
+   "gg_flags_codes": [],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda23",
@@ -8988,6 +10248,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -9015,6 +10279,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -9038,6 +10306,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -9063,6 +10335,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -9087,6 +10363,10 @@
    "gg_strict_codes": [],
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
     "QUALIFIED_VALUE"
    ]
   },
@@ -9115,6 +10395,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -9138,6 +10422,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   },
@@ -9164,7 +10452,9 @@
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
     "MULTIPLE_VALUES_IN_EVIDENCE"
-   ]
+   ],
+   "gg_v2": "admitted",
+   "gg_v2_codes": []
   },
   {
    "fact": "fda24",
@@ -9191,6 +10481,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "EVIDENCE_TEXT_MISMATCH"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
+    "NON_VERBATIM_EVIDENCE"
    ]
   },
   {
@@ -9218,6 +10512,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "VALUE_NOT_IN_EVIDENCE"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "VALUE_NOT_IN_EVIDENCE"
    ]
   },
   {
@@ -9241,6 +10539,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NO_EVIDENCE_SPAN"
    ]
   },
@@ -9266,6 +10568,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "NO_EVIDENCE_SPAN"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "NO_EVIDENCE_SPAN"
    ]
   },
   {
@@ -9290,6 +10596,10 @@
    "gg_strict_codes": [],
    "gg_flags": "needs_verification",
    "gg_flags_codes": [
+    "QUALIFIED_VALUE"
+   ],
+   "gg_v2": "needs_verification",
+   "gg_v2_codes": [
     "QUALIFIED_VALUE"
    ]
   },
@@ -9318,6 +10628,10 @@
    "gg_flags": "rejected",
    "gg_flags_codes": [
     "UNIT_INVALID"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
+    "UNIT_INVALID"
    ]
   },
   {
@@ -9341,6 +10655,10 @@
    ],
    "gg_flags": "rejected",
    "gg_flags_codes": [
+    "NULL_STRING_LITERAL"
+   ],
+   "gg_v2": "rejected",
+   "gg_v2_codes": [
     "NULL_STRING_LITERAL"
    ]
   }

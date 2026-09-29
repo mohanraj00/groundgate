@@ -302,7 +302,12 @@ def _value_at(doc: str, s: int, e: int, value: Decimal, unit: str) -> tuple[Num 
     return None, "UNIT_NOT_IN_EVIDENCE"
 
 
-def groundgate(ext: data.Extraction, f: Fact, doc: str, flags: bool) -> tuple[str, list[str]]:
+def groundgate(
+    ext: data.Extraction, f: Fact, doc: str, flags: bool, verbatim: bool = True, multi: bool = True
+) -> tuple[str, list[str]]:
+    """flags: add review flags. verbatim=False (v2): non-verbatim evidence is a review flag, not a
+    rejection, provided the value and unit still verify at the aligned location. multi=False (v2):
+    drop the blunt other-values-in-sentence flag."""
     attrs = ext.attributes or {}
     raw, unit = str(attrs.get("value", "")), attrs.get("unit")
     if raw.strip().lower() == "null":
@@ -324,6 +329,8 @@ def groundgate(ext: data.Extraction, f: Fact, doc: str, flags: bool) -> tuple[st
     if ws(span) != ws(ext.extraction_text):
         if dehyphen(ws(span)) == dehyphen(ws(ext.extraction_text)):
             codes.append("NORMALIZED_MATCH_ONLY")
+        elif not verbatim:
+            codes.append("NON_VERBATIM_EVIDENCE")
         else:
             return "rejected", ["EVIDENCE_TEXT_MISMATCH"]
     n, why = _value_at(doc, s, e, value, unit)
@@ -352,7 +359,7 @@ def groundgate(ext: data.Extraction, f: Fact, doc: str, flags: bool) -> tuple[st
             m for m in numbers(doc[s0:s1], s0)
             if m.start != n.start and m.value is not None and _has_unit(doc, m, unit)
         ]
-        if others:
+        if others and multi:
             codes.append("MULTIPLE_VALUES_IN_EVIDENCE")
         if SCALE.match(doc[n.end : n.end + 15]):
             codes.append("SCALE_WORD")
@@ -376,6 +383,7 @@ def run() -> dict[str, object]:
             status = ext.alignment_status.value if ext.alignment_status else None
             strict = groundgate(ext, f, doc, flags=False)
             flagged = groundgate(ext, f, doc, flags=True)
+            v2 = groundgate(ext, f, doc, flags=True, verbatim=False, multi=False)
             rows.append({
                 "fact": f.id, "doc": f.doc, "kind": kind, "correct": kind in CORRECT,
                 "text": p.text, "value": p.value, "unit": p.unit,
@@ -384,6 +392,7 @@ def run() -> dict[str, object]:
                 "gold_span": [f.start, f.end], "lx_aligned": ext.char_interval is not None and ext.char_interval.start_pos is not None,
                 "gg_strict": strict[0], "gg_strict_codes": strict[1],
                 "gg_flags": flagged[0], "gg_flags_codes": flagged[1],
+                "gg_v2": v2[0], "gg_v2_codes": v2[1],
             })
     return {"facts": len(facts), "rows": rows}
 
@@ -396,11 +405,11 @@ def accepted(row: dict, config: str) -> str:
         return "accept" if row["lx_aligned"] else "reject"
     if config == "lx-exact":
         return "accept" if row["lx_status"] == "match_exact" else "reject"
-    outcome = row["gg_strict" if config == "gg-strict" else "gg_flags"]
+    outcome = row[{"gg-strict": "gg_strict", "gg-flags": "gg_flags", "gg-v2": "gg_v2"}[config]]
     return {"admitted": "accept", "needs_verification": "review", "rejected": "reject"}[outcome]
 
 
-CONFIGS = ["lx-all", "lx-aligned", "lx-exact", "gg-strict", "gg-flags"]
+CONFIGS = ["lx-all", "lx-aligned", "lx-exact", "gg-strict", "gg-flags", "gg-v2"]
 
 
 def report(res: dict) -> str:
@@ -420,13 +429,13 @@ def report(res: dict) -> str:
             rev = sum(accepted(r, c) == "review" for r in rs)
             tot[(c, "accept")] += acc
             tot[(c, "review")] += rev
-            cell = f"{acc / len(rs):.0%}" + (f" /{rev / len(rs):.0%}" if c == "gg-flags" else "")
+            cell = f"{acc / len(rs):.0%}" + (f" /{rev / len(rs):.0%}" if c in ("gg-flags", "gg-v2") else "")
             line += f"{cell:>13}"
         out.append(line)
     n_wrong = sum(len(by_kind[k]) for k in CORRUPTIONS)
     line = f"{'ALL WRONG':<18}{n_wrong:>4}"
     for c in CONFIGS:
-        cell = f"{tot[(c, 'accept')] / n_wrong:.0%}" + (f" /{tot[(c, 'review')] / n_wrong:.0%}" if c == "gg-flags" else "")
+        cell = f"{tot[(c, 'accept')] / n_wrong:.0%}" + (f" /{tot[(c, 'review')] / n_wrong:.0%}" if c in ("gg-flags", "gg-v2") else "")
         line += f"{cell:>13}"
     out.append(line)
 
@@ -448,10 +457,11 @@ def report(res: dict) -> str:
     out.append("\nLangExtract alignment status by kind")
     for kind, rs in by_kind.items():
         out.append(f"  {kind:<18}" + ", ".join(f"{k}={v}" for k, v in Counter(str(r['lx_status']) for r in rs).most_common()))
-    out.append("\ngg-flags reason codes by kind")
-    for kind, rs in by_kind.items():
-        c = Counter(code for r in rs for code in r["gg_flags_codes"])
-        out.append(f"  {kind:<18}" + ", ".join(f"{k}={v}" for k, v in c.most_common()))
+    for cfg in ("gg_flags", "gg_v2"):
+        out.append(f"\n{cfg} reason codes by kind")
+        for kind, rs in by_kind.items():
+            c = Counter(code for r in rs for code in r[f"{cfg}_codes"])
+            out.append(f"  {kind:<18}" + ", ".join(f"{k}={v}" for k, v in c.most_common()))
     return "\n".join(out)
 
 

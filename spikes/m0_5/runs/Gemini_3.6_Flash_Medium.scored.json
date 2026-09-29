@@ -1,0 +1,1147 @@
+[
+ {
+  "document_id": "fda-metformin-er@1",
+  "class": "lactic_acidosis_lactate_level",
+  "text": ">5 mmol/Liter",
+  "attributes": {
+   "value": "5",
+   "unit": "mmol/L"
+  },
+  "char_interval": [
+   449,
+   462
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "5",
+  "gold_unit": "mmol/L"
+ },
+ {
+  "document_id": "fda-metformin-er@1",
+  "class": "lactic_acidosis_plasma_level",
+  "text": ">5 mcg/mL",
+  "attributes": {
+   "value": "5",
+   "unit": "mcg/mL"
+  },
+  "char_interval": [
+   605,
+   614
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "5",
+  "gold_unit": "mcg/mL"
+ },
+ {
+  "document_id": "fda-metformin-er@1",
+  "class": "risk_factor_age",
+  "text": "65 years",
+  "attributes": {
+   "value": "65",
+   "unit": "years"
+  },
+  "char_interval": [
+   828,
+   836
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "65",
+  "gold_unit": "years"
+ },
+ {
+  "document_id": "fda-metformin-er@1900",
+  "class": "starting_dose",
+  "text": "500 mg",
+  "attributes": {
+   "value": "500",
+   "unit": "mg"
+  },
+  "char_interval": [
+   86,
+   92
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "500",
+  "gold_unit": "mg"
+ },
+ {
+  "document_id": "fda-metformin-er@1900",
+  "class": "titration_increment",
+  "text": "500 mg",
+  "attributes": {
+   "value": "500",
+   "unit": "mg"
+  },
+  "char_interval": [
+   170,
+   176
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "500",
+  "gold_unit": "mg"
+ },
+ {
+  "document_id": "fda-metformin-er@1900",
+  "class": "max_daily_dose",
+  "text": "2,000 mg",
+  "attributes": {
+   "value": "2000",
+   "unit": "mg"
+  },
+  "char_interval": [
+   266,
+   274
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "2000",
+  "gold_unit": "mg"
+ },
+ {
+  "document_id": "fda-metformin-er@2780",
+  "class": "egfr_contraindicated_below",
+  "text": "30 mL/minute/1.73 m2",
+  "attributes": {
+   "value": "30",
+   "unit": "mL/min/1.73m2"
+  },
+  "char_interval": [
+   264,
+   284
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "30",
+  "gold_unit": "mL/min/1.73m2"
+ },
+ {
+  "document_id": "fda-metformin-er@2780",
+  "class": "egfr_initiation_not_recommended_low",
+  "text": "30",
+  "attributes": {
+   "value": "30",
+   "unit": "mL/min/1.73m2"
+  },
+  "char_interval": [
+   383,
+   385
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "30",
+  "gold_unit": "mL/min/1.73m2"
+ },
+ {
+  "document_id": "fda-metformin-er@2780",
+  "class": "egfr_initiation_not_recommended_high",
+  "text": "45 mL/minute/1.73 m2",
+  "attributes": {
+   "value": "45",
+   "unit": "mL/min/1.73m2"
+  },
+  "char_interval": [
+   389,
+   409
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "45",
+  "gold_unit": "mL/min/1.73m2"
+ },
+ {
+  "document_id": "fda-metformin-er@2780",
+  "class": "egfr_reassess_below",
+  "text": "45 mL/minute/1.73 m2",
+  "attributes": {
+   "value": "45",
+   "unit": "mL/min/1.73m2"
+  },
+  "char_interval": [
+   528,
+   548
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "45",
+  "gold_unit": "mL/min/1.73m2"
+ },
+ {
+  "document_id": "fda-metformin-er@3631",
+  "class": "contrast_egfr_low",
+  "text": "30",
+  "attributes": {
+   "value": "30",
+   "unit": "mL/min/1.73m2"
+  },
+  "char_interval": [
+   163,
+   165
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "30",
+  "gold_unit": "mL/min/1.73m2"
+ },
+ {
+  "document_id": "fda-metformin-er@3631",
+  "class": "contrast_egfr_high",
+  "text": "60 mL/minute/1.73 m2",
+  "attributes": {
+   "value": "60",
+   "unit": "mL/min/1.73m2"
+  },
+  "char_interval": [
+   170,
+   190
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "60",
+  "gold_unit": "mL/min/1.73m2"
+ },
+ {
+  "document_id": "fda-metformin-er@3631",
+  "class": "reevaluate_egfr_after",
+  "text": "48 hours",
+  "attributes": {
+   "value": "48",
+   "unit": "hours"
+  },
+  "char_interval": [
+   358,
+   366
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "48",
+  "gold_unit": "hours"
+ },
+ {
+  "document_id": "fda-metformin-er@26518",
+  "class": "tmax_low",
+  "text": "7 hours",
+  "attributes": {
+   "value": "7",
+   "unit": "hours"
+  },
+  "char_interval": [
+   216,
+   217
+  ],
+  "status": "match_lesser",
+  "label": "correct",
+  "gg": "rejected",
+  "gg_codes": [
+   "EVIDENCE_TEXT_MISMATCH"
+  ],
+  "v2": "needs_verification",
+  "v2_codes": [
+   "NON_VERBATIM_EVIDENCE",
+   "QUALIFIED_VALUE"
+  ],
+  "gold_value": "7",
+  "gold_unit": "hours"
+ },
+ {
+  "document_id": "fda-metformin-er@26518",
+  "class": "cmax_increase_vs_ir",
+  "text": "35%",
+  "attributes": {
+   "value": "35",
+   "unit": "%"
+  },
+  "char_interval": [
+   431,
+   434
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "35",
+  "gold_unit": "%"
+ },
+ {
+  "document_id": "fda-metformin-er@26518",
+  "class": "steady_state_time_low",
+  "text": "24 hours",
+  "attributes": {
+   "value": "24",
+   "unit": "hours"
+  },
+  "char_interval": [
+   650,
+   652
+  ],
+  "status": "match_lesser",
+  "label": "correct",
+  "gg": "rejected",
+  "gg_codes": [
+   "EVIDENCE_TEXT_MISMATCH"
+  ],
+  "v2": "needs_verification",
+  "v2_codes": [
+   "NON_VERBATIM_EVIDENCE"
+  ],
+  "gold_value": "24",
+  "gold_unit": "hours"
+ },
+ {
+  "document_id": "fda-metformin-er@26518",
+  "class": "steady_state_plasma_level",
+  "text": "<1 mcg/mL",
+  "attributes": {
+   "value": "1",
+   "unit": "mcg/mL"
+  },
+  "char_interval": [
+   683,
+   692
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "1",
+  "gold_unit": "mcg/mL"
+ },
+ {
+  "document_id": "fda-metformin-er@33133",
+  "class": "rat_carcinogenicity_max_dose_male",
+  "text": "450 mg/kg/day",
+  "attributes": {
+   "value": "450",
+   "unit": "mg/kg/day"
+  },
+  "char_interval": [
+   421,
+   434
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "450",
+  "gold_unit": "mg/kg/day"
+ },
+ {
+  "document_id": "fda-metformin-er@33133",
+  "class": "rat_carcinogenicity_max_dose_female",
+  "text": "1,200 mg/kg/day",
+  "attributes": {
+   "value": "1200",
+   "unit": "mg/kg/day"
+  },
+  "char_interval": [
+   467,
+   482
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "1200",
+  "gold_unit": "mg/kg/day"
+ },
+ {
+  "document_id": "fda-metformin-er@33133",
+  "class": "max_daily_dose",
+  "text": "2,000 mg",
+  "attributes": {
+   "value": "2000",
+   "unit": "mg"
+  },
+  "char_interval": [
+   638,
+   646
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "2000",
+  "gold_unit": "mg"
+ },
+ {
+  "document_id": "fda-metformin-er@34085",
+  "class": "rat_fertility_dose",
+  "text": "600 mg/kg/day",
+  "attributes": {
+   "value": "600",
+   "unit": "mg/kg/day"
+  },
+  "char_interval": [
+   283,
+   296
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "600",
+  "gold_unit": "mg/kg/day"
+ },
+ {
+  "document_id": "fda-metformin-er@34085",
+  "class": "rat_fertility_dose_multiple",
+  "text": "3 times",
+  "attributes": {
+   "value": "3",
+   "unit": "times"
+  },
+  "char_interval": [
+   321,
+   328
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "needs_verification",
+  "v2_codes": [
+   "QUALIFIED_VALUE"
+  ],
+  "gold_value": "3",
+  "gold_unit": "times"
+ },
+ {
+  "document_id": "fda-metformin-er@35086",
+  "class": "study_n_newly_diagnosed",
+  "text": "338",
+  "attributes": {
+   "value": "338",
+   "unit": "count"
+  },
+  "char_interval": [
+   32,
+   35
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "338",
+  "gold_unit": "count"
+ },
+ {
+  "document_id": "fda-metformin-er@35086",
+  "class": "washout_weeks",
+  "text": "6-week",
+  "attributes": {
+   "value": "6",
+   "unit": "weeks"
+  },
+  "char_interval": [
+   503,
+   509
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "6",
+  "gold_unit": "weeks"
+ },
+ {
+  "document_id": "fda-metformin-er@35086",
+  "class": "randomized_period_weeks",
+  "text": "21-week",
+  "attributes": {
+   "value": "21",
+   "unit": "weeks"
+  },
+  "char_interval": [
+   904,
+   911
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "21",
+  "gold_unit": "weeks"
+ },
+ {
+  "document_id": "irs-p590a@2000",
+  "class": "ira_contribution_limit_2025",
+  "text": "$7,000",
+  "attributes": {
+   "value": "7000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   634,
+   640
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "7000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@2000",
+  "class": "ira_contribution_limit_2025_age50",
+  "text": "$8,000",
+  "attributes": {
+   "value": "8000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   643,
+   649
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "8000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@2950",
+  "class": "trump_account_pilot_contribution",
+  "text": "$1,000",
+  "attributes": {
+   "value": "1000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   179,
+   185
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "1000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@3880",
+  "class": "trad_ira_phaseout_start_mfj_2025",
+  "text": "$126,000",
+  "attributes": {
+   "value": "126000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   187,
+   195
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "126000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@3880",
+  "class": "trad_ira_phaseout_end_mfj_2025",
+  "text": "$146,000",
+  "attributes": {
+   "value": "146000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   210,
+   218
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "146000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@3880",
+  "class": "trad_ira_phaseout_start_single_2025",
+  "text": "$79,000",
+  "attributes": {
+   "value": "79000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   312,
+   319
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "79000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@3880",
+  "class": "trad_ira_phaseout_end_single_2025",
+  "text": "$89,000",
+  "attributes": {
+   "value": "89000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   334,
+   341
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "89000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@3880",
+  "class": "spousal_phaseout_start_2025",
+  "text": "$236,000",
+  "attributes": {
+   "value": "236000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   757,
+   765
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "236000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@3880",
+  "class": "spousal_phaseout_start_2024",
+  "text": "$230,000",
+  "attributes": {
+   "value": "230000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   778,
+   786
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "230000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@3880",
+  "class": "spousal_phaseout_end_2025",
+  "text": "$246,000",
+  "attributes": {
+   "value": "246000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   817,
+   825
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "246000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@3880",
+  "class": "spousal_phaseout_end_2024",
+  "text": "$240,000",
+  "attributes": {
+   "value": "240000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   838,
+   846
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "240000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@4860",
+  "class": "roth_phaseout_start_mfj_2025",
+  "text": "$236,000",
+  "attributes": {
+   "value": "236000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   267,
+   275
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "236000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@4860",
+  "class": "roth_phaseout_end_mfj_2025",
+  "text": "$246,000",
+  "attributes": {
+   "value": "246000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   341,
+   349
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "246000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@4860",
+  "class": "roth_phaseout_start_single_2025",
+  "text": "$150,000",
+  "attributes": {
+   "value": "150000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   535,
+   543
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "150000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@4860",
+  "class": "roth_phaseout_end_single_2025",
+  "text": "$165,000",
+  "attributes": {
+   "value": "165000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   610,
+   618
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "165000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@5791",
+  "class": "ira_contribution_limit_2026",
+  "text": "$7,500",
+  "attributes": {
+   "value": "7500",
+   "unit": "USD"
+  },
+  "char_interval": [
+   72,
+   78
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "7500",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@5791",
+  "class": "ira_contribution_limit_2026_age50",
+  "text": "$8,600",
+  "attributes": {
+   "value": "8600",
+   "unit": "USD"
+  },
+  "char_interval": [
+   81,
+   87
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "8600",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@5791",
+  "class": "trad_ira_phaseout_start_mfj_2026",
+  "text": "$129,000",
+  "attributes": {
+   "value": "129000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   446,
+   454
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "129000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@5791",
+  "class": "trad_ira_phaseout_end_mfj_2026",
+  "text": "$149,000",
+  "attributes": {
+   "value": "149000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   469,
+   477
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "149000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@5791",
+  "class": "trad_ira_phaseout_start_single_2026",
+  "text": "$81,000",
+  "attributes": {
+   "value": "81000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   571,
+   578
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "81000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@5791",
+  "class": "trad_ira_phaseout_end_single_2026",
+  "text": "$91,000",
+  "attributes": {
+   "value": "91000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   593,
+   600
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "91000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@6589",
+  "class": "spousal_phaseout_start_2026",
+  "text": "$242,000",
+  "attributes": {
+   "value": "242000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   241,
+   249
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "242000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@6589",
+  "class": "spousal_phaseout_start_2025",
+  "text": "$236,000",
+  "attributes": {
+   "value": "236000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   262,
+   270
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "236000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@6589",
+  "class": "spousal_phaseout_end_2026",
+  "text": "$252,000",
+  "attributes": {
+   "value": "252000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   301,
+   309
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "252000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@6589",
+  "class": "spousal_phaseout_end_2025",
+  "text": "$246,000",
+  "attributes": {
+   "value": "246000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   321,
+   329
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "246000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@7414",
+  "class": "roth_phaseout_start_single_2026",
+  "text": "$153,000",
+  "attributes": {
+   "value": "153000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   175,
+   183
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "153000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@7414",
+  "class": "roth_phaseout_end_single_2026",
+  "text": "$168,000",
+  "attributes": {
+   "value": "168000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   250,
+   258
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "168000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@42685",
+  "class": "spousal_ira_combined_limit_2025",
+  "text": "$14,000",
+  "attributes": {
+   "value": "14000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   444,
+   451
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "14000",
+  "gold_unit": "USD"
+ },
+ {
+  "document_id": "irs-p590a@42685",
+  "class": "spousal_ira_combined_limit_both_age50_2025",
+  "text": "$16,000",
+  "attributes": {
+   "value": "16000",
+   "unit": "USD"
+  },
+  "char_interval": [
+   509,
+   516
+  ],
+  "status": "match_exact",
+  "label": "correct",
+  "gg": "admitted",
+  "gg_codes": [],
+  "v2": "admitted",
+  "v2_codes": [],
+  "gold_value": "16000",
+  "gold_unit": "USD"
+ }
+]

@@ -8,6 +8,9 @@ output is cached in runs/<model>.json; pass --score-only to re-score from the ca
 Providers:
   --provider gemini     LangExtract's native Gemini provider (needs GEMINI_API_KEY)
   --provider claude-cli your logged-in `claude` CLI, tools disabled (uses your Claude plan)
+  --provider agy        the Antigravity CLI in print mode, plan mode, sandboxed; --model takes
+                        its display name, e.g. "Gemini 3.6 Flash (Medium)". It is an agent
+                        harness, not a raw API call, so its system prompt wraps ours.
   --provider ollama     a local Ollama model (needs RAM for the model)
 
 Run: .venv-spike/bin/python spikes/m0_5/real_run.py --provider claude-cli --model claude-haiku-4-5
@@ -17,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import time
 from collections.abc import Iterator, Sequence
@@ -87,6 +91,36 @@ class ClaudeCLIModel(base_model.BaseLanguageModel):
             yield [lx_types.ScoredOutput(score=1.0, output=out)]
 
 
+AGY_PREFIX = (
+    "Answer directly from the text below. Do not use any tools, do not run commands, "
+    "and do not read or write files. Output only the JSON requested.\n\n"
+)
+
+
+class AgyModel(base_model.BaseLanguageModel):
+    """LangExtract provider that calls the Antigravity CLI (`agy -p`) in plan mode, sandboxed."""
+
+    def __init__(self, model_id: str, **kwargs: object) -> None:
+        super().__init__()
+        self.model_id = model_id
+        self.cost_usd = 0.0  # not reported by agy
+
+    def infer(self, batch_prompts: Sequence[str], **kwargs: object) -> Iterator[Sequence[lx_types.ScoredOutput]]:
+        for prompt in batch_prompts:
+            proc = subprocess.run(
+                ["agy", "-p", AGY_PREFIX + prompt, "--model", self.model_id, "--mode", "plan", "--sandbox",
+                 "--print-timeout", "300s"],
+                capture_output=True, text=True, timeout=360, check=False,
+            )
+            if proc.returncode != 0:
+                raise RuntimeError(f"agy error {proc.returncode}: {proc.stderr[-500:]}")
+            out = proc.stdout.strip()
+            if out.startswith("```"):
+                out = out.split("\n", 1)[1].rsplit("```", 1)[0]
+            print(".", end="", flush=True)
+            yield [lx_types.ScoredOutput(score=1.0, output=out)]
+
+
 def gold_chunks(facts: list[Fact]) -> list[tuple[str, int, int, int]]:
     seen: dict[tuple[str, int], tuple[str, int, int, int]] = {}
     for f in facts:
@@ -104,6 +138,9 @@ def extract(provider: str, model: str, texts: dict[str, str], facts: list[Fact])
     cli = None
     if provider == "claude-cli":
         cli = ClaudeCLIModel(model)
+        kw["model"] = cli
+    elif provider == "agy":
+        cli = AgyModel(model)
         kw["model"] = cli
     elif provider == "ollama":
         kw["config"] = factory.ModelConfig(
@@ -141,6 +178,13 @@ def extract(provider: str, model: str, texts: dict[str, str], facts: list[Fact])
     return out
 
 
+CFGS = ["lx-all", "lx-aligned", "lx-exact", "gg-strict", "gg-v2"]
+
+
+def safe(model: str) -> str:
+    return re.sub(r"[^A-Za-z0-9._-]+", "_", model).strip("_")
+
+
 def _dec(v: object) -> Decimal | None:
     try:
         return Decimal(str(v).replace(",", "").replace("$", "").strip())
@@ -167,11 +211,12 @@ def score(model: str, raw: list[dict], texts: dict[str, str], facts: list[Fact])
             ci = data.CharInterval(start_pos=cs + x["char_interval"][0], end_pos=cs + x["char_interval"][1])
         ext = data.Extraction(x["class"], x["text"], char_interval=ci, attributes=attrs)
         if g is None:
-            gg = ("rejected", ["FIELD_UNKNOWN"])
+            gg = v2 = ("rejected", ["FIELD_UNKNOWN"])
         else:
             local = Fact(d, g.id, g.field, g.value, g.unit, g.qualifier, g.start, g.end, cs, ce, ct)
             gg = groundgate(ext, local, doc, flags=False)
-        rows.append({**x, "label": label, "gg": gg[0], "gg_codes": gg[1],
+            v2 = groundgate(ext, local, doc, flags=True, verbatim=False, multi=False)
+        rows.append({**x, "label": label, "gg": gg[0], "gg_codes": gg[1], "v2": v2[0], "v2_codes": v2[1],
                      "gold_value": str(g.value) if g else None, "gold_unit": g.unit if g else None})
 
     found = {(r["class"]) for r in rows if r["label"] == "correct"}
@@ -182,14 +227,19 @@ def score(model: str, raw: list[dict], texts: dict[str, str], facts: list[Fact])
 
     def acc(r: dict, c: str) -> bool:
         return {"lx-all": True, "lx-aligned": r["char_interval"] is not None and r["char_interval"][0] is not None,
-                "lx-exact": r["status"] == "match_exact", "gg-strict": r["gg"] == "admitted"}[c]
+                "lx-exact": r["status"] == "match_exact", "gg-strict": r["gg"] == "admitted",
+                "gg-v2": r["v2"] == "admitted"}[c]
 
-    lines.append(f"\n{'':<16}" + "".join(f"{c:>12}" for c in ["lx-all", "lx-aligned", "lx-exact", "gg-strict"]))
+    lines.append(f"\n{'':<16}" + "".join(f"{c:>12}" for c in CFGS))
     for lab in ["correct", "wrong", "unknown_field"]:
         rs = [r for r in rows if r["label"] == lab]
         if rs:
             lines.append(f"{lab + ' accepted':<16}" + "".join(
-                f"{sum(acc(r, c) for r in rs):>6}/{len(rs):<5}" for c in ["lx-all", "lx-aligned", "lx-exact", "gg-strict"]))
+                f"{sum(acc(r, c) for r in rs):>6}/{len(rs):<5}" for c in CFGS))
+            if lab == "correct":
+                rev = sum(r["v2"] == "needs_verification" for r in rs)
+                rej = sum(r["v2"] == "rejected" for r in rs)
+                lines.append(f"{'':<16}gg-v2 on correct facts: {rev} sent to review, {rej} rejected")
     lines.append("\nwrong extractions (what each got wrong, and what groundgate said):")
     for r in rows:
         if r["label"] == "wrong":
@@ -198,20 +248,20 @@ def score(model: str, raw: list[dict], texts: dict[str, str], facts: list[Fact])
     lines.append("\ncorrect extractions groundgate rejected:")
     for r in rows:
         if r["label"] == "correct" and r["gg"] != "admitted":
-            lines.append(f"  {r['class']}: text={r['text']!r} lx={r['status']} gg={r['gg_codes']}")
-    (RUNS / f"{model.replace(':', '_').replace('/', '_')}.scored.json").write_text(json.dumps(rows, indent=1, ensure_ascii=False))
+            lines.append(f"  {r['class']}: text={r['text']!r} lx={r['status']} gg={r['gg_codes']} v2={r['v2']} {r['v2_codes']}")
+    (RUNS / f"{safe(model)}.scored.json").write_text(json.dumps(rows, indent=1, ensure_ascii=False))
     return "\n".join(lines)
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--provider", choices=["gemini", "claude-cli", "ollama"], default="claude-cli")
+    ap.add_argument("--provider", choices=["gemini", "claude-cli", "agy", "ollama"], default="claude-cli")
     ap.add_argument("--model", default="claude-haiku-4-5")
     ap.add_argument("--score-only", action="store_true")
     a = ap.parse_args()
     texts, facts = spike.load()
     RUNS.mkdir(exist_ok=True)
-    cache = RUNS / f"{a.model.replace(':', '_').replace('/', '_')}.json"
+    cache = RUNS / f"{safe(a.model)}.json"
     if a.score_only:
         raw = json.loads(cache.read_text())
     else:
