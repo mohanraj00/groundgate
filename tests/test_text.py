@@ -78,6 +78,11 @@ def test_parse_value(raw: str, ok: bool) -> None:
         ("up to a maximum of 2,000 mg", "2,000", {"le"}),
         ("age 50 or older", "50", {"ge"}),
         ("The fee is 40. More than 9 apply.", "40", set()),
+        ("more than $242,000 (up from $236,000 for 2025)", "236,000", set()),
+        ("from 7 to 8 hours", "7", {"range"}),
+        ("ages from 50 through 70", "50", {"range"}),
+        ("ages from 50 through 70", "70", {"range"}),
+        ("The promotion is over.\nFee: $500.", "500", set()),
     ],
 )
 def test_qualifiers(text: str, target: str, expected: set[str]) -> None:

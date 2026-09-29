@@ -8,7 +8,7 @@ from decimal import Decimal, InvalidOperation
 
 _TOKEN = re.compile(r"[-\u2212]?\d[\d,]*(?:\.\d+)?")
 _VALID = re.compile(r"^[-\u2212]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?$")
-_SENTENCE_END = re.compile(r"\. |; |•|\n[ \t]*\n")
+_SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t]*\n")
 _WS = re.compile(r"\s+")
 _HYPHEN_BREAK = re.compile(r"-\n\s*")
 _WINDOW = 40
@@ -106,7 +106,7 @@ _BEFORE = {
     "lt": ["less than", "fewer than", "below", "under", "<"],
     "ge": ["at least", "minimum of", "no less than", "≥"],
     "le": ["up to", "maximum of", "at most", "no more than", "≤"],
-    "range": ["between", "from"],
+    "range": ["between"],
 }
 _AFTER = {
     "ge": ["or more", "or greater", "or older", "or higher", "or above"],
@@ -121,8 +121,8 @@ def _phrase(p: str) -> str:
 
 _BEFORE_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in _BEFORE.items()}
 _AFTER_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in _AFTER.items()}
-_RANGE_NEXT = re.compile(r"^\s*(?:to|-|\u2013)\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
-_RANGE_PREV = re.compile(r"\s*(?:to|-|\u2013)\s*\S{0,4}?", re.I)
+_RANGE_NEXT = re.compile(r"^\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
+_RANGE_PREV = re.compile(r"\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?", re.I)
 _AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
 _AND_PREV = re.compile(r"\s*and\s*\S{0,4}?", re.I)
 _BETWEEN_END = re.compile(r"\bbetween\s*\S{0,4}?$", re.I)
@@ -156,7 +156,7 @@ def qualifiers(text: str, tok: Token) -> set[str]:
 
 def _strip_unit_suffix(rest: str) -> str:
     # "30 mg to 45 mg": skip a short unit word before the range connector.
-    m = re.match(r"^\s*[^\s\d]{1,12}(?=\s+(?:to|and)\b)", rest)
+    m = re.match(r"^\s*[^\s\d]{1,12}(?=\s+(?:through|thru|to|and)\b)", rest)
     return rest[m.end() :] if m else rest
 
 

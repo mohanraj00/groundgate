@@ -274,7 +274,8 @@ vector(
     "A qualifier that differs from the field's comparator flags the value for review.",
     "Tmax is reached in approximately 7 hours. The deduction phases out for income more than $126,000. "
     "You cannot contribute if income is $165,000 or more. Initiation is not recommended with an eGFR "
-    "between 30 to 45 mL/minute. Up to 35% higher peaks were seen.",
+    "between 30 to 45 mL/minute. Up to 35% higher peaks were seen. The limit rose to $252,000 (up "
+    "from $246,000 for 2025). Eligible ages run from 50 through 70.",
     {
         "fields": {
             "tmax": {"type": "integer", "unit": "hours"},
@@ -287,6 +288,9 @@ vector(
             "egfr_low_range": {"type": "integer", "comparator": "range"},
             "peak": {"type": "integer", "unit": "%"},
             "peak_le": {"type": "integer", "unit": "%", "comparator": "le"},
+            "prior": {"type": "integer", "unit": "USD"},
+            "age_low": {"type": "integer"},
+            "age_high": {"type": "integer", "comparator": "range"},
         }
     },
     [
@@ -314,6 +318,9 @@ vector(
         c("q8", "egfr_low_range", "30", None, q("30")),
         c("q9", "peak", "35", "%", q("35%"), ("needs_verification", ["QUALIFIED_VALUE"])),
         c("q10", "peak_le", "35", "%", q("35%")),
+        c("q11", "prior", "246000", "USD", q("$246,000")),  # "up from" is not a qualifier
+        c("q12", "age_low", "50", None, q("50"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        c("q13", "age_high", "70", None, q("70")),
     ],
 )
 

@@ -146,11 +146,12 @@ exponent, trailing fractional zeros or a trailing `.`, with `-0` written `0`.
 
 ### 4.2 Qualifiers
 
-A qualifier applies when it appears between the value and the nearest of: the previous number
-token, the start of the sentence, or 40 code points before the value (qualifiers *before*); or
-between the value and the nearest of the next number token, the end of the sentence, or 40 code
-points after it (qualifiers *after*). Sentences end at `. `, `; `, `•`, or a blank line. Matching
-is case-insensitive on whole words.
+A qualifier applies when it appears between the value and the nearest of: the previous number token,
+the start of the sentence, or 40 code points before the value (qualifiers *before*); or between the
+value and the nearest of the next number token, the end of the sentence, or 40 code points after it
+(qualifiers *after*). Sentences end at `.` or `;` followed by whitespace (a line break counts), at
+`•`, or at a blank line. Matching is case-insensitive on whole words. `from` is deliberately absent:
+"from 7 to 8" is already a range through its connector, and "up from $236,000" is not a qualifier.
 
 | Comparator | Before the value | After the value |
 |---|---|---|
@@ -159,7 +160,7 @@ is case-insensitive on whole words.
 | `lt` | less than, fewer than, below, under, < | |
 | `ge` | at least, minimum of, no less than, ≥ | or more, or greater, or older, or higher, or above |
 | `le` | up to, maximum of, at most, no more than, ≤ | or less, or fewer, or younger, or lower, or below |
-| `range` | between, from | the value is followed by `to`, `-` or `–` and then another number token, or is preceded by such a connector and a number token; `and` counts as a connector only when `between` comes before the first number |
+| `range` | between | the value is followed by `to`, `through`, `thru`, `-` or `–` and then another number token, or is preceded by such a connector and a number token; `and` counts as a connector only when `between` comes before the first number |
 
 ### 4.3 Units
 

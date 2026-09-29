@@ -1,7 +1,7 @@
 {
  "name": "07-qualifiers",
  "description": "A qualifier that differs from the field's comparator flags the value for review.",
- "document": "Tmax is reached in approximately 7 hours. The deduction phases out for income more than $126,000. You cannot contribute if income is $165,000 or more. Initiation is not recommended with an eGFR between 30 to 45 mL/minute. Up to 35% higher peaks were seen.",
+ "document": "Tmax is reached in approximately 7 hours. The deduction phases out for income more than $126,000. You cannot contribute if income is $165,000 or more. Initiation is not recommended with an eGFR between 30 to 45 mL/minute. Up to 35% higher peaks were seen. The limit rose to $252,000 (up from $246,000 for 2025). Eligible ages run from 50 through 70.",
  "schema": {
   "fields": {
    "tmax": {
@@ -44,6 +44,17 @@
     "type": "integer",
     "unit": "%",
     "comparator": "le"
+   },
+   "prior": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "age_low": {
+    "type": "integer"
+   },
+   "age_high": {
+    "type": "integer",
+    "comparator": "range"
    }
   }
  },
@@ -155,6 +166,37 @@
     "end": 231,
     "text": "35%"
    }
+  },
+  {
+   "id": "q11",
+   "field": "prior",
+   "value": "246000",
+   "unit": "USD",
+   "evidence": {
+    "start": 292,
+    "end": 300,
+    "text": "$246,000"
+   }
+  },
+  {
+   "id": "q12",
+   "field": "age_low",
+   "value": "50",
+   "evidence": {
+    "start": 335,
+    "end": 337,
+    "text": "50"
+   }
+  },
+  {
+   "id": "q13",
+   "field": "age_high",
+   "value": "70",
+   "evidence": {
+    "start": 346,
+    "end": 348,
+    "text": "70"
+   }
   }
  ],
  "expected": {
@@ -196,6 +238,20 @@
     "codes": [
      "QUALIFIED_VALUE"
     ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
    },
    {
     "outcome": "admitted",
