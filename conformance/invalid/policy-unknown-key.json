@@ -1,0 +1,15 @@
+{
+ "name": "policy-unknown-key",
+ "description": "Unknown policy keys are invalid.",
+ "document": "x",
+ "schema": {
+  "fields": {}
+ },
+ "policy": {
+  "strict": true
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

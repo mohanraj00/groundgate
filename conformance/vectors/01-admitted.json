@@ -1,0 +1,129 @@
+{
+ "name": "01-admitted",
+ "description": "Values present at the cited span with the right unit are admitted; unit surfaces as prefix or suffix.",
+ "document": "For 2025, the contribution limit remains $7,000 ($8,000 for individuals age 50 or older). A late fee of 250 dollars applies. The starting dose is 500 mg once daily. Mean weight was 88.2 kg. Plan name: Retirement Savings Plus.",
+ "schema": {
+  "fields": {
+   "limit": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "limit_50": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "late_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "start_dose": {
+    "type": "integer",
+    "unit": "mg"
+   },
+   "weight": {
+    "type": "number",
+    "unit": "kg"
+   },
+   "plan_name": {
+    "type": "string"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a1",
+   "field": "limit",
+   "value": "7000",
+   "unit": "USD",
+   "evidence": {
+    "start": 41,
+    "end": 47,
+    "text": "$7,000"
+   }
+  },
+  {
+   "id": "a2",
+   "field": "limit_50",
+   "value": 8000,
+   "unit": "USD",
+   "evidence": {
+    "start": 49,
+    "end": 55,
+    "text": "$8,000"
+   }
+  },
+  {
+   "id": "a3",
+   "field": "late_fee",
+   "value": "250",
+   "unit": "USD",
+   "evidence": {
+    "start": 104,
+    "end": 115,
+    "text": "250 dollars"
+   }
+  },
+  {
+   "id": "a4",
+   "field": "start_dose",
+   "value": "500",
+   "unit": "mg",
+   "evidence": {
+    "start": 146,
+    "end": 152,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "a5",
+   "field": "weight",
+   "value": "88.20",
+   "unit": "kg",
+   "evidence": {
+    "start": 181,
+    "end": 188,
+    "text": "88.2 kg"
+   }
+  },
+  {
+   "id": "a6",
+   "field": "plan_name",
+   "value": "Retirement  Savings Plus",
+   "evidence": {
+    "start": 201,
+    "end": 224,
+    "text": "Retirement Savings Plus"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

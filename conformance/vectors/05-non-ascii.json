@@ -1,0 +1,106 @@
+{
+ "name": "05-non-ascii",
+ "description": "Offsets are UTF-8 bytes; spans must fall on character boundaries.",
+ "document": "Café « naïve » prices: €4,500 per year. 価格は $3,000 です。Dose: 5 mg — ≈ daily.",
+ "schema": {
+  "fields": {
+   "price_eur": {
+    "type": "integer",
+    "unit": "EUR"
+   },
+   "price_usd": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "dose": {
+    "type": "integer",
+    "unit": "mg"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "n1",
+   "field": "price_eur",
+   "value": "4500",
+   "unit": "EUR",
+   "evidence": {
+    "start": 27,
+    "end": 35,
+    "text": "€4,500"
+   }
+  },
+  {
+   "id": "n2",
+   "field": "price_usd",
+   "value": "3000",
+   "unit": "USD",
+   "evidence": {
+    "start": 56,
+    "end": 62,
+    "text": "$3,000"
+   }
+  },
+  {
+   "id": "n3",
+   "field": "dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 78,
+    "end": 82,
+    "text": "5 mg"
+   }
+  },
+  {
+   "id": "n4",
+   "field": "price_eur",
+   "value": "4500",
+   "unit": "EUR",
+   "evidence": {
+    "start": 4,
+    "end": 30
+   }
+  },
+  {
+   "id": "n5",
+   "field": "price_usd",
+   "value": "3000",
+   "unit": "USD",
+   "evidence": {
+    "start": 2.0,
+    "end": 9
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SPAN_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

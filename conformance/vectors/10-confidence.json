@@ -1,0 +1,94 @@
+{
+ "name": "10-confidence",
+ "description": "Below-threshold confidence flags the value; absent confidence does not.",
+ "document": "The fee is $40. The rate is 5%.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "rate": {
+    "type": "integer",
+    "unit": "%"
+   }
+  }
+ },
+ "policy": {
+  "min_confidence": 0.8
+ },
+ "candidates": [
+  {
+   "id": "f1",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": {
+    "start": 11,
+    "end": 14,
+    "text": "$40"
+   },
+   "confidence": 0.42
+  },
+  {
+   "id": "f2",
+   "field": "rate",
+   "value": "5",
+   "unit": "%",
+   "evidence": {
+    "start": 28,
+    "end": 30,
+    "text": "5%"
+   },
+   "confidence": 0
+  },
+  {
+   "id": "f3",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": {
+    "start": 11,
+    "end": 14,
+    "text": "$40"
+   },
+   "confidence": 0.9
+  },
+  {
+   "id": "f4",
+   "field": "rate",
+   "value": "5",
+   "unit": "%",
+   "evidence": {
+    "start": 28,
+    "end": 30,
+    "text": "5%"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "LOW_CONFIDENCE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "LOW_CONFIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

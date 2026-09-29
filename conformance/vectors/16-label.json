@@ -1,0 +1,329 @@
+{
+ "name": "16-label",
+ "description": "An invented drug-label excerpt exercising most codes together.",
+ "document": "DOSAGE: The recommended starting dose is 250 mg once daily. Increase by 250 mg every week, up to a maximum of 1,500 mg per day. Section (4.2) lists contraindications: do not use if eGFR is below 30 mL/min. Tablets: 250 mg and 500 mg.",
+ "schema": {
+  "fields": {
+   "start_dose": {
+    "type": "integer",
+    "unit": "mg",
+    "required": true
+   },
+   "increment": {
+    "type": "integer",
+    "unit": "mg"
+   },
+   "max_daily": {
+    "type": "integer",
+    "unit": "mg",
+    "comparator": "le",
+    "maximum": 3000
+   },
+   "egfr_floor": {
+    "type": "integer",
+    "unit": "mL/min",
+    "comparator": "lt"
+   },
+   "strength": {
+    "type": "integer",
+    "unit": "mg",
+    "multiple": true
+   },
+   "duration": {
+    "type": "integer",
+    "unit": "weeks",
+    "required": true
+   }
+  },
+  "units": {
+   "mL/min": {
+    "suffix": [
+     "mL/min"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "L1",
+   "field": "start_dose",
+   "value": "250",
+   "unit": "mg",
+   "evidence": {
+    "start": 41,
+    "end": 47,
+    "text": "250 mg"
+   }
+  },
+  {
+   "id": "L2",
+   "field": "start_dose",
+   "value": "500",
+   "unit": "mg",
+   "evidence": {
+    "start": 226,
+    "end": 232,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "L3",
+   "field": "increment",
+   "value": "250",
+   "unit": "mg",
+   "evidence": {
+    "start": 72,
+    "end": 78,
+    "text": "250 mg"
+   }
+  },
+  {
+   "id": "L4",
+   "field": "max_daily",
+   "value": "1500",
+   "unit": "mg",
+   "evidence": {
+    "start": 110,
+    "end": 118,
+    "text": "1,500 mg"
+   }
+  },
+  {
+   "id": "L5",
+   "field": "max_daily",
+   "value": "4000",
+   "unit": "mg",
+   "evidence": {
+    "start": 110,
+    "end": 118,
+    "text": "1,500 mg"
+   }
+  },
+  {
+   "id": "L6",
+   "field": "egfr_floor",
+   "value": "30",
+   "unit": "mL/min",
+   "evidence": {
+    "start": 195,
+    "end": 204,
+    "text": "30 mL/min"
+   }
+  },
+  {
+   "id": "L7",
+   "field": "egfr_floor",
+   "value": "null",
+   "unit": "mL/min",
+   "evidence": {
+    "start": 195,
+    "end": 204,
+    "text": "30 mL/min"
+   }
+  },
+  {
+   "id": "L8",
+   "field": "increment",
+   "value": "250mg",
+   "unit": "mg",
+   "evidence": {
+    "start": 72,
+    "end": 78,
+    "text": "250 mg"
+   }
+  },
+  {
+   "id": "L9",
+   "field": "strength",
+   "value": "250",
+   "unit": "mg",
+   "evidence": {
+    "start": 215,
+    "end": 221
+   }
+  },
+  {
+   "id": "L10",
+   "field": "strength",
+   "value": "500",
+   "unit": "mg",
+   "evidence": {
+    "start": 226,
+    "end": 232
+   }
+  },
+  {
+   "id": "L11",
+   "field": "frequency",
+   "value": "1",
+   "evidence": {
+    "start": 48,
+    "end": 58,
+    "text": "once daily"
+   }
+  },
+  {
+   "id": "L12",
+   "field": "increment",
+   "value": "250",
+   "unit": "mcg",
+   "evidence": {
+    "start": 72,
+    "end": 78,
+    "text": "250 mg"
+   }
+  },
+  {
+   "id": "L13",
+   "field": "duration",
+   "value": "1",
+   "unit": "weeks"
+  },
+  {
+   "id": "L14",
+   "field": "max_daily",
+   "value": "1500",
+   "unit": "mg",
+   "evidence": {
+    "start": 137,
+    "end": 140,
+    "text": "1,500 mg per day"
+   }
+  },
+  {
+   "id": "L15",
+   "field": "egfr_floor",
+   "value": "30",
+   "unit": "mL/min",
+   "evidence": {
+    "start": 195,
+    "end": 204,
+    "text": "30 mL per minute"
+   }
+  },
+  {
+   "id": "L16",
+   "field": "strength",
+   "value": "500",
+   "unit": "mg",
+   "evidence": {
+    "start": 112,
+    "end": 118,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "L17",
+   "field": "strength",
+   "value": "500",
+   "unit": "mg",
+   "evidence": {
+    "start": 112,
+    "end": 118
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "RANGE_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NULL_STRING_LITERAL"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "FIELD_UNKNOWN"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NO_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "EVIDENCE_REANCHORED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "EVIDENCE_REANCHORED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": [
+   {
+    "field": "duration",
+    "code": "REQUIRED_FIELD_MISSING"
+   }
+  ]
+ }
+}

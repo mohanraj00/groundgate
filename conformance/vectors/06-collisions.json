@@ -1,0 +1,144 @@
+{
+ "name": "06-collisions",
+ "description": "A number never matches inside another number, a malformed grouping, or a number cut off by the span.",
+ "document": "The threshold is $150,000. Contributions are barred at $252,0000 or more. Code 12345 applies. Mean change was -0.7 kg.",
+ "schema": {
+  "fields": {
+   "t": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "bar": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "code": {
+    "type": "integer"
+   },
+   "change": {
+    "type": "number",
+    "unit": "kg"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "k1",
+   "field": "t",
+   "value": "5",
+   "unit": "USD",
+   "evidence": {
+    "start": 17,
+    "end": 25,
+    "text": "$150,000"
+   }
+  },
+  {
+   "id": "k2",
+   "field": "t",
+   "value": "150",
+   "unit": "USD",
+   "evidence": {
+    "start": 17,
+    "end": 25,
+    "text": "$150,000"
+   }
+  },
+  {
+   "id": "k3",
+   "field": "bar",
+   "value": "252000",
+   "unit": "USD",
+   "evidence": {
+    "start": 55,
+    "end": 64,
+    "text": "$252,0000"
+   }
+  },
+  {
+   "id": "k4",
+   "field": "bar",
+   "value": "2520000",
+   "unit": "USD",
+   "evidence": {
+    "start": 55,
+    "end": 64,
+    "text": "$252,0000"
+   }
+  },
+  {
+   "id": "k5",
+   "field": "code",
+   "value": "123",
+   "evidence": {
+    "start": 79,
+    "end": 82
+   }
+  },
+  {
+   "id": "k6",
+   "field": "code",
+   "value": "12345",
+   "evidence": {
+    "start": 79,
+    "end": 84,
+    "text": "12345"
+   }
+  },
+  {
+   "id": "k7",
+   "field": "change",
+   "value": "-0.7",
+   "unit": "kg",
+   "evidence": {
+    "start": 110,
+    "end": 117,
+    "text": "-0.7 kg"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

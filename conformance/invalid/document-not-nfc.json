@@ -1,0 +1,18 @@
+{
+ "name": "document-not-nfc",
+ "description": "Documents must be NFC.",
+ "document": "Café fee is $40.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

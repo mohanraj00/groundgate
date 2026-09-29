@@ -1,0 +1,190 @@
+{
+ "name": "04-evidence",
+ "description": "Missing, invalid or unsupportive evidence is rejected.",
+ "document": "The limit is $7,000 and the fee is 30 dollars. Take 45 minutes.",
+ "schema": {
+  "fields": {
+   "limit": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "wait": {
+    "type": "integer",
+    "unit": "minutes"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "e1",
+   "field": "limit",
+   "value": "7000",
+   "unit": "USD"
+  },
+  {
+   "id": "e2",
+   "field": "fee",
+   "value": "30",
+   "unit": "USD"
+  },
+  {
+   "id": "e3",
+   "field": "limit",
+   "value": "7000",
+   "unit": "USD",
+   "evidence": {
+    "start": 13,
+    "end": 400
+   }
+  },
+  {
+   "id": "e4",
+   "field": "limit",
+   "value": "7000",
+   "unit": "USD",
+   "evidence": {
+    "start": 13,
+    "end": 13
+   }
+  },
+  {
+   "id": "e5",
+   "field": "limit",
+   "value": "7000",
+   "unit": "USD",
+   "evidence": {
+    "start": -1,
+    "end": 5
+   }
+  },
+  {
+   "id": "e6",
+   "field": "limit",
+   "value": "7000",
+   "unit": "USD",
+   "evidence": {
+    "start": 13,
+    "end": 19,
+    "text": "$7,000"
+   },
+   "search_region": {
+    "start": 10,
+    "end": 2
+   }
+  },
+  {
+   "id": "e7",
+   "field": "limit",
+   "value": "70000",
+   "unit": "USD",
+   "evidence": {
+    "start": 13,
+    "end": 19,
+    "text": "$7,000"
+   }
+  },
+  {
+   "id": "e8",
+   "field": "fee",
+   "value": "7000",
+   "unit": "USD",
+   "evidence": {
+    "start": 35,
+    "end": 45,
+    "text": "30 dollars"
+   }
+  },
+  {
+   "id": "e9",
+   "field": "wait",
+   "value": "30",
+   "unit": "minutes",
+   "evidence": {
+    "start": 35,
+    "end": 37,
+    "text": "30"
+   }
+  },
+  {
+   "id": "e10",
+   "field": "fee",
+   "value": "45",
+   "unit": "USD",
+   "evidence": {
+    "start": 52,
+    "end": 62,
+    "text": "45 minutes"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NO_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NO_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SPAN_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SPAN_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SPAN_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SPAN_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

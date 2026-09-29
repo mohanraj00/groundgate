@@ -1,0 +1,135 @@
+{
+ "name": "02-structure",
+ "description": "Malformed candidates are CANDIDATE_INVALID; unknown fields are FIELD_UNKNOWN.",
+ "document": "The fee is $40.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  "not an object",
+  {
+   "id": "s2",
+   "field": "fee"
+  },
+  {
+   "id": "s3",
+   "field": "fee",
+   "value": 40.5,
+   "unit": "USD"
+  },
+  {
+   "id": "s4",
+   "field": "fee",
+   "value": true,
+   "unit": "USD"
+  },
+  {
+   "id": "s5",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": {
+    "start": 11
+   }
+  },
+  {
+   "id": "s6",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "confidence": 1.5
+  },
+  {
+   "id": "s7",
+   "field": 3,
+   "value": "40"
+  },
+  {
+   "id": "s8",
+   "field": "tax",
+   "value": "40",
+   "unit": "USD",
+   "evidence": {
+    "start": 11,
+    "end": 14,
+    "text": "$40"
+   }
+  },
+  {
+   "id": "s9",
+   "field": "Fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": {
+    "start": 11,
+    "end": 14,
+    "text": "$40"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "FIELD_UNKNOWN"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "FIELD_UNKNOWN"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "name": "schema-unknown-type",
+ "description": "Unknown field types are invalid.",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "money"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

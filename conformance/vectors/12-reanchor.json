@@ -1,0 +1,131 @@
+{
+ "name": "12-reanchor",
+ "description": "When the cited span fails, exactly one other passing occurrence of the quote in the search region re-anchors the evidence.",
+ "document": "See section (5.1). Lactate above 5 mmol/L is a risk. Plasma levels are below 1 mcg/mL. Store 5 units; levels of 5 mcg/mL and 5 mcg/mL were both seen.",
+ "schema": {
+  "fields": {
+   "lactate": {
+    "type": "integer",
+    "unit": "mmol/L",
+    "comparator": "gt"
+   },
+   "plasma": {
+    "type": "integer",
+    "unit": "mcg/mL",
+    "comparator": "lt"
+   },
+   "seen": {
+    "type": "integer",
+    "unit": "mcg/mL"
+   }
+  },
+  "units": {
+   "mmol/L": {
+    "suffix": [
+     "mmol/L"
+    ]
+   },
+   "mcg/mL": {
+    "suffix": [
+     "mcg/mL"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "r1",
+   "field": "lactate",
+   "value": "5",
+   "unit": "mmol/L",
+   "evidence": {
+    "start": 13,
+    "end": 14,
+    "text": "5"
+   }
+  },
+  {
+   "id": "r2",
+   "field": "plasma",
+   "value": "1",
+   "unit": "mcg/mL",
+   "evidence": {
+    "start": 15,
+    "end": 16,
+    "text": "1"
+   }
+  },
+  {
+   "id": "r3",
+   "field": "seen",
+   "value": "5",
+   "unit": "mcg/mL",
+   "evidence": {
+    "start": 13,
+    "end": 14,
+    "text": "5"
+   }
+  },
+  {
+   "id": "r4",
+   "field": "seen",
+   "value": "5",
+   "unit": "mcg/mL",
+   "evidence": {
+    "start": 13,
+    "end": 14,
+    "text": "5"
+   },
+   "search_region": {
+    "start": 102,
+    "end": 120
+   }
+  },
+  {
+   "id": "r5",
+   "field": "lactate",
+   "value": "5",
+   "unit": "mmol/L",
+   "evidence": {
+    "start": 13,
+    "end": 14
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "EVIDENCE_REANCHORED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "EVIDENCE_REANCHORED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "EVIDENCE_REANCHORED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

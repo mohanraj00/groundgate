@@ -1,0 +1,17 @@
+{
+ "name": "schema-unknown-key",
+ "description": "Unknown keys are invalid.",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "fee": {
+    "units": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -1,0 +1,140 @@
+{
+ "name": "11-conflicts",
+ "description": "Surviving candidates that disagree on a single-valued field are all flagged.",
+ "document": "The 2025 limit is $7,000. The 2026 limit is $7,500. Strengths: 500 mg and 750 mg tablets.",
+ "schema": {
+  "fields": {
+   "limit_2025": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "limit_2026": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "strength": {
+    "type": "integer",
+    "unit": "mg",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "x1",
+   "field": "limit_2025",
+   "value": "7000",
+   "unit": "USD",
+   "evidence": {
+    "start": 18,
+    "end": 24,
+    "text": "$7,000"
+   }
+  },
+  {
+   "id": "x2",
+   "field": "limit_2025",
+   "value": "7500",
+   "unit": "USD",
+   "evidence": {
+    "start": 44,
+    "end": 50,
+    "text": "$7,500"
+   }
+  },
+  {
+   "id": "x3",
+   "field": "limit_2026",
+   "value": "7500",
+   "unit": "USD",
+   "evidence": {
+    "start": 44,
+    "end": 50,
+    "text": "$7,500"
+   }
+  },
+  {
+   "id": "x4",
+   "field": "limit_2026",
+   "value": "7500",
+   "unit": "USD",
+   "evidence": {
+    "start": 44,
+    "end": 50,
+    "text": "$7,500"
+   },
+   "source": "second-model"
+  },
+  {
+   "id": "x5",
+   "field": "limit_2026",
+   "value": "75000",
+   "unit": "USD",
+   "evidence": {
+    "start": 44,
+    "end": 50,
+    "text": "$7,500"
+   }
+  },
+  {
+   "id": "x6",
+   "field": "strength",
+   "value": "500",
+   "unit": "mg",
+   "evidence": {
+    "start": 63,
+    "end": 69
+   }
+  },
+  {
+   "id": "x7",
+   "field": "strength",
+   "value": "750",
+   "unit": "mg",
+   "evidence": {
+    "start": 74,
+    "end": 80
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

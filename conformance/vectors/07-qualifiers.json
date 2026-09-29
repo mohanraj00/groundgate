@@ -1,0 +1,217 @@
+{
+ "name": "07-qualifiers",
+ "description": "A qualifier that differs from the field's comparator flags the value for review.",
+ "document": "Tmax is reached in approximately 7 hours. The deduction phases out for income more than $126,000. You cannot contribute if income is $165,000 or more. Initiation is not recommended with an eGFR between 30 to 45 mL/minute. Up to 35% higher peaks were seen.",
+ "schema": {
+  "fields": {
+   "tmax": {
+    "type": "integer",
+    "unit": "hours"
+   },
+   "start": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "gt"
+   },
+   "start_eq": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "end": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge"
+   },
+   "end_eq": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "egfr_low": {
+    "type": "integer"
+   },
+   "egfr_high": {
+    "type": "integer"
+   },
+   "egfr_low_range": {
+    "type": "integer",
+    "comparator": "range"
+   },
+   "peak": {
+    "type": "integer",
+    "unit": "%"
+   },
+   "peak_le": {
+    "type": "integer",
+    "unit": "%",
+    "comparator": "le"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "q1",
+   "field": "tmax",
+   "value": "7",
+   "unit": "hours",
+   "evidence": {
+    "start": 33,
+    "end": 40,
+    "text": "7 hours"
+   }
+  },
+  {
+   "id": "q2",
+   "field": "start",
+   "value": "126000",
+   "unit": "USD",
+   "evidence": {
+    "start": 88,
+    "end": 96,
+    "text": "$126,000"
+   }
+  },
+  {
+   "id": "q3",
+   "field": "start_eq",
+   "value": "126000",
+   "unit": "USD",
+   "evidence": {
+    "start": 88,
+    "end": 96,
+    "text": "$126,000"
+   }
+  },
+  {
+   "id": "q4",
+   "field": "end",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": {
+    "start": 133,
+    "end": 141,
+    "text": "$165,000"
+   }
+  },
+  {
+   "id": "q5",
+   "field": "end_eq",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": {
+    "start": 133,
+    "end": 141,
+    "text": "$165,000"
+   }
+  },
+  {
+   "id": "q6",
+   "field": "egfr_low",
+   "value": "30",
+   "evidence": {
+    "start": 202,
+    "end": 204,
+    "text": "30"
+   }
+  },
+  {
+   "id": "q7",
+   "field": "egfr_high",
+   "value": "45",
+   "evidence": {
+    "start": 208,
+    "end": 210,
+    "text": "45"
+   }
+  },
+  {
+   "id": "q8",
+   "field": "egfr_low_range",
+   "value": "30",
+   "evidence": {
+    "start": 202,
+    "end": 204,
+    "text": "30"
+   }
+  },
+  {
+   "id": "q9",
+   "field": "peak",
+   "value": "35",
+   "unit": "%",
+   "evidence": {
+    "start": 228,
+    "end": 231,
+    "text": "35%"
+   }
+  },
+  {
+   "id": "q10",
+   "field": "peak_le",
+   "value": "35",
+   "unit": "%",
+   "evidence": {
+    "start": 228,
+    "end": 231,
+    "text": "35%"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

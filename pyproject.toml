@@ -24,6 +24,9 @@ classifiers = [
 ]
 keywords = ["llm", "extraction", "grounding", "verification", "langextract"]
 
+[project.scripts]
+groundgate = "groundgate.cli:main"
+
 [project.urls]
 Repository = "https://github.com/mohanraj00/groundgate"
 
@@ -34,6 +37,7 @@ dev = [
   "hypothesis>=6.100",
   "mypy>=1.10",
   "ruff>=0.6",
+  "rfc8785>=0.1.4",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -46,6 +50,9 @@ extend-exclude = ["spikes"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"conformance/build.py" = ["E501"]  # vector data reads better unwrapped
 
 [tool.mypy]
 strict = true

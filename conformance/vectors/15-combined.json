@@ -1,0 +1,60 @@
+{
+ "name": "15-combined",
+ "description": "Flags combine, in the order the spec lists them, and re-anchoring is reported last.",
+ "document": "Ref (2). Reserves of about $2 million were held. Reserves of about $2 million were held.",
+ "schema": {
+  "fields": {
+   "reserves": {
+    "type": "number",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": {
+  "min_confidence": 0.5
+ },
+ "candidates": [
+  {
+   "id": "b1",
+   "field": "reserves",
+   "value": "2",
+   "unit": "USD",
+   "evidence": {
+    "start": 27,
+    "end": 37,
+    "text": "$2 million"
+   },
+   "confidence": 0.1
+  },
+  {
+   "id": "b2",
+   "field": "reserves",
+   "value": "2",
+   "unit": "USD",
+   "evidence": {
+    "start": 4,
+    "end": 7,
+    "text": "$2 million."
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE",
+     "SCALE_WORD",
+     "LOW_CONFIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

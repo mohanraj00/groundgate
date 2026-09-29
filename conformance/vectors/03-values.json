@@ -1,0 +1,198 @@
+{
+ "name": "03-values",
+ "description": "Null literals, unparseable values, out-of-range values and unit mismatches are rejected before evidence is read.",
+ "document": "Adults take 500 mg twice daily. The fee is $1,250.",
+ "schema": {
+  "fields": {
+   "dose": {
+    "type": "integer",
+    "unit": "mg",
+    "minimum": 1,
+    "maximum": "2000"
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "note": {
+    "type": "string"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "v1",
+   "field": "dose",
+   "value": "null",
+   "unit": "mg",
+   "evidence": {
+    "start": 12,
+    "end": 18,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "v2",
+   "field": "fee",
+   "value": " N/A ",
+   "unit": "USD",
+   "evidence": {
+    "start": 43,
+    "end": 49,
+    "text": "$1,250"
+   }
+  },
+  {
+   "id": "v3",
+   "field": "dose",
+   "value": "five hundred",
+   "unit": "mg",
+   "evidence": {
+    "start": 12,
+    "end": 18,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "v4",
+   "field": "fee",
+   "value": "1,25",
+   "unit": "USD",
+   "evidence": {
+    "start": 43,
+    "end": 49,
+    "text": "$1,250"
+   }
+  },
+  {
+   "id": "v5",
+   "field": "dose",
+   "value": "500.5",
+   "unit": "mg",
+   "evidence": {
+    "start": 12,
+    "end": 18,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "v6",
+   "field": "note",
+   "value": "   ",
+   "evidence": {
+    "start": 0,
+    "end": 6,
+    "text": "Adults"
+   }
+  },
+  {
+   "id": "v7",
+   "field": "dose",
+   "value": "5000",
+   "unit": "mg",
+   "evidence": {
+    "start": 12,
+    "end": 18,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "v8",
+   "field": "dose",
+   "value": "0",
+   "unit": "mg",
+   "evidence": {
+    "start": 12,
+    "end": 18,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "v9",
+   "field": "dose",
+   "value": "500",
+   "unit": "mcg",
+   "evidence": {
+    "start": 12,
+    "end": 18,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "v10",
+   "field": "fee",
+   "value": "1250",
+   "evidence": {
+    "start": 43,
+    "end": 49,
+    "text": "$1,250"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NULL_STRING_LITERAL"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NULL_STRING_LITERAL"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "RANGE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "RANGE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

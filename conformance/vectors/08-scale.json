@@ -1,0 +1,78 @@
+{
+ "name": "08-scale",
+ "description": "A scale word after the value flags it; the value alone understates the quantity.",
+ "document": "The fund holds $2.5 million in reserves. The exemption is 4 lakh rupees. The fee is $900 per year.",
+ "schema": {
+  "fields": {
+   "reserves": {
+    "type": "number",
+    "unit": "USD"
+   },
+   "exemption": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "m1",
+   "field": "reserves",
+   "value": "2.5",
+   "unit": "USD",
+   "evidence": {
+    "start": 15,
+    "end": 27,
+    "text": "$2.5 million"
+   }
+  },
+  {
+   "id": "m2",
+   "field": "exemption",
+   "value": "4",
+   "unit": "INR",
+   "evidence": {
+    "start": 58,
+    "end": 71,
+    "text": "4 lakh rupees"
+   }
+  },
+  {
+   "id": "m3",
+   "field": "fee",
+   "value": "900",
+   "unit": "USD",
+   "evidence": {
+    "start": 84,
+    "end": 88,
+    "text": "$900"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

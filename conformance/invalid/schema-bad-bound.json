@@ -1,0 +1,17 @@
+{
+ "name": "schema-bad-bound",
+ "description": "Bounds must be decimals.",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "fee": {
+    "minimum": "ten"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

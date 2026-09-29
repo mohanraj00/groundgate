@@ -1,0 +1,90 @@
+{
+ "name": "09-verbatim",
+ "description": "Evidence text that differs from the cited span is flagged; whitespace and line-break hyphenation are not.",
+ "document": "The maximum is 2,000 mg once daily with the evening meal. The limit for a mar-\nried couple is $146,000.",
+ "schema": {
+  "fields": {
+   "max": {
+    "type": "integer",
+    "unit": "mg",
+    "comparator": "le"
+   },
+   "mfj": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "t1",
+   "field": "max",
+   "value": "2000",
+   "unit": "mg",
+   "evidence": {
+    "start": 15,
+    "end": 23,
+    "text": "2000 milligrams"
+   }
+  },
+  {
+   "id": "t2",
+   "field": "max",
+   "value": "2000",
+   "unit": "mg",
+   "evidence": {
+    "start": 15,
+    "end": 34,
+    "text": "2,000   mg once\ndaily"
+   }
+  },
+  {
+   "id": "t3",
+   "field": "mfj",
+   "value": "146000",
+   "unit": "USD",
+   "evidence": {
+    "start": 74,
+    "end": 102,
+    "text": "married couple is $146,000"
+   }
+  },
+  {
+   "id": "t4",
+   "field": "mfj",
+   "value": "146000",
+   "unit": "USD",
+   "evidence": {
+    "start": 94,
+    "end": 102,
+    "text": "$146,000 dollars"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

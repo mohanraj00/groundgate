@@ -1,0 +1,63 @@
+{
+ "name": "13-reanchor-off",
+ "description": "With policy reanchor false, a failing cited span is rejected even when the quote occurs elsewhere.",
+ "document": "See section (5.1). Lactate above 5 mmol/L is a risk.",
+ "schema": {
+  "fields": {
+   "lactate": {
+    "type": "integer",
+    "unit": "mmol/L",
+    "comparator": "gt"
+   }
+  },
+  "units": {
+   "mmol/L": {
+    "suffix": [
+     "mmol/L"
+    ]
+   }
+  }
+ },
+ "policy": {
+  "reanchor": false
+ },
+ "candidates": [
+  {
+   "id": "o1",
+   "field": "lactate",
+   "value": "5",
+   "unit": "mmol/L",
+   "evidence": {
+    "start": 13,
+    "end": 14,
+    "text": "5"
+   }
+  },
+  {
+   "id": "o2",
+   "field": "lactate",
+   "value": "5",
+   "unit": "mmol/L",
+   "evidence": {
+    "start": 33,
+    "end": 41,
+    "text": "5 mmol/L"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

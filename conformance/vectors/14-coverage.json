@@ -1,0 +1,83 @@
+{
+ "name": "14-coverage",
+ "description": "Required fields with no surviving candidate are reported; flagged candidates count as surviving.",
+ "document": "The 2025 limit is about $7,000. The fee is $40.",
+ "schema": {
+  "fields": {
+   "limit": {
+    "type": "integer",
+    "unit": "USD",
+    "required": true
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "required": true
+   },
+   "age": {
+    "type": "integer",
+    "required": true
+   },
+   "bonus": {
+    "type": "integer",
+    "unit": "USD",
+    "required": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "g1",
+   "field": "limit",
+   "value": "7000",
+   "unit": "USD",
+   "evidence": {
+    "start": 24,
+    "end": 30,
+    "text": "$7,000"
+   }
+  },
+  {
+   "id": "g2",
+   "field": "fee",
+   "value": "400",
+   "unit": "USD",
+   "evidence": {
+    "start": 43,
+    "end": 46,
+    "text": "$40"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": [
+   {
+    "field": "age",
+    "code": "REQUIRED_FIELD_MISSING"
+   },
+   {
+    "field": "bonus",
+    "code": "REQUIRED_FIELD_MISSING"
+   },
+   {
+    "field": "fee",
+    "code": "REQUIRED_FIELD_MISSING"
+   }
+  ]
+ }
+}
