@@ -1,0 +1,31 @@
+name: Bug
+description: A wrong decision, a crash, or docs that don't match what the code does.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A wrong decision is fastest to fix with the inputs that produce it. Trim them to the
+        smallest case that still shows the problem.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: The decision or output you got, what you expected, and the SPEC.md section you think applies.
+    validations:
+      required: true
+  - type: textarea
+    id: inputs
+    attributes:
+      label: Inputs
+      description: Document text, schema and candidates (or a short script), and the receipt you got.
+      render: python
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Versions
+      description: groundgate, Python and OS. `python -c "import groundgate; print(groundgate.__version__)"`
+    validations:
+      required: true

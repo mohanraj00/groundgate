@@ -3,6 +3,8 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## Unreleased
+
 ## 0.1.0 (2026-09-29)
 
 First release. Implements spec v0.1.
