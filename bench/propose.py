@@ -43,6 +43,7 @@ from langextract.core import base_model
 from langextract.core import types as lx_types
 
 HERE = Path(__file__).parent
+SET = HERE  # the benchmark set: gold, docs and runs (--set)
 HOME = str(Path.home())
 
 KIND = {
@@ -320,23 +321,26 @@ def main() -> None:
     ap.add_argument("--only", nargs="*", help="document ids")
     ap.add_argument("--effort", help="codex reasoning effort (low, medium, high)")
     ap.add_argument("--label", help='name in the results, e.g. "GPT-6 Luna (Medium)"')
+    ap.add_argument("--set", type=Path, default=HERE, help="benchmark set directory")
     args = ap.parse_args()
+    global SET
+    SET = args.set.resolve()
     label = args.label or args.model
 
-    out_dir = HERE / "runs" / safe(label) / str(args.buffer)
+    out_dir = SET / "runs" / safe(label) / str(args.buffer)
     out_dir.mkdir(parents=True, exist_ok=True)
     kw: dict[str, Any] = {}
     if args.provider == "gemini":
         kw["model_id"] = args.model
     else:
         kw["model"] = CLIModel(args.provider, args.model, args.workers, args.effort)
-    for path in sorted((HERE / "gold").glob("*.json")):
+    for path in sorted((SET / "gold").glob("*.json")):
         gold = json.loads(path.read_text(encoding="utf-8"))
         doc_id = gold["doc"]
         target = out_dir / f"{doc_id}.json"
         if target.exists() or (args.only and doc_id not in args.only):
             continue
-        text = (HERE / "docs" / f"{doc_id}.txt").read_text(encoding="utf-8")
+        text = (SET / "docs" / f"{doc_id}.txt").read_text(encoding="utf-8")
         print(f"{doc_id} ", end="", flush=True)
         t0 = time.time()
         if isinstance(kw.get("model"), CLIModel):

@@ -34,6 +34,7 @@ BENCH = HERE.parent
 GOLD = BENCH / "gold"
 DOCS = BENCH / "docs"
 CACHE = BENCH / ".cache"  # fetch.py's downloads
+SOURCES = BENCH / "sources.json"
 TOKEN = secrets.token_urlsafe(24)
 FACT_STATUS = {"draft", "confirmed", "rejected"}
 ABSENT_STATUS = {"draft", "confirmed"}
@@ -48,7 +49,7 @@ def source_link(doc_id: str) -> str | None:
     """Where to read the original: the cached PDF, or the label on DailyMed."""
     if (CACHE / f"{doc_id}.pdf").exists():
         return f"/source/{doc_id}"
-    sources = json.loads((BENCH / "sources.json").read_text(encoding="utf-8"))["sources"]
+    sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     src = next((s for s in sources if s["id"] == doc_id), None)
     if src is None:
         return None
@@ -196,7 +197,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=8765)
     ap.add_argument("--no-browser", action="store_true")
+    ap.add_argument("--set", type=Path, default=BENCH, help="benchmark set directory")
     args = ap.parse_args()
+    global GOLD, DOCS, CACHE, SOURCES
+    root = args.set.resolve()
+    GOLD, DOCS, CACHE = root / "gold", root / "docs", root / ".cache"
+    SOURCES = root / "sources.json"
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     url = f"http://127.0.0.1:{args.port}/"
     print(f"labeling app at {url}  (Ctrl-C to stop)", file=sys.stderr)

@@ -195,9 +195,16 @@ right after the number and does not look further.
 ```bash
 uv sync --group langextract
 uv run python bench/fetch.py                                   # optional: re-download and verify
-uv run --group langextract python bench/score.py               # rescore from the cached runs
+uv export --only-group langextract --no-emit-project --no-hashes -o /tmp/bench-req.txt
+uv run --isolated --no-project --with groundgate==0.1.0 --with-requirements /tmp/bench-req.txt \
+    python bench/score.py                                      # rescore from the cached runs
 uv run --group langextract python bench/propose.py --provider gemini --model <model id>  # new runs
 ```
 
-CI runs `score.py --check`, which fails if `RESULTS.md`, `results.json` or the charts differ
+These results are for spec 0.1, so they are scored with the released groundgate 0.1.0, not the
+code in `src/`. Later spec versions are measured on a separate set of documents. CI runs
+`score.py --check` the same way, which fails if `RESULTS.md`, `results.json` or the charts differ
 from what the cached runs and gold produce.
+
+The scripts take `--set <dir>` for another benchmark set with the same layout (`sources.json`,
+`docs/`, `gold/`, `runs/`). The default is this one.
