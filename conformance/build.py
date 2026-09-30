@@ -442,6 +442,51 @@ vector(
     ],
 )
 
+vector(
+    "07d-change-not-range",
+    'After a change word, "from X to Y" is a change: Y is the new value and not a range end; X '
+    "keeps the range reading (spec 0.2).",
+    "The limit increased from $70,000 to $72,000 for 2026. The dose was reduced from 20 mg to 10 mg. "
+    "Sessions run from 7 to 8 hours. The cap rose from $1 million to $2 million. Fees changed from "
+    "$5 through $9.",
+    {
+        "fields": {
+            "new_limit": USD,
+            "old_limit": USD,
+            "new_dose": {"type": "integer", "unit": "mg"},
+            "old_dose": {"type": "integer", "unit": "mg"},
+            "session_max": {"type": "integer", "unit": "hours"},
+            "new_cap": USD,
+            "new_fee": USD,
+        }
+    },
+    [
+        c("d1", "new_limit", "72000", "USD", q("$72,000")),
+        # the old value keeps its range flag, so taking it for the new one is caught
+        c(
+            "d2",
+            "old_limit",
+            "70000",
+            "USD",
+            q("$70,000"),
+            ("needs_verification", ["QUALIFIED_VALUE"]),
+        ),
+        c("d3", "new_dose", "10", "mg", q("10 mg")),
+        c("d4", "old_dose", "20", "mg", q("20 mg"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # no change word: a real range, flagged as before
+        c(
+            "d5",
+            "session_max",
+            "8",
+            "hours",
+            q("8 hours"),
+            ("needs_verification", ["QUALIFIED_VALUE"]),
+        ),
+        c("d6", "new_cap", "2", "USD", q("$2 million"), ("needs_verification", ["SCALE_WORD"])),
+        c("d7", "new_fee", "9", "USD", q("$9")),
+    ],
+)
+
 # ---------------------------------------------------------------- scale words
 vector(
     "08-scale",

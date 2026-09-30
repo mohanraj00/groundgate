@@ -123,6 +123,12 @@ _RANGE_PREV = re.compile(rf"\s*{_UNIT_WORD}(?:through|thru|to|-|\u2013)\s*\S{{0,
 _AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
 _AND_PREV = re.compile(rf"\s*{_UNIT_WORD}and\s*\S{{0,4}}?", re.I)
 _BETWEEN_END = re.compile(r"\bbetween\s*\S{0,4}?$", re.I)
+_CHANGE = (
+    "increased|decreased|raised|reduced|lowered|rose|fell|dropped|grew|changed|"
+    "increase|decrease|reduction|rise|drop|change"
+)
+# "increased from X to Y": Y is the new value, not a range end
+_CHANGE_FROM = re.compile(rf"\b(?:{_CHANGE})\s+from\s+\S{{0,4}}?$", re.I)
 
 
 def qualifiers(text: str, tok: Token) -> set[str]:
@@ -140,7 +146,11 @@ def qualifiers(text: str, tok: Token) -> set[str]:
     if (
         _RANGE_NEXT.match(rest)
         or (between_before and _AND_NEXT.match(rest))
-        or (prev and _RANGE_PREV.fullmatch(before))
+        or (
+            prev
+            and _RANGE_PREV.fullmatch(before)
+            and not _CHANGE_FROM.search(text[s0 : prev[-1].start])
+        )
         or (
             prev
             and _AND_PREV.fullmatch(before)

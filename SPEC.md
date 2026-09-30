@@ -176,6 +176,14 @@ than $7,000" and "may not exceed $19,000" are `le`, and "cannot be less than $1,
 In "not required if the balance is more than $600", the `not` is not directly before the
 qualifier, so the value stays `gt`.
 
+A change is not a range. When the first number of a range pair follows `from`, and a change word
+is directly before `from` (only whitespace between them), the second number is the new value and
+is not a range end. The change words are increased, decreased, raised, reduced, lowered, rose,
+fell, dropped, grew, changed, increase, decrease, reduction, rise, drop and change. The first
+number keeps its range reading: it is the old value, and a field that takes it should be looked
+at. So in "increased from $70,000 to $72,000", $72,000 is unqualified and $70,000 is a range.
+"run from 7 to 8 hours" has no change word, so both numbers stay a range.
+
 ### 4.3 Units
 
 Built-in unit table (a schema's `units` extends or overrides it):
