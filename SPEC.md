@@ -158,11 +158,23 @@ value and the nearest of the next number token, the end of the sentence, or 40 c
 | Comparator | Before the value | After the value |
 |---|---|---|
 | `approx` | approximately, about, around, nearly, roughly, generally, ~, ≈ | |
-| `gt` | more than, greater than, above, over, exceeds, exceeding, > | |
+| `gt` | more than, greater than, above, over, exceed, exceeds, exceeding, > | |
 | `lt` | less than, fewer than, below, under, < | |
 | `ge` | at least, minimum of, no less than, ≥ | or more, or greater, or older, or higher, or above |
 | `le` | up to, maximum of, at most, no more than, ≤ | or less, or fewer, or younger, or lower, or below |
 | `range` | between | the value is followed by `to`, `through`, `thru`, `-` or `–` and then another number token, or is preceded by such a connector and a number token; `and` counts as a connector only when `between` comes before the first number |
+
+Where two qualifiers overlap in the text, only the longer one applies: "no more than" is `le`,
+not also `gt`, and "no less than" is `ge`, not also `lt`.
+
+A negation directly before a `gt`, `lt`, `ge` or `le` qualifier in the *before* column inverts
+it: `gt` becomes `le`, `le` becomes `gt`, `lt` becomes `ge`, and `ge` becomes `lt`. The
+negations are `not`, `cannot` and `can't` (with `'` or `’`), optionally followed by `be`, with
+only whitespace between them and the qualifier, in the same sentence. The negation may lie
+outside the 40-code-point window as long as the qualifier is inside it. So "must not be more
+than $7,000" and "may not exceed $19,000" are `le`, and "cannot be less than $1,200" is `ge`.
+In "not required if the balance is more than $600", the `not` is not directly before the
+qualifier, so the value stays `gt`.
 
 ### 4.3 Units
 

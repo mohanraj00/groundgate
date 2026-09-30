@@ -332,6 +332,75 @@ vector(
     ],
 )
 
+vector(
+    "07b-negated-qualifiers",
+    "Only the longest of overlapping qualifiers applies, and a negation directly before gt, lt, ge "
+    "or le inverts it (spec 0.2).",
+    "Your modified AGI must be no more than $7,000. The credit applies if income is not more than "
+    "$40,000. Wages must not be more than $50,000. The deduction cannot be less than $1,200. Total "
+    "gifts may not exceed $19,000. The payment does not exceed $2,500 in any year. The fee is not "
+    "required if the balance is more than $600. Distributions must exceed $1,500. You need no less "
+    "than $900 in the account. Your balance can't be over $3,000. Claims can\u2019t be under $100.",
+    {
+        "fields": {
+            "agi_limit": {"type": "integer", "unit": "USD", "comparator": "le"},
+            "agi_eq": USD,
+            "income_limit": {"type": "integer", "unit": "USD", "comparator": "le"},
+            "wage_limit": {"type": "integer", "unit": "USD", "comparator": "le"},
+            "deduction_floor": {"type": "integer", "unit": "USD", "comparator": "ge"},
+            "gift_limit": {"type": "integer", "unit": "USD", "comparator": "le"},
+            "gift_eq": USD,
+            "payment_limit": {"type": "integer", "unit": "USD", "comparator": "le"},
+            "fee_threshold": {"type": "integer", "unit": "USD", "comparator": "le"},
+            "distribution_eq": USD,
+            "distribution_min": {"type": "integer", "unit": "USD", "comparator": "gt"},
+            "account_floor": {"type": "integer", "unit": "USD", "comparator": "ge"},
+            "balance_limit": {"type": "integer", "unit": "USD", "comparator": "le"},
+            "claim_floor": {"type": "integer", "unit": "USD", "comparator": "ge"},
+        }
+    },
+    [
+        # "no more than" is le only; "more than" inside it does not also apply
+        c("n1", "agi_limit", "7000", "USD", q("$7,000")),
+        c("n2", "agi_eq", "7000", "USD", q("$7,000"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        c("n3", "income_limit", "40000", "USD", q("$40,000")),
+        c("n4", "wage_limit", "50000", "USD", q("$50,000")),
+        c("n5", "deduction_floor", "1200", "USD", q("$1,200")),
+        c("n6", "gift_limit", "19000", "USD", q("$19,000")),
+        # "exceed" is gt, so "may not exceed" is a qualifier (le) an eq field does not allow
+        c(
+            "n7",
+            "gift_eq",
+            "19000",
+            "USD",
+            q("$19,000"),
+            ("needs_verification", ["QUALIFIED_VALUE"]),
+        ),
+        c("n8", "payment_limit", "2500", "USD", q("$2,500")),
+        # "not" earlier in the sentence is not directly before "more than": still gt
+        c(
+            "n9",
+            "fee_threshold",
+            "600",
+            "USD",
+            q("$600"),
+            ("needs_verification", ["QUALIFIED_VALUE"]),
+        ),
+        c(
+            "n10",
+            "distribution_eq",
+            "1500",
+            "USD",
+            q("$1,500"),
+            ("needs_verification", ["QUALIFIED_VALUE"]),
+        ),
+        c("n11", "distribution_min", "1500", "USD", q("$1,500")),
+        c("n12", "account_floor", "900", "USD", q("$900")),
+        c("n13", "balance_limit", "3000", "USD", q("$3,000")),
+        c("n14", "claim_floor", "100", "USD", q("$100")),
+    ],
+)
+
 # ---------------------------------------------------------------- scale words
 vector(
     "08-scale",
