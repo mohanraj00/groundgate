@@ -86,7 +86,8 @@ read the span as 29, which its own spec forbids. It's fixed, and three wrong alt
 longer get through.
 
 Tables and planted-error results: [bench/RESULTS.md](bench/RESULTS.md). Method and caveats:
-[bench/README.md](bench/README.md).
+[bench/README.md](bench/README.md). The write-up, with what got through and why:
+[Grounding is a contract, not a citation](https://mohanraj00.github.io/tech/grounding-is-a-contract/).
 
 ## Quickstart
 
