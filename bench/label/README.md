@@ -10,6 +10,11 @@ uv run python bench/label/app.py
 It opens `http://127.0.0.1:8765`. Pick a document from the list at the top. The document is on
 the left and its fields are on the right.
 
+Tables lose their layout in the text: an IRS table comes out as its row labels, then its
+values. **Original ↗** in the header opens the source PDF, or the label on DailyMed (which may
+be a newer version than the pinned one), so you can read the table as printed. Decide from the
+original, then cite the place in the text.
+
 ## What to decide
 
 For each field, the draft gives either one or more values or says the field is not in the

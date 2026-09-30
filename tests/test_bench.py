@@ -188,6 +188,25 @@ def test_save_rules(served: tuple[int, dict], tmp_path: Path) -> None:
     assert saved["facts"][0]["unit"] == "mg"  # units always come from the field
 
 
+def test_original_document_opens_without_the_token(
+    served: tuple[int, dict], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    port, _ = served
+    monkeypatch.setattr(app, "CACHE", tmp_path)
+    assert call(port, "GET", "/api/doc/d", token=app.TOKEN)[1]["source"] is None
+    (tmp_path / "d.pdf").write_bytes(b"%PDF-1.4")
+    assert call(port, "GET", "/api/doc/d", token=app.TOKEN)[1]["source"] == "/source/d"
+    conn = http.client.HTTPConnection("127.0.0.1", port)
+    conn.request("GET", "/source/d")
+    r = conn.getresponse()
+    assert (r.status, r.getheader("Content-Type"), r.read()) == (
+        200,
+        "application/pdf",
+        b"%PDF-1.4",
+    )
+    assert call(port, "GET", "/source/other")[0] == 403
+
+
 # ---------------------------------------------------------------------------- planting
 
 

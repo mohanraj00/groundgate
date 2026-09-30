@@ -25,6 +25,7 @@ header { display: flex; gap: 12px; align-items: center; padding: 8px 14px;
   border-bottom: 1px solid var(--line); flex-wrap: wrap; }
 header select { font: inherit; padding: 3px 6px; max-width: 320px; }
 header .grow { flex: 1; }
+header a { color: var(--draft); }
 .muted { color: var(--muted); }
 button { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--fg);
   border-radius: 6px; padding: 3px 9px; cursor: pointer; }
@@ -74,6 +75,7 @@ kbd { font: 11px ui-monospace, monospace; border: 1px solid var(--line); border-
   <strong>Gold check</strong>
   <select id="pick" aria-label="Document"></select>
   <span id="progress" class="muted"></span>
+  <a id="source" target="_blank" rel="noopener" hidden>Original ↗</a>
   <span class="grow"></span>
   <span id="help" class="muted"><kbd>j</kbd>/<kbd>k</kbd> move · <kbd>y</kbd> correct ·
     <kbd>n</kbd> wrong · <kbd>a</kbd> confirm absent · select text + <kbd>+</kbd> add</span>
@@ -141,7 +143,8 @@ async function loadList(select) {
 
 async function open(id) {
   if (dirty) await save(false);
-  const {gold, text} = await api(`/api/doc/${encodeURIComponent(id)}`);
+  const {gold, text, source} = await api(`/api/doc/${encodeURIComponent(id)}`);
+  $("#source").hidden = !source; if (source) $("#source").href = source;
   state = {id, gold, text, idx: buildIndex(text)};
   focus = null; seconds = 0; dirty = false; expanded.clear();
   render(); moveFocus(1);

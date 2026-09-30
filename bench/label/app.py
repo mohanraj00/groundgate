@@ -8,7 +8,8 @@ bench/gold/<id>.json. It never shows model output, so the labels stay blind to w
 benchmarked models extracted.
 
 The server binds to 127.0.0.1 only, and every API call must carry a token that exists only in
-the page it served, so other sites in your browser cannot read or write the gold.
+the page it served, so other sites in your browser cannot read or write the gold. The header
+links to the original document, because flattened tables are hard to read as text.
 """
 
 from __future__ import annotations
@@ -32,6 +33,7 @@ HERE = Path(__file__).parent
 BENCH = HERE.parent
 GOLD = BENCH / "gold"
 DOCS = BENCH / "docs"
+CACHE = BENCH / ".cache"  # fetch.py's downloads
 TOKEN = secrets.token_urlsafe(24)
 FACT_STATUS = {"draft", "confirmed", "rejected"}
 ABSENT_STATUS = {"draft", "confirmed"}
@@ -40,6 +42,20 @@ LOCK = threading.Lock()
 
 def doc_ids() -> list[str]:
     return sorted(p.stem for p in GOLD.glob("*.json"))
+
+
+def source_link(doc_id: str) -> str | None:
+    """Where to read the original: the cached PDF, or the label on DailyMed."""
+    if (CACHE / f"{doc_id}.pdf").exists():
+        return f"/source/{doc_id}"
+    sources = json.loads((BENCH / "sources.json").read_text(encoding="utf-8"))["sources"]
+    src = next((s for s in sources if s["id"] == doc_id), None)
+    if src is None:
+        return None
+    if src["kind"] == "fda":
+        setid = src["url"].rsplit("/", 1)[-1].removesuffix(".xml")
+        return f"https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid={setid}"
+    return str(src["url"])
 
 
 def summary(gold: dict[str, Any]) -> dict[str, Any]:
@@ -103,9 +119,11 @@ class Handler(BaseHTTPRequestHandler):
     def _json(self, code: int, obj: Any) -> None:
         self._send(code, json.dumps(obj, ensure_ascii=False).encode(), "application/json")
 
+    def _local(self) -> bool:
+        return self.headers.get("Host", "").startswith("127.0.0.1:")
+
     def _authorized(self) -> bool:
-        host = self.headers.get("Host", "")
-        return self.headers.get("X-Label-Token") == TOKEN and host.startswith("127.0.0.1:")
+        return self.headers.get("X-Label-Token") == TOKEN and self._local()
 
     def _doc(self) -> str | None:
         doc_id = self.path.rsplit("/", 1)[-1]
@@ -116,6 +134,12 @@ class Handler(BaseHTTPRequestHandler):
             page = (HERE / "label.html").read_text(encoding="utf-8").replace("__TOKEN__", TOKEN)
             self._send(HTTPStatus.OK, page.encode(), "text/html; charset=utf-8")
             return
+        if self.path.startswith("/source/") and self._local() and (doc_id := self._doc()):
+            # opened in a new tab, so no token; it is a public document
+            pdf = CACHE / f"{doc_id}.pdf"
+            if pdf.exists():
+                self._send(HTTPStatus.OK, pdf.read_bytes(), "application/pdf")
+                return
         if not self._authorized():
             self._json(HTTPStatus.FORBIDDEN, {"error": "forbidden"})
             return
@@ -125,7 +149,7 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path.startswith("/api/doc/") and (doc_id := self._doc()):
             gold = json.loads((GOLD / f"{doc_id}.json").read_text(encoding="utf-8"))
             text = (DOCS / f"{doc_id}.txt").read_text(encoding="utf-8")
-            self._json(HTTPStatus.OK, {"gold": gold, "text": text})
+            self._json(HTTPStatus.OK, {"gold": gold, "text": text, "source": source_link(doc_id)})
         else:
             self._json(HTTPStatus.NOT_FOUND, {"error": "not found"})
 
