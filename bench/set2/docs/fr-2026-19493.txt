@@ -1,0 +1,259 @@
+Federal Register / Vol. 91, No. 183 / Wednesday, September 23, 2026 / Rules and Regulations
+
+60319
+
+the process for implementing moratoria
+on agent and broker registrations with
+the Federally-facilitated Exchanges in
+certain circumstances in accordance
+with authority conferred by Congress
+under sections 1312(e), 1321, and
+1313(a)(5)(A) of the Affordable Care Act.
+Current data, as discussed in more
+detail in section II.B of this IFC,
+supports additional safeguards to codify
+the authority to impose a temporary
+moratorium on agents and brokers is
+appropriate. At this time, CMS has
+determined additional regulation on
+web-brokers is unnecessary. Agents and
+brokers generally enter into 1-year
+Exchange agreements with CMS that go
+into effect beginning with the applicable
+plan year’s Open Enrollment period,
+and those Exchange agreements
+automatically terminate prior to the
+following plan year’s Open Enrollment
+Period. Prior to entering into Exchange
+agreements, agents and brokers must
+complete annual registration, which
+includes creating a CMS account,
+passing identity proofing,^6 accessing
+and setting up a profile for registration,
+completing required training, and
+executing Exchange agreements for the
+plan year. Section 155.220(o) provides
+that HHS may impose temporary
+moratoria on the registration of certain
+agents and brokers seeking to enter into
+Exchange agreements when CMS
+determines that certain agents’ or
+brokers’ conduct poses an unacceptable
+risk to the accuracy of the Federally-
+facilitated Exchanges’ eligibility
+determinations, operations, applicants,
+or enrollees, or Federally-facilitated
+Exchange information technology
+systems, including risk related to
+noncompliance with the standards of
+conduct under § 155.220(j) and the
+privacy and security standards under
+§ 155.260. Specifically, HHS may
+impose a temporary moratorium
+pausing certain agent and broker
+registrations with the Exchange under
+§ 155.220(d)(1) for agents and brokers
+that do not have a current Plan Year
+registration with the Federally-
+facilitated Exchanges at the time the
+moratorium is effective. Agents and
+brokers that are subject to a moratorium
+would be prevented from completing
+training and registration, including
+executing the Exchange agreements,
+until the moratorium is lifted. A
+moratorium under § 155.220(o) does not
+prevent registration with the Federally-
+
+6 National Institute of Standards and Technology
+(NIST) defines ‘‘identity proofing’’ as ‘‘the process
+of establishing a relationship between a subject
+accessing online services and a real-life person to
+some degree of assurance.’’ NIST Special
+Publication 800–63A; https://pages.nist.gov/800-63-
+4/sp800-63a/introduction/.
+
+facilitated Exchanges for agents and
+brokers that do not have a current Plan
+Year registration with the Federally-
+facilitated Exchanges at the time a
+moratorium is effective due to (1) a
+termination under § 155.220(g) or (2) a
+denial of the right to enter into
+Exchange agreements with the
+Federally-facilitated Exchanges in future
+years under § 155.220(k)(1)(i) when
+such a termination or denial is
+subsequently reversed, or the agent’s or
+broker’s Exchange agreements are
+reinstated while the moratorium is in
+place. When imposing a moratorium on
+registrations with the Federally-
+facilitated Exchanges for agents and
+brokers, CMS will publish a notice in
+the Federal Register indicating the date
+on which the moratorium on
+registrations will take effect, the reasons
+for imposing the moratorium on
+registrations, and the duration of the
+moratorium.
+
+Agents and brokers who help
+
+consumers enroll in individual QHPs
+typically earn a per-member-per-month
+commission from health insurance
+issuers for each active enrollment,
+meaning their compensation is tied
+directly to the number of consumers
+they enroll in plans. Because more
+enrollments and plan switches translate
+into more compensation (including
+commission income, bonuses, etc.),
+some unscrupulous agents and brokers
+have a financial incentive to create
+enrollments for fictitious persons, enroll
+consumers without consent, sign them
+up for coverage they did not request, or
+switch them between plans to generate
+additional compensation.
+
+CMS has made strides in
+
+strengthening program integrity across
+the Federally-facilitated Exchanges, as
+discussed in detail in the Patient
+Protection and Affordable Care Act,
+HHS Notice of Benefit and Payment
+Parameters for 2027; and Basic Health
+Program (91 FR 29526, 29530). The
+addition of § 155.220(o), which
+establishes a process for HHS to
+implement a temporary moratorium on
+certain agent and broker registrations,
+supplements and complements HHS’
+existing enforcement options under
+§ 155.220(g) to terminate Exchange
+agreements and under 155.220(k)(3) to
+immediately suspend an individual
+agent’s or broker’s ability to transact
+information with the Exchanges in
+certain circumstances. Specifically,
+§ 155.220(o) authorizes HHS to
+implement temporary moratoria on
+registration when HHS agent or broker,
+or web-broker conduct systemically
+poses an unacceptable risk to the
+accuracy of the Exchange’s eligibility
+determinations, Exchange operations,
+
+applicants, or enrollees, or Exchange
+information technology systems. Section
+155.220(g) permit HHS to address risks
+presented by individual agents, brokers,
+or web-brokers, § 155.220(o) provides a
+broader mechanism to temporarily
+restrict certain agent and broker
+registrations at a systemic level when
+existing deemed by HHS insufficient to
+address identified vulnerabilities
+associated with agent and broker access
+to Federal Exchange systems,
+enrollment functions, and consumer.
+This authority enables HHS to take
+prompt, program-wide action, to protect
+applicants, enrollees, Federally-
+facilitated Exchange operations, and
+Federal Exchange systems while the
+identified vulnerabilities are addressed.
+As discussed in more detail in section
+II.B of this IFC, even with efforts to
+enhance program integrity across the
+Federally-facilitated Exchanges, CMS
+has observed a substantial increase in
+allegations and confirmed instances of
+unauthorized facilitated enrollments on
+the Federally-facilitated Exchanges and
+other non-compliant practices involving
+agents and brokers. From 2023 through
+2025, CMS received over 624,000
+consumer complaints attesting to
+unauthorized enrollments or
+unauthorized plan switching in the
+Federally-facilitated Exchanges by
+agents or brokers and confirmed by
+issuer review; approximately 300,000 of
+the 624,000 consumer complaints were
+received in 2025 alone.^7 We further
+discussed these concerns in the 2027
+Notice of Benefit and Payment
+Parameters (91 FR 29526) where we
+stated that overall, HHS observed an
+increase in the number of unauthorized
+enrollment complaints made in 2025
+compared to 2024 while acknowledging
+that data from the beginning of 2026
+already demonstrates a substantial
+decrease. However, as discussed
+throughout this IFC, we continue to be
+concerned about the unauthorized
+enrollments and believe that more
+action is needed to address the issue at
+this time. Federal investigations have
+shown that some Federally-facilitated
+Exchange eligibility applications
+submitted by agents and brokers include
+
+7 See GAO. (2025 Dec.) Patient Protection and
+
+Affordable Care Act: Preliminary Results from
+Ongoing Review Suggest Fraud Risks in the
+Advance Premium Tax Credit Persist, GAO–26–
+108742. https://www.gao.gov/products/gao-26-
+108742 (explaining, ‘‘Based on our preliminary
+analyses, we identified at least 30,000 applications
+in plan year 2023 and at least 160,000 applications
+in plan year 2024 that had likely unauthorized
+changes.’’). See also GAO. (2026 July) Health
+Insurance Marketplaces: CMS Needs Stronger
+Controls to Prevent Unauthorized Actions by
+Agents and Brokers, GAO–26–108297. https://
+www.gao.gov/products/gao-26-108297.
+
+VerDate Sep<11>2014 15:59 Sep 22, 2026 Jkt 268001 PO 00000 Frm 00021 Fmt 4700 Sfmt 4700 E:\FR\FM\23SER1.SGM 23SER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+B
+X
+N
+H
+B
+8
+K
+S
+D
+n
+o
+
+r
+e
+t
+t
+o
+
+l

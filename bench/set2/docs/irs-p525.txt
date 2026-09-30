@@ -1,0 +1,700 @@
+forms of compensation such as fringe benefits
+and stock options.
+
+You should receive a Form W-2 from your
+employer or former employer showing the pay
+you received for your services. Include all your
+pay on Form 1040 or 1040-SR, line 1a, even if
+you don’t receive Form W-2, or you receive a
+Form W-2 that doesn’t include all pay that
+should be included on the Form W-2.
+
+If you performed services, other than as an
+independent contractor, and your employer
+didn’t withhold social security and Medicare
+taxes from your pay, you must file Form 8919,
+Uncollected Social Security and Medicare Tax
+on Wages, with your Form 1040 or 1040-SR.
+These wages must be included on Form 1040
+or 1040-SR, line 1g. See Form 8919 for more
+information.
+
+Fair market value (FMV). The FMV of an
+item of property is the price at which the item
+would change hands between a willing buyer
+and a willing seller, neither being required to
+buy or sell and both having reasonable knowl-
+edge of the relevant facts.
+
+Childcare providers. If you provide childcare,
+either in the child’s home or in your home or
+other place of business, the pay you receive
+must be included in your income. If you’re not
+an employee, you’re probably self-employed
+and must include payments for your services on
+Schedule C (Form 1040), Profit or Loss From
+Business. You generally aren’t an employee un-
+less you’re subject to the will and control of the
+person who employs you as to what you’re to do
+and how you’re to do it.
+
+Babysitting. If you babysit for relatives or
+neighborhood children, whether on a regular
+basis or only periodically, the rules for childcare
+providers apply to you.
+
+Self-employment tax. Whether you’re an
+employee or a self-employed person, your in-
+come could be subject to self-employment tax.
+See the Instructions for Schedule C (Form
+1040) and the Instructions for Schedule SE
+(Form 1040) if you’re self-employed. Also, see
+Pub. 926 for more information.
+
+Bankruptcy. If you filed for bankruptcy under
+chapter 11 of the Bankruptcy Code, you must
+allocate your wages and withheld income tax.
+Your Form W-2 will show your total wages and
+withheld income tax for the year. On your tax re-
+turn, you report the wages and withheld income
+tax for the period before you filed for bank-
+ruptcy. Your bankruptcy estate reports the wa-
+ges and withheld income tax for the period after
+you filed for bankruptcy. If you receive other in-
+formation returns (such as Form 1099-DIV or
+Form 1099-INT) that report gross income to
+you, rather than to the bankruptcy estate, you
+must allocate that income.
+
+The only exception is for purposes of figur-
+ing your self-employment tax if you’re self-em-
+ployed. For that purpose, you must take into ac-
+count all your self-employment income for the
+year from services performed both before and
+after the beginning of the case.
+
+You must file a statement with your income
+tax return stating you filed a chapter 11 bank-
+ruptcy case. The statement must show the
+
+Publication 525 (2025)
+
+allocation and describe the method used to
+make the allocation. For a sample of this state-
+information, see Notice
+ment and other
+I.R.B. 596, available at
+2006-83, 2006-40
+For
+IRS.gov/irb/2006-40_IRB#NOT-2006-83.
+additional information on bankruptcy, see Pub.
+908.
+
+Miscellaneous
+Compensation
+
+This section discusses many types of employee
+compensation.
+
+Advance commissions and other earnings.
+If you receive advance commissions or other
+amounts for services to be performed in the fu-
+ture and you’re a cash-method taxpayer, you
+must include these amounts in your income in
+the year you receive them.
+
+If you repay unearned commissions or other
+amounts in the same year you receive them, re-
+duce the amount of unearned commissions in-
+cluded in your income by the repayment. If you
+repay them in a later tax year, you can deduct
+the repayment as an itemized deduction on your
+Schedule A (Form 1040), Other Itemized De-
+ductions, or you may be able to take a credit for
+that year. See Repayments, later.
+
+Allowances and reimbursements. If you re-
+ceive travel, transportation, or other business
+expense allowances or reimbursements from
+your employer, see Pub. 463.
+
+Back pay awards. Include in income amounts
+you’re awarded in a settlement or judgment for
+back pay. These include payments made to you
+for damages, unpaid life insurance premiums,
+and unpaid health insurance premiums. They
+should be reported to you by your employer on
+Form W-2.
+
+Bonuses and awards. Bonuses or awards
+(cash, goods, services, etc.) you receive for out-
+standing work are included in your income and
+should be shown on your Form W-2. These in-
+clude prizes such as vacation trips for meeting
+sales goals. If the prize or award you receive is
+goods or services, you must include the FMV of
+the goods or services in your income. However,
+if your employer merely promises to pay you a
+bonus or award at some future time, it isn’t taxa-
+ble until you receive it or it’s made available to
+you.
+
+Employee achievement award. If you re-
+ceive tangible personal property (other than
+cash, a gift certificate, or an equivalent item) as
+an award for length of service or safety achieve-
+ment, you must generally exclude its value from
+your income. However, the amount you can ex-
+clude is limited to your employer’s cost and
+can’t be more than $1,600 ($400 for awards that
+aren’t qualified plan awards) for all such awards
+you receive during the year. Your employer can
+tell you whether your award is a qualified plan
+award. Your employer must make the award as
+part of a meaningful presentation, under condi-
+tions and circumstances that don’t create a sig-
+nificant likelihood of it being disguised pay.
+
+However, the exclusion doesn’t apply to the
+
+following awards.
+
+• A length-of-service award if you received it
+for less than 5 years of service or if you re-
+ceived another length-of-service award
+during the year or the previous 4 years.
+• A safety achievement award if you’re a
+
+manager, administrator, clerical employee,
+or other professional employee or if more
+than 10% of eligible employees previously
+received safety achievement awards dur-
+ing the year.
+
+Example 2. You received three employee
+achievement awards during the year: a nonqua-
+lified plan award of a watch valued at $250, and
+two qualified plan awards of a stereo valued at
+$1,000 and a set of golf clubs valued at $500.
+Assuming that the requirements for qualified
+plan awards are otherwise satisfied, each award
+by itself would be excluded from income. How-
+ever, because the $1,750 total value of the
+awards is more than $1,600, you must include
+$150 ($1,750 − $1,600) in your income.
+
+Differential wage payments. This is any pay-
+ment made by an employer to an individual for
+any period during which the individual is, for a
+period of more than 30 days, an active duty
+member of the uniformed services and repre-
+sents all or a portion of the wages the individual
+would have received from the employer for that
+period. These payments are treated as wages
+and are subject to income tax withholding but
+not Federal Insurance Contribution Act (FICA)
+or Federal Unemployment Tax Act (FUTA) tax.
+The payments are reported as wages on Form
+W-2.
+
+Government
+allowances.
+cost-of-living
+Most payments received by U.S. Government
+civilian employees for working abroad are taxa-
+ble. However, certain cost-of-living allowances
+are tax free. Pub. 516 explains the tax treatment
+of allowances, differentials, and other special
+pay you receive for employment abroad.
+
+Nonqualified deferred compensation plans.
+Your employer will report to you the total amount
+of deferrals for the year under a nonqualified de-
+ferred compensation plan. This amount
+is
+shown in box 12 of Form W-2, using code Y.
+This amount isn’t included in your income.
+
+However, if at any time during the tax year,
+the plan fails to meet certain requirements, or
+isn’t operated under those requirements, all
+amounts deferred under the plan for the tax
+year and all preceding tax years are included in
+your income for the current year. This amount is
+included in your wages shown in box 1 of Form
+W-2. It’s also shown in box 12 of Form W-2, us-
+ing code Z.
+
+Nonqualified deferred compensation plans
+of nonqualified entities. In most cases, any
+compensation deferred under a nonqualified
+deferred compensation plan of a nonqualified
+entity is included in gross income when there is
+no substantial risk of forfeiture of the rights to
+such compensation. For this purpose, a non-
+qualified entity is one of the following.
+
+1. A foreign corporation, unless substantially
+
+all of its income is:
+
+3
+Table 1. Cost of $1,000 of
+Group-Term Life Insurance for 1
+Month
+
+Age
+
+Cost
+
+Under 25
+25 through 29 . . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . $ 0.05
+0.06
+
+30 through 34
+35 through 39
+
+. . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . .
+
+40 through 44
+45 through 49
+
+. . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . .
+
+50 through 54
+55 through 59
+
+. . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . .
+
+60 through 64
+65 through 69
+
+. . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . .
+
+0.08
+0.09
+
+0.10
+0.15
+
+0.23
+0.43
+
+0.66
+1.27
+
+70 and above . . . . . . . . . . . . . .
+
+2.06
+
+Example 3. You’re 51 years old and work
+for two employers, Green Company and Maple
+Company. Both employers provide group-term
+life insurance coverage for you for the entire
+year. Your coverage is $35,000 with Green
+Company and $45,000 with Maple Company.
+You pay premiums of $4.15 a month under the
+Maple Company group plan. You figure the
+amount to include in your income as follows.
+
+• Provides an amount of insurance to each
+
+employee based on a formula that prevents
+individual selection.
+
+Permanent benefits. If your group-term
+life insurance policy includes permanent bene-
+fits, such as a paid-up or cash surrender value,
+you must include in your income, as wages, the
+cost of the permanent benefits minus the
+amount you pay for them. Your employer should
+be able to tell you the amount to include in your
+income.
+
+Accidental death benefits. Insurance that
+provides accidental or other death benefits but
+doesn’t provide general death benefits (for ex-
+ample, travel insurance) isn’t group-term life in-
+surance.
+
+Former employer. If your former employer
+provided more than $50,000 of group-term life
+insurance coverage during the year, the amount
+included in your income is reported as wages in
+box 1 of Form W-2. Also, it’s shown separately
+in box 12 with code C. Box 12 will also show the
+amount of uncollected social security and Medi-
+care taxes on the excess coverage, with codes
+M and N. You must pay these taxes with your in-
+come tax return. Include them on Schedule 2
+(Form 1040), line 13. For more information, see
+the Instructions for Form 1040.
+
+life
+
+Two or more employers. Your exclusion for
+employer-provided group-term
+insurance
+coverage can’t exceed the cost of $50,000 of
+coverage, whether the insurance is provided by
+a single employer or multiple employers. If two
+or more employers provide insurance coverage
+that totals more than $50,000, the amounts re-
+ported as wages on your Forms W-2 won’t be
+correct. You must figure how much to include in
+your income. Reduce the amount you figure by
+any amount reported in box 12 of Form W-2,
+with code C; add the result to the wages repor-
+ted in box 1; and report the total on your return.
+
+Figuring the taxable cost. Use the following
+worksheet to figure the amount to include in
+your income.
+
+If you pay any part of the cost of the insur-
+ance, your entire payment reduces, dollar for
+dollar, the amount you would otherwise include
+in your income. However, you can’t reduce the
+amount to include in your income by:
+
+• Payments for coverage in a different tax
+
+year;
+
+• Payments for coverage through a cafeteria
+plan, unless the payments are after-tax
+contributions; or
+
+• Payments for coverage not taxed to you
+
+because of the exceptions discussed later
+under Entire cost excluded.
+
+Worksheet 1. Figuring the Cost of
+Group-Term Life Insurance To
+Include in Income (Keep for Your
+Records)
+
+1. Enter the total amount of
+your insurance coverage
+from your
+employer(s) . . . . . . . . . . . 1.
+
+2.
+
+Limit on exclusion for
+employer-provided
+group-term life insurance
+coverage . . . . . . . . . . . . . 2. 50,000
+
+3. Subtract line 2 from
+
+line 1 . . . . . . . . . . . . . . . . 3.
+
+4. Divide line 3 by $1,000.
+Figure to the nearest
+tenth . . . . . . . . . . . . . . . . 4.
+
+5. Go to Table 1. Using your
+age on the last day of the
+tax year, find your age group
+in the left column, and enter
+the cost from the column on
+the right for your age
+group . . . . . . . . . . . . . . . 5.
+
+6. Multiply line 4 by
+
+line 5 . . . . . . . . . . . . . . . . 6.
+
+7. Enter the number of full
+
+months of coverage at this
+cost . . . . . . . . . . . . . . . . . 7.
+
+8. Multiply line 6 by
+
+line 7 . . . . . . . . . . . . . . . . 8.
+
+9. Enter the
+
+premiums you
+paid per
+month . . . . . . . . 9.
+
+10. Enter the number
+of months you
+paid the
+premiums . . . . . 10.
+
+11. Multiply line 9 by
+
+line 10 . . . . . . . . . . . . . . .
+
+11.
+
+12. Subtract line 11 from line 8.
+Include this amount in
+your income as
+wages . . . . . . . . . . . . . .
+
+12.
+
+6
+
+Publication 525 (2025)
+Retirement Planning Services
+
+Tuition Reduction
+
+If your employer has a qualified retirement plan,
+qualified retirement planning services provided
+to you (and your spouse) by your employer
+aren’t included in your income. Qualified serv-
+ices include retirement planning advice, infor-
+mation about your employer’s retirement plan,
+and information about how the plan may fit into
+your overall individual retirement income plan.
+You can’t exclude the value of any tax prepara-
+tion, accounting, legal, or brokerage services
+provided by your employer. Also, see Financial
+Counseling Fees, earlier.
+
+Transportation
+
+If your employer provides you with a qualified
+transportation fringe benefit, it can be excluded
+from your income, up to certain limits. A quali-
+fied transportation fringe benefit is:
+
+• Transportation in a commuter highway ve-
+hicle (such as a van) between your home
+and work place,
+• A transit pass, or
+• Qualified parking.
+
+Cash reimbursement by your employer for
+these expenses under a bona fide reimburse-
+ment arrangement is also excludable. However,
+cash reimbursement for a transit pass is exclud-
+able only if a voucher or similar item that can be
+exchanged only for a transit pass isn’t readily
+available for direct distribution to you.
+
+Exclusion limit. The exclusion for commuter
+vehicle transportation and transit pass fringe
+benefits can’t be more than $325 a month.
+
+The exclusion for the qualified parking fringe
+
+benefit can’t be more than $325 a month.
+
+If the benefits have a value that is more than
+these limits, the excess must be included in
+your income.
+
+Commuter highway vehicle. This is a high-
+way vehicle that seats at least six adults (not in-
+cluding the driver). At least 80% of the vehicle’s
+mileage must reasonably be expected to be:
+
+• For transporting employees between their
+
+homes and workplace, and
+
+• On trips during which employees occupy at
+least half of the vehicle’s adult seating ca-
+pacity (not including the driver).
+
+Transit pass. This is any pass, token, farecard,
+voucher, or similar item entitling a person to ride
+mass transit (whether public or private) free or
+at a reduced rate or to ride in a commuter high-
+way vehicle operated by a person in the busi-
+ness of transporting persons for compensation.
+
+Qualified parking. This is parking provided to
+an employee at or near the employer’s place of
+business. It also includes parking provided on
+or near a location from which the employee
+commutes to work by mass transit, in a com-
+muter highway vehicle, or by car pool. It doesn’t
+include parking at or near the employee’s home.
+
+You can exclude a qualified tuition reduction
+from your income. This is the amount of a
+reduction in tuition:
+
+• For education (below graduate level) fur-
+nished by an educational institution to an
+employee, former employee who retired or
+became disabled, or their spouse and de-
+pendent children;
+
+• For education furnished to a graduate stu-
+dent at an educational institution if the
+graduate student is engaged in teaching or
+research activities for that institution; or
+• Representing payment for teaching, re-
+
+search, or other services if you receive the
+amount under the National Health Service
+Corps Scholarship Program or the Armed
+Forces Health Professions Scholarship
+and Financial Assistance program.
+
+For more information, see Pub. 970.
+
+Working Condition Benefits
+
+If your employer provides you with a product or
+service and the cost of it would have been al-
+lowable as a business or depreciation deduc-
+tion if you paid for it yourself, the cost isn’t inclu-
+ded in your income.
+
+Example 6. You work as an engineer and
+your employer provides you with a subscription
+to an engineering trade magazine. The cost of
+the subscription isn’t included in your income
+because the cost would have been allowable to
+you as a business deduction if you had paid for
+the subscription yourself.
+
+Valuation of Fringe Benefits
+
+If a fringe benefit is included in your income, the
+amount included is generally its value deter-
+mined under the general valuation rule or under
+the special valuation rules. For an exception,
+see Employer-Provided Group-Term Life Insur-
+ance, earlier.
+
+General valuation rule. You must include in
+your income the amount by which the FMV of
+the fringe benefit is more than the sum of:
+
+1. The amount, if any, you paid for the bene-
+
+fit; plus
+
+2. The amount, if any, specifically excluded
+
+from your income by law.
+
+If you pay FMV for a fringe benefit, no amount is
+included in your income.
+
+Fringe benefit FMV. The FMV of a fringe
+benefit is determined by all the facts and cir-
+cumstances. It’s the amount you would have to
+pay a third party to buy or lease the benefit. This
+is determined without regard to:
+
+• Your perceived value of the benefit, or
+• The amount your employer paid for the
+
+benefit.
+
+Employer-provided vehicles. If your em-
+ployer provides a car (or other highway motor
+vehicle) to you, your personal use of the car is
+usually a taxable noncash fringe benefit.
+
+Under the general valuation rule, the value
+of an employer-provided vehicle is the amount
+
+you would have to pay a third party to lease the
+same or a similar vehicle on the same or com-
+parable terms in the same geographic area
+where you use the vehicle. An example of a
+comparable lease term is the amount of time
+the vehicle is available for your use, such as a
+1-year period. The value can’t be determined by
+multiplying a cents-per-mile rate times the num-
+ber of miles driven unless you prove the vehicle
+could have been leased on a cents-per-mile ba-
+sis. See Notice 2021-7 for more information on
+temporary relief for employers and employees
+using the automobile lease valuation rule to de-
+termine the value of an employer-provided vehi-
+cle in 2020 or 2021. The special valuation rule
+used for 2021 under the Notice must continue
+to be used by the employer and the employee
+for all subsequent years, except to the extent
+the employer uses the commuting valuation
+rule. See Special valuation rules below.
+
+Flights on employer-provided aircraft.
+Under the general valuation rules, if your flight
+on an employer-provided piloted aircraft is pri-
+marily personal and you control the use of the
+aircraft for the flight, the value is the amount it
+would cost to charter the flight from a third party.
+If there is more than one employee on the
+flight, the cost to charter the aircraft must be
+divided among those employees. The division
+must be based on all the facts, including which
+employee or employees control the use of the
+aircraft.
+
+Special valuation rules. Generally, you can
+use a special valuation rule for a fringe benefit
+only if your employer uses the rule. If your em-
+ployer uses a special valuation rule, you can’t
+use a different special rule to value that benefit.
+You can always use the general valuation rule
+discussed earlier, based on facts and circum-
+stances, even if your employer uses a special
+rule.
+
+If you and your employer use a special valu-
+ation rule, you must include in your income the
+amount your employer determines under the
+special rule minus the sum of:
+
+1. Any amount you repaid your employer,
+
+plus
+
+2. Any amount specifically excluded from in-
+
+come by law.
+
+The special valuation rules are the following.
+
+• The automobile lease rule.
+• The vehicle cents-per-mile rule.
+• The commuting rule.
+• The unsafe conditions commuting rule.
+• The employer-operated eating-facility rule.
+For more information on these rules, see
+
+Pub. 15-B.
+
+For information on the noncommercial flight
+and commercial flight valuation rules, see sec-
+tions 1.61-21(g) and 1.61-21(h) of the regula-
+tions.
+
+Retirement Plan
+Contributions
+
+Except for Roth contributions, your employer’s
+contributions to a qualified retirement plan for
+you aren’t included in income at the time con-
+tributed. (Your employer can tell you whether
+
+8
+
+Publication 525 (2025)

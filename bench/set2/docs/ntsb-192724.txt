@@ -1,0 +1,552 @@
+Aviation Investigation Final Report
+
+Location:
+
+Eastsound, Washington
+
+Accident Number:
+
+WPR23LA285
+
+Date & Time:
+
+July 26, 2023, 17:30 Local
+
+Registration:
+
+N6201M
+
+Aircraft:
+
+Maule M-5-235C
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Fuel starvation
+
+Injuries:
+
+2 Minor
+
+Flight Conducted Under:
+
+Part 91: General aviation - Personal
+
+Analysis
+
+On final approach, the engine sputtered, lost fuel pressure, then lost all power. With the total
+loss of power, the pilot initiated a forced landing to a field. During the landing, the airplane
+struck a fence and subsequently nosed over.
+
+The pilot reported that there were about 15 gallons of fuel on board before he departed on the
+first of two sightseeing flights and that the left tank had substantially more fuel than the right
+tank. When the airplane wreckage was recovered, about 10 gallons of fuel reportedly were
+drained. According to the airplane manufacturer, about 3 gallons of this fuel would have been
+unusable, and it is likely one of the fuel tanks was nearly empty. However, the investigation
+was unable to determine the actual fuel quantity in the airplane’s tanks because the pilot
+recovered and moved the airplane wreckage without oversight by federal officials.
+
+The circumstances of the accident are consistent with the pilot likely not managing the fuel on
+board properly, resulting in fuel starvation and a total loss of engine power.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot’s improper in-flight fuel management, which led to fuel starvation and a total loss of
+engine power.
+
+Page 1 of 7
+Findings
+
+Aircraft
+
+Fuel - Fluid level
+
+Personnel issues
+
+Decision making/judgment - Pilot
+
+Personnel issues
+
+Use of equip/system - Pilot
+
+Personnel issues
+
+Fuel planning - Pilot
+
+Aircraft
+
+Fuel - Fluid management
+
+Page 2 of 7
+
+WPR23LA285
+Factual Information
+
+History of Flight
+
+Approach
+
+Fuel starvation (Defining event)
+
+Emergency descent
+
+Off-field or emergency landing
+
+Landing-landing roll
+
+Collision with terr/obj (non-CFIT)
+
+Landing-landing roll
+
+Nose over/nose down
+
+On July 26, 2023, about 1730 Pacific daylight time, a Maule M-5-235C, N6201M, was
+substantially damaged when it was involved in an accident near Eastsound, Washington. The
+pilot and passenger sustained minor injuries. The airplane was operated as a Title 14 Code of
+Federal Regulations Part 91 personal flight.
+
+The pilot reported that he departed Columbia Gorge Regional/The Dalles Municipal Airport
+(DLS), The Dalles, Oregon, with 45 gallons of fuel on board and flew to Orcas Island Airport
+(ORS), Eastsound, Washington. While at ORS, he determined that there were about 15 gallons
+of fuel on board, and the left tank had “substantially” more fuel than the right tank. The pilot
+then took off on a 15-minute sightseeing flight around the island with two friends. He returned
+to ORS and conducted a second sightseeing flight with a third friend, flying the same flight
+profile on the second sightseeing flight that he had flown on the first sightseeing flight.
+
+The pilot said that he flew with the fuel selector in the Both position. At the conclusion of the
+second sightseeing flight, while on final approach to ORS, the engine sputtered, lost fuel
+pressure, and lost all power. The pilot engaged the electric boost pump but noted no change in
+fuel pressure. With the total loss of engine power, he thought that he could not make the
+runway and therefore initiated a forced landing to a field. During the landing, he maneuvered
+the airplane to avoid power lines, which resulted in the airplane striking a fence and
+subsequently nosing over and coming to rest inverted. Local law enforcement personnel noted
+that there was no fuel leaking at the accident site.
+
+The investigation was unable to determine the actual fuel quantity in the airplane’s fuel tanks
+at the time of the accident because the pilot recovered the airplane wreckage on Orcas Island
+and then moved it to a secure location on the mainland, without oversight by federal officials.
+The pilot reported that when the airplane wreckage was recovered, about 10 gallons of fuel
+were drained. According to the manufacturer, the airplane’s fuel system retains about 3 gallons
+of unusable fuel.
+
+Examination of the airframe and engine revealed no evidence of preaccident failures or
+malfunctions that would have precluded normal operation. Fuel continuity was established
+
+Page 3 of 7
+
+WPR23LA285
+from the main tanks to the carburetor. The engine-driven fuel pump was removed for
+examination and no anomalies were noted. When the engine-driven lever was activated, the
+pump diaphragm operated normally. Additionally, when the electric fuel boost pump was
+activated, it operated normally with no anomalies noted. The main and auxiliary fuel tanks
+were examined with a borescope and no anomalies were noted.
+
+Following the wreckage examination, the pilot communicated that he likely ran a fuel tank dry.
+He also communicated that air may have been introduced into the fuel lines while turning the
+airplane in maneuvering flight with a low fuel quantity in one of the tanks. When asked how this
+accident could have been prevented, the pilot said to top off both fuel tanks before departure.
+
+Pilot Information
+
+Certificate:
+
+Private
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+None
+
+Instructor Rating(s):
+
+None
+
+Age:
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+52,Male
+
+Left
+
+3-point
+
+No
+
+Medical Certification:
+
+Class 3 With waivers/limitations
+
+Last FAA Medical Exam:
+
+December 23, 2022
+
+Occupational Pilot:
+
+No
+
+Last Flight Review or Equivalent:
+
+May 23, 2023
+
+Flight Time:
+
+(Estimated) 153 hours (Total, all aircraft), 130 hours (Total, this make and model), 100 hours
+(Pilot In Command, all aircraft), 153 hours (Last 90 days, all aircraft), 20 hours (Last 30 days, all
+aircraft), 4 hours (Last 24 hours, all aircraft)
+
+Passenger Information
+
+Certificate:
+
+Airplane Rating(s):
+
+Other Aircraft Rating(s):
+
+Instrument Rating(s):
+
+Instructor Rating(s):
+
+Medical Certification:
+
+Occupational Pilot:
+
+Flight Time:
+
+Male
+
+Right
+
+3-point
+
+No
+
+Age:
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+Last FAA Medical Exam:
+
+Last Flight Review or Equivalent:
+
+Page 4 of 7
+
+WPR23LA285
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Maule
+
+M-5-235C
+
+Year of Manufacture:
+
+1978
+
+Airworthiness Certificate:
+
+Normal
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+Serial Number:
+
+Landing Gear Type:
+
+Tailwheel
+
+Seats:
+
+N6201M
+
+Airplane
+
+7198C
+
+4
+
+Date/Type of Last Inspection: November 2, 2022 Annual
+
+Certified Max Gross Wt.:
+
+2500 lbs
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+2625.7 Hrs as of last
+inspection
+
+Engines:
+
+1 Reciprocating
+
+Engine Manufacturer:
+
+Lycoming
+
+ELT:
+
+C126 installed, not activated
+
+Engine Model/Series:
+
+O-540-J2A5D
+
+Registered Owner:
+
+Operator:
+
+On file
+
+On file
+
+Rated Power:
+
+235 Horsepower
+
+Operating Certificate(s)
+Held:
+
+None
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KORS,31 ft msl
+
+Distance from Accident Site:
+
+3 Nautical Miles
+
+Observation Time:
+
+17:35 Local
+
+Direction from Accident Site:
+
+15°
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Clear
+
+None
+
+Wind Speed/Gusts:
+
+5 knots / None
+
+Wind Direction:
+
+320°
+
+Visibility
+
+10 miles
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+None / None
+
+N/A / N/A
+
+Altimeter Setting:
+
+30.1 inches Hg
+
+Temperature/Dew Point:
+
+19°C / 14°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Eastsound, WA
+
+Type of Flight Plan Filed:
+
+Destination:
+
+Eastsound, WA
+
+Type of Clearance:
+
+None
+
+None
+
+Departure Time:
+
+17:00 Local
+
+Type of Airspace:
+
+Class G
+
+Page 5 of 7
+
+WPR23LA285
+Airport Information
+
+Airport:
+
+Orcas Island Airport KORS
+
+Runway Surface Type:
+
+Airport Elevation:
+
+Runway Used:
+
+Runway Length/Width:
+
+Runway Surface Condition:
+
+Vegetation
+
+IFR Approach:
+
+None
+
+VFR Approach/Landing:
+
+Forced landing;Full
+stop;Straight-in
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 Minor
+
+Passenger Injuries:
+
+1 Minor
+
+Ground Injuries:
+
+Aircraft Damage:
+
+Substantial
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+2 Minor
+
+Latitude, Longitude:
+
+48.65613,-122.93276(est)
+
+Page 6 of 7
+
+WPR23LA285
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Nixon, Albert
+
+Additional Participating
+Persons:
+
+Joseph Sullivan; FAA; Seattle, WA
+
+Original Publish Date:
+
+August 20, 2025
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 3
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192724
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 7 of 7
+
+WPR23LA285

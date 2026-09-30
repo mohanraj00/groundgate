@@ -1,0 +1,712 @@
+Transportation of
+Persons by Air
+
+The tax on transportation of persons by air is
+made up of the:
+
+• Percentage tax, and
+• Domestic-segment tax.
+
+Percentage tax. A tax of 7.5% applies to
+amounts paid for taxable transportation of per-
+sons by air. Amounts paid for transportation in-
+clude charges for seat selection, premium
+economy seating, online booking fee, layover or
+waiting time, and movement of aircraft in dead-
+head service.
+
+Mileage awards. The percentage tax may
+apply to an amount paid (in cash or in kind) to
+an air carrier (or any related person) for the right
+to provide mileage awards for, or other reduc-
+tions in the cost of, any transportation of per-
+sons by air. For example, this applies to mileage
+awards purchased by credit card companies,
+telephone companies, restaurants, hotels, and
+other businesses.
+
+Generally, the percentage tax doesn't apply
+to amounts paid for mileage awards where the
+mileage awards can't, under any circumstan-
+ces, be redeemed for air transportation that is
+subject to the tax. Until regulations are issued,
+the following rules apply to mileage awards.
+
+• Amounts paid for mileage awards that can't
+be redeemed for taxable transportation be-
+ginning and ending in the United States
+aren’t subject to the tax. For this rule, mile-
+age awards issued by a foreign air carrier
+are considered to be usable only on that
+foreign air carrier and not redeemable for
+taxable transportation beginning and end-
+ing in the United States. Therefore,
+amounts paid to a foreign air carrier for
+mileage awards aren’t subject to the tax.
+• Amounts paid by an air carrier to a domes-
+tic air carrier for mileage awards that can
+be redeemed for taxable transportation
+aren’t subject to the tax to the extent those
+miles will be awarded in connection with
+the purchase of taxable transportation.
+• Amounts paid by an air carrier to a domes-
+tic air carrier for mileage awards that can
+be redeemed for taxable transportation are
+subject to the tax to the extent those miles
+won’t be awarded in connection with the
+purchase of taxable transportation.
+
+Domestic-segment tax. The domestic-seg-
+ment tax is a flat dollar amount for each seg-
+ment of taxable transportation for which an
+amount is paid. However, see Rural airports,
+later. A segment is a single takeoff and a single
+landing.
+
+Note. Generally, the tax on each domes-
+tic-segment of taxable air transportation increa-
+ses annually based on adjustments for inflation.
+See the Instructions for Form 720 for the tax
+rate.
+
+Charter flights. If an aircraft is chartered,
+the domestic-segment tax for each segment of
+taxable transportation is figured by multiplying
+the tax by the number of passengers transpor-
+ted on the aircraft.
+
+Rural airports. The domestic-segment tax
+doesn't apply to a segment to or from a rural air-
+port. An airport is a rural airport for a calendar
+year if fewer than 100,000 commercial passen-
+gers departed from the airport by air during the
+second preceding calendar year (the 100,000
+passenger rule), and one of the following is true:
+
+1. The airport isn't located within 75 miles of
+another airport from which 100,000 or
+more commercial passengers departed
+during the second preceding calendar
+year,
+
+2. The airport was receiving essential air
+
+service subsidies as of August 5, 1997, or
+
+3. The airport isn't connected by paved roads
+
+to another airport.
+
+To apply the 100,000 passenger rule to any
+airport described in (3) above, only count com-
+mercial passengers departing from the airport
+by air on flight segments of at least 100 miles.
+
+An updated list of rural airports can be found
+on the Bureau of Transportation Statistics web-
+site at BTS.gov/Topics/Airlines-and-Airports/
+Rural-Airports.
+
+Taxable transportation. Taxable transporta-
+tion is transportation by air that meets either of
+the following tests.
+
+• It begins and ends either in the United
+
+States or at any place in Canada or Mexico
+not more than 225 miles from the nearest
+point on the continental U.S. boundary
+(this is the 225-mile zone).
+
+• It's directly or indirectly from one port or
+
+station in the United States to another port
+or station in the United States, but only if it
+isn't a part of uninterrupted international air
+transportation.
+
+Round trip. A round trip is considered two
+separate trips. The first trip is from the point of
+departure to the destination. The second trip is
+the return trip from that destination.
+
+Uninterrupted international air transpor-
+tation. This means transportation entirely by
+air that doesn't begin and end in the United
+States or in the 225-mile zone if there isn't more
+than a 12-hour scheduled interval between ar-
+rival and departure at any station in the United
+States. For a special rule that applies to military
+personnel, see Exemptions, later.
+
+Transportation between the continental
+United States and Alaska or Hawaii. This
+transportation is partially exempt from the tax on
+transportation of persons by air. The tax doesn't
+apply to the part of the trip between the point at
+which the route of transportation leaves or en-
+ters the continental United States (or a port or
+station in the 225-mile zone) and the point at
+which it enters or leaves Hawaii or Alaska.
+Leaving or entering occurs when the route of
+the transportation passes over either the U.S.
+border or a point 3 nautical miles (3.45 statute
+miles) from low tide on the coastline, or when it
+leaves a port or station in the 225-mile zone.
+Therefore, this transportation is subject to the
+percentage tax on the part of the trip in U.S. air-
+space, the domestic-segment tax for each do-
+mestic segment, and the tax on the use of inter-
+national air travel facilities.
+
+Transportation within Alaska or Hawaii.
+The tax on transportation of persons by air ap-
+plies to the entire fare paid in the case of flights
+between any of the Hawaiian Islands, and be-
+tween any ports or stations in the Aleutian Is-
+lands or other ports or stations elsewhere in
+Alaska. The tax applies even though parts of
+the flights may be over international waters or
+over Canada, if no point on the direct line of
+transportation between the ports or stations is
+more than 225 miles from the United States
+(Hawaii or Alaska).
+
+Package tours. The air transportation taxes
+apply to “complimentary” air transportation fur-
+nished solely to participants in package holiday
+tours. The amount paid for these package tours
+includes a charge for air transportation even
+though it may be advertised as “free.” This rule
+also applies to the tax on the use of interna-
+tional air travel facilities.
+
+Liability for tax. The person paying for taxable
+transportation is liable for the tax and, ordinarily,
+the person receiving the payment collects the
+tax, files the returns, and pays the tax over to
+the government. However, if payment is made
+outside the United States for a prepaid order,
+exchange order, or similar order, the person fur-
+nishing the initial transportation provided for un-
+der that order must collect the tax.
+
+A travel agency that is an independent
+broker and sells tours on aircraft that it charters
+must collect the transportation tax, file the re-
+turns, and pay the tax over to the government.
+However, a travel agency that sells tours as the
+agent of an airline must collect the tax and remit
+it to the airline for the filing of returns and for the
+payment of the tax over to the government. An
+independent third party that isn't under the air-
+line's supervision or control, but is acting on be-
+half of, and receiving compensation from, a
+passenger, isn't required to collect the tax and
+pay it to the government. For more information
+on resellers of air transportation, see Revenue
+Ruling
+IRS.gov/irb/
+2006-43_IRB#RR-2006-52.
+
+2006-52
+
+at
+
+The fact that the aircraft doesn't use public
+or commercial airports in taking off and landing
+has no effect on the tax. But see Certain heli-
+copter uses, later.
+
+For taxable transportation that begins and
+ends in the United States, the tax applies re-
+gardless of whether the payment is made in or
+outside the United States.
+
+If the tax isn't paid when payment for the
+transportation is made, the air carrier providing
+the initial segment of the transportation that be-
+gins or ends in the United States becomes lia-
+ble for the tax.
+
+Exemptions. The tax on transportation of per-
+sons by air doesn't apply in the following situa-
+tions. See Special Rules on Transportation
+Taxes, later.
+
+Military personnel on international trips.
+When traveling in uniform at their own expense,
+U.S. military personnel on authorized leave are
+deemed to be traveling in uninterrupted interna-
+tional air transportation even if the scheduled in-
+terval between arrival and departure at any sta-
+tion in the United States is actually more than
+12 hours. However, such personnel must buy
+
+28
+
+Chapter 4
+
+Communications and Air Transportation Taxes
+
+Publication 510 (12-2025)
+the vessel has completed at least one outward
+and one homeward passage. The tax may be
+imposed even if a passenger doesn't make both
+an outward and a homeward passage as long
+as the voyage begins or ends in the United
+States.
+
+Passenger. A passenger is an individual car-
+ried on the vessel other than the master or a
+crew member or other individual engaged in the
+business of the vessel or its owners.
+
+Example 1. John Smith works as a guest
+lecturer. The cruise line hired John for the bene-
+fit of the passengers. Therefore, John is en-
+gaged in the business of the vessel and isn't a
+passenger.
+
+Example 2. Marian Green is a travel agent.
+Marian is taking the cruise as a promotional trip
+to determine if it should be offered to the clients
+of the travel agency. Marian is a passenger.
+
+Taxable situations. There are two taxable sit-
+uations. The first situation involves voyages on
+commercial passenger vessels extending over
+one or more nights. A voyage extends over one
+or more nights if it extends for more than 24
+hours. A passenger vessel is any vessel with
+stateroom or berth accommodations for more
+than 16 passengers.
+
+The second situation involves voyages on a
+commercial vessel transporting passengers en-
+gaged in gambling on the vessel beyond the ter-
+ritorial waters of the United States. Territorial
+waters of the United States are those waters
+within the international boundary line between
+the United States and any contiguous foreign
+country or within 3 nautical miles (3.45 statute
+miles) from low tide on the coastline. If passen-
+gers participate as players in any policy game
+or other lottery, or any other game of chance for
+money or other thing of value that the owner or
+operator of the vessel (or their employee, agent,
+or franchisee) conducts, sponsors, or operates,
+the voyage is subject to the ship passenger tax.
+The tax applies regardless of the duration of the
+voyage. A casual, friendly game of chance with
+other passengers that isn't conducted, spon-
+sored, or operated by the owner or operator
+isn't gambling for determining if the voyage is
+subject to the ship passenger tax.
+
+Exemptions. The tax doesn't apply when a
+vessel is on a voyage of less than 12 hours be-
+tween two points in the United States or if a ves-
+sel is owned or operated by a state or local gov-
+ernment.
+
+8.
+
+Foreign
+Insurance Taxes
+
+Tax is imposed on insurance policies issued by
+foreign insurers. Any person who makes, signs,
+issues, or sells any of the documents and in-
+struments subject to the tax, or for whose use or
+benefit they're made, signed, issued, or sold, is
+liable for the tax.
+
+The following tax rates apply to each dollar (or
+fraction thereof) of the premium paid.
+
+1. Casualty insurance and indemnity, fidelity,
+and surety bonds: $0.04. For example, on
+a premium payment of $10.10, the tax is
+$0.44.
+
+2. Life, sickness, and accident insurance,
+
+and annuity contracts: $0.01. For example,
+on a premium payment of $10.10, the tax
+is $0.11.
+
+3. Reinsurance policies covering any of the
+taxable contracts described in items (1)
+and (2): $0.01.
+
+However, the tax doesn't apply to casualty in-
+surance premiums paid to foreign insurers for
+coverage of export goods in transit to foreign
+destinations.
+
+Premium. Premium means
+
+the agreed
+price or consideration for assuming and carry-
+ing the risk or obligation. It includes any addi-
+tional charge or assessment payable under the
+contract, whether in one sum or installments. If
+premiums are refunded, claim the tax paid on
+those premiums as an overpayment against tax
+due on other premiums paid or file a claim for
+refund.
+
+When liability attaches. The liability for this
+tax attaches when the premium payment is
+transferred to the foreign insurer or reinsurer (in-
+cluding transfers to any bank, trust fund, or simi-
+lar recipient designated by the foreign insurer or
+reinsurer) or to any nonresident agent, solicitor,
+or broker. A person can pay the tax before the
+liability attaches if the person keeps records
+consistent with that practice.
+
+Who must file. The person who pays the pre-
+mium to the foreign insurer (or to any nonresi-
+dent person such as a foreign broker) must pay
+the tax and file the return. Otherwise, any per-
+son who issued or sold the policy, or who is in-
+sured under the policy, is required to pay the tax
+and file the return.
+
+Records: The person liable for this tax must
+keep accurate records that identify each policy
+or instrument subject to tax. These records
+must clearly establish the type of policy or in-
+strument, the gross premium paid, the identity
+of the insured and insurer, and the total pre-
+mium charged. If the premium is to be paid in in-
+stallments, the records must also establish the
+
+amount and anniversary date of each install-
+ment.
+
+The records must be kept at the place of
+business or other convenient location for at
+least 3 years after the later of the date any part
+of the tax became due, or the date any part of
+the tax was paid. During this period, the records
+must be readily accessible to the IRS.
+
+The person having control or possession of
+a policy or instrument subject to this tax must
+keep the policy for at least 3 years after the date
+any part of the tax on it was paid.
+
+Tip: For information on reinsurance premiums
+paid from one foreign insurer to another foreign
+insurer, see Revenue Ruling 2008-15, I.R.B.
+2008-12,
+IRS.gov/irb/
+2008-12_IRB#RR-2008-15
+
+at
+
+Treaty-based positions under I.R.C 6114.
+You may have to file an annual report disclosing
+the amount of premiums exempt from U.S. ex-
+cise tax as a result of the application of a treaty
+with the United States that overrides (or other-
+wise modifies) any provision of the Internal Rev-
+enue Code.
+
+Attach any disclosure statement to the first
+quarter Form 720. You may be able to use Form
+8833, Treaty-Based Return Position Disclosure
+Under Section 6114 or 7701(b), as a disclosure
+statement. See the Instructions for Form 720 for
+information on how and where to file.
+
+See Revenue Procedure 92-14 in Cumula-
+tive Bulletin 1992-1 for procedures you can use
+to claim a refund of this tax under certain U.S.
+treaties.
+
+9.
+
+Obligations Not
+in Registered
+Form
+
+Tax is imposed on any person who issues a reg-
+istration-required obligation not in registered
+form. The tax is:
+
+• 1% of the principal of the obligation, multi-
+
+plied by -
+
+• The number of calendar years (or portions
+of calendar years) during the period start-
+ing on the date the obligation was issued
+and ending on the date it matures.
+
+A registration-required obligation is any obliga-
+tion other than one that meets any of the follow-
+ing conditions.
+
+1.
+
+It's issued by a natural person.
+
+2.
+
+It isn't of a type offered to the public.
+
+3.
+
+It has a maturity (at issue) of not more than
+1 year.
+
+4.
+
+It's a tax-exempt bond.
+
+38
+
+Chapter 9 Obligations Not in Registered Form
+
+Publication 510 (12-2025)
+businesses is a free and secure payment appli-
+cation available at IRS.gov/DirectPay. If you
+don’t want to use EFTPS, or IRS Direct Pay, you
+can arrange for your tax professional, financial
+institution, payroll service, or other trusted third
+party to make deposits on your behalf. Also, you
+may arrange for your financial institution to sub-
+mit a same-day wire payment on your behalf.
+
+EFTPS and IRS Direct Pay are free services
+provided by the Department of Treasury. Serv-
+ices provided by your tax professional, financial
+institution, payroll service, or other third party
+may have a fee. To get more information about
+EFTPS or to enroll in EFTPS, visit EFTPS.gov
+or call 800-555-4477. Additional information
+about EFTPS is also available in Pub. 966,
+Electronic Federal Tax Payment System: A
+Guide to Getting Started.
+
+Depositing on time. For EFTPS deposits to
+be on time, you must submit the transaction at
+least 1 day before the date the deposit is due
+(by 8:00 p.m. Eastern time).
+
+Same-day wire payment option. If you fail to
+submit a deposit transaction on EFTPS by 8:00
+p.m. Eastern time the day before the date a de-
+posit is due, you can still make your deposit on
+time by using the Federal Tax Collection Serv-
+ice (FTCS). To use the same-day wire payment
+method, you will need to make arrangements
+with your financial institution ahead of time.
+Please check with your financial institution re-
+garding availability, deadlines, and costs. Your
+financial institution may charge you a fee for
+payments made this way. To learn more about
+the information you will need to provide your fi-
+nancial institution to make a same-day wire pay-
+ment, visit
+IRS.gov/Payments and click on
+“Same-day wire.”
+
+Tip: You will automatically be enrolled
+in
+EFTPS when you apply for an EIN. You will re-
+ceive a separate mailing containing instructions
+for activating your EFTPS enrollment after you
+receive your EIN.
+
+When To Make Deposits
+
+There are two methods for determining depos-
+its: the regular method and the alternative
+method.
+
+The regular method applies to all taxes in
+Part I of Form 720 except for communications
+and air transportation taxes if deposits are
+based on amounts billed or tickets sold, rather
+than on amounts actually collected. See Alter-
+native method (IRS Nos. 22, 26, 27, and 28),
+later.
+
+If you're depositing more than one tax under
+a method, combine all the taxes under the
+method and make one deposit for the semi-
+monthly period.
+
+ceding day that isn't a Saturday, Sunday, or le-
+gal holiday.
+
+Caution: Don't reduce your liability by any
+amounts from Form 720-X.
+
+Alternative method (IRS Nos. 22, 26, 27,
+and 28). Deposits of communications and air
+transportation taxes may be based on taxes in-
+cluded in amounts billed or tickets sold during a
+semimonthly period instead of on taxes actually
+collected during the period. Under the alterna-
+tive method, the tax included in amounts billed
+or tickets sold during a semimonthly period is
+considered collected during the first 7 days of
+the second following semimonthly period. The
+deposit of tax is due by the third banking day af-
+ter the seventh day of that period.
+
+For an example of the alternative method,
+
+see the Instructions for Form 720.
+
+To use the alternative method, you must
+keep a separate account of the tax included in
+amounts billed or tickets sold during the month
+and report on Form 720 the tax included in
+amounts billed or tickets sold and not the
+amount of tax that is actually collected. For ex-
+ample, amounts billed in December, January,
+and February are considered collected during
+January, February, and March and are reported
+on Form 720 as the tax for the first quarter of
+the calendar year.
+
+The separate account for each month must
+
+reflect:
+
+1. All items of tax included in amounts billed
+or tickets sold during the month, and
+
+2. Other items of adjustment relating to tax
+for prior months (within the statute of limi-
+tations on credits or refunds).
+
+The separate account for any month can't in-
+clude an adjustment resulting from a refusal to
+pay or inability to collect unless the refusal has
+been reported to the IRS. See Uncollected Tax
+Report in chapter 4.
+
+The net amount of tax that is considered col-
+lected during the semimonthly period must be
+either:
+
+• The net amount of tax reflected in the sep-
+arate account for the corresponding semi-
+monthly period of the preceding month, or
+• One-half of the net amount of tax reflected
+in the separate account for the preceding
+month.
+
+Special rule for deposits of taxes in Sep-
+tember. See the Instructions for Form 720 for a
+special rule on deposits made in September.
+
+Amount of Deposits
+
+Deposits for a semimonthly period must gener-
+ally be at least 95% of the net tax liability for that
+period unless the safe harbor rule applies. Gen-
+erally, you don't have to make a deposit for a pe-
+riod in which you incurred no tax liability.
+
+Safe Harbor Rule
+
+The safe harbor rule applies separately to de-
+posits under the regular method and the alter-
+native method. Persons who filed Form 720 for
+the look-back quarter (the second calendar
+quarter preceding the current quarter) are con-
+sidered to meet the semimonthly deposit re-
+quirement if the deposit for each semimonthly
+period in the current quarter is at least 1/6
+(16.67%) of the net tax liability reported for the
+look-back quarter.
+
+For the semimonthly period for which the ad-
+ditional deposit is required, the additional de-
+posit must be at least 11/90 (12.23%), 10/90
+(11.12%) for non-EFTPS, of the net tax liability
+reported for the look-back quarter. Also, the to-
+tal deposit for that semimonthly period must be
+at least 1/6 (16.67%) of the net tax liability re-
+ported for the look-back quarter.
+
+Exceptions. The safe harbor rule doesn't
+
+apply to:
+
+• The first and second quarters beginning on
+or after the effective date of an increase in
+the rate of tax unless the deposit of taxes
+for each semimonthly period in the calen-
+dar quarter is at least 1/6 (16.67%) of the
+tax liability you would have had for the
+look-back quarter if the increased rate of
+tax had been in effect for that look-back
+quarter;
+
+• Any quarter if liability includes any tax not
+in effect throughout the look-back quarter;
+or
+
+• For deposits under the alternative method,
+any quarter if liability includes any tax not
+in effect throughout the look-back quarter
+and the month preceding the look-back
+quarter.
+
+Requirements to be met. For the safe harbor
+rule to apply, you must:
+
+• Make each deposit timely at an authorized
+
+financial institution, and
+
+• Pay any underpayment for the current
+quarter by the due date of the return.
+
+Caution: The IRS may withdraw the right to
+make deposits of tax using the safe harbor rule
+from any person not complying with these rules.
+
+Tax rate increases. You must modify the safe
+harbor rule if there has been an increase in the
+rate of tax. You must figure your tax liability in
+the look-back quarter as if the increased rate
+had been in effect. To qualify for the safe harbor
+rule, your deposits can't be less than 1/6 of the
+refigured tax liability.
+
+Regular method. The deposit of tax for a sem-
+imonthly period is due by the 14th day following
+that period. Generally, this is the 29th day of a
+month for the first semimonthly period and the
+14th day of the following month for the second
+semimonthly period. If the 14th or the 29th day
+falls on a Saturday, Sunday, or legal holiday, you
+must make the deposit by the immediately pre-
+
+Net tax liability. Your net tax liability is your tax
+liability for the period minus any claims on Form
+720, Schedule C for the period. You may figure
+your net tax liability for a semimonthly period by
+dividing your net liability incurred during the cal-
+endar month by two. If you use this method, you
+must use it for all semimonthly periods in the
+calendar quarter.
+
+Publication 510 (12-2025)
+
+Chapter 14
+
+Payment of Taxes
+
+41

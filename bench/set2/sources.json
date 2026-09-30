@@ -1,0 +1,1646 @@
+{
+  "retrieved": "2026-09-30",
+  "sources": [
+    {
+      "id": "fda-rosuvastatin",
+      "kind": "fda",
+      "groups": [
+        "general"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/b7491a1a-570e-40ea-b65b-f956c9e284a6.xml",
+      "sha256": "fb08cb1664fd4aa0f6419550b76412bffc0ea0859bf6fa3517bc6cde8fa83b77",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ROSUVASTATIN CALCIUM TABLET, FILM COATED [AMERICAN HEALTH PACKAGING]; Part D 2024 claims rank 9"
+    },
+    {
+      "id": "fda-omeprazole",
+      "kind": "fda",
+      "groups": [
+        "general",
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/aa8fc2ea-3942-453b-bc19-1e4b14ba6926.xml",
+      "sha256": "ad850e003c2d8d70a972a60a0c16fab0d7ba65e8d8739fa24366cf1823fa58af",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Treatment of Active Duodenal Ulcer",
+        "Helicobacter pylori Eradication to Reduce the Risk of Duodenal Ulcer Recurrence",
+        "Treatment of Active Benign Gastric Ulcer",
+        "Treatment of Symptomatic Gastroesophageal Reflux Disease (GERD)",
+        "Treatment of Erosive Esophagitis (EE) Due to Acid-Mediated GERD",
+        "Maintenance of Healing of EE Due to Acid-Mediated GERD",
+        "Pathological Hypersecretory Conditions"
+      ],
+      "source": "OMEPRAZOLE CAPSULE, DELAYED RELEASE [PREFERRED PHARMACEUTICALS INC.]; Part D 2024 claims rank 10"
+    },
+    {
+      "id": "fda-pantoprazole",
+      "kind": "fda",
+      "groups": [
+        "general",
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/6faf465b-c3a3-4ae7-9e16-1ba758f6962a.xml",
+      "sha256": "208d38ca87c7c975701028e3254b8331d0a85cb4d77eeef02ee1c6d04e02bee8",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Short-Term Treatment of Erosive Esophagitis Associated With Gastroesophageal Reflux Disease (GERD)",
+        "Maintenance of Healing of Erosive Esophagitis",
+        "Pathological Hypersecretory Conditions Including Zollinger-Ellison Syndrome"
+      ],
+      "source": "PANTOPRAZOLE SODIUM TABLET, DELAYED RELEASE [NCS HEALTHCARE OF KY, LLC DBA VANGARD LABS]; Part D 2024 claims rank 11"
+    },
+    {
+      "id": "fda-apixaban",
+      "kind": "fda",
+      "groups": [
+        "general",
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/19a60552-374d-4b8b-a8ce-ceae252ea5ba.xml",
+      "sha256": "f53d0e46d9844e66506e2b598031bbb1c9c19babb30a8dde5373c6c8224881b4",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Reduction of Risk of Stroke and Systemic Embolism in Nonvalvular Atrial Fibrillation",
+        "Prophylaxis of Deep Vein Thrombosis Following Hip or Knee Replacement Surgery",
+        "Treatment of Deep Vein Thrombosis",
+        "Treatment of Pulmonary Embolism",
+        "Reduction in the Risk of Recurrence of DVT and PE"
+      ],
+      "source": "APIXABAN TABLET, FILM COATED [AMNEAL PHARMACEUTICALS OF NEW YORK LLC]; Part D 2024 claims rank 12"
+    },
+    {
+      "id": "fda-tamsulosin",
+      "kind": "fda",
+      "groups": [
+        "general"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/82d65964-de00-42c2-baaa-cc3de744b8eb.xml",
+      "sha256": "c8dda069bb35b4d02e6383e6811a9f1299f80509880c3d7fe9e1a03731df93ce",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "TAMSULOSIN HYDROCHLORIDE CAPSULE [PREFERRED PHARMACEUTICALS, INC.]; Part D 2024 claims rank 14"
+    },
+    {
+      "id": "fda-trazodone",
+      "kind": "fda",
+      "groups": [
+        "general"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5b9f0b60-0c25-4303-88f1-44bcb347bc49.xml",
+      "sha256": "21f0d682125671860bada3d1c00cba67b5c4ba0bbb9ba8cc5ab1faf013f09e31",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "TRAZODONE HYDROCHLORIDE TABLET [REMEDYREPACK INC.]; Part D 2024 claims rank 18"
+    },
+    {
+      "id": "fda-prednisone",
+      "kind": "fda",
+      "groups": [
+        "general"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/01bdc479-1f1f-af94-837c-12e7e861321a.xml",
+      "sha256": "6ad9d58f392d13fb8317009aeba3fcd27ca595f4e5b1323b0c0aa4b03dac270c",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "PREDNISONE DELAYED RELEASE (PREDNISONE) TABLET, DELAYED RELEASE [DR. REDDYS LABORATORIES INC.]; Part D 2024 claims rank 21"
+    },
+    {
+      "id": "fda-carvedilol",
+      "kind": "fda",
+      "groups": [
+        "general"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5c297a25-6194-45c1-e063-6294a90ae8ed.xml",
+      "sha256": "aabb9f8ec26cf3b21796ff46ad26cd9b7f267a00f66a192ba44231c771cbc9e3",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "CARVEDILOL TABLET, FILM COATED [DIRECT_RX]; Part D 2024 claims rank 22"
+    },
+    {
+      "id": "fda-potassium",
+      "kind": "fda",
+      "groups": [
+        "general"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/9b26cc41-3725-4ef1-afdf-5992816d3b0d.xml",
+      "sha256": "6249b32409ad7cc9bb38560738b2b4bc00e3170bcfa0b9122c40c4d1a0b9f65c",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "POTASSIUM CHLORIDE TABLET, FILM COATED, EXTENDED RELEASE [PD-RX PHARMACEUTICALS, INC.]; Part D 2024 claims rank 23"
+    },
+    {
+      "id": "fda-famotidine",
+      "kind": "fda",
+      "groups": [
+        "general"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5b9c6f47-3071-4bbd-e063-6294a90aaec5.xml",
+      "sha256": "cb1b3a5eaacc5009e874a8f41a7243253b923c8eee2a97ec83022edd6a33acbb",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "FAMOTIDINE TABLET [APHENA PHARMA SOLUTIONS - TENNESSEE, LLC ]; Part D 2024 claims rank 25"
+    },
+    {
+      "id": "fda-clopidogrel",
+      "kind": "fda",
+      "groups": [
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/65ea4dc6-acb2-4609-9a4c-4866ef0ccb11.xml",
+      "sha256": "3549b9418cfe592fbefa771518213fa9240dbbf09902d2151815fb7bdf94b8df",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Acute Coronary Syndrome (ACS)",
+        "Recent MI, Recent Stroke, or Established Peripheral Arterial Disease"
+      ],
+      "source": "CLOPIDOGREL (CLOPIDOGREL BISULFATE) TABLET, FILM COATED [AMERICAN HEALTH PACKAGING]; Part D 2024 claims rank 26"
+    },
+    {
+      "id": "fda-montelukast",
+      "kind": "fda",
+      "groups": [
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/9e375c07-70db-458c-9336-22a7037b0a5f.xml",
+      "sha256": "6c92b278103e4825e52f2fafca9810bb0126db90ad5691cc62bcfa4e07534965",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Asthma",
+        "Exercise-Induced Bronchoconstriction (EIB)",
+        "Allergic Rhinitis",
+        "Limitations of Use"
+      ],
+      "source": "MONTELUKAST SODIUM TABLET, FILM COATED MONTELUKAST SODIUM TABLET, CHEWABLE [UNICHEM PHARMACEUTICALS (USA), INC.]; Part D 2024 claims rank 31"
+    },
+    {
+      "id": "fda-quetiapine",
+      "kind": "fda",
+      "groups": [
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/d51c5bf6-950d-493b-be55-de575c5ef2e7.xml",
+      "sha256": "eb9dcdd8ea7cfe50117e69fa0454b4c2eb6bb288747305c301b49c63623f2046",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Schizophrenia",
+        "Bipolar Disorder",
+        "Special Considerations in Treating Pediatric Schizophrenia and Bipolar I Disorder"
+      ],
+      "source": "QUETIAPINE FUMARATE TABLET [QUALLENT PHARMACEUTICALS HEALTH LLC]; Part D 2024 claims rank 37"
+    },
+    {
+      "id": "fda-amoxicillin",
+      "kind": "fda",
+      "groups": [
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/b07b5ac4-253e-4c83-91c3-3fdc46e91a0f.xml",
+      "sha256": "7e34299b9c788de460d9a5ae2635c211d148abd4a701312b93717f925b873da5",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "AMOXICILLIN TABLET, FILM COATED AMOXICILLIN POWDER, FOR SUSPENSION AMOXICILLIN TABLET, CHEWABLE AMOXICILLIN CAPSULE [CHARTWELL RX, LLC]; Part D 2024 claims rank 42"
+    },
+    {
+      "id": "fda-spironolactone",
+      "kind": "fda",
+      "groups": [
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/8b76a904-6c99-485a-a05f-13a36c5f720c.xml",
+      "sha256": "5c7883d1f40be33f6ba1da39d9cf77579a266316928f1ac0dce5523b0c429950",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Heart Failure",
+        "Hypertension",
+        "Edema Associated with Hepatic Cirrhosis or Nephrotic Syndrome",
+        "Primary Hyperaldosteronism"
+      ],
+      "source": "SPIRONOLACTONE TABLET, FILM COATED [REMEDYREPACK INC.]; Part D 2024 claims rank 44"
+    },
+    {
+      "id": "fda-alendronate",
+      "kind": "fda",
+      "groups": [
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/c7e470d6-508e-466e-a78d-060bbbc9745c.xml",
+      "sha256": "532512f338a3b345b422ffc9f455cb8fa6b2dd27f3c00eeabd1696c0107eebb8",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Treatment of Osteoporosis in Postmenopausal Women",
+        "Prevention of Osteoporosis in Postmenopausal Women",
+        "Treatment to Increase Bone Mass in Men with Osteoporosis",
+        "Treatment of Glucocorticoid-Induced Osteoporosis",
+        "Treatment of Paget's Disease of Bone",
+        "Important Limitations of Use"
+      ],
+      "source": "ALENDRONATE SODIUM TABLET [REMEDYREPACK INC.]; Part D 2024 claims rank 47"
+    },
+    {
+      "id": "fda-azithromycin",
+      "kind": "fda",
+      "groups": [
+        "keyed",
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5f144e92-c9eb-420a-9bb8-4265a9f20a98.xml",
+      "sha256": "c6c0ca65f23568bc03bd27ddb2850df1a63bbbdf2e8617bada8b9f642418776d",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Indications in Adult Patients",
+        "Indications in Pediatric Patients",
+        "Limitations of Use",
+        "Usage"
+      ],
+      "source": "AZITHROMYCIN TABLET, FILM COATED [REMEDYREPACK INC.]; Part D 2024 claims rank 48"
+    },
+    {
+      "id": "fda-pregabalin",
+      "kind": "fda",
+      "groups": [
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/4ccb0d75-d7d9-471c-8737-8552e9e57efa.xml",
+      "sha256": "4a991ca51ab9e47f3001a9ee9f6b9812e78bf3de6a99b4260e410a1824088040",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "PREGABALIN CAPSULE [REMEDYREPACK INC.]; Part D 2024 claims rank 57"
+    },
+    {
+      "id": "fda-cephalexin",
+      "kind": "fda",
+      "groups": [
+        "keyed",
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/1716ea1e-40a9-4a23-870b-3c7e3d070095.xml",
+      "sha256": "ea5b263d6fe6a3e02c3fd1d84080338fde53baf795ad79abf966bdb53f30e774",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Respiratory Tract Infections",
+        "Otitis Media",
+        "Skin and Skin Structure Infections",
+        "Bone Infections",
+        "Genitourinary Tract Infections",
+        "Usage"
+      ],
+      "source": "CEPHALEXIN CAPSULE [PD-RX PHARMACEUTICALS, INC.]; Part D 2024 claims rank 60"
+    },
+    {
+      "id": "fda-rivaroxaban",
+      "kind": "fda",
+      "groups": [
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/481b7802-5093-43e7-bbd9-1532197eb6e6.xml",
+      "sha256": "99e977b5aeb88ca067541a173a72352bc2c6f20e237d90cc49cc985ff9623e89",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Reduction of Risk of Major Cardiovascular Events in Patients with Coronary Artery Disease (CAD)",
+        "Reduction of Risk of Major Thrombotic Vascular Events in Patients with Peripheral Artery Disease (PAD), Including Patients after Lower Extremity Revascularization due to Symptomatic PAD"
+      ],
+      "source": "RIVAROXABAN (RIVAROXABAN) TABLET [MICRO LABS LIMITED]; Part D 2024 claims rank 67"
+    },
+    {
+      "id": "fda-diltiazem",
+      "kind": "fda",
+      "groups": [
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/f7137458-0db3-7ecd-e053-6394a90a5f95.xml",
+      "sha256": "63151134d8ca949e10fbcdc417e44afa5a547f4d422bf4adb2dd1b664dcc1372",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Hypertension",
+        "Angina"
+      ],
+      "source": "DILTIAZEM HYDROCHLORIDE TABLET, EXTENDED RELEASE [SLATE RUN PHARMACEUTICALS, LLC]; Part D 2024 claims rank 69"
+    },
+    {
+      "id": "fda-venlafaxine",
+      "kind": "fda",
+      "groups": [
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/38431a76-6185-4c17-994f-8278b6cd7510.xml",
+      "sha256": "acbbdeb03a7272c71bbff8a0660ab89e799c125c97044d4365fa3e89d2e47d2c",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Major Depressive Disorder",
+        "Social Anxiety Disorder"
+      ],
+      "source": "VENLAFAXINE HYDROCHLORIDE, EXTENDED RELEASE TABLET [EDENBRIDGE PHARMACEUTICALS LLC.]; Part D 2024 claims rank 73"
+    },
+    {
+      "id": "fda-celecoxib",
+      "kind": "fda",
+      "groups": [
+        "keyed"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/f6291230-7598-407a-aef0-ec1f09277d2a.xml",
+      "sha256": "b750f7b0d86d4ba5afd46d27c21bb189069f0b341eb4d7c81f533eb1c03a6f63",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Osteoarthritis",
+        "Rheumatoid Arthritis",
+        "Juvenile Rheumatoid Arthritis",
+        "Ankylosing Spondylitis",
+        "Acute Pain",
+        "Primary Dysmenorrhea"
+      ],
+      "source": "CELECOXIB CAPSULE [ASCLEMED USA, INC.]; Part D 2024 claims rank 78"
+    },
+    {
+      "id": "fda-divalproex",
+      "kind": "fda",
+      "groups": [
+        "keyed",
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/2de86096-4ec7-47df-94db-9c7f6e5df424.xml",
+      "sha256": "20e7c83f2cad9b92384a7b76e082c3e7906eec61f50d42aa17f5531748489fe0",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Mania",
+        "Epilepsy",
+        "Migraine",
+        "Important Limitations"
+      ],
+      "source": "DIVALPROEX SODIUM TABLET, FILM COATED, EXTENDED RELEASE [PREFERRED PHARMACEUTICALS INC.]; Part D 2024 claims rank 83"
+    },
+    {
+      "id": "fda-levetiracetam",
+      "kind": "fda",
+      "groups": [
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/100d7618-b8e6-43f5-a4e2-6fd728de9d3f.xml",
+      "sha256": "031567edc2c7c3cdc304a65290462962cbce96a2e6171b24c07d02450f2039c7",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Partial-Onset Seizures",
+        "Myoclonic Seizures in Patients with Juvenile Myoclonic Epilepsy",
+        "Primary Generalized Tonic-Clonic Seizures"
+      ],
+      "source": "LEVETIRACETAM TABLET, FILM COATED [CARDINAL HEALTH 107, LLC]; Part D 2024 claims rank 89"
+    },
+    {
+      "id": "fda-ciprofloxacin",
+      "kind": "fda",
+      "groups": [
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/c47250c2-bece-46b5-8b3b-b7c97d9005d8.xml",
+      "sha256": "2606858bcfd4cce184027fd0dd3236a423d43d22152c8571a1de2044c2d6688f",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Skin and Skin Structure Infections",
+        "Bone and Joint Infections",
+        "Complicated Intra-Abdominal Infections",
+        "Infectious Diarrhea",
+        "Typhoid Fever (Enteric Fever)",
+        "Uncomplicated Cervial and Urethral Gonorrhea",
+        "Inhalational Anthrax (Post-Exposure)",
+        "Plague",
+        "Chronic Bacterial Prostatitis",
+        "Lower Respiratory Tract Infections",
+        "Urinary Tract Infections",
+        "Acute Sinusitis",
+        "Usage"
+      ],
+      "source": "CIPROFLOXACIN HYDROCHLORIDE TABLET, FILM COATED [WESTMINSTER PHARMACEUTICALS, LLC]; Part D 2024 claims rank 90"
+    },
+    {
+      "id": "fda-valsartan",
+      "kind": "fda",
+      "groups": [
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/170427e5-c74c-c7fc-e063-6294a90a6860.xml",
+      "sha256": "ed6f09bdf5e833a1cbb7bf8171ec4fb896c4692f0220dde6f1640dde9a01a225",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "VALSARTAN TABLET, FILM COATED [DIRECT_RX]; Part D 2024 claims rank 93"
+    },
+    {
+      "id": "fda-lamotrigine",
+      "kind": "fda",
+      "groups": [
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/811188be-d231-4b58-8d7a-b01b236fab51.xml",
+      "sha256": "ea12d00807b8184d64f3fe7a9e12eaf1fbdd53c206e7b04f0e8d93e9fa667070",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Epilepsy",
+        "Bipolar Disorder"
+      ],
+      "source": "LAMOTRIGINE TABLET [REMEDYREPACK INC.]; Part D 2024 claims rank 96"
+    },
+    {
+      "id": "fda-topiramate",
+      "kind": "fda",
+      "groups": [
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/b5f8da43-6daf-413c-9dcd-363617973738.xml",
+      "sha256": "f4561a3b9d1b26840a4bdfa4a4943fac779e30b1d61446eeed91e426580602af",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Monotherapy Epilepsy",
+        "Adjunctive Therapy Epilepsy",
+        "Migraine"
+      ],
+      "source": "TOPIRAMATE CAPSULE, EXTENDED RELEASE [NORTHSTAR RXLLC]; Part D 2024 claims rank 122"
+    },
+    {
+      "id": "fda-naproxen",
+      "kind": "fda",
+      "groups": [
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/86a3e612-3bfe-432f-9afd-972bb8a6644e.xml",
+      "sha256": "bfe3eb69920310dc59fa92b77444d6d5334f752423dca210004dde77ce6e2b0e",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "NAPROXEN TABLET [AMERICAN HEALTH PACKAGING]; Part D 2024 claims rank 136"
+    },
+    {
+      "id": "fda-hydroxychloroquine",
+      "kind": "fda",
+      "groups": [
+        "weight_based"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/ebe00e35-ed3d-40f4-9a93-a37b0da01ddb.xml",
+      "sha256": "c53f04e56f2993f5cdaa0088bfcc0de69b4ce21d446820a98483fce4bc7d2d68",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Malaria",
+        "Rheumatoid Arthritis",
+        "Systemic Lupus Erythematosus",
+        "Chronic Discoid Lupus Erythematosus"
+      ],
+      "source": "HYDROXYCHLOROQUINE SULFATE TABLET, FILM COATED [MAJOR PHARMACEUTICALS]; Part D 2024 claims rank 145"
+    },
+    {
+      "id": "ntsb-192719",
+      "kind": "ntsb",
+      "groups": [
+        "control"
+      ],
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192719/pdf",
+      "sha256": "be49660f5ab20701036f6a19a858b3edbf8fb985c55e1a65bea89c3c63fc99e7",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192720",
+      "kind": "ntsb",
+      "groups": [
+        "control"
+      ],
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192720/pdf",
+      "sha256": "b70b89f6fb908c2f2a911f46ac274d4600e89c9de5914ae635c4f1b4a16e7fd8",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192721",
+      "kind": "ntsb",
+      "groups": [
+        "control"
+      ],
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192721/pdf",
+      "sha256": "d7e70233074d713b03099ae2dbf175e89549890a2f7bf1678228a9bdd8abcf63",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192722",
+      "kind": "ntsb",
+      "groups": [
+        "control"
+      ],
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192722/pdf",
+      "sha256": "33977caab47e0a04e78af51cdbd15fcc627056790e83a8f37dc0712437cdd164",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192723",
+      "kind": "ntsb",
+      "groups": [
+        "control"
+      ],
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192723/pdf",
+      "sha256": "d6b02c26d2d909a027014d9698e05b224e42a12353f9d86ec661a6e9ada9a9f5",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192724",
+      "kind": "ntsb",
+      "groups": [
+        "control"
+      ],
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192724/pdf",
+      "sha256": "13edd641d39f5772991bebe69f0f6f22c913b4cee65d007492d930749b1b2f1c",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192728",
+      "kind": "ntsb",
+      "groups": [
+        "control"
+      ],
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192728/pdf",
+      "sha256": "c4a6c49e2fdaf1cd03df0fdada6f655c44737bf6b015b8f1505bc5d4323c1db5",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192729",
+      "kind": "ntsb",
+      "groups": [
+        "control"
+      ],
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192729/pdf",
+      "sha256": "7d0340f0cbd14593e4b2f3972d979284bf1febf77a767042eb4be6daf4b2cbfe",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192730",
+      "kind": "ntsb",
+      "groups": [
+        "control"
+      ],
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192730/pdf",
+      "sha256": "c4560d50c4dbf6fc00db203f3e322c7e2ab0f84620df15474f1f6dad1c1b1fa3",
+      "select": {}
+    },
+    {
+      "id": "ntsb-192731",
+      "kind": "ntsb",
+      "groups": [
+        "control"
+      ],
+      "url": "https://data.ntsb.gov/carol-repgen/api/Aviation/ReportMain/GenerateNewestReport/192731/pdf",
+      "sha256": "e098b015077e108cf811b7a3feead42de1caf2b8228a1d3053752dca776bd7a7",
+      "select": {}
+    },
+    {
+      "id": "irs-p3",
+      "kind": "irs",
+      "groups": [
+        "general"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3.pdf",
+      "sha256": "925d77d3775a677544895655b7dbd45abf38fe4838fa59445fdcc84c03ce0edc",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p517",
+      "kind": "irs",
+      "groups": [
+        "general"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p517.pdf",
+      "sha256": "42b05466cf30b99d4d487df5bb9ff412250a3e072217a8320b3727b60182b451",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p527",
+      "kind": "irs",
+      "groups": [
+        "general"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p527.pdf",
+      "sha256": "20c826e98dce23d20f80ab89da7e668a8ee7162a2194f480ce417cff651201d6",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p561",
+      "kind": "irs",
+      "groups": [
+        "general"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p561.pdf",
+      "sha256": "c51b97c8d89b027831c7a9c118c504a253e1cc0b276741dc27d34a9e292045cb",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p783",
+      "kind": "irs",
+      "groups": [
+        "general"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p783.pdf",
+      "sha256": "f8d305729ff049bd5132b564f92f8bea4926191341f203123c743b19b9e02767",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p784",
+      "kind": "irs",
+      "groups": [
+        "general"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p784.pdf",
+      "sha256": "d3206e258769acd19bcd6d3e7f90f996a2bfb9082cd620100087f894aeb47c40",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p936",
+      "kind": "irs",
+      "groups": [
+        "general"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p936.pdf",
+      "sha256": "a4ef802b92ddd40ce2d00331b5012834dd274fd6ce74624586a1ea7dc31c32de",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p962",
+      "kind": "irs",
+      "groups": [
+        "general"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p962.pdf",
+      "sha256": "c8adce5618ca721e27328fdabc9b22c771ea98b909afb60b17969ea51b2e9a5d",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p1136",
+      "kind": "irs",
+      "groups": [
+        "general"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1136.pdf",
+      "sha256": "66bf3f4c5f58cdc8e21b066ac237a06a7f841db6d67d71acbc358fff42c7eed8",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p1321",
+      "kind": "irs",
+      "groups": [
+        "general"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1321.pdf",
+      "sha256": "96cdba0663016f1dfe0cd7bb839fb092220686de126703424dadaac653486ebc",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p5",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p5.pdf",
+      "sha256": "75d4b3a4bd2773310241cd33372e6c601beeb8798ebd59d2e1eeadb87b12cdc0",
+      "select": {
+        "pages": [
+          7
+        ]
+      }
+    },
+    {
+      "id": "irs-p15-a",
+      "kind": "irs",
+      "groups": [
+        "negation",
+        "scale"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p15a.pdf",
+      "sha256": "3486cf0ad83401494aa57c688ffb411346ef399bd8202317c1eb3e6d41575c2e",
+      "select": {
+        "pages": [
+          11,
+          18
+        ]
+      }
+    },
+    {
+      "id": "irs-p15-t",
+      "kind": "irs",
+      "groups": [
+        "change",
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p15t.pdf",
+      "sha256": "31b3e2428628e8d2e40f6266c2c8f1b9b0b6ccd24607895f9b3be3d9d306d3fb",
+      "select": {
+        "pages": [
+          9,
+          66
+        ]
+      }
+    },
+    {
+      "id": "irs-p16",
+      "kind": "irs",
+      "groups": [
+        "change",
+        "scale"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p16.pdf",
+      "sha256": "65912d6c5fb53074964f25e26b45dadae60437075f8b3acfdfaea988bea30356",
+      "select": {
+        "pages": [
+          4,
+          5,
+          9
+        ]
+      }
+    },
+    {
+      "id": "irs-p17",
+      "kind": "irs",
+      "groups": [
+        "change",
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p17.pdf",
+      "sha256": "2d2381d62c7c77ed4b64b83ac23c28ed85b7c8304eb580c09bd9fd660be0840b",
+      "select": {
+        "pages": [
+          4,
+          14,
+          16
+        ]
+      }
+    },
+    {
+      "id": "irs-p54",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p54.pdf",
+      "sha256": "9546e80b796aaf505510eff4a8a9e45ef437d80681e14bdfba09e2502449ff91",
+      "select": {
+        "pages": [
+          24,
+          26
+        ]
+      }
+    },
+    {
+      "id": "irs-p55-b",
+      "kind": "irs",
+      "groups": [
+        "scale"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p55b.pdf",
+      "sha256": "c5d69d23ce948231af68f4d99f8820b00c9864f7adf9a288929465b04b710181",
+      "select": {
+        "pages": [
+          5,
+          9,
+          10
+        ]
+      }
+    },
+    {
+      "id": "irs-p225",
+      "kind": "irs",
+      "groups": [
+        "negation",
+        "scale"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p225.pdf",
+      "sha256": "67a82f92fad122ef2f611a88123a377a02c12b10cb7b15b4beb3f14d6d012249",
+      "select": {
+        "pages": [
+          3,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "id": "irs-p334",
+      "kind": "irs",
+      "groups": [
+        "change",
+        "scale"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p334.pdf",
+      "sha256": "722639ba7bfd6f5348234b58d21e1afd8cb0c04895138bd5c4539142dde6c60a",
+      "select": {
+        "pages": [
+          4,
+          5,
+          14
+        ]
+      }
+    },
+    {
+      "id": "irs-p502",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p502.pdf",
+      "sha256": "11801353ab959ee04dcadc1f799b6c0b87e1879680fe6f8511af3fa113690d25",
+      "select": {
+        "pages": [
+          10
+        ]
+      }
+    },
+    {
+      "id": "irs-p503",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p503.pdf",
+      "sha256": "3a00d0c1a1d6d3a88afdf418b79873f95f6d2de584c330ec67647139c09c5532",
+      "select": {
+        "pages": [
+          11
+        ]
+      }
+    },
+    {
+      "id": "irs-p504",
+      "kind": "irs",
+      "groups": [
+        "change",
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p504.pdf",
+      "sha256": "61bb4d52fa8c218dd9e6eac95513f16ffc5aa602df6b2f9af88369fbc295b175",
+      "select": {
+        "pages": [
+          15
+        ]
+      }
+    },
+    {
+      "id": "irs-p509",
+      "kind": "irs",
+      "groups": [
+        "negation",
+        "scale"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p509.pdf",
+      "sha256": "d7d7e3f816bb3e08782d4628efeee1505ae9740fa0a4633aa8746f02f3f4a0cb",
+      "select": {
+        "pages": [
+          3,
+          6
+        ]
+      }
+    },
+    {
+      "id": "irs-p510",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p510.pdf",
+      "sha256": "2ac8115b2433a4a378ed57ffb61cfaea7325cf43e0a63550635951b17534f6c7",
+      "select": {
+        "pages": [
+          28,
+          38,
+          41
+        ]
+      }
+    },
+    {
+      "id": "irs-p514",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p514.pdf",
+      "sha256": "35061c2d247112cd65654cdcd446aa7bd2d3370f84da2563239b8fe772a462bb",
+      "select": {
+        "pages": [
+          7,
+          8,
+          14
+        ]
+      }
+    },
+    {
+      "id": "irs-p515",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p515.pdf",
+      "sha256": "5b8ecb50ba25aaa07da88e2b3d949f4b416bcb0a50d78bd8999bd27a50cbba78",
+      "select": {
+        "pages": [
+          16,
+          46,
+          47
+        ]
+      }
+    },
+    {
+      "id": "irs-p516",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p516.pdf",
+      "sha256": "384194ae1351018e42ec51b4aa9ca457f830fb2ee886266872f35f7413e29a3c",
+      "select": {
+        "pages": [
+          10
+        ]
+      }
+    },
+    {
+      "id": "irs-p519",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p519.pdf",
+      "sha256": "c220ed64473d9f26b09784e45d5c4e05b052caace1263278bb6dc2060796ed85",
+      "select": {
+        "pages": [
+          10,
+          12,
+          23
+        ]
+      }
+    },
+    {
+      "id": "irs-p523",
+      "kind": "irs",
+      "groups": [
+        "change",
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p523.pdf",
+      "sha256": "f11fca89408fa329fdbfec9b9bd0aa22f411f30704e805088076d89a754f736b",
+      "select": {
+        "pages": [
+          4,
+          5,
+          19
+        ]
+      }
+    },
+    {
+      "id": "irs-p524",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p524.pdf",
+      "sha256": "e1ab76554e1523faeb3c34bded59303cfe3dec215be1db06272c4b9663a4a0c3",
+      "select": {
+        "pages": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "irs-p525",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p525.pdf",
+      "sha256": "39b0fa5e04c5d159a34583da12a91326f396f69286f4b7a6f399d34cebc2c25b",
+      "select": {
+        "pages": [
+          3,
+          6,
+          8
+        ]
+      }
+    },
+    {
+      "id": "irs-p526",
+      "kind": "irs",
+      "groups": [
+        "negation"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p526.pdf",
+      "sha256": "607011d9065a39b2fa3e08eda90c6313c581c2d4515f00fc23b0ae0a145435ae",
+      "select": {
+        "pages": [
+          4,
+          5,
+          10
+        ]
+      }
+    },
+    {
+      "id": "irs-p530",
+      "kind": "irs",
+      "groups": [
+        "negation",
+        "scale"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p530.pdf",
+      "sha256": "a794f1a2817175342d8d90568207b52c2b75229836ed8ab5814816723aa5aed1",
+      "select": {
+        "pages": [
+          6,
+          11
+        ]
+      }
+    },
+    {
+      "id": "irs-p537",
+      "kind": "irs",
+      "groups": [
+        "scale"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p537.pdf",
+      "sha256": "2bca1db38d6d34e814bfd7e11bde7530be34d481f23a6583fc2d7ee26ebfce88",
+      "select": {
+        "pages": [
+          16,
+          22
+        ]
+      }
+    },
+    {
+      "id": "irs-p538",
+      "kind": "irs",
+      "groups": [
+        "scale"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p538.pdf",
+      "sha256": "e2aa318b8ccaa755a0094833ebf1d0c60c59604931c1af6a4432db43309fc2f0",
+      "select": {
+        "pages": [
+          9,
+          13,
+          14
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-20036",
+      "kind": "fr",
+      "groups": [
+        "change",
+        "negation"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-30/pdf/2026-20036.pdf",
+      "sha256": "4b6b2d647e739fa7be7116d7f6dff3f19afb4670dbeb0a7107263616028da7f6",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19966",
+      "kind": "fr",
+      "groups": [
+        "negation",
+        "scale"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-30/pdf/2026-19966.pdf",
+      "sha256": "8f2dda5b18ab52949e4ced5536693ef36d319e92b37168bef90fd655b4b6c005",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19963",
+      "kind": "fr",
+      "groups": [
+        "change",
+        "negation"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-30/pdf/2026-19963.pdf",
+      "sha256": "b102cb0391494824d2778c288f1002f887fb8d21defb9a79721e8860a1e0b580",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19946",
+      "kind": "fr",
+      "groups": [
+        "scale"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-29/pdf/2026-19946.pdf",
+      "sha256": "fb1783c6e2c5b6694fb437845e2becc1f6c38cfa8a5ec99936dbb1842d7042c3",
+      "select": {
+        "pages": [
+          13
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19929",
+      "kind": "fr",
+      "groups": [
+        "scale"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-29/pdf/2026-19929.pdf",
+      "sha256": "dcd4369411526adfd91a16474ed035b54762cf44c61a64035820009daade9153",
+      "select": {
+        "pages": [
+          7
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19887",
+      "kind": "fr",
+      "groups": [
+        "scale"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-29/pdf/2026-19887.pdf",
+      "sha256": "6e7a33416d120b5d2d2a925b4fc30b1c387f8024bc808af9cebc9290fac38e80",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19745",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-28/pdf/2026-19745.pdf",
+      "sha256": "d8624686b6f471455c57f87bfe5822c8ab3a876edc472c7c87484daf90b9cd5a",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19666",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-25/pdf/2026-19666.pdf",
+      "sha256": "6c93dd92472b894ffc746a2b7ecde152b5a3ad29fcc4c366d9bdfb673b756b66",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19493",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-23/pdf/2026-19493.pdf",
+      "sha256": "1705808089408055ec9a3e0c13ce45593217545720289d6a24c185a57576d62c",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19389",
+      "kind": "fr",
+      "groups": [
+        "change",
+        "negation",
+        "scale"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-22/pdf/2026-19389.pdf",
+      "sha256": "4627eb0a5c68d8f45c6cfbb8d26ea9a569fde2f21802da7c583a28656deb58b1",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19173",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-18/pdf/2026-19173.pdf",
+      "sha256": "a95faed6af81cda4114d5890d26c163127a80eca9b1daca14397a46123e996bd",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19143",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-18/pdf/2026-19143.pdf",
+      "sha256": "472909ca1f7708211f0965a576c0769b9cd8ecd7a91ca747bd3b25fb607d3c8e",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-19006",
+      "kind": "fr",
+      "groups": [
+        "change",
+        "scale"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-16/pdf/2026-19006.pdf",
+      "sha256": "c132782d9688c230043ecb0093963ba10880bb869ee38814f552d7b1e38890be",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-18911",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-15/pdf/2026-18911.pdf",
+      "sha256": "eb1c7dd2d479ea8395162aa598f7bf95629b0ccdfafcfc81fd5e58e3d40e1e48",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-18830",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-15/pdf/2026-18830.pdf",
+      "sha256": "baa3ceac34fe8ab197b32d3559a9353f2a36dd6de7c36e62bf4bdb0dbbd7b8b7",
+      "select": {
+        "pages": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-18776",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-14/pdf/2026-18776.pdf",
+      "sha256": "58be1606cdf7a0b3d57dfb72d7dc0180bc33041f4febb0c2b0c0a18b3f13a9c9",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-18766",
+      "kind": "fr",
+      "groups": [
+        "change",
+        "negation",
+        "scale"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-14/pdf/2026-18766.pdf",
+      "sha256": "212b11663f0b7b49dc2b59de1fa0272e2c41decb98543ed8cf438b844544a2b8",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-18123",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-04/pdf/2026-18123.pdf",
+      "sha256": "a36a3272b52d2021bc7367941dbb8a82066ea8ba2fc1c72a25d4069174a44636",
+      "select": {
+        "pages": [
+          13
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-17901",
+      "kind": "fr",
+      "groups": [
+        "change",
+        "scale"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-01/pdf/2026-17901.pdf",
+      "sha256": "d7814e3e0a7d4f966e513d31691f6821324f6ec9a31e42db2a90d12a26fde784",
+      "select": {
+        "pages": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-17893",
+      "kind": "fr",
+      "groups": [
+        "change",
+        "negation"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-01/pdf/2026-17893.pdf",
+      "sha256": "206be683716d461b312c544775925a58c0fb4dc33cb284c974d6c4943881f156",
+      "select": {
+        "pages": [
+          5
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-17752",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-08-31/pdf/2026-17752.pdf",
+      "sha256": "40b1a6c87ba65b9b2023cefb36714d7fc24c77ca6a130531cfd2674f752ed013",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-17645",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-08-28/pdf/2026-17645.pdf",
+      "sha256": "decba83deef5b9fd5c4e25bfc217e835b6abd79761aba373460bd60e209c151b",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-17636",
+      "kind": "fr",
+      "groups": [
+        "change",
+        "scale"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-08-28/pdf/2026-17636.pdf",
+      "sha256": "ca12710f681339f197f8a8fafa5364f10e5cb615fe4dc0fbad85b4a2e7e00807",
+      "select": {
+        "pages": [
+          5
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-17512",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-08-27/pdf/2026-17512.pdf",
+      "sha256": "5e8c356e03bcfadfb0054eaeb21d15ab9ae1655357d82e34a8bc48bb1990f6a0",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-17511",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-08-27/pdf/2026-17511.pdf",
+      "sha256": "a5d346265f67390502bdf3f34b7e0b6b2aedffbadb51848307c7e1cf1e64f4ed",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    }
+  ]
+}

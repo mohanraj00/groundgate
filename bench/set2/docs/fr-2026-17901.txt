@@ -1,0 +1,265 @@
+Federal Register / Vol. 91, No. 168 / Tuesday, September 1, 2026 / Rules and Regulations
+
+56059
+
+comments, it appreciates the breadth
+and depth of responses. Illustrative
+examples of concerns raised are
+discussed in further detail below.
+
+Comment: Some comments argue that
+
+the Board’s proposed approach of
+treating single-award IDCs differently
+than multiple-award IDCs creates
+inconsistencies. Some further posit the
+approach is contradictory to the purpose
+of the CAS exemptions themselves,
+which are meant to reduce the
+administrative burden on low-risk
+acquisitions. Others declared this
+approach creates inequity in the
+treatment of single-award and multiple-
+award IDCs.
+
+Response: The Board does not
+
+consider the approach as inconsistent or
+creating inequities. Single-award and
+multiple-award IDCs are inherently
+different. Task or delivery orders
+awarded under each type of IDC are
+awarded under different circumstances
+and present differentiated levels of risk.
+Single-award IDCs establish a long-term
+relationship without maintaining
+competition for task or delivery orders.
+Single-award IDCs increase the potential
+for vendor lock-in, further reducing
+competition and creating risk to the
+Government. This type of transaction
+creates higher risk, not lower risk as
+some comments suggested.
+
+Comment: Some comments theorized
+
+the Board’s proposed approach of
+determining CAS applicability
+differently for single-award IDCs could
+result in applying CAS to transactions
+that would otherwise be exempt such as
+commercial products and commercial
+services. One comment postulated that
+the application of CAS at the IDC level
+could result in the application of CAS
+to tasks or delivery orders that would be
+exempt if these same task or delivery
+orders were issued under a multiple-
+award IDC or nearly all other contract
+scenarios. Another comment declared
+the Board’s proposed approach of
+determining CAS applicability
+differently for single-award IDCs would
+result in application of CAS to fixed-
+price contracts.
+
+Response: The Board appreciates the
+concerns raised associated with unique
+hybrid contract arrangements. As noted
+above, the Board is addressing the
+application of CAS to hybrid contracts
+through this rulemaking. In addition,
+the Board has added additional
+language to clarify that an entire single-
+award IDC could be exempt under
+certain circumstances.
+
+Comment: A number of comments
+suggested the Board delay issuance of a
+final rule, and conduct additional data
+analysis related to single-award IDCs.
+This point was part of their overall
+
+objection to the Board’s proposed
+approach for single-award IDCs, and
+concerns that in some cases the
+cumulative value of task or delivery
+orders on single-award IDCs may not
+reach or could fall well below the
+ceiling value. For example, it would be
+possible for a $35 million single-award
+IDC to receive less than $35 million in
+tasks or delivery orders. Similarly, a
+$100 million single-award IDC could
+receive less than $100 million in tasks
+or delivery orders.
+
+Response: The Board recognizes the
+
+potential exists for cases as those
+described by comments and has
+carefully considered the likelihood of
+these scenarios in both the NPRM and
+this final rule. These scenarios under
+single-award IDCs are similar to the risk
+under definitive contracts that may, in
+some cases, not have all options
+exercised. The Board believes the risk,
+similar to most regulations applying
+thresholds, is amplified at or near the
+threshold. However, the Board believes
+this risk decreases at higher values and
+is mitigated as a result of the increased
+thresholds finalized in this rule. The
+Board’s analysis also indicated that
+most of the entities receiving single-
+award IDCs would otherwise be subject
+to CAS based on definitive awards,
+which further mitigates this risk. The
+Board appreciates the willingness of the
+industry associations to engage with
+their members to collect, aggregate, and
+provide the Board with actual data. This
+would be particularly beneficial for
+subcontracts where currently the
+government-wide data is limited. Lastly,
+the Board notes that this final rule does
+not preclude the Board from conducting
+further analysis or additional
+rulemaking in the future as the impact
+of the threshold increases take effect
+and additional information becomes
+available or is provided to the Board.
+
+VI. Expected Impact of the Rule
+This final rule is deregulatory,
+reduces compliance costs, simplifies
+CAS administration for existing
+contractors, and reduces barriers to
+entry for nontraditional contractors,
+including new mid-size entities who no
+longer qualify for a full exemption from
+CAS as small businesses. This final rule
+increases the basic CAS applicability
+threshold from the current $2.5 million
+to $35 million, and eliminates the $7.5
+million trigger contract concept. This
+simplifies the determination of CAS
+applicability while dramatically
+lowering barriers to entry on larger
+value contracts. Larger contract values
+will attract additional private
+investment into the federal contracting
+marketplace and increase competition
+
+as a result of the higher point of entry
+without the need to establish more
+sophisticated compliance regimes
+required to comply with CAS
+requirements.
+
+This final rule further reduces the
+CAS regulatory footprint by doubling
+the thresholds for full CAS coverage and
+Disclosure Statement requirements from
+$50 million to $100 million. This
+significantly reduce compliance burden
+and lowers barriers to entry into the
+federal marketplace. The Board
+analyzed FPDS data for the five-year
+period covering FYs 2020 through 2024
+and estimates there have been 773
+entities subject to full coverage and
+Disclosure Statement requirements with
+aggregate total contract values during
+the period of $1.22 trillion. Applying
+the finalized threshold of $100 million
+to the data set estimates a reduction in
+the number of entities to 564 while
+maintaining $1.21 trillion of the dollars.
+This represents a nearly 30 percent
+reduction in entities that would be
+subject to full CAS coverage and
+Disclosure Statement reporting with a
+less than one percent loss of the dollars
+currently subject to these requirements.
+The higher threshold for full coverage
+reduces the barriers to entry for
+nontraditional contractors including
+contractors that have outgrown their
+small business size status and no longer
+qualify for a full exemption from CAS
+as small businesses as they may be more
+willing to compete for larger contracts
+only subject to modified coverage.
+
+This final rule codifies needed clarity
+
+on applying the CAS thresholds and
+exemptions to IDCs. Having a clear rule
+avoids unnecessary ambiguity, friction
+and contract disputes. Determining CAS
+applicability for multiple-award IDCs at
+the task or delivery order ensure CAS is
+not overapplied to lower-risk
+transactions. Similarly, determining
+CAS applicability for single-award IDCs
+at the IDC level ensures CAS is not
+underapplied to higher-risk
+transactions. This lowers barriers to
+entry into the federal marketplace as
+potential offerors now have clarity on
+whether or not they will be subject to
+CAS and, if covered, whether full or
+modified.
+
+The changes addressed in this final
+
+rule, both individually and in
+conjunction with the Board’s ongoing
+broader CAS to GAAP conformance
+efforts simplifies CAS administration
+and reduces barriers to entry for
+nontraditional contractors including
+new mid-size entities who no longer
+qualify as small businesses. These
+actions are expected to increase
+competition in federal contracting.
+
+VerDate Sep<11>2014 15:53 Aug 31, 2026 Jkt 268001 PO 00000 Frm 00059 Fmt 4700 Sfmt 4700 E:\FR\FM\01SER1.SGM 01SER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+B
+X
+N
+H
+B
+8
+K
+S
+D
+n
+o
+
+r
+e
+t
+t
+o
+
+l

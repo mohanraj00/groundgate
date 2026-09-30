@@ -1,0 +1,425 @@
+Under the 12-month rule, a taxpayer is not required to
+capitalize amounts paid to create certain rights or benefits
+for the taxpayer that do not extend beyond the earlier of
+the following.
+• 12 months after the right or benefit begins, or
+• The end of the tax year after the tax year in which pay-
+
+ment is made.
+
+If you have not been applying the general rule (an ex-
+pense paid in advance is deductible only in the year to
+which it applies) and/or the 12-month rule to the expenses
+you paid in advance, you must obtain approval from the
+IRS before using the general rule and/or the 12-month
+rule. See Change in Accounting Method, later.
+
+Example 1. You are a calendar year taxpayer and
+pay $3,000 in 2021 for a business insurance policy that is
+effective for 3 years (36 months), beginning on July 1,
+2021. The general rule that an expense paid in advance is
+deductible only in the year to which it applies is applicable
+to this payment because the payment does not qualify for
+the 12-month rule. Therefore, only $500 (6/36 x $3,000) is
+deductible in 2021, $1,000 (12/36 x $3,000) is deductible
+in 2022, $1,000 (12/36 x $3,000) is deductible in 2023,
+and the remaining $500 is deductible in 2024.
+
+Example 2. You are a calendar year taxpayer and
+pay $10,000 on July 1, 2021, for a business insurance
+policy that is effective for only 1 year beginning on July 1,
+2021. The 12-month rule applies. Therefore, the full
+$10,000 is deductible in 2021.
+
+Excluded Entities
+
+The following entities generally cannot use the cash
+method, including any combination of methods that in-
+cludes the cash method. (However, see Special rules for
+farming businesses, later.)
+
+• A corporation (other than an S corporation). However,
+
+see Exceptions below.
+
+• A partnership with a corporation (other than an S cor-
+poration) as a partner. However, see Exceptions be-
+low.
+
+• A tax shelter, as defined in section 448(d)(3).
+
+Exceptions
+
+The following entities can use the cash method of ac-
+counting.
+• Any corporation or partnership, other than a tax shel-
+ter, that meets the gross receipts test explained be-
+low.
+
+• A qualified personal service corporation (PSC).
+
+Gross receipts test. A corporation or partnership, other
+than a tax shelter, that meets the gross receipts test can
+generally use the cash method. A corporation or a part-
+nership meets the test if its average annual gross receipts
+for the 3 prior tax years were $26 million or less (indexed
+for inflation).
+
+Determine an entity’s average annual gross receipts
+
+by:
+
+1. Adding the gross receipts for the 3 prior tax years;
+
+and
+
+2. Dividing the total by 3.
+
+Generally, a partnership applies the test at the partnership
+level. Gross receipts for a short tax year are annualized.
+
+Aggregation rules. Organizations that are members
+of an affiliated service group or a controlled group of cor-
+porations treated as a single employer for tax purposes
+must aggregate their gross receipts to determine whether
+the gross receipts test is met.
+
+Change to accrual method. A corporation or part-
+nership that fails to meet the gross receipts test for any tax
+year cannot use the cash method and must change to an
+accrual method of accounting, effective for the tax year in
+which the entity fails to meet this test. The entity must file
+Form 3115 to request the change. See the Instructions for
+Form 3115.
+
+Special rules for farming businesses. Generally, a
+taxpayer engaged in the trade or business of farming is al-
+lowed to use the cash method for its farming business.
+However, certain corporations (other than S corporations)
+and partnerships that have a partner that is a corporation
+must use an accrual method for their farming business,
+unless they meet the gross receipts test discussed above.
+See chapter 2 of Pub. 225, Farmer's Tax Guide, for
+
+more information.
+
+Qualified Personal Service Corporation (PSC). A cor-
+poration that meets the function and ownership tests be-
+low is a qualified PSC and can use the cash method.
+
+Function test. A corporation meets the function test if
+at least 95% of its activities are in the performance of
+services in the fields of health (including veterinary serv-
+ices), law, engineering (including surveying and mapping),
+architecture, accounting, actuarial science, performing
+arts, or consulting.
+
+Ownership test. A corporation meets the ownership
+test if substantially all of its stock is owned, directly or indi-
+rectly, at all times during the year by one or more of the
+following.
+
+1. Employees performing services for the corporation in
+
+a field qualifying under the function test.
+
+2. Retired employees who had performed services in
+
+those fields.
+
+3. The estate of an employee described in (1) or (2).
+
+4. Any other person who acquired the stock by reason of
+the death of an employee referred to in (1) or (2), but
+only for the 2-year period beginning on the date of
+death.
+
+Indirect ownership is generally taken into account if the
+stock is owned indirectly through one or more partner-
+ships, S corporations, or qualified PSCs. Stock owned by
+one of these entities is considered owned by the entity's
+
+Publication 538 (January 2022)
+
+Page 9
+Related Persons
+
+Business expenses and interest owed to a related person
+who uses the cash method of accounting are not deducti-
+ble until you make the payment and the corresponding
+amount is includible in the related person's gross income.
+Determine the relationship for this rule as of the end of the
+tax year for which the expense or interest would otherwise
+be deductible. See section 267 of the Internal Revenue
+Code for the definition of related person.
+
+Inventories
+
+An inventory is necessary to clearly show income when
+the production, purchase, or sale of merchandise is an in-
+come-producing factor. If you must account for an inven-
+tory in your business, you must use an accrual method of
+accounting for your purchases and sales. However, see
+Exception for Small Business Taxpayers, below. Also, see
+Accrual Method, earlier.
+
+To figure taxable income, you must value your inven-
+tory at the beginning and end of each tax year. To deter-
+mine the value, you need a method for identifying the
+items in your inventory and a method for valuing these
+items. See Identifying Cost and Valuing Inventory, later.
+
+The rules for valuing inventory are not the same for all
+businesses. The method you use must conform to gener-
+ally accepted accounting principles for similar businesses
+and must clearly reflect income. Your inventory practices
+must be consistent from year to year.
+
+The rules discussed here apply only if they do not
+conflict with the uniform capitalization rules of
+section 263A and the mark-to-market rules of sec-
+
+tion 475.
+
+Exception for Small Business Taxpayers
+
+If you are a small business taxpayer (defined below), you
+can choose not to keep an inventory, but you must still
+use a method of accounting for inventory that clearly re-
+flects income. A small business taxpayer can account for
+inventory by (a) treating the inventory as non-incidental
+materials and supplies, or (b) conforming to its treatment
+of inventory in an applicable financial statement (as de-
+fined in section 451(b)(3)). If it does not have an applica-
+ble financial statement, it can use the method of account-
+ing used in its books and records prepared according to
+its accounting procedures. See Regulations section
+1.471-1(b). If, however, you choose to keep an inventory,
+you generally must use an accrual method of accounting
+and value the inventory each year to determine your cost
+of goods sold.
+
+Small business taxpayer. You qualify as a small busi-
+ness taxpayer if you:
+• Have average annual gross receipts of $26 million or
+less (indexed for inflation) for the 3 prior tax years, and
+• Are not a tax shelter (as defined in section 448(d)(3)).
+
+If your business has not been in existence for all of the
+3 tax-year period used in figuring average gross receipts,
+base your average on the period it has existed. If your
+business has a predecessor entity, include the gross re-
+ceipts of the predecessor entity from the 3 tax-year period
+when figuring average gross receipts. If your business (or
+predecessor entity) had short tax years for any of the 3
+tax-year period, annualize your business’s gross receipts
+for the short tax years that are part of the 3 tax-year pe-
+riod.
+
+Changing your method of accounting for inventory.
+If you want to change your method of accounting for in-
+ventory, you must file Form 3115. See the Instructions for
+Form 3115.
+
+Items Included in Inventory
+
+Your inventory should include all of the following.
+
+• Merchandise or stock in trade.
+• Raw materials.
+• Work in process.
+• Finished products.
+• Supplies that physically become a part of the item in-
+
+tended for sale.
+
+Merchandise. Include the following merchandise in in-
+ventory.
+• Purchased merchandise if title has passed to you,
+
+even if the merchandise is in transit or you do not have
+physical possession for another reason.
+
+• Goods under contract for sale that you have not yet
+
+segregated and applied to the contract.
+
+• Goods out on consignment.
+• Goods held for sale in display rooms, merchandise
+mart rooms, or booths located away from your place
+of business.
+
+C.O.D. mail sales. If you sell merchandise by mail
+and intend payment and delivery to happen at the same
+time, title passes when payment is made. Include the mer-
+chandise in your closing inventory until the buyer pays for
+it.
+
+Containers. Containers such as kegs, bottles, and
+cases, regardless of whether they are on hand or returna-
+ble, should be included in inventory if title has not passed
+to the buyer of the contents. If title has passed to the
+buyer, exclude the containers from inventory. Under cer-
+tain circumstances, some containers can be depreciated.
+See Pub. 946.
+
+Merchandise not included. Do not include the fol-
+
+lowing merchandise in inventory.
+
+• Goods you have sold, but only if title has passed to
+
+the buyer.
+
+• Goods consigned to you.
+
+Publication 538 (January 2022)
+
+Page 13
+
+!
+
+CAUTION
+• Goods ordered for future delivery if you do not yet
+
+have title.
+
+Assets. Do not include the following in inventory.
+• Land, buildings, and equipment used in your busi-
+
+ness.
+
+• Notes, accounts receivable, and similar assets.
+• Real estate held for sale by a real estate dealer in the
+
+ordinary course of business.
+
+• Supplies that do not physically become part of the
+
+item intended for sale.
+
+Special rules apply to the cost of inventory or
+property imported from a related person. See the
+regulations under section 1059A of the Internal
+
+Revenue Code.
+
+Identifying Cost
+
+You can use any of the following methods to identify the
+cost of items in inventory.
+
+Specific Identification Method
+
+Use the specific identification method when you can iden-
+tify and match the actual cost to the items in inventory.
+
+Use the FIFO or LIFO method, explained next, if:
+• You cannot specifically identify items with their costs,
+
+or
+
+• The same type of goods are intermingled in your in-
+
+ventory and they cannot be identified with specific in-
+voices.
+
+FIFO Method
+
+The FIFO (first-in first-out) method assumes the items you
+purchased or produced first are the first items you sold,
+consumed, or otherwise disposed of. The items in inven-
+tory at the end of the tax year are matched with the costs
+of similar items that you most recently purchased or pro-
+duced.
+
+LIFO Method
+
+The LIFO (last-in first-out) method assumes the items of
+inventory you purchased or produced last are the first
+items you sold, consumed, or otherwise disposed of.
+Items included in closing inventory are considered to be
+from the opening inventory in the order of acquisition and
+from those acquired during the tax year.
+
+LIFO rules. The rules for using the LIFO method are
+very complex. Two are discussed briefly here. For more
+information on these and other LIFO rules, see sections
+472 through 474 of the Internal Revenue Code and the re-
+lated income tax regulations.
+
+Dollar-value method. Under the dollar-value method
+of pricing LIFO inventories, goods and products must be
+
+grouped into one or more pools (classes of items), de-
+pending on the kinds of goods or products in the invento-
+ries. See Regulations section 1.472-8.
+
+Simplified dollar-value method. Under this method,
+you establish multiple inventory pools in general catego-
+ries from appropriate government price indexes. You then
+use changes in the price index to estimate the annual
+change in price for inventory items in the pools.
+
+An eligible small business (average annual gross re-
+ceipts of $5 million or less for the 3 preceding tax years)
+can elect the simplified dollar-value LIFO method. See
+section 474(c).
+
+Taxpayers who cannot use the method under section
+474 should see Regulations section 1.472-8(e)(3) for a
+similar simplified dollar-value method.
+
+Adopting LIFO method. File Form 970, Application To
+Use LIFO Inventory Method, or a statement with all the in-
+formation required on Form 970 to adopt the LIFO
+method. You must file the form (or the statement) with
+your timely filed tax return for the year in which you first
+use LIFO.
+
+Differences Between
+FIFO and LIFO
+
+Each method produces different income results, depend-
+ing on the trend of price levels at the time. In times of infla-
+tion, when prices are rising, LIFO will produce a larger
+cost of goods sold and a lower closing inventory. Under
+FIFO, the cost of goods sold will be lower and the closing
+inventory will be higher. However, in times of falling pri-
+ces, the opposite will hold.
+
+Valuing Inventory
+
+The value of your inventory is a major factor in figuring
+your taxable income. The method you use to value the in-
+ventory is very important.
+
+The following methods, described below, are those
+
+generally available for valuing inventory.
+
+• Cost.
+• Lower of cost or market.
+• Retail.
+
+Goods that cannot be sold. These are goods you can-
+not sell at normal prices or they are unusable in the usual
+way because of damage,
+imperfections, shop wear,
+changes of style, odd or broken lots, or other similar cau-
+ses. You should value these goods at their bona fide sell-
+ing price minus direct cost of disposition, no matter which
+method you use to value the rest of your inventory. If
+these goods consist of raw materials or partly finished
+goods held for use or consumption, you must value them
+on a reasonable basis, considering their usability and con-
+dition. Do not value them for less than scrap value. For
+more information, see Regulations section 1.471-2(c).
+
+Page 14
+
+Publication 538 (January 2022)
+
+!
+
+CAUTION

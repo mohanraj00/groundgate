@@ -1,0 +1,98 @@
+Publication 1321 (October 2025)
+Special Instructions For Bona Fide Residents
+Of Puerto Rico Who Must File A U.S. Individual
+Income Tax Return (Form 1040 or Form 1040-SR)
+
+If you are a bona fide resident of Puerto Rico who will file a U.S. Federal Income Tax Return, Form
+1040, and claim an exclusion for income earned in Puerto Rico, you will have to make certain
+adjustments on your return. These special instructions explain the adjustments, and how to make
+them on your return.
+
+Bona Fide Residents of Puerto Rico: Generally, you are a bona fide resident of Puerto Rico if during
+the tax year, you:
+
+• Meet the presence test
+
+• Do not have a tax home outside Puerto Rico, and
+
+• Do not have a closer connection to the United States or to a foreign country than to Puerto Rico.
+
+Publication 570 discusses these requirements and provides information on the special rules that apply
+in the year you are moving to or from Puerto Rico.
+
+WHO MUST FILE
+In general, section 933 of the U.S. Internal Revenue Code requires that U.S. citizens who are bona fide
+residents of Puerto Rico during the entire taxable year, but who receive income from sources outside
+Puerto Rico and/or receive income as a civilian or military employee of the U.S. Government in Puerto
+Rico, must file a U.S. Federal income tax return. Active duty members of the U.S. Armed Forces who
+claim Puerto Rico as their legal residence are employees of the U.S. Government. They are required to
+file a U.S. income tax return and declare the income they receive for their services rendered in Puerto
+Rico, the United States, or foreign countries in compliance with their military orders. The income
+you receive from Puerto Rico sources (except income received as a civilian or military employee of
+the U.S. government) is not subject to U.S. income tax. See source of income rules explained in this
+publication. Because some of the income is excluded (under Code section 933) a part of the itemized
+deductions or a part of the standard deduction amount on your U.S. return must be allocated to that
+excluded income. This computation must be made before you can determine if you must file a U.S.
+tax return, because the minimum income level at which you must file a return is based on the standard
+deduction for your particular filing status.
+
+1
+Use the following worksheet to modify standard deduction and to determine if you have to file a U.S.
+income tax return:
+
+1. Enter STANDARD DEDUCTION
+
+If your filing status is (see caution below)
+
+Single
+
+under 65 enter $15,750 ...................
+
+65 or older enter $17,750 ................
+
+Married filing jointly
+
+both under 65 enter $31,500 ...........
+
+one 65 or older enter $33,100 .........
+
+both 65 or older enter $34,700 .......
+
+Head of household
+
+under 65 enter $23,625 ...................
+
+65 or older enter $25,625 ................
+
+Qualifying surviving spouse
+
+under 65 enter $31,500 ...................
+
+65 or older enter $33,100 ................
+
+Married filing separately
+
+See note after line 2d below.
+
+Caution: If someone can claim you as a dependent, enter amount from the Standard Deduction
+Worksheet in the instructions for Form 1040 or Form 1040-SR, as applicable.
+
+2. Allowable portion of STANDARD DEDUCTION
+
+a. Gross income subject to U.S. tax (include taxable social security
+benefits); use Worksheet 1 of Pub. 915 to compute your taxable
+social security benefits) ...........................................................................
+
+b. Total gross income from all sources (including excluded P.R. Income) ...
+
+c. Divide line 2a by line 2b ..........................................................................
+
+d. Adjusted filing requirement: Multiply STANDARD DEDUCTION (line 1)
+
+by line 2c .................................................................................................
+
+You must file a return if your gross income subject to U.S. tax (line 2a) is equal to or more than your
+adjusted filing requirement (line 2d). If you are married filing a separate return, you must file a return if
+your gross income subject to U.S. tax is equal to or more than $5.
+
+2

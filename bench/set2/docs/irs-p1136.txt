@@ -1,0 +1,186 @@
+Inside This Issue
+
+High-Income Tax Returns, Tax Year 2022
+by Justin Bryan
+
+2
+
+For Tax Year 2022, there were just under 12.5 million individual
+income tax returns with an adjusted gross income of $200,000
+or more, which accounted for 7.8% of all returns that were filed
+for the year. Of these, 9,997 returns had no worldwide income
+tax liability, which was a 12.7 % increase from the previous
+year. It was the fourth increase in a row, but still below the peak
+of 12,326 returns for Tax Year 2008.
+
+SOI BULLETIN
+
+A QUARTERLY STATISTICS OF INCOME REPORT
+
+Volume 45 | Number 4
+
+The Statistics of Income (SOI) Bulletin is issued quarterly
+
+by the Statistics of Income division of the Internal Revenue
+
+Service. This report provides written descriptive analyses of
+
+statistics previously released on SOI’s Tax Stats webpage (see
+
+www.irs.gov/statistics) based on the data collected from the
+
+distinct types of tax and information returns filed with the IRS
+
+and included in SOI’s programs. Periodically, this report also
+
+includes results from special analytical studies of particular
+
+interest to students of the U.S. tax system, tax policymakers,
+
+and tax administrators. Selected historical and other data
+
+tables, previously published in the spring issue of the SOI
+
+Bulletin, are now only available on SOI’s Tax Stats webpages
+
+of the IRS website (https://www.irs.gov/statistics/soi-tax-
+
+stats-historical-data-tables). Information on the availability of
+
+supplemental data on the topics included in this issue or other
+
+SOI subjects may be obtained by sending an email to SOI’s
+
+Statistical Information Services at sis@irs.gov, or by writing to
+
+the Director, Statistics of Income Division OS:RAAS:S,
+
+Internal Revenue Service, 1111 Constitution Avenue, NW,
+
+K-Room 4112, Washington, D.C. 20224.
+
+The SOI Bulletin was prepared under the direction of Wayne
+
+Kei, Chief, Data Dissemination Section. Daniel Martinez (layout
+
+and graphics editor) prepared the manuscript. Spencer Adams
+
+(writer/editor) and Beth Kilss (contractor) also made major
+
+contributions in the production of this issue. Views expressed
+
+in the article are those of the author(s) and do not necessarily
+
+represent the views of the Treasury Department or the Internal
+
+Revenue Service.
+
+NOTE: When using information from this report, cite the
+
+publication as follows—
+
+Internal Revenue Service
+
+Statistics of Income Bulletin
+
+Spring 2026
+
+Washington, D.C.
+
+w w w . i r s . g o v / s t a t i s t i c s Statistics of Income Bulletin | Spring 2026
+High-Income Tax Returns for Tax Year 2022
+
+by Justin Bryan
+
+F^or Tax Year (TY) 2022, there were just under 12.5 million
+
+individual income tax returns with an adjusted gross income
+(AGI) of $200,000 or more, which accounted for 7.8% of all
+returns filed for the year.^1 Of these, 9,997 returns had no world-
+wide income tax liability, which was a 12.7% increase from the
+previous year. It was the fourth increase in a row but still below
+the peak of 12,326 returns for TY 2008.
+
+This article presents detailed data for high-income returns
+for TY 2022 and summary data for TYs 1977–2021. Detailed
+data for TYs 1974–2021 were previously published.^2
+
+Changes in Tax Law
+Major changes in effect for TY 2022 that influenced the data in
+this article are explained here. Many changes implemented by
+Public Law 117-2—enacted on March 11, 2021, and is com-
+monly referred to as the American Rescue Plan (ARP) Act—for
+TY 2021 were not extended for TY 2022. The child and depen-
+dent care credit dollar limit on qualifying expenses was $3,000
+(previously $8,000 in TY 2021) for one qualifying person and
+$6,000 (previously $16,000) for two or more qualifying persons.
+The maximum percentage of qualifying expenses eligible for
+the credit decreased from 50% to 35%, along with the income
+limit at which the credit began phasing out, $15,000 (previ-
+ously $125,000 for TY 2021). Additionally, for taxpayers who
+received dependent care benefits from their employer, the
+dollar limit of the exclusion amount decreased for TY 2022
+to $5,000 (previously $10,500). For married employees
+filing separate returns, the maximum amount decreased
+to $2,500 (previously $5,250). Also, for TY 2022, the child
+and dependent care credit was nonrefundable whereas it
+was a refundable credit for TY 2021.
+
+Under the ARP Act of 2021, many changes were made
+to enhance the child tax credit, but those changes were not
+extended for TY 2022. A child must have been under age 17
+at the end of TY 2022 to be a qualifying child, down from 18
+
+in TY 2021. Depending on modified AGI, a taxpayer received
+a credit amount of up to $2,000 for a qualifying child, down
+from the TY 2021 maximum amounts of $3,600 for children
+under 5 and $3,000 for those older. The amount of the child tax
+credit that could be claimed as a refundable credit was limited
+as it was in TY 2020, except the maximum additional child tax
+credit amount increased to $1,500 for each qualifying child. The
+credit for other dependents was unchanged from TY 2021 and
+remained at $500.
+
+Lastly, the ARP Act of 2021 provided certain self-employed
+individuals the opportunity to claim credits for up to 10 days of
+“paid sick leave” and up to 60 days of “paid family leave” if they
+were unable to work or telework due to circumstances
+related to COVID-19. These credits expired in TY 2022 and
+could no longer be claimed.
+
+Income and Tax Concepts
+Two income concepts are used in this article to classify tax
+returns as high-income: the statutory concept of AGI and the
+“expanded income” concept. The expanded income concept
+includes items that were reported on the tax return to obtain a
+more comprehensive measure of income than AGI. Specifically,
+expanded income is AGI plus tax-exempt interest, nontaxable
+Social Security benefits, the foreign-earned income exclusion,
+and items of “tax preference” for Alternative Minimum Tax
+(AMT) purposes less unreimbursed employee business
+expenses, moving expenses, investment interest expenses to the
+extent that they do not exceed investment income, and miscel-
+laneous itemized deductions.^3,4,5
+
+AGI and expanded income differed for 36.7 million (22.8%)
+of the 161.1 million individual income tax returns filed for TY
+2022 (Figure A). This was a 2.4% increase from the number of
+returns that differed for TY 2021. Expanded income
+exceeded AGI in 96.2% of these returns. The average differ-
+ence between expanded income and AGI was $11,662, and the
+
+1 The Tax Reform Act of 1976 requires annual publication of data on individual income tax returns reporting incomes of $200,000 or more, including the number of such returns reporting no
+income tax liability and the importance of various tax provisions in making these returns nontaxable. The statutory requirement is contained in section 2123 of the Tax Reform Act of 1976 (90
+Stat. at 1915).
+2 See the References section for more details.
+3 The definition of adjustments to AGI to obtain the expanded income given in the text is for the current year. See Appendix A for a discussion of AGI and expanded income and a list of adjust-
+ments covering all years since 1977.
+4 See Notes to Appendix A, note A4.
+5 Tax-exempt interest had to be reported on the individual income tax return starting with TY 1987 and is included in expanded income starting with that year. Beginning with TY 1991, tax-
+exempt interest was incorporated into the criteria used for sampling returns for Statistics of Income, thus increasing the reliability of the estimates of expanded income.
+
+Statistics of Income Bulletin | Spring 2026
+
+w w w . i r s . g o v / s t a t i s t i c s
+
+Statistics of Income

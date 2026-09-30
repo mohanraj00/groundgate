@@ -1,0 +1,272 @@
+file) for the tax year in which the taxes were actually paid
+or accrued. You can also choose to claim a deduction or
+to change from claiming a credit to claiming a deduction at
+any time during the period within 3 years from the time you
+filed the return or 2 years from when you paid the tax,
+whichever is later. This 10-year or 3-year (or 2-year) pe-
+riod may be extended by an agreement. You make or
+change your choice on your tax return (or on an amended
+return) for the year your choice is to be effective.
+
+Foreign income taxes. These are generally income
+taxes you pay to any foreign country or U.S. territory.
+
+Foreign income taxes on U.S. return. Foreign income
+taxes can only be taken as a credit on Schedule 3 (Form
+1040), line 1, or as an itemized deduction on Schedule A
+(Form 1040). These amounts cannot be included as with-
+held income taxes on Form 1040 or 1040-SR, line 25.
+
+Foreign taxes paid on excluded income. You cannot
+take a credit or deduction for foreign income taxes paid on
+earnings you exclude from tax under any of the following.
+
+• Foreign earned income exclusion.
+• Foreign housing exclusion.
+• Territory exclusion.
+If your wages are completely excluded, you can’t deduct
+or take a credit for any of the foreign taxes paid on your
+wages.
+
+If only part of your wages is excluded, you can’t deduct
+or take a credit for the foreign income taxes allocable to
+the excluded part. You find the taxes allocable to your ex-
+cluded wages by applying a fraction to the foreign taxes
+paid on foreign earned income received during the tax
+year. The numerator (top number) of the fraction is your
+excluded foreign earned income received during the tax
+year minus deductible expenses allocable to that income
+(not including the foreign housing deduction). The denom-
+inator (bottom number) of the fraction is your total foreign
+earned income received during the tax year minus all de-
+ductible expenses allocable to that income (including the
+foreign housing deduction).
+
+If foreign law taxes both earned income and some other
+type of income and the taxes on the other type can’t be
+separated, the denominator of the fraction is the total
+amount of income subject to foreign tax minus deductible
+expenses allocable to that income.
+
+Caution: If you take a foreign tax credit for tax on in-
+come you could have excluded under your choice to ex-
+clude foreign earned income or your choice to exclude for-
+eign housing costs, one or both of the choices may be
+considered revoked.
+
+Credit for Foreign Income Taxes
+
+If you take the foreign tax credit, you may have to file Form
+1116, Foreign Tax Credit (Individual, Estate, or Trust),
+available at
+IRS.gov/Form1116, with Form 1040 or
+1040-SR. Form 1116 is used to figure the amount of for-
+eign tax paid or accrued that can be claimed as a foreign
+
+tax credit. Don’t include the amount of foreign tax paid or
+accrued as withheld federal income taxes on Form 1040
+or 1040-SR, line 25.
+
+The foreign income tax for which you can claim a credit
+is the amount of legal and actual tax liability you pay or ac-
+crue during the year. The amount for which you can claim
+a credit is not necessarily the amount withheld by the for-
+eign country. You can’t take a foreign tax credit for income
+tax you paid to a foreign country that would be refunded
+by the foreign country if you made a claim for refund.
+
+Subsidies. If a foreign country returns your foreign tax
+payments to you in the form of a subsidy, you cannot claim
+a foreign tax credit based on these payments. This rule
+applies to a subsidy provided by any means that is deter-
+mined, directly or indirectly, by reference to the amount of
+tax, or to the base used to figure the tax.
+
+Some ways of providing a subsidy are refunds, credits,
+deductions, payments, or discharges of obligations. A
+credit is also not allowed if the subsidy is given to a person
+related to you, or persons who participated in a transac-
+tion or a related transaction with you.
+
+Limit
+
+The foreign tax credit is limited to the part of your total U.S.
+tax that is in proportion to your taxable income from sour-
+ces outside the United States compared to your total taxa-
+ble income. The allowable foreign tax credit can’t be more
+than your actual foreign tax liability.
+
+Exemption from limit. You won’t be subject to this limit
+and won’t have to file Form 1116 if you meet all three of
+the following requirements.
+
+• Your only foreign source income for the year is passive
+income (dividends, interest, royalties, etc.) that is re-
+ported to you on a payee statement (such as a Form
+1099-DIV or 1099-INT).
+
+• Your foreign taxes for the year that qualify for the credit
+are not more than $300 ($600 if you are filing a joint
+return) and are reported on a payee statement.
+
+• You elect this procedure.
+
+If you make this election, you can’t carry back or carry
+over any unused foreign tax to or from this year.
+
+Separate limit. You must figure the limit on a separate
+basis with regard to section 951A category income, for-
+eign branch category income, passive category income,
+general category income, section 901(j) income, certain
+income re-sourced by treaty, and any lump-sum distribu-
+tions from an employer benefit plan for which the special
+averaging treatment is used to determine your tax (see the
+Instructions for Form 1116).
+
+Figuring the limit. In figuring taxable income in each
+category, you take into account only the amount that you
+must include in income on your federal tax return. Don’t
+take any excluded amount into account.
+
+24
+
+Chapter 5 Deductions and Credits
+
+Publication 54 (12-2025)
+Example 1. You are a U.S. citizen employed as an ac-
+countant. Your tax home is in Germany for the entire tax
+year. You meet the physical presence test. Your foreign
+earned income for the year was $129,875 and your invest-
+ment income was $8,890. After excluding $120,000, your
+adjusted gross income is $18,765.
+
+Generally, mortgage interest is deductible on Sched-
+ule A (Form 1040). You paid mortgage interest on your for-
+eign home of $15,000. Your mortgage is under $750,000.
+Reduce the $15,000 of your mortgage interest by 92.3%
+(0.923) ($13,845) because you excluded 92.3% (0.923)
+($120,000/$129,875) of your foreign earned income.
+
+The remaining mortgage interest of $1,155 can be de-
+
+ducted on line 8a or 8b of Schedule A (Form 1040).
+
+Example 2. You are a U.S. citizen, have a tax home in
+Spain, and meet the physical presence test. You are
+self-employed and personal services produce the busi-
+ness income. Your gross income was $121,842, business
+expenses were $67,695, and net income (profit) was
+$54,147. You choose the foreign earned income exclusion
+and exclude $120,000 of your gross income. Because
+your excluded income is 98.48% (0.9848) of your total in-
+come, 98.48% (0.9848) of your business expenses are
+not deductible. Report your total income and expenses on
+Schedule C (Form 1040). On Form 2555, you will show
+the following.
+
+• Line 20a, $121,842, gross income.
+• Lines 42 and 43, $120,000, foreign earned income ex-
+
+clusion.
+
+• Line 44, $66,666 (98.48% (0.9848) × $67,695), busi-
+
+ness expenses attributable to the exclusion.
+
+Example 3. Assume in Example 2 that both capital
+and personal services combine to produce the business
+income. No more than 30% of your net income or $16,244
+($54,147 x 30% (0.30)), assuming that this amount is a
+reasonable allowance for your services, is considered
+earned and can be excluded. Your exclusion of $16,244 is
+13.33% of your gross income ($16,244 ÷ $121,842). Be-
+cause you excluded 13.33% of your net income, $9,024
+(13.33% (0.1333) x $67,695) of your business expenses
+is attributable to the excluded income and is not deducti-
+ble.
+
+Example 4. You are a U.S. citizen, have a tax home in
+Brazil, and meet the physical presence test. You are
+self-employed and both capital and personal services
+combine to produce business income. Your gross income
+was $146,000, business expenses were $172,000, and
+your net loss was $26,000. A reasonable allowance for the
+services you performed for the business is $77,000. Be-
+cause you incurred a net loss, the earned income limit of
+30% of your net profit does not apply. The $77,000 is for-
+eign earned
+income. If you choose to exclude the
+$77,000, you exclude 52.74% of your gross income
+($77,000 ÷ $146,000), and 52.74% of your business ex-
+penses ($90,713) is attributable to that income and is not
+deductible. Show your total income and expenses on
+Schedule C (Form 1040). On Form 2555, exclude $77,000
+and show $90,713 on line 44. Subtract line 44 from
+
+line 43, and enter the difference as a negative (in paren-
+theses) on line 45. Because this amount is negative, enter
+it as a positive (no parentheses) on line 8d of Schedule 1
+(Form 1040), and combine it with your other income to ar-
+rive at total income on line 9 of Schedule 1 (Form 1040).
+
+Tip: In Example 4, if this was the first year you were el-
+igible to claim the foreign earned income exclusion, you
+probably would not want to do so because you have a net
+loss. However, if you have a valid election in place from an
+earlier year and decide not to take the exclusion, you will
+be considered to have revoked your election and cannot
+claim the exclusion again for the next 5 tax years without
+IRS approval. See Effect of Choosing the Exclusions and
+Deduction in chapter 4.
+
+Example 5. You are a U.S. citizen, have a tax home in
+Panama, and meet the bona fide residence test. You have
+been performing services for clients as a partner in a firm
+that provides services exclusively in Panama. Capital in-
+vestment is not material in producing the partnership's in-
+come. Under the terms of the partnership agreement, you
+are to receive 50% of the net profits. The partnership re-
+ceived gross income of $248,000 and incurred operating
+expenses of $102,250. Of the net profits of $145,750, you
+received $72,875 as your distributive share.
+
+You choose to exclude $120,000 of your share of the
+gross income. Because you exclude 96.77% (0.9677)
+($120,000 ÷ $124,000) of your share of the gross income,
+you cannot deduct $49,474, which is 96.77% (0.9677) of
+your share of the operating expenses (96.77% (0.9677) ×
+$51,125). Report $72,875, your distributive share of the
+partnership net profit, on Schedule E (Form 1040). On
+Form 2555, show $120,000 on line 42 and show $49,474
+on line 44. Your exclusion on Form 2555 is $70,521.
+
+6.
+
+Tax Treaty Benefits
+
+Topics
+This chapter discusses:
+
+• Some common tax treaty benefits,
+• How to get help in certain situations, and
+• How to get copies of tax treaties.
+
+Useful Items
+You may want to see:
+
+Publication
+
+597
+
+597 Information on the United States–Canada
+Income Tax Treaty
+
+901
+
+901 U.S. Tax Treaties
+
+26
+
+Chapter 6 Tax Treaty Benefits
+
+Publication 54 (12-2025)

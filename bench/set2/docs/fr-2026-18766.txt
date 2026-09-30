@@ -1,0 +1,279 @@
+58010
+
+Federal Register / Vol. 91, No. 176 / Monday, September 14, 2026 / Rules and Regulations
+
+such as confidential information that
+would not be appropriate for public
+disclosure. Comments should identify
+the number for the specific question(s)
+to which they respond. Public
+comments may also be viewed
+electronically or in person in Room M–
+4365A, 2001 C St. NW, Washington, DC
+20551, between 9 a.m. and 5 p.m.
+during Federal business weekdays.
+
+FDIC: The FDIC encourages interested
+
+parties to submit written comments.
+Please include your name, affiliation,
+address, email address, and telephone
+number(s) in your comment. You may
+submit comments to the FDIC,
+identified by RIN 3064–AG33, by any of
+the following methods:
+
+• Agency Website: https://
+www.fdic.gov/federal-register-
+publications. Follow instructions for
+submitting comments on the FDIC’s
+website.
+
+• Mail: Jennifer M. Jones, Deputy
+
+Executive Secretary, Attention:
+Comments–RIN 3064–AG33, Federal
+Deposit Insurance Corporation, 550 17th
+Street NW, Washington, DC 20429.
+
+• Hand Delivered/Courier: Comments
+
+may be hand-delivered to the guard
+station at the rear of the 550 17th Street
+NW, building (located on F Street NW)
+on business days between 7 a.m. and 5
+p.m. ET.
+
+• Email: Comments@FDIC.gov.
+
+Include RIN 3064–AG33 in the subject
+line of the message.
+
+Public Inspection: Comments
+received, including any personal
+information provided, may be posted
+without change to https://www.fdic.gov/
+federal-register-publications.
+Commenters should submit only
+information that the commenter wishes
+to make available publicly. The FDIC
+may review, redact, or refrain from
+posting all or any portion of any
+comment that it may deem to be
+inappropriate for publication, such as
+irrelevant or obscene material. The FDIC
+may post only a single representative
+example of identical or substantially
+identical comments, and in such cases
+will generally identify the number of
+identical or substantially identical
+comments represented by the posted
+example. All comments that have been
+redacted, as well as those that have not
+been posted, that contain comments on
+the merits of this document will be
+retained in the public comment file and
+will be considered as required under all
+applicable laws. All comments may be
+accessible under the Freedom of
+Information Act.
+FOR FURTHER INFORMATION CONTACT:
+OCC: Kimberly Folk Pratt, Acting
+Assistant Director, Daniel Amodeo,
+
+Counsel, J. William Binkley, Counsel,
+Chief Counsel’s Office, Office of the
+Comptroller of the Currency, 400 7th
+Street SW, Washington, DC 20219. If
+you are deaf, hard of hearing, or have a
+speech disability, please dial 7–1–1 to
+access telecommunications relay
+services.
+
+Board: Anthony Cain, Senior Adviser,
+
+(202) 725–7842, Alex Kobulsky, Lead
+Financial Institution Policy Analyst,
+(202) 452–2031, Division of Supervision
+and Regulation; or Jay Schwarz, Deputy
+Associate General Counsel, (202) 452–
+2970, Julie Anthony, Senior Special
+Counsel, (202) 658–9400, David Cohen,
+Counsel, (202) 893–5662, Vivien Lee,
+Attorney, (240) 814–3594, Daniel Parks,
+Attorney, (771) 210–7183, Legal
+Division, Board of Governors of the
+Federal Reserve System, 20th Street and
+Constitution Avenue NW, Washington,
+DC 20551. For users of TTY–TRS, please
+call 711 from any telephone, anywhere
+in the United States.
+
+FDIC: Division of Risk Management
+Supervision—Suzanne Clair, Associate
+Director, SClair@FDIC.gov; Brittany
+Audia, Chief, BAudia@FDIC.gov; Pete
+Martino, Senior Examination Specialist,
+PMartino@FDIC.gov; Legal Division—
+Kimberly Yeh, Senior Attorney, KYeh@
+FDIC.gov.
+SUPPLEMENTARY INFORMATION:
+
+I. Background
+
+Section 903 of the 21st Century ROAD
+
+to Housing Act became law on July 11,
+2026, and amended section 10(d) of the
+Federal Deposit Insurance Act (FDI
+Act) 1 to raise the asset thresholds from
+$3 billion to $6 billion to permit the
+Agencies to examine qualifying insured
+depository institutions (IDIs) not less
+than once during each 18-month period
+instead of annually.^2 Prior to the
+enactment of the 21st Century ROAD to
+Housing Act, only qualifying IDIs with
+under $3 billion in total assets were
+eligible for an 18-month on-site
+examination cycle.^3
+
+The Agencies are issuing an interim
+final rule to implement the 21st Century
+ROAD to Housing Act’s amendments to
+section 10(d)(4) and 10(d)(10) of the FDI
+Act,^4 which allow qualifying IDIs with
+
+1 12 U.S.C. 1820(d).
+2 Public Law 119–101, 140 Stat. 846 (2026).
+3 See section 210 of the Economic Growth,
+Regulatory Relief, and Consumer Protection Act
+(Economic Growth Act), Public Law 115–174, 132
+Stat. 1296 (2018) (permitting the Agencies to
+examine qualifying IDIs with under $3 billion in
+total assets not less than once during each 18-month
+period). The Agencies published interim final rules
+implementing the Economic Growth Act
+amendments in August 2018, and final rules in
+December 2018. See 83 FR 43961 (Aug. 29, 2018)
+and 83 FR 67033 (Dec. 28, 2018), respectively.
+
+4 12 U.S.C. 1820(d)(4) and 1820(d)(10).
+
+under $6 billion in total assets to be
+eligible for the extended 18-month
+examination schedule. In addition, the
+interim final rule makes parallel
+changes to the Agencies’ regulations
+governing the on-site examination cycle
+for U.S. branches and agencies of
+foreign banks, consistent with the IBA.^5
+
+Section 10(d)(1) of the FDI Act
+generally requires the appropriate
+Federal banking agency for an IDI to
+conduct a full-scope, on-site
+examination of the IDI at least once
+during each 12-month period. With the
+enactment of section 903 of the 21st
+Century ROAD to Housing Act, section
+10(d)(4) of the FDI Act now authorizes
+the appropriate Federal banking agency
+to extend the on-site examination cycle
+for an IDI to at least once during an 18-
+month period if the IDI (1) has total
+assets of less than $6 billion; (2) is well
+capitalized; 6 (3) was found, at its most
+recent examination, to be well managed
+and to have a composite condition of
+‘‘outstanding’’ or, in the case of an IDI
+with total assets of not more than $200
+million, ‘‘outstanding’’ or ‘‘good’’; 7 (4)
+is not subject to a formal enforcement
+proceeding or order by the FDIC or its
+appropriate Federal banking agency;
+and (5) has not undergone a change in
+control during the previous 12-month
+period in which a full-scope, on-site
+examination otherwise would have been
+required. The 21st Century ROAD to
+Housing Act also revised the total asset
+threshold under section 10(d)(10) of the
+FDI Act to provide each appropriate
+Federal banking agency discretionary
+authority to extend eligibility for an 18-
+month examination cycle, by regulation,
+to qualifying IDIs with an ‘‘outstanding’’
+
+5 12 U.S.C. 3105(c)(1)(C). Additionally, certain
+
+changes would also be responsive to comments
+received through the Economic Growth and
+Regulatory Paperwork Reduction Act review. See
+Public Law 104–208, Div. A, Title II, section 2222,
+110 Stat. 3009–414 (1996) (codified at 12 U.S.C.
+3311). See also 89 FR 99751 (Dec. 11, 2024).
+
+6 Well capitalized is defined by section 38 of the
+FDI Act, codified at 12 U.S.C. 1831o, to mean that
+an IDI significantly exceeds the required minimum
+level for each relevant capital measure. As required
+by section 38, the Agencies have defined capital
+levels that IDIs must meet in order to be well
+capitalized under the prompt corrective action
+framework. See 12 CFR 6.4 (OCC); 12 CFR 208.43
+(Board); 12 CFR 324.403 (FDIC).
+
+7 IDIs are evaluated under the Uniform Financial
+Institutions Rating System (commonly referred to as
+‘‘CAMELS’’). CAMELS is an acronym that is drawn
+from the first letters of the individual components
+of the rating system: Capital adequacy, Asset
+quality, Management, Earnings, Liquidity, and
+Sensitivity to market risk. CAMELS ratings of ‘‘1’’
+and ‘‘2’’ correspond with ratings of ‘‘outstanding’’
+and ‘‘good.’’ In addition to having a CAMELS
+composite rating of ‘‘1’’ or ‘‘2,’’ an IDI is considered
+to be ‘‘well managed’’ for the purposes of section
+10(d) of the FDI Act only if the IDI also received
+a rating of ‘‘1’’ or ‘‘2’’ for the management
+component of the CAMELS rating at its most recent
+examination. See 72 FR 54347 (Sept. 25, 2007).
+
+VerDate Sep<11>2014 16:10 Sep 11, 2026 Jkt 268001 PO 00000 Frm 00002 Fmt 4700 Sfmt 4700 E:\FR\FM\14SER1.SGM 14SER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

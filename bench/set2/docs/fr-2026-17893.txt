@@ -1,0 +1,270 @@
+Federal Register / Vol. 91, No. 168 / Tuesday, September 1, 2026 / Rules and Regulations
+
+56067
+
+minor and to have little overall impact
+on the Plan’s shortfall,^4 and
+consequently no material impact on the
+amount of the fees assessed to
+registrants.
+
+Regarding NPGA’s comment, FMCSA
+is not authorizing a 20 percent increase
+each year in perpetuity. Rather, the rule
+is authorizing a single fee increase that
+will take place in the 2027 fee year. The
+fee schedule for 2027 will then remain
+in effect until it is adjusted by a future
+rulemaking and consistent with the
+statutory criteria. The UCR Board will
+either make a fee adjustment
+recommendation or notify the Agency
+that it is not recommending any
+adjustments, in sufficient time for the
+Agency to complete any necessary
+rulemaking process before the next fee
+year (i.e., prior to October 1, 2028).
+
+8. Small Business Concerns
+
+Comments: An individual expressed
+
+concern about the effect of the fee
+increase on small carriers and suggested
+that FMCSA explore alternatives such as
+establishing a phased increase in fees or
+a relief system for smaller carriers. Pink
+Cheetah Express, LLC and another
+individual specifically mentioned the
+effects on small businesses when
+discussing general operational costs.
+OOIDA stated that the current structure
+is particularly burdensome for single
+truck operators and small fleet carriers
+because they are assessed
+disproportionately higher fees than large
+motor carriers.
+
+FMCSA Response: FMCSA recognizes
+that small businesses are affected by this
+rule. For the smallest motor carriers and
+small brokers, the increase is $9 per
+year; for the next-larger bracket, the
+increase is $29 per year. These increases
+likely represent a small percentage of
+annual revenue and are not
+disproportionately higher for small
+motor carriers than for large ones. The
+brackets are arranged such that motor
+carriers at the smaller end of each
+bracket do pay more, expressed on a
+per-vehicle basis, than motor carriers at
+the larger end of each bracket. This is
+unavoidable, given the statutory
+directive to have no more than six fee
+brackets (49 U.S.C. 14504a(f)(1)(C)).^5
+
+4 FMCSA also notes that the shortfall amount
+could actually increase, rather than decrease, if
+actual collections are lower than projected
+collections.
+
+5 The Agency considered comments on the
+bracket structure when the fees were initially
+established, 72 FR 48585 (Aug. 24, 2007). FMCSA
+determined that the brackets complied with
+statutory requirements, and the fact that motor
+carriers of similar sizes may pay different amounts
+depending on which bracket they were placed in
+was an expected result of a fee scale based on
+
+However, the proposal adopted here
+raises the fee by approximately $9.41
+per vehicle for the smallest motor
+carriers in each respective bracket
+(ranging from $9 to $9.67). Similarly,
+the overall per-truck cost of registering
+in 2027 is similar for the smallest motor
+carriers in each of the six fee brackets
+at approximately $54.11 to $55.67 per
+truck, depending on the bracket.
+As required by the Regulatory
+Flexibility Act (5 U.S.C. 601 et seq.,
+RFA), as amended by the Small
+Business Regulatory Enforcement
+Fairness Act of 1996 (SBREFA),^6
+FMCSA has considered the effects of the
+regulatory action approved in this final
+rule on small businesses and other small
+entities and to minimize any significant
+economic impact. The analysis for this
+consideration is set out below in the
+Regulatory Analysis in section VII.D.
+Based on this analysis, FMCSA has
+concluded and is certifying that this
+final rule will not have a significant
+economic impact on a substantial
+number of small entities, because the fee
+increase is less than one percent of the
+revenues or costs of small motor carriers
+and other small entities.
+
+9. Entities Included in Registration
+Brackets
+
+Comment: James Lamb, who serves as
+Executive Director of SBTC, commented
+that ‘‘multi-billion dollar [third-party
+logistics] freight brokerages’’ are
+categorized in the smallest fee bracket
+and should pay higher fees.
+
+FMCSA Response: By statute, freight
+
+brokers pay the fee listed for the
+smallest fee bracket (49 U.S.C.
+14504a(f)(1)(A)(ii)). FMCSA has no
+authority to require freight brokers or
+logistics companies to pay the UCR
+registration fees assessed for other
+brackets.
+
+10. Comment Urging Larger Increase in
+Fees
+
+Comment: A commenter stated that
+the fees are too low and need to be set
+at a higher rate than the proposed
+amount for cost recovery.
+
+FMCSA Response: The statute
+
+requires that the UCR Plan assess the
+collection of only the amounts
+necessary to provide each participating
+State its annual entitlement and to cover
+the costs of administering the UCR Plan
+and Agreement. Therefore, the UCR
+Board may not recommend fee increases
+that are calculated to create a surplus.
+If a surplus occurs, the extra money
+
+applying uniform fees to entities with a range of
+fleet sizes (Id. at 48586).
+
+6 Public Law 104–121, 110 Stat. 857, (Mar. 29,
+
+1996).
+
+must be returned to the motor carrier
+industry through reduced fees in future
+years. The documentation provided by
+the UCR Board demonstrates that the
+proposed fee increase is calculated to
+provide the State entitlements and
+reasonable administrative expenses
+without creating a surplus, therefore
+FMCSA believes the fees should not be
+higher than proposed.
+
+11. Conformance With Various Federal
+Statutes and Executive Orders
+
+Comments: Obelisk Tech Systems,
+Inc. (Obelisk) filed a comment stating
+that the NPRM failed to comply with
+numerous statutes and Executive Order
+(E.O.) 12866 and other E.O.s. It asked
+FMCSA to withhold final rule action
+until these alleged defects are cured.
+
+FMCSA Response: FMCSA addresses
+
+each point in Obelisk’s comment as
+follows:
+
+A. Independent Offices Appropriations
+Act (IOAA) User Fee Justification Under
+31 U.S.C. 9701 and OMB Circular A–25,
+User Charges
+
+Obelisk contends FMCSA failed to
+document IOAA user fee justification
+under 31 U.S.C. 9701 and OMB Circular
+A–25. However, the cited statute and
+Circular do not affect UCR registration
+fees. This is because the registration fees
+are not a ‘‘charge for a service or thing
+of value provided by the agency.’’
+Rather, these fees are designed to
+generate revenue for States to use in
+highway safety programs. Therefore, the
+UCR registration fees are not the type of
+fees or charges contemplated by 31
+U.S.C. 9701. Although FMCSA is
+prescribing regulations to set fees,
+FMCSA is not compelled to ensure they
+meet the requirements of 49 U.S.C.
+9701(b)(1) and (2).
+
+Moreover, Congress specifically
+authorized and prescribed the method
+for setting UCR registration fees in 49
+U.S.C. 14504a, which was implemented
+many years after IOAA. When a statute
+sets out a specific purpose and
+methodology, this supersedes general
+requirements that may exist based on an
+earlier statute.
+
+B. Failure To Document UCR Act
+Statutory Fee Authority Under 49 U.S.C.
+14504a(f)
+
+Obelisk states that FMCSA failed to
+
+document the specific fee-setting
+procedures in 49 U.S.C. 14504a(f).
+However, section VI of the NPRM
+specifically describes the reasons for the
+Board’s proposed fee adjustment and
+the Agency’s evaluation of the
+recommendation.
+
+VerDate Sep<11>2014 15:53 Aug 31, 2026 Jkt 268001 PO 00000 Frm 00067 Fmt 4700 Sfmt 4700 E:\FR\FM\01SER1.SGM 01SER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+B
+X
+N
+H
+B
+8
+K
+S
+D
+n
+o
+
+r
+e
+t
+t
+o
+
+l

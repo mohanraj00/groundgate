@@ -1,0 +1,470 @@
+Aviation Investigation Final Report
+
+Location:
+
+Chouteau, Oklahoma
+
+Accident Number:
+
+CEN23LA327
+
+Date & Time:
+
+July 21, 2023, 13:50 Local
+
+Registration:
+
+N730WL
+
+Aircraft:
+
+Vans RV10
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Powerplant sys/comp malf/fail
+
+Injuries:
+
+2 Minor
+
+Flight Conducted Under:
+
+Part 91: General aviation - Personal
+
+Analysis
+
+The amateur-built experimental airplane was in cruise flight when the pilot noticed that a red
+warning light in the cockpit was illuminated. The “oil pressure gauge” was “pegged” at 320°F.
+The pilot immediately reduced engine power and initiated a glide profile to “take all the load off
+the engine” so it could cool down. While setting up for the approach to land at the closest
+airport, the engine “seized up” and sustained a total loss of power. The pilot performed a
+forced landing to a flat grass field. The airplane sustained substantial damage to the fuselage
+and both wings.
+
+Postaccident examination of the experimental automotive engine revealed that the positive
+crankcase ventilation (PCV) valve had failed. The pilot reported that the failed PCV valve
+caused the engine to suck “too much oil” out of the crankcase and into the intake section. He
+additionally reported that over the “long slow climb” to the cruise altitude of 6,000 ft, this
+caused the oil level to get “too low,” eventually causing the oil to overheat, and that once the oil
+overheated, the engine then stopped operating.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The total loss of engine power as a result of a failed positive crankcase ventilation (PCV) valve
+and a subsequent impact with terrain.
+
+Page 1 of 6
+Findings
+
+Aircraft
+
+Aircraft
+
+(general) - Failure
+
+Recip eng liquid cooling - Failure
+
+Page 2 of 6
+
+CEN23LA327
+Factual Information
+
+History of Flight
+
+Enroute-cruise
+
+Enroute-cruise
+
+Landing
+
+Landing
+
+Powerplant sys/comp malf/fail (Defining event)
+
+Attempted remediation/recovery
+
+Off-field or emergency landing
+
+Collision with terr/obj (non-CFIT)
+
+On July 21, 2023, about 1350 central daylight time, a Van’s Aircraft RV-10 airplane, N730WL,
+sustained substantial damage when it was involved in an accident near Chouteau, Oklahoma.
+The pilot and the passenger sustained minor injuries. The airplane was operated as a Title
+14 Code of Federal Regulations Part 91 personal cross-country flight.
+
+The purpose of the flight was for the two occupants to travel in the amateur-built experimental
+airplane to the Experimental Aircraft Association AirVenture at the Wittman Regional Airport
+(OSH), Oshkosh, Wisconsin. The airplane stopped at the Muskogee-Davis Regional Airport
+(MKO), Muskogee, Oklahoma, where it was refueled with about 35 gallons of 100 low lead fuel.
+The airplane departed to the north and, after being established in cruise flight at 6,000 ft, the
+pilot, who is also the owner of the airplane, noticed that a red warning light in the cockpit was
+illuminated. He noticed “the oil pressure gauge” was “pegged” at 320°F. The pilot immediately
+reduced engine power and initiated a glide profile to “take all the load off the engine” so it
+could cool down.
+
+The pilot decided to land at the closest airport, which was the Mid-America Industrial Airport
+(H71), Pryor, Oklahoma. While setting up for the approach to runway 36, the engine “seized up”
+and sustained a total loss of power. The pilot performed a forced landing to a flat grass field
+about 3 miles south of the threshold for runway 36. The airplane came to rest upright, and both
+occupants were able to egress from the airplane without further incident. The airplane
+sustained substantial damage to the fuselage and both wings.
+
+The airplane was recovered from the field and the experimental General Motors LS-3 (V-
+8) automotive engine was examined. The examination revealed that the positive crankcase
+ventilation (PCV) valve had failed for undetermined reasons. The pilot reported that the failed
+PCV valve caused the engine to suck “too much oil” out of the crankcase and into the intake
+section. He additionally reported that over the “long slow climb” to the cruise altitude of 6,000
+ft, this caused the oil level to get “too low,” eventually causing the oil to overheat, and that once
+the oil overheated, the engine then stopped operating.
+
+Page 3 of 6
+
+CEN23LA327
+Pilot Information
+
+Certificate:
+
+Private
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+None
+
+Instructor Rating(s):
+
+None
+
+Age:
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+67,Male
+
+Left
+
+4-point
+
+No
+
+Medical Certification:
+
+Class 3 Without
+waivers/limitations
+
+Last FAA Medical Exam:
+
+July 31, 2020
+
+Occupational Pilot:
+
+No
+
+Last Flight Review or Equivalent:
+
+June 26, 2023
+
+Flight Time:
+
+(Estimated) 178 hours (Total, all aircraft), 30 hours (Total, this make and model), 100 hours
+(Pilot In Command, all aircraft), 23 hours (Last 90 days, all aircraft), 18 hours (Last 30 days, all
+aircraft)
+
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Vans
+
+Registration:
+
+RV10 No Series Exists
+
+Aircraft Category:
+
+Year of Manufacture:
+
+2009
+
+Amateur Built:
+
+Airworthiness Certificate:
+
+Experimental (Special)
+
+Serial Number:
+
+Landing Gear Type:
+
+Tricycle
+
+Seats:
+
+N730WL
+
+Airplane
+
+Yes
+
+40227
+
+4
+
+Date/Type of Last Inspection:
+
+July 2, 2022 Condition
+
+Certified Max Gross Wt.:
+
+2800 lbs
+
+Time Since Last Inspection:
+
+Engines:
+
+1 Reciprocating
+
+Airframe Total Time:
+
+240 Hrs as of last inspection
+
+Engine Manufacturer:
+
+General Motors
+
+ELT:
+
+C91A installed, not activated
+
+Engine Model/Series:
+
+LS-3 (V-8)
+
+Registered Owner:
+
+N730WL LLC
+
+Rated Power:
+
+375 Horsepower
+
+Operator:
+
+On file
+
+Operating Certificate(s)
+Held:
+
+None
+
+Operator Does Business As:
+
+None
+
+Operator Designator Code:
+
+None
+
+Page 4 of 6
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KGCM,725 ft msl
+
+Distance from Accident Site:
+
+10 Nautical Miles
+
+Observation Time:
+
+13:35 Local
+
+Direction from Accident Site:
+
+316°
+
+Lowest Cloud Condition:
+
+Scattered
+
+Visibility
+
+10 miles
+
+Lowest Ceiling:
+
+Broken / 1600 ft AGL
+
+Visibility (RVR):
+
+Wind Speed/Gusts:
+
+3 knots / None
+
+Wind Direction:
+
+320°
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+None / None
+
+N/A / N/A
+
+Altimeter Setting:
+
+30.01 inches Hg
+
+Temperature/Dew Point:
+
+24°C / 23°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Muskogee-Davis Regional
+Airport, OK (MKO)
+
+Type of Flight Plan Filed:
+
+None
+
+Destination:
+
+Pryor, OK (H71)
+
+Type of Clearance:
+
+Departure Time:
+
+13:42 Local
+
+Type of Airspace:
+
+None
+
+Class G
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 Minor
+
+Passenger Injuries:
+
+1 Minor
+
+Ground Injuries:
+
+N/A
+
+Aircraft Damage:
+
+Substantial
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+2 Minor
+
+Latitude, Longitude:
+
+36.175387,-95.329857(est)
+
+Page 5 of 6
+
+CEN23LA327
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Hodges, Michael
+
+Additional Participating
+Persons:
+
+Timothy Wells; FAA Will Rogers FSDO; Oklahoma City, OK
+
+Original Publish Date:
+
+April 18, 2024
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 3
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192721
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+CEN23LA327

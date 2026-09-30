@@ -1,0 +1,404 @@
+Aviation Investigation Final Report
+
+Location:
+
+Arnaudville, Louisiana
+
+Accident Number:
+
+CEN23LA331
+
+Date & Time:
+
+June 24, 2023, 20:00 Local
+
+Registration:
+
+N1836E
+
+Aircraft:
+
+DAVID BROWN/U BALLDIN/T
+MORGAN ZENITH STOL CH701
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Aerodynamic stall/spin
+
+Injuries:
+
+1 Minor
+
+Flight Conducted Under:
+
+Part 91: General aviation - Personal
+
+Analysis
+
+The non-certificated pilot reported that he was flying low and slow over a field looking for a
+model airplane that he had lost the day before. He was returning to his private airstrip, flying
+low and slow over trees, when the airplane stalled. Before he could recover from the
+aerodynamic stall the landing gear contacted the trees, and the airplane fell to the ground. He
+reported that there were no preimpact mechanical problems with the airplane and that the
+accident was all pilot error. The airplane sustained substantial damage to both wings.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot’s failure to maintain airspeed resulting in exceeding the airplane’s critical angle of
+attack and an aerodynamic stall. The low altitude at which the flight was conducted
+contributed to the outcome.
+
+Page 1 of 5
+Findings
+
+Aircraft
+
+Aircraft
+
+Airspeed - Not attained/maintained
+
+Angle of attack - Capability exceeded
+
+Personnel issues
+
+Aircraft control - Pilot
+
+Aircraft
+
+Altitude - Capability exceeded
+
+Page 2 of 5
+
+CEN23LA331
+Factual Information
+
+History of Flight
+
+Maneuvering-low-alt flying
+
+Aerodynamic stall/spin (Defining event)
+
+Pilot Information
+
+Certificate:
+
+Airplane Rating(s):
+
+None
+
+None
+
+Other Aircraft Rating(s): None
+
+Age:
+
+Seat Occupied:
+
+Restraint Used:
+
+65,Male
+
+Left
+
+Instrument Rating(s):
+
+None
+
+Second Pilot Present:
+
+No
+
+Instructor Rating(s):
+
+None
+
+Medical Certification:
+
+None
+
+Toxicology Performed:
+
+Last FAA Medical Exam:
+
+Occupational Pilot:
+
+No
+
+Last Flight Review or Equivalent:
+
+Flight Time:
+
+1000 hours (Total, all aircraft), 150 hours (Total, this make and model)
+
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+DAVID BROWN/U BALLDIN/T
+MORGAN
+
+Registration:
+
+N1836E
+
+Model/Series:
+
+ZENITH STOL CH701
+
+Aircraft Category:
+
+Airplane
+
+Year of Manufacture:
+
+2015
+
+Amateur Built:
+
+Airworthiness Certificate:
+
+Experimental (Special)
+
+Serial Number:
+
+Landing Gear Type:
+
+Tricycle
+
+Seats:
+
+Yes
+
+7-5983
+
+2
+
+Date/Type of Last Inspection:
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+Certified Max Gross Wt.:
+
+Engines:
+
+1 Reciprocating
+
+Engine Manufacturer:
+
+JABIRU
+
+ELT:
+
+Installed, not activated
+
+Engine Model/Series:
+
+2200A
+
+Registered Owner:
+
+Operator:
+
+On file
+
+On file
+
+Rated Power:
+
+85 Horsepower
+
+Operating Certificate(s)
+Held:
+
+None
+
+Page 3 of 5
+
+CEN23LA331
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KOPL,76 ft msl
+
+Distance from Accident Site:
+
+13 Nautical Miles
+
+Observation Time:
+
+19:55 Local
+
+Direction from Accident Site:
+
+318°
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Clear
+
+None
+
+Wind Speed/Gusts:
+
+5 knots / None
+
+Wind Direction:
+
+210°
+
+Visibility
+
+10 miles
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+/
+
+/
+
+Altimeter Setting:
+
+29.95 inches Hg
+
+Temperature/Dew Point:
+
+31°C / 25°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Arnaudville, LA
+
+Type of Flight Plan Filed:
+
+Destination:
+
+Departure Time:
+
+Arnaudville, LA
+
+Type of Clearance:
+
+Type of Airspace:
+
+Class G
+
+None
+
+None
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 Minor
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+Ground Injuries:
+
+N/A
+
+N/A
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 Minor
+
+Latitude, Longitude:
+
+30.3977,-91.9315(est)
+
+Page 4 of 5
+
+CEN23LA331
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Brannen, John
+
+Additional Participating
+Persons:
+
+Keith Kibodeaux; FAA BTR FSDO; Baton rouge, LA
+
+Original Publish Date:
+
+November 9, 2023
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192731
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 5 of 5
+
+CEN23LA331

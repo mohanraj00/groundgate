@@ -1,0 +1,261 @@
+sale contract depends on several factors, including the to-
+tal selling price and the type of property sold.
+
+Determining whether section 1274 or section 483
+applies. For purposes of determining whether section
+1274 or section 483 applies to an installment sale con-
+tract, all sales or exchanges that are part of the same
+transaction (or related transactions) are treated as a single
+sale or exchange and all contracts arising from the same
+transaction (or a series of related transactions) are treated
+as a single contract. Also, the total consideration due un-
+der an installment sale contract is determined at the time
+of the sale or exchange. Any payment (other than a debt
+instrument) is taken into account at its FMV.
+
+• The total stated principal of any other debt instruments
+for prior land sales between these individuals during
+the calendar year.
+
+The section 1274 rules, if otherwise applicable, apply to
+debt instruments issued in a sale of land to the extent the
+stated principal amount exceeds $500,000, or if any party
+to the sale is a nonresident alien.
+
+Related persons include an individual and the mem-
+bers of the individual’s family and their spouses. Members
+of an individual’s family include the individual’s spouse,
+brothers and sisters (whole or half), ancestors, and lineal
+descendants. Membership in the individual’s family can be
+the result of a legal adoption.
+
+Section 1274
+
+Section 483
+
+Section 1274 applies to a debt instrument issued for the
+sale or exchange of property if any payment under the in-
+strument is due more than 6 months after the date of the
+sale or exchange and the instrument doesn’t provide for
+adequate stated interest. Section 1274, however, doesn’t
+apply to an installment sale contract that’s a cash method
+debt instrument (defined next) or that arises from the fol-
+lowing transactions.
+• A sale or exchange for which the total payments are
+
+$250,000 or less.
+
+• The sale or exchange of an individual’s main home.
+• The sale or exchange of a farm for $1 million or less by
+an individual, an estate, a testamentary trust, a small
+business corporation (defined in section 1244(c)(3)),
+or a domestic partnership that meets requirements
+similar to those of section 1244(c)(3).
+
+• Certain land transfers between related persons (de-
+
+scribed later).
+
+Cash method debt instrument. This is any debt instru-
+ment given as payment for the sale or exchange of prop-
+erty (other than new section 38 property) with a stated
+principal of $5,211,900 (adjusted annually for inflation un-
+der section 1274A) or less if the following items apply.
+
+1. The lender (holder) doesn’t use an accrual method of
+accounting and isn’t a dealer in the type of property
+sold or exchanged.
+
+2. Both the borrower (issuer) and the lender jointly elect
+to account for interest under the cash method of ac-
+counting.
+
+3. Section 1274 would apply except for the election in (2)
+
+above.
+
+Land transfers between related persons. The section
+483 rules (discussed next) apply to debt instruments is-
+sued in a land sale between related persons to the extent
+the sum of
+following amounts doesn’t exceed
+$500,000.
+• The stated principal of the debt instrument issued in
+
+the
+
+the sale or exchange.
+
+Section 483 generally applies to an installment sale con-
+tract that doesn’t provide for adequate stated interest and
+isn’t covered by section 1274. Section 483, however, gen-
+erally doesn’t apply to an installment sale contract that ari-
+ses from the following transactions.
+
+• A sale or exchange for which no payments are due
+more than 1 year after the date of the sale or ex-
+change.
+
+• A sale or exchange for $3,000 or less.
+
+Exceptions to Sections
+1274 and 483
+
+Sections 1274 and 483 don’t apply under the following cir-
+cumstances.
+• An assumption of a debt instrument in connection with
+a sale or exchange or the acquisition of property sub-
+ject to a debt instrument, unless the terms or condi-
+tions of the debt instrument are modified in a manner
+that would constitute a deemed exchange under Reg-
+ulations section 1.1001-3.
+
+• A debt instrument issued in connection with a sale or
+exchange of property if either the debt instrument or
+the property is publicly traded.
+
+• A sale or exchange of all substantial rights to a patent,
+or an undivided interest in property that includes part
+or all substantial rights to a patent, if any amount is
+contingent on the productivity, use, or disposition of
+the property transferred. See chapter 2 of Pub. 544 for
+more information.
+
+• An annuity contract issued in connection with a sale or
+exchange of property if the contract is described in
+section 1275(a)(1)(B) and Regulations section
+1.1275-1(j).
+
+• A transfer of property subject to section 1041 (relating
+to transfers of property between spouses or incident to
+divorce).
+
+• A demand loan that is a below-market loan described
+in section 7872(c)(1) (for example, gift loans and cor-
+poration-shareholder loans).
+
+16
+
+Publication 537 (2025)
+Interest on Deferred Tax
+
+Generally, you must pay interest on the deferred tax rela-
+ted to any obligation that arises during a tax year from the
+disposition of property under the installment method if
+both of the following apply.
+• The property had a sales price over $150,000. In de-
+
+termining the sales price, treat all sales that are part of
+the same transaction as a single sale.
+
+• The total balance of all nondealer installment obliga-
+tions arising during, and outstanding at the close of,
+the tax year is more than $5 million.
+
+Subsequent years. You must pay interest in subsequent
+years if installment obligations that originally required in-
+terest to be paid are still outstanding at the close of a tax
+year.
+
+Exceptions. This interest rule doesn’t apply to disposi-
+tions of:
+
+• Farm property,
+• Personal-use property by an individual,
+• Personal property before 1989, or
+• Real property before 1988.
+
+How to figure interest on deferred tax. First, find the
+underpayment rate in effect for the month with or within
+which your tax year ends. The underpayment rate is pub-
+
+Computation Under Section 453A
+
+lished quarterly in the Internal Revenue Bulletin, available
+at IRS.gov/irb. Then compute the deferred tax liability. The
+deferred tax liability is equal to the balance of the unrecog-
+nized gain at the end of the tax year multiplied by your
+maximum tax rate (ordinary or capital gain, as appropri-
+ate) in effect for the tax year. Note, you will need to deter-
+mine the gross profit percentage of the installment sale to
+calculate the amount of the gain that has not been recog-
+nized. Next you will need to compute the applicable per-
+centage. The applicable percentage is the aggregate face
+amount of obligations outstanding as of the close of the
+tax year in excess of $5 million divided by the aggregate
+face amount of obligations outstanding as of the close of
+the tax year. To determine the interest on the deferred tax
+you owe, multiply your deferred tax liability by the applica-
+ble percentage by the underpayment rate.
+
+Section 453A Example. Below is an example of the
+computation. ABC, Inc., a calendar year taxpayer, sold in-
+tellectual property with a $0 basis to an unrelated party on
+November 15, 2022, for $15 million on the installment
+method (a payment is due after the year of sale). ABC,
+Inc., incurred $500,000 of expenses related to the sale.
+The installment sale contract requires the following pay-
+ments.
+• 2022: $1 million.
+• 2023: $5 million.
+• 2024: $9 million—Note is paid off.
+
+Section 453A(c)(2)
+Interest on Deferred Tax
+Liability
+
+Section 453A(c)(3)
+= Deferred Tax Liability (See Step 1
+below)
+
+x
+
+Section 453A(c)(4)
+Applicable Percentage (See
+Step 2 below)
+
+Step 1: 2022 Compute the Deferred Tax Liability
+
+= The amount of gain with respect to an obligation which has not been
+
+recognized as of the close of such tax year
+
+Section 453A(c)(2)(B)
+Underpayment Rate (Step 3)
+
+The maximum rate of tax for ordinary
+income or long-term capital gain, as
+applicable for such tax year
+
+x
+
+x
+
+Form 6252, line 7, Selling price minus liabilities assumed
+– Form 6252, line 21, Payments received in current year
+
+2022 Deferred Obligation
+
+x Form 6252, line 19, Gross profit percentage
+(($15,000,000 – $500,000)/$15,000,000)
+
+The amount of gain that has not been recognized
+x Maximum capital gains tax rate
+
+Deferred Tax Liability
+
+15,000,000
+(1,000,000)
+
+14,000,000
+
+96.6670%
+
+13,533,380
+21%
+
+2,842,010
+
+22
+
+Publication 537 (2025)

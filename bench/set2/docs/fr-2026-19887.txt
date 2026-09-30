@@ -1,0 +1,269 @@
+61294
+
+Federal Register / Vol. 91, No. 187 / Tuesday, September 29, 2026 / Rules and Regulations
+
+made it difficult for industry to meet the
+current September 30 deadline.
+
+Given the notable increase in overall
+inedible product occurring since 2023,
+the Board met on June 17, 2025, and
+unanimously recommended, eight in
+favor and none opposed, to extend the
+inedible disposition deadline from
+September 30 to November 30. This
+action was previously developed during
+a Loss & Exempt Task Force meeting on
+February 26, 2025, where it was
+supported unanimously, and was voted
+on at the Almond Quality, Food Safety
+& Services (AQFSS) Committee meeting
+on March 20, 2025, where it was also
+supported unanimously. The Board
+believes adjusting the deadline by 60
+days, from September 30 to November
+30, will allow sufficient time and more
+flexibility for industry to meet the
+disposition obligation deadline.
+
+Final Regulatory Flexibility Analysis
+
+Pursuant to requirements set forth in
+the Regulatory Flexibility Act (RFA) (5
+U.S.C. 601–612), AMS has considered
+the economic impact of this final rule
+on small entities. Accordingly, AMS has
+prepared this final regulatory flexibility
+analysis.
+
+The purpose of the RFA is to fit
+
+regulatory actions to the scale of
+businesses subject to such actions in
+order that small businesses will not be
+unduly or disproportionately burdened.
+Marketing orders issued pursuant to the
+Act are unique regulations in that they
+are brought about through group action
+of typically small entities acting on their
+own behalf.
+
+There are approximately 7,600
+
+growers of California almonds subject to
+regulation under the Order and
+approximately 100 handlers in the
+production area. At the time this
+analysis was prepared, the Small
+Business Administration (SBA) defined
+small agricultural growers of almonds as
+those having annual receipts equal to or
+less than $3,750,000 (North American
+Industry Classifications System (NAICS)
+code 111335, Tree Nut Farming). Small
+agricultural service firms, including
+handlers, are defined as those whose
+annual receipts are equal to or less than
+$34,000,000 (NAICS code 115114,
+Postharvest Crop Activities).
+Data from USDA’s National
+
+Agricultural Statistics Service (NASS)
+2022 Agricultural Census reports that
+there were 7,596 almond farms with
+bearing acres in the production area.
+Additionally, the Census indicates that
+out of the 7,596 California farms with
+bearing acres of almonds, 4,805 (63
+percent) have fewer than 100 bearing
+acres.
+
+In its annual Noncitrus Fruits and
+Nuts publication, NASS reported a 2023
+crop year average yield of 1,790 pounds
+per acre (shelled basis) and a season
+average grower price of $1.64 per
+pound. Therefore, a 100-acre farm with
+an average yield of 1,790 pounds per
+acre would produce about 179,000
+pounds of almonds (1,790 pounds times
+100 acres equals 179,000 pounds). At
+$1.64 per pound, that farm’s production
+would be valued at $293,560 (179,000
+pounds times $1.64 per pound equals
+$293,560). Since the Census indicated
+that 63 percent of California’s almond
+farms have fewer than 100 bearing acres,
+it could be concluded that the majority
+of California almond growers had
+annual receipts from the sale of almonds
+of less than $293,560 for the 2022 crop
+year, which is below the SBA threshold
+of $3,750,000 for small growers.
+Therefore, the majority of growers may
+be classified as small businesses.
+
+To estimate the proportion of almond
+
+handlers that would be considered
+small or large businesses, it was
+assumed that the unit value per pound
+of almonds exported in a particular year
+could serve as a representative almond
+price at the handler level. A unit value
+for a commodity is the value of exports
+divided by the quantity exported. Data
+from the Global Agricultural Trade
+System (GATS) database of USDA’s
+Foreign Agricultural Service showed
+that the value of almond exports from
+August 2022 to July 2023 (shelled
+equivalent, combining shelled and
+inshell) was $4.115 billion. The quantity
+of almond exports over that period was
+1.783 billion pounds. Dividing the
+export value by the quantity yields a
+unit value of $2.31 per shelled pound
+($4.115 billion divided by 1.783 billion
+pounds equals $2.31).
+
+NASS estimated that the California
+almond industry produced 2.511 billion
+pounds of almonds in 2022. Applying
+the $2.31 derived representative handler
+price per pound to total industry
+production results in an estimated total
+revenue at the handler level of $5.80
+billion (2.511 billion pounds times
+$2.31 per pound equals $5.80 billion).
+With an estimated 100 handlers in the
+California almond industry, average
+revenue per handler would be
+approximately $58 million ($5.80
+billion divided by 100 equals $58
+million). Assuming a normal
+distribution of revenues, most almond
+handlers shipped almonds valued at
+more than $34,000,000 during the 2022
+crop year. Therefore, the majority of
+handlers may be classified as large
+businesses.
+
+This final rule extends the inedible
+
+disposition obligation deadline in
+
+§ 981.442(a)(5) of the Order from
+September 30 to November 30. This
+final rulemaking revises § 981.442(a)(5).
+Authority for this change is provided in
+§ 981.42. This change only impacts the
+inedible disposition deadline prescribed
+under the Order. The Board’s meetings
+are widely publicized throughout the
+California almond industry and all
+interested persons are invited to attend
+the meetings and participate in Board
+deliberations on all issues. Like all
+Board meetings, the June 17, 2025,
+meeting was a public meeting and all
+entities, both large and small, were able
+to express views on this issue. Finally,
+interested persons were invited to
+submit comments on this rule,
+including the regulatory and
+information collection impacts of this
+action on small businesses.
+
+In accordance with the Paperwork
+
+Reduction Act of 1995 (44 U.S.C.
+chapter 35), the Order’s information
+collection requirements have been
+previously approved by OMB and
+assigned OMB No. 0581–0178,
+Vegetable and Specialty Crops, and
+0581–0242, Almond Salmonella. This
+final rule does not require changes to
+the current information collection.
+Should any changes become necessary,
+they would be submitted to OMB for
+approval.
+
+This final rule will not impose any
+additional reporting or recordkeeping
+requirements on either small or large
+California almond handlers. As with all
+Federal marketing order programs,
+reports and forms are periodically
+reviewed to reduce information
+requirements and duplication by
+industry and public sector agencies.
+
+AMS is committed to complying with
+
+the E-Government Act, to promote the
+use of the internet and other
+information technologies to provide
+increased opportunities for citizen
+access to Government information and
+services, and for other purposes.
+
+AMS has not identified any relevant
+Federal rules that duplicate, overlap, or
+conflict with this final rule.
+
+A proposed rule concerning this
+action was published in the Federal
+Register on March 9, 2026 (91 FR
+11187). Copies of the proposed rule
+were provided to all almond handlers.
+In addition, the proposal was made
+available through the internet by AMS
+and the Office of the Federal Register
+via https://www.regulations.gov. A 30-
+day comment period ending April 8,
+2026, was provided for interested
+persons to respond to the proposal.
+AMS received four comments during
+the comment period. Two comments
+supported the proposal and one
+comment did not pertain to the merits
+
+VerDate Sep<11>2014 17:56 Sep 28, 2026 Jkt 268001 PO 00000 Frm 00002 Fmt 4700 Sfmt 4700 E:\FR\FM\29SER1.SGM 29SER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+B
+X
+N
+H
+B
+8
+K
+S
+D
+n
+o
+
+r
+e
+t
+t
+o
+
+l
