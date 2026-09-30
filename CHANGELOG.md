@@ -19,6 +19,10 @@ milestone 0.2.
 - Ranges (#14): one unit or scale word between the first number and `to`, `through`, `thru` or
   `and` no longer hides the upper end. In 0.1, "30 mg to 45 mg" flagged 30 as a range but
   admitted 45. Vector `07c-range-unit-words`.
+- Changes (#4): after a change word such as "increased" or "reduced", "from X to Y" is a change.
+  Y is the new value and no longer flagged as a range end; X keeps the range flag, so a field
+  that takes the old value still goes to review. "run from 7 to 8 hours" is still a range.
+  Vector `07d-change-not-range`.
 
 ## 0.1.0 (2026-09-29)
 

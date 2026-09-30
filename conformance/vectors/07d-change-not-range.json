@@ -1,0 +1,158 @@
+{
+ "name": "07d-change-not-range",
+ "description": "After a change word, \"from X to Y\" is a change: Y is the new value and not a range end; X keeps the range reading (spec 0.2).",
+ "document": "The limit increased from $70,000 to $72,000 for 2026. The dose was reduced from 20 mg to 10 mg. Sessions run from 7 to 8 hours. The cap rose from $1 million to $2 million. Fees changed from $5 through $9.",
+ "schema": {
+  "fields": {
+   "new_limit": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "old_limit": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "new_dose": {
+    "type": "integer",
+    "unit": "mg"
+   },
+   "old_dose": {
+    "type": "integer",
+    "unit": "mg"
+   },
+   "session_max": {
+    "type": "integer",
+    "unit": "hours"
+   },
+   "new_cap": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "new_fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "d1",
+   "field": "new_limit",
+   "value": "72000",
+   "unit": "USD",
+   "evidence": {
+    "start": 36,
+    "end": 43,
+    "text": "$72,000"
+   }
+  },
+  {
+   "id": "d2",
+   "field": "old_limit",
+   "value": "70000",
+   "unit": "USD",
+   "evidence": {
+    "start": 25,
+    "end": 32,
+    "text": "$70,000"
+   }
+  },
+  {
+   "id": "d3",
+   "field": "new_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 89,
+    "end": 94,
+    "text": "10 mg"
+   }
+  },
+  {
+   "id": "d4",
+   "field": "old_dose",
+   "value": "20",
+   "unit": "mg",
+   "evidence": {
+    "start": 80,
+    "end": 85,
+    "text": "20 mg"
+   }
+  },
+  {
+   "id": "d5",
+   "field": "session_max",
+   "value": "8",
+   "unit": "hours",
+   "evidence": {
+    "start": 119,
+    "end": 126,
+    "text": "8 hours"
+   }
+  },
+  {
+   "id": "d6",
+   "field": "new_cap",
+   "value": "2",
+   "unit": "USD",
+   "evidence": {
+    "start": 160,
+    "end": 170,
+    "text": "$2 million"
+   }
+  },
+  {
+   "id": "d7",
+   "field": "new_fee",
+   "value": "9",
+   "unit": "USD",
+   "evidence": {
+    "start": 201,
+    "end": 203,
+    "text": "$9"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
