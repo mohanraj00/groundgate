@@ -95,7 +95,7 @@ def sentence(text: str, pos: int) -> tuple[int, int]:
 
 _BEFORE = {
     "approx": ["approximately", "about", "around", "nearly", "roughly", "generally", "~", "≈"],
-    "gt": ["more than", "greater than", "above", "over", "exceeds", "exceeding", ">"],
+    "gt": ["more than", "greater than", "above", "over", "exceed", "exceeds", "exceeding", ">"],
     "lt": ["less than", "fewer than", "below", "under", "<"],
     "ge": ["at least", "minimum of", "no less than", "≥"],
     "le": ["up to", "maximum of", "at most", "no more than", "≤"],
@@ -114,6 +114,8 @@ def _phrase(p: str) -> str:
 
 _BEFORE_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in _BEFORE.items()}
 _AFTER_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in _AFTER.items()}
+_INVERT = {"gt": "le", "le": "gt", "lt": "ge", "ge": "lt"}
+_NEGATION_END = re.compile(r"\b(?:not|cannot|can['\u2019]t)\s+(?:be\s+)?$", re.I)
 _RANGE_NEXT = re.compile(r"^\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
 _RANGE_PREV = re.compile(r"\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?", re.I)
 _AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
@@ -128,7 +130,7 @@ def qualifiers(text: str, tok: Token) -> set[str]:
     prev_end = max([t.end for t in nearby if t.end <= tok.start] + [s0, tok.start - _WINDOW])
     next_start = min([t.start for t in nearby if t.start >= tok.end] + [s1, tok.end + _WINDOW])
     before, after = text[prev_end : tok.start], text[tok.end : next_start]
-    found = {c for c, rx in _BEFORE_RE.items() if rx.search(before)}
+    found = _before_qualifiers(text, s0, prev_end, tok.start)
     found |= {c for c, rx in _AFTER_RE.items() if rx.search(after)}
     rest = _strip_unit_suffix(text[tok.end : s1])
     prev = [t for t in nearby if t.end <= tok.start and t.end >= prev_end]
@@ -144,6 +146,21 @@ def qualifiers(text: str, tok: Token) -> set[str]:
         )
     ):
         found.add("range")
+    return found
+
+
+def _before_qualifiers(text: str, s0: int, start: int, end: int) -> set[str]:
+    """Comparators of the qualifiers in text[start:end]: the longest of overlapping matches,
+    inverted by a negation directly before it in the same sentence."""
+    window = text[start:end]
+    hits = [(m.start(), m.end(), c) for c, rx in _BEFORE_RE.items() for m in rx.finditer(window)]
+    found = set()
+    for a, b, c in hits:
+        if any(a2 <= a and b <= b2 and (a2, b2) != (a, b) for a2, b2, _ in hits):
+            continue  # "more than" inside "no more than"
+        if c in _INVERT and _NEGATION_END.search(text[s0 : start + a]):
+            c = _INVERT[c]
+        found.add(c)
     return found
 
 

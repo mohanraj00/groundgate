@@ -102,7 +102,7 @@ def test_a_pdf_decision_admits_against_extracted_text(pdf: Path) -> None:
         "unit": "mg",
         "evidence": {"start": start, "end": start + 8, "text": "2,000 mg"},
     }
-    schema = {"fields": {"max_daily_dose": {"type": "integer", "unit": "mg"}}}
+    schema = {"fields": {"max_daily_dose": {"type": "integer", "unit": "mg", "comparator": "le"}}}
     (d,) = gg.admit(doc.text, schema, [cand]).decisions
     assert (d.outcome, d.codes) == ("admitted", ())
 

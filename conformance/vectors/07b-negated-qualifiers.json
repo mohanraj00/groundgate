@@ -1,0 +1,302 @@
+{
+ "name": "07b-negated-qualifiers",
+ "description": "Only the longest of overlapping qualifiers applies, and a negation directly before gt, lt, ge or le inverts it (spec 0.2).",
+ "document": "Your modified AGI must be no more than $7,000. The credit applies if income is not more than $40,000. Wages must not be more than $50,000. The deduction cannot be less than $1,200. Total gifts may not exceed $19,000. The payment does not exceed $2,500 in any year. The fee is not required if the balance is more than $600. Distributions must exceed $1,500. You need no less than $900 in the account. Your balance can't be over $3,000. Claims can’t be under $100.",
+ "schema": {
+  "fields": {
+   "agi_limit": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le"
+   },
+   "agi_eq": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "income_limit": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le"
+   },
+   "wage_limit": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le"
+   },
+   "deduction_floor": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge"
+   },
+   "gift_limit": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le"
+   },
+   "gift_eq": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "payment_limit": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le"
+   },
+   "fee_threshold": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le"
+   },
+   "distribution_eq": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "distribution_min": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "gt"
+   },
+   "account_floor": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge"
+   },
+   "balance_limit": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le"
+   },
+   "claim_floor": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "n1",
+   "field": "agi_limit",
+   "value": "7000",
+   "unit": "USD",
+   "evidence": {
+    "start": 39,
+    "end": 45,
+    "text": "$7,000"
+   }
+  },
+  {
+   "id": "n2",
+   "field": "agi_eq",
+   "value": "7000",
+   "unit": "USD",
+   "evidence": {
+    "start": 39,
+    "end": 45,
+    "text": "$7,000"
+   }
+  },
+  {
+   "id": "n3",
+   "field": "income_limit",
+   "value": "40000",
+   "unit": "USD",
+   "evidence": {
+    "start": 93,
+    "end": 100,
+    "text": "$40,000"
+   }
+  },
+  {
+   "id": "n4",
+   "field": "wage_limit",
+   "value": "50000",
+   "unit": "USD",
+   "evidence": {
+    "start": 130,
+    "end": 137,
+    "text": "$50,000"
+   }
+  },
+  {
+   "id": "n5",
+   "field": "deduction_floor",
+   "value": "1200",
+   "unit": "USD",
+   "evidence": {
+    "start": 173,
+    "end": 179,
+    "text": "$1,200"
+   }
+  },
+  {
+   "id": "n6",
+   "field": "gift_limit",
+   "value": "19000",
+   "unit": "USD",
+   "evidence": {
+    "start": 208,
+    "end": 215,
+    "text": "$19,000"
+   }
+  },
+  {
+   "id": "n7",
+   "field": "gift_eq",
+   "value": "19000",
+   "unit": "USD",
+   "evidence": {
+    "start": 208,
+    "end": 215,
+    "text": "$19,000"
+   }
+  },
+  {
+   "id": "n8",
+   "field": "payment_limit",
+   "value": "2500",
+   "unit": "USD",
+   "evidence": {
+    "start": 245,
+    "end": 251,
+    "text": "$2,500"
+   }
+  },
+  {
+   "id": "n9",
+   "field": "fee_threshold",
+   "value": "600",
+   "unit": "USD",
+   "evidence": {
+    "start": 317,
+    "end": 321,
+    "text": "$600"
+   }
+  },
+  {
+   "id": "n10",
+   "field": "distribution_eq",
+   "value": "1500",
+   "unit": "USD",
+   "evidence": {
+    "start": 349,
+    "end": 355,
+    "text": "$1,500"
+   }
+  },
+  {
+   "id": "n11",
+   "field": "distribution_min",
+   "value": "1500",
+   "unit": "USD",
+   "evidence": {
+    "start": 349,
+    "end": 355,
+    "text": "$1,500"
+   }
+  },
+  {
+   "id": "n12",
+   "field": "account_floor",
+   "value": "900",
+   "unit": "USD",
+   "evidence": {
+    "start": 379,
+    "end": 383,
+    "text": "$900"
+   }
+  },
+  {
+   "id": "n13",
+   "field": "balance_limit",
+   "value": "3000",
+   "unit": "USD",
+   "evidence": {
+    "start": 427,
+    "end": 433,
+    "text": "$3,000"
+   }
+  },
+  {
+   "id": "n14",
+   "field": "claim_floor",
+   "value": "100",
+   "unit": "USD",
+   "evidence": {
+    "start": 459,
+    "end": 463,
+    "text": "$100"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

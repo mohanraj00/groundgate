@@ -11,6 +11,11 @@ milestone 0.2.
 
 - `verify` reports a receipt decided under another spec version as one problem, instead of a
   list of hash mismatches.
+- Qualifiers (#5): where two overlap, only the longer applies, so "no more than" is `le` and no
+  longer also `gt`. In 0.1 it flagged `le` fields on the spec's own `le` phrase. A negation
+  directly before a `gt`, `lt`, `ge` or `le` qualifier inverts it: "must not be more than" and
+  "may not exceed" are `le`, "cannot be less than" is `ge`. `exceed` joins `gt`, so an `eq` field
+  is now flagged on "do not exceed". Vector `07b-negated-qualifiers`.
 
 ## 0.1.0 (2026-09-29)
 
