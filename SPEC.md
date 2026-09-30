@@ -218,10 +218,13 @@ Built-in unit table (a schema's `units` extends or overrides it):
 | `hours`, `days`, `weeks`, `months`, `years`, `minutes` | | the code, its singular, and `-<singular>` |
 
 A unit **is at** a number token when a prefix ends at the token start (whitespace between them
-allowed), or when the first suffix after the token end starts within `policy.unit_window` code
-points without crossing a sentence end, and is not a per-unit. The first suffix is the match of
-any of the unit's suffixes that starts earliest, the longest one at a tie; a later match never
-counts. It is a **per-unit** when it is followed, after optional whitespace, by `/` or `per`, an
+allowed), or when the first suffix after the token end is one of the unit's suffixes, starts
+within `policy.unit_window` code points without crossing a sentence end, and is not a per-unit.
+The first suffix is the match of any suffix of any unit in the table, built-in or the schema's,
+that starts earliest, the longest one at a tie; a later match never counts. So `mg` is not at the
+10 in "10 mcg (maximum 500 mg)", because `mcg` comes first, and `hours` is not at the 2 in
+"Infuse 2 L in 4 hours". A number without a unit of its own still takes the next one: `mg` is at
+the 25 in "25 or 50 mg". It is a **per-unit** when it is followed, after optional whitespace, by `/` or `per`, an
 optional number, and a body-size or volume unit: `kg`, `kilogram`, `lb`, `pound`, `m2`, `m²`,
 `m^2`, `square meter` or `square metre`, `mL`, `dL`, `L`, `liter` or `litre` (plurals included,
 case-insensitive, not followed by a letter). So `mg` is not at the 10 in "10 mg/kg (maximum 500

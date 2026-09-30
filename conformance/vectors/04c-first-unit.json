@@ -1,0 +1,221 @@
+{
+ "name": "04c-first-unit",
+ "description": "The first suffix of any unit in the table decides a number's unit, so another number's unit never supplies it; a list like '25 or 50 mg' keeps the unit (spec 0.2).",
+ "document": "Give 10 mcg (maximum 500 mg) daily. Take 25 or 50 mg once daily. Infuse 2 L in 4 hours, then 250 mL. Start at 10 units, then 5 mg.",
+ "schema": {
+  "fields": {
+   "dose_mg": {
+    "type": "integer",
+    "unit": "mg",
+    "multiple": true
+   },
+   "dose_mcg": {
+    "type": "integer",
+    "unit": "mcg"
+   },
+   "volume": {
+    "type": "integer",
+    "unit": "L"
+   },
+   "volume_ml": {
+    "type": "integer",
+    "unit": "mL"
+   },
+   "duration": {
+    "type": "integer",
+    "unit": "hours",
+    "multiple": true
+   },
+   "insulin": {
+    "type": "integer",
+    "unit": "units"
+   }
+  },
+  "units": {
+   "units": {
+    "suffix": [
+     "units"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "v1",
+   "field": "dose_mg",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 5,
+    "end": 11,
+    "text": "10 mcg"
+   }
+  },
+  {
+   "id": "v2",
+   "field": "dose_mcg",
+   "value": "10",
+   "unit": "mcg",
+   "evidence": {
+    "start": 5,
+    "end": 11,
+    "text": "10 mcg"
+   }
+  },
+  {
+   "id": "v3",
+   "field": "dose_mg",
+   "value": "500",
+   "unit": "mg",
+   "evidence": {
+    "start": 21,
+    "end": 27,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "v4",
+   "field": "dose_mg",
+   "value": "25",
+   "unit": "mg",
+   "evidence": {
+    "start": 41,
+    "end": 52,
+    "text": "25 or 50 mg"
+   }
+  },
+  {
+   "id": "v5",
+   "field": "volume",
+   "value": "2",
+   "unit": "L",
+   "evidence": {
+    "start": 72,
+    "end": 75,
+    "text": "2 L"
+   }
+  },
+  {
+   "id": "v6",
+   "field": "duration",
+   "value": "2",
+   "unit": "hours",
+   "evidence": {
+    "start": 72,
+    "end": 86,
+    "text": "2 L in 4 hours"
+   }
+  },
+  {
+   "id": "v7",
+   "field": "duration",
+   "value": "4",
+   "unit": "hours",
+   "evidence": {
+    "start": 79,
+    "end": 86,
+    "text": "4 hours"
+   }
+  },
+  {
+   "id": "v8",
+   "field": "volume_ml",
+   "value": "250",
+   "unit": "mL",
+   "evidence": {
+    "start": 93,
+    "end": 99,
+    "text": "250 mL"
+   }
+  },
+  {
+   "id": "v9",
+   "field": "dose_mg",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 110,
+    "end": 118,
+    "text": "10 units"
+   }
+  },
+  {
+   "id": "v10",
+   "field": "insulin",
+   "value": "10",
+   "unit": "units",
+   "evidence": {
+    "start": 110,
+    "end": 118,
+    "text": "10 units"
+   }
+  },
+  {
+   "id": "v11",
+   "field": "dose_mg",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 125,
+    "end": 129,
+    "text": "5 mg"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

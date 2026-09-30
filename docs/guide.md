@@ -55,7 +55,8 @@ The comparator is how a field says "up to" is fine. `max_daily_dose` above is `l
 **Units.** The built-in table covers `USD`, `EUR`, `GBP`, `INR`, `%`, `mg`, `mcg`, `g`, `kg`,
 `mL`, `L`, and `minutes` through `years`. A unit is found when a prefix (`$`) ends at the number,
 or a suffix (`mg`, `dollars`) starts within `unit_window` code points after it, in the same
-sentence. `units` in the schema adds codes or replaces built-in ones. A code with no surfaces
+sentence. Only the first suffix of any known unit counts, so in "10 mcg (maximum 500 mg)" the 10
+is mcg, never mg. `units` in the schema adds codes or replaces built-in ones. A code with no surfaces
 matches everywhere, so the unit check becomes a no-op for it.
 
 **Keys.** A label gives a different starting dose per indication. Declare them on the field and

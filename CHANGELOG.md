@@ -31,6 +31,10 @@ milestone 0.2.
   0.1, "1.6 mcg/kg/day" passed as 1.6 mcg, and "10 mg/kg (maximum 500 mg)" passed as 10 mg
   through the later "500 mg". "200 mg/day" is still mg. A weight-based dose needs its own unit
   code, such as `mg/kg`. Vector `04b-per-units`.
+- First unit (#26): the first suffix of any unit in the table, built-in or the schema's, decides
+  a number's unit. In 0.1, "10 mcg (maximum 500 mg)" passed as 10 mg, because the `mg` of 500
+  was within 24 code points, and "2 L in 4 hours" passed as 2 hours. "25 or 50 mg" still gives 25
+  its mg. Vector `04c-first-unit`.
 - Keyed fields (#2): a field can list `keys`, the conditions its values belong to (such as a
   drug's indications), and each candidate names one as `key`. A missing or unknown key rejects
   `KEY_INVALID`, a new step 7, so evidence checks are now steps 8 to 11. A key is at a value when

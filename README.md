@@ -205,7 +205,7 @@ printed in IRS Publication 590-A never equals 252,000 or 2,520,000. When a span 
 but its quote occurs exactly once elsewhere with the right value and unit, groundgate moves the
 evidence there and records `EVIDENCE_REANCHORED`.
 
-The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 23 language-neutral
+The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 24 language-neutral
 vectors that pin every code, so another implementation can prove it agrees.
 
 ## Receipts
