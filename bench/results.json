@@ -2,8 +2,8 @@
  "gold": {
   "absent_fields": 33,
   "documents": 30,
-  "excluded_fields": 2,
-  "facts": 276,
+  "excluded_fields": 1,
+  "facts": 277,
   "labeling_hours": 2.4,
   "status": "checked by a person"
  },
@@ -11,45 +11,45 @@
   "adjacent_value": {
    "code:NON_VERBATIM_EVIDENCE": 2,
    "code:NO_EVIDENCE": 3,
-   "code:QUALIFIED_VALUE": 26,
+   "code:QUALIFIED_VALUE": 27,
    "code:SCALE_WORD": 2,
    "code:UNIT_NOT_IN_EVIDENCE": 1,
    "code:VALUE_NOT_IN_EVIDENCE": 3,
    "groundgate:accept": 158,
    "groundgate:reject": 7,
-   "groundgate:review": 30,
-   "judged:wrong_value": 195,
-   "lx_aligned:accept": 192,
+   "groundgate:review": 31,
+   "judged:wrong_value": 196,
+   "lx_aligned:accept": 193,
    "lx_aligned:reject": 3,
-   "lx_all:accept": 195,
-   "lx_exact:accept": 186,
+   "lx_all:accept": 196,
+   "lx_exact:accept": 187,
    "lx_exact:reject": 9,
-   "n": 195,
+   "n": 196,
    "skipped_planted_value_is_gold": 37
   },
   "clean": {
    "code:EVIDENCE_REANCHORED": 2,
-   "code:QUALIFIED_VALUE": 20,
+   "code:QUALIFIED_VALUE": 21,
    "code:UNIT_NOT_IN_EVIDENCE": 2,
    "code:VALUE_NOT_IN_EVIDENCE": 2,
    "groundgate:accept": 252,
    "groundgate:reject": 4,
-   "groundgate:review": 20,
-   "judged:correct": 276,
-   "lx_aligned:accept": 276,
-   "lx_all:accept": 276,
-   "lx_exact:accept": 276,
-   "n": 276
+   "groundgate:review": 21,
+   "judged:correct": 277,
+   "lx_aligned:accept": 277,
+   "lx_all:accept": 277,
+   "lx_exact:accept": 277,
+   "n": 277
   },
   "comma_as_decimal": {
-   "code:TYPE_INVALID": 56,
+   "code:TYPE_INVALID": 57,
    "code:VALUE_NOT_IN_EVIDENCE": 30,
-   "groundgate:reject": 86,
-   "judged:wrong_value": 86,
-   "lx_aligned:accept": 86,
-   "lx_all:accept": 86,
-   "lx_exact:accept": 86,
-   "n": 86
+   "groundgate:reject": 87,
+   "judged:wrong_value": 87,
+   "lx_aligned:accept": 87,
+   "lx_all:accept": 87,
+   "lx_exact:accept": 87,
+   "n": 87
   },
   "decimal_dropped": {
    "code:VALUE_NOT_IN_EVIDENCE": 20,
@@ -64,102 +64,102 @@
    "code:NO_EVIDENCE": 152,
    "code:QUALIFIED_VALUE": 2,
    "code:UNIT_NOT_IN_EVIDENCE": 3,
-   "code:VALUE_NOT_IN_EVIDENCE": 113,
+   "code:VALUE_NOT_IN_EVIDENCE": 114,
    "groundgate:accept": 6,
-   "groundgate:reject": 268,
+   "groundgate:reject": 269,
    "groundgate:review": 2,
-   "judged:wrong_value": 276,
-   "lx_aligned:accept": 124,
+   "judged:wrong_value": 277,
+   "lx_aligned:accept": 125,
    "lx_aligned:reject": 152,
-   "lx_all:accept": 276,
+   "lx_all:accept": 277,
    "lx_exact:accept": 9,
-   "lx_exact:reject": 267,
-   "n": 276
+   "lx_exact:reject": 268,
+   "n": 277
   },
   "null_literal": {
-   "code:NULL_STRING_LITERAL": 276,
-   "groundgate:reject": 276,
-   "judged:unparsable": 276,
-   "lx_aligned:reject": 276,
-   "lx_all:accept": 276,
-   "lx_exact:reject": 276,
-   "n": 276
+   "code:NULL_STRING_LITERAL": 277,
+   "groundgate:reject": 277,
+   "judged:unparsable": 277,
+   "lx_aligned:reject": 277,
+   "lx_all:accept": 277,
+   "lx_exact:reject": 277,
+   "n": 277
   },
   "paraphrase": {
    "code:NON_VERBATIM_EVIDENCE": 166,
-   "code:NO_EVIDENCE": 97,
+   "code:NO_EVIDENCE": 98,
    "code:QUALIFIED_VALUE": 5,
    "code:UNIT_NOT_IN_EVIDENCE": 7,
    "code:VALUE_NOT_IN_EVIDENCE": 3,
    "groundgate:accept": 3,
-   "groundgate:reject": 107,
+   "groundgate:reject": 108,
    "groundgate:review": 166,
-   "judged:correct": 276,
+   "judged:correct": 277,
    "lx_aligned:accept": 179,
-   "lx_aligned:reject": 97,
-   "lx_all:accept": 276,
+   "lx_aligned:reject": 98,
+   "lx_all:accept": 277,
    "lx_exact:accept": 3,
-   "lx_exact:reject": 273,
-   "n": 276
+   "lx_exact:reject": 274,
+   "n": 277
   },
   "qualifier_in_text": {
    "code:EVIDENCE_REANCHORED": 2,
-   "code:QUALIFIED_VALUE": 245,
+   "code:QUALIFIED_VALUE": 246,
    "code:UNIT_NOT_IN_EVIDENCE": 2,
    "code:VALUE_NOT_IN_EVIDENCE": 1,
    "groundgate:accept": 23,
    "groundgate:accept_cited_elsewhere": 23,
    "groundgate:reject": 3,
-   "groundgate:review": 245,
-   "judged:wrong_meaning": 271,
-   "lx_aligned:accept": 271,
-   "lx_all:accept": 271,
-   "lx_exact:accept": 271,
-   "n": 271
+   "groundgate:review": 246,
+   "judged:wrong_meaning": 272,
+   "lx_aligned:accept": 272,
+   "lx_all:accept": 272,
+   "lx_exact:accept": 272,
+   "n": 272
   },
   "scale_word_in_text": {
-   "code:QUALIFIED_VALUE": 14,
-   "code:SCALE_WORD": 112,
+   "code:QUALIFIED_VALUE": 15,
+   "code:SCALE_WORD": 113,
    "code:VALUE_NOT_IN_EVIDENCE": 1,
    "groundgate:reject": 1,
-   "groundgate:review": 112,
-   "judged:wrong_meaning": 113,
-   "lx_aligned:accept": 113,
-   "lx_all:accept": 113,
-   "lx_exact:accept": 113,
-   "n": 113
+   "groundgate:review": 113,
+   "judged:wrong_meaning": 114,
+   "lx_aligned:accept": 114,
+   "lx_all:accept": 114,
+   "lx_exact:accept": 114,
+   "n": 114
   },
   "text_and_value_x10": {
    "code:NO_EVIDENCE": 205,
    "code:UNIT_NOT_IN_EVIDENCE": 2,
-   "code:VALUE_NOT_IN_EVIDENCE": 67,
-   "groundgate:reject": 274,
-   "judged:wrong_value": 274,
-   "lx_aligned:accept": 69,
+   "code:VALUE_NOT_IN_EVIDENCE": 68,
+   "groundgate:reject": 275,
+   "judged:wrong_value": 275,
+   "lx_aligned:accept": 70,
    "lx_aligned:reject": 205,
-   "lx_all:accept": 274,
+   "lx_all:accept": 275,
    "lx_exact:accept": 1,
-   "lx_exact:reject": 273,
-   "n": 274,
+   "lx_exact:reject": 274,
+   "n": 275,
    "skipped_planted_value_is_gold": 2
   },
   "unit_swap": {
-   "code:UNIT_INVALID": 256,
-   "groundgate:reject": 256,
-   "judged:wrong_unit": 256,
-   "lx_aligned:accept": 256,
-   "lx_all:accept": 256,
-   "lx_exact:accept": 256,
-   "n": 256
+   "code:UNIT_INVALID": 257,
+   "groundgate:reject": 257,
+   "judged:wrong_unit": 257,
+   "lx_aligned:accept": 257,
+   "lx_all:accept": 257,
+   "lx_exact:accept": 257,
+   "n": 257
   },
   "value_x10": {
-   "code:VALUE_NOT_IN_EVIDENCE": 274,
-   "groundgate:reject": 274,
-   "judged:wrong_value": 274,
-   "lx_aligned:accept": 274,
-   "lx_all:accept": 274,
-   "lx_exact:accept": 274,
-   "n": 274,
+   "code:VALUE_NOT_IN_EVIDENCE": 275,
+   "groundgate:reject": 275,
+   "judged:wrong_value": 275,
+   "lx_aligned:accept": 275,
+   "lx_all:accept": 275,
+   "lx_exact:accept": 275,
+   "n": 275,
    "skipped_planted_value_is_gold": 2
   }
  },
@@ -175,16 +175,16 @@
      "n": 1895,
      "rate": 0.1483
     },
-    "candidates": 2332,
-    "correct": 2246,
+    "candidates": 2339,
+    "correct": 2253,
     "correct_sent_to_review": {
      "ci95": [
-      0.115,
-      0.1427
+      0.1176,
+      0.1455
      ],
-     "k": 288,
-     "n": 2246,
-     "rate": 0.1282
+     "k": 295,
+     "n": 2253,
+     "rate": 0.1309
     },
     "documents": 30,
     "escape": {
@@ -210,11 +210,11 @@
     },
     "false_reject": {
      "ci95": [
-      0.001,
+      0.0009,
       0.0052
      ],
      "k": 5,
-     "n": 2246,
+     "n": 2253,
      "rate": 0.0022
     },
     "models": [
@@ -229,49 +229,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8328,
-       0.9105
+       0.8293,
+       0.9077
       ],
       "k": 242,
-      "n": 276,
-      "rate": 0.8768
+      "n": 277,
+      "rate": 0.8736
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.02,
-      0.0332
+      0.0331
      ],
      "k": 58,
-     "n": 2246,
-     "rate": 0.0258
+     "n": 2253,
+     "rate": 0.0257
     },
     "review_load": {
      "ci95": [
-      0.1419,
-      0.1714
+      0.1444,
+      0.174
      ],
-     "k": 364,
-     "n": 2332,
-     "rate": 0.1561
+     "k": 371,
+     "n": 2339,
+     "rate": 0.1586
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1288,
-      0.1571
+      0.1312,
+      0.1598
      ],
-     "k": 332,
-     "n": 2332,
-     "rate": 0.1424
+     "k": 339,
+     "n": 2339,
+     "rate": 0.1449
     },
     "wrong": 86,
     "wrong_by_class": {
@@ -300,16 +300,16 @@
      "n": 1776,
      "rate": 0.1014
     },
-    "candidates": 2006,
-    "correct": 1975,
+    "candidates": 2011,
+    "correct": 1980,
     "correct_sent_to_review": {
      "ci95": [
-      0.0778,
-      0.103
+      0.08,
+      0.1054
      ],
-     "k": 177,
-     "n": 1975,
-     "rate": 0.0896
+     "k": 182,
+     "n": 1980,
+     "rate": 0.0919
     },
     "documents": 30,
     "escape": {
@@ -339,8 +339,8 @@
       0.0086
      ],
      "k": 9,
-     "n": 1975,
-     "rate": 0.0046
+     "n": 1980,
+     "rate": 0.0045
     },
     "models": [
      "Claude Haiku 4.5",
@@ -354,49 +354,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8532,
-       0.9258
+       0.8496,
+       0.9231
       ],
       "k": 247,
-      "n": 276,
-      "rate": 0.8949
+      "n": 277,
+      "rate": 0.8917
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0039,
+      0.0038,
       0.0112
      ],
      "k": 13,
-     "n": 1975,
+     "n": 1980,
      "rate": 0.0066
     },
     "review_load": {
      "ci95": [
-      0.0845,
-      0.1104
+      0.0867,
+      0.1128
      ],
-     "k": 194,
-     "n": 2006,
-     "rate": 0.0967
+     "k": 199,
+     "n": 2011,
+     "rate": 0.099
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0789,
-      0.1041
+      0.0811,
+      0.1065
      ],
-     "k": 182,
-     "n": 2006,
-     "rate": 0.0907
+     "k": 187,
+     "n": 2011,
+     "rate": 0.093
     },
     "wrong": 31,
     "wrong_by_class": {
@@ -518,16 +518,16 @@
      "n": 538,
      "rate": 0.1338
     },
-    "candidates": 670,
-    "correct": 647,
+    "candidates": 672,
+    "correct": 649,
     "correct_sent_to_review": {
      "ci95": [
-      0.1047,
-      0.1563
+      0.1072,
+      0.1591
      ],
-     "k": 83,
-     "n": 647,
-     "rate": 0.1283
+     "k": 85,
+     "n": 649,
+     "rate": 0.131
     },
     "documents": 30,
     "escape": {
@@ -557,7 +557,7 @@
       0.0112
      ],
      "k": 2,
-     "n": 647,
+     "n": 649,
      "rate": 0.0031
     },
     "models": [
@@ -567,49 +567,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8328,
-       0.9105
+       0.8293,
+       0.9077
       ],
       "k": 242,
-      "n": 276,
-      "rate": 0.8768
+      "n": 277,
+      "rate": 0.8736
      },
      "accepted_or_review": {
       "ci95": [
-       0.9583,
-       0.9922
+       0.9584,
+       0.9923
       ],
-      "k": 271,
-      "n": 276,
+      "k": 272,
+      "n": 277,
       "rate": 0.9819
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0251,
-      0.0546
+      0.025,
+      0.0544
      ],
      "k": 24,
-     "n": 647,
-     "rate": 0.0371
+     "n": 649,
+     "rate": 0.037
     },
     "review_load": {
      "ci95": [
-      0.1284,
-      0.183
+      0.1308,
+      0.1856
      ],
-     "k": 103,
-     "n": 670,
-     "rate": 0.1537
+     "k": 105,
+     "n": 672,
+     "rate": 0.1562
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1256,
-      0.1798
+      0.128,
+      0.1825
      ],
-     "k": 101,
-     "n": 670,
-     "rate": 0.1507
+     "k": 103,
+     "n": 672,
+     "rate": 0.1533
     },
     "wrong": 23,
     "wrong_by_class": {
@@ -636,16 +636,16 @@
      "n": 509,
      "rate": 0.0982
     },
-    "candidates": 584,
-    "correct": 572,
+    "candidates": 586,
+    "correct": 574,
     "correct_sent_to_review": {
      "ci95": [
-      0.0731,
-      0.1211
+      0.0759,
+      0.1246
      ],
-     "k": 54,
-     "n": 572,
-     "rate": 0.0944
+     "k": 56,
+     "n": 574,
+     "rate": 0.0976
     },
     "documents": 30,
     "escape": {
@@ -670,10 +670,10 @@
     "false_reject": {
      "ci95": [
       0.0037,
-      0.0203
+      0.0202
      ],
      "k": 5,
-     "n": 572,
+     "n": 574,
      "rate": 0.0087
     },
     "models": [
@@ -683,20 +683,20 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8491,
-       0.9228
+       0.8455,
+       0.92
       ],
       "k": 246,
-      "n": 276,
-      "rate": 0.8913
+      "n": 277,
+      "rate": 0.8881
      },
      "accepted_or_review": {
       "ci95": [
-       0.9583,
-       0.9922
+       0.9584,
+       0.9923
       ],
-      "k": 271,
-      "n": 276,
+      "k": 272,
+      "n": 277,
       "rate": 0.9819
      }
     },
@@ -706,26 +706,26 @@
       0.0178
      ],
      "k": 4,
-     "n": 572,
+     "n": 574,
      "rate": 0.007
     },
     "review_load": {
      "ci95": [
-      0.0807,
-      0.13
+      0.0834,
+      0.1333
      ],
-     "k": 60,
-     "n": 584,
-     "rate": 0.1027
+     "k": 62,
+     "n": 586,
+     "rate": 0.1058
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0776,
-      0.1263
+      0.0804,
+      0.1296
      ],
-     "k": 58,
-     "n": 584,
-     "rate": 0.0993
+     "k": 60,
+     "n": 586,
+     "rate": 0.1024
     },
     "wrong": 12,
     "wrong_by_class": {
@@ -752,16 +752,16 @@
      "n": 556,
      "rate": 0.1493
     },
-    "candidates": 677,
-    "correct": 653,
+    "candidates": 679,
+    "correct": 655,
     "correct_sent_to_review": {
      "ci95": [
-      0.0982,
-      0.1482
+      0.1006,
+      0.1511
      ],
-     "k": 79,
-     "n": 653,
-     "rate": 0.121
+     "k": 81,
+     "n": 655,
+     "rate": 0.1237
     },
     "documents": 30,
     "escape": {
@@ -791,7 +791,7 @@
       0.0134
      ],
      "k": 3,
-     "n": 653,
+     "n": 655,
      "rate": 0.0046
     },
     "models": [
@@ -801,49 +801,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.845,
-       0.9197
+       0.8415,
+       0.917
       ],
       "k": 245,
-      "n": 276,
-      "rate": 0.8877
+      "n": 277,
+      "rate": 0.8845
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.014,
-      0.0376
+      0.0139,
+      0.0374
      ],
      "k": 15,
-     "n": 653,
-     "rate": 0.023
+     "n": 655,
+     "rate": 0.0229
     },
     "review_load": {
      "ci95": [
-      0.1243,
-      0.178
+      0.1267,
+      0.1806
      ],
-     "k": 101,
-     "n": 677,
-     "rate": 0.1492
+     "k": 103,
+     "n": 679,
+     "rate": 0.1517
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.123,
-      0.1764
+      0.1253,
+      0.1791
      ],
-     "k": 100,
-     "n": 677,
-     "rate": 0.1477
+     "k": 102,
+     "n": 679,
+     "rate": 0.1502
     },
     "wrong": 24,
     "wrong_by_class": {
@@ -870,16 +870,16 @@
      "n": 507,
      "rate": 0.0947
     },
-    "candidates": 579,
-    "correct": 570,
+    "candidates": 581,
+    "correct": 572,
     "correct_sent_to_review": {
      "ci95": [
-      0.0764,
-      0.1254
+      0.0793,
+      0.1289
      ],
-     "k": 56,
-     "n": 570,
-     "rate": 0.0982
+     "k": 58,
+     "n": 572,
+     "rate": 0.1014
     },
     "documents": 30,
     "escape": {
@@ -904,10 +904,10 @@
     "false_reject": {
      "ci95": [
       0.0027,
-      0.0179
+      0.0178
      ],
      "k": 4,
-     "n": 570,
+     "n": 572,
      "rate": 0.007
     },
     "models": [
@@ -917,49 +917,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8491,
-       0.9228
+       0.8455,
+       0.92
       ],
       "k": 246,
-      "n": 276,
-      "rate": 0.8913
+      "n": 277,
+      "rate": 0.8881
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0018,
-      0.0154
+      0.0153
      ],
      "k": 3,
-     "n": 570,
-     "rate": 0.0053
+     "n": 572,
+     "rate": 0.0052
     },
     "review_load": {
      "ci95": [
-      0.0844,
-      0.1349
+      0.0872,
+      0.1382
      ],
-     "k": 62,
-     "n": 579,
-     "rate": 0.1071
+     "k": 64,
+     "n": 581,
+     "rate": 0.1102
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0814,
-      0.1311
+      0.0841,
+      0.1345
      ],
-     "k": 60,
-     "n": 579,
-     "rate": 0.1036
+     "k": 62,
+     "n": 581,
+     "rate": 0.1067
     },
     "wrong": 9,
     "wrong_by_class": {
@@ -985,16 +985,16 @@
      "n": 531,
      "rate": 0.1394
     },
-    "candidates": 674,
-    "correct": 644,
+    "candidates": 676,
+    "correct": 646,
     "correct_sent_to_review": {
      "ci95": [
-      0.1137,
-      0.167
+      0.1162,
+      0.1698
      ],
-     "k": 89,
-     "n": 644,
-     "rate": 0.1382
+     "k": 91,
+     "n": 646,
+     "rate": 0.1409
     },
     "documents": 30,
     "escape": {
@@ -1024,8 +1024,8 @@
       0.0087
      ],
      "k": 1,
-     "n": 644,
-     "rate": 0.0016
+     "n": 646,
+     "rate": 0.0015
     },
     "models": [
      "Claude Haiku 4.5",
@@ -1034,49 +1034,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8167,
-       0.898
+       0.8133,
+       0.8953
       ],
       "k": 238,
-      "n": 276,
-      "rate": 0.8623
+      "n": 277,
+      "rate": 0.8592
      },
      "accepted_or_review": {
       "ci95": [
-       0.9583,
-       0.9922
+       0.9584,
+       0.9923
       ],
-      "k": 271,
-      "n": 276,
+      "k": 272,
+      "n": 277,
       "rate": 0.9819
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0239,
-      0.053
+      0.0238,
+      0.0529
      ],
      "k": 23,
-     "n": 644,
-     "rate": 0.0357
+     "n": 646,
+     "rate": 0.0356
     },
     "review_load": {
      "ci95": [
-      0.1455,
-      0.2024
+      0.1478,
+      0.205
      ],
-     "k": 116,
-     "n": 674,
-     "rate": 0.1721
+     "k": 118,
+     "n": 676,
+     "rate": 0.1746
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1372,
-      0.193
+      0.1396,
+      0.1956
      ],
-     "k": 110,
-     "n": 674,
-     "rate": 0.1632
+     "k": 112,
+     "n": 676,
+     "rate": 0.1657
     },
     "wrong": 30,
     "wrong_by_class": {
@@ -1104,16 +1104,16 @@
      "n": 501,
      "rate": 0.0998
     },
-    "candidates": 578,
-    "correct": 563,
+    "candidates": 580,
+    "correct": 565,
     "correct_sent_to_review": {
      "ci95": [
-      0.0727,
-      0.1211
+      0.0756,
+      0.1246
      ],
-     "k": 53,
-     "n": 563,
-     "rate": 0.0941
+     "k": 55,
+     "n": 565,
+     "rate": 0.0973
     },
     "documents": 30,
     "escape": {
@@ -1143,7 +1143,7 @@
       0.0181
      ],
      "k": 4,
-     "n": 563,
+     "n": 565,
      "rate": 0.0071
     },
     "models": [
@@ -1153,49 +1153,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8409,
-       0.9167
+       0.8374,
+       0.9139
       ],
       "k": 244,
-      "n": 276,
-      "rate": 0.8841
+      "n": 277,
+      "rate": 0.8809
      },
      "accepted_or_review": {
       "ci95": [
-       0.9439,
-       0.9852
+       0.9441,
+       0.9853
       ],
-      "k": 268,
-      "n": 276,
-      "rate": 0.971
+      "k": 269,
+      "n": 277,
+      "rate": 0.9711
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0038,
-      0.0206
+      0.0205
      ],
      "k": 5,
-     "n": 563,
-     "rate": 0.0089
+     "n": 565,
+     "rate": 0.0088
     },
     "review_load": {
      "ci95": [
-      0.0815,
-      0.1313
+      0.0843,
+      0.1347
      ],
-     "k": 60,
-     "n": 578,
-     "rate": 0.1038
+     "k": 62,
+     "n": 580,
+     "rate": 0.1069
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.08,
-      0.1294
+      0.0828,
+      0.1328
      ],
-     "k": 59,
-     "n": 578,
-     "rate": 0.1021
+     "k": 61,
+     "n": 580,
+     "rate": 0.1052
     },
     "wrong": 15,
     "wrong_by_class": {
@@ -1223,16 +1223,16 @@
      "n": 514,
      "rate": 0.1401
     },
-    "candidates": 645,
-    "correct": 621,
+    "candidates": 647,
+    "correct": 623,
     "correct_sent_to_review": {
      "ci95": [
-      0.1077,
-      0.1609
+      0.1102,
+      0.1639
      ],
-     "k": 82,
-     "n": 621,
-     "rate": 0.132
+     "k": 84,
+     "n": 623,
+     "rate": 0.1348
     },
     "documents": 30,
     "escape": {
@@ -1259,10 +1259,10 @@
     "false_reject": {
      "ci95": [
       0.0003,
-      0.0091
+      0.009
      ],
      "k": 1,
-     "n": 621,
+     "n": 623,
      "rate": 0.0016
     },
     "models": [
@@ -1272,49 +1272,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8368,
-       0.9136
+       0.8334,
+       0.9108
       ],
       "k": 243,
-      "n": 276,
-      "rate": 0.8804
+      "n": 277,
+      "rate": 0.8773
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0261,
-      0.0569
+      0.026,
+      0.0567
      ],
      "k": 24,
-     "n": 621,
-     "rate": 0.0386
+     "n": 623,
+     "rate": 0.0385
     },
     "review_load": {
      "ci95": [
-      0.1349,
-      0.1916
+      0.1373,
+      0.1943
      ],
-     "k": 104,
-     "n": 645,
-     "rate": 0.1612
+     "k": 106,
+     "n": 647,
+     "rate": 0.1638
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1306,
-      0.1867
+      0.133,
+      0.1894
      ],
-     "k": 101,
-     "n": 645,
-     "rate": 0.1566
+     "k": 103,
+     "n": 647,
+     "rate": 0.1592
     },
     "wrong": 24,
     "wrong_by_class": {
@@ -1341,16 +1341,16 @@
      "n": 498,
      "rate": 0.0944
     },
-    "candidates": 571,
-    "correct": 558,
+    "candidates": 573,
+    "correct": 560,
     "correct_sent_to_review": {
      "ci95": [
-      0.0718,
-      0.1202
+      0.0747,
+      0.1237
      ],
-     "k": 52,
-     "n": 558,
-     "rate": 0.0932
+     "k": 54,
+     "n": 560,
+     "rate": 0.0964
     },
     "documents": 30,
     "escape": {
@@ -1377,10 +1377,10 @@
     "false_reject": {
      "ci95": [
       0.0018,
-      0.0157
+      0.0156
      ],
      "k": 3,
-     "n": 558,
+     "n": 560,
      "rate": 0.0054
     },
     "models": [
@@ -1390,49 +1390,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8409,
-       0.9167
+       0.8374,
+       0.9139
       ],
       "k": 244,
-      "n": 276,
-      "rate": 0.8841
+      "n": 277,
+      "rate": 0.8809
      },
      "accepted_or_review": {
       "ci95": [
-       0.9486,
+       0.9488,
        0.9877
       ],
-      "k": 269,
-      "n": 276,
-      "rate": 0.9746
+      "k": 270,
+      "n": 277,
+      "rate": 0.9747
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0038,
-      0.0208
+      0.0207
      ],
      "k": 5,
-     "n": 558,
-     "rate": 0.009
+     "n": 560,
+     "rate": 0.0089
     },
     "review_load": {
      "ci95": [
-      0.0825,
-      0.1329
+      0.0853,
+      0.1363
      ],
-     "k": 60,
-     "n": 571,
-     "rate": 0.1051
+     "k": 62,
+     "n": 573,
+     "rate": 0.1082
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.081,
-      0.131
+      0.0838,
+      0.1344
      ],
-     "k": 59,
-     "n": 571,
-     "rate": 0.1033
+     "k": 61,
+     "n": 573,
+     "rate": 0.1065
     },
     "wrong": 13,
     "wrong_by_class": {
@@ -1459,16 +1459,16 @@
      "n": 558,
      "rate": 0.1523
     },
-    "candidates": 677,
-    "correct": 652,
+    "candidates": 679,
+    "correct": 654,
     "correct_sent_to_review": {
      "ci95": [
-      0.0969,
-      0.1468
+      0.0994,
+      0.1497
      ],
-     "k": 78,
-     "n": 652,
-     "rate": 0.1196
+     "k": 80,
+     "n": 654,
+     "rate": 0.1223
     },
     "documents": 30,
     "escape": {
@@ -1498,7 +1498,7 @@
       0.0086
      ],
      "k": 1,
-     "n": 652,
+     "n": 654,
      "rate": 0.0015
     },
     "models": [
@@ -1508,49 +1508,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.845,
-       0.9197
+       0.8415,
+       0.917
       ],
       "k": 245,
-      "n": 276,
-      "rate": 0.8877
+      "n": 277,
+      "rate": 0.8845
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.014,
-      0.0376
+      0.0139,
+      0.0375
      ],
      "k": 15,
-     "n": 652,
-     "rate": 0.023
+     "n": 654,
+     "rate": 0.0229
     },
     "review_load": {
      "ci95": [
-      0.1216,
-      0.1748
+      0.124,
+      0.1775
      ],
-     "k": 99,
-     "n": 677,
-     "rate": 0.1462
+     "k": 101,
+     "n": 679,
+     "rate": 0.1487
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1189,
-      0.1717
+      0.1213,
+      0.1743
      ],
-     "k": 97,
-     "n": 677,
-     "rate": 0.1433
+     "k": 99,
+     "n": 679,
+     "rate": 0.1458
     },
     "wrong": 25,
     "wrong_by_class": {
@@ -1579,16 +1579,16 @@
      "n": 512,
      "rate": 0.1016
     },
-    "candidates": 579,
-    "correct": 570,
+    "candidates": 580,
+    "correct": 571,
     "correct_sent_to_review": {
      "ci95": [
-      0.0687,
-      0.1157
+      0.0701,
+      0.1175
      ],
-     "k": 51,
-     "n": 570,
-     "rate": 0.0895
+     "k": 52,
+     "n": 571,
+     "rate": 0.0911
     },
     "documents": 30,
     "escape": {
@@ -1616,7 +1616,7 @@
       0.0179
      ],
      "k": 4,
-     "n": 570,
+     "n": 571,
      "rate": 0.007
     },
     "models": [
@@ -1626,49 +1626,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8491,
-       0.9228
+       0.8455,
+       0.92
       ],
       "k": 246,
-      "n": 276,
-      "rate": 0.8913
+      "n": 277,
+      "rate": 0.8881
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0018,
-      0.0154
+      0.0153
      ],
      "k": 3,
-     "n": 570,
+     "n": 571,
      "rate": 0.0053
     },
     "review_load": {
      "ci95": [
-      0.0752,
-      0.1235
+      0.0766,
+      0.1252
      ],
-     "k": 56,
-     "n": 579,
-     "rate": 0.0967
+     "k": 57,
+     "n": 580,
+     "rate": 0.0983
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0707,
-      0.1178
+      0.0721,
+      0.1195
      ],
-     "k": 53,
-     "n": 579,
-     "rate": 0.0915
+     "k": 54,
+     "n": 580,
+     "rate": 0.0931
     },
     "wrong": 9,
     "wrong_by_class": {
@@ -1694,16 +1694,16 @@
      "n": 548,
      "rate": 0.146
     },
-    "candidates": 664,
-    "correct": 644,
+    "candidates": 666,
+    "correct": 646,
     "correct_sent_to_review": {
      "ci95": [
-      0.0967,
-      0.1469
+      0.0992,
+      0.1498
      ],
-     "k": 77,
-     "n": 644,
-     "rate": 0.1196
+     "k": 79,
+     "n": 646,
+     "rate": 0.1223
     },
     "documents": 30,
     "escape": {
@@ -1729,11 +1729,11 @@
     },
     "false_reject": {
      "ci95": [
-      0.0009,
-      0.0113
+      0.0008,
+      0.0112
      ],
      "k": 2,
-     "n": 644,
+     "n": 646,
      "rate": 0.0031
     },
     "models": [
@@ -1743,49 +1743,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8409,
-       0.9167
+       0.8374,
+       0.9139
       ],
       "k": 244,
-      "n": 276,
-      "rate": 0.8841
+      "n": 277,
+      "rate": 0.8809
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0165,
-      0.0419
+      0.0417
      ],
      "k": 17,
-     "n": 644,
-     "rate": 0.0264
+     "n": 646,
+     "rate": 0.0263
     },
     "review_load": {
      "ci95": [
-      0.1199,
-      0.1734
+      0.1223,
+      0.1761
      ],
-     "k": 96,
-     "n": 664,
-     "rate": 0.1446
+     "k": 98,
+     "n": 666,
+     "rate": 0.1471
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1157,
-      0.1685
+      0.1181,
+      0.1713
      ],
-     "k": 93,
-     "n": 664,
-     "rate": 0.1401
+     "k": 95,
+     "n": 666,
+     "rate": 0.1426
     },
     "wrong": 20,
     "wrong_by_class": {
@@ -1812,16 +1812,16 @@
      "n": 504,
      "rate": 0.1052
     },
-    "candidates": 570,
-    "correct": 562,
+    "candidates": 571,
+    "correct": 563,
     "correct_sent_to_review": {
      "ci95": [
-      0.0697,
-      0.1174
+      0.0711,
+      0.1191
      ],
-     "k": 51,
-     "n": 562,
-     "rate": 0.0907
+     "k": 52,
+     "n": 563,
+     "rate": 0.0924
     },
     "documents": 30,
     "escape": {
@@ -1846,10 +1846,10 @@
     "false_reject": {
      "ci95": [
       0.0028,
-      0.0182
+      0.0181
      ],
      "k": 4,
-     "n": 562,
+     "n": 563,
      "rate": 0.0071
     },
     "models": [
@@ -1859,49 +1859,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8491,
-       0.9228
+       0.8455,
+       0.92
       ],
       "k": 246,
-      "n": 276,
-      "rate": 0.8913
+      "n": 277,
+      "rate": 0.8881
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0018,
-      0.0156
+      0.0155
      ],
      "k": 3,
-     "n": 562,
+     "n": 563,
      "rate": 0.0053
     },
     "review_load": {
      "ci95": [
-      0.0764,
-      0.1254
+      0.0778,
+      0.1272
      ],
-     "k": 56,
-     "n": 570,
-     "rate": 0.0982
+     "k": 57,
+     "n": 571,
+     "rate": 0.0998
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0718,
-      0.1196
+      0.0732,
+      0.1214
      ],
-     "k": 53,
-     "n": 570,
-     "rate": 0.093
+     "k": 54,
+     "n": 571,
+     "rate": 0.0946
     },
     "wrong": 8,
     "wrong_by_class": {
@@ -1927,16 +1927,16 @@
      "n": 562,
      "rate": 0.1441
     },
-    "candidates": 677,
-    "correct": 654,
+    "candidates": 679,
+    "correct": 656,
     "correct_sent_to_review": {
      "ci95": [
-      0.0911,
-      0.1397
+      0.0936,
+      0.1426
      ],
-     "k": 74,
-     "n": 654,
-     "rate": 0.1131
+     "k": 76,
+     "n": 656,
+     "rate": 0.1159
     },
     "documents": 30,
     "escape": {
@@ -1966,7 +1966,7 @@
       0.0134
      ],
      "k": 3,
-     "n": 654,
+     "n": 656,
      "rate": 0.0046
     },
     "models": [
@@ -1976,49 +1976,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8491,
-       0.9228
+       0.8455,
+       0.92
       ],
       "k": 246,
-      "n": 276,
-      "rate": 0.8913
+      "n": 277,
+      "rate": 0.8881
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0139,
-      0.0375
+      0.0374
      ],
      "k": 15,
-     "n": 654,
+     "n": 656,
      "rate": 0.0229
     },
     "review_load": {
      "ci95": [
-      0.1148,
-      0.1669
+      0.1172,
+      0.1696
      ],
-     "k": 94,
-     "n": 677,
-     "rate": 0.1388
+     "k": 96,
+     "n": 679,
+     "rate": 0.1414
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1135,
-      0.1654
+      0.1158,
+      0.168
      ],
-     "k": 93,
-     "n": 677,
-     "rate": 0.1374
+     "k": 95,
+     "n": 679,
+     "rate": 0.1399
     },
     "wrong": 23,
     "wrong_by_class": {
@@ -2045,16 +2045,16 @@
      "n": 518,
      "rate": 0.0965
     },
-    "candidates": 581,
-    "correct": 574,
+    "candidates": 583,
+    "correct": 576,
     "correct_sent_to_review": {
      "ci95": [
-      0.0667,
-      0.113
+      0.0695,
+      0.1165
      ],
-     "k": 50,
-     "n": 574,
-     "rate": 0.0871
+     "k": 52,
+     "n": 576,
+     "rate": 0.0903
     },
     "documents": 30,
     "escape": {
@@ -2079,10 +2079,10 @@
     "false_reject": {
      "ci95": [
       0.0018,
-      0.0153
+      0.0152
      ],
      "k": 3,
-     "n": 574,
+     "n": 576,
      "rate": 0.0052
     },
     "models": [
@@ -2092,49 +2092,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8573,
-       0.9289
+       0.8537,
+       0.9261
       ],
       "k": 248,
-      "n": 276,
-      "rate": 0.8986
+      "n": 277,
+      "rate": 0.8953
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0018,
-      0.0153
+      0.0152
      ],
      "k": 3,
-     "n": 574,
+     "n": 576,
      "rate": 0.0052
     },
     "review_load": {
      "ci95": [
-      0.0719,
-      0.1193
+      0.0747,
+      0.1227
      ],
-     "k": 54,
-     "n": 581,
-     "rate": 0.0929
+     "k": 56,
+     "n": 583,
+     "rate": 0.0961
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0719,
-      0.1193
+      0.0747,
+      0.1227
      ],
-     "k": 54,
-     "n": 581,
-     "rate": 0.0929
+     "k": 56,
+     "n": 583,
+     "rate": 0.0961
     },
     "wrong": 7,
     "wrong_by_class": {
@@ -2161,16 +2161,16 @@
      "n": 540,
      "rate": 0.1389
     },
-    "candidates": 674,
-    "correct": 645,
+    "candidates": 676,
+    "correct": 647,
     "correct_sent_to_review": {
      "ci95": [
-      0.1022,
-      0.1534
+      0.1047,
+      0.1563
      ],
-     "k": 81,
-     "n": 645,
-     "rate": 0.1256
+     "k": 83,
+     "n": 647,
+     "rate": 0.1283
     },
     "documents": 30,
     "escape": {
@@ -2200,8 +2200,8 @@
       0.0087
      ],
      "k": 1,
-     "n": 645,
-     "rate": 0.0016
+     "n": 647,
+     "rate": 0.0015
     },
     "models": [
      "Claude Sonnet 4.6",
@@ -2210,49 +2210,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8287,
-       0.9074
+       0.8253,
+       0.9046
       ],
       "k": 241,
-      "n": 276,
-      "rate": 0.8732
+      "n": 277,
+      "rate": 0.87
      },
      "accepted_or_review": {
       "ci95": [
-       0.9583,
-       0.9922
+       0.9584,
+       0.9923
       ],
-      "k": 271,
-      "n": 276,
+      "k": 272,
+      "n": 277,
       "rate": 0.9819
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0239,
-      0.0529
+      0.0238,
+      0.0528
      ],
      "k": 23,
-     "n": 645,
-     "rate": 0.0357
+     "n": 647,
+     "rate": 0.0355
     },
     "review_load": {
      "ci95": [
-      0.1317,
-      0.1867
+      0.1341,
+      0.1893
      ],
-     "k": 106,
-     "n": 674,
-     "rate": 0.1573
+     "k": 108,
+     "n": 676,
+     "rate": 0.1598
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1276,
-      0.1819
+      0.13,
+      0.1846
      ],
-     "k": 103,
-     "n": 674,
-     "rate": 0.1528
+     "k": 105,
+     "n": 676,
+     "rate": 0.1553
     },
     "wrong": 29,
     "wrong_by_class": {
@@ -2280,16 +2280,16 @@
      "n": 508,
      "rate": 0.1024
     },
-    "candidates": 580,
-    "correct": 567,
+    "candidates": 582,
+    "correct": 569,
     "correct_sent_to_review": {
      "ci95": [
-      0.0691,
-      0.1163
+      0.0719,
+      0.1198
      ],
-     "k": 51,
-     "n": 567,
-     "rate": 0.0899
+     "k": 53,
+     "n": 569,
+     "rate": 0.0931
     },
     "documents": 30,
     "escape": {
@@ -2319,7 +2319,7 @@
       0.0154
      ],
      "k": 3,
-     "n": 567,
+     "n": 569,
      "rate": 0.0053
     },
     "models": [
@@ -2329,49 +2329,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8532,
-       0.9258
+       0.8496,
+       0.9231
       ],
       "k": 247,
-      "n": 276,
-      "rate": 0.8949
+      "n": 277,
+      "rate": 0.8917
      },
      "accepted_or_review": {
       "ci95": [
-       0.9583,
-       0.9922
+       0.9584,
+       0.9923
       ],
-      "k": 271,
-      "n": 276,
+      "k": 272,
+      "n": 277,
       "rate": 0.9819
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0038,
-      0.0205
+      0.0204
      ],
      "k": 5,
-     "n": 567,
+     "n": 569,
      "rate": 0.0088
     },
     "review_load": {
      "ci95": [
-      0.0751,
-      0.1233
+      0.0779,
+      0.1267
      ],
-     "k": 56,
-     "n": 580,
-     "rate": 0.0966
+     "k": 58,
+     "n": 582,
+     "rate": 0.0997
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0705,
-      0.1176
+      0.0733,
+      0.121
      ],
-     "k": 53,
-     "n": 580,
-     "rate": 0.0914
+     "k": 55,
+     "n": 582,
+     "rate": 0.0945
     },
     "wrong": 13,
     "wrong_by_class": {
@@ -2399,16 +2399,16 @@
      "n": 523,
      "rate": 0.1396
     },
-    "candidates": 645,
-    "correct": 622,
+    "candidates": 647,
+    "correct": 624,
     "correct_sent_to_review": {
      "ci95": [
-      0.0958,
-      0.1468
+      0.0984,
+      0.1498
      ],
-     "k": 74,
-     "n": 622,
-     "rate": 0.119
+     "k": 76,
+     "n": 624,
+     "rate": 0.1218
     },
     "documents": 30,
     "escape": {
@@ -2435,10 +2435,10 @@
     "false_reject": {
      "ci95": [
       0.0003,
-      0.0091
+      0.009
      ],
      "k": 1,
-     "n": 622,
+     "n": 624,
      "rate": 0.0016
     },
     "models": [
@@ -2448,49 +2448,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8409,
-       0.9167
+       0.8374,
+       0.9139
       ],
       "k": 244,
-      "n": 276,
-      "rate": 0.8841
+      "n": 277,
+      "rate": 0.8809
      },
      "accepted_or_review": {
       "ci95": [
-       0.9583,
-       0.9922
+       0.9584,
+       0.9923
       ],
-      "k": 271,
-      "n": 276,
+      "k": 272,
+      "n": 277,
       "rate": 0.9819
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0261,
-      0.0568
+      0.026,
+      0.0566
      ],
      "k": 24,
-     "n": 622,
-     "rate": 0.0386
+     "n": 624,
+     "rate": 0.0385
     },
     "review_load": {
      "ci95": [
-      0.1206,
-      0.1751
+      0.1231,
+      0.1778
      ],
-     "k": 94,
-     "n": 645,
-     "rate": 0.1457
+     "k": 96,
+     "n": 647,
+     "rate": 0.1484
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1206,
-      0.1751
+      0.1231,
+      0.1778
      ],
-     "k": 94,
-     "n": 645,
-     "rate": 0.1457
+     "k": 96,
+     "n": 647,
+     "rate": 0.1484
     },
     "wrong": 23,
     "wrong_by_class": {
@@ -2517,16 +2517,16 @@
      "n": 505,
      "rate": 0.097
     },
-    "candidates": 573,
-    "correct": 562,
+    "candidates": 575,
+    "correct": 564,
     "correct_sent_to_review": {
      "ci95": [
-      0.0681,
-      0.1154
+      0.071,
+      0.1189
      ],
-     "k": 50,
-     "n": 562,
-     "rate": 0.089
+     "k": 52,
+     "n": 564,
+     "rate": 0.0922
     },
     "documents": 30,
     "escape": {
@@ -2553,11 +2553,11 @@
     "false_reject": {
      "ci95": [
       0.001,
-      0.0129
+      0.0128
      ],
      "k": 2,
-     "n": 562,
-     "rate": 0.0036
+     "n": 564,
+     "rate": 0.0035
     },
     "models": [
      "Claude Sonnet 4.6",
@@ -2566,49 +2566,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8532,
-       0.9258
+       0.8496,
+       0.9231
       ],
       "k": 247,
-      "n": 276,
-      "rate": 0.8949
+      "n": 277,
+      "rate": 0.8917
      },
      "accepted_or_review": {
       "ci95": [
-       0.9583,
-       0.9922
+       0.9584,
+       0.9923
       ],
-      "k": 271,
-      "n": 276,
+      "k": 272,
+      "n": 277,
       "rate": 0.9819
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0038,
-      0.0207
+      0.0206
      ],
      "k": 5,
-     "n": 562,
+     "n": 564,
      "rate": 0.0089
     },
     "review_load": {
      "ci95": [
-      0.076,
-      0.1248
+      0.0788,
+      0.1282
      ],
-     "k": 56,
-     "n": 573,
-     "rate": 0.0977
+     "k": 58,
+     "n": 575,
+     "rate": 0.1009
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0714,
-      0.119
+      0.0742,
+      0.1224
      ],
-     "k": 53,
-     "n": 573,
-     "rate": 0.0925
+     "k": 55,
+     "n": 575,
+     "rate": 0.0957
     },
     "wrong": 11,
     "wrong_by_class": {
@@ -2635,16 +2635,16 @@
      "n": 566,
      "rate": 0.1502
     },
-    "candidates": 677,
-    "correct": 653,
+    "candidates": 679,
+    "correct": 655,
     "correct_sent_to_review": {
      "ci95": [
-      0.0871,
-      0.1349
+      0.0896,
+      0.1379
      ],
-     "k": 71,
-     "n": 653,
-     "rate": 0.1087
+     "k": 73,
+     "n": 655,
+     "rate": 0.1115
     },
     "documents": 30,
     "escape": {
@@ -2674,7 +2674,7 @@
       0.0086
      ],
      "k": 1,
-     "n": 653,
+     "n": 655,
      "rate": 0.0015
     },
     "models": [
@@ -2684,49 +2684,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8532,
-       0.9258
+       0.8496,
+       0.9231
       ],
       "k": 247,
-      "n": 276,
-      "rate": 0.8949
+      "n": 277,
+      "rate": 0.8917
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.014,
-      0.0376
+      0.0139,
+      0.0374
      ],
      "k": 15,
-     "n": 653,
-     "rate": 0.023
+     "n": 655,
+     "rate": 0.0229
     },
     "review_load": {
      "ci95": [
-      0.1094,
-      0.1606
+      0.1118,
+      0.1633
      ],
-     "k": 90,
-     "n": 677,
-     "rate": 0.1329
+     "k": 92,
+     "n": 679,
+     "rate": 0.1355
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1094,
-      0.1606
+      0.1118,
+      0.1633
      ],
-     "k": 90,
-     "n": 677,
-     "rate": 0.1329
+     "k": 92,
+     "n": 679,
+     "rate": 0.1355
     },
     "wrong": 24,
     "wrong_by_class": {
@@ -2755,16 +2755,16 @@
      "n": 523,
      "rate": 0.1033
     },
-    "candidates": 581,
-    "correct": 574,
+    "candidates": 582,
+    "correct": 575,
     "correct_sent_to_review": {
      "ci95": [
-      0.0591,
-      0.1033
+      0.0605,
+      0.1051
      ],
-     "k": 45,
-     "n": 574,
-     "rate": 0.0784
+     "k": 46,
+     "n": 575,
+     "rate": 0.08
     },
     "documents": 30,
     "escape": {
@@ -2789,10 +2789,10 @@
     "false_reject": {
      "ci95": [
       0.0018,
-      0.0153
+      0.0152
      ],
      "k": 3,
-     "n": 574,
+     "n": 575,
      "rate": 0.0052
     },
     "models": [
@@ -2802,49 +2802,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8573,
-       0.9289
+       0.8537,
+       0.9261
       ],
       "k": 248,
-      "n": 276,
-      "rate": 0.8986
+      "n": 277,
+      "rate": 0.8953
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0018,
-      0.0153
+      0.0152
      ],
      "k": 3,
-     "n": 574,
+     "n": 575,
      "rate": 0.0052
     },
     "review_load": {
      "ci95": [
-      0.0629,
-      0.1078
+      0.0643,
+      0.1096
      ],
-     "k": 48,
-     "n": 581,
-     "rate": 0.0826
+     "k": 49,
+     "n": 582,
+     "rate": 0.0842
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0614,
-      0.1059
+      0.0628,
+      0.1077
      ],
-     "k": 47,
-     "n": 581,
-     "rate": 0.0809
+     "k": 48,
+     "n": 582,
+     "rate": 0.0825
     },
     "wrong": 7,
     "wrong_by_class": {
@@ -2871,16 +2871,16 @@
      "n": 554,
      "rate": 0.1408
     },
-    "candidates": 664,
-    "correct": 645,
+    "candidates": 666,
+    "correct": 647,
     "correct_sent_to_review": {
      "ci95": [
-      0.0896,
-      0.1383
+      0.0921,
+      0.1412
      ],
-     "k": 72,
-     "n": 645,
-     "rate": 0.1116
+     "k": 74,
+     "n": 647,
+     "rate": 0.1144
     },
     "documents": 30,
     "escape": {
@@ -2904,11 +2904,11 @@
     "escaped_by_class": {},
     "false_reject": {
      "ci95": [
-      0.0009,
+      0.0008,
       0.0112
      ],
      "k": 2,
-     "n": 645,
+     "n": 647,
      "rate": 0.0031
     },
     "models": [
@@ -2918,49 +2918,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8491,
-       0.9228
+       0.8455,
+       0.92
       ],
       "k": 246,
-      "n": 276,
-      "rate": 0.8913
+      "n": 277,
+      "rate": 0.8881
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0165,
-      0.0418
+      0.0417
      ],
      "k": 17,
-     "n": 645,
-     "rate": 0.0264
+     "n": 647,
+     "rate": 0.0263
     },
     "review_load": {
      "ci95": [
-      0.1102,
-      0.1621
+      0.1126,
+      0.1648
      ],
-     "k": 89,
-     "n": 664,
-     "rate": 0.134
+     "k": 91,
+     "n": 666,
+     "rate": 0.1366
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1061,
-      0.1572
+      0.1085,
+      0.16
      ],
-     "k": 86,
-     "n": 664,
-     "rate": 0.1295
+     "k": 88,
+     "n": 666,
+     "rate": 0.1321
     },
     "wrong": 19,
     "wrong_by_class": {
@@ -2986,16 +2986,16 @@
      "n": 515,
      "rate": 0.1068
     },
-    "candidates": 572,
-    "correct": 566,
+    "candidates": 573,
+    "correct": 567,
     "correct_sent_to_review": {
      "ci95": [
-      0.0599,
-      0.1047
+      0.0614,
+      0.1065
      ],
-     "k": 45,
-     "n": 566,
-     "rate": 0.0795
+     "k": 46,
+     "n": 567,
+     "rate": 0.0811
     },
     "documents": 30,
     "escape": {
@@ -3020,10 +3020,10 @@
     "false_reject": {
      "ci95": [
       0.0018,
-      0.0155
+      0.0154
      ],
      "k": 3,
-     "n": 566,
+     "n": 567,
      "rate": 0.0053
     },
     "models": [
@@ -3033,49 +3033,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8573,
-       0.9289
+       0.8537,
+       0.9261
       ],
       "k": 248,
-      "n": 276,
-      "rate": 0.8986
+      "n": 277,
+      "rate": 0.8953
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0018,
-      0.0155
+      0.0154
      ],
      "k": 3,
-     "n": 566,
+     "n": 567,
      "rate": 0.0053
     },
     "review_load": {
      "ci95": [
-      0.0639,
-      0.1095
+      0.0653,
+      0.1113
      ],
-     "k": 48,
-     "n": 572,
-     "rate": 0.0839
+     "k": 49,
+     "n": 573,
+     "rate": 0.0855
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0624,
-      0.1076
+      0.0638,
+      0.1093
      ],
-     "k": 47,
-     "n": 572,
-     "rate": 0.0822
+     "k": 48,
+     "n": 573,
+     "rate": 0.0838
     },
     "wrong": 6,
     "wrong_by_class": {
@@ -3102,16 +3102,16 @@
      "n": 555,
      "rate": 0.1495
     },
-    "candidates": 681,
-    "correct": 651,
+    "candidates": 683,
+    "correct": 653,
     "correct_sent_to_review": {
      "ci95": [
-      0.0999,
-      0.1503
+      0.1023,
+      0.1532
      ],
-     "k": 80,
-     "n": 651,
-     "rate": 0.1229
+     "k": 82,
+     "n": 653,
+     "rate": 0.1256
     },
     "documents": 30,
     "escape": {
@@ -3141,7 +3141,7 @@
       0.0111
      ],
      "k": 2,
-     "n": 651,
+     "n": 653,
      "rate": 0.0031
     },
     "models": [
@@ -3151,49 +3151,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8368,
-       0.9136
+       0.8334,
+       0.9108
       ],
       "k": 243,
-      "n": 276,
-      "rate": 0.8804
+      "n": 277,
+      "rate": 0.8773
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0129,
-      0.0358
+      0.0128,
+      0.0357
      ],
      "k": 14,
-     "n": 651,
-     "rate": 0.0215
+     "n": 653,
+     "rate": 0.0214
     },
     "review_load": {
      "ci95": [
-      0.1317,
-      0.1864
+      0.134,
+      0.1889
      ],
-     "k": 107,
-     "n": 681,
-     "rate": 0.1571
+     "k": 109,
+     "n": 683,
+     "rate": 0.1596
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1249,
-      0.1785
+      0.1273,
+      0.1812
      ],
-     "k": 102,
-     "n": 681,
-     "rate": 0.1498
+     "k": 104,
+     "n": 683,
+     "rate": 0.1523
     },
     "wrong": 30,
     "wrong_by_class": {
@@ -3221,16 +3221,16 @@
      "n": 506,
      "rate": 0.0988
     },
-    "candidates": 575,
-    "correct": 565,
+    "candidates": 577,
+    "correct": 567,
     "correct_sent_to_review": {
      "ci95": [
-      0.0724,
-      0.1207
+      0.0753,
+      0.1241
      ],
-     "k": 53,
-     "n": 565,
-     "rate": 0.0938
+     "k": 55,
+     "n": 567,
+     "rate": 0.097
     },
     "documents": 30,
     "escape": {
@@ -3260,7 +3260,7 @@
       0.0128
      ],
      "k": 2,
-     "n": 565,
+     "n": 567,
      "rate": 0.0035
     },
     "models": [
@@ -3270,49 +3270,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8532,
-       0.9258
+       0.8496,
+       0.9231
       ],
       "k": 247,
-      "n": 276,
-      "rate": 0.8949
+      "n": 277,
+      "rate": 0.8917
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0028,
-      0.0181
+      0.0027,
+      0.018
      ],
      "k": 4,
-     "n": 565,
+     "n": 567,
      "rate": 0.0071
     },
     "review_load": {
      "ci95": [
-      0.0788,
-      0.1282
+      0.0816,
+      0.1316
      ],
-     "k": 58,
-     "n": 575,
-     "rate": 0.1009
+     "k": 60,
+     "n": 577,
+     "rate": 0.104
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0742,
-      0.1224
+      0.077,
+      0.1259
      ],
-     "k": 55,
-     "n": 575,
-     "rate": 0.0957
+     "k": 57,
+     "n": 577,
+     "rate": 0.0988
     },
     "wrong": 10,
     "wrong_by_class": {
@@ -3340,16 +3340,16 @@
      "n": 538,
      "rate": 0.1506
     },
-    "candidates": 652,
-    "correct": 628,
+    "candidates": 654,
+    "correct": 630,
     "correct_sent_to_review": {
      "ci95": [
-      0.0935,
-      0.1437
+      0.096,
+      0.1467
      ],
-     "k": 73,
-     "n": 628,
-     "rate": 0.1162
+     "k": 75,
+     "n": 630,
+     "rate": 0.119
     },
     "documents": 30,
     "escape": {
@@ -3379,7 +3379,7 @@
       0.0115
      ],
      "k": 2,
-     "n": 628,
+     "n": 630,
      "rate": 0.0032
     },
     "models": [
@@ -3389,49 +3389,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8491,
-       0.9228
+       0.8455,
+       0.92
       ],
       "k": 246,
-      "n": 276,
-      "rate": 0.8913
+      "n": 277,
+      "rate": 0.8881
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0145,
-      0.039
+      0.0389
      ],
      "k": 15,
-     "n": 628,
-     "rate": 0.0239
+     "n": 630,
+     "rate": 0.0238
     },
     "review_load": {
      "ci95": [
-      0.1207,
-      0.1749
+      0.1231,
+      0.1776
      ],
-     "k": 95,
-     "n": 652,
-     "rate": 0.1457
+     "k": 97,
+     "n": 654,
+     "rate": 0.1483
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1179,
-      0.1716
+      0.1203,
+      0.1743
      ],
-     "k": 93,
-     "n": 652,
-     "rate": 0.1426
+     "k": 95,
+     "n": 654,
+     "rate": 0.1453
     },
     "wrong": 24,
     "wrong_by_class": {
@@ -3458,16 +3458,16 @@
      "n": 503,
      "rate": 0.0934
     },
-    "candidates": 568,
-    "correct": 560,
+    "candidates": 570,
+    "correct": 562,
     "correct_sent_to_review": {
      "ci95": [
-      0.0715,
-      0.1197
+      0.0744,
+      0.1233
      ],
-     "k": 52,
-     "n": 560,
-     "rate": 0.0929
+     "k": 54,
+     "n": 562,
+     "rate": 0.0961
     },
     "documents": 30,
     "escape": {
@@ -3497,7 +3497,7 @@
       0.01
      ],
      "k": 1,
-     "n": 560,
+     "n": 562,
      "rate": 0.0018
     },
     "models": [
@@ -3507,21 +3507,21 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8532,
-       0.9258
+       0.8496,
+       0.9231
       ],
       "k": 247,
-      "n": 276,
-      "rate": 0.8949
+      "n": 277,
+      "rate": 0.8917
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
@@ -3530,26 +3530,26 @@
       0.0182
      ],
      "k": 4,
-     "n": 560,
+     "n": 562,
      "rate": 0.0071
     },
     "review_load": {
      "ci95": [
-      0.0798,
-      0.1297
+      0.0827,
+      0.1332
      ],
-     "k": 58,
-     "n": 568,
-     "rate": 0.1021
+     "k": 60,
+     "n": 570,
+     "rate": 0.1053
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0751,
-      0.1239
+      0.078,
+      0.1274
      ],
-     "k": 55,
-     "n": 568,
-     "rate": 0.0968
+     "k": 57,
+     "n": 570,
+     "rate": 0.1
     },
     "wrong": 8,
     "wrong_by_class": {
@@ -3576,16 +3576,16 @@
      "n": 582,
      "rate": 0.1615
     },
-    "candidates": 684,
-    "correct": 659,
+    "candidates": 686,
+    "correct": 661,
     "correct_sent_to_review": {
      "ci95": [
-      0.0836,
-      0.1304
+      0.086,
+      0.1333
      ],
-     "k": 69,
-     "n": 659,
-     "rate": 0.1047
+     "k": 71,
+     "n": 661,
+     "rate": 0.1074
     },
     "documents": 30,
     "escape": {
@@ -3615,7 +3615,7 @@
       0.011
      ],
      "k": 2,
-     "n": 659,
+     "n": 661,
      "rate": 0.003
     },
     "models": [
@@ -3625,21 +3625,21 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8491,
-       0.9228
+       0.8455,
+       0.92
       ],
       "k": 246,
-      "n": 276,
-      "rate": 0.8913
+      "n": 277,
+      "rate": 0.8881
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
@@ -3648,26 +3648,26 @@
       0.0197
      ],
      "k": 6,
-     "n": 659,
+     "n": 661,
      "rate": 0.0091
     },
     "review_load": {
      "ci95": [
-      0.1083,
-      0.159
+      0.1106,
+      0.1617
      ],
-     "k": 90,
-     "n": 684,
-     "rate": 0.1316
+     "k": 92,
+     "n": 686,
+     "rate": 0.1341
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.107,
-      0.1574
+      0.1093,
+      0.1601
      ],
-     "k": 89,
-     "n": 684,
-     "rate": 0.1301
+     "k": 91,
+     "n": 686,
+     "rate": 0.1327
     },
     "wrong": 25,
     "wrong_by_class": {
@@ -3696,16 +3696,16 @@
      "n": 521,
      "rate": 0.0998
     },
-    "candidates": 576,
-    "correct": 572,
+    "candidates": 577,
+    "correct": 573,
     "correct_sent_to_review": {
      "ci95": [
-      0.0624,
-      0.1076
+      0.0638,
+      0.1093
      ],
-     "k": 47,
-     "n": 572,
-     "rate": 0.0822
+     "k": 48,
+     "n": 573,
+     "rate": 0.0838
     },
     "documents": 30,
     "escape": {
@@ -3730,10 +3730,10 @@
     "false_reject": {
      "ci95": [
       0.001,
-      0.0127
+      0.0126
      ],
      "k": 2,
-     "n": 572,
+     "n": 573,
      "rate": 0.0035
     },
     "models": [
@@ -3743,49 +3743,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8573,
-       0.9289
+       0.8537,
+       0.9261
       ],
       "k": 248,
-      "n": 276,
-      "rate": 0.8986
+      "n": 277,
+      "rate": 0.8953
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.001,
-      0.0127
+      0.0126
      ],
      "k": 2,
-     "n": 572,
+     "n": 573,
      "rate": 0.0035
     },
     "review_load": {
      "ci95": [
-      0.0665,
-      0.1126
+      0.0679,
+      0.1144
      ],
-     "k": 50,
-     "n": 576,
-     "rate": 0.0868
+     "k": 51,
+     "n": 577,
+     "rate": 0.0884
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0649,
-      0.1107
+      0.0663,
+      0.1124
      ],
-     "k": 49,
-     "n": 576,
-     "rate": 0.0851
+     "k": 50,
+     "n": 577,
+     "rate": 0.0867
     },
     "wrong": 4,
     "wrong_by_class": {
@@ -3811,16 +3811,16 @@
      "n": 572,
      "rate": 0.1556
     },
-    "candidates": 671,
-    "correct": 651,
+    "candidates": 673,
+    "correct": 653,
     "correct_sent_to_review": {
      "ci95": [
-      0.0832,
-      0.1303
+      0.0857,
+      0.1333
      ],
-     "k": 68,
-     "n": 651,
-     "rate": 0.1045
+     "k": 70,
+     "n": 653,
+     "rate": 0.1072
     },
     "documents": 30,
     "escape": {
@@ -3847,10 +3847,10 @@
     "false_reject": {
      "ci95": [
       0.0016,
-      0.0135
+      0.0134
      ],
      "k": 3,
-     "n": 651,
+     "n": 653,
      "rate": 0.0046
     },
     "models": [
@@ -3860,49 +3860,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8491,
-       0.9228
+       0.8455,
+       0.92
       ],
       "k": 246,
-      "n": 276,
-      "rate": 0.8913
+      "n": 277,
+      "rate": 0.8881
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0062,
-      0.0241
+      0.024
      ],
      "k": 8,
-     "n": 651,
+     "n": 653,
      "rate": 0.0123
     },
     "review_load": {
      "ci95": [
-      0.1063,
-      0.1572
+      0.1087,
+      0.1599
      ],
-     "k": 87,
-     "n": 671,
-     "rate": 0.1297
+     "k": 89,
+     "n": 673,
+     "rate": 0.1322
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1036,
-      0.154
+      0.106,
+      0.1567
      ],
-     "k": 85,
-     "n": 671,
-     "rate": 0.1267
+     "k": 87,
+     "n": 673,
+     "rate": 0.1293
     },
     "wrong": 20,
     "wrong_by_class": {
@@ -3929,16 +3929,16 @@
      "n": 513,
      "rate": 0.1033
     },
-    "candidates": 567,
-    "correct": 564,
+    "candidates": 568,
+    "correct": 565,
     "correct_sent_to_review": {
      "ci95": [
-      0.0632,
-      0.1091
+      0.0647,
+      0.1108
      ],
-     "k": 47,
-     "n": 564,
-     "rate": 0.0833
+     "k": 48,
+     "n": 565,
+     "rate": 0.085
     },
     "documents": 30,
     "escape": {
@@ -3966,7 +3966,7 @@
       0.0128
      ],
      "k": 2,
-     "n": 564,
+     "n": 565,
      "rate": 0.0035
     },
     "models": [
@@ -3976,21 +3976,21 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8573,
-       0.9289
+       0.8537,
+       0.9261
       ],
       "k": 248,
-      "n": 276,
-      "rate": 0.8986
+      "n": 277,
+      "rate": 0.8953
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
@@ -3999,26 +3999,26 @@
       0.0128
      ],
      "k": 2,
-     "n": 564,
+     "n": 565,
      "rate": 0.0035
     },
     "review_load": {
      "ci95": [
-      0.0675,
-      0.1144
+      0.069,
+      0.1161
      ],
-     "k": 50,
-     "n": 567,
-     "rate": 0.0882
+     "k": 51,
+     "n": 568,
+     "rate": 0.0898
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.066,
-      0.1124
+      0.0674,
+      0.1142
      ],
-     "k": 49,
-     "n": 567,
-     "rate": 0.0864
+     "k": 50,
+     "n": 568,
+     "rate": 0.088
     },
     "wrong": 3,
     "wrong_by_class": {
@@ -4044,16 +4044,16 @@
      "n": 517,
      "rate": 0.147
     },
-    "candidates": 649,
-    "correct": 619,
+    "candidates": 651,
+    "correct": 621,
     "correct_sent_to_review": {
      "ci95": [
-      0.1036,
-      0.1562
+      0.1062,
+      0.1592
      ],
-     "k": 79,
-     "n": 619,
-     "rate": 0.1276
+     "k": 81,
+     "n": 621,
+     "rate": 0.1304
     },
     "documents": 30,
     "escape": {
@@ -4080,10 +4080,10 @@
     "false_reject": {
      "ci95": [
       0.0,
-      0.0062
+      0.0061
      ],
      "k": 0,
-     "n": 619,
+     "n": 621,
      "rate": 0.0
     },
     "models": [
@@ -4093,49 +4093,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8287,
-       0.9074
+       0.8253,
+       0.9046
       ],
       "k": 241,
-      "n": 276,
-      "rate": 0.8732
+      "n": 277,
+      "rate": 0.87
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0249,
-      0.0551
+      0.0248,
+      0.055
      ],
      "k": 23,
-     "n": 619,
-     "rate": 0.0372
+     "n": 621,
+     "rate": 0.037
     },
     "review_load": {
      "ci95": [
-      0.1369,
-      0.1937
+      0.1393,
+      0.1964
      ],
-     "k": 106,
-     "n": 649,
-     "rate": 0.1633
+     "k": 108,
+     "n": 651,
+     "rate": 0.1659
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1326,
-      0.1888
+      0.135,
+      0.1915
      ],
-     "k": 103,
-     "n": 649,
-     "rate": 0.1587
+     "k": 105,
+     "n": 651,
+     "rate": 0.1613
     },
     "wrong": 30,
     "wrong_by_class": {
@@ -4163,16 +4163,16 @@
      "n": 498,
      "rate": 0.0984
     },
-    "candidates": 567,
-    "correct": 553,
+    "candidates": 569,
+    "correct": 555,
     "correct_sent_to_review": {
      "ci95": [
-      0.0661,
-      0.1132
+      0.069,
+      0.1168
      ],
-     "k": 48,
-     "n": 553,
-     "rate": 0.0868
+     "k": 50,
+     "n": 555,
+     "rate": 0.0901
     },
     "documents": 30,
     "escape": {
@@ -4199,10 +4199,10 @@
     "false_reject": {
      "ci95": [
       0.0003,
-      0.0102
+      0.0101
      ],
      "k": 1,
-     "n": 553,
+     "n": 555,
      "rate": 0.0018
     },
     "models": [
@@ -4212,49 +4212,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.845,
-       0.9197
+       0.8415,
+       0.917
       ],
       "k": 245,
-      "n": 276,
-      "rate": 0.8877
+      "n": 277,
+      "rate": 0.8845
      },
      "accepted_or_review": {
       "ci95": [
-       0.9439,
-       0.9852
+       0.9441,
+       0.9853
       ],
-      "k": 268,
-      "n": 276,
-      "rate": 0.971
+      "k": 269,
+      "n": 277,
+      "rate": 0.9711
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.005,
-      0.0235
+      0.0234
      ],
      "k": 6,
-     "n": 553,
+     "n": 555,
      "rate": 0.0108
     },
     "review_load": {
      "ci95": [
-      0.0753,
-      0.1241
+      0.0781,
+      0.1276
      ],
-     "k": 55,
-     "n": 567,
-     "rate": 0.097
+     "k": 57,
+     "n": 569,
+     "rate": 0.1002
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0737,
-      0.1222
+      0.0766,
+      0.1257
      ],
-     "k": 54,
-     "n": 567,
-     "rate": 0.0952
+     "k": 56,
+     "n": 569,
+     "rate": 0.0984
     },
     "wrong": 14,
     "wrong_by_class": {
@@ -4282,16 +4282,16 @@
      "n": 560,
      "rate": 0.1571
     },
-    "candidates": 681,
-    "correct": 650,
+    "candidates": 683,
+    "correct": 652,
     "correct_sent_to_review": {
      "ci95": [
-      0.0944,
-      0.1439
+      0.0969,
+      0.1468
      ],
-     "k": 76,
-     "n": 650,
-     "rate": 0.1169
+     "k": 78,
+     "n": 652,
+     "rate": 0.1196
     },
     "documents": 30,
     "escape": {
@@ -4321,7 +4321,7 @@
       0.0059
      ],
      "k": 0,
-     "n": 650,
+     "n": 652,
      "rate": 0.0
     },
     "models": [
@@ -4331,49 +4331,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8409,
-       0.9167
+       0.8374,
+       0.9139
       ],
       "k": 244,
-      "n": 276,
-      "rate": 0.8841
+      "n": 277,
+      "rate": 0.8809
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0129,
-      0.0358
+      0.0128,
+      0.0357
      ],
      "k": 14,
-     "n": 650,
+     "n": 652,
      "rate": 0.0215
     },
     "review_load": {
      "ci95": [
-      0.1249,
-      0.1785
+      0.1273,
+      0.1812
      ],
-     "k": 102,
-     "n": 681,
-     "rate": 0.1498
+     "k": 104,
+     "n": 683,
+     "rate": 0.1523
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1209,
-      0.1738
+      0.1232,
+      0.1765
      ],
-     "k": 99,
-     "n": 681,
-     "rate": 0.1454
+     "k": 101,
+     "n": 683,
+     "rate": 0.1479
     },
     "wrong": 31,
     "wrong_by_class": {
@@ -4402,16 +4402,16 @@
      "n": 513,
      "rate": 0.1053
     },
-    "candidates": 575,
-    "correct": 565,
+    "candidates": 576,
+    "correct": 566,
     "correct_sent_to_review": {
      "ci95": [
-      0.0616,
-      0.1069
+      0.063,
+      0.1087
      ],
-     "k": 46,
-     "n": 565,
-     "rate": 0.0814
+     "k": 47,
+     "n": 566,
+     "rate": 0.083
     },
     "documents": 30,
     "escape": {
@@ -4441,7 +4441,7 @@
       0.0128
      ],
      "k": 2,
-     "n": 565,
+     "n": 566,
      "rate": 0.0035
     },
     "models": [
@@ -4451,49 +4451,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8573,
-       0.9289
+       0.8537,
+       0.9261
       ],
       "k": 248,
-      "n": 276,
-      "rate": 0.8986
+      "n": 277,
+      "rate": 0.8953
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0028,
-      0.0181
+      0.018
      ],
      "k": 4,
-     "n": 565,
+     "n": 566,
      "rate": 0.0071
     },
     "review_load": {
      "ci95": [
-      0.0666,
-      0.1128
+      0.068,
+      0.1146
      ],
-     "k": 50,
-     "n": 575,
-     "rate": 0.087
+     "k": 51,
+     "n": 576,
+     "rate": 0.0885
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0635,
-      0.1089
+      0.0649,
+      0.1107
      ],
-     "k": 48,
-     "n": 575,
-     "rate": 0.0835
+     "k": 49,
+     "n": 576,
+     "rate": 0.0851
     },
     "wrong": 10,
     "wrong_by_class": {
@@ -4521,16 +4521,16 @@
      "n": 547,
      "rate": 0.1463
     },
-    "candidates": 668,
-    "correct": 642,
+    "candidates": 670,
+    "correct": 644,
     "correct_sent_to_review": {
      "ci95": [
-      0.0984,
-      0.149
+      0.101,
+      0.1519
      ],
-     "k": 78,
-     "n": 642,
-     "rate": 0.1215
+     "k": 80,
+     "n": 644,
+     "rate": 0.1242
     },
     "documents": 30,
     "escape": {
@@ -4557,10 +4557,10 @@
     "false_reject": {
      "ci95": [
       0.0003,
-      0.0088
+      0.0087
      ],
      "k": 1,
-     "n": 642,
+     "n": 644,
      "rate": 0.0016
     },
     "models": [
@@ -4570,49 +4570,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8368,
-       0.9136
+       0.8334,
+       0.9108
       ],
       "k": 243,
-      "n": 276,
-      "rate": 0.8804
+      "n": 277,
+      "rate": 0.8773
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0154,
-      0.0401
+      0.0153,
+      0.04
      ],
      "k": 16,
-     "n": 642,
-     "rate": 0.0249
+     "n": 644,
+     "rate": 0.0248
     },
     "review_load": {
      "ci95": [
-      0.1274,
-      0.182
+      0.1298,
+      0.1846
      ],
-     "k": 102,
-     "n": 668,
-     "rate": 0.1527
+     "k": 104,
+     "n": 670,
+     "rate": 0.1552
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1178,
-      0.1708
+      0.1202,
+      0.1734
      ],
-     "k": 95,
-     "n": 668,
-     "rate": 0.1422
+     "k": 97,
+     "n": 670,
+     "rate": 0.1448
     },
     "wrong": 26,
     "wrong_by_class": {
@@ -4640,16 +4640,16 @@
      "n": 505,
      "rate": 0.1089
     },
-    "candidates": 566,
-    "correct": 557,
+    "candidates": 567,
+    "correct": 558,
     "correct_sent_to_review": {
      "ci95": [
-      0.0625,
-      0.1084
+      0.0639,
+      0.1102
      ],
-     "k": 46,
-     "n": 557,
-     "rate": 0.0826
+     "k": 47,
+     "n": 558,
+     "rate": 0.0842
     },
     "documents": 30,
     "escape": {
@@ -4679,7 +4679,7 @@
       0.013
      ],
      "k": 2,
-     "n": 557,
+     "n": 558,
      "rate": 0.0036
     },
     "models": [
@@ -4689,21 +4689,21 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8573,
-       0.9289
+       0.8537,
+       0.9261
       ],
       "k": 248,
-      "n": 276,
-      "rate": 0.8986
+      "n": 277,
+      "rate": 0.8953
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
@@ -4712,26 +4712,26 @@
       0.0183
      ],
      "k": 4,
-     "n": 557,
+     "n": 558,
      "rate": 0.0072
     },
     "review_load": {
      "ci95": [
-      0.0676,
-      0.1146
+      0.0691,
+      0.1163
      ],
-     "k": 50,
-     "n": 566,
-     "rate": 0.0883
+     "k": 51,
+     "n": 567,
+     "rate": 0.0899
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0646,
-      0.1106
+      0.066,
+      0.1124
      ],
-     "k": 48,
-     "n": 566,
-     "rate": 0.0848
+     "k": 49,
+     "n": 567,
+     "rate": 0.0864
     },
     "wrong": 9,
     "wrong_by_class": {
@@ -4759,16 +4759,16 @@
      "n": 543,
      "rate": 0.1584
     },
-    "candidates": 652,
-    "correct": 627,
+    "candidates": 654,
+    "correct": 629,
     "correct_sent_to_review": {
      "ci95": [
-      0.0879,
-      0.137
+      0.0905,
+      0.14
      ],
-     "k": 69,
-     "n": 627,
-     "rate": 0.11
+     "k": 71,
+     "n": 629,
+     "rate": 0.1129
     },
     "documents": 30,
     "escape": {
@@ -4798,7 +4798,7 @@
       0.0061
      ],
      "k": 0,
-     "n": 627,
+     "n": 629,
      "rate": 0.0
     },
     "models": [
@@ -4808,49 +4808,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8532,
-       0.9258
+       0.8496,
+       0.9231
       ],
       "k": 247,
-      "n": 276,
-      "rate": 0.8949
+      "n": 277,
+      "rate": 0.8917
      },
      "accepted_or_review": {
       "ci95": [
-       0.9685,
+       0.9686,
        0.9963
       ],
-      "k": 273,
-      "n": 276,
-      "rate": 0.9891
+      "k": 274,
+      "n": 277,
+      "rate": 0.9892
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
-      0.0146,
-      0.0391
+      0.0145,
+      0.039
      ],
      "k": 15,
-     "n": 627,
-     "rate": 0.0239
+     "n": 629,
+     "rate": 0.0238
     },
     "review_load": {
      "ci95": [
-      0.1137,
-      0.1666
+      0.1161,
+      0.1694
      ],
-     "k": 90,
-     "n": 652,
-     "rate": 0.138
+     "k": 92,
+     "n": 654,
+     "rate": 0.1407
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1137,
-      0.1666
+      0.1161,
+      0.1694
      ],
-     "k": 90,
-     "n": 652,
-     "rate": 0.138
+     "k": 92,
+     "n": 654,
+     "rate": 0.1407
     },
     "wrong": 25,
     "wrong_by_class": {
@@ -4879,16 +4879,16 @@
      "n": 509,
      "rate": 0.1002
     },
-    "candidates": 568,
-    "correct": 560,
+    "candidates": 569,
+    "correct": 561,
     "correct_sent_to_review": {
      "ci95": [
-      0.0621,
-      0.1078
+      0.0636,
+      0.1096
      ],
-     "k": 46,
-     "n": 560,
-     "rate": 0.0821
+     "k": 47,
+     "n": 561,
+     "rate": 0.0838
     },
     "documents": 30,
     "escape": {
@@ -4918,7 +4918,7 @@
       0.01
      ],
      "k": 1,
-     "n": 560,
+     "n": 561,
      "rate": 0.0018
     },
     "models": [
@@ -4928,21 +4928,21 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8573,
-       0.9289
+       0.8537,
+       0.9261
       ],
       "k": 248,
-      "n": 276,
-      "rate": 0.8986
+      "n": 277,
+      "rate": 0.8953
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
@@ -4951,26 +4951,26 @@
       0.0182
      ],
      "k": 4,
-     "n": 560,
+     "n": 561,
      "rate": 0.0071
     },
     "review_load": {
      "ci95": [
-      0.069,
-      0.1161
+      0.0704,
+      0.1179
      ],
-     "k": 51,
-     "n": 568,
-     "rate": 0.0898
+     "k": 52,
+     "n": 569,
+     "rate": 0.0914
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0643,
-      0.1103
+      0.0658,
+      0.112
      ],
-     "k": 48,
-     "n": 568,
-     "rate": 0.0845
+     "k": 49,
+     "n": 569,
+     "rate": 0.0861
     },
     "wrong": 8,
     "wrong_by_class": {
@@ -4997,16 +4997,16 @@
      "n": 530,
      "rate": 0.1472
     },
-    "candidates": 639,
-    "correct": 619,
+    "candidates": 641,
+    "correct": 621,
     "correct_sent_to_review": {
      "ci95": [
-      0.0919,
-      0.1422
+      0.0945,
+      0.1453
      ],
-     "k": 71,
-     "n": 619,
-     "rate": 0.1147
+     "k": 73,
+     "n": 621,
+     "rate": 0.1176
     },
     "documents": 30,
     "escape": {
@@ -5036,7 +5036,7 @@
       0.0091
      ],
      "k": 1,
-     "n": 619,
+     "n": 621,
      "rate": 0.0016
     },
     "models": [
@@ -5046,49 +5046,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.845,
-       0.9197
+       0.8415,
+       0.917
       ],
       "k": 245,
-      "n": 276,
-      "rate": 0.8877
+      "n": 277,
+      "rate": 0.8845
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0172,
-      0.0435
+      0.0434
      ],
      "k": 17,
-     "n": 619,
-     "rate": 0.0275
+     "n": 621,
+     "rate": 0.0274
     },
     "review_load": {
      "ci95": [
-      0.116,
-      0.17
+      0.1185,
+      0.1728
      ],
-     "k": 90,
-     "n": 639,
-     "rate": 0.1408
+     "k": 92,
+     "n": 641,
+     "rate": 0.1435
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.1103,
-      0.1632
+      0.1128,
+      0.1661
      ],
-     "k": 86,
-     "n": 639,
-     "rate": 0.1346
+     "k": 88,
+     "n": 641,
+     "rate": 0.1373
     },
     "wrong": 20,
     "wrong_by_class": {
@@ -5115,16 +5115,16 @@
      "n": 501,
      "rate": 0.1038
     },
-    "candidates": 559,
-    "correct": 552,
+    "candidates": 560,
+    "correct": 553,
     "correct_sent_to_review": {
      "ci95": [
-      0.0631,
-      0.1094
+      0.0645,
+      0.1112
      ],
-     "k": 46,
-     "n": 552,
-     "rate": 0.0833
+     "k": 47,
+     "n": 553,
+     "rate": 0.085
     },
     "documents": 30,
     "escape": {
@@ -5154,7 +5154,7 @@
       0.0102
      ],
      "k": 1,
-     "n": 552,
+     "n": 553,
      "rate": 0.0018
     },
     "models": [
@@ -5164,49 +5164,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8573,
-       0.9289
+       0.8537,
+       0.9261
       ],
       "k": 248,
-      "n": 276,
-      "rate": 0.8986
+      "n": 277,
+      "rate": 0.8953
      },
      "accepted_or_review": {
       "ci95": [
-       0.9633,
+       0.9635,
        0.9944
       ],
-      "k": 272,
-      "n": 276,
-      "rate": 0.9855
+      "k": 273,
+      "n": 277,
+      "rate": 0.9856
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0028,
-      0.0185
+      0.0184
      ],
      "k": 4,
-     "n": 552,
+     "n": 553,
      "rate": 0.0072
     },
     "review_load": {
      "ci95": [
-      0.0701,
-      0.118
+      0.0715,
+      0.1197
      ],
-     "k": 51,
-     "n": 559,
-     "rate": 0.0912
+     "k": 52,
+     "n": 560,
+     "rate": 0.0929
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0654,
-      0.112
+      0.0668,
+      0.1138
      ],
-     "k": 48,
-     "n": 559,
-     "rate": 0.0859
+     "k": 49,
+     "n": 560,
+     "rate": 0.0875
     },
     "wrong": 7,
     "wrong_by_class": {
@@ -5233,16 +5233,16 @@
      "n": 574,
      "rate": 0.1585
     },
-    "candidates": 671,
-    "correct": 650,
+    "candidates": 673,
+    "correct": 652,
     "correct_sent_to_review": {
      "ci95": [
-      0.082,
-      0.1288
+      0.0845,
+      0.1318
      ],
-     "k": 67,
-     "n": 650,
-     "rate": 0.1031
+     "k": 69,
+     "n": 652,
+     "rate": 0.1058
     },
     "documents": 30,
     "escape": {
@@ -5269,10 +5269,10 @@
     "false_reject": {
      "ci95": [
       0.0003,
-      0.0087
+      0.0086
      ],
      "k": 1,
-     "n": 650,
+     "n": 652,
      "rate": 0.0015
     },
     "models": [
@@ -5282,49 +5282,49 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8491,
-       0.9228
+       0.8455,
+       0.92
       ],
       "k": 246,
-      "n": 276,
-      "rate": 0.8913
+      "n": 277,
+      "rate": 0.8881
      },
      "accepted_or_review": {
       "ci95": [
-       0.9583,
-       0.9922
+       0.9584,
+       0.9923
       ],
-      "k": 271,
-      "n": 276,
+      "k": 272,
+      "n": 277,
       "rate": 0.9819
      }
     },
     "rejected_right_value_wrong_place": {
      "ci95": [
       0.0062,
-      0.0241
+      0.024
      ],
      "k": 8,
-     "n": 650,
+     "n": 652,
      "rate": 0.0123
     },
     "review_load": {
      "ci95": [
-      0.1036,
-      0.154
+      0.106,
+      0.1567
      ],
-     "k": 85,
-     "n": 671,
-     "rate": 0.1267
+     "k": 87,
+     "n": 673,
+     "rate": 0.1293
     },
     "review_load_when_admitted_separately": {
      "ci95": [
-      0.0996,
-      0.1492
+      0.102,
+      0.1519
      ],
-     "k": 82,
-     "n": 671,
-     "rate": 0.1222
+     "k": 84,
+     "n": 673,
+     "rate": 0.1248
     },
     "wrong": 21,
     "wrong_by_class": {
@@ -5400,21 +5400,21 @@
     "recall": {
      "accepted": {
       "ci95": [
-       0.8614,
-       0.9319
+       0.8578,
+       0.9291
       ],
       "k": 249,
-      "n": 276,
-      "rate": 0.9022
+      "n": 277,
+      "rate": 0.8989
      },
      "accepted_or_review": {
       "ci95": [
-       0.9439,
-       0.9852
+       0.9394,
+       0.9828
       ],
       "k": 268,
-      "n": 276,
-      "rate": 0.971
+      "n": 277,
+      "rate": 0.9675
      }
     },
     "rejected_right_value_wrong_place": {
@@ -5626,16 +5626,16 @@
         "n": 88,
         "rate": 0.0114
        },
-       "candidates": 102,
-       "correct": 102,
+       "candidates": 103,
+       "correct": 103,
        "correct_sent_to_review": {
         "ci95": [
-         0.076,
-         0.2059
+         0.0827,
+         0.2153
         ],
-        "k": 13,
-        "n": 102,
-        "rate": 0.1275
+        "k": 14,
+        "n": 103,
+        "rate": 0.1359
        },
        "escape": {
         "ci95": null,
@@ -5647,29 +5647,29 @@
        "false_reject": {
         "ci95": [
          0.0017,
-         0.0535
+         0.053
         ],
         "k": 1,
-        "n": 102,
-        "rate": 0.0098
+        "n": 103,
+        "rate": 0.0097
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0363
+         0.036
         ],
         "k": 0,
-        "n": 102,
+        "n": 103,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.076,
-         0.2059
+         0.0827,
+         0.2153
         ],
-        "k": 13,
-        "n": 102,
-        "rate": 0.1275
+        "k": 14,
+        "n": 103,
+        "rate": 0.1359
        },
        "wrong": 0,
        "wrong_by_class": {},
@@ -5684,21 +5684,21 @@
        "accepted_correct_citing_wrong_place": {
         "ci95": [
          0.0017,
-         0.054
+         0.0535
         ],
         "k": 1,
-        "n": 101,
-        "rate": 0.0099
+        "n": 102,
+        "rate": 0.0098
        },
-       "candidates": 102,
-       "correct": 102,
+       "candidates": 103,
+       "correct": 103,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.0363
+         0.036
         ],
         "k": 0,
-        "n": 102,
+        "n": 103,
         "rate": 0.0
        },
        "escape": {
@@ -5711,28 +5711,28 @@
        "false_reject": {
         "ci95": [
          0.0017,
-         0.0535
+         0.053
         ],
         "k": 1,
-        "n": 102,
-        "rate": 0.0098
+        "n": 103,
+        "rate": 0.0097
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0363
+         0.036
         ],
         "k": 0,
-        "n": 102,
+        "n": 103,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
          0.0,
-         0.0363
+         0.036
         ],
         "k": 0,
-        "n": 102,
+        "n": 103,
         "rate": 0.0
        },
        "wrong": 0,
@@ -5909,16 +5909,16 @@
       "n": 267,
       "rate": 0.1386
      },
-     "candidates": 335,
-     "correct": 323,
+     "candidates": 336,
+     "correct": 324,
      "correct_sent_to_review": {
       "ci95": [
-       0.1004,
-       0.1745
+       0.1027,
+       0.1774
       ],
-      "k": 43,
-      "n": 323,
-      "rate": 0.1331
+      "k": 44,
+      "n": 324,
+      "rate": 0.1358
      },
      "escape": {
       "ci95": [
@@ -5938,46 +5938,46 @@
        0.0173
       ],
       "k": 1,
-      "n": 323,
+      "n": 324,
       "rate": 0.0031
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.7967,
-        0.8822
+        0.7935,
+        0.8795
        ],
        "k": 233,
-       "n": 276,
-       "rate": 0.8442
+       "n": 277,
+       "rate": 0.8412
       },
       "accepted_or_review": {
        "ci95": [
-        0.9301,
-        0.9776
+        0.9303,
+        0.9777
        ],
-       "k": 265,
-       "n": 276,
-       "rate": 0.9601
+       "k": 266,
+       "n": 277,
+       "rate": 0.9603
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
-       0.0214,
-       0.0638
+       0.0213,
+       0.0636
       ],
       "k": 12,
-      "n": 323,
-      "rate": 0.0372
+      "n": 324,
+      "rate": 0.037
      },
      "review_load": {
       "ci95": [
-       0.1257,
-       0.2044
+       0.128,
+       0.207
       ],
-      "k": 54,
-      "n": 335,
-      "rate": 0.1612
+      "k": 55,
+      "n": 336,
+      "rate": 0.1637
      },
      "wrong": 12,
      "wrong_by_class": {
@@ -6004,22 +6004,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1205,
-       0.2009
+       0.1201,
+       0.2003
       ],
       "k": 49,
-      "n": 313,
-      "rate": 0.1565
+      "n": 314,
+      "rate": 0.1561
      },
-     "candidates": 335,
-     "correct": 323,
+     "candidates": 336,
+     "correct": 324,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0118
+       0.0117
       ],
       "k": 0,
-      "n": 323,
+      "n": 324,
       "rate": 0.0
      },
      "escape": {
@@ -6038,40 +6038,40 @@
      "false_reject": {
       "ci95": [
        0.0,
-       0.0118
+       0.0117
       ],
       "k": 0,
-      "n": 323,
+      "n": 324,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9392,
+        0.9394,
         0.9828
        ],
-       "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "k": 268,
+       "n": 277,
+       "rate": 0.9675
       },
       "accepted_or_review": {
        "ci95": [
-        0.9392,
+        0.9394,
         0.9828
        ],
-       "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "k": 268,
+       "n": 277,
+       "rate": 0.9675
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
-       0.0169,
-       0.056
+       0.0168,
+       0.0559
       ],
       "k": 10,
-      "n": 323,
-      "rate": 0.031
+      "n": 324,
+      "rate": 0.0309
      },
      "review_load": {
       "ci95": [
@@ -6079,7 +6079,7 @@
        0.0113
       ],
       "k": 0,
-      "n": 335,
+      "n": 336,
       "rate": 0.0
      },
      "wrong": 12,
@@ -6100,22 +6100,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1443,
-       0.2284
+       0.1439,
+       0.2278
       ],
       "k": 59,
-      "n": 323,
-      "rate": 0.1827
+      "n": 324,
+      "rate": 0.1821
      },
-     "candidates": 335,
-     "correct": 323,
+     "candidates": 336,
+     "correct": 324,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0118
+       0.0117
       ],
       "k": 0,
-      "n": 323,
+      "n": 324,
       "rate": 0.0
      },
      "escape": {
@@ -6134,39 +6134,39 @@
      "false_reject": {
       "ci95": [
        0.0,
-       0.0118
+       0.0117
       ],
       "k": 0,
-      "n": 323,
+      "n": 324,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9392,
+        0.9394,
         0.9828
        ],
-       "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "k": 268,
+       "n": 277,
+       "rate": 0.9675
       },
       "accepted_or_review": {
        "ci95": [
-        0.9392,
+        0.9394,
         0.9828
        ],
-       "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "k": 268,
+       "n": 277,
+       "rate": 0.9675
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0,
-       0.0118
+       0.0117
       ],
       "k": 0,
-      "n": 323,
+      "n": 324,
       "rate": 0.0
      },
      "review_load": {
@@ -6175,7 +6175,7 @@
        0.0113
       ],
       "k": 0,
-      "n": 335,
+      "n": 336,
       "rate": 0.0
      },
      "wrong": 12,
@@ -6196,22 +6196,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1207,
-       0.2044
+       0.1202,
+       0.2037
       ],
       "k": 46,
-      "n": 291,
-      "rate": 0.1581
+      "n": 292,
+      "rate": 0.1575
      },
-     "candidates": 335,
-     "correct": 323,
+     "candidates": 336,
+     "correct": 324,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0118
+       0.0117
       ],
       "k": 0,
-      "n": 323,
+      "n": 324,
       "rate": 0.0
      },
      "escape": {
@@ -6229,41 +6229,41 @@
      },
      "false_reject": {
       "ci95": [
-       0.038,
-       0.09
+       0.0379,
+       0.0898
       ],
       "k": 19,
-      "n": 323,
-      "rate": 0.0588
+      "n": 324,
+      "rate": 0.0586
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8614,
-        0.9319
+        0.8619,
+        0.9321
        ],
-       "k": 249,
-       "n": 276,
-       "rate": 0.9022
+       "k": 250,
+       "n": 277,
+       "rate": 0.9025
       },
       "accepted_or_review": {
        "ci95": [
-        0.8614,
-        0.9319
+        0.8619,
+        0.9321
        ],
-       "k": 249,
-       "n": 276,
-       "rate": 0.9022
+       "k": 250,
+       "n": 277,
+       "rate": 0.9025
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
-       0.0237,
-       0.0676
+       0.0236,
+       0.0674
       ],
       "k": 13,
-      "n": 323,
-      "rate": 0.0402
+      "n": 324,
+      "rate": 0.0401
      },
      "review_load": {
       "ci95": [
@@ -6271,7 +6271,7 @@
        0.0113
       ],
       "k": 0,
-      "n": 335,
+      "n": 336,
       "rate": 0.0
      },
      "wrong": 12,
@@ -6451,16 +6451,16 @@
         "n": 88,
         "rate": 0.0114
        },
-       "candidates": 107,
-       "correct": 105,
+       "candidates": 108,
+       "correct": 106,
        "correct_sent_to_review": {
         "ci95": [
-         0.096,
-         0.2333
+         0.1026,
+         0.2419
         ],
-        "k": 16,
-        "n": 105,
-        "rate": 0.1524
+        "k": 17,
+        "n": 106,
+        "rate": 0.1604
        },
        "escape": {
         "ci95": [
@@ -6475,29 +6475,29 @@
        "false_reject": {
         "ci95": [
          0.0017,
-         0.052
+         0.0515
         ],
         "k": 1,
-        "n": 105,
-        "rate": 0.0095
+        "n": 106,
+        "rate": 0.0094
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0353
+         0.035
         ],
         "k": 0,
-        "n": 105,
+        "n": 106,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.1091,
-         0.2503
+         0.1156,
+         0.2585
         ],
-        "k": 18,
-        "n": 107,
-        "rate": 0.1682
+        "k": 19,
+        "n": 108,
+        "rate": 0.1759
        },
        "wrong": 2,
        "wrong_by_class": {
@@ -6517,21 +6517,21 @@
        "accepted_correct_citing_wrong_place": {
         "ci95": [
          0.0017,
-         0.053
+         0.0525
         ],
         "k": 1,
-        "n": 103,
-        "rate": 0.0097
+        "n": 104,
+        "rate": 0.0096
        },
-       "candidates": 107,
-       "correct": 105,
+       "candidates": 108,
+       "correct": 106,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.0353
+         0.035
         ],
         "k": 0,
-        "n": 105,
+        "n": 106,
         "rate": 0.0
        },
        "escape": {
@@ -6549,28 +6549,28 @@
        "false_reject": {
         "ci95": [
          0.0052,
-         0.0668
+         0.0662
         ],
         "k": 2,
-        "n": 105,
-        "rate": 0.019
+        "n": 106,
+        "rate": 0.0189
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0353
+         0.035
         ],
         "k": 0,
-        "n": 105,
+        "n": 106,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "wrong": 2,
@@ -6752,16 +6752,16 @@
       "n": 251,
       "rate": 0.0956
      },
-     "candidates": 291,
-     "correct": 284,
+     "candidates": 292,
+     "correct": 285,
      "correct_sent_to_review": {
       "ci95": [
-       0.0691,
-       0.1388
+       0.0718,
+       0.1423
       ],
-      "k": 28,
-      "n": 284,
-      "rate": 0.0986
+      "k": 29,
+      "n": 285,
+      "rate": 0.1018
      },
      "escape": {
       "ci95": [
@@ -6776,49 +6776,49 @@
      "false_reject": {
       "ci95": [
        0.0036,
-       0.0306
+       0.0305
       ],
       "k": 3,
-      "n": 284,
-      "rate": 0.0106
+      "n": 285,
+      "rate": 0.0105
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8287,
-        0.9074
+        0.8253,
+        0.9046
        ],
        "k": 241,
-       "n": 276,
-       "rate": 0.8732
+       "n": 277,
+       "rate": 0.87
       },
       "accepted_or_review": {
        "ci95": [
-        0.9439,
-        0.9852
+        0.9441,
+        0.9853
        ],
-       "k": 268,
-       "n": 276,
-       "rate": 0.971
+       "k": 269,
+       "n": 277,
+       "rate": 0.9711
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0019,
-       0.0253
+       0.0252
       ],
       "k": 2,
-      "n": 284,
+      "n": 285,
       "rate": 0.007
      },
      "review_load": {
       "ci95": [
-       0.079,
-       0.1511
+       0.0816,
+       0.1545
       ],
-      "k": 32,
-      "n": 291,
-      "rate": 0.11
+      "k": 33,
+      "n": 292,
+      "rate": 0.113
      },
      "wrong": 7,
      "wrong_by_class": {
@@ -6844,22 +6844,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.075,
-       0.1468
+       0.0747,
+       0.1463
       ],
       "k": 30,
-      "n": 284,
-      "rate": 0.1056
+      "n": 285,
+      "rate": 0.1053
      },
-     "candidates": 291,
-     "correct": 284,
+     "candidates": 292,
+     "correct": 285,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0133
       ],
       "k": 0,
-      "n": 284,
+      "n": 285,
       "rate": 0.0
      },
      "escape": {
@@ -6880,27 +6880,27 @@
        0.0133
       ],
       "k": 0,
-      "n": 284,
+      "n": 285,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9685,
+        0.9686,
         0.9963
        ],
-       "k": 273,
-       "n": 276,
-       "rate": 0.9891
+       "k": 274,
+       "n": 277,
+       "rate": 0.9892
       },
       "accepted_or_review": {
        "ci95": [
-        0.9685,
+        0.9686,
         0.9963
        ],
-       "k": 273,
-       "n": 276,
-       "rate": 0.9891
+       "k": 274,
+       "n": 277,
+       "rate": 0.9892
       }
      },
      "rejected_right_value_wrong_place": {
@@ -6909,7 +6909,7 @@
        0.0133
       ],
       "k": 0,
-      "n": 284,
+      "n": 285,
       "rate": 0.0
      },
      "review_load": {
@@ -6918,7 +6918,7 @@
        0.013
       ],
       "k": 0,
-      "n": 291,
+      "n": 292,
       "rate": 0.0
      },
      "wrong": 7,
@@ -6938,22 +6938,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.075,
-       0.1468
+       0.0747,
+       0.1463
       ],
       "k": 30,
-      "n": 284,
-      "rate": 0.1056
+      "n": 285,
+      "rate": 0.1053
      },
-     "candidates": 291,
-     "correct": 284,
+     "candidates": 292,
+     "correct": 285,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0133
       ],
       "k": 0,
-      "n": 284,
+      "n": 285,
       "rate": 0.0
      },
      "escape": {
@@ -6974,27 +6974,27 @@
        0.0133
       ],
       "k": 0,
-      "n": 284,
+      "n": 285,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9685,
+        0.9686,
         0.9963
        ],
-       "k": 273,
-       "n": 276,
-       "rate": 0.9891
+       "k": 274,
+       "n": 277,
+       "rate": 0.9892
       },
       "accepted_or_review": {
        "ci95": [
-        0.9685,
+        0.9686,
         0.9963
        ],
-       "k": 273,
-       "n": 276,
-       "rate": 0.9891
+       "k": 274,
+       "n": 277,
+       "rate": 0.9892
       }
      },
      "rejected_right_value_wrong_place": {
@@ -7003,7 +7003,7 @@
        0.0133
       ],
       "k": 0,
-      "n": 284,
+      "n": 285,
       "rate": 0.0
      },
      "review_load": {
@@ -7012,7 +7012,7 @@
        0.013
       ],
       "k": 0,
-      "n": 291,
+      "n": 292,
       "rate": 0.0
      },
      "wrong": 7,
@@ -7032,22 +7032,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0791,
-       0.1562
+       0.0788,
+       0.1556
       ],
       "k": 29,
-      "n": 259,
-      "rate": 0.112
+      "n": 260,
+      "rate": 0.1115
      },
-     "candidates": 291,
-     "correct": 284,
+     "candidates": 292,
+     "correct": 285,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0133
       ],
       "k": 0,
-      "n": 284,
+      "n": 285,
       "rate": 0.0
      },
      "escape": {
@@ -7064,40 +7064,40 @@
      },
      "false_reject": {
       "ci95": [
-       0.0574,
-       0.1227
+       0.0572,
+       0.1222
       ],
       "k": 24,
-      "n": 284,
-      "rate": 0.0845
+      "n": 285,
+      "rate": 0.0842
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8573,
-        0.9289
+        0.8578,
+        0.9291
        ],
-       "k": 248,
-       "n": 276,
-       "rate": 0.8986
+       "k": 249,
+       "n": 277,
+       "rate": 0.8989
       },
       "accepted_or_review": {
        "ci95": [
-        0.8573,
-        0.9289
+        0.8578,
+        0.9291
        ],
-       "k": 248,
-       "n": 276,
-       "rate": 0.8986
+       "k": 249,
+       "n": 277,
+       "rate": 0.8989
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0006,
-       0.0197
+       0.0196
       ],
       "k": 1,
-      "n": 284,
+      "n": 285,
       "rate": 0.0035
      },
      "review_load": {
@@ -7106,7 +7106,7 @@
        0.013
       ],
       "k": 0,
-      "n": 291,
+      "n": 292,
       "rate": 0.0
      },
      "wrong": 7,
@@ -7285,16 +7285,16 @@
         "n": 92,
         "rate": 0.0109
        },
-       "candidates": 107,
-       "correct": 107,
+       "candidates": 108,
+       "correct": 108,
        "correct_sent_to_review": {
         "ci95": [
-         0.0796,
-         0.2077
+         0.086,
+         0.2166
         ],
-        "k": 14,
-        "n": 107,
-        "rate": 0.1308
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
        },
        "escape": {
         "ci95": null,
@@ -7305,30 +7305,30 @@
        "escaped_by_class": {},
        "false_reject": {
         "ci95": [
-         0.0017,
-         0.0511
+         0.0016,
+         0.0506
         ],
         "k": 1,
-        "n": 107,
+        "n": 108,
         "rate": 0.0093
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.0796,
-         0.2077
+         0.086,
+         0.2166
         ],
-        "k": 14,
-        "n": 107,
-        "rate": 0.1308
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
        },
        "wrong": 0,
        "wrong_by_class": {},
@@ -7342,22 +7342,22 @@
       "lx_exact": {
        "accepted_correct_citing_wrong_place": {
         "ci95": [
-         0.0017,
-         0.0511
+         0.0016,
+         0.0506
         ],
         "k": 1,
-        "n": 107,
+        "n": 108,
         "rate": 0.0093
        },
-       "candidates": 107,
-       "correct": 107,
+       "candidates": 108,
+       "correct": 108,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "escape": {
@@ -7370,28 +7370,28 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "wrong": 0,
@@ -7569,16 +7569,16 @@
       "n": 273,
       "rate": 0.1319
      },
-     "candidates": 335,
-     "correct": 324,
+     "candidates": 336,
+     "correct": 325,
      "correct_sent_to_review": {
       "ci95": [
-       0.0867,
-       0.1569
+       0.089,
+       0.1598
       ],
-      "k": 38,
-      "n": 324,
-      "rate": 0.1173
+      "k": 39,
+      "n": 325,
+      "rate": 0.12
      },
      "escape": {
       "ci95": [
@@ -7593,49 +7593,49 @@
      "false_reject": {
       "ci95": [
        0.0005,
-       0.0173
+       0.0172
       ],
       "k": 1,
-      "n": 324,
+      "n": 325,
       "rate": 0.0031
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8328,
-        0.9105
+        0.8293,
+        0.9077
        ],
        "k": 242,
-       "n": 276,
-       "rate": 0.8768
+       "n": 277,
+       "rate": 0.8736
       },
       "accepted_or_review": {
        "ci95": [
-        0.9486,
+        0.9488,
         0.9877
        ],
-       "k": 269,
-       "n": 276,
-       "rate": 0.9746
+       "k": 270,
+       "n": 277,
+       "rate": 0.9747
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
-       0.0213,
-       0.0636
+       0.0212,
+       0.0634
       ],
       "k": 12,
-      "n": 324,
-      "rate": 0.037
+      "n": 325,
+      "rate": 0.0369
      },
      "review_load": {
       "ci95": [
-       0.1072,
-       0.1816
+       0.1095,
+       0.1843
       ],
-      "k": 47,
-      "n": 335,
-      "rate": 0.1403
+      "k": 48,
+      "n": 336,
+      "rate": 0.1429
      },
      "wrong": 11,
      "wrong_by_class": {
@@ -7661,22 +7661,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1117,
-       0.1899
+       0.1113,
+       0.1893
       ],
       "k": 46,
-      "n": 314,
-      "rate": 0.1465
+      "n": 315,
+      "rate": 0.146
      },
-     "candidates": 335,
-     "correct": 324,
+     "candidates": 336,
+     "correct": 325,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0117
       ],
       "k": 0,
-      "n": 324,
+      "n": 325,
       "rate": 0.0
      },
      "escape": {
@@ -7697,37 +7697,37 @@
        0.0117
       ],
       "k": 0,
-      "n": 324,
+      "n": 325,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       },
       "accepted_or_review": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0168,
-       0.0559
+       0.0557
       ],
       "k": 10,
-      "n": 324,
-      "rate": 0.0309
+      "n": 325,
+      "rate": 0.0308
      },
      "review_load": {
       "ci95": [
@@ -7735,7 +7735,7 @@
        0.0113
       ],
       "k": 0,
-      "n": 335,
+      "n": 336,
       "rate": 0.0
      },
      "wrong": 11,
@@ -7755,22 +7755,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1356,
-       0.2178
+       0.1351,
+       0.2171
       ],
       "k": 56,
-      "n": 324,
-      "rate": 0.1728
+      "n": 325,
+      "rate": 0.1723
      },
-     "candidates": 335,
-     "correct": 324,
+     "candidates": 336,
+     "correct": 325,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0117
       ],
       "k": 0,
-      "n": 324,
+      "n": 325,
       "rate": 0.0
      },
      "escape": {
@@ -7791,26 +7791,26 @@
        0.0117
       ],
       "k": 0,
-      "n": 324,
+      "n": 325,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       },
       "accepted_or_review": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       }
      },
@@ -7820,7 +7820,7 @@
        0.0117
       ],
       "k": 0,
-      "n": 324,
+      "n": 325,
       "rate": 0.0
      },
      "review_load": {
@@ -7829,7 +7829,7 @@
        0.0113
       ],
       "k": 0,
-      "n": 335,
+      "n": 336,
       "rate": 0.0
      },
      "wrong": 11,
@@ -7849,22 +7849,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1089,
-       0.1887
+       0.1086,
+       0.1881
       ],
       "k": 43,
-      "n": 298,
-      "rate": 0.1443
+      "n": 299,
+      "rate": 0.1438
      },
-     "candidates": 335,
-     "correct": 324,
+     "candidates": 336,
+     "correct": 325,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0117
       ],
       "k": 0,
-      "n": 324,
+      "n": 325,
       "rate": 0.0
      },
      "escape": {
@@ -7881,41 +7881,41 @@
      },
      "false_reject": {
       "ci95": [
-       0.0236,
-       0.0674
+       0.0235,
+       0.0672
       ],
       "k": 13,
-      "n": 324,
-      "rate": 0.0401
+      "n": 325,
+      "rate": 0.04
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9036,
-        0.9612
+        0.9039,
+        0.9613
        ],
-       "k": 259,
-       "n": 276,
-       "rate": 0.9384
+       "k": 260,
+       "n": 277,
+       "rate": 0.9386
       },
       "accepted_or_review": {
        "ci95": [
-        0.9036,
-        0.9612
+        0.9039,
+        0.9613
        ],
-       "k": 259,
-       "n": 276,
-       "rate": 0.9384
+       "k": 260,
+       "n": 277,
+       "rate": 0.9386
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
-       0.0236,
-       0.0674
+       0.0235,
+       0.0672
       ],
       "k": 13,
-      "n": 324,
-      "rate": 0.0401
+      "n": 325,
+      "rate": 0.04
      },
      "review_load": {
       "ci95": [
@@ -7923,7 +7923,7 @@
        0.0113
       ],
       "k": 0,
-      "n": 335,
+      "n": 336,
       "rate": 0.0
      },
      "wrong": 11,
@@ -8105,16 +8105,16 @@
         "n": 92,
         "rate": 0.0109
        },
-       "candidates": 107,
-       "correct": 107,
+       "candidates": 108,
+       "correct": 108,
        "correct_sent_to_review": {
         "ci95": [
-         0.0796,
-         0.2077
+         0.086,
+         0.2166
         ],
-        "k": 14,
-        "n": 107,
-        "rate": 0.1308
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
        },
        "escape": {
         "ci95": null,
@@ -8125,30 +8125,30 @@
        "escaped_by_class": {},
        "false_reject": {
         "ci95": [
-         0.0017,
-         0.0511
+         0.0016,
+         0.0506
         ],
         "k": 1,
-        "n": 107,
+        "n": 108,
         "rate": 0.0093
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.0796,
-         0.2077
+         0.086,
+         0.2166
         ],
-        "k": 14,
-        "n": 107,
-        "rate": 0.1308
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
        },
        "wrong": 0,
        "wrong_by_class": {},
@@ -8162,22 +8162,22 @@
       "lx_exact": {
        "accepted_correct_citing_wrong_place": {
         "ci95": [
-         0.0017,
-         0.0511
+         0.0016,
+         0.0506
         ],
         "k": 1,
-        "n": 107,
+        "n": 108,
         "rate": 0.0093
        },
-       "candidates": 107,
-       "correct": 107,
+       "candidates": 108,
+       "correct": 108,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "escape": {
@@ -8190,28 +8190,28 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "wrong": 0,
@@ -8389,16 +8389,16 @@
       "n": 260,
       "rate": 0.1
      },
-     "candidates": 293,
-     "correct": 288,
+     "candidates": 294,
+     "correct": 289,
      "correct_sent_to_review": {
       "ci95": [
-       0.0566,
-       0.121
+       0.0593,
+       0.1246
       ],
-      "k": 24,
-      "n": 288,
-      "rate": 0.0833
+      "k": 25,
+      "n": 289,
+      "rate": 0.0865
      },
      "escape": {
       "ci95": [
@@ -8413,49 +8413,49 @@
      "false_reject": {
       "ci95": [
        0.0019,
-       0.025
+       0.0249
       ],
       "k": 2,
-      "n": 288,
+      "n": 289,
       "rate": 0.0069
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8573,
-        0.9289
+        0.8537,
+        0.9261
        ],
        "k": 248,
-       "n": 276,
-       "rate": 0.8986
+       "n": 277,
+       "rate": 0.8953
       },
       "accepted_or_review": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0019,
-       0.025
+       0.0249
       ],
       "k": 2,
-      "n": 288,
+      "n": 289,
       "rate": 0.0069
      },
      "review_load": {
       "ci95": [
-       0.0613,
-       0.1268
+       0.0639,
+       0.1303
       ],
-      "k": 26,
-      "n": 293,
-      "rate": 0.0887
+      "k": 27,
+      "n": 294,
+      "rate": 0.0918
      },
      "wrong": 5,
      "wrong_by_class": {
@@ -8482,22 +8482,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0798,
-       0.1526
+       0.0795,
+       0.1521
       ],
       "k": 32,
-      "n": 288,
-      "rate": 0.1111
+      "n": 289,
+      "rate": 0.1107
      },
-     "candidates": 293,
-     "correct": 288,
+     "candidates": 294,
+     "correct": 289,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0132
+       0.0131
       ],
       "k": 0,
-      "n": 288,
+      "n": 289,
       "rate": 0.0
      },
      "escape": {
@@ -8516,10 +8516,10 @@
      "false_reject": {
       "ci95": [
        0.0,
-       0.0132
+       0.0131
       ],
       "k": 0,
-      "n": 288,
+      "n": 289,
       "rate": 0.0
      },
      "recall": {
@@ -8528,8 +8528,8 @@
         0.9798,
         0.9994
        ],
-       "k": 275,
-       "n": 276,
+       "k": 276,
+       "n": 277,
        "rate": 0.9964
       },
       "accepted_or_review": {
@@ -8537,18 +8537,18 @@
         0.9798,
         0.9994
        ],
-       "k": 275,
-       "n": 276,
+       "k": 276,
+       "n": 277,
        "rate": 0.9964
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0,
-       0.0132
+       0.0131
       ],
       "k": 0,
-      "n": 288,
+      "n": 289,
       "rate": 0.0
      },
      "review_load": {
@@ -8557,7 +8557,7 @@
        0.0129
       ],
       "k": 0,
-      "n": 293,
+      "n": 294,
       "rate": 0.0
      },
      "wrong": 5,
@@ -8578,22 +8578,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0798,
-       0.1526
+       0.0795,
+       0.1521
       ],
       "k": 32,
-      "n": 288,
-      "rate": 0.1111
+      "n": 289,
+      "rate": 0.1107
      },
-     "candidates": 293,
-     "correct": 288,
+     "candidates": 294,
+     "correct": 289,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0132
+       0.0131
       ],
       "k": 0,
-      "n": 288,
+      "n": 289,
       "rate": 0.0
      },
      "escape": {
@@ -8612,10 +8612,10 @@
      "false_reject": {
       "ci95": [
        0.0,
-       0.0132
+       0.0131
       ],
       "k": 0,
-      "n": 288,
+      "n": 289,
       "rate": 0.0
      },
      "recall": {
@@ -8624,8 +8624,8 @@
         0.9798,
         0.9994
        ],
-       "k": 275,
-       "n": 276,
+       "k": 276,
+       "n": 277,
        "rate": 0.9964
       },
       "accepted_or_review": {
@@ -8633,18 +8633,18 @@
         0.9798,
         0.9994
        ],
-       "k": 275,
-       "n": 276,
+       "k": 276,
+       "n": 277,
        "rate": 0.9964
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0,
-       0.0132
+       0.0131
       ],
       "k": 0,
-      "n": 288,
+      "n": 289,
       "rate": 0.0
      },
      "review_load": {
@@ -8653,7 +8653,7 @@
        0.0129
       ],
       "k": 0,
-      "n": 293,
+      "n": 294,
       "rate": 0.0
      },
      "wrong": 5,
@@ -8674,22 +8674,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.083,
-       0.1601
+       0.0827,
+       0.1595
       ],
       "k": 31,
-      "n": 267,
-      "rate": 0.1161
+      "n": 268,
+      "rate": 0.1157
      },
-     "candidates": 293,
-     "correct": 288,
+     "candidates": 294,
+     "correct": 289,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0132
+       0.0131
       ],
       "k": 0,
-      "n": 288,
+      "n": 289,
       "rate": 0.0
      },
      "escape": {
@@ -8707,40 +8707,40 @@
      },
      "false_reject": {
       "ci95": [
-       0.0454,
-       0.1048
+       0.0452,
+       0.1045
       ],
       "k": 20,
-      "n": 288,
-      "rate": 0.0694
+      "n": 289,
+      "rate": 0.0692
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8865,
-        0.9497
+        0.8869,
+        0.9499
        ],
-       "k": 255,
-       "n": 276,
-       "rate": 0.9239
+       "k": 256,
+       "n": 277,
+       "rate": 0.9242
       },
       "accepted_or_review": {
        "ci95": [
-        0.8865,
-        0.9497
+        0.8869,
+        0.9499
        ],
-       "k": 255,
-       "n": 276,
-       "rate": 0.9239
+       "k": 256,
+       "n": 277,
+       "rate": 0.9242
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0006,
-       0.0194
+       0.0193
       ],
       "k": 1,
-      "n": 288,
+      "n": 289,
       "rate": 0.0035
      },
      "review_load": {
@@ -8749,7 +8749,7 @@
        0.0129
       ],
       "k": 0,
-      "n": 293,
+      "n": 294,
       "rate": 0.0
      },
      "wrong": 5,
@@ -8934,16 +8934,16 @@
         "n": 94,
         "rate": 0.0106
        },
-       "candidates": 109,
-       "correct": 109,
+       "candidates": 110,
+       "correct": 110,
        "correct_sent_to_review": {
         "ci95": [
-         0.0781,
-         0.2041
+         0.0844,
+         0.2129
         ],
-        "k": 14,
-        "n": 109,
-        "rate": 0.1284
+        "k": 15,
+        "n": 110,
+        "rate": 0.1364
        },
        "escape": {
         "ci95": null,
@@ -8955,29 +8955,29 @@
        "false_reject": {
         "ci95": [
          0.0016,
-         0.0501
+         0.0497
         ],
         "k": 1,
-        "n": 109,
-        "rate": 0.0092
+        "n": 110,
+        "rate": 0.0091
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.034
+         0.0337
         ],
         "k": 0,
-        "n": 109,
+        "n": 110,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.0781,
-         0.2041
+         0.0844,
+         0.2129
         ],
-        "k": 14,
-        "n": 109,
-        "rate": 0.1284
+        "k": 15,
+        "n": 110,
+        "rate": 0.1364
        },
        "wrong": 0,
        "wrong_by_class": {},
@@ -8992,21 +8992,21 @@
        "accepted_correct_citing_wrong_place": {
         "ci95": [
          0.0016,
-         0.0501
+         0.0497
         ],
         "k": 1,
-        "n": 109,
-        "rate": 0.0092
+        "n": 110,
+        "rate": 0.0091
        },
-       "candidates": 109,
-       "correct": 109,
+       "candidates": 110,
+       "correct": 110,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.034
+         0.0337
         ],
         "k": 0,
-        "n": 109,
+        "n": 110,
         "rate": 0.0
        },
        "escape": {
@@ -9019,28 +9019,28 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.034
+         0.0337
         ],
         "k": 0,
-        "n": 109,
+        "n": 110,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.034
+         0.0337
         ],
         "k": 0,
-        "n": 109,
+        "n": 110,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
          0.0,
-         0.034
+         0.0337
         ],
         "k": 0,
-        "n": 109,
+        "n": 110,
         "rate": 0.0
        },
        "wrong": 0,
@@ -9217,16 +9217,16 @@
       "n": 290,
       "rate": 0.1586
      },
-     "candidates": 342,
-     "correct": 330,
+     "candidates": 343,
+     "correct": 331,
      "correct_sent_to_review": {
       "ci95": [
-       0.0773,
-       0.1439
+       0.0796,
+       0.1469
       ],
-      "k": 35,
-      "n": 330,
-      "rate": 0.1061
+      "k": 36,
+      "n": 331,
+      "rate": 0.1088
      },
      "escape": {
       "ci95": [
@@ -9246,46 +9246,46 @@
        0.0218
       ],
       "k": 2,
-      "n": 330,
-      "rate": 0.0061
+      "n": 331,
+      "rate": 0.006
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8491,
-        0.9228
+        0.8455,
+        0.92
        ],
        "k": 246,
-       "n": 276,
-       "rate": 0.8913
+       "n": 277,
+       "rate": 0.8881
       },
       "accepted_or_review": {
        "ci95": [
-        0.9633,
+        0.9635,
         0.9944
        ],
-       "k": 272,
-       "n": 276,
-       "rate": 0.9855
+       "k": 273,
+       "n": 277,
+       "rate": 0.9856
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0031,
-       0.0264
+       0.0263
       ],
       "k": 3,
-      "n": 330,
+      "n": 331,
       "rate": 0.0091
      },
      "review_load": {
       "ci95": [
-       0.1024,
-       0.1748
+       0.1046,
+       0.1775
       ],
-      "k": 46,
-      "n": 342,
-      "rate": 0.1345
+      "k": 47,
+      "n": 343,
+      "rate": 0.137
      },
      "wrong": 12,
      "wrong_by_class": {
@@ -9312,22 +9312,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1303,
-       0.2107
+       0.1299,
+       0.21
       ],
       "k": 55,
-      "n": 330,
-      "rate": 0.1667
+      "n": 331,
+      "rate": 0.1662
      },
-     "candidates": 342,
-     "correct": 330,
+     "candidates": 343,
+     "correct": 331,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0115
       ],
       "k": 0,
-      "n": 330,
+      "n": 331,
       "rate": 0.0
      },
      "escape": {
@@ -9349,7 +9349,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 330,
+      "n": 331,
       "rate": 0.0
      },
      "recall": {
@@ -9358,8 +9358,8 @@
         0.9798,
         0.9994
        ],
-       "k": 275,
-       "n": 276,
+       "k": 276,
+       "n": 277,
        "rate": 0.9964
       },
       "accepted_or_review": {
@@ -9367,8 +9367,8 @@
         0.9798,
         0.9994
        ],
-       "k": 275,
-       "n": 276,
+       "k": 276,
+       "n": 277,
        "rate": 0.9964
       }
      },
@@ -9378,7 +9378,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 330,
+      "n": 331,
       "rate": 0.0
      },
      "review_load": {
@@ -9387,7 +9387,7 @@
        0.0111
       ],
       "k": 0,
-      "n": 342,
+      "n": 343,
       "rate": 0.0
      },
      "wrong": 12,
@@ -9408,22 +9408,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1303,
-       0.2107
+       0.1299,
+       0.21
       ],
       "k": 55,
-      "n": 330,
-      "rate": 0.1667
+      "n": 331,
+      "rate": 0.1662
      },
-     "candidates": 342,
-     "correct": 330,
+     "candidates": 343,
+     "correct": 331,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0115
       ],
       "k": 0,
-      "n": 330,
+      "n": 331,
       "rate": 0.0
      },
      "escape": {
@@ -9445,7 +9445,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 330,
+      "n": 331,
       "rate": 0.0
      },
      "recall": {
@@ -9454,8 +9454,8 @@
         0.9798,
         0.9994
        ],
-       "k": 275,
-       "n": 276,
+       "k": 276,
+       "n": 277,
        "rate": 0.9964
       },
       "accepted_or_review": {
@@ -9463,8 +9463,8 @@
         0.9798,
         0.9994
        ],
-       "k": 275,
-       "n": 276,
+       "k": 276,
+       "n": 277,
        "rate": 0.9964
       }
      },
@@ -9474,7 +9474,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 330,
+      "n": 331,
       "rate": 0.0
      },
      "review_load": {
@@ -9483,7 +9483,7 @@
        0.0111
       ],
       "k": 0,
-      "n": 342,
+      "n": 343,
       "rate": 0.0
      },
      "wrong": 12,
@@ -9504,22 +9504,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1371,
-       0.2211
+       0.1367,
+       0.2204
       ],
       "k": 55,
-      "n": 314,
-      "rate": 0.1752
+      "n": 315,
+      "rate": 0.1746
      },
-     "candidates": 342,
-     "correct": 330,
+     "candidates": 343,
+     "correct": 331,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0115
       ],
       "k": 0,
-      "n": 330,
+      "n": 331,
       "rate": 0.0
      },
      "escape": {
@@ -9537,31 +9537,31 @@
      },
      "false_reject": {
       "ci95": [
-       0.0301,
-       0.0773
+       0.03,
+       0.0771
       ],
       "k": 16,
-      "n": 330,
-      "rate": 0.0485
+      "n": 331,
+      "rate": 0.0483
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9079,
-        0.964
+        0.9082,
+        0.9641
        ],
-       "k": 260,
-       "n": 276,
-       "rate": 0.942
+       "k": 261,
+       "n": 277,
+       "rate": 0.9422
       },
       "accepted_or_review": {
        "ci95": [
-        0.9079,
-        0.964
+        0.9082,
+        0.9641
        ],
-       "k": 260,
-       "n": 276,
-       "rate": 0.942
+       "k": 261,
+       "n": 277,
+       "rate": 0.9422
       }
      },
      "rejected_right_value_wrong_place": {
@@ -9570,7 +9570,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 330,
+      "n": 331,
       "rate": 0.0
      },
      "review_load": {
@@ -9579,7 +9579,7 @@
        0.0111
       ],
       "k": 0,
-      "n": 342,
+      "n": 343,
       "rate": 0.0
      },
      "wrong": 12,
@@ -9759,16 +9759,16 @@
         "n": 92,
         "rate": 0.0109
        },
-       "candidates": 107,
-       "correct": 107,
+       "candidates": 108,
+       "correct": 108,
        "correct_sent_to_review": {
         "ci95": [
-         0.0796,
-         0.2077
+         0.086,
+         0.2166
         ],
-        "k": 14,
-        "n": 107,
-        "rate": 0.1308
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
        },
        "escape": {
         "ci95": null,
@@ -9779,30 +9779,30 @@
        "escaped_by_class": {},
        "false_reject": {
         "ci95": [
-         0.0017,
-         0.0511
+         0.0016,
+         0.0506
         ],
         "k": 1,
-        "n": 107,
+        "n": 108,
         "rate": 0.0093
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.0796,
-         0.2077
+         0.086,
+         0.2166
         ],
-        "k": 14,
-        "n": 107,
-        "rate": 0.1308
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
        },
        "wrong": 0,
        "wrong_by_class": {},
@@ -9816,22 +9816,22 @@
       "lx_exact": {
        "accepted_correct_citing_wrong_place": {
         "ci95": [
-         0.0017,
-         0.0511
+         0.0016,
+         0.0506
         ],
         "k": 1,
-        "n": 107,
+        "n": 108,
         "rate": 0.0093
        },
-       "candidates": 107,
-       "correct": 107,
+       "candidates": 108,
+       "correct": 108,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "escape": {
@@ -9844,28 +9844,28 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "wrong": 0,
@@ -10041,16 +10041,16 @@
       "n": 258,
       "rate": 0.093
      },
-     "candidates": 288,
-     "correct": 286,
+     "candidates": 289,
+     "correct": 287,
      "correct_sent_to_review": {
       "ci95": [
-       0.0628,
-       0.1299
+       0.0655,
+       0.1334
       ],
-      "k": 26,
-      "n": 286,
-      "rate": 0.0909
+      "k": 27,
+      "n": 287,
+      "rate": 0.0941
      },
      "escape": {
       "ci95": [
@@ -10068,27 +10068,27 @@
        0.0195
       ],
       "k": 1,
-      "n": 286,
+      "n": 287,
       "rate": 0.0035
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8532,
-        0.9258
+        0.8496,
+        0.9231
        ],
        "k": 247,
-       "n": 276,
-       "rate": 0.8949
+       "n": 277,
+       "rate": 0.8917
       },
       "accepted_or_review": {
        "ci95": [
-        0.9633,
+        0.9635,
         0.9944
        ],
-       "k": 272,
-       "n": 276,
-       "rate": 0.9855
+       "k": 273,
+       "n": 277,
+       "rate": 0.9856
       }
      },
      "rejected_right_value_wrong_place": {
@@ -10097,17 +10097,17 @@
        0.0195
       ],
       "k": 1,
-      "n": 286,
+      "n": 287,
       "rate": 0.0035
      },
      "review_load": {
       "ci95": [
-       0.0681,
-       0.1369
+       0.0708,
+       0.1404
       ],
-      "k": 28,
-      "n": 288,
-      "rate": 0.0972
+      "k": 29,
+      "n": 289,
+      "rate": 0.1003
      },
      "wrong": 2,
      "wrong_by_class": {
@@ -10132,22 +10132,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0715,
-       0.1418
+       0.0713,
+       0.1414
       ],
       "k": 29,
-      "n": 286,
-      "rate": 0.1014
+      "n": 287,
+      "rate": 0.101
      },
-     "candidates": 288,
-     "correct": 286,
+     "candidates": 289,
+     "correct": 287,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0133
+       0.0132
       ],
       "k": 0,
-      "n": 286,
+      "n": 287,
       "rate": 0.0
      },
      "escape": {
@@ -10165,48 +10165,48 @@
      "false_reject": {
       "ci95": [
        0.0,
-       0.0133
+       0.0132
       ],
       "k": 0,
-      "n": 286,
+      "n": 287,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.974,
+        0.9741,
         0.998
        ],
-       "k": 274,
-       "n": 276,
+       "k": 275,
+       "n": 277,
        "rate": 0.9928
       },
       "accepted_or_review": {
        "ci95": [
-        0.974,
+        0.9741,
         0.998
        ],
-       "k": 274,
-       "n": 276,
+       "k": 275,
+       "n": 277,
        "rate": 0.9928
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0,
-       0.0133
+       0.0132
       ],
       "k": 0,
-      "n": 286,
+      "n": 287,
       "rate": 0.0
      },
      "review_load": {
       "ci95": [
        0.0,
-       0.0132
+       0.0131
       ],
       "k": 0,
-      "n": 288,
+      "n": 289,
       "rate": 0.0
      },
      "wrong": 2,
@@ -10226,22 +10226,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0715,
-       0.1418
+       0.0713,
+       0.1414
       ],
       "k": 29,
-      "n": 286,
-      "rate": 0.1014
+      "n": 287,
+      "rate": 0.101
      },
-     "candidates": 288,
-     "correct": 286,
+     "candidates": 289,
+     "correct": 287,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0133
+       0.0132
       ],
       "k": 0,
-      "n": 286,
+      "n": 287,
       "rate": 0.0
      },
      "escape": {
@@ -10259,48 +10259,48 @@
      "false_reject": {
       "ci95": [
        0.0,
-       0.0133
+       0.0132
       ],
       "k": 0,
-      "n": 286,
+      "n": 287,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.974,
+        0.9741,
         0.998
        ],
-       "k": 274,
-       "n": 276,
+       "k": 275,
+       "n": 277,
        "rate": 0.9928
       },
       "accepted_or_review": {
        "ci95": [
-        0.974,
+        0.9741,
         0.998
        ],
-       "k": 274,
-       "n": 276,
+       "k": 275,
+       "n": 277,
        "rate": 0.9928
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0,
-       0.0133
+       0.0132
       ],
       "k": 0,
-      "n": 286,
+      "n": 287,
       "rate": 0.0
      },
      "review_load": {
       "ci95": [
        0.0,
-       0.0132
+       0.0131
       ],
       "k": 0,
-      "n": 288,
+      "n": 289,
       "rate": 0.0
      },
      "wrong": 2,
@@ -10320,22 +10320,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0761,
-       0.1505
+       0.0758,
+       0.15
       ],
       "k": 29,
-      "n": 269,
-      "rate": 0.1078
+      "n": 270,
+      "rate": 0.1074
      },
-     "candidates": 288,
-     "correct": 286,
+     "candidates": 289,
+     "correct": 287,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0133
+       0.0132
       ],
       "k": 0,
-      "n": 286,
+      "n": 287,
       "rate": 0.0
      },
      "escape": {
@@ -10352,49 +10352,49 @@
      },
      "false_reject": {
       "ci95": [
-       0.0374,
-       0.0931
+       0.0373,
+       0.0928
       ],
       "k": 17,
-      "n": 286,
-      "rate": 0.0594
+      "n": 287,
+      "rate": 0.0592
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.895,
-        0.9555
+        0.8954,
+        0.9557
        ],
-       "k": 257,
-       "n": 276,
-       "rate": 0.9312
+       "k": 258,
+       "n": 277,
+       "rate": 0.9314
       },
       "accepted_or_review": {
        "ci95": [
-        0.895,
-        0.9555
+        0.8954,
+        0.9557
        ],
-       "k": 257,
-       "n": 276,
-       "rate": 0.9312
+       "k": 258,
+       "n": 277,
+       "rate": 0.9314
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0,
-       0.0133
+       0.0132
       ],
       "k": 0,
-      "n": 286,
+      "n": 287,
       "rate": 0.0
      },
      "review_load": {
       "ci95": [
        0.0,
-       0.0132
+       0.0131
       ],
       "k": 0,
-      "n": 288,
+      "n": 289,
       "rate": 0.0
      },
      "wrong": 2,
@@ -10578,16 +10578,16 @@
         "n": 85,
         "rate": 0.0118
        },
-       "candidates": 106,
-       "correct": 102,
+       "candidates": 107,
+       "correct": 103,
        "correct_sent_to_review": {
         "ci95": [
-         0.1067,
-         0.2508
+         0.1135,
+         0.2594
         ],
-        "k": 17,
-        "n": 102,
-        "rate": 0.1667
+        "k": 18,
+        "n": 103,
+        "rate": 0.1748
        },
        "escape": {
         "ci95": [
@@ -10602,29 +10602,29 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0363
+         0.036
         ],
         "k": 0,
-        "n": 102,
+        "n": 103,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0363
+         0.036
         ],
         "k": 0,
-        "n": 102,
+        "n": 103,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.1256,
-         0.2735
+         0.1321,
+         0.2815
         ],
-        "k": 20,
-        "n": 106,
-        "rate": 0.1887
+        "k": 21,
+        "n": 107,
+        "rate": 0.1963
        },
        "wrong": 4,
        "wrong_by_class": {
@@ -10645,21 +10645,21 @@
        "accepted_correct_citing_wrong_place": {
         "ci95": [
          0.0017,
-         0.0535
+         0.053
         ],
         "k": 1,
-        "n": 102,
-        "rate": 0.0098
+        "n": 103,
+        "rate": 0.0097
        },
-       "candidates": 106,
-       "correct": 102,
+       "candidates": 107,
+       "correct": 103,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.0363
+         0.036
         ],
         "k": 0,
-        "n": 102,
+        "n": 103,
         "rate": 0.0
        },
        "escape": {
@@ -10678,28 +10678,28 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0363
+         0.036
         ],
         "k": 0,
-        "n": 102,
+        "n": 103,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0363
+         0.036
         ],
         "k": 0,
-        "n": 102,
+        "n": 103,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
          0.0,
-         0.035
+         0.0347
         ],
         "k": 0,
-        "n": 106,
+        "n": 107,
         "rate": 0.0
        },
        "wrong": 4,
@@ -10886,16 +10886,16 @@
       "n": 270,
       "rate": 0.1444
      },
-     "candidates": 339,
-     "correct": 321,
+     "candidates": 340,
+     "correct": 322,
      "correct_sent_to_review": {
       "ci95": [
-       0.0929,
-       0.1652
+       0.0953,
+       0.1682
       ],
-      "k": 40,
-      "n": 321,
-      "rate": 0.1246
+      "k": 41,
+      "n": 322,
+      "rate": 0.1273
      },
      "escape": {
       "ci95": [
@@ -10915,46 +10915,46 @@
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8047,
-        0.8886
+        0.8014,
+        0.8858
        ],
        "k": 235,
-       "n": 276,
-       "rate": 0.8514
+       "n": 277,
+       "rate": 0.8484
       },
       "accepted_or_review": {
        "ci95": [
-        0.9346,
-        0.9802
+        0.9348,
+        0.9803
        ],
-       "k": 266,
-       "n": 276,
-       "rate": 0.9638
+       "k": 267,
+       "n": 277,
+       "rate": 0.9639
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0192,
-       0.0603
+       0.0601
       ],
       "k": 11,
-      "n": 321,
-      "rate": 0.0343
+      "n": 322,
+      "rate": 0.0342
      },
      "review_load": {
       "ci95": [
-       0.1295,
-       0.2084
+       0.1317,
+       0.211
       ],
-      "k": 56,
-      "n": 339,
-      "rate": 0.1652
+      "k": 57,
+      "n": 340,
+      "rate": 0.1676
      },
      "wrong": 18,
      "wrong_by_class": {
@@ -10981,22 +10981,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1156,
-       0.1952
+       0.1152,
+       0.1946
       ],
       "k": 47,
-      "n": 311,
-      "rate": 0.1511
+      "n": 312,
+      "rate": 0.1506
      },
-     "candidates": 339,
-     "correct": 321,
+     "candidates": 340,
+     "correct": 322,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "escape": {
@@ -11019,37 +11019,37 @@
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9392,
+        0.9394,
         0.9828
        ],
-       "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "k": 268,
+       "n": 277,
+       "rate": 0.9675
       },
       "accepted_or_review": {
        "ci95": [
-        0.9392,
+        0.9394,
         0.9828
        ],
-       "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "k": 268,
+       "n": 277,
+       "rate": 0.9675
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.017,
-       0.0564
+       0.0562
       ],
       "k": 10,
-      "n": 321,
-      "rate": 0.0312
+      "n": 322,
+      "rate": 0.0311
      },
      "review_load": {
       "ci95": [
@@ -11057,7 +11057,7 @@
        0.0112
       ],
       "k": 0,
-      "n": 339,
+      "n": 340,
       "rate": 0.0
      },
      "wrong": 18,
@@ -11079,22 +11079,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1397,
-       0.2231
+       0.1392,
+       0.2224
       ],
       "k": 57,
-      "n": 321,
-      "rate": 0.1776
+      "n": 322,
+      "rate": 0.177
      },
-     "candidates": 339,
-     "correct": 321,
+     "candidates": 340,
+     "correct": 322,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "escape": {
@@ -11117,27 +11117,27 @@
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9392,
+        0.9394,
         0.9828
        ],
-       "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "k": 268,
+       "n": 277,
+       "rate": 0.9675
       },
       "accepted_or_review": {
        "ci95": [
-        0.9392,
+        0.9394,
         0.9828
        ],
-       "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "k": 268,
+       "n": 277,
+       "rate": 0.9675
       }
      },
      "rejected_right_value_wrong_place": {
@@ -11146,7 +11146,7 @@
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "review_load": {
@@ -11155,7 +11155,7 @@
        0.0112
       ],
       "k": 0,
-      "n": 339,
+      "n": 340,
       "rate": 0.0
      },
      "wrong": 18,
@@ -11177,22 +11177,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1168,
-       0.1993
+       0.1164,
+       0.1987
       ],
       "k": 45,
-      "n": 293,
-      "rate": 0.1536
+      "n": 294,
+      "rate": 0.1531
      },
-     "candidates": 339,
-     "correct": 321,
+     "candidates": 340,
+     "correct": 322,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "escape": {
@@ -11211,41 +11211,41 @@
      },
      "false_reject": {
       "ci95": [
-       0.0309,
-       0.0794
+       0.0308,
+       0.0792
       ],
       "k": 16,
-      "n": 321,
-      "rate": 0.0498
+      "n": 322,
+      "rate": 0.0497
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8781,
-        0.9438
+        0.8785,
+        0.944
        ],
-       "k": 253,
-       "n": 276,
-       "rate": 0.9167
+       "k": 254,
+       "n": 277,
+       "rate": 0.917
       },
       "accepted_or_review": {
        "ci95": [
-        0.8781,
-        0.9438
+        0.8785,
+        0.944
        ],
-       "k": 253,
-       "n": 276,
-       "rate": 0.9167
+       "k": 254,
+       "n": 277,
+       "rate": 0.917
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
-       0.0215,
-       0.0642
+       0.0214,
+       0.064
       ],
       "k": 12,
-      "n": 321,
-      "rate": 0.0374
+      "n": 322,
+      "rate": 0.0373
      },
      "review_load": {
       "ci95": [
@@ -11253,7 +11253,7 @@
        0.0112
       ],
       "k": 0,
-      "n": 339,
+      "n": 340,
       "rate": 0.0
      },
      "wrong": 18,
@@ -11439,16 +11439,16 @@
         "n": 88,
         "rate": 0.0114
        },
-       "candidates": 107,
-       "correct": 104,
+       "candidates": 108,
+       "correct": 105,
        "correct_sent_to_review": {
         "ci95": [
-         0.097,
-         0.2354
+         0.1036,
+         0.2441
         ],
-        "k": 16,
-        "n": 104,
-        "rate": 0.1538
+        "k": 17,
+        "n": 105,
+        "rate": 0.1619
        },
        "escape": {
         "ci95": [
@@ -11463,29 +11463,29 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0356
+         0.0353
         ],
         "k": 0,
-        "n": 104,
+        "n": 105,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0356
+         0.0353
         ],
         "k": 0,
-        "n": 104,
+        "n": 105,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.1091,
-         0.2503
+         0.1156,
+         0.2585
         ],
-        "k": 18,
-        "n": 107,
-        "rate": 0.1682
+        "k": 19,
+        "n": 108,
+        "rate": 0.1759
        },
        "wrong": 3,
        "wrong_by_class": {
@@ -11506,21 +11506,21 @@
        "accepted_correct_citing_wrong_place": {
         "ci95": [
          0.0017,
-         0.053
+         0.0525
         ],
         "k": 1,
-        "n": 103,
-        "rate": 0.0097
+        "n": 104,
+        "rate": 0.0096
        },
-       "candidates": 107,
-       "correct": 104,
+       "candidates": 108,
+       "correct": 105,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.0356
+         0.0353
         ],
         "k": 0,
-        "n": 104,
+        "n": 105,
         "rate": 0.0
        },
        "escape": {
@@ -11538,28 +11538,28 @@
        "false_reject": {
         "ci95": [
          0.0017,
-         0.0525
+         0.052
         ],
         "k": 1,
-        "n": 104,
-        "rate": 0.0096
+        "n": 105,
+        "rate": 0.0095
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0356
+         0.0353
         ],
         "k": 0,
-        "n": 104,
+        "n": 105,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "wrong": 3,
@@ -11744,16 +11744,16 @@
       "n": 251,
       "rate": 0.1036
      },
-     "candidates": 287,
-     "correct": 279,
+     "candidates": 288,
+     "correct": 280,
      "correct_sent_to_review": {
       "ci95": [
-       0.0585,
-       0.1248
+       0.0612,
+       0.1285
       ],
-      "k": 24,
-      "n": 279,
-      "rate": 0.086
+      "k": 25,
+      "n": 280,
+      "rate": 0.0893
      },
      "escape": {
       "ci95": [
@@ -11770,49 +11770,49 @@
      "false_reject": {
       "ci95": [
        0.0006,
-       0.02
+       0.0199
       ],
       "k": 1,
-      "n": 279,
+      "n": 280,
       "rate": 0.0036
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8287,
-        0.9074
+        0.8253,
+        0.9046
        ],
        "k": 241,
-       "n": 276,
-       "rate": 0.8732
+       "n": 277,
+       "rate": 0.87
       },
       "accepted_or_review": {
        "ci95": [
-        0.9256,
+        0.9258,
         0.975
        ],
-       "k": 264,
-       "n": 276,
-       "rate": 0.9565
+       "k": 265,
+       "n": 277,
+       "rate": 0.9567
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0037,
-       0.0311
+       0.031
       ],
       "k": 3,
-      "n": 279,
-      "rate": 0.0108
+      "n": 280,
+      "rate": 0.0107
      },
      "review_load": {
       "ci95": [
-       0.0655,
-       0.1334
+       0.0681,
+       0.1369
       ],
-      "k": 27,
-      "n": 287,
-      "rate": 0.0941
+      "k": 28,
+      "n": 288,
+      "rate": 0.0972
      },
      "wrong": 8,
      "wrong_by_class": {
@@ -11839,22 +11839,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0824,
-       0.1574
+       0.0821,
+       0.1569
       ],
       "k": 32,
-      "n": 279,
-      "rate": 0.1147
+      "n": 280,
+      "rate": 0.1143
      },
-     "candidates": 287,
-     "correct": 279,
+     "candidates": 288,
+     "correct": 280,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0136
+       0.0135
       ],
       "k": 0,
-      "n": 279,
+      "n": 280,
       "rate": 0.0
      },
      "escape": {
@@ -11874,39 +11874,39 @@
      "false_reject": {
       "ci95": [
        0.0,
-       0.0136
+       0.0135
       ],
       "k": 0,
-      "n": 279,
+      "n": 280,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9439,
-        0.9852
+        0.9441,
+        0.9853
        ],
-       "k": 268,
-       "n": 276,
-       "rate": 0.971
+       "k": 269,
+       "n": 277,
+       "rate": 0.9711
       },
       "accepted_or_review": {
        "ci95": [
-        0.9439,
-        0.9852
+        0.9441,
+        0.9853
        ],
-       "k": 268,
-       "n": 276,
-       "rate": 0.971
+       "k": 269,
+       "n": 277,
+       "rate": 0.9711
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0,
-       0.0136
+       0.0135
       ],
       "k": 0,
-      "n": 279,
+      "n": 280,
       "rate": 0.0
      },
      "review_load": {
@@ -11915,7 +11915,7 @@
        0.0132
       ],
       "k": 0,
-      "n": 287,
+      "n": 288,
       "rate": 0.0
      },
      "wrong": 8,
@@ -11937,22 +11937,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0824,
-       0.1574
+       0.0821,
+       0.1569
       ],
       "k": 32,
-      "n": 279,
-      "rate": 0.1147
+      "n": 280,
+      "rate": 0.1143
      },
-     "candidates": 287,
-     "correct": 279,
+     "candidates": 288,
+     "correct": 280,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0136
+       0.0135
       ],
       "k": 0,
-      "n": 279,
+      "n": 280,
       "rate": 0.0
      },
      "escape": {
@@ -11972,39 +11972,39 @@
      "false_reject": {
       "ci95": [
        0.0,
-       0.0136
+       0.0135
       ],
       "k": 0,
-      "n": 279,
+      "n": 280,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9439,
-        0.9852
+        0.9441,
+        0.9853
        ],
-       "k": 268,
-       "n": 276,
-       "rate": 0.971
+       "k": 269,
+       "n": 277,
+       "rate": 0.9711
       },
       "accepted_or_review": {
        "ci95": [
-        0.9439,
-        0.9852
+        0.9441,
+        0.9853
        ],
-       "k": 268,
-       "n": 276,
-       "rate": 0.971
+       "k": 269,
+       "n": 277,
+       "rate": 0.9711
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0,
-       0.0136
+       0.0135
       ],
       "k": 0,
-      "n": 279,
+      "n": 280,
       "rate": 0.0
      },
      "review_load": {
@@ -12013,7 +12013,7 @@
        0.0132
       ],
       "k": 0,
-      "n": 287,
+      "n": 288,
       "rate": 0.0
      },
      "wrong": 8,
@@ -12035,22 +12035,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0863,
-       0.1661
+       0.086,
+       0.1655
       ],
       "k": 31,
-      "n": 257,
-      "rate": 0.1206
+      "n": 258,
+      "rate": 0.1202
      },
-     "candidates": 287,
-     "correct": 279,
+     "candidates": 288,
+     "correct": 280,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
-       0.0136
+       0.0135
       ],
       "k": 0,
-      "n": 279,
+      "n": 280,
       "rate": 0.0
      },
      "escape": {
@@ -12068,40 +12068,40 @@
      },
      "false_reject": {
       "ci95": [
-       0.0498,
-       0.1123
+       0.0496,
+       0.1119
       ],
       "k": 21,
-      "n": 279,
-      "rate": 0.0753
+      "n": 280,
+      "rate": 0.075
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8491,
-        0.9228
+        0.8496,
+        0.9231
        ],
-       "k": 246,
-       "n": 276,
-       "rate": 0.8913
+       "k": 247,
+       "n": 277,
+       "rate": 0.8917
       },
       "accepted_or_review": {
        "ci95": [
-        0.8491,
-        0.9228
+        0.8496,
+        0.9231
        ],
-       "k": 246,
-       "n": 276,
-       "rate": 0.8913
+       "k": 247,
+       "n": 277,
+       "rate": 0.8917
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0006,
-       0.02
+       0.0199
       ],
       "k": 1,
-      "n": 279,
+      "n": 280,
       "rate": 0.0036
      },
      "review_load": {
@@ -12110,7 +12110,7 @@
        0.0132
       ],
       "k": 0,
-      "n": 287,
+      "n": 288,
       "rate": 0.0
      },
      "wrong": 8,
@@ -12296,16 +12296,16 @@
         "n": 93,
         "rate": 0.0108
        },
-       "candidates": 108,
-       "correct": 107,
+       "candidates": 109,
+       "correct": 108,
        "correct_sent_to_review": {
         "ci95": [
-         0.0796,
-         0.2077
+         0.086,
+         0.2166
         ],
-        "k": 14,
-        "n": 107,
-        "rate": 0.1308
+        "k": 15,
+        "n": 108,
+        "rate": 0.1389
        },
        "escape": {
         "ci95": [
@@ -12320,29 +12320,29 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.086,
-         0.2166
+         0.0924,
+         0.2252
         ],
-        "k": 15,
-        "n": 108,
-        "rate": 0.1389
+        "k": 16,
+        "n": 109,
+        "rate": 0.1468
        },
        "wrong": 1,
        "wrong_by_class": {
@@ -12361,22 +12361,22 @@
       "lx_exact": {
        "accepted_correct_citing_wrong_place": {
         "ci95": [
-         0.0017,
-         0.0511
+         0.0016,
+         0.0506
         ],
         "k": 1,
-        "n": 107,
+        "n": 108,
         "rate": 0.0093
        },
-       "candidates": 108,
-       "correct": 107,
+       "candidates": 109,
+       "correct": 108,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "escape": {
@@ -12394,28 +12394,28 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
-        "ci95": [
-         0.0,
-         0.0347
-        ],
-        "k": 0,
-        "n": 107,
-        "rate": 0.0
-       },
-       "review_load": {
         "ci95": [
          0.0,
          0.0343
         ],
         "k": 0,
         "n": 108,
+        "rate": 0.0
+       },
+       "review_load": {
+        "ci95": [
+         0.0,
+         0.034
+        ],
+        "k": 0,
+        "n": 109,
         "rate": 0.0
        },
        "wrong": 1,
@@ -12597,16 +12597,16 @@
       "n": 250,
       "rate": 0.148
      },
-     "candidates": 310,
-     "correct": 298,
+     "candidates": 311,
+     "correct": 299,
      "correct_sent_to_review": {
       "ci95": [
-       0.0885,
-       0.1627
+       0.0911,
+       0.1659
       ],
-      "k": 36,
-      "n": 298,
-      "rate": 0.1208
+      "k": 37,
+      "n": 299,
+      "rate": 0.1237
      },
      "escape": {
       "ci95": [
@@ -12626,46 +12626,46 @@
        0.0127
       ],
       "k": 0,
-      "n": 298,
+      "n": 299,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.7574,
-        0.8501
+        0.7544,
+        0.8474
        ],
        "k": 223,
-       "n": 276,
-       "rate": 0.808
+       "n": 277,
+       "rate": 0.8051
       },
       "accepted_or_review": {
        "ci95": [
-        0.8697,
-        0.9379
+        0.8702,
+        0.9381
        ],
-       "k": 251,
-       "n": 276,
-       "rate": 0.9094
+       "k": 252,
+       "n": 277,
+       "rate": 0.9097
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
-       0.0232,
-       0.0691
+       0.0231,
+       0.0688
       ],
       "k": 12,
-      "n": 298,
-      "rate": 0.0403
+      "n": 299,
+      "rate": 0.0401
      },
      "review_load": {
       "ci95": [
-       0.116,
-       0.1958
+       0.1184,
+       0.1987
       ],
-      "k": 47,
-      "n": 310,
-      "rate": 0.1516
+      "k": 48,
+      "n": 311,
+      "rate": 0.1543
      },
      "wrong": 12,
      "wrong_by_class": {
@@ -12692,22 +12692,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1189,
-       0.2027
+       0.1185,
+       0.202
       ],
       "k": 45,
-      "n": 288,
-      "rate": 0.1562
+      "n": 289,
+      "rate": 0.1557
      },
-     "candidates": 310,
-     "correct": 298,
+     "candidates": 311,
+     "correct": 299,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0127
       ],
       "k": 0,
-      "n": 298,
+      "n": 299,
       "rate": 0.0
      },
      "escape": {
@@ -12729,37 +12729,37 @@
        0.0127
       ],
       "k": 0,
-      "n": 298,
+      "n": 299,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8739,
-        0.9409
+        0.8743,
+        0.9411
        ],
-       "k": 252,
-       "n": 276,
-       "rate": 0.913
+       "k": 253,
+       "n": 277,
+       "rate": 0.9134
       },
       "accepted_or_review": {
        "ci95": [
-        0.8739,
-        0.9409
+        0.8743,
+        0.9411
        ],
-       "k": 252,
-       "n": 276,
-       "rate": 0.913
+       "k": 253,
+       "n": 277,
+       "rate": 0.9134
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0183,
-       0.0607
+       0.0605
       ],
       "k": 10,
-      "n": 298,
-      "rate": 0.0336
+      "n": 299,
+      "rate": 0.0334
      },
      "review_load": {
       "ci95": [
@@ -12767,7 +12767,7 @@
        0.0122
       ],
       "k": 0,
-      "n": 310,
+      "n": 311,
       "rate": 0.0
      },
      "wrong": 12,
@@ -12788,22 +12788,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1446,
-       0.2325
+       0.1441,
+       0.2318
       ],
       "k": 55,
-      "n": 298,
-      "rate": 0.1846
+      "n": 299,
+      "rate": 0.1839
      },
-     "candidates": 310,
-     "correct": 298,
+     "candidates": 311,
+     "correct": 299,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0127
       ],
       "k": 0,
-      "n": 298,
+      "n": 299,
       "rate": 0.0
      },
      "escape": {
@@ -12825,27 +12825,27 @@
        0.0127
       ],
       "k": 0,
-      "n": 298,
+      "n": 299,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8739,
-        0.9409
+        0.8743,
+        0.9411
        ],
-       "k": 252,
-       "n": 276,
-       "rate": 0.913
+       "k": 253,
+       "n": 277,
+       "rate": 0.9134
       },
       "accepted_or_review": {
        "ci95": [
-        0.8739,
-        0.9409
+        0.8743,
+        0.9411
        ],
-       "k": 252,
-       "n": 276,
-       "rate": 0.913
+       "k": 253,
+       "n": 277,
+       "rate": 0.9134
       }
      },
      "rejected_right_value_wrong_place": {
@@ -12854,7 +12854,7 @@
        0.0127
       ],
       "k": 0,
-      "n": 298,
+      "n": 299,
       "rate": 0.0
      },
      "review_load": {
@@ -12863,7 +12863,7 @@
        0.0122
       ],
       "k": 0,
-      "n": 310,
+      "n": 311,
       "rate": 0.0
      },
      "wrong": 12,
@@ -12884,22 +12884,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1163,
-       0.2021
+       0.1159,
+       0.2014
       ],
       "k": 42,
-      "n": 272,
-      "rate": 0.1544
+      "n": 273,
+      "rate": 0.1538
      },
-     "candidates": 310,
-     "correct": 298,
+     "candidates": 311,
+     "correct": 299,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0127
       ],
       "k": 0,
-      "n": 298,
+      "n": 299,
       "rate": 0.0
      },
      "escape": {
@@ -12917,41 +12917,41 @@
      },
      "false_reject": {
       "ci95": [
-       0.0257,
-       0.0732
+       0.0256,
+       0.073
       ],
       "k": 13,
-      "n": 298,
-      "rate": 0.0436
+      "n": 299,
+      "rate": 0.0435
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8247,
-        0.9043
+        0.8253,
+        0.9046
        ],
-       "k": 240,
-       "n": 276,
-       "rate": 0.8696
+       "k": 241,
+       "n": 277,
+       "rate": 0.87
       },
       "accepted_or_review": {
        "ci95": [
-        0.8247,
-        0.9043
+        0.8253,
+        0.9046
        ],
-       "k": 240,
-       "n": 276,
-       "rate": 0.8696
+       "k": 241,
+       "n": 277,
+       "rate": 0.87
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
-       0.0257,
-       0.0732
+       0.0256,
+       0.073
       ],
       "k": 13,
-      "n": 298,
-      "rate": 0.0436
+      "n": 299,
+      "rate": 0.0435
      },
      "review_load": {
       "ci95": [
@@ -12959,7 +12959,7 @@
        0.0122
       ],
       "k": 0,
-      "n": 310,
+      "n": 311,
       "rate": 0.0
      },
      "wrong": 12,
@@ -13145,16 +13145,16 @@
         "n": 88,
         "rate": 0.0114
        },
-       "candidates": 107,
-       "correct": 104,
+       "candidates": 108,
+       "correct": 105,
        "correct_sent_to_review": {
         "ci95": [
-         0.097,
-         0.2354
+         0.1036,
+         0.2441
         ],
-        "k": 16,
-        "n": 104,
-        "rate": 0.1538
+        "k": 17,
+        "n": 105,
+        "rate": 0.1619
        },
        "escape": {
         "ci95": [
@@ -13169,29 +13169,29 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0356
+         0.0353
         ],
         "k": 0,
-        "n": 104,
+        "n": 105,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0356
+         0.0353
         ],
         "k": 0,
-        "n": 104,
+        "n": 105,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.1167,
-         0.2608
+         0.1232,
+         0.2688
         ],
-        "k": 19,
-        "n": 107,
-        "rate": 0.1776
+        "k": 20,
+        "n": 108,
+        "rate": 0.1852
        },
        "wrong": 3,
        "wrong_by_class": {
@@ -13211,21 +13211,21 @@
        "accepted_correct_citing_wrong_place": {
         "ci95": [
          0.0017,
-         0.0525
+         0.052
         ],
         "k": 1,
-        "n": 104,
-        "rate": 0.0096
+        "n": 105,
+        "rate": 0.0095
        },
-       "candidates": 107,
-       "correct": 104,
+       "candidates": 108,
+       "correct": 105,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.0356
+         0.0353
         ],
         "k": 0,
-        "n": 104,
+        "n": 105,
         "rate": 0.0
        },
        "escape": {
@@ -13243,28 +13243,28 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0356
+         0.0353
         ],
         "k": 0,
-        "n": 104,
+        "n": 105,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0356
+         0.0353
         ],
         "k": 0,
-        "n": 104,
+        "n": 105,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
          0.0,
-         0.0347
+         0.0343
         ],
         "k": 0,
-        "n": 107,
+        "n": 108,
         "rate": 0.0
        },
        "wrong": 3,
@@ -13447,16 +13447,16 @@
       "n": 247,
       "rate": 0.0931
      },
-     "candidates": 280,
-     "correct": 274,
+     "candidates": 281,
+     "correct": 275,
      "correct_sent_to_review": {
       "ci95": [
-       0.0596,
-       0.127
+       0.0623,
+       0.1308
       ],
-      "k": 24,
-      "n": 274,
-      "rate": 0.0876
+      "k": 25,
+      "n": 275,
+      "rate": 0.0909
      },
      "escape": {
       "ci95": [
@@ -13477,46 +13477,46 @@
        0.0138
       ],
       "k": 0,
-      "n": 274,
+      "n": 275,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8127,
-        0.8949
+        0.8093,
+        0.8921
        ],
        "k": 237,
-       "n": 276,
-       "rate": 0.8587
+       "n": 277,
+       "rate": 0.8556
       },
       "accepted_or_review": {
        "ci95": [
-        0.9079,
-        0.964
+        0.9082,
+        0.9641
        ],
-       "k": 260,
-       "n": 276,
-       "rate": 0.942
+       "k": 261,
+       "n": 277,
+       "rate": 0.9422
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0037,
-       0.0317
+       0.0316
       ],
       "k": 3,
-      "n": 274,
+      "n": 275,
       "rate": 0.0109
      },
      "review_load": {
       "ci95": [
-       0.0671,
-       0.1367
+       0.0698,
+       0.1402
       ],
-      "k": 27,
-      "n": 280,
-      "rate": 0.0964
+      "k": 28,
+      "n": 281,
+      "rate": 0.0996
      },
      "wrong": 6,
      "wrong_by_class": {
@@ -13543,22 +13543,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0747,
-       0.1479
+       0.0744,
+       0.1473
       ],
       "k": 29,
-      "n": 274,
-      "rate": 0.1058
+      "n": 275,
+      "rate": 0.1055
      },
-     "candidates": 280,
-     "correct": 274,
+     "candidates": 281,
+     "correct": 275,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0138
       ],
       "k": 0,
-      "n": 274,
+      "n": 275,
       "rate": 0.0
      },
      "escape": {
@@ -13580,27 +13580,27 @@
        0.0138
       ],
       "k": 0,
-      "n": 274,
+      "n": 275,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9211,
-        0.9723
+        0.9214,
+        0.9724
        ],
-       "k": 263,
-       "n": 276,
-       "rate": 0.9529
+       "k": 264,
+       "n": 277,
+       "rate": 0.9531
       },
       "accepted_or_review": {
        "ci95": [
-        0.9211,
-        0.9723
+        0.9214,
+        0.9724
        ],
-       "k": 263,
-       "n": 276,
-       "rate": 0.9529
+       "k": 264,
+       "n": 277,
+       "rate": 0.9531
       }
      },
      "rejected_right_value_wrong_place": {
@@ -13609,7 +13609,7 @@
        0.0138
       ],
       "k": 0,
-      "n": 274,
+      "n": 275,
       "rate": 0.0
      },
      "review_load": {
@@ -13618,7 +13618,7 @@
        0.0135
       ],
       "k": 0,
-      "n": 280,
+      "n": 281,
       "rate": 0.0
      },
      "wrong": 6,
@@ -13639,22 +13639,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0747,
-       0.1479
+       0.0744,
+       0.1473
       ],
       "k": 29,
-      "n": 274,
-      "rate": 0.1058
+      "n": 275,
+      "rate": 0.1055
      },
-     "candidates": 280,
-     "correct": 274,
+     "candidates": 281,
+     "correct": 275,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0138
       ],
       "k": 0,
-      "n": 274,
+      "n": 275,
       "rate": 0.0
      },
      "escape": {
@@ -13676,27 +13676,27 @@
        0.0138
       ],
       "k": 0,
-      "n": 274,
+      "n": 275,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9211,
-        0.9723
+        0.9214,
+        0.9724
        ],
-       "k": 263,
-       "n": 276,
-       "rate": 0.9529
+       "k": 264,
+       "n": 277,
+       "rate": 0.9531
       },
       "accepted_or_review": {
        "ci95": [
-        0.9211,
-        0.9723
+        0.9214,
+        0.9724
        ],
-       "k": 263,
-       "n": 276,
-       "rate": 0.9529
+       "k": 264,
+       "n": 277,
+       "rate": 0.9531
       }
      },
      "rejected_right_value_wrong_place": {
@@ -13705,7 +13705,7 @@
        0.0138
       ],
       "k": 0,
-      "n": 274,
+      "n": 275,
       "rate": 0.0
      },
      "review_load": {
@@ -13714,7 +13714,7 @@
        0.0135
       ],
       "k": 0,
-      "n": 280,
+      "n": 281,
       "rate": 0.0
      },
      "wrong": 6,
@@ -13735,22 +13735,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.0783,
-       0.1565
+       0.078,
+       0.1559
       ],
       "k": 28,
-      "n": 251,
-      "rate": 0.1116
+      "n": 252,
+      "rate": 0.1111
      },
-     "candidates": 280,
-     "correct": 274,
+     "candidates": 281,
+     "correct": 275,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0138
       ],
       "k": 0,
-      "n": 274,
+      "n": 275,
       "rate": 0.0
      },
      "escape": {
@@ -13768,40 +13768,40 @@
      },
      "false_reject": {
       "ci95": [
-       0.0536,
-       0.1186
+       0.0534,
+       0.1182
       ],
       "k": 22,
-      "n": 274,
-      "rate": 0.0803
+      "n": 275,
+      "rate": 0.08
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8247,
-        0.9043
+        0.8253,
+        0.9046
        ],
-       "k": 240,
-       "n": 276,
-       "rate": 0.8696
+       "k": 241,
+       "n": 277,
+       "rate": 0.87
       },
       "accepted_or_review": {
        "ci95": [
-        0.8247,
-        0.9043
+        0.8253,
+        0.9046
        ],
-       "k": 240,
-       "n": 276,
-       "rate": 0.8696
+       "k": 241,
+       "n": 277,
+       "rate": 0.87
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0006,
-       0.0204
+       0.0203
       ],
       "k": 1,
-      "n": 274,
+      "n": 275,
       "rate": 0.0036
      },
      "review_load": {
@@ -13810,7 +13810,7 @@
        0.0135
       ],
       "k": 0,
-      "n": 280,
+      "n": 281,
       "rate": 0.0
      },
      "wrong": 6,
@@ -13998,16 +13998,16 @@
         "n": 94,
         "rate": 0.0106
        },
-       "candidates": 107,
-       "correct": 106,
+       "candidates": 108,
+       "correct": 107,
        "correct_sent_to_review": {
         "ci95": [
-         0.066,
-         0.1875
+         0.0724,
+         0.1968
         ],
-        "k": 12,
-        "n": 106,
-        "rate": 0.1132
+        "k": 13,
+        "n": 107,
+        "rate": 0.1215
        },
        "escape": {
         "ci95": [
@@ -14022,29 +14022,29 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.035
+         0.0347
         ],
         "k": 0,
-        "n": 106,
+        "n": 107,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.035
+         0.0347
         ],
         "k": 0,
-        "n": 106,
+        "n": 107,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.0653,
-         0.1859
+         0.0717,
+         0.1951
         ],
-        "k": 12,
-        "n": 107,
-        "rate": 0.1121
+        "k": 13,
+        "n": 108,
+        "rate": 0.1204
        },
        "wrong": 1,
        "wrong_by_class": {
@@ -14064,21 +14064,21 @@
        "accepted_correct_citing_wrong_place": {
         "ci95": [
          0.0017,
-         0.0515
+         0.0511
         ],
         "k": 1,
-        "n": 106,
-        "rate": 0.0094
+        "n": 107,
+        "rate": 0.0093
        },
-       "candidates": 107,
-       "correct": 106,
+       "candidates": 108,
+       "correct": 107,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.035
+         0.0347
         ],
         "k": 0,
-        "n": 106,
+        "n": 107,
         "rate": 0.0
        },
        "escape": {
@@ -14096,28 +14096,28 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.035
+         0.0347
         ],
         "k": 0,
-        "n": 106,
+        "n": 107,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
-        "ci95": [
-         0.0,
-         0.035
-        ],
-        "k": 0,
-        "n": 106,
-        "rate": 0.0
-       },
-       "review_load": {
         "ci95": [
          0.0,
          0.0347
         ],
         "k": 0,
         "n": 107,
+        "rate": 0.0
+       },
+       "review_load": {
+        "ci95": [
+         0.0,
+         0.0343
+        ],
+        "k": 0,
+        "n": 108,
         "rate": 0.0
        },
        "wrong": 1,
@@ -14301,16 +14301,16 @@
       "n": 293,
       "rate": 0.1672
      },
-     "candidates": 342,
-     "correct": 329,
+     "candidates": 343,
+     "correct": 330,
      "correct_sent_to_review": {
       "ci95": [
-       0.0723,
-       0.1375
+       0.0747,
+       0.1405
       ],
-      "k": 33,
-      "n": 329,
-      "rate": 0.1003
+      "k": 34,
+      "n": 330,
+      "rate": 0.103
      },
      "escape": {
       "ci95": [
@@ -14330,46 +14330,46 @@
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8532,
-        0.9258
+        0.8496,
+        0.9231
        ],
        "k": 247,
-       "n": 276,
-       "rate": 0.8949
+       "n": 277,
+       "rate": 0.8917
       },
       "accepted_or_review": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0031,
-       0.0265
+       0.0264
       ],
       "k": 3,
-      "n": 329,
+      "n": 330,
       "rate": 0.0091
      },
      "review_load": {
       "ci95": [
-       0.0947,
-       0.1651
+       0.097,
+       0.1678
       ],
-      "k": 43,
-      "n": 342,
-      "rate": 0.1257
+      "k": 44,
+      "n": 343,
+      "rate": 0.1283
      },
      "wrong": 13,
      "wrong_by_class": {
@@ -14397,22 +14397,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1362,
-       0.2179
+       0.1358,
+       0.2172
       ],
       "k": 57,
-      "n": 329,
-      "rate": 0.1733
+      "n": 330,
+      "rate": 0.1727
      },
-     "candidates": 342,
-     "correct": 329,
+     "candidates": 343,
+     "correct": 330,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "escape": {
@@ -14436,27 +14436,27 @@
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9633,
+        0.9635,
         0.9944
        ],
-       "k": 272,
-       "n": 276,
-       "rate": 0.9855
+       "k": 273,
+       "n": 277,
+       "rate": 0.9856
       },
       "accepted_or_review": {
        "ci95": [
-        0.9633,
+        0.9635,
         0.9944
        ],
-       "k": 272,
-       "n": 276,
-       "rate": 0.9855
+       "k": 273,
+       "n": 277,
+       "rate": 0.9856
       }
      },
      "rejected_right_value_wrong_place": {
@@ -14465,7 +14465,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "review_load": {
@@ -14474,7 +14474,7 @@
        0.0111
       ],
       "k": 0,
-      "n": 342,
+      "n": 343,
       "rate": 0.0
      },
      "wrong": 13,
@@ -14497,22 +14497,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1362,
-       0.2179
+       0.1358,
+       0.2172
       ],
       "k": 57,
-      "n": 329,
-      "rate": 0.1733
+      "n": 330,
+      "rate": 0.1727
      },
-     "candidates": 342,
-     "correct": 329,
+     "candidates": 343,
+     "correct": 330,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "escape": {
@@ -14536,27 +14536,27 @@
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9633,
+        0.9635,
         0.9944
        ],
-       "k": 272,
-       "n": 276,
-       "rate": 0.9855
+       "k": 273,
+       "n": 277,
+       "rate": 0.9856
       },
       "accepted_or_review": {
        "ci95": [
-        0.9633,
+        0.9635,
         0.9944
        ],
-       "k": 272,
-       "n": 276,
-       "rate": 0.9855
+       "k": 273,
+       "n": 277,
+       "rate": 0.9856
       }
      },
      "rejected_right_value_wrong_place": {
@@ -14565,7 +14565,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "review_load": {
@@ -14574,7 +14574,7 @@
        0.0111
       ],
       "k": 0,
-      "n": 342,
+      "n": 343,
       "rate": 0.0
      },
      "wrong": 13,
@@ -14597,22 +14597,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.137,
-       0.2191
+       0.1366,
+       0.2185
       ],
       "k": 57,
-      "n": 327,
-      "rate": 0.1743
+      "n": 328,
+      "rate": 0.1738
      },
-     "candidates": 342,
-     "correct": 329,
+     "candidates": 343,
+     "correct": 330,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "escape": {
@@ -14633,29 +14633,29 @@
      "false_reject": {
       "ci95": [
        0.0017,
-       0.0219
+       0.0218
       ],
       "k": 2,
-      "n": 329,
+      "n": 330,
       "rate": 0.0061
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       },
       "accepted_or_review": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       }
      },
@@ -14665,7 +14665,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "review_load": {
@@ -14674,7 +14674,7 @@
        0.0111
       ],
       "k": 0,
-      "n": 342,
+      "n": 343,
       "rate": 0.0
      },
      "wrong": 13,
@@ -15172,21 +15172,21 @@
      "recall": {
       "accepted": {
        "ci95": [
-        0.8614,
-        0.9319
+        0.8578,
+        0.9291
        ],
        "k": 249,
-       "n": 276,
-       "rate": 0.9022
+       "n": 277,
+       "rate": 0.8989
       },
       "accepted_or_review": {
        "ci95": [
-        0.9439,
-        0.9852
+        0.9394,
+        0.9828
        ],
        "k": 268,
-       "n": 276,
-       "rate": 0.971
+       "n": 277,
+       "rate": 0.9675
       }
      },
      "rejected_right_value_wrong_place": {
@@ -15272,21 +15272,21 @@
      "recall": {
       "accepted": {
        "ci95": [
-        0.9534,
-        0.99
+        0.9488,
+        0.9877
        ],
        "k": 270,
-       "n": 276,
-       "rate": 0.9783
+       "n": 277,
+       "rate": 0.9747
       },
       "accepted_or_review": {
        "ci95": [
-        0.9534,
-        0.99
+        0.9488,
+        0.9877
        ],
        "k": 270,
-       "n": 276,
-       "rate": 0.9783
+       "n": 277,
+       "rate": 0.9747
       }
      },
      "rejected_right_value_wrong_place": {
@@ -15366,21 +15366,21 @@
      "recall": {
       "accepted": {
        "ci95": [
-        0.9534,
-        0.99
+        0.9488,
+        0.9877
        ],
        "k": 270,
-       "n": 276,
-       "rate": 0.9783
+       "n": 277,
+       "rate": 0.9747
       },
       "accepted_or_review": {
        "ci95": [
-        0.9534,
-        0.99
+        0.9488,
+        0.9877
        ],
        "k": 270,
-       "n": 276,
-       "rate": 0.9783
+       "n": 277,
+       "rate": 0.9747
       }
      },
      "rejected_right_value_wrong_place": {
@@ -15460,21 +15460,21 @@
      "recall": {
       "accepted": {
        "ci95": [
-        0.9211,
-        0.9723
+        0.917,
+        0.9697
        ],
        "k": 263,
-       "n": 276,
-       "rate": 0.9529
+       "n": 277,
+       "rate": 0.9495
       },
       "accepted_or_review": {
        "ci95": [
-        0.9211,
-        0.9723
+        0.917,
+        0.9697
        ],
        "k": 263,
-       "n": 276,
-       "rate": 0.9529
+       "n": 277,
+       "rate": 0.9495
       }
      },
      "rejected_right_value_wrong_place": {
@@ -15671,16 +15671,16 @@
         "n": 95,
         "rate": 0.0105
        },
-       "candidates": 108,
-       "correct": 108,
+       "candidates": 109,
+       "correct": 109,
        "correct_sent_to_review": {
         "ci95": [
-         0.0647,
-         0.1842
+         0.071,
+         0.1934
         ],
-        "k": 12,
-        "n": 108,
-        "rate": 0.1111
+        "k": 13,
+        "n": 109,
+        "rate": 0.1193
        },
        "escape": {
         "ci95": null,
@@ -15692,29 +15692,29 @@
        "false_reject": {
         "ci95": [
          0.0016,
-         0.0506
+         0.0501
         ],
         "k": 1,
-        "n": 108,
-        "rate": 0.0093
+        "n": 109,
+        "rate": 0.0092
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0343
+         0.034
         ],
         "k": 0,
-        "n": 108,
+        "n": 109,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
-         0.0647,
-         0.1842
+         0.071,
+         0.1934
         ],
-        "k": 12,
-        "n": 108,
-        "rate": 0.1111
+        "k": 13,
+        "n": 109,
+        "rate": 0.1193
        },
        "wrong": 0,
        "wrong_by_class": {},
@@ -15729,21 +15729,21 @@
        "accepted_correct_citing_wrong_place": {
         "ci95": [
          0.0016,
-         0.0506
+         0.0501
         ],
         "k": 1,
-        "n": 108,
-        "rate": 0.0093
+        "n": 109,
+        "rate": 0.0092
        },
-       "candidates": 108,
-       "correct": 108,
+       "candidates": 109,
+       "correct": 109,
        "correct_sent_to_review": {
         "ci95": [
          0.0,
-         0.0343
+         0.034
         ],
         "k": 0,
-        "n": 108,
+        "n": 109,
         "rate": 0.0
        },
        "escape": {
@@ -15756,28 +15756,28 @@
        "false_reject": {
         "ci95": [
          0.0,
-         0.0343
+         0.034
         ],
         "k": 0,
-        "n": 108,
+        "n": 109,
         "rate": 0.0
        },
        "rejected_right_value_wrong_place": {
         "ci95": [
          0.0,
-         0.0343
+         0.034
         ],
         "k": 0,
-        "n": 108,
+        "n": 109,
         "rate": 0.0
        },
        "review_load": {
         "ci95": [
          0.0,
-         0.0343
+         0.034
         ],
         "k": 0,
-        "n": 108,
+        "n": 109,
         "rate": 0.0
        },
        "wrong": 0,
@@ -15953,16 +15953,16 @@
       "n": 284,
       "rate": 0.1549
      },
-     "candidates": 329,
-     "correct": 321,
+     "candidates": 330,
+     "correct": 322,
      "correct_sent_to_review": {
       "ci95": [
-       0.0689,
-       0.1338
+       0.0713,
+       0.1369
       ],
-      "k": 31,
-      "n": 321,
-      "rate": 0.0966
+      "k": 32,
+      "n": 322,
+      "rate": 0.0994
      },
      "escape": {
       "ci95": [
@@ -15976,50 +15976,50 @@
      "escaped_by_class": {},
      "false_reject": {
       "ci95": [
-       0.0006,
+       0.0005,
        0.0174
       ],
       "k": 1,
-      "n": 321,
+      "n": 322,
       "rate": 0.0031
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.8409,
-        0.9167
+        0.8374,
+        0.9139
        ],
        "k": 244,
-       "n": 276,
-       "rate": 0.8841
+       "n": 277,
+       "rate": 0.8809
       },
       "accepted_or_review": {
        "ci95": [
-        0.9439,
-        0.9852
+        0.9441,
+        0.9853
        ],
-       "k": 268,
-       "n": 276,
-       "rate": 0.971
+       "k": 269,
+       "n": 277,
+       "rate": 0.9711
       }
      },
      "rejected_right_value_wrong_place": {
       "ci95": [
        0.0067,
-       0.0359
+       0.0358
       ],
       "k": 5,
-      "n": 321,
-      "rate": 0.0156
+      "n": 322,
+      "rate": 0.0155
      },
      "review_load": {
       "ci95": [
-       0.0879,
-       0.1579
+       0.0903,
+       0.1609
       ],
-      "k": 39,
-      "n": 329,
-      "rate": 0.1185
+      "k": 40,
+      "n": 330,
+      "rate": 0.1212
      },
      "wrong": 8,
      "wrong_by_class": {
@@ -16044,22 +16044,22 @@
     "lx_aligned": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1313,
-       0.213
+       0.1309,
+       0.2124
       ],
       "k": 54,
-      "n": 321,
-      "rate": 0.1682
+      "n": 322,
+      "rate": 0.1677
      },
-     "candidates": 329,
-     "correct": 321,
+     "candidates": 330,
+     "correct": 322,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "escape": {
@@ -16080,26 +16080,26 @@
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       },
       "accepted_or_review": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       }
      },
@@ -16109,7 +16109,7 @@
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "review_load": {
@@ -16118,7 +16118,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "wrong": 8,
@@ -16138,22 +16138,22 @@
     "lx_all": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1313,
-       0.213
+       0.1309,
+       0.2124
       ],
       "k": 54,
-      "n": 321,
-      "rate": 0.1682
+      "n": 322,
+      "rate": 0.1677
      },
-     "candidates": 329,
-     "correct": 321,
+     "candidates": 330,
+     "correct": 322,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "escape": {
@@ -16174,26 +16174,26 @@
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       },
       "accepted_or_review": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       }
      },
@@ -16203,7 +16203,7 @@
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "review_load": {
@@ -16212,7 +16212,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "wrong": 8,
@@ -16232,22 +16232,22 @@
     "lx_exact": {
      "accepted_correct_citing_wrong_place": {
       "ci95": [
-       0.1313,
-       0.213
+       0.1309,
+       0.2124
       ],
       "k": 54,
-      "n": 321,
-      "rate": 0.1682
+      "n": 322,
+      "rate": 0.1677
      },
-     "candidates": 329,
-     "correct": 321,
+     "candidates": 330,
+     "correct": 322,
      "correct_sent_to_review": {
       "ci95": [
        0.0,
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "escape": {
@@ -16268,26 +16268,26 @@
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "recall": {
       "accepted": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       },
       "accepted_or_review": {
        "ci95": [
-        0.9583,
-        0.9922
+        0.9584,
+        0.9923
        ],
-       "k": 271,
-       "n": 276,
+       "k": 272,
+       "n": 277,
        "rate": 0.9819
       }
      },
@@ -16297,7 +16297,7 @@
        0.0118
       ],
       "k": 0,
-      "n": 321,
+      "n": 322,
       "rate": 0.0
      },
      "review_load": {
@@ -16306,7 +16306,7 @@
        0.0115
       ],
       "k": 0,
-      "n": 329,
+      "n": 330,
       "rate": 0.0
      },
      "wrong": 8,
@@ -16782,21 +16782,21 @@
      "recall": {
       "accepted": {
        "ci95": [
-        0.8491,
-        0.9228
+        0.8455,
+        0.92
        ],
        "k": 246,
-       "n": 276,
-       "rate": 0.8913
+       "n": 277,
+       "rate": 0.8881
       },
       "accepted_or_review": {
        "ci95": [
-        0.9301,
-        0.9776
+        0.9258,
+        0.975
        ],
        "k": 265,
-       "n": 276,
-       "rate": 0.9601
+       "n": 277,
+       "rate": 0.9567
       }
      },
      "rejected_right_value_wrong_place": {
@@ -16882,21 +16882,21 @@
      "recall": {
       "accepted": {
        "ci95": [
-        0.9392,
-        0.9828
+        0.9348,
+        0.9803
        ],
        "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "n": 277,
+       "rate": 0.9639
       },
       "accepted_or_review": {
        "ci95": [
-        0.9392,
-        0.9828
+        0.9348,
+        0.9803
        ],
        "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "n": 277,
+       "rate": 0.9639
       }
      },
      "rejected_right_value_wrong_place": {
@@ -16976,21 +16976,21 @@
      "recall": {
       "accepted": {
        "ci95": [
-        0.9392,
-        0.9828
+        0.9348,
+        0.9803
        ],
        "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "n": 277,
+       "rate": 0.9639
       },
       "accepted_or_review": {
        "ci95": [
-        0.9392,
-        0.9828
+        0.9348,
+        0.9803
        ],
        "k": 267,
-       "n": 276,
-       "rate": 0.9674
+       "n": 277,
+       "rate": 0.9639
       }
      },
      "rejected_right_value_wrong_place": {
@@ -17070,21 +17070,21 @@
      "recall": {
       "accepted": {
        "ci95": [
-        0.9256,
-        0.975
+        0.9214,
+        0.9724
        ],
        "k": 264,
-       "n": 276,
-       "rate": 0.9565
+       "n": 277,
+       "rate": 0.9531
       },
       "accepted_or_review": {
        "ci95": [
-        0.9256,
-        0.975
+        0.9214,
+        0.9724
        ],
        "k": 264,
-       "n": 276,
-       "rate": 0.9565
+       "n": 277,
+       "rate": 0.9531
       }
      },
      "rejected_right_value_wrong_place": {

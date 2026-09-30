@@ -182,7 +182,7 @@
      "end": 856
     }
    ],
-   "status": "rejected"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -266,13 +266,11 @@
  "absent": {
   "catch_up_limit_age_50_2026": "confirmed"
  },
- "excluded": {
-  "savers_credit_limit_single_2025": "Value extracted is for 2026, not 2025"
- },
+ "excluded": {},
  "prelabeled_by": "Claude (model draft)",
  "checked": {
   "by": "person",
-  "at": "2026-09-29T19:16:44-0700"
+  "at": "2026-09-29T22:16:12-0700"
  },
- "seconds_spent": 205
+ "seconds_spent": 339
 }

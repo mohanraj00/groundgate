@@ -49,7 +49,7 @@ rejected **none** of the correct facts. The method and full tables are in
 [spikes/m0_5](spikes/m0_5/README.md).
 
 To be clear about scale: current models rarely get a value wrong. In the benchmark below, 117 of
-4,338 real extractions were wrong. The point is not that models are bad. It is that when
+4,350 real extractions were wrong. The point is not that models are bad. It is that when
 one is wrong, nothing downstream should have to trust it, and every fact that is admitted comes
 with proof you can re-check.
 
@@ -59,14 +59,14 @@ LangExtract verifies the text. groundgate verifies the value.
 
 Seven models (Gemini, GPT and Claude, each through its own CLI) ran through LangExtract on 30
 public-domain FDA drug labels, NTSB accident reports and IRS publications, at two chunk sizes. A
-person checked every gold fact. Of 4,338 extractions, 117 were wrong: the wrong value, a value
+person checked every gold fact. Of 4,350 extractions, 117 were wrong: the wrong value, a value
 for a field the document doesn't state, the wrong unit, or not a number.
 
 | | LangExtract, `MATCH_EXACT` | groundgate |
 |---|---:|---:|
 | wrong extractions accepted without review | 98.3% (115/117) | 6.8% (8/117) |
-| correct extractions rejected | 4.6% (194/4,221) | 0.3% (14/4,221) |
-| extractions sent to a person | 0% | 11.8% (514/4,338) |
+| correct extractions rejected | 4.6% (194/4,233) | 0.3% (14/4,233) |
+| extractions sent to a person | 0% | 12.1% (526/4,350) |
 
 Most catches (84 of 109) were `CONFLICTING_CANDIDATES`: a model proposed two values for a
 single-valued field, and groundgate sent both to review instead of picking one.

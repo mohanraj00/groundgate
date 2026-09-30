@@ -36,10 +36,9 @@ fact and absence in the labeling app ([label/README.md](label/README.md)), which
 the benchmarked models extracted. Only checked facts count. The gold files record who checked
 each document, when, and how long it took.
 
-The check took 2.4 hours and kept nearly all of the draft. It rejected one draft value and
-excluded that field as ambiguous, excluded one more field, found one field the draft had called
-absent (levothyroxine is dosed from birth, so the youngest pediatric age is 0), and added two
-places as evidence.
+The check took 2.4 hours and kept nearly all of the draft. It excluded one field as ambiguous,
+found one field the draft had called absent (levothyroxine is dosed from birth, so the youngest
+pediatric age is 0), and added two places as evidence.
 
 An extraction is **correct** when its value is a gold value for its field and its unit is the
 field's unit. It is **wrong** when the value differs, the field is absent from the document, the
