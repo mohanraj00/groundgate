@@ -206,9 +206,17 @@ Built-in unit table (a schema's `units` extends or overrides it):
 | `hours`, `days`, `weeks`, `months`, `years`, `minutes` | | the code, its singular, and `-<singular>` |
 
 A unit **is at** a number token when a prefix ends at the token start (whitespace between them
-allowed), or a suffix starts within `policy.unit_window` code points after the token end without
-crossing a sentence end. A unit code not in the table and without prefixes or suffixes is at every
-token (the check is vacuous).
+allowed), or when the first suffix after the token end starts within `policy.unit_window` code
+points without crossing a sentence end, and is not a per-unit. The first suffix is the match of
+any of the unit's suffixes that starts earliest, the longest one at a tie; a later match never
+counts. It is a **per-unit** when it is followed, after optional whitespace, by `/` or `per`, an
+optional number, and a body-size or volume unit: `kg`, `kilogram`, `lb`, `pound`, `m2`, `m²`,
+`m^2`, `square meter` or `square metre`, `mL`, `dL`, `L`, `liter` or `litre` (plurals included,
+case-insensitive, not followed by a letter). So `mg` is not at the 10 in "10 mg/kg (maximum 500
+mg)", nor at "1.6 mcg/kg/day", "75 mg/m2", "2 mg per kilogram" or "250 mg/5 mL". A time
+denominator keeps the unit: "200 mg/day" is mg. A weight-based dose needs its own unit code, such
+as `mg/kg` with the suffix `mg/kg`. A unit code not in the table and without prefixes or suffixes
+is at every token (the check is vacuous).
 
 ### 4.4 Whitespace normalisation
 
