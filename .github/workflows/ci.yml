@@ -33,6 +33,28 @@ jobs:
       - run: uv sync --python ${{ matrix.python }}
       - run: uv run pytest --cov --cov-report=term-missing
 
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - run: uv build
+      - run: uvx twine check --strict dist/*
+      - name: The wheel installs into a clean venv, and the quickstart and vectors pass against it
+        run: |
+          python -m venv /tmp/clean
+          /tmp/clean/bin/pip install -q dist/*.whl pytest
+          /tmp/clean/bin/groundgate --help > /dev/null
+          /tmp/clean/bin/python -m pytest -p no:cacheprovider \
+            tests/test_package.py tests/test_readme.py tests/test_conformance.py
+
   langextract:
     runs-on: ubuntu-latest
     steps:

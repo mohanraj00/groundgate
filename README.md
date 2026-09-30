@@ -62,6 +62,8 @@ public-domain FDA drug labels, NTSB accident reports and IRS publications, at tw
 person checked every gold fact. Of 4,350 extractions, 117 were wrong: the wrong value, a value
 for a field the document doesn't state, the wrong unit, or not a number.
 
+![Pooled over all 14 runs: MATCH_EXACT accepted 98% of wrong extractions without review, groundgate 6.8%. MATCH_EXACT rejected 4.6% of correct extractions, groundgate 0.3%. groundgate sent 12% of extractions to a person.](bench/charts/summary.svg)
+
 | | LangExtract, `MATCH_EXACT` | groundgate |
 |---|---:|---:|
 | wrong extractions accepted without review | 98.3% (115/117) | 6.8% (8/117) |
@@ -89,11 +91,50 @@ Tables and planted-error results: [bench/RESULTS.md](bench/RESULTS.md). Method a
 ## Quickstart
 
 ```bash
-pip install "groundgate[pdf] @ git+https://github.com/mohanraj00/groundgate"
+pip install groundgate
 ```
 
-The core has no dependencies. `[pdf]` adds pdfminer.six for PDF text; `[langextract]` installs
-LangExtract.
+```python
+import groundgate as gg
+
+text = "The IRA contribution limit is $7,000. The deduction phases out above $79,000."
+schema = {
+    "fields": {
+        "ira_limit": {"type": "integer", "unit": "USD"},
+        "phaseout_start": {"type": "integer", "unit": "USD"},
+    }
+}
+
+
+def cite(field, value, quote):
+    """A candidate citing the first place `quote` appears, as UTF-8 byte offsets."""
+    start = text.encode().index(quote.encode())
+    span = {"start": start, "end": start + len(quote.encode()), "text": quote}
+    return {"field": field, "value": value, "unit": "USD", "evidence": span}
+
+
+candidates = [
+    cite("ira_limit", "7000", "$7,000"),
+    cite("ira_limit", "70000", "$7,000"),  # a digit too many
+    cite("phaseout_start", "79000", "$79,000"),  # "above" is not "at"
+]
+receipt = gg.admit(text, schema, candidates)
+for d in receipt.decisions:
+    print(f"{d.outcome:<19} {d.field:<15} {d.value:<6} {' '.join(d.codes)}".rstrip())
+
+print(gg.verify(receipt.to_dict(), text, schema, candidates).ok)
+```
+
+```text
+needs_verification  phaseout_start  79000  QUALIFIED_VALUE
+admitted            ira_limit       7000
+rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
+True
+```
+
+The core has no dependencies. `groundgate[pdf]` adds pdfminer.six for PDF text, and
+`groundgate[langextract]` installs LangExtract. [docs/guide.md](docs/guide.md) covers schemas,
+policies, candidates and the Python API.
 
 ### With LangExtract
 
@@ -102,42 +143,11 @@ import langextract as lx
 from groundgate.adapters.langextract import admit_document
 
 result = lx.extract(text_or_documents=text, prompt_description=prompt, examples=examples)
-
-schema = {
-    "fields": {
-        "ira_limit_2025": {"type": "integer", "unit": "USD", "required": True},
-        "roth_phaseout_single_2025_start": {"type": "integer", "unit": "USD", "comparator": "ge"},
-    }
-}
 receipt = admit_document(result, schema)
-
-for d in receipt.decisions:
-    print(d.outcome, d.field, d.value, d.codes)
 ```
 
-Each extraction's `value` and `unit` attributes are checked at the location LangExtract found.
-An extraction LangExtract could not align is rejected `NO_EVIDENCE`.
-
-### With any extractor
-
-A candidate is a small JSON object. Evidence is a UTF-8 byte span into the document:
-
-```python
-import groundgate as gg
-
-text = "The IRA contribution limit remains $7,000 ($8,000 for individuals age 50 or older)."
-start = text.encode().index(b"$8,000")
-candidate = {
-    "field": "ira_limit_2025",
-    "value": "8000",
-    "unit": "USD",
-    "evidence": {"start": start, "end": start + 6, "text": "$8,000"},
-}
-receipt = gg.admit(text, schema, [candidate])
-```
-
-That fact is admitted. It is also the wrong one: $8,000 is the age-50 limit. The span checks
-can't see that; see [what it does not do](#what-it-does-not-do).
+Each extraction's `value` and `unit` attributes are checked at the place LangExtract aligned its
+`extraction_text`. An extraction LangExtract could not align is rejected `NO_EVIDENCE`.
 
 ### From the command line
 
@@ -184,8 +194,9 @@ A fact that passes every check can still be flagged for a person:
 
 Number matching is collision-safe. The span `500 mg` inside `1,500 mg` never reads as 500, a span
 that stops at `29.` inside `29.97` never reads as 29, and a malformed number like the `$252,0000`
-printed in IRS Publication 590-A never equals 252,000 or 2,520,000. When a span misses the value but its quote occurs exactly once elsewhere with the right
-value and unit, groundgate moves the evidence there and records `EVIDENCE_REANCHORED`.
+printed in IRS Publication 590-A never equals 252,000 or 2,520,000. When a span misses the value
+but its quote occurs exactly once elsewhere with the right value and unit, groundgate moves the
+evidence there and records `EVIDENCE_REANCHORED`.
 
 The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 16 language-neutral
 vectors that pin every code, so another implementation can prove it agrees.
@@ -212,18 +223,20 @@ a changed document, schema, policy, candidate or outcome.
 ## What it does not do
 
 - **It does not judge meaning.** If the model reports a number that really is in the sentence but
-  belongs to another field, every span check passes. The quickstart's $8,000 is that case. A second
-  proposer plus `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the
-  benchmark they mostly agreed: six of the eight escapes were this case.
+  belongs to another field, every span check passes: a model that reads an age-50 limit of $8,000
+  as the IRA limit cites a real "$8,000" with the right unit. A second proposer plus
+  `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
+  mostly agreed: six of the eight escapes were this case.
 - **No dates, arrays of records, or cross-document checks** in spec v0.1.
 - **No OCR.** Scanned PDFs need a text layer first (for example `ocrmypdf`).
 - **No model calls.** groundgate never asks an LLM whether an LLM was right.
 
 ## Status
 
-Pre-alpha. The spec is a v0.1 draft and may change before 0.1.0 ships on PyPI. The benchmark is
-done; the next spec version starts from what it found: values that depend on a condition (dose
-per indication, limit per year) and weight-based units.
+Alpha. groundgate 0.1.0 implements spec v0.1, and a receipt names the spec version it was decided
+under. The next spec version starts from what the benchmark found: values that depend on a
+condition (a dose per indication, a limit per year) and weight-based units. See
+[CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

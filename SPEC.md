@@ -1,8 +1,9 @@
 # groundgate specification v0.1
 
-Status: draft. Version string: `groundgate/0.1`. An implementation conforms if it produces the
-decisions and coverage findings in every vector under `conformance/vectors/`, and the receipt
-hashes for vectors that pin them.
+Status: released with groundgate 0.1.0. Version string: `groundgate/0.1`. Any change to how a
+candidate is decided is a new version with a new version string. An implementation conforms if
+it produces the decisions and coverage findings in every vector under `conformance/vectors/`,
+and the receipt hashes for vectors that pin them.
 
 ## 1. Purpose
 
@@ -204,8 +205,9 @@ Decisions are sorted by `candidate_sha256`, then by input position. `codes` list
 code, or the flag codes in the order of the table in §3, followed by `EVIDENCE_REANCHORED` when it
 applies. `value` is the canonical value and `unit` the candidate's unit, each `null` when the candidate
 does not provide a parseable one. `evidence` is the span the decision rests on: the re-anchored span
-when re-anchoring applied, otherwise the cited span if it is valid, otherwise `null`. Coverage is sorted by field name. `receipt_sha256` is the digest of kind `receipt`
-over the receipt without its `receipt_sha256` key.
+when re-anchoring applied, otherwise the cited span if it is valid, otherwise `null`. Coverage is
+sorted by field name. `receipt_sha256` is the digest of kind `receipt` over the receipt without
+its `receipt_sha256` key.
 
 ## 6. Canonical JSON and digests
 

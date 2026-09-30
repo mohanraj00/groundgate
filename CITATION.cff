@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: If you use groundgate or its benchmark, please cite it as below.
+title: "groundgate: deterministic admission for LLM-extracted facts"
+type: software
+authors:
+  - given-names: Mohan Raj
+    alias: mohanraj00
+version: 0.1.0
+date-released: 2026-09-29
+license: Apache-2.0
+repository-code: https://github.com/mohanraj00/groundgate
+abstract: >-
+  groundgate checks facts an LLM extracted from a document: that the value is in the cited text,
+  with the right unit, and that nothing nearby changes its meaning. Each fact is admitted, sent
+  to a person, or rejected with a stable reason code, and every run writes a receipt that anyone
+  can re-derive.
+keywords:
+  - llm
+  - information extraction
+  - grounding
+  - verification
+  - langextract
