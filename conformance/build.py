@@ -401,6 +401,47 @@ vector(
     ],
 )
 
+vector(
+    "07c-range-unit-words",
+    "One unit or scale word between the first number and a word connector keeps the range, for "
+    "both ends (spec 0.2).",
+    "Take 30 mg to 45 mg daily. Keep levels between 10 mcg and 20 mcg. Reserves of $1 million to "
+    "$2 million are held. Give 30 mg daily to 45 patients.",
+    {
+        "fields": {
+            "dose_low": {"type": "integer", "unit": "mg"},
+            "dose_high": {"type": "integer", "unit": "mg"},
+            "dose_high_range": {"type": "integer", "unit": "mg", "comparator": "range"},
+            "level_high": {"type": "integer", "unit": "mcg"},
+            "reserve_high": USD,
+            "patients": {"type": "integer"},
+        }
+    },
+    [
+        c("r1", "dose_low", "30", "mg", q("30 mg"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        c("r2", "dose_high", "45", "mg", q("45 mg"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        c("r3", "dose_high_range", "45", "mg", q("45 mg")),
+        c(
+            "r4",
+            "level_high",
+            "20",
+            "mcg",
+            q("20 mcg"),
+            ("needs_verification", ["QUALIFIED_VALUE"]),
+        ),
+        c(
+            "r5",
+            "reserve_high",
+            "2",
+            "USD",
+            q("$2 million"),
+            ("needs_verification", ["QUALIFIED_VALUE", "SCALE_WORD"]),
+        ),
+        # two words between the numbers: not a range
+        c("r6", "patients", "45", None, q("45 patients")),
+    ],
+)
+
 # ---------------------------------------------------------------- scale words
 vector(
     "08-scale",

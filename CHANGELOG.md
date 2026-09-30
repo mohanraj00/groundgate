@@ -16,6 +16,9 @@ milestone 0.2.
   directly before a `gt`, `lt`, `ge` or `le` qualifier inverts it: "must not be more than" and
   "may not exceed" are `le`, "cannot be less than" is `ge`. `exceed` joins `gt`, so an `eq` field
   is now flagged on "do not exceed". Vector `07b-negated-qualifiers`.
+- Ranges (#14): one unit or scale word between the first number and `to`, `through`, `thru` or
+  `and` no longer hides the upper end. In 0.1, "30 mg to 45 mg" flagged 30 as a range but
+  admitted 45. Vector `07c-range-unit-words`.
 
 ## 0.1.0 (2026-09-29)
 

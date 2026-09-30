@@ -117,9 +117,11 @@ _AFTER_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in 
 _INVERT = {"gt": "le", "le": "gt", "lt": "ge", "ge": "lt"}
 _NEGATION_END = re.compile(r"\b(?:not|cannot|can['\u2019]t)\s+(?:be\s+)?$", re.I)
 _RANGE_NEXT = re.compile(r"^\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
-_RANGE_PREV = re.compile(r"\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?", re.I)
+# one unit or scale word may stand before a word connector: "30 mg to 45", "$1 million to $2"
+_UNIT_WORD = r"(?:[^\s\d]{1,12}\s+(?=(?:through|thru|to|and)\b))?"
+_RANGE_PREV = re.compile(rf"\s*{_UNIT_WORD}(?:through|thru|to|-|\u2013)\s*\S{{0,4}}?", re.I)
 _AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
-_AND_PREV = re.compile(r"\s*and\s*\S{0,4}?", re.I)
+_AND_PREV = re.compile(rf"\s*{_UNIT_WORD}and\s*\S{{0,4}}?", re.I)
 _BETWEEN_END = re.compile(r"\bbetween\s*\S{0,4}?$", re.I)
 
 
