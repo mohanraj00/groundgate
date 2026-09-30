@@ -162,7 +162,7 @@ value and the nearest of the next number token, the end of the sentence, or 40 c
 | `lt` | less than, fewer than, below, under, < | |
 | `ge` | at least, minimum of, no less than, ≥ | or more, or greater, or older, or higher, or above |
 | `le` | up to, maximum of, at most, no more than, ≤ | or less, or fewer, or younger, or lower, or below |
-| `range` | between | the value is followed by `to`, `through`, `thru`, `-` or `–` and then another number token, or is preceded by such a connector and a number token; `and` counts as a connector only when `between` comes before the first number |
+| `range` | between | the value is followed by `to`, `through`, `thru`, `-` or `–` and then another number token, or is preceded by such a connector and a number token; `and` counts as a connector only when `between` comes before the first number; one word of up to 12 characters with no digits (a unit or scale word) may stand between the first number and `to`, `through`, `thru` or `and`, so both ends of "30 mg to 45 mg" and "$1 million to $2 million" are a range |
 
 Where two qualifiers overlap in the text, only the longer one applies: "no more than" is `le`,
 not also `gt`, and "no less than" is `ge`, not also `lt`.

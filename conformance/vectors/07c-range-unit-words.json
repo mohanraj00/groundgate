@@ -1,0 +1,139 @@
+{
+ "name": "07c-range-unit-words",
+ "description": "One unit or scale word between the first number and a word connector keeps the range, for both ends (spec 0.2).",
+ "document": "Take 30 mg to 45 mg daily. Keep levels between 10 mcg and 20 mcg. Reserves of $1 million to $2 million are held. Give 30 mg daily to 45 patients.",
+ "schema": {
+  "fields": {
+   "dose_low": {
+    "type": "integer",
+    "unit": "mg"
+   },
+   "dose_high": {
+    "type": "integer",
+    "unit": "mg"
+   },
+   "dose_high_range": {
+    "type": "integer",
+    "unit": "mg",
+    "comparator": "range"
+   },
+   "level_high": {
+    "type": "integer",
+    "unit": "mcg"
+   },
+   "reserve_high": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "patients": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "r1",
+   "field": "dose_low",
+   "value": "30",
+   "unit": "mg",
+   "evidence": {
+    "start": 5,
+    "end": 10,
+    "text": "30 mg"
+   }
+  },
+  {
+   "id": "r2",
+   "field": "dose_high",
+   "value": "45",
+   "unit": "mg",
+   "evidence": {
+    "start": 14,
+    "end": 19,
+    "text": "45 mg"
+   }
+  },
+  {
+   "id": "r3",
+   "field": "dose_high_range",
+   "value": "45",
+   "unit": "mg",
+   "evidence": {
+    "start": 14,
+    "end": 19,
+    "text": "45 mg"
+   }
+  },
+  {
+   "id": "r4",
+   "field": "level_high",
+   "value": "20",
+   "unit": "mcg",
+   "evidence": {
+    "start": 58,
+    "end": 64,
+    "text": "20 mcg"
+   }
+  },
+  {
+   "id": "r5",
+   "field": "reserve_high",
+   "value": "2",
+   "unit": "USD",
+   "evidence": {
+    "start": 92,
+    "end": 102,
+    "text": "$2 million"
+   }
+  },
+  {
+   "id": "r6",
+   "field": "patients",
+   "value": "45",
+   "evidence": {
+    "start": 133,
+    "end": 144,
+    "text": "45 patients"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE",
+     "SCALE_WORD"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
