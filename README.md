@@ -53,7 +53,7 @@ To be clear about scale: current models rarely get a value wrong. In the benchma
 one is wrong, nothing downstream should have to trust it, and every fact that is admitted comes
 with proof you can re-check.
 
-LangExtract verifies the text. groundgate verifies the value.
+LangExtract locates the text. groundgate checks the number in it.
 
 ## Benchmark
 
@@ -62,13 +62,17 @@ public-domain FDA drug labels, NTSB accident reports and IRS publications, at tw
 person checked every gold fact. Of 4,350 extractions, 117 were wrong: the wrong value, a value
 for a field the document doesn't state, the wrong unit, or not a number.
 
-![Pooled over all 14 runs: MATCH_EXACT accepted 98% of wrong extractions without review, groundgate 6.8%. MATCH_EXACT rejected 4.6% of correct extractions, groundgate 0.3%. groundgate sent 12% of extractions to a person.](bench/charts/summary.svg)
+![Pooled over all 14 runs: MATCH_EXACT accepted 98% of wrong extractions without review, groundgate 6.8%. Of correct extractions citing the right place, MATCH_EXACT rejected 4.6%, groundgate 0.3%. groundgate sent 12% of extractions to a person.](bench/charts/summary.svg)
 
 | | LangExtract, `MATCH_EXACT` | groundgate |
 |---|---:|---:|
 | wrong extractions accepted without review | 98.3% (115/117) | 6.8% (8/117) |
-| correct extractions rejected | 4.6% (194/4,233) | 0.3% (14/4,233) |
+| correct extractions citing the right place, rejected | 4.6% (194/4,233) | 0.3% (14/4,233) |
 | extractions sent to a person | 0% | 12.1% (526/4,350) |
+
+Of the 526 extractions groundgate sent to a person, 92 were wrong; a random sample that size
+would have held about 14. groundgate also rejected 71 correct values that LangExtract had aligned
+to a place that doesn't state them: the value was right, the evidence wasn't.
 
 Most catches (84 of 109) were `CONFLICTING_CANDIDATES`: a model proposed two values for a
 single-valued field, and groundgate sent both to review instead of picking one.
