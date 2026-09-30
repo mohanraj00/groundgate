@@ -193,7 +193,7 @@ A fact that passes every check can still be flagged for a person:
 |---|---|
 | `NON_VERBATIM_EVIDENCE` | the quote differs from the text at the span |
 | `QUALIFIED_VALUE` | "up to", "approximately", "or more" changes the value, and the schema didn't declare it |
-| `SCALE_WORD` | "million", "lakh" and similar follow the value |
+| `SCALE_WORD` | "million", "lakh" and similar follow the value, and the value was given unscaled |
 | `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
 | `CONFLICTING_CANDIDATES` | another proposal for the same field has a different value |
 
@@ -203,7 +203,7 @@ printed in IRS Publication 590-A never equals 252,000 or 2,520,000. When a span 
 but its quote occurs exactly once elsewhere with the right value and unit, groundgate moves the
 evidence there and records `EVIDENCE_REANCHORED`.
 
-The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 19 language-neutral
+The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 20 language-neutral
 vectors that pin every code, so another implementation can prove it agrees.
 
 ## Receipts

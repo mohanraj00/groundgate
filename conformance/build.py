@@ -520,6 +520,66 @@ vector(
     ],
 )
 
+vector(
+    "08b-scaled-values",
+    "A number followed by a scale word also has its scaled value; a candidate equal to it passes "
+    "and is not flagged SCALE_WORD (spec 0.2).",
+    "The fund holds $2.5 million in reserves. Grants total $1.25 billion. The exemption is 4 lakh "
+    "rupees. The pool is 3 crore rupees. Staff earned 45 thousand dollars. Millions of dollars were "
+    "spent. The cap rose from $1 million to $2 million. Donors gave $3 million.",
+    {
+        "fields": {
+            "reserves": {"type": "number", "unit": "USD"},
+            "reserves_wrong": {"type": "number", "unit": "USD"},
+            "grants": USD,
+            "exemption": {"type": "integer", "unit": "INR"},
+            "pool": {"type": "integer", "unit": "INR"},
+            "pay": USD,
+            "spent": USD,
+            "new_cap": USD,
+            "old_cap": USD,
+            "donations": USD,
+        }
+    },
+    [
+        c("v1", "reserves", "2500000", "USD", q("$2.5 million")),
+        # neither the written 2.5 nor the scaled 2,500,000
+        c(
+            "v2",
+            "reserves_wrong",
+            "250000",
+            "USD",
+            q("$2.5 million"),
+            ("rejected", ["VALUE_NOT_IN_EVIDENCE"]),
+        ),
+        c("v3", "grants", "1250000000", "USD", q("$1.25 billion")),
+        c("v4", "exemption", "400000", "INR", q("4 lakh rupees")),
+        c("v5", "pool", "30000000", "INR", q("3 crore rupees")),
+        c("v6", "pay", "45000", "USD", q("45 thousand dollars")),
+        # a scale word with no number has no value
+        c(
+            "v7",
+            "spent",
+            "1000000",
+            "USD",
+            q("Millions of dollars"),
+            ("rejected", ["VALUE_NOT_IN_EVIDENCE"]),
+        ),
+        # with #4: the new value is neither a range end nor flagged SCALE_WORD
+        c("v8", "new_cap", "2000000", "USD", q("$2 million")),
+        c(
+            "v9",
+            "old_cap",
+            "1000000",
+            "USD",
+            q("$1 million"),
+            ("needs_verification", ["QUALIFIED_VALUE"]),
+        ),
+        # the scale word is read from the document, like a unit, even past the span
+        c("v10", "donations", "3000000", "USD", q("$3")),
+    ],
+)
+
 # ---------------------------------------------------------------- verbatim
 vector(
     "09-verbatim",

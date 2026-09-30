@@ -1,0 +1,213 @@
+{
+ "name": "08b-scaled-values",
+ "description": "A number followed by a scale word also has its scaled value; a candidate equal to it passes and is not flagged SCALE_WORD (spec 0.2).",
+ "document": "The fund holds $2.5 million in reserves. Grants total $1.25 billion. The exemption is 4 lakh rupees. The pool is 3 crore rupees. Staff earned 45 thousand dollars. Millions of dollars were spent. The cap rose from $1 million to $2 million. Donors gave $3 million.",
+ "schema": {
+  "fields": {
+   "reserves": {
+    "type": "number",
+    "unit": "USD"
+   },
+   "reserves_wrong": {
+    "type": "number",
+    "unit": "USD"
+   },
+   "grants": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "exemption": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "pool": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "pay": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "spent": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "new_cap": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "old_cap": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "donations": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "v1",
+   "field": "reserves",
+   "value": "2500000",
+   "unit": "USD",
+   "evidence": {
+    "start": 15,
+    "end": 27,
+    "text": "$2.5 million"
+   }
+  },
+  {
+   "id": "v2",
+   "field": "reserves_wrong",
+   "value": "250000",
+   "unit": "USD",
+   "evidence": {
+    "start": 15,
+    "end": 27,
+    "text": "$2.5 million"
+   }
+  },
+  {
+   "id": "v3",
+   "field": "grants",
+   "value": "1250000000",
+   "unit": "USD",
+   "evidence": {
+    "start": 54,
+    "end": 67,
+    "text": "$1.25 billion"
+   }
+  },
+  {
+   "id": "v4",
+   "field": "exemption",
+   "value": "400000",
+   "unit": "INR",
+   "evidence": {
+    "start": 86,
+    "end": 99,
+    "text": "4 lakh rupees"
+   }
+  },
+  {
+   "id": "v5",
+   "field": "pool",
+   "value": "30000000",
+   "unit": "INR",
+   "evidence": {
+    "start": 113,
+    "end": 127,
+    "text": "3 crore rupees"
+   }
+  },
+  {
+   "id": "v6",
+   "field": "pay",
+   "value": "45000",
+   "unit": "USD",
+   "evidence": {
+    "start": 142,
+    "end": 161,
+    "text": "45 thousand dollars"
+   }
+  },
+  {
+   "id": "v7",
+   "field": "spent",
+   "value": "1000000",
+   "unit": "USD",
+   "evidence": {
+    "start": 163,
+    "end": 182,
+    "text": "Millions of dollars"
+   }
+  },
+  {
+   "id": "v8",
+   "field": "new_cap",
+   "value": "2000000",
+   "unit": "USD",
+   "evidence": {
+    "start": 227,
+    "end": 237,
+    "text": "$2 million"
+   }
+  },
+  {
+   "id": "v9",
+   "field": "old_cap",
+   "value": "1000000",
+   "unit": "USD",
+   "evidence": {
+    "start": 213,
+    "end": 223,
+    "text": "$1 million"
+   }
+  },
+  {
+   "id": "v10",
+   "field": "donations",
+   "value": "3000000",
+   "unit": "USD",
+   "evidence": {
+    "start": 251,
+    "end": 253,
+    "text": "$3"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
