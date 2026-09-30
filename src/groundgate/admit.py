@@ -18,6 +18,7 @@ from .text import (
     qualifiers,
     quote_pattern,
     scale_word,
+    scaled_value,
     tokens,
     unit_at,
     verbatim_equal,
@@ -94,7 +95,11 @@ def _value_at(
         if normalize_ws(value) not in normalize_ws(ctx.text[s:e]):
             return None, "VALUE_NOT_IN_EVIDENCE"
         return None, None
-    hits = [t for t in tokens(ctx.text, s, e) if t.value is not None and t.value == value]
+    hits = [
+        t
+        for t in tokens(ctx.text, s, e)
+        if t.value is not None and value in (t.value, scaled_value(ctx.text, t))
+    ]
     if not hits:
         return None, "VALUE_NOT_IN_EVIDENCE"
     if f.unit is None:
@@ -187,7 +192,7 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
         found = qualifiers(ctx.text, token) - {f.comparator}
         if found:
             flags.append("QUALIFIED_VALUE")
-        if scale_word(ctx.text, token):
+        if scale_word(ctx.text, token) and token.value == value:  # written, not scaled
             flags.append("SCALE_WORD")
     mc = ctx.policy.min_confidence
     if mc is not None and conf is not None and conf < mc:

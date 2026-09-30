@@ -185,8 +185,19 @@ def _strip_unit_suffix(rest: str) -> str:
 _SCALE = re.compile(r"^\s{0,2}(thousand|million|billion|trillion|lakh|crore)\b", re.I)
 
 
+_SCALE_EXP = {"thousand": 3, "million": 6, "billion": 9, "trillion": 12, "lakh": 5, "crore": 7}
+
+
 def scale_word(text: str, tok: Token) -> bool:
     return bool(_SCALE.match(text[tok.end : tok.end + 12]))
+
+
+def scaled_value(text: str, tok: Token) -> Decimal | None:
+    """The token's value times its scale word, or None (SPEC §4.1)."""
+    m = _SCALE.match(text[tok.end : tok.end + 12])
+    if m is None or tok.value is None:
+        return None
+    return tok.value.scaleb(_SCALE_EXP[m.group(1).lower()])
 
 
 # ----------------------------------------------------------------------- units

@@ -23,6 +23,9 @@ milestone 0.2.
   Y is the new value and no longer flagged as a range end; X keeps the range flag, so a field
   that takes the old value still goes to review. "run from 7 to 8 hours" is still a range.
   Vector `07d-change-not-range`.
+- Scale words (#6): a number followed by a scale word also has its scaled value, so 1000000
+  matches "$1 million" and is admitted with no flag. In 0.1 it was rejected. A candidate that
+  gives the written value (1) keeps `SCALE_WORD`. Vector `08b-scaled-values`.
 
 ## 0.1.0 (2026-09-29)
 

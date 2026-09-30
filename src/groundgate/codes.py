@@ -20,7 +20,9 @@ FLAG = {
     "QUALIFIED_VALUE": (
         'Text such as "more than" or "up to" qualifies the value, and the field does not say so.'
     ),
-    "SCALE_WORD": 'A scale word such as "million" follows the value.',
+    "SCALE_WORD": (
+        'A scale word such as "million" follows the value, and the value was given unscaled.'
+    ),
     "LOW_CONFIDENCE": "The extractor's confidence is below the policy minimum.",
     "CONFLICTING_CANDIDATES": "Another candidate for this field has a different value.",
 }

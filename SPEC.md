@@ -104,7 +104,7 @@ later check runs. `value` means the candidate's value parsed per its field type.
 | 6 | `UNIT_INVALID` | The candidate's `unit` differs from the field's `unit` (both absent is a match). |
 | 7 | `NO_EVIDENCE` | `evidence` is absent. |
 | 8 | `SPAN_INVALID` | The evidence span, or `search_region`, is not a valid span (§2.2). |
-| 9 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value` (for `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text). |
+| 9 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value`, by its value or its scaled value (for `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text). |
 | 10 | `UNIT_NOT_IN_EVIDENCE` | The field has a unit, and no matching number token in the span has that unit at its location (§4.3). |
 
 **Re-anchoring (steps 9–10).** When step 9 or 10 fails, `policy.reanchor` is true and the candidate
@@ -121,7 +121,7 @@ outcome `needs_verification`, no flag makes it `admitted`.
 |---|---|
 | `NON_VERBATIM_EVIDENCE` | `evidence.text` is present and differs from the span's text after whitespace normalisation and joining of line-break hyphenation (§4.4). |
 | `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the document and its comparator differs from the field's `comparator`. |
-| `SCALE_WORD` | A scale word (`thousand`, `million`, `billion`, `trillion`, `lakh`, `crore`) follows the value within 2 code points, ignoring whitespace. |
+| `SCALE_WORD` | A scale word (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. |
 | `LOW_CONFIDENCE` | `policy.min_confidence` is set and `confidence` is below it. |
 | `CONFLICTING_CANDIDATES` | Another candidate for the same non-`multiple` field also passed steps 1–10 with a different canonical value. Set on every such candidate. |
 
@@ -141,6 +141,13 @@ ungrouped (`\d+`) or grouped in threes after the first group (`\d{1,3}(,\d{3})+`
 has **no** value (`252,0000` never equals 252000 or 2520000). When tokens are read inside a span, a
 token that continues past the span's end is ignored, so a span can never read a prefix of a longer
 number.
+
+A number token with a value that is followed by a **scale word** also has a **scaled value**. The
+scale words are `thousand`, `million`, `billion`, `trillion`, `lakh` and `crore`, matched as whole
+words, case-insensitively, after at most 2 whitespace code points. The scaled value is the value
+times 10^3, 10^6, 10^9, 10^12, 10^5 or 10^7: "$1.25 billion" is 1250000000 and "4 lakh" is
+400000. Like a unit, the scale word is read from the document, so it counts even past the end of
+the span. A scale word with no number before it ("millions of") has no value.
 
 Candidate values parse the same way after trimming, and must be a single token. `integer` fields
 additionally require an integral value. The **canonical value** is the decimal without grouping,
