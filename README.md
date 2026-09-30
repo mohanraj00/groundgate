@@ -131,9 +131,9 @@ print(gg.verify(receipt.to_dict(), text, schema, candidates).ok)
 ```
 
 ```text
+rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
 needs_verification  phaseout_start  79000  QUALIFIED_VALUE
 admitted            ira_limit       7000
-rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
 True
 ```
 

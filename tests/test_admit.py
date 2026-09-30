@@ -33,7 +33,7 @@ CANDS = [
 
 def test_receipt_shape_and_summary() -> None:
     r = gg.admit(DOC, SCHEMA, CANDS, document_id="doc-1").to_dict()
-    assert r["groundgate"] == "0.1"
+    assert r["groundgate"] == "0.2"
     assert r["document"]["id"] == "doc-1"
     assert r["summary"] == {"admitted": 2, "needs_verification": 0, "rejected": 1}
     shas = [d["candidate_sha256"] for d in r["decisions"]]
@@ -68,6 +68,15 @@ def test_verify_detects_tampering() -> None:
     other_doc = DOC.replace("$8,000", "$9,000")
     assert not gg.verify(r, other_doc, SCHEMA, CANDS).ok
     assert not gg.verify(r, DOC, SCHEMA, CANDS[:2]).ok
+
+
+def test_verify_names_a_receipt_from_another_spec_version() -> None:
+    r = gg.admit(DOC, SCHEMA, CANDS).to_dict()
+    r["groundgate"] = "0.1"
+    result = gg.verify(r, DOC, SCHEMA, CANDS)
+    assert result.problems == (
+        "receipt was decided under spec 0.1; this groundgate implements 0.2",
+    )
 
 
 def test_packet_errors() -> None:
