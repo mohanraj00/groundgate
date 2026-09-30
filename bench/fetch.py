@@ -23,8 +23,6 @@ from groundgate.extract import extract
 from groundgate.extract.markup import xml_text
 
 HERE = Path(__file__).parent
-CACHE = HERE / ".cache"
-DOCS = HERE / "docs"
 HL7 = "{urn:hl7-org:v3}"
 
 
@@ -60,15 +58,18 @@ def text_of(src: dict, path: Path, data: bytes) -> str:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--pin", action="store_true", help="record missing hashes")
+    ap.add_argument("--set", type=Path, default=HERE, help="benchmark set directory")
     args = ap.parse_args()
-    lock_path = HERE / "sources.json"
+    root = args.set.resolve()
+    cache, docs_dir = root / ".cache", root / "docs"
+    lock_path = root / "sources.json"
     lock = json.loads(lock_path.read_text())
-    CACHE.mkdir(exist_ok=True)
-    DOCS.mkdir(exist_ok=True)
+    cache.mkdir(exist_ok=True)
+    docs_dir.mkdir(exist_ok=True)
     failed = False
     for src in lock["sources"]:
         suffix = ".xml" if src["kind"] == "fda" else ".pdf"
-        path = CACHE / f"{src['id']}{suffix}"
+        path = cache / f"{src['id']}{suffix}"
         data = download(src["url"], path)
         sha = hashlib.sha256(data).hexdigest()
         if src["sha256"] is None and args.pin:
@@ -78,12 +79,12 @@ def main() -> None:
             print("  the publisher revised it; the committed text stays", file=sys.stderr)
             failed = True
             continue
-        (DOCS / f"{src['id']}.txt").write_text(text_of(src, path, data), encoding="utf-8")
+        (docs_dir / f"{src['id']}.txt").write_text(text_of(src, path, data), encoding="utf-8")
     if args.pin:
         lock_path.write_text(json.dumps(lock, indent=2) + "\n")
     if failed:
         raise SystemExit(1)
-    print(f"{len(lock['sources'])} sources verified; text in {DOCS.relative_to(HERE.parent)}")
+    print(f"{len(lock['sources'])} sources verified; text in {docs_dir.relative_to(HERE.parent)}")
 
 
 if __name__ == "__main__":

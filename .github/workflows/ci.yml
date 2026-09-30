@@ -62,5 +62,9 @@ jobs:
       - uses: astral-sh/setup-uv@v6
       - run: uv sync --python 3.12 --group langextract
       - run: uv run --group langextract pytest tests/test_langextract.py tests/test_bench.py
-      - name: Benchmark results rescore byte for byte from the cached runs and gold
-        run: uv run --group langextract python bench/score.py --check
+      - name: v0.1 benchmark results rescore byte for byte on the released 0.1.0 wheel
+        run: |
+          uv export --only-group langextract --no-emit-project --no-hashes \
+            -o "$RUNNER_TEMP/bench-requirements.txt"
+          uv run --isolated --no-project --python 3.12 --with groundgate==0.1.0 \
+            --with-requirements "$RUNNER_TEMP/bench-requirements.txt" python bench/score.py --check

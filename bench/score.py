@@ -38,6 +38,7 @@ from groundgate.adapters.langextract import to_candidates
 from groundgate.text import canonical, parse_value, tokens, unit_at
 
 HERE = Path(__file__).parent
+SET = HERE  # the benchmark set: gold, docs, runs and results (--set)
 WRONG = ("wrong_value", "absent_field", "wrong_unit", "unparsable")
 LX_CONFIGS = ("lx_all", "lx_aligned", "lx_exact")
 
@@ -64,7 +65,7 @@ class Gold:
 
 def load_gold(drafts: bool) -> dict[str, Gold]:
     out = {}
-    for path in sorted((HERE / "gold").glob("*.json")):
+    for path in sorted((SET / "gold").glob("*.json")):
         g = json.loads(path.read_text(encoding="utf-8"))
         ok_fact = {"confirmed", "draft"} if drafts else {"confirmed"}
         ok_absent = {"confirmed", "draft"} if drafts else {"confirmed"}
@@ -83,7 +84,7 @@ def load_gold(drafts: bool) -> dict[str, Gold]:
         out[g["doc"]] = Gold(
             doc=g["doc"],
             kind=g["kind"],
-            text=(HERE / "docs" / f"{g['doc']}.txt").read_text(encoding="utf-8"),
+            text=(SET / "docs" / f"{g['doc']}.txt").read_text(encoding="utf-8"),
             schema=schema,
             values=dict(values),
             evidence=dict(evidence),
@@ -203,7 +204,7 @@ def load_runs(golds: dict[str, Gold]) -> tuple[Runs, dict[tuple[str, int], dict[
     runs: Runs = defaultdict(dict)
     health: dict[tuple[str, int], Counter[str]] = defaultdict(Counter)
     providers: dict[tuple[str, int], str] = {}
-    for path in sorted((HERE / "runs").glob("*/*/*.json")):
+    for path in sorted((SET / "runs").glob("*/*/*.json")):
         rec = json.loads(path.read_text(encoding="utf-8"))
         doc = rec["document"]["document_id"]
         if doc not in golds:
@@ -649,8 +650,11 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--drafts", action="store_true", help="score against draft gold")
     ap.add_argument("--check", action="store_true", help="fail if outputs would change")
+    ap.add_argument("--set", type=Path, default=HERE, help="benchmark set directory")
     args = ap.parse_args()
-    committed = HERE / "results.json"
+    global SET
+    SET = args.set.resolve()
+    committed = SET / "results.json"
     if args.check and committed.exists():  # re-score the way the committed results were scored
         args.drafts = json.loads(committed.read_text())["gold"]["status"].startswith("draft")
     golds = load_gold(args.drafts)
@@ -677,15 +681,15 @@ def main() -> None:
     files |= render(results)
     if args.check:
         stale = [
-            n for n, t in files.items() if not (HERE / n).exists() or (HERE / n).read_text() != t
+            n for n, t in files.items() if not (SET / n).exists() or (SET / n).read_text() != t
         ]
         if stale:
             raise SystemExit(f"out of date: {', '.join(stale)}; run bench/score.py")
         print("results are up to date")
         return
-    (HERE / "charts").mkdir(exist_ok=True)
+    (SET / "charts").mkdir(exist_ok=True)
     for name, text in files.items():
-        (HERE / name).write_text(text, encoding="utf-8")
+        (SET / name).write_text(text, encoding="utf-8")
     print(f"wrote {', '.join(files)}", file=sys.stderr)
 
 
