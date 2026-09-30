@@ -271,6 +271,45 @@ vector(
 )
 
 vector(
+    "04c-first-unit",
+    "The first suffix of any unit in the table decides a number's unit, so another number's unit "
+    "never supplies it; a list like '25 or 50 mg' keeps the unit (spec 0.2).",
+    "Give 10 mcg (maximum 500 mg) daily. Take 25 or 50 mg once daily. "
+    "Infuse 2 L in 4 hours, then 250 mL. Start at 10 units, then 5 mg.",
+    {
+        "fields": {
+            "dose_mg": {"type": "integer", "unit": "mg", "multiple": True},
+            "dose_mcg": {"type": "integer", "unit": "mcg"},
+            "volume": {"type": "integer", "unit": "L"},
+            "volume_ml": {"type": "integer", "unit": "mL"},
+            "duration": {"type": "integer", "unit": "hours", "multiple": True},
+            "insulin": {"type": "integer", "unit": "units"},
+        },
+        "units": {"units": {"suffix": ["units"]}},
+    },
+    [
+        c("v1", "dose_mg", "10", "mg", q("10 mcg"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("v2", "dose_mcg", "10", "mcg", q("10 mcg")),
+        c("v3", "dose_mg", "500", "mg", q("500 mg")),
+        c("v4", "dose_mg", "25", "mg", q("25 or 50 mg")),
+        c("v5", "volume", "2", "L", q("2 L")),
+        c(
+            "v6",
+            "duration",
+            "2",
+            "hours",
+            q("2 L in 4 hours"),
+            ("rejected", ["UNIT_NOT_IN_EVIDENCE"]),
+        ),
+        c("v7", "duration", "4", "hours", q("4 hours")),
+        c("v8", "volume_ml", "250", "mL", q("250 mL")),
+        c("v9", "dose_mg", "10", "mg", q("10 units"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("v10", "insulin", "10", "units", q("10 units")),
+        c("v11", "dose_mg", "5", "mg", q("5 mg")),
+    ],
+)
+
+vector(
     "05-non-ascii",
     "Offsets are UTF-8 bytes; spans must fall on character boundaries.",
     "Café « naïve » prices: €4,500 per year. 価格は $3,000 です。Dose: 5 mg — ≈ daily.",

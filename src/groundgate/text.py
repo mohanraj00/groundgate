@@ -231,8 +231,16 @@ _PER_UNIT = re.compile(
 )
 
 
-def unit_at(text: str, tok: Token, prefixes: list[str], suffixes: list[str], window: int) -> bool:
-    """Whether a unit surface form is at ``tok`` (SPEC §4.3)."""
+def unit_at(
+    text: str,
+    tok: Token,
+    prefixes: list[str],
+    suffixes: list[str],
+    window: int,
+    table: frozenset[str] = frozenset(),
+) -> bool:
+    """Whether a unit surface form is at ``tok`` (SPEC §4.3). ``table`` holds the suffixes of
+    every unit in the table; the first of them after the number decides."""
     if not prefixes and not suffixes:
         return True
     head = text[: tok.start].rstrip()
@@ -241,10 +249,13 @@ def unit_at(text: str, tok: Token, prefixes: list[str], suffixes: list[str], win
             before = head[: len(head) - len(p)]
             if not (p[0].isalnum() and before and before[-1].isalnum()):
                 return True
+    if not suffixes:
+        return False
+    candidates = table | set(suffixes)
     _, s1 = sentence(text, tok.start)
-    region = text[tok.end : min(s1, tok.end + window + max((len(s) for s in suffixes), default=0))]
-    first: tuple[int, int] | None = None  # the earliest suffix match, longest at a tie
-    for suffix in suffixes:
+    region = text[tok.end : min(s1, tok.end + window + max(len(s) for s in candidates))]
+    first: tuple[int, int, str] | None = None  # the earliest suffix match, longest at a tie
+    for suffix in sorted(candidates):
         pat = re.escape(suffix)
         if suffix[-1].isalnum():
             pat += r"(?![A-Za-z0-9])"
@@ -252,9 +263,9 @@ def unit_at(text: str, tok: Token, prefixes: list[str], suffixes: list[str], win
             pat = r"(?<![A-Za-z0-9])" + pat
         m = re.search(pat, region)
         if m and (first is None or (m.start(), -m.end()) < (first[0], -first[1])):
-            first = (m.start(), m.end())
-    if first is None or first[0] > window:
-        return False
+            first = (m.start(), m.end(), suffix)
+    if first is None or first[0] > window or first[2] not in suffixes:
+        return False  # "10 mcg (maximum 500 mg)": mcg comes first, so mg is not at 10
     # "10 mg/kg", "250 mg/5 mL": a per-unit is not the unit
     return not _PER_UNIT.match(text, tok.end + first[1])
 

@@ -74,6 +74,7 @@ class _Ctx:
     schema: Schema
     policy: Policy
     mentions: dict[str, list[tuple[int, int, str]]] = field(default_factory=dict)
+    suffixes: frozenset[str] = frozenset()  # of every unit in the table (SPEC §4.3)
 
     def key_mentions(self, f: Field) -> list[tuple[int, int, str]]:
         if f.name not in self.mentions:
@@ -116,7 +117,7 @@ def _value_at(
         return hits[0], None
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], []))
     for t in hits:
-        if unit_at(ctx.text, t, prefixes, suffixes, ctx.policy.unit_window):
+        if unit_at(ctx.text, t, prefixes, suffixes, ctx.policy.unit_window, ctx.suffixes):
             return t, None
     return None, "UNIT_NOT_IN_EVIDENCE"
 
@@ -239,7 +240,8 @@ def admit(
         policy = Policy() if policy is None else Policy.from_dict(policy)
     if isinstance(candidates, (str, bytes)) or not isinstance(candidates, Sequence):
         raise PacketError("candidates must be a list")
-    ctx = _Ctx(text, Offsets(text), schema, policy)
+    table = frozenset(x for _, suffixes in schema.units.values() for x in suffixes)
+    ctx = _Ctx(text, Offsets(text), schema, policy, suffixes=table)
 
     results: list[tuple[str, int, object, _Passed | str]] = []
     for i, cand in enumerate(candidates):
