@@ -1,7 +1,7 @@
 {
  "name": "04-evidence",
  "description": "Missing, invalid or unsupportive evidence is rejected.",
- "document": "The limit is $7,000 and the fee is 30 dollars. Take 45 minutes.",
+ "document": "The limit is $7,000 and the fee is 30 dollars. Take 45 minutes. Altimeter 29.97 inches.",
  "schema": {
   "fields": {
    "limit": {
@@ -15,6 +15,9 @@
    "wait": {
     "type": "integer",
     "unit": "minutes"
+   },
+   "altimeter": {
+    "type": "number"
    }
   }
  },
@@ -120,6 +123,16 @@
     "end": 62,
     "text": "45 minutes"
    }
+  },
+  {
+   "id": "e11",
+   "field": "altimeter",
+   "value": "29",
+   "evidence": {
+    "start": 74,
+    "end": 77,
+    "text": "29."
+   }
   }
  ],
  "expected": {
@@ -182,6 +195,12 @@
     "outcome": "rejected",
     "codes": [
      "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
     ]
    }
   ],

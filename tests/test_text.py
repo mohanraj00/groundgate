@@ -35,6 +35,10 @@ def test_region_never_reads_a_prefix() -> None:
     assert [t.value for t in tokens(text, 5, 8)] == []
     assert [t.value for t in tokens(text, 15, 17)] == []
     assert [t.value for t in tokens(text, 5, 10)] == [Decimal(12345)]
+    split = "Altimeter 29.97 inches"  # a chunk boundary cut the number after "29."
+    assert tokens(split, 10, 13) == []
+    assert [t.value for t in tokens(split, 10, 15)] == [Decimal("29.97")]
+    assert [t.value for t in tokens("fees of 1,500, then", 8, 13)] == [Decimal(1500)]
 
 
 @given(st.integers(min_value=-(10**12), max_value=10**12))

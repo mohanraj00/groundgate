@@ -175,8 +175,15 @@ vector(
 vector(
     "04-evidence",
     "Missing, invalid or unsupportive evidence is rejected.",
-    "The limit is $7,000 and the fee is 30 dollars. Take 45 minutes.",
-    {"fields": {"limit": USD, "fee": USD, "wait": {"type": "integer", "unit": "minutes"}}},
+    "The limit is $7,000 and the fee is 30 dollars. Take 45 minutes. Altimeter 29.97 inches.",
+    {
+        "fields": {
+            "limit": USD,
+            "fee": USD,
+            "wait": {"type": "integer", "unit": "minutes"},
+            "altimeter": {"type": "number"},
+        }
+    },
     [
         c("e1", "limit", "7000", "USD", None, ("rejected", ["NO_EVIDENCE"])),
         c("e2", "fee", "30", "USD", None, ("rejected", ["NO_EVIDENCE"])),
@@ -196,6 +203,7 @@ vector(
         c("e8", "fee", "7000", "USD", q("30 dollars"), ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
         c("e9", "wait", "30", "minutes", q("30"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
         c("e10", "fee", "45", "USD", q("45 minutes"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("e11", "altimeter", "29", None, q("29."), ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
     ],
 )
 

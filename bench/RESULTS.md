@@ -47,17 +47,17 @@ All 22 admitted here cite another place where the same text appears without the 
 | Run | docs | candidates | wrong | escaped, LangExtract all | escaped, MATCH_EXACT | escaped, groundgate | wrong sent to review | false rejects | review load | recall, admitted | recall, admitted or review |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | Claude Haiku 4.5 @ 1000 | 30 | 336 | 12 | 100.0% (12/12) | 100.0% (12/12) | 8.3% (1/12) [1, 35] | 91.7% (11/12) | 0.3% (1/324) | 16.4% (55/336) | 84.4% (233/276) | 96.4% (266/276) |
-| Claude Haiku 4.5 @ 4000 | 30 | 292 | 8 | 100.0% (8/8) | 100.0% (8/8) | 12.5% (1/8) [2, 47] | 50.0% (4/8) | 0.7% (2/284) | 11.3% (33/292) | 87.3% (241/276) | 97.5% (269/276) |
+| Claude Haiku 4.5 @ 4000 | 30 | 292 | 8 | 100.0% (8/8) | 100.0% (8/8) | 0.0% (0/8) [0, 32] | 50.0% (4/8) | 0.7% (2/284) | 11.3% (33/292) | 87.3% (241/276) | 97.5% (269/276) |
 | Claude Sonnet 4.6 @ 1000 | 30 | 336 | 11 | 100.0% (11/11) | 100.0% (11/11) | 0.0% (0/11) [0, 26] | 81.8% (9/11) | 0.3% (1/325) | 14.3% (48/336) | 87.7% (242/276) | 97.8% (270/276) |
 | Claude Sonnet 4.6 @ 4000 | 30 | 294 | 6 | 100.0% (6/6) | 100.0% (6/6) | 0.0% (0/6) [0, 39] | 33.3% (2/6) | 0.4% (1/288) | 9.2% (27/294) | 89.9% (248/276) | 98.6% (272/276) |
 | Claude Sonnet 5.5 @ 1000 | 30 | 343 | 13 | 100.0% (13/13) | 92.3% (12/13) | 7.7% (1/13) [1, 33] | 84.6% (11/13) | 0.3% (1/330) | 13.7% (47/343) | 89.1% (246/276) | 98.9% (273/276) |
 | Claude Sonnet 5.5 @ 4000 | 30 | 289 | 2 | 100.0% (2/2) | 100.0% (2/2) | 0.0% (0/2) [0, 66] | 100.0% (2/2) | 0.4% (1/287) | 10.0% (29/289) | 89.5% (247/276) | 98.9% (273/276) |
 | GPT-5.6 Luna (Medium) @ 1000 | 30 | 340 | 18 | 100.0% (18/18) | 100.0% (18/18) | 5.6% (1/18) [1, 26] | 88.9% (16/18) | 0.0% (0/322) | 16.8% (57/340) | 85.1% (235/276) | 96.7% (267/276) |
-| GPT-5.6 Luna (Medium) @ 4000 | 30 | 288 | 8 | 100.0% (8/8) | 87.5% (7/8) | 25.0% (2/8) [7, 59] | 37.5% (3/8) | 0.4% (1/280) | 9.7% (28/288) | 87.3% (241/276) | 96.0% (265/276) |
+| GPT-5.6 Luna (Medium) @ 4000 | 30 | 288 | 8 | 100.0% (8/8) | 87.5% (7/8) | 12.5% (1/8) [2, 47] | 37.5% (3/8) | 0.4% (1/280) | 9.7% (28/288) | 87.3% (241/276) | 96.0% (265/276) |
 | GPT-5.6 Terra (Medium) @ 1000 | 30 | 311 | 12 | 100.0% (12/12) | 100.0% (12/12) | 8.3% (1/12) [1, 35] | 91.7% (11/12) | 0.0% (0/299) | 15.4% (48/311) | 80.8% (223/276) | 91.3% (252/276) |
 | GPT-5.6 Terra (Medium) @ 4000 | 30 | 281 | 6 | 100.0% (6/6) | 100.0% (6/6) | 33.3% (2/6) [10, 70] | 50.0% (3/6) | 0.0% (0/275) | 10.0% (28/281) | 85.9% (237/276) | 94.6% (261/276) |
 | Gemini 3.6 Flash (Medium) @ 1000 | 30 | 343 | 13 | 100.0% (13/13) | 100.0% (13/13) | 7.7% (1/13) [1, 33] | 76.9% (10/13) | 0.0% (0/330) | 12.8% (44/343) | 89.5% (247/276) | 98.6% (272/276) |
-| Gemini 3.6 Flash (Medium) @ 4000 | 30 | 288 | 2 | 100.0% (2/2) | 100.0% (2/2) | 50.0% (1/2) [9, 91] | 50.0% (1/2) | 0.4% (1/286) | 7.3% (21/288) | 90.2% (249/276) | 97.1% (268/276) |
+| Gemini 3.6 Flash (Medium) @ 4000 | 30 | 288 | 2 | 100.0% (2/2) | 100.0% (2/2) | 0.0% (0/2) [0, 66] | 50.0% (1/2) | 0.4% (1/286) | 7.3% (21/288) | 90.2% (249/276) | 97.1% (268/276) |
 | Gemini 3.8 Flash (Low) @ 1000 | 30 | 330 | 8 | 100.0% (8/8) | 100.0% (8/8) | 0.0% (0/8) [0, 32] | 100.0% (8/8) | 0.3% (1/322) | 12.1% (40/330) | 88.4% (244/276) | 97.5% (269/276) |
 | Gemini 3.8 Flash (Low) @ 4000 | 30 | 279 | 1 | 100.0% (1/1) | 100.0% (1/1) | 0.0% (0/1) [0, 79] | 100.0% (1/1) | 0.4% (1/278) | 7.5% (21/279) | 89.1% (246/276) | 96.0% (265/276) |
 
@@ -87,17 +87,17 @@ The first reason code on each wrong extraction groundgate rejected or sent to re
 | Run | `CONFLICTING_CANDIDATES` | `QUALIFIED_VALUE` | `SCALE_WORD` | `TYPE_INVALID` | `UNIT_INVALID` | `UNIT_NOT_IN_EVIDENCE` | `VALUE_NOT_IN_EVIDENCE` |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Claude Haiku 4.5 @ 1000 | 10 | 1 | 0 | 0 | 0 | 0 | 0 |
-| Claude Haiku 4.5 @ 4000 | 4 | 0 | 0 | 0 | 0 | 1 | 2 |
+| Claude Haiku 4.5 @ 4000 | 4 | 0 | 0 | 0 | 0 | 1 | 3 |
 | Claude Sonnet 4.6 @ 1000 | 8 | 1 | 0 | 0 | 0 | 0 | 2 |
 | Claude Sonnet 4.6 @ 4000 | 2 | 0 | 0 | 0 | 1 | 1 | 2 |
 | Claude Sonnet 5.5 @ 1000 | 10 | 1 | 0 | 0 | 0 | 1 | 0 |
 | Claude Sonnet 5.5 @ 4000 | 2 | 0 | 0 | 0 | 0 | 0 | 0 |
 | GPT-5.6 Luna (Medium) @ 1000 | 14 | 2 | 0 | 1 | 0 | 0 | 0 |
-| GPT-5.6 Luna (Medium) @ 4000 | 3 | 0 | 0 | 1 | 0 | 1 | 1 |
+| GPT-5.6 Luna (Medium) @ 4000 | 3 | 0 | 0 | 1 | 0 | 1 | 2 |
 | GPT-5.6 Terra (Medium) @ 1000 | 10 | 0 | 1 | 0 | 0 | 0 | 0 |
 | GPT-5.6 Terra (Medium) @ 4000 | 2 | 0 | 1 | 0 | 0 | 0 | 1 |
 | Gemini 3.6 Flash (Medium) @ 1000 | 9 | 1 | 0 | 1 | 1 | 0 | 0 |
-| Gemini 3.6 Flash (Medium) @ 4000 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Gemini 3.6 Flash (Medium) @ 4000 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
 | Gemini 3.8 Flash (Low) @ 1000 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Gemini 3.8 Flash (Low) @ 4000 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 
@@ -129,7 +129,7 @@ Correct values groundgate admitted whose evidence does not overlap any gold evid
 | Claude Haiku 4.5 @ 1000 | fda | 8 | 100.0% (8/8) | 12.5% (1/8) |
 | Claude Haiku 4.5 @ 1000 | ntsb | 4 | 100.0% (4/4) | 0.0% (0/4) |
 | Claude Haiku 4.5 @ 4000 | fda | 2 | 100.0% (2/2) | 0.0% (0/2) |
-| Claude Haiku 4.5 @ 4000 | ntsb | 4 | 100.0% (4/4) | 25.0% (1/4) |
+| Claude Haiku 4.5 @ 4000 | ntsb | 4 | 100.0% (4/4) | 0.0% (0/4) |
 | Claude Haiku 4.5 @ 4000 | irs | 2 | 100.0% (2/2) | 0.0% (0/2) |
 | Claude Sonnet 4.6 @ 1000 | fda | 5 | 100.0% (5/5) | 0.0% (0/5) |
 | Claude Sonnet 4.6 @ 1000 | ntsb | 6 | 100.0% (6/6) | 0.0% (0/6) |
@@ -143,7 +143,7 @@ Correct values groundgate admitted whose evidence does not overlap any gold evid
 | GPT-5.6 Luna (Medium) @ 1000 | ntsb | 5 | 100.0% (5/5) | 0.0% (0/5) |
 | GPT-5.6 Luna (Medium) @ 1000 | irs | 4 | 100.0% (4/4) | 0.0% (0/4) |
 | GPT-5.6 Luna (Medium) @ 4000 | fda | 3 | 100.0% (3/3) | 33.3% (1/3) |
-| GPT-5.6 Luna (Medium) @ 4000 | ntsb | 2 | 100.0% (2/2) | 50.0% (1/2) |
+| GPT-5.6 Luna (Medium) @ 4000 | ntsb | 2 | 100.0% (2/2) | 0.0% (0/2) |
 | GPT-5.6 Luna (Medium) @ 4000 | irs | 3 | 66.7% (2/3) | 0.0% (0/3) |
 | GPT-5.6 Terra (Medium) @ 1000 | fda | 7 | 100.0% (7/7) | 14.3% (1/7) |
 | GPT-5.6 Terra (Medium) @ 1000 | ntsb | 4 | 100.0% (4/4) | 0.0% (0/4) |
@@ -155,7 +155,7 @@ Correct values groundgate admitted whose evidence does not overlap any gold evid
 | Gemini 3.6 Flash (Medium) @ 1000 | ntsb | 4 | 100.0% (4/4) | 0.0% (0/4) |
 | Gemini 3.6 Flash (Medium) @ 1000 | irs | 1 | 100.0% (1/1) | 0.0% (0/1) |
 | Gemini 3.6 Flash (Medium) @ 4000 | fda | 1 | 100.0% (1/1) | 0.0% (0/1) |
-| Gemini 3.6 Flash (Medium) @ 4000 | ntsb | 1 | 100.0% (1/1) | 100.0% (1/1) |
+| Gemini 3.6 Flash (Medium) @ 4000 | ntsb | 1 | 100.0% (1/1) | 0.0% (0/1) |
 | Gemini 3.8 Flash (Low) @ 1000 | fda | 4 | 100.0% (4/4) | 0.0% (0/4) |
 | Gemini 3.8 Flash (Low) @ 1000 | ntsb | 4 | 100.0% (4/4) | 0.0% (0/4) |
 | Gemini 3.8 Flash (Low) @ 4000 | fda | 1 | 100.0% (1/1) | 0.0% (0/1) |
@@ -209,7 +209,7 @@ Each group's candidates go into one `admit` call per document, so a disagreement
 | GPT-5.6 Terra (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 30 | 20 | 5.0% (1/20) [1, 24] | 5.0% (1/20) | 14.3% (92/641) | 13.7% (88/641) | 88.8% (245/276) |
 | Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 30 | 21 | 4.8% (1/21) [1, 23] | 4.8% (1/21) | 12.9% (87/673) | 12.5% (84/673) | 89.1% (246/276) |
 | Claude Haiku 4.5 + Claude Sonnet 4.6 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 1000 | 30 | 87 | 5.8% (5/87) [2, 13] | 5.8% (5/87) | 15.9% (371/2339) | 14.5% (339/2339) | 87.7% (242/276) |
-| Claude Haiku 4.5 + Claude Sonnet 4.6 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 4000 | 30 | 33 | 15.2% (5/33) [7, 31] | 18.2% (6/33) | 9.9% (199/2011) | 9.3% (187/2011) | 89.5% (247/276) |
+| Claude Haiku 4.5 + Claude Sonnet 4.6 + Claude Sonnet 5.5 + GPT-5.6 Luna (Medium) + GPT-5.6 Terra (Medium) + Gemini 3.6 Flash (Medium) + Gemini 3.8 Flash (Low) @ 4000 | 30 | 33 | 6.1% (2/33) [2, 20] | 9.1% (3/33) | 9.9% (199/2011) | 9.3% (187/2011) | 89.5% (247/276) |
 
 ## Appendix: wrong and admitted
 
@@ -218,13 +218,10 @@ Every wrong candidate groundgate admitted without review.
 | Run | doc | field | value | gold | why wrong | text around the evidence |
 |---|---|---|---|---|---|---|
 | Claude Haiku 4.5, 1000 | fda-metoprolol-succinate | adult_max_daily_dose | 200 | absent | absent_field | the highest dosage level tolerated by the patient or up to 200 mg of metoprolol succinate extended-releas |
-| Claude Haiku 4.5, 4000 | ntsb-192708 | altimeter_setting | 29 | 29.97 | wrong_value | recast/Actual: None / None N/A / N/A Altimeter Setting: 29.97 inches Hg Temperature/Dew Point: 28 |
 | Claude Sonnet 5.5, 1000 | fda-metoprolol-succinate | adult_max_daily_dose | 200 | absent | absent_field | the highest dosage level tolerated by the patient or up to 200 mg of metoprolol succinate extended-releas |
 | GPT-5.6 Luna (Medium), 1000 | fda-metoprolol-succinate | adult_max_daily_dose | 200 | absent | absent_field | the highest dosage level tolerated by the patient or up to 200 mg of metoprolol succinate extended-releas |
 | GPT-5.6 Luna (Medium), 4000 | fda-levothyroxine | adult_starting_dose | 1.6 | absent | absent_field | lts diagnosed with hypothyroidism Full replacement dose is 1.6 mcg/kg/day. Some patients require a lower starting |
-| GPT-5.6 Luna (Medium), 4000 | ntsb-192708 | altimeter_setting | 29 | 29.97 | wrong_value | recast/Actual: None / None N/A / N/A Altimeter Setting: 29.97 inches Hg Temperature/Dew Point: 28 |
 | GPT-5.6 Terra (Medium), 1000 | fda-metoprolol-succinate | adult_max_daily_dose | 200 | absent | absent_field | the highest dosage level tolerated by the patient or up to 200 mg of metoprolol succinate extended-releas |
 | GPT-5.6 Terra (Medium), 4000 | fda-levothyroxine | adult_starting_dose | 1.6 | absent | absent_field | lts diagnosed with hypothyroidism Full replacement dose is 1.6 mcg/kg/day. Some patients require a lower starting |
 | GPT-5.6 Terra (Medium), 4000 | fda-lisinopril | adult_starting_dose | 5 | 10 | wrong_value | l to half of the usual recommended dose i.e., hypertension, 5 mg; systolic heart failure, 2.5 mg and acu |
 | Gemini 3.6 Flash (Medium), 1000 | fda-metoprolol-succinate | adult_max_daily_dose | 200 | absent | absent_field | the highest dosage level tolerated by the patient or up to 200 mg of metoprolol succinate extended-releas |
-| Gemini 3.6 Flash (Medium), 4000 | ntsb-192708 | altimeter_setting | 29 | 29.97 | wrong_value | recast/Actual: None / None N/A / N/A Altimeter Setting: 29.97 inches Hg Temperature/Dew Point: 28 |

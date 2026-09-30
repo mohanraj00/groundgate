@@ -311,25 +311,24 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0665,
-      0.3092
+      0.0168,
+      0.1961
      ],
-     "k": 5,
+     "k": 2,
      "n": 33,
-     "rate": 0.1515
+     "rate": 0.0606
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0861,
-      0.3439
+      0.0314,
+      0.2357
      ],
-     "k": 6,
+     "k": 3,
      "n": 33,
-     "rate": 0.1818
+     "rate": 0.0909
     },
     "escaped_by_class": {
-     "absent_field": 2,
-     "wrong_value": 3
+     "absent_field": 2
     },
     "false_reject": {
      "ci95": [
@@ -426,19 +425,6 @@
     "value": "200"
    },
    {
-    "buffer": 4000,
-    "codes": [],
-    "context": "recast/Actual: None / None N/A / N/A Altimeter Setting: 29.97 inches Hg Temperature/Dew Point: 28",
-    "doc": "ntsb-192708",
-    "field": "altimeter_setting",
-    "gold": [
-     "29.97"
-    ],
-    "label": "wrong_value",
-    "model": "Claude Haiku 4.5",
-    "value": "29"
-   },
-   {
     "buffer": 1000,
     "codes": [],
     "context": "the highest dosage level tolerated by the patient or up to 200 mg of metoprolol succinate extended-releas",
@@ -470,19 +456,6 @@
     "label": "absent_field",
     "model": "GPT-5.6 Luna (Medium)",
     "value": "1.6"
-   },
-   {
-    "buffer": 4000,
-    "codes": [],
-    "context": "recast/Actual: None / None N/A / N/A Altimeter Setting: 29.97 inches Hg Temperature/Dew Point: 28",
-    "doc": "ntsb-192708",
-    "field": "altimeter_setting",
-    "gold": [
-     "29.97"
-    ],
-    "label": "wrong_value",
-    "model": "GPT-5.6 Luna (Medium)",
-    "value": "29"
    },
    {
     "buffer": 1000,
@@ -529,19 +502,6 @@
     "label": "absent_field",
     "model": "Gemini 3.6 Flash (Medium)",
     "value": "200"
-   },
-   {
-    "buffer": 4000,
-    "codes": [],
-    "context": "recast/Actual: None / None N/A / N/A Altimeter Setting: 29.97 inches Hg Temperature/Dew Point: 28",
-    "doc": "ntsb-192708",
-    "field": "altimeter_setting",
-    "gold": [
-     "29.97"
-    ],
-    "label": "wrong_value",
-    "model": "Gemini 3.6 Flash (Medium)",
-    "value": "29"
    }
   ],
   "pairs": {
@@ -687,25 +647,23 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0127,
-      0.3147
+      0.0,
+      0.2153
      ],
-     "k": 1,
+     "k": 0,
      "n": 14,
-     "rate": 0.0714
+     "rate": 0.0
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0127,
-      0.3147
+      0.0,
+      0.2153
      ],
-     "k": 1,
+     "k": 0,
      "n": 14,
-     "rate": 0.0714
+     "rate": 0.0
     },
-    "escaped_by_class": {
-     "wrong_value": 1
-    },
+    "escaped_by_class": {},
     "false_reject": {
      "ci95": [
       0.0018,
@@ -923,25 +881,23 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0179,
-      0.4042
+      0.0,
+      0.2775
      ],
-     "k": 1,
+     "k": 0,
      "n": 10,
-     "rate": 0.1
+     "rate": 0.0
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0179,
-      0.4042
+      0.0,
+      0.2775
      ],
-     "k": 1,
+     "k": 0,
      "n": 10,
-     "rate": 0.1
+     "rate": 0.0
     },
-    "escaped_by_class": {
-     "wrong_value": 1
-    },
+    "escaped_by_class": {},
     "false_reject": {
      "ci95": [
       0.0018,
@@ -1160,25 +1116,24 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0659,
-      0.4301
+      0.0111,
+      0.2833
      ],
-     "k": 3,
+     "k": 1,
      "n": 16,
-     "rate": 0.1875
+     "rate": 0.0625
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0659,
-      0.4301
+      0.0111,
+      0.2833
      ],
-     "k": 3,
+     "k": 1,
      "n": 16,
-     "rate": 0.1875
+     "rate": 0.0625
     },
     "escaped_by_class": {
-     "absent_field": 1,
-     "wrong_value": 2
+     "absent_field": 1
     },
     "false_reject": {
      "ci95": [
@@ -1398,6 +1353,15 @@
     "documents": 30,
     "escape": {
      "ci95": [
+      0.0127,
+      0.3147
+     ],
+     "k": 1,
+     "n": 14,
+     "rate": 0.0714
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
       0.0401,
       0.3994
      ],
@@ -1405,18 +1369,8 @@
      "n": 14,
      "rate": 0.1429
     },
-    "escape_when_admitted_separately": {
-     "ci95": [
-      0.0757,
-      0.4759
-     ],
-     "k": 3,
-     "n": 14,
-     "rate": 0.2143
-    },
     "escaped_by_class": {
-     "absent_field": 1,
-     "wrong_value": 1
+     "absent_field": 1
     },
     "false_reject": {
      "ci95": [
@@ -1636,25 +1590,23 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0567,
-      0.5098
+      0.0,
+      0.2775
      ],
-     "k": 2,
+     "k": 0,
      "n": 10,
-     "rate": 0.2
+     "rate": 0.0
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0567,
-      0.5098
+      0.0,
+      0.2775
      ],
-     "k": 2,
+     "k": 0,
      "n": 10,
-     "rate": 0.2
+     "rate": 0.0
     },
-    "escaped_by_class": {
-     "wrong_value": 2
-    },
+    "escaped_by_class": {},
     "false_reject": {
      "ci95": [
       0.0018,
@@ -1872,25 +1824,23 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0199,
-      0.435
+      0.0,
+      0.2992
      ],
-     "k": 1,
+     "k": 0,
      "n": 9,
-     "rate": 0.1111
+     "rate": 0.0
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0199,
-      0.435
+      0.0,
+      0.2992
      ],
-     "k": 1,
+     "k": 0,
      "n": 9,
-     "rate": 0.1111
+     "rate": 0.0
     },
-    "escaped_by_class": {
-     "wrong_value": 1
-    },
+    "escaped_by_class": {},
     "false_reject": {
      "ci95": [
       0.0018,
@@ -2343,25 +2293,24 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0401,
-      0.3994
+      0.0127,
+      0.3147
      ],
-     "k": 2,
+     "k": 1,
      "n": 14,
-     "rate": 0.1429
+     "rate": 0.0714
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0401,
-      0.3994
+      0.0127,
+      0.3147
      ],
-     "k": 2,
+     "k": 1,
      "n": 14,
-     "rate": 0.1429
+     "rate": 0.0714
     },
     "escaped_by_class": {
-     "absent_field": 1,
-     "wrong_value": 1
+     "absent_field": 1
     },
     "false_reject": {
      "ci95": [
@@ -2818,25 +2767,23 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0224,
-      0.4709
+      0.0,
+      0.3244
      ],
-     "k": 1,
+     "k": 0,
      "n": 8,
-     "rate": 0.125
+     "rate": 0.0
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0224,
-      0.4709
+      0.0,
+      0.3244
      ],
-     "k": 1,
+     "k": 0,
      "n": 8,
-     "rate": 0.125
+     "rate": 0.0
     },
-    "escaped_by_class": {
-     "wrong_value": 1
-    },
+    "escaped_by_class": {},
     "false_reject": {
      "ci95": [
       0.001,
@@ -3286,25 +3233,24 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0567,
-      0.5098
+      0.0179,
+      0.4042
      ],
-     "k": 2,
+     "k": 1,
      "n": 10,
-     "rate": 0.2
+     "rate": 0.1
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0567,
-      0.5098
+      0.0179,
+      0.4042
      ],
-     "k": 2,
+     "k": 1,
      "n": 10,
-     "rate": 0.2
+     "rate": 0.1
     },
     "escaped_by_class": {
-     "absent_field": 1,
-     "wrong_value": 1
+     "absent_field": 1
     },
     "false_reject": {
      "ci95": [
@@ -3761,25 +3707,23 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0456,
-      0.6994
+      0.0,
+      0.4899
      ],
-     "k": 1,
+     "k": 0,
      "n": 4,
-     "rate": 0.25
+     "rate": 0.0
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0456,
-      0.6994
+      0.0,
+      0.4899
      ],
-     "k": 1,
+     "k": 0,
      "n": 4,
-     "rate": 0.25
+     "rate": 0.0
     },
-    "escaped_by_class": {
-     "wrong_value": 1
-    },
+    "escaped_by_class": {},
     "false_reject": {
      "ci95": [
       0.001,
@@ -4230,6 +4174,15 @@
     "documents": 30,
     "escape": {
      "ci95": [
+      0.0401,
+      0.3994
+     ],
+     "k": 2,
+     "n": 14,
+     "rate": 0.1429
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
       0.0757,
       0.4759
      ],
@@ -4237,18 +4190,8 @@
      "n": 14,
      "rate": 0.2143
     },
-    "escape_when_admitted_separately": {
-     "ci95": [
-      0.1172,
-      0.5465
-     ],
-     "k": 4,
-     "n": 14,
-     "rate": 0.2857
-    },
     "escaped_by_class": {
-     "absent_field": 2,
-     "wrong_value": 1
+     "absent_field": 2
     },
     "false_reject": {
      "ci95": [
@@ -4469,25 +4412,24 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.1078,
-      0.6032
+      0.0179,
+      0.4042
      ],
-     "k": 3,
+     "k": 1,
      "n": 10,
-     "rate": 0.3
+     "rate": 0.1
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.1078,
-      0.6032
+      0.0179,
+      0.4042
      ],
-     "k": 3,
+     "k": 1,
      "n": 10,
-     "rate": 0.3
+     "rate": 0.1
     },
     "escaped_by_class": {
-     "absent_field": 1,
-     "wrong_value": 2
+     "absent_field": 1
     },
     "false_reject": {
      "ci95": [
@@ -4708,25 +4650,24 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0632,
-      0.5474
+      0.0199,
+      0.435
      ],
-     "k": 2,
+     "k": 1,
      "n": 9,
-     "rate": 0.2222
+     "rate": 0.1111
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0632,
-      0.5474
+      0.0199,
+      0.435
      ],
-     "k": 2,
+     "k": 1,
      "n": 9,
-     "rate": 0.2222
+     "rate": 0.1111
     },
     "escaped_by_class": {
-     "absent_field": 1,
-     "wrong_value": 1
+     "absent_field": 1
     },
     "false_reject": {
      "ci95": [
@@ -4947,6 +4888,15 @@
     "documents": 30,
     "escape": {
      "ci95": [
+      0.0224,
+      0.4709
+     ],
+     "k": 1,
+     "n": 8,
+     "rate": 0.125
+    },
+    "escape_when_admitted_separately": {
+     "ci95": [
       0.0715,
       0.5907
      ],
@@ -4954,18 +4904,8 @@
      "n": 8,
      "rate": 0.25
     },
-    "escape_when_admitted_separately": {
-     "ci95": [
-      0.1368,
-      0.6943
-     ],
-     "k": 3,
-     "n": 8,
-     "rate": 0.375
-    },
     "escaped_by_class": {
-     "absent_field": 1,
-     "wrong_value": 1
+     "absent_field": 1
     },
     "false_reject": {
      "ci95": [
@@ -5421,25 +5361,23 @@
     "documents": 30,
     "escape": {
      "ci95": [
-      0.0615,
-      0.7923
+      0.0,
+      0.5615
      ],
-     "k": 1,
+     "k": 0,
      "n": 3,
-     "rate": 0.3333
+     "rate": 0.0
     },
     "escape_when_admitted_separately": {
      "ci95": [
-      0.0615,
-      0.7923
+      0.0,
+      0.5615
      ],
-     "k": 1,
+     "k": 0,
      "n": 3,
-     "rate": 0.3333
+     "rate": 0.0
     },
-    "escaped_by_class": {
-     "wrong_value": 1
-    },
+    "escaped_by_class": {},
     "false_reject": {
      "ci95": [
       0.001,
@@ -6671,16 +6609,14 @@
        },
        "escape": {
         "ci95": [
-         0.0456,
-         0.6994
+         0.0,
+         0.4899
         ],
-        "k": 1,
+        "k": 0,
         "n": 4,
-        "rate": 0.25
+        "rate": 0.0
        },
-       "escaped_by_class": {
-        "wrong_value": 1
-       },
+       "escaped_by_class": {},
        "false_reject": {
         "ci95": [
          0.0,
@@ -6801,7 +6737,7 @@
     "caught_by": {
      "CONFLICTING_CANDIDATES": 4,
      "UNIT_NOT_IN_EVIDENCE": 1,
-     "VALUE_NOT_IN_EVIDENCE": 2
+     "VALUE_NOT_IN_EVIDENCE": 3
     },
     "documents": 30,
     "groundgate": {
@@ -6827,16 +6763,14 @@
      },
      "escape": {
       "ci95": [
-       0.0224,
-       0.4709
+       0.0,
+       0.3244
       ],
-      "k": 1,
+      "k": 0,
       "n": 8,
-      "rate": 0.125
+      "rate": 0.0
      },
-     "escaped_by_class": {
-      "wrong_value": 1
-     },
+     "escaped_by_class": {},
      "false_reject": {
       "ci95": [
        0.0019,
@@ -11675,16 +11609,14 @@
        },
        "escape": {
         "ci95": [
-         0.0945,
-         0.9055
+         0.0,
+         0.6576
         ],
-        "k": 1,
+        "k": 0,
         "n": 2,
-        "rate": 0.5
+        "rate": 0.0
        },
-       "escaped_by_class": {
-        "wrong_value": 1
-       },
+       "escaped_by_class": {},
        "false_reject": {
         "ci95": [
          0.0,
@@ -11806,7 +11738,7 @@
      "CONFLICTING_CANDIDATES": 3,
      "TYPE_INVALID": 1,
      "UNIT_NOT_IN_EVIDENCE": 1,
-     "VALUE_NOT_IN_EVIDENCE": 1
+     "VALUE_NOT_IN_EVIDENCE": 2
     },
     "documents": 30,
     "groundgate": {
@@ -11832,16 +11764,15 @@
      },
      "escape": {
       "ci95": [
-       0.0715,
-       0.5907
+       0.0224,
+       0.4709
       ],
-      "k": 2,
+      "k": 1,
       "n": 8,
-      "rate": 0.25
+      "rate": 0.125
      },
      "escaped_by_class": {
-      "absent_field": 1,
-      "wrong_value": 1
+      "absent_field": 1
      },
      "false_reject": {
       "ci95": [
@@ -15065,16 +14996,14 @@
        },
        "escape": {
         "ci95": [
-         0.2065,
-         1.0
+         0.0,
+         0.7935
         ],
-        "k": 1,
+        "k": 0,
         "n": 1,
-        "rate": 1.0
+        "rate": 0.0
        },
-       "escaped_by_class": {
-        "wrong_value": 1
-       },
+       "escaped_by_class": {},
        "false_reject": {
         "ci95": [
          0.0,
@@ -15193,7 +15122,8 @@
      }
     },
     "caught_by": {
-     "CONFLICTING_CANDIDATES": 1
+     "CONFLICTING_CANDIDATES": 1,
+     "VALUE_NOT_IN_EVIDENCE": 1
     },
     "documents": 30,
     "groundgate": {
@@ -15219,16 +15149,14 @@
      },
      "escape": {
       "ci95": [
-       0.0945,
-       0.9055
+       0.0,
+       0.6576
       ],
-      "k": 1,
+      "k": 0,
       "n": 2,
-      "rate": 0.5
+      "rate": 0.0
      },
-     "escaped_by_class": {
-      "wrong_value": 1
-     },
+     "escaped_by_class": {},
      "false_reject": {
       "ci95": [
        0.0006,

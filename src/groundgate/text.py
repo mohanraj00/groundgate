@@ -43,18 +43,11 @@ def tokens(text: str, start: int = 0, end: int | None = None) -> list[Token]:
         if tok.endswith(","):
             tok = tok[:-1]
         e = s + len(tok)
-        if e == end and _continues(text, e):
+        whole = _TOKEN.match(text, s)
+        if whole and s + len(whole.group().removesuffix(",")) > end:
             continue  # the number runs past the region: never read a prefix of it
         out.append(Token(s, e, _to_decimal(tok)))
     return out
-
-
-def _continues(text: str, i: int) -> bool:
-    if i >= len(text):
-        return False
-    if text[i].isdigit():
-        return True
-    return text[i] in ".," and i + 1 < len(text) and text[i + 1].isdigit()
 
 
 def parse_value(raw: str) -> Decimal | None:
