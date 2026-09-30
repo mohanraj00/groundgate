@@ -62,5 +62,6 @@ until every draft fact and absence is decided.
 - Saves are automatic. The timer counts time with the tab visible, and the total is written to
   the gold file so the benchmark can report the labeling cost.
 
-There are 276 draft facts and 34 absences across 30 documents. The NTSB reports are the
-fastest; the IRS pages take the most reading. One-hour sittings work well.
+The first check covered 276 draft facts and 34 absences across 30 documents and took 2.4 hours.
+The NTSB reports are the fastest; the IRS pages take the most reading. One-hour sittings work
+well.

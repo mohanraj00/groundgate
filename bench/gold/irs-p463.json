@@ -112,7 +112,7 @@
      "end": 2279
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -125,7 +125,7 @@
      "end": 2681
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -142,7 +142,7 @@
      "end": 3097
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -159,7 +159,7 @@
      "end": 3122
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -176,7 +176,7 @@
      "end": 3158
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -189,7 +189,7 @@
      "end": 3071
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -202,7 +202,7 @@
      "end": 3507
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -215,7 +215,7 @@
      "end": 3625
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -228,13 +228,17 @@
      "end": 3811
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "standard_mileage_rate_2026": "draft"
+  "standard_mileage_rate_2026": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-29T18:51:00-0700"
+ },
+ "seconds_spent": 139
 }

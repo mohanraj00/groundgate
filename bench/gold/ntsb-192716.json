@@ -166,7 +166,7 @@
      "end": 2388
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -179,7 +179,7 @@
      "end": 2709
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -192,7 +192,7 @@
      "end": 2742
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -205,7 +205,7 @@
      "end": 2955
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -218,7 +218,7 @@
      "end": 3253
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -231,7 +231,7 @@
      "end": 3892
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -244,7 +244,7 @@
      "end": 3836
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -257,7 +257,7 @@
      "end": 4057
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -270,15 +270,19 @@
      "end": 4026
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "pilot_last_90_days_hours": "draft",
-  "airport_elevation": "draft",
-  "runway_length": "draft"
+  "pilot_last_90_days_hours": "confirmed",
+  "airport_elevation": "confirmed",
+  "runway_length": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-29T21:53:30-0700"
+ },
+ "seconds_spent": 52
 }

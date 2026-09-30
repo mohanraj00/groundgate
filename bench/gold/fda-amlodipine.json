@@ -76,7 +76,7 @@
      "end": 501
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -93,7 +93,7 @@
      "end": 543
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -106,7 +106,7 @@
      "end": 1502
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -119,7 +119,7 @@
      "end": 2120
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -132,7 +132,7 @@
      "end": 2126
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -145,7 +145,7 @@
      "end": 2137
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -162,11 +162,28 @@
      "end": 657
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
+  },
+  {
+   "id": "p1790724166963",
+   "field": "adult_starting_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 27,
+     "end": 75
+    }
+   ],
+   "status": "confirmed"
   }
  ],
  "absent": {},
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-29T16:24:45-0700"
+ },
+ "seconds_spent": 375
 }

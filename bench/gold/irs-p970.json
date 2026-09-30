@@ -121,7 +121,7 @@
      "end": 943
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -134,7 +134,7 @@
      "end": 1420
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -151,7 +151,7 @@
      "end": 1544
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -164,7 +164,7 @@
      "end": 1443
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -181,7 +181,7 @@
      "end": 1562
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -194,7 +194,7 @@
      "end": 1785
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -211,7 +211,7 @@
      "end": 1915
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -224,7 +224,7 @@
      "end": 1808
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -241,7 +241,7 @@
      "end": 1933
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f10",
@@ -254,13 +254,17 @@
      "end": 2253
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "american_opportunity_credit_max": "draft"
+  "american_opportunity_credit_max": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-29T21:07:54-0700"
+ },
+ "seconds_spent": 365
 }

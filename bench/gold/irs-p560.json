@@ -148,7 +148,7 @@
      "end": 3199
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -161,7 +161,7 @@
      "end": 3233
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -174,7 +174,7 @@
      "end": 3367
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -187,7 +187,7 @@
      "end": 3388
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -200,7 +200,7 @@
      "end": 3706
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -213,7 +213,7 @@
      "end": 3740
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -226,7 +226,7 @@
      "end": 3878
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -239,7 +239,7 @@
      "end": 3913
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -252,7 +252,7 @@
      "end": 4085
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f10",
@@ -265,7 +265,7 @@
      "end": 4119
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f11",
@@ -278,7 +278,7 @@
      "end": 4664
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f12",
@@ -291,7 +291,7 @@
      "end": 4684
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f13",
@@ -304,13 +304,17 @@
      "end": 5812
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "ira_contribution_limit_2026": "draft"
+  "ira_contribution_limit_2026": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-29T19:13:02-0700"
+ },
+ "seconds_spent": 264
 }

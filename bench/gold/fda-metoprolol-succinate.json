@@ -76,7 +76,7 @@
      "end": 510
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -89,7 +89,7 @@
      "end": 838
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -102,14 +102,34 @@
      "end": 3477
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
+  },
+  {
+   "id": "p1790731131955",
+   "field": "adult_max_daily_dose",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [],
+   "status": "rejected"
+  },
+  {
+   "id": "p1790731179601",
+   "field": "adult_max_daily_dose",
+   "value": "100",
+   "unit": "mg",
+   "evidence": [],
+   "status": "rejected"
   }
  ],
  "absent": {
-  "adult_max_daily_dose": "draft",
-  "hepatic_starting_dose": "draft"
+  "hepatic_starting_dose": "confirmed",
+  "adult_max_daily_dose": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-29T18:22:05-0700"
+ },
+ "seconds_spent": 832
 }

@@ -23,14 +23,14 @@
 <text x="396.6" y="97" fill="#333" font-size="11">8%</text>
 <text x="240" y="146.5" text-anchor="end" fill="#222">Claude Haiku 4.5, buffer 4000</text>
 <rect x="250" y="117" width="400.0" height="14" fill="#b8b8b8"/>
-<line x1="520.2" y1="124.0" x2="650.0" y2="124.0" stroke="#222" stroke-width="1"/>
+<line x1="508.3" y1="124.0" x2="650.0" y2="124.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="128" fill="#333" font-size="11">100%</text>
 <rect x="250" y="134" width="400.0" height="14" fill="#5b6b7f"/>
-<line x1="520.2" y1="141.0" x2="650.0" y2="141.0" stroke="#222" stroke-width="1"/>
+<line x1="508.3" y1="141.0" x2="650.0" y2="141.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="145" fill="#333" font-size="11">100%</text>
 <rect x="250" y="151" width="1.5" height="14" fill="#1f7a4d"/>
-<line x1="250.0" y1="158.0" x2="379.8" y2="158.0" stroke="#222" stroke-width="1"/>
-<text x="384.8" y="162" fill="#333" font-size="11">0%</text>
+<line x1="250.0" y1="158.0" x2="391.7" y2="158.0" stroke="#222" stroke-width="1"/>
+<text x="396.7" y="162" fill="#333" font-size="11">0%</text>
 <text x="240" y="211.5" text-anchor="end" fill="#222">Claude Sonnet 4.6, buffer 1000</text>
 <rect x="250" y="182" width="400.0" height="14" fill="#b8b8b8"/>
 <line x1="546.5" y1="189.0" x2="650.0" y2="189.0" stroke="#222" stroke-width="1"/>
@@ -43,24 +43,24 @@
 <text x="358.5" y="227" fill="#333" font-size="11">0%</text>
 <text x="240" y="276.5" text-anchor="end" fill="#222">Claude Sonnet 4.6, buffer 4000</text>
 <rect x="250" y="247" width="400.0" height="14" fill="#b8b8b8"/>
-<line x1="493.9" y1="254.0" x2="650.0" y2="254.0" stroke="#222" stroke-width="1"/>
+<line x1="476.2" y1="254.0" x2="650.0" y2="254.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="258" fill="#333" font-size="11">100%</text>
 <rect x="250" y="264" width="400.0" height="14" fill="#5b6b7f"/>
-<line x1="493.9" y1="271.0" x2="650.0" y2="271.0" stroke="#222" stroke-width="1"/>
+<line x1="476.2" y1="271.0" x2="650.0" y2="271.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="275" fill="#333" font-size="11">100%</text>
 <rect x="250" y="281" width="1.5" height="14" fill="#1f7a4d"/>
-<line x1="250.0" y1="288.0" x2="406.1" y2="288.0" stroke="#222" stroke-width="1"/>
-<text x="411.1" y="292" fill="#333" font-size="11">0%</text>
+<line x1="250.0" y1="288.0" x2="423.8" y2="288.0" stroke="#222" stroke-width="1"/>
+<text x="428.8" y="292" fill="#333" font-size="11">0%</text>
 <text x="240" y="341.5" text-anchor="end" fill="#222">Claude Sonnet 5.5, buffer 1000</text>
 <rect x="250" y="312" width="400.0" height="14" fill="#b8b8b8"/>
-<line x1="558.8" y1="319.0" x2="650.0" y2="319.0" stroke="#222" stroke-width="1"/>
+<line x1="553.0" y1="319.0" x2="650.0" y2="319.0" stroke="#222" stroke-width="1"/>
 <text x="655.0" y="323" fill="#333" font-size="11">100%</text>
-<rect x="250" y="329" width="369.2" height="14" fill="#5b6b7f"/>
-<line x1="516.8" y1="336.0" x2="644.5" y2="336.0" stroke="#222" stroke-width="1"/>
-<text x="649.5" y="340" fill="#333" font-size="11">92%</text>
-<rect x="250" y="346" width="30.8" height="14" fill="#1f7a4d"/>
-<line x1="255.5" y1="353.0" x2="383.2" y2="353.0" stroke="#222" stroke-width="1"/>
-<text x="388.2" y="357" fill="#333" font-size="11">8%</text>
+<rect x="250" y="329" width="366.7" height="14" fill="#5b6b7f"/>
+<line x1="508.4" y1="336.0" x2="644.0" y2="336.0" stroke="#222" stroke-width="1"/>
+<text x="649.0" y="340" fill="#333" font-size="11">92%</text>
+<rect x="250" y="346" width="33.3" height="14" fill="#1f7a4d"/>
+<line x1="256.0" y1="353.0" x2="391.6" y2="353.0" stroke="#222" stroke-width="1"/>
+<text x="396.6" y="357" fill="#333" font-size="11">8%</text>
 <text x="240" y="406.5" text-anchor="end" fill="#222">Claude Sonnet 5.5, buffer 4000</text>
 <rect x="250" y="377" width="400.0" height="14" fill="#b8b8b8"/>
 <line x1="387.0" y1="384.0" x2="650.0" y2="384.0" stroke="#222" stroke-width="1"/>

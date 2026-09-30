@@ -56,6 +56,7 @@ class Gold:
     absent: set[str]
     excluded: set[str]
     checked: bool
+    seconds: int = 0  # labeling time
 
     def facts(self) -> list[tuple[str, str]]:
         return [(f, v) for f, vs in self.values.items() for v in sorted(vs)]
@@ -89,6 +90,7 @@ def load_gold(drafts: bool) -> dict[str, Gold]:
             absent={k for k, v in g["absent"].items() if v in ok_absent},
             excluded=set(g["excluded"]),
             checked=g.get("checked") is not None,
+            seconds=int(g.get("seconds_spent", 0)),
         )
     return out
 
@@ -653,6 +655,8 @@ def main() -> None:
             "documents": len(golds),
             "facts": sum(len(g.facts()) for g in golds.values()),
             "absent_fields": sum(len(g.absent) for g in golds.values()),
+            "excluded_fields": sum(len(g.excluded) for g in golds.values()),
+            "labeling_hours": round(sum(g.seconds for g in golds.values()) / 3600, 1),
         },
         "track_b": track_b(golds),
         "track_a": track_a(golds),

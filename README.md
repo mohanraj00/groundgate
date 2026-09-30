@@ -48,12 +48,43 @@ planted value and unit errors whose quote was correct. groundgate caught **all**
 rejected **none** of the correct facts. The method and full tables are in
 [spikes/m0_5](spikes/m0_5/README.md).
 
-To be clear about scale: on clean text, current models rarely get a value wrong. In that spike, 84
-real extractions had no value errors at all. The point is not that models are bad. It is that when
+To be clear about scale: current models rarely get a value wrong. In the benchmark below, 117 of
+4,338 real extractions were wrong. The point is not that models are bad. It is that when
 one is wrong, nothing downstream should have to trust it, and every fact that is admitted comes
 with proof you can re-check.
 
 LangExtract verifies the text. groundgate verifies the value.
+
+## Benchmark
+
+Seven models (Gemini, GPT and Claude, each through its own CLI) ran through LangExtract on 30
+public-domain FDA drug labels, NTSB accident reports and IRS publications, at two chunk sizes. A
+person checked every gold fact. Of 4,338 extractions, 117 were wrong: the wrong value, a value
+for a field the document doesn't state, the wrong unit, or not a number.
+
+| | LangExtract, `MATCH_EXACT` | groundgate |
+|---|---:|---:|
+| wrong extractions accepted without review | 98.3% (115/117) | 6.8% (8/117) |
+| correct extractions rejected | 4.6% (194/4,221) | 0.3% (14/4,221) |
+| extractions sent to a person | 0% | 11.8% (514/4,338) |
+
+Most catches (84 of 109) were `CONFLICTING_CANDIDATES`: a model proposed two values for a
+single-valued field, and groundgate sent both to review instead of picking one.
+
+Six of the 8 that got through are the case groundgate says it cannot catch (see
+[What it does not do](#what-it-does-not-do)). Five models took metoprolol's heart failure maximum
+(200 mg) as the hypertension maximum, and one took lisinopril's renal impairment dose as the usual
+starting dose. Each number is real and cited correctly; it belongs to another condition. The
+other two read levothyroxine's 1.6 mcg/kg/day as a flat 1.6 mcg, which the unit check allows.
+Putting all seven models through one gate caught one more, because when they were wrong they
+mostly agreed.
+
+The benchmark also found a bug. When LangExtract's chunker cut "29.97" after "29.", groundgate
+read the span as 29, which its own spec forbids. It's fixed, and three wrong altimeter settings no
+longer get through.
+
+Tables and planted-error results: [bench/RESULTS.md](bench/RESULTS.md). Method and caveats:
+[bench/README.md](bench/README.md).
 
 ## Quickstart
 
@@ -151,9 +182,9 @@ A fact that passes every check can still be flagged for a person:
 | `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
 | `CONFLICTING_CANDIDATES` | another proposal for the same field has a different value |
 
-Number matching is collision-safe. The span `500 mg` inside `1,500 mg` never reads as 500, and a
-malformed number like the `$252,0000` printed in IRS Publication 590-A never equals 252,000 or
-2,520,000. When a span misses the value but its quote occurs exactly once elsewhere with the right
+Number matching is collision-safe. The span `500 mg` inside `1,500 mg` never reads as 500, a span
+that stops at `29.` inside `29.97` never reads as 29, and a malformed number like the `$252,0000`
+printed in IRS Publication 590-A never equals 252,000 or 2,520,000. When a span misses the value but its quote occurs exactly once elsewhere with the right
 value and unit, groundgate moves the evidence there and records `EVIDENCE_REANCHORED`.
 
 The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 16 language-neutral
@@ -181,19 +212,18 @@ a changed document, schema, policy, candidate or outcome.
 ## What it does not do
 
 - **It does not judge meaning.** If the model reports a number that really is in the sentence but
-  belongs to another field, every span check passes. The quickstart's $8,000 is that case. The
-  countermeasure is two independent proposers plus `CONFLICTING_CANDIDATES`; how well that works
-  is what the benchmark will measure.
+  belongs to another field, every span check passes. The quickstart's $8,000 is that case. A second
+  proposer plus `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the
+  benchmark they mostly agreed: six of the eight escapes were this case.
 - **No dates, arrays of records, or cross-document checks** in spec v0.1.
 - **No OCR.** Scanned PDFs need a text layer first (for example `ocrmypdf`).
 - **No model calls.** groundgate never asks an LLM whether an LLM was right.
 
 ## Status
 
-Pre-alpha. The spec is a v0.1 draft and may change before 0.1.0 ships on PyPI. Next up is a
-benchmark on public-domain FDA, NTSB and IRS documents with person-checked labels: how often real
-models produce each error class, how many groundgate catches, and how many correct facts it sends
-to review.
+Pre-alpha. The spec is a v0.1 draft and may change before 0.1.0 ships on PyPI. The benchmark is
+done; the next spec version starts from what it found: values that depend on a condition (dose
+per indication, limit per year) and weight-based units.
 
 ## License
 

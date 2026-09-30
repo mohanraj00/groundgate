@@ -103,7 +103,7 @@
      "end": 3410
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -116,7 +116,7 @@
      "end": 3509
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -129,7 +129,7 @@
      "end": 3790
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -142,7 +142,7 @@
      "end": 7877
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -155,7 +155,7 @@
      "end": 7895
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -168,7 +168,7 @@
      "end": 8504
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -181,7 +181,7 @@
      "end": 5376
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -194,13 +194,17 @@
      "end": 5468
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "business_mileage_rate_2026": "draft"
+  "business_mileage_rate_2026": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-29T18:48:42-0700"
+ },
+ "seconds_spent": 183
 }

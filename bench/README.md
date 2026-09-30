@@ -36,6 +36,11 @@ fact and absence in the labeling app ([label/README.md](label/README.md)), which
 the benchmarked models extracted. Only checked facts count. The gold files record who checked
 each document, when, and how long it took.
 
+The check took 2.4 hours and kept nearly all of the draft. It rejected one draft value and
+excluded that field as ambiguous, excluded one more field, found one field the draft had called
+absent (levothyroxine is dosed from birth, so the youngest pediatric age is 0), and added two
+places as evidence.
+
 An extraction is **correct** when its value is a gold value for its field and its unit is the
 field's unit. It is **wrong** when the value differs, the field is absent from the document, the
 unit differs, or the value is not a number. Off-schema field names are counted but not scored.
@@ -128,6 +133,16 @@ real "20 mg" as the tablet strength and the label only sells 10 mg tablets, ever
 Track A's "nearby number with the same unit" row measures this directly, and the Track B
 appendix lists every real case.
 
+In the real runs, this was six of the eight escapes. Each took a value stated for another
+condition: five models took metoprolol's heart failure maximum as the hypertension maximum, and
+one took lisinopril's renal impairment dose. The FDA fields name one condition ("the first
+indication in section 2") because a v0.1 field holds one value per document. A field whose value
+depends on a condition, checked against the condition's words near the evidence, is a candidate
+for the next spec version.
+
+The other two read levothyroxine's "1.6 mcg/kg/day" as a flat 1.6 mcg. The unit rule finds `mcg`
+right after the number and does not look further.
+
 ## Caveats
 
 - **The spec is frozen for this benchmark.** Scoring uses SPEC 0.1 as of commit `9245852`. While
@@ -136,8 +151,16 @@ appendix lists every real case.
   field is the limit itself; and "$1 million" is rejected for the value 1000000 because scale
   words only flag. I did not fix them here, because fixing them against this set would tune the
   rules on the test data. Fixes go into a later spec version and get measured on new documents.
+- **One fix to the code, none to the spec.** At 4,000 characters, LangExtract's chunker cut
+  "Altimeter Setting: 29.97" after "29.", and three models answered 29 from that chunk. The spec
+  says a span never reads a prefix of a longer number, but the code only checked for that when the
+  span ended right on a digit, so it admitted 29. I fixed the code to match the spec and added a
+  conformance vector. The results are from the fixed code; before the fix, these three also
+  escaped (11 of 117, not 8).
 - **Who drafted the gold.** Claude drafted it, and three Claude models (Sonnet 4.6, Sonnet 5.5,
-  Haiku 4.5) are among the benchmarked ones. A person checked every fact without seeing model output, but drafts anchor judgment.
+  Haiku 4.5) are among the benchmarked ones. A person checked every fact without seeing model
+  output, but drafts anchor judgment. The check changed little, and from here I can't tell a good
+  draft from an anchored checker.
 - **How the models were called.** Every model ran through a logged-in agent CLI, not a raw API.
   Antigravity runs in its sandboxed plan mode with a no-tools preamble. Codex runs `codex exec`
   in an empty directory with a read-only sandbox, my user config, rules and AGENTS.md ignored,
@@ -146,8 +169,8 @@ appendix lists every real case.
   servers, skills or setting sources, so no CLAUDE.md, hooks or memory load, and a one-line
   system prompt replaces the default; a reply from a fallback model or with more than one turn
   is discarded. Antigravity and Codex add their own system prompt, and temperature is not
-  under my control in any of them, so a rerun gives different extractions. The cached runs are what was
-  scored. `propose.py` also supports LangExtract's native Gemini provider.
+  under my control in any of them, so a rerun gives different extractions. The cached runs are
+  what was scored. `propose.py` also supports LangExtract's native Gemini provider.
 - **The prompt changed once, before the full runs.** The first prompt described the output
   with the words `extraction_class` and `extraction_text`, and GPT-5.6 answered in that shape
   instead of the one LangExtract parses, so its chunks were dropped. The final prompt describes
@@ -173,7 +196,7 @@ appendix lists every real case.
 ```bash
 uv sync --group langextract
 uv run python bench/fetch.py                                   # optional: re-download and verify
-uv run --group langextract python bench/score.py --drafts      # rescore; drop --drafts once the gold is checked
+uv run --group langextract python bench/score.py               # rescore from the cached runs
 uv run --group langextract python bench/propose.py --provider gemini --model <model id>  # new runs
 ```
 

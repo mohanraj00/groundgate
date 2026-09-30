@@ -177,7 +177,10 @@ def render(res: dict[str, Any]) -> dict[str, str]:
         "[bench/README.md](README.md) explains the method.",
         "",
         f"Gold: {gold['documents']} documents, {gold['facts']} facts, "
-        f"{gold['absent_fields']} fields confirmed absent ({gold['status']}).",
+        f"{gold['absent_fields']} fields confirmed absent, "
+        f"{gold['excluded_fields']} excluded as ambiguous ({gold['status']}"
+        + (f" in {gold['labeling_hours']} hours" if gold["labeling_hours"] else "")
+        + ").",
         "",
         "## Track A: planted errors",
         "",

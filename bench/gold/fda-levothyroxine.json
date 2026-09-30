@@ -72,7 +72,7 @@
      "end": 11119
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -85,7 +85,7 @@
      "end": 11145
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -98,7 +98,7 @@
      "end": 11171
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -111,7 +111,7 @@
      "end": 11198
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -124,7 +124,7 @@
      "end": 11225
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -137,7 +137,7 @@
      "end": 11253
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -150,7 +150,7 @@
      "end": 11279
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -163,7 +163,7 @@
      "end": 11304
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -176,7 +176,7 @@
      "end": 11335
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f10",
@@ -189,7 +189,7 @@
      "end": 11361
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f11",
@@ -202,7 +202,7 @@
      "end": 11388
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f12",
@@ -215,16 +215,32 @@
      "end": 11414
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
+  },
+  {
+   "id": "p1790723640162",
+   "field": "pediatric_min_age",
+   "value": "0",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 5962,
+     "end": 5975
+    }
+   ],
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "adult_starting_dose": "draft",
-  "adult_max_daily_dose": "draft",
-  "pediatric_min_age": "draft",
-  "hepatic_starting_dose": "draft"
+  "adult_starting_dose": "confirmed",
+  "adult_max_daily_dose": "confirmed",
+  "hepatic_starting_dose": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-29T16:17:08-0700"
+ },
+ "seconds_spent": 274
 }
