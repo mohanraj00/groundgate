@@ -155,7 +155,7 @@ def chart_b(b: dict[str, Any]) -> str:
 
 POOLED = {
     "escape": "wrong extractions accepted without review",
-    "false_reject": "correct extractions rejected",
+    "false_reject": "correct extractions citing the right place, rejected",
     "review_load": "extractions sent to a person",
 }
 
@@ -164,7 +164,7 @@ def chart_summary(b: dict[str, Any]) -> str:
     """The README chart: MATCH_EXACT against groundgate over every run."""
     groups = [
         (
-            label,
+            "correct extractions rejected*" if m == "false_reject" else label,
             [
                 ("lx_exact", b["pooled"]["lx_exact"][m]["rate"], None),
                 ("gg", b["pooled"]["groundgate"][m]["rate"], None),
@@ -176,7 +176,8 @@ def chart_summary(b: dict[str, Any]) -> str:
     return bars(
         "LangExtract MATCH_EXACT and groundgate, all runs",
         groups,
-        f"Track B, {len(b['runs'])} runs, {n:,} extractions. Runs share documents: no intervals.",
+        f"Track B, {len(b['runs'])} runs, {n:,} extractions. Runs share documents: no intervals."
+        " *Correct extractions citing the right place.",
     )
 
 

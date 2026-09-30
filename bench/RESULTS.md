@@ -46,7 +46,7 @@ All runs pooled. The runs share documents, so a pooled rate has no honest interv
 |  | LangExtract, all | aligned | MATCH_EXACT | groundgate |
 |---|---:|---:|---:|---:|
 | wrong extractions accepted without review | 100.0% (117/117) | 100.0% (117/117) | 98.3% (115/117) | 6.8% (8/117) |
-| correct extractions rejected | 0.0% (0/4233) | 0.0% (0/4233) | 4.6% (194/4233) | 0.3% (14/4233) |
+| correct extractions citing the right place, rejected | 0.0% (0/4233) | 0.0% (0/4233) | 4.6% (194/4233) | 0.3% (14/4233) |
 | extractions sent to a person | 0.0% (0/4350) | 0.0% (0/4350) | 0.0% (0/4350) | 12.1% (526/4350) |
 
 | Run | docs | candidates | wrong | escaped, LangExtract all | escaped, MATCH_EXACT | escaped, groundgate | wrong sent to review | false rejects | review load | recall, admitted | recall, admitted or review |
