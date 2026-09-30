@@ -26,6 +26,11 @@ milestone 0.2.
 - Scale words (#6): a number followed by a scale word also has its scaled value, so 1000000
   matches "$1 million" and is admitted with no flag. In 0.1 it was rejected. A candidate that
   gives the written value (1) keeps `SCALE_WORD`. Vector `08b-scaled-values`.
+- Per-units (#3): the first suffix after a number decides its unit, and a suffix followed by a
+  body-size or volume denominator (`/kg`, `/m2`, `per kilogram`, `/5 mL`) is not that unit. In
+  0.1, "1.6 mcg/kg/day" passed as 1.6 mcg, and "10 mg/kg (maximum 500 mg)" passed as 10 mg
+  through the later "500 mg". "200 mg/day" is still mg. A weight-based dose needs its own unit
+  code, such as `mg/kg`. Vector `04b-per-units`.
 
 ## 0.1.0 (2026-09-29)
 

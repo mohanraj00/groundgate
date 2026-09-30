@@ -208,6 +208,68 @@ vector(
 )
 
 # ---------------------------------------------------------------- non-ASCII
+PER_KG_UNITS = {
+    "mg/kg": {"suffix": ["mg/kg"]},
+    "mcg/kg/day": {"suffix": ["mcg/kg/day"]},
+}
+vector(
+    "04b-per-units",
+    "A unit followed by a per-body-size or per-volume denominator is not that unit; the first "
+    "matching suffix after the number decides; per-time keeps the unit (spec 0.2).",
+    "Give 10 mg/kg (maximum 500 mg) daily. Start at 1.6 mcg/kg/day. Infuse 75 mg/m2 on day 1. "
+    "The dose is 2 mg per kilogram. Oral solution: 250 mg/5 mL. The maximum is 200 mg/day. "
+    "Children take 5 to 10 mg/kg. Take 20 mg per day. Use 40 mg/m² weekly. Give 300 mg, "
+    "or 5 mg/kg for children.",
+    {
+        "fields": {
+            "dose": {"type": "number", "unit": "mg"},
+            "dose_per_kg": {"type": "number", "unit": "mg/kg"},
+            "cap": {"type": "number", "unit": "mg"},
+            "levo": {"type": "number", "unit": "mcg"},
+            "levo_per_kg": {"type": "number", "unit": "mcg/kg/day"},
+            "infusion": {"type": "number", "unit": "mg"},
+            "per_kilogram": {"type": "number", "unit": "mg"},
+            "solution": {"type": "number", "unit": "mg"},
+            "daily_max": {"type": "number", "unit": "mg"},
+            "child_low": {"type": "number", "unit": "mg"},
+            "daily": {"type": "number", "unit": "mg"},
+            "weekly": {"type": "number", "unit": "mg"},
+            "adult": {"type": "number", "unit": "mg"},
+        },
+        "units": PER_KG_UNITS,
+    },
+    [
+        # the first mg after 10 is "mg/kg"; the "500 mg" later in the window does not count
+        c("u1", "dose", "10", "mg", q("10 mg/kg"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("u2", "dose_per_kg", "10", "mg/kg", q("10 mg/kg")),
+        c("u3", "cap", "500", "mg", q("500 mg")),
+        c("u4", "levo", "1.6", "mcg", q("1.6 mcg/kg/day"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("u5", "levo_per_kg", "1.6", "mcg/kg/day", q("1.6 mcg/kg/day")),
+        c("u6", "infusion", "75", "mg", q("75 mg/m2"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c(
+            "u7",
+            "per_kilogram",
+            "2",
+            "mg",
+            q("2 mg per kilogram"),
+            ("rejected", ["UNIT_NOT_IN_EVIDENCE"]),
+        ),
+        c("u8", "solution", "250", "mg", q("250 mg/5 mL"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("u9", "daily_max", "200", "mg", q("200 mg/day")),
+        c(
+            "u10",
+            "child_low",
+            "5",
+            "mg",
+            q("5 to 10 mg/kg"),
+            ("rejected", ["UNIT_NOT_IN_EVIDENCE"]),
+        ),
+        c("u11", "daily", "20", "mg", q("20 mg per day")),
+        c("u12", "weekly", "40", "mg", q("40 mg/m²"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("u13", "adult", "300", "mg", q("300 mg")),
+    ],
+)
+
 vector(
     "05-non-ascii",
     "Offsets are UTF-8 bytes; spans must fall on character boundaries.",

@@ -223,6 +223,14 @@ def builtin_units() -> dict[str, tuple[list[str], list[str]]]:
     return table
 
 
+_PER_UNIT = re.compile(
+    r"\s*(?:/|per\b)\s*(?:\d+(?:\.\d+)?\s*)?"
+    r"(?:kg|kilograms?|lbs?|pounds?|m2|m\u00b2|m\^2|square\s+met(?:er|re)s?"
+    r"|mL|dL|L|lit(?:er|re)s?)(?![A-Za-z])",
+    re.I,
+)
+
+
 def unit_at(text: str, tok: Token, prefixes: list[str], suffixes: list[str], window: int) -> bool:
     """Whether a unit surface form is at ``tok`` (SPEC §4.3)."""
     if not prefixes and not suffixes:
@@ -235,6 +243,7 @@ def unit_at(text: str, tok: Token, prefixes: list[str], suffixes: list[str], win
                 return True
     _, s1 = sentence(text, tok.start)
     region = text[tok.end : min(s1, tok.end + window + max((len(s) for s in suffixes), default=0))]
+    first: tuple[int, int] | None = None  # the earliest suffix match, longest at a tie
     for suffix in suffixes:
         pat = re.escape(suffix)
         if suffix[-1].isalnum():
@@ -242,6 +251,9 @@ def unit_at(text: str, tok: Token, prefixes: list[str], suffixes: list[str], win
         if suffix[0].isalnum():
             pat = r"(?<![A-Za-z0-9])" + pat
         m = re.search(pat, region)
-        if m and m.start() <= window:
-            return True
-    return False
+        if m and (first is None or (m.start(), -m.end()) < (first[0], -first[1])):
+            first = (m.start(), m.end())
+    if first is None or first[0] > window:
+        return False
+    # "10 mg/kg", "250 mg/5 mL": a per-unit is not the unit
+    return not _PER_UNIT.match(text, tok.end + first[1])

@@ -1,0 +1,290 @@
+{
+ "name": "04b-per-units",
+ "description": "A unit followed by a per-body-size or per-volume denominator is not that unit; the first matching suffix after the number decides; per-time keeps the unit (spec 0.2).",
+ "document": "Give 10 mg/kg (maximum 500 mg) daily. Start at 1.6 mcg/kg/day. Infuse 75 mg/m2 on day 1. The dose is 2 mg per kilogram. Oral solution: 250 mg/5 mL. The maximum is 200 mg/day. Children take 5 to 10 mg/kg. Take 20 mg per day. Use 40 mg/m² weekly. Give 300 mg, or 5 mg/kg for children.",
+ "schema": {
+  "fields": {
+   "dose": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "dose_per_kg": {
+    "type": "number",
+    "unit": "mg/kg"
+   },
+   "cap": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "levo": {
+    "type": "number",
+    "unit": "mcg"
+   },
+   "levo_per_kg": {
+    "type": "number",
+    "unit": "mcg/kg/day"
+   },
+   "infusion": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "per_kilogram": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "solution": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "daily_max": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "child_low": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "daily": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "weekly": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "adult": {
+    "type": "number",
+    "unit": "mg"
+   }
+  },
+  "units": {
+   "mg/kg": {
+    "suffix": [
+     "mg/kg"
+    ]
+   },
+   "mcg/kg/day": {
+    "suffix": [
+     "mcg/kg/day"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "u1",
+   "field": "dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 5,
+    "end": 13,
+    "text": "10 mg/kg"
+   }
+  },
+  {
+   "id": "u2",
+   "field": "dose_per_kg",
+   "value": "10",
+   "unit": "mg/kg",
+   "evidence": {
+    "start": 5,
+    "end": 13,
+    "text": "10 mg/kg"
+   }
+  },
+  {
+   "id": "u3",
+   "field": "cap",
+   "value": "500",
+   "unit": "mg",
+   "evidence": {
+    "start": 23,
+    "end": 29,
+    "text": "500 mg"
+   }
+  },
+  {
+   "id": "u4",
+   "field": "levo",
+   "value": "1.6",
+   "unit": "mcg",
+   "evidence": {
+    "start": 47,
+    "end": 61,
+    "text": "1.6 mcg/kg/day"
+   }
+  },
+  {
+   "id": "u5",
+   "field": "levo_per_kg",
+   "value": "1.6",
+   "unit": "mcg/kg/day",
+   "evidence": {
+    "start": 47,
+    "end": 61,
+    "text": "1.6 mcg/kg/day"
+   }
+  },
+  {
+   "id": "u6",
+   "field": "infusion",
+   "value": "75",
+   "unit": "mg",
+   "evidence": {
+    "start": 70,
+    "end": 78,
+    "text": "75 mg/m2"
+   }
+  },
+  {
+   "id": "u7",
+   "field": "per_kilogram",
+   "value": "2",
+   "unit": "mg",
+   "evidence": {
+    "start": 101,
+    "end": 118,
+    "text": "2 mg per kilogram"
+   }
+  },
+  {
+   "id": "u8",
+   "field": "solution",
+   "value": "250",
+   "unit": "mg",
+   "evidence": {
+    "start": 135,
+    "end": 146,
+    "text": "250 mg/5 mL"
+   }
+  },
+  {
+   "id": "u9",
+   "field": "daily_max",
+   "value": "200",
+   "unit": "mg",
+   "evidence": {
+    "start": 163,
+    "end": 173,
+    "text": "200 mg/day"
+   }
+  },
+  {
+   "id": "u10",
+   "field": "child_low",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 189,
+    "end": 202,
+    "text": "5 to 10 mg/kg"
+   }
+  },
+  {
+   "id": "u11",
+   "field": "daily",
+   "value": "20",
+   "unit": "mg",
+   "evidence": {
+    "start": 209,
+    "end": 222,
+    "text": "20 mg per day"
+   }
+  },
+  {
+   "id": "u12",
+   "field": "weekly",
+   "value": "40",
+   "unit": "mg",
+   "evidence": {
+    "start": 228,
+    "end": 237,
+    "text": "40 mg/m²"
+   }
+  },
+  {
+   "id": "u13",
+   "field": "adult",
+   "value": "300",
+   "unit": "mg",
+   "evidence": {
+    "start": 251,
+    "end": 257,
+    "text": "300 mg"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
