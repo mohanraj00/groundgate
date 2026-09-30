@@ -31,6 +31,15 @@ milestone 0.2.
   0.1, "1.6 mcg/kg/day" passed as 1.6 mcg, and "10 mg/kg (maximum 500 mg)" passed as 10 mg
   through the later "500 mg". "200 mg/day" is still mg. A weight-based dose needs its own unit
   code, such as `mg/kg`. Vector `04b-per-units`.
+- Keyed fields (#2): a field can list `keys`, the conditions its values belong to (such as a
+  drug's indications), and each candidate names one as `key`. A missing or unknown key rejects
+  `KEY_INVALID`, a new step 7, so evidence checks are now steps 8 to 11. A key is at a value when
+  the value's sentence mentions it, or, when the sentence mentions none, when it is the nearest
+  key mentioned before the value, such as a heading. Otherwise the new flag `KEY_NOT_AT_VALUE`
+  applies. `CONFLICTING_CANDIDATES` works per field and key, decisions echo the `key`, and the
+  LangExtract adapter passes a `key` attribute through. In 0.1, a dose that differs by
+  indication was one field, where the doses conflicted, or one field per indication, where
+  nothing checked the indication. Vectors `17-keyed-fields` and `17b-keyed-tables`.
 
 ## 0.1.0 (2026-09-29)
 

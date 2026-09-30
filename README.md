@@ -182,6 +182,7 @@ Checks run in a fixed order. The first failure rejects the fact.
 | `TYPE_INVALID` | the value does not parse as the field's type |
 | `RANGE_INVALID` | the value is outside the field's bounds |
 | `UNIT_INVALID` | the unit is not the field's unit |
+| `KEY_INVALID` | the field is keyed by condition, and the key is missing or not one of its keys |
 | `NO_EVIDENCE` | no evidence is cited |
 | `SPAN_INVALID` | the span is outside the document or splits a character |
 | `VALUE_NOT_IN_EVIDENCE` | no number in the span equals the value |
@@ -194,8 +195,9 @@ A fact that passes every check can still be flagged for a person:
 | `NON_VERBATIM_EVIDENCE` | the quote differs from the text at the span |
 | `QUALIFIED_VALUE` | "up to", "approximately", "or more" changes the value, and the schema didn't declare it |
 | `SCALE_WORD` | "million", "lakh" and similar follow the value, and the value was given unscaled |
+| `KEY_NOT_AT_VALUE` | the text puts the value under another condition, such as another indication's heading |
 | `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
-| `CONFLICTING_CANDIDATES` | another proposal for the same field has a different value |
+| `CONFLICTING_CANDIDATES` | another proposal for the same field and key has a different value |
 
 Number matching is collision-safe. The span `500 mg` inside `1,500 mg` never reads as 500, a span
 that stops at `29.` inside `29.97` never reads as 29, and a malformed number like the `$252,0000`
@@ -203,7 +205,7 @@ printed in IRS Publication 590-A never equals 252,000 or 2,520,000. When a span 
 but its quote occurs exactly once elsewhere with the right value and unit, groundgate moves the
 evidence there and records `EVIDENCE_REANCHORED`.
 
-The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 21 language-neutral
+The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 23 language-neutral
 vectors that pin every code, so another implementation can prove it agrees.
 
 ## Receipts

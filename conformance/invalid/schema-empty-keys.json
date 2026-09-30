@@ -1,0 +1,17 @@
+{
+ "name": "schema-empty-keys",
+ "description": "keys is null or a non-empty list of strings.",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "dose": {
+    "keys": []
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

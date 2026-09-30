@@ -142,6 +142,11 @@ def test_cli_admit_and_verify(tmp_path: Path, capsys: pytest.CaptureFixture[str]
         {"fields": {}, "units": []},
         {"fields": {}, "units": {"X": []}},
         {"fields": {}, "units": {"X": {"prefix": "$"}}},
+        {"fields": {"f": {"keys": "adults"}}},
+        {"fields": {"f": {"keys": []}}},
+        {"fields": {"f": {"keys": ["adults", 1]}}},
+        {"fields": {"f": {"keys": ["adults", " "]}}},
+        {"fields": {"f": {"keys": ["Heart failure", "heart\nfailure"]}}},
     ],
 )
 def test_invalid_schemas(schema: Any) -> None:
@@ -177,14 +182,46 @@ def test_flag_order_and_code_descriptions_are_pinned() -> None:
     from groundgate.admit import FLAG_ORDER
 
     assert FLAG_ORDER == (
-        "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "LOW_CONFIDENCE",
-        "CONFLICTING_CANDIDATES",
+        "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "KEY_NOT_AT_VALUE",
+        "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES",
     )  # fmt: skip
     assert tuple(codes.FLAG) == FLAG_ORDER
-    assert len(codes.REJECT) == 10 and set(codes.INFO) == {"EVIDENCE_REANCHORED"}
+    assert len(codes.REJECT) == 11 and set(codes.INFO) == {"EVIDENCE_REANCHORED"}
     assert set(codes.COVERAGE) == {"REQUIRED_FIELD_MISSING"}
 
 
 def test_verify_rejects_a_receipt_that_is_not_an_object() -> None:
     with pytest.raises(gg.PacketError):
         gg.verify([], DOC, SCHEMA, CANDS)  # type: ignore[arg-type]
+
+
+def test_decisions_echo_the_key_of_a_keyed_field() -> None:
+    doc = "Adults: take 10 mg. Children: take 5 mg."
+    schema = {
+        "fields": {
+            "dose": {"unit": "mg", "keys": ["adults", "children"]},
+            "strength": {"unit": "mg"},
+        }
+    }
+    span = {"start": 13, "end": 18, "text": "10 mg"}
+    cands = [
+        {"id": 1, "field": "dose", "value": "10", "unit": "mg", "key": "adults", "evidence": span},
+        {"id": 2, "field": "dose", "value": "10", "unit": "mg", "key": "teens", "evidence": span},
+        {
+            "id": 3,
+            "field": "strength",
+            "value": "10",
+            "unit": "mg",
+            "key": "adults",
+            "evidence": span,
+        },
+        {"id": 4, "field": "nope", "value": "10", "key": "adults"},
+    ]
+    got = {d.candidate_id: (d.outcome, d.key) for d in gg.admit(doc, schema, cands).decisions}
+    assert got == {
+        1: ("admitted", "adults"),
+        2: ("rejected", "teens"),
+        3: ("admitted", None),
+        4: ("rejected", None),
+    }
+    assert gg.Schema.from_dict(schema).to_dict()["fields"]["strength"]["keys"] is None

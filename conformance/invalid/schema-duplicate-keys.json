@@ -1,0 +1,20 @@
+{
+ "name": "schema-duplicate-keys",
+ "description": "Keys that match the same text are invalid.",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "dose": {
+    "keys": [
+     "Heart failure",
+     "heart  failure"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

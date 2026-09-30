@@ -72,6 +72,15 @@ def test_report_content() -> None:
     assert sorted(anchors) == sorted(set(links)) and len(links) == 4
 
 
+def test_report_shows_the_key() -> None:
+    schema = {"fields": {"limit": {"type": "integer", "unit": "USD", "keys": ["<at 50>"]}}}
+    cands = [{"field": "limit", "value": "8000", "unit": "USD", "key": "<at 50>",
+              "evidence": ev("$8,000")}]  # fmt: skip
+    html = render(gg.admit(DOC, schema, cands).to_dict(), DOC, cands, schema=schema)
+    assert '<span class="unit">for &lt;at 50&gt;</span>' in html
+    assert "limit = 8000 USD for &lt;at 50&gt;: " in html
+
+
 def test_report_with_layout_shows_page_numbers(tmp_path: Path) -> None:
     pdf = tmp_path / "x.pdf"
     pdf.write_bytes(make_pdf([[(72, 700, "Intro")], [(72, 700, "Fee: $500 per year.")]]))

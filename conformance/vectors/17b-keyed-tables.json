@@ -1,0 +1,180 @@
+{
+ "name": "17b-keyed-tables",
+ "description": "Conflicts are per field and key. Rows of a flattened table share one sentence, so every value in the table is at every key the table mentions.",
+ "document": "Table 1. Recommended Dosage\nIndication\tStarting dose\tMaximum dose\nHypertension\t10 mg\t40 mg\nHeart failure\t5 mg\t20 mg\n\nIn heart failure, titrate every 2 weeks. The usual starting dose is 5 mg. Patients with hypertension start at 10 mg. Take it once daily for heart failure.",
+ "schema": {
+  "fields": {
+   "starting_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "max_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "frequency": {
+    "type": "string",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "t1",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 79,
+    "end": 84,
+    "text": "10 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "t2",
+   "field": "starting_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 105,
+    "end": 109,
+    "text": "5 mg"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "t3",
+   "field": "max_dose",
+   "value": "40",
+   "unit": "mg",
+   "evidence": {
+    "start": 85,
+    "end": 90,
+    "text": "40 mg"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "t4",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 227,
+    "end": 232,
+    "text": "10 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "t5",
+   "field": "starting_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 185,
+    "end": 189,
+    "text": "5 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "t6",
+   "field": "starting_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 105,
+    "end": 109,
+    "text": "5 mg"
+   },
+   "key": "renal impairment"
+  },
+  {
+   "id": "t7",
+   "field": "frequency",
+   "value": "once daily",
+   "evidence": {
+    "start": 242,
+    "end": 252,
+    "text": "once daily"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "t8",
+   "field": "frequency",
+   "value": "once daily",
+   "evidence": {
+    "start": 242,
+    "end": 252,
+    "text": "once daily"
+   },
+   "key": "hypertension"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "KEY_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

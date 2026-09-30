@@ -51,12 +51,20 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
   "minimum": "<decimal>" | null,
   "maximum": "<decimal>" | null,
   "required": false,
-  "multiple": false
+  "multiple": false,
+  "keys": ["<key>"] | null
 }},
  "units": {"<unit code>": {"prefix": ["<surface>"], "suffix": ["<surface>"]}}}
 ```
 
-Defaults: `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false.
+Defaults: `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false,
+`keys` null.
+
+`keys` makes a field **keyed**: its values belong to one of several conditions, such as the
+indications of a drug, and each candidate names its condition. The keys are written in the
+document's words (§4.5). `keys` is null or a non-empty list of strings, no key is blank, and no
+two keys are equal after whitespace normalisation (§4.4) and lower-casing; otherwise the packet is
+invalid.
 `units` extends and overrides the built-in table (§4.3). `schema_sha256` is the digest of kind
 `schema` over the schema object **after** defaults are filled in.
 
@@ -81,8 +89,9 @@ Defaults: `unit` null, `comparator` `"eq"`, bounds null, `required` false, `mult
 | `field` | yes | Schema field name. |
 | `value` | yes | A string, or a JSON integer. JSON numbers with a fraction are not allowed (use a decimal string). |
 | `unit` | no | Unit code the extractor claims. |
+| `key` | no | For a keyed field, the key the value belongs to. Ignored on a field without `keys`. |
 | `evidence` | no | Span the extractor cites, with the text it quoted (`text` optional). |
-| `search_region` | no | Span within which re-anchoring may look (§3 step 9). Default: the whole document. |
+| `search_region` | no | Span within which re-anchoring may look (§3 step 10). Default: the whole document. |
 | `confidence` | no | Number in [0, 1]. |
 | `id` | no | Caller's identifier, echoed in the decision. |
 
@@ -96,21 +105,22 @@ later check runs. `value` means the candidate's value parsed per its field type.
 
 | Step | Code | Rejects when |
 |---:|---|---|
-| 1 | `CANDIDATE_INVALID` | The candidate is not an object, `field` is not a string, `value` is missing or not a string/integer, `unit` is not a string, `confidence` is not a number in [0, 1], or `evidence`/`search_region` is present but not an object with integer `start` and `end`. |
+| 1 | `CANDIDATE_INVALID` | The candidate is not an object, `field` is not a string, `value` is missing or not a string/integer, `unit` or `key` is not a string, `confidence` is not a number in [0, 1], or `evidence`/`search_region` is present but not an object with integer `start` and `end`. |
 | 2 | `FIELD_UNKNOWN` | `field` is not in the schema. |
 | 3 | `NULL_STRING_LITERAL` | `value`, trimmed and lower-cased, is `null`, `none`, `nil` or `n/a`. |
 | 4 | `TYPE_INVALID` | `value` does not parse as the field type (§4.1). |
 | 5 | `RANGE_INVALID` | `value` is below `minimum` or above `maximum`. |
 | 6 | `UNIT_INVALID` | The candidate's `unit` differs from the field's `unit` (both absent is a match). |
-| 7 | `NO_EVIDENCE` | `evidence` is absent. |
-| 8 | `SPAN_INVALID` | The evidence span, or `search_region`, is not a valid span (§2.2). |
-| 9 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value`, by its value or its scaled value (for `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text). |
-| 10 | `UNIT_NOT_IN_EVIDENCE` | The field has a unit, and no matching number token in the span has that unit at its location (§4.3). |
+| 7 | `KEY_INVALID` | The field has `keys`, and the candidate's `key` is absent or not exactly one of them. |
+| 8 | `NO_EVIDENCE` | `evidence` is absent. |
+| 9 | `SPAN_INVALID` | The evidence span, or `search_region`, is not a valid span (§2.2). |
+| 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value`, by its value or its scaled value (for `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text). |
+| 11 | `UNIT_NOT_IN_EVIDENCE` | The field has a unit, and no matching number token in the span has that unit at its location (§4.3). |
 
-**Re-anchoring (steps 9–10).** When step 9 or 10 fails, `policy.reanchor` is true and the candidate
+**Re-anchoring (steps 10–11).** When step 10 or 11 fails, `policy.reanchor` is true and the candidate
 has a non-blank `evidence.text`, the implementation finds every occurrence of `evidence.text` inside
 `search_region` (whitespace runs in the quote match any whitespace run in the document). If
-**exactly one** occurrence other than the cited span passes steps 9 and 10, that occurrence becomes
+**exactly one** occurrence other than the cited span passes steps 10 and 11, that occurrence becomes
 the evidence, the decision records code `EVIDENCE_REANCHORED`, and checking continues. Otherwise
 the original failure stands.
 
@@ -122,13 +132,15 @@ outcome `needs_verification`, no flag makes it `admitted`.
 | `NON_VERBATIM_EVIDENCE` | `evidence.text` is present and differs from the span's text after whitespace normalisation and joining of line-break hyphenation (§4.4). |
 | `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the document and its comparator differs from the field's `comparator`. |
 | `SCALE_WORD` | A scale word (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. |
+| `KEY_NOT_AT_VALUE` | The field has `keys`, and the candidate's `key` is not a key at the value (§4.5). |
 | `LOW_CONFIDENCE` | `policy.min_confidence` is set and `confidence` is below it. |
-| `CONFLICTING_CANDIDATES` | Another candidate for the same non-`multiple` field also passed steps 1–10 with a different canonical value. Set on every such candidate. |
+| `CONFLICTING_CANDIDATES` | Another candidate for the same non-`multiple` field, and on a keyed field the same `key`, also passed steps 1–11 with a different canonical value. Set on every such candidate. |
 
 `EVIDENCE_REANCHORED` is informational: it never changes the outcome.
 
 **Coverage.** For every `required` field with no candidate that is `admitted` or
 `needs_verification`, the receipt lists `{"field": <name>, "code": "REQUIRED_FIELD_MISSING"}`.
+Coverage is per field, not per key.
 
 ## 4. Text rules
 
@@ -223,6 +235,26 @@ is at every token (the check is vacuous).
 Collapse every whitespace run to one space and trim. For the verbatim comparison only, also delete
 `-` followed by a line break and optional whitespace (line-break hyphenation).
 
+### 4.5 Keys
+
+A **key mention** is an occurrence of one of a field's keys in the document: matched
+case-insensitively, with each whitespace run in the key matching any whitespace run, and not
+preceded or followed by a letter or digit. Where two mentions overlap and one contains the
+other, only the longer counts. A mention is in a sentence (§4.2) when it lies wholly inside it.
+
+The value is at its supporting number token (§3 steps 10–11), or at the start of the evidence
+span for a `string` field. The **keys at the value** are the keys mentioned in the value's
+sentence. When the sentence mentions none, they are the key of the nearest mention that ends at
+or before the value's start, or no key when there is no such mention. The candidate's `key` must
+be one of them.
+
+There is no heading detection. A heading kept as a line of text is a mention like any other, so
+in "2.2 Heart Failure\nThe starting dose is 5 mg", 5 mg is at heart failure, and so is a value
+in a later sentence under that heading, until another key is mentioned. A sentence that mentions
+two conditions puts its values at both. Rows of a flattened table with no sentence end between
+them are one sentence, so every value in the table is at every key the table mentions, and a key
+swapped within a table is not caught.
+
 ## 5. Receipt
 
 ```json
@@ -230,7 +262,7 @@ Collapse every whitespace run to one space and trim. For the verbatim comparison
  "document": {"id": null, "sha256": "sha256:..."},
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "c1", "candidate_sha256": "sha256:...", "field": "...",
-                "outcome": "admitted", "codes": [], "value": "2000", "unit": "mg",
+                "key": null, "outcome": "admitted", "codes": [], "value": "2000", "unit": "mg",
                 "evidence": {"start": 120, "end": 128}}],
  "coverage": [],
  "summary": {"admitted": 1, "needs_verification": 0, "rejected": 0},
@@ -240,7 +272,8 @@ Collapse every whitespace run to one space and trim. For the verbatim comparison
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
 code, or the flag codes in the order of the table in §3, followed by `EVIDENCE_REANCHORED` when it
 applies. `value` is the canonical value and `unit` the candidate's unit, each `null` when the candidate
-does not provide a parseable one. `evidence` is the span the decision rests on: the re-anchored span
+does not provide a parseable one. `key` is the candidate's `key` when its field has `keys` and the
+key is a string, otherwise `null`. `evidence` is the span the decision rests on: the re-anchored span
 when re-anchoring applied, otherwise the cited span if it is valid, otherwise `null`. Coverage is
 sorted by field name. `receipt_sha256` is the digest of kind `receipt` over the receipt without
 its `receipt_sha256` key.

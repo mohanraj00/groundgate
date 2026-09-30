@@ -78,7 +78,11 @@ def test_defaults_and_renames() -> None:
     )
     assert (c["field"], c["value"], c["unit"]) == ("limit", "7000", "USD")
     (c,) = to_candidates(doc(x("limit", "$7,000", at)))
-    assert c["value"] == "$7,000" and "unit" not in c
+    assert c["value"] == "$7,000" and "unit" not in c and "key" not in c
+    (c,) = to_candidates(doc(x("limit", "$7,000", at, key="under 50")))
+    assert c["key"] == "under 50"
+    (c,) = to_candidates(doc(x("limit", "$7,000", at, group="under 50")), key_attribute="group")
+    assert c["key"] == "under 50"
 
 
 def test_bad_documents() -> None:

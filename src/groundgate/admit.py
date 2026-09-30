@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Any
 
@@ -13,6 +13,8 @@ from .model import Decision, Field, Outcome, PacketError, Policy, Receipt, Schem
 from .text import (
     Token,
     canonical,
+    key_mentions,
+    keys_at,
     normalize_ws,
     parse_value,
     qualifiers,
@@ -29,6 +31,7 @@ FLAG_ORDER = (  # SPEC §3 table order; it is part of every receipt hash
     "NON_VERBATIM_EVIDENCE",
     "QUALIFIED_VALUE",
     "SCALE_WORD",
+    "KEY_NOT_AT_VALUE",
     "LOW_CONFIDENCE",
     "CONFLICTING_CANDIDATES",
 )
@@ -70,15 +73,22 @@ class _Ctx:
     offsets: Offsets
     schema: Schema
     policy: Policy
+    mentions: dict[str, list[tuple[int, int, str]]] = field(default_factory=dict)
+
+    def key_mentions(self, f: Field) -> list[tuple[int, int, str]]:
+        if f.name not in self.mentions:
+            self.mentions[f.name] = key_mentions(self.text, f.keys or ())
+        return self.mentions[f.name]
 
 
 @dataclass
 class _Passed:
-    """A candidate that passed steps 1-10."""
+    """A candidate that passed steps 1-11."""
 
     field: Field
     value: str
     unit: str | None
+    key: str | None  # None on a field without keys
     span: tuple[int, int]  # code points
     token: Token | None
     flags: list[str]
@@ -88,7 +98,7 @@ class _Passed:
 def _value_at(
     ctx: _Ctx, f: Field, value: Decimal | str, span: tuple[int, int]
 ) -> tuple[Token | None, str | None]:
-    """Steps 9-10 at one span: the supporting token (None for strings) or a failure code."""
+    """Steps 10-11 at one span: the supporting token (None for strings) or a failure code."""
     s, e = span
     if f.type == "string":
         assert isinstance(value, str)
@@ -112,15 +122,18 @@ def _value_at(
 
 
 def _check(ctx: _Ctx, cand: object) -> _Passed:
-    """Steps 1-10 plus per-candidate flags. Raises _Reject."""
+    """Steps 1-11 plus per-candidate flags. Raises _Reject."""
     # 1. structure
     if not isinstance(cand, Mapping):
         raise _Reject("CANDIDATE_INVALID")
     name, raw, unit = cand.get("field"), cand.get("value"), cand.get("unit")
     conf, ev, region = cand.get("confidence"), cand.get("evidence"), cand.get("search_region")
+    key = cand.get("key")
     if not isinstance(name, str) or isinstance(raw, bool) or not isinstance(raw, (str, int)):
         raise _Reject("CANDIDATE_INVALID")
-    if unit is not None and not isinstance(unit, str):
+    if (unit is not None and not isinstance(unit, str)) or (
+        key is not None and not isinstance(key, str)
+    ):
         raise _Reject("CANDIDATE_INVALID")
     if conf is not None and (
         isinstance(conf, bool) or not isinstance(conf, (int, float)) or not 0 <= conf <= 1
@@ -159,14 +172,19 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
             raise _Reject("RANGE_INVALID")
     if unit != f.unit:
         raise _Reject("UNIT_INVALID")
-    # 7-8. evidence
+    # 7. key
+    if f.keys is None:
+        key = None
+    elif key not in f.keys:
+        raise _Reject("KEY_INVALID")
+    # 8-9. evidence
     if cited is None:
         raise _Reject("NO_EVIDENCE")
     span = _valid(ctx.offsets, cited)
     search = (0, len(ctx.text)) if region_span is None else _valid(ctx.offsets, region_span)
     if span is None or search is None:
         raise _Reject("SPAN_INVALID")
-    # 9-10. value and unit at the evidence, with re-anchoring
+    # 10-11. value and unit at the evidence, with re-anchoring
     assert isinstance(ev, Mapping)
     quote = ev.get("text")
     token, failure = _value_at(ctx, f, value, span)
@@ -194,11 +212,15 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
             flags.append("QUALIFIED_VALUE")
         if scale_word(ctx.text, token) and token.value == value:  # written, not scaled
             flags.append("SCALE_WORD")
+    if f.keys is not None:
+        at = token.start if token is not None else span[0]
+        if key not in keys_at(ctx.text, ctx.key_mentions(f), at):
+            flags.append("KEY_NOT_AT_VALUE")
     mc = ctx.policy.min_confidence
     if mc is not None and conf is not None and conf < mc:
         flags.append("LOW_CONFIDENCE")
     canon = value if isinstance(value, str) else canonical(value)
-    return _Passed(f, canon, unit, span, token, flags, reanchored)
+    return _Passed(f, canon, unit, key, span, token, flags, reanchored)
 
 
 def admit(
@@ -227,12 +249,12 @@ def admit(
             outcome = r.code
         results.append((digest("candidate", cand), i, cand, outcome))
 
-    by_field: dict[str, set[tuple[str, str | None]]] = defaultdict(set)
+    by_key: dict[tuple[str, str | None], set[tuple[str, str | None]]] = defaultdict(set)
     for *_, p in results:
         if isinstance(p, _Passed) and not p.field.multiple:
-            by_field[p.field.name].add((p.value, p.unit))
+            by_key[p.field.name, p.key].add((p.value, p.unit))
     for *_, p in results:
-        if isinstance(p, _Passed) and len(by_field.get(p.field.name, ())) > 1:
+        if isinstance(p, _Passed) and len(by_key.get((p.field.name, p.key), ())) > 1:
             p.flags.append("CONFLICTING_CANDIDATES")
 
     decisions = []
@@ -266,19 +288,30 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | str) 
         byte_span = (ctx.offsets.to_bytes(p.span[0]), ctx.offsets.to_bytes(p.span[1]))
         outcome: Outcome = "needs_verification" if flags else "admitted"
         return Decision(
-            _json_id(cid), sha, p.field.name, outcome, tuple(codes), p.value, p.unit, byte_span
+            _json_id(cid),
+            sha,
+            p.field.name,
+            outcome,
+            tuple(codes),
+            p.value,
+            p.unit,
+            byte_span,
+            p.key,
         )
     # rejected: report what is known about the candidate
     field_name: str | None = None
     value: str | None = None
     unit: str | None = None
     span: tuple[int, int] | None = None
+    key: str | None = None
     if isinstance(cand, Mapping):
         if isinstance(cand.get("field"), str):
             field_name = cand["field"]
         if isinstance(cand.get("unit"), str):
             unit = cand["unit"]
         f = ctx.schema.fields.get(field_name or "")
+        if f is not None and f.keys is not None and isinstance(cand.get("key"), str):
+            key = cand["key"]
         raw = cand.get("value")
         if f is not None and isinstance(raw, (str, int)) and not isinstance(raw, bool):
             if f.type == "string" and isinstance(raw, str) and normalize_ws(raw):
@@ -288,7 +321,7 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | str) 
         cited = _span(cand.get("evidence"))
         if cited is not None and _valid(ctx.offsets, cited) is not None:
             span = cited
-    return Decision(_json_id(cid), sha, field_name, "rejected", (p,), value, unit, span)
+    return Decision(_json_id(cid), sha, field_name, "rejected", (p,), value, unit, span, key)
 
 
 def _json_id(cid: object) -> object:

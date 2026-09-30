@@ -1,0 +1,280 @@
+{
+ "name": "17-keyed-fields",
+ "description": "A keyed field needs one of its keys. A key mentioned in the value's sentence decides; otherwise the nearest mention before the value, such as a heading, decides.",
+ "document": "2 DOSAGE AND ADMINISTRATION\nTake 20 mg tablets with water.\n\n2.1 Hypertension\nThe recommended starting dose is 10 mg once daily. The maximum dose is 40 mg daily.\n\n2.2 Heart Failure\nThe recommended starting dose is 5 mg once daily, taken with diuretics.\n\n2.3 Acute Myocardial Infarction\nGive 5 mg within 24 hours. In patients who also have heart failure, start at 2.5 mg.",
+ "schema": {
+  "fields": {
+   "starting_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "max_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "adjusted_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "strength": {
+    "type": "integer",
+    "unit": "mg"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "k1",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 110,
+    "end": 115,
+    "text": "10 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "k2",
+   "field": "max_dose",
+   "value": "40",
+   "unit": "mg",
+   "evidence": {
+    "start": 148,
+    "end": 153,
+    "text": "40 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "k3",
+   "field": "max_dose",
+   "value": "40",
+   "unit": "mg",
+   "evidence": {
+    "start": 148,
+    "end": 153,
+    "text": "40 mg"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "k4",
+   "field": "starting_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 213,
+    "end": 222,
+    "text": "5 mg once"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "k5",
+   "field": "starting_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 290,
+    "end": 301,
+    "text": "5 mg within"
+   },
+   "key": "acute myocardial infarction"
+  },
+  {
+   "id": "k6",
+   "field": "adjusted_dose",
+   "value": "2.5",
+   "unit": "mg",
+   "evidence": {
+    "start": 362,
+    "end": 368,
+    "text": "2.5 mg"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "k7",
+   "field": "adjusted_dose",
+   "value": "2.5",
+   "unit": "mg",
+   "evidence": {
+    "start": 362,
+    "end": 368,
+    "text": "2.5 mg"
+   },
+   "key": "acute myocardial infarction"
+  },
+  {
+   "id": "k8",
+   "field": "adjusted_dose",
+   "value": "20",
+   "unit": "mg",
+   "evidence": {
+    "start": 33,
+    "end": 38,
+    "text": "20 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "k9",
+   "field": "strength",
+   "value": "20",
+   "unit": "mg",
+   "evidence": {
+    "start": 33,
+    "end": 38,
+    "text": "20 mg"
+   },
+   "key": "any text"
+  },
+  {
+   "id": "k10",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 110,
+    "end": 115,
+    "text": "10 mg"
+   }
+  },
+  {
+   "id": "k11",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 110,
+    "end": 115,
+    "text": "10 mg"
+   },
+   "key": "Hypertension"
+  },
+  {
+   "id": "k12",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 110,
+    "end": 115,
+    "text": "10 mg"
+   },
+   "key": 1
+  },
+  {
+   "id": "k13",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "g",
+   "evidence": {
+    "start": 110,
+    "end": 115,
+    "text": "10 mg"
+   }
+  },
+  {
+   "id": "k14",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "mg"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "KEY_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "KEY_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "KEY_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
