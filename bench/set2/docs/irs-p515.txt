@@ -1,0 +1,423 @@
+of the payment is either engaged in business as a broker
+or dealer in securities or an FI that engages in significant
+activities at an office or branch located outside the United
+States.
+
+A payment is made outside the United States if you
+complete the acts necessary to effect the payment outside
+the United States. However, an amount paid by a bank or
+other FI on a deposit or account will usually be treated as
+paid at the branch or office where the amount is credited
+unless the other requirements of Regulations section
+1.6049-5(e)(2) are met with respect to the branch or of-
+fice, unless the amount is collected by the FI as an agent
+of the payee.
+
+If a payment is made outside the United States with re-
+spect to an offshore obligation, a payee may give you
+documentary evidence, rather than a Form W-8, to estab-
+lish that the payee is a foreign person. See Regulations
+section 1.6049-5(c)(1) for the requirements for documen-
+tary evidence for offshore obligations. For accounts
+opened on or after July 1, 2014, through December 31,
+2014, you may use the rules regarding the use of docu-
+mentary evidence under Regulations sections 1.6049-5(c)
+(1) and (c)(4) as in effect prior to the issuance of the tem-
+porary regulations.
+
+You may rely on documentary evidence given to you by
+an NQI or a flow-through entity with its Form W-8IMY. This
+rule applies even though you make the payment to an NQI
+or flow-through entity in the United States. In most cases,
+the NQI or flow-through entity that gives you documentary
+evidence will also have to give you a withholding state-
+ment, discussed later.
+
+Documentary evidence. You may apply a reduced
+rate of withholding to income from marketable securities
+(discussed earlier) paid outside the United States for
+chapter 3 purposes with respect to an offshore obligation
+if the beneficial owner gives you documentary evidence in
+place of a Form W-8. To claim treaty benefits, the docu-
+mentary evidence must be one of the following.
+
+1. A certificate of residence that:
+
+a. Is issued by a tax official of the treaty country of
+
+which the foreign beneficial owner claims to be a
+resident,
+
+b. States that the person has filed its most recent in-
+come tax return as a resident of that country, and
+
+c. Is issued within 3 years before it is presented to
+
+you.
+
+2. Documentation for an individual that:
+
+a. Includes the individual’s name, address, and pho-
+
+tograph;
+
+b. Is an official document issued by an authorized
+
+governmental body; and
+
+c. Is issued no more than 3 years prior to being pre-
+
+sented to you.
+
+3. Documentation for an entity that:
+
+a. Includes the name of the entity,
+
+b. Includes the address of its principal office in the
+
+treaty country, and
+
+c. Is an official document issued by an authorized
+
+governmental body.
+
+In addition to the documentary evidence, a foreign ben-
+eficial owner that is an entity must provide a statement
+that it derives the income for which it claims treaty benefits
+and that it meets one or more of the tests set forth in an
+LOB article, if any (or similar provision), contained in the
+applicable treaty and must identify the specific test in the
+LOB article under which it qualifies for benefits. In the
+case of a withholdable payment made to an entity, you
+must also obtain the applicable documentation to estab-
+lish that withholding does not apply under chapter 4.
+
+Form W-8BEN. This form is used by a foreign individual
+to:
+
+• Establish foreign status;
+• Claim that such individual is the beneficial owner of
+the income for which the form is being furnished or a
+partner in a partnership subject to withholding under
+section 1446(a) or a transferee of an interest in a part-
+nership under section 1446(f); and
+
+• If applicable, claim a reduced rate of, or exemption
+
+from, withholding under an income tax treaty.
+
+A withholding agent, in some cases, may substitute its
+
+own form for a Form W-8BEN for individuals.
+
+Form W-8BEN may also be used to claim that the for-
+eign individual is exempt from Form 1099 reporting and
+backup withholding for income that is not subject to chap-
+ter 3 withholding and is not a withholdable payment. For
+example, a foreign person may provide a Form W-8BEN to
+a broker to establish that the gross proceeds from the sale
+of securities are not subject to Form 1099 reporting or
+backup withholding.
+
+Date of birth requirement for certain account hold-
+ers. If you are a U.S. office or branch of a depository insti-
+tution, custodial institution, investment entity, or specified
+insurance company (each as defined in Regulations sec-
+tion 1.1471-5(e)) documenting an
+individual account
+holder (as defined in Regulations section 1.1471-5(a)(3))
+of an account that is a financial account (as defined in
+Regulations section 1.1471-5(b)), you must obtain the in-
+dividual account holder’s date of birth on the Form
+W-8BEN in order for the form to not be invalid for a pay-
+ment of U.S. source income reportable on Form 1042-S. If
+the individual’s date of birth is not provided on the Form
+W-8BEN, the form is still valid if you otherwise have the
+date of birth in your account files for the account holder or
+you obtain the date of birth on a written statement (includ-
+ing a written statement transmitted by email) from the ac-
+count holder and associate the written statement with the
+Form W-8BEN. See the related foreign TIN requirement
+discussed under Foreign TIN requirement for account
+holders, later, which also generally applies with respect to
+accounts described in this paragraph.
+
+16
+
+Publication 515 (2026)
+Dividend Equivalents
+
+Gains
+
+Dividend equivalent payments are treated as U.S. source
+dividends such that withholding under chapter 3 may ap-
+ply. Dividend equivalent payments are withholdable pay-
+ments except when an exception applies for chapter 4
+purposes. Dividend equivalent payments are divided into
+three income code reporting categories.
+
+1. Substitute dividends that are dividend equivalents (in-
+
+come code 34 or 53).
+
+2. Dividend equivalents with respect to transactions that
+are section 871(m) transactions as a result of combin-
+ing transactions under Regulations section
+1.871-15(n) (income code 56).
+
+3. All other dividend equivalents (income code 40).
+
+Note: Because a dividend equivalent is determined on a
+gross basis, there may be a payment for reporting purpo-
+ses even when there is no transfer of funds. See Regula-
+tions section 1.871-15(i).
+
+Amounts Paid to Qualified Securities
+Lenders (QSLs)
+
+A withholding agent that makes substitute dividend pay-
+ments to a QSL may apply the transition rules described in
+Notice 2010-46, Part III, C, D and E, for payments made
+before January 1, 2027, which do not include the credit
+forward provisions. See Notice 2024-44, 2024-25 I.R.B.
+1737, available at IRS.gov/irb2024-25_IRB#NOT-2024-44.
+
+Amounts Paid to QDDs
+
+A withholding agent that makes a payment to a QI that is
+acting as a QDD is not required to withhold on the follow-
+ing payments if the withholding agent can reliably asso-
+ciate the payment with a valid QI withholding certification
+that satisfies the documentation requirements.
+
+1. A payment with respect to a potential section 871(m)
+transaction that is not an underlying security (see
+Regulations section 1.871-15(a)(12) and (15) for the
+definitions of potential section 871(m) transaction and
+underlying security).
+
+2. A payment of a dividend equivalent.
+
+3. A payment of a dividend received by the QDD in its
+
+equity derivatives dealer capacity prior to January 1,
+2027.
+
+All other payments to a QDD, including dividends not
+received in its equity derivatives dealer capacity and any
+other U.S. source FDAP payments in any capacity, remain
+subject to withholding to the extent required under the
+general withholding rules.
+
+For more information on amounts paid to QDDs, see
+Regulations section 1.1441-1(b)(4)(xxii) and Notice
+2024-44.
+
+You generally do not need to withhold under chapter 3 or 4
+on any gain from the sale of real or personal property be-
+cause it is not FDAP income. However, see U.S. Real
+Property Interest, later.
+
+Capital gains (income code 9). You must withhold at
+30%, or if applicable, a reduced treaty rate, on the gross
+amount of the following items.
+• Gains on the disposal of timber, coal, or domestic iron
+ore with a retained economic interest, unless an elec-
+tion is made to treat those gains as income effectively
+connected with a U.S. trade or business.
+
+• Gains on contingent payments received from the sale
+or exchange after October 4, 1966, of patents, copy-
+rights, secret processes and formulas, goodwill, trade-
+marks, trade brands, franchises, and other like prop-
+erty.
+
+• Gains on certain transfers of all substantial rights to, or
+an undivided interest in, patents if the transfers were
+made before October 5, 1966.
+
+• Certain gains from the sale or exchange of original is-
+sue discount obligations issued after March 31, 1972.
+For more on withholding on original issue discount ob-
+ligations, see Interest, earlier.
+
+If you do not know the amount of the gain, you must
+withhold an amount necessary to ensure that the tax with-
+held will not be less than 30% of the recognized gain. The
+amount to be withheld, however, must not be more than
+30% of the amount payable because of the transaction.
+
+Unless you have reason to believe otherwise, you may
+rely upon the written statement of the person entitled to
+the income as to the amount of gain. The Form W-8 or
+documentary evidence must show the beneficial owner’s
+basis in the property giving rise to the gain.
+
+Tax treaties. Many tax treaties exempt certain types of
+gains from U.S. income tax. Be sure to carefully check the
+provision of the treaty that applies before allowing an ex-
+emption from withholding.
+
+Royalties
+
+In general, you must withhold tax under chapter 3 on the
+payment of royalties from sources in the United States.
+However, certain types of royalties are given reduced
+rates or exemptions under some tax treaties. Accordingly,
+these different types of royalties are treated as separate
+categories for withholding purposes. For chapter 4 purpo-
+ses, royalties are nonfinancial payments and are therefore
+excluded as withholdable payments.
+
+Caution: Most treaties have more than one withholding
+rate on royalties, which varies by the classification of the
+payment in that treaty. Be sure to check your particular
+treaty for the specific rate that applies to you.
+
+Industrial royalties (income code 10). This category of
+income includes royalties for the use of, or the right to use,
+
+46
+
+Publication 515 (2026)
+patents, trademarks, secret processes and formulas,
+goodwill, franchises, “know-how,” and similar rights. It may
+also include payments for the use of, or right to use, indus-
+trial, commercial, and scientific equipment, when this is in-
+cluded in the treaty definition of royalties.
+
+Motion picture or television copyright royalties (in-
+come code 11). This category refers to royalties paid for
+the use of motion picture and television copyrights.
+
+Other royalties (for example, copyright, software,
+broadcasting, endorsement payments) (income code
+12). This category refers to the royalties paid for the use
+of copyrights on books, periodicals, articles, etc., except
+motion picture and television copyrights.
+
+Real Property Income and Natural
+Resources Royalties (Income Code 14)
+
+You must withhold tax under chapter 3 on income (such as
+rents and royalties) from real property located in the Uni-
+ted States and held for the production of income, unless
+the foreign payee elects to treat this income as effectively
+connected with a U.S. trade or business. If the foreign
+payee chooses to treat this income as effectively connec-
+ted, the payee must give you Form W-8ECI (discussed
+earlier). This real property income includes royalties from
+mines, wells, or other natural deposits, as well as ordinary
+rents for the use of real property. For chapter 4 purposes,
+income from real property is either a nonfinancial payment
+(and therefore not a withholdable payment) or is excluded
+as a withholdable payment because it is ECI. For with-
+holding that applies to the disposition of USRPI, see U.S.
+Real Property Interest, later.
+
+Pensions, Annuities, and Alimony (Income
+Code 15)
+
+The following rules apply to withholding on pensions, an-
+nuities, and alimony of foreign payees.
+
+Pensions and annuities. In most cases, you must with-
+hold tax on the gross amount of pensions and annuities
+that you pay that are from sources within the United
+States. This includes amounts paid under an annuity con-
+tract issued by a foreign branch of a U.S. life insurance
+company.
+
+Most tax treaties provide an exemption from tax on
+non-government pensions and annuities. See the specific
+treaty rules for government pensions. The exemption may
+not apply to lump-sum payments. See, for example, Article
+17(2) of the United States–United Kingdom income tax
+treaty. In addition, it does not apply to payments treated as
+deferred compensation, which is often treated as income
+from employment.
+
+For purposes of chapter 3 withholding, in the absence
+of a treaty exemption, you must withhold at the statutory
+rate of 30% on the entire distribution that is from sources
+within the United States. You may, however, apply with-
+holding at graduated rates to the part of a distribution that
+arises from the performance of services in the United
+States after December 31, 1986.
+
+Employer contributions to a defined benefit plan cover-
+ing more than one individual are not made for the benefit
+of a specific participant, but are made based on the total
+liabilities to all participants. All funds held under the plan
+are available to provide benefits to any participant. If the
+distribution is from such a plan, you can use the method in
+Revenue Procedure 2004-37 to allocate the distribution to
+sources in the United States.
+
+The withholding rules that apply to payments to foreign
+persons generally take precedence over any other with-
+holding rules that would apply to distributions from quali-
+fied plans and other qualified retirement arrangements.
+
+Foreign pension plans are exempt from applying with-
+holding under chapter 4 when they are exempt beneficial
+owners under Regulations section 1.1471-6(f). A payment
+from a U.S. pension plan to a foreign individual beneficiary
+in the plan is not subject to withholding under chapter 4.
+
+No withholding. Do not withhold tax on an annuity pay-
+ment to a nonresident alien if, at the time of the first pay-
+ment from the plan, 90% or more of the employees eligible
+for benefits under the plan are citizens or residents of the
+United States and the payment is:
+
+1. For the nonresident’s personal services performed
+
+outside the United States; or
+
+2. For personal services by a nonresident individual
+
+present in the United States for 90 days or less during
+each tax year, whose pay for those services did not
+exceed $3,000, and the personal services were per-
+formed for:
+
+a. A nonresident alien individual, foreign partnership,
+or foreign corporation not engaged in a trade or
+business in the United States; or
+
+b. An office or place of business of a U.S. resident or
+citizen that was maintained outside the United
+States.
+
+If the payment otherwise qualifies under these rules,
+but less than 90% of the employees eligible for benefits
+are citizens or residents of the United States, you still
+need not withhold tax on the payment if:
+
+• The recipient is a resident of a country that gives a
+
+substantially equal exclusion to U.S. citizens and resi-
+dents, or
+
+• The recipient is a resident of a beneficiary developing
+
+country under the Trade Act of 1974.
+
+The foreign person entitled to the payments must pro-
+vide you with a Form W-8BEN that contains the TIN of the
+foreign person.
+
+Alimony payments. In most cases, alimony payments
+made by U.S. resident aliens to nonresident aliens are tax-
+able and subject to chapter 3 withholding whether the re-
+cipients are residing abroad or are temporarily present in
+the United States.
+
+Many tax treaties, however, provide for an exemption
+from withholding for alimony payments. See Tax Treaties,
+later, for information about treaty benefits.
+
+Publication 515 (2026)
+
+47

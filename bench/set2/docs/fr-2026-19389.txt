@@ -1,0 +1,218 @@
+59982
+
+Federal Register / Vol. 91, No. 182 / Tuesday, September 22, 2026 / Rules and Regulations
+
+done using the following calculation:
+1,000 m^3 nominal/2.3597 = 423.8 MBF.
+
+In 2021, the Board identified a
+
+reporting discrepancy and engaged with
+AMS. In January 2023, the Forest
+Economic Advisors (FEA), an
+independent lumber and wood industry
+consulting firm, released a study that
+quantified the impact of net size versus
+nominal size on imports and provided
+a calculation to be used for board feet
+on the net count. To attempt to resolve
+the issue without rulemaking, in May
+
+2023 the Board worked with AMS and
+Customs to issue a U.S. Customs and
+Border Protection Cargo Systems
+Messaging Service (CSMS) bulletin to
+all U.S. importers and brokers.
+Misreporting persisted and Customs
+advised the Board to revise the Order
+language to make assessment collection
+on the nominal size explicit.
+
+FEA’s 2023 analysis shows net
+
+volume can be converted to board feet
+through application of the appropriate
+factor: 1,000 m^3 net/1.57 = 636.9 MBF.
+
+Using this calculation, 1,000 m^3 on a net
+count equates to 636.9 MBF of softwood
+lumber, 1.503 times more than when a
+nominal count is used (636.9 MBF/
+423.8 MBF = 1.503).
+
+To properly calculate the assessment
+rate for softwood lumber imported on a
+net count, the nominal assessment rate
+of $0.41/MBF must be multiplied by
+1.503, which computes to a rate of
+$0.62/MBF on a net count. The table
+below demonstrates the different
+conversion rates.
+
+Nominal ........................................................................................................................................
+...............................................................................................................................................
+Net
+
+0.41
+0.62
+
+0.1737
+0.2611
+
+0.004412
+0.006631
+
+$/thousand board feet
+
+$/cubic meter
+
+$/square
+meter
+
+Therefore, this action adds a
+
+definition of net size or count, revises
+§ 1217.52(b) and (c) to specify
+assessment calculations shall be on the
+nominal count, adds nominal and net
+calculations to the table in § 1217.52(h),
+clarifies that exemptions from
+assessment are calculated using the
+nominal count in § 1217.53(a) and (b),
+revises § 1217.70(a) to clarify reports
+should include information on a
+nominal count, and lastly, amends
+§ 1217.101(d) and (e) to clarify
+eligibility to vote in a referendum is
+calculated using the nominal count.
+
+Changes in Membership
+
+The Board is required to review
+
+membership at least every five years to
+determine if the distribution of members
+accurately reflects the makeup of the
+industry. The Board analyzed Customs
+and industry geographical data from
+2022 through 2024 and found the U.S.
+South’s proportion of manufactured
+lumber increased during the period. The
+data shows the U.S. South Region
+
+manufactured almost 22.1 billion board
+feet, the U.S. West Region manufactured
+over 13.6 billion board feet, the
+Northeast and Lake States Region
+manufactured 1.6 billion board feet, and
+importers had an average volume of
+nearly 15.2 billion board feet.
+
+Therefore, this action adds one seat of
+
+any size to the U.S. South Region in
+§ 1217.40 to reflect increased
+production in the geographic region.
+Industry seats on the Board will
+increase from 14 to 15, for a total of 16
+Board members. Final Regulatory
+Flexibility Analysis
+
+Final Regulatory Flexibility Analysis
+In accordance with the Regulatory
+Flexibility Act (RFA) (5 U.S.C. 601–
+612), AMS is required to examine the
+impact of this action on small entities.
+Accordingly, AMS has considered the
+economic impact of this action on such
+entities and conducted the following
+analysis using the most recent data.
+The purpose of the RFA is to fit
+
+regulatory actions to the scale of
+businesses subject to the actions so
+
+small businesses will not be
+disproportionately burdened. The Small
+Business Administration (SBA) defines,
+in 13 CFR part 121, small firms which
+engage in ‘‘Support Activities for
+Forestry’’ (domestic softwood lumber
+manufacturers and importers) as those
+having annual receipts of no more than
+$11.5 million.^1
+
+According to data from Fastmarkets
+Random Lengths, the 2022–2024 three-
+year average framing lumber composite
+price was $523 per thousand-board-feet.
+Dividing the $11.5 million threshold
+that defines a small firm which provides
+‘‘Support Activities for Forestry’’ by this
+price results in a maximum threshold of
+about 22 million board feet (MMBF) of
+softwood lumber per year a domestic
+manufacturer may ship to be considered
+a small entity for purposes of the RFA.
+Table 1., based on shipment data from
+FEA and import data from CBP, shows
+the number of entities and the amount
+of volume they represent may be
+categorized as small or large based on
+the SBA definition.
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+
+1 SBA does have a small business size standard
+
+for ‘‘Sawmills’’ of 550 employees (see https://
+www.sba.gov/sites/sbagov/files/2023-06/Table
+%20of%20Size%20Standards_Effective%20March
+%2017%2C%202023%20%282%29.pdf). Based on
+
+USDA’s understanding of the lumber industry,
+using this criterion would be impractical as
+sawmills often use contractors rather than
+employees to operate and, therefore, many mills
+would be deemed small businesses under this
+
+criterion while being, in reality, a large business.
+Therefore, USDA used the definition of a small firm
+which engages in ‘‘Support Activities for Forestry’’
+as a more appropriate criterion for this analysis.
+
+VerDate Sep<11>2014 16:07 Sep 21, 2026 Jkt 268001 PO 00000 Frm 00002 Fmt 4700 Sfmt 4700 E:\FR\FM\22SER1.SGM 22SER1

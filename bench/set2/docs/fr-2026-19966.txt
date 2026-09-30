@@ -1,0 +1,280 @@
+Federal Register / Vol. 91, No. 188 / Wednesday, September 30, 2026 / Rules and Regulations
+
+61689
+
+defined in 15 U.S.C. 77b, 78c, or 80a–
+2.
+
+Under section 3(a) of the GENIUS Act
+
+(12 U.S.C. 5902(a)), only permitted
+payment stablecoin issuers may issue a
+payment stablecoin in the United States,
+subject to certain exceptions and safe
+harbors.^3 The Board of Governors of the
+Federal Reserve System (Board), the
+Federal Deposit Insurance Corporation
+(FDIC), the National Credit Union
+Administration (NCUA), and the Office
+of the Comptroller of the Currency
+(OCC) (collectively, the primary Federal
+payment stablecoin regulators) are
+generally tasked with establishing
+processes and frameworks for the
+licensing, regulation, examination, and
+supervision of permitted payment
+stablecoin issuers.^4
+
+Under section 4(c) of the GENIUS Act
+
+(12 U.S.C. 5903(c)), State-qualified
+payment stablecoin issuers with a
+consolidated total outstanding issuance
+of payment stablecoins of not more than
+$10 billion may opt for State regulation
+provided that (i) the State payment
+stablecoin regulator has submitted a
+certification, including an attestation
+that the State regulatory regime meets
+the criteria for substantial similarity
+established by Treasury,^5 and (ii) the
+Stablecoin Certification Review
+Committee (the Committee) has
+approved the State-level regulatory
+regime upon determining that it meets
+or exceeds the standards and
+requirements described in section 4(a)
+of the GENIUS Act (12 U.S.C. 5903(a)).
+Pursuant to section 2(27) of the GENIUS
+Act (12 U.S.C. 5901(27)), the Secretary
+of the Treasury chairs the Committee,
+which also includes the Chair of the
+Board (or the Vice Chair for
+Supervision, if delegated by the Board
+Chair) and the Chairman of the FDIC.
+
+3 See 12 U.S.C. 5916, 91 FR 53368 (Aug. 19, 2026)
+
+(Treasury).
+
+4 See 12 U.S.C. 5901(25), 5903–5904.
+5 On April 3, 2026, pursuant to section 4(c)(2) of
+
+the GENIUS Act (12 U.S.C. 5903(c)(2)), Treasury
+published proposed broad-based principles for
+determining whether a State-level regulatory regime
+is substantially similar to the Federal regulatory
+framework. 91 FR 16844 (Apr. 3, 2026) (Treasury).
+Changes to Treasury’s principles between proposal
+and final adoption inherently will affect the
+certifications that States submit under part 1522.
+The Committee has endeavored to keep these
+interim procedural regulations and forms at a
+sufficiently high level to generally apply regardless
+of the substance of Treasury’s principles. However,
+the Committee may adjust part 1522 to ensure
+appropriate alignment with the substantial
+similarity principles, based on the Committee’s
+determination of, among other things, how any
+changes to the principles may affect the
+certification or procedures under part 1522. The
+Committee therefore encourages the public to
+carefully review the proposed broad-based
+principles alongside these interim procedures and
+forms.
+
+The GENIUS Act directs Treasury and
+
+each of the primary Federal payment
+stablecoin regulators to promulgate
+regulations to carry out their respective
+responsibilities under the Act.^6 With
+respect to the Committee’s review of
+State-level regulatory regimes under
+section 4(c) of the Act (12 U.S.C.
+5903(c)), the Act requires States to
+submit certifications to the Committee,
+including an attestation ‘‘in a form
+prescribed by the [Committee],’’ 7 and
+directs the Committee to follow certain
+procedures.^8 The Committee is issuing
+this rule to prescribe the form of
+certifications and to implement the
+procedures necessary for the Committee
+to carry out its statutory review
+responsibilities under section 4(c) of the
+Act (12 U.S.C. 5903(c)).^9
+
+On September 19, 2025, Treasury
+published in the Federal Register an
+advance notice of proposed rulemaking
+(ANPRM) to solicit public comment on
+questions relating to the implementation
+of the GENIUS Act.^10 In drafting these
+procedures, the Committee considered
+comments received on the ANPRM that
+were material and relevant to the
+subjects contained herein.
+
+II. Description of the Rule
+
+A. Overview of the Rule
+
+Section 1522.1 sets forth the scope
+and applicability of part 1522, which is
+intended to contain all rules issued by
+the Committee. Section 1522.2 provides
+definitions of certain terms used
+throughout the part. Section 1522.3
+includes a severability provision.
+Section 1522.4 reserves authority for the
+Committee to waive the requirements in
+part 1522 in exceptional circumstances
+and only to the extent consistent with
+the Act.
+
+Section 1522.10 sets out the
+
+procedures by which the Committee
+will review State ‘‘substantial
+similarity’’ certifications and
+
+6 See, e.g., 12 U.S.C. 5913.
+7 Id. at section 4(c)(4)(B) (12 U.S.C. 5903(c)(4)(B)).
+8 See, e.g., id. at section 4(c)(5) (12 U.S.C.
+
+5903(c)(5)).
+
+9 See generally Vermont Yankee Nuclear Power
+
+Corp. v. NRDC, 435 U.S. 519, 544 (1978)
+(recognizing the ‘‘very basic tenet of administrative
+law that agencies should be free to fashion their
+own rules of procedure’’). See also Perez v.
+Mortgage Banker’s Ass’n, 575 U.S. 92, 102 (2015)
+(reaffirming this ‘‘very basic tenet’’ set out in
+Vermont Yankee); FCC v. Pottsville Broadcasting
+Co., 309 U.S. 134, 138 (1940) (observing, in the
+context of a particular statutory licensing structure,
+that ‘‘[n]ecessarily . . . the subordinate questions of
+procedure . . . when the Commission’s licensing
+authority is invoked . . . were explicitly and by
+implication left to the Commission’s own
+devising’’).
+
+10 90 FR 45159 (September 19, 2025) (Treasury);
+
+90 FR 47251 (October 1, 2025) (extending the
+comment period).
+
+recertifications under section 4(c) of the
+GENIUS Act (12 U.S.C. 5903(c)).
+Paragraph (a) addresses the manner of
+submission. Paragraph (b) sets out the
+form of initial certifications, and the
+preamble solicits comment on the effect
+of the one-year deadline in section
+4(c)(4)(A) of the Act (12 U.S.C.
+5903(c)(4)(A)), including the extent to
+which the Committee may consider
+later-filed certifications. Paragraph (c)
+addresses the form and timing of annual
+recertifications and provides that
+approval of a State’s certification shall
+be suspended if an annual
+recertification is not timely filed.
+Paragraph (d) addresses when a
+certification or recertification will be
+considered submitted, and paragraph (e)
+sets forth the standards for the
+Committee’s determinations. Finally,
+paragraph (f) sets forth procedures
+relating to denial, opportunity to cure,
+resubmission, and appeal. Recognizing
+that States may need additional time for
+the State level regulatory regime to
+appropriately reflect any changes to
+Federal statutes, interpretations,
+regulations, or orders, it provides that
+the cure period is two years from the
+date of enactment of an Act of Congress
+or two years from the date of
+publication of the regulatory materials.
+
+Appendices A and B contain forms for
+
+the attestations to be included in the
+initial and annual certifications.
+
+B. Scope and Applicability
+
+Subpart A of part 1522 sets out
+general provisions related to the
+Committee’s rules under part 1522.
+Section 1522.1 sets forth the scope and
+applicability of part 1522. Specifically,
+it provides that part 1522 is being issued
+to implement certain responsibilities of
+the Committee under the GENIUS Act.
+It further provides that the regulations
+issued under part 1522 are those of the
+Committee, published by the agency of
+its Chair, the Department of the
+Treasury, at the Committee’s direction.
+Section 1522.1(b) states that subpart B
+of part 1522 sets forth the procedures
+related to the Committee’s review of
+State ‘‘substantial similarity’’
+certifications and recertifications under
+section 4(c) of the GENIUS Act (12
+U.S.C. 5903(c)). The Committee may
+issue additional rules under part 1522
+that relate to responsibilities other than
+those set out in section 4(c) of the Act,
+as appropriate.
+
+Question 1: Is it clear how subpart B
+of part 1522 relates to the broad-based
+principles proposed by Treasury in part
+1521? Should § 1522.1, or subpart B of
+part 1522, more closely reference,
+incorporate, or rely on part 1521?
+Alternatively, should § 1522.1, or
+
+VerDate Sep<11>2014 17:37 Sep 29, 2026 Jkt 268001 PO 00000 Frm 00005 Fmt 4700 Sfmt 4700 E:\FR\FM\30SER1.SGM 30SER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

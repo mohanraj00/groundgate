@@ -1,0 +1,438 @@
+Aviation Investigation Final Report
+
+Location:
+
+Charles City, Iowa
+
+Accident Number:
+
+CEN23LA326
+
+Date & Time:
+
+July 26, 2023, 11:00 Local
+
+Registration:
+
+N4174L
+
+Aircraft:
+
+ROBINSON HELICOPTER
+COMPANY R44 II
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Aircraft loading event
+
+Injuries:
+
+1 None
+
+Flight Conducted Under:
+
+Part 91: General aviation - Aerial application
+
+Analysis
+
+The pilot of the aerial application flight stated that when the flight returned to the load truck, it
+still had aerial application product aboard, which he was unaware of. He requested and
+received an additional 60 gallons of product that was loaded onto the helicopter for the
+accident flight. After loading the helicopter with the additional product, it now was about 172
+lbs over the helicopter’s gross weight. When the helicopter departed from the load truck on the
+accident flight, the helicopter experienced a decay in rotor rpm and settled into an adjacent
+corn field about 75 ft from the truck. The helicopter sustained substantial damage to the main
+and tail rotor blades and tail boom.
+
+The pilot stated that he was not properly prepared to jettison the load in the event of an
+emergency and his power cross checks were not adequate. The pilot stated that there was no
+mechanical malfunction/failure of the helicopter. An excessive load would have reduced the
+climb performance capability of the helicopter and resulted in settling.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot’s improper preflight of the helicopter to ensure that it was within the loading and
+performance limitations that resulted in settling and impact with terrain during initial climb.
+
+Page 1 of 6
+Findings
+
+Personnel issues
+
+Weight/balance calculations - Pilot
+
+Aircraft
+
+Maximum weight - Capability exceeded
+
+Page 2 of 6
+
+CEN23LA326
+Factual Information
+
+History of Flight
+
+Prior to flight
+
+Initial climb
+
+Aircraft loading event (Defining event)
+
+Loss of control in flight
+
+Uncontrolled descent
+
+Attempted remediation/recovery
+
+Landing
+
+Hard landing
+
+Pilot Information
+
+Certificate:
+
+Commercial
+
+Age:
+
+Airplane Rating(s):
+
+None
+
+Other Aircraft Rating(s): Helicopter
+
+Instrument Rating(s):
+
+Helicopter
+
+Instructor Rating(s):
+
+None
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+39,Male
+
+Front
+
+4-point
+
+No
+
+Medical Certification:
+
+Class 2 Without
+waivers/limitations
+
+Last FAA Medical Exam:
+
+January 5, 2023
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+April 11, 2022
+
+Flight Time:
+
+2057 hours (Total, all aircraft), 1204 hours (Total, this make and model), 2032 hours (Pilot In
+Command, all aircraft), 208 hours (Last 90 days, all aircraft), 189 hours (Last 30 days, all
+aircraft), 8 hours (Last 24 hours, all aircraft)
+
+Page 3 of 6
+
+CEN23LA326
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+ROBINSON HELICOPTER
+COMPANY
+
+Registration:
+
+N4174L
+
+Model/Series:
+
+Year of Manufacture:
+
+R44 II
+
+2008
+
+Aircraft Category:
+
+Helicopter
+
+Amateur Built:
+
+Airworthiness Certificate:
+
+Restricted (Special)
+
+Serial Number:
+
+Landing Gear Type:
+
+Skid
+
+Seats:
+
+12495
+
+4
+
+Date/Type of Last Inspection:
+
+100 hour
+
+Certified Max Gross Wt.:
+
+2500 lbs
+
+Time Since Last Inspection:
+
+Engines:
+
+1 Reciprocating
+
+Airframe Total Time:
+
+1913.7 Hrs
+
+Engine Manufacturer:
+
+Lycoming
+
+ELT:
+
+Installed, not activated
+
+Engine Model/Series:
+
+IO-540
+
+Registered Owner:
+
+CST & SONS LLC
+
+Rated Power:
+
+245 Horsepower
+
+Operator:
+
+Back Nine Aerial LLC
+
+Operating Certificate(s)
+Held:
+
+Agricultural aircraft (137)
+
+Operator Does Business As:
+
+Recon Helicopters
+
+Operator Designator Code:
+
+4B9L
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+CCY,1125 ft msl
+
+Distance from Accident Site:
+
+7 Nautical Miles
+
+Observation Time:
+
+10:55 Local
+
+Direction from Accident Site:
+
+225°
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Wind Speed/Gusts:
+
+Clear
+
+None
+
+/
+
+Wind Direction:
+
+Visibility
+
+10 miles
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+/
+
+/
+
+Altimeter Setting:
+
+29.82 inches Hg
+
+Temperature/Dew Point:
+
+24°C / 22°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+West Union, IA
+
+Type of Flight Plan Filed:
+
+Destination:
+
+Charles City, IA
+
+Type of Clearance:
+
+None
+
+None
+
+Departure Time:
+
+07:00 Local
+
+Type of Airspace:
+
+Class G
+
+Page 4 of 6
+
+CEN23LA326
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 None
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+Ground Injuries:
+
+N/A
+
+N/A
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 None
+
+Latitude, Longitude:
+
+43.023485,-92.767075
+
+Page 5 of 6
+
+CEN23LA326
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Gallo, Mitchell
+
+Additional Participating
+Persons:
+
+Jason Glass; Federal Aviation Administration, Des Moines FSDO; Ankeny, IA
+
+Original Publish Date:
+
+October 17, 2023
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192720
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+CEN23LA326

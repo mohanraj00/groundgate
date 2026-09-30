@@ -1,0 +1,4002 @@
+[
+ {
+  "kind": "fda",
+  "rank": 1,
+  "name": "Atorvastatin Calcium",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 2,
+  "name": "Amlodipine Besylate",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 3,
+  "name": "Levothyroxine Sodium",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 4,
+  "name": "Gabapentin",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 5,
+  "name": "Losartan Potassium",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 6,
+  "name": "Lisinopril",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 7,
+  "name": "Metformin HCl",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 8,
+  "name": "Metoprolol Succinate",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 9,
+  "name": "Rosuvastatin Calcium",
+  "setid": "b7491a1a-570e-40ea-b65b-f956c9e284a6",
+  "keyed": false,
+  "weight_based": false,
+  "groups": [
+   "general"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 10,
+  "name": "Omeprazole",
+  "setid": "aa8fc2ea-3942-453b-bc19-1e4b14ba6926",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "general",
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 11,
+  "name": "Pantoprazole Sodium",
+  "setid": "6faf465b-c3a3-4ae7-9e16-1ba758f6962a",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "general",
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 12,
+  "name": "Apixaban",
+  "setid": "19a60552-374d-4b8b-a8ce-ceae252ea5ba",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "general",
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 13,
+  "name": "Furosemide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 14,
+  "name": "Tamsulosin HCl",
+  "setid": "82d65964-de00-42c2-baaa-cc3de744b8eb",
+  "keyed": false,
+  "weight_based": false,
+  "groups": [
+   "general"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 15,
+  "name": "Albuterol Sulfate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 16,
+  "name": "Hydrocodone/Acetaminophen",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 17,
+  "name": "Hydrochlorothiazide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 18,
+  "name": "Trazodone HCl",
+  "setid": "5b9f0b60-0c25-4303-88f1-44bcb347bc49",
+  "keyed": false,
+  "weight_based": false,
+  "groups": [
+   "general"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 19,
+  "name": "Sertraline HCl",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 20,
+  "name": "Metoprolol Tartrate",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 21,
+  "name": "Prednisone",
+  "setid": "01bdc479-1f1f-af94-837c-12e7e861321a",
+  "keyed": false,
+  "weight_based": false,
+  "groups": [
+   "general"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 22,
+  "name": "Carvedilol",
+  "setid": "5c297a25-6194-45c1-e063-6294a90ae8ed",
+  "keyed": false,
+  "weight_based": false,
+  "groups": [
+   "general"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 23,
+  "name": "Potassium Chloride",
+  "setid": "9b26cc41-3725-4ef1-afdf-5992816d3b0d",
+  "keyed": false,
+  "weight_based": false,
+  "groups": [
+   "general"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 24,
+  "name": "Simvastatin",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 25,
+  "name": "Famotidine",
+  "setid": "5b9c6f47-3071-4bbd-e063-6294a90aaec5",
+  "keyed": false,
+  "weight_based": false,
+  "groups": [
+   "general"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 26,
+  "name": "Clopidogrel Bisulfate",
+  "setid": "65ea4dc6-acb2-4609-9a4c-4866ef0ccb11",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 27,
+  "name": "Fluticasone Propionate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 28,
+  "name": "Tramadol HCl",
+  "setid": "5c2ac7cb-3a38-2174-e063-6394a90a95cc",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 29,
+  "name": "Duloxetine HCl",
+  "setid": "00628e5e-4c5b-2573-e063-6294a90a0e3b",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 30,
+  "name": "Escitalopram Oxalate",
+  "skip": "used in v0.1"
+ },
+ {
+  "kind": "fda",
+  "rank": 31,
+  "name": "Montelukast Sodium",
+  "setid": "9e375c07-70db-458c-9336-22a7037b0a5f",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 32,
+  "name": "Meloxicam",
+  "setid": "58dcbc65-d126-7b48-e063-6294a90a52e9",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 33,
+  "name": "Semaglutide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 34,
+  "name": "Alprazolam",
+  "setid": "a23063c0-099a-4256-b95f-3a857bbf704b",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 35,
+  "name": "Empagliflozin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 36,
+  "name": "Latanoprost",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 37,
+  "name": "Quetiapine Fumarate",
+  "setid": "d51c5bf6-950d-493b-be55-de575c5ef2e7",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 38,
+  "name": "Bupropion HCl",
+  "setid": "b5c12c9a-62eb-481a-8099-7ad35242f7bf",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 39,
+  "name": "Insulin Glargine,Hum.Rec.Anlog",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 40,
+  "name": "Allopurinol",
+  "setid": "da78d290-c71f-44bc-8db4-58fe4195e2f8",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 41,
+  "name": "Oxycodone HCl",
+  "setid": "338b5391-e5f7-40a2-8b15-57f47cbc4813",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 42,
+  "name": "Amoxicillin",
+  "setid": "b07b5ac4-253e-4c83-91c3-3fdc46e91a0f",
+  "keyed": false,
+  "weight_based": true,
+  "groups": [
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 43,
+  "name": "Pravastatin Sodium",
+  "setid": "ce15ad07-3286-478f-9f30-1db6a45ed402",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 44,
+  "name": "Spironolactone",
+  "setid": "8b76a904-6c99-485a-a05f-13a36c5f720c",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 45,
+  "name": "Oxycodone HCl/Acetaminophen",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 46,
+  "name": "Clonazepam",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 47,
+  "name": "Alendronate Sodium",
+  "setid": "c7e470d6-508e-466e-a78d-060bbbc9745c",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 48,
+  "name": "Azithromycin",
+  "setid": "5f144e92-c9eb-420a-9bb8-4265a9f20a98",
+  "keyed": true,
+  "weight_based": true,
+  "groups": [
+   "keyed",
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 49,
+  "name": "Ezetimibe",
+  "setid": "6407d7f3-fd92-4c36-b561-f95ab7ebe055",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 50,
+  "name": "Mirtazapine",
+  "setid": "63f140c2-2a18-4dea-96fe-2658dda28a0c",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 51,
+  "name": "Lorazepam",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 52,
+  "name": "Donepezil HCl",
+  "setid": "603c07bb-61bf-410f-8abf-01ef09d61c14",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 53,
+  "name": "Zolpidem Tartrate",
+  "setid": "d34336b1-7041-4078-beda-94bc9d9f771e",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 54,
+  "name": "Buspirone HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 55,
+  "name": "Glipizide",
+  "setid": "667dd68a-d3e7-4b50-bd0a-d17783a090d5",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 56,
+  "name": "Amoxicillin/Potassium Clav",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 57,
+  "name": "Pregabalin",
+  "setid": "4ccb0d75-d7d9-471c-8737-8552e9e57efa",
+  "keyed": false,
+  "weight_based": true,
+  "groups": [
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 58,
+  "name": "Ibuprofen",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 59,
+  "name": "Fluoxetine HCl",
+  "setid": "a5fa64a6-3de3-4e2e-8b92-6d507fb8eee9",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 60,
+  "name": "Cephalexin",
+  "setid": "1716ea1e-40a9-4a23-870b-3c7e3d070095",
+  "keyed": true,
+  "weight_based": true,
+  "groups": [
+   "keyed",
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 61,
+  "name": "Cyclobenzaprine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 62,
+  "name": "Finasteride",
+  "setid": "00e934bb-c15b-490a-a852-839689a1231a",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 63,
+  "name": "Tizanidine HCl",
+  "setid": "3dd09a0d-a782-1d6d-a552-b71e5bcbf2fe",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 64,
+  "name": "Diclofenac Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 65,
+  "name": "Citalopram Hydrobromide",
+  "setid": "0109f365-bebd-4810-a56f-4451e10245db",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 66,
+  "name": "Doxycycline Hyclate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 67,
+  "name": "Rivaroxaban",
+  "setid": "481b7802-5093-43e7-bbd9-1532197eb6e6",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 68,
+  "name": "Triamcinolone Acetonide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 69,
+  "name": "Diltiazem HCl",
+  "setid": "f7137458-0db3-7ecd-e053-6394a90a5f95",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 70,
+  "name": "Atenolol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 71,
+  "name": "Memantine HCl",
+  "setid": "007d4cb9-3fa9-40f3-b5ca-4083eccd6038",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 72,
+  "name": "Fluticasone/Umeclidin/Vilanter",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 73,
+  "name": "Venlafaxine HCl",
+  "setid": "38431a76-6185-4c17-994f-8278b6cd7510",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 74,
+  "name": "Hydralazine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 75,
+  "name": "Dapagliflozin Propanediol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 76,
+  "name": "Pen Needle, Diabetic",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 77,
+  "name": "Methylprednisolone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 78,
+  "name": "Celecoxib",
+  "setid": "f6291230-7598-407a-aef0-ec1f09277d2a",
+  "keyed": true,
+  "weight_based": false,
+  "groups": [
+   "keyed"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 79,
+  "name": "Lisinopril/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 80,
+  "name": "Losartan/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 81,
+  "name": "Oxybutynin Chloride",
+  "setid": "0c71bdfb-01db-49ac-a8e9-0037df0d24af",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 82,
+  "name": "Baclofen",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 83,
+  "name": "Divalproex Sodium",
+  "setid": "2de86096-4ec7-47df-94db-9c7f6e5df424",
+  "keyed": true,
+  "weight_based": true,
+  "groups": [
+   "keyed",
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 84,
+  "name": "Estradiol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 85,
+  "name": "Tirzepatide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 86,
+  "name": "Warfarin Sodium",
+  "setid": "654ca5d2-d4c1-48f8-90c4-130a21162bb0",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 87,
+  "name": "Fluticasone Propion/Salmeterol",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 88,
+  "name": "Ondansetron",
+  "setid": "960e2104-18c3-4cfa-abf6-f1b30c452918",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 89,
+  "name": "Levetiracetam",
+  "setid": "100d7618-b8e6-43f5-a4e2-6fd728de9d3f",
+  "keyed": true,
+  "weight_based": true,
+  "groups": [
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 90,
+  "name": "Ciprofloxacin HCl",
+  "setid": "c47250c2-bece-46b5-8b3b-b7c97d9005d8",
+  "keyed": true,
+  "weight_based": true,
+  "groups": [
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 91,
+  "name": "Isosorbide Mononitrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 92,
+  "name": "Sulfamethoxazole/Trimethoprim",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 93,
+  "name": "Valsartan",
+  "setid": "170427e5-c74c-c7fc-e063-6294a90a6860",
+  "keyed": false,
+  "weight_based": true,
+  "groups": [
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 94,
+  "name": "Hydroxyzine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 95,
+  "name": "Glimepiride",
+  "setid": "aa533cde-4b32-450e-b080-127351524678",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 96,
+  "name": "Lamotrigine",
+  "setid": "811188be-d231-4b58-8d7a-b01b236fab51",
+  "keyed": true,
+  "weight_based": true,
+  "groups": [
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 97,
+  "name": "Dulaglutide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 98,
+  "name": "Ketoconazole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 99,
+  "name": "Nitrofurantoin Monohyd/M-Cryst",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 100,
+  "name": "Ondansetron HCl",
+  "skip": "same drug ranked higher"
+ },
+ {
+  "kind": "fda",
+  "rank": 101,
+  "name": "Propranolol HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 102,
+  "name": "Aripiprazole",
+  "setid": "abb8ad7e-7998-4485-a09f-a2892190f4ad",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 103,
+  "name": "Sitagliptin Phosphate",
+  "setid": "cebc8388-c9db-4e27-8d6b-0d9bdc9d766d",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 104,
+  "name": "Olanzapine",
+  "setid": "5ba67321-6988-46ea-97a0-549954e2c405",
+  "keyed": true,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 105,
+  "name": "Varicella-Zoster Ge/As01b/PF",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 106,
+  "name": "Mupirocin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 107,
+  "name": "Nystatin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 108,
+  "name": "Sacubitril/Valsartan",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 109,
+  "name": "Nifedipine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 110,
+  "name": "Prednisolone Acetate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 111,
+  "name": "Risperidone",
+  "setid": "a6767972-2d3f-482b-80bd-ac93e28fdd05",
+  "keyed": true,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 112,
+  "name": "Carbidopa/Levodopa",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 113,
+  "name": "Fluconazole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 114,
+  "name": "Mirabegron",
+  "setid": "5f7a1758-8691-4e53-96d6-a01626ee8140",
+  "keyed": true,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 115,
+  "name": "Amitriptyline HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 116,
+  "name": "Budesonide/Formoterol Fumarate",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 117,
+  "name": "Olmesartan Medoxomil",
+  "setid": "67aa498d-edf6-45b8-a3fd-019c3fb76960",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 118,
+  "name": "Clonidine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 119,
+  "name": "Ropinirole HCl",
+  "setid": "a97d5e2d-4a17-4d80-9216-1b0780199502",
+  "keyed": true,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 120,
+  "name": "Paroxetine HCl",
+  "setid": "1c2716c0-16e2-460d-8639-70d36f14714a",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 121,
+  "name": "Insulin Lispro",
+  "skip": "same drug ranked higher"
+ },
+ {
+  "kind": "fda",
+  "rank": 122,
+  "name": "Topiramate",
+  "setid": "b5f8da43-6daf-413c-9dcd-363617973738",
+  "keyed": true,
+  "weight_based": true,
+  "groups": [
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 123,
+  "name": "Valacyclovir HCl",
+  "setid": "72300f70-57fd-42a8-a2dc-4cf95a1ce805",
+  "keyed": true,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 124,
+  "name": "Azelastine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 125,
+  "name": "Pioglitazone HCl",
+  "setid": "04577c39-a9c0-4c66-a775-4c79e2c3dea5",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 126,
+  "name": "Methocarbamol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 127,
+  "name": "Amiodarone HCl",
+  "setid": "4c149392-a4f0-4e2d-a13f-2b94810005de",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 128,
+  "name": "Meclizine HCl",
+  "setid": "d53bf04e-5cfc-4974-9b24-2cce545d1bd0",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 129,
+  "name": "Diazepam",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 130,
+  "name": "Torsemide",
+  "setid": "26a3af16-39fc-482d-8a8e-9473af4b0e3f",
+  "keyed": true,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 131,
+  "name": "Esomeprazole Magnesium",
+  "setid": "5baf88c3-eda4-8aa6-e063-6294a90a68b4",
+  "keyed": true,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 132,
+  "name": "Hydrocortisone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 133,
+  "name": "Timolol Maleate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 134,
+  "name": "Dorzolamide HCl/Timolol Maleat",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 135,
+  "name": "Chlorthalidone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 136,
+  "name": "Naproxen",
+  "setid": "86a3e612-3bfe-432f-9afd-972bb8a6644e",
+  "keyed": false,
+  "weight_based": true,
+  "groups": [
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "fda",
+  "rank": 137,
+  "name": "Rsvpref3 Antigen/As01e/PF",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 138,
+  "name": "Triamterene/Hydrochlorothiazid",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 139,
+  "name": "Fluticasone/Vilanterol",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 140,
+  "name": "Clobetasol Propionate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 141,
+  "name": "Brimonidine Tartrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 142,
+  "name": "Morphine Sulfate",
+  "setid": "533034fd-c8e7-495b-8874-0db41bd1e65a",
+  "keyed": false,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 143,
+  "name": "Chlorhexidine Gluconate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 144,
+  "name": "Irbesartan",
+  "setid": "ed789dc1-0b39-4efc-990d-7b6b43a8b3ba",
+  "keyed": true,
+  "weight_based": false,
+  "skip": "no group needs it"
+ },
+ {
+  "kind": "fda",
+  "rank": 145,
+  "name": "Hydroxychloroquine Sulfate",
+  "setid": "ebe00e35-ed3d-40f4-9a93-a37b0da01ddb",
+  "keyed": true,
+  "weight_based": true,
+  "groups": [
+   "weight_based"
+  ]
+ },
+ {
+  "kind": "ntsb",
+  "id": 192718,
+  "skip": "no report (404)"
+ },
+ {
+  "kind": "ntsb",
+  "id": 192719
+ },
+ {
+  "kind": "ntsb",
+  "id": 192720
+ },
+ {
+  "kind": "ntsb",
+  "id": 192721
+ },
+ {
+  "kind": "ntsb",
+  "id": 192722
+ },
+ {
+  "kind": "ntsb",
+  "id": 192723
+ },
+ {
+  "kind": "ntsb",
+  "id": 192724
+ },
+ {
+  "kind": "ntsb",
+  "id": 192725,
+  "skip": "not a final report"
+ },
+ {
+  "kind": "ntsb",
+  "id": 192726,
+  "skip": "no report (404)"
+ },
+ {
+  "kind": "ntsb",
+  "id": 192727,
+  "skip": "not a final report"
+ },
+ {
+  "kind": "ntsb",
+  "id": 192728
+ },
+ {
+  "kind": "ntsb",
+  "id": 192729
+ },
+ {
+  "kind": "ntsb",
+  "id": 192730
+ },
+ {
+  "kind": "ntsb",
+  "id": 192731
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p3",
+  "dollar_amounts_pages_1_2": 17
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p5",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p15-a",
+  "dollar_amounts_pages_1_2": 6,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p15-t",
+  "dollar_amounts_pages_1_2": 4,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p16",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p17",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p54",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p55-b",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p216",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p225",
+  "dollar_amounts_pages_1_2": 6,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p334",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p487",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p502",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p503",
+  "dollar_amounts_pages_1_2": 3,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p504",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p509",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p510",
+  "dollar_amounts_pages_1_2": 5,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p514",
+  "dollar_amounts_pages_1_2": 1,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p515",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p516",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p517",
+  "dollar_amounts_pages_1_2": 22
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p519",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p523",
+  "dollar_amounts_pages_1_2": 2,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p524",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p525",
+  "dollar_amounts_pages_1_2": 4,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p526",
+  "dollar_amounts_pages_1_2": 4,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p527",
+  "dollar_amounts_pages_1_2": 8
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p529",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p530",
+  "dollar_amounts_pages_1_2": 6,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p531",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p534",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p537",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p538",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p541",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p542",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p544",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p547",
+  "dollar_amounts_pages_1_2": 3,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p550",
+  "dollar_amounts_pages_1_2": 4,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p551",
+  "dollar_amounts_pages_1_2": 1,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p555",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p556",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p557",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p559",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p561",
+  "dollar_amounts_pages_1_2": 11
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p570",
+  "dollar_amounts_pages_1_2": 5,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p575",
+  "dollar_amounts_pages_1_2": 1,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p583",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p584",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p584-b",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p587",
+  "dollar_amounts_pages_1_2": 6,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p590-b",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p594",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p595",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p597",
+  "dollar_amounts_pages_1_2": 5,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p598",
+  "dollar_amounts_pages_1_2": 2,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p721",
+  "dollar_amounts_pages_1_2": 4,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p783",
+  "dollar_amounts_pages_1_2": 23
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p784",
+  "dollar_amounts_pages_1_2": 20
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p785",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p786",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p794",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p892",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p901",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p904",
+  "dollar_amounts_pages_1_2": 4,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p907",
+  "dollar_amounts_pages_1_2": 6,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p908",
+  "dollar_amounts_pages_1_2": 1,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p915",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p925",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p926",
+  "dollar_amounts_pages_1_2": 6,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p936",
+  "dollar_amounts_pages_1_2": 8
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p938",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p939",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p946",
+  "dollar_amounts_pages_1_2": 6,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p947",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p957",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p962",
+  "dollar_amounts_pages_1_2": 14
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p963",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p966",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p969",
+  "dollar_amounts_pages_1_2": 4,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p971",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p972",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p974",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p976",
+  "dollar_amounts_pages_1_2": 2,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1020",
+  "dollar_amounts_pages_1_2": 1,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1024",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1035",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1040",
+  "dollar_amounts_pages_1_2": 3,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1075",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1099",
+  "skip": "unreadable: RecursionError"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1101",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1136",
+  "dollar_amounts_pages_1_2": 19
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1141",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1153",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1167",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1179",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1187",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1212",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1220",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1223",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1239",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1281",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1304",
+  "dollar_amounts_pages_1_2": 0,
+  "skip": "fewer than 8 dollar amounts on pages 1 and 2"
+ },
+ {
+  "kind": "irs",
+  "group": "general",
+  "id": "irs-p1321",
+  "dollar_amounts_pages_1_2": 10
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p1",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p5",
+  "pages": [
+   7
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 1,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p15-a",
+  "pages": [
+   11,
+   18
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 1,
+   "scale": 1
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p15-t",
+  "pages": [
+   9,
+   66
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 1,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p16",
+  "pages": [
+   4,
+   5,
+   9
+  ],
+  "matches": {
+   "change": 4,
+   "negation": 0,
+   "scale": 5
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p17",
+  "pages": [
+   4,
+   14,
+   16
+  ],
+  "matches": {
+   "change": 2,
+   "negation": 2,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p54",
+  "pages": [
+   24,
+   26
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 2,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p55-b",
+  "pages": [
+   5,
+   9,
+   10
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 0,
+   "scale": 5
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p216",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p225",
+  "pages": [
+   3,
+   6,
+   7
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 1,
+   "scale": 2
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p334",
+  "pages": [
+   4,
+   5,
+   14
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 5
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p487",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p502",
+  "pages": [
+   10
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 1,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p503",
+  "pages": [
+   11
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 2,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p504",
+  "pages": [
+   15
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 2,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p509",
+  "pages": [
+   3,
+   6
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 1,
+   "scale": 2
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p510",
+  "pages": [
+   28,
+   38,
+   41
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 3,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p514",
+  "pages": [
+   7,
+   8,
+   14
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 3,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p515",
+  "pages": [
+   16,
+   46,
+   47
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 4,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p516",
+  "pages": [
+   10
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 1,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p519",
+  "pages": [
+   10,
+   12,
+   23
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 4,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p523",
+  "pages": [
+   4,
+   5,
+   19
+  ],
+  "matches": {
+   "change": 2,
+   "negation": 1,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p524",
+  "pages": [
+   6
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 2,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p525",
+  "pages": [
+   3,
+   6,
+   8
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 4,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p526",
+  "pages": [
+   4,
+   5,
+   10
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 4,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p529",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p530",
+  "pages": [
+   6,
+   11
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 2,
+   "scale": 5
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p531",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p534",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p537",
+  "pages": [
+   16,
+   22
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 0,
+   "scale": 5
+  }
+ },
+ {
+  "kind": "irs",
+  "group": "targeted",
+  "id": "irs-p538",
+  "pages": [
+   9,
+   13,
+   14
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 0,
+   "scale": 3
+  }
+ },
+ {
+  "kind": "irs",
+  "targeted_matches": {
+   "change": 11,
+   "negation": 42,
+   "scale": 33
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20075",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20067",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20039",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20037",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20036",
+  "pages": [
+   1
+  ],
+  "matches": {
+   "change": 2,
+   "negation": 1,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20019",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20014",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20012",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20011",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20010",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20009",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20008",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20007",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-20006",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19978",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19977",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19973",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19966",
+  "pages": [
+   2
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 1,
+   "scale": 1
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19963",
+  "pages": [
+   2
+  ],
+  "matches": {
+   "change": 2,
+   "negation": 1,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19959",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19956",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19946",
+  "pages": [
+   13
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 0,
+   "scale": 2
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19945",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19929",
+  "pages": [
+   7
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 0,
+   "scale": 1
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19901",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19896",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19891",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19889",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19887",
+  "pages": [
+   2
+  ],
+  "matches": {
+   "change": 0,
+   "negation": 0,
+   "scale": 5
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19884",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19878",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19843",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19813",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19801",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19762",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19761",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19760",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19758",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19757",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19754",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19751",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19745",
+  "pages": [
+   2
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19743",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19741",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19723",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19722",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19720",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19696",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19694",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19688",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19681",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19678",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19668",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19666",
+  "pages": [
+   1
+  ],
+  "matches": {
+   "change": 2,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19657",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19656",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19653",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19598",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19597",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19566",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19537",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19493",
+  "pages": [
+   3
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19456",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19448",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19429",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19428",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19424",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19423",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19422",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19421",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19404",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19403",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19391",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19390",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19389",
+  "pages": [
+   2
+  ],
+  "matches": {
+   "change": 2,
+   "negation": 1,
+   "scale": 2
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19350",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19329",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19312",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19311",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19270",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19231",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19223",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19211",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19207",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19177",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19173",
+  "pages": [
+   1
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19172",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19171",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19161",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19154",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19150",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19149",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19143",
+  "pages": [
+   2
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19084",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19083",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19082",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19074",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19065",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19060",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19056",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19052",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-C1-2026-13420",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-19006",
+  "pages": [
+   2
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 3
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18996",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18978",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18977",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18960",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18949",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18914",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18927",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18911",
+  "pages": [
+   1
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18902",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18856",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18855",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18849",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18848",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18830",
+  "pages": [
+   4
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18828",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18800",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18780",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18776",
+  "pages": [
+   2
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18766",
+  "pages": [
+   2
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 3,
+   "scale": 5
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18748",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18734",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18670",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18630",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18623",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18612",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18607",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18602",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18601",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18600",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18583",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18576",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18572",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18569",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18565",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18563",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18560",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18559",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18558",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18557",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18548",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18535",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18492",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18478",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18463",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18461",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18437",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18433",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18432",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18431",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18430",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18429",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18428",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18427",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18426",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18423",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18391",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18380",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18369",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18364",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18353",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18345",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18337",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18334",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18324",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18279",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18194",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18166",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18132",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18130",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18126",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18123",
+  "pages": [
+   13
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18107",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18104",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18062",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18055",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18053",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18052",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18044",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18040",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18033",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18032",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18029",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-18019",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17979",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17978",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17971",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17940",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17903",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17901",
+  "pages": [
+   4
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 5
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17893",
+  "pages": [
+   5
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 1,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17884",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17876",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17874",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17872",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17865",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17854",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17823",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17821",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17815",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-C3-2026-15190",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17792",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17791",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17790",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17789",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17788",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17787",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17786",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17784",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17783",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17782",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17757",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17756",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17752",
+  "pages": [
+   3
+  ],
+  "matches": {
+   "change": 2,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17742",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17731",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17726",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17715",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17689",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-C1-2026-16628",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17660",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17652",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17650",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17645",
+  "pages": [
+   1
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17639",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17636",
+  "pages": [
+   5
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 1
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17627",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17622",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17616",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17615",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17608",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17588",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17584",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17583",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17582",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17581",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17579",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17576",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17553",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17552",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17551",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17538",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17536",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17531",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17522",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17512",
+  "pages": [
+   3
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17511",
+  "pages": [
+   1
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "targeted_matches": {
+   "change": 37,
+   "negation": 50,
+   "scale": 58
+  }
+ }
+]

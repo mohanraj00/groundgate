@@ -1,0 +1,465 @@
+Section 1
+
+Introduction
+
+T^his report presents statistical estimates based on a strati-
+
+fied sample of 125,308 unaudited returns selected from
+the approximately 6.8 million active corporate returns
+filed for Tax Year (TY) 2022. This tax year includes accounting
+periods ending July 2022 through June 2023.
+
+Section 1 of this report summarizes overall corporate ac-
+tivity for TY 2022. Section 2 discusses changes in law and
+regulations (if any) affecting the comparability of the statistics
+in this report with prior years. Section 3 describes the sample
+of income tax returns selected, the method of estimation used,
+how sampling variability of the data was measured, and other
+limitations. Section 4 explains the terms used throughout this
+report, and it includes the adjustments made in preparing the
+statistics and any limitations inherent in the data. Section 5
+consists of the key corporation tax return forms.
+
+The IRS Statistics of Income (SOI) Division classified
+the industries in this report according to the North American
+Industry Classification System (NAICS). The list of indus-
+try codes used for classification appears as an appendix to
+Section 4, Explanation of Terms.
+
+Overall Corporate Summary
+Corporation summary statistics for TYs 2021 and 2022 are pre-
+sented in Figure A. These data include the number of returns,
+total assets, total receipts, net income (less deficit), income
+subject to tax, total income tax before credits, and total income
+tax after credits for active corporations.
+
+The number of active corporate tax returns filed increased
+approximately 2.3% between 2021 and 2022. Additionally,
+the number of corporations filing tax returns electroni-
+cally rose 1.9% between those same years, increasing from
+6,297,688 returns to an all-time high of 6,419,195 returns filed
+electronically.
+
+Total assets reported for active corporations increased
+approximately 1.0%, from $141.9 trillion in 2021 to $143.3
+trillion in 2022. By sector, Educational Services experienced
+the largest percentage increase, up 38.1% from $66.6 billion
+Isaac Goodwin and William Rush were responsible for the overall production of
+this report. Jacob Dailey and Abigail Gaudinier prepared this introduction, under
+the direction of Julia Shiller, Chief, Corporation Returns Analysis Section
+
+1
+
+in 2021 to $92.0 billion in 2022, while Finance and Insurance
+experienced the largest percentage decrease, down 3.8% from
+$70.1 trillion in 2021 to $67.4 trillion in 2022.
+
+Total receipts from operations and investments increased
+13.9%, from $39.8 trillion in 2021 to $45.3 trillion the fol-
+lowing year. This was driven by a 14.3% increase in business
+receipts, from $35 trillion in 2021 to $39.9 trillion, as well as
+a 49.2% increase in interest, from $1.2 trillion to $1.8 trillion.
+Notably, short term capital gains decreased by 84.8% from
+$177.6 billion in 2021 to $27.0 billion in 2022. Long term
+capital gains decreased by 33.9%, from $366.3 billion in 2021
+to $242.0 billion in 2022. By sector, Mining experienced the
+largest percentage increase in total receipts, up 37.7% from
+$464.9 billion in 2021 to $639.9 billion in 2022, while Retail
+Trade recorded the smallest percentage increase of 4.8% from
+$6.0 trillion in 2021 to $6.2 trillion in 2022.
+
+Total deductions increased 13.5% from $36.4 trillion in
+2021 to $41.3 trillion in 2022. Interest, a component of total
+deductions, increased by 36%, going from $710.1 billion to
+$965.9 billion. Of all specified components of total deductions,
+Net Gain/Loss experienced the largest percentage increase of
+54.1% from $47.9 billion in 2021 to $73.8 billion in 2022.
+
+Corporate pretax profits, also known as net income
+(less deficit), increased 17.7%, from $4.1 trillion to $4.8
+trillion (Figure B). By sector, Mining experienced the larg-
+est percentage increase in pretax profits, up 159.6% from
+$41.1 billion in 2021 to $106.6 billion in 2022. The largest
+percentage decrease in net income was in the Educational
+Services sector, down 10.9% from $4.7 billion in 2021 to
+$4.2 billion in 2022. When excluding passthrough entities
+from the total, pretax profits increased from $2.6 trillion
+in 2021 to $3.3 trillion in 2022. For 2022, S corporations
+reported $763.3 billion in pretax profits, an increase of
+1.1% from 2021. Regulated investment companies (RICs)
+reported $625.4 billion, down 2.9% from 2021. Real estate
+investment trusts (REITs) reported $97.9 billion, up 4.6%
+from 2021 (Figure C).
+
+Income subject to tax (the tax base) increased 18.9%,
+from $2.4 trillion in 2021 to $2.9 trillion in 2022. Total
+income tax before credits increased by 19.8%, from $528.8
+Figure A. Returns of Active Corporations: Number of Returns, Total Assets, Total Receipts, Net Income (Less Deficit),
+Income Subject to Tax, Total Income Tax Before Credits, Total Income Tax After Credits, by Size of Total Assets, Tax
+Years 2021 and 2022
+[All figures are estimates based on samples—money amounts are in thousands of dollars and size of total assets is in whole dollars]
+
+Year and size of total assets
+
+2021
+
+Total .......................................................
+Zero assets .............................................
+$1 under $500,000 .................................
+$500,000 under $1,000,000 ...................
+$1,000,000 under $5,000,000 ................
+$5,000,000 under $10,000,000 ..............
+$10,000,000 under $25,000,000 ............
+$25,000,000 under $50,000,000 ............
+$50,000,000 under $100,000,000 ..........
+$100,000,000 under $250,000,000 ........
+$250,000,000 under $500,000,000 ........
+$500,000,000 under $2,500,000,000 .....
+$2,500,000,000 or more .........................
+
+2022
+
+Total .......................................................
+Zero assets .............................................
+$1 under $500,000 .................................
+$500,000 under $1,000,000 ...................
+$1,000,000 under $5,000,000 ................
+$5,000,000 under $10,000,000 ..............
+$10,000,000 under $25,000,000 ............
+$25,000,000 under $50,000,000 ............
+$50,000,000 under $100,000,000 ..........
+$100,000,000 under $250,000,000 ........
+$250,000,000 under $500,000,000 ........
+$500,000,000 under $2,500,000,000 .....
+$2,500,000,000 or more .........................
+
+Number
+of returns
+
+(1)
+
+Total
+assets
+
+(2)
+
+Total
+receipts
+
+(3)
+
+Net income
+(less deficit)
+
+Income subject
+to tax
+
+Total income tax
+before credits
+
+Total income tax
+after credits
+
+(4)
+
+(5)
+
+(6)
+
+(7)
+
+6,690,732 141,928,079,790
+-
+1,360,320
+470,313,092
+3,972,255
+372,957,320
+526,795
+1,240,657,117
+584,033
+698,181,088
+99,425
+1,078,725,665
+70,035
+944,196,640
+27,058
+1,163,665,092
+16,519
+2,152,131,174
+13,643
+2,455,363,121
+6,911
+10,086,713,099
+9,123
+4,613 121,265,176,381
+
+6,845,719 143,330,805,078
+1,402,579
+-
+467,918,815
+4,023,688
+386,637,796
+546,064
+1,291,207,958
+605,558
+745,750,345
+106,803
+1,168,387,475
+75,406
+1,055,523,671
+30,173
+1,274,785,339
+18,151
+2,388,311,917
+15,161
+2,675,498,814
+7,547
+9,829
+10,734,998,994
+4,759 121,141,783,954
+
+39,802,048,295
+647,813,893
+2,103,744,165
+958,654,373
+2,382,608,013
+1,195,394,605
+1,748,022,971
+1,251,276,474
+1,139,582,048
+1,468,359,477
+1,177,358,219
+3,367,213,636
+22,362,020,422
+
+45,344,721,435
+615,154,905
+2,271,343,134
+1,020,173,318
+2,500,069,198
+1,321,132,589
+1,849,594,909
+1,398,266,798
+1,287,326,114
+1,714,792,695
+1,393,309,759
+4,016,192,365
+25,957,365,652
+
+4,072,854,671
+39,264,248
+162,020,290
+60,684,917
+143,555,687
+61,097,241
+80,420,996
+51,530,208
+45,244,600
+57,992,333
+56,368,304
+277,018,453
+3,037,657,395
+
+4,793,892,373
+44,328,189
+175,885,398
+63,221,279
+140,197,818
+55,736,016
+78,719,082
+56,290,372
+52,191,486
+67,748,296
+65,884,097
+319,087,831
+3,674,602,509
+
+2,422,050,144
+36,888,354
+8,902,800
+6,160,878
+25,181,768
+16,461,267
+27,837,737
+24,753,522
+27,940,867
+43,788,145
+40,239,910
+176,907,710
+1,986,987,186
+
+2,879,100,959
+39,859,532
+8,963,870
+6,421,493
+26,244,428
+16,767,443
+28,364,976
+27,041,691
+30,864,170
+50,041,039
+46,719,765
+196,450,787
+2,401,361,764
+
+528,805,470
+8,750,203
+1,868,984
+1,296,713
+5,302,520
+3,458,538
+5,856,735
+5,231,717
+5,883,505
+9,264,621
+8,575,650
+37,611,490
+435,704,792
+
+633,315,735
+9,196,606
+1,838,597
+1,353,715
+5,517,174
+3,521,374
+5,975,013
+5,695,458
+6,535,093
+10,576,203
+9,882,835
+41,909,303
+531,314,364
+
+371,403,253
+8,285,865
+1,814,426
+1,264,056
+5,119,670
+3,333,351
+5,577,524
+4,972,897
+5,496,701
+8,279,824
+7,633,324
+32,254,907
+287,370,710
+
+448,720,584
+8,510,893
+1,785,153
+1,315,273
+5,292,809
+3,352,287
+5,628,892
+5,365,251
+5,903,790
+9,564,087
+8,636,620
+34,904,733
+358,460,796
+
+d-To avoid disclosure of information for specific corporations, these data have been deleted. Data are included in appropriate totals.
+NOTE: Detail may not add to totals because of rounding. See text for “Explanation of Terms” and “Description of the Sample and Limitations of the Data.”
+SOURCE: IRS, Statistics of Income Division: 2022 Publication 16, September 2025
+
+billion to $633.3 billion in 2022. Income tax also increased
+18.8% during the year, from $508.6 billion to $604.2 bil-
+lion. Total income tax after credits, the amount paid to the
+U.S. Government, increased by 20.8%, from $371.4 billion
+in 2021 to $448.7 billion in 2022.
+
+Of the 6.8 million active corporations for TY 2022, ap-
+proximately 5.3 million were passthrough entities. These
+entities include RICs, REITs, and S corporations [1].
+Passthrough entities pay little to no federal income tax at
+the corporate level. By law, they are required to pass any
+profits or losses to their shareholders, where they are taxed
+at the individual rate. Pretax profits for passthrough entities
+decreased 0.4% ($6.2 billion) during 2022.
+
+The remaining 1.6 million non-passthrough corporate
+returns reported total receipts of $33.6 trillion, an increase
+of 15.7% from 2021 to 2022. 47.5% of the non-passthrough
+corporation returns reported net income for 2022 [2].
+Additionally, 39.0% of non-passthrough corporations had
+a net income and tax liability.
+
+The number of returns with total assets of $2.5 billion
+or more represented 0.07% of total returns but 84.5% of
+total assets (Figure A). These 4,759 returns for 2022 ac-
+counted for 57.2% of total receipts, 76.7% of net income
+(less deficit), 83.4% of income subject to tax, 83.9% of total
+income tax before credits, and 79.9% of total income tax
+after credits. Approximately 48.6% of all returns with net
+income and total assets greater than $2.5 billion had a tax
+liability for 2022. Excluding passthrough entities, 97.9% of
+returns reporting net income and with total assets greater
+than $2.5 billion had a tax liability for the year.
+
+Activities Covered
+The estimates include corporate business activities in the
+United States, certain foreign activities as reported on re-
+turns of domestic corporations, and foreign corporations
+with U.S. business activities. “Domestic corporations”
+refers to companies incorporated in the U.S., but this does
+not mean that all their activities are domestic. For instance,
+data for a U.S. corporation conducting business abroad
+through foreign subsidiaries may include dividends remitted
+
+2
+
+2022 Corporate Tax Returns Complete Report
+
+Introduction
+Section 2
+
+T^he statistics in this report reflect, in general, changes
+
+in law and regulations that became effective during the
+covered accounting periods for 2022. Depending on the
+accounting period used and effective date of the change in
+law, this change may have been fully applicable for some cor-
+porations, only partially applicable for several others, or not
+applicable at all for the rest.
+
+The following changes affect the comparability of the rel-
+
+evant statistics in this report with those of prior years:
+
+Inflation Reduction Act (IRA)
+
+The Inflation Reduction Act (IRA) was signed into law
+on August 16, 2022. It was implemented with the goals of re-
+ducing inflation and the federal deficit, lowering prescription
+drug prices, and investing in domestic energy production and
+clean energy.
+
+Changes to Form 4562, Depreciation and
+Amortization
+
+This form is used when a taxpayer needs to claim de-
+preciation, amortization, or Section 179 deductions on a
+tax return. For tax years beginning in 2022 the Section 179
+
+Changes in Law and
+Regulations
+
+maximum expense deduction increased from $1,050,000 to
+$1,080,000. This limit is reduced by the amount by which the
+cost of Section 179 property placed in service during the tax
+year exceeds $2,700,000.
+
+Research and Development Expenditures
+
+Under the Tax Cuts and Jobs Act (TCJA), Section 174 was
+amended to disallow full expensing of R&D expenditures.
+Beginning January 1, 2022, domestic R&D expenditures
+are required to be capitalized and amortized over a 5-year
+period. Foreign expenditures are to be amortized over a 15-
+year period.
+
+See Section 4, Explanation of Terms, for more detailed
+
+explanations and definitions of the terms used in this report.
+
+6

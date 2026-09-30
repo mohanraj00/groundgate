@@ -1,0 +1,264 @@
+Federal Register / Vol. 91, No. 176 / Monday, September 14, 2026 / Rules and Regulations
+
+58015
+
+Compliance date: The compliance
+date for this final rule is October 14,
+2026.
+ADDRESSES: For information on where to
+obtain copies of rulemaking documents
+and other information related to this
+final rule, see ‘‘Additional Information’’
+in the SUPPLEMENTARY INFORMATION
+section of this document.
+FOR FURTHER INFORMATION CONTACT:
+Ethan Argenbright, General Aviation
+and Commercial Division/Testing
+Standards Section, AFS–810, Federal
+Aviation Administration, 800
+Independence Avenue SW, Washington,
+DC 20591; telephone (405) 954–6404;
+email ethan.d.argenbright@faa.gov.
+SUPPLEMENTARY INFORMATION:
+
+ACS—Airman Certification Standards
+AGL—Above Ground Level
+CFR—Code of Federal Regulations
+DOT—Department of Transportation
+FAA—Federal Aviation Administration
+FR—Federal Register
+IBR—Incorporation by reference
+MOSAIC—Modernization of Special
+
+Airworthiness Certification
+
+NPRM—Notice of proposed rulemaking
+PTS—Practical Test Standards
+RFA—Regulatory Flexibility Act
+U.S.C.—United States Code
+
+I. Executive Summary
+
+A. Purpose of the Regulatory Action
+
+FAA updates three PTS related to the
+
+certification of sport pilots and
+operation of light-sport category aircraft
+to address a conflict between
+regulations adopted by the MOSAIC
+final rule and language in three sport
+pilot PTS. The PTS establish the formal
+guidelines, standards, and criteria used
+by FAA Safety Inspectors and
+Designated Pilot Examiners (DPEs) to
+evaluate an applicant’s suitability for an
+airman certificate, ensuring they
+demonstrate proficiency and can safely
+operate within the National Airspace
+System (NAS). These updates align the
+language in the sport pilot PTS
+identifying which aircraft can be used to
+satisfy practical test and proficiency
+check requirements under part 61 with
+the new sport pilot operational limits
+adopted in the MOSAIC final rule. FAA
+also makes non-substantive, conforming
+amendments to update minor
+terminology inconsistencies throughout
+these three PTS.
+
+FAA updates from versions A to B,
+three sport pilot PTS listed in section
+61.14, specifically; (a)(12) Sport Pilot
+and Sport Pilot Flight Instructor Rating
+PTS for Airplane Category; Rotorcraft
+Category, and Glider Category (FAA–S–
+8081–29A), (a)(13) Sport Pilot and Sport
+Pilot Flight Instructor Rating PTS for
+Lighter-Than-Air Category (FAA–S–
+
+8081–30A), and (a)(14) Sport Pilot and
+Sport Pilot Flight Instructor PTS for
+Powered Parachute Category, Weight-
+Shift-Control Aircraft Category (FAA–S–
+8081–31A).
+
+The rule aligns pilot certification
+
+standards in these three PTS with
+regulatory changes adopted by the
+MOSAIC final rule by replacing
+references to ‘‘light-sport aircraft’’ with
+‘‘aircraft’’ to encompass aircraft meeting
+the performance limits and design
+requirements in new section 61.316.
+The performance limits and design
+requirements in section 61.316 expand
+the aircraft that sport pilots and flight
+instructors with a sport pilot rating may
+operate, therefore necessitating
+revisions to the sport pilot PTS to reflect
+those expanded aircraft privileges. The
+changes in the PTS will reduce
+confusion between the current
+definition of ‘‘light-sport aircraft’’ in
+section 1.1, which will be removed by
+the MOSAIC final rule effective July 24,
+2026, and future light-sport category
+aircraft, also as explained by the
+MOSAIC final rule. This rule also aligns
+practical test requirements for the
+certification of pilots and flight
+instructors with a sport pilot rating
+seeking to add airplane privileges to
+their sport pilot certificate.
+
+B. Changes Made in This Final Rule
+Based on Comments
+
+Based on comments received on the
+
+NPRM, FAA amends the proposed
+minimum recovery altitude in Sport
+Pilot and Flight Instructors with a Sport
+Pilot Rating PTS for Airplane Category;
+Rotorcraft Category Gyroplane, and
+Glider Category (FAA–S–8081–29B)
+from 1,000 to 1,500 feet AGL for stalls
+and slow flight tasks.
+
+C. Summary of the Costs and Benefits
+
+FAA expects no new costs to
+applicants for an initial certificate,
+rating, or privilege, or to existing
+airmen, because there are no substantive
+changes to the testing processes, areas of
+operation, or elements upon which
+airmen are currently tested in order to
+obtain a sport pilot certificate. FAA will
+incur some de minimis costs to make
+changes to the PTS and upload the
+updated versions to its website, but
+FAA does not anticipate any other costs
+to the agency because the process by
+which testing is conducted or the
+manner in which PTS and ACS are
+currently implemented is not changing.
+Although not attributable to this final
+rule, aligning the PTS with MOSAIC
+ensures consistent application of
+MOSAIC’s not quantified benefits, such
+as increased safety from allowing sport
+
+pilots to train, test, and fly with larger
+and more varied aircraft.
+
+II. Authority for This Rulemaking
+
+The authority of FAA to issue rules on
+
+aviation safety is found in 49 U.S.C.
+106, which describes the authority of
+the Administrator of FAA. The scope of
+FAA’s authority is further described in
+49 U.S.C. Subtitle VII, Aviation
+Programs. This rulemaking is issued
+under the authority described in 49
+U.S.C. 106(f), which establishes the
+authority of the Administrator to
+promulgate and revise regulations,
+rules, and other official publications
+related to aviation safety. This
+rulemaking is promulgated under the
+authority granted to the Administrator
+in 49 U.S.C. 40113 (prescribing general
+authority of the Administrator of FAA
+with respect to aviation safety duties
+and powers to prescribe regulations)
+and §§ 44701 (general authority of the
+Administrator to promote safe flight of
+civil aircraft in air commerce by
+prescribing regulations and setting
+minimum standards for other practices,
+methods, and procedures necessary for
+safety in air commerce and national
+security), 44702 (general authority of the
+Administrator to issue airman
+certificates), and 44703 (general
+authority of the Administrator to
+prescribe regulations for the issuance of
+airman certificates when the
+Administrator finds, after investigation,
+an individual is qualified for and
+physically able to perform the duties
+related to the position authorized by the
+certificate). This rulemaking is within
+the scope of that authority.
+
+III. Background
+
+A. Summary of the NPRM
+
+On July 24, 2025 FAA published the
+MOSAIC final rule (90 FR 35218). The
+MOSAIC rule amended rules for the
+manufacture, certification, operation,
+maintenance, and alteration of light-
+sport aircraft, which subsequently
+increased sport pilot privileges and
+expanded what aircraft sport pilots may
+operate. The MOSAIC final rule
+restructured certification requirements
+for light-sport category aircraft, which
+resulted in FAA removing the ‘‘light-
+sport aircraft’’ definition from section
+1.1. As such, FAA adopted new
+performance limitations and design
+requirements for sport pilot operations
+in section 61.316. Although the new
+performance and design limitations in
+section 61.316, which expand the
+aircraft sport pilots may operate, became
+effective October 22, 2025, the ‘‘light-
+sport aircraft’’ definition in section 1.1
+will remain effective until July 24, 2026.
+
+VerDate Sep<11>2014 16:10 Sep 11, 2026 Jkt 268001 PO 00000 Frm 00007 Fmt 4700 Sfmt 4700 E:\FR\FM\14SER1.SGM 14SER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

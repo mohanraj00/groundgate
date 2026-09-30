@@ -1,0 +1,316 @@
+How to Apply for a
+Certificate of Discharge From Federal Tax Lien
+
+A Certificate of Discharge under Internal Revenue Code Section
+6325(b) removes the United States’ lien from the property
+named in the certificate. Discharge of property under Internal
+Revenue Code Section 6325(c) subject to an Estate Tax Lien is
+not covered in this publication. For Estate Tax Lien discharges
+see instead the application and instructions found in Form 4422
+
+1. Complete Form 14135, Application for Certificate
+
+of Discharge of Federal Tax Lien attached with this
+publication.
+
+2. Mail the completed Form 14135 and the appropriate
+
+attachments to:
+IRS Advisory Consolidated Receipts
+7940 Kentucky Drive, Stop 2850F
+Florence, KY 41042
+(Refer to Publication 4235 Collection Advisory Group
+Addresses for additional contact information.)
+
+If you have any questions, contact the Advisory Consolidated
+Receipts Office at 859-594-6090.
+
+If you want to know how much you owe in order to pay the
+lien(s) in full, call 1-800-913-6050, visit the nearest Taxpayer
+Assistance Center, or contact the revenue officer assigned to
+your case.
+
+Important!
+Please submit your application at least 45 days before the
+transaction date that the certificate of discharge is needed.
+Doing so will allow sufficient time for review, determination,
+notification and the furnishing of any applicable documents by
+the transaction date.
+
+Information Required on the Application
+
+Section 1 - Taxpayer Information
+
+1. Enter the name and address of the individual(s) or business
+as it appears on the Notice of Federal Tax Lien (NFTL). A
+second name line is provided if needed.
+
+2. Enter, if known, the last 4 digits of the social security
+
+number (SSN) or full employer identification number as it
+appears on the NFTL.
+
+3. Enter, if known and if applicable, the last 4 digits of any
+
+spousal SSN (secondary SSN) associated with the tax debt
+listed on the NFTL.
+
+4. Provide a daytime phone number and a fax number.
+
+Section 2 - Applicant Information
+
+1. Check the box on the first line of Section 2 if you are both
+the taxpayer and the applicant. If you are not the taxpayer,
+attach a copy of the lien.
+
+2. If you have checked the box indicating that you are the
+
+taxpayer and your information is the same as listed on the
+lien, enter “same as taxpayer” on the name line.
+
+3. If you are not the taxpayer or you are the taxpayer but your
+information is no longer the same as the information on the
+Notice of Federal Tax Lien, enter your name (include any
+name changes), current address, daytime phone number
+and fax number.
+
+4. If you are not the taxpayer, enter in the box next to “Name”
+your relationship to the taxpayer (e.g. parent, uncle, sister,
+no relation, etc).
+
+Section 3 - Purchaser/Transferee/New Owner
+
+1. Check the box on the first line of Section 3 if you are both
+
+the property owner and the applicant.
+
+2. Enter the name of the property owner. Or enter “NA” if you
+have checked the box indicating you are both the applicant
+and the property owner, enter, “same as applicant”.
+
+3. Enter the property owner’s relationship to the taxpayer (e.g.
+
+taxpayer, parent, no relation, etc.).
+
+Section 4 - Attorney/Representative Information
+
+This section is used to list the taxpayer’s representative or a
+representative of a party other than the taxpayer, such as the
+lender, needing to receive information from the IRS. However,
+you do not need a representative to request discharge of the
+federal tax lien.
+
+1. Check the box on the first line of Section 4 if you are
+
+attaching a Form 8821 (Tax Information Authority) or Form
+2848 (Power of Attorney) with your application. If you
+are attaching one of these forms, please make sure it is
+completely filled out, signed, and dated. You must provide
+one of these forms if the representative represents an
+interest other than the taxpayer.
+
+2. Enter the name, address, phone number, and fax number
+
+of your representative in this action. The IRS will work with
+you and your representative to process your application.
+Or enter “NA” on the name line if you are not using a
+representative.
+
+3. Enter whose interest the representative represents (e.g.
+taxpayer, lender, title company, etc.). This allows the IRS
+to determine what information can be shared with the
+representative.
+
+Section 5 – Lender/Finance Company Information
+(Settlement/Escrow Company for Section 6325(b)(3) only)
+
+Enter the company name, contact name, and phone number for
+the title or escrow company that will be used at settlement.
+
+Section 6 – Monetary Information
+
+1. Provide the proposed property sale amount
+
+2. Provide the amount of proceeds the IRS can expect for
+
+application to the tax liability.
+
+3. Enter NA for the amount of proceeds the IRS can expect, if
+
+you anticipate there will be no proceeds.
+
+Section 7 - Basis for Discharge
+
+Discharge of property from the federal tax lien may be granted
+under several Internal Revenue Code (IRC) provisions. After
+reviewing the discharge sections, explanations, and examples
+below, select the discharge section that best applies to your
+application. If the IRS does not agree with your selection after
+its review, an explanation of the decision will be provided.
+
+Publication 783 (Rev. 12-2022) Catalog Number 46755I Department of the Treasury Internal Revenue Services www.irs.gov
+1. 6325(b)(1) – a discharge may be issued under this
+
+Submit a copy of the proposed escrow agreement.
+
+provision if the value of the taxpayer’s remaining property
+encumbered by the federal tax lien is equal to at least twice
+the amount of the federal tax liability secured by the lien
+and any encumbrance entered into before the IRS filed its
+public notice of the lien. If there are mortgages, state and/
+or local taxes, mechanics liens, etc., the amount of these
+debts would be added to the amount of the tax liability and
+multiplied by 2.
+
+Example
+Tax liability
+Other Debts
+
+$15,500
++ $23,334
+$38,834
+x 2
+$77,668
+
+The property remaining subject to the lien must be at least
+$77,668.
+
+2. 6325(b)(2)(A) – a discharge may be issued under this
+
+provision when the tax liability is partially satisfied with an
+amount paid that is not less than the value of the United
+States’ interest in the property being discharged. For
+example, the IRS has a lien totaling $203,000 and:
+
+• Property selling for:
+
+$215,000
+
+5. 6325(b)(4) – a discharge will be issued under this provision
+to a third party who owns the property if a deposit is made
+or an acceptable bond provided equal to the government’s
+interest in the property. In the case of Tenancy by
+Entireties property, a deposit or an acceptable bond
+totaling one-half the government’s interest in the property
+must be made. If you are the property owner (but not the
+taxpayer, i.e., you are not responsible for the tax liability)
+and you make a deposit or post an acceptable bond to
+obtain a discharge under this section, you have 120 days
+to file an action in federal district court, under section
+7426(a)(4), challenging the IRS’ determination of the
+government’s lien interest. This is the exclusive remedy
+available to the third party for the return of the deposit
+or accepted bond or a portion thereof. An administrative
+request for refund and a refund suit in district court is not
+available. The Circular 570, available at https://fiscal.
+treasury.gov/surety-bonds/ contains a list of companies
+certified by the Secretary of the Treasury as providers of
+acceptable securities.
+
+6. 6325(c) – a discharge of property subject to an Estate Tax
+Lien is not covered in this publication. Please refer to Form
+4422.
+
+• Minus encumbrances senior to IRS lien:
+
+$135,000
+
+Section 8 – Description of Property
+
+• Minus proposed settlement costs:
+
+• The IRS lien interest equals:
+
+$ 15,000
+
+$ 65,000
+
+After the IRS receives and applies the $65,000 in partial
+satisfaction of the tax liability, there remains an outstanding
+tax debt of $138,000.
+
+In the case of Tenancy by Entireties property, the United
+States is generally paid one-half of the proceeds in partial
+satisfaction of the liability secured by the tax lien.
+
+3. 6325(b)(2)(B) – a discharge may be issued under this
+provision when it is determined that the government’s
+interest in the property has no value. The debts senior to
+the federal tax lien are greater than the fair market value of
+the property or greater than the sale value of the property.
+Submit a copy of the proposed escrow agreement as part
+of the application.
+
+1. Enter a detailed description of the property to be
+
+discharged from the federal tax lien.
+
+2. When the property is real estate include the type of
+
+property, for example, 3-bedroom house; etc. When the
+property is personal property include serial or vehicle
+numbers, as appropriate, for example, 2002 Cessna twin
+engine airplane, serial number AT919000000000X00; etc.
+
+3. Provide the physical address if real estate or physical
+
+location address if personal property.
+
+4. Check the appropriate box to indicate whether you
+attached a copy of the title or deed to the property.
+
+5. If you are applying under 6325(b)(1) check the “Attached”
+box and attach copies of the titles or deeds for property
+remaining subject to the lien. If you are not applying under
+6325(b)(1) check the “NA” box.
+
+4. 6325(b)(3) – a discharge may be issued under this
+
+Section 9 – Appraisal and Valuations
+
+provision if an agreement is reached with the IRS allowing
+the property to be sold. Per an escrow agreement the sale
+proceeds must be held in a fund subject to the claims
+of the United States in the same manner and priority
+the claims had prior to the property being discharged.
+For example, there are two mortgages senior to the IRS
+tax lien totaling $32,000 and $5,000. The government’s
+interest in the property is $40,000 and there are liens on
+the property junior to the IRS lien in the amount of $3,000,
+$12,000 and $2,990. The proceeds from the sale would be
+dispensed by paying the debts in the following sequence.
+
+a. $32,000
+
+b. $5,000
+
+c. $40,000
+
+d. $3,000
+
+e. 12,000
+
+f. $2,990
+
+1. Check the “Attached” box after “Required Appraisal”
+
+indicate whether you have attached the required
+appraisal by a disinterested third party. This is typically a
+professional appraisal providing neighborhood analysis;
+description of the site; description of the improvements;
+cost approach; comparable sales; definition of market
+value; certification; contingent and limiting conditions;
+interior and exterior photos of the property; exterior photos
+of comparable sales used; comparable sales location map;
+sketch of subject property showing room layout; flood map
+and qualifications of the appraiser.
+
+2. Check the appropriate box under the “Plus One of the
+
+Following Additional Valuations” section to indicate which
+other type of property value verification is attached with
+your application.
+
+Note: For applications under IRC 6325(b)(1), valuation
+information described above must also be provided for
+property remaining subject to lien.

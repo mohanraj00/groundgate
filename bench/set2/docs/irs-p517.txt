@@ -1,0 +1,332 @@
+Publication 517
+
+Social Security
+and Other
+Information for
+Members of the
+Clergy and
+Religious
+Workers
+
+For use in preparing
+2025 Returns
+
+Get forms and other information faster and easier at:
+• IRS.gov/Korean (한국어)
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Chinese (中文)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Contents
+
+Future Developments . . . . . . . . . . . . 1
+
+What's New . . . . . . . . . . . . . . . . . . 1
+
+Reminders . . . . . . . . . . . . . . . . . . . 2
+
+Introduction . . . . . . . . . . . . . . . . . . 3
+
+Social Security Coverage . . . . . . . . . . 3
+
+Ministerial Services . . . . . . . . . . . . . 5
+
+Exemption From Self-Employment
+
+(SE) Tax . . . . . . . . . . . . . . . . . . 5
+
+Self-Employment Tax: Figuring Net
+
+Earnings . . . . . . . . . . . . . . . . . 7
+
+Income Tax: Income and Expenses . . . . 9
+
+Filing Your Return . . . . . . . . . . . . . 11
+
+Retirement Savings Arrangements . . . 12
+
+Earned Income Credit (EIC)
+
+. . . . . . . 13
+
+Worksheets . . . . . . . . . . . . . . . . . 14
+
+How To Get Tax Help . . . . . . . . . . . . 15
+
+Index
+
+. . . . . . . . . . . . . . . . . . . . . 18
+
+Future Developments
+For the latest information about developments
+related to Pub. 517, such as legislation enacted
+after this publication was published, go to
+IRS.gov/Pub517.
+
+What's New
+Electronic payments and direct deposit. If
+you have access to U.S. banking services or
+electronic payments systems, you should use
+direct deposit for any refunds. The IRS recom-
+mends paying electronically whenever possible.
+Options to pay electronically include using your
+bank account with Direct Pay, your debit or
+credit card, your digital wallet, or your online ac-
+count. Go to IRS.gov/Payments to see all your
+payment options. Also, see ModernPayments.
+New deductions for itemizers and non-item-
+izers. Recent legislation provided for four new
+deductions that take effect beginning in 2025. If
+you are eligible, you can claim these deductions
+if you take the standard deduction or if you item-
+ize on Schedule A (Form 1040). For more infor-
+mation on these deductions, see the instruc-
+tions for Form 1040. The new deductions are as
+follows.
+
+• No tax on tips. You may be eligible to take
+a deduction for qualified tips paid to you in
+2025. You can't deduct more than $25,000
+of those tips. Your deduction will be limited
+if your modified adjusted gross income is
+more than $150,000 ($300,000 if married
+filing jointly). To be eligible, you and/or your
+spouse who received the tips must have a
+
+Feb 20, 2026
+
+Publication 517 (2025) Catalog Number 15021X
+Department of the Treasury Internal Revenue Service www.irs.gov
+valid SSN. If you are married, you must file
+a joint return.
+
+• No tax on overtime. If you earned quali-
+fied overtime, you may be eligible to de-
+duct up to $12,500 ($25,000 if married fil-
+ing jointly) of your qualified overtime
+compensation. Your deduction will be limi-
+ted if your modified adjusted gross income
+is more than $150,000 ($300,000 if mar-
+ried filing jointly). To be eligible, you and/or
+your spouse who received the overtime
+must have a valid SSN. If you are married,
+you must file a joint return.
+
+• No tax on car loan interest. If you paid or
+accrued interest on a vehicle loan that
+meets certain requirements, you may be
+able to deduct up to $10,000 of that inter-
+est as qualified passenger vehicle loan in-
+terest. Your amount of deductible interest
+will begin to phaseout if your modified ad-
+justed gross income is more than
+$100,000 ($200,000 if married filing
+jointly).
+
+• Enhanced deduction for seniors. If you
+were born before January 2, 1961, you
+may be eligible for an enhanced deduction
+for seniors. Your deduction will be limited if
+your modified adjusted gross income is
+more than $75,000 ($150,000 if married fil-
+ing jointly). To be eligible, you and/or your
+spouse must have a valid SSN. If you are
+married, you must file a joint return. The
+maximum amount of the deduction is
+$6,000 ($12,000 if both spouses are eligi-
+ble).
+
+New Schedule 1-A. A new schedule to Form
+1040, Schedule 1-A, has been created for tax-
+payers to claim a deduction for the recently
+enacted deductions for no tax on tips, no tax on
+overtime, no tax on car loan interest, and the
+enhanced deduction for seniors. For more infor-
+mation, see the instructions for Form 1040.
+Standard mileage rate. The business stand-
+ard mileage rate for 2025 is 70 cents per mile.
+Earnings subject to social security tax. For
+2025, the maximum wages and self-employ-
+ment income subject to social security tax has
+increased to $176,100.
+Modified adjusted gross income (AGI) limit
+for deduction of traditional IRA contribu-
+tions. For 2025, you may be able to take a de-
+duction for your traditional IRA contributions if
+you were covered by a retirement plan at work
+and your modified AGI is:
+
+• Less than $146,000 if married filing jointly
+
+or qualifying surviving spouse;
+
+• Less than $89,000 if single or head of
+
+household; or
+
+• Less than $10,000 if married filing sepa-
+
+rately.
+
+If you file a joint return and either you or your
+spouse wasn't covered by a retirement plan at
+work, you may be able to take a deduction for
+your traditional IRA contributions if your modi-
+fied AGI is less than $246,000.
+Modified AGI limit for Roth IRA contribu-
+tions increased. For 2025, you may be able to
+contribute to your Roth IRA if your modified AGI
+is:
+
+• Less than $246,000 if married filing jointly
+
+or qualifying surviving spouse;
+
+• Less than $165,000 if single, head of
+
+household, or married filing separately and
+
+2
+
+Table 1.
+
+Are Your Ministerial Earnings* Covered Under FICA or SECA?
+Find the class to which you belong in the left column and read across
+the table to find if you are covered under FICA or SECA. Don't rely on
+this table alone. Also read the discussion for the class in the following
+pages.
+
+Class
+
+Covered under FICA?
+
+Covered under SECA?
+
+Minister
+
+NO. Your ministerial earnings
+are exempt.
+
+YES, if you don't have an
+approved exemption from
+the IRS.
+
+Member of a religious order
+who hasn't taken a vow of
+poverty
+
+NO. Your ministerial earnings
+are exempt.
+
+NO, if you have an approved
+exemption.
+
+YES, if you don't have an
+approved exemption from
+the IRS.
+
+NO, if you have an approved
+exemption.
+
+Member of a religious order
+who has taken a vow of
+poverty
+
+YES, if:
+
+• Your order elected FICA
+
+NO. Your ministerial
+earnings are exempt.
+
+coverage for its
+members; or
+
+• You worked outside the
+order and the work
+wasn't required by, or
+done on behalf of, the
+order.
+
+NO, if neither of the above
+applies.
+
+Christian Science practitioner
+or reader
+
+NO. Your ministerial earnings
+are exempt.
+
+Religious worker (church
+employee)
+
+YES, if your employer didn't
+elect to exclude you.
+
+Member of a recognized
+religious sect
+
+NO, if your employer elected
+to exclude you.
+
+YES, if you are an employee
+and don't have an approved
+exemption from the IRS.
+
+NO, if you have an approved
+exemption.
+
+YES, if you don't have an
+approved exemption from
+the IRS.
+
+NO, if you have an approved
+exemption.
+
+YES, if your employer
+elected to exclude you from
+FICA.
+
+NO, if you are covered
+under FICA.
+
+YES, if you are
+self-employed and don't
+have an approved
+exemption from the IRS.
+
+NO, if you have an approved
+exemption.
+
+* Ministerial earnings are the self-employment earnings that result from ministerial services, defined and discussed
+later.
+
+you didn't live with your spouse at any time
+during the year; or
+
+• Less than $10,000 if married filing sepa-
+rately and you lived with your spouse at
+any time during the year.
+
+Earned income credit (EIC). For 2025, the
+maximum amount of income you can earn and
+still claim the EIC has increased. See Earned
+Income Credit, later.
+
+Reminders
+Social security information. Social security
+beneficiaries may quickly and easily obtain vari-
+ous information from the Social Security Admin-
+istration’s (SSA) website with a my Social Se-
+curity account, including getting a replacement
+Form SSA-1099 or SSA-1042S. For more infor-
+mation, go to SSA.gov/myaccount.
+
+Photographs of missing children. The IRS is
+a proud partner with the National Center for
+Missing & Exploited Children® (NCMEC). Pho-
+tographs of missing children selected by the
+
+Publication 517 (2025)

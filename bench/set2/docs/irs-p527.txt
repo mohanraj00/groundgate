@@ -1,0 +1,229 @@
+Publication 527
+
+Residential
+Rental
+Property
+(Including Rental of
+Vacation Homes)
+
+For use in preparing
+2025 Returns
+
+Future Developments
+For the latest information about developments related to
+Pub. 527, such as
+it was
+published, go to IRS.gov/Pub527.
+
+legislation enacted after
+
+What’s New
+Standard mileage rate. For 2025, the standard mileage
+rate for the cost of operating your car, van, pickup, or
+panel truck increased to 70 cents a mile.
+
+Bonus depreciation. The 100% special depreciation al-
+lowance is restored for qualified property acquired and
+placed into service after January 19, 2025. However,
+property put into service between January 1, 2025, and
+January 19, 2025, or acquired before January 20, 2025,
+and put into service later will remain subject to the
+phase-down rules under prior law. For more information,
+see Form 4562, Depreciation and Amortization and its in-
+structions.
+
+Increased section 179 deduction dollar limits. For tax
+years beginning in 2025, the maximum section 179 ex-
+pense deduction is $2,500,000. This limit is reduced by
+the amount by which the cost of section 179 property
+placed in service during the year exceeds $4,000,000.
+
+Business interest expense limitation. The business in-
+terest expense in your rental real estate activity may be
+limited. For tax years beginning in 2025, the calculation of
+adjusted taxable income includes a requirement to add
+back to taxable income the deductions for depreciation,
+amortization, and depletion to arrive at the amount that is
+used to determine if your interest expense is limited. For
+more information, see Form 8990, Limitation on Business
+Interest Expense Under Section 163(j), and its instruc-
+tions.
+
+No tax on car loan interest. If you are self-employed
+and use your vehicle for personal and business use, you
+may be eligible to take a deduction for the interest for the
+personal use on Schedule 1-A (Form 1040). You can only
+deduct the part of the interest expense that represents the
+business use of your vehicle on Schedule E (Form 1040).
+See the Instructions for Schedule 1-A (Form 1040) for
+more information.
+
+State and local tax (SALT) deduction limit increased.
+The overall limit on the deduction for state and local in-
+come, sales, and property taxes has increased to $40,000
+($20,000 if married filing separately). The overall limit is
+reduced if your modified adjusted gross income is more
+than $500,000 ($250,000 if married filing separately) but
+will not be reduced below $10,000 ($5,000 if married filing
+separately). See Worksheet 5-1, later.
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Reminders
+Net Investment Income Tax (NIIT). You may be subject
+to the NIIT. NIIT is a 3.8% tax on the lesser of net
+
+Jan 8, 2026
+
+Publication 527 (2025) Catalog Number 15052W
+Department of the Treasury Internal Revenue Service www.irs.gov
+investment income or the excess of modified adjusted
+gross income (MAGI) over the threshold amount. Net in-
+vestment income may include rental income and other in-
+come from passive activities. Use Form 8960 to figure this
+tax. For more information on NIIT, go to IRS.gov/NIIT.
+Form 7205, Energy Efficient Commercial Buildings
+Deduction. This form and its separate instructions are
+used to claim the section 179D deduction for qualifying
+energy efficient commercial building expense(s).
+Excess business loss limitation. If you report a loss on
+line 26, 32, 37, or 39 of your Schedule E (Form 1040), you
+may be subject to a business loss limitation. The disal-
+lowed loss resulting from the limitation will not be reflected
+on line 26, 32, 37, or 39 of your Schedule E. Instead, use
+Form 461 to determine the amount of your excess busi-
+ness loss, which will be included as income on Schedule
+1 (Form 1040), line 8p. Any disallowed loss resulting from
+this limitation will be treated as a net operating loss that
+must be carried forward and deducted in a subsequent
+year.
+
+See Form 461 and its instructions for details on the ex-
+
+cess business loss limitation.
+Photographs of missing children. The Internal Reve-
+nue Service is a proud partner with the National Center for
+Missing & Exploited Children® (NCMEC). Photographs of
+missing children selected by the Center may appear in
+this publication on pages that would otherwise be blank.
+You can help bring these children home by looking at the
+photographs
+1-800-THE-LOST
+and
+(1-800-843-5678) if you recognize a child.
+
+calling
+
+Introduction
+Do you own a second house that you rent out all the time?
+Do you own a vacation home that you rent out when you
+or your family isn’t using it?
+
+These are two common types of residential rental activ-
+ities discussed in this publication. In most cases, all rental
+income must be reported on your tax return, but there are
+differences in the expenses you are allowed to deduct and
+in the way the rental activity is reported on your return.
+
+Chapter 1 discusses rental-for-profit activity in which
+there is no personal use of the property. It examines some
+common types of rental income and when each is repor-
+ted, as well as some common types of expenses and
+which are deductible.
+
+Chapter 2 discusses depreciation as it applies to your
+rental real estate activity—what property can be depreci-
+ated and how much it can be depreciated.
+
+Chapter 3 covers the reporting of your rental income
+and deductions, including casualties and thefts, limitations
+on losses, and claiming the correct amount of deprecia-
+tion.
+
+Chapter 4 discusses special rental situations. These in-
+clude condominiums, cooperatives, property changed to
+rental use, renting only part of your property, and a
+not-for-profit rental activity.
+
+Chapter 5 discusses the rules for rental income and ex-
+penses when there is also personal use of the dwelling
+unit, such as a vacation home.
+
+Finally, chapter 6 explains how to get tax help from the
+
+IRS.
+
+Sale or exchange of rental property. For information
+on how to figure and report any gain or loss from the sale,
+exchange, or other disposition of your rental property, see
+Pub. 544.
+
+Sale of main home used as rental property. For in-
+formation on how to figure and report any gain or loss from
+the sale or other disposition of your main home that you
+also used as rental property, see Pub. 523.
+
+Tax-free exchange of rental property occasionally
+used for personal purposes. If you meet certain quali-
+fying use standards, you may qualify for a tax-free ex-
+change (a like-kind or section 1031 exchange) of one
+piece of rental property you own for a similar piece of
+rental property, even if you have used the rental property
+for personal purposes.
+
+For information on the qualifying use standards, see
+Revenue Procedure 2008-16, 2008-10 I.R.B. 547, availa-
+ble at IRS.gov/irb/2008-10_IRB#RP-2008-16. For more in-
+formation on like-kind exchanges, see chapter 1 of Pub.
+544.
+
+Comments and suggestions. We welcome your com-
+ments about this publication and suggestions for future
+editions.
+
+You can send us comments
+
+IRS.gov/
+FormComments. Or, you can write to the Internal Revenue
+Service, Tax Forms and Publications, 1111 Constitution
+Ave. NW, IR-6526, Washington, DC 20224.
+
+through
+
+Although we can’t respond individually to each com-
+ment received, we do appreciate your feedback and will
+consider your comments and suggestions as we revise
+our tax forms, instructions, and publications. Don’t send
+tax questions, tax returns, or payments to the above ad-
+dress.
+
+Getting answers to your tax questions. If you have
+a tax question not answered by this publication or the How
+To Get Tax Help section at the end of this publication, go
+to the IRS Interactive Tax Assistant page at IRS.gov/
+Help/ITA where you can find topics by using the search
+feature or viewing the categories listed.
+
+Getting tax forms, instructions, and publications.
+Go to IRS.gov/Forms to download current and prior-year
+forms, instructions, and publications.
+
+Ordering tax forms, instructions, and publications.
+Go to IRS.gov/OrderForms to order current forms, instruc-
+tions, and publications; call 800-829-3676
+to order
+prior-year forms and instructions. The IRS will process
+your order for forms and publications as soon as possible.
+Don’t resubmit requests you’ve already sent us. You can
+get forms and publications faster online.
+
+2
+
+Publication 527 (2025)

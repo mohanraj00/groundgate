@@ -1,0 +1,414 @@
+4. You change your election and claim a credit for foreign
+income taxes that you previously deducted, or you
+change your election and claim a deduction for for-
+eign income taxes that you previously credited.
+
+5. There is a change in foreign tax liability that affects the
+amount of distributions or inclusions under section
+951, 951A, or 1293, or affects the application of the
+high-tax exception described in section 954(b)(4).
+
+6. For taxes taken into account when accrued but trans-
+lated into dollars on the date of payment, the dollar
+value of the accrued tax differs from the dollar value of
+the tax paid because of fluctuations in the exchange
+rate between the date of accrual and the date of pay-
+ment. However, no redetermination is required if the
+change in foreign tax liability for each foreign country
+is solely attributable to exchange rate fluctuations and
+is less than the smaller of:
+
+a. $10,000, or
+
+b. 2% of the total dollar amount of the foreign tax ini-
+tially accrued for that foreign country for the U.S.
+tax year.
+
+In this case, you must adjust your U.S. tax in the tax
+
+No change in U.S. tax liability. If a foreign tax redeter-
+mination doesn’t change the amount of U.S. tax due for
+any tax year including in instances where the additional
+U.S. tax due by reason of the redetermination is elimina-
+ted by a carryback or carryover of an unused foreign tax,
+you don’t need to file an amended return and may instead
+notify the IRS of the redetermination by attaching for each
+applicable separate category of income a completed
+Schedule C (Form 1116) to the original return for your tax
+year in which the foreign tax redetermination occurs. See
+the Instructions for Schedule C (Form 1116) for additional
+information.
+
+You are not required to attach Form 1116 for a tax year
+affected by a redetermination if you meet both of the fol-
+lowing criteria.
+
+1. The amount of your creditable taxes paid or accrued
+during the tax year is not more than $300 ($600 if
+married filing a joint return) as a result of the foreign
+tax redetermination.
+
+2. You meet the requirements listed under Exemption
+from foreign tax credit limit under How To Figure the
+Credit, later.
+
+year in which the accrued foreign taxes are paid.
+
+There are other exceptions to this requirement. They
+
+Generally, you must take into account foreign tax rede-
+
+terminations in the tax year to which the tax relates.
+
+Note: If you use the cash method of accounting and
+choose to take credits for taxes in the year they are paid
+(see Credit for Taxes Paid or Accrued, earlier), and you
+pay additional foreign income taxes that relate to a prior
+tax year, that is not a foreign tax redetermination. You re-
+port those additional foreign income taxes in the tax year
+in which you paid the additional taxes.
+
+Notice to the IRS of Redetermination
+
+Change in U.S. tax liability. If any of the above foreign
+tax redeterminations occur after you file your tax return,
+and the foreign tax redeterminations change the amount
+of U.S. tax due for any tax year, you must generally file
+Form 1040-X, Amended U.S. Individual Income Tax Re-
+turn, or other amended return, to notify the IRS so that
+your U.S. tax for the year or years affected can be redeter-
+mined. Complete and attach to Form 1040-X (or other
+amended return) a revised Form 1116 for the tax year(s)
+affected and a statement that contains information suffi-
+cient for the IRS to redetermine your U.S. tax liability. See
+Contents of statement, later. In some cases, you may not
+have to file Form 1040-X or attach Form 1116.
+
+In addition to filing an amended return with Form 1116
+and attached statement for your tax year(s) for which your
+U.S. tax liability is changed as a result of the foreign tax re-
+determination, you must file Schedule C (Form 1116) with
+your current-year tax return summarizing the foreign tax
+redeterminations that occurred in the current year that re-
+late to prior tax years. You must file Schedule C (Form
+1116) for each applicable separate category of income.
+
+are discussed later under Due date of notification to IRS.
+
+Contents of statement. The statement must include all
+of the following.
+
+• Your name, address, and taxpayer identification num-
+
+ber.
+
+• The tax year or years that are affected by the foreign
+
+tax redetermination.
+
+• The date or dates the foreign taxes were accrued, if
+
+applicable.
+
+• The date or dates the foreign taxes were paid.
+• The amount of foreign taxes paid or accrued on each
+date (in foreign currency) and the exchange rate used
+to translate each amount.
+
+• Information sufficient to determine any interest due
+from or owing to you, including the amount of any in-
+terest paid to you by the foreign government, and the
+dates received.
+
+In the case of any foreign taxes that were not paid be-
+fore the date 24 months after the close of the tax year to
+which those taxes relate, you must provide the amount of
+those taxes in foreign currency and the exchange rate that
+was used to translate that amount when originally claimed
+as a credit.
+
+If any foreign tax was refunded in whole or in part, you
+must provide the date and amount (in foreign currency) of
+each refund, the exchange rate that was used to translate
+each amount when originally claimed as a credit, and the
+exchange rate for the date the refund was received (for
+purposes of figuring foreign currency gain or loss under In-
+ternal Revenue Code section 988).
+
+Publication 514 (2025)
+
+7
+Due date of notification to IRS. If you pay less foreign
+tax than you originally claimed a credit for, in most cases,
+you must file a notification by the due date (with exten-
+sions) of your original return for your tax year in which the
+foreign tax redetermination occurred. There is no limit on
+the time the IRS has to redetermine and assess the cor-
+rect U.S. tax due. If you pay more foreign tax than you
+originally claimed a credit for, you have 10 years to file a
+claim for refund of U.S. taxes. See Time Limit on Refund
+Claims, later.
+
+Exceptions to this due date are explained in the next
+
+two paragraphs.
+
+Multiple redeterminations of U.S. tax liability for
+same tax year. Where more than one foreign tax redeter-
+mination requires a redetermination of U.S. tax liability for
+the same tax year and those redeterminations occur in the
+same tax year or within 2 consecutive tax years, you can
+file for that tax year one notification (Form 1040-X with a
+Form 1116 and the required statement) that reflects all
+those tax redeterminations. If you choose to file one notifi-
+cation for multiple redeterminations which, taken together,
+increase your U.S. tax liability for the tax year, the due
+date for that notification is the due date (with extensions)
+for the year in which the first foreign tax redetermination
+that increased your U.S. tax liability occurred. On the other
+hand, if multiple redeterminations, taken together, de-
+crease your U.S. tax liability for the tax year, the due date
+for that notification is the applicable due date for filing a
+claim for credit or refund for an overpayment of U.S. tax.
+However, foreign tax redeterminations with respect to the
+tax year for which a redetermination of U.S. tax liability is
+required may occur after the due date for providing that
+notification. In this situation, you may have to file more
+than one Form 1040-X for that tax year.
+
+Additional U.S. tax due eliminated by foreign tax
+credit carryback or carryover. If a foreign tax redeter-
+mination requires a redetermination of U.S. tax liability that
+would otherwise result in an additional amount of U.S. tax
+due, but the additional tax is eliminated by a carryback or
+carryover of an unused foreign tax, you do not have to
+amend your tax return for the year affected by the redeter-
+mination. Instead, you can notify the IRS by attaching
+Schedule C (Form 1116) to the original return for the tax
+year in which the foreign tax redetermination occurred.
+
+Failure-to-notify penalty. If you fail to notify the IRS of a
+foreign tax redetermination and cannot show reasonable
+cause for the failure, you may have to pay a penalty.
+
+For each month, or part of a month, that the failure con-
+tinues, you pay a penalty of 5% of the tax due resulting
+from a redetermination of your U.S. tax. This penalty can-
+not be more than 25% of the tax due.
+
+Foreign tax refund. If you receive a foreign tax refund
+without interest from the foreign government, you will not
+have to pay interest on the amount of tax due resulting
+from the adjustment to your U.S. tax for the time before the
+date of the refund.
+
+However, if you receive a foreign tax refund with inter-
+est, you must pay interest to the IRS up to the amount of
+
+the interest paid to you by the foreign government. The in-
+terest you must pay cannot be more than the interest you
+would have had to pay on taxes that were unpaid for any
+other reason for the same period. Interest is also owed
+from the time you receive a refund until you pay the addi-
+tional tax due.
+
+Foreign tax imposed on foreign refund. If your for-
+eign tax refund is taxed by the foreign country, you cannot
+take a separate credit or deduction for this additional for-
+eign tax. However, when you refigure the foreign tax credit
+taken for the original foreign tax, reduce the amount of the
+refund by the foreign tax paid on the refund.
+
+Example. You paid a foreign income tax of $3,000 in
+2023, and received a foreign tax refund of $500 in 2025 on
+which a foreign tax of $100 was imposed. When you refig-
+ure your credit for 2023, you must reduce the $3,000 you
+paid by $400.
+
+Time Limit on Refund Claims
+
+You have 10 years to file a claim for refund of U.S. tax if
+you find that you paid or accrued a larger foreign tax than
+you claimed a credit for. The 10-year period begins the
+day after the regular due date for filing the return (without
+extensions) for the year in which the taxes were actually
+paid or accrued.
+
+You have 10 years to file your claim regardless of
+whether you claim the credit for taxes paid or taxes ac-
+crued. The 10-year period applies to claims for refund or
+credit based on:
+
+1. Fixing math errors in figuring qualified foreign taxes,
+
+2. Reporting qualified foreign taxes not originally repor-
+
+ted on the return, or
+
+3. Any other change in the size of the credit (including
+one caused by correcting the foreign tax credit limit).
+
+The special 10-year period also applies to claiming a
+credit or to changing from claiming a deduction to claiming
+a credit for foreign taxes. See Making or Changing Your
+Choice, earlier, under Choosing To Take Credit or Deduc-
+tion.
+
+Who Can Take the Credit?
+
+U.S. citizens, resident aliens, and nonresident aliens who
+paid foreign income tax and are subject to U.S. tax on for-
+eign source income may be able to take a foreign tax
+credit.
+
+U.S. Citizens
+
+If you are a U.S. citizen, you are taxed by the United
+States on your worldwide income wherever you live. You
+are normally entitled to take a credit for foreign taxes you
+pay or accrue.
+
+8
+
+Publication 514 (2025)
+Taxes Imposed by Sanctioned Countries
+(Section 901(j) Income)
+
+You cannot claim a foreign tax credit for income taxes paid
+or accrued to any country if the income giving rise to the
+tax is for a period (the sanction period) during which:
+• The Secretary of State has designated the country as
+one that repeatedly provides support for acts of inter-
+national terrorism;
+
+• The United States has severed or does not conduct
+
+diplomatic relations with the country; or
+
+• The United States does not recognize the country’s
+
+government, and that government is not otherwise eli-
+gible to purchase defense articles or services under
+the Arms Export Control Act.
+
+The following countries meet this description for 2025. In-
+come taxes paid or accrued to these countries in 2025 do
+not qualify for the credit.
+
+• Iran.
+• Libya (but see Note, later).
+• North Korea.
+• Sudan.
+• Syria.
+
+Waiver of denial of the credit. A waiver can be granted
+to a sanctioned country if the President of the United
+States determines that granting the waiver is in the na-
+tional interest of the United States and will expand trade
+and investment opportunities for U.S. companies in the
+sanctioned country. The President must report to Con-
+gress, not less than 30 days before the date on which the
+waiver is granted, the intention to grant the waiver and the
+reason for the waiver.
+
+Note: Effective December 10, 2004, the President gran-
+ted a waiver to Libya. Income taxes arising on or after this
+date qualify for the credit if they meet the other require-
+ments in this publication.
+
+Limit on credit. In figuring the foreign tax credit limit, dis-
+cussed later, income from a sanctioned country is a sepa-
+rate category of foreign income unless a Presidential
+waiver is granted. You must fill out a separate Form 1116
+for this income and check box e at the top of the form. Be-
+cause no credit is allowed for taxes paid to sanctioned
+countries, you would generally complete Form 1116 for
+this category only through line 17.
+
+Table 1. Countries Removed From the
+Sanction List or Granted Presidential Waiver
+
+Example. You lived and worked in Iran until August,
+when you were transferred to Italy. You paid taxes to each
+country on the income earned in that country. You cannot
+claim a foreign tax credit for the foreign taxes paid on the
+income earned in Iran. Because the income earned in Iran
+is a separate category of foreign income, you must fill out
+a separate Form 1116 for that income. You cannot take a
+credit for taxes paid on the income earned in Iran, but that
+income is taxable by the United States.
+
+Note: A foreign tax credit may be claimed for foreign
+taxes paid or accrued with respect to section 901(j) in-
+come if such tax is paid or accrued to a country other than
+a sanctioned country. For example, if a U.S. citizen resi-
+dent in a nonsanctioned country pays a residence-based
+income tax in that country on income derived from busi-
+ness activities in a sanctioned country, those foreign taxes
+would be eligible for a foreign tax credit. In this situation,
+you would continue completing Form 1116, and not stop
+at line 17.
+
+Figuring the credit when a sanction ends. Table 1 lists
+the countries for which sanctions have ended or for which
+a Presidential waiver has been granted. For any of these
+countries, you can claim a foreign tax credit for the taxes
+paid or accrued to that country on the income for the pe-
+riod that begins after the end of the sanction period or the
+date the Presidential waiver was granted.
+
+Example. The sanctions against Country X ended on
+July 31. On August 19, you receive a distribution from a
+mutual fund of Country X income. The fund paid Country
+X income tax for you on the distribution. Because the dis-
+tribution was made after the sanction ended, you may in-
+clude the foreign tax paid on the distribution to figure your
+foreign tax credit.
+
+Amounts for the nonsanctioned period. If a sanc-
+tion period ends (or a Presidential waiver is granted) dur-
+ing your tax year and you are not able to determine the ac-
+tual income and taxes for that period, you can allocate
+amounts to that period based on the number of days in the
+period that fall in your tax year. Multiply the income or
+taxes for the year by the following fraction to determine the
+amounts allocable to that period.
+
+Number of nonsanctioned days in year
+Number of days in year
+
+Example. You are a calendar-year filer and received
+$20,000 of income from Country X in 2025 on which you
+paid tax of $4,500. Sanctions against Country X ended on
+
+Country
+
+Cuba
+
+Iraq
+
+Libya
+
+Starting date
+
+January 1, 1987
+
+February 1, 1991
+
+January 1, 1987
+
+Sanction period
+
+Ending date
+
+December 21, 2015
+
+June 27, 2004
+
+December 9, 2004*
+
+* Presidential waiver granted for qualified income taxes arising after December 9, 2004.
+
+14
+
+Publication 514 (2025)

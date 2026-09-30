@@ -1,0 +1,283 @@
+Federal Register / Vol. 91, No. 178 / Wednesday, September 16, 2026 / Rules and Regulations
+
+58577
+
+provided by the whistleblower,
+furtherance of the Commission’s law
+enforcement interest, and the
+whistleblower’s participation in internal
+compliance systems.^9 Negative factors
+that may reduce an award include
+whistleblower culpability, unreasonable
+reporting delay, and interference with
+internal compliance and reporting
+systems.^10 In promulgating rule 165.9,
+the Commission expressed its intent
+that whistleblower award amounts be
+determined based on an individualized
+review of the circumstances
+surrounding each award.^11
+
+Part 165 also defines the process by
+which Program awards are made, with
+the WBO serving as administrator.
+Among other duties,^12 the WBO reviews
+whistleblower award claims and makes
+initial recommendations regarding their
+disposition. In doing so, the WBO
+reviews the circumstances surrounding
+each claim, with outreach where
+appropriate, to other Commission staff
+including the Division of Enforcement
+(‘‘DOE’’), or, for Related Actions, to the
+staff of other relevant agencies.^13 If a
+claimant appears eligible for an award,
+the WBO analyzes each of the factors set
+out in CEA section 23(c) and rule 165.9.
+
+Designated Claims Review Staff
+(‘‘CRS’’)—consisting of three to five
+individuals from various Commission
+divisions and offices—review the
+WBO’s initial recommendation and
+issue a preliminary determination
+(‘‘Preliminary Determination’’) based on
+the WBO’s analysis and
+recommendations. A Preliminary
+Determination reflects the CRS’s
+assessment of whether a claim should
+be granted, and, if so, proposes a
+percentage of the collected monetary
+sanctions for the award in the Covered
+Action and any Related Actions.^14 If a
+claimant disagrees with a Preliminary
+Determination, the claimant may contest
+it by submitting a written response.^15
+
+9 Id. 165.9(b). The rule specifies subfactors that
+
+the Commission may consider in assessing each
+positive factor.
+
+10 Id. 165.9(c). The rule specifies subfactors that
+
+the Commission may consider in assessing each
+factor that may decrease an award.
+
+11 See Whistleblower Incentives and Protection,
+
+76 FR 53172, 53188 (Aug. 25, 2011) (‘‘The
+Commission anticipates that the determination of
+award amounts . . . will involve highly
+individualized review of the circumstances
+surrounding each award.’’).
+
+12 See 17 CFR 165.7(e)(1), (2), (f)(2), (g), (j)
+
+(specifying various WBO duties).
+
+13 Id. 165.7(f)(2).
+14 See id. 165.7(g)(1), (i); id. 165.15(a)(2).
+15 Id. 165.7(g)(2). A claimant’s failure to submit a
+
+timely response to the Preliminary Determination
+results in the Preliminary Determination becoming
+either the Final Order of the Commission or, if an
+award was recommended, a Proposed Final
+Determination. Id. 165.7(h).
+
+The CRS considers timely submitted
+responses before making a proposed
+final determination (‘‘Proposed Final
+Determination’’). The WBO notifies the
+Commission of each Proposed Final
+Determination, and, within 30 calendar
+days, any Commissioner may request
+Commission review of a Proposed Final
+Determination.^16 A Proposed Final
+Determination automatically becomes a
+final order of the Commission (‘‘Final
+Order’’) if no Commissioner requests
+review by the full Commission. If a
+Commissioner requests a review, the
+Commission will review the record
+relied upon by Commission staff in
+making its determination and will then
+issue a Final Order.^17 The OGC reviews
+all Preliminary Determinations and
+Proposed Final Determinations for legal
+sufficiency before their issuance.^18
+
+By many metrics, the Program has
+been a success since it began operating
+in 2011. Through the end of calendar
+year 2025, whistleblower reports have
+contributed to successful enforcement
+actions resulting in over $3.3 billion in
+financial remedies,^19 including
+approximately $160 million (excluding
+added interest) returned to harmed
+customers. In fiscal year (‘‘FY’’) 2024,
+whistleblowers contributed information
+relevant to approximately 42 percent of
+the Commission’s enforcement actions.
+Between 2014, when the Commission
+issued its first whistleblower award, and
+the end of calendar year 2025, the
+Commission granted 73 awards in 56
+matters, totaling over $395 million in
+award payments. As the agency’s
+Director of Enforcement noted at the
+time, ‘‘Timely reports to the CFTC are
+critical for enforcement [as they] help
+prevent further harm to customers or
+market participants and hold
+wrongdoers accountable to the fullest
+extent possible.’’ 20
+
+Notwithstanding the Program’s
+
+success, an important area for
+improvement remains: the time required
+to process and issue awards for
+meritorious claims. From 2012 to 2025,
+the average time from the deadline for
+prospective whistleblowers to submit
+award claims to the date of a
+Commission Final Order granting an
+award to meritorious claimants averaged
+more than 2.5 years. The delay between
+claim submission and award is a
+
+16 Id. 165.7(j).
+17 Id. 165.7(i), (j).
+18 Id. 165.7(k).
+19 This figure reflects awards in Commission
+
+enforcement actions and Related Actions as defined
+in 7 U.S.C. 26(a)(5) and 17 CFR 165.2(m).
+
+20 Press Release, CFTC, CFTC Awards $4M to
+Two Whistleblowers (Nov. 12, 2024), available at
+https://www.cftc.gov/PressRoom/PressReleases/
+9006-24.
+
+concern for the Commission, claimants,
+and members of Congress, as delays
+could dampen incentives for potential
+whistleblowers to participate in the
+Program.^21
+
+The Commission believes the
+
+amendments adopted herein will help
+to improve processing time and promote
+transparency in the awards process.
+Before these amendments, Commission
+staff were required to analyze the factors
+that may increase the amount of a
+whistleblower’s award regardless of the
+size of an award, including for smaller
+awards.^22 This process consumed
+resources that otherwise could be
+devoted to resolving larger, more
+complex matters. Responding to
+requests to contest a Preliminary
+Determination, where a claimant has
+contested an award of less than the
+maximum 30 percent award, can also
+consume additional Commission time
+and resources.^23
+
+The Commission expects the rule
+
+changes adopted herein will shorten the
+time needed to resolve meritorious,
+smaller-dollar whistleblower claims by
+limiting the scope of analysis and intra-
+agency review of the appropriate award
+percentage. These resource savings will
+allow Commission staff to concentrate
+on larger awards, facilitating the
+Commission’s ability to assess and pay
+larger award claims more quickly. And,
+as explained below, the Commission
+expects that a shortened award
+timeframe and more transparent,
+predictable process will reinforce
+whistleblowers’ incentives to participate
+in the Program.
+
+II. Summary of the Proposal, Comments
+Received, and Discussion
+
+On June 15, 2026, the Commission
+
+proposed to amend part 165 of its
+Regulations to increase the Program’s
+overall efficiency, transparency, and
+predictability (‘‘Proposal’’ or
+‘‘NPRM’’).^24 Specifically, the
+Commission proposed adding new rule
+165.9(d) to establish a 30 percent
+presumption (the ‘‘30 Percent
+Presumption,’’ defined further below)
+for whistleblowers under certain
+
+21 See, e.g., Testimony of Michael Selig, Chairman
+
+of the CFTC, before House Agriculture Committee
+(Apr. 14, 2026) (remarks of Congressman Zach
+Nunn), available at https://www.pbs.org/newshour/
+politics/watch-live-cftc-chairman-testifies-before-
+house-panel-amid-scrutiny-of-prediction-markets,
+3:16:28 mark); CFTC Whistleblower Protection and
+Program Improvement Act of 2026, S. 5161, 119th
+Cong. § 4 (2026) (specifying one-year general
+deadlines for Preliminary Determinations and Final
+Orders).
+
+22 See 7 U.S.C. 26(c)(1)(A), 17 CFR 165.9.
+23 See 17 CFR 165.7(g)(2).
+24 See Whistleblower Award Determination, 91
+
+FR 35914 (June 15, 2026) (Notice of Proposed
+Rulemaking).
+
+VerDate Sep<11>2014 15:57 Sep 15, 2026 Jkt 268001 PO 00000 Frm 00003 Fmt 4700 Sfmt 4700 E:\FR\FM\16SER1.SGM 16SER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
