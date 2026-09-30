@@ -16,6 +16,7 @@ Mapping, per extraction:
 - ``field``: ``extraction_class``, renamed through ``fields`` when given;
 - ``value``: the ``value`` attribute, or ``extraction_text`` when there is none;
 - ``unit``: the ``unit`` attribute, when present;
+- ``key``: the ``key`` attribute, when present, for a keyed field;
 - ``evidence``: ``char_interval`` converted to UTF-8 byte offsets, quoting ``extraction_text``.
   An extraction LangExtract could not align has no evidence and is rejected ``NO_EVIDENCE``.
 
@@ -63,6 +64,7 @@ def to_candidates(
     fields: Mapping[str, str] | None = None,
     value_attribute: str = "value",
     unit_attribute: str = "unit",
+    key_attribute: str = "key",
 ) -> list[dict[str, Any]]:
     """One groundgate candidate per extraction in a LangExtract ``AnnotatedDocument``."""
     text = document_text(document)
@@ -81,6 +83,8 @@ def to_candidates(
         }
         if attrs.get(unit_attribute) is not None:
             cand["unit"] = attrs[unit_attribute]
+        if attrs.get(key_attribute) is not None:
+            cand["key"] = attrs[key_attribute]
         interval = _get(x, "char_interval")
         start, end = _get(interval, "start_pos"), _get(interval, "end_pos")
         if isinstance(start, int) and isinstance(end, int):

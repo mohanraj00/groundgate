@@ -7,7 +7,7 @@ from decimal import Decimal
 from typing import Any, Literal
 
 from .canonical import SPEC_VERSION
-from .text import builtin_units, parse_value
+from .text import builtin_units, normalize_ws, parse_value
 
 FieldType = Literal["number", "integer", "string"]
 Comparator = Literal["eq", "gt", "ge", "lt", "le", "approx", "range"]
@@ -42,6 +42,7 @@ class Field:
     maximum: Decimal | None = None
     required: bool = False
     multiple: bool = False
+    keys: tuple[str, ...] | None = None
     _raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
 
     @classmethod
@@ -56,6 +57,7 @@ class Field:
             "maximum",
             "required",
             "multiple",
+            "keys",
         }
         if unknown:
             raise PacketError(f"field {name!r} has unknown keys {sorted(unknown)}")
@@ -67,6 +69,7 @@ class Field:
             "maximum": d.get("maximum"),
             "required": d.get("required", False),
             "multiple": d.get("multiple", False),
+            "keys": d.get("keys"),
         }
         if raw["type"] not in _TYPES:
             raise PacketError(f"field {name!r} has unknown type {raw['type']!r}")
@@ -77,6 +80,14 @@ class Field:
         for flag in ("required", "multiple"):
             if not isinstance(raw[flag], bool):
                 raise PacketError(f"field {name!r} {flag} must be a boolean")
+        keys = raw["keys"]
+        if keys is not None:
+            if not isinstance(keys, list) or not keys or not all(isinstance(k, str) for k in keys):
+                raise PacketError(f"field {name!r} keys must be null or a list of strings")
+            seen = [normalize_ws(k).lower() for k in keys]
+            if "" in seen or len(set(seen)) != len(seen):
+                raise PacketError(f"field {name!r} keys must be distinct, non-blank text")
+            raw["keys"] = list(keys)
         return cls(
             name=name,
             type=raw["type"],
@@ -86,6 +97,7 @@ class Field:
             maximum=_bound(f"{name}.maximum", raw["maximum"]),
             required=raw["required"],
             multiple=raw["multiple"],
+            keys=None if keys is None else tuple(keys),
             _raw=raw,
         )
 
@@ -169,12 +181,14 @@ class Decision:
     value: str | None
     unit: str | None
     evidence: tuple[int, int] | None  # UTF-8 byte span
+    key: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "candidate_id": self.candidate_id,
             "candidate_sha256": self.candidate_sha256,
             "field": self.field,
+            "key": self.key,
             "outcome": self.outcome,
             "codes": list(self.codes),
             "value": self.value,

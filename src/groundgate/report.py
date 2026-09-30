@@ -162,9 +162,11 @@ def _card(item: _Item, layout: Layout | None, text: str) -> str:
         f'<span class="pill {outcome}">{_e(LABELS.get(outcome, d.get("outcome")))}</span></div>'
     )
     val = "(no value)" if shown is None else f"{shown}"
+    key = d.get("key")
     out.append(
         f'<div class="value">{_e(val)}'
         + (f' <span class="unit">{_e(unit)}</span>' if unit else "")
+        + (f' <span class="unit">for {_e(key)}</span>' if key else "")
         + "</div>"
     )
     codes = d.get("codes", [])
@@ -248,10 +250,10 @@ def _document(text: str, items: list[_Item], layout: Layout | None) -> str:
 
 def _tooltip(d: Mapping[str, Any]) -> str:
     unit = f" {d['unit']}" if d.get("unit") else ""
+    key = f" for {d['key']}" if d.get("key") else ""
     codes = f" ({', '.join(d['codes'])})" if d.get("codes") else ""
-    return (
-        f"{d.get('field')} = {d.get('value')}{unit}: {LABELS.get(str(d.get('outcome')), '')}{codes}"
-    )
+    outcome = LABELS.get(str(d.get("outcome")), "")
+    return f"{d.get('field')} = {d.get('value')}{unit}{key}: {outcome}{codes}"
 
 
 _HEAD = """<!doctype html>

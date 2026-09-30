@@ -9,6 +9,7 @@ REJECT = {
     "TYPE_INVALID": "The value does not parse as the field's type.",
     "RANGE_INVALID": "The value is outside the field's allowed range.",
     "UNIT_INVALID": "The unit is not the field's unit.",
+    "KEY_INVALID": "The field has keys, and the key is missing or not one of them.",
     "NO_EVIDENCE": "The candidate cites no evidence.",
     "SPAN_INVALID": "The evidence span is outside the document or splits a character.",
     "VALUE_NOT_IN_EVIDENCE": "The value cannot be read from the cited text.",
@@ -23,8 +24,11 @@ FLAG = {
     "SCALE_WORD": (
         'A scale word such as "million" follows the value, and the value was given unscaled.'
     ),
+    "KEY_NOT_AT_VALUE": (
+        "The key the document mentions at the value is not the candidate's key, or none is."
+    ),
     "LOW_CONFIDENCE": "The extractor's confidence is below the policy minimum.",
-    "CONFLICTING_CANDIDATES": "Another candidate for this field has a different value.",
+    "CONFLICTING_CANDIDATES": "Another candidate for this field and key has a different value.",
 }
 
 INFO = {

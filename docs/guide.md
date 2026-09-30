@@ -47,6 +47,7 @@ box of every word so the report can show page numbers.
 | `minimum`, `maximum` | `null` | Bounds, as decimal strings or integers. Outside them is `RANGE_INVALID`. |
 | `required` | `false` | A required field with nothing admitted or flagged is listed in the receipt's `coverage`. |
 | `multiple` | `false` | The field holds a list, so different values don't conflict. |
+| `keys` | `null` | The conditions a value can belong to, in the document's words. Each candidate names one as `key`. |
 
 The comparator is how a field says "up to" is fine. `max_daily_dose` above is `le`, so "up to
 4,000 mg" admits; an `eq` field citing the same text is flagged.
@@ -56,6 +57,20 @@ The comparator is how a field says "up to" is fine. `max_daily_dose` above is `l
 or a suffix (`mg`, `dollars`) starts within `unit_window` code points after it, in the same
 sentence. `units` in the schema adds codes or replaces built-in ones. A code with no surfaces
 matches everywhere, so the unit check becomes a no-op for it.
+
+**Keys.** A label gives a different starting dose per indication. Declare them on the field and
+send one candidate per indication:
+
+```json
+{"fields": {"starting_dose": {"unit": "mg", "keys": ["hypertension", "heart failure"]}}}
+```
+
+A candidate for `starting_dose` without a `key`, or with one not in the list, is rejected
+`KEY_INVALID`. groundgate then reads which key the text puts at the value: the keys its sentence
+mentions, or else the nearest one mentioned before it, such as the heading "2.2 Heart Failure".
+When that is not the candidate's key, the fact is flagged `KEY_NOT_AT_VALUE`. Two candidates only
+conflict when they share a key. The receipt echoes the key. Rows of a flattened table share one
+sentence, so a key swapped inside a table is not caught.
 
 ## Candidates
 
@@ -69,6 +84,7 @@ matches everywhere, so the unit check becomes a no-op for it.
 - `evidence` is a **UTF-8 byte** span, half-open. `text` is what the extractor quoted; when it
   differs from the text at the span, the fact is flagged `NON_VERBATIM_EVIDENCE`.
 - `search_region` limits where re-anchoring may look. It defaults to the whole document.
+- `key` names the condition on a keyed field. On other fields it is ignored.
 - Any other key (a proposer name, a chunk id) is kept, ignored by the checks, and covered by the
   candidate's hash.
 
@@ -93,20 +109,21 @@ The LangExtract adapter does this for you.
 Checks run in a fixed order and the first failure rejects:
 
 `CANDIDATE_INVALID`, `FIELD_UNKNOWN`, `NULL_STRING_LITERAL`, `TYPE_INVALID`, `RANGE_INVALID`,
-`UNIT_INVALID`, `NO_EVIDENCE`, `SPAN_INVALID`, `VALUE_NOT_IN_EVIDENCE`, `UNIT_NOT_IN_EVIDENCE`.
+`UNIT_INVALID`, `KEY_INVALID`, `NO_EVIDENCE`, `SPAN_INVALID`, `VALUE_NOT_IN_EVIDENCE`,
+`UNIT_NOT_IN_EVIDENCE`.
 
 A fact that passes them all is checked for flags. Any flag makes it `needs_verification`:
 
-`NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `LOW_CONFIDENCE`,
+`NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `KEY_NOT_AT_VALUE`, `LOW_CONFIDENCE`,
 `CONFLICTING_CANDIDATES`.
 
-`CONFLICTING_CANDIDATES` is set on every candidate for a single-valued field when two of them
-passed the checks with different values. groundgate never picks between them. That is also why
+`CONFLICTING_CANDIDATES` is set on every candidate for a single-valued field (and key) when two
+of them passed the checks with different values. groundgate never picks between them. That is also why
 it helps to send several proposers' candidates through one `admit` call: disagreement becomes a
 flag. It only helps when they disagree.
 
-A decision carries `candidate_id`, `candidate_sha256`, `field`, `outcome`, `codes`, the canonical
-`value`, the candidate's `unit`, and the `evidence` span the decision rests on (the re-anchored
+A decision carries `candidate_id`, `candidate_sha256`, `field`, `key`, `outcome`, `codes`, the
+canonical `value`, the candidate's `unit`, and the `evidence` span the decision rests on (the re-anchored
 one, if it moved).
 
 ## Python API

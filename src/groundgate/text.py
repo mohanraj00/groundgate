@@ -257,3 +257,33 @@ def unit_at(text: str, tok: Token, prefixes: list[str], suffixes: list[str], win
         return False
     # "10 mg/kg", "250 mg/5 mL": a per-unit is not the unit
     return not _PER_UNIT.match(text, tok.end + first[1])
+
+
+# ------------------------------------------------------------------------ keys
+
+_NOT_ALNUM_BEFORE, _NOT_ALNUM_AFTER = r"(?<![^\W_])", r"(?![^\W_])"
+
+
+def key_mentions(text: str, keys: tuple[str, ...]) -> list[tuple[int, int, str]]:
+    """(start, end, key) for each mention of a key, the longer of overlapping ones (SPEC §4.5)."""
+    hits = []
+    for key in keys:
+        body = r"\s+".join(re.escape(w) for w in normalize_ws(key).split(" "))
+        rx = re.compile(_NOT_ALNUM_BEFORE + body + _NOT_ALNUM_AFTER, re.I)
+        hits += [(m.start(), m.end(), key) for m in rx.finditer(text)]
+    return [
+        (a, b, k)
+        for a, b, k in hits
+        if not any(a2 <= a and b <= b2 and (a2, b2) != (a, b) for a2, b2, _ in hits)
+    ]
+
+
+def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[str]:
+    """The keys a value at ``pos`` belongs to: those its sentence mentions, else the nearest
+    mention before it (SPEC §4.5)."""
+    s0, s1 = sentence(text, pos)
+    inside = {k for a, b, k in mentions if s0 <= a and b <= s1}
+    if inside:
+        return inside
+    before = [(b, k) for _, b, k in mentions if b <= pos]
+    return {max(before)[1]} if before else set()

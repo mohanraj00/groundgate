@@ -939,6 +939,153 @@ vector(
     coverage=[{"field": "duration", "code": "REQUIRED_FIELD_MISSING"}],
 )
 
+# ---------------------------------------------------------------- keyed fields
+CONDITIONS = ["hypertension", "heart failure", "acute myocardial infarction"]
+KEYED_MG = {"type": "number", "unit": "mg", "keys": CONDITIONS}
+
+vector(
+    "17-keyed-fields",
+    "A keyed field needs one of its keys. A key mentioned in the value's sentence decides; "
+    "otherwise the nearest mention before the value, such as a heading, decides.",
+    "2 DOSAGE AND ADMINISTRATION\nTake 20 mg tablets with water.\n\n"
+    "2.1 Hypertension\nThe recommended starting dose is 10 mg once daily. "
+    "The maximum dose is 40 mg daily.\n\n"
+    "2.2 Heart Failure\nThe recommended starting dose is 5 mg once daily, taken with diuretics.\n\n"
+    "2.3 Acute Myocardial Infarction\nGive 5 mg within 24 hours. "
+    "In patients who also have heart failure, start at 2.5 mg.",
+    {
+        "fields": {
+            "starting_dose": KEYED_MG,
+            "max_dose": KEYED_MG,
+            "adjusted_dose": KEYED_MG,
+            "strength": {"type": "integer", "unit": "mg"},
+        }
+    },
+    [
+        c("k1", "starting_dose", "10", "mg", q("10 mg"), key="hypertension"),
+        c("k2", "max_dose", "40", "mg", q("40 mg"), key="hypertension"),
+        c(
+            "k3",
+            "max_dose",
+            "40",
+            "mg",
+            q("40 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="heart failure",
+        ),
+        c("k4", "starting_dose", "5", "mg", q("5 mg once"), key="heart failure"),
+        c("k5", "starting_dose", "5", "mg", q("5 mg within"), key="acute myocardial infarction"),
+        c("k6", "adjusted_dose", "2.5", "mg", q("2.5 mg"), key="heart failure"),
+        c(
+            "k7",
+            "adjusted_dose",
+            "2.5",
+            "mg",
+            q("2.5 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="acute myocardial infarction",
+        ),
+        c(
+            "k8",
+            "adjusted_dose",
+            "20",
+            "mg",
+            q("20 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="hypertension",
+        ),
+        c("k9", "strength", "20", "mg", q("20 mg"), key="any text"),
+        c("k10", "starting_dose", "10", "mg", q("10 mg"), ("rejected", ["KEY_INVALID"])),
+        c(
+            "k11",
+            "starting_dose",
+            "10",
+            "mg",
+            q("10 mg"),
+            ("rejected", ["KEY_INVALID"]),
+            key="Hypertension",
+        ),
+        c(
+            "k12",
+            "starting_dose",
+            "10",
+            "mg",
+            q("10 mg"),
+            ("rejected", ["CANDIDATE_INVALID"]),
+            key=1,
+        ),
+        c("k13", "starting_dose", "10", "g", q("10 mg"), ("rejected", ["UNIT_INVALID"])),
+        c("k14", "starting_dose", "10", "mg", None, ("rejected", ["KEY_INVALID"])),
+    ],
+)
+
+vector(
+    "17b-keyed-tables",
+    "Conflicts are per field and key. Rows of a flattened table share one sentence, so every "
+    "value in the table is at every key the table mentions.",
+    "Table 1. Recommended Dosage\nIndication\tStarting dose\tMaximum dose\n"
+    "Hypertension\t10 mg\t40 mg\nHeart failure\t5 mg\t20 mg\n\n"
+    "In heart failure, titrate every 2 weeks. The usual starting dose is 5 mg. "
+    "Patients with hypertension start at 10 mg. Take it once daily for heart failure.",
+    {
+        "fields": {
+            "starting_dose": KEYED_MG,
+            "max_dose": KEYED_MG,
+            "frequency": {"type": "string", "keys": CONDITIONS},
+        }
+    },
+    [
+        c(
+            "t1",
+            "starting_dose",
+            "10",
+            "mg",
+            q("10 mg"),
+            ("needs_verification", ["CONFLICTING_CANDIDATES"]),
+            key="hypertension",
+        ),
+        c("t2", "starting_dose", "5", "mg", q("5 mg"), key="heart failure"),
+        c("t3", "max_dose", "40", "mg", q("40 mg"), key="heart failure"),
+        c(
+            "t4",
+            "starting_dose",
+            "10",
+            "mg",
+            q("10 mg", n=2),
+            ("needs_verification", ["CONFLICTING_CANDIDATES"]),
+            key="hypertension",
+        ),
+        c(
+            "t5",
+            "starting_dose",
+            "5",
+            "mg",
+            q("5 mg", n=2),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "CONFLICTING_CANDIDATES"]),
+            key="hypertension",
+        ),
+        c(
+            "t6",
+            "starting_dose",
+            "5",
+            "mg",
+            q("5 mg"),
+            ("rejected", ["KEY_INVALID"]),
+            key="renal impairment",
+        ),
+        c("t7", "frequency", "once daily", None, q("once daily"), key="heart failure"),
+        c(
+            "t8",
+            "frequency",
+            "once daily",
+            None,
+            q("once daily"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="hypertension",
+        ),
+    ],
+)
+
 # ---------------------------------------------------------------- invalid packets
 INVALID.extend(
     [
@@ -968,6 +1115,20 @@ INVALID.extend(
             "description": "Unknown keys are invalid.",
             "document": "x",
             "schema": {"fields": {"fee": {"units": "USD"}}},
+            "policy": None,
+        },
+        {
+            "name": "schema-empty-keys",
+            "description": "keys is null or a non-empty list of strings.",
+            "document": "x",
+            "schema": {"fields": {"dose": {"keys": []}}},
+            "policy": None,
+        },
+        {
+            "name": "schema-duplicate-keys",
+            "description": "Keys that match the same text are invalid.",
+            "document": "x",
+            "schema": {"fields": {"dose": {"keys": ["Heart failure", "heart  failure"]}}},
             "policy": None,
         },
         {
