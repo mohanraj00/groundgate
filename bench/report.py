@@ -10,6 +10,7 @@ SERIES = {
     "lx_aligned": ("LangExtract, aligned", "#8c8c8c"),
     "lx_exact": ("LangExtract, MATCH_EXACT only", "#5b6b7f"),
     "groundgate": ("groundgate, admitted", "#1f7a4d"),
+    "gg": ("groundgate", "#1f7a4d"),  # a chart whose rows are not all admissions
 }
 CORRECT = ("clean", "paraphrase")
 ERRORS = (
@@ -101,7 +102,7 @@ def bars(
             end = max(w, width * ci[1]) if ci else w
             out.append(
                 f'<text x="{left + end + 5:.1f}" y="{y + bar - 3}" fill="#333" '
-                f'font-size="11">{100 * value:.0f}%</text>'
+                f'font-size="11">{100 * value:.{1 if value < 0.1 else 0}f}%</text>'
             )
             y += bar + 3
         y += gap
@@ -149,6 +150,33 @@ def chart_b(b: dict[str, Any]) -> str:
         "Wrong model extractions accepted without review",
         groups,
         "Track B. Lines are 95% Wilson intervals.",
+    )
+
+
+POOLED = {
+    "escape": "wrong extractions accepted without review",
+    "false_reject": "correct extractions rejected",
+    "review_load": "extractions sent to a person",
+}
+
+
+def chart_summary(b: dict[str, Any]) -> str:
+    """The README chart: MATCH_EXACT against groundgate over every run."""
+    groups = [
+        (
+            label,
+            [
+                ("lx_exact", b["pooled"]["lx_exact"][m]["rate"], None),
+                ("gg", b["pooled"]["groundgate"][m]["rate"], None),
+            ],
+        )
+        for m, label in POOLED.items()
+    ]
+    n = b["pooled"]["groundgate"]["review_load"]["n"]
+    return bars(
+        "LangExtract MATCH_EXACT and groundgate, all runs",
+        groups,
+        f"Track B, {len(b['runs'])} runs, {n:,} extractions. Runs share documents: no intervals.",
     )
 
 
@@ -225,7 +253,22 @@ def render(res: dict[str, Any]) -> dict[str, str]:
         "",
         "![Wrong extractions accepted](charts/track_b.svg)",
         "",
+        "All runs pooled. The runs share documents, so a pooled rate has no honest interval.",
+        "",
     ]
+    md += table(
+        ["", "LangExtract, all", "aligned", "MATCH_EXACT", "groundgate"],
+        [
+            [
+                label,
+                *(
+                    pct(b["pooled"][c][m])
+                    for c in ("lx_all", "lx_aligned", "lx_exact", "groundgate")
+                ),
+            ]
+            for m, label in POOLED.items()
+        ],
+    )
     runs = list(b["runs"].items())
     md += table(
         [
@@ -413,4 +456,5 @@ def render(res: dict[str, Any]) -> dict[str, str]:
         "RESULTS.md": "\n".join(md).rstrip("\n") + "\n",
         "charts/track_a.svg": chart_a(a),
         "charts/track_b.svg": chart_b(b),
+        "charts/summary.svg": chart_summary(b),
     }

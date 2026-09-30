@@ -12,34 +12,42 @@ Gold: 30 documents, 277 facts, 33 fields confirmed absent, 1 excluded as ambiguo
 
 | Planted | n | LangExtract, all | aligned | MATCH_EXACT | groundgate admitted | review | rejected |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| correct value, verbatim text | 277 | 100.0% | 100.0% | 100.0% | 91.0% | 7.6% | 1.4% |
-| correct value, paraphrased text | 277 | 100.0% | 64.6% | 1.1% | 1.1% | 59.9% | 39.0% |
+| correct value, verbatim text | 277 | 100.0% | 100.0% | 100.0% | 91.0% | 0.0% | 7.6% | 1.4% |
+| correct value, paraphrased text | 277 | 100.0% | 64.6% | 1.1% | 1.1% | 0.0% | 59.9% | 39.0% |
 
 **Errors in the extraction (lower is better).** Share accepted without review.
 
 | Planted | n | LangExtract, all | aligned | MATCH_EXACT | groundgate admitted | review | rejected |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| value attribute x10, text right | 275 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 100.0% |
-| value and text x10 | 275 | 100.0% | 25.5% | 0.4% | 0.0% | 0.0% | 100.0% |
-| one digit changed | 277 | 100.0% | 45.1% | 3.2% | 2.2% | 0.7% | 97.1% |
-| decimal point dropped (0.4 read as 4) | 20 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 100.0% |
-| comma read as a decimal point (184,500 as 184.5) | 87 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 100.0% |
-| wrong unit | 257 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 100.0% |
-| "null" as the value | 277 | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 100.0% |
-| a nearby number with the same unit | 196 | 100.0% | 98.5% | 95.4% | 80.6% | 15.8% | 3.6% |
+| value attribute x10, text right | 275 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 0.0% | 100.0% |
+| value and text x10 | 275 | 100.0% | 25.5% | 0.4% | 0.0% | 0.0% | 0.0% | 100.0% |
+| one digit changed | 277 | 100.0% | 45.1% | 3.2% | 2.2% | 0.0% | 0.7% | 97.1% |
+| decimal point dropped (0.4 read as 4) | 20 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 0.0% | 100.0% |
+| comma read as a decimal point (184,500 as 184.5) | 87 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 0.0% | 100.0% |
+| wrong unit | 257 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 0.0% | 100.0% |
+| "null" as the value | 277 | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 100.0% |
+| a nearby number with the same unit | 196 | 100.0% | 98.5% | 95.4% | 80.6% | 0.0% | 15.8% | 3.6% |
 
 **Errors in meaning: the text qualifies the value (lower is better).** Share accepted without review.
 
 | Planted | n | LangExtract, all | aligned | MATCH_EXACT | groundgate admitted | review | rejected |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| "more than" written before the value | 272 | 100.0% | 100.0% | 100.0% | 8.5% | 90.4% | 1.1% |
-| "million" written after the value | 114 | 100.0% | 100.0% | 100.0% | 0.0% | 99.1% | 0.9% |
+| "more than" written before the value | 272 | 100.0% | 100.0% | 100.0% | 8.5% | 0.0% | 90.4% | 1.1% |
+| "million" written after the value | 114 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | 99.1% | 0.9% |
 
 All 23 admitted here cite another place where the same text appears without the planted word. LangExtract aligned the quote there, and that place does state the value.
 
 ## Track B: real model runs
 
 ![Wrong extractions accepted](charts/track_b.svg)
+
+All runs pooled. The runs share documents, so a pooled rate has no honest interval.
+
+|  | LangExtract, all | aligned | MATCH_EXACT | groundgate |
+|---|---:|---:|---:|---:|
+| wrong extractions accepted without review | 100.0% (117/117) | 100.0% (117/117) | 98.3% (115/117) | 6.8% (8/117) |
+| correct extractions rejected | 0.0% (0/4233) | 0.0% (0/4233) | 4.6% (194/4233) | 0.3% (14/4233) |
+| extractions sent to a person | 0.0% (0/4350) | 0.0% (0/4350) | 0.0% (0/4350) | 12.1% (526/4350) |
 
 | Run | docs | candidates | wrong | escaped, LangExtract all | escaped, MATCH_EXACT | escaped, groundgate | wrong sent to review | false rejects | review load | recall, admitted | recall, admitted or review |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|

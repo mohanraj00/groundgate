@@ -15,37 +15,37 @@
 <rect x="250" y="52" width="400.0" height="14" fill="#5b6b7f"/>
 <text x="655.0" y="63" fill="#333" font-size="11">100%</text>
 <rect x="250" y="69" width="1.5" height="14" fill="#1f7a4d"/>
-<text x="256.5" y="80" fill="#333" font-size="11">0%</text>
+<text x="256.5" y="80" fill="#333" font-size="11">0.0%</text>
 <text x="240" y="121.0" text-anchor="end" fill="#222">value and text x10</text>
 <rect x="250" y="100" width="1.5" height="14" fill="#5b6b7f"/>
-<text x="256.5" y="111" fill="#333" font-size="11">0%</text>
+<text x="256.5" y="111" fill="#333" font-size="11">0.4%</text>
 <rect x="250" y="117" width="1.5" height="14" fill="#1f7a4d"/>
-<text x="256.5" y="128" fill="#333" font-size="11">0%</text>
+<text x="256.5" y="128" fill="#333" font-size="11">0.0%</text>
 <text x="240" y="169.0" text-anchor="end" fill="#222">one digit changed</text>
 <rect x="250" y="148" width="13.0" height="14" fill="#5b6b7f"/>
-<text x="268.0" y="159" fill="#333" font-size="11">3%</text>
+<text x="268.0" y="159" fill="#333" font-size="11">3.2%</text>
 <rect x="250" y="165" width="8.7" height="14" fill="#1f7a4d"/>
-<text x="263.7" y="176" fill="#333" font-size="11">2%</text>
+<text x="263.7" y="176" fill="#333" font-size="11">2.2%</text>
 <text x="240" y="217.0" text-anchor="end" fill="#222">decimal point dropped</text>
 <rect x="250" y="196" width="400.0" height="14" fill="#5b6b7f"/>
 <text x="655.0" y="207" fill="#333" font-size="11">100%</text>
 <rect x="250" y="213" width="1.5" height="14" fill="#1f7a4d"/>
-<text x="256.5" y="224" fill="#333" font-size="11">0%</text>
+<text x="256.5" y="224" fill="#333" font-size="11">0.0%</text>
 <text x="240" y="265.0" text-anchor="end" fill="#222">comma read as a decimal point</text>
 <rect x="250" y="244" width="400.0" height="14" fill="#5b6b7f"/>
 <text x="655.0" y="255" fill="#333" font-size="11">100%</text>
 <rect x="250" y="261" width="1.5" height="14" fill="#1f7a4d"/>
-<text x="256.5" y="272" fill="#333" font-size="11">0%</text>
+<text x="256.5" y="272" fill="#333" font-size="11">0.0%</text>
 <text x="240" y="313.0" text-anchor="end" fill="#222">wrong unit</text>
 <rect x="250" y="292" width="400.0" height="14" fill="#5b6b7f"/>
 <text x="655.0" y="303" fill="#333" font-size="11">100%</text>
 <rect x="250" y="309" width="1.5" height="14" fill="#1f7a4d"/>
-<text x="256.5" y="320" fill="#333" font-size="11">0%</text>
+<text x="256.5" y="320" fill="#333" font-size="11">0.0%</text>
 <text x="240" y="361.0" text-anchor="end" fill="#222">&quot;null&quot; as the value</text>
 <rect x="250" y="340" width="1.5" height="14" fill="#5b6b7f"/>
-<text x="256.5" y="351" fill="#333" font-size="11">0%</text>
+<text x="256.5" y="351" fill="#333" font-size="11">0.0%</text>
 <rect x="250" y="357" width="1.5" height="14" fill="#1f7a4d"/>
-<text x="256.5" y="368" fill="#333" font-size="11">0%</text>
+<text x="256.5" y="368" fill="#333" font-size="11">0.0%</text>
 <text x="240" y="409.0" text-anchor="end" fill="#222">a nearby number with the same unit</text>
 <rect x="250" y="388" width="381.6" height="14" fill="#5b6b7f"/>
 <text x="636.6" y="399" fill="#333" font-size="11">95%</text>
@@ -55,12 +55,12 @@
 <rect x="250" y="436" width="400.0" height="14" fill="#5b6b7f"/>
 <text x="655.0" y="447" fill="#333" font-size="11">100%</text>
 <rect x="250" y="453" width="33.8" height="14" fill="#1f7a4d"/>
-<text x="288.8" y="464" fill="#333" font-size="11">8%</text>
+<text x="288.8" y="464" fill="#333" font-size="11">8.5%</text>
 <text x="240" y="505.0" text-anchor="end" fill="#222">&quot;million&quot; written after the value</text>
 <rect x="250" y="484" width="400.0" height="14" fill="#5b6b7f"/>
 <text x="655.0" y="495" fill="#333" font-size="11">100%</text>
 <rect x="250" y="501" width="1.5" height="14" fill="#1f7a4d"/>
-<text x="256.5" y="512" fill="#333" font-size="11">0%</text>
+<text x="256.5" y="512" fill="#333" font-size="11">0.0%</text>
 <rect x="16" y="540" width="12" height="12" fill="#5b6b7f"/>
 <text x="34" y="550" fill="#222">LangExtract, MATCH_EXACT only</text>
 <rect x="346" y="540" width="12" height="12" fill="#1f7a4d"/>

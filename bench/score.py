@@ -382,6 +382,16 @@ def track_b(golds: dict[str, Gold]) -> dict[str, Any]:
             }
             target = out["all_models"] if len(group) > 2 else out["pairs"]
             target[f"{' + '.join(group)} @ {buffer}"] = entry
+    out["pooled"] = {
+        c: {
+            m: rate(
+                sum(r[c][m]["k"] for r in out["runs"].values()),
+                sum(r[c][m]["n"] for r in out["runs"].values()),
+            )
+            for m in ("escape", "false_reject", "review_load")
+        }
+        for c in ("lx_all", "lx_aligned", "lx_exact", "groundgate")
+    }
     return out
 
 
