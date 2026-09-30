@@ -5,6 +5,13 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+Spec 0.2, in progress. Receipts name `"groundgate": "0.2"` and every digest uses the
+`groundgate/0.2:` prefix, so all hashes differ from 0.1.0. The decision changes are tracked in
+milestone 0.2.
+
+- `verify` reports a receipt decided under another spec version as one problem, instead of a
+  list of hash mismatches.
+
 ## 0.1.0 (2026-09-29)
 
 First release. Implements spec v0.1.

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import Any
 
-from .canonical import Offsets, digest, is_nfc
+from .canonical import SPEC_VERSION, Offsets, digest, is_nfc
 from .model import Decision, Field, Outcome, PacketError, Policy, Receipt, Schema
 from .text import (
     Token,
@@ -308,6 +308,9 @@ def verify(
     """Re-derive the receipt from its inputs and compare it with ``receipt``."""
     if not isinstance(receipt, Mapping):
         raise PacketError("receipt must be a JSON object")
+    if (version := receipt.get("groundgate")) != SPEC_VERSION:
+        problem = f"receipt was decided under spec {version}; this groundgate implements "
+        return Verification(False, (problem + SPEC_VERSION,))
     problems = []
     body = {k: v for k, v in receipt.items() if k != "receipt_sha256"}
     if digest("receipt", body) != receipt.get("receipt_sha256"):

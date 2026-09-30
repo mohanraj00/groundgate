@@ -174,6 +174,6 @@ inputs, 2 invalid input.
 
 A receipt holds the SHA-256 of the document, schema and policy, one decision per candidate, the
 coverage findings, a summary and its own hash. Hashes are over RFC 8785 canonical JSON with a
-`groundgate/0.1:<kind>` prefix, so a receipt made in one language verifies in another.
+`groundgate/<spec version>:<kind>` prefix, so a receipt made in one language verifies in another.
 `verify` recomputes everything from the inputs; any change to the document, schema, policy, a
 candidate or a decision shows up as a problem.
