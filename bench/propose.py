@@ -339,6 +339,15 @@ class CLIModel(base_model.BaseLanguageModel):
                 cwd=self.empty,
             )
             out = proc.stdout
+            if (
+                self.provider == "claude-cli"
+                and out.startswith("{")
+                and json.loads(out).get("stop_reason") == "refusal"
+            ):
+                # the API's safety classifier refused the chunk; it refuses every retry,
+                # so record it and give LangExtract nothing, which skips the chunk
+                notes["refused"] = 1
+                return "", notes
             if proc.returncode == 0 and self.provider == "claude-cli":
                 res = json.loads(out)
                 clean = (

@@ -340,6 +340,37 @@ def test_claude_replies_from_another_model_are_discarded(monkeypatch: pytest.Mon
     assert cmd[cmd.index("--tools") + 1] == "" and cmd[cmd.index("--setting-sources") + 1] == ""
 
 
+def test_a_refused_chunk_is_recorded_and_skipped(monkeypatch: pytest.MonkeyPatch) -> None:
+    pytest.importorskip("langextract")
+    import subprocess
+
+    import langextract as lx
+    import propose
+
+    body = {"is_error": True, "stop_reason": "refusal", "result": "API Error: ..."}
+    calls = []
+
+    def run(*a: object, **k: object) -> subprocess.CompletedProcess[str]:
+        calls.append(a)
+        return subprocess.CompletedProcess([], 1, json.dumps(body), "")
+
+    monkeypatch.setattr(propose.subprocess, "run", run)
+    model = propose.CLIModel("claude-cli", "m", 1, None)
+    assert model._one("prompt") == ("", {"refused": 1})
+    assert len(calls) == 1  # not retried
+    result = lx.extract(
+        text_or_documents="Some text.",
+        prompt_description="Extract amounts.",
+        examples=propose.EXAMPLES["irs"],
+        fence_output=False,
+        use_schema_constraints=False,
+        show_progress=False,
+        model=model,
+    )
+    assert result.extractions == []
+    assert model.raw[0]["harness"] == {"refused": 1}
+
+
 def test_prompts_ask_for_keys_only_on_keyed_documents(monkeypatch: pytest.MonkeyPatch) -> None:
     pytest.importorskip("langextract")
     import propose
