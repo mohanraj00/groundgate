@@ -1,0 +1,166 @@
+{
+ "doc": "fr-2026-19006",
+ "kind": "fr",
+ "groups": [
+  "change",
+  "scale"
+ ],
+ "fields": {
+  "financial_remedies_total": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Financial remedies in enforcement actions that whistleblower reports contributed to, through the end of calendar year 2025."
+  },
+  "returned_to_customers": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Amount of those financial remedies returned to harmed customers, excluding added interest."
+  },
+  "awards_granted": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of whistleblower awards the Commission granted from 2014 through the end of calendar year 2025."
+  },
+  "award_matters": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of matters in which those whistleblower awards were granted."
+  },
+  "award_payments_total": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total whistleblower award payments from 2014 through the end of calendar year 2025."
+  },
+  "average_award_time": {
+   "schema": {
+    "type": "number",
+    "unit": "years",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Average time from 2012 to 2025 from the award claim deadline to a Final Order granting an award, in years."
+  },
+  "tips_received_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of whistleblower tips the Commission received in fiscal year 2025."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "financial_remedies_total",
+   "value": "3300000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3862,
+     "end": 3874
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "returned_to_customers",
+   "value": "160000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3925,
+     "end": 3937
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "awards_granted",
+   "value": "73",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 4282,
+     "end": 4291
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "award_matters",
+   "value": "56",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 4295,
+     "end": 4305
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "award_payments_total",
+   "value": "395000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4321,
+     "end": 4333
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "average_award_time",
+   "value": "2.5",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 4987,
+     "end": 4996
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "tips_received_fy2025": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

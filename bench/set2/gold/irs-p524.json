@@ -1,0 +1,99 @@
+{
+ "doc": "irs-p524",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "joint_initial_amount_base_one_disabled": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Table 2 footnote 3: the fixed dollar part of the initial amount (added to the taxable disability income of the spouse under age 65) for a joint return where one spouse is 65 or older and the other is under 65 and retired on permanent and total disability."
+  },
+  "joint_initial_amount_cap_one_disabled": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Table 2 footnote 3: the maximum initial amount for a joint return where one spouse is 65 or older and the other is under 65 and retired on permanent and total disability."
+  },
+  "joint_initial_amount_limit_base_one_under_65": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Special rules for joint returns: if only one spouse is under age 65, the fixed dollar part of the limit on the initial amount (the limit is this plus that spouse's taxable disability income)."
+  },
+  "agi_limit_single": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Adjusted gross income limit for the credit for a single filer."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "joint_initial_amount_base_one_disabled",
+   "value": "5000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2409,
+     "end": 2415
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "joint_initial_amount_cap_one_disabled",
+   "value": "7500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2497,
+     "end": 2503
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "joint_initial_amount_limit_base_one_under_65",
+   "value": "5000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3773,
+     "end": 3779
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "agi_limit_single": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

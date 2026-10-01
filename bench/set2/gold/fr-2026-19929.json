@@ -1,0 +1,55 @@
+{
+ "doc": "fr-2026-19929",
+ "kind": "fr",
+ "groups": [
+  "scale"
+ ],
+ "fields": {
+  "umra_expenditure_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Annual expenditure by State, local, or Tribal governments or the private sector above which the Unfunded Mandates Reform Act requires an assessment of a rule."
+  },
+  "estimated_annual_cost": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Estimated annual cost of this Title IX rule to recipients of Federal funding."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "umra_expenditure_threshold",
+   "value": "100000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3319,
+     "end": 3331
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "estimated_annual_cost": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,55 @@
+{
+ "doc": "irs-p5",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "net_worth_limit_individuals": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Net worth limit for individuals, estates or trusts to qualify as a prevailing party for recovering administrative and litigation costs."
+  },
+  "max_attorney_fee_hourly_rate": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum hourly rate for recoverable attorney fees, in dollars per hour."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "net_worth_limit_individuals",
+   "value": "2000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3688,
+     "end": 3698
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_attorney_fee_hourly_rate": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

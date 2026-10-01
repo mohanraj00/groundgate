@@ -1,0 +1,122 @@
+{
+ "doc": "irs-p504",
+ "kind": "irs",
+ "groups": [
+  "change",
+  "negation"
+ ],
+ "fields": {
+  "child_contingency_window_months": {
+   "schema": {
+    "type": "integer",
+    "unit": "months",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Payments reduced within this many months before or after a child reaches 18, 21 or the local age of majority are presumed associated with a child contingency."
+  },
+  "multiple_reductions_window_years": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "For reductions on two or more occasions, the window, in years, before or after each child reaches a certain age."
+  },
+  "multiple_reductions_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Lower end of the range of ages (the certain age each child reaches) for payments reduced on two or more occasions."
+  },
+  "multiple_reductions_max_age": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Upper end of the range of ages (the certain age each child reaches) for payments reduced on two or more occasions."
+  },
+  "alimony_recapture_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Amount by which alimony payments must decrease in the third year for recapture to apply."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "child_contingency_window_months",
+   "value": "6",
+   "unit": "months",
+   "evidence": [
+    {
+     "start": 5101,
+     "end": 5110
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "multiple_reductions_window_years",
+   "value": "1",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 5279,
+     "end": 5285
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "multiple_reductions_min_age",
+   "value": "18",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 5362,
+     "end": 5364
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "multiple_reductions_max_age",
+   "value": "24",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 5368,
+     "end": 5370
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "alimony_recapture_threshold": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,154 @@
+{
+ "doc": "fda-clopidogrel",
+ "kind": "fda",
+ "groups": [
+  "keyed"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Acute Coronary Syndrome (ACS)",
+     "Recent MI, Recent Stroke, or Established Peripheral Arterial Disease"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Acute Coronary Syndrome (ACS)",
+     "Recent MI, Recent Stroke, or Established Peripheral Arterial Disease"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Acute Coronary Syndrome (ACS)",
+   "value": "300",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 94,
+     "end": 100
+    },
+    {
+     "start": 526,
+     "end": 532
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Recent MI, Recent Stroke, or Established Peripheral Arterial Disease",
+   "value": "75",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 342,
+     "end": 347
+    },
+    {
+     "start": 842,
+     "end": 847
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "strengths",
+   "value": "75",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1009,
+     "end": 1014
+    },
+    {
+     "start": 1289,
+     "end": 1294
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "strengths",
+   "value": "300",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1153,
+     "end": 1159
+    },
+    {
+     "start": 1296,
+     "end": 1302
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "pediatric_min_age": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,143 @@
+{
+ "doc": "irs-p515",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "individual_documentary_evidence_max_age_years": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum age of an official document used as documentary evidence for an individual claiming treaty benefits: it must be issued no more than this many years before being presented."
+  },
+  "unknown_gain_withholding_min_percent": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "When the amount of the gain is not known, the minimum tax withheld as a percent of the recognized gain."
+  },
+  "unknown_gain_withholding_max_percent": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "When the amount of the gain is not known, the maximum amount withheld as a percent of the amount payable because of the transaction."
+  },
+  "annuity_personal_services_max_days": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "For no withholding on an annuity payment for personal services, the maximum days the nonresident individual was present in the United States during each tax year."
+  },
+  "annuity_personal_services_max_pay": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "For no withholding on an annuity payment for personal services, the maximum pay for those services."
+  },
+  "backup_withholding_rate": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Backup withholding rate."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "individual_documentary_evidence_max_age_years",
+   "value": "3",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 2516,
+     "end": 2523
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "unknown_gain_withholding_min_percent",
+   "value": "30",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 9145,
+     "end": 9148
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "unknown_gain_withholding_max_percent",
+   "value": "30",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 9231,
+     "end": 9234
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "annuity_personal_services_max_days",
+   "value": "90",
+   "unit": "days",
+   "evidence": [
+    {
+     "start": 14839,
+     "end": 14846
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "annuity_personal_services_max_pay",
+   "value": "3000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 14921,
+     "end": 14927
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "backup_withholding_rate": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

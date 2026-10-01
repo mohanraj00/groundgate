@@ -1,0 +1,77 @@
+{
+ "doc": "fr-2026-17511",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "olive_assessment_rate_old": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "California olive assessment rate per ton of assessable olives before this rule."
+  },
+  "olive_assessment_rate_new": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "California olive assessment rate per ton of assessable olives for the 2025 and subsequent fiscal years, under this rule."
+  },
+  "olive_handlers_count": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of handlers of California olives."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "olive_assessment_rate_old",
+   "value": "28",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6298,
+     "end": 6301
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "olive_assessment_rate_new",
+   "value": "24",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6305,
+     "end": 6308
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "olive_handlers_count": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

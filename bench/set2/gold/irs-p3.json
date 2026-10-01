@@ -1,0 +1,341 @@
+{
+ "doc": "irs-p3",
+ "kind": "irs",
+ "groups": [
+  "general"
+ ],
+ "fields": {
+  "late_filing_min_penalty": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Minimum penalty for a return filed more than 60 days late (unless the tax owed is smaller)."
+  },
+  "standard_deduction_single_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 standard deduction, single or married filing separately."
+  },
+  "standard_deduction_joint_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 standard deduction, married filing jointly or qualifying surviving spouse."
+  },
+  "standard_deduction_hoh_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 standard deduction, head of household."
+  },
+  "child_tax_credit_max_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum child tax credit per qualifying child, beginning in 2025."
+  },
+  "form_1099k_threshold_amount_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "2025 amount of business transactions above which payment card companies, payment apps and online marketplaces must send a Form 1099-K."
+  },
+  "form_1099k_threshold_transactions_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "2025 number of transactions above which a Form 1099-K must be sent."
+  },
+  "business_mileage_rate_2025": {
+   "schema": {
+    "type": "number",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 standard mileage rate for business use."
+  },
+  "charitable_mileage_rate_2025": {
+   "schema": {
+    "type": "number",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 standard mileage rate for volunteer work for charitable organizations."
+  },
+  "medical_mileage_rate_2025": {
+   "schema": {
+    "type": "number",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 standard mileage rate for car operating expenses for medical reasons."
+  },
+  "catch_up_limit_age_60_to_63_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "2025 higher catch-up contribution limit for participants aged 60 to 63 in a deferred compensation plan."
+  },
+  "ira_deduction_phaseout_start_joint_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "2025 modified AGI above which the traditional IRA deduction phases out for a married couple filing jointly (or qualifying surviving spouse) covered by a retirement plan at work."
+  },
+  "ira_deduction_phaseout_start_single_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "2025 modified AGI above which the traditional IRA deduction phases out for a single individual or head of household covered by a retirement plan at work."
+  },
+  "roth_ira_no_contribution_magi_joint_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "2025 modified AGI at or above which a married couple filing jointly (or qualifying surviving spouse) can't make a Roth IRA contribution."
+  },
+  "combat_zone_exclusion_officer_monthly_cap": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Monthly limit on the combat zone pay exclusion for commissioned officers."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "late_filing_min_penalty",
+   "value": "525",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4965,
+     "end": 4969
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "standard_deduction_single_2025",
+   "value": "15750",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5201,
+     "end": 5208
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "standard_deduction_joint_2025",
+   "value": "31500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5271,
+     "end": 5278
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "standard_deduction_hoh_2025",
+   "value": "23625",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5309,
+     "end": 5316
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "child_tax_credit_max_2025",
+   "value": "2200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5491,
+     "end": 5497
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "form_1099k_threshold_amount_2025",
+   "value": "20000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6640,
+     "end": 6647
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "form_1099k_threshold_transactions_2025",
+   "value": "200",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 6661,
+     "end": 6664
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "business_mileage_rate_2025",
+   "value": "70",
+   "unit": "cents",
+   "evidence": [
+    {
+     "start": 6807,
+     "end": 6815
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "charitable_mileage_rate_2025",
+   "value": "14",
+   "unit": "cents",
+   "evidence": [
+    {
+     "start": 6925,
+     "end": 6933
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "medical_mileage_rate_2025",
+   "value": "21",
+   "unit": "cents",
+   "evidence": [
+    {
+     "start": 7028,
+     "end": 7036
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "catch_up_limit_age_60_to_63_2025",
+   "value": "11250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7439,
+     "end": 7446
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "ira_deduction_phaseout_start_joint_2025",
+   "value": "126000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7844,
+     "end": 7852
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f13",
+   "field": "ira_deduction_phaseout_start_single_2025",
+   "value": "79000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7970,
+     "end": 7977
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f14",
+   "field": "roth_ira_no_contribution_magi_joint_2025",
+   "value": "246000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 8841,
+     "end": 8849
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "combat_zone_exclusion_officer_monthly_cap": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,163 @@
+{
+ "doc": "irs-p525",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "achievement_award_exclusion_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum exclusion for all employee achievement awards received during the year (qualified plan awards)."
+  },
+  "achievement_award_exclusion_limit_nonqualified": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum exclusion for employee achievement awards that are not qualified plan awards."
+  },
+  "group_term_life_exclusion_coverage_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Coverage amount whose cost limits the exclusion for employer-provided group-term life insurance."
+  },
+  "commuter_transit_exclusion_monthly_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Monthly exclusion limit for commuter vehicle transportation and transit pass fringe benefits."
+  },
+  "parking_exclusion_monthly_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Monthly exclusion limit for the qualified parking fringe benefit."
+  },
+  "dependent_care_assistance_exclusion_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum exclusion for employer-provided dependent care assistance."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "achievement_award_exclusion_limit",
+   "value": "1600",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5349,
+     "end": 5355
+    },
+    {
+     "start": 6618,
+     "end": 6624
+    },
+    {
+     "start": 6660,
+     "end": 6666
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "achievement_award_exclusion_limit_nonqualified",
+   "value": "400",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5357,
+     "end": 5361
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "group_term_life_exclusion_coverage_limit",
+   "value": "50000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 10968,
+     "end": 10975
+    },
+    {
+     "start": 10358,
+     "end": 10365
+    },
+    {
+     "start": 11141,
+     "end": 11148
+    },
+    {
+     "start": 12365,
+     "end": 12371
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "commuter_transit_exclusion_monthly_limit",
+   "value": "325",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 14704,
+     "end": 14708
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "parking_exclusion_monthly_limit",
+   "value": "325",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 14796,
+     "end": 14800
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "dependent_care_assistance_exclusion_limit": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

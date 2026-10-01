@@ -1,0 +1,188 @@
+{
+ "doc": "irs-p17",
+ "kind": "irs",
+ "groups": [
+  "change",
+  "negation"
+ ],
+ "fields": {
+  "research_expenditure_amortization_min_months": {
+   "schema": {
+    "type": "integer",
+    "unit": "months",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Shortest period over which taxpayers who elect to capitalize domestic research and experimental expenditures can deduct them ratably."
+  },
+  "ptc_former_household_income_limit_pct": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Household income limit for the premium tax credit, as a percentage of the federal poverty line, that the ARP eliminated."
+  },
+  "fiscal_year_52_53_min_weeks": {
+   "schema": {
+    "type": "integer",
+    "unit": "weeks",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Shortest length, in weeks, of a 52-53-week fiscal year."
+  },
+  "fiscal_year_52_53_max_weeks": {
+   "schema": {
+    "type": "integer",
+    "unit": "weeks",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Longest length, in weeks, of a 52-53-week fiscal year."
+  },
+  "rounding_drop_below_cents": {
+   "schema": {
+    "type": "integer",
+    "unit": "cents",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "When rounding off dollars on the return, amounts under this many cents are dropped."
+  },
+  "rounding_up_from_cents": {
+   "schema": {
+    "type": "integer",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "When rounding off dollars on the return, the lower end of the range of cents increased to the next dollar."
+  },
+  "rounding_up_to_cents": {
+   "schema": {
+    "type": "integer",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "When rounding off dollars on the return, the upper end of the range of cents increased to the next dollar."
+  },
+  "standard_deduction_single_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Standard deduction for a single filer for 2025."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "research_expenditure_amortization_min_months",
+   "value": "60",
+   "unit": "months",
+   "evidence": [
+    {
+     "start": 2690,
+     "end": 2699
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "ptc_former_household_income_limit_pct",
+   "value": "400",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 7326,
+     "end": 7330
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "fiscal_year_52_53_min_weeks",
+   "value": "52",
+   "unit": "weeks",
+   "evidence": [
+    {
+     "start": 15242,
+     "end": 15244
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "fiscal_year_52_53_max_weeks",
+   "value": "53",
+   "unit": "weeks",
+   "evidence": [
+    {
+     "start": 15248,
+     "end": 15256
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "rounding_drop_below_cents",
+   "value": "50",
+   "unit": "cents",
+   "evidence": [
+    {
+     "start": 18411,
+     "end": 18419
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "rounding_up_from_cents",
+   "value": "50",
+   "unit": "cents",
+   "evidence": [
+    {
+     "start": 18446,
+     "end": 18448
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "rounding_up_to_cents",
+   "value": "99",
+   "unit": "cents",
+   "evidence": [
+    {
+     "start": 18452,
+     "end": 18460
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "standard_deduction_single_2025": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

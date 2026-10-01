@@ -1,0 +1,210 @@
+{
+ "doc": "irs-p334",
+ "kind": "irs",
+ "groups": [
+  "change",
+  "scale"
+ ],
+ "fields": {
+  "section_179_max_deduction_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum section 179 expense deduction beginning in 2025."
+  },
+  "section_179_phaseout_threshold_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Cost of section 179 property placed in service in the tax year above which the 2025 maximum deduction is reduced."
+  },
+  "reportable_loss_single_year": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Loss in any single tax year at which a transaction is a reportable (loss) transaction."
+  },
+  "reportable_loss_single_year_foreign_currency": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Loss in any single tax year at which certain foreign currency transactions are reportable."
+  },
+  "reportable_loss_combined_years": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Loss in any combination of tax years at which a transaction is reportable."
+  },
+  "sbse_small_business_asset_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Assets under which small business taxpayers are served by the SB/SE Tax Center."
+  },
+  "fiscal_year_52_53_min_weeks": {
+   "schema": {
+    "type": "integer",
+    "unit": "weeks",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Shortest length, in weeks, of a 52-53-week tax year."
+  },
+  "fiscal_year_52_53_max_weeks": {
+   "schema": {
+    "type": "integer",
+    "unit": "weeks",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Longest length, in weeks, of a 52-53-week tax year."
+  },
+  "home_office_simplified_rate": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Rate per square foot for the simplified method of the business use of home deduction."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "section_179_max_deduction_2025",
+   "value": "2500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5073,
+     "end": 5085
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "section_179_phaseout_threshold_2025",
+   "value": "4000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5239,
+     "end": 5249
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "reportable_loss_single_year",
+   "value": "2000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9002,
+     "end": 9012
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "reportable_loss_single_year_foreign_currency",
+   "value": "50000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9037,
+     "end": 9044
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "reportable_loss_combined_years",
+   "value": "4000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9095,
+     "end": 9105
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "sbse_small_business_asset_limit",
+   "value": "10000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9763,
+     "end": 9774
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "fiscal_year_52_53_min_weeks",
+   "value": "52",
+   "unit": "weeks",
+   "evidence": [
+    {
+     "start": 11216,
+     "end": 11218
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "fiscal_year_52_53_max_weeks",
+   "value": "53",
+   "unit": "weeks",
+   "evidence": [
+    {
+     "start": 11222,
+     "end": 11230
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "home_office_simplified_rate": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

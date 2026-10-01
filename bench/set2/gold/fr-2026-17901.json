@@ -1,0 +1,324 @@
+{
+ "doc": "fr-2026-17901",
+ "kind": "fr",
+ "groups": [
+  "change",
+  "scale"
+ ],
+ "fields": {
+  "example_idc_ceiling_first": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Ceiling value of the single-award IDC in the commenters' first example of orders falling below the ceiling."
+  },
+  "example_idc_orders_bound_first": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Amount that task or delivery orders under the single-award IDC in the commenters' first example could fall below."
+  },
+  "example_idc_ceiling_second": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Ceiling value of the single-award IDC in the commenters' second example ('Similarly') of orders falling below the ceiling."
+  },
+  "example_idc_orders_bound_second": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Amount that task or delivery orders under the single-award IDC in the commenters' second example ('Similarly') could fall below."
+  },
+  "basic_cas_threshold_old": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Basic CAS applicability threshold before this final rule (the current threshold)."
+  },
+  "basic_cas_threshold_new": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Basic CAS applicability threshold set by this final rule."
+  },
+  "trigger_contract_amount": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Contract amount of the trigger contract concept that this final rule eliminates."
+  },
+  "full_coverage_threshold_old": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Threshold for full CAS coverage and Disclosure Statement requirements before this final rule."
+  },
+  "full_coverage_threshold_new": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Threshold for full CAS coverage and Disclosure Statement requirements set by this final rule."
+  },
+  "entities_full_coverage_fy2020_2024": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Estimated number of entities subject to full coverage and Disclosure Statement requirements in FYs 2020 through 2024, from FPDS data."
+  },
+  "contract_value_full_coverage_fy2020_2024": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Aggregate total contract value of the entities subject to full coverage and Disclosure Statement requirements in FYs 2020 through 2024."
+  },
+  "entities_full_coverage_new_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Estimated number of entities subject to full coverage when the finalized threshold is applied to the FYs 2020 through 2024 data."
+  },
+  "contract_value_full_coverage_new_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Aggregate contract dollars still subject to full coverage when the finalized threshold is applied to the FYs 2020 through 2024 data."
+  },
+  "annual_compliance_savings": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Estimated annual compliance cost savings to contractors from this final rule, in dollars."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "example_idc_ceiling_first",
+   "value": "35000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2840,
+     "end": 2851
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "example_idc_orders_bound_first",
+   "value": "35000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2890,
+     "end": 2901
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "example_idc_ceiling_second",
+   "value": "100000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2944,
+     "end": 2956
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "example_idc_orders_bound_second",
+   "value": "100000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2998,
+     "end": 3010
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "basic_cas_threshold_old",
+   "value": "2500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4772,
+     "end": 4784
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "basic_cas_threshold_new",
+   "value": "35000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4788,
+     "end": 4799
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "trigger_contract_amount",
+   "value": "7500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4820,
+     "end": 4832
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "full_coverage_threshold_old",
+   "value": "50000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5425,
+     "end": 5436
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "full_coverage_threshold_new",
+   "value": "100000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5440,
+     "end": 5452
+    },
+    {
+     "start": 5858,
+     "end": 5870
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "entities_full_coverage_fy2020_2024",
+   "value": "773",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 5672,
+     "end": 5675
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "contract_value_full_coverage_fy2020_2024",
+   "value": "1220000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5806,
+     "end": 5820
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "entities_full_coverage_new_threshold",
+   "value": "564",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 5938,
+     "end": 5941
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f13",
+   "field": "contract_value_full_coverage_new_threshold",
+   "value": "1210000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5960,
+     "end": 5974
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "annual_compliance_savings": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

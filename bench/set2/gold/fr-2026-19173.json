@@ -1,0 +1,99 @@
+{
+ "doc": "fr-2026-19173",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "class_e_radius_old": {
+   "schema": {
+    "type": "number",
+    "unit": "miles",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Radius of the Class E airspace extending upward from 700 feet around Gratiot Community Airport before this action, in miles."
+  },
+  "class_e_radius_new": {
+   "schema": {
+    "type": "number",
+    "unit": "miles",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Radius of the Class E airspace extending upward from 700 feet around Gratiot Community Airport after this action, in miles."
+  },
+  "annual_aircraft_operations": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of aircraft operations per year at Gratiot Community Airport."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "miles": {
+   "suffix": [
+    "miles",
+    "-mile"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "class_e_radius_old",
+   "value": "6.5",
+   "unit": "miles",
+   "evidence": [
+    {
+     "start": 1569,
+     "end": 1572
+    },
+    {
+     "start": 1739,
+     "end": 1747
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "class_e_radius_new",
+   "value": "7.4",
+   "unit": "miles",
+   "evidence": [
+    {
+     "start": 1576,
+     "end": 1585
+    },
+    {
+     "start": 1717,
+     "end": 1726
+    },
+    {
+     "start": 4582,
+     "end": 4590
+    },
+    {
+     "start": 4715,
+     "end": 4723
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "annual_aircraft_operations": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

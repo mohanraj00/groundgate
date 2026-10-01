@@ -1,0 +1,255 @@
+{
+ "doc": "irs-p526",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "agi_limit_general_percent": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "General limit on the deduction for charitable contributions, as a percent of AGI."
+  },
+  "agi_limit_alternative_low_percent": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "The lowest of the three other percent-of-AGI limits that may apply in some cases instead of the general limit."
+  },
+  "agi_limit_alternative_middle_percent": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "The middle one of the three other percent-of-AGI limits that may apply in some cases instead of the general limit."
+  },
+  "agi_limit_alternative_high_percent": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "The highest of the three other percent-of-AGI limits that may apply in some cases instead of the general limit."
+  },
+  "state_credit_example_deduction_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "State tax credit Example 1 (70% state tax credit): the charitable contribution deduction the example's result says can't be exceeded."
+  },
+  "state_credit_example_contribution": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "State tax credit Example 1 (70% state tax credit): the cash contribution made to the qualified organization."
+  },
+  "state_credit_example_credit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "State tax credit Example 1 (70% state tax credit): the state tax credit that reduces the contribution."
+  },
+  "state_credit_exception_percent_fmv": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Exception to reducing the deduction for a state or local tax credit: the maximum credit as a percent of the FMV of the transferred property."
+  },
+  "qcd_annual_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum total qualified charitable distributions (QCDs) for the year."
+  },
+  "charitable_mileage_rate": {
+   "schema": {
+    "type": "number",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Standard mileage rate, in cents per mile, for using a car for charitable purposes."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "agi_limit_general_percent",
+   "value": "60",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 1940,
+     "end": 1943
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "agi_limit_alternative_low_percent",
+   "value": "20",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 1975,
+     "end": 1978
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "agi_limit_alternative_middle_percent",
+   "value": "30",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 1980,
+     "end": 1983
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "agi_limit_alternative_high_percent",
+   "value": "50",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 1988,
+     "end": 1991
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "state_credit_example_deduction_limit",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7011,
+     "end": 7015
+    },
+    {
+     "start": 7190,
+     "end": 7194
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "state_credit_example_contribution",
+   "value": "1000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6710,
+     "end": 6716
+    },
+    {
+     "start": 6841,
+     "end": 6847
+    },
+    {
+     "start": 6932,
+     "end": 6938
+    },
+    {
+     "start": 7017,
+     "end": 7023
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "state_credit_example_credit",
+   "value": "700",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6919,
+     "end": 6923
+    },
+    {
+     "start": 7037,
+     "end": 7041
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "state_credit_exception_percent_fmv",
+   "value": "15",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 6561,
+     "end": 6564
+    },
+    {
+     "start": 7469,
+     "end": 7472
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "qcd_annual_limit",
+   "value": "108000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 13072,
+     "end": 13080
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "charitable_mileage_rate": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

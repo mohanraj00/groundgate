@@ -1,0 +1,56 @@
+{
+ "doc": "fr-2026-19966",
+ "kind": "fr",
+ "groups": [
+  "negation",
+  "scale"
+ ],
+ "fields": {
+  "state_regulation_issuance_cap": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum consolidated total outstanding issuance of payment stablecoins for a State-qualified issuer to opt for State regulation under section 4(c) of the GENIUS Act."
+  },
+  "state_certification_fee": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Fee a State pays to submit a substantial similarity certification to the Committee."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "state_regulation_issuance_cap",
+   "value": "10000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 989,
+     "end": 1000
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "state_certification_fee": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

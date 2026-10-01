@@ -1,0 +1,199 @@
+{
+ "doc": "fda-pantoprazole",
+ "kind": "fda",
+ "groups": [
+  "general",
+  "keyed"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Short-Term Treatment of Erosive Esophagitis Associated With Gastroesophageal Reflux Disease (GERD)",
+     "Maintenance of Healing of Erosive Esophagitis",
+     "Pathological Hypersecretory Conditions Including Zollinger-Ellison Syndrome"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Short-Term Treatment of Erosive Esophagitis Associated With Gastroesophageal Reflux Disease (GERD)",
+     "Maintenance of Healing of Erosive Esophagitis",
+     "Pathological Hypersecretory Conditions Including Zollinger-Ellison Syndrome"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Short-Term Treatment of Erosive Esophagitis Associated With Gastroesophageal Reflux Disease (GERD)",
+   "value": "40",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 204,
+     "end": 209
+    },
+    {
+     "start": 917,
+     "end": 922
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Maintenance of Healing of Erosive Esophagitis",
+   "value": "40",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 405,
+     "end": 410
+    },
+    {
+     "start": 1276,
+     "end": 1281
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Pathological Hypersecretory Conditions Including Zollinger-Ellison Syndrome",
+   "value": "40",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 565,
+     "end": 570
+    },
+    {
+     "start": 1431,
+     "end": 1436
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "pediatric_min_age",
+   "value": "5",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 249,
+     "end": 256
+    },
+    {
+     "start": 1124,
+     "end": 1131
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "strengths",
+   "value": "20",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2678,
+     "end": 2683
+    },
+    {
+     "start": 2729,
+     "end": 2734
+    },
+    {
+     "start": 3069,
+     "end": 3074
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "strengths",
+   "value": "40",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2687,
+     "end": 2692
+    },
+    {
+     "start": 2888,
+     "end": 2893
+    },
+    {
+     "start": 3079,
+     "end": 3084
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

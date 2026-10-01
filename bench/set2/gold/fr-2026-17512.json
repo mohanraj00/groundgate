@@ -1,0 +1,110 @@
+{
+ "doc": "fr-2026-17512",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "economic_adjustment_motions_low": {
+   "schema": {
+    "type": "integer",
+    "unit": "lb",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Low end of the range of economic adjustments in the motions the Board discussed at the June meeting, in pounds."
+  },
+  "economic_adjustment_motions_high": {
+   "schema": {
+    "type": "integer",
+    "unit": "lb",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "High end of the range of economic adjustments in the motions the Board discussed at the June meeting, in pounds."
+  },
+  "preliminary_economic_adjustment": {
+   "schema": {
+    "type": "integer",
+    "unit": "lb",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Preliminary economic adjustment the Board recommended at the June meeting, in pounds."
+  },
+  "assessment_rate_per_pound": {
+   "schema": {
+    "type": "number",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Tart cherry assessment rate per pound for the 2024-2025 crop year, in cents."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "lb": {
+   "suffix": [
+    "pounds",
+    "pound",
+    "-pound"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "economic_adjustment_motions_low",
+   "value": "0",
+   "unit": "lb",
+   "evidence": [
+    {
+     "start": 2728,
+     "end": 2729
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "economic_adjustment_motions_high",
+   "value": "10000000",
+   "unit": "lb",
+   "evidence": [
+    {
+     "start": 2733,
+     "end": 2750
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "preliminary_economic_adjustment",
+   "value": "5000000",
+   "unit": "lb",
+   "evidence": [
+    {
+     "start": 2811,
+     "end": 2827
+    },
+    {
+     "start": 3157,
+     "end": 3173
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "assessment_rate_per_pound": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

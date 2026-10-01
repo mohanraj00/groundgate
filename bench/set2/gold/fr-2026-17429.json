@@ -1,0 +1,205 @@
+{
+ "doc": "fr-2026-17429",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "annual_fee_per_area_code_fy2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Do Not Call Registry annual fee for each area code of data before this rule's increase (the fee being replaced)."
+  },
+  "annual_fee_per_area_code_fy2027": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Do Not Call Registry annual fee for each area code of data for fiscal year 2027, after the increase."
+  },
+  "max_charge_per_entity_fy2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum amount charged to any single entity for accessing area codes of data, before this rule's increase."
+  },
+  "max_charge_per_entity_fy2027": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum amount charged to any single entity for accessing area codes of data for fiscal year 2027, after the increase."
+  },
+  "second_half_area_code_fee_fy2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Fee for each area code added during the second six months of the annual subscription period, before this rule's increase."
+  },
+  "second_half_area_code_fee_fy2027": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Fee for each area code added during the second six months of the annual subscription period, for fiscal year 2027 after the increase."
+  },
+  "free_area_codes_per_entity": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of area codes of data an entity may access at no charge."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "annual_fee_per_area_code_fy2026",
+   "value": "82",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 142,
+     "end": 145
+    },
+    {
+     "start": 4639,
+     "end": 4642
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "annual_fee_per_area_code_fy2027",
+   "value": "85",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 149,
+     "end": 152
+    },
+    {
+     "start": 2552,
+     "end": 2555
+    },
+    {
+     "start": 2741,
+     "end": 2744
+    },
+    {
+     "start": 4666,
+     "end": 4669
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "max_charge_per_entity_fy2026",
+   "value": "22626",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 275,
+     "end": 282
+    },
+    {
+     "start": 4715,
+     "end": 4722
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "max_charge_per_entity_fy2027",
+   "value": "23425",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 286,
+     "end": 293
+    },
+    {
+     "start": 2926,
+     "end": 2933
+    },
+    {
+     "start": 4747,
+     "end": 4754
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "second_half_area_code_fee_fy2026",
+   "value": "41",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 448,
+     "end": 451
+    },
+    {
+     "start": 4895,
+     "end": 4898
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "second_half_area_code_fee_fy2027",
+   "value": "43",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 455,
+     "end": 458
+    },
+    {
+     "start": 2859,
+     "end": 2862
+    },
+    {
+     "start": 4922,
+     "end": 4925
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "free_area_codes_per_entity": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,132 @@
+{
+ "doc": "fr-2026-19745",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "depth_min": {
+   "schema": {
+    "type": "integer",
+    "unit": "ft",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Shallowest water depth of the modified CCSC and CCNW ODMDSs, in feet."
+  },
+  "depth_max": {
+   "schema": {
+    "type": "integer",
+    "unit": "ft",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Deepest water depth of the modified CCSC and CCNW ODMDSs, in feet."
+  },
+  "offshore_distance_min": {
+   "schema": {
+    "type": "number",
+    "unit": "nmi",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Nearest distance offshore of the modified ODMDSs, in nautical miles."
+  },
+  "offshore_distance_max": {
+   "schema": {
+    "type": "number",
+    "unit": "nmi",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Farthest distance offshore of the modified ODMDSs, in nautical miles."
+  },
+  "monitoring_interval_years": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of years between monitoring surveys of the modified ODMDSs under the SMMP."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "ft": {
+   "suffix": [
+    "feet"
+   ]
+  },
+  "nmi": {
+   "suffix": [
+    "nautical miles",
+    "nmi"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "depth_min",
+   "value": "35",
+   "unit": "ft",
+   "evidence": [
+    {
+     "start": 3479,
+     "end": 3481
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "depth_max",
+   "value": "55",
+   "unit": "ft",
+   "evidence": [
+    {
+     "start": 3485,
+     "end": 3492
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "offshore_distance_min",
+   "value": "1.7",
+   "unit": "nmi",
+   "evidence": [
+    {
+     "start": 3547,
+     "end": 3565
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "offshore_distance_max",
+   "value": "2.7",
+   "unit": "nmi",
+   "evidence": [
+    {
+     "start": 3576,
+     "end": 3583
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "monitoring_interval_years": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

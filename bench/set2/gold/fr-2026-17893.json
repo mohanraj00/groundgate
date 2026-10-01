@@ -1,0 +1,100 @@
+{
+ "doc": "fr-2026-17893",
+ "kind": "fr",
+ "groups": [
+  "change",
+  "negation"
+ ],
+ "fields": {
+  "per_vehicle_increase_smallest_carriers": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Approximate per-vehicle fee increase for the smallest motor carriers in each bracket under the adopted proposal."
+  },
+  "per_vehicle_increase_range_low": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Low end of the range of per-vehicle fee increases for the smallest motor carriers in each bracket."
+  },
+  "per_vehicle_increase_range_high": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "High end of the range of per-vehicle fee increases for the smallest motor carriers in each bracket."
+  },
+  "fee_largest_bracket_2027": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2027 UCR registration fee for motor carriers in the largest fee bracket."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "per_vehicle_increase_smallest_carriers",
+   "value": "9.41",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2748,
+     "end": 2753
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "per_vehicle_increase_range_low",
+   "value": "9",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2839,
+     "end": 2841
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "per_vehicle_increase_range_high",
+   "value": "9.67",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2845,
+     "end": 2850
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "fee_largest_bracket_2027": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

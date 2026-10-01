@@ -1,0 +1,97 @@
+{
+ "doc": "fr-2026-17752",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "avg_days_sentencing_to_designation": {
+   "schema": {
+    "type": "number",
+    "unit": "days",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Average length of time from sentencing to arrival at the designated BOP facility, for newly committed inmates with sentences starting 2023 through 2025, in days."
+  },
+  "inmates_transfer_no_supervision_annual": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Annual average number of inmates whose Time Credits were applied toward transfer to prerelease custody (RRC or HC) without a term of supervision (category 1), 2023 through 2025."
+  },
+  "total_bop_population": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total number of inmates in BOP custody."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "avg_days_sentencing_to_designation",
+   "value": "66.06",
+   "unit": "days",
+   "evidence": [
+    {
+     "start": 2573,
+     "end": 2583
+    },
+    {
+     "start": 1681,
+     "end": 1691
+    },
+    {
+     "start": 3516,
+     "end": 3526
+    },
+    {
+     "start": 1377,
+     "end": 1382
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "inmates_transfer_no_supervision_annual",
+   "value": "7554",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 4572,
+     "end": 4585
+    },
+    {
+     "start": 5694,
+     "end": 5707
+    },
+    {
+     "start": 1332,
+     "end": 1337
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "total_bop_population": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,59 @@
+{
+ "doc": "fr-2026-19493",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "unauthorized_enrollment_complaints_2023_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Consumer complaints about unauthorized enrollments or plan switching by agents or brokers in the Federally-facilitated Exchanges, confirmed by issuer review, received from 2023 through 2025."
+  },
+  "moratorium_max_duration_days": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum duration, in days, of a temporary moratorium on agent and broker registrations."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "unauthorized_enrollment_complaints_2023_2025",
+   "value": "624000",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 6327,
+     "end": 6334
+    },
+    {
+     "start": 6545,
+     "end": 6552
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "moratorium_max_duration_days": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

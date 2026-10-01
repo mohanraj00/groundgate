@@ -1,0 +1,77 @@
+{
+ "doc": "irs-p516",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "foreign_tax_limit_exemption_max_taxes": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum total foreign taxes to elect exemption from the foreign tax credit limit, for returns other than joint returns."
+  },
+  "foreign_tax_limit_exemption_max_taxes_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum total foreign taxes to elect exemption from the foreign tax credit limit, for joint tax returns."
+  },
+  "foreign_housing_exclusion_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum foreign housing exclusion for the tax year."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "foreign_tax_limit_exemption_max_taxes",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2193,
+     "end": 2197
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "foreign_tax_limit_exemption_max_taxes_joint",
+   "value": "600",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2199,
+     "end": 2203
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "foreign_housing_exclusion_limit": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

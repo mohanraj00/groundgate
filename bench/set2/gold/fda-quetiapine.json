@@ -1,0 +1,268 @@
+{
+ "doc": "fda-quetiapine",
+ "kind": "fda",
+ "groups": [
+  "keyed"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Schizophrenia",
+     "Bipolar Disorder",
+     "Special Considerations in Treating Pediatric Schizophrenia and Bipolar I Disorder"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Schizophrenia",
+     "Bipolar Disorder",
+     "Special Considerations in Treating Pediatric Schizophrenia and Bipolar I Disorder"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Schizophrenia",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 171,
+     "end": 176
+    },
+    {
+     "start": 1509,
+     "end": 1514
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Bipolar Disorder",
+   "value": "50",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 396,
+     "end": 401
+    },
+    {
+     "start": 597,
+     "end": 602
+    },
+    {
+     "start": 3281,
+     "end": 3286
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "max_daily_dose",
+   "key": "Schizophrenia",
+   "value": "750",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 207,
+     "end": 217
+    },
+    {
+     "start": 1778,
+     "end": 1788
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "max_daily_dose",
+   "key": "Bipolar Disorder",
+   "value": "800",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 432,
+     "end": 442
+    },
+    {
+     "start": 2705,
+     "end": 2715
+    },
+    {
+     "start": 2612,
+     "end": 2622
+    },
+    {
+     "start": 3606,
+     "end": 3616
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "pediatric_min_age",
+   "value": "10",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 483,
+     "end": 485
+    },
+    {
+     "start": 2756,
+     "end": 2758
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "hepatic_starting_dose",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 847,
+     "end": 856
+    },
+    {
+     "start": 4543,
+     "end": 4552
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7028,
+     "end": 7033
+    },
+    {
+     "start": 7107,
+     "end": 7112
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "strengths",
+   "value": "50",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7035,
+     "end": 7040
+    },
+    {
+     "start": 7264,
+     "end": 7269
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "strengths",
+   "value": "100",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7042,
+     "end": 7048
+    },
+    {
+     "start": 7414,
+     "end": 7420
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "strengths",
+   "value": "200",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7053,
+     "end": 7059
+    },
+    {
+     "start": 7574,
+     "end": 7580
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {},
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

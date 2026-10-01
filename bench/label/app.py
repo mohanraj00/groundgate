@@ -59,13 +59,19 @@ def source_link(doc_id: str) -> str | None:
     return str(src["url"])
 
 
+def unkeyed(gold: dict[str, Any], fact: dict[str, Any]) -> bool:
+    """A kept fact on a keyed field that has no key yet."""
+    keys = gold["fields"][fact["field"]]["schema"].get("keys")
+    return bool(keys) and fact["status"] != "rejected" and fact.get("key") is None
+
+
 def summary(gold: dict[str, Any]) -> dict[str, Any]:
     facts = gold["facts"]
     return {
         "id": gold["doc"],
         "kind": gold["kind"],
         "facts": len(facts),
-        "open": sum(f["status"] == "draft" for f in facts)
+        "open": sum(f["status"] == "draft" or unkeyed(gold, f) for f in facts)
         + sum(s == "draft" for s in gold["absent"].values()),
         "checked": gold.get("checked") is not None,
     }
@@ -85,6 +91,9 @@ def validate(gold: dict[str, Any], old: dict[str, Any], text: str) -> str | None
             return "each fact needs a string value and a known status"
         if parse_value(fact["value"]) is None:
             return f"{fact['value']!r} is not a number (write 15750 or 15,750, no $ or unit)"
+        keys = old["fields"][fact["field"]]["schema"].get("keys")
+        if keys and fact.get("key") is not None and fact["key"] not in keys:
+            return f"{fact['key']!r} is not a key of {fact['field']}"
         ev = fact.get("evidence")
         if not isinstance(ev, list):
             return "evidence must be a list"
@@ -178,7 +187,10 @@ class Handler(BaseHTTPRequestHandler):
             text = (DOCS / f"{doc_id}.txt").read_text(encoding="utf-8")
             problem = validate(gold, old, text)
             if problem is None and done and summary(gold)["open"]:
-                problem = "decide every draft fact and absence before marking the document checked"
+                problem = (
+                    "decide every draft fact and absence, and pick a key for every kept fact on "
+                    "a keyed field, before marking the document checked"
+                )
             if problem:
                 self._json(HTTPStatus.UNPROCESSABLE_ENTITY, {"error": problem})
                 return

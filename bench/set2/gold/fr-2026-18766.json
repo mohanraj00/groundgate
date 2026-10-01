@@ -1,0 +1,159 @@
+{
+ "doc": "fr-2026-18766",
+ "kind": "fr",
+ "groups": [
+  "change",
+  "negation",
+  "scale"
+ ],
+ "fields": {
+  "exam_cycle_asset_threshold_old": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Total-asset threshold for a qualifying IDI to be eligible for the 18-month on-site examination cycle before the 21st Century ROAD to Housing Act (the old threshold)."
+  },
+  "exam_cycle_asset_threshold_new": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Total-asset threshold for a qualifying IDI to be eligible for the 18-month on-site examination cycle after the 21st Century ROAD to Housing Act (the new threshold)."
+  },
+  "extended_exam_cycle_months": {
+   "schema": {
+    "type": "integer",
+    "unit": "months",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Length, in months, of the extended on-site examination cycle for qualifying IDIs (instead of the annual cycle)."
+  },
+  "good_rating_asset_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Total-asset limit under which an IDI qualifies for the extended cycle with a composite condition of 'outstanding' or 'good' (rather than only 'outstanding')."
+  },
+  "newly_eligible_idis": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of IDIs that become eligible for the 18-month examination cycle under the new asset threshold."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "exam_cycle_asset_threshold_old",
+   "value": "3000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3871,
+     "end": 3881
+    },
+    {
+     "start": 4146,
+     "end": 4156
+    },
+    {
+     "start": 4717,
+     "end": 4727
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "exam_cycle_asset_threshold_new",
+   "value": "6000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3885,
+     "end": 3895
+    },
+    {
+     "start": 5061,
+     "end": 5071
+    },
+    {
+     "start": 5859,
+     "end": 5869
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "extended_exam_cycle_months",
+   "value": "18",
+   "unit": "months",
+   "evidence": [
+    {
+     "start": 4011,
+     "end": 4019
+    },
+    {
+     "start": 4194,
+     "end": 4202
+    },
+    {
+     "start": 4775,
+     "end": 4783
+    },
+    {
+     "start": 5120,
+     "end": 5128
+    },
+    {
+     "start": 5797,
+     "end": 5806
+    },
+    {
+     "start": 6645,
+     "end": 6654
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "good_rating_asset_limit",
+   "value": "200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6086,
+     "end": 6098
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "newly_eligible_idis": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

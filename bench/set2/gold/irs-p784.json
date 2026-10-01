@@ -1,0 +1,369 @@
+{
+ "doc": "irs-p784",
+ "kind": "irs",
+ "groups": [
+  "general"
+ ],
+ "fields": {
+  "application_lead_time_days": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "How many days before the transaction date the subordination application should be submitted, at least."
+  },
+  "example_loan_to_value_pct": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Refinance example: loan-to-value ratio."
+  },
+  "example_closing_cost_pct": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Refinance example: closing cost to financing ratio."
+  },
+  "example_fair_market_value": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Refinance example: fair market value of the property."
+  },
+  "example_refinance_amount": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Refinance example: new refinance loan amount."
+  },
+  "example_closing_costs": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Refinance example: closing costs to obtain the loan."
+  },
+  "example_united_states_interest": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Refinance example: United States' interest, the amount the IRS would ask for."
+  },
+  "example_existing_loan": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Refinance example: original (existing) loan paid off."
+  },
+  "example_potential_equity": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Refinance example: potential equity before closing costs."
+  },
+  "aaa_example_monthly_payment_current": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "AAA Auto Sales example: current monthly payment to the IRS."
+  },
+  "aaa_example_tax_debt": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "AAA Auto Sales example: tax debt."
+  },
+  "aaa_example_monthly_payment_proposed": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "AAA Auto Sales example: monthly payment after the inventory replenishment."
+  },
+  "aaa_example_inventory_cars": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "AAA Auto Sales example: number of cars in the inventory replenishment."
+  },
+  "subordination_application_fee": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Fee for applying for a certificate of subordination."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "days": {
+   "suffix": [
+    "days",
+    "day"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "application_lead_time_days",
+   "value": "45",
+   "unit": "days",
+   "evidence": [
+    {
+     "start": 1187,
+     "end": 1194
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "example_loan_to_value_pct",
+   "value": "80",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 5600,
+     "end": 5603
+    },
+    {
+     "start": 6033,
+     "end": 6036
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "example_closing_cost_pct",
+   "value": "3",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 5624,
+     "end": 5626
+    },
+    {
+     "start": 6162,
+     "end": 6164
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "example_fair_market_value",
+   "value": "200000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5748,
+     "end": 5756
+    },
+    {
+     "start": 6007,
+     "end": 6015
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "example_refinance_amount",
+   "value": "160000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5757,
+     "end": 5765
+    },
+    {
+     "start": 6059,
+     "end": 6067
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "example_closing_costs",
+   "value": "4800",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5766,
+     "end": 5772
+    },
+    {
+     "start": 6167,
+     "end": 6172
+    },
+    {
+     "start": 6234,
+     "end": 6240
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "example_united_states_interest",
+   "value": "10200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5773,
+     "end": 5780
+    },
+    {
+     "start": 6257,
+     "end": 6264
+    },
+    {
+     "start": 6288,
+     "end": 6295
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "example_existing_loan",
+   "value": "145000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5795,
+     "end": 5803
+    },
+    {
+     "start": 5948,
+     "end": 5956
+    },
+    {
+     "start": 6102,
+     "end": 6110
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "example_potential_equity",
+   "value": "15000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6125,
+     "end": 6132
+    },
+    {
+     "start": 6207,
+     "end": 6214
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "aaa_example_monthly_payment_current",
+   "value": "2000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6944,
+     "end": 6949
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "aaa_example_tax_debt",
+   "value": "120000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6965,
+     "end": 6973
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "aaa_example_monthly_payment_proposed",
+   "value": "3000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7278,
+     "end": 7283
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f13",
+   "field": "aaa_example_inventory_cars",
+   "value": "500",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 7215,
+     "end": 7218
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "subordination_application_fee": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

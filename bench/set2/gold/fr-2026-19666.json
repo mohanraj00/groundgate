@@ -1,0 +1,85 @@
+{
+ "doc": "fr-2026-19666",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "closing_letter_fee_old": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "User fee for a request for an estate tax closing letter before these regulations."
+  },
+  "closing_letter_fee_new": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "User fee for a request for an estate tax closing letter under these final regulations."
+  },
+  "annual_closing_letter_requests": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of estate tax closing letter requests the IRS receives per year."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "closing_letter_fee_old",
+   "value": "56",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 716,
+     "end": 719
+    },
+    {
+     "start": 3121,
+     "end": 3124
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "closing_letter_fee_new",
+   "value": "76",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 723,
+     "end": 726
+    },
+    {
+     "start": 3128,
+     "end": 3131
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "annual_closing_letter_requests": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

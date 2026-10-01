@@ -1,0 +1,347 @@
+{
+ "doc": "irs-p962",
+ "kind": "irs",
+ "groups": [
+  "general"
+ ],
+ "fields": {
+  "average_eitc_2024": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Average EITC received nationwide in tax year 2024."
+  },
+  "investment_income_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Investment income the taxpayer must have less than to claim the EITC."
+  },
+  "max_eitc_no_child_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum EITC for tax year 2025, no qualifying child."
+  },
+  "max_eitc_one_child_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum EITC for tax year 2025, 1 qualifying child."
+  },
+  "max_eitc_two_children_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum EITC for tax year 2025, 2 qualifying children."
+  },
+  "max_eitc_three_children_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum EITC for tax year 2025, 3 qualifying children."
+  },
+  "income_limit_no_child": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum income limit for the EITC, no qualifying child, not married filing jointly."
+  },
+  "income_limit_no_child_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum income limit for the EITC, no qualifying child, married filing jointly."
+  },
+  "income_limit_one_child": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum income limit for the EITC, 1 qualifying child, not married filing jointly."
+  },
+  "income_limit_one_child_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum income limit for the EITC, 1 qualifying child, married filing jointly."
+  },
+  "income_limit_two_children": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum income limit for the EITC, 2 qualifying children, not married filing jointly."
+  },
+  "income_limit_two_children_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum income limit for the EITC, 2 qualifying children, married filing jointly."
+  },
+  "income_limit_three_children": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum income limit for the EITC, 3 qualifying children, not married filing jointly."
+  },
+  "income_limit_three_children_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum income limit for the EITC, 3 qualifying children, married filing jointly."
+  },
+  "self_only_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Minimum age to claim the self-only EITC without a qualifying child."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "years": {
+   "suffix": [
+    "years",
+    "year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "average_eitc_2024",
+   "value": "2894",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 373,
+     "end": 378
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "investment_income_limit",
+   "value": "11950",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 862,
+     "end": 869
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "max_eitc_no_child_2025",
+   "value": "649",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1586,
+     "end": 1590
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "max_eitc_one_child_2025",
+   "value": "4328",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1613,
+     "end": 1619
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "max_eitc_two_children_2025",
+   "value": "7152",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1645,
+     "end": 1651
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "max_eitc_three_children_2025",
+   "value": "8046",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1677,
+     "end": 1683
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "income_limit_no_child",
+   "value": "19104",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1685,
+     "end": 1692
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "income_limit_no_child_joint",
+   "value": "26214",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1693,
+     "end": 1700
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "income_limit_one_child",
+   "value": "50434",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1727,
+     "end": 1734
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "income_limit_one_child_joint",
+   "value": "57554",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1735,
+     "end": 1742
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "income_limit_two_children",
+   "value": "57310",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1770,
+     "end": 1777
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "income_limit_two_children_joint",
+   "value": "64430",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1778,
+     "end": 1785
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f13",
+   "field": "income_limit_three_children",
+   "value": "61555",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1812,
+     "end": 1819
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f14",
+   "field": "income_limit_three_children_joint",
+   "value": "68675",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1820,
+     "end": 1827
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "self_only_min_age": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

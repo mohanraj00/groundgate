@@ -1,0 +1,242 @@
+{
+ "doc": "irs-p530",
+ "kind": "irs",
+ "groups": [
+  "negation",
+  "scale"
+ ],
+ "fields": {
+  "pre_2018_debt_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Limit on qualifying debt taken out on or before December 15, 2017, on which home mortgage interest can be deducted, for filers other than married filing separately."
+  },
+  "pre_2018_debt_limit_mfs": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Limit on qualifying debt taken out on or before December 15, 2017, on which home mortgage interest can be deducted, if married filing separately."
+  },
+  "post_2017_debt_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Limit on qualifying debt taken out after December 15, 2017, on which home mortgage interest can be deducted, for filers other than married filing separately."
+  },
+  "post_2017_debt_limit_mfs": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Limit on qualifying debt taken out after December 15, 2017, on which home mortgage interest can be deducted, if married filing separately."
+  },
+  "home_acquisition_debt_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Home acquisition debt limit (other than grandfathered debt), under Home acquisition debt limit, for filers other than married filing separately."
+  },
+  "home_acquisition_debt_limit_mfs": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Home acquisition debt limit (other than grandfathered debt), under Home acquisition debt limit, if married filing separately."
+  },
+  "home_acquisition_debt_limit_after_2017": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Home acquisition debt limit for a home purchased in tax years beginning after 2017, for filers other than married filing separately."
+  },
+  "home_acquisition_debt_limit_after_2017_mfs": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Home acquisition debt limit for a home purchased in tax years beginning after 2017, if married filing separately."
+  },
+  "salt_deduction_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Limit on the itemized deduction for state and local taxes, including real estate taxes."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "pre_2018_debt_limit",
+   "value": "1000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1808,
+     "end": 1818
+    },
+    {
+     "start": 2156,
+     "end": 2166
+    },
+    {
+     "start": 2493,
+     "end": 2503
+    },
+    {
+     "start": 2776,
+     "end": 2786
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "pre_2018_debt_limit_mfs",
+   "value": "500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1820,
+     "end": 1828
+    },
+    {
+     "start": 2168,
+     "end": 2176
+    },
+    {
+     "start": 2505,
+     "end": 2513
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "post_2017_debt_limit",
+   "value": "750000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2374,
+     "end": 2382
+    },
+    {
+     "start": 2653,
+     "end": 2661
+    },
+    {
+     "start": 3177,
+     "end": 3185
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "post_2017_debt_limit_mfs",
+   "value": "375000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2384,
+     "end": 2392
+    },
+    {
+     "start": 3187,
+     "end": 3195
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "home_acquisition_debt_limit",
+   "value": "1000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 8961,
+     "end": 8971
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "home_acquisition_debt_limit_mfs",
+   "value": "500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 8973,
+     "end": 8981
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "home_acquisition_debt_limit_after_2017",
+   "value": "750000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9249,
+     "end": 9257
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "home_acquisition_debt_limit_after_2017_mfs",
+   "value": "375000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9259,
+     "end": 9267
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "salt_deduction_limit": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

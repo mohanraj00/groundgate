@@ -1,0 +1,81 @@
+{
+ "doc": "fr-2026-17116",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "vevraa_coverage_threshold_before_oct_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "VEVRAA coverage threshold (single Federal contract or subcontract amount) before the inflation adjustment effective October 1, 2025."
+  },
+  "vevraa_coverage_threshold_from_oct_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "VEVRAA coverage threshold (single Federal contract or subcontract amount) after the inflation adjustment effective October 1, 2025."
+  },
+  "covered_contractor_count": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of Federal contractors and subcontractors covered by VEVRAA."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "vevraa_coverage_threshold_before_oct_2025",
+   "value": "150000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4149,
+     "end": 4157
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "vevraa_coverage_threshold_from_oct_2025",
+   "value": "200000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4161,
+     "end": 4169
+    },
+    {
+     "start": 3023,
+     "end": 3031
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "covered_contractor_count": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

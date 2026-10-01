@@ -1,0 +1,159 @@
+{
+ "doc": "fda-azithromycin",
+ "kind": "fda",
+ "groups": [
+  "keyed",
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Indications in Adult Patients",
+     "Indications in Pediatric Patients",
+     "Limitations of Use",
+     "Usage"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Indications in Adult Patients",
+     "Indications in Pediatric Patients",
+     "Limitations of Use",
+     "Usage"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Single-dose regimen for acute otitis media in pediatric patients 6 months of age and older."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg": {
+   "suffix": [
+    "mg/kg"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Indications in Adult Patients",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 248,
+     "end": 254
+    },
+    {
+     "start": 1820,
+     "end": 1826
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "strengths",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 6470,
+     "end": 6476
+    },
+    {
+     "start": 6693,
+     "end": 6699
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "weight_based_dose",
+   "value": "30",
+   "unit": "mg/kg",
+   "evidence": [
+    {
+     "start": 881,
+     "end": 889
+    },
+    {
+     "start": 2816,
+     "end": 2824
+    },
+    {
+     "start": 4981,
+     "end": 4989
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "pediatric_min_age": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

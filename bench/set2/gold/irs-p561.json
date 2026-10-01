@@ -1,0 +1,270 @@
+{
+ "doc": "irs-p561",
+ "kind": "irs",
+ "groups": [
+  "general"
+ ],
+ "fields": {
+  "conservation_contribution_basis_multiple": {
+   "schema": {
+    "type": "number",
+    "unit": "times",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Multiple of the sum of each ultimate member's relevant basis above which a partnership's or S corporation's conservation contribution is not treated as a qualified conservation contribution."
+  },
+  "option_example_exercise_price": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Options example: price at which the university could buy the real property under the option (the exercise price)."
+  },
+  "option_example_fmv_at_grant": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Options example: FMV of the property on the date the option is granted."
+  },
+  "option_example_fmv_at_exercise": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Options example: FMV of the property on the date the option is exercised."
+  },
+  "option_example_contribution": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Options example: charitable contribution made in the year the option is exercised."
+  },
+  "gems_example_purchase_price": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Bailey Morgan example: price paid for the assortment of gems."
+  },
+  "gems_example_promoter_deduction": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Bailey Morgan example: charitable deduction the promoter said Bailey could claim."
+  },
+  "painting_example_cost": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Corey Brown example: price paid for the painting."
+  },
+  "painting_example_claimed_deduction": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Corey Brown example: charitable contribution deduction claimed for the painting."
+  },
+  "painting_example_value_increase_pct": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Corey Brown example: increase in value over the 13 months the appraisal must justify."
+  },
+  "qualified_appraisal_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Claimed deduction for a donated item above which a qualified appraisal is required."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "times": {
+   "suffix": [
+    "times"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "conservation_contribution_basis_multiple",
+   "value": "2.5",
+   "unit": "times",
+   "evidence": [
+    {
+     "start": 774,
+     "end": 783
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "option_example_exercise_price",
+   "value": "40000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7202,
+     "end": 7209
+    },
+    {
+     "start": 7512,
+     "end": 7519
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "option_example_fmv_at_grant",
+   "value": "50000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7263,
+     "end": 7270
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "option_example_fmv_at_exercise",
+   "value": "55000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7414,
+     "end": 7421
+    },
+    {
+     "start": 7488,
+     "end": 7495
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "option_example_contribution",
+   "value": "15000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7479,
+     "end": 7486
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "gems_example_purchase_price",
+   "value": "5000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 8968,
+     "end": 8974
+    },
+    {
+     "start": 9724,
+     "end": 9730
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "gems_example_promoter_deduction",
+   "value": "15000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9329,
+     "end": 9336
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "painting_example_cost",
+   "value": "10000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 10573,
+     "end": 10580
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "painting_example_claimed_deduction",
+   "value": "15000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 10687,
+     "end": 10694
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "painting_example_value_increase_pct",
+   "value": "50",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 10838,
+     "end": 10841
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "qualified_appraisal_threshold": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

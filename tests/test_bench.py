@@ -200,6 +200,36 @@ def test_a_nested_section_with_the_same_code_is_read_once() -> None:
     assert text.count("Adults: 10 mg.") == 1 and "Dose 5 mg." in text
 
 
+def test_keyed_facts_need_a_key_from_the_list(served: tuple[int, dict], tmp_path: Path) -> None:
+    port, g = served
+    keyed = copy.deepcopy(g)
+    keyed["doc"] = "k"
+    keyed["fields"]["max_dose"]["schema"]["keys"] = ["Hypertension", "Angina"]
+    (tmp_path / "docs" / "k.txt").write_text(TEXT, encoding="utf-8")
+    (tmp_path / "gold" / "k.json").write_text(json.dumps(keyed))
+
+    keyed["facts"][0]["status"] = "confirmed"
+    status, body = call(port, "POST", "/api/doc/k", {"gold": keyed, "done": True}, app.TOKEN)
+    assert status == 422 and "pick a key" in body["error"]
+    keyed["facts"][0]["key"] = "Migraine"
+    assert call(port, "POST", "/api/doc/k", {"gold": keyed}, app.TOKEN)[0] == 422
+    keyed["facts"][0]["key"] = "Angina"
+    assert call(port, "POST", "/api/doc/k", {"gold": keyed, "done": True}, app.TOKEN)[0] == 200
+
+
+def test_set2_drafts_must_write_their_value() -> None:
+    sys.path.insert(0, str(BENCH / "set2" / "gold"))
+    import build
+
+    assert build.stated("141900000000000", "$141.9 trillion")
+    assert build.stated("1600", "$1,600") and not build.stated("16000", "$1,600")
+    text = "Limit: $7,000.\nOver 50:  $8,000."
+    span, quote = build.locate(text, "Over 50: [[$8,000]]")
+    assert quote == "$8,000" and span == {"start": 25, "end": 31}
+    with pytest.raises(ValueError, match="2 times"):
+        build.locate("$5 and $5", "[[$5]]")
+
+
 def test_original_document_opens_without_the_token(
     served: tuple[int, dict], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

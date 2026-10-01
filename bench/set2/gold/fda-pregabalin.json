@@ -1,0 +1,157 @@
+{
+ "doc": "fda-pregabalin",
+ "kind": "fda",
+ "groups": [
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. For the first indication in section 2."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. For the first indication in section 2."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg/day",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended initial dosage for adjunctive therapy of partial-onset seizures in pediatric patients weighing 30 kg or more."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg/day": {
+   "suffix": [
+    "mg/kg/day"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "value": "150",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 78
+    },
+    {
+     "start": 1797,
+     "end": 1807
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "max_daily_dose",
+   "value": "300",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 315,
+     "end": 325
+    },
+    {
+     "start": 1683,
+     "end": 1693
+    },
+    {
+     "start": 2153,
+     "end": 2163
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "strengths",
+   "value": "75",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 8506,
+     "end": 8511
+    },
+    {
+     "start": 8592,
+     "end": 8597
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "weight_based_dose",
+   "value": "2.5",
+   "unit": "mg/kg/day",
+   "evidence": [
+    {
+     "start": 3912,
+     "end": 3925
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "pediatric_min_age": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,122 @@
+{
+ "doc": "irs-p510",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "taxable_transportation_zone_miles": {
+   "schema": {
+    "type": "integer",
+    "unit": "miles",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum distance from the nearest point on the continental U.S. boundary of a place in Canada or Mexico where taxable air transportation can begin or end (the zone named after this distance)."
+  },
+  "registration_exception_max_maturity_years": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum maturity at issue of an obligation that is not a registration-required obligation for that reason."
+  },
+  "rate_increase_safe_harbor_min_deposit_percent": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Minimum deposit for each semimonthly period, as a percent of the look-back quarter's tax liability refigured at the increased rate, for the safe harbor rule to apply after an increase in the rate of tax."
+  },
+  "domestic_segment_tax_per_segment": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Dollar amount of the domestic-segment tax for each segment of taxable air transportation."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "miles": {
+   "suffix": [
+    "miles",
+    "mile",
+    "-mile"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "taxable_transportation_zone_miles",
+   "value": "225",
+   "unit": "miles",
+   "evidence": [
+    {
+     "start": 3956,
+     "end": 3965
+    },
+    {
+     "start": 4035,
+     "end": 4043
+    },
+    {
+     "start": 4594,
+     "end": 4602
+    },
+    {
+     "start": 5154,
+     "end": 5162
+    },
+    {
+     "start": 5453,
+     "end": 5461
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "registration_exception_max_maturity_years",
+   "value": "1",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 15682,
+     "end": 15688
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "rate_increase_safe_harbor_min_deposit_percent",
+   "value": "16.67",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 21800,
+     "end": 21806
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "domestic_segment_tax_per_segment": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

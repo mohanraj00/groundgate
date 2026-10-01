@@ -7,7 +7,7 @@ app before its facts count. The app never shows what the benchmarked models extr
 uv run python bench/label/app.py
 ```
 
-It opens `http://127.0.0.1:8765`. Pick a document from the list at the top. The document is on
+For set 2, add `--set bench/set2`. It opens `http://127.0.0.1:8765`. Pick a document from the list at the top. The document is on
 the left and its fields are on the right.
 
 Tables lose their layout in the text: an IRS table comes out as its row labels, then its
@@ -39,7 +39,12 @@ document. Your job is to make that true.
 
 Values are plain numbers: `15750` or `15,750`, no `$` and no unit. Units come from the field.
 
-When nothing on the page is still a draft, click **Mark document checked**. The app refuses
+- **The field is keyed** (set 2, FDA labels with indications): each fact has a key picker. Check
+  that the value belongs to the indication shown, and change the key if it belongs to another
+  one. A value you add from the selection starts with no key; pick one.
+
+When nothing on the page is still a draft, and every kept fact on a keyed field has a key, click
+**Mark document checked**. The app refuses
 until every draft fact and absence is decided.
 
 ## Keys

@@ -1,0 +1,207 @@
+{
+ "doc": "irs-p537",
+ "kind": "irs",
+ "groups": [
+  "scale"
+ ],
+ "fields": {
+  "farm_sale_section_1274_exception_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum price for a sale or exchange of a farm (by an individual, estate, testamentary trust, small business corporation or qualifying partnership) that is excepted from section 1274."
+  },
+  "deferred_tax_interest_obligations_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Interest on deferred tax: total balance of nondealer installment obligations outstanding at the close of the tax year above which interest is due (and above which the applicable percentage counts the excess)."
+  },
+  "section_453a_example_basis": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Section 453A Example: ABC, Inc.'s basis in the intellectual property it sold."
+  },
+  "section_453a_example_sale_price": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Section 453A Example: the price for which ABC, Inc. sold the intellectual property on the installment method."
+  },
+  "section_453a_example_payment_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Section 453A Example: the installment payment in 2022."
+  },
+  "section_453a_example_payment_2023": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Section 453A Example: the installment payment in 2023."
+  },
+  "section_453a_example_payment_2024": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Section 453A Example: the installment payment in 2024, when the note is paid off."
+  },
+  "underpayment_rate": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Underpayment rate used to figure interest on deferred tax."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "farm_sale_section_1274_exception_limit",
+   "value": "1000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2032,
+     "end": 2042
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "deferred_tax_interest_obligations_threshold",
+   "value": "5000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5549,
+     "end": 5559
+    },
+    {
+     "start": 6825,
+     "end": 6835
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "section_453a_example_basis",
+   "value": "0",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7218,
+     "end": 7220
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "section_453a_example_sale_price",
+   "value": "15000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7275,
+     "end": 7286
+    },
+    {
+     "start": 8269,
+     "end": 8280
+    },
+    {
+     "start": 8295,
+     "end": 8306
+    },
+    {
+     "start": 8415,
+     "end": 8425
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "section_453a_example_payment_2022",
+   "value": "1000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7493,
+     "end": 7503
+    },
+    {
+     "start": 8427,
+     "end": 8436
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "section_453a_example_payment_2023",
+   "value": "5000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7515,
+     "end": 7525
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "section_453a_example_payment_2024",
+   "value": "9000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7537,
+     "end": 7547
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "underpayment_rate": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

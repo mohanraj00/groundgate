@@ -1,0 +1,236 @@
+{
+ "doc": "fda-levetiracetam",
+ "kind": "fda",
+ "groups": [
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Partial-Onset Seizures",
+     "Myoclonic Seizures in Patients with Juvenile Myoclonic Epilepsy",
+     "Primary Generalized Tonic-Clonic Seizures"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Partial-Onset Seizures",
+     "Myoclonic Seizures in Patients with Juvenile Myoclonic Epilepsy",
+     "Primary Generalized Tonic-Clonic Seizures"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Starting dose per administration (given twice daily) for partial-onset seizures in pediatric patients 1 month to less than 6 months of age, in mg/kg."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg": {
+   "suffix": [
+    "mg/kg",
+    "mg per kg"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Partial-Onset Seizures",
+   "value": "1000",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2494,
+     "end": 2501
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Myoclonic Seizures in Patients with Juvenile Myoclonic Epilepsy",
+   "value": "1000",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 4955,
+     "end": 4962
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Primary Generalized Tonic-Clonic Seizures",
+   "value": "1000",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 5308,
+     "end": 5315
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "max_daily_dose",
+   "key": "Partial-Onset Seizures",
+   "value": "3000",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2677,
+     "end": 2684
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "strengths",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7528,
+     "end": 7534
+    },
+    {
+     "start": 7587,
+     "end": 7593
+    },
+    {
+     "start": 8241,
+     "end": 8247
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "strengths",
+   "value": "750",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7536,
+     "end": 7542
+    },
+    {
+     "start": 7806,
+     "end": 7812
+    },
+    {
+     "start": 8249,
+     "end": 8255
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "1000",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7546,
+     "end": 7553
+    },
+    {
+     "start": 8025,
+     "end": 8032
+    },
+    {
+     "start": 8261,
+     "end": 8268
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "weight_based_dose",
+   "value": "7",
+   "unit": "mg/kg",
+   "evidence": [
+    {
+     "start": 359,
+     "end": 366
+    },
+    {
+     "start": 2883,
+     "end": 2890
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "pediatric_min_age": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

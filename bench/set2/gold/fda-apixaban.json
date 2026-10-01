@@ -1,0 +1,215 @@
+{
+ "doc": "fda-apixaban",
+ "kind": "fda",
+ "groups": [
+  "general",
+  "keyed"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Reduction of Risk of Stroke and Systemic Embolism in Nonvalvular Atrial Fibrillation",
+     "Prophylaxis of Deep Vein Thrombosis Following Hip or Knee Replacement Surgery",
+     "Treatment of Deep Vein Thrombosis",
+     "Treatment of Pulmonary Embolism",
+     "Reduction in the Risk of Recurrence of DVT and PE"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Reduction of Risk of Stroke and Systemic Embolism in Nonvalvular Atrial Fibrillation",
+     "Prophylaxis of Deep Vein Thrombosis Following Hip or Knee Replacement Surgery",
+     "Treatment of Deep Vein Thrombosis",
+     "Treatment of Pulmonary Embolism",
+     "Reduction in the Risk of Recurrence of DVT and PE"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Reduction of Risk of Stroke and Systemic Embolism in Nonvalvular Atrial Fibrillation",
+   "value": "5",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 140,
+     "end": 144
+    },
+    {
+     "start": 1013,
+     "end": 1017
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Prophylaxis of Deep Vein Thrombosis Following Hip or Knee Replacement Surgery",
+   "value": "2.5",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 514,
+     "end": 520
+    },
+    {
+     "start": 1427,
+     "end": 1433
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Treatment of Deep Vein Thrombosis",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 598,
+     "end": 603
+    },
+    {
+     "start": 1791,
+     "end": 1796
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "starting_dose",
+   "key": "Treatment of Pulmonary Embolism",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 598,
+     "end": 603
+    },
+    {
+     "start": 1791,
+     "end": 1796
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "starting_dose",
+   "key": "Reduction in the Risk of Recurrence of DVT and PE",
+   "value": "2.5",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 789,
+     "end": 795
+    },
+    {
+     "start": 2020,
+     "end": 2026
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "strengths",
+   "value": "2.5",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 5470,
+     "end": 5476
+    },
+    {
+     "start": 5705,
+     "end": 5711
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "5",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 5586,
+     "end": 5590
+    },
+    {
+     "start": 5716,
+     "end": 5720
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "pediatric_min_age": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

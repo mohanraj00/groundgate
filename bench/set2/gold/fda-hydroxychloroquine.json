@@ -1,0 +1,259 @@
+{
+ "doc": "fda-hydroxychloroquine",
+ "kind": "fda",
+ "groups": [
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Malaria",
+     "Rheumatoid Arthritis",
+     "Systemic Lupus Erythematosus",
+     "Chronic Discoid Lupus Erythematosus"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Malaria",
+     "Rheumatoid Arthritis",
+     "Systemic Lupus Erythematosus",
+     "Chronic Discoid Lupus Erythematosus"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Weekly malaria prophylaxis dose for pediatric patients weighing 31 kg or more, in mg/kg."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg": {
+   "suffix": [
+    "mg/kg"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Malaria",
+   "value": "400",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 294,
+     "end": 300
+    },
+    {
+     "start": 1723,
+     "end": 1729
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Rheumatoid Arthritis",
+   "value": "400",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 558,
+     "end": 564
+    },
+    {
+     "start": 2573,
+     "end": 2579
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Systemic Lupus Erythematosus",
+   "value": "200",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 721,
+     "end": 727
+    },
+    {
+     "start": 3211,
+     "end": 3217
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "starting_dose",
+   "key": "Chronic Discoid Lupus Erythematosus",
+   "value": "200",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 846,
+     "end": 852
+    },
+    {
+     "start": 3377,
+     "end": 3383
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "strengths",
+   "value": "100",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 3485,
+     "end": 3491
+    },
+    {
+     "start": 4198,
+     "end": 4204
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "strengths",
+   "value": "200",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 3657,
+     "end": 3663
+    },
+    {
+     "start": 4206,
+     "end": 4212
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "300",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 3832,
+     "end": 3838
+    },
+    {
+     "start": 4214,
+     "end": 4220
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "strengths",
+   "value": "400",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 4016,
+     "end": 4022
+    },
+    {
+     "start": 4225,
+     "end": 4231
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "weight_based_dose",
+   "value": "6.5",
+   "unit": "mg/kg",
+   "evidence": [
+    {
+     "start": 347,
+     "end": 356
+    },
+    {
+     "start": 1777,
+     "end": 1786
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "pediatric_min_age": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

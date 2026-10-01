@@ -1,0 +1,233 @@
+{
+ "doc": "fda-montelukast",
+ "kind": "fda",
+ "groups": [
+  "keyed"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Asthma",
+     "Exercise-Induced Bronchoconstriction (EIB)",
+     "Allergic Rhinitis",
+     "Limitations of Use"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Asthma",
+     "Exercise-Induced Bronchoconstriction (EIB)",
+     "Allergic Rhinitis",
+     "Limitations of Use"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Asthma",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1045,
+     "end": 1050
+    },
+    {
+     "start": 449,
+     "end": 454
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Exercise-Induced Bronchoconstriction (EIB)",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1745,
+     "end": 1750
+    },
+    {
+     "start": 449,
+     "end": 454
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Allergic Rhinitis",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2887,
+     "end": 2892
+    },
+    {
+     "start": 3259,
+     "end": 3264
+    },
+    {
+     "start": 449,
+     "end": 454
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "pediatric_min_age",
+   "value": "2",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 111,
+     "end": 118
+    },
+    {
+     "start": 303,
+     "end": 310
+    },
+    {
+     "start": 381,
+     "end": 388
+    },
+    {
+     "start": 512,
+     "end": 513
+    },
+    {
+     "start": 1142,
+     "end": 1143
+    },
+    {
+     "start": 2984,
+     "end": 2985
+    },
+    {
+     "start": 3356,
+     "end": 3357
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "strengths",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 3870,
+     "end": 3875
+    },
+    {
+     "start": 4338,
+     "end": 4343
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "strengths",
+   "value": "5",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 4028,
+     "end": 4032
+    },
+    {
+     "start": 4389,
+     "end": 4393
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "4",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 4187,
+     "end": 4191
+    },
+    {
+     "start": 4398,
+     "end": 4402
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}
