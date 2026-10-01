@@ -337,3 +337,26 @@ def test_claude_replies_from_another_model_are_discarded(monkeypatch: pytest.Mon
     assert notes == {"discarded_for_harness": 2}
     cmd = model.command()
     assert cmd[cmd.index("--tools") + 1] == "" and cmd[cmd.index("--setting-sources") + 1] == ""
+
+
+def test_prompts_ask_for_keys_only_on_keyed_documents(monkeypatch: pytest.MonkeyPatch) -> None:
+    pytest.importorskip("langextract")
+    import propose
+
+    v01 = json.loads((BENCH / "gold" / "fda-lisinopril.json").read_text(encoding="utf-8"))
+    assert not propose.keyed(v01)
+    assert "one per key" not in propose.prompt_for(v01)
+    assert propose.examples_for(v01) is propose.EXAMPLES["fda"]
+
+    monkeypatch.setattr(propose, "SET", BENCH / "set2")
+    gold = json.loads((BENCH / "set2" / "gold" / "fda-diltiazem.json").read_text(encoding="utf-8"))
+    prompt = propose.prompt_for(gold)
+    assert '- starting_dose [mg] (one per key; keys: "Hypertension"; "Angina"): ' in prompt
+    assert prompt.endswith(propose.KEYS_NOTE)
+    example = propose.examples_for(gold)[0].extractions
+    assert {(x.extraction_class, (x.attributes or {}).get("key")) for x in example} >= {
+        ("starting_dose", "Gout"),
+        ("starting_dose", "Psoriasis"),
+    }
+    irs = json.loads((BENCH / "set2" / "gold" / "irs-p5.json").read_text(encoding="utf-8"))
+    assert propose.prompt_for(irs).startswith("Extract the fields listed below from one page")
