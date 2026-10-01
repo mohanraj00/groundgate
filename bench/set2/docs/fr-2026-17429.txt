@@ -1,0 +1,273 @@
+54948
+
+Federal Register / Vol. 91, No. 164 / Wednesday, August 26, 2026 / Rules and Regulations
+
+the Registry for each area code of data
+from $82 to $85 per area code, and (2)
+the maximum amount that will be
+charged to any single entity for
+accessing area codes of data from
+$22,626 to $23,425. Entities may add
+area codes during the second six months
+of their annual subscription period, and
+the fee for those additional area codes
+increases from $41 to $43.
+
+These increases are in accordance
+
+with the Act, which specifies that
+beginning after fiscal year 2009, the
+dollar amounts charged shall be
+increased by an amount equal to the
+amounts specified in the Act, multiplied
+by the percentage (if any) by which the
+average of the monthly consumer price
+index (for all urban consumers
+published by the Department of Labor)
+(‘‘CPI’’) for the most recently ended 12-
+month period ending on June 30
+exceeds the CPI for the 12-month period
+ending June 30, 2008. The Act also
+states that any increase shall be rounded
+to the nearest dollar and that there shall
+be no increase in the dollar amounts if
+the change in the CPI since the last fee
+increase is less than one percent. For
+fiscal year 2009, the Act specified that
+the original annual fee for access to the
+Registry for each area code of data was
+$54 per area code, or $27 per area code
+of data during the second six months of
+an entity’s annual subscription period,
+and that the maximum amount that
+would be charged to any single entity
+for accessing area codes of data would
+be $14,850.
+
+The determination of whether a fee
+change is required and the amount of
+the fee changes involves a two-step
+process. First, to determine whether a
+fee change is required, we measure the
+change in the CPI from the time of the
+previous increase in fees. There was an
+increase in the fees for fiscal year 2026.
+Accordingly, we calculated the change
+in the CPI since last year, and the
+increase was 3.5 percent. Because this
+change is over the one percent
+threshold, the fees will change for fiscal
+year 2027.
+
+Second, to determine how much the
+fees should increase this fiscal year, we
+use the calculation specified by the Act
+set forth above: the percentage change in
+the baseline CPI applied to the original
+fees for fiscal year 2009. The average
+value of the CPI for July 1, 2007, to June
+30, 2008, was 211.702; the average value
+for July 1, 2025, to June 30, 2026, was
+333.952, an increase of 57.75 percent.
+Applying the 57.75 percent increase to
+the base amount from fiscal year 2009,
+leads to a $85 fee for access to a single
+area code of data for a full year for fiscal
+year 2027, an increase of $3 from last
+year. The actual amount is $85.18 but
+
+when rounded, pursuant to the Act, $85
+is the appropriate fee. The fee for
+accessing an additional area code for a
+half year increases by two dollars to $43
+(rounded from $42.59). The maximum
+amount charged increases to $23,425
+(rounded from $23,425.32).
+
+Administrative Procedure Act;
+Regulatory Flexibility Act; Paperwork
+Reduction Act
+
+Under the Administrative Procedure
+
+Act (5 U.S.C. 553(b)), an agency may
+waive the normal notice and comment
+requirements if it finds, for good cause,
+that they are impracticable,
+unnecessary, or contrary to the public
+interest. The fee adjustments set forth in
+this final rule are mandated by the Do-
+Not-Call Registry Fee Extension Act of
+2007. Accordingly, the amendments to
+the TSR are merely technical in nature,
+making notice and comment
+unnecessary and contrary to the public
+interest. See 5 U.S.C. 553(b). For this
+reason, the requirements of the
+Regulatory Flexibility Act also do not
+apply. See 5 U.S.C. 603, 604.
+
+Pursuant to the Paperwork Reduction
+Act, 44 U.S.C. 3501–3521, the Office of
+Management and Budget (‘‘OMB’’)
+approved the information collection
+requirements in the TSR and assigned
+the following existing OMB Control
+Number: 3084–0169. The amendments
+outlined in this final rule pertain only
+to the fee provision (§ 310.8) of the TSR
+and will not establish or alter any record
+keeping, reporting, or third-party
+disclosure requirements elsewhere in
+the TSR.
+
+List of Subjects in 16 CFR Part 310
+
+Advertising, Consumer protection,
+
+Reporting and recordkeeping
+requirements, Telephone, Trade
+practices.
+
+Accordingly, the Federal Trade
+
+Commission amends part 310 of title 16
+of the Code of Federal Regulations as
+follows:
+
+PART 310–TELEMARKETING SALES
+RULE
+
+■ 1. The authority citation for part 310
+continues to read as follows:
+
+Authority: 15 U.S.C. 6101–6108.
+
+§ 310.8 [Amended]
+
+■ 2. Amend § 310.8 by:
+■ a. In paragraph (c):
+
+i. Removing ‘‘$82’’ and adding ‘‘$85’’
+
+in its place; and
+
+ii. Removing ‘‘$22,626’’ and adding
+
+‘‘$23,425’’ in its place;
+■ b. In paragraph (d):
+
+i. Removing ‘‘$82’’ and adding ‘‘$85’’
+
+in its place; and
+
+ii. Removing ‘‘$41’’ and adding ‘‘$43’’
+
+in its place.
+
+By direction of the Commission.
+
+Joel Christie,
+Acting Secretary.
+[FR Doc. 2026–17428 Filed 8–25–26; 8:45 am]
+
+BILLING CODE 6750–01–P
+
+DEPARTMENT OF JUSTICE
+
+Drug Enforcement Administration
+
+21 CFR Part 1308
+
+[Docket No. DEA–1644]
+
+Schedules of Controlled Substances:
+Temporary Placement of Mitragynine
+Pseudoindoxyl, MGM–15, and MGM–16
+in Schedule I
+
+AGENCY: Drug Enforcement
+Administration, Department of Justice.
+ACTION: Temporary amendment;
+temporary scheduling order.
+
+SUMMARY: The Drug Enforcement
+Administration (DEA) is issuing this
+temporary order to schedule three 7-
+hydroxymitragynine-related substances
+(mitragynine pseudoindoxyl, MGM–15,
+and MGM–16), including their isomers,
+esters, ethers, salts, and salts of isomers,
+esters, and ethers, whenever the
+existence of such isomers, esters, ethers,
+and salts is possible, in schedule I of the
+Controlled Substances Act. DEA bases
+this action on a finding that placing
+mitragynine pseudoindoxyl, MGM–15,
+and MGM–16 in schedule I is necessary
+to avoid an imminent hazard to public
+safety. This order imposes the
+regulatory controls and administrative,
+civil, and criminal sanctions applicable
+to schedule I controlled substances on
+persons who handle (manufacture,
+distribute, reverse distribute, import,
+export, engage in research, conduct
+instructional activities or chemical
+analysis with, or possess) or propose to
+handle these three 7-
+hydroxymitragynine-related substances.
+DATES: This temporary order is effective
+August 26, 2026, until August 26, 2028.
+If this order is extended or made
+permanent, DEA will publish a
+document in the Federal Register.
+ADDRESSES: 8701 Morrissette Drive,
+Springfield, Virginia 22152.
+FOR FURTHER INFORMATION CONTACT:
+Terrence L. Boos, Drug and Chemical
+Evaluation Section, Diversion Control
+Division, Drug Enforcement
+Administration; Mailing Address: 8701
+Morrissette Drive, Springfield, Virginia
+22152; Telephone: (571) 362–3249.
+SUPPLEMENTARY INFORMATION: The Drug
+Enforcement Administration (DEA)
+
+VerDate Sep<11>2014 16:10 Aug 25, 2026 Jkt 268001 PO 00000 Frm 00012 Fmt 4700 Sfmt 4700 E:\FR\FM\26AUR1.SGM 26AUR1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

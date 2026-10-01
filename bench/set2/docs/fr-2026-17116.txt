@@ -1,0 +1,305 @@
+54234
+
+Federal Register / Vol. 91, No. 161 / Friday, August 21, 2026 / Rules and Regulations
+
+PART 180—TOLERANCES AND
+EXEMPTIONS FOR PESTICIDE
+CHEMICAL RESIDUES IN FOOD
+
+■ 1. The authority citation for part 180
+continues to read as follows:
+
+Authority: 21 U.S.C. 321(q), 346a and 371.
+
+■ 2. In § 180.301, amend table 1 to
+paragraph (a) by:
+■ a. Removing the entry for ‘‘Bean, dry,
+seed’’; and
+■ b. Adding alphabetically the entries
+‘‘Vegetable, legume, forage and hay,
+except soybean, subgroup 7–22A’’,
+‘‘Vegetable, legume, pulse, bean, dried
+shelled, except soybean, subgroup 6–
+22E’’, and ‘‘Vegetable, legume, pulse,
+pea, dried shelled, subgroup 6–22F’’.
+The revisions and additions read as
+
+follows:
+
+§ 180.301 Carboxin; tolerances for
+residues.
+
+(a) * * *
+
+TABLE 1 TO PARAGRAPH (a)
+
+Commodity
+
+Parts per
+million
+
+*
+
+*
+
+*
+
+*
+
+*
+
+Vegetable, legume, forage and
+hay, except soybean, sub-
+group 7–22A ...........................
+Vegetable, legume, pulse, bean,
+dried shelled, except soybean,
+subgroup 6–22E ......................
+
+Vegetable, legume, pulse, pea,
+
+dried shelled, subgroup 6–22F
+
+2
+
+0.2
+
+0.2
+
+*
+
+*
+
+*
+
+*
+
+*
+
+*
+
+*
+*
+[FR Doc. 2026–17088 Filed 8–20–26; 8:45 am]
+
+*
+
+*
+
+BILLING CODE 6560–50–P
+
+DEPARTMENT OF LABOR
+
+Office of Federal Contract Compliance
+Programs
+
+41 CFR Part 60–300
+
+[Docket No. OFCCP–2025–0002]
+
+RIN 1250–AA19
+
+Vietnam Era Veterans’ Readjustment
+Assistance Act of 1974, as amended
+(VEVRAA). These revisions will align
+the regulations with Executive Order
+14173 and remove the VEVRAA
+regulations’ cross-references to the
+Executive Order 11246 authority.
+Executive Order 11246 was revoked by
+Executive Order 14173 on January 21,
+2025. This final rule also makes
+technical revisions to update the
+VEVRAA regulations’ jurisdictional
+thresholds, which were adjusted for
+inflation by the Federal Acquisition
+Regulation Council on October 1, 2025.
+DATES: This rule is effective September
+21, 2026.
+FOR FURTHER INFORMATION CONTACT:
+Kenneth Wolfe, Director, OFCCP, 200
+Constitution Avenue NW, Washington,
+DC 20210. Telephone: 202–693–0101.
+Email: ofccp_guidance@dol.gov.
+SUPPLEMENTARY INFORMATION:
+
+I. Background
+
+The U.S. Department of Labor (DOL)
+enforces VEVRAA, 38 U.S.C. 4212, and
+its implementing regulations at 41 CFR
+part 60–300. VEVRAA, as applied by
+regulation, prohibits Federal contractors
+and subcontractors (contractors) 1 from
+discriminating against employees and
+applicants because of their status as a
+protected veteran (defined by the statute
+to include disabled veterans, recently
+separated veterans, Armed Forces
+service medal veterans, and active duty
+wartime or campaign badge veterans).
+VEVRAA also requires covered
+contractors to take ‘‘affirmative action to
+employ and advance in employment
+qualified covered veterans.’’ 38 U.S.C.
+4212(a).
+
+The basic requirements in VEVRAA
+
+generally apply to any business or
+organization that holds a single Federal
+contract or subcontract of at least
+$200,000.^2 Further, under the current
+regulations, contractors with 50 or more
+employees and a single Federal contract
+or subcontract of $200,000 or more are
+also required to develop and maintain
+an affirmative action program (AAP),
+where they must implement and
+document their affirmative action efforts
+
+Modifications to the Regulations
+Implementing the Vietnam Era
+Veterans’ Readjustment Assistance
+Act of 1974, as Amended
+
+AGENCY: Office of Federal Contract
+Compliance Programs, Labor.
+ACTION: Final rule.
+
+SUMMARY: The U.S. Department of Labor
+publishes this final rule to revise its
+implementing regulations for the
+
+1 Hereinafter, the terms ‘‘contractor’’ or ‘‘Federal
+contractor’’ are used to refer collectively to Federal
+contractors and subcontractors that fall under
+OFCCP’s authority, unless otherwise expressly
+stated. This approach is consistent with OFCCP’s
+regulations, which define ‘‘contract’’ to include
+subcontracts and ‘‘contractor’’ to include
+subcontractors. See 41 CFR 60–300.2.
+
+2 Effective October 1, 2025, the coverage
+
+threshold under VEVRAA increased from $150,000
+to $200,000, in accordance with the inflationary
+adjustment requirements in 41 U.S.C. 1908. See
+Federal Acquisition Regulation: Inflation
+Adjustment of Acquisition-Related Thresholds, 90
+FR 41872 (Aug. 27, 2025).
+
+on an annual basis, as provided in 41
+CFR part 60–300, subpart C.
+
+II. Need for the Rulemaking
+
+Prior to January 21, 2025, DOL
+
+administered and enforced Executive
+Order 11246, ‘‘Equal Employment
+Opportunity,’’ as amended (Executive
+Order 11246), Section 503 of the
+Rehabilitation Act of 1973, as amended
+(Section 503), and VEVRAA. On January
+21, 2025, President Trump issued
+Executive Order 14173, ‘‘Ending Illegal
+Discrimination and Restoring Merit-
+Based Opportunity,’’ 90 FR 8633 (Jan.
+31, 2025). Executive Order 14173
+revoked Executive Order 11246.
+Executive Order 11246, and its
+implementing regulations at 41 CFR part
+60–1 et seq., prohibited contractors from
+discriminating against employees and
+applicants because of race, color,
+religion, sex, sexual orientation, gender
+identity, national origin, or because they
+inquired about, discussed, or disclosed
+their compensation or that of others,
+subject to certain limitations.
+Contractors were also required to take
+certain affirmative actions to promote
+equal employment opportunity in their
+workplaces, as specified in 41 CFR part
+60–2 and 41 CFR part 60–4.
+
+While VEVRAA remains in effect, the
+
+revocation of Executive Order 11246
+necessitates several revisions to the
+VEVRAA implementing regulations. On
+July 1, 2025, DOL published a Notice of
+Proposed Rulemaking (NPRM) in the
+Federal Register proposing specific
+revisions. See 90 FR 28485 (July 1,
+2025). Specifically, DOL proposed
+removal of the cross-reference to the
+Executive Order 11246 administrative
+proceeding procedures found in 41 CFR
+60–300.65(b) and proposed the addition
+of those administrative proceeding
+procedures directly into VEVRAA’s
+implementing regulations, except where
+duplicative of current part 60–300
+provisions (e.g., the severability
+clause).^3
+
+DOL also proposed removal of a
+reference to 41 CFR part 60–3 because
+this citation is part of the revoked
+Executive Order 11246 authority.
+Additionally, DOL proposed removal of
+the 29 U.S.C. 793 reference in the
+authority citation for 41 CFR part 60–
+300. The 29 U.S.C. 793 reference refers
+to the Section 503 authority and is
+unnecessary.
+
+3 In a separate rulemaking, DOL proposed similar
+
+changes to the Section 503 regulations. If the
+proposed changes become final, the 41 CFR part
+60–30 regulations will be duplicative and
+unnecessary as they will be incorporated into 41
+CFR parts 60–300 and 60–741. As such, as part of
+the Section 503 rulemaking, DOL is also proposing
+to rescind 41 CFR part 60–30 using a delayed
+effective date.
+
+VerDate Sep<11>2014 23:07 Aug 20, 2026 Jkt 268001 PO 00000 Frm 00024 Fmt 4700 Sfmt 4700 E:\FR\FM\21AUR1.SGM 21AUR1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

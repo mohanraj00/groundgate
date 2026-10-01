@@ -327,8 +327,10 @@ def walk_targeted(
     counts: dict[str, int],
     max_pages: int,
     log: list[dict[str, Any]],
+    seen: dict[str, str],
 ) -> list[dict[str, Any]]:
-    """Add documents (id, url), in order, while a pattern group is open. Updates ``counts``."""
+    """Add documents (id, url), in order, while a pattern group is open. Updates ``counts``,
+    and ``seen`` (the hash of each taken text: its id), so the same text is never taken twice."""
     chosen: list[dict[str, Any]] = []
     for doc_id, url in docs:
         open_groups = [g for g, c in counts.items() if c < TARGET_MATCHES]
@@ -346,6 +348,11 @@ def walk_targeted(
         if not idx:
             entry["skip"] = "no page matches a group that is still open"
             continue
+        text_sha = hashlib.sha256("\f".join(pages[i] for i in idx).encode()).hexdigest()
+        if text_sha in seen:  # Federal Register rules share printed pages
+            entry["skip"] = f"same text as {seen[text_sha]}"
+            continue
+        seen[text_sha] = doc_id
         added = {g: min(TARGET_PER_DOC, sum(hits[i][g] for i in idx)) for g in PATTERNS}
         for g, c in added.items():
             counts[g] += c
@@ -378,10 +385,11 @@ def select_irs(log: list[dict[str, Any]]) -> list[dict[str, Any]]:
     taken = {s["id"] for s in general}
     rest = [(f"irs-p{n.lower()}", u) for n, u in pubs if f"irs-p{n.lower()}" not in taken]
     counts = dict.fromkeys(PATTERNS, 0)
-    targeted = walk_targeted(rest, "irs", counts, TARGET_MAX_PAGES, log)
+    seen: dict[str, str] = {}
+    targeted = walk_targeted(rest, "irs", counts, TARGET_MAX_PAGES, log, seen)
     log.append({"kind": "irs", "targeted_matches": dict(counts)})
     if any(c < TARGET_MATCHES for c in counts.values()):
-        targeted += walk_targeted(federal_register_rules(), "fr", counts, FR_MAX_PAGES, log)
+        targeted += walk_targeted(federal_register_rules(), "fr", counts, FR_MAX_PAGES, log, seen)
         log.append({"kind": "fr", "targeted_matches": dict(counts)})
     return general + targeted
 

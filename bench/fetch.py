@@ -36,13 +36,17 @@ def download(url: str, path: Path) -> bytes:
 
 
 def spl_sections(data: bytes, codes: list[str]) -> str:
-    """Text of the SPL sections with the given LOINC codes, in document order."""
+    """Text of the SPL sections with the given LOINC codes, in document order. A matching
+    section inside one already taken is part of its text, so it is not taken again."""
     root = ET.fromstring(data)
     parts = []
+    taken: set[int] = set()  # ids of the sections taken and everything inside them
     for sec in root.iter(f"{HL7}section"):
         code = sec.find(f"{HL7}code")
-        if code is not None and code.get("code") in codes:
-            parts.append(xml_text(ET.tostring(sec)))
+        if id(sec) in taken or code is None or code.get("code") not in codes:
+            continue
+        taken.update(id(e) for e in sec.iter())
+        parts.append(xml_text(ET.tostring(sec)))
     if not parts:
         raise SystemExit(f"no sections {codes} found")
     return "\n\n".join(parts)
