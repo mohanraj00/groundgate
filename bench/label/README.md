@@ -7,7 +7,8 @@ app before its facts count. The app never shows what the benchmarked models extr
 uv run python bench/label/app.py
 ```
 
-For set 2, add `--set bench/set2`. It opens `http://127.0.0.1:8765`. Pick a document from the list at the top. The document is on
+For set 2, add `--set bench/set2`. Set 2 lists its control documents last, marked "control":
+they are not checked in full (SELECTION.md "Fields"), so start with the others. It opens `http://127.0.0.1:8765`. Pick a document from the list at the top. The document is on
 the left and its fields are on the right.
 
 Tables lose their layout in the text: an IRS table comes out as its row labels, then its

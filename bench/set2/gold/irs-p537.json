@@ -50,24 +50,6 @@
    },
    "description": "Section 453A Example: the installment payment in 2022."
   },
-  "section_453a_example_payment_2023": {
-   "schema": {
-    "type": "integer",
-    "unit": "USD",
-    "comparator": "eq",
-    "minimum": "0"
-   },
-   "description": "Section 453A Example: the installment payment in 2023."
-  },
-  "section_453a_example_payment_2024": {
-   "schema": {
-    "type": "integer",
-    "unit": "USD",
-    "comparator": "eq",
-    "minimum": "0"
-   },
-   "description": "Section 453A Example: the installment payment in 2024, when the note is paid off."
-  },
   "underpayment_rate": {
    "schema": {
     "type": "number",
@@ -167,32 +149,6 @@
     {
      "start": 8427,
      "end": 8436
-    }
-   ],
-   "status": "draft"
-  },
-  {
-   "id": "f6",
-   "field": "section_453a_example_payment_2023",
-   "value": "5000000",
-   "unit": "USD",
-   "evidence": [
-    {
-     "start": 7515,
-     "end": 7525
-    }
-   ],
-   "status": "draft"
-  },
-  {
-   "id": "f7",
-   "field": "section_453a_example_payment_2024",
-   "value": "9000000",
-   "unit": "USD",
-   "evidence": [
-    {
-     "start": 7537,
-     "end": 7547
     }
    ],
    "status": "draft"

@@ -5,6 +5,10 @@ drafts are not ground truth: a person checks each one in the labeling app before
 
     uv run python bench/set2/gold/build.py                        # write new gold files
     uv run python bench/set2/gold/build.py --check drafts_fda1.py  # check one file, write nothing
+    uv run python bench/set2/gold/build.py --cap                   # apply the cap to gold files
+
+Targeted documents keep only the fields whose amounts sit in a sentence holding one of the first
+5 matches per group, the matches pick.py counted (SELECTION.md "Fields").
 
 The drafts live in ``drafts_*.py`` next to this file, one or more per kind, so they can be
 written in parallel. Each defines ``DRAFTS`` and may define ``FIELDS``, ``UNITS`` and
@@ -39,6 +43,11 @@ from typing import Any
 
 HERE = Path(__file__).parent
 SET = HERE.parent
+sys.path.insert(0, str(SET.parent))
+from pick import PATTERNS, TARGET_PER_DOC  # noqa: E402
+
+from groundgate.text import sentence  # noqa: E402
+
 DOCS = SET / "docs"
 SOURCES = SET / "sources.json"
 
@@ -253,10 +262,60 @@ def build(
             "prelabeled_by": "Claude (model draft)", "checked": None}  # fmt: skip
 
 
+def capped(gold: dict, text: str) -> set[str]:
+    """Fields of a targeted document whose amounts lie only in matched sentences beyond the first
+    TARGET_PER_DOC matches of each group. A field with evidence outside every matched sentence
+    (a sentence split by the text extraction) is kept."""
+    groups = [g for g in gold["groups"] if g in PATTERNS]
+    if gold["kind"] not in ("irs", "fr") or "general" in gold["groups"] or not groups:
+        return set()
+    matched, counted = set(), set()
+    for g in groups:
+        for i, m in enumerate(PATTERNS[g].finditer(text)):
+            matched.add(span := sentence(text, m.start()))
+            if i < TARGET_PER_DOC:
+                counted.add(span)
+    raw = text.encode()
+    out = set()
+    for name in gold["fields"]:
+        starts = [
+            len(raw[: e["start"]].decode())
+            for f in gold["facts"]
+            if f["field"] == name
+            for e in f["evidence"]
+        ]
+        inside = [s for c in starts for s in matched if s[0] <= c < s[1]]
+        if inside and not any(s in counted for s in inside):
+            out.add(name)
+    return out
+
+
+def apply_cap(gold: dict, text: str) -> int:
+    """Drop the capped fields from a gold file, keeping every other decision. Returns facts
+    dropped."""
+    drop = capped(gold, text)
+    before = len(gold["facts"])
+    gold["fields"] = {k: v for k, v in gold["fields"].items() if k not in drop}
+    gold["facts"] = [f for f in gold["facts"] if f["field"] not in drop]
+    for part in ("absent", "excluded"):
+        gold[part] = {k: v for k, v in gold[part].items() if k not in drop}
+    return before - len(gold["facts"])
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", type=Path, help="check one drafts file and write nothing")
+    ap.add_argument("--cap", action="store_true", help="apply the cap to existing gold files")
     args = ap.parse_args()
+    if args.cap:
+        for path in sorted(HERE.glob("*.json")):
+            gold = json.loads(path.read_text(encoding="utf-8"))
+            text = (DOCS / f"{gold['doc']}.txt").read_text(encoding="utf-8")
+            if dropped := apply_cap(gold, text):
+                out = json.dumps(gold, indent=1, ensure_ascii=False) + "\n"
+                path.write_text(out, encoding="utf-8")
+                print(f"{gold['doc']}: dropped {dropped} facts")
+        return
     paths = [HERE / args.check.name] if args.check else sorted(HERE.glob("drafts_*.py"))
     sources = {s["id"]: s for s in json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]}
     drafts, own_fields, own_units, dose_unit = load_drafts(paths)
@@ -275,6 +334,8 @@ def main() -> None:
     }
     if errors:
         raise SystemExit("\n".join(errors))
+    for doc_id, gold in built.items():
+        apply_cap(gold, (DOCS / f"{doc_id}.txt").read_text(encoding="utf-8"))
     if args.check:
         facts = sum(len(g["facts"]) for g in built.values())
         print(f"{len(built)} documents valid: {facts} facts, "

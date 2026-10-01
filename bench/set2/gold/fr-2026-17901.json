@@ -87,42 +87,6 @@
    },
    "description": "Threshold for full CAS coverage and Disclosure Statement requirements set by this final rule."
   },
-  "entities_full_coverage_fy2020_2024": {
-   "schema": {
-    "type": "integer",
-    "unit": null,
-    "comparator": "eq",
-    "minimum": "0"
-   },
-   "description": "Estimated number of entities subject to full coverage and Disclosure Statement requirements in FYs 2020 through 2024, from FPDS data."
-  },
-  "contract_value_full_coverage_fy2020_2024": {
-   "schema": {
-    "type": "integer",
-    "unit": "USD",
-    "comparator": "eq",
-    "minimum": "0"
-   },
-   "description": "Aggregate total contract value of the entities subject to full coverage and Disclosure Statement requirements in FYs 2020 through 2024."
-  },
-  "entities_full_coverage_new_threshold": {
-   "schema": {
-    "type": "integer",
-    "unit": null,
-    "comparator": "eq",
-    "minimum": "0"
-   },
-   "description": "Estimated number of entities subject to full coverage when the finalized threshold is applied to the FYs 2020 through 2024 data."
-  },
-  "contract_value_full_coverage_new_threshold": {
-   "schema": {
-    "type": "integer",
-    "unit": "USD",
-    "comparator": "eq",
-    "minimum": "0"
-   },
-   "description": "Aggregate contract dollars still subject to full coverage when the finalized threshold is applied to the FYs 2020 through 2024 data."
-  },
   "annual_compliance_savings": {
    "schema": {
     "type": "integer",
@@ -152,7 +116,7 @@
      "end": 2851
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -165,7 +129,7 @@
      "end": 2901
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -178,7 +142,7 @@
      "end": 2956
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -191,7 +155,7 @@
      "end": 3010
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -204,7 +168,7 @@
      "end": 4784
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -217,7 +181,7 @@
      "end": 4799
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -230,7 +194,7 @@
      "end": 4832
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -243,7 +207,7 @@
      "end": 5436
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -260,65 +224,17 @@
      "end": 5870
     }
    ],
-   "status": "draft"
-  },
-  {
-   "id": "f10",
-   "field": "entities_full_coverage_fy2020_2024",
-   "value": "773",
-   "unit": null,
-   "evidence": [
-    {
-     "start": 5672,
-     "end": 5675
-    }
-   ],
-   "status": "draft"
-  },
-  {
-   "id": "f11",
-   "field": "contract_value_full_coverage_fy2020_2024",
-   "value": "1220000000000",
-   "unit": "USD",
-   "evidence": [
-    {
-     "start": 5806,
-     "end": 5820
-    }
-   ],
-   "status": "draft"
-  },
-  {
-   "id": "f12",
-   "field": "entities_full_coverage_new_threshold",
-   "value": "564",
-   "unit": null,
-   "evidence": [
-    {
-     "start": 5938,
-     "end": 5941
-    }
-   ],
-   "status": "draft"
-  },
-  {
-   "id": "f13",
-   "field": "contract_value_full_coverage_new_threshold",
-   "value": "1210000000000",
-   "unit": "USD",
-   "evidence": [
-    {
-     "start": 5960,
-     "end": 5974
-    }
-   ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "annual_compliance_savings": "draft"
+  "annual_compliance_savings": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-30T20:20:05-0700"
+ },
+ "seconds_spent": 89
 }
