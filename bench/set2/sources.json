@@ -1312,21 +1312,6 @@
       }
     },
     {
-      "id": "fr-2026-19963",
-      "kind": "fr",
-      "groups": [
-        "change",
-        "negation"
-      ],
-      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-30/pdf/2026-19963.pdf",
-      "sha256": "b102cb0391494824d2778c288f1002f887fb8d21defb9a79721e8860a1e0b580",
-      "select": {
-        "pages": [
-          2
-        ]
-      }
-    },
-    {
       "id": "fr-2026-19946",
       "kind": "fr",
       "groups": [
@@ -1441,20 +1426,6 @@
       }
     },
     {
-      "id": "fr-2026-19143",
-      "kind": "fr",
-      "groups": [
-        "change"
-      ],
-      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-18/pdf/2026-19143.pdf",
-      "sha256": "472909ca1f7708211f0965a576c0769b9cd8ecd7a91ca747bd3b25fb607d3c8e",
-      "select": {
-        "pages": [
-          2
-        ]
-      }
-    },
-    {
       "id": "fr-2026-19006",
       "kind": "fr",
       "groups": [
@@ -1480,20 +1451,6 @@
       "select": {
         "pages": [
           1
-        ]
-      }
-    },
-    {
-      "id": "fr-2026-18830",
-      "kind": "fr",
-      "groups": [
-        "change"
-      ],
-      "url": "https://www.govinfo.gov/content/pkg/FR-2026-09-15/pdf/2026-18830.pdf",
-      "sha256": "baa3ceac34fe8ab197b32d3559a9353f2a36dd6de7c36e62bf4bdb0dbbd7b8b7",
-      "select": {
-        "pages": [
-          4
         ]
       }
     },
@@ -1636,6 +1593,50 @@
       ],
       "url": "https://www.govinfo.gov/content/pkg/FR-2026-08-27/pdf/2026-17511.pdf",
       "sha256": "a5d346265f67390502bdf3f34b7e0b6b2aedffbadb51848307c7e1cf1e64f4ed",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-17429",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-08-26/pdf/2026-17429.pdf",
+      "sha256": "b46579373a1a72e5d866d9b42160f0b4dcaf38c5def7f05ed55cc6f5b8bb3a48",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-17400",
+      "kind": "fr",
+      "groups": [
+        "change",
+        "negation",
+        "scale"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-08-26/pdf/2026-17400.pdf",
+      "sha256": "239250d57e292ffcc1f068fa2355daecb6161be2facee58f1f1f710d681ac583",
+      "select": {
+        "pages": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "fr-2026-17116",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-08-21/pdf/2026-17116.pdf",
+      "sha256": "fd94af284c417430c61e3ab100ad9b3eb9d44a4a0368642100fe740bea9c5bcf",
       "select": {
         "pages": [
           1

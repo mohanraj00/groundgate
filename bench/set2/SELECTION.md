@@ -106,6 +106,10 @@ one page per document, the first that matches an open group, because a Federal R
 holds about 7,000 characters. The walk stops when every group is closed or 25 documents have
 joined.
 
+Short rules share printed pages, so two rules can select the same page. A document whose
+selected text is identical to one already taken is skipped. That rule holds for the IRS walk
+too, where it never fires.
+
 ## Fields
 
 Fields are drafted per document after spec 0.2 is frozen (#10), under these rules:
@@ -145,9 +149,22 @@ What the rules pick:
 | NTSB | 10 | ids 192719 to 192731 |
 | IRS general | 10 | |
 | IRS targeted | 25 | change 11, negation 42, scale 33 counted matches |
-| Federal Register | 25 | brings change to 37, negation to 50, scale to 58 |
+| Federal Register | 25 | brings change to 38, negation to 50, scale to 60 |
 
-Change closes at 37, three short of 40, because the Federal Register walk reached its cap. Its
-37 matches come from 27 documents, negation's 50 from 26 and scale's 58 from 18.
+Change closes at 38, two short of 40, because the Federal Register walk reached its cap. Its
+38 matches come from 27 documents, negation's 50 from 26 and scale's 60 from 19.
 
 101 documents, about 855,000 characters of text: 3.9 times v0.1.
+
+## Changes after the freeze
+
+Each change here is noted on #1.
+
+- #29: the first walk took three pairs of Federal Register rules whose selected page was the
+  same printed page: 20036 and 19963, 19173 and 19143, 18911 and 18830. The rule above was
+  added and the walk ran again from cached downloads. It dropped 19963, 19143 and 18830 and took
+  17116, 17400 and 17429. Nothing outside the Federal Register changed.
+- #29: `fetch.py` took a label section a second time when it was nested inside a section already
+  taken with the same LOINC code. The texts of apixaban, potassium and lamotrigine lost the
+  repeat. The selection did not change: the weight-based counts are the same either way, and
+  the v0.1 label texts are byte-identical.

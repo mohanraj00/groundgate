@@ -2448,14 +2448,7 @@
   "kind": "fr",
   "group": "targeted",
   "id": "fr-2026-19963",
-  "pages": [
-   2
-  ],
-  "matches": {
-   "change": 2,
-   "negation": 1,
-   "scale": 0
-  }
+  "skip": "same text as fr-2026-20036"
  },
  {
   "kind": "fr",
@@ -2955,14 +2948,7 @@
   "kind": "fr",
   "group": "targeted",
   "id": "fr-2026-19143",
-  "pages": [
-   2
-  ],
-  "matches": {
-   "change": 1,
-   "negation": 0,
-   "scale": 0
-  }
+  "skip": "same text as fr-2026-19173"
  },
  {
   "kind": "fr",
@@ -3120,14 +3106,7 @@
   "kind": "fr",
   "group": "targeted",
   "id": "fr-2026-18830",
-  "pages": [
-   4
-  ],
-  "matches": {
-   "change": 1,
-   "negation": 0,
-   "scale": 0
-  }
+  "skip": "same text as fr-2026-18911"
  },
  {
   "kind": "fr",
@@ -3993,10 +3972,319 @@
  },
  {
   "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17510",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17508",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17500",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17494",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17491",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17490",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17487",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17486",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17481",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17480",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17454",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17445",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17442",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17440",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17437",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17429",
+  "pages": [
+   1
+  ],
+  "matches": {
+   "change": 3,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17428",
+  "skip": "same text as fr-2026-17429"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17426",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17400",
+  "pages": [
+   4
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 1,
+   "scale": 2
+  }
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17391",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17389",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17381",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17378",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17375",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17366",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17354",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17353",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17339",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17338",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17337",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17336",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17335",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17334",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17333",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17299",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17231",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17230",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17228",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17217",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17198",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17154",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17148",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17146",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17145",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17131",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17129",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17120",
+  "skip": "no page matches a group that is still open"
+ },
+ {
+  "kind": "fr",
+  "group": "targeted",
+  "id": "fr-2026-17116",
+  "pages": [
+   1
+  ],
+  "matches": {
+   "change": 1,
+   "negation": 0,
+   "scale": 0
+  }
+ },
+ {
+  "kind": "fr",
   "targeted_matches": {
-   "change": 37,
+   "change": 38,
    "negation": 50,
-   "scale": 58
+   "scale": 60
   }
  }
 ]

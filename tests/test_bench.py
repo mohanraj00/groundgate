@@ -188,6 +188,18 @@ def test_save_rules(served: tuple[int, dict], tmp_path: Path) -> None:
     assert saved["facts"][0]["unit"] == "mg"  # units always come from the field
 
 
+def test_a_nested_section_with_the_same_code_is_read_once() -> None:
+    from fetch import spl_sections
+
+    xml = (
+        b'<document xmlns="urn:hl7-org:v3"><section><code code="34068-7"/><text>Dose 5 mg.</text>'
+        b'<component><section><code code="34068-7"/><text>Adults: 10 mg.</text></section>'
+        b"</component></section></document>"
+    )
+    text = spl_sections(xml, ["34068-7"])
+    assert text.count("Adults: 10 mg.") == 1 and "Dose 5 mg." in text
+
+
 def test_original_document_opens_without_the_token(
     served: tuple[int, dict], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
