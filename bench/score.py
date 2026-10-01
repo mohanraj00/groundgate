@@ -219,6 +219,8 @@ def load_runs(golds: dict[str, Gold]) -> tuple[Runs, dict[tuple[str, int], dict[
             notes = raw.get("harness", {})
             h["discarded"] += notes.get("discarded_for_tool_use", 0)
             h["discarded"] += notes.get("discarded_for_harness", 0)
+            if notes.get("refused"):  # set-2 Claude runs only; v0.1 has none
+                h["refused"] += 1
             try:
                 parse.resolve(raw["output"], suppress_parse_errors=False)
             except Exception:  # LangExtract skipped this chunk
