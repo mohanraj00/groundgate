@@ -4,8 +4,10 @@
         --model "Gemini 3.6 Flash (Medium)" [--buffer 4000]
 
 Each document is extracted with its own field list and descriptions from bench/gold/<id>.json.
-The prompt never sees the gold facts. Results go to bench/runs/<model>/<buffer>/<id>.json; an
-existing file is skipped, so an interrupted run resumes where it stopped.
+The prompt never sees the gold facts. A keyed field (set 2) lists its keys, and the prompt asks for
+the key of each value; documents without keyed fields get the v0.1 prompt byte for byte. Results
+go to bench/runs/<model>/<buffer>/<id>.json; an existing file is skipped, so an interrupted run
+resumes where it stopped.
 
 Providers:
   gemini      LangExtract's native Gemini provider (GEMINI_API_KEY)
@@ -50,7 +52,9 @@ KIND = {
     "fda": "the dosage sections of an FDA drug label",
     "ntsb": "an NTSB aviation accident report",
     "irs": "two pages of an IRS publication",
+    "fr": "a page of a Federal Register final rule",
 }
+IRS_PAGES = {1: "one page of an IRS publication", 3: "three pages of an IRS publication"}
 
 PROMPT = """Extract the fields listed below from {kind}.
 Only extract a field when the text itself states its value. Do not compute, infer, or use
@@ -63,6 +67,11 @@ field. Leave "unit" out for a field that has no unit code.
 
 Fields (name [unit code]: meaning):
 {fields}
+"""
+KEYS_NOTE = """
+A field marked "one per key" can have one value for each key it lists. Give each of its
+extractions a "key" in the attributes: the key of the condition the value belongs to, copied
+exactly from the field's list.
 """
 
 EXAMPLES = {
@@ -132,6 +141,60 @@ EXAMPLES = {
                 lx.data.Extraction(
                     "late_fee_threshold_end", "$900", attributes={"value": "900", "unit": "USD"}
                 ),
+            ],
+        )
+    ],
+}
+
+_SET2_FDA_TEXT = (
+    "2 DOSAGE AND ADMINISTRATION\n\n2.1 Gout\nThe recommended starting dose is 20 mg once "
+    "daily. The maximum recommended dose is 80 mg once daily.\n\n2.2 Psoriasis\nStart at 10 mg "
+    "once daily.\n\n3 DOSAGE FORMS AND STRENGTHS\n\nTablets: 10 mg, 20 mg and 80 mg"
+)
+
+
+def _mg(field: str, value: str, key: str | None = None) -> lx.data.Extraction:
+    attrs = {"value": value, "unit": "mg"} | ({"key": key} if key else {})
+    return lx.data.Extraction(field, f"{value} mg", attributes=attrs)
+
+
+_STRENGTHS = [_mg("strengths", v) for v in ("10", "20", "80")]
+SET2_EXAMPLES = {  # set 2 renames the FDA fields and adds keys and the Federal Register
+    "fda": [
+        lx.data.ExampleData(
+            text=_SET2_FDA_TEXT,
+            extractions=[_mg("starting_dose", "20"), _mg("max_daily_dose", "80"), *_STRENGTHS],
+        )
+    ],
+    "fda keyed": [
+        lx.data.ExampleData(
+            text=_SET2_FDA_TEXT,
+            extractions=[
+                _mg("starting_dose", "20", "Gout"),
+                _mg("max_daily_dose", "80", "Gout"),
+                _mg("starting_dose", "10", "Psoriasis"),
+                *_STRENGTHS,
+            ],
+        )
+    ],
+    "fr": [
+        lx.data.ExampleData(
+            text=(
+                "This final rule raises the small business size standard from $7.5 million to "
+                "$9 million in average annual receipts. About 1,200 firms will qualify."
+            ),
+            extractions=[
+                lx.data.Extraction(
+                    "size_standard_old",
+                    "$7.5 million",
+                    attributes={"value": "7500000", "unit": "USD"},
+                ),
+                lx.data.Extraction(
+                    "size_standard_new",
+                    "$9 million",
+                    attributes={"value": "9000000", "unit": "USD"},
+                ),
+                lx.data.Extraction("firms_qualifying", "1,200", attributes={"value": "1200"}),
             ],
         )
     ],
@@ -298,14 +361,39 @@ class CLIModel(base_model.BaseLanguageModel):
                 yield [lx_types.ScoredOutput(score=1.0, output=out)]
 
 
+def keyed(gold: dict[str, Any]) -> bool:
+    return any(spec["schema"].get("keys") for spec in gold["fields"].values())
+
+
+def kind_text(gold: dict[str, Any]) -> str:
+    """What the text is. Set-2 IRS documents can have one or three pages, not two."""
+    if gold["kind"] == "irs":
+        sources = json.loads((SET / "sources.json").read_text(encoding="utf-8"))["sources"]
+        pages = next(s["select"]["pages"] for s in sources if s["id"] == gold["doc"])
+        return IRS_PAGES.get(len(pages), KIND["irs"])
+    return KIND[gold["kind"]]
+
+
+def field_line(name: str, spec: dict[str, Any]) -> str:
+    unit = spec["schema"]["unit"]
+    head = f"- {name} [{unit}]" if unit else f"- {name}"
+    if keys := spec["schema"].get("keys"):
+        head += " (one per key; keys: " + "; ".join(f'"{k}"' for k in keys) + ")"
+    return f"{head}: {spec['description']}"
+
+
 def prompt_for(gold: dict[str, Any]) -> str:
-    lines = [
-        f"- {name} [{unit}]: {spec['description']}"
-        if (unit := spec["schema"]["unit"])
-        else f"- {name}: {spec['description']}"
-        for name, spec in gold["fields"].items()
-    ]
-    return PROMPT.format(kind=KIND[gold["kind"]], fields="\n".join(lines))
+    lines = [field_line(name, spec) for name, spec in gold["fields"].items()]
+    prompt = PROMPT.format(kind=kind_text(gold), fields="\n".join(lines))
+    return prompt + KEYS_NOTE if keyed(gold) else prompt
+
+
+def examples_for(gold: dict[str, Any]) -> list[lx.data.ExampleData]:
+    if gold["kind"] == "fr":
+        return SET2_EXAMPLES["fr"]
+    if gold["kind"] == "fda" and "starting_dose" in gold["fields"]:  # set 2's FDA field names
+        return SET2_EXAMPLES["fda keyed" if keyed(gold) else "fda"]
+    return EXAMPLES[gold["kind"]]
 
 
 def safe(name: str) -> str:
@@ -349,7 +437,7 @@ def main() -> None:
             result = lx.extract(
                 text_or_documents=text,
                 prompt_description=prompt_for(gold),
-                examples=EXAMPLES[gold["kind"]],
+                examples=examples_for(gold),
                 max_char_buffer=args.buffer,
                 fence_output=False,
                 use_schema_constraints=False,
