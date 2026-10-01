@@ -265,8 +265,8 @@ class CLIModel(base_model.BaseLanguageModel):
             cmd += ["-c", f'model_reasoning_effort="{self.effort}"']
         return [*cmd, "-"]
 
-    def _codex(self, prompt: str) -> tuple[str, int]:
-        """(reply, tool items seen). Raises on a failed call."""
+    def _codex(self, prompt: str) -> tuple[str, int, list[str]]:
+        """(reply, tool items seen, harness messages). Raises on a failed call."""
         proc = subprocess.run(
             self.command(),
             input=AGY_PREFIX + prompt,
@@ -276,6 +276,7 @@ class CLIModel(base_model.BaseLanguageModel):
             check=False,
         )
         reply, tools, error = "", 0, proc.stderr[-300:]
+        messages: list[str] = []
         for line in proc.stdout.splitlines():
             event = json.loads(line) if line.startswith("{") else {}
             item = event.get("item") or {}
@@ -283,22 +284,28 @@ class CLIModel(base_model.BaseLanguageModel):
                 error = str(event.get("error", {}).get("message", ""))[-300:]
             if event.get("type") == "item.completed" and item.get("type") == "agent_message":
                 reply = item.get("text", "")
+            elif event.get("type") == "item.completed" and item.get("type") == "error":
+                # a notice from the harness itself, such as "Skill descriptions were shortened"
+                messages.append(str(item.get("message", ""))[:200])
             elif event.get("type") == "item.completed" and item.get("type") != "reasoning":
                 tools += 1
         if proc.returncode != 0:
             raise RuntimeError(error)
-        return reply, tools
+        return reply, tools, messages
 
     def _one(self, prompt: str) -> tuple[str, dict[str, Any]]:
         notes: dict[str, Any] = {}
         if self.provider == "codex":
             for attempt in range(3):
                 try:
-                    out, tools = self._codex(prompt)
+                    out, tools, messages = self._codex(prompt)
                 except (RuntimeError, subprocess.TimeoutExpired) as e:
                     notes.setdefault("failed_calls", []).append(str(e)[-200:])
                     time.sleep(10 * (attempt + 1))
                     continue
+                for m in messages:
+                    if m not in notes.setdefault("harness_messages", []):
+                        notes["harness_messages"].append(m)
                 if tools:  # the answer may lean on something other than the prompt
                     notes["discarded_for_tool_use"] = notes.get("discarded_for_tool_use", 0) + 1
                     continue
@@ -422,6 +429,12 @@ def main() -> None:
         kw["model_id"] = args.model
     else:
         kw["model"] = CLIModel(args.provider, args.model, args.workers, args.effort)
+    cli = {"agy": "agy", "codex": "codex", "claude-cli": "claude"}.get(args.provider)
+    cli_version = (
+        subprocess.run([cli, "--version"], capture_output=True, text=True).stdout.strip()
+        if cli
+        else None
+    )
     for path in sorted((SET / "gold").glob("*.json")):
         gold = json.loads(path.read_text(encoding="utf-8"))
         doc_id = gold["doc"]
@@ -464,6 +477,7 @@ def main() -> None:
             "document": data_lib.annotated_document_to_dict(result),
         }
         if isinstance(kw.get("model"), CLIModel):
+            record["cli_version"] = cli_version
             if args.provider in ("codex", "claude-cli"):
                 cmd = kw["model"].command()
                 record["harness"] = ["<empty dir>" if a.startswith("/") else a for a in cmd]

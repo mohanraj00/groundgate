@@ -296,6 +296,7 @@ def test_codex_replies_that_used_a_tool_are_counted(monkeypatch: pytest.MonkeyPa
     events = [
         {"type": "item.completed", "item": {"type": "reasoning", "text": "..."}},
         {"type": "item.completed", "item": {"type": "command_execution", "command": "cat x"}},
+        {"type": "item.completed", "item": {"type": "error", "message": "Skill descriptions..."}},
         {
             "type": "item.completed",
             "item": {"type": "agent_message", "text": '{"extractions": []}'},
@@ -304,7 +305,7 @@ def test_codex_replies_that_used_a_tool_are_counted(monkeypatch: pytest.MonkeyPa
     done = subprocess.CompletedProcess([], 0, "\n".join(json.dumps(e) for e in events), "")
     monkeypatch.setattr(propose.subprocess, "run", lambda *a, **k: done)
     model = propose.CLIModel("codex", "m", 1, "low")
-    assert model._codex("prompt") == ('{"extractions": []}', 1)
+    assert model._codex("prompt") == ('{"extractions": []}', 1, ["Skill descriptions..."])
     assert 'model_reasoning_effort="low"' in model.command()
     assert model.command()[model.command().index("-s") + 1] == "read-only"
 
