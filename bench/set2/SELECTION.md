@@ -125,6 +125,13 @@ Fields are drafted per document after spec 0.2 is frozen (#10), under these rule
 - The comparator follows what the field means, not the wording: a limit is `le`, a threshold
   to reach is `ge`, anything else is `eq`.
 
+The targeted fields are capped at what the walk counted. Only sentences holding one of the first
+5 matches of each group count, so a document with many matches does not outweigh the rest.
+
+Control documents are checked only where it matters. NTSB, IRS general and the FDA labels in the
+general group alone are controls. Only their candidates that spec 0.1 and 0.2 decide differently
+are judged (#12). The other documents are checked in full.
+
 ## Feasibility pass
 
 `pick.py --count` ran on 2026-09-30, before the rules were frozen, and reported only counts.
@@ -168,3 +175,7 @@ Each change here is noted on #1.
   taken with the same LOINC code. The texts of apixaban, potassium and lamotrigine lost the
   repeat. The selection did not change: the weight-based counts are the same either way, and
   the v0.1 label texts are byte-identical.
+- #10: the two rules at the end of "Fields" (the cap and the controls) were added after the
+  drafts, to cut checking from 857 items to about 500. The cap dropped 66 draft facts: 58 in
+  IRS Publication 16, 4 in Federal Register rule 17901 and 2 each in Publications 537 and 55-B.
+  Model runs on those four documents that started before the cap were deleted and run again.

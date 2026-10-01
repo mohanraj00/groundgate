@@ -18,7 +18,8 @@ uv run python bench/fetch.py --set bench/set2   # re-download, check the hashes,
 
 A model (Claude) drafted the gold after spec 0.2 was frozen, from the rules in SELECTION.md
 "Fields". The drafts are not ground truth: a person checks every fact in the labeling app, as for
-v0.1, and only checked facts count.
+v0.1, and only checked facts count. Targeted fields are capped at the matches the walk counted,
+and control documents are judged only where spec 0.1 and 0.2 disagree (SELECTION.md "Fields").
 
 ```bash
 uv run python bench/set2/gold/build.py              # write gold files for new drafts only

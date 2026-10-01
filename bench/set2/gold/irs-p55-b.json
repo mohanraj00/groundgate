@@ -68,24 +68,6 @@
    },
    "description": "Income taxes the IRS collected from businesses, before refunds, in FY 2025."
   },
-  "individual_refunds_fy2025": {
-   "schema": {
-    "type": "integer",
-    "unit": null,
-    "comparator": "eq",
-    "minimum": "0"
-   },
-   "description": "Number of refunds the IRS issued to individuals in FY 2025."
-  },
-  "individual_refunds_amount_fy2025": {
-   "schema": {
-    "type": "integer",
-    "unit": "USD",
-    "comparator": "eq",
-    "minimum": "0"
-   },
-   "description": "Total amount of refunds the IRS issued to individuals in FY 2025."
-  },
   "irs_budget_fy2025": {
    "schema": {
     "type": "integer",
@@ -119,7 +101,7 @@
      "end": 5275
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -136,7 +118,7 @@
      "end": 7124
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -149,7 +131,7 @@
      "end": 1994
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -162,7 +144,7 @@
      "end": 5361
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -175,7 +157,7 @@
      "end": 5410
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -188,7 +170,7 @@
      "end": 5519
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -201,39 +183,17 @@
      "end": 5599
     }
    ],
-   "status": "draft"
-  },
-  {
-   "id": "f8",
-   "field": "individual_refunds_fy2025",
-   "value": "116900000",
-   "unit": null,
-   "evidence": [
-    {
-     "start": 7586,
-     "end": 7599
-    }
-   ],
-   "status": "draft"
-  },
-  {
-   "id": "f9",
-   "field": "individual_refunds_amount_fy2025",
-   "value": "516400000000",
-   "unit": "USD",
-   "evidence": [
-    {
-     "start": 7648,
-     "end": 7662
-    }
-   ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "irs_budget_fy2025": "draft"
+  "irs_budget_fy2025": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-30T19:48:30-0700"
+ },
+ "seconds_spent": 109
 }

@@ -65,11 +65,20 @@ def unkeyed(gold: dict[str, Any], fact: dict[str, Any]) -> bool:
     return bool(keys) and fact["status"] != "rejected" and fact.get("key") is None
 
 
+def control(gold: dict[str, Any]) -> bool:
+    """A set-2 control document: NTSB, IRS general or a general-only FDA label. Only its
+    candidates that spec 0.1 and 0.2 decide differently are judged (#12), so it is not checked
+    in full."""
+    groups = gold.get("groups")
+    return bool(groups) and set(groups) <= {"general", "control"}
+
+
 def summary(gold: dict[str, Any]) -> dict[str, Any]:
     facts = gold["facts"]
     return {
         "id": gold["doc"],
         "kind": gold["kind"],
+        "control": control(gold),
         "facts": len(facts),
         "open": sum(f["status"] == "draft" or unkeyed(gold, f) for f in facts)
         + sum(s == "draft" for s in gold["absent"].values()),
@@ -155,6 +164,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         if self.path == "/api/docs":
             docs = [summary(json.loads((GOLD / f"{d}.json").read_text())) for d in doc_ids()]
+            docs.sort(key=lambda d: d["control"])  # controls last; stable, so ids stay sorted
             self._json(HTTPStatus.OK, docs)
         elif self.path.startswith("/api/doc/") and (doc_id := self._doc()):
             gold = json.loads((GOLD / f"{doc_id}.json").read_text(encoding="utf-8"))

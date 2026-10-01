@@ -361,3 +361,28 @@ def test_prompts_ask_for_keys_only_on_keyed_documents(monkeypatch: pytest.Monkey
     }
     irs = json.loads((BENCH / "set2" / "gold" / "irs-p5.json").read_text(encoding="utf-8"))
     assert propose.prompt_for(irs).startswith("Extract the fields listed below from one page")
+
+
+def test_targeted_fields_beyond_the_counted_matches_are_dropped() -> None:
+    sys.path.insert(0, str(BENCH / "set2" / "gold"))
+    import build
+
+    text = " ".join(f"Item {i} cost ${i}0 million." for i in range(1, 8)) + "\nFootnote: $99."
+    raw = text.encode()
+
+    def fact(name: str, quote: str) -> dict:
+        start = raw.index(quote.encode())
+        return {"field": name, "evidence": [{"start": start, "end": start + len(quote)}]}
+
+    names = [f"cost_{i}" for i in range(1, 8)]
+    gold = {
+        "kind": "irs",
+        "groups": ["scale"],
+        "fields": {n: {} for n in [*names, "footnote", "absent_one"]},
+        "facts": [fact(n, f"${i}0 million") for i, n in enumerate(names, 1)]
+        + [fact("footnote", "$99")],
+        "absent": {"absent_one": "draft"},
+        "excluded": {},
+    }
+    assert build.apply_cap(gold, text) == 2
+    assert set(gold["fields"]) == {*names[:5], "footnote", "absent_one"}

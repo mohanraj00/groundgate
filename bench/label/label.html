@@ -134,11 +134,11 @@ async function loadList(select) {
   for (const d of docs) {
     const o = document.createElement("option");
     o.value = d.id;
-    o.textContent = `${d.checked ? "✓" : d.open ? "•" : "○"} ${d.id} (${d.facts} facts${d.open ? `, ${d.open} open` : ""})`;
+    o.textContent = `${d.checked ? "✓" : d.open ? "•" : "○"} ${d.control ? "control · " : ""}${d.id} (${d.facts} facts${d.open ? `, ${d.open} open` : ""})`;
     pick.append(o); if (d.checked) checked++;
   }
   $("#progress").textContent = `${checked} of ${docs.length} checked`;
-  const first = select || (docs.find((d) => !d.checked) || docs[0]).id;
+  const first = select || (docs.find((d) => !d.checked && !d.control) || docs[0]).id;
   pick.value = first;
   return first;
 }
