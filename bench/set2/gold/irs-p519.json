@@ -1,0 +1,157 @@
+{
+ "doc": "irs-p519",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "residency_start_excluded_days_max": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum total days of actual presence in the United States that can be excluded in determining the residency starting date."
+  },
+  "residency_termination_excluded_days_max": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum total days of actual presence in the United States that can be excluded in determining the residency termination date (de minimis presence)."
+  },
+  "foreign_employer_services_max_days": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "For pay from a foreign employer not to be U.S. source income, the maximum total days the nonresident alien is temporarily present in the United States during the tax year."
+  },
+  "foreign_employer_services_max_pay": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "For pay from a foreign employer not to be U.S. source income, the maximum pay for the services performed in the United States."
+  },
+  "expatriation_net_worth_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Net worth at or above which an expatriate is a covered expatriate for the expatriation tax."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "residency_start_excluded_days_max",
+   "value": "10",
+   "unit": "days",
+   "evidence": [
+    {
+     "start": 310,
+     "end": 317
+    },
+    {
+     "start": 470,
+     "end": 472
+    },
+    {
+     "start": 642,
+     "end": 649
+    },
+    {
+     "start": 1314,
+     "end": 1321
+    },
+    {
+     "start": 1401,
+     "end": 1408
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "residency_termination_excluded_days_max",
+   "value": "10",
+   "unit": "days",
+   "evidence": [
+    {
+     "start": 8739,
+     "end": 8746
+    },
+    {
+     "start": 8880,
+     "end": 8887
+    },
+    {
+     "start": 9038,
+     "end": 9040
+    },
+    {
+     "start": 9210,
+     "end": 9217
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "foreign_employer_services_max_days",
+   "value": "90",
+   "unit": "days",
+   "evidence": [
+    {
+     "start": 14425,
+     "end": 14432
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "foreign_employer_services_max_pay",
+   "value": "3000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 14503,
+     "end": 14509
+    },
+    {
+     "start": 14738,
+     "end": 14744
+    },
+    {
+     "start": 14858,
+     "end": 14864
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "expatriation_net_worth_threshold": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

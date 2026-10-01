@@ -1,0 +1,239 @@
+{
+ "doc": "irs-p55-b",
+ "kind": "irs",
+ "groups": [
+  "scale"
+ ],
+ "fields": {
+  "gross_collections_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Gross taxes (revenue) the IRS collected in FY 2025."
+  },
+  "returns_processed_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of tax returns and other forms (supplemental documents) the IRS processed in FY 2025."
+  },
+  "individual_returns_processed_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of individual income tax returns the IRS processed in FY 2025."
+  },
+  "refunds_issued_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of refunds (all types) the IRS issued in FY 2025."
+  },
+  "refunds_amount_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total amount of refunds (all types) the IRS issued in FY 2025."
+  },
+  "individual_withholding_and_payments_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Individual income tax withheld and tax payments combined, before refunds, in FY 2025."
+  },
+  "business_income_taxes_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Income taxes the IRS collected from businesses, before refunds, in FY 2025."
+  },
+  "individual_refunds_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of refunds the IRS issued to individuals in FY 2025."
+  },
+  "individual_refunds_amount_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total amount of refunds the IRS issued to individuals in FY 2025."
+  },
+  "irs_budget_fy2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total IRS budget (appropriations) for FY 2025."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "gross_collections_fy2025",
+   "value": "5300000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1872,
+     "end": 1885
+    },
+    {
+     "start": 5262,
+     "end": 5275
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "returns_processed_fy2025",
+   "value": "271400000",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 1921,
+     "end": 1934
+    },
+    {
+     "start": 7111,
+     "end": 7124
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "individual_returns_processed_fy2025",
+   "value": "162800000",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 1981,
+     "end": 1994
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "refunds_issued_fy2025",
+   "value": "120600000",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 5348,
+     "end": 5361
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "refunds_amount_fy2025",
+   "value": "638800000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5396,
+     "end": 5410
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "individual_withholding_and_payments_fy2025",
+   "value": "2900000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5506,
+     "end": 5519
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "business_income_taxes_fy2025",
+   "value": "486400000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5585,
+     "end": 5599
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "individual_refunds_fy2025",
+   "value": "116900000",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 7586,
+     "end": 7599
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "individual_refunds_amount_fy2025",
+   "value": "516400000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7648,
+     "end": 7662
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "irs_budget_fy2025": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

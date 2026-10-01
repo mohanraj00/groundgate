@@ -1,0 +1,202 @@
+{
+ "doc": "fr-2026-20036",
+ "kind": "fr",
+ "groups": [
+  "change",
+  "negation"
+ ],
+ "fields": {
+  "primary_credit_rate_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "pp",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Size of the increase in the primary credit rate the Board approved on September 16, 2026, in percentage points."
+  },
+  "primary_credit_rate_old": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Primary credit rate before the September 2026 increase."
+  },
+  "primary_credit_rate_new": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Primary credit rate after the September 2026 increase."
+  },
+  "secondary_credit_rate_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "pp",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Size of the increase in the secondary credit rate that followed the primary credit rate action, in percentage points."
+  },
+  "secondary_credit_rate_old": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Secondary credit rate before the September 2026 increase."
+  },
+  "secondary_credit_rate_new": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Secondary credit rate after the September 2026 increase."
+  },
+  "apa_min_publication_days": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Minimum number of days before its effective date that the Administrative Procedure Act generally requires a final rule to be published."
+  },
+  "seasonal_credit_rate": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Seasonal credit rate at the Federal Reserve Banks after the September 2026 action."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "pp": {
+   "suffix": [
+    "percentage point",
+    "percentage points"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "primary_credit_rate_increase",
+   "value": "0.25",
+   "unit": "pp",
+   "evidence": [
+    {
+     "start": 2327,
+     "end": 2348
+    },
+    {
+     "start": 2888,
+     "end": 2909
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "primary_credit_rate_old",
+   "value": "3.75",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2434,
+     "end": 2446
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "primary_credit_rate_new",
+   "value": "4.00",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2450,
+     "end": 2462
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "secondary_credit_rate_increase",
+   "value": "0.25",
+   "unit": "pp",
+   "evidence": [
+    {
+     "start": 2665,
+     "end": 2687
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "secondary_credit_rate_old",
+   "value": "4.25",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2795,
+     "end": 2807
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "secondary_credit_rate_new",
+   "value": "4.50",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2811,
+     "end": 2823
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "apa_min_publication_days",
+   "value": "30",
+   "unit": "days",
+   "evidence": [
+    {
+     "start": 3780,
+     "end": 3787
+    },
+    {
+     "start": 4070,
+     "end": 4077
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "seasonal_credit_rate": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

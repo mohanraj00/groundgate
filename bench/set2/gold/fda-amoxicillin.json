@@ -1,0 +1,200 @@
+{
+ "doc": "fda-amoxicillin",
+ "kind": "fda",
+ "groups": [
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. For the first indication in section 2."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. For the first indication in section 2."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg/day",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended dosage for pediatric patients aged 3 months and older weighing less than 40 kg with mild or moderate ear/nose/throat, skin/skin structure or genitourinary tract infections, given in divided doses every 12 hours."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg/day": {
+   "suffix": [
+    "mg/kg/day"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "value": "750",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 40,
+     "end": 58
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "strengths",
+   "value": "125",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7051,
+     "end": 7057
+    },
+    {
+     "start": 7983,
+     "end": 7989
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "strengths",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7217,
+     "end": 7223
+    },
+    {
+     "start": 7991,
+     "end": 7997
+    },
+    {
+     "start": 7426,
+     "end": 7432
+    },
+    {
+     "start": 8013,
+     "end": 8019
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "strengths",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 6020,
+     "end": 6026
+    },
+    {
+     "start": 7866,
+     "end": 7872
+    },
+    {
+     "start": 7652,
+     "end": 7658
+    },
+    {
+     "start": 8021,
+     "end": 8027
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "strengths",
+   "value": "875",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 6240,
+     "end": 6246
+    },
+    {
+     "start": 7874,
+     "end": 7880
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "weight_based_dose",
+   "value": "25",
+   "unit": "mg/kg/day",
+   "evidence": [
+    {
+     "start": 1993,
+     "end": 2005
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "pediatric_min_age": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

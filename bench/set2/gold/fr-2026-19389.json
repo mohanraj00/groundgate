@@ -1,0 +1,154 @@
+{
+ "doc": "fr-2026-19389",
+ "kind": "fr",
+ "groups": [
+  "change",
+  "negation",
+  "scale"
+ ],
+ "fields": {
+  "industry_seats_old": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of industry seats on the Softwood Lumber Board before this action."
+  },
+  "industry_seats_new": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of industry seats on the Softwood Lumber Board after this action."
+  },
+  "board_members_total": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total number of Softwood Lumber Board members after this action."
+  },
+  "sba_small_firm_receipts": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "SBA annual receipts limit for a small firm in Support Activities for Forestry."
+  },
+  "small_entity_max_volume": {
+   "schema": {
+    "type": "integer",
+    "unit": "board_feet",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum softwood lumber volume per year, in board feet, a domestic manufacturer may ship to be considered a small entity for the RFA."
+  },
+  "small_manufacturer_count": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of domestic softwood lumber manufacturers classified as small entities."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "board_feet": {
+   "suffix": [
+    "board feet"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "industry_seats_old",
+   "value": "14",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 3280,
+     "end": 3282
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "industry_seats_new",
+   "value": "15",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 3286,
+     "end": 3288
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "board_members_total",
+   "value": "16",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 3305,
+     "end": 3307
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "sba_small_firm_receipts",
+   "value": "11500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4109,
+     "end": 4122
+    },
+    {
+     "start": 4292,
+     "end": 4305
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "small_entity_max_volume",
+   "value": "22000000",
+   "unit": "board_feet",
+   "evidence": [
+    {
+     "start": 4455,
+     "end": 4476
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "small_manufacturer_count": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

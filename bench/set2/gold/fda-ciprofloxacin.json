@@ -1,0 +1,420 @@
+{
+ "doc": "fda-ciprofloxacin",
+ "kind": "fda",
+ "groups": [
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Skin and Skin Structure Infections",
+     "Bone and Joint Infections",
+     "Complicated Intra-Abdominal Infections",
+     "Infectious Diarrhea",
+     "Typhoid Fever (Enteric Fever)",
+     "Uncomplicated Cervial and Urethral Gonorrhea",
+     "Inhalational Anthrax (Post-Exposure)",
+     "Plague",
+     "Chronic Bacterial Prostatitis",
+     "Lower Respiratory Tract Infections",
+     "Urinary Tract Infections",
+     "Acute Sinusitis",
+     "Usage"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Skin and Skin Structure Infections",
+     "Bone and Joint Infections",
+     "Complicated Intra-Abdominal Infections",
+     "Infectious Diarrhea",
+     "Typhoid Fever (Enteric Fever)",
+     "Uncomplicated Cervial and Urethral Gonorrhea",
+     "Inhalational Anthrax (Post-Exposure)",
+     "Plague",
+     "Chronic Bacterial Prostatitis",
+     "Lower Respiratory Tract Infections",
+     "Urinary Tract Infections",
+     "Acute Sinusitis",
+     "Usage"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pediatric oral dose per administration for inhalational anthrax (post-exposure), in mg/kg."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg": {
+   "suffix": [
+    "mg/kg"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Skin and Skin Structure Infections",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 198,
+     "end": 204
+    },
+    {
+     "start": 2233,
+     "end": 2239
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Bone and Joint Infections",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 258,
+     "end": 264
+    },
+    {
+     "start": 2293,
+     "end": 2299
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Complicated Intra-Abdominal Infections",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 331,
+     "end": 337
+    },
+    {
+     "start": 2406,
+     "end": 2412
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "starting_dose",
+   "key": "Infectious Diarrhea",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 386,
+     "end": 392
+    },
+    {
+     "start": 2460,
+     "end": 2466
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "starting_dose",
+   "key": "Typhoid Fever (Enteric Fever)",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 434,
+     "end": 440
+    },
+    {
+     "start": 2508,
+     "end": 2514
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "starting_dose",
+   "key": "Uncomplicated Cervial and Urethral Gonorrhea",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 488,
+     "end": 494
+    },
+    {
+     "start": 2596,
+     "end": 2602
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "starting_dose",
+   "key": "Inhalational Anthrax (Post-Exposure)",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 556,
+     "end": 562
+    },
+    {
+     "start": 2749,
+     "end": 2755
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "starting_dose",
+   "key": "Plague",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 593,
+     "end": 599
+    },
+    {
+     "start": 2787,
+     "end": 2793
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "starting_dose",
+   "key": "Chronic Bacterial Prostatitis",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 663,
+     "end": 669
+    },
+    {
+     "start": 2857,
+     "end": 2863
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "starting_dose",
+   "key": "Lower Respiratory Tract Infections",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 717,
+     "end": 723
+    },
+    {
+     "start": 2922,
+     "end": 2928
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "starting_dose",
+   "key": "Urinary Tract Infections",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 776,
+     "end": 782
+    },
+    {
+     "start": 2992,
+     "end": 2998
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "starting_dose",
+   "key": "Acute Sinusitis",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 895,
+     "end": 901
+    },
+    {
+     "start": 3111,
+     "end": 3117
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f13",
+   "field": "pediatric_min_age",
+   "value": "1",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 1264,
+     "end": 1265
+    },
+    {
+     "start": 4055,
+     "end": 4056
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f14",
+   "field": "strengths",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7899,
+     "end": 7905
+    },
+    {
+     "start": 7965,
+     "end": 7971
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f15",
+   "field": "strengths",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7907,
+     "end": 7913
+    },
+    {
+     "start": 8108,
+     "end": 8114
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f16",
+   "field": "strengths",
+   "value": "750",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7918,
+     "end": 7924
+    },
+    {
+     "start": 8260,
+     "end": 8266
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f17",
+   "field": "weight_based_dose",
+   "value": "15",
+   "unit": "mg/kg",
+   "evidence": [
+    {
+     "start": 1393,
+     "end": 1401
+    },
+    {
+     "start": 4514,
+     "end": 4522
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

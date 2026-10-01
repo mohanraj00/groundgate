@@ -1,0 +1,87 @@
+{
+ "doc": "fr-2026-18776",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "min_recovery_altitude_proposed": {
+   "schema": {
+    "type": "integer",
+    "unit": "ft",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Minimum recovery altitude for stalls and slow flight tasks that the NPRM proposed for the sport pilot PTS for Airplane, Gyroplane and Glider categories (FAA-S-8081-29B), in feet AGL."
+  },
+  "min_recovery_altitude_final": {
+   "schema": {
+    "type": "integer",
+    "unit": "ft",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Minimum recovery altitude for stalls and slow flight tasks adopted in this final rule for the sport pilot PTS for Airplane, Gyroplane and Glider categories (FAA-S-8081-29B), in feet AGL."
+  },
+  "max_stall_speed_knots": {
+   "schema": {
+    "type": "integer",
+    "unit": "knots",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum stall speed, in knots, of aircraft a sport pilot may operate under the performance limits in section 61.316."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "ft": {
+   "suffix": [
+    "feet"
+   ]
+  },
+  "knots": {
+   "suffix": [
+    "knots"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "min_recovery_altitude_proposed",
+   "value": "1000",
+   "unit": "ft",
+   "evidence": [
+    {
+     "start": 4001,
+     "end": 4006
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "min_recovery_altitude_final",
+   "value": "1500",
+   "unit": "ft",
+   "evidence": [
+    {
+     "start": 4010,
+     "end": 4020
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_stall_speed_knots": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,196 @@
+{
+ "doc": "fda-valsartan",
+ "kind": "fda",
+ "groups": [
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. For the first indication in section 2."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. For the first indication in section 2."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Usual recommended starting dose for pediatric hypertension in patients 1 to 16 years of age, in mg/kg once daily."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg": {
+   "suffix": [
+    "mg/kg"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "value": "80",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1702,
+     "end": 1707
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "max_daily_dose",
+   "value": "320",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1928,
+     "end": 1934
+    },
+    {
+     "start": 2217,
+     "end": 2223
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "pediatric_min_age",
+   "value": "1",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 2433,
+     "end": 2434
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "strengths",
+   "value": "40",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 4300,
+     "end": 4305
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "strengths",
+   "value": "80",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 4431,
+     "end": 4436
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "strengths",
+   "value": "160",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 4573,
+     "end": 4579
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "320",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 4719,
+     "end": 4725
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "weight_based_dose",
+   "value": "1",
+   "unit": "mg/kg",
+   "evidence": [
+    {
+     "start": 2494,
+     "end": 2501
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

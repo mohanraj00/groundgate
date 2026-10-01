@@ -1,0 +1,121 @@
+{
+ "doc": "irs-p514",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "redetermination_no_form_1116_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum creditable foreign taxes paid or accrued during the tax year as a result of a foreign tax redetermination for which you need not attach Form 1116, for filers other than married filing jointly."
+  },
+  "redetermination_no_form_1116_limit_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum creditable foreign taxes paid or accrued during the tax year as a result of a foreign tax redetermination for which you need not attach Form 1116, if married filing a joint return."
+  },
+  "failure_to_notify_penalty_max_percent": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum failure-to-notify penalty for not notifying the IRS of a foreign tax redetermination, as a percent of the tax due."
+  },
+  "sanction_waiver_report_notice_days": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Minimum number of days before a sanctioned-country waiver is granted by which the President must report the intention to grant it to Congress."
+  },
+  "foreign_earned_income_exclusion_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum foreign earned income exclusion for the tax year."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "redetermination_no_form_1116_limit",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1970,
+     "end": 1974
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "redetermination_no_form_1116_limit_joint",
+   "value": "600",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1976,
+     "end": 1980
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "failure_to_notify_penalty_max_percent",
+   "value": "25",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 8291,
+     "end": 8294
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "sanction_waiver_report_notice_days",
+   "value": "30",
+   "unit": "days",
+   "evidence": [
+    {
+     "start": 12272,
+     "end": 12279
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "foreign_earned_income_exclusion_limit": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,259 @@
+{
+ "doc": "irs-p1321",
+ "kind": "irs",
+ "groups": [
+  "general"
+ ],
+ "fields": {
+  "std_deduction_single_under_65": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Worksheet line 1 standard deduction, single, under 65."
+  },
+  "std_deduction_single_65_or_older": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Worksheet line 1 standard deduction, single, 65 or older."
+  },
+  "std_deduction_joint_both_under_65": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Worksheet line 1 standard deduction, married filing jointly, both under 65."
+  },
+  "std_deduction_joint_one_65_or_older": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Worksheet line 1 standard deduction, married filing jointly, one 65 or older."
+  },
+  "std_deduction_joint_both_65_or_older": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Worksheet line 1 standard deduction, married filing jointly, both 65 or older."
+  },
+  "std_deduction_hoh_under_65": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Worksheet line 1 standard deduction, head of household, under 65."
+  },
+  "std_deduction_hoh_65_or_older": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Worksheet line 1 standard deduction, head of household, 65 or older."
+  },
+  "std_deduction_qss_under_65": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Worksheet line 1 standard deduction, qualifying surviving spouse, under 65."
+  },
+  "std_deduction_qss_65_or_older": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Worksheet line 1 standard deduction, qualifying surviving spouse, 65 or older."
+  },
+  "filing_threshold_mfs": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Gross income subject to U.S. tax at or above which a bona fide resident of Puerto Rico married filing separately must file a return."
+  },
+  "presence_test_days": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Days in Puerto Rico needed to meet the presence test."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "days": {
+   "suffix": [
+    "days",
+    "day"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "std_deduction_single_under_65",
+   "value": "15750",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2532,
+     "end": 2539
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "std_deduction_single_65_or_older",
+   "value": "17750",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2579,
+     "end": 2586
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "std_deduction_joint_both_under_65",
+   "value": "31500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2649,
+     "end": 2656
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "std_deduction_joint_one_65_or_older",
+   "value": "33100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2692,
+     "end": 2699
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "std_deduction_joint_both_65_or_older",
+   "value": "34700",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2734,
+     "end": 2741
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "std_deduction_hoh_under_65",
+   "value": "23625",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2785,
+     "end": 2792
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "std_deduction_hoh_65_or_older",
+   "value": "25625",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2832,
+     "end": 2839
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "std_deduction_qss_under_65",
+   "value": "31500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2902,
+     "end": 2909
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "std_deduction_qss_65_or_older",
+   "value": "33100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2949,
+     "end": 2956
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "filing_threshold_mfs",
+   "value": "5",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4119,
+     "end": 4121
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "presence_test_days": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

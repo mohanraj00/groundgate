@@ -1,0 +1,135 @@
+{
+ "doc": "fr-2026-17645",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "initial_period_limit_low_lb": {
+   "schema": {
+    "type": "integer",
+    "unit": "lb",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Lowest fishing period limit (vessel catch limit) in the initial 2026 Area 2A fishing periods (June 23-25 and July 7-9), across vessel size classes, in pounds."
+  },
+  "initial_period_limit_high_lb": {
+   "schema": {
+    "type": "integer",
+    "unit": "lb",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Highest fishing period limit (vessel catch limit) in the initial 2026 Area 2A fishing periods (June 23-25 and July 7-9), across vessel size classes, in pounds."
+  },
+  "initial_period_limit_low_mt": {
+   "schema": {
+    "type": "number",
+    "unit": "mt",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Lowest fishing period limit (vessel catch limit) in the initial 2026 Area 2A fishing periods (June 23-25 and July 7-9), across vessel size classes, in metric tons."
+  },
+  "initial_period_limit_high_mt": {
+   "schema": {
+    "type": "number",
+    "unit": "mt",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Highest fishing period limit (vessel catch limit) in the initial 2026 Area 2A fishing periods (June 23-25 and July 7-9), across vessel size classes, in metric tons."
+  },
+  "participating_vessels_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of vessels that participated in the 2026 Area 2A non-Tribal directed commercial Pacific halibut fishery."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "lb": {
+   "suffix": [
+    "lb",
+    "-lb",
+    "pounds"
+   ]
+  },
+  "mt": {
+   "suffix": [
+    "mt",
+    "-mt",
+    "metric tons"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "initial_period_limit_low_lb",
+   "value": "2000",
+   "unit": "lb",
+   "evidence": [
+    {
+     "start": 6488,
+     "end": 6493
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "initial_period_limit_high_lb",
+   "value": "5000",
+   "unit": "lb",
+   "evidence": [
+    {
+     "start": 6497,
+     "end": 6505
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "initial_period_limit_low_mt",
+   "value": "0.907",
+   "unit": "mt",
+   "evidence": [
+    {
+     "start": 6507,
+     "end": 6512
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "initial_period_limit_high_mt",
+   "value": "2.268",
+   "unit": "mt",
+   "evidence": [
+    {
+     "start": 6516,
+     "end": 6524
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "participating_vessels_2026": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

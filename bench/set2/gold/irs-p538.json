@@ -1,0 +1,191 @@
+{
+ "doc": "irs-p538",
+ "kind": "irs",
+ "groups": [
+  "scale"
+ ],
+ "fields": {
+  "cash_method_gross_receipts_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Gross receipts test for a corporation or partnership to use the cash method: maximum average annual gross receipts."
+  },
+  "cash_method_gross_receipts_years": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Gross receipts test for a corporation or partnership to use the cash method: number of prior tax years averaged."
+  },
+  "small_business_taxpayer_gross_receipts_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Small business taxpayer (inventories): maximum average annual gross receipts."
+  },
+  "small_business_taxpayer_gross_receipts_years": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Small business taxpayer (inventories): number of prior tax years in the period used to figure average annual gross receipts."
+  },
+  "simplified_lifo_gross_receipts_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Eligible small business for the simplified dollar-value LIFO method: maximum average annual gross receipts."
+  },
+  "simplified_lifo_gross_receipts_years": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Eligible small business for the simplified dollar-value LIFO method: number of preceding tax years averaged."
+  },
+  "de_minimis_safe_harbor_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "De minimis safe harbor limit per invoice or item for taxpayers without an applicable financial statement."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "-year",
+    "prior tax years",
+    "preceding tax years",
+    "tax-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "cash_method_gross_receipts_limit",
+   "value": "26000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2427,
+     "end": 2438
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "cash_method_gross_receipts_years",
+   "value": "3",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 2404,
+     "end": 2421
+    },
+    {
+     "start": 2570,
+     "end": 2587
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "small_business_taxpayer_gross_receipts_limit",
+   "value": "26000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7677,
+     "end": 7688
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "small_business_taxpayer_gross_receipts_years",
+   "value": "3",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 7729,
+     "end": 7746
+    },
+    {
+     "start": 7872,
+     "end": 7882
+    },
+    {
+     "start": 8086,
+     "end": 8096
+    },
+    {
+     "start": 8218,
+     "end": 8228
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "simplified_lifo_gross_receipts_limit",
+   "value": "5000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 12615,
+     "end": 12625
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "simplified_lifo_gross_receipts_years",
+   "value": "3",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 12642,
+     "end": 12663
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "de_minimis_safe_harbor_limit": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

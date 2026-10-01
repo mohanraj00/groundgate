@@ -1,0 +1,232 @@
+{
+ "doc": "fda-lamotrigine",
+ "kind": "fda",
+ "groups": [
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Epilepsy",
+     "Bipolar Disorder"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Epilepsy",
+     "Bipolar Disorder"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg/day",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Daily dose in weeks 1 and 2 of adjunctive epilepsy therapy for patients aged 2 to 12 years taking valproate, in mg/kg/day."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg/day": {
+   "suffix": [
+    "mg/kg/day"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Epilepsy",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 12842,
+     "end": 12847
+    },
+    {
+     "start": 12864,
+     "end": 12869
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Bipolar Disorder",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 23831,
+     "end": 23836
+    },
+    {
+     "start": 23852,
+     "end": 23857
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "max_daily_dose",
+   "key": "Bipolar Disorder",
+   "value": "200",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 22196,
+     "end": 22202
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "pediatric_min_age",
+   "value": "2",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 14297,
+     "end": 14298
+    },
+    {
+     "start": 14988,
+     "end": 14989
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "strengths",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 26592,
+     "end": 26597
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "strengths",
+   "value": "100",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 26599,
+     "end": 26605
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "150",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 26607,
+     "end": 26613
+    },
+    {
+     "start": 26660,
+     "end": 26666
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "strengths",
+   "value": "200",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 26619,
+     "end": 26625
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "weight_based_dose",
+   "value": "0.15",
+   "unit": "mg/kg/day",
+   "evidence": [
+    {
+     "start": 15260,
+     "end": 15274
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

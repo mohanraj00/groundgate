@@ -1,0 +1,100 @@
+{
+ "doc": "fr-2026-17636",
+ "kind": "fr",
+ "groups": [
+  "change",
+  "scale"
+ ],
+ "fields": {
+  "application_fee_old": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Title XI program application fee before this rule."
+  },
+  "application_fee_new": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Title XI program application fee under this rule."
+  },
+  "umra_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Annual expenditure threshold (as adjusted for inflation in 2025) at which the Unfunded Mandates Reform Act requires agencies to act."
+  },
+  "expedited_application_fee": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Fee for the expedited application approval process in the Title XI program."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "application_fee_old",
+   "value": "5000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 998,
+     "end": 1004
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "application_fee_new",
+   "value": "1000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1008,
+     "end": 1014
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "umra_threshold",
+   "value": "206000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4150,
+     "end": 4162
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "expedited_application_fee": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

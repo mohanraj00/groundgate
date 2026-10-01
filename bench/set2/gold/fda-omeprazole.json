@@ -1,0 +1,320 @@
+{
+ "doc": "fda-omeprazole",
+ "kind": "fda",
+ "groups": [
+  "general",
+  "keyed"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Treatment of Active Duodenal Ulcer",
+     "Helicobacter pylori Eradication to Reduce the Risk of Duodenal Ulcer Recurrence",
+     "Treatment of Active Benign Gastric Ulcer",
+     "Treatment of Symptomatic Gastroesophageal Reflux Disease (GERD)",
+     "Treatment of Erosive Esophagitis (EE) Due to Acid-Mediated GERD",
+     "Maintenance of Healing of EE Due to Acid-Mediated GERD",
+     "Pathological Hypersecretory Conditions"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Treatment of Active Duodenal Ulcer",
+     "Helicobacter pylori Eradication to Reduce the Risk of Duodenal Ulcer Recurrence",
+     "Treatment of Active Benign Gastric Ulcer",
+     "Treatment of Symptomatic Gastroesophageal Reflux Disease (GERD)",
+     "Treatment of Erosive Esophagitis (EE) Due to Acid-Mediated GERD",
+     "Maintenance of Healing of EE Due to Acid-Mediated GERD",
+     "Pathological Hypersecretory Conditions"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Treatment of Active Duodenal Ulcer",
+   "value": "20",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 123,
+     "end": 128
+    },
+    {
+     "start": 2085,
+     "end": 2090
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Helicobacter pylori Eradication to Reduce the Risk of Duodenal Ulcer Recurrence",
+   "value": "20",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 308,
+     "end": 313
+    },
+    {
+     "start": 2222,
+     "end": 2227
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Treatment of Active Benign Gastric Ulcer",
+   "value": "40",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 554,
+     "end": 559
+    },
+    {
+     "start": 2784,
+     "end": 2789
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "starting_dose",
+   "key": "Treatment of Symptomatic Gastroesophageal Reflux Disease (GERD)",
+   "value": "20",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 613,
+     "end": 618
+    },
+    {
+     "start": 2847,
+     "end": 2852
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "starting_dose",
+   "key": "Treatment of Erosive Esophagitis (EE) Due to Acid-Mediated GERD",
+   "value": "20",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 795,
+     "end": 800
+    },
+    {
+     "start": 2923,
+     "end": 2928
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "starting_dose",
+   "key": "Maintenance of Healing of EE Due to Acid-Mediated GERD",
+   "value": "20",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1005,
+     "end": 1010
+    },
+    {
+     "start": 3014,
+     "end": 3019
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "starting_dose",
+   "key": "Pathological Hypersecretory Conditions",
+   "value": "60",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1200,
+     "end": 1205
+    },
+    {
+     "start": 3144,
+     "end": 3149
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "pediatric_min_age",
+   "value": "2",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 733,
+     "end": 740
+    },
+    {
+     "start": 917,
+     "end": 924
+    },
+    {
+     "start": 1111,
+     "end": 1118
+    },
+    {
+     "start": 4550,
+     "end": 4551
+    },
+    {
+     "start": 4695,
+     "end": 4696
+    },
+    {
+     "start": 4854,
+     "end": 4855
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "hepatic_starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1674,
+     "end": 1679
+    },
+    {
+     "start": 3940,
+     "end": 3945
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "strengths",
+   "value": "10",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 6587,
+     "end": 6592
+    },
+    {
+     "start": 7436,
+     "end": 7441
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "strengths",
+   "value": "20",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 6866,
+     "end": 6871
+    },
+    {
+     "start": 7443,
+     "end": 7448
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "strengths",
+   "value": "40",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 7156,
+     "end": 7161
+    },
+    {
+     "start": 7453,
+     "end": 7458
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,177 @@
+{
+ "doc": "fda-spironolactone",
+ "kind": "fda",
+ "groups": [
+  "keyed"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Heart Failure",
+     "Hypertension",
+     "Edema Associated with Hepatic Cirrhosis or Nephrotic Syndrome",
+     "Primary Hyperaldosteronism"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Heart Failure",
+     "Hypertension",
+     "Edema Associated with Hepatic Cirrhosis or Nephrotic Syndrome",
+     "Primary Hyperaldosteronism"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Heart Failure",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 66,
+     "end": 71
+    },
+    {
+     "start": 848,
+     "end": 853
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Hypertension",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 127,
+     "end": 142
+    },
+    {
+     "start": 1403,
+     "end": 1418
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Edema Associated with Hepatic Cirrhosis or Nephrotic Syndrome",
+   "value": "100",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 295,
+     "end": 301
+    },
+    {
+     "start": 1836,
+     "end": 1842
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "starting_dose",
+   "key": "Primary Hyperaldosteronism",
+   "value": "100",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 387,
+     "end": 403
+    },
+    {
+     "start": 2161,
+     "end": 2177
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "strengths",
+   "value": "100",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2438,
+     "end": 2444
+    },
+    {
+     "start": 2578,
+     "end": 2584
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "pediatric_min_age": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,144 @@
+{
+ "doc": "irs-p225",
+ "kind": "irs",
+ "groups": [
+  "negation",
+  "scale"
+ ],
+ "fields": {
+  "research_expense_amortization_min_months": {
+   "schema": {
+    "type": "integer",
+    "unit": "months",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Shortest period over which R&E expenses charged to a capital account can be amortized."
+  },
+  "cash_method_gross_receipts_limit_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "For tax years beginning in 2025, the most average annual gross receipts a farm corporation or partnership can have and still use the cash method."
+  },
+  "cash_method_gross_receipts_years": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of preceding tax years averaged for the gross receipts test that lets farm corporations and partnerships use the cash method."
+  },
+  "inventory_exception_gross_receipts_limit_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "For tax years beginning in 2025, the most average annual gross receipts a farm can have and not be required to maintain an inventory."
+  },
+  "inventory_exception_gross_receipts_years": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of preceding tax years averaged for the gross receipts test of the inventory exception."
+  },
+  "section_179_max_deduction_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum section 179 expense deduction for 2025."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "research_expense_amortization_min_months",
+   "value": "60",
+   "unit": "months",
+   "evidence": [
+    {
+     "start": 2081,
+     "end": 2090
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "cash_method_gross_receipts_limit_2025",
+   "value": "31000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 15838,
+     "end": 15849
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "cash_method_gross_receipts_years",
+   "value": "3",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 15866,
+     "end": 15867
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "inventory_exception_gross_receipts_limit_2025",
+   "value": "31000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 23210,
+     "end": 23221
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "inventory_exception_gross_receipts_years",
+   "value": "3",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 23170,
+     "end": 23171
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "section_179_max_deduction_2025": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

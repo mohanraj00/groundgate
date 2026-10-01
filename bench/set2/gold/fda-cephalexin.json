@@ -1,0 +1,298 @@
+{
+ "doc": "fda-cephalexin",
+ "kind": "fda",
+ "groups": [
+  "keyed",
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Respiratory Tract Infections",
+     "Otitis Media",
+     "Skin and Skin Structure Infections",
+     "Bone Infections",
+     "Genitourinary Tract Infections",
+     "Usage"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Respiratory Tract Infections",
+     "Otitis Media",
+     "Skin and Skin Structure Infections",
+     "Bone Infections",
+     "Genitourinary Tract Infections",
+     "Usage"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended total daily dose for pediatric patients over 1 year of age, for indications other than otitis media and severe infections. The label gives a range; its lower bound."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg": {
+   "suffix": [
+    "mg/kg"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Respiratory Tract Infections",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 90,
+     "end": 96
+    },
+    {
+     "start": 812,
+     "end": 818
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Otitis Media",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 90,
+     "end": 96
+    },
+    {
+     "start": 812,
+     "end": 818
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Skin and Skin Structure Infections",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 90,
+     "end": 96
+    },
+    {
+     "start": 812,
+     "end": 818
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "starting_dose",
+   "key": "Bone Infections",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 90,
+     "end": 96
+    },
+    {
+     "start": 812,
+     "end": 818
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "starting_dose",
+   "key": "Genitourinary Tract Infections",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 90,
+     "end": 96
+    },
+    {
+     "start": 812,
+     "end": 818
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "pediatric_min_age",
+   "value": "1",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 200,
+     "end": 206
+    },
+    {
+     "start": 1112,
+     "end": 1118
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2545,
+     "end": 2551
+    },
+    {
+     "start": 3334,
+     "end": 3340
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "strengths",
+   "value": "333",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2929,
+     "end": 2935
+    },
+    {
+     "start": 3342,
+     "end": 3348
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "strengths",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2736,
+     "end": 2742
+    },
+    {
+     "start": 3350,
+     "end": 3356
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "strengths",
+   "value": "750",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 3121,
+     "end": 3127
+    },
+    {
+     "start": 3361,
+     "end": 3367
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "weight_based_dose",
+   "value": "25",
+   "unit": "mg/kg",
+   "evidence": [
+    {
+     "start": 316,
+     "end": 330
+    },
+    {
+     "start": 1220,
+     "end": 1234
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

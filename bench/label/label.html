@@ -53,6 +53,8 @@ main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1
 .fact.rejected { border-left-color: var(--bad); opacity: .75; }
 .fact.focus { background: var(--focus-bg); }
 .fact .row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.fact select.key { font: inherit; max-width: 100%; margin-top: 4px; }
+.fact select.key.missing { outline: 2px solid var(--bad); }
 .fact input { font: 600 14px ui-monospace, Menlo, monospace; width: 9em; padding: 2px 5px;
   border: 1px solid var(--line); border-radius: 4px; background: var(--bg); color: var(--fg); }
 .chips { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; font-size: 12px; }
@@ -184,7 +186,8 @@ function render() {
       const st = cover.some((m) => m.status === "draft") ? "draft"
         : cover.some((m) => m.status === "confirmed") ? "confirmed" : "rejected";
       node.className = st; node.dataset.facts = cover.map((m) => m.fact).join(",");
-      node.title = [...new Set(cover.map((m) => gold.facts[m.fact].field + " = " + gold.facts[m.fact].value))].join("\n");
+      node.title = [...new Set(cover.map((m) => { const f = gold.facts[m.fact];
+        return f.field + (f.key ? ` [${f.key}]` : "") + " = " + f.value; }))].join("\n");
       node.addEventListener("click", () => setFocus({kind: "fact", key: cover[0].fact}, true));
     } else node = document.createElement("span");
     appendText(node, chunk); doc.append(node);
@@ -194,7 +197,7 @@ function render() {
   for (const [name, spec] of Object.entries(gold.fields)) {
     const card = el("div", "field"); card.id = "field-" + name;
     const h = el("h3"); h.textContent = `${name}  [${spec.schema.unit || "no unit"}]` +
-      (spec.schema.multiple ? "  (one per value)" : "");
+      (spec.schema.multiple ? "  (one per value)" : "") + (spec.schema.keys ? "  (one per key)" : "");
     const d = el("div", "desc"); d.textContent = spec.description;
     card.append(h, d);
     if (gold.excluded[name] !== undefined) {
@@ -263,7 +266,18 @@ function factRow(f, i) {
     more.addEventListener("click", (ev) => { ev.stopPropagation(); expanded.add(i); render(); });
     chips.append(more);
   }
-  row.append(top, chips);
+  const keys = state.gold.fields[f.field].schema.keys;
+  if (keys) {
+    const pick = el("select", "key" + (keys.includes(f.key) ? "" : " missing"));
+    pick.setAttribute("aria-label", "key");
+    for (const k of ["", ...keys]) {
+      const o = el("option"); o.value = k; o.textContent = k || "Pick the key this value belongs to";
+      o.selected = (f.key || "") === k; pick.append(o);
+    }
+    pick.addEventListener("click", (ev) => ev.stopPropagation());
+    pick.addEventListener("change", () => { f.key = pick.value || null; changed(); });
+    row.append(top, pick, chips);
+  } else row.append(top, chips);
   return row;
 }
 function absentRow(name) {
@@ -319,8 +333,10 @@ function addFromSelection(name) {
   const value = m ? m[0].replace(/,/g, "").replace("−", "-") : "";
   const gold = state.gold;
   delete gold.absent[name];
-  gold.facts.push({id: "p" + Date.now(), field: name, value, unit: gold.fields[name].schema.unit,
-                   evidence: [{start: s.start, end: s.end}], status: "confirmed"});
+  const fact = {id: "p" + Date.now(), field: name, value, unit: gold.fields[name].schema.unit,
+                evidence: [{start: s.start, end: s.end}], status: "confirmed"};
+  if (gold.fields[name].schema.keys) { fact.key = null; toast("Pick the key for the new value"); }
+  gold.facts.push(fact);
   window.getSelection().removeAllRanges();
   changed(); setFocus({kind: "fact", key: gold.facts.length - 1}, true);
 }

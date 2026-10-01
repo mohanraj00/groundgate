@@ -1,0 +1,236 @@
+{
+ "doc": "fr-2026-19887",
+ "kind": "fr",
+ "groups": [
+  "scale"
+ ],
+ "fields": {
+  "almond_export_value": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Value of almond exports from August 2022 to July 2023 (shelled equivalent), from the GATS database."
+  },
+  "almond_export_quantity": {
+   "schema": {
+    "type": "integer",
+    "unit": "pounds",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Quantity of almond exports from August 2022 to July 2023, in pounds."
+  },
+  "handler_price_per_pound": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Unit value of almond exports per shelled pound, used as the representative handler price per pound."
+  },
+  "almond_production_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "pounds",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pounds of almonds the California almond industry produced in 2022, as estimated by NASS."
+  },
+  "handler_total_revenue": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Estimated total revenue at the handler level for the California almond industry."
+  },
+  "handler_count": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Estimated number of handlers in the California almond industry (production area)."
+  },
+  "average_revenue_per_handler": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Approximate average revenue per almond handler."
+  },
+  "assessment_rate_per_pound": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Assessment rate per pound of almonds that handlers pay to the Board."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "pounds": {
+   "suffix": [
+    "pounds"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "almond_export_value",
+   "value": "4115000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3985,
+     "end": 3999
+    },
+    {
+     "start": 4165,
+     "end": 4179
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "almond_export_quantity",
+   "value": "1783000000",
+   "unit": "pounds",
+   "evidence": [
+    {
+     "start": 4053,
+     "end": 4073
+    },
+    {
+     "start": 4191,
+     "end": 4211
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "handler_price_per_pound",
+   "value": "2.31",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4140,
+     "end": 4145
+    },
+    {
+     "start": 4219,
+     "end": 4224
+    },
+    {
+     "start": 4342,
+     "end": 4347
+    },
+    {
+     "start": 4528,
+     "end": 4533
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "almond_production_2022",
+   "value": "2511000000",
+   "unit": "pounds",
+   "evidence": [
+    {
+     "start": 4288,
+     "end": 4308
+    },
+    {
+     "start": 4501,
+     "end": 4521
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "handler_total_revenue",
+   "value": "5800000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4486,
+     "end": 4499
+    },
+    {
+     "start": 4551,
+     "end": 4564
+    },
+    {
+     "start": 4697,
+     "end": 4710
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "handler_count",
+   "value": "100",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 1670,
+     "end": 1682
+    },
+    {
+     "start": 4585,
+     "end": 4597
+    },
+    {
+     "start": 4722,
+     "end": 4725
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "average_revenue_per_handler",
+   "value": "58000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4684,
+     "end": 4695
+    },
+    {
+     "start": 4733,
+     "end": 4744
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "assessment_rate_per_pound": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

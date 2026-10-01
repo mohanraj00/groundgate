@@ -1,0 +1,159 @@
+{
+ "doc": "irs-p54",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "foreign_tax_exemption_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Most qualifying foreign taxes for the year, for filers other than joint filers, to be exempt from the foreign tax credit limit and from filing Form 1116."
+  },
+  "foreign_tax_exemption_limit_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Most qualifying foreign taxes for the year, on a joint return, to be exempt from the foreign tax credit limit and from filing Form 1116."
+  },
+  "earned_share_of_net_income_limit_pct": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "When both capital and personal services produce business income, the most of net income (net profit) that is considered earned income."
+  },
+  "example3_earned_income_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "In Example 3, the most of net income considered earned and excludable (30% of $54,147)."
+  },
+  "example2_net_income": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Net income (profit) of the self-employed taxpayer in Example 2 (also used in Example 3)."
+  },
+  "foreign_earned_income_exclusion_max_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum foreign earned income exclusion for 2025."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "foreign_tax_exemption_limit",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4694,
+     "end": 4698
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "foreign_tax_exemption_limit_joint",
+   "value": "600",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4700,
+     "end": 4704
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "earned_share_of_net_income_limit_pct",
+   "value": "30",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 7306,
+     "end": 7309
+    },
+    {
+     "start": 7351,
+     "end": 7354
+    },
+    {
+     "start": 8170,
+     "end": 8173
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "example3_earned_income_limit",
+   "value": "16244",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7332,
+     "end": 7339
+    },
+    {
+     "start": 7495,
+     "end": 7502
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "example2_net_income",
+   "value": "54147",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6630,
+     "end": 6637
+    },
+    {
+     "start": 7341,
+     "end": 7348
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "foreign_earned_income_exclusion_max_2025": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

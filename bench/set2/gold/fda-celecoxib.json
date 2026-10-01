@@ -1,0 +1,211 @@
+{
+ "doc": "fda-celecoxib",
+ "kind": "fda",
+ "groups": [
+  "keyed"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Osteoarthritis",
+     "Rheumatoid Arthritis",
+     "Juvenile Rheumatoid Arthritis",
+     "Ankylosing Spondylitis",
+     "Acute Pain",
+     "Primary Dysmenorrhea"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Osteoarthritis",
+     "Rheumatoid Arthritis",
+     "Juvenile Rheumatoid Arthritis",
+     "Ankylosing Spondylitis",
+     "Acute Pain",
+     "Primary Dysmenorrhea"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Osteoarthritis",
+   "value": "200",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 153,
+     "end": 159
+    },
+    {
+     "start": 1451,
+     "end": 1457
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Rheumatoid Arthritis",
+   "value": "100",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 214,
+     "end": 220
+    },
+    {
+     "start": 1571,
+     "end": 1577
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Ankylosing Spondylitis",
+   "value": "200",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 379,
+     "end": 385
+    },
+    {
+     "start": 2347,
+     "end": 2353
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "starting_dose",
+   "key": "Acute Pain",
+   "value": "400",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 562,
+     "end": 568
+    },
+    {
+     "start": 2800,
+     "end": 2806
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "starting_dose",
+   "key": "Primary Dysmenorrhea",
+   "value": "400",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 562,
+     "end": 568
+    },
+    {
+     "start": 2800,
+     "end": 2806
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "pediatric_min_age",
+   "value": "2",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 1685,
+     "end": 1692
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "100",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 3832,
+     "end": 3838
+    },
+    {
+     "start": 3996,
+     "end": 4002
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

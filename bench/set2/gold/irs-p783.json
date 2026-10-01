@@ -1,0 +1,337 @@
+{
+ "doc": "irs-p783",
+ "kind": "irs",
+ "groups": [
+  "general"
+ ],
+ "fields": {
+  "application_lead_time_days": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "How many days before the transaction date the discharge application should be submitted, at least."
+  },
+  "third_party_suit_deadline_days": {
+   "schema": {
+    "type": "integer",
+    "unit": "days",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Days a property owner who is not the taxpayer has to file an action in federal district court after a deposit or bond under 6325(b)(4)."
+  },
+  "b1_example_tax_liability": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "6325(b)(1) example: tax liability."
+  },
+  "b1_example_other_debts": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "6325(b)(1) example: other debts."
+  },
+  "b1_example_total_debts": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "6325(b)(1) example: tax liability plus other debts."
+  },
+  "b1_example_min_remaining_property": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "6325(b)(1) example: value the property remaining subject to the lien must reach."
+  },
+  "b2a_example_lien_total": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "6325(b)(2)(A) example: total IRS lien."
+  },
+  "b2a_example_sale_price": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "6325(b)(2)(A) example: price the property sells for."
+  },
+  "b2a_example_senior_encumbrances": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "6325(b)(2)(A) example: encumbrances senior to the IRS lien."
+  },
+  "b2a_example_settlement_costs": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "6325(b)(2)(A) example: proposed settlement costs."
+  },
+  "b2a_example_lien_interest": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "6325(b)(2)(A) example: IRS lien interest in the property, paid in partial satisfaction."
+  },
+  "b2a_example_remaining_debt": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "6325(b)(2)(A) example: tax debt outstanding after the partial payment."
+  },
+  "b3_example_government_interest": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "6325(b)(3) example: government's interest in the property."
+  },
+  "discharge_application_fee": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Fee for applying for a certificate of discharge."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  },
+  "days": {
+   "suffix": [
+    "days",
+    "day"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "application_lead_time_days",
+   "value": "45",
+   "unit": "days",
+   "evidence": [
+    {
+     "start": 1162,
+     "end": 1169
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "third_party_suit_deadline_days",
+   "value": "120",
+   "unit": "days",
+   "evidence": [
+    {
+     "start": 6930,
+     "end": 6938
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "b1_example_tax_liability",
+   "value": "15500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5921,
+     "end": 5928
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "b1_example_other_debts",
+   "value": "23334",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5931,
+     "end": 5938
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "b1_example_total_debts",
+   "value": "38834",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5939,
+     "end": 5946
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "b1_example_min_remaining_property",
+   "value": "77668",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5951,
+     "end": 5958
+    },
+    {
+     "start": 6020,
+     "end": 6027
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "b2a_example_lien_total",
+   "value": "203000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6305,
+     "end": 6313
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "b2a_example_sale_price",
+   "value": "215000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6347,
+     "end": 6355
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "b2a_example_senior_encumbrances",
+   "value": "135000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7665,
+     "end": 7673
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "b2a_example_settlement_costs",
+   "value": "15000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7787,
+     "end": 7795
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "b2a_example_lien_interest",
+   "value": "65000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7797,
+     "end": 7805
+    },
+    {
+     "start": 7846,
+     "end": 7853
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "b2a_example_remaining_debt",
+   "value": "138000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7941,
+     "end": 7949
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f13",
+   "field": "b3_example_government_interest",
+   "value": "40000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9815,
+     "end": 9822
+    },
+    {
+     "start": 10047,
+     "end": 10054
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "discharge_application_fee": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

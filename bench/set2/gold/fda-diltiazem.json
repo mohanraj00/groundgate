@@ -1,0 +1,281 @@
+{
+ "doc": "fda-diltiazem",
+ "kind": "fda",
+ "groups": [
+  "keyed"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Hypertension",
+     "Angina"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Hypertension",
+     "Angina"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Hypertension",
+   "value": "180",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 261,
+     "end": 274
+    },
+    {
+     "start": 674,
+     "end": 687
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Angina",
+   "value": "180",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 403,
+     "end": 409
+    },
+    {
+     "start": 932,
+     "end": 938
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "max_daily_dose",
+   "key": "Hypertension",
+   "value": "540",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 352,
+     "end": 358
+    },
+    {
+     "start": 803,
+     "end": 809
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "max_daily_dose",
+   "key": "Angina",
+   "value": "360",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 472,
+     "end": 478
+    },
+    {
+     "start": 1051,
+     "end": 1057
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "strengths",
+   "value": "120",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1515,
+     "end": 1521
+    },
+    {
+     "start": 1652,
+     "end": 1658
+    },
+    {
+     "start": 2669,
+     "end": 2675
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "strengths",
+   "value": "180",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1523,
+     "end": 1529
+    },
+    {
+     "start": 1825,
+     "end": 1831
+    },
+    {
+     "start": 2677,
+     "end": 2683
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "240",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1531,
+     "end": 1537
+    },
+    {
+     "start": 1998,
+     "end": 2004
+    },
+    {
+     "start": 2685,
+     "end": 2691
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "strengths",
+   "value": "300",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1539,
+     "end": 1545
+    },
+    {
+     "start": 2171,
+     "end": 2177
+    },
+    {
+     "start": 2693,
+     "end": 2699
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "strengths",
+   "value": "360",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1547,
+     "end": 1553
+    },
+    {
+     "start": 2344,
+     "end": 2350
+    },
+    {
+     "start": 2701,
+     "end": 2707
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "strengths",
+   "value": "420",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1558,
+     "end": 1564
+    },
+    {
+     "start": 2517,
+     "end": 2523
+    },
+    {
+     "start": 2712,
+     "end": 2718
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "pediatric_min_age": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

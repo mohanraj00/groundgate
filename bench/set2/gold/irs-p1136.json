@@ -1,0 +1,361 @@
+{
+ "doc": "irs-p1136",
+ "kind": "irs",
+ "groups": [
+  "general"
+ ],
+ "fields": {
+  "high_income_returns_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Number of individual income tax returns for TY 2022 with AGI of $200,000 or more."
+  },
+  "high_income_share_2022": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Share of all TY 2022 returns that had AGI of $200,000 or more."
+  },
+  "high_income_no_tax_returns_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "TY 2022 returns with AGI of $200,000 or more and no worldwide income tax liability."
+  },
+  "high_income_no_tax_increase_pct_2022": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Increase from the previous year in TY 2022 high-income returns with no worldwide income tax liability."
+  },
+  "high_income_no_tax_peak_2008": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Peak number of high-income returns with no worldwide income tax liability, TY 2008."
+  },
+  "cdcc_expense_limit_one_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "TY 2022 child and dependent care credit dollar limit on qualifying expenses, one qualifying person."
+  },
+  "cdcc_expense_limit_two_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "TY 2022 child and dependent care credit dollar limit on qualifying expenses, two or more qualifying persons."
+  },
+  "cdcc_max_pct_2022": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "TY 2022 maximum percentage of qualifying expenses eligible for the child and dependent care credit."
+  },
+  "cdcc_phaseout_income_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "TY 2022 income at which the child and dependent care credit began phasing out."
+  },
+  "dependent_care_exclusion_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "TY 2022 dollar limit on the exclusion for employer dependent care benefits."
+  },
+  "dependent_care_exclusion_mfs_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "TY 2022 maximum dependent care benefits exclusion, married employees filing separate returns."
+  },
+  "child_tax_credit_max_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "TY 2022 maximum child tax credit per qualifying child."
+  },
+  "additional_child_tax_credit_max_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "TY 2022 maximum additional child tax credit per qualifying child."
+  },
+  "credit_other_dependents_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "TY 2022 credit for other dependents."
+  },
+  "high_income_average_agi_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Average AGI of TY 2022 returns with AGI of $200,000 or more."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "high_income_returns_2022",
+   "value": "12500000",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 119,
+     "end": 131
+    },
+    {
+     "start": 2633,
+     "end": 2645
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "high_income_share_2022",
+   "value": "7.8",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 233,
+     "end": 237
+    },
+    {
+     "start": 2754,
+     "end": 2758
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "high_income_no_tax_returns_2022",
+   "value": "9997",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 293,
+     "end": 298
+    },
+    {
+     "start": 2806,
+     "end": 2811
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "high_income_no_tax_increase_pct_2022",
+   "value": "12.7",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 358,
+     "end": 364
+    },
+    {
+     "start": 2873,
+     "end": 2878
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "high_income_no_tax_peak_2008",
+   "value": "12326",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 463,
+     "end": 469
+    },
+    {
+     "start": 2976,
+     "end": 2982
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "cdcc_expense_limit_one_2022",
+   "value": "3000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3560,
+     "end": 3566
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "cdcc_expense_limit_two_2022",
+   "value": "6000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3628,
+     "end": 3634
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "cdcc_max_pct_2022",
+   "value": "35",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 3784,
+     "end": 3787
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "cdcc_phaseout_income_2022",
+   "value": "15000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3856,
+     "end": 3863
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "dependent_care_exclusion_2022",
+   "value": "5000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4053,
+     "end": 4059
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "dependent_care_exclusion_mfs_2022",
+   "value": "2500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4161,
+     "end": 4167
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "child_tax_credit_max_2022",
+   "value": "2000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4625,
+     "end": 4631
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f13",
+   "field": "additional_child_tax_credit_max_2022",
+   "value": "1500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4934,
+     "end": 4940
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f14",
+   "field": "credit_other_dependents_2022",
+   "value": "500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5043,
+     "end": 5047
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "high_income_average_agi_2022": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

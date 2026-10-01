@@ -1,0 +1,137 @@
+{
+ "doc": "irs-p936",
+ "kind": "irs",
+ "groups": [
+  "general"
+ ],
+ "fields": {
+  "mortgage_debt_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Home acquisition debt on which interest is deductible, for debt incurred after December 15, 2017, not married filing separately."
+  },
+  "mortgage_debt_limit_mfs": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "The same limit (debt incurred after December 15, 2017), married filing separately."
+  },
+  "mortgage_debt_limit_pre_2017": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Higher debt limit for mortgage interest on indebtedness incurred before December 16, 2017, not married filing separately."
+  },
+  "mortgage_debt_limit_pre_2017_mfs": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "The same higher limit (debt incurred before December 16, 2017), married filing separately."
+  },
+  "home_equity_debt_limit": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Limit on home equity debt on which interest is deductible."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "mortgage_debt_limit",
+   "value": "750000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 557,
+     "end": 565
+    },
+    {
+     "start": 6780,
+     "end": 6788
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "mortgage_debt_limit_mfs",
+   "value": "375000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 567,
+     "end": 575
+    },
+    {
+     "start": 6798,
+     "end": 6806
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "mortgage_debt_limit_pre_2017",
+   "value": "1000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 656,
+     "end": 666
+    },
+    {
+     "start": 6138,
+     "end": 6148
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "mortgage_debt_limit_pre_2017_mfs",
+   "value": "500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 668,
+     "end": 676
+    },
+    {
+     "start": 6158,
+     "end": 6166
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "home_equity_debt_limit": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

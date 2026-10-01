@@ -1,0 +1,264 @@
+{
+ "doc": "fda-topiramate",
+ "kind": "fda",
+ "groups": [
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Monotherapy Epilepsy",
+     "Adjunctive Therapy Epilepsy",
+     "Migraine"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Monotherapy Epilepsy",
+     "Adjunctive Therapy Epilepsy",
+     "Migraine"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Lower end of the recommended total daily dose range for adjunctive epilepsy therapy in pediatric patients 2 to 16 years of age, in mg/kg."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg": {
+   "suffix": [
+    "mg/kg"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Monotherapy Epilepsy",
+   "value": "50",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1016,
+     "end": 1021
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "starting_dose",
+   "key": "Adjunctive Therapy Epilepsy",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2536,
+     "end": 2541
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "starting_dose",
+   "key": "Migraine",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 4115,
+     "end": 4120
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "pediatric_min_age",
+   "value": "2",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 1077,
+     "end": 1078
+    },
+    {
+     "start": 1117,
+     "end": 1118
+    },
+    {
+     "start": 2867,
+     "end": 2868
+    },
+    {
+     "start": 3007,
+     "end": 3008
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "strengths",
+   "value": "25",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 5678,
+     "end": 5683
+    },
+    {
+     "start": 6296,
+     "end": 6301
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "strengths",
+   "value": "50",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 5800,
+     "end": 5805
+    },
+    {
+     "start": 6303,
+     "end": 6308
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "strengths",
+   "value": "100",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 5921,
+     "end": 5927
+    },
+    {
+     "start": 6310,
+     "end": 6316
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "strengths",
+   "value": "150",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 6045,
+     "end": 6051
+    },
+    {
+     "start": 6318,
+     "end": 6324
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "strengths",
+   "value": "200",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 6159,
+     "end": 6165
+    },
+    {
+     "start": 6330,
+     "end": 6336
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "weight_based_dose",
+   "value": "5",
+   "unit": "mg/kg",
+   "evidence": [
+    {
+     "start": 3169,
+     "end": 3176
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

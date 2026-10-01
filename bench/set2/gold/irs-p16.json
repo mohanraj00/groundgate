@@ -1,0 +1,1744 @@
+{
+ "doc": "irs-p16",
+ "kind": "irs",
+ "groups": [
+  "change",
+  "scale"
+ ],
+ "fields": {
+  "total_assets_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in total assets reported for active corporations from 2021 to 2022."
+  },
+  "total_assets_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total assets reported for active corporations in 2021."
+  },
+  "total_assets_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total assets reported for active corporations in 2022."
+  },
+  "educational_services_assets_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in total assets of the Educational Services sector from 2021 to 2022."
+  },
+  "educational_services_assets_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total assets of the Educational Services sector in 2021."
+  },
+  "educational_services_assets_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total assets of the Educational Services sector in 2022."
+  },
+  "finance_insurance_assets_pct_decrease": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage decrease in total assets of the Finance and Insurance sector from 2021 to 2022."
+  },
+  "finance_insurance_assets_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total assets of the Finance and Insurance sector in 2021."
+  },
+  "finance_insurance_assets_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total assets of the Finance and Insurance sector in 2022."
+  },
+  "total_receipts_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in total receipts from operations and investments, 2021 to 2022."
+  },
+  "total_receipts_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total receipts from operations and investments in 2021."
+  },
+  "total_receipts_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total receipts from operations and investments in 2022."
+  },
+  "business_receipts_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in business receipts, 2021 to 2022."
+  },
+  "business_receipts_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Business receipts in 2021."
+  },
+  "business_receipts_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Business receipts in 2022."
+  },
+  "interest_receipts_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in interest (a component of total receipts), 2021 to 2022."
+  },
+  "interest_receipts_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Interest received (a component of total receipts) in 2021."
+  },
+  "interest_receipts_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Interest received (a component of total receipts) in 2022."
+  },
+  "short_term_capital_gains_pct_decrease": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage decrease in short term capital gains, 2021 to 2022."
+  },
+  "short_term_capital_gains_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Short term capital gains in 2021."
+  },
+  "short_term_capital_gains_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Short term capital gains in 2022."
+  },
+  "long_term_capital_gains_pct_decrease": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage decrease in long term capital gains, 2021 to 2022."
+  },
+  "long_term_capital_gains_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Long term capital gains in 2021."
+  },
+  "long_term_capital_gains_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Long term capital gains in 2022."
+  },
+  "mining_receipts_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in total receipts of the Mining sector, 2021 to 2022."
+  },
+  "mining_receipts_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total receipts of the Mining sector in 2021."
+  },
+  "mining_receipts_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total receipts of the Mining sector in 2022."
+  },
+  "retail_trade_receipts_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in total receipts of the Retail Trade sector, 2021 to 2022."
+  },
+  "retail_trade_receipts_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total receipts of the Retail Trade sector in 2021."
+  },
+  "retail_trade_receipts_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total receipts of the Retail Trade sector in 2022."
+  },
+  "total_deductions_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in total deductions, 2021 to 2022."
+  },
+  "total_deductions_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total deductions in 2021."
+  },
+  "total_deductions_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total deductions in 2022."
+  },
+  "interest_deduction_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in interest as a component of total deductions, 2021 to 2022."
+  },
+  "interest_deduction_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Interest deducted (a component of total deductions), 2021."
+  },
+  "interest_deduction_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Interest deducted (a component of total deductions), 2022."
+  },
+  "net_gain_loss_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in Net Gain/Loss (a component of total deductions), 2021 to 2022."
+  },
+  "net_gain_loss_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Net Gain/Loss (a component of total deductions) in 2021."
+  },
+  "net_gain_loss_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Net Gain/Loss (a component of total deductions) in 2022."
+  },
+  "pretax_profits_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in corporate pretax profits (net income less deficit), 2021 to 2022."
+  },
+  "pretax_profits_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Corporate pretax profits (net income less deficit) in 2021."
+  },
+  "pretax_profits_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Corporate pretax profits (net income less deficit) in 2022."
+  },
+  "mining_pretax_profits_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in pretax profits of the Mining sector, 2021 to 2022."
+  },
+  "mining_pretax_profits_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pretax profits of the Mining sector in 2021."
+  },
+  "mining_pretax_profits_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pretax profits of the Mining sector in 2022."
+  },
+  "educational_services_net_income_pct_decrease": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage decrease in net income of the Educational Services sector, 2021 to 2022."
+  },
+  "educational_services_net_income_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Net income of the Educational Services sector in 2021."
+  },
+  "educational_services_net_income_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Net income of the Educational Services sector in 2022."
+  },
+  "pretax_profits_excl_passthrough_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pretax profits excluding passthrough entities in 2021."
+  },
+  "pretax_profits_excl_passthrough_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pretax profits excluding passthrough entities in 2022."
+  },
+  "s_corp_pretax_profits_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pretax profits reported by S corporations for 2022."
+  },
+  "s_corp_pretax_profits_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in S corporation pretax profits from 2021 to 2022."
+  },
+  "ric_pretax_profits_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pretax profits reported by regulated investment companies (RICs) for 2022."
+  },
+  "ric_pretax_profits_pct_decrease": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage decrease in RIC pretax profits from 2021 to 2022."
+  },
+  "reit_pretax_profits_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Pretax profits reported by real estate investment trusts (REITs) for 2022."
+  },
+  "reit_pretax_profits_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in REIT pretax profits from 2021 to 2022."
+  },
+  "income_subject_to_tax_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in income subject to tax (the tax base), 2021 to 2022."
+  },
+  "income_subject_to_tax_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Income subject to tax (the tax base) in 2021."
+  },
+  "income_subject_to_tax_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Income subject to tax (the tax base) in 2022."
+  },
+  "income_tax_before_credits_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total income tax before credits in 2022."
+  },
+  "income_tax_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in income tax during the year (2021 to 2022)."
+  },
+  "income_tax_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Income tax in 2021 (the amount it increased from)."
+  },
+  "income_tax_after_credits_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in total income tax after credits (paid to the U.S. Government), 2021 to 2022."
+  },
+  "income_tax_after_credits_2021": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total income tax after credits in 2021."
+  },
+  "income_tax_after_credits_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total income tax after credits in 2022."
+  },
+  "passthrough_pretax_profits_pct_decrease": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage decrease in pretax profits for passthrough entities during 2022."
+  },
+  "passthrough_pretax_profits_decrease": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Dollar decrease in pretax profits for passthrough entities during 2022."
+  },
+  "non_passthrough_returns_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of non-passthrough corporate returns for TY 2022."
+  },
+  "non_passthrough_total_receipts_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total receipts reported by non-passthrough corporate returns for 2022."
+  },
+  "non_passthrough_receipts_pct_increase": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage increase in total receipts of non-passthrough corporate returns, 2021 to 2022."
+  },
+  "largest_size_class_asset_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Total assets at or above which a return is in the largest asset size class discussed (returns with total assets of this amount or more)."
+  },
+  "largest_size_class_share_of_returns": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Share of total returns represented by returns with total assets of $2.5 billion or more."
+  },
+  "largest_size_class_share_of_assets": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Share of total assets held by returns with total assets of $2.5 billion or more."
+  },
+  "large_returns_with_tax_liability_pct": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Share of all returns with net income and total assets greater than $2.5 billion that had a tax liability for 2022."
+  },
+  "large_non_passthrough_returns_with_tax_liability_pct": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Excluding passthrough entities, share of returns with net income and total assets greater than $2.5 billion that had a tax liability."
+  },
+  "section_179_max_deduction_before_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Section 179 maximum expense deduction before the 2022 increase (the amount it increased from)."
+  },
+  "section_179_max_deduction_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Section 179 maximum expense deduction for tax years beginning in 2022."
+  },
+  "foreign_tax_credit_2022": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Total foreign tax credit claimed by active corporations for 2022."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "total_assets_pct_increase",
+   "value": "1.0",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 1895,
+     "end": 1899
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "total_assets_2021",
+   "value": "141900000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1906,
+     "end": 1921
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "total_assets_2022",
+   "value": "143300000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1933,
+     "end": 1948
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "educational_services_assets_pct_increase",
+   "value": "38.1",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2038,
+     "end": 2043
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "educational_services_assets_2021",
+   "value": "66600000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2049,
+     "end": 2062
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "educational_services_assets_2022",
+   "value": "92000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2314,
+     "end": 2327
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "finance_insurance_assets_pct_decrease",
+   "value": "3.8",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2415,
+     "end": 2419
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "finance_insurance_assets_2021",
+   "value": "70100000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2425,
+     "end": 2439
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "finance_insurance_assets_2022",
+   "value": "67400000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2451,
+     "end": 2465
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "total_receipts_pct_increase",
+   "value": "13.9",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2533,
+     "end": 2538
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "total_receipts_2021",
+   "value": "39800000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2545,
+     "end": 2559
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "total_receipts_2022",
+   "value": "45300000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2571,
+     "end": 2585
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f13",
+   "field": "business_receipts_pct_increase",
+   "value": "14.3",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2629,
+     "end": 2634
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f14",
+   "field": "business_receipts_2021",
+   "value": "35000000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2671,
+     "end": 2683
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f15",
+   "field": "business_receipts_2022",
+   "value": "39900000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2695,
+     "end": 2709
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f16",
+   "field": "interest_receipts_pct_increase",
+   "value": "49.2",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2724,
+     "end": 2729
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f17",
+   "field": "interest_receipts_2021",
+   "value": "1200000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2757,
+     "end": 2770
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f18",
+   "field": "interest_receipts_2022",
+   "value": "1800000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2774,
+     "end": 2787
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f19",
+   "field": "short_term_capital_gains_pct_decrease",
+   "value": "84.8",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2836,
+     "end": 2841
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f20",
+   "field": "short_term_capital_gains_2021",
+   "value": "177600000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2847,
+     "end": 2861
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f21",
+   "field": "short_term_capital_gains_2022",
+   "value": "27000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2873,
+     "end": 2886
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f22",
+   "field": "long_term_capital_gains_pct_decrease",
+   "value": "33.9",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 2933,
+     "end": 2938
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f23",
+   "field": "long_term_capital_gains_2021",
+   "value": "366300000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2945,
+     "end": 2959
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f24",
+   "field": "long_term_capital_gains_2022",
+   "value": "242000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2971,
+     "end": 2985
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f25",
+   "field": "mining_receipts_pct_increase",
+   "value": "37.7",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 3079,
+     "end": 3084
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f26",
+   "field": "mining_receipts_2021",
+   "value": "464900000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3090,
+     "end": 3104
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f27",
+   "field": "mining_receipts_2022",
+   "value": "639900000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3116,
+     "end": 3130
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f28",
+   "field": "retail_trade_receipts_pct_increase",
+   "value": "4.8",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 3204,
+     "end": 3208
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f29",
+   "field": "retail_trade_receipts_2021",
+   "value": "6000000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3214,
+     "end": 3227
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f30",
+   "field": "retail_trade_receipts_2022",
+   "value": "6200000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3239,
+     "end": 3252
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f31",
+   "field": "total_deductions_pct_increase",
+   "value": "13.5",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 3290,
+     "end": 3295
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f32",
+   "field": "total_deductions_2021",
+   "value": "36400000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3301,
+     "end": 3315
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f33",
+   "field": "total_deductions_2022",
+   "value": "41300000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3327,
+     "end": 3341
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f34",
+   "field": "interest_deduction_pct_increase",
+   "value": "36",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 3407,
+     "end": 3410
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f35",
+   "field": "interest_deduction_2021",
+   "value": "710100000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3423,
+     "end": 3437
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f36",
+   "field": "interest_deduction_2022",
+   "value": "965900000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3441,
+     "end": 3455
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f37",
+   "field": "net_gain_loss_pct_increase",
+   "value": "54.1",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 3567,
+     "end": 3572
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f38",
+   "field": "net_gain_loss_2021",
+   "value": "47900000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3578,
+     "end": 3591
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f39",
+   "field": "net_gain_loss_2022",
+   "value": "73800000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3603,
+     "end": 3616
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f40",
+   "field": "pretax_profits_pct_increase",
+   "value": "17.7",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 3704,
+     "end": 3709
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f41",
+   "field": "pretax_profits_2021",
+   "value": "4100000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3716,
+     "end": 3729
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f42",
+   "field": "pretax_profits_2022",
+   "value": "4800000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3733,
+     "end": 3746
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f43",
+   "field": "mining_pretax_profits_pct_increase",
+   "value": "159.6",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 3845,
+     "end": 3851
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f44",
+   "field": "mining_pretax_profits_2021",
+   "value": "41100000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3857,
+     "end": 3870
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f45",
+   "field": "mining_pretax_profits_2022",
+   "value": "106600000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3882,
+     "end": 3896
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f46",
+   "field": "educational_services_net_income_pct_decrease",
+   "value": "10.9",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 3997,
+     "end": 4002
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f47",
+   "field": "educational_services_net_income_2021",
+   "value": "4700000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4008,
+     "end": 4020
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f48",
+   "field": "educational_services_net_income_2022",
+   "value": "4200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4032,
+     "end": 4044
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f49",
+   "field": "pretax_profits_excl_passthrough_2021",
+   "value": "2600000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4136,
+     "end": 4149
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f50",
+   "field": "pretax_profits_excl_passthrough_2022",
+   "value": "3300000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4161,
+     "end": 4174
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f51",
+   "field": "s_corp_pretax_profits_2022",
+   "value": "763300000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4218,
+     "end": 4232
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f52",
+   "field": "s_corp_pretax_profits_pct_increase",
+   "value": "1.1",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 4267,
+     "end": 4271
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f53",
+   "field": "ric_pretax_profits_2022",
+   "value": "625400000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4330,
+     "end": 4344
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f54",
+   "field": "ric_pretax_profits_pct_decrease",
+   "value": "2.9",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 4351,
+     "end": 4355
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f55",
+   "field": "reit_pretax_profits_2022",
+   "value": "97900000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4414,
+     "end": 4427
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f56",
+   "field": "reit_pretax_profits_pct_increase",
+   "value": "4.6",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 4432,
+     "end": 4436
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f57",
+   "field": "income_subject_to_tax_pct_increase",
+   "value": "18.9",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 4507,
+     "end": 4512
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f58",
+   "field": "income_subject_to_tax_2021",
+   "value": "2400000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4519,
+     "end": 4532
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f59",
+   "field": "income_subject_to_tax_2022",
+   "value": "2900000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4544,
+     "end": 4557
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f60",
+   "field": "income_tax_before_credits_2022",
+   "value": "633300000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 8916,
+     "end": 8930
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f61",
+   "field": "income_tax_pct_increase",
+   "value": "18.8",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 8966,
+     "end": 8971
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f62",
+   "field": "income_tax_2021",
+   "value": "508600000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 8994,
+     "end": 9008
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f63",
+   "field": "income_tax_after_credits_pct_increase",
+   "value": "20.8",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 9115,
+     "end": 9120
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f64",
+   "field": "income_tax_after_credits_2021",
+   "value": "371400000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9127,
+     "end": 9141
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f65",
+   "field": "income_tax_after_credits_2022",
+   "value": "448700000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9153,
+     "end": 9167
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f66",
+   "field": "passthrough_pretax_profits_pct_decrease",
+   "value": "0.4",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 9600,
+     "end": 9604
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f67",
+   "field": "passthrough_pretax_profits_decrease",
+   "value": "6200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9606,
+     "end": 9618
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f68",
+   "field": "non_passthrough_returns_2022",
+   "value": "1600000",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 9648,
+     "end": 9659
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f69",
+   "field": "non_passthrough_total_receipts_2022",
+   "value": "33600000000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9721,
+     "end": 9735
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f70",
+   "field": "non_passthrough_receipts_pct_increase",
+   "value": "15.7",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 9752,
+     "end": 9757
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f71",
+   "field": "largest_size_class_asset_threshold",
+   "value": "2500000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 9992,
+     "end": 10004
+    },
+    {
+     "start": 10392,
+     "end": 10404
+    },
+    {
+     "start": 10540,
+     "end": 10552
+    },
+    {
+     "start": 5616,
+     "end": 5630
+    },
+    {
+     "start": 6229,
+     "end": 6243
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f72",
+   "field": "largest_size_class_share_of_returns",
+   "value": "0.07",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 10025,
+     "end": 10030
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f73",
+   "field": "largest_size_class_share_of_assets",
+   "value": "84.5",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 10052,
+     "end": 10057
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f74",
+   "field": "large_returns_with_tax_liability_pct",
+   "value": "48.6",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 10325,
+     "end": 10330
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f75",
+   "field": "large_non_passthrough_returns_with_tax_liability_pct",
+   "value": "97.9",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 10467,
+     "end": 10472
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f76",
+   "field": "section_179_max_deduction_before_2022",
+   "value": "1050000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 12246,
+     "end": 12256
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f77",
+   "field": "section_179_max_deduction_2022",
+   "value": "1080000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 12260,
+     "end": 12270
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "foreign_tax_credit_2022": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

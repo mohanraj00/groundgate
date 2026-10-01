@@ -1,0 +1,121 @@
+{
+ "doc": "fr-2026-18123",
+ "kind": "fr",
+ "groups": [
+  "change"
+ ],
+ "fields": {
+  "flowering_stems_per_plant_low": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Low end of the number of flowering stems an individual tall western penstemon plant can have."
+  },
+  "flowering_stems_per_plant_high": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "High end of the number of flowering stems an individual tall western penstemon plant can have (stated as that number 'or more')."
+  },
+  "flowers_per_stem_low": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Low end of the number of flowers per flowering stem of tall western penstemon."
+  },
+  "flowers_per_stem_high": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "High end of the number of flowers per flowering stem of tall western penstemon."
+  },
+  "seeds_per_capsule": {
+   "schema": {
+    "type": "integer",
+    "unit": null,
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Number of seeds in one tall western penstemon capsule."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "flowering_stems_per_plant_low",
+   "value": "1",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 1730,
+     "end": 1731
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "flowering_stems_per_plant_high",
+   "value": "100",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 1735,
+     "end": 1738
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "flowers_per_stem_low",
+   "value": "10",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 1774,
+     "end": 1776
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "flowers_per_stem_high",
+   "value": "80",
+   "unit": null,
+   "evidence": [
+    {
+     "start": 1780,
+     "end": 1782
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "seeds_per_capsule": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

@@ -1,0 +1,55 @@
+{
+ "doc": "irs-p502",
+ "kind": "irs",
+ "groups": [
+  "negation"
+ ],
+ "fields": {
+  "medical_lodging_limit_per_night": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Most that can be included in medical expenses for lodging, per night for each person."
+  },
+  "medical_expense_agi_floor_pct": {
+   "schema": {
+    "type": "number",
+    "unit": "%",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Percentage of adjusted gross income that medical expenses must exceed to be deductible."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "medical_lodging_limit_per_night",
+   "value": "50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2309,
+     "end": 2312
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "medical_expense_agi_floor_pct": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

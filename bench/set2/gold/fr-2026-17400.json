@@ -1,0 +1,123 @@
+{
+ "doc": "fr-2026-17400",
+ "kind": "fr",
+ "groups": [
+  "change",
+  "negation",
+  "scale"
+ ],
+ "fields": {
+  "snun_fee_standard": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "SNUN submission fee before the reduction offered to qualifying small businesses."
+  },
+  "snun_fee_small_business": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Reduced SNUN submission fee for qualifying small businesses."
+  },
+  "umra_unfunded_mandate_threshold_1995_dollars": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "UMRA unfunded mandate threshold in any one year, in 1995 dollars."
+  },
+  "umra_private_sector_threshold_2023_dollars": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "UMRA threshold for costs to the private sector in any one year, adjusted to 2023 dollars, that the action's estimated costs do not exceed."
+  },
+  "snur_violation_civil_penalty": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Civil penalty per day for violating one of these significant new use rules."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "snun_fee_standard",
+   "value": "37000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1885,
+     "end": 1892
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "snun_fee_small_business",
+   "value": "6480",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 1896,
+     "end": 1902
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "umra_unfunded_mandate_threshold_1995_dollars",
+   "value": "100000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2674,
+     "end": 2686
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "umra_private_sector_threshold_2023_dollars",
+   "value": "183000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3180,
+     "end": 3192
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "snur_violation_civil_penalty": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

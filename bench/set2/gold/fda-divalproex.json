@@ -1,0 +1,196 @@
+{
+ "doc": "fda-divalproex",
+ "kind": "fda",
+ "groups": [
+  "keyed",
+  "weight_based"
+ ],
+ "fields": {
+  "starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "keys": [
+     "Mania",
+     "Epilepsy",
+     "Migraine",
+     "Important Limitations"
+    ]
+   },
+   "description": "Usual recommended starting dose for adults. If the label gives a range, its lower bound. One per indication, with the indication's key."
+  },
+  "max_daily_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "le",
+    "minimum": "0",
+    "keys": [
+     "Mania",
+     "Epilepsy",
+     "Migraine",
+     "Important Limitations"
+    ]
+   },
+   "description": "Maximum recommended daily dose for adults. Doses that were only studied or used are not a recommendation. One per indication, with the indication's key."
+  },
+  "pediatric_min_age": {
+   "schema": {
+    "type": "integer",
+    "unit": "years",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Youngest age, in years, for which section 2 gives pediatric dosing."
+  },
+  "hepatic_starting_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended starting dose for adults with hepatic impairment, when the label gives a number."
+  },
+  "strengths": {
+   "schema": {
+    "type": "number",
+    "unit": "mg",
+    "comparator": "eq",
+    "minimum": "0",
+    "multiple": true
+   },
+   "description": "Every tablet or capsule strength listed in section 3 (one extraction per strength)."
+  },
+  "weight_based_dose": {
+   "schema": {
+    "type": "number",
+    "unit": "mg/kg/day",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "Recommended initial daily dose for mania, in mg/kg/day."
+  }
+ },
+ "units": {
+  "years": {
+   "suffix": [
+    "years",
+    "year",
+    "Years",
+    "Year",
+    "-year"
+   ]
+  },
+  "mg/kg/day": {
+   "suffix": [
+    "mg/kg/day"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "starting_dose",
+   "key": "Migraine",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 1270,
+     "end": 1276
+    },
+    {
+     "start": 7174,
+     "end": 7180
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "pediatric_min_age",
+   "value": "10",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 2858,
+     "end": 2866
+    },
+    {
+     "start": 7984,
+     "end": 7992
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "strengths",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 12346,
+     "end": 12352
+    },
+    {
+     "start": 12572,
+     "end": 12578
+    },
+    {
+     "start": 12909,
+     "end": 12915
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "strengths",
+   "value": "500",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 12646,
+     "end": 12652
+    },
+    {
+     "start": 12874,
+     "end": 12880
+    },
+    {
+     "start": 12920,
+     "end": 12926
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "weight_based_dose",
+   "value": "25",
+   "unit": "mg/kg/day",
+   "evidence": [
+    {
+     "start": 498,
+     "end": 510
+    },
+    {
+     "start": 1450,
+     "end": 1462
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "max_daily_dose": "draft",
+  "hepatic_starting_dose": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

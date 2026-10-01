@@ -1,0 +1,341 @@
+{
+ "doc": "irs-p517",
+ "kind": "irs",
+ "groups": [
+  "general"
+ ],
+ "fields": {
+  "tips_deduction_max": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum deduction for qualified tips (no tax on tips)."
+  },
+  "tips_deduction_magi_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Modified AGI above which the no-tax-on-tips deduction is limited, not married filing jointly."
+  },
+  "tips_deduction_magi_threshold_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Modified AGI above which the no-tax-on-tips deduction is limited, married filing jointly."
+  },
+  "overtime_deduction_max": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum deduction for qualified overtime compensation, not married filing jointly."
+  },
+  "overtime_deduction_max_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum deduction for qualified overtime compensation, married filing jointly."
+  },
+  "car_loan_interest_deduction_max": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum deduction for qualified passenger vehicle loan interest."
+  },
+  "car_loan_interest_phaseout_magi": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Modified AGI above which the car loan interest deduction begins to phase out, not married filing jointly."
+  },
+  "car_loan_interest_phaseout_magi_joint": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Modified AGI above which the car loan interest deduction begins to phase out, married filing jointly."
+  },
+  "senior_deduction_magi_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Modified AGI above which the enhanced deduction for seniors is limited, not married filing jointly."
+  },
+  "senior_deduction_max": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum enhanced deduction for seniors, per person."
+  },
+  "senior_deduction_max_both_spouses": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum enhanced deduction for seniors when both spouses are eligible."
+  },
+  "business_mileage_rate_2025": {
+   "schema": {
+    "type": "number",
+    "unit": "cents",
+    "comparator": "eq",
+    "minimum": "0"
+   },
+   "description": "2025 business standard mileage rate."
+  },
+  "social_security_wage_base_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "2025 maximum wages and self-employment income subject to social security tax."
+  },
+  "roth_ira_magi_limit_single_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "2025 modified AGI a single or head of household filer (or married filing separately, not living with the spouse) must be under to contribute to a Roth IRA."
+  },
+  "eic_max_income_2025": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "2025 maximum income a taxpayer can earn and still claim the earned income credit."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "tips_deduction_max",
+   "value": "25000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2346,
+     "end": 2353
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "tips_deduction_magi_threshold",
+   "value": "150000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2452,
+     "end": 2460
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f3",
+   "field": "tips_deduction_magi_threshold_joint",
+   "value": "300000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2462,
+     "end": 2470
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f4",
+   "field": "overtime_deduction_max",
+   "value": "12500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2857,
+     "end": 2864
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f5",
+   "field": "overtime_deduction_max_joint",
+   "value": "25000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 2866,
+     "end": 2873
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f6",
+   "field": "car_loan_interest_deduction_max",
+   "value": "10000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3365,
+     "end": 3372
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f7",
+   "field": "car_loan_interest_phaseout_magi",
+   "value": "100000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3552,
+     "end": 3560
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f8",
+   "field": "car_loan_interest_phaseout_magi_joint",
+   "value": "200000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3562,
+     "end": 3570
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f9",
+   "field": "senior_deduction_magi_threshold",
+   "value": "75000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 3819,
+     "end": 3826
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f10",
+   "field": "senior_deduction_max",
+   "value": "6000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4018,
+     "end": 4024
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f11",
+   "field": "senior_deduction_max_both_spouses",
+   "value": "12000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4026,
+     "end": 4033
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f12",
+   "field": "business_mileage_rate_2025",
+   "value": "70",
+   "unit": "cents",
+   "evidence": [
+    {
+     "start": 4460,
+     "end": 4468
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f13",
+   "field": "social_security_wage_base_2025",
+   "value": "176100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4625,
+     "end": 4633
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f14",
+   "field": "roth_ira_magi_limit_single_2025",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5551,
+     "end": 5559
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "eic_max_income_2025": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}

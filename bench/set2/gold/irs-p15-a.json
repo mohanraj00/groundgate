@@ -1,0 +1,82 @@
+{
+ "doc": "irs-p15-a",
+ "kind": "irs",
+ "groups": [
+  "negation",
+  "scale"
+ ],
+ "fields": {
+  "award_exclusion_limit_mixed_awards": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Limit on the exclusion for the total cost of all employee achievement awards to one employee in a year when the employee receives both qualified plan and nonqualified awards."
+  },
+  "supplemental_wages_withholding_threshold": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "ge",
+    "minimum": "0"
+   },
+   "description": "Wages to an individual during the year above which the special rules for withholding federal income tax from supplemental wages apply (section 7 of Pub. 15)."
+  },
+  "social_security_wage_base_2026": {
+   "schema": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "le",
+    "minimum": "0"
+   },
+   "description": "Maximum wages subject to social security tax for 2026."
+  }
+ },
+ "units": {
+  "cents": {
+   "suffix": [
+    "cents"
+   ]
+  }
+ },
+ "facts": [
+  {
+   "id": "f1",
+   "field": "award_exclusion_limit_mixed_awards",
+   "value": "1600",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 5156,
+     "end": 5162
+    },
+    {
+     "start": 5238,
+     "end": 5244
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "f2",
+   "field": "supplemental_wages_withholding_threshold",
+   "value": "1000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6271,
+     "end": 6281
+    }
+   ],
+   "status": "draft"
+  }
+ ],
+ "absent": {
+  "social_security_wage_base_2026": "draft"
+ },
+ "excluded": {},
+ "prelabeled_by": "Claude (model draft)",
+ "checked": null
+}
