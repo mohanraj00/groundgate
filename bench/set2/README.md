@@ -27,6 +27,20 @@ uv run python bench/set2/gold/matches.py            # the matched sentences of t
 uv run python bench/label/app.py --set bench/set2   # check them
 ```
 
+## Runs
+
+`runs/<model>/<buffer>/<id>.json` holds each model's extractions from `bench/propose.py`, the same
+roster and flags as v0.1, at buffers 1,000 and 4,000 (#11). Every model saw the same prompts:
+947 chunks at 1,000 and 262 at 4,000. Each record keeps the raw reply and the SHA-256 of the
+prompt for every chunk, plus the CLI version.
+
+```bash
+uv run --group langextract python bench/propose.py --set bench/set2 --provider claude-cli \
+  --model claude-sonnet-5-5 --label "Claude Sonnet 5.5" --buffer 1000
+```
+
+A rerun skips documents that already have a file, so delete one to run it again.
+
 ## Licenses
 
 - FDA drug labels (DailyMed SPL): openFDA publishes drug label content as public domain under

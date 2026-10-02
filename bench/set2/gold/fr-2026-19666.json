@@ -56,7 +56,7 @@
      "end": 3124
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -73,13 +73,17 @@
      "end": 3131
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "annual_closing_letter_requests": "draft"
+  "annual_closing_letter_requests": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-30T20:29:22-0700"
+ },
+ "seconds_spent": 40
 }

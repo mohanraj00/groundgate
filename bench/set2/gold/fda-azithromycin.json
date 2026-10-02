@@ -107,7 +107,7 @@
      "end": 1826
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -155,5 +155,6 @@
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": null,
+ "seconds_spent": 284
 }

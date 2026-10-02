@@ -89,7 +89,7 @@
      "end": 58
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -106,7 +106,7 @@
      "end": 7989
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -131,7 +131,7 @@
      "end": 8019
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -156,7 +156,7 @@
      "end": 8027
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -173,7 +173,7 @@
      "end": 7880
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -186,15 +186,45 @@
      "end": 2005
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
+  },
+  {
+   "id": "p1790816837678",
+   "field": "max_daily_dose",
+   "value": "1750",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 38,
+     "end": 60
+    }
+   ],
+   "status": "confirmed"
+  },
+  {
+   "id": "p1790816911042",
+   "field": "pediatric_min_age",
+   "value": "3",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 987,
+     "end": 1021
+    }
+   ],
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "max_daily_dose": "draft",
-  "pediatric_min_age": "draft",
-  "hepatic_starting_dose": "draft"
+  "hepatic_starting_dose": "confirmed"
  },
- "excluded": {},
+ "excluded": {
+  "pediatric_min_age": "provided value is in months (3 month), value extracted is years"
+ },
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-30T18:10:13-0700"
+ },
+ "seconds_spent": 200
 }
