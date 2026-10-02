@@ -238,6 +238,9 @@
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null,
- "seconds_spent": 125
+ "checked": {
+  "by": "person",
+  "at": "2026-10-01T19:02:52-0700"
+ },
+ "seconds_spent": 128
 }
