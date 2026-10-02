@@ -157,7 +157,7 @@
      "end": 1169
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -170,7 +170,7 @@
      "end": 6938
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -183,7 +183,7 @@
      "end": 5928
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -196,7 +196,7 @@
      "end": 5938
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -209,7 +209,7 @@
      "end": 5946
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -226,7 +226,7 @@
      "end": 6027
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -239,7 +239,7 @@
      "end": 6313
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -252,7 +252,7 @@
      "end": 6355
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -265,7 +265,7 @@
      "end": 7673
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f10",
@@ -278,7 +278,7 @@
      "end": 7795
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f11",
@@ -295,7 +295,7 @@
      "end": 7853
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f12",
@@ -308,7 +308,7 @@
      "end": 7949
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f13",
@@ -319,19 +319,19 @@
     {
      "start": 9815,
      "end": 9822
-    },
-    {
-     "start": 10047,
-     "end": 10054
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "discharge_application_fee": "draft"
+  "discharge_application_fee": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-30T19:56:55-0700"
+ },
+ "seconds_spent": 449
 }

@@ -84,7 +84,7 @@
      "end": 4273
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -97,7 +97,7 @@
      "end": 4285
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -110,7 +110,7 @@
      "end": 4292
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -123,13 +123,17 @@
      "end": 4304
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "participating_vessels_2026": "draft"
+  "participating_vessels_2026": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-09-30T20:32:38-0700"
+ },
+ "seconds_spent": 29
 }
