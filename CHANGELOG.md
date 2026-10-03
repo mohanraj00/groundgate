@@ -3,6 +3,15 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## Unreleased
+
+Spec 0.3, in progress. Receipts name `"groundgate": "0.3"` and every digest uses the
+`groundgate/0.3:` prefix, so all hashes differ from 0.2.0. The decision changes are tracked in
+milestone 0.3.
+
+- Set 2 is rescored on the released 0.2.0 wheel, the way the v0.1 set is rescored on 0.1.0, so
+  its published numbers stay spec 0.2's.
+
 ## 0.2.0 (2026-10-03)
 
 Spec 0.2. Receipts name `"groundgate": "0.2"` and every digest uses the `groundgate/0.2:`
