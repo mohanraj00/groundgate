@@ -40,6 +40,7 @@ TOKEN = secrets.token_urlsafe(24)
 FACT_STATUS = {"draft", "confirmed", "rejected"}
 ABSENT_STATUS = {"draft", "confirmed"}
 LOCK = threading.Lock()
+ABSENT_PASS: str | None = None  # --absent: a second look at confirmed absences, of this kind
 
 
 def doc_ids() -> list[str]:
@@ -91,6 +92,7 @@ def summary(gold: dict[str, Any]) -> dict[str, Any]:
         "kind": gold["kind"],
         "control": control(gold),
         "facts": len(facts),
+        "absent": len(gold["absent"]),
         "open": sum(f["status"] == "draft" or unkeyed(gold, f) for f in facts)
         + sum(s == "draft" for s in gold["absent"].values()),
         "checked": gold.get("checked") is not None,
@@ -162,6 +164,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         if self.path == "/":
             page = (HERE / "label.html").read_text(encoding="utf-8").replace("__TOKEN__", TOKEN)
+            page = page.replace("__PASS__", "absent" if ABSENT_PASS else "")
             self._send(HTTPStatus.OK, page.encode(), "text/html; charset=utf-8")
             return
         if self.path.startswith("/source/") and self._local() and (doc_id := self._doc()):
@@ -176,6 +179,12 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == "/api/docs":
             docs = [summary(json.loads((GOLD / f"{d}.json").read_text())) for d in doc_ids()]
             docs.sort(key=lambda d: d["control"])  # controls last; stable, so ids stay sorted
+            if ABSENT_PASS:
+                docs = [
+                    d
+                    for d in docs
+                    if d["absent"] and not d["control"] and ABSENT_PASS in ("all", d["kind"])
+                ]
             self._json(HTTPStatus.OK, docs)
         elif self.path.startswith("/api/doc/") and (doc_id := self._doc()):
             gold = json.loads((GOLD / f"{doc_id}.json").read_text(encoding="utf-8"))
@@ -239,8 +248,16 @@ def main() -> None:
     ap.add_argument("--port", type=int, default=8765)
     ap.add_argument("--no-browser", action="store_true")
     ap.add_argument("--set", type=Path, default=BENCH, help="benchmark set directory")
+    ap.add_argument(
+        "--absent",
+        nargs="?",
+        const="all",
+        metavar="KIND",
+        help="a second look at absences: only full-check documents with one (fda, irs, fr)",
+    )
     args = ap.parse_args()
-    global GOLD, DOCS, CACHE, SOURCES
+    global GOLD, DOCS, CACHE, SOURCES, ABSENT_PASS
+    ABSENT_PASS = args.absent
     root = args.set.resolve()
     GOLD, DOCS, CACHE = root / "gold", root / "docs", root / ".cache"
     SOURCES = root / "sources.json"

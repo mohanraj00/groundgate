@@ -49,6 +49,7 @@ main.with-pdf { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, .
 #doc mark.rejected { background: var(--bad-bg); box-shadow: inset 0 -2px var(--bad); }
 #doc mark.focus { background: var(--focus-bg); outline: 2px solid var(--warn); }
 #doc .pagebreak { display: block; border-top: 1px dashed var(--line); margin: 8px 0; }
+::highlight(spot) { background-color: var(--focus-bg); }
 #panel { overflow: auto; padding: 10px 14px 40vh; background: var(--panel); }
 .field { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
   padding: 10px 12px; margin-bottom: 10px; }
@@ -91,7 +92,8 @@ kbd { font: 11px ui-monospace, monospace; border: 1px solid var(--line); border-
   <span class="grow"></span>
   <span id="help" class="muted"><kbd>j</kbd>/<kbd>k</kbd> move · <kbd>y</kbd> correct ·
     <kbd>n</kbd> wrong · <kbd>a</kbd> confirm absent · select text + <kbd>+</kbd> add ·
-    <kbd>1</kbd>–<kbd>9</kbd> key · <kbd>p</kbd> PDF · <kbd>c</kbd> checked</span>
+    <kbd>1</kbd>–<kbd>9</kbd> key · <kbd>p</kbd> PDF · <kbd>c</kbd> checked ·
+    <kbd>[</kbd>/<kbd>]</kbd> document</span>
   <span id="timer" class="muted"></span>
   <button id="done" class="primary">Mark document checked</button>
 </header>
@@ -104,11 +106,13 @@ kbd { font: 11px ui-monospace, monospace; border: 1px solid var(--line); border-
 <script>
 "use strict";
 const TOKEN = "__TOKEN__";
+const ABSENT_PASS = "__PASS__" === "absent";  // --absent: only the absences, for a second look
 const $ = (s) => document.querySelector(s);
 let state = null;      // {id, text, gold, idx}
 let focus = null;      // {kind: "fact"|"absent", key}
 let dirty = false, seconds = 0, saveTimer = null;
 const expanded = new Set();  // facts whose every other occurrence is listed
+const added = new Set();  // facts added since the document opened
 let pdfPage = null, keyDigits = "", keyTimer = null;
 let pdfOn = true;
 try { pdfOn = localStorage.getItem("pdf") !== "off"; } catch {}
@@ -149,7 +153,7 @@ async function loadList(select) {
   for (const d of docs) {
     const o = document.createElement("option");
     o.value = d.id;
-    o.textContent = `${d.checked ? "✓" : d.open ? "•" : "○"} ${d.control ? "control · " : ""}${d.id} (${d.facts} facts${d.open ? `, ${d.open} open` : ""})`;
+    o.textContent = `${d.checked ? "✓" : d.open ? "•" : "○"} ${d.control ? "control · " : ""}${d.id} (${ABSENT_PASS ? `${d.absent} absent` : `${d.facts} facts`}${d.open ? `, ${d.open} open` : ""})`;
     pick.append(o); if (d.checked) checked++;
   }
   $("#progress").textContent = `${checked} of ${docs.length} checked`;
@@ -158,22 +162,28 @@ async function loadList(select) {
   return first;
 }
 
+function neighbor(by) {
+  // the next or previous document in the list
+  const ids = [...$("#pick").options].map((o) => o.value), i = ids.indexOf(state.id);
+  return ids[Math.min(ids.length - 1, Math.max(0, i + by))];
+}
+async function go(id) { await open(id); await loadList(id); }
 async function open(id) {
   if (dirty) await save(false);
   const {gold, text, source, pdf} = await api(`/api/doc/${encodeURIComponent(id)}`);
   $("#source").hidden = !source; if (source) $("#source").href = source;
   state = {id, gold, text, pdf, idx: buildIndex(text)};
   pdfPage = null; $("#pdfbtn").hidden = !pdf; showPdf();
-  focus = null; seconds = 0; dirty = false; expanded.clear();
+  focus = null; seconds = 0; dirty = false; expanded.clear(); added.clear();
   render(); moveFocus(1);
 }
 
 function occurrences(value) {
   // every place the number is written in the text, as byte spans, also with a scale word:
-  // 1000000 is written "1,000,000", "1000000" or "1 million"
+  // 1000000 is written "1,000,000", "1000000", "1 million" or "1.0 million"
   const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const written = (int, frac) => [Number(int).toLocaleString("en-US"), int]
-    .map((i) => esc(i + (frac ? "." + frac : "")));
+    .map((i) => esc(i + (frac ? "." + frac : "")) + (frac ? "0*" : "(?:\\.0+)?"));
   const [int, frac = ""] = value.replace(/,/g, "").split(".");
   const alts = written(int, frac);
   const SCALES = {thousand: 3, million: 6, billion: 9, trillion: 12};
@@ -321,7 +331,44 @@ function absentRow(name) {
   row.append(t,
     button("✓ confirm absent", () => { state.gold.absent[name] = "confirmed"; changed(); moveFocus(1); }, st === "confirmed" ? "on-ok" : ""),
     button("It is there", () => { delete state.gold.absent[name]; changed(); toast("Select the value in the document, then press +"); }));
+  const found = leads(name), shown = expanded.has("a:" + name) ? found : found.slice(0, 8);
+  const chips = el("div", "chips");
+  for (const o of shown) {
+    const c = el("span", "chip other"); c.textContent = context(o);
+    c.title = "a line that names this field and holds a number: read it";
+    c.addEventListener("click", (ev) => { ev.stopPropagation(); scrollTo(o); pdfAt(o); });
+    chips.append(c);
+  }
+  if (shown.length < found.length) {
+    const more = el("span", "chip other"); more.textContent = `${found.length - shown.length} more`;
+    more.addEventListener("click", (ev) => { ev.stopPropagation(); expanded.add("a:" + name); render(); });
+    chips.append(more);
+  }
+  if (!found.length) chips.append(Object.assign(el("span", "muted"), {textContent: "No line names this field near a number."}));
+  row.append(chips);
   return row;
+}
+// words near which an absent field's value would be written
+const LEADS = {
+  hepatic: /\b(?:hepatic|liver|child-pugh)\b/gi,
+  pediatric: /\b(?:pediatric|paediatric|child|children|infants?|neonat\w*|adolescents?|(?:years|months) (?:of age|and older))\b/gi,
+  max: /\b(?:maximum|max|not (?:to )?exceed|no more than|up to|greater than|higher than)\b/gi,
+};
+function leads(name) {
+  // every place one of the field's words stands where its line or the next holds a number,
+  // so a heading such as "Hepatic Impairment" counts when the dose follows it
+  const w = Object.keys(LEADS).find((k) => name.includes(k));
+  const words = name.split("_").filter((x) => x.length > 3 && !["dose", "daily"].includes(x));
+  const re = w ? LEADS[w] : words.length ? new RegExp(words.join("|"), "gi") : null;
+  if (!re) return [];
+  const {text, idx} = state, out = [];
+  const eol = (i) => { const e = text.indexOf("\n", i); return e < 0 ? text.length : e; };
+  for (const m of text.matchAll(re)) {
+    const a = text.lastIndexOf("\n", m.index) + 1;
+    if (/\d/.test(text.slice(a, eol(eol(m.index) + 1))))
+      out.push({start: idx.j2b[m.index], end: idx.j2b[m.index + m[0].length]});
+  }
+  return out;
 }
 function snippet(e) {
   const {b2j} = state.idx; return state.text.slice(b2j.get(e.start), b2j.get(e.end));
@@ -332,15 +379,23 @@ function context(e) {
     state.text.slice(b, b + 20)).replace(/\s+/g, " ");
 }
 function scrollTo(e) {
-  const a = state.idx.b2j.get(e.start);
-  for (const m of document.querySelectorAll("#doc mark, #doc span")) {
-    if (m._start === undefined) indexNodes();
-    if (m._start <= a && a < m._end) { m.scrollIntoView({block: "center"}); m.classList.add("focus"); setTimeout(() => m.classList.remove("focus"), 900); return; }
+  // scroll the span itself to the middle and light it, also inside a long unmarked stretch
+  const a = state.idx.b2j.get(e.start), b = state.idx.b2j.get(e.end), doc = $("#doc");
+  const w = document.createTreeWalker(doc, NodeFilter.SHOW_TEXT), range = document.createRange();
+  let n = 0, started = false;
+  while (w.nextNode()) {
+    const len = w.currentNode.length;
+    if (!started && a < n + len) { range.setStart(w.currentNode, a - n); started = true; }
+    if (started && b <= n + len) { range.setEnd(w.currentNode, b - n); break; }
+    n += len;
   }
-}
-function indexNodes() {
-  let pos = 0;
-  for (const m of $("#doc").children) { m._start = pos; pos += m.textContent.length; m._end = pos; }
+  if (!started) return;
+  const r = range.getBoundingClientRect(), d = doc.getBoundingClientRect();
+  doc.scrollTop += r.top - d.top - d.height / 2;
+  if (window.CSS?.highlights) {
+    CSS.highlights.set("spot", new Highlight(range));
+    clearTimeout(scrollTo.timer); scrollTo.timer = setTimeout(() => CSS.highlights.delete("spot"), 1500);
+  }
 }
 
 function selectionSpan() {
@@ -369,7 +424,7 @@ function addFromSelection(name) {
   const fact = {id: "p" + Date.now(), field: name, value, unit: gold.fields[name].schema.unit,
                 evidence: [{start: s.start, end: s.end}], status: "confirmed"};
   if (gold.fields[name].schema.keys) { fact.key = null; toast("Pick the key for the new value"); }
-  gold.facts.push(fact);
+  gold.facts.push(fact); added.add(gold.facts.length - 1);
   window.getSelection().removeAllRanges();
   changed(); setFocus({kind: "fact", key: gold.facts.length - 1}, true);
 }
@@ -380,7 +435,8 @@ function targets() {
     state.gold.facts.forEach((f, i) => { if (f.field === name) out.push({kind: "fact", key: i}); });
     if (state.gold.absent[name] !== undefined) out.push({kind: "absent", key: name});
   }
-  return out;
+  // in the pass, a value added in this sitting is focused too, so its key can be picked
+  return ABSENT_PASS ? out.filter((x) => x.kind === "absent" || added.has(x.key)) : out;
 }
 function moveFocus(step) {
   const t = targets(); if (!t.length) return;
@@ -453,11 +509,11 @@ function pickKey(digit) {
 function changed() { dirty = true; render(); clearTimeout(saveTimer); saveTimer = setTimeout(() => save(false), 600); }
 async function save(done) {
   clearTimeout(saveTimer);
-  const spent = seconds; seconds = 0;
+  const spent = seconds, next = neighbor(1); seconds = 0;
   try {
     await api(`/api/doc/${encodeURIComponent(state.id)}`, {gold: state.gold, done, seconds: spent});
     dirty = false;
-    if (done) { toast("Checked. Next document."); await open(await loadList()); }
+    if (done) { toast("Checked. Next document."); if (ABSENT_PASS) await go(next); else await open(await loadList()); }
     else await loadList(state.id);
   } catch (e) { seconds += spent; toast(e.message); }
 }
@@ -476,6 +532,7 @@ document.addEventListener("keydown", (e) => {
   } else if (/^[0-9]$/.test(e.key) && (e.key !== "0" || keyDigits)) pickKey(e.key);
   else if (e.key === "p" && state?.pdf) togglePdf();
   else if (e.key === "c") save(true);
+  else if (e.key === "]" || e.key === "[") go(neighbor(e.key === "]" ? 1 : -1));
   else return;
   e.preventDefault();
 });
