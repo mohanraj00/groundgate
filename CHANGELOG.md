@@ -3,11 +3,15 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
-## Unreleased
+## 0.2.0 (2026-10-03)
 
-Spec 0.2, in progress. Receipts name `"groundgate": "0.2"` and every digest uses the
-`groundgate/0.2:` prefix, so all hashes differ from 0.1.0. The decision changes are tracked in
-milestone 0.2.
+Spec 0.2. Receipts name `"groundgate": "0.2"` and every digest uses the `groundgate/0.2:`
+prefix, so all hashes differ from 0.1.0. The rules came from the v0.1 escapes, so they were
+measured on a second set of 101 documents picked before anyone read them (`bench/set2`). Pooled
+over 14 runs on the 74 documents checked in full, wrong extractions admitted without review fell
+from 30.7% (253/823) under spec 0.1 to 8.8% (72/823), correct extractions rejected from 11.3%
+(690/6080) to 0.5% (28/6080), and extractions sent to a person rose from 28.2% (1950/6903) to
+39.6% (2730/6903).
 
 - `verify` reports a receipt decided under another spec version as one problem, instead of a
   list of hash mismatches.
@@ -47,6 +51,11 @@ milestone 0.2.
 - `extract` (#30): the same PDF always gives the same text. pdfminer broke ties between equally
   distant text boxes by memory address, so a chart on one IRS page came out in two orders. All 90
   PDF texts in both benchmark sets are unchanged.
+- A second benchmark set (#1): 101 public-domain FDA labels, NTSB reports, IRS publications and
+  Federal Register rules, picked by rules frozen before anyone read them, with person-checked
+  gold and the same seven models. `bench/score.py --set bench/set2` decides every candidate under
+  spec 0.2 and, through `bench/decide.py`, under the released 0.1.0 wheel, side by side. Tables
+  and every escape are in `bench/set2/RESULTS.md`.
 
 ## 0.1.0 (2026-09-29)
 

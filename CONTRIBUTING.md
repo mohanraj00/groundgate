@@ -39,7 +39,7 @@ real LangExtract install.
 
 1. Set `__version__` in `src/groundgate/__init__.py` and rename `CHANGELOG.md`'s "Unreleased"
    section to the version and date.
-2. Commit, then tag: `git tag v0.1.0 && git push origin v0.1.0`.
+2. Commit, then tag: `git tag v0.2.0 && git push origin v0.2.0`.
 3. The release workflow builds once, tests that exact wheel on Linux and macOS, publishes it to
    PyPI through trusted publishing (no token is stored), and creates the GitHub release with the
    changelog section as its notes.
