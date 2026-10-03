@@ -41,6 +41,47 @@ uv run --group langextract python bench/propose.py --set bench/set2 --provider c
 
 A rerun skips documents that already have a file, so delete one to run it again.
 
+## Scoring
+
+```bash
+uv run --group langextract python bench/score.py --set bench/set2 --controls  # list the controls
+uv run python bench/label/app.py --set bench/set2 --controls                  # judge them
+uv run --group langextract python bench/score.py --set bench/set2             # RESULTS.md
+```
+
+[RESULTS.md](RESULTS.md) scores every run under spec 0.1 and spec 0.2, side by side (#12). Spec
+0.2 is the core in this repository. Spec 0.1 is the released 0.1.0 wheel, which `score.py` runs
+in a separate process through `bench/decide.py`. Both decide the same candidates, built by the
+current LangExtract adapter, so a candidate carries its key under both.
+
+- **Keyed facts** are judged on field, key and value. The key comes from the model's extraction
+  and is compared the way SPEC §4.5 compares keys. A right value under another key is `wrong_key`.
+- **Spec 0.1 has no keyed fields.** The 0.1.0 wheel refuses a schema with `keys`, so `decide.py`
+  drops them and makes the field `multiple`: what a 0.1 user would write for a field with one
+  value per condition.
+- **Controls** are judged only where the two specs decide differently. `--controls` writes
+  those candidates to `controls.json`, without either decision, and a person judges each one in
+  the labeling app. The other control candidates are not scored. The pooled rates cover the
+  documents checked in full only.
+- **Every rate carries its document count**, and every wrong candidate admitted without review
+  is listed one by one, under each spec.
+- **`--drafts` is refused.** Set 2 is scored on checked gold only.
+
+Track A plants the v0.1 classes and three new ones: `key_swap` (#2), the right value under the
+first other key that does not hold it; `per_kg_as_absolute` (#3), a weight-based dose given to
+the first field with the absolute unit, under the key whose title appears last before the value
+(the first key when none does);
+and `from_value` (#4), the old value of "from X to Y" for a field that means Y. The clean
+extraction is also scored on its own for each gold fact whose evidence overlaps a match of the
+`change`, `negation` or `scale` pattern in `bench/pick.py` (#4, #5, #6).
+
+### Caveats
+
+- `scale_word_in_text` skips a value that is already written with a scale word, because the plant
+  would read "183 million million". The v0.1 scorer planted one such fact (`irs-p15b`); the v0.1
+  numbers stay as published.
+- A scorer bug found after scoring is fixed and noted here. A spec fix waits for 0.3.
+
 ## Licenses
 
 - FDA drug labels (DailyMed SPL): openFDA publishes drug label content as public domain under

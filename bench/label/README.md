@@ -92,6 +92,20 @@ similar words) where that line or the next holds a number. Click a chip to read 
 
 The chips only show where to look. A field with no chip can still be in the text.
 
+## Judging the controls (set 2)
+
+Control documents are judged only where spec 0.1 and 0.2 decide a candidate differently (#12).
+`score.py --controls` lists those candidates in `bench/set2/controls.json`. Judge them here:
+
+```bash
+uv run python bench/label/app.py --set bench/set2 --controls
+```
+
+Each item is one model claim: a value, its unit and key, and the place it cites. The app never
+shows how either spec decided it. Press `y` when the claim is right for this document (right
+value, unit and key, cited at a place that states it) and `n` when it is not. Each judgment is
+saved at once. Then run `score.py --set bench/set2` again.
+
 ## Rules of thumb
 
 - Read the field description, not just the name. `pilot_total_hours` is all aircraft;

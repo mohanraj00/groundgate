@@ -107,13 +107,15 @@ kbd { font: 11px ui-monospace, monospace; border: 1px solid var(--line); border-
 "use strict";
 const TOKEN = "__TOKEN__";
 const ABSENT_PASS = "__PASS__" === "absent";  // --absent: only the absences, for a second look
+const CONTROLS_MODE = "__PASS__" === "controls";  // --controls: judge set 2's control items
 const $ = (s) => document.querySelector(s);
 let state = null;      // {id, text, gold, idx}
 let focus = null;      // {kind: "fact"|"absent", key}
 let dirty = false, seconds = 0, saveTimer = null;
 const expanded = new Set();  // facts whose every other occurrence is listed
 let absentAtOpen = new Set();  // in the pass, only these fields are shown
-const passFields = (name) => !ABSENT_PASS || absentAtOpen.has(name);
+const passFields = (name) => CONTROLS_MODE ? state.gold.facts.some((f) => f.field === name)
+  : !ABSENT_PASS || absentAtOpen.has(name);
 let pdfPage = null, keyDigits = "", keyTimer = null;
 let pdfOn = true;
 try { pdfOn = localStorage.getItem("pdf") !== "off"; } catch {}
@@ -154,10 +156,10 @@ async function loadList(select) {
   for (const d of docs) {
     const o = document.createElement("option");
     o.value = d.id;
-    o.textContent = `${d.checked ? "✓" : d.open ? "•" : "○"} ${d.control ? "control · " : ""}${d.id} (${ABSENT_PASS ? `${d.absent} absent` : `${d.facts} facts`}${d.open ? `, ${d.open} open` : ""})`;
+    o.textContent = `${d.checked ? "✓" : d.open ? "•" : "○"} ${d.control ? "control · " : ""}${d.id} (${ABSENT_PASS ? `${d.absent} absent` : CONTROLS_MODE ? `${d.facts} items` : `${d.facts} facts`}${d.open ? `, ${d.open} open` : ""})`;
     pick.append(o); if (d.checked) checked++;
   }
-  $("#progress").textContent = `${checked} of ${docs.length} checked`;
+  $("#progress").textContent = `${checked} of ${docs.length} ${CONTROLS_MODE ? "judged" : "checked"}`;
   const first = select || (docs.find((d) => !d.checked && !d.control) || docs[0]).id;
   pick.value = first;
   return first;
@@ -171,7 +173,15 @@ function neighbor(by) {
 async function go(id) { await open(id); await loadList(id); }
 async function open(id) {
   if (dirty) await save(false);
-  const {gold, text, source, pdf} = await api(`/api/doc/${encodeURIComponent(id)}`);
+  const {gold, text, source, pdf, controls} = await api(`/api/doc/${encodeURIComponent(id)}`);
+  if (CONTROLS_MODE) {
+    // the control items stand in for the facts: one per candidate the two specs decide differently
+    const items = controls.map((it, index) => ({...it, index})).filter((it) => it.doc === id);
+    gold.facts = items.map((it) => ({field: it.field, value: it.value, key: it.key, unit: it.unit,
+      evidence: it.start === null ? [] : [{start: it.start, end: it.end}], status: STATUS[it.judgment],
+      item: it}));
+    gold.absent = {}; gold.excluded = {};
+  }
   $("#source").hidden = !source; if (source) $("#source").href = source;
   state = {id, gold, text, pdf, idx: buildIndex(text)};
   pdfPage = null; $("#pdfbtn").hidden = !pdf; showPdf();
@@ -244,7 +254,8 @@ function render() {
       card.append(x, button("Include again", () => { delete gold.excluded[name]; changed(); }));
       panel.append(card); continue;
     }
-    gold.facts.forEach((f, i) => { if (f.field === name) card.append(factRow(f, i)); });
+    gold.facts.forEach((f, i) => { if (f.field === name) card.append((CONTROLS_MODE ? controlRow : factRow)(f, i)); });
+    if (CONTROLS_MODE) { panel.append(card); continue; }
     if (gold.absent[name] !== undefined) card.append(absentRow(name));
     const tools = el("div", "row chips");
     tools.append(button("+ Add from selection", () => addFromSelection(name)),
@@ -325,6 +336,35 @@ function factRow(f, i) {
     row.append(top, pick, chips);
   } else row.append(top, chips);
   return row;
+}
+const STATUS = {null: "draft", correct: "confirmed", wrong: "rejected"};
+function controlRow(f, i) {
+  // a control item: what the model claims, and where. No decision is shown, so the judgment is blind.
+  const row = el("div", "fact " + f.status); row.dataset.fact = i;
+  row.addEventListener("click", () => setFocus({kind: "fact", key: i}, true));
+  const top = el("div", "row"), claim = el("strong");
+  claim.textContent = `${f.value}${f.unit ? " " + f.unit : ""}${f.key ? `  [${f.key}]` : ""}`;
+  top.append(claim,
+    button("✓ correct", () => judgeItem(i, "correct"), f.status === "confirmed" ? "on-ok" : ""),
+    button("✗ wrong", () => judgeItem(i, "wrong"), f.status === "rejected" ? "on-bad" : ""));
+  const chips = el("div", "chips");
+  for (const e of f.evidence) {
+    const c = el("span", "chip ev"); c.textContent = "“" + snippet(e) + "”";
+    c.title = "the place the model cites";
+    c.addEventListener("click", (ev) => { ev.stopPropagation(); scrollTo(e); pdfAt(e); });
+    chips.append(c);
+  }
+  if (!f.evidence.length) chips.append(Object.assign(el("span", "muted"), {textContent: "No place cited."}));
+  row.append(top, chips);
+  return row;
+}
+async function judgeItem(i, judgment) {
+  const f = state.gold.facts[i];
+  try {
+    await api(`/api/controls/${encodeURIComponent(state.id)}`, {index: f.item.index, judgment});
+    f.item.judgment = judgment; f.status = STATUS[judgment];
+    render(); moveFocus(1); await loadList(state.id);
+  } catch (e) { toast(e.message); }
 }
 function absentRow(name) {
   const st = state.gold.absent[name];
@@ -525,6 +565,8 @@ document.addEventListener("keydown", (e) => {
   const cur = focus;
   if (e.key === "j") moveFocus(1);
   else if (e.key === "k") moveFocus(-1);
+  else if (CONTROLS_MODE && (e.key === "y" || e.key === "n") && cur) judgeItem(cur.key, e.key === "y" ? "correct" : "wrong");
+  else if (CONTROLS_MODE && !"pjk[]".includes(e.key)) return;
   else if (e.key === "y" && cur?.kind === "fact") { state.gold.facts[cur.key].status = "confirmed"; changed(); moveFocus(1); }
   else if (e.key === "n" && cur?.kind === "fact") { state.gold.facts[cur.key].status = "rejected"; changed(); moveFocus(1); }
   else if (e.key === "a" && cur?.kind === "absent") { state.gold.absent[cur.key] = "confirmed"; changed(); moveFocus(1); }
@@ -539,6 +581,11 @@ document.addEventListener("keydown", (e) => {
   e.preventDefault();
 });
 $("#pick").addEventListener("change", (e) => open(e.target.value));
+if (CONTROLS_MODE) {
+  $("#done").hidden = true; $("#timer").hidden = true;
+  $("#help").innerHTML = "Is the model's claim right for this document? <kbd>y</kbd> correct · " +
+    "<kbd>n</kbd> wrong · <kbd>j</kbd>/<kbd>k</kbd> move · <kbd>[</kbd>/<kbd>]</kbd> document";
+}
 $("#done").addEventListener("click", () => save(true));
 $("#pdfbtn").addEventListener("click", togglePdf);
 setInterval(() => {

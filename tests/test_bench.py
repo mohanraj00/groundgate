@@ -111,6 +111,55 @@ def test_near_miss_changes_the_second_digit() -> None:
     assert score._near(Decimal("0.4")) == Decimal("0.6")
 
 
+def test_a_keyed_fact_is_judged_on_its_key() -> None:
+    g = gold()
+    g.schema["fields"]["max_dose"]["keys"] = ["Hypertension", "Heart Failure"]
+    g.keyed = {"max_dose": {("Heart Failure", "40")}}
+    assert score.judge(g, cand("max_dose", "40", at="40 mg") | {"key": "heart  failure"}) == (
+        "correct",
+        True,
+    )
+    assert score.judge(g, cand("max_dose", "40") | {"key": "Hypertension"})[0] == "wrong_key"
+    assert score.judge(g, cand("max_dose", "40"))[0] == "wrong_key"  # no key at all
+    assert score.judge(g, cand("max_dose", "20") | {"key": "Hypertension"})[0] == "wrong_value"
+
+
+def test_spec_01_sees_a_keyed_field_as_multiple() -> None:
+    import decide  # bench/decide.py
+
+    schema = {"fields": {"d": {"type": "number", "keys": ["A", "B"]}, "e": {"type": "number"}}}
+    assert decide.as_01(schema)["fields"] == {
+        "d": {"type": "number", "multiple": True},
+        "e": {"type": "number"},
+    }
+    assert schema["fields"]["d"]["keys"] == ["A", "B"]  # the 0.2 schema is not changed
+
+
+def test_a_control_judgment_is_saved_and_checked(
+    served: tuple[int, dict], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    port, _ = served
+    item = {"doc": "d", "field": "max_dose", "key": None, "value": "40", "unit": "mg"}
+    item |= {"start": 36, "end": 41, "quote": "40 mg", "judgment": None, "note": ""}
+    (tmp_path / "controls.json").write_text(json.dumps({"items": [item]}))
+    monkeypatch.setattr(app, "CONTROLS", True)
+    docs = call(port, "GET", "/api/docs", token=app.TOKEN)[1]
+    assert docs == [app.control_summary("d", [item])] and docs[0]["open"] == 1
+    bad = {"index": 0, "judgment": "maybe"}
+    assert call(port, "POST", "/api/controls/d", bad, app.TOKEN)[0] == 422
+    assert (
+        call(port, "POST", "/api/controls/d", {"index": 3, "judgment": "wrong"}, app.TOKEN)[0]
+        == 422
+    )
+    status, body = call(
+        port, "POST", "/api/controls/d", {"index": 0, "judgment": "wrong"}, app.TOKEN
+    )
+    assert status == 200 and body["open"] == 0
+    saved = json.loads((tmp_path / "controls.json").read_text())["items"][0]
+    assert saved["judgment"] == "wrong"
+    assert call(port, "POST", "/api/controls/d", {"index": 0, "judgment": "wrong"})[0] == 403
+
+
 # ---------------------------------------------------------------------------- label app
 
 
