@@ -16,19 +16,29 @@ Every run writes a receipt with hashes of every input. Anyone can re-derive it b
 
 ## Why this exists
 
-Grounded extraction tools check that the quoted **text** exists in the source. They don't check
-the **value** you asked for.
+Current models get most extracted values right. In the benchmark below, 4,233 of 4,350
+extractions were correct. The other 117, about 1 in 37, each cited a real place in the document,
+so nothing on the page tells you which ones are wrong.
 
-LangExtract is the clearest example, and a good tool. It aligns each `extraction_text` to the
-source and reports `MATCH_EXACT`, `MATCH_FUZZY` and so on. It never looks at the attributes that
-hold the typed value. So this passes as an exact match:
+Grounded extraction tools check that the quoted **text** exists in the source. They don't check
+the **value** you store. LangExtract is the clearest example, and a good tool. It aligns each
+`extraction_text` to the source and reports `MATCH_EXACT`, `MATCH_FUZZY` and so on. It never
+looks at the attributes that hold the typed value.
+
+A real case from the benchmark: IRS Publication 560 states two limits a few lines apart.
 
 ```text
-extraction_text: "$8,000"     found in the source: MATCH_EXACT
-value:           "80000"      not what the source says
+The limit on elective deferrals, other than catch-up contributions, is $23,500 for 2025 ...
+The limit on salary reduction contributions, other than catch-up contributions, is $16,500 for 2025 ...
 ```
 
-Here is what that looks like on a real document. I ran Gemini 3.6 Flash and GPT-OSS 120B through
+The first is the 401(k) limit. The second is the SIMPLE plan limit. Asked for the 2025 elective
+deferral limit, 4 of 14 runs proposed both, and LangExtract marked both quotes `MATCH_EXACT`.
+groundgate sent both to a person with `CONFLICTING_CANDIDATES`, because two proposals for one
+field disagree. In Publication 15-B, one model stored "$1 million" as 1, also an exact match, and
+groundgate flagged it `SCALE_WORD`.
+
+The same gap shows up on the document I used while building the library. I ran Gemini 3.6 Flash and GPT-OSS 120B through
 LangExtract on two pages of IRS Publication 590-A. LangExtract aligned all 48 extractions as
 `MATCH_EXACT`. groundgate then:
 
@@ -47,11 +57,6 @@ government documents, LangExtract's strictest setting (`MATCH_EXACT` only) accep
 planted value and unit errors whose quote was correct. groundgate caught **all** of them and
 rejected **none** of the correct facts. The method and full tables are in
 [spikes/m0_5](spikes/m0_5/README.md).
-
-To be clear about scale: current models rarely get a value wrong. In the benchmark below, 117 of
-4,350 real extractions were wrong. The point is not that models are bad. It is that when
-one is wrong, nothing downstream should have to trust it, and every fact that is admitted comes
-with proof you can re-check.
 
 LangExtract locates the text. groundgate checks the number in it.
 
