@@ -16,11 +16,19 @@ values. **Original ↗** in the header opens the source PDF, or the label on Dai
 be a newer version than the pinned one), so you can read the table as printed. Decide from the
 original, then cite the place in the text.
 
+When the original is a cached PDF, the app also shows it in a pane between the text and the
+fields. The pane turns to the PDF page of the focused fact's evidence. `p` or **PDF pane** shows
+or hides it. Chrome and Firefox open the right page; other browsers may open page 1.
+
 ## What to decide
 
 For each field, the draft gives either one or more values or says the field is not in the
 document. Your job is to make that true.
 
+- **Each fact has a badge.** "in evidence" means its value is written in its evidence, in any
+  form: `1000000` matches "1,000,000" and "$1 million". Then you only check what the value
+  means. "not in evidence" or "no evidence" means the draft is probably wrong, so read it
+  closely. The badge only shows where to look. You still decide every fact.
 - **A draft value is right.** Press `y` (or click ✓). Check the evidence chip too: it should
   point at the place in the text that states the value. If the same number is stated for the
   same field somewhere else, click its `+` chip under the fact to add that place as evidence.
@@ -42,7 +50,8 @@ Values are plain numbers: `15750` or `15,750`, no `$` and no unit. Units come fr
 
 - **The field is keyed** (set 2, FDA labels with indications): each fact has a key picker. Check
   that the value belongs to the indication shown, and change the key if it belongs to another
-  one. A value you add from the selection starts with no key; pick one.
+  one. A value you add from the selection starts with no key; pick one. The number keys pick a
+  key by its number in the picker. With 10 or more keys, type both digits, `1` then `2` for 12.
 
 When nothing on the page is still a draft, and every kept fact on a keyed field has a key, click
 **Mark document checked**. The app refuses
@@ -57,6 +66,9 @@ until every draft fact and absence is decided.
 | `n` | fact is wrong |
 | `a` | confirm the field is absent |
 | `+` | add the selected text as a fact for the focused field |
+| `1`-`9` | pick the key with this number for the focused fact |
+| `p` | show or hide the PDF pane |
+| `c` | mark the document checked |
 
 ## Rules of thumb
 
