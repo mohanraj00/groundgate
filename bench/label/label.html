@@ -112,7 +112,8 @@ let state = null;      // {id, text, gold, idx}
 let focus = null;      // {kind: "fact"|"absent", key}
 let dirty = false, seconds = 0, saveTimer = null;
 const expanded = new Set();  // facts whose every other occurrence is listed
-const added = new Set();  // facts added since the document opened
+let absentAtOpen = new Set();  // in the pass, only these fields are shown
+const passFields = (name) => !ABSENT_PASS || absentAtOpen.has(name);
 let pdfPage = null, keyDigits = "", keyTimer = null;
 let pdfOn = true;
 try { pdfOn = localStorage.getItem("pdf") !== "off"; } catch {}
@@ -174,7 +175,8 @@ async function open(id) {
   $("#source").hidden = !source; if (source) $("#source").href = source;
   state = {id, gold, text, pdf, idx: buildIndex(text)};
   pdfPage = null; $("#pdfbtn").hidden = !pdf; showPdf();
-  focus = null; seconds = 0; dirty = false; expanded.clear(); added.clear();
+  focus = null; seconds = 0; dirty = false; expanded.clear();
+  absentAtOpen = new Set(Object.keys(gold.absent));
   render(); moveFocus(1);
 }
 
@@ -231,6 +233,7 @@ function render() {
   // fields panel
   const panel = $("#panel"); panel.textContent = "";
   for (const [name, spec] of Object.entries(gold.fields)) {
+    if (!passFields(name)) continue;
     const card = el("div", "field"); card.id = "field-" + name;
     const h = el("h3"); h.textContent = `${name}  [${spec.schema.unit || "no unit"}]` +
       (spec.schema.multiple ? "  (one per value)" : "") + (spec.schema.keys ? "  (one per key)" : "");
@@ -424,7 +427,7 @@ function addFromSelection(name) {
   const fact = {id: "p" + Date.now(), field: name, value, unit: gold.fields[name].schema.unit,
                 evidence: [{start: s.start, end: s.end}], status: "confirmed"};
   if (gold.fields[name].schema.keys) { fact.key = null; toast("Pick the key for the new value"); }
-  gold.facts.push(fact); added.add(gold.facts.length - 1);
+  gold.facts.push(fact);
   window.getSelection().removeAllRanges();
   changed(); setFocus({kind: "fact", key: gold.facts.length - 1}, true);
 }
@@ -435,8 +438,7 @@ function targets() {
     state.gold.facts.forEach((f, i) => { if (f.field === name) out.push({kind: "fact", key: i}); });
     if (state.gold.absent[name] !== undefined) out.push({kind: "absent", key: name});
   }
-  // in the pass, a value added in this sitting is focused too, so its key can be picked
-  return ABSENT_PASS ? out.filter((x) => x.kind === "absent" || added.has(x.key)) : out;
+  return out.filter((x) => passFields(x.kind === "absent" ? x.key : state.gold.facts[x.key].field));
 }
 function moveFocus(step) {
   const t = targets(); if (!t.length) return;
