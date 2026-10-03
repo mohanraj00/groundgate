@@ -81,7 +81,8 @@ uv run python bench/label/app.py --set bench/set2 --absent fda
 ```
 
 `--absent` lists only the documents checked in full that have an absence, of one kind (`fda`,
-`irs`, `fr`) or of all kinds without a value. `j` / `k` move between the absences only. Under
+`irs`, `fr`) or of all kinds without a value. The panel shows only the fields that were absent
+when the document opened, and `j` / `k` move between them. Under
 each absence, chips show the lines that name the field ("hepatic", "pediatric", "maximum" and
 similar words) where that line or the next holds a number. Click a chip to read the line.
 
