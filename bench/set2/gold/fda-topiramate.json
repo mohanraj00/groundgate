@@ -252,17 +252,44 @@
     }
    ],
    "status": "confirmed"
+  },
+  {
+   "id": "p1791011527307",
+   "field": "max_daily_dose",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2066,
+     "end": 2069
+    }
+   ],
+   "status": "rejected",
+   "key": null
+  },
+  {
+   "id": "p1791012238161",
+   "field": "max_daily_dose",
+   "value": "400",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2410,
+     "end": 2416
+    }
+   ],
+   "status": "confirmed",
+   "key": "Adjunctive Therapy Epilepsy"
   }
  ],
  "absent": {
-  "max_daily_dose": "confirmed",
   "hepatic_starting_dose": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
  "checked": {
   "by": "person",
-  "at": "2026-10-02T22:43:23-0700"
+  "at": "2026-10-03T00:23:58-0700"
  },
- "seconds_spent": 95
+ "seconds_spent": 219
 }

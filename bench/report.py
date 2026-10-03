@@ -503,7 +503,9 @@ def render_set2(res: dict[str, Any]) -> dict[str, str]:
         f"{gold['absent_fields']} fields confirmed absent, {gold['excluded_fields']} excluded "
         f"as ambiguous ({gold['status']} in {gold['labeling_hours']} hours). "
         f"{gold['control_documents']} control documents are judged only where the two specs "
-        f"decide differently: {gold['control_items']} candidates.",
+        f"decide differently: {gold['control_items']} candidates. Three fields changed after "
+        'the first scoring, with model output in view; README.md lists them under "Gold '
+        'changes after scoring".',
         "",
         "## Track A: planted errors",
         "",

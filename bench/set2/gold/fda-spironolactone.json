@@ -167,15 +167,16 @@
   }
  ],
  "absent": {
-  "max_daily_dose": "confirmed",
   "pediatric_min_age": "confirmed",
   "hepatic_starting_dose": "confirmed"
  },
- "excluded": {},
+ "excluded": {
+  "max_daily_dose": "Several recommended daily ranges (25 mg to 100 mg, 25 mg to 200 mg, 100 mg to 400 mg) whose indications are not clear, so no maximum is one value."
+ },
  "prelabeled_by": "Claude (model draft)",
  "checked": {
   "by": "person",
-  "at": "2026-10-02T22:41:37-0700"
+  "at": "2026-10-03T00:23:58-0700"
  },
  "seconds_spent": 34
 }

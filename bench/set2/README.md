@@ -75,6 +75,24 @@ and `from_value` (#4), the old value of "from X to Y" for a field that means Y. 
 extraction is also scored on its own for each gold fact whose evidence overlaps a match of the
 `change`, `negation` or `scale` pattern in `bench/pick.py` (#4, #5, #6).
 
+### Gold changes after scoring
+
+The gold was checked blind (#10). After the first scoring, spec 0.2 admitted model claims on
+fields the gold called absent, so I looked at the three that read most like real values. That
+look came with model output in view, so every change is listed here.
+
+- The rule for a recommended daily range ("200 mg to 400 mg daily") is that its upper end is the
+  maximum, as the blind check already decided for amoxicillin and valsartan. Applied everywhere:
+  - `fda-topiramate`, `max_daily_dose`, Adjunctive Therapy Epilepsy: absent, now 400 ("200 mg to
+    400 mg orally once daily", adults).
+  - `fda-hydroxychloroquine`, `max_daily_dose`: absent, now excluded. Rheumatoid arthritis has an
+    initial and a chronic range, so its maximum is not one value.
+  - `fda-spironolactone`, `max_daily_dose`: absent, now excluded. Its ranges do not map clearly to
+    its indications.
+- Looked at and left as they were: topiramate's "should not exceed 400 mg/day" is in the
+  pediatric paragraph; `irs-p54`'s $120,000 is from a worked example, not the stated maximum;
+  lamotrigine's Epilepsy key has several ranges that depend on other drugs, so it keeps no value.
+
 ### Caveats
 
 - `scale_word_in_text` skips a value that is already written with a scale word, because the plant
