@@ -1,0 +1,221 @@
+{
+ "name": "07e-change-at-a-distance",
+ "description": "A change word may stand a few words before `from` when the words between start with a determiner and hold no preposition, range word, digit or punctuation (spec 0.3).",
+ "document": "The agency is reducing the annual filing fee from $1,200 to $950. The limit increases from $70,000 to $72,000. An increase in the late fee from $25 to $40 applies in 2027. The board raised its cap on grants from $10,000 to $15,000. Children with increased body weight from 20 to 40 kg take the adult dose. The increase in the fee ranges from $31 to $37. The rule lowered the maximum annual civil monetary penalty amount from $500 to $650. The fee decreased, as noted, from $81 to $66. The board increased the 2026 fee from $300 to $350.",
+ "schema": {
+  "fields": {
+   "filing_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "old_filing_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "limit": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "late_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "grant_cap": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "weight_max": {
+    "type": "integer",
+    "unit": "kg"
+   },
+   "fee_max": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "penalty": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "fee_noted": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "fee_2026": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "e1",
+   "field": "filing_fee",
+   "value": "950",
+   "unit": "USD",
+   "evidence": {
+    "start": 60,
+    "end": 64,
+    "text": "$950"
+   }
+  },
+  {
+   "id": "e2",
+   "field": "old_filing_fee",
+   "value": "1200",
+   "unit": "USD",
+   "evidence": {
+    "start": 50,
+    "end": 56,
+    "text": "$1,200"
+   }
+  },
+  {
+   "id": "e3",
+   "field": "limit",
+   "value": "72000",
+   "unit": "USD",
+   "evidence": {
+    "start": 102,
+    "end": 109,
+    "text": "$72,000"
+   }
+  },
+  {
+   "id": "e4",
+   "field": "late_fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": {
+    "start": 151,
+    "end": 154,
+    "text": "$40"
+   }
+  },
+  {
+   "id": "e5",
+   "field": "grant_cap",
+   "value": "15000",
+   "unit": "USD",
+   "evidence": {
+    "start": 223,
+    "end": 230,
+    "text": "$15,000"
+   }
+  },
+  {
+   "id": "e6",
+   "field": "weight_max",
+   "value": "40",
+   "unit": "kg",
+   "evidence": {
+    "start": 279,
+    "end": 284,
+    "text": "40 kg"
+   }
+  },
+  {
+   "id": "e7",
+   "field": "fee_max",
+   "value": "37",
+   "unit": "USD",
+   "evidence": {
+    "start": 349,
+    "end": 352,
+    "text": "$37"
+   }
+  },
+  {
+   "id": "e8",
+   "field": "penalty",
+   "value": "650",
+   "unit": "USD",
+   "evidence": {
+    "start": 433,
+    "end": 437,
+    "text": "$650"
+   }
+  },
+  {
+   "id": "e9",
+   "field": "fee_noted",
+   "value": "66",
+   "unit": "USD",
+   "evidence": {
+    "start": 480,
+    "end": 483,
+    "text": "$66"
+   }
+  },
+  {
+   "id": "e10",
+   "field": "fee_2026",
+   "value": "350",
+   "unit": "USD",
+   "evidence": {
+    "start": 531,
+    "end": 535,
+    "text": "$350"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
