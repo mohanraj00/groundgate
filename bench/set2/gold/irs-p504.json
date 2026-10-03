@@ -71,7 +71,7 @@
      "end": 5110
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -84,7 +84,7 @@
      "end": 5285
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -97,7 +97,7 @@
      "end": 5364
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -110,13 +110,17 @@
      "end": 5370
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "alimony_recapture_threshold": "draft"
+  "alimony_recapture_threshold": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:47:34-0700"
+ },
+ "seconds_spent": 20
 }

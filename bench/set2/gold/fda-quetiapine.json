@@ -90,7 +90,7 @@
      "end": 1514
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -112,7 +112,7 @@
      "end": 3286
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -130,7 +130,7 @@
      "end": 1788
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -156,7 +156,7 @@
      "end": 3616
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -173,7 +173,7 @@
      "end": 2758
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -190,7 +190,7 @@
      "end": 4552
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -207,7 +207,7 @@
      "end": 7112
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -224,7 +224,7 @@
      "end": 7269
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -241,7 +241,7 @@
      "end": 7420
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f10",
@@ -258,11 +258,15 @@
      "end": 7580
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {},
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T21:05:10-0700"
+ },
+ "seconds_spent": 62
 }

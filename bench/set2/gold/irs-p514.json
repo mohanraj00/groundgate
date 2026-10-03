@@ -70,7 +70,7 @@
      "end": 1974
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -83,7 +83,7 @@
      "end": 1980
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -96,7 +96,7 @@
      "end": 8294
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -109,13 +109,17 @@
      "end": 12279
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "foreign_earned_income_exclusion_limit": "draft"
+  "foreign_earned_income_exclusion_limit": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:46:19-0700"
+ },
+ "seconds_spent": 13
 }

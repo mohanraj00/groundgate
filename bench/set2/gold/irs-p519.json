@@ -86,7 +86,7 @@
      "end": 1408
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -111,7 +111,7 @@
      "end": 9217
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -124,7 +124,7 @@
      "end": 14432
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -145,13 +145,17 @@
      "end": 14864
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "expatriation_net_worth_threshold": "draft"
+  "expatriation_net_worth_threshold": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:45:23-0700"
+ },
+ "seconds_spent": 18
 }

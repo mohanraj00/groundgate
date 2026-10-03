@@ -84,7 +84,7 @@
      "end": 5461
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -97,7 +97,7 @@
      "end": 15688
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -110,13 +110,17 @@
      "end": 21806
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "domestic_segment_tax_per_segment": "draft"
+  "domestic_segment_tax_per_segment": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:46:52-0700"
+ },
+ "seconds_spent": 13
 }

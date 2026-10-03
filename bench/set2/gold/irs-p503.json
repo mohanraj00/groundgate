@@ -43,13 +43,17 @@
      "end": 2080
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "max_credit_percentage": "draft"
+  "max_credit_percentage": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:47:50-0700"
+ },
+ "seconds_spent": 7
 }

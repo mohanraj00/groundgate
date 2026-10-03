@@ -43,13 +43,17 @@
      "end": 2312
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "medical_expense_agi_floor_pct": "draft"
+  "medical_expense_agi_floor_pct": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:48:11-0700"
+ },
+ "seconds_spent": 6
 }

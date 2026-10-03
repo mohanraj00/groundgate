@@ -61,7 +61,7 @@
      "end": 2415
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -74,7 +74,7 @@
      "end": 2503
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -87,13 +87,17 @@
      "end": 3779
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "agi_limit_single": "draft"
+  "agi_limit_single": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:42:34-0700"
+ },
+ "seconds_spent": 33
 }
