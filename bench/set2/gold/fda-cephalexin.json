@@ -286,17 +286,39 @@
     }
    ],
    "status": "confirmed"
+  },
+  {
+   "id": "p1791004504037",
+   "field": "max_daily_dose",
+   "value": "1",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 2116,
+     "end": 2156
+    },
+    {
+     "start": 1900,
+     "end": 1901
+    },
+    {
+     "start": 2335,
+     "end": 2336
+    }
+   ],
+   "status": "rejected",
+   "key": null
   }
  ],
  "absent": {
-  "max_daily_dose": "confirmed",
-  "hepatic_starting_dose": "confirmed"
+  "hepatic_starting_dose": "confirmed",
+  "max_daily_dose": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
  "checked": {
   "by": "person",
-  "at": "2026-10-02T20:39:41-0700"
+  "at": "2026-10-02T22:31:19-0700"
  },
- "seconds_spent": 112
+ "seconds_spent": 991
 }

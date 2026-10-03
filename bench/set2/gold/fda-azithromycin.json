@@ -150,14 +150,15 @@
  ],
  "absent": {
   "max_daily_dose": "confirmed",
-  "pediatric_min_age": "confirmed",
   "hepatic_starting_dose": "confirmed"
  },
- "excluded": {},
+ "excluded": {
+  "pediatric_min_age": "The youngest pediatric age is stated in months (6 months); the field is in years."
+ },
  "prelabeled_by": "Claude (model draft)",
  "checked": {
   "by": "person",
-  "at": "2026-10-01T19:04:10-0700"
+  "at": "2026-10-02T22:47:42-0700"
  },
- "seconds_spent": 362
+ "seconds_spent": 381
 }

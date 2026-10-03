@@ -224,17 +224,31 @@
     }
    ],
    "status": "confirmed"
+  },
+  {
+   "id": "p1791005844551",
+   "field": "pediatric_min_age",
+   "value": "1",
+   "unit": "years",
+   "evidence": [
+    {
+     "start": 336,
+     "end": 358
+    }
+   ],
+   "status": "rejected"
   }
  ],
  "absent": {
-  "pediatric_min_age": "confirmed",
   "hepatic_starting_dose": "confirmed"
  },
- "excluded": {},
+ "excluded": {
+  "pediatric_min_age": "The youngest pediatric age is stated in months (1 month); the field is in years."
+ },
  "prelabeled_by": "Claude (model draft)",
  "checked": {
   "by": "person",
-  "at": "2026-10-02T21:02:07-0700"
+  "at": "2026-10-02T22:47:42-0700"
  },
- "seconds_spent": 29
+ "seconds_spent": 164
 }
