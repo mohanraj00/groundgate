@@ -64,7 +64,7 @@ LangExtract locates the text. groundgate checks the number in it.
 
 Seven models (Gemini, GPT and Claude, each through its own CLI) ran through LangExtract on 30
 public-domain FDA drug labels, NTSB accident reports and IRS publications, at two chunk sizes. A
-person checked every gold fact. Of 4,350 extractions, 117 were wrong: the wrong value, a value
+person checked every gold fact. These are spec 0.1's numbers on the first set, as published. Of 4,350 extractions, 117 were wrong: the wrong value, a value
 for a field the document doesn't state, the wrong unit, or not a number.
 
 ![Pooled over all 14 runs: MATCH_EXACT accepted 98% of wrong extractions without review, groundgate 6.8%. Of correct extractions citing the right place, MATCH_EXACT rejected 4.6%, groundgate 0.3%. groundgate sent 12% of extractions to a person.](bench/charts/summary.svg)
@@ -88,7 +88,8 @@ Six of the 8 that got through are the case groundgate says it cannot catch (see
 starting dose. Each number is real and cited correctly; it belongs to another condition. The
 other two read levothyroxine's 1.6 mcg/kg/day as a flat 1.6 mcg, which the unit check allows.
 Putting all seven models through one gate caught one more, because when they were wrong they
-mostly agreed.
+mostly agreed. Spec 0.2 goes after both: keyed fields check the condition, and a dose per
+kilogram no longer passes as a flat dose.
 
 The benchmark also found a bug. When LangExtract's chunker cut "29.97" after "29.", groundgate
 read the span as 29, which its own spec forbids. It's fixed, and three wrong altimeter settings no
@@ -97,6 +98,27 @@ longer get through.
 Tables and planted-error results: [bench/RESULTS.md](bench/RESULTS.md). Method and caveats:
 [bench/README.md](bench/README.md). The write-up, with what got through and why:
 [Grounding is a contract, not a citation](https://mohanraj00.github.io/tech/grounding-is-a-contract/).
+
+### Spec 0.2 on a second set
+
+Spec 0.2's rules were written from the escapes above, so they can't be measured on the same
+documents. I picked 101 new ones by rules frozen before anyone read them: FDA labels with doses
+per indication or per kilogram, IRS publications and Federal Register rules with "increased from",
+"must not be more than" and "$1.2 million". The same seven models ran at both chunk sizes. Every
+candidate was decided twice, by spec 0.1 (the released 0.1.0 wheel) and by spec 0.2. Pooled over
+14 runs on the 74 documents checked in full:
+
+| | LangExtract, `MATCH_EXACT` | groundgate, spec 0.1 | groundgate, spec 0.2 |
+|---|---:|---:|---:|
+| wrong extractions accepted without review | 85.7% (705/823) | 30.7% (253/823) | 8.8% (72/823) |
+| correct extractions citing the right place, rejected | 3.8% (230/6,080) | 11.3% (690/6,080) | 0.5% (28/6,080) |
+| extractions sent to a person | 0% | 28.2% (1,950/6,903) | 39.6% (2,730/6,903) |
+
+642 of 0.1's 690 false rejects are in the 19 documents picked for amounts like "$1.2 million",
+which 0.1 could not match. 82 of its 253 escapes were a right value under the wrong indication;
+0.2 lets 10 of those through. It pays in review load. The 72 that still got through are listed
+one by one in [bench/set2/RESULTS.md](bench/set2/RESULTS.md), and two rules that need work are
+open for the next version (#51, #52).
 
 ## Quickstart
 
@@ -216,15 +238,15 @@ vectors that pin every code, so another implementation can prove it agrees.
 ## Receipts
 
 ```json
-{"groundgate": "0.1",
+{"groundgate": "0.2",
  "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:387c5991b989..."},
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "Gemini_3.6_Flash_Medium/0", "field": "ira_limit_2025",
                 "outcome": "admitted", "codes": [], "value": "7000", "unit": "USD",
                 "evidence": {"start": 2634, "end": 2640}, "candidate_sha256": "sha256:37e4fbb8..."},
                "..."],
- "coverage": [{"field": "roth_phaseout_joint_2026_end", "code": "REQUIRED_FIELD_MISSING"}],
- "summary": {"admitted": 50, "needs_verification": 0, "rejected": 2},
+ "coverage": [{"field": "roth_phaseout_single_2025_end", "code": "REQUIRED_FIELD_MISSING"}],
+ "summary": {"admitted": 44, "needs_verification": 3, "rejected": 1},
  "receipt_sha256": "sha256:..."}
 ```
 
@@ -238,17 +260,17 @@ a changed document, schema, policy, candidate or outcome.
   belongs to another field, every span check passes: a model that reads an age-50 limit of $8,000
   as the IRA limit cites a real "$8,000" with the right unit. A second proposer plus
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
-  mostly agreed: six of the eight escapes were this case.
-- **No dates, arrays of records, or cross-document checks** in spec v0.1.
+  mostly agreed: six of the eight escapes were this case. When the field depends on a condition
+  the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
+- **No dates, arrays of records, or cross-document checks** in spec v0.2.
 - **No OCR.** Scanned PDFs need a text layer first (for example `ocrmypdf`).
 - **No model calls.** groundgate never asks an LLM whether an LLM was right.
 
 ## Status
 
-Alpha. groundgate 0.1.0 implements spec v0.1, and a receipt names the spec version it was decided
-under. The next spec version starts from what the benchmark found: values that depend on a
-condition (a dose per indication, a limit per year) and weight-based units. See
-[CHANGELOG.md](CHANGELOG.md).
+Alpha. groundgate 0.2.0 implements spec v0.2, and a receipt names the spec version it was decided
+under. The next spec version starts from what the second set found: a change rule that fires on too
+few sentences (#51), and keys written in a short form (#52). See [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

@@ -4,7 +4,7 @@ from .admit import Verification, admit, verify
 from .canonical import digest, jcs
 from .model import Decision, Field, PacketError, Policy, Receipt, Schema
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = [
     "Decision",

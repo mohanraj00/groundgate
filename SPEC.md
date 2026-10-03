@@ -1,7 +1,7 @@
-# groundgate specification v0.2 (draft)
+# groundgate specification v0.2
 
-Status: draft, not released. Version string: `groundgate/0.2`. Spec 0.1 was released with
-groundgate 0.1.0 and is in the `v0.1.0` tag. Any change to how a candidate is decided is a new
+Status: released with groundgate 0.2.0. Version string: `groundgate/0.2`. Spec 0.1 was released
+with groundgate 0.1.0 and is in the `v0.1.0` tag. Any change to how a candidate is decided is a new
 version with a new version string. An implementation conforms if it produces the decisions and
 coverage findings in every vector under `conformance/vectors/`, and the receipt hashes for
 vectors that pin them.
