@@ -9,7 +9,7 @@
    "start": 3835,
    "end": 3840,
    "quote": "10 mg",
-   "judgment": null,
+   "judgment": "wrong",
    "note": ""
   },
   {
@@ -21,7 +21,7 @@
    "start": 4299,
    "end": 4304,
    "quote": "10 mg",
-   "judgment": null,
+   "judgment": "wrong",
    "note": ""
   },
   {
@@ -33,7 +33,7 @@
    "start": 4346,
    "end": 4350,
    "quote": "5 mg",
-   "judgment": null,
+   "judgment": "wrong",
    "note": ""
   },
   {
@@ -45,7 +45,7 @@
    "start": 4391,
    "end": 4396,
    "quote": "10 mg",
-   "judgment": null,
+   "judgment": "wrong",
    "note": ""
   },
   {
@@ -57,7 +57,7 @@
    "start": 108,
    "end": 131,
    "quote": "just under 12.5 million",
-   "judgment": null,
+   "judgment": "correct",
    "note": ""
   },
   {
@@ -69,7 +69,7 @@
    "start": 119,
    "end": 131,
    "quote": "12.5 million",
-   "judgment": null,
+   "judgment": "correct",
    "note": ""
   },
   {
@@ -81,7 +81,7 @@
    "start": 2622,
    "end": 2645,
    "quote": "just under 12.5 million",
-   "judgment": null,
+   "judgment": "correct",
    "note": ""
   },
   {
@@ -93,7 +93,7 @@
    "start": 2633,
    "end": 2645,
    "quote": "12.5 million",
-   "judgment": null,
+   "judgment": "correct",
    "note": ""
   },
   {
@@ -105,7 +105,7 @@
    "start": 656,
    "end": 666,
    "quote": "$1 million",
-   "judgment": null,
+   "judgment": "correct",
    "note": ""
   },
   {
@@ -117,7 +117,7 @@
    "start": 6138,
    "end": 6148,
    "quote": "$1 million",
-   "judgment": null,
+   "judgment": "correct",
    "note": ""
   }
  ]
