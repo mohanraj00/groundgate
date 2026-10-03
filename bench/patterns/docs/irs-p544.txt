@@ -1,0 +1,347 @@
+Property for sale to customers. A sale, exchange, or
+involuntary conversion of property held mainly for sale to
+customers is not a section 1231 transaction. If you will get
+back all, or nearly all, of your investment in the property by
+selling it rather than by using it up in your business, it is
+property held mainly for sale to customers.
+
+Example. You manufacture and sell steel cable, which
+you deliver on returnable reels that are depreciable prop-
+erty. Customers make deposits on the reels, which you re-
+fund if the reels are returned within a year. If they are not
+returned, you keep each deposit as the agreed-upon sales
+price. Most reels are returned within the 1-year period.
+You keep adequate records showing depreciation and
+other charges to the capitalized cost of the reels. Under
+these conditions, the reels are not property held for sale to
+customers in the ordinary course of your business. Any
+gain or loss resulting from their not being returned may be
+capital or ordinary, depending on your section 1231 trans-
+actions.
+
+Patents and copyrights. The sale of a patent; invention;
+model or design (whether or not patented); a secret for-
+mula or process; a copyright; a literary, musical, or artistic
+composition; or similar property is not a section 1231
+transaction if your personal efforts created the property, or
+if you acquired the property in a way that entitled you to
+the basis of the previous owner whose personal efforts
+created it (for example, if you receive the property as a
+gift). The sale of such property results in ordinary income
+and is generally reported in Part II of Form 4797.
+
+Property deducted under the de minimis safe harbor
+for tangible property. If you deducted the costs of a
+property under the de minimis safe harbor for tangible
+property (currently $2,500 or less or $5,000 or less if you
+have an applicable financial statement), then upon its sale
+or disposition, this property is not treated as property used
+in the trade or business under section 1231. Generally,
+any gain on the disposition of this property is treated as
+ordinary income and is reported in Part II of Form 4797.
+
+Example. In 2025, you paid $1,000 for a machine that
+you used in your business. You deducted the $1,000 cost
+of the machine on your 2025 income tax return under the
+de minimis safe harbor for tangible property. In 2027, you
+sold the machine for $1,500. Because you deducted the
+cost of the machine under the de minimis safe harbor, this
+property is not treated as property used in the trade or
+business under section 1231. Upon sale of the machine,
+you must report the $1,500 as ordinary gain on line 10 of
+Form 4797.
+
+Treatment as ordinary or capital. To determine the
+treatment of section 1231 gains and losses, combine all of
+your section 1231 gains and losses for the year.
+• If you have a net section 1231 loss, it is ordinary loss.
+• If you have a net section 1231 gain, it is ordinary in-
+
+come up to the amount of your nonrecaptured section
+1231 losses from previous years. The rest, if any, is
+long-term capital gain.
+
+Nonrecaptured section 1231 losses. Your nonre-
+captured section 1231 losses are your net section 1231
+losses for the previous 5 years that have not been applied
+against a net section 1231 gain. Therefore, if in any of your
+5 preceding tax years you had section 1231 losses, a net
+gain for the current year from the sale of section 1231 as-
+sets is ordinary gain to the extent of your prior losses.
+These losses are applied against your net section 1231
+gain beginning with the earliest loss in the 5-year period.
+
+Example. In 2025, you have a $2,000 net section 1231
+gain. To figure how much you have to report as ordinary
+income and long-term capital gain, you must first deter-
+mine your section 1231 gains and losses from the previ-
+ous 5-year period. From 2020 through 2024, you had the
+following section 1231 gains and losses.
+
+Year
+2020
+2021
+2022
+2023
+2024
+
+Amount
+-0-
+-0-
+($2,500)
+-0-
+$1,800
+
+You use this information to figure how to report your
+
+section 1231 gain for 2025 as shown below.
+
+1) Net section 1231 gain (2025) .
+2) Net section 1231 loss (2022) .
+3) Net section 1231 gain (2024) .
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+4) Remaining net section
+
+.
+
+.
+
+.
+.
+.
+($2,500)
+1,800
+
+1231 loss from
+prior 5 years .
+
+.
+5) Gain treated as
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+($700)
+
+$2,000
+
+ordinary income .
+
+.
+6) Gain treated as long-term
+.
+
+capital gain .
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+$700
+
+$1,300
+
+Depreciation Recapture
+
+If you dispose of depreciable or amortizable property at a
+gain, you may have to treat all or part of the gain (even if
+otherwise nontaxable) as ordinary income.
+
+Records. To figure any gain that must be reported as
+ordinary income, you must keep permanent records of the
+facts necessary to figure the depreciation or amortization
+allowed or allowable on your property. This includes the
+date and manner of acquisition, cost or other basis, de-
+preciation or amortization, and all other adjustments that
+affect basis.
+
+On property you acquired in a nontaxable exchange or
+as a gift, your records must also indicate the following in-
+formation.
+
+• Whether the adjusted basis was figured using depreci-
+ation or amortization you claimed on other property.
+• Whether the adjusted basis was figured using depreci-
+
+ation or amortization another person claimed.
+
+Corporate distributions. For information on property
+distributed by corporations, see Distributions
+to
+Shareholders in Pub. 542, Corporations.
+
+Publication 544 (2025)
+
+Chapter 3 Ordinary or Capital Gain or Loss for Business
+Property
+
+41

@@ -1,0 +1,111 @@
+Sec. 6 Accuracy of Data and Common Formatting/Submission Errors
+.01 Accuracy of Data
+
+Review the following information below along with the record layout information found in Part C. Record
+Format Specifications and Record Layouts to ensure the data contained in the required fields is accurate:
+
+•
+
+If a qualified intermediary (QI), withholding foreign partnership (WP), or withholding foreign trust
+(WT) is acting as such, either as a withholding agent or as a recipient, the TIN reported must be a
+QI-EIN, WP-EIN, or WT-EIN and must begin with “98.” See the definition of a QI in Part A. Sec. 11,
+Definition of Terms or in the Instructions for Form 1042-S.
+
+• Country Codes used must be valid codes taken from the Country Code Table at Foreign Country
+Code Listing for Modernized e-File. If a recipient is claiming treaty benefits, the Country Code can
+never be “OC” or blank. Also, DO NOT use “UC” to indicate unknown country. Country code “UC”
+should only be used when the Recipient’s country of residence is Curacao.
+
+•
+
+If a recipient is an “UNKNOWN RECIPIENT” or “WITHHOLDING RATE POOL,” no address should
+be present. These are the only two situations where a street address is not required.
+
+• All income, withholding, and repayment fields must be reported in whole dollars only. Don’t enter
+
+cents in amount fields. To round amounts to the nearest whole dollar, drop amounts under 50 cents
+and increase amounts from 50 to 99 cents to the next dollar. For example, $1.39 becomes $1 and
+$2.50 becomes $3.00. If you must add amounts to figure the amount to enter on a line include cents
+when adding and only round off the total.
+
+Apply the following formulas to determine U.S. Federal Tax Withheld, Q record (359-370). Applying the
+formulas will determine what the correct amount of withholding should be. If a different amount was
+withheld, enter the amount that was actually withheld in whole dollars only. The U.S. Federal Tax
+Withheld, Q record (359-370) plus Withholding by Other Agents, Q record (371-382) less Amount Repaid, Q
+record (60-71) should equal the Total Withholding Credit, Q record (383-394). For example, if the total
+amount reported as withheld by you is $600, total amount withheld by other withholding agent is $120, and
+the amount reported as repaid to recipient is $50, the total withholding credit amount will equal $670. All field
+positions described below are in the Recipient “Q” Record.
+
+Income Codes (16, 17, 18, 19, 20, and 42)
+
+All Other Income Codes
+
+Gross Income (positions 6-17)
+
+Gross Income (positions 6-17)
+
+– Withholding Allowance (positions 18-29)
+
+X Tax Rate (positions 42-45)
+
+= Net Income (positions 30-41)
+
+= U.S. Federal Tax Withheld (positions 359-370)
+
+X Tax Rate (positions 42-45)
+
+= U.S. Federal Tax Withheld (positions 359-370)
+
+34
+Sec. 1 Record Format
+Don’t use decimal points (.) to indicate dollars and cents. All income, withholding, and repayment fields must
+be reported in whole dollars only. Don’t enter cents in amount fields. To round amounts to the nearest whole
+dollar, drop amounts under 50 cents and increase amounts from 50 to 99 cents to the next dollar. For
+example, $1.39 becomes $1 and $2.50 becomes $3. If you must add amounts to figure amount to enter on a
+line include cents when adding and only round the total.
+
+For all fields marked “Required,” the transmitter must provide the information described under General Field
+Description. If required fields are not completed in accordance with this publication, the IRS will contact the
+filer to request a replacement file. For those fields not marked “Required,” a transmitter must allow for the
+field, but may be instructed to enter blanks or zeros in the indicated field positions and for the indicated
+length.
+
+Valid Characters
+
+The only valid characters for electronic filing are alpha, numeric, blank, ampersand (&), hyphen (-), comma
+(,), apostrophe (’), forward slash (/), pound (#), period (.), and the percent (%). The percent [% (used as “in
+care of”)] is valid in the first position only. Don’t use special characters that are unique to a language other
+than English. For example: å = A, æ = A, = U, = O, = N, etc. Inclusion of any characters other than those
+identified as valid in the instructions will result in a “Bad File” status.
+
+Sec. 2 Transmitter “T” Record
+
+General Field Descriptions
+
+The Transmitter “T” Record identifies the entity transmitting the electronic file. A replacement file will be
+requested if the “T” Record is not present. See File Format Diagram.
+
+• Transmitter “T” Record is the first record on each file and is followed by a Withholding Agent “W”
+
+Record.
+
+• All alpha characters entered in the “T” Record must be upper case.
+
+• All records must be a fixed length of 1020 positions.
+
+• Don’t use punctuation in the name and address fields.
+
+• The Transmitter “T” Record contains information, which is critical if it is necessary for IRS to contact
+
+the filer.
+
+• The transmitter and the withholding agent may be the same, but they need not be.
+
+• For all fields marked “Required,” the transmitter must provide the information described under
+
+General Field Description. For those fields not marked “Required,” a transmitter must allow for the
+field but may be instructed to enter blanks or zeros in the indicated field positions and for the
+indicated length.
+
+44

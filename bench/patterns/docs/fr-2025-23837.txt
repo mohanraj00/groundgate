@@ -1,0 +1,1110 @@
+60548
+
+Federal Register / Vol. 90, No. 245 / Monday, December 29, 2025 / Rules and Regulations
+
+relocate a branch or main office, and
+retain an existing branch after the
+interstate relocation of a main office.
+Subpart C requires all insured State
+nonmember banks to submit an
+application to the appropriate FDIC
+office prior to establishing a new
+branch, relocating a branch or a main
+office, or retaining a branch after the
+interstate relocation of a main office.^4
+All applicants are required to submit the
+same information regardless of the type
+of proposed change and regardless of
+the bank’s supervisory history, except
+that, consistent with section 38 of the
+FDI Act, undercapitalized institutions
+must submit relatively more
+information. Further, the FDIC retains
+the right to request additional
+information to complete application
+processing.^5
+
+The application processing timeline
+
+depends primarily upon whether the
+bank meets the definition of an ‘‘eligible
+depository institution.’’ 6 An application
+submitted by an eligible depository
+institution is generally subject to
+expedited processing, and applications
+submitted by all other insured State
+nonmember banks are subject to
+standard processing.^7 The FDIC Rules
+and Regulations at 12 CFR part 303 (part
+303) define an ‘‘eligible depository
+institution’’ as a depository institution
+that meets the following criteria: (1)
+received an FDIC-assigned composite
+rating of 1 or 2 under the Uniform
+Financial Institutions Rating System
+(UFIRS) as a result of its most recent
+Federal or State examination; (2)
+received a satisfactory or better CRA
+rating from its primary Federal regulator
+at its most recent examination, if the
+depository institution is subject to
+examination under 12 CFR part 345; (3)
+received a compliance rating of 1 or 2
+from its primary Federal regulator at its
+most recent examination; (4) is well-
+capitalized, as defined in the
+appropriate capital regulation and
+guidance of the institution’s primary
+Federal regulator; and (5) is not subject
+to a cease and desist order, consent
+order, prompt corrective action
+directive, written agreement,
+memorandum of understanding, or
+other administrative agreement with its
+primary Federal regulator or chartering
+authority.^8
+
+Under the current rule, the FDIC
+
+retains the right to move an application
+from expedited processing to standard
+
+4 12 CFR 303.42(a).
+5 See 12 CFR 303.42(b) through (d).
+6 See 12 CFR 303.43.
+7 12 CFR 303.2(r).
+8 12 CFR 303.2(r).
+
+processing when appropriate.^9 Absent
+such removal, an application processed
+under expedited processing is deemed
+approved the latest of (1) 21 days after
+the FDIC receives a substantially
+complete application, (2) 5 days after
+the public comment period expires, or
+(3) in the case of an interstate branch
+application that represents new entry
+into a State where the applicant does
+not maintain a branch, 5 days after the
+FDIC receives the requisite confirmation
+from the host State that its filing
+requirements have been satisfied. The
+FDIC must provide the applicant with
+written notification of the final action
+when the decision is rendered.^10
+
+Subpart J of part 303 (subpart J) sets
+
+forth the procedures for an insured
+branch of a foreign bank seeking the
+FDIC’s consent to move from one
+location to another at 12 CFR 303.184.
+The requirements in subpart J largely
+mirror the requirements found in
+subpart C.
+
+C. Branch Application Statistics
+
+From 2015 to September 30, 2025, the
+
+FDIC received 7,043 branch
+applications: 5,366 applications to
+establish a branch, 489 to relocate a
+main office, 1,183 to relocate a branch,
+and 5 applications related to an insured
+branch of a foreign bank, for an average
+of 655 applications received per year.
+During this period, the FDIC approved
+an average of 624 branch applications
+annually (479 branch establishment
+applications, 102 branch relocation
+applications, and 43 main office
+relocation applications). On average,
+531 applications per year were
+approved under expedited processing
+(85 percent) and 92 were approved
+under standard processing (15 percent).
+From 2015 to September 30, 2025, the
+average time between the FDIC’s receipt
+of an application to establish a branch
+or relocate a branch or main office and
+the application being approved, denied,
+returned to the applicant, or withdrawn,
+was 25 days for applications subject to
+expedited processing and 70 days for
+applications subject to standard
+processing.
+
+D. Public Comments
+
+On July 18, 2025, the FDIC published
+
+in the Federal Register a notice of
+proposed rulemaking on the
+Establishment and Relocation of
+Branches and Offices (NPR).^11 The FDIC
+invited public comment on all aspects
+of the NPR. The comment period ended
+on September 16, 2025. The FDIC
+
+9 12 CFR 303.43(a).
+10 12 CFR 303.43(b).
+11 90 FR 33898 (July 18, 2025).
+
+received 8 total comments from 7
+different individuals, financial
+institutions, industry groups, and
+consumer organizations.
+
+Several comments were supportive of
+
+the NPR. More specifically, several
+commenters supported the FDIC’s
+efforts to shorten filing processing
+timelines, simplify certain filing
+requirements, and eliminate
+unnecessary delays. Two of these
+commenters generally supported the
+elimination of public notice and
+comment requirements, and one of these
+commenters supported providing
+reasonable advance notice to customers
+for de minimis changes in address but
+requested clarification on what would
+constitute reasonable advance notice.
+Two commenters supported the
+
+proposed changes to expedited
+processing, with one of these
+commenters noting that the NPR would
+shorten expedited processing timelines
+and another of these commenters noting
+that the NPR would expand the number
+of eligible institutions. One commenter
+requested clarification on what would
+constitute a ‘‘substantially complete’’
+filing and guidance on how the FDIC
+would determine an institution’s
+eligibility for expedited processing.
+
+One commenter expressed support for
+
+the proposed definitions. In particular,
+the commenter noted that clarification
+of terms, including ‘‘branch,’’ ‘‘remote
+service unit,’’ and ‘‘de minimis change
+in address,’’ will help to ensure
+consistent interpretation and
+application. One commenter requested
+clarification on several definitions,
+including examples of what features
+distinguish a remote service unit (RSU)
+from other service models and examples
+of what qualifies as an intrastate
+relocation. The commenter also
+requested that the FDIC clarify whether
+the same streamlined filing
+requirements apply to intrastate
+relocations of main offices.
+
+One commenter requested that the
+FDIC make an additional change to 12
+CFR 303.45(c) to extend the expiration
+date for an approved filing from 18
+months to 36 months. The commenter
+reasoned that preparations for a
+relocation generally take longer than the
+18 months provided by the current
+regulation, and a longer expiration
+period would enable institutions to seek
+regulatory approval earlier in the
+process.
+
+Several commenters opposed aspects
+
+of the NPR. Four commenters asserted
+that some of the proposed changes may
+be inconsistent with the CRA.
+Specifically, three of these commenters
+expressed concerns regarding the
+proposed elimination of the provisions
+
+VerDate Sep<11>2014 16:12 Dec 23, 2025 Jkt 268001 PO 00000 Frm 00002 Fmt 4700 Sfmt 4700 E:\FR\FM\29DER1.SGM 29DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+Federal Register / Vol. 90, No. 245 / Monday, December 29, 2025 / Rules and Regulations
+
+60553
+
+requires reasonable advance written
+notice to customers of a branch
+undergoing a de minimis change in
+address.
+
+F. Expiration of Approval
+
+One commenter requested that the
+FDIC extend the expiration date for an
+approved filing under 12 CFR 303.45(c)
+from 18 months to 36 months. The
+commenter reasoned that preparations
+for a relocation generally take longer
+than the 18 months provided by the
+current regulation, and a longer
+expiration period would enable banks to
+seek regulatory approval earlier in the
+process. In the final rule, the FDIC
+modifies 12 CFR 303.45(c) to extend the
+expiration date for an approved filing to
+24 months. The final rule adopts this
+24-month expiration period, as it is the
+FDIC’s expectation that 24 months
+would provide a reasonable timeframe
+for banks to consummate a branch
+establishment or relocation.
+
+G. Moving an Insured Branch of a
+Foreign Bank
+
+The NPR proposed making changes to
+
+subpart J to correspond to those
+proposed for subpart C. The FDIC did
+not receive comments on its proposed
+revisions to subpart J. The final rule
+adopts the previously proposed changes
+to subpart J to correspond with the
+changes to subpart C discussed in this
+SUPPLEMENTARY INFORMATION.
+
+IV. Expected Effects
+
+As previously discussed, the objective
+of the final rule is to improve the speed
+and certainty of, and reduce the
+regulatory burden associated with, the
+filing process for insured State
+nonmember banks seeking to establish a
+branch or relocate a main office or
+branch and for foreign banks seeking to
+relocate an insured branch (collectively,
+FDIC-supervised banks).
+
+This analysis utilizes all regulations
+
+and guidance applicable to FDIC-
+supervised banks, as well as information
+on their financial condition as of the
+quarter ending June 30, 2025, as the
+baseline to which the effects of the final
+rule are estimated.
+
+The final rule applies to FDIC-
+
+supervised banks seeking to establish a
+branch, relocate a main office or branch,
+or relocate an insured branch of a
+foreign bank. As of the quarter ending
+June 30, 2025, the FDIC supervises
+2,776 State nonmember banks or
+insured branches of foreign banks which
+collectively operate 25,250 branches
+and main offices.^28 In the period from
+
+28 FDIC Call Report and Structure Data, June 30,
+
+2025.
+
+January 1, 2015 to September 30, 2025,
+the FDIC received 7,043 branch
+applications: 5,366 applications to
+establish a branch, 489 to relocate a
+main office, 1,183 to relocate a branch,
+and 5 applications relating to an insured
+branch of a foreign bank, for an average
+of 655 applications received per year.^29
+Based on this historical average, the
+FDIC estimates that the final rule will
+affect approximately 700 branch filings
+per year on average.^30
+
+The final rule reduces the regulatory
+
+requirements for branch filings.
+Specifically, it only requires FDIC-
+supervised banks that seek to make a de
+minimis change in the address of a
+branch to notify the FDIC and customers
+of the branch undergoing such a
+change,^31 rather than submit a filing.
+For all other branch filings, the final
+rule reduces filing content requirements
+from six to four items. The final rule
+also greatly reduces public notice
+requirements for filings and extends the
+expiration date for an approved filing
+from 18 months to 24 months.
+
+For FDIC-supervised banks that seek a
+de minimis change in address, the FDIC
+estimates that the final rule will
+eliminate the entire estimated five-hour
+burden of preparing and submitting a
+branch filing.^32 At a conservative
+estimate of $200 per hour per
+application,^33 the resulting savings will
+be $1,000 per de minimis change in
+address. For the purpose of estimating
+the number of de minimis changes in
+address per year, the FDIC assumes that
+
+29 FDIC supervisory data. 7,043 applications/
+10.75 years = 655 applications per year (rounded to
+the nearest integer).
+
+30 Although the final rule will result in a decrease
+
+in the burden for a branch application, the FDIC
+does not believe the final rule will likely result in
+a material increase in the number of branch
+applications. To the extent that the final rule results
+in a greater number of branch applications, the
+historical average of 655 branch applications per
+year may be an undercount of the number of
+applications affected by the final rule. The FDIC
+believes that using 700 as the number of branch
+applications per year is a conservative estimate for
+purposes of estimating the effects of the final rule.
+
+31 Final 12 CFR 303.41(b).
+32 Based on Paperwork Reduction Act hourly
+burden estimates for branch applications by State
+nonmember banks under Information Collection
+Request OMB No. 3064–0070 (See https://
+www.reginfo.gov/public/do/PRAICList?ref_
+nbr=202301-3064-006). Hourly burden estimates for
+branch applications by foreign banks under
+Information Collection Request OMB No. 3064–
+0114 are not used for this analysis because only 5
+out of 7,043 historical branch applications were
+submitted by a foreign bank.
+
+33 In recent information collection requests, the
+
+FDIC estimated that the fully loaded costs of
+preparing and submitting branch applications are
+approximately $147 per hour for State nonmember
+banks and $135 per hour for foreign banks. See
+https://www.reginfo.gov/public/do/
+PRAViewICR?ref_nbr=202312-3064-001,
+respectively.
+
+the distances of such relocations will be
+less than 0.1 miles.^34 Of the 7,043
+branch applications used in this
+analysis, 325 involved a relocation
+distance of less than 0.1 miles. As such,
+the FDIC estimates that approximately
+30 branch applications per year will
+involve a de minimis change in address,
+resulting in an estimated aggregate
+benefit of $30,000 annually.^35
+
+For the remaining 670 branch
+applications that do not involve de
+minimis changes in address, the final
+rule will reduce the regulatory
+requirements for preparing and
+submitting branch filings. Specifically,
+it reduces filing content requirements
+from six to four items. The final rule
+also eliminates public notice
+requirements for these filings. The FDIC
+estimates these changes will benefit
+filers by reducing the time spent
+preparing and submitting branch filings
+by approximately two hours, on
+average.^36 At a conservative hourly
+burden estimate of $200 per hour,^37 the
+final rule will result in aggregate cost
+savings of approximately $268,000 per
+year.^38
+
+Summing up the quantified effects for
+
+the approximately 700 affected branch
+applications, the FDIC estimates that the
+final rule will result in approximately
+$298,000 in savings per year from the
+reduction of labor costs associated with
+preparing and submitting branch filings.
+As previously discussed, the final rule
+will generally reduce the time it takes
+for the FDIC to process a filing. In
+particular, the final rule will establish a
+deadline of three days for approval after
+receipt of a letter filing that includes the
+information set forth in 12 CFR 303.42;
+a reduction of between 18 days and 28
+days, respectively.^39 Further, the final
+
+34 De minimis changes in address will only
+
+involve relocations ‘‘within the same approximate
+location,’’ as per final 12 CFR 303.41(b)(1)(i).
+35 $30,000 savings annually = $1,000 per
+
+relocation application × 30 applications per year;
+and 30 branch applications per year = 325
+applications/10.75 years (rounded to the nearest
+integer).
+
+36 See section VI.A of this SUPPLEMENTARY
+
+INFORMATION.
+
+37 In recent information collection requests, the
+
+FDIC estimated that the fully loaded costs of
+preparing and submitting branch applications are
+approximately $147 per hour for State nonmember
+banks and $135 per hour for foreign banks. See
+https://www.reginfo.gov/public/do/
+PRAViewICR?ref_nbr=202312-3064-001,
+respectively.
+
+38 $268,000 cost savings per year = 670 branch
+
+applications per year * 2 hours saved per
+application * $200 per hour saved.
+
+39 As noted above, intrastate branch filings are
+deemed approved under expedited processing on
+the latest of: the 21st day after receipt by the FDIC
+of a substantially complete filing, or the fifth day
+after expiration of the comment period described in
+Continued
+
+VerDate Sep<11>2014 16:12 Dec 23, 2025 Jkt 268001 PO 00000 Frm 00007 Fmt 4700 Sfmt 4700 E:\FR\FM\29DER1.SGM 29DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+60554
+
+Federal Register / Vol. 90, No. 245 / Monday, December 29, 2025 / Rules and Regulations
+
+rule will expand expedited processing
+for intrastate branch filings and main
+office relocations to a bank that received
+an FDIC-assigned composite rating of 3
+or better under the UFIRS as a result of
+its most recent Federal or State
+examination. The final rule also extends
+the expiration date of an approved filing
+from 18 months to 24 months. Finally,
+the final rule will eliminate the FDIC’s
+discretion to remove a filing from
+expedited processing. As noted above, a
+filing to establish a branch, or to
+relocate a branch or main office, subject
+to expedited processing takes an average
+of 25 days to process.^40
+
+The final rule’s reduction in
+
+processing times for certain branch
+filings will have benefits for eligible
+depository institutions. Faster
+processing times will reduce
+uncertainty and costs associated with
+downtime while waiting for a decision
+from the FDIC. FDIC-supervised banks
+will be able to more swiftly respond to
+changes in local conditions that affect
+their branch network, such as a change
+in landlord for a bank’s current location
+or a time-sensitive opportunity to
+relocate to a more desirable location.
+The FDIC does not have the information
+necessary to further quantify the
+benefits associated with the reduction in
+the time it takes for the FDIC to process
+filings, but believes that processing time
+reductions will improve productivity
+and competitiveness for applicants.
+
+As previously discussed, the final rule
+clarifies certain definitions. Specifically,
+the final rule clarifies that the term
+‘‘branch’’ does not include RSUs or drop
+boxes. In practice, the FDIC has not
+considered such locations branches.
+Finally, the final rule clarifies the
+definition of ‘‘de novo interstate
+branch.’’ The FDIC does not have the
+information necessary to quantify the
+benefits to prospective filers associated
+with these aspects of the final rule.
+However, the FDIC believes that these
+clarifications will benefit filers and the
+industry by reducing uncertainty.
+
+As previously discussed, the FDIC
+does not believe that the final rule will
+pose any material direct costs to filers.
+The FDIC acknowledges that there may
+be ancillary costs to the public. For
+example, the elimination of the public
+
+12 CFR 303.44, which at most could be 23 days
+(consisting of 8 days to meet the newspaper
+publication requirement plus a 15-day comment
+period), and 5 + 23 = 28. The final rule’s deadline
+of three days (down from 21) for intrastate branch
+filings represents a decrease of 18 days from
+baseline, and the elimination of the public notice
+requirements and associated five-day processing
+period represents a decrease of 28 days from
+baseline.
+
+40 Based on branch applications received from
+
+2015 to September 30, 2025.
+
+notice and comment requirements for
+branch establishments and branch and
+main office relocations may have
+impacts that are difficult to quantify.^41
+The final rule eliminates any potential
+customer confusion by requiring
+confirmation of advance written notice
+to customers of a relocating branch or
+office as part of the filing information
+requirements. The FDIC does not have
+the data necessary to quantify the effect
+of the elimination of the public notice
+and comment requirements. However,
+given the limited historical number of
+public comments received in response
+to subpart C applications, and the
+advance notice provision, the FDIC does
+not believe this effect to be material.
+Moreover, the final rule does not affect
+the responsibility of FDIC-supervised
+banks to help meet the credit needs of
+the communities in which they are
+headquartered or operate branches.
+Therefore, the FDIC believes that the
+final rule will pose no substantiative
+indirect costs to customers.
+
+Finally, the FDIC believes that the
+final rule can provide indirect benefits
+to customers. To the extent that the
+shorter processing periods, reduced
+filing content requirements, and
+clarifications within the final rule
+reduce the time it takes banks to
+establish new branches and begin
+providing banking products and
+services at applicable locations,
+customers may benefit. The FDIC does
+not have the necessary information to
+quantify such benefits.
+
+V. Other Alternatives Considered
+
+The FDIC considered implementing
+internal process changes related to the
+review of subpart C filings that would
+result in abbreviated review periods
+without implementing a regulatory
+change. However, the FDIC determined
+that improving the speed, certainty, and
+regulatory burden associated with the
+processes for subpart C filings would be
+better achieved through a formal notice
+and comment rulemaking that
+considered feedback from all
+stakeholders.^42 As discussed above, the
+FDIC also expects to implement changes
+to its internal processes and related
+publicly available materials addressing
+subpart C filings consistent with the
+amendments set forth in this final rule
+to further support these objectives.
+
+VI. Regulatory Analysis
+
+A. Administrative Procedure Act
+
+The Administrative Procedure Act
+
+requires an agency to publish a
+
+41 See final 12 CFR 303.44.
+42 See sections II and III of this SUPPLEMENTARY
+INFORMATION for the FDIC’s responses to comments.
+
+substantive rule not less than 30 days
+before its effective date, except when an
+agency otherwise publishes in the final
+rule good cause for providing for an
+earlier effective date.^43 Accordingly, the
+final rule is effective as of the date set
+forth above in this document under the
+DATES heading.
+
+B. The Paperwork Reduction Act
+
+Certain provisions of the final rule
+contain ‘‘collections of information’’
+within the meaning of the Paperwork
+Reduction Act (PRA) of 1995.^44 In
+accordance with the requirements of the
+PRA, the FDIC may not conduct or
+sponsor, and the respondent is not
+required to respond to, an information
+collection unless it displays a currently
+valid Office of Budget and Management
+(OMB) control number. The information
+collections contained in the final rule
+have been submitted to OMB for review
+and approval by the FDIC under section
+3507(d) of the PRA 45 and 5 CFR 1320.11
+of OMB’s implementing regulations.^46
+The FDIC proposes to extend for three
+years, with revision, the following
+information collections:
+
+Title of Information Collection:
+Application for a Bank to Establish a
+Branch or Move its Main Office or
+Branch.
+
+OMB Control Number: 3064–0070.
+Respondents: Insured State
+
+nonmember banks.
+
+Current Actions: The final rule revises
+
+the currently-approved information
+collection as follows:
+
+Section 303.42, Application for a
+bank to establish a branch or move its
+main office or Branch. Pursuant to
+sections 13(f), 13(k), 18(d) and 44 of the
+FDI Act, insured State nonmember
+banks must obtain FDIC approval before
+establishing a branch, relocating a
+branch or main office, or retaining
+existing branches after the interstate
+relocation of the main office. This
+information collection represents the
+occasional reporting requirement
+associated with those banks’
+applications for FDIC approval. The
+final rule will reduce reporting burden
+by eliminating the requirement that the
+applicant provide information regarding
+insider involvement in the proposed
+branch office, comments on changes in
+services offered or the effect the
+proposal may have on the applicant’s
+compliance with the CRA, and a copy
+of and information related to the
+required newspaper publication. As
+such, the FDIC estimates average time
+
+43 5 U.S.C. 553(d).
+44 44 U.S.C. 3501.
+45 44 U.S.C. 3507(d).
+46 5 CFR 1320.
+
+VerDate Sep<11>2014 16:12 Dec 23, 2025 Jkt 268001 PO 00000 Frm 00008 Fmt 4700 Sfmt 4700 E:\FR\FM\29DER1.SGM 29DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+Federal Register / Vol. 90, No. 245 / Monday, December 29, 2025 / Rules and Regulations
+
+60555
+
+per response will be reduced from 5
+hours to 3 hours. However, to account
+for additional applications that may
+result from changes in the final rule as
+well as historical data since the most
+recent PRA renewal, the FDIC also
+estimates an increase in respondents
+from 436 to 700. Thus, the total
+estimated annual burden for OMB No.
+3064–0070 is 2,100 hours, a decrease of
+80 hours from the most recent PRA
+renewal.^47
+
+Title of Information Collection:
+
+Foreign Banks.
+
+OMB Control Number: 3064–0114.
+Respondents: Insured branches of
+
+foreign banks.
+
+Current Actions: The final rule revises
+
+the currently-approved information
+collection as follows:
+
+The FDIC is removing the information
+
+collection ‘‘Section 303.184, Moving a
+Branch’’ from the ICR under the OMB
+Control No. 3064–0114 and including it
+in the ICR under OMB Control No.
+3064–0070. Under 12 CFR 303.183,
+insured branches of foreign banks
+seeking approval from the FDIC to move
+locations complete a substantially
+similar application as domestic banks
+seeking FDIC approval to move
+locations. To ensure consistent burden
+estimates between similar respondents
+completing similar applications, the
+FDIC will include burden estimates
+from the information collection
+‘‘Section 303.184, Moving a Branch’’ in
+the information collection ‘‘Application
+for a bank to establish a branch or move
+its main office or Branch.’’ Combining
+these two information collections does
+not affect the FDIC estimates of
+respondents for the information
+collection under OMB Control No.
+3064–0070 because historically the
+FDIC rarely receives applications to
+move insured branches from foreign
+banks. In the most recent PRA renewal
+for OMB Control No. 3064–0114, the
+FDIC used a placeholder of a single
+respondent to maintain the information
+collection.
+
+C. Congressional Review Act
+
+Pursuant to the Congressional Review
+
+Act, the OMB makes a determination
+regarding whether a final rule
+constitutes a ‘‘major rule,’’ defined in
+the Congressional Review Act as any
+rule that the Administrator of the Office
+of Information and Regulatory Affairs of
+the OMB finds has resulted in or is
+likely to result in (A) an annual effect
+on the economy of $100,000,000 or
+
+47 FDIC Application for a bank to establish a
+
+branch or move its main office or branch, OMB No.
+3064–0070, available at https://www.reginfo.gov/
+public/do/PRAViewICR?ref_nbr=202301-3064-006.
+
+more; (B) a major increase in costs or
+prices for consumers, individual
+industries, Federal, State, or local
+government agencies or geographic
+regions; or (C) significant adverse effects
+on competition, employment,
+investment, productivity, innovation, or
+on the ability of United States-based
+enterprises to compete with foreign-
+based enterprises in domestic and
+export markets. If OMB determines a
+rule is ‘‘major,’’ the Congressional
+Review Act generally provides that the
+rule may not take effect until at least 60
+days following its publication. If a rule
+is not a ‘‘major rule,’’ it may take effect
+after the Federal agency submits to
+Congress a report required under the
+Congressional Review Act.
+
+OMB has determined the final rule is
+
+not a major rule under the
+Congressional Review Act. Accordingly,
+the FDIC will submit the report to
+Congress required by the Congressional
+Review Act and the final rule will
+become effective as set forth under the
+DATES heading of this document.
+
+D. The Regulatory Flexibility Act
+
+The Regulatory Flexibility Act (RFA)
+
+generally requires an agency, in
+connection with a final rule, to prepare
+and make available for public comment
+a final regulatory flexibility analysis that
+describes the impact of the final rule on
+small entities.^48 However, a final
+regulatory flexibility analysis is not
+required if the agency certifies that the
+final rule will not have a significant
+economic impact on a substantial
+number of small entities. The Small
+Business Administration (SBA) has
+defined ‘‘small entities’’ to include
+banking organizations with total assets
+of less than or equal to $850 million.^49
+Generally, the FDIC considers a
+significant economic impact to be a
+quantified effect in excess of 5 percent
+of total annual salaries and benefits or
+2.5 percent of total noninterest
+expenses. The FDIC believes that effects
+in excess of one or more of these
+thresholds typically represent
+
+48 5 U.S.C. 601 et seq.
+49 The SBA defines a small banking organization
+
+as having $850 million or less in assets, where an
+organization’s ‘‘assets are determined by averaging
+the assets reported on its four quarterly financial
+statements for the preceding year.’’ See 13 CFR
+121.201 (as amended by 87 FR 69118, effective Dec.
+19, 2022). In its determination, the ‘‘SBA counts the
+receipts, employees, or other measure of size of the
+concern whose size is at issue and all of its
+domestic and foreign affiliates.’’ See 13 CFR
+121.103. Following these regulations, the FDIC uses
+an insured depository institution’s affiliated and
+acquired assets, averaged over the preceding four
+quarters, to determine whether the insured
+depository institution is ‘‘small’’ for the purposes of
+RFA.
+
+significant economic impacts for FDIC-
+supervised banks.
+
+The final rule applies to certain FDIC-
+supervised banks seeking to establish a
+branch, relocate a main office or branch,
+or relocate an insured branch of a
+foreign bank. As of the quarter ending
+June 30, 2025, the FDIC supervised
+2,776 banks, of which 2,055 were
+considered ‘‘small’’ for the purposes of
+RFA.^50 These 2,055 small banks
+collectively operated 8,204 branches
+and main offices.^51 In the period from
+January 1, 2015 to September 30,
+2025,^52 small banks submitted 2,145
+applications to establish a branch, 368
+applications to relocate a branch, and
+308 applications to relocate a main
+office, for a total of 2,821 applications
+and an average of 262 applications per
+year.^53 Based on this historical average,
+the FDIC estimates the final rule will
+affect approximately 300 branch
+applications from small banks per year
+on average.^54
+
+In general, the final rule will reduce
+
+the regulatory requirements for
+establishing or relocating a branch.
+Specifically, it will eliminate filing
+requirements for de minimis changes in
+address and reduce filing content
+requirements from six to four items for
+all other filings. The final rule will also
+eliminate or greatly reduce public notice
+requirements for all branch
+establishments and relocations, and
+extend the expiration date of an
+
+50 FDIC Call Report data, June 30, 2025.
+51 FDIC Call Report and Structure Data, June 30,
+
+2025.
+
+52 To estimate whether a bank was ‘‘small’’ for
+
+purposes of the RFA during the quarter ending
+September 30, 2025, the FDIC relied on banks’
+status as of June 30, 2025, because bank holding
+company regulatory reports for the quarter ending
+September 30, 2025, were not available at the time
+this analysis was conducted.
+
+53 FDIC supervisory and Call Report data. For the
+
+purpose of these application counts, an FDIC-
+supervised bank is considered ‘‘small’’ for purposes
+of the RFA if it is identified in the FDIC’s data as
+‘‘small’’ as of the quarter-end in which it sent a
+relevant application to the FDIC, with the exception
+for the quarter ending September 30, 2025,
+described in the previous footnote. Note that no
+insured branches of foreign banks are considered
+‘‘small’’ for purposes of the RFA. 2,821
+applications/10.75 years = 262 applications per year
+(when rounded to the nearest integer).
+
+54 Although the final rule will result in a decrease
+in the burden imposed by a branch application, the
+FDIC does not believe the final rule will likely
+result in a material increase in the number of
+branch filings. To the extent that the final rule
+results in a greater number of branch filings from
+small banks, the historical average of 262 branch
+applications per year may be an undercount of the
+number of applications affected by the final rule.
+The FDIC believes that using 300 as the number of
+branch applications from small banks per year is a
+conservative estimate for purposes of the RFA.
+
+VerDate Sep<11>2014 16:12 Dec 23, 2025 Jkt 268001 PO 00000 Frm 00009 Fmt 4700 Sfmt 4700 E:\FR\FM\29DER1.SGM 29DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

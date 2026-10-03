@@ -1,0 +1,43 @@
+ACTUARIAL TABLES ASSOCIATED WITH PUBLICATION 1458
+
+The actuarial tables associated with this publication are:
+
+Table
+
+Type of Factors
+
+Table U(1)
+
+Single Life Factors
+
+Table U(2)
+
+2-Life Last to Die Unitrust Remainder Factors
+
+Part 1: Adjusted Payout Rates from 0.2 to 4.0%
+
+Part 2: Adjusted Payout Rates from 4.2 to 8.0%
+
+Part 3: Adjusted Payout Rates from 8.2 to 12.0%
+
+Part 4: Adjusted Payout Rates from 12.2 to 16.0%
+
+Part 5: Adjusted Payout Rates from 16.2 to 20.0%
+
+Table D
+
+Table F
+
+Table Z
+
+Term Certain Factors
+
+Payout Rate Adjustment Factors
+
+Commutation Factors
+
+Table 2010CM
+
+Mortality Table
+
+3

@@ -1,0 +1,94 @@
+Section 14. OUTPUT FILE SPECIFICATIONS
+
+Beginning July 1, 2009, the Output File changed from 121 to 134 bytes.
+
+Section 15. INVALID RECORDS - D3 FILE (Version 2.2 as of 5-19-2009)
+
+FILE DESCRIPTION
+
+This essay format refers to relative data placement positions, while the physical data address
+in the file begins with zero. All information, except position 134 which provides the reason for
+the record’s elimination from processing, is duplicated from the agency’s request record. If
+any of the default values were incorrect, they have been corrected.
+
+Record Format - this essay format refers to relative data placement positions, while the
+physical data address in the file begins with zero.
+
+Field
+
+Positions
+1-3
+
+Agency Code
+
+****D3 OUTPUT FILE DESCRIPTION****
+
+Field Name/Description
+
+Field
+Length
+
+4
+
+5-7
+
+8-12
+
+13
+
+14
+
+15-16
+
+17
+
+18
+
+The assigned Agency Code which represents the originator of the request. See
+Attachment 3 – Agency Code.
+Filler
+
+Blank (alpha) filled.
+Tax Year Code
+
+F01
+Filler
+
+Blank (alpha) filled.
+New Record Indicator
+
+“N”
+Request Type
+
+“E”
+Document Type
+
+“99”
+Primary TIN Validity Indicator
+
+“0” (zero)
+Secondary TIN Validity Indicator
+
+“0” (zero)
+
+DIFSLA TY 2025
+
+17
+
+3
+
+1
+
+3
+
+5
+
+1
+
+1
+
+2
+
+1
+
+1

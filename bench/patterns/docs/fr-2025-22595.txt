@@ -1,0 +1,276 @@
+57374
+
+Federal Register / Vol. 90, No. 236 / Thursday, December 11, 2025 / Rules and Regulations
+
+Technology Transfer and Advancement
+Act of 1995 (15 U.S.C. 272 note) because
+application of those requirements would
+be inconsistent with the Clean Air Act.
+In addition, the SIP is not approved
+to apply on any Indian reservation land
+or in any other area where EPA or an
+Indian tribe has demonstrated that a
+tribe has jurisdiction. In those areas of
+Indian country, the rule does not have
+tribal implications and will not impose
+substantial direct costs on tribal
+governments or preempt tribal law as
+specified by Executive Order 13175 (65
+FR 67249, November 9, 2000).
+
+The Congressional Review Act, 5
+
+U.S.C. 801 et seq., as added by the Small
+Business Regulatory Enforcement
+Fairness Act of 1996, generally provides
+that before a rule may take effect, the
+agency promulgating the rule must
+submit a rule report, which includes a
+copy of the rule, to each House of the
+Congress and to the Comptroller General
+of the United States. EPA will submit a
+report containing this action and other
+required information to the U.S. Senate,
+the U.S. House of Representatives, and
+the Comptroller General of the United
+States prior to publication of the rule in
+the Federal Register. A major rule
+cannot take effect until 60 days after it
+is published in the Federal Register.
+This action is not a ‘‘major rule’’ as
+defined by 5 U.S.C. 804(2).
+
+List of Subjects in 40 CFR Part 52
+
+Environmental protection, Air
+pollution control, Carbon monoxide,
+Incorporation by reference,
+Intergovernmental relations, Lead,
+Nitrogen dioxide, Ozone, Particulate
+matter, Reporting and recordkeeping
+requirements, Sulfur oxides, Volatile
+organic compounds.
+
+Authority: 42 U.S.C. 7401 et seq.
+
+Dated: December 4, 2025.
+
+Mark Sanborn,
+Regional Administrator, EPA Region 1.
+
+Part 52 of chapter I, title 40 of the
+
+Code of Federal Regulations is amended
+as follows:
+
+PART 52—APPROVAL AND
+PROMULGATION OF
+IMPLEMENTATION PLANS
+
+■ 1. The authority citation for part 52
+continues to read as follows:
+
+Authority: 42 U.S.C. 7401 et seq.
+
+Subpart H—Connecticut
+
+■ 2. Section 52.377 is amended by
+revising paragraph (t) to read as follows:
+
+§ 52.377 Control strategy: Ozone.
+*
+
+*
+
+*
+
+*
+
+*
+
+(t) Approval. Revisions to the State
+Implementation Plan submitted by the
+Connecticut Department of Energy and
+Environmental Protection on January
+17, 2017, September 5, 2017, and
+August 8, 2017, to meet, in part,
+requirements of the 2008 ozone
+NAAQS. These revisions satisfy the rate
+of progress requirement of section
+182(b) through 2017, the motor vehicle
+inspection and maintenance
+requirements of section 182(b), the
+contingency measure requirements of
+section 172(c)(9), the emission
+statement requirements of section
+182(a)(3)(B), and the reasonably
+available control measure requirement
+of section 172(c)(1) for the Connecticut
+portion of the New York-Northern New
+Jersey-Long Island, NY-NJ-CT area, and
+the Greater Connecticut moderate ozone
+nonattainment areas. The January 17,
+2017, revision establishes motor vehicle
+emissions budgets for 2017 of 15.9 tons
+per day of VOC and 22.2 tons per day
+of NOX to be used in transportation
+conformity in the Greater Connecticut
+moderate ozone nonattainment area.
+The August 8, 2017, revision establishes
+motor vehicle emissions budgets for
+2017 of 17.6 tons per day of VOC and
+24.6 tons per day of NOX to be used in
+transportation conformity in the
+Connecticut portion of the New York-
+Northern New Jersey-Long Island, NY-
+NJ-CT moderate ozone nonattainment
+area.
+*
+[FR Doc. 2025–22595 Filed 12–10–25; 8:45 am]
+
+*
+
+*
+
+*
+
+*
+
+BILLING CODE 6560–50–P
+
+ENVIRONMENTAL PROTECTION
+AGENCY
+
+40 CFR Part 52
+
+[EPA–R05–OAR–2024–0549; FRL–12784–
+02–R5]
+
+Air Plan Approval; Ohio; Carmeuse
+Lime, Inc. SO2
+
+AGENCY: Environmental Protection
+Agency (EPA).
+ACTION: Final rule.
+
+SUMMARY: The Environmental Protection
+Agency (EPA) is approving new
+emissions limits for the Carmeuse Lime
+Maple Grove, Inc. facility into the Ohio
+State Implementation Plan (SIP) for the
+National Ambient Air Quality Standard
+(NAAQS) for sulfur dioxide (SO2). The
+Ohio Environmental Protection Agency
+(Ohio EPA) submitted Director’s
+Findings and Orders that establish a
+new emission limit for SO2 emissions
+from two rotary lime kilns at the
+Carmeuse Lime Maple Grove, Inc.
+
+facility (hereafter referred to as
+Carmeuse Lime) in Seneca County,
+Ohio. EPA proposed to approve this
+action on August 7, 2025.
+DATES: This final rule is effective on
+January 12, 2026.
+ADDRESSES: EPA has established a
+docket for this action under Docket ID
+No. EPA–R05–OAR–2024–0549. All
+documents in the docket are listed on
+the https://www.regulations.gov
+website. Although listed in the index,
+some information is not publicly
+available, i.e., Confidential Business
+Information (CBI), Proprietary Business
+Information (PBI), or other information
+whose disclosure is restricted by statute.
+Certain other material, such as
+copyrighted material, is not placed on
+the internet and will be publicly
+available only in hard copy form.
+Publicly available docket materials are
+available either through https://
+www.regulations.gov or at the
+Environmental Protection Agency,
+Region 5, Air and Radiation Division, 77
+West Jackson Boulevard, Chicago,
+Illinois 60604. This facility is open from
+8:30 a.m. to 4:30 p.m., Monday through
+Friday, excluding Federal holidays. We
+recommend that you telephone Cecilia
+Magos, at (312) 886–7336 before visiting
+the Region 5 office.
+FOR FURTHER INFORMATION CONTACT:
+Cecilia Magos, Air and Radiation
+Division (AR–18J), Environmental
+Protection Agency, Region 5, 77 West
+Jackson Boulevard, Chicago, Illinois
+60604, (312) 886–7336, magos.cecilia@
+epa.gov.
+
+SUPPLEMENTARY INFORMATION:
+Throughout this document whenever
+‘‘we,’’ ‘‘us,’’ or ‘‘our’’ is used, we mean
+EPA.
+
+I. Background Information
+
+On August 21, 2015 (80 FR 51052),
+EPA finalized the Data Requirements
+Rule (DRR), which required State air
+agencies to characterize ambient SO2
+levels in areas with large sources of SO2
+emissions to identify sources that may
+be causing air quality problems. Under
+the DRR (40 CFR 51.1205), for any area
+where modeling of actual SO2 emissions
+served as a basis for designating such
+area as attainment for the 2010 SO2
+NAAQS, the State air agency shall
+submit to EPA an annual SO2 emissions
+report of applicable sources by July 1 of
+each year, including an assessment of
+the cause of any emission increases
+from the previous year and a
+recommendation regarding the need for
+additional dispersion modeling to
+determine if an area is still meeting the
+2010 SO2 NAAQS.
+
+VerDate Sep<11>2014 15:45 Dec 10, 2025 Jkt 268001 PO 00000 Frm 00024 Fmt 4700 Sfmt 4700 E:\FR\FM\11DER1.SGM 11DER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+3
+2
+N
+Q
+X
+1
+1
+K
+S
+D
+n
+o
+
+r
+e
+t
+t
+o
+
+l

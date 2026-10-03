@@ -1,0 +1,33 @@
+USE OF EXAMPLES AND TABLES
+
+This publication illustrates the method for using actuarial factors for certain income tax valuations
+of future interests. This example uses factors from actuarial tables associated with this publication.
+The actuarial tables are located at
+
+https://www.irs.gov/retirement-plans/actuarial-tables
+
+The factors and tables associated with this publication involving life contingencies are derived
+from the values of lx taken from the Life Table for the Total Population appearing as Table 1, in
+U.S. Decennial Life Tables for 2009-2011 published by the U.S. Department of Health and Human
+Services, Public Health Service, National Center for Health Statistics. Values from Table 1 appear in
+the associated set of tables labeled as Table 2010CM. However, in Table 2010CM the values of lx
+are stated to seven digits.
+
+ASSOCIATED TABLES ON THE WEB
+
+In Table C, the primary actuarial table on IRS.gov associated with this publication and the following
+example, the factors are based on interest rates ranging from 0.2% to 20.0% in intervals of 0.2%.
+The wide range of rates is shown pursuant to Internal Revenue Code (IRC) Section 7520, which
+requires the use of an interest rate of 120% of the annual mid-term applicable federal rate for the
+month in which the valuation date falls. This rate is referred to in this publication as the “Section
+7520 rate,”, or simply the “7520 rate.” All the factors associated with this publication reflect annual
+compounding of interest.
+
+The factors in Table C are used for making adjustments to the standard remainder factor for valuing
+gifts of depreciable property. Under Federal Income Tax Regulations Section 1.170A-12, this
+adjustment must be made for a charitable gift of a remainder interest in a depreciable property to
+take a charitable deduction for the gift. As an alternative to factors from Table C, actuarial factors
+may be computed with software from the underlying actuarial formulas applicable to ordinary and
+depreciable remainder interests, including the formula shown in the above regulations.
+
+3

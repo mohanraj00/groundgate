@@ -1,0 +1,1381 @@
+Federal Register / Vol. 90, No. 244 / Tuesday, December 23, 2025 / Rules and Regulations
+
+59951
+
+IV. Single-Family Housing Goals and
+Subgoal
+
+A. Factors Considered in Setting the
+Single-Family Housing Goal Benchmark
+Levels
+
+The Safety and Soundness Act
+
+requires FHFA to consider the following
+seven factors in setting the single-family
+housing goals:
+
+1. National housing needs;
+2. Economic, housing, and
+
+demographic conditions, including
+expected market developments;
+
+3. The performance and effort of the
+
+Enterprises toward achieving the
+housing goals in previous years;
+
+4. The ability of the Enterprises to
+lead the industry in making mortgage
+credit available;
+
+5. Such other reliable mortgage data
+
+as may be available;
+
+6. The size of the purchase money
+
+conventional mortgage market, or
+refinance conventional mortgage
+market, as applicable, serving each of
+the types of families described, relative
+to the size of the overall purchase
+money mortgage market or the overall
+refinance mortgage market, respectively;
+and
+
+7. The need to maintain the sound
+financial condition of the Enterprises.^21
+FHFA has considered each of these
+
+seven statutory factors in setting the
+benchmark levels for each of the single-
+family housing goals in this final rule.
+FHFA also has considered each of the
+comments received in response to the
+proposed rule, as discussed in more
+detail below
+
+FHFA’s analysis of the single-family
+
+housing goals depends in part on a
+market forecast model developed by
+FHFA. The most recently developed
+models, published in December 2024,
+relied on 20 years of HMDA data, from
+2004 to 2023, the latest year for which
+public HMDA data was available when
+the proposed rule was issued. FHFA
+also uses Moody’s Analytics forecasts
+data as the primary data source for the
+model’s independent or driver variables.
+Additional discussion of the most recent
+market forecast models can be found in
+a technical report on FHFA’s website.^22
+
+B. National Housing Needs and
+Economic, Housing, and Demographic
+Conditions
+
+FHFA received several comments
+from national advocacy groups and
+
+21 See 12 U.S.C. 4562(e)(2)(B).
+22 Details on FHFA’s single-family market models
+are available in the technical report ‘‘The Size of the
+Affordable Mortgage Market: 2025–2027 Enterprise
+Single-Family Housing Goals,’’ (December 2024),
+available at https://www.fhfa.gov/research/papers/
+2025-2027-enterprise-single-family-housing-goals-
+12-2024.
+
+individuals on the current state of
+housing affordability, racial disparities
+in lending, and threats to economic
+sustainability in the United States. Two
+commenters argued that the lower
+benchmarks would improve affordable
+housing, strengthen communities, and
+reduce inequality. However, most
+commenters contended that the lower
+benchmarks would widen gaps in
+affordable housing availability and
+increase financial hardship for low- to
+moderate-income borrowers. Some
+commenters claimed that FHFA asserted
+that mission focused lending
+undermines safety and soundness.
+These commenters argued FHFA should
+not prioritize recapitalization over
+equitable access to capital and the
+public interest. Furthermore, advocacy
+groups stated that the nation faces a
+housing affordability crisis compounded
+by a fair housing crisis, both of which
+exacerbate challenges for borrowers.
+Commenters provided evidence that
+racial homeownership gaps remain as
+wide today as in 1968 and cited ongoing
+redlining, exclusionary zoning laws,
+and labor market discrimination.
+
+Other commenters, including trade
+associations, praised FHFA’s efforts to
+enhance the supply of affordable
+housing and promote efficiency and
+innovation in the housing market.
+Specifically, trade associations
+supported FHFA’s focus on housing
+supply in the proposed rule. They
+argued that the Enterprises should
+reconsider deployment of housing goal
+subsides to address drivers of housing
+affordability issues. Some policy
+advocacy groups, however, rejected the
+notion that current affordable housing
+supply conditions justify a reduction in
+goals, emphasizing that the Enterprises
+have a mandate to support borrowers
+regardless of housing supply levels.
+
+The Agency also received comments
+on the proposed rule’s impact on first-
+time homebuyers. Advocacy groups
+noted that homeownership remains out
+of reach for borrowers across all income
+levels, emphasizing that single-family
+home prices have risen faster than
+median incomes in nearly all
+metropolitan areas. They urged FHFA
+not to reduce the single-family
+benchmarks, emphasizing that
+Enterprise-backed mortgages represent
+important opportunities for first-time
+homebuyers. Advocacy groups further
+expressed concern that persistent
+drivers of wealth inequality, such as
+exposure to natural disasters and
+worsening macroeconomic conditions,
+continue to disproportionately affect
+low- to moderate-income communities,
+and cautioned that the single-family
+benchmarks should not be set at levels
+
+that could exacerbate disparities among
+borrowers.
+
+FHFA also received comments in
+favor of its broad efforts to better serve
+middle- and working-class Americans.
+Trade organizations praised FHFA for
+acknowledging the past evidence of
+‘‘denominator management’’ and other
+market distortions that negatively
+impact middle class borrowers and
+supported FHFA’s proposed efforts to
+negate these effects. Other commenters
+argued that the regulation does not
+expand access to housing credit for all
+borrowers, but, instead, primarily
+benefits wealthier households. Some
+policy advocacy groups also challenged
+FHFA’s belief that the rule, if finalized
+as proposed, will better support middle-
+income borrowers, noting that the
+current housing goals already target this
+group and that reducing the benchmarks
+undermines the regulation’s intended
+objective. Commenters emphasized that
+middle-income borrowers should be
+supported by the Enterprises in all
+economic cycles and across all regions,
+and argued that the proposed
+benchmarks do not achieve this goal.
+Additionally, advocacy groups
+criticized FHFA for not providing
+sufficient quantitative evidence to
+support the assertion that moderate-
+income households will face increasing
+obstacles to homeownership due to
+competition among millennials
+pursuing first-time homeownership.
+FHFA acknowledges the nation’s
+affordable housing crisis, and believes
+that finalizing the proposed rule will be
+a meaningful step toward addressing
+these challenges for Americans. The
+rule accounts for the limited supply of
+affordable housing and establishes
+benchmark levels designed to prevent
+unfair market distortions, such as
+discouraging or denying access to
+mortgages for credit-eligible applicants
+in order to meet housing goals targets.
+The lower single-family benchmarks are
+also intended to help mitigate potential
+price escalation that could
+disproportionately harm affordability
+for goal-eligible populations.
+Furthermore, the proposed benchmarks
+will enable the Enterprises to focus their
+efforts on developing products and
+resources that better support first-time
+homeownership and enhance
+affordability, rather than competing in a
+bidding war over a limited supply of
+goal-qualifying loans. FHFA finds that
+the proposed rule, once finalized, will
+likely expand access to mortgage credit
+for approximately 201,000 additional
+goal-eligible borrowers who otherwise
+might not obtain mortgage financing.
+Therefore, FHFA concurs with
+commenters who argue that the lower
+
+VerDate Sep<11>2014 17:20 Dec 22, 2025 Jkt 268001 PO 00000 Frm 00007 Fmt 4700 Sfmt 4700 E:\FR\FM\23DER1.SGM 23DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+Federal Register / Vol. 90, No. 244 / Tuesday, December 23, 2025 / Rules and Regulations
+
+59955
+
+the single-family purchase benchmarks.
+All letters focused on the proposed
+reduction of the low-income purchase
+(LIP) benchmark from 25.0 percent to
+21.0 percent, while all but one also
+addressed the proposed reduction of the
+very low-income purchase (VLIP)
+benchmark from 6.0 percent to 3.5
+percent for the years 2026–2028.
+
+The commenters generally expressed
+concerns that the proposed goals are not
+ambitious enough and fall below current
+market levels, undermining the
+assistance that the Enterprises could
+provide to families in need. They argued
+that these reduced goals could
+jeopardize the statutory mission of the
+Enterprises and significantly limit
+lending opportunities for households
+with incomes up to 80 percent and 50
+percent of area median income for LIP
+and VLIP, respectively.
+
+Additionally, several commenters
+raised issues with FHFA’s reliance on
+qualitative evidence related to the
+crowding out of other funding sources,
+the increasing costs for middle-income
+borrowers, and the notion that increased
+lending to low and moderate-income
+borrowers could undermine safety and
+soundness. Despite these Agency
+concerns, the commenters argue that
+market data supports maintaining the
+current benchmark levels, which they
+say have consistently been met in
+previous years. The commenters
+advocate for more ambitious goals,
+especially given the ongoing
+affordability challenges in the housing
+market.
+
+Most of the commenters urged FHFA
+
+to either maintain the current
+benchmarks or reassess them based on
+
+additional empirical data, rather than
+qualitative evidence and industry
+sentiment. One of these commenters
+suggested that the Enterprises could
+exceed the current purchase
+benchmarks, requesting increases in
+both LIP and VLIP benchmarks,
+although no specific targets were
+provided.
+
+In contrast to the commenters
+
+advocating higher benchmarks, there
+were two letters from industry trade
+groups expressing their appreciation to
+FHFA for its recognition of the potential
+for market distortion and efforts to more
+appropriately calibrate the goals. One of
+these commenters pointed out that the
+LIP and VLIP goals were not feasible to
+achieve for 2023.
+
+FHFA has thoroughly reviewed the
+
+comments and decided to retain the
+proposed reductions to both single-
+family purchase goals. This decision is
+based on FHFA’s consideration of each
+of the statutory factors and the
+comments received, as discussed above.
+The Agency reaffirms that while data
+
+is crucial, qualitative insights from
+stakeholder experience also play an
+essential role in understanding the
+complexities of the mortgage finance
+landscape. These qualitative
+assessments enrich the understanding of
+market dynamics and borrower needs.
+Further, the Agency provided
+quantitative data using the National
+Mortgage Database, noting unexpectedly
+lower acquisitions of goal-eligible loans
+by the Enterprises beginning in 2022,
+which may be explained by
+denominator management strategies
+identified by market participants
+through the qualitative data. The
+
+Regulatory Impact Analysis estimates
+that in 2024, the Enterprises would have
+acquired an additional 67,000 goal-
+eligible loans per annum without having
+to purchase any fewer housing goal
+qualifying loans. Both qualitative and
+quantitative data provide unique and
+valuable insights into the market. In this
+case, both qualitative and quantitative
+information reinforce the need for FHFA
+to make adjustments to the goals to
+appropriately align incentives with
+desired outcomes.
+
+FHFA aims to balance market
+
+dynamics by reconciling the
+Enterprises’ commitment to affordable
+lending with the necessity of providing
+liquidity in the broader market. The
+Agency believes that maintaining these
+revised goals will reduce market
+distortions and mitigate unintended
+consequences while continuing to
+provide robust support for low- to
+moderate-income households.
+Furthermore, FHFA acknowledges the
+current economic realities affecting the
+housing landscape, such as a significant
+decrease in affordable inventory and
+rising costs, necessitating a reevaluation
+of attainable targets.
+
+With a focus on long-term stability in
+the housing market, FHFA believes that
+implementing lower benchmarks is a
+prudent strategy to ensure the
+Enterprises can operate sustainably
+while protecting their financial health
+and the structural integrity of the
+secondary mortgage market. It is
+important to note that these goals reflect
+minimum requirements, and the Agency
+expects the Enterprises to exceed these
+benchmarks whenever feasible and
+prudent.
+
+TABLE 1—SINGLE-FAMILY LOW-INCOME HOME PURCHASE GOAL
+
+Year
+
+Historical performance
+
+2021
+
+2022
+
+2023
+
+2024
+
+2025
+
+2026
+
+2027
+
+2028
+
+Actual Market ....................................................
+Benchmark ........................................................
+
+I
+
+26.7%
+24.0%
+
+I
+
+26.8%
+28.0%
+
+I
+
+26.3%
+28.0%
+
+....................
+28.0%
+
+I
+
+....................
+25.0%
+
+I
+
+....................
+21.0%
+
+I
+
+....................
+21.0%
+
+I
+
+....................
+21.0%
+
+Fannie Mae Performance
+
+Low-Income Home Purchase Mortgages .........
+Total Home Purchase Mortgages .....................
+Low-Income % of Home Purchase Mortgages
+
+375,569
+1,306,459
+28.7%
+
+278,799
+1,016,371
+27.4%
+
+189,439
+726,139
+26.1%
+
+189,247
+710,076
+26.7%
+
+....................
+....................
+....................
+
+....................
+....................
+....................
+
+....................
+....................
+....................
+
+....................
+....................
+....................
+
+Low-Income Home Purchase Mortgages .........
+Total Home Purchase Mortgages .....................
+Low-Income % of Home Purchase Mortgages
+
+329,426
+1,201,540
+27.4%
+
+264,118
+911,037
+29.0%
+
+209,432
+735,932
+28.5%
+
+200,757
+753,338
+26.6%
+
+....................
+....................
+....................
+
+....................
+....................
+....................
+
+....................
+....................
+....................
+
+....................
+....................
+....................
+
+Freddie Mac Performance
+
+As presented in Table 2, the market
+level for the low-income home purchase
+housing goal, derived from HMDA data,
+declined from 27.6 percent in 2020 to
+26.3 percent in 2023. FHFA’s most
+recent forecast for this goal projects a
+
+continued market level decline,
+averaging 25.9 ± 5.6 percent. FHFA’s
+current model forecasts the market level
+to remain below 26.0 percent through
+2027, with an average forecast midpoint
+value of 25.9 percent.
+
+Regarding Enterprise performance,
+Freddie Mac recorded a low-income
+home purchase performance of 29.0
+percent in 2022 and 28.5 percent in
+2023, exceeding both the benchmark
+and market levels in those years. Fannie
+
+VerDate Sep<11>2014 17:20 Dec 22, 2025 Jkt 268001 PO 00000 Frm 00011 Fmt 4700 Sfmt 4700 E:\FR\FM\23DER1.SGM 23DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+59956
+
+Federal Register / Vol. 90, No. 244 / Tuesday, December 23, 2025 / Rules and Regulations
+
+Mae’s performance in 2022 was 27.4
+percent, which was below the
+benchmark level but above the market
+level. In 2023, however, Fannie Mae’s
+performance decreased to 26.1 percent,
+
+falling below both the benchmark and
+the market levels. For 2023, FHFA
+determined that while Fannie Mae did
+not meet the goal, the established
+benchmark was not feasible for the
+
+Enterprise.^29 For 2024, both Enterprises
+exceeded the market level, with Fannie
+Mae’s performance at 26.7 percent and
+Freddie Mac’s performance at 26.6
+percent.
+
+TABLE 2—SINGLE-FAMILY VERY LOW-INCOME HOME PURCHASE GOAL
+
+Year
+
+Historical performance
+
+2021
+
+2022
+
+2023
+
+2024
+
+2025
+
+2026
+
+2027
+
+2028
+
+Actual Market ....................................................
+Benchmark ........................................................
+
+6.8%
+6.0%
+
+6.8%
+7.0%
+
+6.5%
+7.0%
+
+....................
+7.0%
+
+....................
+6.0%
+
+I
+
+....................
+3.5%
+
+I
+
+....................
+3.5%
+
+I
+
+....................
+3.5%
+
+I
+
+Fannie Mae Performance
+
+Very Low-Income Home Purchase Mortgages
+Total Home Purchase Mortgages .....................
+Very Low-Income % of Home Purchase Mort-
+gages .............................................................
+
+97,154
+1,306,459
+
+69,919
+1,016,371
+
+43,792
+726,139
+
+41,783
+710,076
+
+....................
+....................
+
+....................
+....................
+
+....................
+....................
+
+....................
+....................
+
+7.4%
+
+6.9%
+
+6.0%
+
+5.9%
+
+....................
+
+I
+
+....................
+
+....................
+
+....................
+
+I
+
+Freddie Mac Performance
+
+Very Low-Income Home Purchase Mortgages
+Total Home Purchase Mortgages .....................
+Very Low-Income % of Home Purchase Mort-
+gages .............................................................
+
+75,945
+1,201,540
+
+64,850
+911,037
+
+50,244
+735,932
+
+46,055
+753,338
+
+....................
+....................
+
+....................
+....................
+
+....................
+....................
+
+....................
+....................
+
+6.3%
+
+7.1%
+
+6.8%
+
+6.1%
+
+....................
+
+I
+
+....................
+
+I
+
+....................
+
+I
+
+....................
+
+I
+
+As detailed in Table 3, the market
+level for the very low-income home
+purchase housing goal, derived from
+HMDA data, decreased from 7.0 percent
+in 2020 to 6.5 percent in 2023. FHFA’s
+most recent forecast projects a
+continued market level decline,
+averaging 6.0 ± 2.5 percent. FHFA’s
+current model forecasts the market to
+continue its downward trajectory
+reaching below 6 percent through 2027,
+with an average forecast midpoint value
+of 5.9 percent.
+
+Regarding the Enterprises, both
+Enterprises met the very low-income
+home purchase goal in 2022, with
+Freddie Mac’s performance at 7.1
+percent and Fannie Mae’s performance
+at 6.9 percent. In 2023, Freddie Mac met
+the very low-income home purchase
+goal, with performance at 6.8 percent,
+but Fannie Mae’s performance was 6.0
+percent, which was below both the
+market and the benchmark. For 2024,
+Freddie Mac again met the very low-
+income home purchase goal, while
+Fannie Mae’s performance was 5.9
+percent, below both the market and the
+benchmark.
+
+The Agency remains committed to its
+
+statutory mission of promoting
+affordable housing. However, the latest
+available market performance data,
+market forecasts, and Enterprise
+performance all indicate that the current
+benchmark levels for the low-income
+home purchase goal and the very low-
+income home purchase goal are set too
+aggressively. FHFA believes that the
+reductions in the LIP and VLIP goals are
+
+a necessary strategy to maintain the
+stability of the Enterprises and the
+broader housing market. FHFA values
+the constructive dialogue and insights
+from stakeholders and will continue to
+monitor market conditions closely to
+evaluate the ongoing viability of these
+housing goals.
+
+F. Low-Income Areas, Minority Census
+Tracts, & Low-Income Census Tracts
+Subgoal Determinations
+
+The Agency received several
+
+comments regarding the restoration of
+the low-income areas subgoal, which
+would merge the current minority
+census tracts subgoal and the low-
+income census tracts subgoal. One
+individual supported the restoration of
+the low-income areas subgoal as it
+reduces administrative burden.
+
+One individual, one trade association,
+
+two nonprofits, and three policy
+advocacy groups disagreed with the
+proposal to restore the previous subgoal
+and urged FHFA to keep the two area-
+based subgoals separate. They argued
+that given that the Enterprises can meet
+the low-income census tracts segment
+by serving borrowers at any income,
+combining both segments could result
+in greater service to higher-income
+borrowers and reduced focus on lower-
+income homebuyers in minority census
+tracts. One policy advocacy group
+argued that this change could result in
+the Enterprises’ purchasing up to 88,000
+fewer loans in minority census tracts
+from 2026 to 2028. In addition,
+commenters noted that while this
+
+merger may reduce administrative
+burden, it may make it more difficult to
+track the Enterprises’ performance in
+the minority census tracts.
+
+As stated in the proposed rule, FHFA
+
+is restoring the low-income areas
+subgoal to simplify the regulatory
+framework, improve operational clarity
+for the Enterprises, and better align the
+subgoal with existing borrower-based
+metrics. This merger ensures that both
+segments of the subgoal remain
+supported while considering the
+implementation challenges related to
+the current structure. This change also
+advances the Administration’s priorities
+for race neutral policies, and for
+regulatory reform by reducing
+compliance costs, increasing efficiency,
+and reducing regulatory burden.
+Under the current structure, all
+
+higher-income borrower loans in low-
+income census tracts that are also
+minority census tracts qualify for the
+low-income census tracts subgoal only,
+while the lower-income loans in those
+census tracts qualify for the minority
+census tracts subgoal only. Although
+this separation enables the Enterprises
+to focus on lower-income borrowers in
+census tracts that are both minority and
+low-income in one subgoal (the
+minority census tracts subgoal), it also
+places higher-income loans in those
+census tracts in the other subgoal,
+which increases operational complexity.
+However, a 2020 study of Enterprise
+
+acquisitions between 2010 and 2019,
+conducted by FHFA, found that under
+the previous structure, when the loans
+
+29 FHFA’s final determination of Fannie Mae’s
+
+performance for 2023, available at https://
+
+www.fhfa.gov/sites/default/files/2024-11/2023-
+Final-Determination-Letter-Fannie-Mae.pdf.
+
+VerDate Sep<11>2014 17:20 Dec 22, 2025 Jkt 268001 PO 00000 Frm 00012 Fmt 4700 Sfmt 4700 E:\FR\FM\23DER1.SGM 23DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+Federal Register / Vol. 90, No. 244 / Tuesday, December 23, 2025 / Rules and Regulations
+
+59957
+
+were not separated as described above,
+the share of loans made to borrowers
+with incomes greater than 100 percent
+of AMI and residing in low-income
+census tracts declined from 40.7 percent
+in 2010 to 37.0 percent in 2019.^30 The
+trend was similar among borrowers
+residing in minority census tracts, with
+the share of higher-income borrowers
+declining from 45.4 percent in 2010 to
+42.9 percent in 2019.^31 The share of
+high-income borrowers peaked between
+2014 and 2016, corresponding with an
+overall increase in loan volume, decline
+in mortgage rates, and expansion of
+credit availability. In the following
+years, FHFA observed an overall decline
+in the share of higher-income borrowers
+
+that qualified for this housing goal.
+Based on this evidence, and assuming
+that the trend observed during the 2010
+to 2019 study period is representative of
+the subgoal as a whole, there does not
+appear to be any evidence that having
+a combined goal results in reduced
+support for low-income borrowers.
+FHFA believes that the Enterprises will
+continue to support lower-income
+borrowers when borrowers in low-
+income census tracts and minority
+census tracts are served under one
+subgoal.
+
+Additionally, FHFA notes that the
+
+public will still be able to track the
+Enterprises’ performance in minority
+census tracts without the minority
+census tracts subgoal. The Enterprises
+
+provide this information in Tables 7 and
+9 of their Annual Mortgage Reports
+published on their websites.^32
+Additionally, FHFA publishes
+information on borrower race and
+ethnicity by loan product compared to
+the market in its Annual Housing
+Report.^33
+
+Given the operational challenges that
+emerged with the current structure, and
+the evidence of Enterprise behavior
+under the previous structure, FHFA
+believes that it is reasonable and
+prudent to restore the low-income areas
+subgoal as it will reduce administrative
+burden while encouraging the
+Enterprises to focus on supporting
+borrowers in low-income areas.
+
+TABLE 3—SINGLE-FAMILY LOW-INCOME AREAS HOME PURCHASE SUBGOAL
+
+Year
+
+Historical performance
+
+2021
+
+2022
+
+2023
+
+2024
+
+2025
+
+2026
+
+2027
+
+2028
+
+Actual Market ....................................................
+Benchmark ........................................................
+
+19.1%
+14.0%
+
+I
+
+21.8%
+N/A
+
+I
+
+22.1%
+N/A
+
+....................
+N/A
+
+I
+
+....................
+N/A
+
+I
+
+....................
+16.0%
+
+I
+
+....................
+16.0%
+
+I
+
+....................
+16.0%
+
+I
+
+Fannie Mae Performance
+
+Minority Census Tracts Home Purchase Mort-
+gages .............................................................
+Low-Income Census Tracts Home Purchase
+Mortgages ......................................................
+Low-Income Areas Subgoal Home Purchase
+Mortgages ......................................................
+Total Home Purchase Mortgages .....................
+Low-Income Area Subgoal % of Home Pur-
+chase Mortgages ...........................................
+
+Minority Census Tracts Home Purchase Mort-
+gages .............................................................
+Low-Income Census Tracts Home Purchase
+Mortgages ......................................................
+Low-Income Areas Subgoal Home Purchase
+Mortgages ......................................................
+Total Home Purchase Mortgages .....................
+Low-Income Area Subgoal % of Home Pur-
+chase Mortgages ...........................................
+
+143,340
+
+137,474
+
+91,202
+
+92,060
+
+....................
+
+....................
+
+....................
+
+....................
+
+122,177
+
+94,864
+
+67,844
+
+68,370
+
+....................
+
+....................
+
+....................
+
+....................
+
+265,517
+1,306,459
+
+232,338
+1,016,371
+
+159,046
+726,139
+
+160,430
+710,076
+
+....................
+....................
+
+....................
+....................
+
+....................
+....................
+
+....................
+....................
+
+20.3%
+
+22.9%
+
+21.9%
+
+22.6%
+
+....................
+
+....................
+
+....................
+
+....................
+
+Freddie Mac Performance
+
+111,691
+
+116,223
+
+97,378
+
+90,754
+
+....................
+
+....................
+
+....................
+
+....................
+
+104,401
+
+82,883
+
+69,459
+
+69,438
+
+....................
+
+....................
+
+....................
+
+....................
+
+216,092
+1,201,540
+
+199,106
+911,037
+
+166,837
+735,932
+
+160,192
+753,338
+
+....................
+....................
+
+....................
+....................
+
+....................
+....................
+
+....................
+....................
+
+18.0%
+
+21.9%
+
+22.7%
+
+21.3%
+
+....................
+
+....................
+
+....................
+
+....................
+
+The numbers in italics refer to FHFA’s tabulations of the market and Enterprise performance had this subgoal been in place from 2022–2024.
+
+Table 3 shows the market levels and
+Enterprise performance on this subgoal
+in 2021, along with implied market
+levels and Enterprise performance for
+the years 2022 through 2024, during
+which the low-income areas subgoal
+was replaced by the low-income census
+tracts and minority census tracts
+subgoals. As shown above, both
+Enterprises exceeded the proposed
+benchmark level for this subgoal in
+2022, 2023, and 2024.
+
+Based on the comments received and
+
+FHFA’s consideration of the statutory
+factors, including the recent
+performance of the Enterprises and the
+market forecasts shown in Table 3,
+FHFA has determined that the
+benchmark level for the low-income
+areas home purchase subgoal should be
+established at the level that was
+proposed by FHFA earlier this year, 16
+percent.
+
+30 Advanced Notice of Proposed Rulemaking,
+
+Table 3: Borrower Income Relative to AMI
+(Enterprise Loans Only), available at https://
+www.govinfo.gov/content/pkg/FR-2020-12-21/pdf/
+2020-28084.pdf.
+
+31 Ibid.
+
+32 See Fannie Mae’s 2024 Annual Mortgage
+Report, available at https://www.fanniemae.com/
+media/55596/display and Freddie Mac’s 2024
+Annual Mortgage Report, available at https://
+www.freddiemac.com/about/pdf/2024-annual-
+mortgage-report.pdf.
+
+33 Under 12 U.S.C. 4544(b)(3), FHFA is required
+to ‘‘aggregate and analyze data on income, race, and
+
+G. Low-Income Refinance Goal
+Determinations
+
+The Agency received comments
+regarding the proposal to maintain the
+low-income refinance benchmark level
+at 26.0 percent. A trade organization
+supported FHFA’s proposal to maintain
+the benchmark level as was finalized in
+the 2025–2027 rule, given the segment’s
+sensitivity to interest rates. Another
+trade organization urged FHFA to
+consider lowering the low-income
+
+gender by census tract and other relevant
+classifications, and compare such data with larger
+demographic, housing, and economic trends.’’ See
+FHFA’s 2024 Annual Housing Report, available at
+https://www.fhfa.gov/document/annual-housing-
+report-2024.
+
+VerDate Sep<11>2014 17:20 Dec 22, 2025 Jkt 268001 PO 00000 Frm 00013 Fmt 4700 Sfmt 4700 E:\FR\FM\23DER1.SGM 23DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

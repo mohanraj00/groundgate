@@ -1,0 +1,282 @@
+Wash sales. Your holding period for substantially identi-
+cal stock or securities you acquire in a wash sale includes
+the period you held the old stock or securities.
+
+Qualified small business stock. Your holding period for
+stock you acquired in a tax-free rollover of gain from a sale
+of qualified small business stock, described later under
+Gains on Qualified Small Business Stock, includes the pe-
+riod you held the old stock.
+
+Commodity futures. Your holding period for a commod-
+ity received in satisfaction of a commodity futures con-
+tract, other than a regulated futures contract subject to In-
+ternal Revenue Code section 1256, includes your holding
+period for the futures contract if you held the contract as a
+capital asset.
+
+Securities futures contract. Your holding period for a
+security received in satisfaction of a securities futures con-
+tract, other than one that is a section 1256 contract, in-
+cludes your holding period for the futures contract if you
+held the contract as a capital asset.
+
+Your holding period for a security received in satisfac-
+tion of a securities futures contract to sell, other than one
+that is a section 1256 contract, is determined by the rules
+that apply to short sales, discussed later under Short
+Sales.
+
+Loss on mutual fund or REIT stock held 6 months or
+less. If you hold stock in a mutual fund (or other regulated
+investment company) or REIT for 6 months or less and
+then sell it at a loss (other than under a periodic liquidation
+plan), special rules may apply.
+
+Capital gain distributions received. The loss (after
+reduction for any exempt-interest dividends you received,
+as explained later) is treated as a long-term capital loss up
+to the total of any capital gain distributions you received
+and your share of any undistributed capital gains. Any re-
+maining loss is short-term capital loss.
+
+Reinvested distributions. If your dividends and capital
+gain distributions are reinvested in new shares, the hold-
+ing period of each new share begins the day after that
+share was purchased. Therefore, if you sell both the new
+shares and the original shares, you might have both
+short-term and long-term gains and losses.
+
+Example. On April 3, 2025, you bought a mutual fund
+share for $20. On June 17, 2025, the mutual fund paid a
+capital gain distribution of $2 per share, which is taxed as
+a long-term capital gain. On July 15, 2025, you sold the
+share for $17.50. If it were not for the capital gain distribu-
+tion, your loss would be a short-term loss of $2.50 ($20 −
+$17.50). However, the part of the loss that is not more
+than the capital gain distribution ($2) must be reported as
+a long-term capital loss. The remaining $0.50 of the loss
+can be reported as a short-term capital loss.
+
+Exempt-interest dividends on mutual fund stock. If
+you received exempt-interest dividends on the stock, at
+least part of your loss is disallowed. You can deduct only
+the amount of loss that is more than the exempt-interest
+
+dividends. Report the loss as a short-term capital loss. On
+Form 8949, Part I, line 1, column (d), increase the sales
+price by the amount of exempt-interest dividends, but do
+not increase it to more than the cost or other basis shown
+in column (e).
+
+Example. On January 10, 2025, you bought a mutual
+fund share for $40. On February 7, 2025, the mutual fund
+paid a $5 dividend from tax-exempt interest, which is not
+taxable to you. On February 14, 2025, you sold the share
+for $34. If it were not for the tax-exempt dividend, your loss
+would be $6 ($40 − $34). However, you must increase the
+sales price from $34 to $39 (to account for the $5 portion
+of the loss that is not deductible). You can deduct only $1
+as a short-term capital loss.
+
+Loss on stock that paid qualified dividends. Any loss
+on the sale or trade of stock must be treated as a
+long-term capital loss to the extent you received, from that
+stock, qualified dividends (defined in chapter 1) that are
+extraordinary dividends. This is true regardless of how
+long you actually held the stock. Generally, an extraordi-
+nary dividend is a dividend that equals or exceeds 10%
+(5% in the case of preferred stock) of your adjusted basis
+in the stock.
+
+Nonbusiness Bad Debts
+
+If someone owes you money that you cannot collect, you
+have a bad debt. You may be able to deduct the amount
+owed to you when you figure your tax for the year the debt
+becomes worthless.
+
+There are two kinds of bad debts—business and non-
+business. A business bad debt, generally, is one that
+comes from operating your trade or business and is de-
+ductible as a business loss. All other bad debts are non-
+business bad debts and are deductible as short-term cap-
+ital losses.
+
+Example. An architect made personal loans to several
+friends who were not clients. The architect could not col-
+lect on some of these loans. They are deductible only as
+nonbusiness bad debts because the architect was not in
+the business of lending money and the loans do not have
+any relationship to the architect’s business.
+
+Business bad debts. For information on business bad
+debts of an employee, see Pub. 334, Tax Guide For Small
+Business (For Individuals Who Use Schedule C).
+
+Deductible nonbusiness bad debts. To be deductible,
+nonbusiness bad debts must be totally worthless. You
+cannot deduct a partly worthless nonbusiness debt.
+
+Genuine debt required. A debt must be genuine for
+you to deduct a loss. A debt is genuine if it arises from a
+debtor-creditor relationship based on a valid and enforce-
+able obligation to repay a fixed or determinable sum of
+money.
+
+Loan or gift. For a bad debt, you must show there was
+an intention at the time of the transaction to make a loan
+and not a gift. If you lend money to a relative or friend with
+
+Publication 550 (2025)
+
+Chapter 4 Sales and Trades of Investment Property
+
+83
+Worksheet 4-1. Capital Loss Carryover Worksheet
+
+Keep for Your Records
+
+Use this worksheet to figure your capital loss carryovers from 2024 to 2025 if your 2024 Schedule D (Form 1040), line 21, is a loss
+and (a) that loss is a smaller loss than the loss on your 2024 Schedule D (Form 1040), line 16, or (b) if the amount on your 2024
+Form 1040, 1040-SR, or 1040-NR, line 15, would be less than zero if you could enter a negative amount on that line. Otherwise, you
+do not have any carryovers.
+
+If you and your spouse once filed a joint return and are filing separate returns for 2025, any capital loss carryover from the joint
+return can be deducted only on the return of the spouse who actually had the loss.
+
+If you excluded canceled debt from income in 2025, see Pub. 4681.
+
+1. Enter the amount from your 2024 Form 1040, 1040-SR, or 1040-NR, line 15. If the amount would have
+
+been a loss and if you could enter a negative number on that line, enclose the amount in
+parentheses . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2. Enter the loss from your 2024 Schedule D (Form 1040), line 21, as a positive amount
+
+. . . . . . . . . . . . . .
+
+3. Combine lines 1 and 2. If zero or less, enter -0- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4. Enter the smaller of line 2 or line 3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+If line 7 of your 2024 Schedule D is a loss, go to line 5; otherwise, enter -0- on line 5 and go to
+line 9.
+
+5. Enter the loss from your 2024 Schedule D (Form 1040), line 7, as a positive amount
+
+. . . . . . . . . . . . . . .
+
+6. Enter any gain from your 2024 Schedule D (Form 1040), line 15. If a loss,
+
+enter -0- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6.
+
+7. Add lines 4 and 6 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+8. Short-term capital loss carryover to 2025. Subtract line 7 from line 5. If zero or less, enter -0-. If
+
+more than zero, also enter this amount on Schedule D, line 6
+If line 15 of your 2024 Schedule D is a loss, go to line 9; otherwise, skip lines 9 through 13.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9. Enter the loss from your 2024 Schedule D (Form 1040), line 15, as a positive amount
+
+. . . . . . . . . . . . . .
+
+10. Enter any gain from your 2024 Schedule D (Form 1040), line 7. If a loss,
+
+enter -0- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+11. Subtract line 5 from line 4. If zero or less, enter -0-
+
+10.
+11.
+
+12. Add lines 10 and 11 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+13. Long-term capital loss carryover for 2025. Subtract line 12 from line 9. If zero or less, enter -0-. If
+
+more than zero, also enter this amount on Schedule D, line 14
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.
+
+2.
+3.
+4.
+
+5.
+
+7.
+
+8.
+
+9.
+
+12.
+
+13.
+
+yearly limit on capital loss deductions, you can carry over
+the unused part to the next year and treat it as if you had
+incurred it in that next year. If part of the loss is still un-
+used, you can carry it over to later years until it is com-
+pletely used up.
+
+When you figure the amount of any capital loss carry-
+over to the next year, you must take the current year's al-
+lowable deduction into account, whether or not you
+claimed it and whether or not you filed a return for the cur-
+rent year.
+
+When you carry over a loss, it remains long-term or
+short-term. A long-term capital loss you carry over to the
+next tax year will reduce that year's long-term capital gains
+before it reduces that year's short-term capital gains.
+
+Figuring your carryover. The amount of your capital
+loss carryover is the amount of your total net loss that is
+more than the lesser of:
+
+1. Your allowable capital loss deduction for the year, or
+
+2. Your taxable income increased by your allowable cap-
+
+ital loss deduction for the year.
+
+If your deductions are more than your gross income for
+the tax year, use your negative taxable income in figuring
+the amount in (2) above.
+
+Complete Worksheet 4-1 to determine the part of your
+
+capital loss that you can carry over.
+
+Example. Bob and Shelly sold securities in 2025. The
+sales resulted in a capital loss of $7,000. They had no
+other capital transactions. Their taxable income was
+$26,000. On their joint 2025 return, they can deduct
+$3,000. The unused part of the loss, $4,000 ($7,000 −
+$3,000), can be carried over to 2026.
+
+If their capital loss had been $2,000, their capital loss
+deduction would have been $2,000. They would have no
+carryover.
+
+Use short-term losses first. When you figure your
+capital loss carryover, use your short-term capital losses
+first, even if you incurred them after a long-term capital
+loss. If you have not reached the limit on the capital loss
+deduction after using the short-term capital losses, use
+the long-term capital losses until you reach the limit.
+
+102
+
+Chapter 4 Sales and Trades of Investment Property
+
+Publication 550 (2025)

@@ -15,9 +15,10 @@ from typing import Any
 import pytest
 
 BENCH = Path(__file__).parent.parent / "bench"
-sys.path[:0] = [str(BENCH), str(BENCH / "label")]  # bench scripts are not a package
+sys.path[:0] = [str(BENCH), str(BENCH / "label"), str(BENCH / "patterns")]  # not a package
 
 import app  # noqa: E402  (bench/label/app.py)
+import pairs  # noqa: E402  (bench/patterns/pairs.py)
 import score  # noqa: E402  (bench/score.py)
 
 TEXT = "Tablets: 10 mg. The maximum dose is 40 mg once daily."
@@ -498,3 +499,19 @@ def test_targeted_fields_beyond_the_counted_matches_are_dropped() -> None:
     }
     assert build.apply_cap(gold, text) == 2
     assert set(gold["fields"]) == {*names[:5], "footnote", "absent_one"}
+
+
+def test_a_pattern_pair_is_from_a_number_a_connector_and_a_number() -> None:
+    text = (
+        "Raised from $1,200 to $950. Doses from 20 mg to 10 mg. From 2 through 5 years. Ages "
+        "from 2-5. Taken from 5 tons of 7. From 10% to 5%. Moved from 4 to the 6th floor."
+    )
+    found = [(m.group(1), m.group(2)) for m in pairs.pairs_in(text)]
+    assert found == [("1,200", "950"), ("20", "10"), ("2", "5"), ("2", "5"), ("10", "5")]
+
+
+def test_the_label_context_marks_x_and_y_and_nothing_else() -> None:
+    text = "The fee went\nfrom $5 to $7 in 2027."
+    m = pairs.pairs_in(text)[0]
+    shown = pairs.context(text, {"x": [m.start(1), m.end(1)], "y": [m.start(2), m.end(2)]})
+    assert shown == "The fee went from $\033[1;7m5\033[0m to $\033[1;7m7\033[0m in 2027."

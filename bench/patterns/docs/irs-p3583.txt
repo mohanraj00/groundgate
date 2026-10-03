@@ -1,0 +1,310 @@
+Significant Cases (1/3)
+
+Global Export Control and
+Sanctions Evasion Scheme
+New York Field Office
+
+From 2019 through 2022, Vadim Yermolenko,
+a dual U.S. and Russian national residing in
+New Jersey, played a key role in a transnational
+procurement and money laundering network that
+illegally acquired U.S.-made dual-use electronics
+and military-grade ammunition intended for
+Russian military and intelligence entities.
+
+Yermolenko was affiliated with Serniya Engineering
+(Serniya) and Sertal LLC (Sertal), two Moscow-based
+procurement companies that operated a network
+of shell companies and bank accounts throughout
+the world, including in the United States. These
+companies concealed involvement of the Russian
+government and end-users of highly sensitive
+electronic components, some which are used
+in the development of nuclear weapons or
+other military applications. Serniya, Sertal, and
+several individuals and companies involved in
+the scheme were placed on the Office of Foreign
+Assets Control’s (OFAC) Specially Designated
+Nationals List in February 2022, which allows
+the U.S. to place sanctions on these entities.
+
+Yermolenko helped set up shell companies and U.S.
+bank accounts to conceal the Russian government’s
+involvement, funneling over $12 million through
+accounts he controlled. Yermolenko failed to report
+the funds to the IRS. These funds were used in
+part to purchase sensitive radar equipment for
+surveillance, military research, and development.
+Yermolenko pleaded guilty to conspiracy to violate
+the Export Control Reform Act, bank fraud conspiracy,
+and conspiracy to defraud the United States. He
+was sentenced to 30 months in prison and ordered
+to pay a forfeiture money judgment of $75,547.
+
+TD Bank Investigation
+Newark Field Office
+
+For almost a decade, TD Bank NA and its parent
+company, TD Bank US Holding Company, the 10th
+largest bank in the United States, had long-term,
+pervasive, and systemic deficiencies in its U.S.
+anti-money laundering (AML) policies, procedures,
+and controls but failed to take appropriate remedial
+action. Instead, senior executives at TD Bank
+enforced a budget mandate, referred to internally
+as a “flat cost paradigm,” requiring that TD Bank’s
+budget not increase year-over-year, despite its
+profits and risk profile increasing significantly over
+the same period. Although TD Bank maintained
+elements of an AML program that appeared
+adequate on paper, fundamental, widespread
+flaws in its AML program made TD Bank an “easy
+target” for perpetrators of financial crime.
+
+TD Bank’s federal regulators and their own internal
+audit staff repeatedly identified concerns about
+its transaction monitoring program, a key element
+of an effective AML program, which is necessary
+to detect and report suspicious activities and
+financial transactions. TD Bank intentionally did
+not automatically monitor all domestic automated
+clearinghouse transactions (ACH), most check
+activity, and numerous other transaction types,
+resulting in 92% of their total transaction volume
+going unmonitored from January 2018 through
+April 2024. This amounted to approximately
+$18.3 trillion of unmonitored transaction activity.
+
+Employees of TD Bank described the institution as
+a “convenient” target for criminals, which allowed
+hundreds of millions of dollars to pass through
+the bank. The investigation revealed at least three
+distinct money laundering networks that collectively
+transferred more than $670 million through TD Bank
+accounts between 2019 and 2023. The Justice
+Department has charged over two dozen individuals
+across these schemes, including two bank insiders.
+TD Bank’s plea agreement requires continued
+cooperation in ongoing investigations of
+individuals. In November 2024, TD Bank
+was ordered to forfeit over $452 million
+and to pay a criminal fine of $1.4 billion.
+
+8
+
+Bitfinex Hack
+Washington, D.C. Field Office
+
+In 2016, Ilya Lichtenstein hacked into Bitfinex, a
+global cryptocurrency exchange, using advanced
+hacking tools and techniques. Once inside the
+network, Lichtenstein fraudulently authorized more
+than 2,000 transactions transferring 119,754 bitcoin
+from Bitfinex to a cryptocurrency wallet in his control.
+Lichtenstein then took steps to cover his tracks by
+deleting access credentials and other log files from
+Bitfinex’s network that could have revealed his
+conduct to law enforcement. Following the hack,
+Lichtenstein enlisted the help of his wife, Heather
+Morgan, in laundering the stolen funds. At the time
+of the hack, the bitcoin was valued at $71 million.
+
+Lichtenstein, at times with Morgan’s assistance,
+employed numerous sophisticated laundering
+techniques that ranged from using fictitious
+identities to set up online accounts to utilizing
+computer programs to automate transactions to
+converting bitcoin to other forms of cryptocurrency
+in a practice known as chain hopping. He then
+used U.S.-based business accounts to legitimize
+his and Morgan’s banking activity and exchanged
+a portion of the stolen funds for gold coins.
+
+Lichtenstein and Morgan both pleaded guilty.
+Lichtenstein was sentenced to five years in
+prison, and Morgan was sentenced to 18 months.
+Several billion dollars of illicit proceeds have also
+been recovered through seizure and forfeiture
+due to the appreciation of the stolen funds.
+
+North Korean Information
+Technology Scheme
+Phoenix Field Office
+
+From 2020 through 2023, Christina Chapman
+conspired with and assisted North Korean IT workers
+in a scheme that generated more than $17 million
+in illicit revenue for herself and North Korea. Using
+stolen and purchased identities of U.S. nationals,
+North Korean workers applied for remote IT jobs
+at over 300 U.S. companies, including Fortune
+500 corporations, major television networks,
+American car makers, and tech companies.
+
+Chapman operated a “laptop farm,” where she
+received and hosted computers from U.S. companies
+at her home, leading the companies to believe these
+workers were in the United States. Chapman also
+shipped 49 laptops and other devices supplied by U.S.
+companies to locations overseas, including multiple
+shipments to a city in China near North Korea.
+
+Much of the $17.1 million was falsely reported as
+wages to the IRS and Social Security Administration
+in the names of U.S. individuals whose identities
+had been stolen or borrowed. Chapman pleaded
+guilty to conspiracy to commit wire fraud,
+aggravated identity theft, and conspiracy to
+launder monetary instruments. She was sentenced
+to 102 months in prison and ordered to forfeit
+$284,555.92 that she planned to pay to the North
+Koreans and pay a judgement of $176,850.
+
+54
+
+CONVICTIONS
+
+63 Mos
+
+AVERAGE SENTENCING
+
+$149M
+
+ASSETS SEIZED
+
+9
+
+IRS-CI ANNUAL REPORT 2025
+
+CYBERCRIMES
+Significant Cases (3/3)
+
+Multi-State Drug Trafficking
+and Money Laundering
+Tampa Field Office
+
+From 2017 through 2023, a violent drug trafficking
+organization led by Dudzinski Edwinn Poole,
+known as “Zink,” distributed massive quantities of
+methamphetamine and fentanyl across multiple
+states, including Florida, Georgia, and Ohio. The
+organization relied on a network of couriers,
+stash houses, and mailed packages to move
+narcotics. They then laundered their proceeds,
+including through an entertainment business that
+disguised illicit revenue as legitimate income. The
+investigation uncovered a wide-reaching conspiracy
+involving suppliers, distributors, couriers, and
+financial operatives who played roles in sustaining
+the drug pipeline and concealing profits.
+
+Investigators seized more than 250 pounds of
+methamphetamine and fentanyl, along with firearms,
+vehicles, jewelry, and residences purchased with
+the drug proceeds. Leaders used commercial flights
+and the mail to transport drugs, while laundering
+millions of dollars through shell operations and cash
+couriers. Evidence revealed that members of the
+organization used violence, threats, and intimidation
+to maintain control of their operation and profits.
+
+Seventeen defendants were convicted, either
+through guilty pleas or jury trials. Sentences
+varied depending on the defendant’s role:
+Michael Chester was sentenced to life in prison,
+reflecting his leadership in the conspiracy, while
+Poole received 21 years and 10 months. Several
+others received terms ranging from six years to
+more than 30 years. The wide range of sentences
+highlights the differing levels of responsibility
+within the organization, from masterminds and
+major distributors to couriers and facilitators.
+
+COVID-19 Pandemic Fraud Scheme
+Los Angeles Field Office
+
+Syndicated Conservation Easements
+Charlotte Field Office
+
+From June 2020 through December 2021, Casie
+Hynes engaged in a wide-ranging fraud scheme
+exploiting COVID-19 relief programs and pandemic
+tax credits. Hynes submitted over 80 fraudulent
+loan applications through the Paycheck Protection
+Program (PPP) and Economic Injury Disaster Loan
+(EIDL) program, seeking more than $3.1 million in
+relief funds. She fabricated the number of employees,
+payroll amounts, and supporting tax and bank
+records, and she used the personal information and
+signatures of others without authorization. Through
+this scheme, she successfully obtained approximately
+$2.25 million in fraudulent loan proceeds.
+
+In addition, between May 2021 and April 2022,
+Hynes submitted a dozen fraudulent tax filings
+claiming nearly $1.3 million in pandemic-related
+tax credits, including the Employee Retention Credit
+and Paid Sick and Family Leave Credits. These
+filings were submitted on behalf of companies she
+controlled, such as Nasty Womxn Project LLC, She
+Suite Ventures, and Casie Hynes Consulting, and
+were based on fictitious wages and employees.
+Although those tax credit claims were denied,
+the attempt underscored her use of multiple
+pandemic relief programs to maximize illicit gain.
+
+Hynes was convicted of wire fraud and presenting
+false claims to the United States. She was
+sentenced to 60 months in prison and ordered
+to pay more than $2.37 million in restitution.
+
+IRS-CI continues to investigate individuals associated
+with an abusive tax scheme tied to syndicated
+conservation easement transactions. From 2014
+through at least 2019, Victor Smith, CPA, a founding
+partner of an Atlanta-based accounting firm,
+promoted and sold tax deductions to his wealthy
+clients in illegal syndicated conservation easement
+tax shelters, which were organized and created
+by co-defendants Jack Fisher, James Sinnott,
+and others. Smith and his firm sold approximately
+$14 million in false tax deductions to their clients,
+causing a tax loss to the IRS of about $4.8 million.
+Smith earned $491,400 in commissions.
+
+William Tomasello, a CPA at another accounting
+firm, also promoted and sold units to his wealthy
+clients causing a tax loss of about $2.3 million. He
+earned approximately $525,072 in commissions.
+
+Smith and Tomasello both knew that, contrary to
+law, these tax shelters lacked economic substance
+and that their wealthy clients participated in these
+sham investments only to obtain a tax deduction.
+For example, a client who purchased units in a
+partnership had to vote ostensibly on what to
+do with the partnership’s land. However, Smith
+and Tomasello knew that the vote held by the
+partnerships each year was just for optics, and
+the land invariably would be donated largely as
+a conservation easement. Smith and Tomasello
+also knowingly instructed and caused their clients
+to falsely backdate documents like subscription
+agreements and checks related to the illegal tax
+shelters. In October 2024, they were each sentenced
+to 20 months in prison for their role in the scheme.
+
+In FY25, eight defendants were convicted of
+criminal conduct related to this scheme, which was
+orchestrated by Fisher and Sinnott. Fisher and Sinnott
+were convicted after trial and sentenced in 2024. Other
+defendants include appraiser Walter Douglas “Terry”
+Roberts, Ralph Anderson, and Vui Bui, an attorney
+and partner at Sinnott & Co. Bui was sentenced to
+16 months in prison for his role in this scheme.
+
+12
+
+13
+
+IRS-CI ANNUAL REPORT 2025

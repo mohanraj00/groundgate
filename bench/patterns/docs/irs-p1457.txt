@@ -1,0 +1,48 @@
+ACTUARIAL TABLES ASSOCIATED WITH PUBLICATION 1457
+
+The actuarial tables associated with this publication are:
+
+Table
+
+Table S
+
+Type of Factors
+
+Single Life Factors
+
+2-Life Last to Die Remainder Factors
+
+Part 1: Interest from 0.2 to 4.0%
+
+Part 2: Interest from 4.2 to 8.0%
+
+Part 3: Interest from 8.2 to 12.0%
+
+Part 4: Interest from 12.2 to 16.0%
+
+Part 5: Interest from 16.2 to 20.0%
+
+Term Certain Factors
+
+Commutation Factors
+
+Adjustment Factors for Annuities Payable at the End of Each Interval
+
+Adjustment Factors for Term Certain Annuities Payable at the Beginning of
+Each Interval
+
+Table R(2)
+
+Table B
+
+Table H
+
+Table K
+
+Table J
+
+Table 2010CM
+
+Mortality Table
+
+3

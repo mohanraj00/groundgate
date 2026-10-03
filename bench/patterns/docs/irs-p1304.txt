@@ -1,0 +1,172 @@
+Section 1
+
+Introduction
+and Changes
+in Law
+
+Introduction
+This report contains complete individual income tax data for
+Tax Year (TY) 2022. The statistics are based on a stratified
+probability sample of individual income tax returns, selected
+before audit, which represents a population of 161.3 million
+U.S. Individual Income Tax Returns (Forms 1040 and 1040-
+SR), including electronic returns, filed for TY 2022.
+
+Table A presents selected income and tax items for TYs
+2018 through 2022 as they appear on the forms and provides
+the percentage change between 2021 and 2022 for each item.
+When comparing income and tax items for different years, it
+is important to consider any tax law changes that affect the
+data. The tax law changes are explained later in this section.
+To assist with year-to-year comparisons, Table A includes the
+items in current dollars and constant 1990 dollars, as adjusted
+by the U.S. Department of Labor’s Consumer Price Index for
+All Urban Consumers.
+
+For TY 2022, the number of individual income tax re-
+turns filed rose by 0.5 million, or 0.3%. Adjusted gross income
+(AGI) rose 0.3% from 2021 to 2022. This increase in AGI
+was reflected by increases in some components of income that
+included: taxable interest (29.0%); salaries and wages (7.9%);
+taxable income from Individual Retirement Arrangement
+(IRA) distributions (7.2%); ordinary dividends (6.6%); and
+taxable income from pensions and annuities (6.3%). Two
+
+significant components of AGI that showed decreases were
+net capital gains (38.9%) and business or profession net income
+less loss (0.3%). Taxable income decreased by 0.5% to $11.7
+trillion for 2022. Similarly, income tax after credits decreased
+by 5.1% to $2.1 trillion, and the total tax liability decreased by
+5.4% to $2.3 trillion.
+
+This report is divided into nine sections. The remainder of
+this section (Section 1) explains the requirements for filing and
+changes in the law for 2022. Section 2 offers a brief analysis
+of the data, and Section 3 discusses tax rates and computation
+of total income tax. Section 4 discusses tax shares of AGI and
+total income tax and is followed by tables of detailed aggre-
+gate statistics on individual tax returns (Section 5). Section 6
+provides explanations of the terms used in the tables. Section
+7 describes the sample of individual income tax returns upon
+which the statistics are based. Key individual income tax
+forms appear in Section 8, and the report ends with a subject
+index (Section 9).
+
+Michael Parisi is responsible for the text and production of this
+publication. This report was prepared under the direction of
+Michael Strudler, Technical Project Manager, Individual and
+Tax-Exempt Branch, and Victoria Bryant, Chief, Individual and
+Tax-Exempt Branch.
+
+5
+Terms, provides more detailed explanations and definitions
+of the terms used in this report.
+
+Alternative Minimum Tax (AMT)—The maximum AMT
+exemption increased from $114,600 to $118,100 for a married
+couple filing a joint return, from $73,600 to $75,900 for single
+filers and heads of household, and from $57,300 to $59,050
+for a married person filing separately. The income levels at
+which the AMT exemption began to phase out increased to
+$539,900 from $523,600 ($1,079,800 from $1,047,200 if mar-
+ried filing jointly or a qualifying surviving spouse). Also, for
+2022, the 26% tax rate applied to the first $206,100 ($103,050
+if married filing separately) of alternative minimum taxable
+income. Previously it applied to the first $199,900 ($99,950)
+of such income.
+
+Child and dependent care credit—The changes imple-
+mented by the American Rescue Plan Act of 2021, enacted
+on March 11, 2021, were not extended. For 2022, the dollar
+limit on qualifying expenses was $3,000 (previously $8,000
+in 2021) for one qualifying person and $6,000 (previously
+$16,000) for two or more qualifying persons. The percentage
+of qualifying expenses eligible for the credit was decreased
+from 50% to 35%, along with the income limit at which the
+credit began phasing out, $15,000 (previously $125,000 for
+2021). Additionally, for taxpayers who received dependent
+care benefits from their employer, the dollar limit of the ex-
+clusion amount decreased for 2022 to $5,000 (previously
+$10,500). For married employees filing separate returns, the
+maximum amount decreased to $2,500 (previously $5,250).
+Also, for 2022 this credit was nonrefundable whereas it was a
+refundable credit for 2021.
+
+Child tax credit—Under the American Rescue Plan Act
+of 2021, many changes were made to enhance the child tax
+credit, however those changes were not extended for 2022. A
+child must have been under age 17 at the end of 2022 to be a
+qualifying child, down from 18 in 2021. Depending on modi-
+fied AGI, a taxpayer received a credit amount of up to $2,000
+for a qualifying child down from $3,600 for children under 5
+and $3,000 for those older. The amount of the child tax credit
+that could be claimed as a refundable credit was limited as it
+was in 2020, except the maximum additional child tax credit
+amount was increased to $1,500 for each qualifying child. The
+credit for other dependents remained at $500 and was figured
+as it was in 2021.
+
+Earned income credit—The maximum amount of the EIC
+increased for taxpayers with at least one qualifying child, as
+did the amounts of earned income and investment income an
+individual could receive and still claim the credit. The maxi-
+mum credit for taxpayers with no qualifying children fell from
+
+$1,502 to $560. For these taxpayers, earned income and AGI
+had to be less than $16,480 ($22,610 if married filing jointly)
+to be eligible for the EIC. Special rules applied if claiming
+the EIC without a qualifying child in 2021 but did not apply
+to 2022. For 2022, a taxpayer could claim the EIC without
+a qualifying child if they were at least age 25 (up from 19
+in 2021) but under age 65 (with no upper age limit in 2021).
+For taxpayers with one qualifying child, the maximum credit
+increased from $3,618 to $3,733, and, for taxpayers with two
+qualifying children, the maximum credit increased from
+$5,980 to $6,164. To be eligible for the credit, a taxpayer’s
+earned income and AGI had to be less than $43,492 ($49,622
+for married filing jointly) for one qualifying child, or less than
+$49,399 ($55,529 for married filing jointly) for two qualify-
+ing children. The maximum credit for taxpayers with three or
+more qualifying children increased from $6,728 to $6,935. For
+these taxpayers, earned income and AGI had to be less than
+$53,057 ($59,187 if married filing jointly) to be eligible for the
+EIC. The maximum amount of investment income (interest,
+dividends, and capital gain income) a taxpayer could have and
+still claim the credit was $10,300 for the year. If a taxpayer
+was married but didn’t file a joint return, they may still have
+qualified to claim the EIC if they lived with a qualifying child
+for more than half the year and lived apart from their spouse
+for the last 6 months of 2022 or were legally separated under
+written agreement and did not live in the same household as
+their spouse. If two taxpayers could claim the same qualify-
+ing child, the taxpayer who did not claim the child was able to
+claim the EIC without a qualifying child.
+
+Health coverage tax credit—The health coverage tax
+
+credit was not available after 2021.
+
+Qualified sick and family leave credit—The American
+Rescue Plan Act of 2021, enacted on March 11, 2021, pro-
+vided certain self-employed individuals the opportunity to
+claim credits for up to 10 days of “paid sick leave,” and up to
+60 days of “paid family leave,” if they were unable to work or
+telework due to circumstances related to COVID-19. For 2022,
+these credits could not be claimed by self-employed taxpayers.
+
+Standard deduction amount—The standard deduction
+for people who did not itemize deductions on Schedule A of
+Form 1040 was increased in 2022 for all filers. This amount
+depended on the taxpayer’s filing status, whether the taxpayer
+was age 65 or older, or whether the taxpayer was a dependent
+of another person. For 2022, the standard deduction increased
+to $25,900 for joint filers, up from $25,100 for 2021. For single
+filers and married filers filing separately, the deduction amount
+increased to $12,950, up from $12,550. For heads of house-
+holds, the deduction was $19,400, up from $18,800.
+
+22
+
+Individual Income Tax Returns 2022
+
+Introduction and Changes in Law

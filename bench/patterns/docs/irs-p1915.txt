@@ -1,0 +1,145 @@
+8. Mail Form W-7/W-7(SP), proof of identity documents and a valid U.S.
+
+Federal income tax return, if applicable, to:
+
+Internal Revenue Service
+ITIN Operations
+P.O. Box 149342
+Austin, TX 78714-9342
+
+If you are using a private delivery service and need to provide a street
+
+address, send your Form W-7 package to:
+
+Internal Revenue Service
+ITIN Operations
+Mail Stop 6090-AUSC
+3651 S. Interregional, Hwy 35
+Austin, TX 78741-0000
+
+CAUTION: If you are attaching your tax return to the Form W-7, do not
+use the mailing address in the instructions for your tax return. Do not
+send a “copy” of the return to any other IRS office.
+
+You can apply for an ITIN by mail or by appointment at any designated
+IRS TAC in the United States.
+
+You can also apply through an Acceptance Agent, (see “What are
+Acceptance Agents?” later in this publication).
+
+The IRS will send your ITIN in the form of an assignment letter. An ITIN
+does not change your immigration status or grant your right to work in
+the United States. An ITIN is for tax purposes only.
+
+GENERAL INFORMATION
+What is an ITIN?
+An ITIN is a tax processing number, issued by the Internal Revenue
+Service, for certain resident and nonresident aliens, their spouses, and
+their dependents. It is a nine-digit number beginning with the number
+“9”, has a range of numbers from "50" to "65", "70" to "88", “90” to
+“92” and “94” to “99” for the fourth and fifth digits and is formatted like
+a SSN (i.e. 9XX-7X-XXXX).
+
+ITINs are issued regardless of immigration status because both resident
+and nonresident aliens may have United States Federal tax filing and
+payment responsibilities under the Internal Revenue Code.
+
+What is the purpose of an ITIN?
+ITINs are used for federal tax purposes only, and are not intended to
+serve any other purpose. IRS issues ITINs to help individuals comply
+with the U.S. tax laws, and to provide a means to efficiently process and
+account for tax returns and payments for those not eligible for Social
+Security Numbers.
+
+An ITIN:
+
+1.
+
+2.
+3.
+
+Does not authorize work in the U.S. or provide eligibility for Social
+Security Benefits or the Earned Income Tax Credit.
+Is not valid for identification outside of the tax system.
+Does not change immigration status.
+
+An applicant must enter his/her ITIN in the space provided for the SSN
+when completing and filing a U.S. Federal income tax return (Form 1040,
+1040NR, 1040X).
+NOTE: Applicants are required to file their Form W-7/W-7(SP) with a valid
+U.S. Federal income tax return attached, unless they meet an exception
+to return filing (see "Exceptions").
+
+Are ITINs valid for identification?
+ITINs are not valid for identification outside of the tax
+system and should not be offered as identification for
+non-tax purposes. ITIN applicants are not required to
+apply in person.
+
+Who must apply?
+Any individual who is not eligible to obtain a SSN but who must furnish a
+taxpayer identification number to the IRS must apply for an ITIN on Form
+W-7/W-7(SP).
+Do not complete Form W-7/W-7(SP) if you have a SSN or if you are eligible
+to obtain a SSN (i.e., A United States citizen or person lawfully admitted
+for employment).
+Applicants must have a valid filing requirement and file a valid U.S.
+Federal income tax return with their ITIN applications, unless they meet
+one of the exceptions listed later in this publication.
+NOTE: Exceptions relate to the tax return filing requirement. They do not
+relate to the tax purpose. Therefore, all individuals must have a tax purpose
+for requesting an ITIN, whether or not a U.S. Federal income tax return is
+submitted to the IRS with Form W-7.
+To determine if you have a filing requirement, see Publication 17, Your
+Federal Income Tax, or Pub. 519, U.S. Tax Guide for Aliens.
+
+Examples of who needs an ITIN:
+■ A nonresident alien individual eligible to obtain the benefit of a
+reduced tax withholding rate under an income tax treaty. See Pub.
+515, Withholding of Tax on Nonresident Aliens and Foreign Entities.
+■ A nonresident alien individual not eligible for a SSN who is required to
+file a U.S. Federal income tax return or who is filing a U.S. tax return
+only to claim a refund.
+
+■ A nonresident/resident alien individual not eligible for a SSN who
+elects to file a joint U.S. Federal income tax return with a spouse who
+is a U.S. citizen or resident.
+
+■ A U.S. resident alien (based on the substantial presence test) who
+files a U.S. Federal income tax return but who is not eligible for a
+SSN. For information about the substantial presence test, see Pub.
+519.
+
+■ An alien spouse, claimed as an exemption on a U.S. Federal income
+tax return, who is not eligible to obtain a SSN. Note: A spouse can be
+claimed as an exemption only for tax year 2017 and prior.
+
+■ An alien individual eligible to be claimed as a dependent for the
+purposes of claiming an allowable tax benefit on a U.S. Federal
+income tax return but who is not eligible to obtain a SSN. To determine
+if an alien individual is eligible to be claimed as a dependent on a
+U.S. Federal income tax return, see Pub. 501, Dependents, Standard
+Deduction, and Filing Information and Pub. 519. Note: A dependent
+can be claimed as an exemption only for tax year 2017 and prior.
+■ A nonresident alien student, professor, or researcher who is required
+to file a U.S. Federal income tax return but who is not eligible for a
+SSN.
+
+If you have an application for a SSN pending, do not file Form W-7/W
+7(SP). Complete Form W-7/W-7(SP) only when the SSA notifies you
+that you aren't eligible for an SSN. Proof that the SSA denied your
+request for a SSN must be included with your submission of Form W-7/
+W-7(SP), whether you are attaching your U.S. Federal income tax return
+or requesting an ITIN under one of the “exceptions”.
+To request a SSN, use Form SS-5, “Application for a Social Security
+Card, (Original, Replacement or Correction)”. This form can be obtained
+from the SSA or downloaded from the IRS web site at https://www.ssa.
+gov/forms. To find out if you are eligible to obtain a SSN, contact your
+nearest SSA Office.
+IMPORTANT NOTE: If you are filing for an extension of time to file a United
+States Federal income tax return (Form 4868 or Form 2688) or making
+an estimated payment with Forms 4868, 2688, or Form 1040-ES/1040-
+ES (NR), “Estimated Tax for Individuals/Estimated Tax for Nonresident
+Aliens” do not file the Form W-7/W-7(SP) with these forms. Write “ITIN
+
+Individual Taxpayer Identification Number 5

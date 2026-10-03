@@ -1,0 +1,268 @@
+Federal Register / Vol. 90, No. 247 / Wednesday, December 31, 2025 / Rules and Regulations
+
+61311
+
+www.justice.gov/olc/media/1421726/
+dl?inline. The DOJ Opinion explains
+that section 106 of the Veterans Health
+Care Act of 1992 (VHCA), Public Law
+(Pub. L.) 102–585, expressly prohibits
+VA from furnishing abortion when
+providing hospital care and medical
+services under Chapter 17 of Title 38.
+Id.
+
+The DOJ Opinion further clarifies that
+
+procedures necessary to save the life of
+the pregnant veteran (such as treatment
+for ectopic pregnancies or miscarriages)
+are not considered ‘‘abortions’’ within
+the meaning of section 106 and
+therefore remain permissible. VA has
+historically interpreted its authority in
+this manner, and the DOJ Opinion
+affirms that such life-saving care is
+consistent with federal law.
+
+As a Federal agency, VA is bound by
+the DOJ Opinion and relies on it as the
+primary legal basis for this final rule.
+Accordingly, this rule reinstates the
+longstanding exclusion of abortion and
+abortion counseling from VA’s medical
+benefits package and CHAMPVA
+coverage, consistent with the statutory
+limitations imposed by section 106.
+In addition to section 106, VA
+
+previously relied on its discretionary
+authority under 38 U.S.C. 1710 and
+1781 to justify the provision of abortion
+services. In light of the DOJ Opinion,
+VA now recognizes that this
+discretionary authority is constrained by
+section 106 and cannot be exercised to
+override the statutory prohibition.
+Nevertheless, VA addresses VA’s
+discretionary authority as a supporting
+and additional rationale for this
+rulemaking. Even if such discretion
+were available, the Secretary has
+determined that VA will not provide
+abortion or abortion counseling under
+that authority.
+
+If VA’s authority under sections 1710
+and 1781 remained the primary basis for
+this rule, the absence of clear
+congressional direction regarding
+abortion is particularly relevant in light
+of the major questions doctrine. That
+doctrine, as articulated in West Virginia
+v. EPA, 597 U.S. 697 (2022), instructs
+that agencies must identify clear
+statutory authority before regulating in
+areas of profound political consequence.
+Abortion is one of the most politically
+divisive and morally charged issues in
+American public life, a fact the Supreme
+Court recognized in Dobbs v. Jackson
+Women’s Health Organization, 142 S.
+Ct. 2228 (2022), which returned the
+issue to the people and their elected
+representatives. In this context, VA’s
+decision to return to its prior regulatory
+position reflects a cautious and legally
+grounded exercise of discretion; not an
+expansion of authority. VA did not in its
+
+proposed rulemaking, does not now,
+and has never interpreted the regulatory
+bar against abortions to be a bar against
+providing life-saving treatment. VA has
+simply never used the term ‘‘abortion’’
+to refer to life-saving treatment provided
+to a pregnant woman. VA’s proposal
+and final action today do not change
+this long-standing understanding of the
+difference between an abortion and a
+medical intervention necessary to save
+the life of a pregnant woman.
+
+After publishing the proposed rule on
+
+August 4, 2025, VA provided a 30-day
+comment period, which ended on
+September 3, 2025. VA received 20,984
+document submissions, which included
+approximately 24,333 total comments.
+The vast majority of comments were
+duplicated form responses. This final
+rule addresses all relevant and
+significant comments received,
+regardless of how many individuals
+submitted the same (or even identical)
+comment. Some commenters solely
+expressed support or opposition or
+made comments that were beyond the
+scope of the proposed rule. These
+comments are not addressed in this final
+rule, except to the extent that they also
+requested clarifications or suggested
+substantive revisions.
+
+Section I. below addresses comments
+that generally challenged the proposed
+rule related to the medical benefits
+package or CHAMPVA. This section
+also includes comments that may not
+have specifically mentioned either
+program but that expressed general
+opposition to all changes in the
+proposed rule.
+
+Section II. below addresses comments
+
+that specifically challenged VA’s
+rationale in the proposed rule. This
+section addresses VA’s more specific
+rationale related to the number of
+abortions provided by VA, comparison
+to other Federal laws related to abortion,
+and VA’s legal authorities.
+
+Section III. below addresses
+
+comments that raised other legal issues,
+to include assertions that the proposed
+rule did not meet certain administrative
+law standards.
+
+Sections IV. through VIII. below
+
+address all other comments.
+
+I. Comments That Generally Challenged
+the Proposed Rule
+
+A. Comments That Asserted Abortions
+Were Needed Medical Services for
+Veterans or Were Medically Necessary
+and Appropriate Treatment for
+CHAMPVA Beneficiaries
+
+VA proposed to remove the
+
+exceptions to the general exclusion of
+abortions in § 17.38(c)(1)(i) and (ii) of
+title 38, Code of Federal Regulations
+
+(CFR), that, pursuant to an IFR
+published on September 9, 2022 (see 87
+FR 55296) and a final rule published on
+March 4, 2024 (see 89 FR 15473),
+established that abortions could be
+provided when: (i) the life or the health
+of the pregnant veteran would be
+endangered if the pregnancy were
+carried to term; or (ii) the pregnancy
+was the result of an act of rape or incest.
+Part of the rationale in the proposed rule
+for removing these exceptions to the
+general exclusion of abortions was that
+they are not needed and, as to the first
+exception, from 1999 through 2022, VA
+had never understood the exclusion of
+abortions to prohibit VA from providing
+care to pregnant women in life-
+threatening circumstances. 90 FR 36416.
+Since the creation of the medical
+benefits package and for nearly 23 years,
+VA had consistently interpreted that
+abortions were not needed medical
+services under 38 U.S.C. 1710 and
+furnished care in life-threatening
+circumstances to pregnant veterans as a
+needed medical service. Moreover, the
+DOJ Opinion concludes that VA lacks
+statutory authority to exercise discretion
+to provide abortion services under 38
+U.S.C. 1710, thereby foreclosing reliance
+on discretionary judgment to justify the
+exceptions previously established in 38
+CFR17.38(c)(1)(i) and (ii).
+
+VA also proposed to revise the
+
+exceptions to the general exclusion of
+abortions in CHAMPVA in 38 CFR
+17.272(a)(58) to similarly revert back to
+regulatory language in existence prior to
+September 9, 2022, so that there would
+be a single exception for abortion for
+CHAMPVA beneficiaries in cases when
+a physician certifies that the life of the
+mother would be endangered if the fetus
+were carried to term, versus broader
+exceptions in cases of life or health
+endangerment or when the pregnancy is
+the result of rape or incest. VA’s
+rationale for these proposed changes in
+CHAMPVA was that abortions were not
+‘‘medically necessary and appropriate
+for the treatment of a condition’’
+(pursuant to the definition of
+CHAMPVA-covered services and
+supplies in 38 CFR 17.270(b)) under the
+broader exceptions for the same reasons
+that abortions were not ‘‘needed’’
+(pursuant to 38 U.S.C. 1710(a)(1)–(3)) in
+the veteran’s program. 90 FR 36417. VA
+notes that for the comment summaries
+and responses that follow and for the
+remainder of the discussion in the final
+rule, it will use the shorthand of
+‘‘needed’’ care in the context of 38
+U.S.C. 1710, and ‘‘medically necessary
+and appropriate’’ care in the context of
+38 U.S.C. 1781 (as interpreted in 38 CFR
+17.270(b)). Again, the DOJ Opinion
+
+VerDate Sep<11>2014 16:15 Dec 30, 2025 Jkt 268001 PO 00000 Frm 00051 Fmt 4700 Sfmt 4700 E:\FR\FM\31DER1.SGM 31DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
