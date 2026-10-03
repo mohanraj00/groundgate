@@ -92,7 +92,7 @@
      "end": 4642
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -117,7 +117,7 @@
      "end": 4669
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -134,7 +134,7 @@
      "end": 4722
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -155,7 +155,7 @@
      "end": 4754
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -172,7 +172,7 @@
      "end": 4898
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -193,13 +193,17 @@
      "end": 4925
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "free_area_codes_per_entity": "draft"
+  "free_area_codes_per_entity": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T19:52:06-0700"
+ },
+ "seconds_spent": 51
 }

@@ -62,7 +62,7 @@
      "end": 2753
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -75,7 +75,7 @@
      "end": 2841
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -88,13 +88,17 @@
      "end": 2850
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "fee_largest_bracket_2027": "draft"
+  "fee_largest_bracket_2027": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:20:46-0700"
+ },
+ "seconds_spent": 17
 }

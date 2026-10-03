@@ -86,7 +86,7 @@
      "end": 3282
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -99,7 +99,7 @@
      "end": 3288
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -112,7 +112,7 @@
      "end": 3307
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -129,7 +129,7 @@
      "end": 4305
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -142,13 +142,17 @@
      "end": 4476
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "small_manufacturer_count": "draft"
+  "small_manufacturer_count": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:21:43-0700"
+ },
+ "seconds_spent": 19
 }

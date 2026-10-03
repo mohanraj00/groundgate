@@ -47,13 +47,17 @@
      "end": 6552
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "moratorium_max_duration_days": "draft"
+  "moratorium_max_duration_days": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:22:45-0700"
+ },
+ "seconds_spent": 7
 }

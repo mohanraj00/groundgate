@@ -52,7 +52,7 @@
      "end": 4157
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -69,13 +69,17 @@
      "end": 3031
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "covered_contractor_count": "draft"
+  "covered_contractor_count": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T19:49:47-0700"
+ },
+ "seconds_spent": 78
 }
