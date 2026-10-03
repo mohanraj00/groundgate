@@ -43,13 +43,17 @@
      "end": 3331
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "estimated_annual_cost": "draft"
+  "estimated_annual_cost": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:22:57-0700"
+ },
+ "seconds_spent": 6
 }

@@ -72,7 +72,7 @@
      "end": 1892
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -85,7 +85,7 @@
      "end": 1902
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -98,7 +98,7 @@
      "end": 2686
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -111,13 +111,17 @@
      "end": 3192
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "snur_violation_civil_penalty": "draft"
+  "snur_violation_civil_penalty": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T19:51:10-0700"
+ },
+ "seconds_spent": 73
 }

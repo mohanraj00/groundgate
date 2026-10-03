@@ -62,7 +62,7 @@
      "end": 4006
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -75,13 +75,17 @@
      "end": 4020
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "max_stall_speed_knots": "draft"
+  "max_stall_speed_knots": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:20:24-0700"
+ },
+ "seconds_spent": 20
 }

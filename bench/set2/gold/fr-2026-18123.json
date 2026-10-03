@@ -70,7 +70,7 @@
      "end": 1731
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -83,7 +83,7 @@
      "end": 1738
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -96,7 +96,7 @@
      "end": 1776
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -109,13 +109,17 @@
      "end": 1782
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "seeds_per_capsule": "draft"
+  "seeds_per_capsule": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:17:32-0700"
+ },
+ "seconds_spent": 140
 }

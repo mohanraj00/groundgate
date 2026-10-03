@@ -52,7 +52,7 @@
      "end": 6301
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -65,13 +65,17 @@
      "end": 6308
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "olive_handlers_count": "draft"
+  "olive_handlers_count": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:11:56-0700"
+ },
+ "seconds_spent": 528
 }

@@ -62,7 +62,7 @@
      "end": 1747
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -87,13 +87,17 @@
      "end": 4723
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "annual_aircraft_operations": "draft"
+  "annual_aircraft_operations": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:21:19-0700"
+ },
+ "seconds_spent": 14
 }

@@ -62,7 +62,7 @@
      "end": 1004
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -75,7 +75,7 @@
      "end": 1014
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -88,13 +88,17 @@
      "end": 4162
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "expedited_application_fee": "draft"
+  "expedited_application_fee": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:14:13-0700"
+ },
+ "seconds_spent": 51
 }
