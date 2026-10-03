@@ -99,7 +99,7 @@
      "end": 2090
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -117,7 +117,7 @@
      "end": 2227
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -135,7 +135,7 @@
      "end": 2789
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -153,7 +153,7 @@
      "end": 2852
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -171,7 +171,7 @@
      "end": 2928
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -189,7 +189,7 @@
      "end": 3019
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -207,7 +207,7 @@
      "end": 3149
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -240,7 +240,7 @@
      "end": 4855
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -257,7 +257,7 @@
      "end": 3945
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f10",
@@ -274,7 +274,7 @@
      "end": 7441
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f11",
@@ -291,7 +291,7 @@
      "end": 7448
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f12",
@@ -308,13 +308,17 @@
      "end": 7458
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "max_daily_dose": "draft"
+  "max_daily_dose": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T21:03:33-0700"
+ },
+ "seconds_spent": 37
 }

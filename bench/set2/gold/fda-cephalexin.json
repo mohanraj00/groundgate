@@ -111,7 +111,7 @@
      "end": 818
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -129,7 +129,7 @@
      "end": 818
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -147,7 +147,7 @@
      "end": 818
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -165,7 +165,7 @@
      "end": 818
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -183,7 +183,7 @@
      "end": 818
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -200,7 +200,7 @@
      "end": 1118
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -217,7 +217,7 @@
      "end": 3340
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -234,7 +234,7 @@
      "end": 3348
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -251,7 +251,7 @@
      "end": 3356
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f10",
@@ -268,7 +268,7 @@
      "end": 3367
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f11",
@@ -285,14 +285,18 @@
      "end": 1234
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "max_daily_dose": "draft",
-  "hepatic_starting_dose": "draft"
+  "max_daily_dose": "confirmed",
+  "hepatic_starting_dose": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:39:41-0700"
+ },
+ "seconds_spent": 112
 }

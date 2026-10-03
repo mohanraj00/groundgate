@@ -115,7 +115,7 @@
      "end": 1943
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -128,7 +128,7 @@
      "end": 1978
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -141,7 +141,7 @@
      "end": 1983
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -154,7 +154,7 @@
      "end": 1991
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -171,7 +171,7 @@
      "end": 7194
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -196,7 +196,7 @@
      "end": 7023
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -213,7 +213,7 @@
      "end": 7041
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -230,7 +230,7 @@
      "end": 7472
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -243,13 +243,17 @@
      "end": 13080
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "charitable_mileage_rate": "draft"
+  "charitable_mileage_rate": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:40:55-0700"
+ },
+ "seconds_spent": 32
 }

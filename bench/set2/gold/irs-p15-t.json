@@ -71,7 +71,7 @@
      "end": 3922
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -84,7 +84,7 @@
      "end": 3953
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -97,7 +97,7 @@
      "end": 3965
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -110,13 +110,17 @@
      "end": 6632
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "supplemental_wage_flat_rate": "draft"
+  "supplemental_wage_flat_rate": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:57:04-0700"
+ },
+ "seconds_spent": 20
 }

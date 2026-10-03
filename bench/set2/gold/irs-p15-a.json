@@ -57,7 +57,7 @@
      "end": 5244
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -70,13 +70,17 @@
      "end": 6281
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "social_security_wage_base_2026": "draft"
+  "social_security_wage_base_2026": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:36:47-0700"
+ },
+ "seconds_spent": 10
 }

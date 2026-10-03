@@ -93,7 +93,7 @@
      "end": 2730
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -114,7 +114,7 @@
      "end": 3503
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -131,7 +131,7 @@
      "end": 6749
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -148,7 +148,7 @@
      "end": 6757
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -165,7 +165,7 @@
      "end": 6766
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -182,7 +182,7 @@
      "end": 6803
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -199,7 +199,7 @@
      "end": 6811
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -216,14 +216,18 @@
      "end": 4190
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "pediatric_min_age": "draft",
-  "hepatic_starting_dose": "draft"
+  "pediatric_min_age": "confirmed",
+  "hepatic_starting_dose": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T21:02:56-0700"
+ },
+ "seconds_spent": 17
 }

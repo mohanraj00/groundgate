@@ -206,7 +206,7 @@
      "end": 1899
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -219,7 +219,7 @@
      "end": 1921
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -232,7 +232,7 @@
      "end": 1948
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -245,7 +245,7 @@
      "end": 2043
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -258,7 +258,7 @@
      "end": 2062
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -271,7 +271,7 @@
      "end": 2327
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -284,7 +284,7 @@
      "end": 2419
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -297,7 +297,7 @@
      "end": 2439
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -310,7 +310,7 @@
      "end": 2465
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f34",
@@ -323,7 +323,7 @@
      "end": 3410
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f35",
@@ -336,7 +336,7 @@
      "end": 3437
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f36",
@@ -349,7 +349,7 @@
      "end": 3455
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f61",
@@ -362,7 +362,7 @@
      "end": 8971
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f62",
@@ -375,7 +375,7 @@
      "end": 9008
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f68",
@@ -388,7 +388,7 @@
      "end": 9659
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f69",
@@ -401,7 +401,7 @@
      "end": 9735
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f70",
@@ -414,7 +414,7 @@
      "end": 9757
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f76",
@@ -427,7 +427,7 @@
      "end": 12256
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f77",
@@ -440,13 +440,17 @@
      "end": 12270
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "foreign_tax_credit_2022": "draft"
+  "foreign_tax_credit_2022": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:56:38-0700"
+ },
+ "seconds_spent": 503
 }

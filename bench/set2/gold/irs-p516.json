@@ -52,7 +52,7 @@
      "end": 2197
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -65,13 +65,17 @@
      "end": 2203
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "foreign_housing_exclusion_limit": "draft"
+  "foreign_housing_exclusion_limit": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:45:41-0700"
+ },
+ "seconds_spent": 12
 }

@@ -124,7 +124,7 @@
      "end": 2239
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f2",
@@ -142,7 +142,7 @@
      "end": 2299
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f3",
@@ -160,7 +160,7 @@
      "end": 2412
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f4",
@@ -178,7 +178,7 @@
      "end": 2466
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f5",
@@ -196,7 +196,7 @@
      "end": 2514
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f6",
@@ -214,7 +214,7 @@
      "end": 2602
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f7",
@@ -232,7 +232,7 @@
      "end": 2755
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f8",
@@ -250,7 +250,7 @@
      "end": 2793
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f9",
@@ -268,7 +268,7 @@
      "end": 2863
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f10",
@@ -286,7 +286,7 @@
      "end": 2928
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f11",
@@ -304,7 +304,7 @@
      "end": 2998
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f12",
@@ -322,7 +322,7 @@
      "end": 3117
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f13",
@@ -339,7 +339,7 @@
      "end": 4056
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f14",
@@ -356,7 +356,7 @@
      "end": 7971
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f15",
@@ -373,7 +373,7 @@
      "end": 8114
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f16",
@@ -390,7 +390,7 @@
      "end": 8266
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   },
   {
    "id": "f17",
@@ -407,14 +407,18 @@
      "end": 4522
     }
    ],
-   "status": "draft"
+   "status": "confirmed"
   }
  ],
  "absent": {
-  "max_daily_dose": "draft",
-  "hepatic_starting_dose": "draft"
+  "max_daily_dose": "confirmed",
+  "hepatic_starting_dose": "confirmed"
  },
  "excluded": {},
  "prelabeled_by": "Claude (model draft)",
- "checked": null
+ "checked": {
+  "by": "person",
+  "at": "2026-10-02T20:59:09-0700"
+ },
+ "seconds_spent": 93
 }
