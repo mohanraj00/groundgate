@@ -44,6 +44,9 @@ milestone 0.2.
   LangExtract adapter passes a `key` attribute through. In 0.1, a dose that differs by
   indication was one field, where the doses conflicted, or one field per indication, where
   nothing checked the indication. Vectors `17-keyed-fields` and `17b-keyed-tables`.
+- `extract` (#30): the same PDF always gives the same text. pdfminer broke ties between equally
+  distant text boxes by memory address, so a chart on one IRS page came out in two orders. All 90
+  PDF texts in both benchmark sets are unchanged.
 
 ## 0.1.0 (2026-09-29)
 
