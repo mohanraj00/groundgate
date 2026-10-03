@@ -10,10 +10,12 @@ until the gold is checked.
     uv run --group langextract python bench/score.py --set bench/set2             # set 2 (#12)
     uv run --group langextract python bench/score.py --set bench/set2 --controls  # list controls
 
-Set 2 is scored under spec 0.2 (the installed core) and spec 0.1 (the released 0.1.0 wheel,
-through bench/decide.py) on the same candidates, side by side. Keyed facts are judged on field,
-key and value. A control document is judged only where 0.1 and 0.2 decide differently: those
-candidates are listed in controls.json and judged by a person in the labeling app.
+Set 2 is scored under spec 0.2 (the installed core) and spec 0.1 (the released 0.1.0 wheel, through
+bench/decide.py) on the same candidates, side by side. Its published numbers are spec 0.2's, so
+rescore it on the released 0.2.0 wheel, the way bench/README.md rescores v0.1 on 0.1.0. Keyed facts
+are judged on field, key and value. A control document is judged only where 0.1 and 0.2 decide
+differently: those candidates are listed in controls.json and judged by a person in the labeling
+app.
 
 No model is called. Track B scores what real models proposed (bench/runs). Track A plants one
 controlled error at a time into the gold facts, aligns each with LangExtract's own Resolver, and

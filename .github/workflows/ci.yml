@@ -68,5 +68,8 @@ jobs:
             -o "$RUNNER_TEMP/bench-requirements.txt"
           uv run --isolated --no-project --python 3.12 --with groundgate==0.1.0 \
             --with-requirements "$RUNNER_TEMP/bench-requirements.txt" python bench/score.py --check
-      - name: Set-2 results rescore, spec 0.2 in process and spec 0.1 on the 0.1.0 wheel
-        run: uv run --group langextract python bench/score.py --set bench/set2 --check
+      - name: Set-2 results rescore, spec 0.2 on the released 0.2.0 wheel and spec 0.1 on 0.1.0
+        run: |
+          uv run --isolated --no-project --python 3.12 --with groundgate==0.2.0 \
+            --with-requirements "$RUNNER_TEMP/bench-requirements.txt" \
+            python bench/score.py --set bench/set2 --check

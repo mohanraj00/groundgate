@@ -44,15 +44,19 @@ A rerun skips documents that already have a file, so delete one to run it again.
 ## Scoring
 
 ```bash
-uv run --group langextract python bench/score.py --set bench/set2 --controls  # list the controls
+uv export --only-group langextract --no-emit-project --no-hashes -o /tmp/bench-req.txt
+uv run --isolated --no-project --with groundgate==0.2.0 --with-requirements /tmp/bench-req.txt \
+    python bench/score.py --set bench/set2 --controls                         # list the controls
 uv run python bench/label/app.py --set bench/set2 --controls                  # judge them
-uv run --group langextract python bench/score.py --set bench/set2             # RESULTS.md
+uv run --isolated --no-project --with groundgate==0.2.0 --with-requirements /tmp/bench-req.txt \
+    python bench/score.py --set bench/set2                                    # RESULTS.md
 ```
 
-[RESULTS.md](RESULTS.md) scores every run under spec 0.1 and spec 0.2, side by side (#12). Spec
-0.2 is the core in this repository. Spec 0.1 is the released 0.1.0 wheel, which `score.py` runs
-in a separate process through `bench/decide.py`. Both decide the same candidates, built by the
-current LangExtract adapter, so a candidate carries its key under both.
+[RESULTS.md](RESULTS.md) scores every run under spec 0.1 and spec 0.2, side by side (#12). Spec 0.2
+is the released 0.2.0 wheel, not the code in `src/`, which moves on to the next spec. Spec 0.1 is
+the released 0.1.0 wheel, which `score.py` runs in a separate process through `bench/decide.py`.
+Both decide the same candidates, built by the current LangExtract adapter, so a candidate carries
+its key under both.
 
 - **Keyed facts** are judged on field, key and value. The key comes from the model's extraction
   and is compared the way SPEC §4.5 compares keys. A right value under another key is `wrong_key`.

@@ -1,5 +1,5 @@
 """Decide candidates with the installed groundgate, one packet per line. score.py runs it on the
-released 0.1.0 wheel to score set 2 under spec 0.1, next to the 0.2 core it imports itself:
+released 0.1.0 wheel to score set 2 under spec 0.1, next to the 0.2 core that score.py imports:
 
     uv run --isolated --no-project --python 3.12 --with groundgate==0.1.0 python bench/decide.py
 

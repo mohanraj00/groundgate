@@ -158,9 +158,9 @@ print(gg.verify(receipt.to_dict(), text, schema, candidates).ok)
 ```
 
 ```text
+admitted            ira_limit       7000
 rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
 needs_verification  phaseout_start  79000  QUALIFIED_VALUE
-admitted            ira_limit       7000
 True
 ```
 
@@ -238,12 +238,12 @@ vectors that pin every code, so another implementation can prove it agrees.
 ## Receipts
 
 ```json
-{"groundgate": "0.2",
- "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:387c5991b989..."},
+{"groundgate": "0.3",
+ "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:da7797d569a5..."},
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "Gemini_3.6_Flash_Medium/0", "field": "ira_limit_2025",
                 "outcome": "admitted", "codes": [], "value": "7000", "unit": "USD",
-                "evidence": {"start": 2634, "end": 2640}, "candidate_sha256": "sha256:37e4fbb8..."},
+                "evidence": {"start": 2317, "end": 2323}, "candidate_sha256": "sha256:aaf08a9a..."},
                "..."],
  "coverage": [{"field": "roth_phaseout_single_2025_end", "code": "REQUIRED_FIELD_MISSING"}],
  "summary": {"admitted": 44, "needs_verification": 3, "rejected": 1},

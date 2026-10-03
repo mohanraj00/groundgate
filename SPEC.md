@@ -1,10 +1,10 @@
-# groundgate specification v0.2
+# groundgate specification v0.3 (draft)
 
-Status: released with groundgate 0.2.0. Version string: `groundgate/0.2`. Spec 0.1 was released
-with groundgate 0.1.0 and is in the `v0.1.0` tag. Any change to how a candidate is decided is a new
-version with a new version string. An implementation conforms if it produces the decisions and
-coverage findings in every vector under `conformance/vectors/`, and the receipt hashes for
-vectors that pin them.
+Status: draft, not released. Version string: `groundgate/0.3`. Spec 0.2 was released with
+groundgate 0.2.0 and is in the `v0.2.0` tag, and spec 0.1 in the `v0.1.0` tag. Any change to how
+a candidate is decided is a new version with a new version string. An implementation conforms if
+it produces the decisions and coverage findings in every vector under `conformance/vectors/`,
+and the receipt hashes for vectors that pin them.
 
 ## 1. Purpose
 
@@ -261,7 +261,7 @@ swapped within a table is not caught.
 ## 5. Receipt
 
 ```json
-{"groundgate": "0.2",
+{"groundgate": "0.3",
  "document": {"id": null, "sha256": "sha256:..."},
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "c1", "candidate_sha256": "sha256:...", "field": "...",
@@ -288,10 +288,10 @@ strings escaped as ECMAScript `JSON.stringify` does, numbers serialised as ECMAS
 `Number.prototype.toString`. NaN and infinities are not permitted. Integers outside
 [-(2^53-1), 2^53-1] are not permitted (they are not exactly representable).
 
-`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.2:" + kind + "\0" + JCS(obj)))`, where
+`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.3:" + kind + "\0" + JCS(obj)))`, where
 the prefix is ASCII and `JCS(obj)` is UTF-8.
 
-## 7. Non-goals for v0.2
+## 7. Non-goals for v0.3
 
 Semantic correctness (whether the sentence describes the field), dates, arrays of records,
 cross-document checks, and PDF geometry (page and bounding box) as evidence. Adapters may convert
