@@ -1,0 +1,140 @@
+CONTEXT
+
+Context for the Inflation Reduction Act and the Strategic Operating Plan
+
+The funding provided by the Inflation Reduction Act (IRA) creates a unique opportunity for this nation to realize a
+future of tax administration that meets the evolving needs of taxpayers. Prior to the IRA, the Internal Revenue Service
+(IRS) had been significantly underfunded, with a budget reduction of 18% in real terms from 2010 to 2021. The IRA
+provides the IRS with tens of billions of dollars over a decade to significantly improve the way we serve taxpayers,
+ensure fair enforcement of tax law, modernize our technology, and collect hundreds of billions of dollars to fund our
+country’s vital activities. This funding enables the IRS to finally make meaningful investments in our employees and
+technology, evolving the American tax administration system into one that is modern, capable of adapting to this
+digital age, and trusted by the public.
+
+After the passage of the IRA, the U.S. Department of the Treasury and the IRS developed the Strategic Operating
+Plan (or the “Plan”) to guide this large-scale transformation and transparently show the American public, Congress,
+and other stakeholders how we plan to use this funding. Published in April 2023, the Plan outlines five major objec-
+tives to carry forward this transformation. Through the course of implementing the Plan in the first year, the IRS further
+refined the vision and the near-term priority efforts to get there. A key component of this work was the development
+of plain language outcomes, aligned to the five objectives in the Plan, with priority efforts and key results to deliver
+over the next two years. These outcomes will be embedded throughout this update.
+
+Objective 1
+
+Dramatically improve services to help taxpayers meet their
+obligations and receive the tax incentives for which they are eligible
+
+Objective 2
+
+Quickly resolve taxpayer issues when they arise
+
+• Enhance Live Assistance
+• Expand Online Services
+• Accelerate Digitalization
+• Improve Employee Tools
+
+• Simplify Notices
+• Disrupt Scams
+
+Objective 3
+
+Focus expanded enforcement on taxpayers with complex tax filings
+and high-dollar noncompliance to address the tax gap
+
+• Ensure Fairness in Enforcement
+
+Objective 4
+
+Deliver cutting-edge technology, data, and analytics to operate more
+effectively
+
+• Modernize Foundational IT
+
+Objective 5
+
+Attract, retain, and empower a highly skilled, diverse workforce
+and develop a culture that is better equipped to deliver results for
+taxpayers
+
+• Enhance Human Capital and
+
+Culture
+
+The plan was published with a commitment from the IRS Commissioner to provide annual progress updates to the
+public. To meet that commitment, we have published the IRA Strategic Operating Plan: Annual Update, which is
+available in full in Appendix 1. This report provides additional detail on the future of the plan, across three major areas:
+
+• Vision for a transformed IRS
+
+• Priorities for Fiscal Year 2024 and Fiscal Year 2025
+
+• Budget and staffing
+
+In addition, more can be found regarding the Strategic Operating Plan (IRS Inflation Reduction Act Strategic
+Operating Plan | Internal Revenue Service), on the Treasury Inflation Reduction Act website (Inflation Reduction
+Act | U.S. Department of the Treasury), and regular reporting on IRS Inflation Reeducation Act spending (IRS
+financial reports | Internal Revenue Service).
+
+IRS IRA Strategic Operating Plan | Annual Update Supplement
+
+1
+Depletion of IRA Funding Threatens Service and IT Improvements
+With the funding currently appropriated to the IRS, the agency can maintain the taxpayer services workforce at
+the level required to deliver exceptional service in FY 2025, but will not be able to support these efforts through FY
+2026. The 85% level of service target for the 2025 filing season will necessarily drop to less than 30% in FY 2026 as
+Taxpayer Services staff needed to support taxpayers who need help will be underfunded by more than 33% meaning
+that less than three out of every 10 taxpayers will get through to the IRS when they call.
+
+Similarly, Business System Modernization (BSM) funds were zeroed out in FY 2023 and FY 2024 appropriations. The
+IRS is currently reliant on IRA funds for Digitalization and other technological innovations and in the absence of discre-
+tionary BSM funding, estimates it is currently underfunded by nearly $3 billion through FY 2031. The IRS estimates
+BSM funds provided by the IRA will be exhausted by FY 2026 at which point: automation solutions will be scaled
+back leaving taxpayers without the ability to have up-to-date account information when they want it; cyber and cloud
+work will be truncated, increasing the risk for failure of IRS systems and cyber-attacks; and work on digital solutions
+including Taxpayer 360 and expanded payment functionality. IRA Operations Support appropriations are projected to
+be fully exhausted in FY 2030, at which point in time the IRS will be unable to fund the operations and maintenance
+costs to support newly enhanced and deployed technology.
+
+IRS Will More than Double Audit Rates on the Wealthiest Taxpayers, While Protecting Small
+Businesses and Everyday Families from Additional Audit Scrutiny, But Additional Funding Will
+be Needed
+
+Continual underfunding from 2010 through 2021 meant the IRS was significantly understaffed across all of its work
+streams – most notably in the IRS’s compliance offices where overall staffing declined 30% since 2010. At the time
+of the IRA’s passage, the IRS had only 8,400 revenue agents, down from 14,600 in 2010, while the number of large
+corporate, large partnership, and high-income individual filings grew rapidly over time. As a result, the audit rate for
+the largest corporations fell to a low in tax year (TY) 2019 of 8.8% (down from 28.5% in TY 2010), and the audit rate
+for multi-millionaires decreased by nearly 50% from TY 2010 to TY 2019. Moreover, the number of large partnerships
+grew by 70% from TY 2010 to TY 2019, but the IRS was only able to audit 0.1% of these partnerships.
+
+The IRS is using the enforcement funding provided by the IRA to hire accountants, engineers, economists, data
+scientists, attorneys, and tax experts with the specialized skills to examine the complex returns of large corporations,
+complex partnerships, and high-income individuals. The IRS will not increase audit rates relative to historical levels for
+small businesses and households making under $400,000 per year.
+
+As noted above, with the funding provided by the IRA, the IRS has already begun to rebuild capacity and deliver
+results to improve tax fairness. Such results include collecting over half a billion dollars from millionaires with delin-
+quent tax debt and examining the returns of large partnerships with questionable balance sheets. New enforcement
+staff will allow the IRS to double audit rates on the wealthiest taxpayers, reversing the sharp decline in audit rates over
+the 2010s. More specifically, the IRS will:
+
+• Nearly triple audit rates on large corporations with assets over $250 million
+
+•
+
+•
+
+Increase audit rates by nearly ten-fold on large, complex partnerships with assets over $10 million
+
+Increase audit rates by more than 50% on wealthy individual taxpayers with total positive income over
+$10 million
+
+• Not increase audit rates for small businesses and taxpayers making under $400,000, relative to historical
+
+levels
+
+IRS IRA Strategic Operating Plan | Annual Update Supplement
+
+29
+
+TRANSFORMATION

@@ -1,0 +1,136 @@
+• In 2016, he rolled over the balance of his qualified re-
+tirement plan, $20,000, into a Roth IRA when he
+changed jobs. He used a 2016 Form 1040 to file his
+taxes. He entered $20,000 on line 16a of Form 1040
+because that was the amount reported in box 1 of his
+2016 Form 1099-R. Box 5 of his 2016 Form 1099-R
+reported $0 because he didn't make any after-tax con-
+tributions to the qualified retirement plan. He entered
+$20,000 on line 16b of Form 1040 because that is the
+taxable amount that was rolled over in 2016.
+
+The total balance in his Roth IRA as of January 1,
+2025, was $105,000 ($50,000 in contributions from 2000
+through 2024 + $10,000 from the 2005 conversion +
+$20,000 from the 2016 rollover + $25,000 from earnings).
+He hasn't taken any early distribution from his Roth IRA
+before 2025. In 2025, he made a contribution of $5,500 to
+his Roth IRA.
+
+In August 2025 he took a $85,500 early distribution
+from his Roth IRA to use as a down payment on the pur-
+chase of his first home. See his filled out Illustrated Re-
+capture Amount Allocation Chart to see how he allocated
+the amounts from the above transactions. Based on his al-
+location, he would enter $20,000 on his 2025 Form 5329,
+line 1 (see Amount to include on Form 5329, line 1, ear-
+lier). He should also report $10,000 on his 2025 Form
+5329, line 2, and enter exception 09 because that amount
+isn't subject to the 10% additional tax on early distribu-
+tions.
+
+How Do You Figure the Taxable Part?
+
+To figure the taxable part of a distribution that isn't a quali-
+fied distribution, complete Form 8606, Part III.
+
+Must You Withdraw or Use
+Assets?
+
+You aren't required to take distributions from your Roth
+IRA at any age. The minimum distribution rules that apply
+to traditional IRAs don't apply to Roth IRAs while the
+owner is alive. However, after the death of a Roth IRA
+owner, certain minimum distribution rules that apply to tra-
+ditional IRAs also apply to Roth IRAs, as explained later
+under Distributions After Owner's Death.
+
+Minimum distributions. You can't use your Roth IRA
+to satisfy minimum distribution requirements for your tradi-
+tional IRA. Nor can you use distributions from traditional
+IRAs for required distributions from Roth IRAs. See Distri-
+butions to beneficiaries, later.
+
+Distributions After Owner's Death
+
+If a Roth IRA owner dies, the minimum distribution rules
+that apply to traditional IRAs apply to Roth IRAs as though
+the Roth IRA owner died before their required beginning
+date. See When Can You Withdraw or Use Assets? in
+chapter 1.
+
+Distributions to beneficiaries. Generally, the entire in-
+terest in the Roth IRA must be distributed by the end of
+the 5th or 10th calendar year, as applicable, after the year
+of the owner's death unless the interest is payable to an
+eligible designated beneficiary over the life or life expect-
+ancy of the eligible designated beneficiary. See When
+Must You Withdraw Assets? (Required Minimum Distribu-
+tions) in chapter 1.
+
+If paid as an annuity, the entire interest must be payable
+over a period not greater than the designated beneficiary's
+life expectancy and distributions must begin before the
+end of the calendar year following the year of death. Distri-
+butions from another Roth IRA can't be substituted for
+these distributions unless the other Roth IRA was inheri-
+ted from the same decedent.
+
+If the sole beneficiary is the spouse, they can either de-
+lay distributions until the decedent would have reached
+age 73 or treat the Roth IRA as their own.
+
+Combining with other Roth IRAs. A beneficiary can
+combine an inherited Roth IRA with another Roth IRA
+maintained by the beneficiary only if the beneficiary either:
+• Inherited the other Roth IRA from the same decedent,
+
+or
+
+• Was the spouse of the decedent and the sole benefi-
+ciary of the Roth IRA and elects to treat it as their own
+IRA.
+
+Distributions that aren't qualified distributions. If a
+distribution to a beneficiary isn't a qualified distribution, it
+is generally includible in the beneficiary's gross income in
+the same manner as it would have been included in the
+owner's income had it been distributed to the IRA owner
+when they were alive.
+
+If the owner of a Roth IRA dies before the end of:
+• The 5-year period beginning with the first tax year for
+which a contribution was made to a Roth IRA set up
+for the owner's benefit, or
+
+• The 5-year period starting with the year of a conver-
+sion contribution from a traditional IRA or a rollover
+from a qualified retirement plan to a Roth IRA,
+
+then each type of contribution is divided among multiple
+beneficiaries according to the pro-rata share of each. See
+Ordering Rules for Distributions, earlier.
+
+Example. When Ms. Hibbard died in 2025, her Roth
+IRA contained regular contributions of $4,000, a conver-
+sion contribution of $10,000 that was made in 2021, and
+earnings of $2,000. No distributions had been made from
+her IRA. She had no basis in the conversion contribution
+in 2021.
+
+When she established this Roth IRA (her first) in 2021,
+she named each of her four children as equal beneficia-
+ries. Each child will receive one-fourth of each type of con-
+tribution and one-fourth of the earnings. An immediate dis-
+tribution of $4,000 to each child will be treated as $1,000
+from regular contributions, $2,500 from conversion contri-
+butions, and $500 from earnings.
+
+In this case, because the distributions are made before
+the end of the applicable 5-year period for a qualified
+
+Publication 590-B (2025)
+
+Chapter 2 Roth IRAs
+
+37

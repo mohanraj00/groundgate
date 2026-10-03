@@ -1,0 +1,45 @@
+VII. FORM W-2 SSN SOLICITATIONS
+
+In general, the solicitation rules with respect to missing or incorrect TINs on Form W-2 are the same
+as discussed in Sections V and VI. An employer must make an initial solicitation for the employee’s
+SSN at the time the employee begins work. The initial solicitation of the employee’s SSN may be
+made in person, by oral request, or by written request. The SSN may also be requested through
+other communications, by mail, telephone, or electronic means. The employer may rely in good
+faith on the number provided by the employee and use it when filling out the employee’s Form W-2.
+Employees are required to complete Form I-9, Employment Eligibility Verification, to establish that
+they are legally eligible to work in the U.S.
+
+An employer has an obligation to ask for Form W-4 from a new employee. Under IRC 3402(f)(2)(A),
+on commencement of employment, an employee must provide a signed Form W-4 (or a substitute
+form) with the information necessary for the employer to determine the employee’s correct income
+tax withholding.
+
+Since the employee is required to furnish Form W-4 to the employer on commencement of
+employment, Form W-4 may be used as the initial solicitation of the employee’s SSN. An employer
+who retains the Form W-4 in its records will be able to document that an initial solicitation of a TIN
+was made, verifying that it acted in a responsible manner.
+
+Employers may use the SSA’s SSN verification systems to verify the employee’s name and SSN,
+but there is no IRS requirement to do so. The option is useful for employers to identify potential
+discrepancies and correct SSNs before receiving a penalty notice. For more information, go to
+www.socialsecurity.gov/employer.
+
+Generally, SSA and IRS records are consistent. However, it is important to note that the database
+used by SSA to match names and SSNs may not be identical to the IRS database. IRS penalty
+notices relating to mismatched TINs are based and issued exclusively on IRS system information.
+Mismatches reported under SSA verification systems are not considered IRS notices and do not
+trigger any further solicitation requirements under IRS rules for reasonable cause waivers. However,
+if an employer receives a mismatch notice from SSA, the employer may wish to re-solicit the
+employee’s SSN and try to obtain correct information prior to filing the Form W-2.
+
+VIII. INFORMATION RETURN PENALTY RATES
+
+The Trade Preferences Extension Act (TPEA) of 2015, Section 806, increased the IRC 6721 and IRC
+6722 base penalty rates from $100 to $250 for each return that failed to comply with information
+return filing requirements. The calendar year maximum penalties for both large and small businesses
+also increased. In addition, IRC 6721(f) and IRC 6722(f) provide for annual inflationary adjustments to
+the IRC 6721 and IRC 6722 penalty rates and calendar year maximum penalties for returns required
+to be filed and furnished on or after January 1, 2016. See Revenue Procedures for
+inflation adjustments.
+
+14

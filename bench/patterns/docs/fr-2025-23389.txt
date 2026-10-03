@@ -1,0 +1,250 @@
+Rules and Regulations
+
+59367
+
+Federal Register
+
+Vol. 90, No. 242
+
+Friday, December 19, 2025
+
+This section of the FEDERAL REGISTER
+contains regulatory documents having general
+applicability and legal effect, most of which
+are keyed to and codified in the Code of
+Federal Regulations, which is published under
+50 titles pursuant to 44 U.S.C. 1510.
+
+The Code of Federal Regulations is sold by
+the Superintendent of Documents.
+
+FEDERAL RESERVE SYSTEM
+
+12 CFR Part 201
+
+[Docket No. R–1882; RIN 7100–AH15]
+
+Regulation A: Extensions of Credit by
+Federal Reserve Banks
+
+AGENCY: Board of Governors of the
+Federal Reserve System.
+ACTION: Final rule.
+
+SUMMARY: The Board of Governors of the
+Federal Reserve System (‘‘Board’’) has
+adopted final amendments to its
+Regulation A to reflect the Board’s
+approval of a decrease in the rate for
+primary credit at each Federal Reserve
+Bank. The secondary credit rate at each
+Reserve Bank automatically decreased
+by formula as a result of the Board’s
+primary credit rate action.
+DATES:
+
+Effective date: This rule is effective
+
+December 19, 2025.
+
+Applicability date: The rate changes
+for primary and secondary credit were
+applicable on December 11, 2025.
+FOR FURTHER INFORMATION CONTACT: M.
+Benjamin Snodgrass, Special Counsel
+(202–263–4877), Legal Division, or
+David Lowe, Financial Institution &
+Policy Analyst (202–893–6143),
+Division of Monetary Affairs; for users
+of telephone systems via text telephone
+(TTY) or any TTY-based
+Telecommunications Relay Services,
+please call 711 from any telephone,
+anywhere in the United States; Board of
+Governors of the Federal Reserve
+System, 20th and C Streets NW,
+Washington, DC 20551.
+SUPPLEMENTARY INFORMATION: The
+Federal Reserve Banks make primary
+and secondary credit available to
+depository institutions as a backup
+source of funding on a short-term basis,
+usually overnight. The primary and
+secondary credit rates are the interest
+rates that the twelve Federal Reserve
+Banks charge for extensions of credit
+under these programs. In accordance
+
+with the Federal Reserve Act, the
+primary and secondary credit rates are
+established by the boards of directors of
+the Federal Reserve Banks, subject to
+review and determination of the Board.
+On December 10, 2025, the Board
+
+voted to approve a 0.25 percentage point
+decrease in the primary credit rate,
+thereby decreasing the primary credit
+rate from 4.00 percent to 3.75 percent.
+In addition, the Board had previously
+approved the renewal of the secondary
+credit rate formula, the primary credit
+rate plus 50 basis points. Under the
+formula, the secondary credit rate
+decreased by 0.25 percentage points as
+a result of the Board’s primary credit
+rate action, thereby decreasing the
+secondary credit rate from 4.50 percent
+to 4.25 percent. The amendments to
+Regulation A reflect these rate changes.
+The 0.25 percentage point decrease in
+
+the primary credit rate was associated
+with a 0.25 percentage point decrease in
+the target range for the federal funds rate
+(from a target range of 3^3⁄4 percent to 4
+percent to a target range of 3^1⁄2 percent
+to 3^3⁄4 percent) announced by the
+Federal Open Market Committee on
+December 10, 2025, as described in the
+Board’s amendment of its Regulation D
+published elsewhere in today’s Federal
+Register.
+
+Administrative Procedure Act
+
+In general, the Administrative
+
+Procedure Act (‘‘APA’’) 1 imposes three
+principal requirements when an agency
+promulgates legislative rules (rules
+made pursuant to Congressionally
+delegated authority): (1) publication
+with adequate notice of a proposed rule;
+(2) followed by a meaningful
+opportunity for the public to comment
+on the rule’s content; and (3)
+publication of the final rule not less
+than 30 days before its effective date.
+The APA provides that notice and
+comment procedures do not apply if the
+agency for good cause finds them to be
+‘‘unnecessary, impracticable, or contrary
+to the public interest.’’ 2 Section 553(d)
+of the APA also provides that
+publication at least 30 days prior to a
+rule’s effective date is not required for
+(1) a substantive rule which grants or
+recognizes an exemption or relieves a
+restriction; (2) interpretive rules and
+statements of policy; or (3) a rule for
+which the agency finds good cause for
+
+1 5 U.S.C. 551 et seq.
+2 5 U.S.C. 553(b)(3)(A).
+
+shortened notice and publishes its
+reasoning with the rule.^3 The APA
+further provides that the notice, public
+comment, and delayed effective date
+requirements of 5 U.S.C. 553 do not
+apply ‘‘to the extent that there is
+involved . . . a matter relating to agency
+management or personnel or to public
+property, loans, grants, benefits, or
+contracts.’’ 4
+
+Regulation A establishes the interest
+
+rates that the twelve Reserve Banks
+charge for extensions of primary credit
+and secondary credit. The Board has
+determined that the notice, public
+comment, and delayed effective date
+requirements of the APA do not apply
+to these final amendments to Regulation
+A. The amendments involve a matter
+relating to loans and are therefore
+exempt under the terms of the APA.
+Furthermore, because delay would
+undermine the Board’s action in
+responding to economic data and
+conditions, the Board has determined
+that ‘‘good cause’’ exists within the
+meaning of the APA to dispense with
+the notice, public comment, and
+delayed effective date procedures of the
+APA with respect to the final
+amendments to Regulation A.
+
+Regulatory Flexibility Analysis
+
+The Regulatory Flexibility Act
+
+(‘‘RFA’’) does not apply to a rulemaking
+where a general notice of proposed
+rulemaking is not required.^5 As noted
+previously, a general notice of proposed
+rulemaking is not required if the final
+rule involves a matter relating to loans.
+Furthermore, the Board has determined
+that it is unnecessary and contrary to
+the public interest to publish a general
+notice of proposed rulemaking for this
+final rule. Accordingly, the RFA’s
+requirements relating to an initial and
+final regulatory flexibility analysis do
+not apply.
+
+Paperwork Reduction Act
+
+In accordance with the Paperwork
+Reduction Act (‘‘PRA’’) of 1995,^6 the
+Board reviewed the final rule under the
+authority delegated to the Board by the
+Office of Management and Budget. The
+
+3 5 U.S.C. 553(d).
+4 5 U.S.C. 553(a)(2).
+5 5 U.S.C. 603, 604.
+6 44 U.S.C. 3506; see 5 CFR part 1320, appendix
+
+A.1.
+
+VerDate Sep<11>2014 15:45 Dec 18, 2025 Jkt 268001 PO 00000 Frm 00001 Fmt 4700 Sfmt 4700 E:\FR\FM\19DER1.SGM 19DER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+3
+2
+N
+Q
+X
+1
+1
+K
+S
+D
+n
+o
+
+r
+e
+t
+t
+o
+
+l

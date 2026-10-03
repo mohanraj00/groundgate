@@ -1,0 +1,281 @@
+Federal Register / Vol. 90, No. 237 / Friday, December 12, 2025 / Rules and Regulations
+
+57715
+
+At the June 2024 meeting, the Council
+adopted its final preferred alternative to
+develop one GEA for commercial
+groundfish bottom contact gear at Sur
+Ridge in MBNMS. It is anticipated that
+ONMS may begin deep-sea coral
+outplanting at Sur Ridge in 2026.
+
+The GEA at Sur Ridge applies to
+commercial groundfish vessels using
+bottom contact gear. Currently, the GEA
+area is within a bottom trawl essential
+fish habitat conservation area (EFHCA),
+and therefore no bottom trawling is
+permitted. If the EFHCA were to be
+removed in the future, the GEA will
+continue to prohibit bottom trawl. The
+GEA creates new restrictions for non-
+trawl commercial groundfish vessels
+using bottom contact gears in the
+limited entry fixed gear, directed open
+access, and shore-based individual
+fishing quota sectors. Vessels using non-
+bottom contact gear will still be
+permitted to operate in the area. The
+GEA will close 36.64 square nautical
+miles of area, with depths ranging from
+2,690 to 5,118 feet (448 to 853 fathoms
+(fm) (4,919 meters (m)). Overall, this
+GEA allows ONMS to perform deep-sea
+coral research and restoration while
+having limited impact on the groundfish
+fisheries.
+
+Amendment 34
+
+NMFS is implementing amendment
+34 to the Groundfish FMP in alignment
+with the Council’s recommendation in
+June 2024. Amendment 34 revises the
+description of GEAs in the Groundfish
+FMP to remove references to specific
+GEAs, consistent with how other closed
+area types are included in the
+Groundfish FMP. Active GEAs are
+currently listed in the FMP. With this
+amendment, active GEAs will instead be
+noted in the Federal groundfish
+regulations at § 660.70, and the history
+of a specific GEA will likely be provided
+in the groundfish Stock Assessment
+Fishery Evaluation document.
+
+Revisions to GEAs
+
+In addition to revising the description
+
+of GEAs under amendment 34, in
+alignment with the Council’s
+recommendation, NMFS is revising
+regulations to modify the use of GEAs
+as a management tool in the following
+ways. This final rule will:
+
+• Add GEAs to the general groundfish
+
+prohibitions found at § 660.12;
+
+• Revise the descriptions of GEAs
+
+found in §§ 660.230, 660.330, and
+660.360 to remove the specific
+references to the Southern California
+Bight; and,
+
+• Establish a new GEA at Sur Ridge
+
+in MBNMS.
+
+This final rule will add GEAs to the
+general groundfish prohibitions found
+in regulations by adding § 660.12(a)(23)
+to the list of prohibitions in § 660.12(a).
+This will clarify that it is unlawful for
+fishermen to violate any regulations that
+apply to activity in GEAs. This final rule
+will also revise the descriptions of GEAs
+in the regulations by updating
+§§ 660.230, 660.330, and 660.360 to
+remove specific references to the
+Southern California Bight and to
+generalize the GEA descriptions to
+allow for GEAs to be located more
+broadly. This final rule will also update
+the GEA description at § 660.70(t) to
+note that there will be a total of nine
+GEAs and to remove the specific
+reference to GEAs being areas south of
+Point Conception, California. Finally,
+this final rule will add § 660.70(t)(9) to
+the list of GEAs found in that section
+and will include the latitude and
+longitude coordinates and other
+information relevant to establishing the
+Sur Ridge GEA.
+
+Expected Effects of This Action
+
+The Council prepared a detailed
+
+Analysis (see ADDRESSES) that analyzed
+the effects of amendment 34 on various
+resources. A brief summary of expected
+effects from the Analysis is provided
+below and is also included in the
+proposed rule (89 FR 84511, October 23,
+2024).
+
+All commercial groundfish
+
+participants that use bottom contact gear
+for fisheries in the EEZ off Washington,
+Oregon, and California, which are
+managed under the Groundfish FMP,
+may be affected by this final rule.
+Bottom contact gear is defined at 50 CFR
+660.11: ‘‘fishing gear designed or
+modified to make contact with the
+bottom. This includes, but is not limited
+to, beam trawl, bottom trawl, dredge,
+fixed gear, set net, demersal seine,
+dinglebar gear, and other gear (including
+experimental gear) designed or modified
+to make contact with the bottom. Gear
+used to harvest bottom dwelling
+organisms (e.g., by hand, rakes, and
+knives) are also considered bottom
+contact gear for purposes of this
+subpart.’’
+
+This list is non-exhaustive. The coral
+research and restoration area is within
+existing bottom trawl EFHCAs, which
+prohibit all bottom trawl gears from
+operating within those EFHCA
+boundaries. Given that these areas are
+currently closed to bottom trawl vessels,
+this action will establish no new impact
+to those vessels. Therefore, the action
+will impact only fishing with non-trawl
+bottom contact gear types within the
+GEA at Sur Ridge. The commercial gears
+that will be permitted to operate within
+
+the newly closed area are midwater
+trawl and select non-trawl gear types
+(troll gear and commercial vertical
+hook-and-line gear not anchored to the
+bottom, such as vertical jig gear or rod-
+and-reel gear with weights suspended
+off the bottom).
+
+From 2019 to 2023, there were 429
+distinct vessels that utilized non-trawl
+bottom contact gears 1 in the 3
+commercial groundfish sectors (directed
+open access (OA), limited entry fixed
+gear (LEFG), and individual fishing
+quota (IFQ) gear switching) with an
+annual average of 175 vessels operating
+annually (table 1) between the latitudes
+of 40°30′ N and 36° N. As described in
+section 3.5.2 of the Analysis, this is the
+catch area that encompassed the three
+coral restoration and research areas
+proposed within MBNMS in late 2023.
+The Council ultimately only
+recommended one offshore area to move
+forward as a GEA. Therefore, the
+estimated values here are expected to
+reflect the maximum number of vessels
+that could potentially be affected by this
+action. The actual number is likely
+lower. The majority of affected vessels
+would participate in the directed OA
+fishery. To protect the confidentiality of
+vessel data, IFQ gear switching vessels
+were combined with LEFG vessels in
+table 1.
+
+TABLE 1—RANGE OF VESSELS BY
+FISHERY SECTOR
+[2019–2023]
+
+Fishery sector
+
+Range
+
+Average
+
+OA ...............................
+LEFG/IFQ ...................
+
+130–172
+24–29
+
+149
+26
+
+For purposes of this action, directed
+
+OA vessels are assumed to be small
+entities, with ex-vessel revenues for all
+landings (groundfish and non-
+groundfish) averaging $71,959. In 2023,
+26 of the 29 LEFG permits associated
+with vessels that would likely be subject
+to this action (i.e., required to fish in the
+primary or LE trip limit fisheries) were
+owned by small entities (self-reported).
+For gear switching vessels likely to be
+affected by this action, all were reported
+as small entities in 2023.
+
+Note that there is not a strict one-to-
+
+one correlation between vessels and
+entities, nor between permits and
+entities; therefore, some persons or
+firms likely have ownership interests in
+more than one vessel or permit.
+
+1 Vessels were selected based on FOS_
+
+Groundfish_Sector_Codes of ‘‘Catch Shares’’, ‘‘LE
+Fixed Gear Daily Trip Limit’’, ‘‘Limited entry
+Sablefish’’, and ‘‘OA Fixed Gear’’ and were not
+declared (using declaration code) associated with
+non-bottom contact gears.
+
+VerDate Sep<11>2014 17:48 Dec 11, 2025 Jkt 268001 PO 00000 Frm 00041 Fmt 4700 Sfmt 4700 E:\FR\FM\12DER1.SGM 12DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

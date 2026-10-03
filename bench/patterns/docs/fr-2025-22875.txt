@@ -1,0 +1,530 @@
+Rules and Regulations
+
+58141
+
+Federal Register
+
+Vol. 90, No. 239
+
+Tuesday, December 16, 2025
+
+This section of the FEDERAL REGISTER
+contains regulatory documents having general
+applicability and legal effect, most of which
+are keyed to and codified in the Code of
+Federal Regulations, which is published under
+50 titles pursuant to 44 U.S.C. 1510.
+
+The Code of Federal Regulations is sold by
+the Superintendent of Documents.
+
+DEPARTMENT OF THE TREASURY
+
+Office of the Comptroller of the
+Currency
+
+12 CFR Part 34
+
+[Docket No. OCC–2025–0306]
+
+RIN 1557–AF39
+
+FEDERAL RESERVE SYSTEM
+
+12 CFR Part 226
+
+[Docket No. R–1878]
+
+RIN 7100–AH12
+
+CONSUMER FINANCIAL PROTECTION
+BUREAU
+
+12 CFR Part 1026
+
+Appraisals for Higher-Priced Mortgage
+Loans Exemption Threshold
+
+AGENCY: Office of the Comptroller of the
+Currency, Treasury (OCC); Board of
+Governors of the Federal Reserve
+System (Board); and Consumer
+Financial Protection Bureau (Bureau).
+ACTION: Final rules and official
+interpretations.
+
+SUMMARY: The OCC, the Board, and the
+Bureau are finalizing amendments to the
+official interpretations for their
+regulations that implement section
+129H of the Truth in Lending Act
+(TILA). Section 129H of TILA
+establishes special appraisal
+requirements for ‘‘higher-risk
+mortgages,’’ termed ‘‘higher-priced
+mortgage loans’’ or ‘‘HPMLs’’ in the
+agencies’ regulations. A December 2013
+rulemaking exempted transactions of
+$25,000 or less and required that this
+loan amount be adjusted annually based
+on any annual percentage increase in
+the Consumer Price Index for Urban
+Wage Earners and Clerical Workers
+(CPI–W). Based on the CPI–W in effect
+as of June 1, 2025, the exemption
+threshold will increase from $33,500 to
+$34,200, effective January 1, 2026.
+
+DATES: This final rule is effective
+January 1, 2026.
+
+FOR FURTHER INFORMATION CONTACT:
+
+OCC: Maria Riegger, Counsel, Chief
+Counsel’s Office, at (202) 649–5490. If
+you are deaf, hard of hearing, or have a
+speech disability, please dial 711 to
+access telecommunications relay
+services.
+
+Board: Lorna M. Neill, Senior
+Counsel, Division of Consumer and
+Community Affairs, Board of Governors
+of the Federal Reserve System, at (202)
+452–3667. For users of text telephone
+systems (TTY) or any TTY-based
+Telecommunications Relay Services,
+please call 711 from any telephone,
+anywhere in the United States.
+
+Bureau: Dave Gettler, Paralegal
+
+Specialist, Office of Regulations, at 202–
+435–7700 or at: https://reginquiries.
+consumerfinance.gov/. If you require
+this document in an alternative
+electronic format, please contact CFPB_
+Accessibility@cfpb.gov.
+
+SUPPLEMENTARY INFORMATION:
+
+I. Background
+
+The Dodd-Frank Wall Street Reform
+and Consumer Protection Act of 2010
+(Dodd-Frank Act) amended TILA to add
+special appraisal requirements for
+‘‘higher-risk mortgages.’’ 1 In January
+2013, the OCC, the Board, the Bureau,
+the Federal Deposit Insurance
+Corporation (FDIC), the National Credit
+Union Administration (NCUA), and the
+Federal Housing Finance Agency
+(FHFA) (collectively, the Agencies)
+jointly issued a final rule implementing
+these requirements and adopted the
+term ‘‘higher-priced mortgage loan’’
+(HPML) instead of ‘‘higher-risk
+mortgage’’ (January 2013 Final Rule).^2 In
+July 2013, the Agencies proposed
+additional exemptions from the January
+2013 Final Rule.^3 In December 2013, the
+Agencies issued a supplemental final
+rule with additional exemptions from
+the January 2013 Final Rule (December
+2013 Supplemental Final Rule).^4 Among
+other exemptions, the Agencies adopted
+an exemption from the new HPML
+appraisal rules for transactions of
+
+1 Public Law 111–203, sec. 1471, 124 Stat. 1376,
+
+2185–87 (2010), codified at TILA sec. 129H, 15
+U.S.C. 1639h.
+
+2 78 FR 10368 (Feb. 13, 2013).
+3 78 FR 48548 (Aug. 8, 2013).
+4 78 FR 78520 (Dec. 26, 2013).
+
+$25,000 or less, to be adjusted annually
+for inflation.
+
+The OCC’s, Board’s, and Bureau’s
+versions of the January 2013 Final Rule
+and December 2013 Supplemental Final
+Rule and corresponding official
+interpretations are substantively
+identical. The FDIC, NCUA, and FHFA
+adopted the Bureau’s version of the
+regulations under the January 2013
+Final Rule and December 2013
+Supplemental Final Rule.^5
+
+The OCC’s, Board’s, and Bureau’s
+regulations,^6 and their accompanying
+official interpretations,^7 provide that the
+exemption threshold for smaller loans
+will be adjusted effective January 1 of
+each year based on any annual
+percentage increase in the CPI–W that
+was in effect on the preceding June 1.
+Any increase in the threshold amount
+will be rounded to the nearest $100
+increment. For example, if the annual
+percentage increase in the CPI–W would
+result in a $950 increase in the
+threshold amount, the threshold amount
+will be increased by $1,000. However, if
+the annual percentage increase in the
+CPI–W would result in a $949 increase
+in the threshold amount, the threshold
+amount will be increased by $900. If
+there is no annual percentage increase
+in the CPI–W, the OCC, the Board, and
+the Bureau will not adjust the threshold
+amounts from the prior year.^8
+
+On November 30, 2016, the OCC, the
+Board, and the Bureau published a final
+rule in the Federal Register to
+memorialize the calculation method
+used by the OCC, the Board, and the
+Bureau each year to adjust the
+exemption threshold to ensure that the
+values for the exemption threshold keep
+pace with the CPI–W (HPML Small
+Dollar Adjustment Calculation Rule).^9
+The HPML Small Dollar Adjustment
+Calculation Rule memorialized the
+
+5 See NCUA: 12 CFR 722.3; FHFA: 12 CFR part
+
+1222. Although the FDIC adopted the Bureau’s
+version of the regulation, the FDIC did not issue its
+own regulation containing a cross-reference to the
+Bureau’s version. See 78 FR 10368 at 10370.
+
+6 12 CFR 34.203(b)(2) (OCC); 12 CFR 226.43(b)(2)
+
+(Board); and 12 CFR 1026.35(c)(2)(ii) (Bureau).
+7 12 CFR part 34, appendix C to subpart G,
+comment 203(b)(2)–1 (OCC); 12 CFR part 226,
+supplement I, comment 43(b)(2)–1 (Board); and 12
+CFR part 1026, supplement I, comment 35(c)(2)(ii)–
+1 (Bureau).
+
+8 See 12 CFR part 34, appendix C to subpart G,
+comment 203(b)(2)–1 and –2 (OCC); 12 CFR part
+226, supplement I, comment 43(b)(2)–1 and –2
+(Board); and 12 CFR part 1026, supplement I,
+comment 35(c)(2)(ii)–1 and –2 (Bureau).
+9 See 81 FR 86250 (Nov. 30, 2016).
+
+VerDate Sep<11>2014 16:22 Dec 15, 2025 Jkt 268001 PO 00000 Frm 00001 Fmt 4700 Sfmt 4700 E:\FR\FM\16DER1.SGM 16DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+58142
+
+Federal Register / Vol. 90, No. 239 / Tuesday, December 16, 2025 / Rules and Regulations
+
+policy that, if there is no annual
+percentage increase in the CPI–W, the
+OCC, Board, and Bureau will not adjust
+the exemption threshold from the prior
+year. The HPML Small Dollar
+Adjustment Calculation Rule also
+provided that, in years following a year
+in which the exemption threshold was
+not adjusted because there was a
+decrease in the CPI–W from the
+previous year, the threshold is
+calculated by applying the annual
+percentage change in the CPI–W to the
+dollar amount that would have resulted,
+after rounding, if the decreases and any
+subsequent increases in the CPI–W had
+been taken into account. If the resulting
+amount calculated, after rounding, is
+greater than the current threshold, then
+the threshold effective January 1 the
+following year will increase
+accordingly; if the resulting amount
+calculated, after rounding, is equal to or
+less than the current threshold, then the
+threshold effective January 1 the
+following year will not change, but
+future increases will be calculated based
+on the amount that would have resulted,
+after rounding.
+
+II. 2026 Adjustment and Official
+Interpretations Revision
+
+Effective January 1, 2026, the
+exemption threshold amount is
+increased from $33,500 to $34,200. This
+amount is based on the CPI–W in effect
+on June 1, 2025, which was reported on
+May 13, 2025 (based on April 2025
+data).^10 The CPI–W is a subset of the
+CPI–U index (based on all urban
+consumers) and represents
+approximately 30 percent of the U.S.
+population. The CPI–W reported on
+May 13, 2025, reflects a 2.1 percent
+increase in the CPI–W from April 2024
+to April 2025. Accordingly, the 2.1
+percent increase in the CPI–W from
+April 2024 to April 2025 results in an
+exemption threshold amount of $34,200,
+after rounding. The OCC, the Board, and
+the Bureau are revising the official
+interpretations to their respective
+regulations to add new comments as
+follows:
+
+• Comment 203(b)(2)–3.xiii to 12 CFR
+part 34, appendix C to subpart G (OCC);
+
+• Comment 43(b)(2)–3.xiii to
+supplement I of 12 CFR part 226
+(Board); and
+
+• Comment 35(c)(2)(ii)–3.xiii to
+supplement I of 12 CFR part 1026
+(Bureau).
+
+10 The Bureau of Labor Statistics calculates
+consumer-based indices for each month but does
+not report those indices until the middle of the
+following month. As such, the most recently
+reported indices as of June 1, 2025, were reported
+on May 13, 2025, and reflect economic conditions
+in April 2025.
+
+These new comments state that, from
+January 1, 2026, through December 31,
+2026, the threshold amount is $34,200.
+These revisions are effective January 1,
+2026.
+
+III. Regulatory Analysis
+
+Administrative Procedure Act
+
+Under the Administrative Procedure
+Act (APA), notice and opportunity for
+public comment are not required if the
+agency finds that notice and public
+comment are impracticable,
+unnecessary, or contrary to the public
+interest.^11 The amendments in this rule
+are technical and apply the method
+previously memorialized in the
+December 2013 Supplemental Final
+Rule and the HPML Small Dollar
+Adjustment Calculation Rule. For these
+reasons, the OCC, the Board, and the
+Bureau have determined that publishing
+a notice of proposed rulemaking and
+providing opportunity for public
+comment are unnecessary. Therefore,
+the amendments are adopted in final
+form.
+
+Section 553(d) of the APA generally
+requires publication of a final rule not
+less than 30 days before its effective
+date, except in the case of (1) a
+substantive rule which grants or
+recognizes an exemption or relieves a
+restriction; (2) interpretive rules and
+statements of policy; or (3) as otherwise
+provided by the agency for good cause
+found and published with the rule.^12 At
+a minimum, the OCC, the Board, and
+the Bureau have determined that the
+amendments fall under the third
+exception to section 553(d). The OCC,
+the Board, and the Bureau find that
+there is good cause to make the
+amendments effective on January 1,
+2026. The amendments in this final rule
+are technical and non-discretionary, and
+apply the method previously
+established in the regulations for
+determining adjustments to the
+threshold.
+
+Paperwork Reduction Act
+
+The OCC, the Board, and the Bureau
+reviewed this final rule in accordance
+with the Paperwork Reduction Act of
+1995.^14 The OCC, the Board, and the
+Bureau have determined that this rule
+does not create any new information
+collections or substantially revise any
+existing collections.
+
+Unfunded Mandates Reform Act
+
+The OCC analyzes proposed rules for
+
+the factors listed in section 202 of the
+Unfunded Mandates Reform Act of
+1995, before promulgating a final rule
+for which a general notice of proposed
+rulemaking was published.^15 As
+discussed above, the OCC has
+determined that the publication of a
+general notice of proposed rulemaking
+is unnecessary.
+
+Executive Order 12866
+
+The Office of Information and
+
+Regulatory Affairs within the Office of
+Management and Budget (OMB) has
+determined that this action is not a
+‘‘significant regulatory action’’ under
+Executive Order 12866, as amended.
+
+Bureau Congressional Review Act
+Statement
+
+Pursuant to the Congressional Review
+
+Act (5 U.S.C. 801 et seq.), the Bureau
+will submit a report containing this rule
+and other required information to the
+U.S. Senate, the U.S. House of
+Representatives, and the Comptroller
+General of the United States prior to the
+rule taking effect. The Office of
+Information and Regulatory Affairs has
+designated this rule as not a ‘‘major
+rule’’ as defined by 5 U.S.C. 804(2).
+
+List of Subjects
+
+12 CFR Part 34
+
+Accounting, Banks, Banking,
+
+Consumer protection, Credit, Mortgages,
+National banks, Reporting and
+recordkeeping requirements, Savings
+associations, Truth-in-lending.
+
+Regulatory Flexibility Act
+
+12 CFR Part 226
+
+The Regulatory Flexibility Act (RFA)
+does not apply to a rulemaking where a
+general notice of proposed rulemaking
+is not required.^13 As noted previously,
+the OCC, the Board, and the Bureau
+have determined that it is unnecessary
+to publish a general notice of proposed
+rulemaking for this final rule.
+Accordingly, the RFA’s requirements
+relating to an initial and final regulatory
+flexibility analysis do not apply.
+
+11 5 U.S.C. 553(b)(B).
+12 5 U.S.C. 553(d).
+13 5 U.S.C. 603(a), 604(a).
+
+Advertising, Appraisal, Appraiser,
+Consumer protection, Credit, Federal
+Reserve System, Reporting and
+recordkeeping requirements, Truth-in-
+lending.
+
+12 CFR Part 1026
+
+Advertising, Banks, Banking,
+
+Consumer protection, Credit, Credit
+unions, Mortgages, National banks,
+Reporting and recordkeeping
+requirements, Savings associations,
+Truth-in-lending.
+
+14 44 U.S.C. 3506; 5 CFR part 1320.
+15 2 U.S.C. 1532.
+
+VerDate Sep<11>2014 16:22 Dec 15, 2025 Jkt 268001 PO 00000 Frm 00002 Fmt 4700 Sfmt 4700 E:\FR\FM\16DER1.SGM 16DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

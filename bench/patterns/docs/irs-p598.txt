@@ -1,0 +1,265 @@
+acquisition. Further, the rule applies after the
+first 5 years only if the organization satisfies the
+IRS that use of the land for exempt purposes is
+reasonably certain before the 10-year period
+expires. The organization need not show bind-
+ing contracts to satisfy this requirement; but it
+must have a definite plan detailing a specific im-
+provement and a completion date, and it must
+show some affirmative action toward the fulfill-
+ment of the plan. This information should be for-
+warded to the IRS for a ruling at least 90 days
+before the end of the 5th year after acquisition
+of the land. Send information to:
+
+Internal Revenue Service
+Attn: CC:PA:LPD:DRU
+P.O. Box 120, Ben Franklin Station
+Washington, DC 20044
+
+If a private delivery service is used, the address
+is:
+
+Internal Revenue Service
+Attn: CC:PA:LPD:DRU, Room 5336
+1111 Constitution Ave. NW
+Washington, DC 20224
+
+The IRS may grant a reasonable extension of
+time for requesting the ruling if the organization
+can show good cause. For more information,
+contact the IRS.
+
+For any updates to these addresses go
+to IRS.gov/Pub598.
+
+Actual use. If the neighborhood land rule
+doesn’t apply because the acquired land isn’t in
+the neighborhood of other land used for an or-
+ganization's exempt purposes, or because the
+organization fails to establish after the first 5
+years of the 10-year period that the property will
+be used for exempt purposes, but the land is
+used eventually by the organization for its ex-
+empt purposes within the 10-year period, the
+property isn’t treated as debt-financed property
+for any period before the conversion.
+
+Limits. The neighborhood land rule or ac-
+tual use rule applies to any structure on the land
+when acquired, or to the land occupied by the
+structure, only so long as the intended future
+use of the land in furtherance of the organiza-
+tion's exempt purpose requires that the struc-
+ture be demolished or removed in order to use
+the land in this manner. Thus, during the first 5
+years after acquisition (and for later years if
+there is a favorable ruling), improved property
+isn’t debt financed so long as the organization
+doesn’t abandon its intent to demolish the exist-
+ing structures and use the land in furtherance of
+its exempt purpose. If an actual demolition of
+these structures occurs, the use made of the
+land need not be the one originally intended as
+long as its use furthers the organization's ex-
+empt purpose.
+
+In addition to this limit, the neighborhood
+land rule and the actual use rule don’t apply to
+structures erected on land after its acquisition.
+They don’t apply to property subject to a busi-
+ness lease (as defined in section 1.514(f)-1 of
+the regulations) whether an organization ac-
+quired the property subject to the lease, or
+whether it executed the lease after acquisition.
+A business lease is any lease, with certain
+
+exceptions, of real property for a term of more
+than 5 years by an exempt organization if at the
+close of the lessor's tax year there is a business
+lease (acquisition) indebtedness on that prop-
+erty.
+
+Refund of taxes. When the neighborhood
+land rule doesn’t initially apply, but the land is
+eventually used for exempt purposes, a refund
+or credit of any overpaid taxes will be allowed
+for a prior tax year as a result of the satisfaction
+of the actual use rule. A claim must be filed
+within 1 year after the close of the tax year in
+which the actual use rule is satisfied. Interest
+rates on any overpayment are governed by the
+regulations.
+
+Example. In January 2009, Y, a calendar
+year exempt organization, acquired real prop-
+erty contiguous to other property that Y uses in
+furtherance of its exempt purpose. Assume that
+without the neighborhood land rule, the property
+would be debt-financed property. Y didn’t sat-
+isfy the IRS by January 2014 that the existing
+structure would be demolished and the land
+would be used in furtherance of its exempt pur-
+pose. From 2014 until the property is converted
+to an exempt use, the income from the property
+is subject to the tax on unrelated business in-
+come. During July 2018, Y will demolish the ex-
+isting structure on the land and begin using the
+land in furtherance of its exempt purpose. At
+that time, Y can file claims for refund for the
+open years 2015 through 2017.
+
+Further, Y also can file a claim for refund for
+2014, even though a claim for that tax year may
+be barred by the statute of limitations, provided
+the claim is filed before the close of 2019.
+
+Churches. The neighborhood land rule as
+described here also applies to churches, or a
+convention or association of churches, but with
+two differences:
+
+1. The period during which the organization
+must demonstrate the intent to use ac-
+quired property for exempt purposes is in-
+creased from 10 to 15 years, and
+
+2. Acquired property doesn’t have to be in
+the neighborhood of other property used
+by the organization for exempt purposes.
+
+Thus, if a church or association or conven-
+tion of churches acquires real property for the
+primary purpose of using the land in the exer-
+cise or performance of its exempt purpose,
+within 15 years after the time of acquisition, the
+property isn’t treated as debt-financed property
+as long as the organization doesn't abandon its
+intent to use the land in this manner within the
+15-year period.
+
+This exception for a church or association or
+convention of churches doesn’t apply to any
+property after the 15-year period expires. Fur-
+ther, this rule will apply after the first 5 years of
+the 15-year period only if the church or associa-
+tion or convention of churches establishes to
+the satisfaction of the IRS that use of the ac-
+quired land in furtherance of the organization's
+exempt purpose is reasonably certain before
+the 15-year period expires.
+
+If a church or association or convention of
+churches can’t establish after the first 5 years of
+the 15-year period that use of acquired land for
+its exempt purpose is reasonably certain within
+
+the 15-year period, but the land is in fact con-
+verted to an exempt use within the 15-year pe-
+riod, the land isn’t treated as debt-financed
+property for any period before the conversion.
+
+The same rule for demolition or removal of
+structures, as discussed earlier in this chapter
+under Limits, applies to a church or an associa-
+tion or a convention of churches.
+
+Computation of
+Debt-Financed Income
+
+For each debt-financed property, the unrelated
+debt-financed income is a percentage (not over
+100%) of the total gross income derived during
+a tax year from the property. This percentage is
+the same percentage as the average acquisi-
+tion indebtedness with respect to the property
+for the tax year of the property's average adjus-
+ted basis for the year (the debt/basis percent-
+age). Thus, the formula for deriving unrelated
+debt-financed income is:
+
+average acquisition
+indebtedness
+
+average adjusted basis
+
+x
+
+gross income
+from
+debt-financed
+property
+
+Example. X, an exempt trade association,
+owns an office building that is debt-financed
+property. The building produced $10,000 of
+gross rental income last year. The average ad-
+justed basis of the building during that year was
+$100,000, and the average acquisition indebt-
+the building was
+edness with respect
+$50,000. Accordingly, the debt/basis percent-
+age was 50%
+to
+$100,000). Therefore, the unrelated debt-fi-
+nanced income with respect to the building was
+$5,000 (50% of $10,000).
+
+ratio of $50,000
+
+(the
+
+to
+
+Gain or loss from sale or other disposition
+of property. If an organization sells or other-
+wise disposes of debt-financed property, it must
+include, in computing UBTI, a percentage (not
+over 100%) of any gain or loss. The percentage
+is that of the highest acquisition indebtedness
+with
+the
+12-month period preceding the date of disposi-
+tion, in relation to the property's average adjus-
+ted basis.
+
+the property during
+
+respect
+
+to
+
+The tax on this percentage of gain or loss is
+determined according to the usual rules for cap-
+ital gains and losses.
+
+Debt-financed property exchanged for
+subsidiary's stock. A
+transfer of debt-fi-
+nanced property by a tax-exempt organization
+to its wholly owned taxable subsidiary, in ex-
+change for additional stock in the subsidiary,
+isn’t considered a gain subject to the tax on un-
+related business income.
+
+Example. A tax-exempt hospital wants to
+build a new hospital complex to replace its
+present old and obsolete facility. The most de-
+sirable location for the new hospital complex is
+a site occupied by an apartment complex. Sev-
+eral years ago the hospital bought the land and
+apartment complex, taking title subject to a first
+mortgage already on the premises.
+
+For valid business reasons, the hospital pro-
+posed to exchange the land and apartment
+
+Chapter 4
+
+Unrelated Business Taxable Income
+
+Page 19
+
+!
+
+CAUTION
