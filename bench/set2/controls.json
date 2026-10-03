@@ -1,0 +1,124 @@
+{
+ "items": [
+  {
+   "doc": "fda-rosuvastatin",
+   "field": "strengths",
+   "key": null,
+   "value": "10",
+   "unit": "mg",
+   "start": 3835,
+   "end": 3840,
+   "quote": "10 mg",
+   "judgment": "wrong",
+   "note": ""
+  },
+  {
+   "doc": "fda-rosuvastatin",
+   "field": "strengths",
+   "key": null,
+   "value": "10",
+   "unit": "mg",
+   "start": 4299,
+   "end": 4304,
+   "quote": "10 mg",
+   "judgment": "wrong",
+   "note": ""
+  },
+  {
+   "doc": "fda-rosuvastatin",
+   "field": "strengths",
+   "key": null,
+   "value": "5",
+   "unit": "mg",
+   "start": 4346,
+   "end": 4350,
+   "quote": "5 mg",
+   "judgment": "wrong",
+   "note": ""
+  },
+  {
+   "doc": "fda-rosuvastatin",
+   "field": "strengths",
+   "key": null,
+   "value": "10",
+   "unit": "mg",
+   "start": 4391,
+   "end": 4396,
+   "quote": "10 mg",
+   "judgment": "wrong",
+   "note": ""
+  },
+  {
+   "doc": "irs-p1136",
+   "field": "high_income_returns_2022",
+   "key": null,
+   "value": "12500000",
+   "unit": null,
+   "start": 108,
+   "end": 131,
+   "quote": "just under 12.5 million",
+   "judgment": "correct",
+   "note": ""
+  },
+  {
+   "doc": "irs-p1136",
+   "field": "high_income_returns_2022",
+   "key": null,
+   "value": "12500000",
+   "unit": null,
+   "start": 119,
+   "end": 131,
+   "quote": "12.5 million",
+   "judgment": "correct",
+   "note": ""
+  },
+  {
+   "doc": "irs-p1136",
+   "field": "high_income_returns_2022",
+   "key": null,
+   "value": "12500000",
+   "unit": null,
+   "start": 2622,
+   "end": 2645,
+   "quote": "just under 12.5 million",
+   "judgment": "correct",
+   "note": ""
+  },
+  {
+   "doc": "irs-p1136",
+   "field": "high_income_returns_2022",
+   "key": null,
+   "value": "12500000",
+   "unit": null,
+   "start": 2633,
+   "end": 2645,
+   "quote": "12.5 million",
+   "judgment": "correct",
+   "note": ""
+  },
+  {
+   "doc": "irs-p936",
+   "field": "mortgage_debt_limit_pre_2017",
+   "key": null,
+   "value": "1000000",
+   "unit": "USD",
+   "start": 656,
+   "end": 666,
+   "quote": "$1 million",
+   "judgment": "correct",
+   "note": ""
+  },
+  {
+   "doc": "irs-p936",
+   "field": "mortgage_debt_limit_pre_2017",
+   "key": null,
+   "value": "1000000",
+   "unit": "USD",
+   "start": 6138,
+   "end": 6148,
+   "quote": "$1 million",
+   "judgment": "correct",
+   "note": ""
+  }
+ ]
+}

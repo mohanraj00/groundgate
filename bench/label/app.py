@@ -41,6 +41,8 @@ FACT_STATUS = {"draft", "confirmed", "rejected"}
 ABSENT_STATUS = {"draft", "confirmed"}
 LOCK = threading.Lock()
 ABSENT_PASS: str | None = None  # --absent: a second look at confirmed absences, of this kind
+CONTROLS = False  # --controls: judge set 2's control items (controls.json, #12)
+JUDGMENTS = {None, "correct", "wrong"}
 
 
 def doc_ids() -> list[str]:
@@ -83,6 +85,29 @@ def control(gold: dict[str, Any]) -> bool:
     in full."""
     groups = gold.get("groups")
     return bool(groups) and set(groups) <= {"general", "control"}
+
+
+def control_items() -> list[dict[str, Any]]:
+    """controls.json from score.py --controls: the control candidates spec 0.1 and 0.2 decide
+    differently. It holds no decision, so the judgment stays blind to them."""
+    path = GOLD.parent / "controls.json"
+    items: list[dict[str, Any]] = json.loads(path.read_text(encoding="utf-8"))["items"]
+    return items
+
+
+def control_summary(doc_id: str, items: list[dict[str, Any]]) -> dict[str, Any]:
+    mine = [i for i in items if i["doc"] == doc_id]
+    left = sum(i["judgment"] is None for i in mine)
+    kind = doc_id.split("-", 1)[0]
+    return {
+        "id": doc_id,
+        "kind": kind,
+        "control": True,
+        "facts": len(mine),
+        "open": left,
+        "checked": not left,
+        "absent": 0,
+    }
 
 
 def summary(gold: dict[str, Any]) -> dict[str, Any]:
@@ -164,7 +189,8 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         if self.path == "/":
             page = (HERE / "label.html").read_text(encoding="utf-8").replace("__TOKEN__", TOKEN)
-            page = page.replace("__PASS__", "absent" if ABSENT_PASS else "")
+            mode = "controls" if CONTROLS else "absent" if ABSENT_PASS else ""
+            page = page.replace("__PASS__", mode)
             self._send(HTTPStatus.OK, page.encode(), "text/html; charset=utf-8")
             return
         if self.path.startswith("/source/") and self._local() and (doc_id := self._doc()):
@@ -176,7 +202,11 @@ class Handler(BaseHTTPRequestHandler):
         if not self._authorized():
             self._json(HTTPStatus.FORBIDDEN, {"error": "forbidden"})
             return
-        if self.path == "/api/docs":
+        if self.path == "/api/docs" and CONTROLS:
+            items = control_items()
+            ids = sorted({i["doc"] for i in items})
+            self._json(HTTPStatus.OK, [control_summary(d, items) for d in ids])
+        elif self.path == "/api/docs":
             docs = [summary(json.loads((GOLD / f"{d}.json").read_text())) for d in doc_ids()]
             docs.sort(key=lambda d: d["control"])  # controls last; stable, so ids stay sorted
             if ABSENT_PASS:
@@ -196,7 +226,8 @@ class Handler(BaseHTTPRequestHandler):
                     "text": text,
                     "source": source_link(doc_id),
                     "pdf": pdf_pane(doc_id),
-                },
+                }
+                | ({"controls": control_items()} if CONTROLS else {}),
             )
         else:
             self._json(HTTPStatus.NOT_FOUND, {"error": "not found"})
@@ -204,6 +235,9 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         if not self._authorized():
             self._json(HTTPStatus.FORBIDDEN, {"error": "forbidden"})
+            return
+        if CONTROLS and self.path.startswith("/api/controls/"):
+            self._judge()
             return
         doc_id = self._doc() if self.path.startswith("/api/doc/") else None
         if doc_id is None:
@@ -242,6 +276,33 @@ class Handler(BaseHTTPRequestHandler):
             tmp.replace(path)
         self._json(HTTPStatus.OK, summary(gold))
 
+    def _judge(self) -> None:
+        """Save one judgment: {"index": i, "judgment": "correct" | "wrong" | null, "note": ...}."""
+        try:
+            body = json.loads(
+                self.rfile.read(min(int(self.headers.get("Content-Length", "0")), 10_000))
+            )
+            index, judgment, note = body["index"], body["judgment"], str(body.get("note", ""))
+        except (ValueError, KeyError, TypeError):
+            self._json(HTTPStatus.BAD_REQUEST, {"error": "bad request"})
+            return
+        path = GOLD.parent / "controls.json"
+        with LOCK:
+            items = control_items()
+            if (
+                not isinstance(index, int)
+                or not 0 <= index < len(items)
+                or judgment not in JUDGMENTS
+            ):
+                self._json(HTTPStatus.UNPROCESSABLE_ENTITY, {"error": "unknown item or judgment"})
+                return
+            items[index]["judgment"], items[index]["note"] = judgment, note
+            tmp = path.with_suffix(".tmp")
+            text = json.dumps({"items": items}, indent=1, ensure_ascii=False) + "\n"
+            tmp.write_text(text, encoding="utf-8")
+            tmp.replace(path)
+        self._json(HTTPStatus.OK, control_summary(items[index]["doc"], items))
+
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -255,9 +316,10 @@ def main() -> None:
         metavar="KIND",
         help="a second look at absences: only full-check documents with one (fda, irs, fr)",
     )
+    ap.add_argument("--controls", action="store_true", help="judge the control items of set 2")
     args = ap.parse_args()
-    global GOLD, DOCS, CACHE, SOURCES, ABSENT_PASS
-    ABSENT_PASS = args.absent
+    global GOLD, DOCS, CACHE, SOURCES, ABSENT_PASS, CONTROLS
+    ABSENT_PASS, CONTROLS = args.absent, args.controls
     root = args.set.resolve()
     GOLD, DOCS, CACHE = root / "gold", root / "docs", root / ".cache"
     SOURCES = root / "sources.json"

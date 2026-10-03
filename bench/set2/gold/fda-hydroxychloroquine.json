@@ -249,15 +249,16 @@
   }
  ],
  "absent": {
-  "max_daily_dose": "confirmed",
   "pediatric_min_age": "confirmed",
   "hepatic_starting_dose": "confirmed"
  },
- "excluded": {},
+ "excluded": {
+  "max_daily_dose": "Rheumatoid arthritis has two recommended daily ranges, initial 400 mg to 600 mg and chronic 200 mg to 400 mg, so its maximum is not one value."
+ },
  "prelabeled_by": "Claude (model draft)",
  "checked": {
   "by": "person",
-  "at": "2026-10-02T22:35:27-0700"
+  "at": "2026-10-03T00:23:58-0700"
  },
- "seconds_spent": 83
+ "seconds_spent": 124
 }
