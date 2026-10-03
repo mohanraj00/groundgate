@@ -9,7 +9,8 @@ benchmarked models extracted.
 
 The server binds to 127.0.0.1 only, and every API call must carry a token that exists only in
 the page it served, so other sites in your browser cannot read or write the gold. The header
-links to the original document, because flattened tables are hard to read as text.
+links to the original document, and a pane shows a cached PDF at the page of the focused fact,
+because flattened tables are hard to read as text.
 """
 
 from __future__ import annotations
@@ -57,6 +58,16 @@ def source_link(doc_id: str) -> str | None:
         setid = src["url"].rsplit("/", 1)[-1].removesuffix(".xml")
         return f"https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid={setid}"
     return str(src["url"])
+
+
+def pdf_pane(doc_id: str) -> dict[str, Any] | None:
+    """The cached PDF for the side pane, with the PDF page number of each text page."""
+    if not (CACHE / f"{doc_id}.pdf").exists():
+        return None
+    sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
+    src = next((s for s in sources if s["id"] == doc_id), {})
+    pages = src.get("select", {}).get("pages")
+    return {"url": f"/source/{doc_id}", "pages": sorted(pages) if pages else None}
 
 
 def unkeyed(gold: dict[str, Any], fact: dict[str, Any]) -> bool:
@@ -145,7 +156,7 @@ class Handler(BaseHTTPRequestHandler):
         return self.headers.get("X-Label-Token") == TOKEN and self._local()
 
     def _doc(self) -> str | None:
-        doc_id = self.path.rsplit("/", 1)[-1]
+        doc_id = self.path.split("?", 1)[0].rsplit("/", 1)[-1]
         return doc_id if doc_id in doc_ids() else None
 
     def do_GET(self) -> None:
@@ -169,7 +180,15 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path.startswith("/api/doc/") and (doc_id := self._doc()):
             gold = json.loads((GOLD / f"{doc_id}.json").read_text(encoding="utf-8"))
             text = (DOCS / f"{doc_id}.txt").read_text(encoding="utf-8")
-            self._json(HTTPStatus.OK, {"gold": gold, "text": text, "source": source_link(doc_id)})
+            self._json(
+                HTTPStatus.OK,
+                {
+                    "gold": gold,
+                    "text": text,
+                    "source": source_link(doc_id),
+                    "pdf": pdf_pane(doc_id),
+                },
+            )
         else:
             self._json(HTTPStatus.NOT_FOUND, {"error": "not found"})
 

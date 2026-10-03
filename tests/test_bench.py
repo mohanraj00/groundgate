@@ -188,6 +188,25 @@ def test_save_rules(served: tuple[int, dict], tmp_path: Path) -> None:
     assert saved["facts"][0]["unit"] == "mg"  # units always come from the field
 
 
+def test_the_pdf_pane_maps_text_pages_to_pdf_pages(
+    served: tuple[int, dict], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    port, _ = served
+    (tmp_path / ".cache").mkdir()
+    (tmp_path / ".cache" / "d.pdf").write_bytes(b"%PDF-1.4 test")
+    sources = {"sources": [{"id": "d", "kind": "irs", "url": "u", "select": {"pages": [11, 6]}}]}
+    (tmp_path / "sources.json").write_text(json.dumps(sources))
+    monkeypatch.setattr(app, "CACHE", tmp_path / ".cache")
+    monkeypatch.setattr(app, "SOURCES", tmp_path / "sources.json")
+    status, body = call(port, "GET", "/api/doc/d", token=app.TOKEN)
+    assert status == 200 and body["pdf"] == {"url": "/source/d", "pages": [6, 11]}
+    # the pane adds a query so the viewer loads the page again
+    conn = http.client.HTTPConnection("127.0.0.1", port)
+    conn.request("GET", "/source/d?p=11")
+    r = conn.getresponse()
+    assert r.status == 200 and r.read() == b"%PDF-1.4 test"
+
+
 def test_a_nested_section_with_the_same_code_is_read_once() -> None:
     from fetch import spl_sections
 
