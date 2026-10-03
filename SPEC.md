@@ -196,12 +196,32 @@ In "not required if the balance is more than $600", the `not` is not directly be
 qualifier, so the value stays `gt`.
 
 A change is not a range. When the first number of a range pair follows `from`, and a change word
-is directly before `from` (only whitespace between them), the second number is the new value and
-is not a range end. The change words are increased, decreased, raised, reduced, lowered, rose,
-fell, dropped, grew, changed, increase, decrease, reduction, rise, drop and change. The first
-number keeps its range reading: it is the old value, and a field that takes it should be looked
-at. So in "increased from $70,000 to $72,000", $72,000 is unqualified and $70,000 is a range.
-"run from 7 to 8 hours" has no change word, so both numbers stay a range.
+stands before `from` in the same phrase, the second number is the new value and is not a range
+end. The change word and `from` are in the same phrase when one of these is true:
+
+- only whitespace stands between them, as in "increased from";
+- at most six words stand between them, separated only by whitespace, and the first of them is
+  a determiner, or `in`, `of` or `to` followed by a determiner, as in "reducing the annual fee
+  from" or "an increase in the late fee from". The determiners are the, a, an, its, their, this,
+  that, these and those. Every other word between them is made of letters, with `-`, `'` or `’`
+  allowed between two letters, and is not one of these: about, above, across, after, among, at,
+  before, below, between, by, during, for, from, in, into, on, over, per, since, through, to,
+  under, until, with, within, range, ranges, ranged, ranging, vary, varies, varied, varying.
+
+So a digit, punctuation, a preposition or a range word between them ends the phrase, and so
+does a missing determiner: in "increased body weight from 20 to 40 kg", `increased` describes
+the weight, and 40 stays a range end.
+
+The change words are increase, increases, increased, increasing, decrease, decreases, decreased,
+decreasing, raise, raises, raised, raising, reduce, reduces, reduced, reducing, reduction,
+reductions, lowers, lowered, lowering, rise, rises, rose, risen, rising, fall, falls, fell,
+fallen, falling, drop, drops, dropped, dropping, grow, grows, grew, grown, growing, change,
+changes, changed, changing, decline, declines, declined, declining, adjust, adjusts, adjusted,
+adjusting, adjustment, adjustments, revise, revises, revised, revising, revision and revisions.
+`lower` is not one: it is also an adjective, as in "lower doses from 2 to 4 mg". The first number
+keeps its range reading: it is the old value, and a field that takes it should be looked at. So
+in "increased from $70,000 to $72,000", $72,000 is unqualified and $70,000 is a range. "run from
+7 to 8 hours" has no change word, so both numbers stay a range.
 
 ### 4.3 Units
 

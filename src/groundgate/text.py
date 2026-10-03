@@ -124,11 +124,29 @@ _AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
 _AND_PREV = re.compile(rf"\s*{_UNIT_WORD}and\s*\S{{0,4}}?", re.I)
 _BETWEEN_END = re.compile(r"\bbetween\s*\S{0,4}?$", re.I)
 _CHANGE = (
-    "increased|decreased|raised|reduced|lowered|rose|fell|dropped|grew|changed|"
-    "increase|decrease|reduction|rise|drop|change"
+    "increase|increases|increased|increasing|decrease|decreases|decreased|decreasing|"
+    "raise|raises|raised|raising|reduce|reduces|reduced|reducing|reduction|reductions|"
+    "lowers|lowered|lowering|rise|rises|rose|risen|rising|fall|falls|fell|fallen|falling|"
+    "drop|drops|dropped|dropping|grow|grows|grew|grown|growing|"
+    "change|changes|changed|changing|decline|declines|declined|declining|"
+    "adjust|adjusts|adjusted|adjusting|adjustment|adjustments|"
+    "revise|revises|revised|revising|revision|revisions"
+)
+_DETERMINER = "the|a|an|its|their|this|that|these|those"
+_NOT_BETWEEN = (
+    "about|above|across|after|among|at|before|below|between|by|during|for|from|in|into|on|over|"
+    "per|since|through|to|under|until|with|within|range|ranges|ranged|ranging|vary|varies|"
+    "varied|varying"
+)
+_PLAIN = rf"\s+(?!(?:{_NOT_BETWEEN})\b)[^\W\d_](?:[^\W\d_]|['\u2019-](?=[^\W\d_]))*"
+# at most six words between the change word and "from", the first of them a determiner or
+# "in", "of" or "to" and then a determiner: "reducing the fee from", "an increase in the fee from"
+_CHANGE_GAP = (
+    rf"(?:\s+(?:in|of|to)\s+(?:{_DETERMINER})(?:{_PLAIN}){{0,4}}"
+    rf"|\s+(?:{_DETERMINER})(?:{_PLAIN}){{0,5}})?"
 )
 # "increased from X to Y": Y is the new value, not a range end
-_CHANGE_FROM = re.compile(rf"\b(?:{_CHANGE})\s+from\s+\S{{0,4}}?$", re.I)
+_CHANGE_FROM = re.compile(rf"\b(?:{_CHANGE}){_CHANGE_GAP}\s+from\s+\S{{0,4}}?$", re.I)
 
 
 def qualifiers(text: str, tok: Token) -> set[str]:

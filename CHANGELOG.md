@@ -11,6 +11,11 @@ milestone 0.3.
 
 - Set 2 is rescored on the released 0.2.0 wheel, the way the v0.1 set is rescored on 0.1.0, so
   its published numbers stay spec 0.2's.
+- Changes (#51): a change word may stand up to six words before `from`, and every form of it
+  counts. "reducing the annual fee from $1,200 to $950" and "the limit increases from $70,000 to
+  $72,000" are now changes, so the new value is no longer flagged as a range end. The words
+  between must start with a determiner and hold no digit, punctuation, preposition or range word,
+  so "increased body weight from 20 to 40 kg" stays a range. Vector `07e-change-at-a-distance`.
 
 ## 0.2.0 (2026-10-03)
 

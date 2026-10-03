@@ -588,6 +588,67 @@ vector(
     ],
 )
 
+vector(
+    "07e-change-at-a-distance",
+    "A change word may stand a few words before `from` when the words between start with a "
+    "determiner and hold no preposition, range word, digit or punctuation (spec 0.3).",
+    "The agency is reducing the annual filing fee from $1,200 to $950. The limit increases from "
+    "$70,000 to $72,000. An increase in the late fee from $25 to $40 applies in 2027. The board "
+    "raised its cap on grants from $10,000 to $15,000. Children with increased body weight from 20 "
+    "to 40 kg take the adult dose. The increase in the fee ranges from $31 to $37. The rule lowered "
+    "the maximum annual civil monetary penalty amount from $500 to $650. The fee decreased, as "
+    "noted, from $81 to $66. The board increased the 2026 fee from $300 to $350.",
+    {
+        "fields": {
+            "filing_fee": USD,
+            "old_filing_fee": USD,
+            "limit": USD,
+            "late_fee": USD,
+            "grant_cap": USD,
+            "weight_max": {"type": "integer", "unit": "kg"},
+            "fee_max": USD,
+            "penalty": USD,
+            "fee_noted": USD,
+            "fee_2026": USD,
+        }
+    },
+    [
+        # determiner, then up to six words: a change
+        c("e1", "filing_fee", "950", "USD", q("$950")),
+        c(
+            "e2",
+            "old_filing_fee",
+            "1200",
+            "USD",
+            q("$1,200"),
+            ("needs_verification", ["QUALIFIED_VALUE"]),
+        ),
+        # every form of a change word counts, not only the past tense
+        c("e3", "limit", "72000", "USD", q("$72,000")),
+        # "in" may come first, before the determiner
+        c("e4", "late_fee", "40", "USD", q("$40")),
+        # a preposition between them: "from" can belong to "grants"
+        c(
+            "e5",
+            "grant_cap",
+            "15000",
+            "USD",
+            q("$15,000"),
+            ("needs_verification", ["QUALIFIED_VALUE"]),
+        ),
+        # no determiner: "increased" describes the weight, so it stays a range
+        c("e6", "weight_max", "40", "kg", q("40 kg"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # a range word between them wins
+        c("e7", "fee_max", "37", "USD", q("$37"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # seven words between them: too far
+        c("e8", "penalty", "650", "USD", q("$650"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # punctuation between them
+        c("e9", "fee_noted", "66", "USD", q("$66"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # a digit between them
+        c("e10", "fee_2026", "350", "USD", q("$350"), ("needs_verification", ["QUALIFIED_VALUE"])),
+    ],
+)
+
 # ---------------------------------------------------------------- scale words
 vector(
     "08-scale",
