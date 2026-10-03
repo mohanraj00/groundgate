@@ -163,6 +163,19 @@ def test_api_needs_the_page_token(served: tuple[int, dict]) -> None:
     assert status == 200 and docs[0]["open"] == 1
 
 
+def test_the_absent_pass_lists_only_documents_with_an_absence(
+    served: tuple[int, dict], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    port, g = served
+    monkeypatch.setattr(app, "ABSENT_PASS", "fda")
+    assert call(port, "GET", "/api/docs", token=app.TOKEN)[1] == []
+    g["absent"] = {"max_dose": "confirmed"}
+    (tmp_path / "gold" / "d.json").write_text(json.dumps(g))
+    assert [d["id"] for d in call(port, "GET", "/api/docs", token=app.TOKEN)[1]] == ["d"]
+    monkeypatch.setattr(app, "ABSENT_PASS", "irs")
+    assert call(port, "GET", "/api/docs", token=app.TOKEN)[1] == []
+
+
 def test_save_rules(served: tuple[int, dict], tmp_path: Path) -> None:
     port, g = served
     status, body = call(port, "POST", "/api/doc/d", {"gold": g, "done": True}, app.TOKEN)

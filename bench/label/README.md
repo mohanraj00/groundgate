@@ -26,7 +26,7 @@ For each field, the draft gives either one or more values or says the field is n
 document. Your job is to make that true.
 
 - **Each fact has a badge.** "in evidence" means its value is written in its evidence, in any
-  form: `1000000` matches "1,000,000" and "$1 million". Then you only check what the value
+  form: `1000000` matches "1,000,000", "$1 million" and "$1.0 million". Then you only check what the value
   means. "not in evidence" or "no evidence" means the draft is probably wrong, so read it
   closely. The badge only shows where to look. You still decide every fact.
 - **A draft value is right.** Press `y` (or click ✓). Check the evidence chip too: it should
@@ -69,6 +69,27 @@ until every draft fact and absence is decided.
 | `1`-`9` | pick the key with this number for the focused fact |
 | `p` | show or hide the PDF pane |
 | `c` | mark the document checked |
+| `[` / `]` | previous / next document |
+
+## A second look at absences
+
+An absence is easy to confirm too fast, because the value can sit in a part of the text you
+did not read. After the check, look at the absences again:
+
+```bash
+uv run python bench/label/app.py --set bench/set2 --absent fda
+```
+
+`--absent` lists only the documents checked in full that have an absence, of one kind (`fda`,
+`irs`, `fr`) or of all kinds without a value. `j` / `k` move between the absences only. Under
+each absence, chips show the lines that name the field ("hepatic", "pediatric", "maximum" and
+similar words) where that line or the next holds a number. Click a chip to read the line.
+
+- **The value is there.** Select it, then press `+`. Pick the key if the field has keys, then
+  press `c`. A changed document must be marked checked again.
+- **The absence holds.** Press `]` for the next document. Nothing is saved.
+
+The chips only show where to look. A field with no chip can still be in the text.
 
 ## Rules of thumb
 
