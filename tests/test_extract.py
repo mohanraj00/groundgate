@@ -125,6 +125,21 @@ def test_pdf_drops_text_outside_the_visible_page(tmp_path: Path) -> None:
     assert doc.warnings == ("page 1: dropped 3 words drawn outside the visible page",)
 
 
+def test_pdfminer_breaks_ties_by_first_seen_order_not_by_address() -> None:
+    from pdfminer import layout
+
+    from groundgate.extract.pdf import _stable_ids
+
+    class Box:
+        pass
+
+    a, b = Box(), Box()
+    with _stable_ids():
+        stable_id = vars(layout)["id"]
+        assert [stable_id(b), stable_id(a), stable_id(b)] == [0, 1, 0]
+    assert "id" not in vars(layout)  # pdfminer gets the builtin back
+
+
 def test_pdf_errors(tmp_path: Path, pdf: Path) -> None:
     bad = tmp_path / "bad.pdf"
     bad.write_bytes(b"%PDF-1.4 not really")

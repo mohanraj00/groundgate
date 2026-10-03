@@ -5,10 +5,17 @@ marks, slugs, off-page junk) are dropped, and the count is reported as a warning
 
 Superscripts and subscripts are marked with ``^`` and ``_`` so they never fuse with the number
 before them: a raised 9 after 10 reads ``10^9``, not ``109``.
+
+The same PDF always gives the same text. pdfminer breaks a tie between two equally distant text
+boxes by ``id()``, a memory address, so the reading order could change from run to run (#30).
+While groundgate reads a PDF, pdfminer's layout code gets a stable ``id()`` instead.
 """
 
 from __future__ import annotations
 
+import contextlib
+import itertools
+import threading
 import unicodedata
 from collections.abc import Iterable, Iterator
 from pathlib import Path
@@ -147,7 +154,42 @@ def extract_pdf(path: str | Path, pages: Iterable[int] | None = None) -> Result:
         raise ExtractError(f"{path}: not a readable PDF ({type(e).__name__}: {e})") from e
 
 
+_LAYOUT_LOCK = threading.Lock()
+
+
+@contextlib.contextmanager
+def _stable_ids() -> Iterator[None]:
+    """pdfminer.layout's ``id()`` becomes a number given in the order objects are first seen.
+
+    ``group_textboxes`` keeps box pairs in a heap of ``(skip, distance, id(a), id(b), a, b)``, so
+    pairs at the same distance were ordered by memory address. The numbers keep every object
+    distinct, which is all the heap and its ``done`` set need. One read at a time holds the lock.
+    """
+    from pdfminer import layout
+
+    seq = itertools.count()
+
+    def stable_id(obj: object) -> int:
+        n = getattr(obj, "_groundgate_seq", None)
+        if not isinstance(n, int):
+            n = next(seq)
+            setattr(obj, "_groundgate_seq", n)  # noqa: B010  (LT objects have no such attribute)
+        return n
+
+    with _LAYOUT_LOCK:
+        setattr(layout, "id", stable_id)  # noqa: B010  (shadows the builtin in that module only)
+        try:
+            yield
+        finally:
+            delattr(layout, "id")
+
+
 def _read(fp: BinaryIO, wanted: list[int] | None) -> Result:
+    with _stable_ids():
+        return _read_pages(fp, wanted)
+
+
+def _read_pages(fp: BinaryIO, wanted: list[int] | None) -> Result:
     from pdfminer.converter import PDFPageAggregator
     from pdfminer.layout import LAParams
     from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
