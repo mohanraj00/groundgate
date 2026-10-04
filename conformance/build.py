@@ -1355,6 +1355,71 @@ vector(
     ],
 )
 
+vector(
+    "17c-label-lines",
+    "When the value's sentence mentions no key, a label line between the nearest earlier mention "
+    "and the value puts the value at no key: a line of at most 12 words with a blank line or the "
+    "start of the text before it and a blank line after it, with no sentence end in it and no "
+    "final `.`. Such a line names a condition in a form that is not a key (spec 0.3).",
+    "2.1 Hypertension\n\nThe starting dose is 10 mg once daily.\n\n"
+    "Treatment of HF:\n\nThe starting dose is 5 mg once daily.\n\n"
+    "2.2 Heart Failure\n\nThe maximum dose is 20 mg daily.\n\n"
+    "Take it with water and food at the same time each day, as your doctor tells you\n\n"
+    "The low dose is 2.5 mg daily.\n\n"
+    "Older adults\nThe last dose is 7.5 mg daily.\n\n"
+    "Adults\n\nThe usual dose is 15 mg daily.",
+    {
+        "fields": {
+            "starting_dose": KEYED_MG,
+            "hf_starting_dose": KEYED_MG,
+            "max_dose": KEYED_MG,
+            "low_dose": KEYED_MG,
+            "last_dose": KEYED_MG,
+            "usual_dose": KEYED_MG,
+        }
+    },
+    [
+        # a heading that is a key mention still reaches past its blank line
+        c("l1", "starting_dose", "10", "mg", q("10 mg"), key="hypertension"),
+        # "Treatment of HF:" is a label line, so the earlier heading no longer reaches 5 mg
+        c(
+            "l2",
+            "hf_starting_dose",
+            "5",
+            "mg",
+            q("5 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="hypertension",
+        ),
+        # the short form is not a key, so the right key goes to review too
+        c(
+            "l3",
+            "hf_starting_dose",
+            "5",
+            "mg",
+            q("5 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="heart failure",
+        ),
+        # a one-line sentence that ends with "." is not a label line
+        c("l4", "max_dose", "20", "mg", q("20 mg"), key="heart failure"),
+        # a line of more than 12 words is not a label line
+        c("l5", "low_dose", "2.5", "mg", q("2.5 mg"), key="heart failure"),
+        # a line with no blank line after it is not a label line
+        c("l6", "last_dose", "7.5", "mg", q("7.5 mg"), key="heart failure"),
+        # a subheading that is not a key is a label line: the right key goes to review
+        c(
+            "l7",
+            "usual_dose",
+            "15",
+            "mg",
+            q("15 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="heart failure",
+        ),
+    ],
+)
+
 # ---------------------------------------------------------------- invalid packets
 INVALID.extend(
     [

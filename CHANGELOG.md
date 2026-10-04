@@ -33,6 +33,11 @@ milestone 0.3.
   joins none of the 3 real sentence ends.
 - Blank lines (#63): a blank line may hold a carriage return, so `\r\n\r\n` ends a sentence
   too.
+- Keys (#52): when a value's sentence mentions no key, the key of the nearest earlier mention no
+  longer reaches it past a label line: a short line of its own between blank lines, such as
+  "Treatment of DVT and PE:" or "Adults". The value is at no key, so a keyed candidate goes to
+  review. A heading that is a key mention still reaches past its blank line. Vector
+  `17c-label-lines`.
 - Numbers (#59): a number grouped the Indian way, the last three digits and then pairs, has its
   value: `2,00,000` is 200000 and `1,00,00,000` is 10000000, in the document and in a candidate's
   `value`. A mix of the two groupings, such as `1,23,456,789`, still has none. Vector
