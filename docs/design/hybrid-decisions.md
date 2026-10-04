@@ -139,8 +139,9 @@ a measurement (#67). The sentences are short and clean, unlike real documents.
   rejects `jev-1.12.0` as an unknown model. I do not know if that version existed. If old
   versions are retired, a pinned threshold stops working with its version. Rule 9 in §4 covers
   both.
-- Each Jev response reports output tokens, for example 88 for one question. I do not know what
-  these are, for a model described as System 1 (§12).
+- Each Jev response reports output tokens, for example 88 for one question. Jev does not charge
+  for them. I do not know what they are, for a model described as System 1, or whether they
+  explain why the probabilities move between runs (§12).
 
 The Laya README says that its answers have the same schema as Jev's, so a Jev client needs only a
 different base URL. One adapter can then serve both: Laya on the local machine and Jev on the
@@ -448,6 +449,6 @@ documents and a high review cost accepts lower ones.
 4. Which judge is the default for live use, Jev or Laya? #67 decides it. Development work on
    public documents uses Jev (§3).
 5. Is the field-match check (§5) worth its added review? #67 answers this with numbers.
-6. What are the output tokens in a Jev response, and do they affect cost or repeatability? This
-   is a question for TypeSafe.
+6. What are the output tokens in a Jev response? They cost nothing, but they can explain why
+   Jev's probabilities move between runs. This is a question for TypeSafe.
 7. How long does TypeSafe serve an old Jev version?
