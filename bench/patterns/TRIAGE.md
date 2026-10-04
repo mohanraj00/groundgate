@@ -20,13 +20,13 @@ Laya warned:
 
 74 of 147 answers match the label.
 
-As a review aid, on the 85 Y values that spec 0.3 sends to review (22 of them changes):
+As a review aid, on the 122 Y values that spec 0.3 sends to review (22 of them changes):
 
 | Threshold | Changes marked (right) | Other pairs marked (wrong) |
 |---:|---:|---:|
-| 0.5 | 13 of 22 | 14 |
-| 0.7 | 7 of 22 | 3 |
-| 0.8 | 4 of 22 | 1 |
+| 0.5 | 13 of 22 | 36 |
+| 0.7 | 7 of 22 | 18 |
+| 0.8 | 4 of 22 | 6 |
 | 0.9 | 0 of 22 | 1 |
 | 0.95 | 0 of 22 | 0 |
 | 0.99 | 0 of 22 | 0 |
@@ -49,7 +49,7 @@ Jev (TypeSafe API), model `jev-1.13.0`. Same answers on a second run: no. On the
 
 134 of 147 answers match the label.
 
-As a review aid, on the 85 Y values that spec 0.3 sends to review (22 of them changes):
+As a review aid, on the 122 Y values that spec 0.3 sends to review (22 of them changes):
 
 | Threshold | Changes marked (right) | Other pairs marked (wrong) |
 |---:|---:|---:|

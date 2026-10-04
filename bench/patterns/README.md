@@ -74,8 +74,10 @@ What it found:
   a digit (2), a parenthesis (2) or "for" (1) between the change word and `from`; a list that
   continues after a comma (2); the change word in an earlier clause (2); a word broken by a line
   end ("in- creased", 1); a period of years (1); and a chain of three values (1).
-- The 15 ranges that both specs read as changes are all clock times. "p.m." ends the sentence,
-  so Y is in a sentence of its own (#69).
+- The 15 ranges that spec 0.2 reads as changes are all clock times. "p.m." ends the sentence,
+  so Y is in a sentence of its own. #51 did not change that. #63 did: since it, spec 0.3 reads
+  all 15 as ranges, and the 22 partial clock times labeled `neither` go to review. This set is
+  where the "p.m." case was found, so it does not measure #63.
 
 Some pairs are the same text in two documents: IRS publications 2104 and 2104-C share a
 paragraph, and so do several Federal Register rules about the same safety zone. Each pair counts

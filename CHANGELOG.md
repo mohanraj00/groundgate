@@ -16,6 +16,10 @@ milestone 0.3.
   $72,000" are now changes, so the new value is no longer flagged as a range end. The words
   between must start with a determiner and hold no digit, punctuation, preposition or range word,
   so "increased body weight from 20 to 40 kg" stays a range. Vector `07e-change-at-a-distance`.
+- Sentence ends (#63): the dot of a listed abbreviation such as `Rs.`, `approx.`, `p.m.` or
+  `U.S.` no longer ends a sentence when the next word starts with no uppercase letter. "up to
+  Rs. 50,000" is now qualified, and in "from 6 p.m. to 8 p.m." 8 is a range end. `approx` joins
+  the `approx` qualifiers, so "approx. 5 mg" is flagged. Vector `07f-abbreviation-dots`.
 
 ## 0.2.0 (2026-10-03)
 

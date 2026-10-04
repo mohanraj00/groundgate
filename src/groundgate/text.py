@@ -9,6 +9,61 @@ from decimal import Decimal, InvalidOperation
 _TOKEN = re.compile(r"[-\u2212]?\d[\d,]*(?:\.\d+)?")
 _VALID = re.compile(r"^[-\u2212]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?$")
 _SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t]*\n")
+_ABBREVIATIONS = [
+    "a.m.",
+    "p.m.",
+    "approx.",
+    "ca.",
+    "cf.",
+    "e.g.",
+    "i.e.",
+    "etc.",
+    "vs.",
+    "viz.",
+    "no.",
+    "nos.",
+    "p.",
+    "pp.",
+    "para.",
+    "fig.",
+    "figs.",
+    "vol.",
+    "rs.",
+    "u.s.",
+    "u.k.",
+    "dr.",
+    "mr.",
+    "mrs.",
+    "ms.",
+    "jr.",
+    "sr.",
+    "st.",
+    "inc.",
+    "co.",
+    "corp.",
+    "ltd.",
+    "est.",
+    "min.",
+    "max.",
+    "hr.",
+    "hrs.",
+    "mo.",
+    "mos.",
+    "yr.",
+    "yrs.",
+    "wk.",
+    "wks.",
+    "wt.",
+    "oz.",
+    "lb.",
+    "lbs.",
+]
+# a listed abbreviation that ends at a dot, as a whole word ("Rs." but not the end of "Mrs.")
+_ABBREVIATION_END = re.compile(
+    r"(?<!\w)(?:" + "|".join(re.escape(a) for a in _ABBREVIATIONS) + r")\Z", re.I
+)
+_ABBREVIATION_MAX = max(len(a) for a in _ABBREVIATIONS)
+_BLANK_LINE = re.compile(r"\n[ \t]*\n")
 _WS = re.compile(r"\s+")
 _HYPHEN_BREAK = re.compile(r"-\n\s*")
 _WINDOW = 40
@@ -83,18 +138,47 @@ def quote_pattern(quote: str) -> re.Pattern[str]:
     return re.compile(r"\s+".join(re.escape(p) for p in parts))
 
 
+def _ends_sentence(text: str, m: re.Match[str]) -> bool:
+    """A "." that ends a listed abbreviation is not a sentence end when the next word does not
+    start with an uppercase letter and no blank line comes first (SPEC §4.2)."""
+    if not m.group().startswith("."):
+        return True
+    dot = m.start()
+    if not _ABBREVIATION_END.search(text, max(0, dot + 1 - _ABBREVIATION_MAX), dot + 1):
+        return True
+    gap = re.match(r"\s*", text[dot + 1 :])
+    assert gap is not None
+    nxt = dot + 1 + gap.end()
+    return bool(_BLANK_LINE.search(gap.group())) or nxt == len(text) or text[nxt].isupper()
+
+
 def sentence(text: str, pos: int) -> tuple[int, int]:
     left = 0
     for m in _SENTENCE_END.finditer(text, 0, pos):
-        left = m.end()
-    nxt = _SENTENCE_END.search(text, pos)
-    return left, (nxt.start() if nxt else len(text))
+        if _ends_sentence(text, m):
+            left = m.end()
+    right = len(text)
+    for m in _SENTENCE_END.finditer(text, pos):
+        if _ends_sentence(text, m):
+            right = m.start()
+            break
+    return left, right
 
 
 # ------------------------------------------------------------------ qualifiers
 
 _BEFORE = {
-    "approx": ["approximately", "about", "around", "nearly", "roughly", "generally", "~", "≈"],
+    "approx": [
+        "approximately",
+        "approx",
+        "about",
+        "around",
+        "nearly",
+        "roughly",
+        "generally",
+        "~",
+        "≈",
+    ],
     "gt": ["more than", "greater than", "above", "over", "exceed", "exceeds", "exceeding", ">"],
     "lt": ["less than", "fewer than", "below", "under", "<"],
     "ge": ["at least", "minimum of", "no less than", "≥"],
