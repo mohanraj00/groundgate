@@ -655,7 +655,7 @@ vector(
     "uppercase letter, so a qualifier before it still applies; `approx` is a qualifier (spec 0.3).",
     "The refund is up to Rs. 50,000 a year. Take approx. 5 mg a day. Take approx 6 mg at night. "
     "The office is open from 6 p.m. to 8 p.m. on weekdays. Taxes are at most due in the U.S. The "
-    "fee is $30.",
+    "fee is $30. Taxes are at most due in the U.S.\r\n\r\nfee is $45.",
     {
         "fields": {
             "refund": {"type": "integer", "unit": "INR"},
@@ -663,6 +663,7 @@ vector(
             "night_dose": {"type": "integer", "unit": "mg"},
             "closing_hour": {"type": "integer"},
             "fee": USD,
+            "crlf_fee": USD,
         }
     },
     [
@@ -674,6 +675,8 @@ vector(
         c("a4", "closing_hour", "8", None, q("8"), ("needs_verification", ["QUALIFIED_VALUE"])),
         # "U.S." before an uppercase word still ends the sentence, so "at most" stays out
         c("a5", "fee", "30", "USD", q("$30")),
+        # a blank line ends the sentence, with Windows line endings too
+        c("a6", "crlf_fee", "45", "USD", q("$45")),
     ],
 )
 

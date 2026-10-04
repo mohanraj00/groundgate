@@ -8,7 +8,7 @@ from decimal import Decimal, InvalidOperation
 
 _TOKEN = re.compile(r"[-\u2212]?\d[\d,]*(?:\.\d+)?")
 _VALID = re.compile(r"^[-\u2212]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?$")
-_SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t]*\n")
+_SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t\r]*\n")
 _ABBREVIATIONS = [
     "a.m.",
     "p.m.",
@@ -63,7 +63,7 @@ _ABBREVIATION_END = re.compile(
     r"(?<!\w)(?:" + "|".join(re.escape(a) for a in _ABBREVIATIONS) + r")\Z", re.I
 )
 _ABBREVIATION_MAX = max(len(a) for a in _ABBREVIATIONS)
-_BLANK_LINE = re.compile(r"\n[ \t]*\n")
+_BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS = re.compile(r"\s+")
 _HYPHEN_BREAK = re.compile(r"-\n\s*")
 _WINDOW = 40

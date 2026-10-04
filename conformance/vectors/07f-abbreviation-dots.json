@@ -1,7 +1,7 @@
 {
  "name": "07f-abbreviation-dots",
  "description": "The dot of a listed abbreviation does not end a sentence when the next word starts with no uppercase letter, so a qualifier before it still applies; `approx` is a qualifier (spec 0.3).",
- "document": "The refund is up to Rs. 50,000 a year. Take approx. 5 mg a day. Take approx 6 mg at night. The office is open from 6 p.m. to 8 p.m. on weekdays. Taxes are at most due in the U.S. The fee is $30.",
+ "document": "The refund is up to Rs. 50,000 a year. Take approx. 5 mg a day. Take approx 6 mg at night. The office is open from 6 p.m. to 8 p.m. on weekdays. Taxes are at most due in the U.S. The fee is $30. Taxes are at most due in the U.S.\r\n\r\nfee is $45.",
  "schema": {
   "fields": {
    "refund": {
@@ -20,6 +20,10 @@
     "type": "integer"
    },
    "fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "crlf_fee": {
     "type": "integer",
     "unit": "USD"
    }
@@ -80,6 +84,17 @@
     "end": 193,
     "text": "$30"
    }
+  },
+  {
+   "id": "a6",
+   "field": "crlf_fee",
+   "value": "45",
+   "unit": "USD",
+   "evidence": {
+    "start": 239,
+    "end": 242,
+    "text": "$45"
+   }
   }
  ],
  "expected": {
@@ -107,6 +122,10 @@
     "codes": [
      "QUALIFIED_VALUE"
     ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
    },
    {
     "outcome": "admitted",
