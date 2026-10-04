@@ -20,7 +20,8 @@ decision. This file covers how work is run.
   in `bench/` or set 2 in `bench/set2/`, and never change their published numbers.
 - Every benchmark number in the README, a `RESULTS.md`, the changelog or an issue must match its
   set's `results.json`. Rescore with `bench/score.py` and `bench/report.py`; don't type numbers.
-- The core stays dependency-free and never calls a model.
+- The core stays dependency-free. No model runs inside the decision: a model's answer enters
+  only as a recorded input (#66).
 - Tags publish to PyPI and can't be undone. Only the maintainer tags a release.
 
 ## Writing

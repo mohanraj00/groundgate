@@ -264,7 +264,9 @@ a changed document, schema, policy, candidate or outcome.
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
 - **No dates, arrays of records, or cross-document checks** in spec v0.2.
 - **No OCR.** Scanned PDFs need a text layer first (for example `ocrmypdf`).
-- **No model calls.** groundgate never asks an LLM whether an LLM was right.
+- **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right. A
+  planned optional tier (#66) records a small model's answers as inputs, so a receipt still
+  re-derives byte for byte.
 
 ## Status
 
