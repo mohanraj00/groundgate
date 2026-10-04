@@ -1,0 +1,286 @@
+{
+ "fda-anastrozole:1031": [
+  "Adjuvant Treatment"
+ ],
+ "fda-anastrozole:1145": [
+  "Adjuvant Treatment"
+ ],
+ "fda-anastrozole:132": [
+  "Adjuvant Treatment"
+ ],
+ "fda-anastrozole:33": null,
+ "fda-carbamazepine:2373": [
+  "Epilepsy"
+ ],
+ "fda-carbamazepine:2467": [
+  "Epilepsy"
+ ],
+ "fda-carbamazepine:2525": [
+  "Epilepsy"
+ ],
+ "fda-carbamazepine:2731": [
+  "Epilepsy"
+ ],
+ "fda-carbamazepine:2784": [
+  "Epilepsy"
+ ],
+ "fda-carbamazepine:2845": [
+  "Epilepsy"
+ ],
+ "fda-cefuroxime:576": [
+  "Pharyngitis/Tonsillitis"
+ ],
+ "fda-cefuroxime:656": [
+  "Acute Bacterial Maxillary Sinusitis"
+ ],
+ "fda-cefuroxime:752": [
+  "Acute Bacterial Exacerbations of Chronic Bronchitis"
+ ],
+ "fda-cefuroxime:762": [
+  "Acute Bacterial Exacerbations of Chronic Bronchitis"
+ ],
+ "fda-cefuroxime:836": [
+  "Uncomplicated Skin and Skin-Structure Infections"
+ ],
+ "fda-cefuroxime:846": [
+  "Uncomplicated Skin and Skin-Structure Infections"
+ ],
+ "fda-clozapine:174": null,
+ "fda-clozapine:183": null,
+ "fda-clozapine:227": null,
+ "fda-clozapine:237": null,
+ "fda-clozapine:346": null,
+ "fda-clozapine:65": null,
+ "fda-doxazosin:147": [
+  "Benign Prostatic Hyperplasia (BPH)"
+ ],
+ "fda-doxazosin:226": [
+  "Hypertension"
+ ],
+ "fda-doxazosin:281": [
+  "Hypertension"
+ ],
+ "fda-doxazosin:689": [
+  "Benign Prostatic Hyperplasia (BPH)"
+ ],
+ "fda-doxazosin:78": [
+  "Benign Prostatic Hyperplasia (BPH)"
+ ],
+ "fda-doxazosin:873": [
+  "Benign Prostatic Hyperplasia (BPH)"
+ ],
+ "fda-esomeprazole:194": [
+  "Healing of Erosive Esophagitis (EE)"
+ ],
+ "fda-esomeprazole:203": [
+  "Healing of Erosive Esophagitis (EE)"
+ ],
+ "fda-esomeprazole:315": [
+  "Healing of Erosive Esophagitis (EE)"
+ ],
+ "fda-esomeprazole:324": [
+  "Healing of Erosive Esophagitis (EE)"
+ ],
+ "fda-esomeprazole:397": [
+  "Maintenance of Healing of EE"
+ ],
+ "fda-esomeprazole:501": [
+  "Treatment of Symptomatic GERD"
+ ],
+ "fda-fenofibrate:168": [
+  "Severe Hypertriglyceridemia"
+ ],
+ "fda-fenofibrate:177": [
+  "Severe Hypertriglyceridemia"
+ ],
+ "fda-fenofibrate:1809": [
+  "Severe Hypertriglyceridemia"
+ ],
+ "fda-fenofibrate:212": [
+  "Severe Hypertriglyceridemia"
+ ],
+ "fda-fenofibrate:270": [],
+ "fda-fenofibrate:97": [
+  "Primary Hypercholesterolemia or Mixed Dyslipidemia"
+ ],
+ "fda-irbesartan:117": [
+  "Nephropathy in Type 2 Diabetic Patients"
+ ],
+ "fda-irbesartan:338": [
+  "Hypertension"
+ ],
+ "fda-irbesartan:406": [
+  "Hypertension"
+ ],
+ "fda-irbesartan:561": [
+  "Nephropathy in Type 2 Diabetic Patients"
+ ],
+ "fda-irbesartan:62": [
+  "Hypertension"
+ ],
+ "fda-irbesartan:72": [
+  "Hypertension"
+ ],
+ "fda-lansoprazole:1106": [
+  "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+ ],
+ "fda-lansoprazole:1119": [
+  "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+ ],
+ "fda-lansoprazole:1126": [
+  "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+ ],
+ "fda-lansoprazole:1335": [
+  "Treatment of Active Benign Gastric Ulcer"
+ ],
+ "fda-lansoprazole:795": [
+  "Treatment of Active Duodenal Ulcer"
+ ],
+ "fda-lansoprazole:801": [
+  "Treatment of Active Duodenal Ulcer"
+ ],
+ "fda-levofloxacin:585": [
+  "Nosocomial Pneumonia"
+ ],
+ "fda-levofloxacin:635": [
+  "Community-Acquired Pneumonia: 7 to 14 day Treatment Regimen"
+ ],
+ "fda-levofloxacin:685": [
+  "Community-Acquired Pneumonia: 5-day Treatment Regimen"
+ ],
+ "fda-levofloxacin:717": [
+  "Complicated Skin and Skin Structure Infections"
+ ],
+ "fda-levofloxacin:757": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-levofloxacin:808": [
+  "Chronic Bacterial Prostatitis"
+ ],
+ "fda-methotrexate:302": [
+  "Neoplastic Diseases"
+ ],
+ "fda-methotrexate:443": [
+  "Neoplastic Diseases"
+ ],
+ "fda-methotrexate:452": [
+  "Neoplastic Diseases"
+ ],
+ "fda-methotrexate:493": [
+  "Neoplastic Diseases"
+ ],
+ "fda-methotrexate:637": [
+  "Neoplastic Diseases"
+ ],
+ "fda-methotrexate:789": [
+  "Rheumatoid Arthritis"
+ ],
+ "fda-mirabegron:1954": [
+  "Adult Overactive Bladder (OAB)"
+ ],
+ "fda-mirabegron:2060": [
+  "Adult Overactive Bladder (OAB)"
+ ],
+ "fda-mirabegron:410": [
+  "Adult Overactive Bladder (OAB)"
+ ],
+ "fda-mirabegron:527": [
+  "Adult Overactive Bladder (OAB)"
+ ],
+ "fda-mirabegron:763": [
+  "Pediatric Neurogenic Detrusor Overactivity (NDO)"
+ ],
+ "fda-mirabegron:873": [
+  "Pediatric Neurogenic Detrusor Overactivity (NDO)"
+ ],
+ "fda-olanzapine:106": [
+  "Schizophrenia"
+ ],
+ "fda-olanzapine:195": [
+  "Schizophrenia"
+ ],
+ "fda-olanzapine:220": [
+  "Schizophrenia"
+ ],
+ "fda-olanzapine:314": [
+  "Bipolar I Disorder (Manic or Mixed Episodes)"
+ ],
+ "fda-olanzapine:421": [
+  "Bipolar I Disorder (Manic or Mixed Episodes)"
+ ],
+ "fda-olanzapine:80": [
+  "Schizophrenia"
+ ],
+ "fda-risperidone:176": [
+  "Schizophrenia"
+ ],
+ "fda-risperidone:186": [
+  "Schizophrenia"
+ ],
+ "fda-risperidone:196": [
+  "Schizophrenia"
+ ],
+ "fda-risperidone:206": [
+  "Schizophrenia"
+ ],
+ "fda-risperidone:245": [
+  "Schizophrenia"
+ ],
+ "fda-risperidone:259": [
+  "Schizophrenia"
+ ],
+ "fda-ropinirole:239": [
+  "Parkinson\u2019s Disease"
+ ],
+ "fda-ropinirole:307": [
+  "Parkinson\u2019s Disease"
+ ],
+ "fda-ropinirole:374": [
+  "Parkinson\u2019s Disease"
+ ],
+ "fda-ropinirole:510": [
+  "Restless Legs Syndrome"
+ ],
+ "fda-ropinirole:600": [
+  "Restless Legs Syndrome"
+ ],
+ "fda-ropinirole:672": [
+  "Restless Legs Syndrome"
+ ],
+ "fda-torsemide:147": [
+  "Edema"
+ ],
+ "fda-torsemide:223": [
+  "Edema"
+ ],
+ "fda-torsemide:280": [
+  "Edema"
+ ],
+ "fda-torsemide:357": [
+  "Edema"
+ ],
+ "fda-torsemide:414": [
+  "Edema"
+ ],
+ "fda-torsemide:90": [
+  "Edema"
+ ],
+ "fda-valacyclovir:122": [
+  "Pediatric Patients"
+ ],
+ "fda-valacyclovir:134": [
+  "Pediatric Patients"
+ ],
+ "fda-valacyclovir:182": [
+  "Pediatric Patients"
+ ],
+ "fda-valacyclovir:479": [
+  "Adult Patients"
+ ],
+ "fda-valacyclovir:671": [
+  "Adult Patients"
+ ],
+ "fda-valacyclovir:689": [
+  "Adult Patients"
+ ]
+}

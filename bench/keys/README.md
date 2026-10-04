@@ -36,5 +36,41 @@ stops when the set has 100.
 
 `keys.py label` shows each dose in its text, with the line breaks of the text, and lists the
 label's keys. It asks one question: which of these conditions does the dose belong to? The answer
-is one key, more than one, or none of them. It never shows which keys a spec puts at the dose. The
-labels go in `labels.json`.
+is one key, more than one when the dose holds for each of them, `0` when it belongs to none, or
+`?` when the person can't tell. `m` shows more of the text before the dose, and `s` shows section
+1 of the label, which says what each key covers. The tool never shows which keys a spec puts at
+the dose. The labels go in `labels.json`.
+
+The labeling showed two gaps in the tool, and both were fixed before scoring:
+
+- Some short forms need medical knowledge: "ALL" (acute lymphoblastic leukemia) is one of the
+  neoplastic diseases of methotrexate. `s` and `m` were added so that the label's own text
+  settles them.
+- My first instructions said to type `0` for a dose that holds for every patient. That is wrong:
+  such a dose holds for each key. `?` and `label --recheck` were added, and every dose labeled
+  `0` was labeled again with the corrected instructions.
+
+The doses labeled `?` are listed in `results.json` and left out of the counts.
+
+## Scoring
+
+```bash
+uv run python bench/keys/keys.py score --check    # fail if the committed files differ
+```
+
+[RESULTS.md](RESULTS.md) reads the keys at each dose under spec 0.2, the released 0.2.0 wheel in
+its own environment, and under spec 0.3, the core in this repository. For a dose with keys, it
+asks whether every labeled key reaches the dose (a candidate with it is admitted) and whether a
+wrong key does (a candidate with it is admitted too). The rule was fixed on #52 before the pick.
+CI runs `score --check`.
+
+What it found:
+
+- The label-line rule stops a wrong key at short forms and headings that are not keys, such as
+  "Cold Sores", "Benign Gastric Ulcer" and "2.1 Dosing Information".
+- It also sends right keys to review, in the same number of doses as it fixes. Half of those are
+  a bullet that the text puts on a line of its own, which the rule reads as a label line (#86).
+  The rest are under headings that are not keys, such as "2.1 General Considerations".
+- A wrong key still reaches many doses under both specs, most of them where one sentence or a
+  flattened table mentions two or more keys (#87).
+- No label changed after scoring.
