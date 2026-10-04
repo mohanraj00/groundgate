@@ -145,17 +145,18 @@ I ran Laya 0.3.26 locally and Jev through its API on the same 32 sentences. I wr
 and the expected answers by hand. None came from set 2 or the v0.1 set. This is a quick check, not
 a measurement (#67). The sentences are short and clean, unlike real documents.
 
-| Question | Jev | Jeff 2B | Jeff 0.8B | Laya `english` | Laya `typed-decisions` | Laya `multilingual` |
-|---|---|---|---|---|---|---|
-| Comparator, 18 (4 in German) | 18 | 16 | 14 | 12 | 11 | 1 |
-| Key, 4 | 4 | 4 | 4 | 3 | 3 | 3 |
-| Does this sentence state this field? 6 | 6 | 6 | 6 | 6 | 5 | 2 |
-| Quote and span state the same fact, 4 | 4 | 3 | 3 | 3 | 3 | 2 |
-| Total, 32 | 32 | 29 | 27 | 24 | 22 | 8 |
+| Question | Jev | Jeff Gemma4 E2B | Jeff 2B | Jeff 0.8B | Laya `english` | Laya `typed-decisions` | Laya `multilingual` |
+|---|---|---|---|---|---|---|---|
+| Comparator, 18 (4 in German) | 18 | 17 | 16 | 14 | 12 | 11 | 1 |
+| Key, 4 | 4 | 4 | 4 | 4 | 3 | 3 | 3 |
+| Does this sentence state this field? 6 | 6 | 6 | 6 | 6 | 6 | 5 | 2 |
+| Quote and span state the same fact, 4 | 4 | 4 | 3 | 3 | 3 | 3 | 2 |
+| Total, 32 | 32 | 31 | 29 | 27 | 24 | 22 | 8 |
 
 `jev-latest` and `jev-preview` gave the same answers, and both reported `jev-1.13.0`. Jeff 0.8B
 and Jeff 2B are `mstrasser/Jeff-Qwen3.5-0.8B` and `mstrasser/Jeff-Qwen3.5-2B` at revision `v1.2`,
-run locally with MLX.
+run locally with MLX. Jeff Gemma4 E2B is `mstrasser/Jeff-Gemma4-E2B` at revision `v1.0`, run
+locally with PyTorch on Apple Silicon, because Jeff's MLX backend loads only Qwen3.5 checkpoints.
 
 - Jeff answered correctly the cases where Laya was confidently wrong: the old value of a change
   (0.709), "Do not take more than 4,000 mg" (0.898), "höchstens 4.000 mg" (0.829) and the
@@ -185,6 +186,16 @@ run locally with MLX.
   question kind needs its own threshold for each model.
 - Jeff 2B took 220 ms for each question with MLX and repeated its probabilities exactly. Its
   weights are 4.1 GB.
+- Jeff Gemma4 E2B answered 31 of 32 correctly. It fixed "under 12" (0.347) and "30 degrees or
+  below" (0.597), which both Qwen sizes missed, and it read the two different facts as
+  different (0.232). Its only error was "Doses range from 250 mg to 500 mg" as "at least" (0.549).
+  The script already reads that as a range, so rule 8 in §4 keeps the flag.
+- Its field-match margins were 0.85 to 0.97 for the true values and 0.05 to 0.33 for the wrong
+  ones. Some correct answers had low probabilities, for example 0.276 on "above $150,000". A high
+  threshold leaves those with a person, which is safe.
+- It took 361 ms to 540 ms for each question with PyTorch on Apple Silicon, and it repeated its
+  probabilities exactly. Its weights are 8.7 GB, and it accepts at most 26 options for each
+  choice. The weights and the Gemma 4 base model are both Apache-2.0.
 
 - Laya `english` was wrong with high confidence on cases that a script already gets right: the
   old value of "increased from $120 to $150" as the new value (0.941), "Do not take more than
