@@ -244,6 +244,37 @@ An adapter does not carry over to a new base version.
 - Each Jev response reports output tokens, for example 88 for one question. Jev does not charge
   for them. A later test explains them (below).
 
+### A first measurement on real text (#65)
+
+PR #71 asked Laya and Jev one question on the change-rule pattern set: is the pair "from X to Y" a
+change, a range, or neither? The text is from documents that no rule was written from, and the
+question was written once before the first run. The full tables are in
+`bench/patterns/TRIAGE.md`.
+
+| | Laya 0.3.26, CPU | Jev `jev-1.13.0` |
+|---|---|---|
+| Answers that match the label | 74 of 147 | 134 of 147 |
+| Same answers on a second run | yes | no: 2 choices changed, confidence moved by up to 0.19 |
+| Changes that spec 0.3 sends to review, marked at 0.99 | 0 of 22 | 14 of 22 |
+| Other pairs marked at 0.99 | 0 | 0 |
+| Highest confidence on a wrong "change" | 0.901 | 0.960 |
+
+What this adds to the first check:
+
+- **Jev is useful on real text.** At 0.99 it marks 14 of the 22 changes that spec 0.3 sends to
+  review, with no wrong mark. That is the clearing of stage 3, measured once.
+- **0.96 is not safe for Jev.** Two pairs labeled "neither" got "change" with 0.960. On this
+  question, only 0.99 had no wrong mark. The threshold comes from a measurement for each question
+  kind, never from a round number.
+- **The replay tolerance must be larger.** Jev's confidence moved by up to 0.19 between two runs,
+  not 0.06 as in the first check. Rule 7 in §4 records every answer for this reason.
+- **Laya zero-shot is not usable here.** It called 37 ranges a change, and its checkpoint warns
+  that some confidences are uncalibrated.
+- **A model finds gold errors.** Jev disagreed with 22 labels, and some were clear label errors.
+  Those 22 pairs and 22 others were labeled again, blind and in a shuffled order, and 16 labels
+  changed. This is the development use in §6, "the gold check after the blind pass". Because the
+  re-check started from Jev's disagreements, Jev's match count is not blind.
+
 ### What independent sources say about Jev
 
 An evaluation paper (Deußer, Sparrenberg and Sifa, arXiv 2609.37647, 29 September 2026) tested
@@ -364,7 +395,8 @@ The decision stays a pure function. A model's answer is an input to it, like a c
    question, the model id and digest, the answer and the probability. `verify` re-derives the
    receipt byte for byte from those recorded answers. A separate replay check runs the model
    again and accepts a small difference in probability. The tolerance comes from a measurement
-   for each judge: Jev's probabilities moved by up to 0.06 between two runs.
+   for each judge: Jev's probabilities moved by up to 0.06 between two runs on short sentences,
+   and by up to 0.19 on real text (#65).
 8. **A model cannot clear a flag where a script has a specific reading.** The old value of a
    change and a negated qualifier are examples. The script's rule exists because these cases are
    dangerous, and a model reads them wrong with high confidence (§3, "A first check"). A model can
@@ -663,6 +695,7 @@ documents and a high review cost accepts lower ones.
    nothing about retirement.
 8. Do two identical Jev calls give the same probabilities? The documentation does not say, and it
    has no temperature or seed parameter. A third-party explainer says that they should. In the
-   first check, 9 of 32 probabilities moved; in a later test of extreme answers, none moved.
+   first check, 9 of 32 probabilities moved; in a later test of extreme answers, none moved. On
+   real text (#65), 2 of 147 choices changed and a confidence moved by 0.19.
 9. Does a label that a person confirmed with Jev's answer in view count as Jev Output under the
    agreement? Until a lawyer or TypeSafe says no, such labels stay out of any training set.
