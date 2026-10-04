@@ -42,13 +42,12 @@ count.
 - **Federal Register:** final rules of at most 20 pages, published 2025-01-01 to 2025-06-30,
   newest first. Set 2 took 2026 and the pattern set 2025-07-01 to 2025-12-31.
 
-116 dots in 31 documents: FDA 9 (7 labels), IRS 54 (12 publications), Federal Register 53 (12
-rules). The most common are `U.S.` (56) and `No.` (27).
+The counts of dots and documents, for each kind, are in [RESULTS.md](RESULTS.md) once the dots are scored.
 
-The first pick counted running heads, and a review of #74 found that 30 of the 50 Federal
-Register dots were `Vol.` and `No.` in them. The running-head rule was added, and then widened to a
-head split over lines, which the second review found. The pick ran again each time before anyone
-read the text.
+The first pick counted running heads, and a review of #74 found that most of the Federal Register
+dots were `Vol.` and `No.` in them. The running-head rule was added, and then widened to a head
+split over lines, which the second review found. The pick ran again each time before anyone read
+the text.
 
 ## Labels
 

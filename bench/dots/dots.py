@@ -213,6 +213,10 @@ def score(check: bool) -> None:
     specs = ("spec_0.2", "spec_0.3")
     results = {
         "dots": len(rows),
+        "dots_by_kind": {k: sum(r["kind"] == k for r in rows) for k in ("fda", "irs", "fr")},
+        "documents_by_kind": {
+            k: len({r["doc"] for r in rows if r["kind"] == k}) for k in ("fda", "irs", "fr")
+        },
         "labels": {lab: sum(r["label"] == lab for r in rows) for lab in LABELS.values()},
         "by_spec": {s: tally(rows, s) for s in specs},
         "by_kind": {
@@ -234,7 +238,12 @@ def score(check: bool) -> None:
         "[README.md](README.md) explains the set. Spec 0.2 ends a sentence at every `.` followed "
         "by whitespace. Spec 0.3 is the core in this repository.",
         "",
-        f"{len(rows)} dots, labeled by a person: {results['labels']['end']} sentence ends, "
+        f"{len(rows)} dots in {sum(results['documents_by_kind'].values())} documents: "
+        + ", ".join(
+            f"{name} {results['dots_by_kind'][k]} ({results['documents_by_kind'][k]} documents)"
+            for k, name in (("fda", "FDA"), ("irs", "IRS"), ("fr", "Federal Register"))
+        )
+        + f". Labeled by a person: {results['labels']['end']} sentence ends, "
         f"{results['labels']['goes on']} where the sentence goes on.",
         "",
         "| Label and reading | What it means | Spec 0.2 | Spec 0.3 |",
