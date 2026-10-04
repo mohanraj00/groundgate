@@ -92,13 +92,18 @@ often.
 |---|---|---|
 | Source | Open source, Apache-2.0 | TypeSafe |
 | Model | ModernBERT-large, 421M parameters; mmBERT-base, 322M | Not in the pages I read |
-| Where it runs | Locally, on a CPU or a GPU | Not stated; it looks like a hosted API |
+| Where it runs | Locally, on a CPU, a GPU or Apple Silicon. Offline after the first download of the weights. | A hosted API with an API key. There is no local option. |
 | Speed | 7.2 ms per question in a batch on a T4 GPU | Not stated |
 | Determinism | The same output on the same hardware and batch shape | Not stated |
 | Languages | 51 tested | Not stated |
 
-I took the Laya figures from its README and did not verify them. Jev's pages do not document its
-hosting, licence, data handling or model versions. A local model is the default in this design.
+I took the Laya figures from its README and did not verify them. Jev is hosted only, and the
+maintainer can get an API key. Jev's pages do not document its licence, data handling or model
+versions. A local model is the default in this design, and Jev is the hosted option.
+
+The Laya README says that its answers have the same schema as Jev's, so a Jev client needs only a
+different base URL. One adapter can then serve both: Laya on the local machine and Jev on the
+hosted API.
 
 ## 4. The rules that keep the guarantees
 
@@ -309,7 +314,9 @@ class Judge(Protocol):
 
 A `Question` is a primitive (`choice`, `score` or `noul`), the text, and the options. An `Answer`
 is the answer and its probability. Judges ship as extras that import lazily:
-`groundgate[laya]` for local Laya and `groundgate[jev]` for the Jev API. Other packages can
+`groundgate[laya]` for local Laya. Because the two answer schemas are the same, one HTTP
+adapter serves a local Laya server and the hosted Jev API. Only the base URL and the key differ.
+The key comes from the environment, never from the policy or the receipt. Other packages can
 register a judge in the entry point group `groundgate.judges`. A hosted judge sends document text
 out of the machine, so it runs only when the policy names it.
 
