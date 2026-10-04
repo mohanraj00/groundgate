@@ -1,0 +1,966 @@
+{
+ "pairs": 147,
+ "labels": {
+  "change": 44,
+  "range": 72,
+  "neither": 31
+ },
+ "by_spec": {
+  "spec_0.2": {
+   "change read as change": 16,
+   "change read as range": 28,
+   "range read as change": 15,
+   "range read as range": 57,
+   "neither read as change": 22,
+   "neither read as range": 9
+  },
+  "spec_0.3": {
+   "change read as change": 25,
+   "change read as range": 19,
+   "range read as change": 15,
+   "range read as range": 57,
+   "neither read as change": 22,
+   "neither read as range": 9
+  }
+ },
+ "by_kind": {
+  "fda": {
+   "spec_0.2": {
+    "change read as change": 0,
+    "change read as range": 0,
+    "range read as change": 0,
+    "range read as range": 5,
+    "neither read as change": 0,
+    "neither read as range": 0
+   },
+   "spec_0.3": {
+    "change read as change": 0,
+    "change read as range": 0,
+    "range read as change": 0,
+    "range read as range": 5,
+    "neither read as change": 0,
+    "neither read as range": 0
+   }
+  },
+  "irs": {
+   "spec_0.2": {
+    "change read as change": 6,
+    "change read as range": 16,
+    "range read as change": 0,
+    "range read as range": 38,
+    "neither read as change": 1,
+    "neither read as range": 9
+   },
+   "spec_0.3": {
+    "change read as change": 11,
+    "change read as range": 11,
+    "range read as change": 0,
+    "range read as range": 38,
+    "neither read as change": 1,
+    "neither read as range": 9
+   }
+  },
+  "fr": {
+   "spec_0.2": {
+    "change read as change": 10,
+    "change read as range": 12,
+    "range read as change": 15,
+    "range read as range": 14,
+    "neither read as change": 21,
+    "neither read as range": 0
+   },
+   "spec_0.3": {
+    "change read as change": 14,
+    "change read as range": 8,
+    "range read as change": 15,
+    "range read as range": 14,
+    "neither read as change": 21,
+    "neither read as range": 0
+   }
+  }
+ },
+ "pairs_read": [
+  {
+   "id": "fda-fluoxetine:3789",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fda-labetalol:3190",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fda-sildenafil:412",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fda-sildenafil:827",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fda-candesartan:4773",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p544:3825",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p550:3576",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p550:5941",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p583:176",
+   "label": "neither",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p590-b:620",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p598:4757",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p926:1855",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p946:2177",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p963:1238",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p974:5130",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p974:6194",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p974:7640",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p974:14613",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p974:16675",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1141:2195",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p1179:668",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1179:818",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1187:1426",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1187:3094",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1304:1116",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1304:2925",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p1304:2995",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1304:3065",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1304:3936",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p1415:2664",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p1457:225",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1457:260",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1457:295",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1457:331",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1457:368",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1458:262",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1458:310",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1458:358",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1458:407",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1458:457",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1459:1035",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1500:3014",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p1500:7211",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1500:11840",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1500:17176",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1500:17432",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1586:2549",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p1915:1316",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p2104:198",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p2104:7524",
+   "label": "neither",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p2104:7654",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p2104:9431",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p2104:13487",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p2104-c:198",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p2104-c:7524",
+   "label": "neither",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p2104-c:7654",
+   "label": "neither",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p2104-c:9431",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3151-a:1313",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3373:93",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "irs-p3415:2349",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3415:5362",
+   "label": "neither",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3415:8244",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3415:8338",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3415:8839",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3536:1610",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3583:104",
+   "label": "neither",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3583:5355",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3583:6808",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3744:999",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3744:3067",
+   "label": "neither",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3744:3699",
+   "label": "neither",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3744-a:411",
+   "label": "neither",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3744-a:5280",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p3908:1278",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "irs-p4012:714",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-24061:5544",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23920:3361",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23860:3725",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23848:3725",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23848:10118",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23837:6745",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23837:7804",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23837:10822",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23837:16265",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23837:23748",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23786:2786",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23746:1603",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23746:7868",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23746:8008",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23746:19599",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23746:26365",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23634:1959",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23634:2324",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23626:6021",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-23626:8596",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23626:8961",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23389:2374",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23389:2733",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-23125:200",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22968:1038",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22966:5239",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22966:5298",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22957:1038",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22957:8690",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22927:1930",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22875:1684",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22875:7740",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22814:6183",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22814:7698",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22814:13382",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22814:20344",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22814:30882",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22813:5706",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22813:7241",
+   "label": "change",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22813:12922",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22813:20883",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22773:5454",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22759:5454",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22759:7573",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22738:5706",
+   "label": "change",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22672:1058",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22672:5112",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22595:5320",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22584:447",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22584:495",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22559:3861",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22559:4754",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22559:6306",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22558:5009",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22558:5155",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22558:5295",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22558:5477",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22558:5572",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22557:159",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22545:199",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22545:7860",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22545:19368",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22545:20801",
+   "label": "range",
+   "spec_0.2": "range",
+   "spec_0.3": "range"
+  },
+  {
+   "id": "fr-2025-22518:159",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22518:11721",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22518:12823",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22518:12871",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22516:5232",
+   "label": "neither",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22516:6334",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22516:6382",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22516:7155",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  },
+  {
+   "id": "fr-2025-22516:7203",
+   "label": "range",
+   "spec_0.2": "change",
+   "spec_0.3": "change"
+  }
+ ]
+}

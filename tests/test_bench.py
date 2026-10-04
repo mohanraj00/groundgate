@@ -515,3 +515,24 @@ def test_the_label_context_marks_x_and_y_and_nothing_else() -> None:
     m = pairs.pairs_in(text)[0]
     shown = pairs.context(text, {"x": [m.start(1), m.end(1)], "y": [m.start(2), m.end(2)]})
     assert shown == "The fee went from $\033[1;7m5\033[0m to $\033[1;7m7\033[0m in 2027."
+
+
+def test_a_pattern_pair_is_tallied_by_its_label_and_reading() -> None:
+    pairs_read = [
+        {"id": "a", "spec_0.3": "change"},
+        {"id": "b", "spec_0.3": "range"},
+        {"id": "c", "spec_0.3": "change"},
+    ]
+    labels = {"a": "change", "b": "change", "c": "range"}
+    counts = pairs.tally(pairs_read, labels, "spec_0.3")
+    assert counts["change read as change"] == 1
+    assert counts["change read as range"] == 1
+    assert counts["range read as change"] == 1
+    assert sum(counts.values()) == 3
+
+
+def test_a_results_snippet_is_the_sentence_with_x_and_y_in_bold() -> None:
+    text = "First one. The fee rose\nfrom $5 to $7 in 2027. Next one."
+    m = pairs.pairs_in(text)[0]
+    p = {"x": [m.start(1), m.end(1)], "y": [m.start(2), m.end(2)]}
+    assert pairs.snippet(text, p) == "The fee rose from $**5** to $**7** in 2027."
