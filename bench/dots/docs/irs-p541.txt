@@ -1,0 +1,243 @@
+Publication 541
+(Rev. December 2025)
+
+Partnerships
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Reminder
+Photographs of missing children. The Internal Reve-
+nue Service is a proud partner with the National Center for
+Missing & Exploited Children® (NCMEC). Photographs of
+missing children selected by the Center may appear in
+this publication on pages that would otherwise be blank.
+You can help bring these children home by looking at the
+photographs
+1-800-THE-LOST
+and
+(1-800-843-5678) if you recognize a child.
+
+calling
+
+Introduction
+This publication provides supplemental federal income tax
+information for partnerships and partners. It supplements
+the information provided in the Instructions for Form 1065,
+U.S. Return of Partnership Income; the Partner’s Instruc-
+tions for Schedule K-1 (Form 1065), Partner’s Share of In-
+come, Deductions, Credits, etc.; and the instructions for
+Schedule K-2 and Schedule K-3 (Form 1065). Generally,
+a partnership doesn’t pay tax on its income but passes
+through any profits or losses to its partners. Partners must
+include partnership items on their tax returns.
+
+For a discussion of business expenses a partnership
+can deduct, see the 2022 version of Pub. 535, Business
+Expenses, at Publication 535, Business Expenses (2022).
+Partnerships can’t deduct depletion on oil and gas wells.
+Each partner must determine the allowable amount to re-
+port on their return. As such, members of oil and gas part-
+nerships should read about the deduction for depletion in
+chapter 9 of that publication.
+
+Each partnership must designate a partnership repre-
+sentative unless the partnership has made a valid election
+out of the centralized partnership audit regime. See Desig-
+nated Partnership Representative (PR) in the Form 1065
+instructions and Regulations section 301.6223-1.
+
+Withholding on foreign partner or firm. A partnership
+that has foreign partners or engages in certain transac-
+tions with foreign persons may have one (or more) of the
+following obligations.
+
+Fixed or determinable annual or periodical (FDAP)
+income. A partnership may have to withhold tax on distri-
+butions to a foreign partner or a foreign partner’s distribu-
+tive share when it earns income not effectively connected
+with a U.S. trade or business. A partnership may also have
+to withhold on payments to a foreign person of FDAP in-
+come not effectively connected with a U.S. trade or busi-
+ness. See section 1441 or 1442 for more information.
+
+Withholding under the Foreign Investment in Real
+Property Tax Act (FIRPTA). If a partnership acquires a
+U.S. real property interest from a foreign person or firm,
+the partnership may have to withhold tax on the amount it
+pays for the property (including cash, the fair market value
+(FMV) of other property, and any assumed liability). See
+section 1445 for more information.
+
+Dec 18, 2025
+
+Publication 541 (Rev. 12-2025) Catalog Number 15071D
+Department of the Treasury Internal Revenue Service www.irs.gov
+Withholding on foreign partner’s effectively con­
+nected taxable income (ECTI). If a partnership has in-
+come effectively connected with a trade or business in the
+United States (including gain on the disposition of a U.S.
+real property interest), it must withhold on the ECTI alloca-
+ble to its foreign partners. See section 1446(a) for more in-
+formation.
+
+Withholding on foreign partner’s sale of a partner­
+ship interest. A purchaser of a partnership interest,
+which may include the partnership itself, may have to with-
+hold tax on the amount realized by a foreign partner on the
+sale for that partnership interest if the partnership is en-
+gaged in a trade or business in the United States. See
+section 1446(f) for more information.
+
+Withholding under the Foreign Account Tax Com­
+pliance Act (FATCA). A partnership may have to with-
+hold tax on distributions to a foreign partner of a foreign
+partner’s distributive share when it earns withholdable
+payments. A partnership may also have to withhold on
+withholdable payments that it makes to a foreign entity.
+See sections 1471 through 1474 for more information. A
+partnership that has a duty to withhold but fails to withhold
+may be held liable for the tax, applicable penalties, and in-
+terest. See section 1461 for more information.
+
+For more information on withholding on nonresident ali-
+
+ens and foreign entities, see Pub. 515.
+
+Comments and suggestions. We welcome your com-
+ments about this publication and suggestions for future
+editions.
+
+You can send us comments
+
+IRS.gov/
+FormComments. Or, you can write to the Internal Revenue
+Service, Tax Forms and Publications, 1111 Constitution
+Ave. NW, IR-6526, Washington, DC 20224.
+
+through
+
+Although we can’t respond individually to each com-
+ment received, we do appreciate your feedback and will
+consider your comments and suggestions as we revise
+our tax forms, instructions, and publications. Don’t send
+tax questions, tax returns, or payments to the above ad-
+dress.
+
+Getting answers to your tax questions. If you have
+a tax question not answered by this publication or the How
+To Get Tax Help section at the end of this publication, go
+to the IRS Interactive Tax Assistant page at IRS.gov/
+Help/ITA where you can find topics by using the search
+feature or viewing the categories listed.
+
+Getting tax forms, instructions, and publications.
+Go to IRS.gov/Forms to download current and prior-year
+forms, instructions, and publications.
+
+Ordering tax forms, instructions, and publications.
+Go to IRS.gov/OrderForms to order current forms, instruc-
+tions, and publications; call 800-829-3676
+to order
+prior-year forms and instructions. The IRS will process
+your order for forms and publications as soon as possible.
+Don’t resubmit requests you’ve already sent us. You can
+get forms and publications faster online.
+
+Additional forms. A list of other forms and statements
+that a partnership may need to file is included at the end
+
+of this publication. Also, see the instructions for the part-
+nership’s tax return for additional forms and statements
+that may be required.
+
+Useful Items
+You may want to see:
+
+Publication
+
+334
+
+334 Tax Guide for Small Business
+
+505
+
+505 Tax Withholding and Estimated Tax
+
+515
+
+515 Withholding of Tax on Nonresident Aliens and
+Foreign Entities
+
+537
+
+537 Installment Sales
+
+538
+
+538 Accounting Periods and Methods
+
+544
+
+544 Sales and Other Dispositions of Assets
+
+551
+
+551 Basis of Assets
+
+925
+
+925 Passive Activity and At-Risk Rules
+
+946
+
+946 How To Depreciate Property
+
+See How To Get Tax Help at the end of this publication for
+information about getting publications and forms.
+
+Forming a Partnership
+
+The following sections contain general information about
+partnerships.
+
+Organizations Classified as
+Partnerships
+
+An unincorporated organization with two or more mem-
+bers is generally classified as a partnership for federal tax
+purposes if its members carry on a trade, business, finan-
+cial operation, or venture and divide its profits. However, a
+joint undertaking merely to share expenses is not a part-
+nership. For example, co-ownership of property main-
+tained and rented or leased is not a partnership unless the
+co-owners provide services to the tenants.
+
+The rules you must use to determine whether an organ-
+ization is classified as a partnership changed for organiza-
+tions formed after 1996.
+
+Organizations formed after 1996. An organization
+formed after 1996 is classified as a partnership for federal
+tax purposes if it has two or more members and it is none
+of the following.
+
+• An organization formed under a federal or state law
+that refers to it as incorporated or as a corporation,
+body corporate, or body politic.
+
+• An organization formed under a state law that refers to
+it as a joint-stock company or joint-stock association.
+
+• An insurance company.
+• Certain banks.
+
+2
+
+Publication 541 (12-2025)

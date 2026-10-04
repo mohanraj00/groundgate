@@ -26,6 +26,7 @@ import re
 import subprocess
 import sys
 from collections import defaultdict
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -63,11 +64,26 @@ def pairs_in(text: str) -> list[re.Match[str]]:
     return list(PAIR.finditer(text))
 
 
-def pick_fda(log: list[dict[str, Any]], drugs: set[str]) -> list[dict[str, Any]]:
+Find = Callable[[str], list[re.Match[str]]]
+
+
+def pick_fda(
+    log: list[dict[str, Any]],
+    drugs: set[str],
+    find: Find = pairs_in,
+    per_kind: int = PAIRS_PER_KIND,
+    per_doc: int = PAIRS_PER_DOC,
+    group: str = "change",
+    max_rank: int = FDA_MAX_RANK,
+) -> list[dict[str, Any]]:
+    """Take labels in Part D order up to ``max_rank`` while the kind has fewer than ``per_kind``
+    items; a label counts its first ``per_doc`` items in sections 1 and 2."""
     chosen: list[dict[str, Any]] = []
     seen: set[str] = set()
     total = 0
-    for rank, name in enumerate(walk.ranked_generics()[:FDA_MAX_RANK], 1):
+    for rank, name in enumerate(walk.ranked_generics()[:max_rank], 1):
+        if total >= per_kind:
+            break
         base = walk.base_word(name)
         entry: dict[str, Any] = {"kind": "fda", "rank": rank, "name": name}
         log.append(entry)
@@ -85,18 +101,18 @@ def pick_fda(log: list[dict[str, Any]], drugs: set[str]) -> list[dict[str, Any]]
             entry["skip"] = why
             continue
         data = walk.get(label["url"], f"spl-{label['setid']}.xml")
-        found = len(pairs_in(spl_sections(data, [walk.INDICATIONS, walk.DOSAGE])))
+        found = len(find(spl_sections(data, [walk.INDICATIONS, walk.DOSAGE])))
         entry.update({"setid": label["setid"], "pairs": found})
         if not found:
             entry["skip"] = "no pair in sections 1 and 2"
             continue
-        total += min(found, PAIRS_PER_DOC)
+        total += min(found, per_doc)
         print(f"fda: rank {rank}, {len(chosen) + 1} documents, {total} pairs", file=sys.stderr)
         chosen.append(
             {
                 "id": f"fda-{base}",
                 "kind": "fda",
-                "groups": ["change"],
+                "groups": [group],
                 "url": label["url"],
                 "sha256": label["sha256"],
                 "select": {"sections": [walk.INDICATIONS, walk.DOSAGE]},
@@ -107,14 +123,21 @@ def pick_fda(log: list[dict[str, Any]], drugs: set[str]) -> list[dict[str, Any]]
 
 
 def pick_pdfs(
-    kind: str, docs: list[tuple[str, str]], log: list[dict[str, Any]], seen: dict[str, str]
+    kind: str,
+    docs: list[tuple[str, str]],
+    log: list[dict[str, Any]],
+    seen: dict[str, str],
+    find: Find = pairs_in,
+    per_kind: int = PAIRS_PER_KIND,
+    per_doc: int = PAIRS_PER_DOC,
+    group: str = "change",
 ) -> list[dict[str, Any]]:
-    """Take documents (id, url) in order until the kind has PAIRS_PER_KIND pairs. A document
-    gives the pages that hold its first PAIRS_PER_DOC pairs."""
+    """Take documents (id, url) in order until the kind has ``per_kind`` items. A document gives
+    the pages that hold its first ``per_doc`` items."""
     chosen: list[dict[str, Any]] = []
     total = 0
     for doc_id, url in docs:
-        if total >= PAIRS_PER_KIND:
+        if total >= per_kind:
             break
         entry: dict[str, Any] = {"kind": kind, "id": doc_id}
         log.append(entry)
@@ -126,9 +149,9 @@ def pick_pdfs(
         idx: list[int] = []
         found = 0
         for i, page in enumerate(pages):
-            if found >= PAIRS_PER_DOC:
+            if found >= per_doc:
                 break
-            if n := len(pairs_in(page)):
+            if n := len(find(page)):
                 idx.append(i)
                 found += n
         if not idx:
@@ -139,10 +162,10 @@ def pick_pdfs(
             entry["skip"] = f"same text as {seen[text_sha]}"
             continue
         seen[text_sha] = doc_id
-        total += min(found, PAIRS_PER_DOC)
+        total += min(found, per_doc)
         print(f"{kind}: {len(chosen) + 1} documents, {total} pairs", file=sys.stderr)
         entry.update({"pages": [i + 1 for i in idx], "pairs": found})
-        chosen.append(walk.source(doc_id, kind, url, sha, ["change"], [i + 1 for i in idx]))
+        chosen.append(walk.source(doc_id, kind, url, sha, [group], [i + 1 for i in idx]))
     return chosen
 
 
