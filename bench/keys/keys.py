@@ -201,17 +201,19 @@ def read() -> dict[str, list[str]]:
 
 
 def outcome(label: list[str], read: list[str]) -> str:
-    """How a reading serves the label: does the right key reach the dose, and does a wrong one?"""
-    right = bool(set(label) & set(read))
+    """How a reading serves the label: does every right key reach the dose, and does a wrong
+    one? A candidate with a right key that does not reach goes to review, and one with a wrong key
+    that reaches is admitted."""
+    missing = bool(set(label) - set(read))
     wrong = bool(set(read) - set(label))
     if not label:
         return "a wrong key reaches it" if wrong else "no key reaches it"
     return {
-        (True, False): "right key only",
-        (True, True): "right key and a wrong key",
-        (False, True): "a wrong key only",
-        (False, False): "no key: review",
-    }[(right, wrong)]
+        (False, False): "every right key, no wrong key",
+        (False, True): "every right key and a wrong key",
+        (True, False): "a right key missing, no wrong key",
+        (True, True): "a right key missing and a wrong key",
+    }[(missing, wrong)]
 
 
 def score(check: bool) -> None:
@@ -232,10 +234,10 @@ def score(check: bool) -> None:
         for it in items
     ]
     with_key = [
-        "right key only",
-        "right key and a wrong key",
-        "a wrong key only",
-        "no key: review",
+        "every right key, no wrong key",
+        "every right key and a wrong key",
+        "a right key missing, no wrong key",
+        "a right key missing and a wrong key",
     ]
     no_key = ["no key reaches it", "a wrong key reaches it"]
     specs = ("spec_0.2", "spec_0.3")
@@ -257,10 +259,11 @@ def score(check: bool) -> None:
         "doses_read": rows,
     }
     what = {
-        "right key only": "right",
-        "right key and a wrong key": "a swapped key is admitted",
-        "a wrong key only": "a swapped key is admitted, the right one goes to review",
-        "no key: review": "the right key goes to review",
+        "every right key, no wrong key": "right",
+        "every right key and a wrong key": "a swapped key is admitted",
+        "a right key missing, no wrong key": "a right key goes to review",
+        "a right key missing and a wrong key": "a swapped key is admitted, a right key goes to "
+        "review",
         "no key reaches it": "right",
         "a wrong key reaches it": "a key is admitted where none applies",
     }

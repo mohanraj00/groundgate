@@ -609,6 +609,8 @@ def test_a_keys_dose_is_a_number_token_before_mg_or_mcg() -> None:
     found = [text[a:b] for a, b in keys.doses_in(text)]
     assert found == ["10", "2.5", "50", "1,000", "3"]
     label, read = ["Hypertension"], ["Hypertension", "Heart Failure"]
-    assert keys.outcome(label, read) == "right key and a wrong key"
+    assert keys.outcome(label, read) == "every right key and a wrong key"
+    assert keys.outcome(read, label) == "a right key missing, no wrong key"
+    assert keys.outcome(read, ["Heart Failure", "Angina"]) == "a right key missing and a wrong key"
     assert keys.outcome([], []) == "no key reaches it"
-    assert keys.outcome(label, []) == "no key: review"
+    assert keys.outcome(label, []) == "a right key missing, no wrong key"
