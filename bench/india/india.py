@@ -46,8 +46,6 @@ SEBI_MAX_PAGES = 40
 CIRCULAR = re.compile(r"legal/circulars/[a-z]{3}-\d{4}/[^\"']+_(\d+)\.html")
 CIRCULAR_PDF = re.compile(r"https://www\.sebi\.gov\.in/sebi_data/attachdocs/[^'\"]+\.pdf")
 PER_SET, PER_DOC = 100, 5
-# SPEC §4.1: a number token, not preceded by a letter, digit, "." or ",", one trailing "," dropped
-TOKEN = re.compile(r"(?<![^\W_])(?<![\d.,])[-\u2212]?\d[\d,]*(?:\.\d+)?")
 LABELS = {"y": "one number", "n": "not one number"}
 SPEC02 = [
     *("uv", "run", "--isolated", "--no-project", "--quiet", "--python", "3.12"),
@@ -55,26 +53,12 @@ SPEC02 = [
 ]
 
 
-class Found:
-    """A token with a comma: ``start()`` and ``end()`` like a match, the trailing comma dropped."""
+def commas_in(text: str) -> list[Any]:
+    """The number tokens (SPEC §4.1) with a comma in them. The core's tokenizer decides where a
+    token starts and ends; #59 changes only which tokens have a value, not their bounds."""
+    from groundgate.text import tokens
 
-    def __init__(self, start: int, end: int) -> None:
-        self._start, self._end = start, end
-
-    def start(self) -> int:
-        return self._start
-
-    def end(self) -> int:
-        return self._end
-
-
-def commas_in(text: str) -> list[Found]:
-    out = []
-    for m in TOKEN.finditer(text):
-        end = m.end() - 1 if m.group().endswith(",") else m.end()
-        if "," in text[m.start() : end]:
-            out.append(Found(m.start(), end))
-    return out
+    return [t for t in tokens(text) if "," in text[t.start : t.end]]
 
 
 def _opener() -> urllib.request.OpenerDirector:
@@ -139,10 +123,8 @@ def find_items() -> None:
     out = []
     for src in json.loads((HERE / "sources.json").read_text())["sources"]:
         text = (HERE / "docs" / f"{src['id']}.txt").read_text(encoding="utf-8")
-        for f in commas_in(text)[:PER_DOC]:
-            out.append(
-                {"id": f"{src['id']}:{f.start()}", "doc": src["id"], "span": [f.start(), f.end()]}
-            )
+        for t in commas_in(text)[:PER_DOC]:
+            out.append({"id": f"{src['id']}:{t.start}", "doc": src["id"], "span": [t.start, t.end]})
     (HERE / "items.json").write_text(json.dumps(out, indent=1) + "\n")
     print(f"wrote items.json: {len(out)} tokens in {len({i['doc'] for i in out})} documents")
 

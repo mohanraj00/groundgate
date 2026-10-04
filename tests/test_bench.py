@@ -564,8 +564,8 @@ def test_an_india_token_is_a_number_token_with_a_comma() -> None:
     sys.path.insert(0, str(BENCH / "india"))
     import india
 
-    text = "Rs 2,00,000 and 1,2,3, then 5,000, x12,3 and 7."
-    assert [text[f.start() : f.end()] for f in india.commas_in(text)] == [
+    text = "Rs 2,00,000 and 1,2,3, then 5,000, x12,3, page-width,-16,842 and 7."
+    assert [text[t.start : t.end] for t in india.commas_in(text)] == [
         "2,00,000",
         "1,2,3",
         "5,000",

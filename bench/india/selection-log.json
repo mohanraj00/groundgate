@@ -931,7 +931,7 @@
  {
   "kind": "sebi",
   "id": "sebi-90698",
-  "skip": "unreadable: IncompleteRead"
+  "skip": "no pair"
  },
  {
   "kind": "sebi",
@@ -1353,10 +1353,7 @@
  {
   "kind": "sebi",
   "id": "sebi-84748",
-  "pages": [
-   2
-  ],
-  "pairs": 1
+  "skip": "no pair"
  },
  {
   "kind": "sebi",

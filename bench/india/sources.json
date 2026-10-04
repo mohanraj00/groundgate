@@ -476,20 +476,6 @@
       }
     },
     {
-      "id": "sebi-84748",
-      "kind": "sebi",
-      "groups": [
-        "india"
-      ],
-      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jul-2024/1720795024197.pdf",
-      "sha256": "07a2a73ff24bc9bfed9d17eda9c9a7db88ef8e8856966275b68d6fdcfcb985b1",
-      "select": {
-        "pages": [
-          2
-        ]
-      }
-    },
-    {
       "id": "sebi-84633",
       "kind": "sebi",
       "groups": [
