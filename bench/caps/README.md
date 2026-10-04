@@ -24,11 +24,12 @@ letter, with at most one line break between. These are the dots that spec 0.3 wi
 keeps as sentence ends. A dot inside a Federal Register running head does not count, as in the
 dots set.
 
-A dot also does not count when an earlier dot of the set had the same text around it: 100 code
-points on each side, with each whitespace run read as one space. Federal Register rules share
-printed pages, and IRS publications repeat paragraphs, so the same dot can turn up in two
-documents. A review of #82 found repeated Federal Register dots in the first pick, and the pick
-ran again before anyone read the text.
+A dot also does not count when an earlier dot of the set, or a caps dot anywhere in the documents
+of the dots set, had the same text around it: 100 code points on each side, with each whitespace
+run read as one space. Federal Register rules share printed pages, and IRS publications repeat
+paragraphs, so the same dot can turn up in two documents, and the dots set is where #77 was
+found. Two reviews of #82 found these repeats, and the pick ran again each time before anyone
+read the text.
 
 ## What is excluded
 

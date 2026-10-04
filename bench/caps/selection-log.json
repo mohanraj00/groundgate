@@ -32,10 +32,7 @@
  {
   "kind": "irs",
   "id": "irs-p584",
-  "pages": [
-   2
-  ],
-  "pairs": 1
+  "skip": "no pair"
  },
  {
   "kind": "irs",

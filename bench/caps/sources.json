@@ -45,20 +45,6 @@
       }
     },
     {
-      "id": "irs-p584",
-      "kind": "irs",
-      "groups": [
-        "dots"
-      ],
-      "url": "https://www.irs.gov/pub/irs-pdf/p584.pdf",
-      "sha256": "7a1a7b247aac764bbd82b75d308177e72d1bb1c11e37b318dd87ac9f5503c3ef",
-      "select": {
-        "pages": [
-          2
-        ]
-      }
-    },
-    {
       "id": "irs-p587",
       "kind": "irs",
       "groups": [

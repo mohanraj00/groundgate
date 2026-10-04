@@ -47,17 +47,31 @@ def caps_in(text: str) -> list[re.Match[str]]:
     return [m for m in CAP_DOT.finditer(text) if not any(a <= m.start() < b for a, b in heads)]
 
 
-def fresh_finder() -> Callable[[str], list[re.Match[str]]]:
-    """A finder of the caps dots on a page that passes over a dot when an earlier dot had the
-    same text, CONTEXT code points on each side, whitespace runs read as one space. Federal
-    Register rules share printed pages, and IRS publications repeat paragraphs, so the same dot
-    can turn up in two documents."""
-    seen: set[str] = set()
+def dot_key(page: str, m: re.Match[str]) -> str:
+    """The text around a dot: CONTEXT code points on each side, whitespace runs read as one
+    space."""
+    return " ".join(page[max(0, m.start() - CONTEXT) : m.end() + CONTEXT].split())
+
+
+def dots_set_keys() -> set[str]:
+    """The text around every caps dot in the documents of the dots set, where #77 was found."""
+    keys = set()
+    for path in sorted((HERE.parent / "dots" / "docs").glob("*.txt")):
+        for page in path.read_text(encoding="utf-8").split("\f"):
+            keys |= {dot_key(page, m) for m in caps_in(page)}
+    return keys
+
+
+def fresh_finder(seen: set[str] | None = None) -> Callable[[str], list[re.Match[str]]]:
+    """A finder of the caps dots on a page that passes over a dot when an earlier dot, or a dot
+    in ``seen``, had the same text around it. Federal Register rules share printed pages, and
+    IRS publications repeat paragraphs, so the same dot can turn up in two documents."""
+    seen = set(seen or ())
 
     def find(page: str) -> list[re.Match[str]]:
         out = []
         for m in caps_in(page):
-            key = " ".join(page[max(0, m.start() - CONTEXT) : m.end() + CONTEXT].split())
+            key = dot_key(page, m)
             if key not in seen:
                 seen.add(key)
                 out.append(m)
@@ -87,7 +101,12 @@ def pick(count_only: bool) -> None:
     pubs, frs = excluded()
     log: list[dict[str, Any]] = []
     seen: dict[str, str] = {}
-    limits = {"find": fresh_finder(), "per_kind": PER_KIND, "per_doc": PER_DOC, "group": "dots"}
+    limits = {
+        "find": fresh_finder(dots_set_keys()),
+        "per_kind": PER_KIND,
+        "per_doc": PER_DOC,
+        "group": "dots",
+    }
     irs = [(f"irs-p{n.lower()}", u) for n, u in walk.irs_publications()]
     irs = [(i, u) for i, u in irs if i not in pubs]
     sources = pairs.pick_pdfs("irs", irs, log, seen, **limits)
@@ -119,7 +138,7 @@ def find_items() -> None:
     """items.json: the first PER_DOC caps dots of each document, as the code point offset of the
     abbreviation and of its dot in docs/<id>.txt."""
     out = []
-    find = fresh_finder()  # the same pages in the same order as the pick, so the same dots
+    find = fresh_finder(dots_set_keys())  # the same pages and order as the pick: the same dots
     for src in json.loads((HERE / "sources.json").read_text())["sources"]:
         text = (HERE / "docs" / f"{src['id']}.txt").read_text(encoding="utf-8")
         spans, pos = [], 0
