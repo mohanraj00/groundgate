@@ -88,6 +88,13 @@ numbers right in each locale, and the model can help with the words. All models 
 low-resource languages (an 86.7% score for Jev over 122 languages in the paper below), so a
 language without a measured pack still needs a person.
 
+TypeSafe's own page on the weak spots of Jev 1.13 says the same. It says that "Jev is not a
+calculator", that it "does not count reliably", and that it cannot "reliably judge whether two
+values are near each other". It advises against "asking the model something code can compute
+exactly". It also says that questions with double negatives are "answered less reliably", which
+is one more reason for rule 8 in §4, and that "accuracy falls as the state grows with content
+unrelated to the decision", which is the reason for rule 10.
+
 ### Why a System 1 model
 
 A System 1 model answers a typed question in one forward pass, with no generated text. The two
@@ -209,6 +216,56 @@ The Laya README says that its answers have the same schema as Jev's, so a Jev cl
 different base URL. One adapter can then serve both: Laya on the local machine and Jev on the
 hosted API.
 
+### A local model trained for groundgate's questions
+
+Comments on Hacker News explain Laya's weak first check. I could not verify who wrote them. One
+commenter says that Laya "is designed to be fine-tuned for a specific task": its base model scores
+"around 0.35 on the typed-decisions benchmark, which is close to random", the 0.766 figure "comes
+from fine-tuning on the benchmark's train split", and one temperature for each question type
+"cuts expected calibration error from 0.466 to 0.081". The trade-off is that "Jev can take on a
+new task without retraining", and Laya stays small and trainable for a fixed task.
+
+groundgate has a few fixed question kinds, so a local model trained for them is a real option.
+Live use would then have a model that is local, free, repeatable and private.
+
+1. Labels for each question kind come from people: the gold of benchmark sets and the decisions in
+   reviews (mode D in §7).
+2. A small open model is fine-tuned on those labels, one model or one head for each question
+   kind.
+3. One temperature for each question kind calibrates it. The Laya package has the tools:
+   `fit_temperature_map`, `fit_abstention_thresholds` and `ece_score`.
+4. The test uses human gold that the training never saw.
+
+**Jev's answers cannot be the labels.** TypeSafe's Master Customer Agreement (updated 23 September
+2026), section 2.3(b), forbids the use of "the Services or any Output to perform model
+distillation, train a model to imitate the output of the Services". The agreement covers API key
+users. So Jev can help a person in development, for example to sort escapes or to check gold after
+the blind pass, but its answers never go into a training set. I am not a lawyer. If a label that a
+person confirmed with Jev's answer in view counts as Output, it must stay out too, so the safe rule
+is: training labels come only from decisions made without Jev's answers in view.
+
+The same agreement gives the customer the Output (section 4.2), and TypeSafe does not train on
+customer data without consent (section 4.1). Its privacy policy says that TypeSafe will "not train
+or fine tune" any model on the input.
+
+**A student copies its teacher.** A model trained on another model's answers learns that model's
+errors. Human labels avoid that, and the test on human gold shows what is left.
+
+**Candidates for the local model.**
+
+| | Laya | Jeff |
+|---|---|---|
+| Base | ModernBERT-large (421M) or mmBERT-base (322M) | Qwen3.5 0.8B or 2B, or Gemma4 E2B |
+| Training | Reinforcement learning against proper scoring rules | Started as a fork of AutoJev; training data from Qwen3.8 models; not distilled from Jev |
+| Licence | Apache-2.0 | Code MIT, weights Apache-2.0 |
+| Runs on | CPU, CUDA, Apple Silicon | CUDA, Apple Silicon (MLX), CPU |
+| Reported | 0.766 on its own benchmark after fine-tuning | 78.7% on its panel, ECE 0.028 (0.8B, v1.2); 22 ms median on a GPU |
+| Languages | 51 tested | English only |
+| Maturity | Release 0.3.26 | v1.2 on 1 October 2026, 14 commits |
+
+The Jeff figures come from its README, and I have not run it. A larger base model carries more
+general knowledge, which is what the Laya critics say that Laya lacks. #67 measures both.
+
 ## 4. The rules that keep the guarantees
 
 The decision stays a pure function. A model's answer is an input to it, like a candidate.
@@ -240,6 +297,10 @@ The decision stays a pure function. A model's answer is an input to it, like a c
    invalid, because the thresholds belong to one model. For Jev, the policy names the version
    that the response reports, for example `jev-1.13.0`. When a hosted version is retired, its
    thresholds go with it, and the new version needs a new measurement.
+10. **A question carries the smallest text that answers it.** That is the value's sentence, and
+    the nearest heading for a key question. It is never the whole document. Accuracy falls when
+    the text contains material that is not related to the question, and less text also costs
+    less and sends less out of the machine.
 
 The vectors can include model answers as inputs. Another implementation then proves that it
 agrees on the decision function without the model.
@@ -499,6 +560,7 @@ documents and a high review cost accepts lower ones.
 | 0 | The judgment record, the `Judge` interface and recorded answers in the receipt. No model ships. | None |
 | 1 | Development tools with Jev on public documents: escape sorting, the gold check after the blind pass, pack drafts. | Maintainer time |
 | 2 | The measurement in #67. | None, but it sets every later number |
+| 2b | A local model fine-tuned on human labels for each question kind (§3). | The hosted judge in live use |
 | 3 | Live clearing for the measured flags, probably `QUALIFIED_VALUE`, `KEY_NOT_AT_VALUE` and `NON_VERBATIM_EVIDENCE`. | Reviews of correct values |
 | 4 | The field-match doubt check. | Escapes, for more reviews |
 | 5 | Locate and repair: `EVIDENCE_LOCATED`, coverage help. | Lost recall |
@@ -521,3 +583,5 @@ documents and a high review cost accepts lower ones.
 8. Do two identical Jev calls give the same probabilities? The documentation does not say, and it
    has no temperature or seed parameter. A third-party explainer says that they should. In the
    first check, 9 of 32 probabilities moved; in a later test of extreme answers, none moved.
+9. Does a label that a person confirmed with Jev's answer in view count as Jev Output under the
+   agreement? Until a lawyer or TypeSafe says no, such labels stay out of any training set.
