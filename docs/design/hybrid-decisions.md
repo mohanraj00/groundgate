@@ -73,6 +73,21 @@ time.
 | System 1 model | Reads meaning. Many languages. Typed answers with a probability. | Wrong some of the time. Needs a measurement for each question. | Low |
 | Person | The final authority. | Slow and expensive. | High |
 
+### Scripts do the numbers, the model does the words
+
+The two deciders are strong in different places. The scripts are exact on numbers: values,
+groupings, units, scale words and spans. A System 1 model is weak there: an independent explainer
+of Jev names arithmetic and counting as "weak spots". The model is strong on words: qualifiers,
+keys, and whether a sentence states a field. The scripts are weak there, and they see one
+language at a time.
+
+So the split of work follows that line. A model never decides what a number is, what its unit is,
+or whether it is in the span. Those stay proofs. A model reads only the words around a number that
+the scripts have already read. This also limits the locale work in #60: a pack must get the
+numbers right in each locale, and the model can help with the words. All models do worse on
+low-resource languages (an 86.7% score for Jev over 122 languages in the paper below), so a
+language without a measured pack still needs a person.
+
 ### Why a System 1 model
 
 A System 1 model answers a typed question in one forward pass, with no generated text. The two
@@ -149,8 +164,46 @@ a measurement (#67). The sentences are short and clean, unlike real documents.
   versions are retired, a pinned threshold stops working with its version. Rule 9 in §4 covers
   both.
 - Each Jev response reports output tokens, for example 88 for one question. Jev does not charge
-  for them, and the documentation does not explain them. I do not know what they are, for a model described as System 1, or whether they
-  explain why the probabilities move between runs (§12).
+  for them. A later test explains them (below).
+
+### What independent sources say about Jev
+
+An evaluation paper (Deußer, Sparrenberg and Sifa, arXiv 2609.37647, 29 September 2026) tested
+`jev-1.13.0`, the version that I tested, on 37 datasets with 346,009 requests for less than USD
+10. A third-party explainer by Victor Dibia describes how Jev works. Neither is TypeSafe
+material.
+
+- **How Jev answers.** Jev does not generate text. It scores each option by its token
+  probabilities and normalises the scores so that they sum to 1 (explainer).
+- **Calibration.** Over 22 choice datasets and 279,925 answers, the calibration error (ECE) is
+  0.028. For single datasets it is from 0.003 to 0.279. Yes/no answers are slightly
+  under-confident: a mean of 0.465 against an observed rate of 0.518 (paper). One global
+  threshold is therefore not safe. Each question kind needs its own (§9).
+- **Selective answers.** When Jev answers only its most confident half of the items, accuracy
+  rises: Banking77 from 79.7% to 96.3%, MMLU to 98.1% (paper). That is the mechanism of stage 3:
+  clear a flag only above a measured threshold.
+- **Weak spots.** Arithmetic and counting (explainer), and low-resource languages (paper).
+- **Limits.** 255 options for each choice, and 70 to 500 ms for each call (explainer).
+
+**Output tokens.** I called `jev-1.13.0` with four question shapes, three times each:
+
+| Question | Input tokens | Output tokens |
+|---|---|---|
+| Choice, 3 options, no descriptions | 333 | 44 |
+| Choice, 3 options, long descriptions | 394 | 44 |
+| Choice, 9 options, no descriptions | 373 | 90 |
+| Yes/no | 307 | 20 |
+
+The output tokens grow by about 8 for each option and do not change with the length of the
+descriptions. They seem to count the returned answer, not generated text. That is my inference,
+and TypeSafe has not confirmed it. They are free, so they do not change the cost.
+
+**Repeatability.** The explainer says that identical calls should be deterministic, because Jev
+has no temperature or seed. That is a conclusion from how Jev works, not a measurement. In this
+test, all three calls of each shape gave the same answers and probabilities, but those
+probabilities were at the extremes (1.00 and 0.96), where rounding to two decimals hides small
+changes. In the first check, 9 of 32 probabilities moved between two runs, mostly in the middle of
+the range. Rule 7 in §4 stays: only recorded answers make a receipt re-derive byte for byte.
 
 The Laya README says that its answers have the same schema as Jev's, so a Jev client needs only a
 different base URL. One adapter can then serve both: Laya on the local machine and Jev on the
@@ -414,7 +467,10 @@ For each flag, locale and model digest:
    rate among cleared values is below the ceiling that the user sets.
 3. Report the escape rate and the cleared fraction on the test part only.
 4. Check the calibration: a probability of 0.9 must mean about 90% correct. Laya says that it is
-   trained against proper scoring rules. That is a claim to measure, not to assume.
+   trained against proper scoring rules. That is a claim to measure, not to assume. For Jev, the
+   paper in §3 found a pooled error of 0.028, but from 0.003 to 0.279 for single datasets. So
+   the calibration is checked for each question kind on groundgate's own text, and never taken
+   from a pooled number.
 
 The total cost is then a choice for each user: escapes × the cost of an escape + reviews × the
 cost of a review. A team that pays a lot for an escape sets high thresholds. A team with many
@@ -458,9 +514,10 @@ documents and a high review cost accepts lower ones.
 4. Which judge is the default for live use, Jev or Laya? #67 decides it. Development work on
    public documents uses Jev (§3).
 5. Is the field-match check (§5) worth its added review? #67 answers this with numbers.
-6. What are the output tokens in a Jev response? They cost nothing, but they can explain why
-   Jev's probabilities move between runs. This is a question for TypeSafe.
+6. Mostly answered: Jev's output tokens are free, and they seem to count the returned answer
+   (§3). TypeSafe can confirm it.
 7. How long does TypeSafe serve an old Jev version? The Models page advises pinning, but it says
    nothing about retirement.
 8. Do two identical Jev calls give the same probabilities? The documentation does not say, and it
-   has no temperature or seed parameter. In the first check, 9 of 32 probabilities moved.
+   has no temperature or seed parameter. A third-party explainer says that they should. In the
+   first check, 9 of 32 probabilities moved; in a later test of extreme answers, none moved.
