@@ -244,6 +244,10 @@ the blind pass, but its answers never go into a training set. I am not a lawyer.
 person confirmed with Jev's answer in view counts as Output, it must stay out too, so the safe rule
 is: training labels come only from decisions made without Jev's answers in view.
 
+The model outputs in the `bench/` runs are never training data either. Anthropic's Usage Policy
+forbids training an AI model on Claude inputs and outputs without Anthropic's prior authorization,
+and the runs of other hosted models have their own terms.
+
 The same agreement gives the customer the Output (section 4.2), and TypeSafe does not train on
 customer data without consent (section 4.1). Its privacy policy says that TypeSafe will "not train
 or fine tune" any model on the input.
