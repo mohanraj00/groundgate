@@ -1,0 +1,248 @@
+rule) if both countries consider you to be a resi-
+dent under their domestic tax laws (a dual-resi-
+dent taxpayer).
+
+Dual-resident taxpayers who are Canadian
+residents under a tie-breaker rule. If you
+are a dual-resident taxpayer because you have
+a U.S. green card but you determine under the
+tie-breaker rule that you are a resident of Can-
+ada, you may claim treaty benefits and compute
+your U.S. income tax as a nonresident alien.
+But you must file a U.S. income tax return by
+the due date (including extensions) using Form
+1040NR or Form 1040NR-EZ. You must also
+completed Form 8833,
+attach a
+Treaty-Based Return Position Disclosure Under
+Section 6114 or 7701(b). For more information,
+see Pub. 519, U.S. Tax Guide for Aliens.
+
+fully
+
+Dual-resident taxpayers who are not Cana-
+dian residents under a tie-breaker rule. If
+you are a dual resident of the United States and
+a third country and derive income from Canada,
+you can only claim treaty benefits from Canada
+if you have a substantial presence, permanent
+home or habitual abode in the United States,
+and your personal and economic relations are
+closer to the United States than to any third
+state.
+
+If you are a U.S. citizen or green card holder
+living in Canada, you still have to file a Form
+1040 and report your worldwide income be-
+cause of the “saving clause” in Article XXIX(2),
+which allows the United States to tax its citizens
+and residents as if the treaty had not entered
+into effect. There are limited exceptions to the
+saving clause, which means certain types of in-
+come may be exempt from tax in the United
+States. Exceptions to the saving clause can be
+found in Article XXIX, paragraph 3.
+
+Special foreign tax credit rules for U.S. citi-
+zens residing in Canada. If you are a U.S.
+citizen and a resident of Canada, special for-
+eign tax credit rules may apply to relieve double
+tax on income from the United States. See Arti-
+cle XXIV(3), (4) and (5). For more information
+about foreign tax credit rules generally, see In-
+come Tax Credits, later.
+
+Example. As a U.S. citizen residing in Can-
+ada, you have dividend income from a U.S. cor-
+poration. Canada will tax you on your worldwide
+income, including your U.S. dividend income.
+As a resident of Canada under the treaty you
+can claim a reduced withholding rate from the
+United States on the dividend income (15%)
+rather than 30%, and Canada generally allows
+you to deduct the U.S. withholding tax from your
+Canadian tax on that income. However, you still
+need to file a U.S. income tax return and report
+your worldwide income, and pay any residual
+tax to the United States, to the extent it exceeds
+the U.S. tax withheld and the Canadian tax paid
+with respect to the income.
+
+Income from self-employment (Article VII).
+Income from services performed (other than
+those performed as an employee) are taxed in
+Canada if they are attributable to a permanent
+establishment
+is
+treated as business profits, and taxable on a net
+basis in Canada in accordance with Article
+VII(3).
+
+in Canada. This
+
+income
+
+Page 2
+
+If you carry on (or have carried on) business
+in Canada through a permanent establishment,
+Canada may tax the profits the permanent es-
+tablishment might be expected to make if it
+were a distinct and separate person. The busi-
+ness profits attributable to the permanent estab-
+lishment include only those profits derived from
+assets used, risks assumed, and activities per-
+formed by the permanent establishment.
+
+You may be considered to have a perma-
+nent establishment if you meet certain condi-
+tions. For more information, see Article V (Per-
+manent Establishment)
+and Article VII
+(Business Profits).
+
+Services permanent establishment (Article
+V Paragraph 9). Under paragraph 9 of Article
+V, if you, or your enterprise, provide services in
+Canada, you may be treated as providing them
+through a permanent establishment in Canada
+even if you do not have a fixed base in Canada
+from which you operate. This rule applies, how-
+ever, only if:
+
+1. You are present in Canada for more than
+183 days in a 12-month period, and, dur-
+ing that period or periods, more than 50
+percent of your gross active business rev-
+enues consist of income derived from your
+services performed in Canada; or
+
+2. Your enterprise provides services in Can-
+ada for an aggregate of 183 days or more
+in any 12-month period with respect to the
+same or connected project for customers
+who are either residents of Canada or who
+maintain a permanent establishment in
+Canada and your services are provided in
+respect of that permanent establishment.
+This rule applies to tax years beginning af-
+ter January 1, 2010.
+
+Personal Services
+
+A U.S. citizen or resident who is temporarily
+present in Canada during the tax year is exempt
+from Canadian income taxes on pay for serv-
+ices performed, or remittances received from
+the United States, if the citizen or resident quali-
+fies under one of the treaty exemption provi-
+sions set out below.
+
+Income from employment (Article XV). In-
+come U.S. residents receive for the perform-
+ance of dependent personal services in Canada
+(except as public entertainers) is exempt from
+Canadian tax if it is not more than $10,000 in
+Canadian currency for the year. If it is more than
+$10,000 for the year, it is exempt only if:
+
+1. The residents are present in Canada for
+no more than 183 days in any 12-month
+period beginning or ending in the year
+concerned, and
+
+2. The income is not paid by, or on behalf of,
+a Canadian resident and is not borne by a
+permanent establishment in Canada.
+
+Whether there is a permanent estab-
+lishment in Canada is determined by
+the rules set forth in Article V.
+
+Example. You are a U.S. resident em-
+ployed under an 8-month contract with a Cana-
+dian firm to install equipment in their Montreal
+plant. During the calendar year you were physi-
+cally present in Canada for 179 days and were
+paid $16,500 (Canadian) for your services. Al-
+though you were in Canada for not more than
+183 days during the year, your income is not ex-
+empt from Canadian income tax because it was
+paid by a Canadian resident and was more than
+$10,000 (Canadian) for the year.
+
+Pay received by a U.S. resident for work
+regularly done in more than one country as an
+employee on a ship, aircraft, motor vehicle, or
+train operated by a U.S. resident is exempt from
+Canadian tax.
+
+Income from self-employment (Article VII).
+Income from services performed (other than
+those performed as an employee) are taxed in
+Canada if they are attributable to a permanent
+establishment
+is
+treated as business profits, and deductions sim-
+ilar to those allowed under U.S. law are allowa-
+ble.
+
+in Canada. This
+
+income
+
+If you carry on (or have carried on) business
+in both Canada and the United States, the busi-
+ness profits are attributable to each country
+based on the profits that the permanent estab-
+lishment might be expected to make if it were a
+distinct and separate person engaged in the
+same or similar activities. The business profits
+attributable to the permanent establishment in-
+clude only those profits derived from assets
+used, risks assumed, and activities performed
+by the permanent establishment.
+
+You may be considered to have a perma-
+nent establishment if you meet certain condi-
+tions. For more information, see Article V (Per-
+manent Establishment)
+and Article VII
+(Business Profits).
+
+Public entertainers (Article XVI). The provi-
+sions under income from employment or in-
+come from self-employment do not apply to
+public entertainers (such as theater, motion pic-
+ture, radio, or television artistes, musicians, or
+athletes) from the United States who receive
+more than $15,000 in gross receipts in Cana-
+dian currency, including reimbursed expenses,
+from their entertainment activities in Canada
+during the calendar year. However, this provi-
+sion for public entertainers does not apply (and
+the other provisions will apply) to athletes par-
+ticipating in team sports in leagues with regu-
+larly scheduled games in both the United States
+and Canada.
+
+Compensation paid by the U.S. Govern-
+ment (Article XIX). Wages, salaries, and simi-
+lar income (other than pensions) paid to a U.S.
+citizen by the United States or any of its agen-
+cies, instrumentalities, or political subdivisions
+for discharging governmental functions are ex-
+empt from Canadian income tax.
+
+The exemption does not apply to pay for
+services performed in connection with any trade
+or business carried on for profit by the United
+States, or any of its agencies, instrumentalities,
+or political subdivisions.
+
+Students and apprentices (Article XX). A
+full-time student, apprentice, or business
+
+Publication 597 (October 2015)
+
+TIP

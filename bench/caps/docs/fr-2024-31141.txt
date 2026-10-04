@@ -1,0 +1,1103 @@
+Federal Register / Vol. 89, No. 249 / Monday, December 30, 2024 / Rules and Regulations
+
+106365
+
+ACTION: Interim rule; extension of
+comment period.
+
+SUMMARY: DoD, GSA, and NASA issued
+an interim rule on November 12, 2024,
+amending the Federal Acquisition
+Regulation (FAR) to implement a
+prohibition on the procurement and
+operation of unmanned aircraft systems
+manufactured or assembled by an
+American Security Drone Act-covered
+foreign entity. The deadline for
+submitting comments is being extended
+from January 13, 2025, to January 27,
+2025, to provide additional time for
+interested parties to provide comments
+on the proposed rule. The effective date
+of this rule is not being changed and
+remains November 12, 2024.
+DATES: For the interim rule published
+on November 12, 2024, (89 FR 89464),
+the deadline to submit comments is
+extended. Submit comments by January
+27, 2025.
+ADDRESSES: Submit comments in
+response to FAC 2025–01, FAR Case
+2024–002 to the Federal eRulemaking
+portal at https://www.regulations.gov by
+searching for ‘‘FAR Case 2024–002’’.
+Select the link ‘‘Comment Now’’ that
+corresponds with ‘‘FAR Case 2024–
+002’’. Follow the instructions provided
+on the ‘‘Comment Now’’ screen. Please
+include your name, company name (if
+any), and ‘‘FAR Case 2024–002’’ on your
+attached document. If your comment
+cannot be submitted using https://
+www.regulations.gov, call or email the
+points of contact in the FOR FURTHER
+INFORMATION CONTACT section of this
+document for alternate instructions.
+
+Instructions: Please submit comments
+
+only and cite ‘‘FAR Case 2024–002’’ in
+all correspondence related to this case.
+Comments received generally will be
+posted without change to https://
+www.regulations.gov, including any
+personal and/or business confidential
+information provided. Public comments
+may be submitted as an individual, as
+an organization, or anonymously (see
+frequently asked questions at https://
+www.regulations.gov/faq). To confirm
+receipt of your comment(s), please
+check https://www.regulations.gov,
+approximately two-to-three days after
+submission to verify posting.
+FOR FURTHER INFORMATION CONTACT: For
+clarification of content, contact Mr.
+Benjamin Collins, Procurement Analyst,
+at 850–826–0058 or by email at
+benjamin.collins@gsa.gov. For
+information pertaining to status,
+publication schedules, or alternate
+instructions for submitting comments if
+https://www.regulations.gov cannot be
+used, contact the Regulatory Secretariat
+Division at 202–501–4755 or
+
+GSARegSec@gsa.gov. Please cite FAC
+2025–01, FAR Case 2024–002.
+SUPPLEMENTARY INFORMATION:
+
+I. Background
+
+DoD, GSA, and NASA published an
+interim rule in the Federal Register at
+89 FR 89464 on November 12, 2024. The
+comment period is extended to January
+27, 2025, to allow additional time for
+interested parties to develop comments
+on this rule. The effective date of this
+rule is not being changed and remains
+November 12, 2024.
+
+List of Subjects in 48 CFR Parts 4, 13,
+39, 40, and 52
+
+Government procurement.
+
+William F. Clark,
+Director, Office of Government-wide
+Acquisition Policy, Office of Acquisition
+Policy, Office of Government-wide Policy.
+[FR Doc. 2024–30937 Filed 12–27–24; 8:45 am]
+
+BILLING CODE 6820–EP–P
+
+DEPARTMENT OF
+TRANSPORTANTION
+
+National Highway Traffic Safety
+Administration
+
+49 CFR Part 571
+
+[[Docket No. NHTSA–2022–0013]
+
+Federal Motor Vehicle Safety
+Standards; Lamps, Reflective Devices,
+and Associated Equipment, Adaptive
+Driving Beam Headlamps
+
+AGENCY: National Highway Traffic
+Safety Administration (NHTSA or the
+Agency), Department of Transportation
+(DOT).
+ACTION: Denial of petitions for
+reconsideration.
+
+SUMMARY: This document responds to
+the petitions for reconsideration of the
+February 22, 2022, final rule that
+amended Federal Motor Vehicle Safety
+Standard (FMVSS) No. 108, ‘‘Lamps,
+reflective devices, and associated
+equipment,’’ to enable certification of
+adaptive driving beam (ADB)
+headlighting systems on vehicles sold in
+the United States. This document denies
+all petitions for reconsideration received
+in response to the final rule.
+DATES: December 30, 2024.
+FOR FURTHER INFORMATION CONTACT: For
+non-legal issues, you may contact Adam
+Lowery, Office of Crash Avoidance
+Standards, Telephone: (202) 366–1810,
+Email: Adam.Lowery@dot.gov; For legal
+issues, you may contact Evita St. Andre,
+Office of Chief Counsel, Telephone:
+(202) 366–2992, Email: Evita.St.Andre@
+
+dot.gov. The mailing address for these
+officials is: The National Highway
+Traffic Safety Administration, 1200 New
+Jersey Ave. SE, Washington, DC 20590.
+SUPPLEMENTARY INFORMATION:
+
+Table of Contents
+
+I. Background
+
+A. Notice of Proposed Rulemaking
+B. Final Rule
+
+II. Petitions for Reconsideration
+
+A. Stimulus Headlamps Aiming
+B. Allow Representative Vehicles as
+Stimulus for Compliance Testing
+
+C. ADB System Component-Level
+
+Photometric Requirements
+
+D. ADB Photometry Requirements
+E. Transition Zone
+F. Other
+
+III. Petition of Reconsideration That is Out of
+
+Scope
+IV. Clarification
+V. Conclusion
+
+I. Background
+
+Beam switching technology was first
+
+introduced into vehicles sold in the
+United States in the 1950s and was
+limited simply to switching between
+upper and lower beams. An adaptive
+driving beam (ADB) is an advanced type
+of semiautomatic headlamp beam
+switching technology. It uses advanced
+sensing and computing technology to
+identify oncoming and preceding traffic
+and actively adapt the beam pattern to
+limit at lower beam levels any light
+shining toward those vehicles while
+continuing to direct high intensity light
+to other areas of the roadway. This
+dynamic beam pattern was not
+previously permitted by NHTSA’s
+lighting standard. As such, in 2013,
+Toyota petitioned NHTSA to modify the
+standard to permit ADB headlighting
+systems.
+
+A. Notice of Proposed Rulemaking
+
+NHTSA published a Notice of
+Proposed Rulemaking (NPRM) on
+October 12, 2018, proposing to amend
+NHTSA’s lighting standard, FMVSS No.
+108, ‘‘Lamps, reflective devices, and
+associated equipment,’’ in response to a
+petition that raised concerns that the
+standard’s beam pattern (photometry)
+requirements would not permit the
+enhanced beam that ADB headlighting
+systems provide.^1 ADB headlamp
+technology dynamically modifies
+headlamp photometry to provide more
+illumination in certain areas in and
+around the roadway while reducing
+glare towards oncoming and preceding
+motorists. This dynamism is facilitated
+by the headlamps changing the lower
+beam pattern and increasing the usage
+of the upper beam, the effect of which
+
+1 83 FR 51766, (Oct. 12, 2018).
+
+VerDate Sep<11>2014 21:04 Dec 27, 2024 Jkt 265001 PO 00000 Frm 00135 Fmt 4700 Sfmt 4700 E:\FR\FM\30DER1.SGM 30DER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+3
+2
+N
+R
+0
+2
+1
+K
+S
+D
+n
+o
+
+r
+e
+
+l
+l
+
+e
+h
+m
+u
+r
+d
+d
+Federal Register / Vol. 89, No. 249 / Monday, December 30, 2024 / Rules and Regulations
+
+106369
+
+requirements for a lower beam.^22 In
+addition to the component-level
+photometric requirements, vehicles
+using ADB headlighting systems are
+required to maintain these standards
+while performing dynamic testing on a
+track. As a part of the track testing,
+FMVSS No. 108 specifies the use of
+ADB test fixtures, which each contain
+stimulus lamps and photometry
+sensors.^23 For an ADB headlamp,
+FMVSS No. 108 states the headlighting
+system must meet the photometry
+requirements of Table XXI (Adaptive
+Driving Beam Photometry
+Requirements) which sets the maximum
+illuminance within marked
+measurement distance intervals within a
+220 m range.^24
+
+Several petitioners 25 asserted that
+
+ADB headlighting systems cannot
+concurrently meet the requirements set
+forth in the component-level tests and
+the vehicle-level tests. The petitions
+stated that the maximum permitted
+illuminance values associated with
+specific driving scenarios (such as right
+curves, straight-path, etc.) were
+particularly difficult to meet while also
+maintaining the component-level
+photometric requirements. They
+suggested, among other actions, that
+vehicles with ADB systems may need to
+have their headlamps permanently
+aimed downward and/or mounted at
+specific heights to meet the ADB
+photometry requirements. IIHS asserted
+that NHTSA’s decision to apply left side
+beam pattern glare limits to the ADB
+headlighting system imposed an
+asymmetry during vehicle-level testing
+of right curves. IIHS stated that the more
+demanding requirements could only be
+satisfied with more advanced ADB
+systems.
+
+SAE, Stanley, and Koito each
+
+identified photometric test point 0.5U,
+1R–3R as an instance where the ADB
+maximum allowed illuminance values
+(glare limit) will fall below the
+headlamp lower beam photometric
+intensity minimum. SAE presented
+multiple right curve calculations to
+
+22 For instance, in accordance with Table XIX,
+headlamps observed at test point 0.5U, 1R–3R (deg)
+must abide by a minimum photometric intensity of
+500 cd and maximum photometric intensity of 2700
+cd.
+
+23 49 CFR 571.108 S14.9.3.12.3.1.
+24 See 49 CFR 571.108 S14.9.3.12.2. and 49 CFR
+
+571.108, Table XVIII (Headlamp Upper Beam
+Photometry Requirements), Table XXI (Adaptive
+Driving Beam Photometry Requirements). As an
+example: at distances less than 30 m and greater
+than or equal to 15 m, the maximum illuminance
+for an oncoming vehicle is 3.1 lux and the
+maximum illuminance for a same direction vehicle
+is 18.9 lux.
+
+25 Specifically SAE, Stanley, Toyota, Ford, TSEI,
+
+NAL, IIHS, Valeo, Volkswagen, Koito and the
+Alliance.
+
+support its claim. The first area in
+which SAE claimed conflicting
+requirements exist is at the lower beam
+photometric test line of 0.5U, 1R–3R.
+This particular lower beam photometric
+scan (laboratory) requires a minimum
+intensity of 500 cd throughout the line,
+while allowing a maximum of 2,700 cd
+anywhere along the line. During right
+curve ADB test scenarios, the
+photometer on the test fixture will have
+a relative travel path that will cross this
+same test line at some test distance (the
+distance varies with factors such as
+curve radius, headlamp mounting
+height, etc.). SAE stated that the
+dynamic vehicle test also imposes a
+glare limit on the same region of the
+beam pattern which it claimed does not
+match the corresponding component-
+level photometry requirement.
+
+In its petition, SAE presented an
+example showing a 400 m right curve
+and an ADB headlamp mounting height
+of 600 mm. In the example, the lower
+beam maximum of 2,700 cd (laboratory)
+along that line for a single headlamp
+would now be limited to 2,160 cd
+(track) from the pair of ADB headlamps.
+SAE further stated that dividing this
+value for each of the two headlamps
+results in approximately 1,080 cd from
+a single ADB headlamp imposed by the
+vehicle driving test requirements. SAE
+stated that the component-level
+minimum of 500 cd is also required for
+lower beams along that same
+photometric scan line. SAE described
+this smaller window of compliance as a
+conflict, claiming that an intensity not
+much greater than the minimum
+intensity required along the 0.5U, 1R–
+3R line would fail the ADB vehicle
+testing requirements. SAE also
+presented an example for a 210 m right
+curve and an ADB lamp mounting
+height of 800 mm where the upper limit
+would be approximately 1103 cd per
+ADB headlamp (track) along the same
+0.5U, 1R–3R line that again has a 500 cd
+minimum.
+
+SAE also presented an example for an
+
+area close to the lower beam test point
+of 2U–4L (Laboratory). SAE stated that
+this test point requires a minimum of
+135 cd. SAE further calculated that, for
+the 210 m right curve at an ADB
+mounting height of 600 mm, the lux
+meter position for the vehicle test would
+be very close to the 2U–4L point at 15
+m distance. The track test maxima
+require no greater than 700 cd from a
+pair of ADB headlamps, or 350 cd per
+ADB headlamp, which SAE stated
+allows only a small design window.
+TSEI stated its concurrence with
+
+SAE’s petition. It further stated that the
+glare and lower beam photometry
+requirements, along with the
+
+requirement for a 1-degree transition
+zone, deviate from the definition of ADB
+systems as an evolution of headlamp
+beam switching devices where specific
+zones of the upper beam are dimmed,
+leaving intensity of the dimmed zone at
+a level equal to the lower beam. TSEI
+stated that unless the ADB system is
+deactivated while performing on right
+curves, under the standard as currently
+written, the lower beam portion of the
+ADB system would need to be re-aimed
+downward or dimmed to comply. TSEI
+stated that either of those choices would
+reduce the performance and increase the
+cost of the system.
+
+Ford presented a comparison of the
+performance of compliant 2021 F–150
+headlamps while undertaking right
+curves, aimed nominally versus
+oriented 3 inches downward, to meet
+the glare limits of the final rule.^26 Ford’s
+comparison highlighted that the
+headlamps largely exceeded the
+maximum illuminance requirements
+defined in Table XXI at nominal, while
+the downwardly aimed headlamps met
+the requirements. For example, for
+distances less than 60 m and greater
+than or equal to 30 m the maximum
+illuminance requirement is 1.8 lux, yet
+the illuminance at nominal aim was 4.4
+lux and the illuminance when aimed 3
+inches down was 1.1 lux. In addition,
+when translated into forward visibility
+on a straight road, Ford determined that
+the downward aiming decreased the
+forward lower beam seeing distance by
+40.3%. For those reasons, Ford
+petitioned for the creation of a separate
+glare limit for right curves, in order to
+maintain a high level of road visibility
+for drivers. Ford also petitioned based
+on the IIHS’s Headlight Test & Rating
+Protocol 27 for updates of the
+illuminance values in Table XXI.^28
+Valeo asserted that currently
+compliant headlamps that meet
+photometric requirements would not
+meet the requirements in the standard
+on vehicles with higher mounting
+heights during same direction driving
+scenarios. Valeo performed an internal
+investigation with three headlamp
+mounting heights (750 mm, 900 mm,
+
+26 See Docket No. NHTSA–2022–0013–0016;
+
+Appendix A.
+
+27 See Insurance Institute for Highway Safety,
+
+Headlight Test & Rating Protocol, Ver. III (July
+2018), https://www.iihs.org/media/0e823704-32d1-
+4500-b095-15d064d824a7/ZJciYw/;.(last accessed
+Dec. 18, 2024)
+
+28 Ford suggests using the following values in
+Table XXI: for distances less than 30 m and greater
+than or equal to 15 m, a maximum illuminance for
+right curves of 7.1; for distances less than 60 m and
+greater than or equal to 30 m, a maximum
+illuminance for right curves of 4.8; and for
+distances less than 120 m and greater than or equal
+to 60 m, a maximum illuminance for right curves
+of 2.1.
+
+VerDate Sep<11>2014 21:04 Dec 27, 2024 Jkt 265001 PO 00000 Frm 00139 Fmt 4700 Sfmt 4700 E:\FR\FM\30DER1.SGM 30DER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+3
+2
+N
+R
+0
+2
+1
+K
+S
+D
+n
+o
+
+r
+e
+
+l
+l
+
+e
+h
+m
+u
+r
+d
+d
+106370
+
+Federal Register / Vol. 89, No. 249 / Monday, December 30, 2024 / Rules and Regulations
+
+and 1160 mm) to evaluate glare
+compliance for the vehicle rearview
+mirrors and driver’s eyes photometers at
+distances of 15 m, 30 m, 60 m, and 120
+m. Valeo composed photometric figures
+(Figures 5–7) on a coordinate system
+that showed the intensity (cd) from the
+left side headlamps of the outside
+rearview mirrors and driver’s eyes
+photometers during the same direction
+(straight-path) road test.^29 Figure 5
+showed a 750 mm headlamp mounting
+height, Figure 6 showed a 900 mm
+mounting height, and Figure 7 showed
+a 1160 mm mounting height. Each figure
+identified several points of interest,
+corresponding mirror and photometer
+locations, where Valeo calculated that
+the photometric intensity would exceed
+the bounds of the lower and upper beam
+photometric requirements, at a given
+distances, for the specified mounting
+height. As such, Valeo stated that it does
+not believe that redesigning the lower
+beam photometric output would resolve
+the issue, as recommended in the rule
+that permitted the installation of ADB
+systems. Instead, Valeo recommended
+that NHTSA change the glare
+requirements, so that they are calibrated
+to the headlamp being tested instead of
+it being a fixed value.
+
+Toyota presented a similar analysis,
+
+characterizing the pitch of a high-
+mounted lower beam versus normal
+aiming.^30 Toyota determined that
+headlamps positioned at a height of 1.1
+m would need to lower their vertical
+aiming angle by 1.41 degrees to meet the
+photometry requirements in the final
+rule. However, the adjusted vertical
+aiming angle would result in a roughly
+120 m reduction in forward visibility at
+3 lux of lower beam visibility, creating
+‘‘sub-optimal visibility’’ for the driver in
+the area of reduced intensity.
+
+The petitioners suggested that due to
+
+perceived conflict enabled by the
+narrow acceptable intensity margin
+presented in Table XIX (Headlamp
+Lower Beam Photometry Requirements)
+and XXI (Adaptive Driving Beam
+Photometry Requirements), NHTSA
+should allow industry stakeholders to
+dim or re-aim the lower beam during
+right curves. Several petitioners
+requested NHTSA consider aligning
+with SAE J3069, essentially providing
+the option to evaluate the ADB glare
+requirement by stipulating the
+illuminance of the ADB either not
+exceed the values listed in Table XXI or
+not exceed by more than 25% the
+illuminance produced by the same
+
+29 See Docket No. NHTSA–2022–0013–0010,
+
+Figures 5–7.
+
+30 See Docket No. NHTSA–2022–0013–0015,
+
+Figure 1.
+
+vehicle’s lower beam. Ford alternatively
+petitioned NHTSA to amend FMVSS
+No. 108 to reflect its own petitioned
+values for Table XXI, though Ford stated
+that it would request that NHTSA
+provide a phase-in period to allow
+vehicle manufacturers the time to
+validate the more stringent
+requirements.
+
+Agency Response
+
+NHTSA is denying the petitioners’
+requests to modify the track limits in
+Table XXI of FMVSS No. 108 by
+permitting ADB illuminance to exceed
+the vehicle’s lower beam illuminance by
+up to 25%. NHTSA is also denying
+Ford’s petitioned changes to Table XXI
+(Adaptive Driving Beam Photometry
+Requirements), to create separate
+standards for right and left opposite
+direction curves. Further modifications
+to FMVSS No. 108, such as those raised
+by the petitioners, are not necessary
+because options already exist for ADB
+systems to mitigate glare while adhering
+to the component-level photometric
+requirements. These flexibilities are
+available to the manufacturer and
+discussed below.
+
+NHTSA established photometry
+requirements for headlamp upper and
+lower beams in Table XVIII and Table
+XIX of the lighting standard (FMVSS
+No. 108), respectively. NHTSA
+standardizes vehicle headlamps to
+satisfy two safety needs: visibility and
+glare prevention. Headlamp lower
+beams are designed to provide relatively
+high levels of light in the close-in
+forward visibility region, and to provide
+reduced light intensity in longer-
+distance regions, where oncoming or
+preceding vehicles would be glared. The
+upper beams are designed to provide
+relatively high levels of illumination in
+both close-in and longer distance
+regions. For adaptive driving beams,
+NHTSA designated the photometry
+requirements, specified as a directional
+maximum illuminance per
+measurement distance interval, on the
+left or driver side of the vehicle. For
+example, over a measurement distance
+interval greater than or equal to 15.0 m
+and less than 30.0 m, the maximum
+illuminance for a vehicle in the opposite
+direction is 3.1 lux; for a vehicle driving
+in the same direction, the maximum
+illuminance is 18.9 lux.
+
+NHTSA reiterates that it currently
+allows vehicle manufacturers the option
+to dynamically re-aim headlamps
+during driving. Potential issues of glare
+due to headlamp mounting height can
+be addressed with the on-vehicle
+(dynamic) aim of the headlamps.
+NHTSA has previously explained that
+for headlamp systems capable of
+
+dynamically re-aiming the headlamps
+(e.g., based on the steering angle), the
+laboratory photometry requirements
+‘‘must be met in the nominal position of
+the lower beam headlamp (i.e.,
+considering the location of the axis of
+reference to coincide with the
+longitudinal axis of the vehicle).’’ 31
+
+With respect to the comments about
+vehicles equipped with high-mounted
+headlamps, the issue of glare is also
+present with respect to the lower beams
+on those vehicles. As such, those
+vehicles already tend to have their
+headlamps aimed downward to avoid
+glaring oncoming or preceding vehicles.
+Toyota contended that aiming beams
+downward would reduce seeing
+distance. However, this concern
+presumes that a manufacturer aims an
+entire system’s beams downward
+instead of aiming the adaptive driving
+beam only. If a manufacturer aims only
+the adaptive driving beam somewhat
+lower, that will likely have the greatest
+impact on areas of reduced intensity,
+not areas of unreduced intensity (due to
+the characteristics of lower beam and
+upper beam patterns). This would not
+likely have an outsized impact on seeing
+distance as Toyota suggests.
+
+Additionally, manufacturers have the
+
+flexibility to alter the vertical
+arrangement of the headlamps and/or
+light sources to mitigate glare. Vertical
+arrangement refers to the positioning of
+each headlamp when multiple
+headlamps are used. FMVSS No. 108
+S9.4.1.6.5 expressly permits the
+adaptive driving beam to be provided by
+any combination of headlamps,
+allowing ADB systems to produce the
+adaptive driving beam out of a
+headlamp that is mounted lower on the
+vehicle. This regulatory language
+directly addresses the concerns raised
+by commenters that cited high-mounted
+headlamps as causing a glare issue. Ford
+and the Alliance acknowledged this
+option in their comments to the
+NPRM.^32
+
+SAE, in its petition, calculated that
+
+during certain curve scenarios the
+maximum glare limits are less than the
+maximum allowed photometry values.
+Considering the example that results in
+the highest discrepancy based on the
+provided calculations (the 400 m right
+curve example), the maximum value at
+that test point is still more than twice
+
+31 See Letter to Kiminori Hyodo, Koito
+
+Manufacturing Co., Ltd. (Feb. 10, 2006), https://
+www.nhtsa.gov/interpretations/hyodob-3 (last
+accessed Dec. 18, 2024); see also 68 FR 7101 (Feb.
+12, 2003) (discussing application of laboratory
+photometry requirements to adaptive frontal-
+lighting systems).
+
+32 NHTSA–2018–0090–0162; NHTSA–2018–
+
+0090–0138.
+
+VerDate Sep<11>2014 21:04 Dec 27, 2024 Jkt 265001 PO 00000 Frm 00140 Fmt 4700 Sfmt 4700 E:\FR\FM\30DER1.SGM 30DER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+3
+2
+N
+R
+0
+2
+1
+K
+S
+D
+n
+o
+
+r
+e
+
+l
+l
+
+e
+h
+m
+u
+r
+d
+d
+Federal Register / Vol. 89, No. 249 / Monday, December 30, 2024 / Rules and Regulations
+
+106371
+
+the minimum at the same point (1,080
+cd from SAE calculations vs the 500 cd
+minimum in FMVSS No. 108). A 580 cd
+(1,080 cd–500 cd) range of intensity
+values is sufficient for the design of a
+compliant ADB lamp, especially
+considering that the ADB system could
+dynamically re-aim in order to avoid
+glare during the ADB track tests. As
+mentioned previously, a lamp with an
+output which may exceed the dynamic
+track test limits for glare could re-aim
+downward (or use other means) to
+alleviate glare. The Agency retains this
+requirement, as detailed in the final
+rule, because ADB systems can detect
+oncoming vehicles and adapt
+accordingly, thus outperforming
+traditional lower and upper beams in
+reducing glare.^33 It is therefore
+appropriate to hold ADB systems to a
+higher standard.
+
+In its petition, through an internal
+
+analysis, Valeo asserts that fully
+compliant lower beams would fail the
+glare requirements for same direction
+driving scenarios. However, upon
+inspection of their analysis, NHTSA
+recognized that Valeo had instead
+applied the adaptive driving beam
+photometry requirements (Table XXI)
+for oncoming/opposite direction
+scenarios when grouping the intensity
+measures for the locations of the side-
+view mirrors and driver photometers,
+shown in figures 5–7. NHTSA also
+observed that Valeo analyzed test setups
+using headlamp mounting heights that
+were nearly level with the 1.2 m driver
+photometer, in particular the 1.16 m
+height. Headlamp setups of that stature
+are unlikely and would glare drivers
+without proper re-aiming. Because
+Valeo used improper parameters in its
+testing, NHTSA does not find the results
+
+33 87 FR 9957, (February 22, 2022). The agency
+notes that even with this modification, the glare
+limits in this final rule are still (as Stanley
+suggested) more stringent than currently allowed by
+the Table XIX right-side maxima from 1R to 3R.
+However, this level of stringency is reasonable and
+provides a manageable design range. The lower
+beam photometry was designed to provide a generic
+beam to prevent glare regardless of the actual road
+and traffic conditions; it was not customized to
+provide glare protection to oncoming vehicles on a
+right curve. Because most situations in which an
+oncoming vehicle can be glared will occur with the
+oncoming vehicle to the left, the existing Table XIX
+lower beam photometry requirements require
+shading the left side and permit more light on the
+right side. However, the adaptive driving beam is
+not, and need not be, an all-purpose beam like a
+conventional lower beam. It is clear in the
+photometry tables that the appropriate glare limits
+for oncoming situations are the left-side maxima in
+Table XIX, on which the oncoming glare limits are
+based. These limits should, to the extent possible,
+apply to oncoming glare, including from the right-
+side. In any case, the agency believes that current
+lower beams would generally comply with the glare
+limits as applied in this scenario with the revised
+measurement distance range.
+
+of this testing compelling and they do
+not warrant revisiting FMVSS No. 108.
+NHTSA therefore denies the petitions.
+
+E. Transition Zone
+
+FMVSS No. 108 allows for a 1-degree
+
+transition zone between an area of
+reduced intensity and an area of
+unreduced intensity.^34 The lower and
+upper beam photometric test points will
+not be applied within the transition
+zone (except for the upper beam
+maximum at H–V, which still applies
+throughout the entirety of the beam).
+Manufacturers are free to decide which
+portions of the roadway will receive an
+area of reduced or unreduced intensity,
+subject to several requirements or
+constraints (such as the track test that
+evaluates glare). This flexibility enables
+ADB systems to provide an area of
+reduced intensity not only to prevent
+glare to oncoming or preceding vehicles,
+but also in other situations in which
+reduced intensity would be beneficial
+(e.g., towards retroreflective signs, or on
+a wet roadway).
+
+SAE, Stanley, Koito, Valeo, NAL, the
+
+Alliance, Toyota, TSEI, IIHS,
+Volkswagen, and Honda all petitioned
+NHTSA to adjust the designation of a 1-
+degree transition zone between the
+headlamp’s areas of reduced and
+unreduced intensity. Of those
+identified, SAE, Stanley, Valeo, the
+Alliance, Toyota, Volkswagen and TSEI
+explicitly petitioned that NHTSA
+increase the transition zone to 4 degrees.
+Valeo supported its petition by
+presenting an ADB pattern and its
+accompanying intensity scan of the H–
+H line, to demonstrate how transitioning
+from the area of reduced intensity to an
+area of full intensity in the upper beam
+portion of the ADB beam takes at least
+4 degrees.^35 Further, Valeo presented a
+comparative diagram of the UNECE and
+FMVSS No. 108 ADB implementation
+requirements to illustrate that the 1-
+degree transition zones will result in
+much larger areas of reduced intensity
+to meet the minimum requirements of
+the upper beam test points in the areas
+of unreduced intensity; Valeo stated this
+result effectively minimized the added
+safety benefits of ADB. Koito showed in
+its petition an iso-lux curve showing its
+ADB systems use approximately a 4-
+degree transition zone.^36 NAL stated
+that not restricting ADB systems to a 1-
+degree transition zone could provide
+more light than the basic lower beam
+and potentially improve safety. Further,
+
+34 49 CFR 571.108 S9.4.1.6.4.5.
+35 See Docket No. NHTSA–2022–0013–0010,
+
+Figures 2–3.
+
+NAL and Koito also commented that
+NHTSA did not thoroughly explain the
+safety benefit of a 1-degree transition
+zone.
+
+Several petitioners 37 shared that an
+overwhelming majority of current ADB
+systems in other foreign markets would
+fail to meet the 1-degree transition zone
+requirement given the limits of the
+technology. Koito stated that the most
+popular and cost-effective ADB systems
+employ an optical system with shifting
+and overlapping segments of light, to
+ensure better visibility by enabling
+smooth transitions between the areas of
+reduced and unreduced intensity. Koito,
+among others, stated that these systems
+would fail to meet the standard. Toyota
+also commented that the photometry
+requirements would likely make
+systems more costly and slow
+development. Further, Toyota stated
+that only expensive, high-resolution
+pixelated ADB systems within premium
+vehicles can meet the current
+compliance standards for the transition
+zone. Additionally, NAL stated that SAE
+J3069 intentionally did not specify a
+width of the transition zone to permit
+different, less complicated, ADB
+systems and beam patterns as more than
+80 percent of systems currently
+implemented by manufacturers are less
+complex. IIHS stated that NHTSA
+would contravene its stated technology-
+neutral approach by having a
+requirement that would strongly favor
+pixelated systems.
+
+Petitioners SAE and Koito suggested
+eliminating the transition zone entirely.
+TSEI requested NHTSA specify the size
+of the transition zone be greater than the
+minimum values specified for relevant
+lower beam test points (Table XIX,
+Headlamp Lower Beam Photometry
+Requirements) and less than the
+maximum specified at the HV for the
+upper beam (Table XVIII, Headlamp
+Upper Beam Photometry Requirements).
+TSEI stated this solution would more
+closely align, not only with SAE J3069,
+but also with the definition of a semi-
+automatic headlamp beam switching
+device, granting manufacturers more
+freedom to optimize ADB systems.
+Volkswagen stated in its petition that
+there are no known safety recalls,
+reported concerns or customer
+complaints with ADB in the rest of the
+world, which indicates an absence of
+safety issues with current ADB systems.
+According to Volkswagen, the
+exceptionally rigorous requirements for
+ADB in the United States through
+FMVSS No. 108 are not necessary.
+
+36 See Docket No. NHTSA–2022–0013–0007,
+
+37 SAE, Stanley, Valeo, the Alliance, NAL,
+
+Figure 1.
+
+Toyota, IIHS, Volkswagen and TSEI.
+
+VerDate Sep<11>2014 21:04 Dec 27, 2024 Jkt 265001 PO 00000 Frm 00141 Fmt 4700 Sfmt 4700 E:\FR\FM\30DER1.SGM 30DER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+3
+2
+N
+R
+0
+2
+1
+K
+S
+D
+n
+o
+
+r
+e
+
+l
+l
+
+e
+h
+m
+u
+r
+d
+d

@@ -1,0 +1,528 @@
+Publication 721
+
+Tax Guide to
+U.S. Civil
+Service
+Retirement
+Benefits
+
+For use in preparing
+2025 Returns
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Contents
+
+Future Developments . . . . . . . . . . . . . . . . . . . . . . . 1
+
+What’s New . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Reminders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+Part I General Information . . . . . . . . . . . . . . . . . . . 3
+
+Part II Rules for Retirees . . . . . . . . . . . . . . . . . . . . 5
+
+Part III Rules for Disability Retirement and
+
+Credit for the Elderly or the Disabled . . . . . . . 19
+
+Part IV Rules for Survivors of Federal
+
+Employees . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+Part V Rules for Survivors of Federal Retirees . . . 26
+
+Worksheets A and B . . . . . . . . . . . . . . . . . . . . . . . 29
+
+How To Get Tax Help . . . . . . . . . . . . . . . . . . . . . . . 30
+
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+
+Future Developments
+For the latest information about developments related to
+Pub. 721, such as
+it was
+published, go to IRS.gov/Pub721.
+
+legislation enacted after
+
+What’s New
+Additional deductions for seniors. Beginning in 2025,
+seniors age 65 or older may claim an additional deduction
+of $6,000 (or $12,000 for married couples where both
+spouses qualify).
+• The deduction is an addition to the standard or item-
+
+ized deduction.
+
+• It phases out for taxpayers with modified adjusted
+gross income (MAGI) over $75,000 (single) or
+$150,000 (married filing jointly).
+
+Repeal of the windfall elimination provision (WEP)
+and government pension offset (GPO). Recent legis-
+lation repealed the WEP and GPO with respect to social
+security benefits payable after 2023. For more information,
+see Social Security Fairness Act: Windfall Elimination
+Provision (WEP) and Government Pension Offset (GPO)
+update | SSA.
+
+Reminders
+Phased retirement. The phased retirement program was
+signed into law by the Moving Ahead for Progress in the
+21st Century Act. This program allows eligible employees
+to begin receiving annuity payments while working part
+time. For more information about phased retirement, go to
+
+Feb 11, 2026
+
+Publication 721 (2025) Catalog Number 46713C
+Department of the Treasury Internal Revenue Service www.irs.gov
+delivered, but you don’t provide your own U.S. home ad-
+dress. Also, even if you provide a U.S. home address, any
+election of no withholding is not valid if your payment in-
+structions provide that the payment is to be made to a fi-
+nancial institution or other person located outside the Uni-
+ted States or its territories.
+
+If you don’t provide a home address in the United
+States or its territories, you can choose not to have tax
+withheld only if you certify to OPM that you aren’t a U.S.
+citizen, a U.S. resident alien, or someone who left the Uni-
+ted States to avoid tax. But if you so certify, you may be
+subject to the 30% flat (or lower treaty) rate withholding
+that applies to nonresident aliens. For details, see Pub.
+519, U.S. Tax Guide for Aliens.
+
+Withholding certificate. If you give OPM a Form W-4P
+for withholding on periodic pension or annuity payments,
+or Form W-4R for withholding on nonperiodic payments,
+you can choose not to have tax withheld or you can
+choose to have tax withheld. You can’t choose to have no
+tax withheld
+from eligible rollover distributions. The
+amount of federal income tax withheld depends on which
+form you need to complete. See the instructions for each
+form for more information. If you don’t complete Form
+W-4P, then for a payee who received a first periodic pay-
+ment in 2025, OPM must withhold as if you were a single
+filer who made no entries in Step 2, Step 3, and Step 4 of
+Form W-4P. For the default 2025 withholding for a payee
+who first received a periodic payment before 2025, see
+Payee fails to furnish Form W-4P or provides an incorrect
+SSN on Form W-4P in Pub. 15-T. If you don’t complete
+Form W-4R, then for a nonperiodic payment, OPM must
+withhold federal income tax at 10%. For an eligible rollover
+distribution, the default withholding rate is 20%.
+
+To change the amount of withholding or stop withhold-
+ing, go to the OPM website at servicesonline.opm.gov.
+You will need your retirement CSA or CSF claim number
+and password. If you do not have a password, call or write
+OPM’s Retirement Information Office.
+
+You can also change the amount of tax withholding or
+stop withholding by calling OPM’s Retirement Information
+Office at 1-888-767-6738. No special form is needed. You
+will need your retirement CSA or CSF claim number and
+your SSN when you call. If you have TTY/TDD equipment,
+call 711.
+
+Withholding from certain lump-sum payments. If you
+leave the federal government before becoming eligible to
+retire and you apply for a refund of your CSRS or FERS
+contributions, or you die without leaving a survivor eligible
+for an annuity, you or your beneficiary will receive a distri-
+bution of your contributions to the retirement plan plus any
+interest payable. Tax will be withheld at a 20% rate on the
+interest distributed. However, tax will not be withheld if you
+have OPM transfer (roll over) the interest directly to your
+traditional IRA or other qualified plan. If you have OPM
+transfer (roll over) the interest directly to a Roth IRA, the
+entire amount will be taxed in the current year. Because
+no income tax will be withheld at the time of the transfer,
+you may want to increase your withholding or pay estima-
+
+ted taxes. See Rollover Rules under Part II, later. If you re-
+ceive only your contributions, no tax will be withheld.
+
+Withholding from TSP payments. Generally, a distribu-
+tion that you receive from the TSP is subject to federal in-
+come tax withholding. The amount withheld is:
+
+• 20% if the distribution is an eligible rollover distribu-
+
+tion;
+
+• 10% if it is a nonperiodic distribution other than an eli-
+
+gible rollover distribution; or
+
+• Determined using the instructions and tables provided
+in Pub. 15-T, based on information you provide on
+Form W-4P, if it is a periodic distribution.
+
+However, you can usually choose not to have tax withheld
+from TSP payments other than eligible rollover distribu-
+tions. By January 31 after the end of the year in which you
+receive a distribution, the TSP will issue Form 1099-R
+showing the total distributions you received in the prior
+year and the amount of tax withheld.
+
+For a detailed discussion of withholding on distributions
+from the TSP, see the TSP publications Tax Rules about
+TSP Payments, and Distributions. Both these publications
+are available on the TSP website at TSP.gov/forms.
+
+Estimated tax. Generally, you must make estimated tax
+payments for 2026 if you expect to owe at least $1,000 in
+tax for 2026 (after subtracting your withholding and cred-
+its) and you expect your withholding and your credits to be
+less than the smaller of:
+• 90% of the tax to be shown on your income tax return
+
+for 2026, or
+
+• 100% of the tax shown on your 2025 income tax return
+(110% of that amount if the adjusted gross income
+shown on the return was more than $150,000
+($75,000 if your filing status for 2026 will be married fil-
+ing separately)). The return must cover all 12 months.
+
+You don’t have to pay estimated tax for 2026 if you were
+a U.S. citizen or resident alien for all of 2025 and you had
+no tax liability for the full 12-month 2025 tax year.
+
+Pub. 505 and Form 1040-ES contain information that
+you can use to help you figure your estimated tax pay-
+ments.
+
+Filing Requirements
+
+If your gross income, including the taxable part of your an-
+nuity, is less than a certain amount, you generally don’t
+have to file a federal income tax return for that year. The
+gross income filing requirements for the tax year are in the
+Instructions for Form 1040.
+
+Children. If you are the surviving spouse of a federal em-
+ployee or retiree and your monthly annuity check includes
+a survivor annuity for one or more children, each child’s
+annuity counts as their own income (not yours) for federal
+income tax purposes.
+
+If your child can be claimed as a dependent, treat the
+taxable part of their annuity as unearned income when ap-
+plying the filing requirements for dependents.
+
+4
+
+Publication 721 (2025)
+Worksheet A.
+
+Simplified Method for Bill Smith
+
+See the instructions under Simplified Method in Part II of this publication.
+
+1. Enter the total pension or annuity payments received this year. Also, add this amount to the total for Form 1040,
+1040-SR, or 1040-NR, line 5a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2. Enter your cost in the plan at the annuity starting date, plus any death benefit exclusion.^* See Your cost under
+
+Rules for Retirees in Part II, earlier . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Note: If your annuity starting date was before this year and you completed this worksheet last year, skip line 3
+and enter the amount from line 4 of last year’s worksheet on line 4 below (even if the amount of your pension or
+annuity has changed). Otherwise, go to line 3.
+
+3. Enter the appropriate number from Table 1 below. But if your annuity starting date was after 1997 and the
+
+payments are for your life and that of your beneficiary, enter the appropriate number from Table 2 below . . . . .
+4. Divide line 2 by the number on line 3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5. Multiply line 4 by the number of months for which this year’s payments were made. If your annuity starting date
+
+was before 1987, enter this amount on line 8 below and skip lines 6, 7, 10, and 11. Otherwise, go
+to line 6 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6. Enter any amounts previously recovered tax free in years after 1986. This is the amount shown on line 10 of
+
+your worksheet for last year
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7. Subtract line 6 from line 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+8. Enter the smaller of line 5 or line 7 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9. Taxable amount for year. Subtract line 8 from line 1. Enter the result, but not less than zero. Also, add this
+
+amount to the total for Form 1040 or 1040-SR, line 5b. If you are a nonresident alien, enter this amount on line 1
+of Worksheet C. If your Form CSA 1099-R or Form CSF 1099-R shows a larger amount, use the amount figured
+on this line instead. If you are a retired public safety officer, see Distributions Used To Pay Insurance Premiums
+for Public Safety Officers under Part II before entering an amount on your tax return or Worksheet
+C, line 1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+10. Was your annuity starting date before 1987?
+
+Yes.
+
+Don’t complete the rest of this worksheet.
+
+No. Add lines 6 and 8. This is the amount you have recovered tax free through 2025. You will need this
+
+number if you need to fill out this worksheet next year
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+11. Balance of cost to be recovered. Subtract line 10 from line 2. If zero, you will not have to complete this
+
+worksheet next year. The payments you receive next year will generally be fully taxable . . . . . . . . . . . . . . . . . .
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+9.
+
+$
+
+8,000
+
+31,000
+
+310
+
+100
+
+800
+
+0
+
+31,000
+
+800
+
+$
+
+7,200
+
+10.
+
+11.
+
+800
+
+$ 30,200
+
+IF your age on your
+annuity starting date was...
+
+55 or under
+56–60
+61–65
+66–70
+71 or over
+
+IF the annuitants’ combined
+ages on your annuity starting
+date were...
+
+110 or under
+111–120
+121–130
+131–140
+141 or over
+
+Table 1 for Line 3 Above
+
+AND your annuity starting date was—
+
+before November 19, 1996,
+THEN enter on line 3...
+
+after November 18, 1996,
+THEN enter on line 3...
+
+360
+310
+260
+210
+160
+
+300
+260
+240
+170
+120
+
+Table 2 for Line 3 Above
+
+THEN enter on line 3...
+
+410
+360
+310
+260
+210
+
+* A death benefit exclusion of up to $5,000 applies to certain benefits received by survivors of employees who died
+
+before August 21, 1996.
+
+8
+
+Publication 721 (2025)
+
+STOP
+
+(cid:2)
+comes from the regular contributions deducted from your
+salary. This separate treatment applies for figuring the
+amounts to be excluded from, and included in, gross in-
+come. It doesn’t matter that you receive only one monthly
+check covering both benefits. Each year, you will receive a
+Form CSA 1099-R that will show how much of your total
+annuity received in the past year was from each type of
+benefit.
+
+Figure the taxable and tax-free parts of your additional
+monthly benefits from voluntary contributions using the
+rules that apply to regular CSRS and FERS annuities, as
+explained earlier.
+
+Refund of voluntary contributions. If you choose to
+receive a refund of your voluntary contributions plus ac-
+crued interest, the interest is taxable to you in the tax year
+it is distributed unless you roll it over to a traditional IRA or
+another qualified retirement plan. If you don’t have OPM
+transfer the interest to a traditional IRA or other qualified
+retirement plan in a direct rollover, tax will be withheld at a
+20% rate. See Rollover Rules, later. The interest doesn’t
+qualify as a lump-sum distribution eligible for capital gain
+treatment or the 10-year tax option. It may also be subject
+to the 10% additional tax on early distributions if you sepa-
+rate from service before the calendar year in which you
+reach age 55 (or before the earlier of age 50 or completing
+25 years of service under the plan if you are a qualified
+public safety employee). For more
+information, see
+Lump-Sum Distributions and Tax on Early Distributions in
+Pub. 575.
+
+Community property laws. State community property
+laws apply to your annuity. These laws will affect your in-
+come tax only if you file a return separately from your
+spouse.
+
+Generally, the determination of whether your annuity is
+separate income (taxable to you) or community income
+(taxable to both you and your spouse) is based on your
+marital status and domicile when you were working. Re-
+gardless of whether you are now living in a community
+property state or a noncommunity property state, your cur-
+rent annuity may be community income if it is based on
+services you performed while married and domiciled in a
+community property state.
+
+At any time, you have only one domicile even though
+you may have more than one home. Your domicile is your
+fixed and permanent legal home that you intend to use for
+an indefinite or unlimited period, and to which, when ab-
+sent, you intend to return. The question of your domicile is
+mainly a matter of your intentions as indicated by your ac-
+tions.
+
+If your annuity is a mixture of community income and
+separate income, you must divide it between the two kinds
+of income. The division is based on your periods of serv-
+ice and domicile in community and noncommunity prop-
+erty states while you were married.
+
+For more information, see Pub. 555, Community Prop-
+
+Reemployment After Retirement
+
+If you retired from federal service and are later rehired by
+the federal government as an employee, you can continue
+to receive your annuity during reemployment. The employ-
+ing agency will usually pay you the difference between
+your salary for your period of reemployment and your an-
+nuity. This amount is taxable as wages. Your annuity will
+continue to be taxed just as it was before. If you are still re-
+covering your cost, you continue to do so. If you have re-
+covered your cost, the annuity you receive while you are
+reemployed is generally fully taxable.
+
+Nonresident Aliens
+
+The following special rules apply to nonresident alien fed-
+eral employees performing services outside the United
+States and to nonresident alien retirees and beneficiaries.
+A nonresident alien is an individual who isn’t a citizen or a
+resident alien of the United States.
+
+Special rule for figuring your total contributions. Your
+contributions to the retirement plan (your cost) also in-
+clude the government’s contributions to the plan to a cer-
+tain extent. You include government contributions that
+wouldn’t have been taxable to you at the time they were
+contributed if they had been paid directly to you. For ex-
+ample, government contributions wouldn’t have been tax-
+able to you if, at the time made, your services were per-
+formed outside the United States. Thus, your cost is
+increased by these government contributions, and the
+benefits that you, or your beneficiary, must include in in-
+come are reduced.
+
+This method of figuring your total contributions doesn’t
+apply to any contributions the government made on your
+behalf after you became a citizen or a resident alien of the
+United States.
+
+Limit on taxable amount. There is a limit on the taxable
+amount of payments received from the CSRS, the FERS,
+or the TSP by a nonresident alien retiree or nonresident
+alien beneficiary. Figure this limited taxable amount by
+multiplying the otherwise taxable amount by a fraction.
+The numerator of the fraction is the retiree’s total U.S.
+Government basic pay, other than tax-exempt pay for
+services performed outside the United States. The de-
+nominator is the retiree’s total U.S. Government basic pay
+for all services.
+
+Basic pay includes regular pay plus any standby differ-
+ential. It doesn’t include bonuses, overtime pay, certain
+retroactive pay, uniform or other allowances, or lump-sum
+leave payments.
+
+To figure the limited taxable amount of your CSRS or
+FERS annuity or your TSP distributions, use Worksheet C.
+(For an annuity, first complete Worksheet A in this publica-
+tion.)
+
+erty.
+
+12
+
+Publication 721 (2025)

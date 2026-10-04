@@ -1,0 +1,276 @@
+107012
+
+Federal Register / Vol. 89, No. 250 / Tuesday, December 31, 2024 / Rules and Regulations
+
+21.3.4 Combining USPS Marketing
+Mail, Parcel Select, and Package
+Services Parcels (Not APPS-
+Machinable)
+
+*
+
+*
+
+*
+
+*
+
+*
+
+[Revise the column of the table in
+21.3.4 titled ‘‘ADC/RPDC’’ to read as
+‘‘ADC’’]
+
+[Revise the column of the table in
+21.3.4 titled ‘‘Mixed ADC/RPDC’’ to
+read as ‘‘Mixed ADC’’]
+*
+*
+*
+
+*
+
+*
+
+Kevin Rayburn,
+Attorney, Ethics and Legal Compliance.
+[FR Doc. 2024–31225 Filed 12–30–24; 8:45 am]
+
+BILLING CODE 7710–12–P
+
+ENVIRONMENTAL PROTECTION
+AGENCY
+
+40 CFR Part 52
+
+[EPA–R09–OAR–2023–0649; FRL–11647–
+02–R9]
+
+Air Plan Revisions; California; Feather
+River Air Quality Management District
+
+AGENCY: Environmental Protection
+Agency (EPA).
+
+Local
+agency
+
+Rule No.
+
+ACTION: Final rule.
+
+SUMMARY: The Environmental Protection
+Agency (EPA) is taking final action to
+approve a revision to the Feather River
+Air Quality Management District
+(FRAQMD) portion of the California
+State Implementation Plan (SIP). This
+revision concerns a rule submitted to
+address section 185 of the Clean Air Act
+(CAA or ‘‘Act’’).
+DATES: This rule is effective January 30,
+2025.
+ADDRESSES: The EPA has established a
+docket for this action under Docket ID
+No. EPA–R09–OAR–2023–0649. All
+documents in the docket are listed on
+the https://www.regulations.gov
+website. Although listed in the index,
+some information is not publicly
+available, e.g., Confidential Business
+Information (CBI) or other information
+whose disclosure is restricted by statute.
+Certain other material, such as
+copyrighted material, is not placed on
+the internet and will be publicly
+available only in hard copy form.
+Publicly available docket materials are
+available through https://
+www.regulations.gov, or please contact
+
+the person identified in the FOR FURTHER
+INFORMATION CONTACT section for
+additional availability information. If
+you need assistance in a language other
+than English or if you are a person with
+a disability who needs a reasonable
+accommodation at no cost to you, please
+contact the person identified in the FOR
+FURTHER INFORMATION CONTACT section.
+
+FOR FURTHER INFORMATION CONTACT: Mae
+Wang, EPA Region IX, 75 Hawthorne
+St., San Francisco, CA 94105; phone:
+(415) 947–4137; email: wang.mae@
+epa.gov.
+
+SUPPLEMENTARY INFORMATION:
+Throughout this document, ‘‘we,’’ ‘‘us’’
+and ‘‘our’’ refer to the EPA.
+
+Table of Contents
+
+I. Proposed Action
+II. Public Comments and EPA Responses
+III. EPA Action
+IV. Incorporation by Reference
+V. Statutory and Executive Order Reviews
+
+I. Proposed Action
+
+On February 12, 2024 (89 FR 9813),
+
+the EPA proposed to approve the
+following rule into the California SIP.
+
+Rule title
+
+Amended
+
+Submitted
+
+FRAQMD
+
+7.15 Clean Air Act Nonattainment Fees ....................................................................................
+
+04/04/2022
+
+07/05/2022
+
+We proposed to approve this rule
+because we determined that it complies
+with the relevant CAA requirements.
+Our proposed action contains more
+information on the rule and our
+evaluation.
+
+II. Public Comments and EPA
+Responses
+
+The EPA’s proposed action provided
+a 30-day public comment period. During
+this period, we received five comments.
+Three of these comments were
+supportive of our proposed action, one
+was not germane to the action, and one
+stated that the rule submittal is not
+approvable. All the comments can be
+found in the docket for this rulemaking.
+We thank the commenters for their
+input. One of these commenters in
+support of the proposed action asked
+why there was no mention of California
+and COVID–19. FRAQMD Rule 7.15 was
+adopted and submitted to address the
+CAA section 185 fee program for
+Federal ozone nonattainment areas.
+Because COVID–19 does not bear on
+whether or not the submitted rule
+fulfills the requirements of section 185
+of the CAA, we do not consider COVID–
+19 relevant to this rulemaking.
+
+The comment in opposition to our
+proposed action was submitted from Air
+Law for All, Ltd., on behalf of the Center
+for Biological Diversity (the commenter
+from here on referred to as ‘‘ALFA’’ or
+‘‘the commenter’’). We have
+summarized below the substance of the
+comments from ALFA, identifying
+discrete points made by the commenter,
+and responding to each in turn.
+
+Before responding to the issues raised
+
+by the commenter, we will first correct
+two factual misstatements in the
+comment letter. In the Background
+section of ALFA’s comment letter, the
+commenter states that ‘‘In 2012, EPA
+determined that the area had met the 1-
+hour standards by the applicable
+attainment date for those standards.’’
+The reference cited was an EPA action
+on October 18, 2012 (77 FR 64036). In
+that action, the EPA determined that
+complete, quality-assured, and certified
+air quality data for the Sacramento
+Metro 1-hour ozone nonattainment area
+show continuous attainment for the 1-
+hour ozone national ambient air quality
+standards (NAAQS) since 2009. We
+would like to clarify that this clean data
+finding was not a determination that the
+area had attained the NAAQS by the
+
+applicable attainment date, but instead
+a finding that the area had achieved
+attaining levels of air quality for the
+2009–2011 period, which was after the
+applicable attainment date. The
+commenter also incorrectly stated, ‘‘For
+the 2008 8-hour standards, the
+applicable attainment date is December
+31, 2027.’’ The applicable attainment
+date for the Sacramento Metro ozone
+nonattainment area for the 2008 8-hour
+ozone NAAQS is July 20, 2027. See 40
+CFR 51.1103(a) Table 1, 77 FR 30160
+(May 21, 2012) and 80 FR 12264 (March
+6, 2015).
+
+Comment #1: The commenter states
+that the EPA has not carried out its duty
+to determine whether the Sacramento
+Metro nonattainment area has attained
+the 1997 8-hour NAAQS by the June 15,
+2019 attainment date. The commenter
+states that ‘‘[t]his information is
+germane to EPA’s action, as the failure
+to attain would trigger the ozone fee
+requirement, for which the public and
+the regulated community must receive
+notice.’’ Therefore, the commenter
+claims that ‘‘EPA’s proposal notice is
+insufficient, because it gives no notice
+of the legal consequences of EPA’s
+approval.’’
+
+VerDate Sep<11>2014 15:56 Dec 30, 2024 Jkt 265001 PO 00000 Frm 00036 Fmt 4700 Sfmt 4700 E:\FR\FM\31DER1.SGM 31DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

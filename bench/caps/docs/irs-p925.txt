@@ -1,0 +1,143 @@
+make up an appropriate economic unit for the measure-
+ment of gain or loss under the passive activity rules.
+
+passive activity (trade or business activity or rental activ-
+ity).
+
+Regrouping. You must file a written statement with your
+original income tax return for the tax year in which you re-
+group the activities. The statement must provide the
+names, addresses, and EINs, if applicable, for the activi-
+ties that are being regrouped. If two or more activities are
+being regrouped into a single activity, the statement must
+contain a declaration that the regrouped activities make
+up an appropriate economic unit for the measurement of
+gain or loss under the passive activity rules. In addition,
+the statement must contain an explanation of the material
+change in the facts and circumstances that made the orig-
+inal grouping clearly inappropriate.
+
+Groupings by partnerships and S corporations. Part-
+nerships and S corporations aren’t subject to the rules for
+new grouping, addition to an existing grouping, or re-
+grouping. Instead, they must comply with the disclosure
+instructions for grouping activities provided in their Form
+1065, U.S. Return of Partnership Income, or Form 1120-S,
+U.S. Income Tax Return for an S Corporation, whichever is
+applicable.
+
+The partner or shareholder isn’t required to make a
+separate disclosure of the groupings disclosed by the en-
+tity unless the partner or shareholder:
+
+• Groups together any of the activities that the entity
+
+doesn’t group together,
+
+• Groups the entity’s activities with activities conducted
+
+directly by the partner or shareholder, or
+
+• Groups an entity’s activities with activities conducted
+
+through another entity.
+
+A partner or shareholder may not treat activities grou-
+
+ped together by the entity as separate activities.
+
+Recharacterization
+of Passive Income
+
+Net income from the following passive activities may have
+to be recharacterized and excluded from passive activity
+income.
+• Significant participation passive activities,
+• Rental of property when less than 30% of the unadjus-
+ted basis of the property is subject to depreciation,
+
+• Equity-financed lending activities,
+• Rental of property incidental to development activities,
+• Rental of property to nonpassive activities, and
+• Licensing of intangible property by
+
+pass-through entities.
+
+If you’re engaged in or have an interest in one of these ac-
+tivities during the tax year (either directly or through a part-
+nership or an S corporation), combine the income and los-
+ses from the activity to determine if you have a net loss or
+net income from that activity.
+
+If the result is net income, don’t enter any of the income
+or losses from the activity or property on Form 8582 or its
+separate parts, as they are recharacterized as nonpas-
+sive. Instead, enter income or losses on the form and
+schedules you normally use. However, see Significant
+Participation Passive Activities, later, if the activity is a sig-
+nificant participation passive activity and you also have a
+net loss from a different significant participation passive
+activity.
+
+Limit on recharacterized passive income. The total
+amount that you treat as nonpassive income under the
+rules described later in this discussion for significant par-
+ticipation passive activities, rental of nondepreciable prop-
+erty, and equity-financed lending activities can’t exceed
+the greatest amount that you treat as nonpassive income
+under any one of these rules.
+
+Investment income and investment expense. To fig-
+ure your investment interest expense limitation on Form
+4952, treat as investment income any net passive income
+recharacterized as nonpassive income from rental of non-
+depreciable property, equity-financed lending activity, or li-
+censing of intangible property by a pass-through entity.
+
+Significant Participation
+Passive Activities
+
+A significant participation passive activity is any trade or
+business activity in which you participated for more than
+100 hours during the tax year but didn’t materially partici-
+pate.
+
+If your gross income from all significant participation
+passive activities combined is more than your deductions
+from those activities, a part of your net income from each
+significant participation passive activity is treated as non-
+passive income.
+
+Corporations. An activity of a personal service corpora-
+tion or closely held corporation is a significant participa-
+tion passive activity if both of the following statements are
+true.
+
+• The corporation isn’t treated as materially participating
+
+in the activity for the year.
+
+• One or more individuals, each of whom is treated as
+
+significantly participating in the activity, directly or indi-
+rectly, hold (in total) more than 50% (by value) of the
+corporation’s outstanding stock.
+
+Worksheet A. Complete Worksheet A. Significant Partici-
+pation Passive Activities if you have income or losses from
+any significant participation activity. Begin by entering the
+name of each activity in the left column.
+
+Column (a). Enter the number of hours you participa-
+
+ted in each activity and total the column.
+
+If the result is a net loss, treat the income and losses
+the same as any other income or losses from that type of
+
+If the total is more than 500, don’t complete Worksheet
+A or B. None of the activities are passive activities
+
+Publication 925 (2025)
+
+15

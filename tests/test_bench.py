@@ -570,3 +570,32 @@ def test_an_india_token_is_a_number_token_with_a_comma() -> None:
         "1,2,3",
         "5,000",
     ]
+
+
+def test_a_caps_dot_is_us_or_no_before_whitespace_and_an_uppercase_letter() -> None:
+    sys.path.insert(0, str(BENCH / "caps"))
+    import caps
+
+    text = "In the U.S. Tax Court, Docket No. DEA-1086 and Nos. A-1 but no. 4 and U.S. citizens."
+    assert [m.group() for m in caps.caps_in(text)] == ["U.S.", "No.", "Nos."]
+    assert not caps.caps_in("Made in the U.S.A. Here.\nU.S.\n\nThe end. No.\r\n  \nThe")
+    assert [m.start() for m in caps.caps_in("Sold in the U.S.\r\n The")] == [12]
+    head = "Federal Register / Vol. 89, No. 5 / Rules\nSee No. Five."
+    assert [m.start() for m in caps.caps_in(head)] == [head.index("No. Five")]
+
+
+def test_a_caps_dot_with_the_text_of_an_earlier_dot_does_not_count_again() -> None:
+    sys.path.insert(0, str(BENCH / "caps"))
+    import caps
+
+    find = caps.fresh_finder()
+    page = "Rules of the U.S. Tax Court apply here."
+    assert len(find(page)) == 1
+    assert find("Rules of the  U.S.\nTax Court apply here.") == []
+    assert len(find("Rules in the U.S. Code apply here.")) == 1
+    seeded = caps.fresh_finder(caps.dot_keys(page, caps.caps_in(page)[0]))
+    assert seeded(page) == []
+    sign = "Captain, U.S. Coast Guard, Captain of the Port San Francisco."
+    find = caps.fresh_finder()
+    assert len(find("Dated: May 1. " + sign + " [FR Doc. 1]")) == 1
+    assert find("Dated: June 9. " + sign + " [FR Doc. 2]") == []
