@@ -197,6 +197,35 @@ locally with PyTorch on Apple Silicon, because Jeff's MLX backend loads only Qwe
   probabilities exactly. Its weights are 8.7 GB, and it accepts at most 26 options for each
   choice. The weights and the Gemma 4 base model are both Apache-2.0.
 
+**Jeff's task adapters.** Jeff publishes nine LoRA adapters of about 41 MB for the 0.8B v1.2
+base. Each one is trained for one task that is not groundgate's: prompt-injection guard, ticket
+triage, intents, tool choice, passage grounding, navigation, emotion, spam and contract clauses.
+I ran all nine on the same 32 sentences.
+
+| Model | Total | Comparator | Key | Field | Paraphrase | Highest wrong p |
+|---|---|---|---|---|---|---|
+| Base, no adapter | 27 | 14 | 4 | 6 | 3 | 0.703 |
+| `ground` | 25 | 12 | 4 | 6 | 3 | 0.839 |
+| `legal-clauses` | 25 | 14 | 4 | 4 | 3 | 0.892 |
+| `guard` | 24 | 13 | 4 | 4 | 3 | 0.947 |
+| `triage` | 24 | 14 | 4 | 3 | 3 | 0.950 |
+| `support-intents` | 27 | 14 | 4 | 6 | 3 | 0.901 |
+| `tools` | 27 | 15 | 4 | 5 | 3 | 0.814 |
+| `nav` | 27 | 15 | 4 | 5 | 3 | 0.945 |
+| `emotion` | 27 | 14 | 4 | 6 | 3 | 0.817 |
+| `spam` | 28 | 15 | 4 | 5 | 4 | 0.917 |
+
+- No adapter was reliably better than the base. `ground`, the closest task, scored 25.
+- Adapters raised the confidence of wrong answers. "Up to 50 L" read as exact had 0.703 on the
+  base, and 0.817 to 0.949 with `nav`, `spam`, `guard` and `triage`. `guard` read two different
+  facts as the same fact with 0.927.
+- Off-task adapters damaged the field-match question: 3 of 6 with `triage`.
+
+So an adapter changes a model as much as a new version does (rule 9 in §4), and an adapter is
+never used outside its own task. A useful adapter for groundgate is trained on groundgate's own
+questions with human labels (stage 2b in §11). Jeff's adapter kit is one possible tool for that.
+An adapter does not carry over to a new base version.
+
 - Laya `english` was wrong with high confidence on cases that a script already gets right: the
   old value of "increased from $120 to $150" as the new value (0.941), "Do not take more than
   4,000 mg" as "more than" (0.690), and "höchstens 4.000 mg" as "more than" (0.770). Jev answered
@@ -346,7 +375,9 @@ The decision stays a pure function. A model's answer is an input to it, like a c
    that the response reports, for example `jev-1.13.0`. When a hosted version is retired, its
    thresholds go with it, and the new version needs a new measurement. For a local model, the
    policy also names the backend, for example MLX or PyTorch, because two backends give
-   slightly different probabilities.
+   slightly different probabilities, and any adapter, because an adapter changes the answers as
+   much as a new version does. Each combination of model, adapter and backend has its own
+   thresholds.
 10. **A question carries the smallest text that answers it.** That is the value's sentence, and
     the nearest heading for a key question. It is never the whole document. Accuracy falls when
     the text contains material that is not related to the question, and less text also costs
