@@ -27,6 +27,10 @@ milestone 0.3.
   0.3 joins none of the 9 real sentence ends.
 - Blank lines (#63): a blank line may hold a carriage return, so `\r\n\r\n` ends a sentence
   too.
+- Numbers (#59): a number grouped the Indian way, the last three digits and then pairs, has its
+  value: `2,00,000` is 200000 and `1,00,00,000` is 10000000, in the document and in a candidate's
+  `value`. A mix of the two groupings, such as `1,23,456,789`, still has none. Vector
+  `03b-indian-grouping`.
 
 ## 0.2.0 (2026-10-03)
 

@@ -7,7 +7,9 @@ from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 
 _TOKEN = re.compile(r"[-\u2212]?\d[\d,]*(?:\.\d+)?")
-_VALID = re.compile(r"^[-\u2212]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?$")
+# ungrouped, grouped in threes ("200,000"), or grouped the Indian way: the last three digits,
+# then pairs ("2,00,000")
+_VALID = re.compile(r"^[-\u2212]?(?:\d{1,3}(?:,\d{3})+|\d{1,2}(?:,\d{2})*,\d{3}|\d+)(?:\.\d+)?$")
 _SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t\r]*\n")
 _ABBREVIATIONS = [
     "a.m.",
