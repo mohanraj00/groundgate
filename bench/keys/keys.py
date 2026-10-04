@@ -128,6 +128,7 @@ def find_items() -> None:
         text = (HERE / "docs" / f"{src['id']}.txt").read_text(encoding="utf-8")
         for a, b in doses_in(text)[:PER_DOC]:
             out.append({"id": f"{src['id']}:{a}", "doc": src["id"], "span": [a, b]})
+    out = out[:PER_SET]  # the last label gives only the doses the set still needs
     (HERE / "items.json").write_text(json.dumps(out, indent=1) + "\n")
     print(f"wrote items.json: {len(out)} doses in {len({it['doc'] for it in out})} labels")
 
