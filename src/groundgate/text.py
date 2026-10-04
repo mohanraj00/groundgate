@@ -68,6 +68,8 @@ _ABBREVIATION_MAX = max(len(a) for a in _ABBREVIATIONS)
 _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS_RUN = re.compile(r"\s*")
 _CONTINUES = "$€£₹"
+# "No." before a code such as "DEA-1086": a word that holds a digit or starts with two capitals
+_CODE = re.compile(r"\S*?\d|[A-Z]{2}")
 _WS = re.compile(r"\s+")
 _HYPHEN_BREAK = re.compile(r"-\n\s*")
 _WINDOW = 40
@@ -144,17 +146,22 @@ def quote_pattern(quote: str) -> re.Pattern[str]:
 
 def _ends_sentence(text: str, m: re.Match[str]) -> bool:
     """A "." that ends a listed abbreviation is not a sentence end when the next character is a
-    lowercase letter, a digit or a currency sign and no blank line comes first (SPEC §4.2)."""
+    lowercase letter, a digit or a currency sign and no blank line comes first. "U.S." never
+    ends one, and "No." or "Nos." does not before a code (SPEC §4.2)."""
     if not m.group().startswith("."):
         return True
     dot = m.start()
-    if not _ABBREVIATION_END.search(text, max(0, dot + 1 - _ABBREVIATION_MAX), dot + 1):
+    abbreviation = _ABBREVIATION_END.search(text, max(0, dot + 1 - _ABBREVIATION_MAX), dot + 1)
+    if not abbreviation:
         return True
     gap = _WS_RUN.match(text, dot + 1)  # in place: no copy of the rest of the text
     assert gap is not None
     nxt = gap.end()
     if _BLANK_LINE.search(gap.group()) or nxt == len(text):
         return True
+    word = abbreviation.group().lower()
+    if word == "u.s." or (word in ("no.", "nos.") and _CODE.match(text, nxt)):
+        return False
     # only a plain continuation joins; an uppercase letter or punctuation may start a sentence
     ch = text[nxt]
     return not (ch.islower() or "0" <= ch <= "9" or ch in _CONTINUES)

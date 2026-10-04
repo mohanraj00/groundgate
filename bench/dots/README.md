@@ -68,12 +68,14 @@ runs `score --check`.
 
 What it found:
 
-- Of the 107 dots where the sentence goes on, spec 0.2 cuts all 107 and spec 0.3 cuts 53. A cut
+- Of the 107 dots where the sentence goes on, spec 0.2 cuts all 107 and spec 0.3 cuts 10. A cut
   sentence can lose a qualifier that stands before the dot.
 - Of the 9 real sentence ends, spec 0.3 joins none.
-- Most of the 53 cuts that remain are `U.S.` (37) and `No.` (9) before a capitalized word, as in
-  "U.S. Tax Court" and "Docket No. DEA-1086". Spec 0.3 reads those as sentence ends. That is a
-  follow-up for a later spec, measured on other documents (#77).
+- With the #63 rule alone, spec 0.3 cut 53 of the 107. Most were `U.S.` and `No.` before a
+  capitalized word, as in "U.S. Tax Court" and "Docket No. DEA-1086". The #77 rule joins those.
+  This set found them, so it does not measure that rule: the caps set (`bench/caps`) does.
+- The 10 cuts that remain are other abbreviations before an uppercase letter or a parenthesis,
+  such as "Inc. Ora Plus" and "St. John's wort", and 3 `No.` before a blank line in a table.
 
 The rule changed twice after the first scoring, both times from a security review of #72, not from
 this set. It first joined before any character that was not an uppercase letter, and a join before

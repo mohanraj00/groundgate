@@ -741,8 +741,8 @@ vector(
         c("a3", "night_dose", "6", "mg", q("6 mg"), ("needs_verification", ["QUALIFIED_VALUE"])),
         # the first "p.m." no longer cuts the range
         c("a4", "closing_hour", "8", None, q("8"), ("needs_verification", ["QUALIFIED_VALUE"])),
-        # "U.S." before an uppercase word still ends the sentence, so "at most" stays out
-        c("a5", "fee", "30", "USD", q("$30")),
+        # "U.S." does not end the sentence, even before an uppercase word (vector 07g)
+        c("a5", "fee", "30", "USD", q("$30"), ("needs_verification", ["QUALIFIED_VALUE"])),
         # a blank line ends the sentence, with Windows line endings too
         c("a6", "crlf_fee", "45", "USD", q("$45")),
         # a currency sign after the dot keeps the sentence going
@@ -764,6 +764,54 @@ vector(
             "9",
             "mg",
             q("9 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="Hypertension",
+        ),
+    ],
+)
+
+vector(
+    "07g-us-and-number-dots",
+    "For the qualifier window only, the dot of `U.S.` never ends a sentence, and the dot of `No.` "
+    "or `Nos.` does not end one when the next word holds a digit or starts with two uppercase "
+    "letters. A blank line still ends the sentence, and key scope still ends at every dot "
+    "(spec 0.3).",
+    "Fees are up to the U.S. Code cap of $60. At most the sum in Docket No. FDA-N is $75. Is "
+    "the fee at most a guess? No. The fee is $80. At least Nos. A1 and A2 cost $90. Fees are at "
+    "most paid in the U.S.\n\nThe fee is $95. For hypertension, ask in "
+    "the U.S. Heart failure dose is 7 mg.",
+    {
+        "fields": {
+            "code_fee": USD,
+            "docket_fee": USD,
+            "answer_fee": USD,
+            "item_fee": USD,
+            "blank_fee": USD,
+            "keyed_dose": {
+                "type": "number",
+                "unit": "mg",
+                "keys": ["Hypertension", "Heart Failure"],
+            },
+        }
+    },
+    [
+        # "U.S." before an uppercase word: one sentence, so "up to" qualifies $60
+        c("u1", "code_fee", "60", "USD", q("$60"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # "No." before a code that starts with two uppercase letters
+        c("u2", "docket_fee", "75", "USD", q("$75"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # "No." before a word that is not a code ends the sentence, so "at most" stays out
+        c("u3", "answer_fee", "80", "USD", q("$80")),
+        # "Nos." before a word that holds a digit
+        c("u4", "item_fee", "90", "USD", q("$90"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # a blank line after "U.S." still ends the sentence
+        c("u5", "blank_fee", "95", "USD", q("$95")),
+        # a join never moves a key: the key of the sentence before "U.S." does not reach 7 mg
+        c(
+            "u6",
+            "keyed_dose",
+            "7",
+            "mg",
+            q("7 mg"),
             ("needs_verification", ["KEY_NOT_AT_VALUE"]),
             key="Hypertension",
         ),

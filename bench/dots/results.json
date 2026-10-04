@@ -24,8 +24,8 @@
   "spec_0.3": {
    "end read as end": 9,
    "end read as goes on": 0,
-   "goes on read as end": 53,
-   "goes on read as goes on": 54
+   "goes on read as end": 10,
+   "goes on read as goes on": 97
   }
  },
  "by_kind": {
@@ -53,8 +53,8 @@
    "spec_0.3": {
     "end read as end": 6,
     "end read as goes on": 0,
-    "goes on read as end": 23,
-    "goes on read as goes on": 25
+    "goes on read as end": 2,
+    "goes on read as goes on": 46
    }
   },
   "fr": {
@@ -67,8 +67,8 @@
    "spec_0.3": {
     "end read as end": 0,
     "end read as goes on": 0,
-    "goes on read as end": 25,
-    "goes on read as goes on": 28
+    "goes on read as end": 3,
+    "goes on read as goes on": 50
    }
   }
  },
@@ -131,25 +131,25 @@
    "id": "irs-p1:2940",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p1:2956",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p1:2993",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p216:300",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p216:360",
@@ -221,7 +221,7 @@
    "id": "irs-p531:12552",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p531:17659",
@@ -245,7 +245,7 @@
    "id": "irs-p541:883",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p541:2408",
@@ -281,31 +281,31 @@
    "id": "irs-p542:1066",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p542:4718",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p542:8767",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p542:13538",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p547:3622",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p547:8951",
@@ -317,13 +317,13 @@
    "id": "irs-p547:12968",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p547:17603",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p547:22342",
@@ -353,13 +353,13 @@
    "id": "irs-p551:14632",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p551:20793",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p555:1942",
@@ -383,7 +383,7 @@
    "id": "irs-p555:10228",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p555:10269",
@@ -401,13 +401,13 @@
    "id": "irs-p556:3543",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p556:9088",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p556:17116",
@@ -419,7 +419,7 @@
    "id": "irs-p556:20396",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p557:663",
@@ -443,13 +443,13 @@
    "id": "irs-p557:25411",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "irs-p557:25438",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-12035:123",
@@ -473,25 +473,25 @@
    "id": "fr-2025-12033:1937",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-12033:5069",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-12033:6013",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-12025:3588",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-12025:5213",
@@ -509,7 +509,7 @@
    "id": "fr-2025-12025:8529",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-12025:11411",
@@ -533,37 +533,37 @@
    "id": "fr-2025-12024:2331",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-12024:5644",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-12024:9838",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11993:1455",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11993:10794",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11993:11112",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11993:11663",
@@ -587,13 +587,13 @@
    "id": "fr-2025-11991:8567",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11991:8896",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11991:9447",
@@ -611,13 +611,13 @@
    "id": "fr-2025-11990:1711",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11990:2029",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11990:2580",
@@ -665,7 +665,7 @@
    "id": "fr-2025-11922:3549",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11907:177",
@@ -683,13 +683,13 @@
    "id": "fr-2025-11907:2298",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11907:4911",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11907:12911",
@@ -713,7 +713,7 @@
    "id": "fr-2025-11902:593",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11902:2791",
@@ -743,7 +743,7 @@
    "id": "fr-2025-11824:4049",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11824:5524",
@@ -755,13 +755,13 @@
    "id": "fr-2025-11824:9587",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11824:9604",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "end"
+   "spec_0.3": "goes on"
   },
   {
    "id": "fr-2025-11824:15300",

@@ -54,3 +54,24 @@ count.
 `caps.py label` shows each abbreviation in its text and asks one question: does the sentence end
 at its dot (`end`), or does it go on (`goes on`)? It never shows how a spec reads the dot. The
 labels go in `labels.json`.
+
+## Scoring
+
+```bash
+uv run python bench/caps/caps.py score --check    # fail if the committed files differ
+```
+
+[RESULTS.md](RESULTS.md) reads each dot before #77, when spec 0.3 ends a sentence at every dot of
+this set, and under spec 0.3 (the core in this repository). It counts each reading against the
+label, by abbreviation and by kind. The rule was fixed on #77 before the pick. CI runs
+`score --check`.
+
+What it found:
+
+- Every `U.S.` dot of the set is in a sentence that goes on, and spec 0.3 joins each of them.
+- Spec 0.3 joins none of the real sentence ends. They are all `No.` before a word that is not a
+  code.
+- The cuts that remain are `No.` as the answer in an IRS worksheet ("No. Go to line 7c"), which the
+  label calls one sentence. Spec 0.3 cuts there, and the cut can only lose a qualifier, never a
+  key.
+- No label changed after scoring.
