@@ -68,13 +68,19 @@ runs `score --check`.
 
 What it found:
 
-- Of the 107 dots where the sentence goes on, spec 0.2 cuts all 107 and spec 0.3 cuts 51. A cut
+- Of the 107 dots where the sentence goes on, spec 0.2 cuts all 107 and spec 0.3 cuts 53. A cut
   sentence can lose a qualifier that stands before the dot.
-- Of the 9 real sentence ends, spec 0.3 joins 1: "mL/min. ( 2.2)", where the next character is
-  a parenthesis and not an uppercase letter.
-- Most of the 51 cuts that remain are `U.S.` (37) and `No.` (9) before a capitalized word, as in
-  "U.S. Tax Court" and "Docket No. DEA-1086". The uppercase test reads those as sentence ends.
-  That is a follow-up for a later spec, measured on other documents (#77).
+- Of the 9 real sentence ends, spec 0.3 joins none.
+- Most of the 53 cuts that remain are `U.S.` (37) and `No.` (9) before a capitalized word, as in
+  "U.S. Tax Court" and "Docket No. DEA-1086". Spec 0.3 reads those as sentence ends. That is a
+  follow-up for a later spec, measured on other documents (#77).
+
+The rule changed once after the first scoring. It first joined before any character that was
+not an uppercase letter. A security review of #72 showed that a join before a parenthesis lets
+the key or unit of one sentence reach a value in the next, so a swapped key can pass. The join
+now needs a lowercase letter, a digit or a currency sign. With the first rule, spec 0.3 cut 51
+of the 107 and joined 1 of the 9 real ends ("mL/min. ( 2.2)"). The change came from the
+review, not from this set.
 
 ## Labels changed after scoring
 

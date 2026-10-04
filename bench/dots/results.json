@@ -22,10 +22,10 @@
    "goes on read as goes on": 0
   },
   "spec_0.3": {
-   "end read as end": 8,
-   "end read as goes on": 1,
-   "goes on read as end": 51,
-   "goes on read as goes on": 56
+   "end read as end": 9,
+   "end read as goes on": 0,
+   "goes on read as end": 53,
+   "goes on read as goes on": 54
   }
  },
  "by_kind": {
@@ -37,10 +37,10 @@
     "goes on read as goes on": 0
    },
    "spec_0.3": {
-    "end read as end": 2,
-    "end read as goes on": 1,
-    "goes on read as end": 3,
-    "goes on read as goes on": 3
+    "end read as end": 3,
+    "end read as goes on": 0,
+    "goes on read as end": 5,
+    "goes on read as goes on": 1
    }
   },
   "irs": {
@@ -89,7 +89,7 @@
    "id": "fda-ramipril:7663",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "goes on"
+   "spec_0.3": "end"
   },
   {
    "id": "fda-ramipril:8389",
@@ -113,7 +113,7 @@
    "id": "fda-tolterodine:917",
    "label": "end",
    "spec_0.2": "end",
-   "spec_0.3": "goes on"
+   "spec_0.3": "end"
   },
   {
    "id": "fda-tacrolimus:12056",
@@ -125,7 +125,7 @@
    "id": "fda-hydroxyurea:805",
    "label": "goes on",
    "spec_0.2": "end",
-   "spec_0.3": "goes on"
+   "spec_0.3": "end"
   },
   {
    "id": "irs-p1:2940",

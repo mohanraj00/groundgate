@@ -1,7 +1,7 @@
 {
  "name": "07f-abbreviation-dots",
- "description": "The dot of a listed abbreviation does not end a sentence when the next word starts with no uppercase letter, so a qualifier before it still applies; `approx` is a qualifier (spec 0.3).",
- "document": "The refund is up to Rs. 50,000 a year. Take approx. 5 mg a day. Take approx 6 mg at night. The office is open from 6 p.m. to 8 p.m. on weekdays. Taxes are at most due in the U.S. The fee is $30. Taxes are at most due in the U.S.\r\n\r\nfee is $45.",
+ "description": "The dot of a listed abbreviation does not end a sentence when the next character is a lowercase letter, a digit or a currency sign, so a qualifier before it still applies; `approx` is a qualifier (spec 0.3).",
+ "document": "The refund is up to Rs. 50,000 a year. Take approx. 5 mg a day. Take approx 6 mg at night. The office is open from 6 p.m. to 8 p.m. on weekdays. Taxes are at most due in the U.S. The fee is $30. Taxes are at most due in the U.S.\r\n\r\nfee is $45. Pay approx. $12 a month. For hypertension, ship packs of 2 lb. (Heart failure dose is 7 mg.)",
  "schema": {
   "fields": {
    "refund": {
@@ -26,6 +26,18 @@
    "crlf_fee": {
     "type": "integer",
     "unit": "USD"
+   },
+   "monthly": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "keyed_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "Hypertension",
+     "Heart Failure"
+    ]
    }
   }
  },
@@ -95,6 +107,29 @@
     "end": 242,
     "text": "$45"
    }
+  },
+  {
+   "id": "a7",
+   "field": "monthly",
+   "value": "12",
+   "unit": "USD",
+   "evidence": {
+    "start": 256,
+    "end": 259,
+    "text": "$12"
+   }
+  },
+  {
+   "id": "a8",
+   "field": "keyed_dose",
+   "value": "7",
+   "unit": "mg",
+   "evidence": {
+    "start": 330,
+    "end": 334,
+    "text": "7 mg"
+   },
+   "key": "Hypertension"
   }
  ],
  "expected": {
@@ -130,6 +165,18 @@
    {
     "outcome": "admitted",
     "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
    }
   ],
   "coverage": []

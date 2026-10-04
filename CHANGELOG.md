@@ -17,12 +17,14 @@ milestone 0.3.
   between must start with a determiner and hold no digit, punctuation, preposition or range word,
   so "increased body weight from 20 to 40 kg" stays a range. Vector `07e-change-at-a-distance`.
 - Sentence ends (#63): the dot of a listed abbreviation such as `Rs.`, `approx.`, `p.m.` or
-  `U.S.` no longer ends a sentence when the next word starts with no uppercase letter. "up to
+  `U.S.` no longer ends a sentence when a lowercase letter, a digit or a currency sign follows. "up to
   Rs. 50,000" is now qualified, and in "from 6 p.m. to 8 p.m." 8 is a range end. `approx` joins
   the `approx` qualifiers, so "approx. 5 mg" is flagged. Vector `07f-abbreviation-dots`.
-  Measured on 116 abbreviation dots in documents no rule was written from (`bench/dots`): of
-  the 107 where the sentence goes on, spec 0.2 cuts all 107 and 0.3 cuts 51, and 0.3 joins 1 of
-  the 9 real sentence ends.
+  The join needs a lowercase letter, a digit or a currency sign next, because a join before a
+  parenthesis can let a key from one sentence reach a value in the next. Measured on 116
+  abbreviation dots in documents no rule was written from (`bench/dots`): of the 107 where the
+  sentence goes on, spec 0.2 cuts all 107 and 0.3 cuts 53, and 0.3 joins none of the 9 real
+  sentence ends.
 - Blank lines (#63): a blank line may hold a carriage return, so `\r\n\r\n` ends a sentence
   too.
 

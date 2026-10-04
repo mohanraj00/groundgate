@@ -65,6 +65,7 @@ _ABBREVIATION_END = re.compile(
 _ABBREVIATION_MAX = max(len(a) for a in _ABBREVIATIONS)
 _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS_RUN = re.compile(r"\s*")
+_CONTINUES = "$€£₹"
 _WS = re.compile(r"\s+")
 _HYPHEN_BREAK = re.compile(r"-\n\s*")
 _WINDOW = 40
@@ -140,8 +141,8 @@ def quote_pattern(quote: str) -> re.Pattern[str]:
 
 
 def _ends_sentence(text: str, m: re.Match[str]) -> bool:
-    """A "." that ends a listed abbreviation is not a sentence end when the next word does not
-    start with an uppercase letter and no blank line comes first (SPEC §4.2)."""
+    """A "." that ends a listed abbreviation is not a sentence end when the next character is a
+    lowercase letter, a digit or a currency sign and no blank line comes first (SPEC §4.2)."""
     if not m.group().startswith("."):
         return True
     dot = m.start()
@@ -150,7 +151,11 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
     gap = _WS_RUN.match(text, dot + 1)  # in place: no copy of the rest of the text
     assert gap is not None
     nxt = gap.end()
-    return bool(_BLANK_LINE.search(gap.group())) or nxt == len(text) or text[nxt].isupper()
+    if _BLANK_LINE.search(gap.group()) or nxt == len(text):
+        return True
+    # only a plain continuation joins; an uppercase letter or punctuation may start a sentence
+    ch = text[nxt]
+    return not (ch.islower() or "0" <= ch <= "9" or ch in _CONTINUES)
 
 
 def sentence(text: str, pos: int) -> tuple[int, int]:
