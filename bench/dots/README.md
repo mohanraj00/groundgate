@@ -45,7 +45,7 @@ count.
 116 dots in 31 documents: FDA 9 (7 labels), IRS 54 (12 publications), Federal Register 53 (12
 rules). The most common are `U.S.` (56) and `No.` (27).
 
-The first pick counted running heads, and the Codex review of #74 found that 30 of the 50 Federal
+The first pick counted running heads, and a review of #74 found that 30 of the 50 Federal
 Register dots were `Vol.` and `No.` in them. The running-head rule was added, and then widened to a
 head split over lines, which the second review found. The pick ran again each time before anyone
 read the text.
