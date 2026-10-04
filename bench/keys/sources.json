@@ -1,0 +1,386 @@
+{
+  "retrieved": "2026-10-04",
+  "sources": [
+    {
+      "id": "fda-olanzapine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5ba67321-6988-46ea-97a0-549954e2c405.xml",
+      "sha256": "591c7a021a0be200caabfb4c7dd4ecd5f15d682a80eca998b2b0a9df515ab280",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Schizophrenia",
+        "Bipolar I Disorder (Manic or Mixed Episodes)",
+        "Special Considerations in Treating Pediatric Schizophrenia and Bipolar I Disorder",
+        "Olanzapine Tablets and Fluoxetine in Combination: Depressive Episodes Associated with Bipolar I Disorder",
+        "Olanzapine Tablets and Fluoxetine in Combination: Treatment Resistant Depression"
+      ],
+      "source": "OLANZAPINE TABLET, FILM COATED [CARDINAL HEALTH 107, LLC]; Part D 2024 claims rank 104"
+    },
+    {
+      "id": "fda-risperidone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/a6767972-2d3f-482b-80bd-ac93e28fdd05.xml",
+      "sha256": "a170fa92bb6a52d137dbcc4eb2d53404b152ab1d5bd0ba123216f21bd58fe3dc",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Schizophrenia",
+        "Bipolar Mania",
+        "Irritability Associated with Autistic Disorder"
+      ],
+      "source": "RISPERIDONE TABLET [A-S MEDICATION SOLUTIONS]; Part D 2024 claims rank 111"
+    },
+    {
+      "id": "fda-mirabegron",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5f7a1758-8691-4e53-96d6-a01626ee8140.xml",
+      "sha256": "ecf1166db021f6c0302238db6df2a5ee57acdd9b97267cc4b01770da1ff0ecd9",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Adult Overactive Bladder (OAB)",
+        "Pediatric Neurogenic Detrusor Overactivity (NDO)"
+      ],
+      "source": "MIRABEGRON TABLET, EXTENDED RELEASE [REMEDYREPACK INC.]; Part D 2024 claims rank 114"
+    },
+    {
+      "id": "fda-ropinirole",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/a97d5e2d-4a17-4d80-9216-1b0780199502.xml",
+      "sha256": "94cfd71c35ae0870d75cdd17a6c29610cb335fbf93ef63a6614d000967e6acd9",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Parkinson’s Disease",
+        "Restless Legs Syndrome"
+      ],
+      "source": "ROPINIROLE HYDROCHLORIDE TABLET, FILM COATED [A-S MEDICATION SOLUTIONS]; Part D 2024 claims rank 119"
+    },
+    {
+      "id": "fda-valacyclovir",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/72300f70-57fd-42a8-a2dc-4cf95a1ce805.xml",
+      "sha256": "cdb5f95a7b41f306b1e708f7e74c36a73bfab0bea9819d15f96b1e09be75a533",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Adult Patients",
+        "Pediatric Patients",
+        "Limitations of Use"
+      ],
+      "source": "VALACYCLOVIR HYDROCHLORIDE TABLET, FILM COATED [CARDINAL HEALTH 107, LLC]; Part D 2024 claims rank 123"
+    },
+    {
+      "id": "fda-torsemide",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/26a3af16-39fc-482d-8a8e-9473af4b0e3f.xml",
+      "sha256": "c8d8f3eaa0aa8a8ae176a5d1a073a8063698f682b6df81a07a86cd661e1b9851",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Edema",
+        "Hypertension"
+      ],
+      "source": "TORSEMIDE TABLET [REMEDYREPACK INC.]; Part D 2024 claims rank 130"
+    },
+    {
+      "id": "fda-esomeprazole",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5baf88c3-eda4-8aa6-e063-6294a90a68b4.xml",
+      "sha256": "3163244730520a21f824abc7a9d19361071bd8e5c3e53501e63ee88a7253d87d",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Healing of Erosive Esophagitis (EE)",
+        "Maintenance of Healing of EE",
+        "Treatment of Symptomatic GERD",
+        "Risk Reduction of Nonsteroidal Anti-Inflammatory Drugs (NSAID)-Associated Gastric Ulcer",
+        "Helicobacter pyloriEradication to Reduce the Risk of Duodenal Ulcer Recurrence",
+        "Pathological Hypersecretory Conditions Including Zollinger-Ellison Syndrome"
+      ],
+      "source": "ESOMEPRAZOLE MAGNESIUM CAPSULE, DELAYED RELEASE [ST. MARY'S MEDICAL PARK PHARMACY]; Part D 2024 claims rank 131"
+    },
+    {
+      "id": "fda-irbesartan",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/ed789dc1-0b39-4efc-990d-7b6b43a8b3ba.xml",
+      "sha256": "dd40bcfc98aad625502ef1b118ef3e99fb3403019b59fd695f62d5e700e9a4e9",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Hypertension",
+        "Nephropathy in Type 2 Diabetic Patients"
+      ],
+      "source": "IRBESARTAN TABLET [BRYANT RANCH PREPACK]; Part D 2024 claims rank 144"
+    },
+    {
+      "id": "fda-levofloxacin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5a65b2bc-9edc-f193-e063-6394a90a0104.xml",
+      "sha256": "e1e18a324103489962eab55c6e239e8e9aaac89574ca4b2cbd4a4a08c882e7dd",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Nosocomial Pneumonia",
+        "Community-Acquired Pneumonia: 7 to 14 day Treatment Regimen",
+        "Community-Acquired Pneumonia: 5-day Treatment Regimen",
+        "Complicated Skin and Skin Structure Infections",
+        "Uncomplicated Skin and Skin Structure Infections",
+        "Chronic Bacterial Prostatitis",
+        "Inhalational Anthrax (Post-Exposure)",
+        "Plague",
+        "Complicated Urinary Tract Infections: 5-day Treatment Regimen",
+        "Complicated Urinary Tract Infections: 10-day Treatment Regimen",
+        "Acute Pyelonephritis: 5 or 10-day Treatment Regimen",
+        "Uncomplicated Urinary Tract Infections",
+        "Acute Bacterial Exacerbation of Chronic Bronchitis",
+        "Acute Bacterial Sinusitis: 5-day and 10 to 14 day Treatment Regimens",
+        "Usage"
+      ],
+      "source": "LEVOFLOXACIN TABLET, FILM COATED [REDPHARM DRUG]; Part D 2024 claims rank 150"
+    },
+    {
+      "id": "fda-methotrexate",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/8f1260de-b60c-4f0e-8af6-0e957b0a281b.xml",
+      "sha256": "2694d47f309ed5149422fbb51fc56acb43f15fb1d95647cb5498078f6615887d",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Neoplastic Diseases",
+        "Rheumatoid Arthritis",
+        "Polyarticular Juvenile Idiopathic Arthritis",
+        "Psoriasis"
+      ],
+      "source": "METHOTREXATE (METHOTREXATE SODIUM) TABLET [SUN PHARMACEUTICAL INDUSTRIES, INC.]; Part D 2024 claims rank 151"
+    },
+    {
+      "id": "fda-doxazosin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/6b887aa5-5edf-48c5-a480-dea8c35afa9d.xml",
+      "sha256": "c7f65bfe1a603b1235f070ba4158949b840f713adab7191b226a1cc764a52eea",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Benign Prostatic Hyperplasia (BPH)",
+        "Hypertension"
+      ],
+      "source": "DOXAZOSIN MESYLATE TABLET DOXAZOSIN TABLET [MYLAN PHARMACEUTICALS INC.]; Part D 2024 claims rank 165"
+    },
+    {
+      "id": "fda-fenofibrate",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/35ba17d9-0dd7-4f15-8f74-be5fd15f1917.xml",
+      "sha256": "422bcaf039f320e19f2e8c8afd42fba3ac238fe61e48855c4bcfa48ef31fc562",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Primary Hypercholesterolemia or Mixed Dyslipidemia",
+        "Severe Hypertriglyceridemia",
+        "Important Limitations of Use"
+      ],
+      "source": "FENOFIBRATE TABLET [PD-RX PHARMACEUTICALS, INC.]; Part D 2024 claims rank 169"
+    },
+    {
+      "id": "fda-anastrozole",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/362034e9-2830-19a5-e063-6394a90a8dfb.xml",
+      "sha256": "4fb123df55fd21081bef61d35d3e28d278aea3cef309689d00a72f8a9ee7db11",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Adjuvant Treatment",
+        "First-Line Treatment",
+        "Second-Line Treatment"
+      ],
+      "source": "ANASTROZOLE TABLET [NUCARE PHARMACEUTICALS, INC.]; Part D 2024 claims rank 187"
+    },
+    {
+      "id": "fda-carbamazepine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/e68998cb-5f91-4d7e-85a6-555efb8b0384.xml",
+      "sha256": "56989dfb7ce6e1d745ec2fcca2f2b4fb9e16e1182a4bfad7cb2518274705c59e",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Epilepsy",
+        "Trigeminal Neuralgia"
+      ],
+      "source": "CARBAMAZEPINE TABLET [NIVAGEN PHARMACEUTICALS, INC.]; Part D 2024 claims rank 209"
+    },
+    {
+      "id": "fda-lansoprazole",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/7daa1721-f92b-4096-b19e-4d27fc8acb51.xml",
+      "sha256": "97bb8f81721dfa7cd1cf551f283a1dcc45806eb4889ee5297be550f75b40a1b5",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Treatment of Active Duodenal Ulcer",
+        "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence",
+        "Maintenance of Healed Duodenal Ulcers",
+        "Treatment of Active Benign Gastric Ulcer",
+        "Healing of NSAID-Associated Gastric Ulcer",
+        "Risk Reduction of NSAID-Associated Gastric Ulcer",
+        "Treatment of Symptomatic Gastroesophageal Reflux Disease (GERD)",
+        "Treatment of Erosive Esophagitis (EE)",
+        "Maintenance of Healing of EE",
+        "Pathological Hypersecretory Conditions Including Zollinger-Ellison Syndrome (ZES)"
+      ],
+      "source": "LANSOPRAZOLE TABLET, ORALLY DISINTEGRATING, DELAYED RELEASE [CARDINAL HEALTH 107, LLC]; Part D 2024 claims rank 222"
+    },
+    {
+      "id": "fda-clozapine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/61fe53d5-ed5c-4e45-9189-709d08d386cb.xml",
+      "sha256": "f09227f70e566fa564433645a564a3fa59f60ae67a992de1e984bfc67461d5e0",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Treatment-Resistant Schizophrenia",
+        "Reduction in the Risk of Recurrent Suicidal Behavior in Schizophrenia or Schizoaffective Disorder"
+      ],
+      "source": "CLOZAPINE TABLET [NORTHSTAR RX LLC]; Part D 2024 claims rank 223"
+    },
+    {
+      "id": "fda-cefuroxime",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5b2e7ec0-7c68-4d62-e063-6294a90a7bd5.xml",
+      "sha256": "63144c87a1e26c8cb71d1f105a806450a9c65048b9256c377b9a863d63c4cbde",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Pharyngitis/Tonsillitis",
+        "Acute Bacterial Otitis Media",
+        "Acute Bacterial Maxillary Sinusitis",
+        "Acute Bacterial Exacerbations of Chronic Bronchitis",
+        "Uncomplicated Skin and Skin-Structure Infections",
+        "Uncomplicated Urinary Tract Infections",
+        "Uncomplicated Gonorrhea",
+        "Early Lyme Disease (erythema migrans)",
+        "Usage"
+      ],
+      "source": "CEFUROXIME AXETIL TABLET, FILM COATED [REDPHARM DRUG]; Part D 2024 claims rank 225"
+    }
+  ]
+}

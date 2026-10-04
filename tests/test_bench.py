@@ -599,3 +599,18 @@ def test_a_caps_dot_with_the_text_of_an_earlier_dot_does_not_count_again() -> No
     find = caps.fresh_finder()
     assert len(find("Dated: May 1. " + sign + " [FR Doc. 1]")) == 1
     assert find("Dated: June 9. " + sign + " [FR Doc. 2]") == []
+
+
+def test_a_keys_dose_is_a_number_token_before_mg_or_mcg() -> None:
+    sys.path.insert(0, str(BENCH / "keys"))
+    import keys
+
+    text = "Take 10 mg, then 2.5mg, 50 mcg, 1,000 mg and 20 mL; 5 mgs is not one, but 3 mg/kg is."
+    found = [text[a:b] for a, b in keys.doses_in(text)]
+    assert found == ["10", "2.5", "50", "1,000", "3"]
+    label, read = ["Hypertension"], ["Hypertension", "Heart Failure"]
+    assert keys.outcome(label, read) == "every right key and a wrong key"
+    assert keys.outcome(read, label) == "a right key missing, no wrong key"
+    assert keys.outcome(read, ["Heart Failure", "Angina"]) == "a right key missing and a wrong key"
+    assert keys.outcome([], []) == "no key reaches it"
+    assert keys.outcome(label, []) == "a right key missing, no wrong key"
