@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import hashlib
 import json
 import re
 import subprocess
@@ -29,7 +30,7 @@ sys.path[:0] = [str(HERE.parent), str(HERE.parent / "patterns"), str(HERE.parent
 
 import dots  # noqa: E402  (bench/dots/dots.py)
 import pick as walk  # noqa: E402  (bench/pick.py)
-from fetch import spl_sections  # noqa: E402  (bench/fetch.py)
+from fetch import download, spl_sections  # noqa: E402  (bench/fetch.py)
 
 PER_SET, PER_DOC, MAX_RANK = 100, 6, 600
 # a dose: a number token followed by mg or mcg
@@ -144,13 +145,16 @@ def context(text: str, span: list[int], bold: str = "\033[1;7m{}\033[0m", before
 
 
 def section_1(doc: str) -> str:
-    """Section 1 (indications) of a label, which says what each key covers."""
-    walk.CACHE = HERE / ".cache"
+    """Section 1 (indications) of a label, which says what each key covers, from the pinned
+    revision that docs/ was made from."""
     src = next(
         s for s in json.loads((HERE / "sources.json").read_text())["sources"] if s["id"] == doc
     )
-    setid = src["url"].rsplit("/", 1)[1].removesuffix(".xml")
-    return spl_sections(walk.get(src["url"], f"spl-{setid}.xml"), [walk.INDICATIONS])
+    (HERE / ".cache").mkdir(exist_ok=True)
+    data = download(src["url"], HERE / ".cache" / f"{doc}.xml")
+    if hashlib.sha256(data).hexdigest() != src["sha256"]:
+        raise SystemExit(f"{doc}: the label is not the pinned revision; run bench/fetch.py")
+    return spl_sections(data, [walk.INDICATIONS])
 
 
 def label(recheck: bool) -> None:
