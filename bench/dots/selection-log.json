@@ -2759,10 +2759,9 @@
   "kind": "fr",
   "id": "fr-2025-12035",
   "pages": [
-   1,
-   2
+   1
   ],
-  "pairs": 5
+  "pairs": 1
  },
  {
   "kind": "fr",
@@ -2770,13 +2769,14 @@
   "pages": [
    1
   ],
-  "pairs": 7
+  "pairs": 5
  },
  {
   "kind": "fr",
   "id": "fr-2025-12025",
   "pages": [
-   1
+   1,
+   2
   ],
   "pairs": 5
  },
@@ -2795,7 +2795,7 @@
    1,
    2
   ],
-  "pairs": 11
+  "pairs": 7
  },
  {
   "kind": "fr",
@@ -2804,16 +2804,15 @@
    1,
    2
   ],
-  "pairs": 14
+  "pairs": 10
  },
  {
   "kind": "fr",
   "id": "fr-2025-11990",
   "pages": [
-   1,
    2
   ],
-  "pairs": 17
+  "pairs": 13
  },
  {
   "kind": "fr",
@@ -2821,23 +2820,41 @@
   "pages": [
    1
   ],
-  "pairs": 9
+  "pairs": 7
  },
  {
   "kind": "fr",
   "id": "fr-2025-11907",
   "pages": [
-   1
+   1,
+   4
   ],
-  "pairs": 6
+  "pairs": 5
  },
  {
   "kind": "fr",
   "id": "fr-2025-11902",
   "pages": [
-   1,
    2
   ],
-  "pairs": 9
+  "pairs": 5
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2025-11867",
+  "pages": [
+   1
+  ],
+  "pairs": 2
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2025-11824",
+  "pages": [
+   1,
+   6,
+   9
+  ],
+  "pairs": 17
  }
 ]

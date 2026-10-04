@@ -319,8 +319,7 @@
       "sha256": "e2a7169307755c780aa86ff8fd0f097af8d2838424b0bf0a390d038ac9dc8710",
       "select": {
         "pages": [
-          1,
-          2
+          1
         ]
       }
     },
@@ -348,7 +347,8 @@
       "sha256": "ea4cf9c63fab1507ae5a6e2b9645c0333137d7e1df251577ac141ca0f6c873df",
       "select": {
         "pages": [
-          1
+          1,
+          2
         ]
       }
     },
@@ -406,7 +406,6 @@
       "sha256": "cfae1d40ee42364f4ffd14fc0f00b1710a312072fef7d6aecc2a69eb60d5db45",
       "select": {
         "pages": [
-          1,
           2
         ]
       }
@@ -435,7 +434,8 @@
       "sha256": "18092b4fc8763a37e0b068e946bea7a5dce96cc620ef3eb50b6ba53954c67e5d",
       "select": {
         "pages": [
-          1
+          1,
+          4
         ]
       }
     },
@@ -449,8 +449,37 @@
       "sha256": "33fe76b32c0fa67e7754e407d7446e090615277fc7032296a574b4905bf2d3cf",
       "select": {
         "pages": [
-          1,
           2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-11867",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-27/pdf/2025-11867.pdf",
+      "sha256": "06ba65982bdba6c7af1e01c5d156b64c27fa768c3b18e180b953e96bf31540d2",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-11824",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-27/pdf/2025-11824.pdf",
+      "sha256": "cf840e92ca4253e4bdf828a99565875e92abb5e56e069d33751a6bb7739dc60e",
+      "select": {
+        "pages": [
+          1,
+          6,
+          9
         ]
       }
     }

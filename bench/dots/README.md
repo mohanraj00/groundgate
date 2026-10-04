@@ -20,7 +20,9 @@ uv run python bench/dots/dots.py score            # RESULTS.md: spec 0.2 and 0.3
 ## A dot
 
 A listed abbreviation, as a whole word, whose dot is followed by whitespace. The list is the one
-in SPEC §4.2, written out in `dots.py`, so the pick does not run the rule it measures. Both
+in SPEC §4.2, written out in `dots.py`, so the pick does not run the rule it measures. A dot on a
+line that holds a Federal Register running head ("Federal Register / Vol. 90, No. 123 / ...")
+does not count, because the head repeats on every page. Both
 kinds count: a dot before an uppercase word, which spec 0.3 keeps as a sentence end, and a dot
 before any other character, which spec 0.3 does not.
 
@@ -40,8 +42,12 @@ count.
 - **Federal Register:** final rules of at most 20 pages, published 2025-01-01 to 2025-06-30,
   newest first. Set 2 took 2026 and the pattern set 2025-07-01 to 2025-12-31.
 
-113 dots in 29 documents: FDA 9 (7 labels), IRS 54 (12 publications), Federal Register 50 (10
-rules).
+116 dots in 31 documents: FDA 9 (7 labels), IRS 54 (12 publications), Federal Register 53 (12
+rules). The most common are `U.S.` (54) and `No.` (28).
+
+The first pick counted running heads, and the Codex review of #74 found that 30 of the 50
+Federal Register dots were `Vol.` and `No.` in them. The running-head rule was added and the
+pick run again before anyone read the text.
 
 ## Labels
 
