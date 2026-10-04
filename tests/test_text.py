@@ -1,12 +1,23 @@
 from __future__ import annotations
 
+import re
+import time
 from decimal import Decimal
 
 import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from groundgate.text import canonical, parse_value, qualifiers, tokens, verbatim_equal
+from groundgate.text import (
+    _label_line_in,
+    canonical,
+    key_mentions,
+    keys_at,
+    parse_value,
+    qualifiers,
+    tokens,
+    verbatim_equal,
+)
 
 
 def _values(text: str) -> list[Decimal | None]:
@@ -97,3 +108,33 @@ def test_qualifiers(text: str, target: str, expected: set[str]) -> None:
 def test_verbatim_equal() -> None:
     assert verbatim_equal("mar-\nried  couple", "married couple")
     assert not verbatim_equal("2,000 mg", "2000 mg")
+
+
+# the first form of the label-line rule, kept as the reference for the linear scan
+_LABEL_LINE_REGEX = re.compile(r"(?:\A|\n[ \t\r]*\n)[ \t\r]*([^\n]*?)[ \t\r]*(?=\n[ \t\r]*\n)")
+
+
+def _label_line_by_regex(text: str, start: int, end: int) -> bool:
+    for m in _LABEL_LINE_REGEX.finditer(text, start, end):
+        line = m.group(1)
+        if line and len(line.split()) <= 12 and not re.search(r"[.;]\s", line + "\n"):
+            return True
+    return False
+
+
+@given(
+    st.text(alphabet=" \t\r\nab.;", max_size=40),
+    st.integers(min_value=0, max_value=40),
+    st.integers(min_value=0, max_value=40),
+)
+def test_the_label_line_scan_agrees_with_the_regex(text: str, a: int, b: int) -> None:
+    start, end = min(a, b, len(text)), min(max(a, b), len(text))
+    assert _label_line_in(text, start, end) == _label_line_by_regex(text, start, end)
+
+
+def test_a_long_line_of_spaces_takes_linear_time() -> None:
+    mentions = key_mentions("Hypertension", ("Hypertension",))
+    text = "Hypertension\n\n" + " " * 200_000 + "\nThe dose is 5 mg."
+    t0 = time.perf_counter()
+    assert keys_at(text, mentions, text.index("5 mg")) == {"Hypertension"}
+    assert time.perf_counter() - t0 < 1

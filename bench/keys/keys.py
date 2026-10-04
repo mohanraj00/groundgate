@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import hashlib
 import json
 import re
 import subprocess
@@ -29,7 +30,7 @@ sys.path[:0] = [str(HERE.parent), str(HERE.parent / "patterns"), str(HERE.parent
 
 import dots  # noqa: E402  (bench/dots/dots.py)
 import pick as walk  # noqa: E402  (bench/pick.py)
-from fetch import spl_sections  # noqa: E402  (bench/fetch.py)
+from fetch import download, spl_sections  # noqa: E402  (bench/fetch.py)
 
 PER_SET, PER_DOC, MAX_RANK = 100, 6, 600
 # a dose: a number token followed by mg or mcg
@@ -137,22 +138,49 @@ def keys_of() -> dict[str, list[str]]:
     return {s["id"]: s["keys"] for s in json.loads((HERE / "sources.json").read_text())["sources"]}
 
 
-def context(text: str, span: list[int], bold: str = "\033[1;7m{}\033[0m") -> str:
-    """The dose with up to 400 code points before and 150 after, line breaks kept."""
+def context(text: str, span: list[int], bold: str = "\033[1;7m{}\033[0m", before: int = 400) -> str:
+    """The dose with up to ``before`` code points before it and 150 after, line breaks kept."""
     a, b = span
-    return text[max(0, a - 400) : a] + bold.format(text[a:b]) + text[b : b + 150]
+    return text[max(0, a - before) : a] + bold.format(text[a:b]) + text[b : b + 150]
 
 
-def label() -> None:
+def section_1(doc: str) -> str:
+    """Section 1 (indications) of a label, which says what each key covers, from the pinned
+    revision that docs/ was made from."""
+    src = next(
+        s for s in json.loads((HERE / "sources.json").read_text())["sources"] if s["id"] == doc
+    )
+    (HERE / ".cache").mkdir(exist_ok=True)
+    data = download(src["url"], HERE / ".cache" / f"{doc}.xml")
+    if hashlib.sha256(data).hexdigest() != src["sha256"]:
+        raise SystemExit(f"{doc}: the label is not the pinned revision; run bench/fetch.py")
+    return spl_sections(data, [walk.INDICATIONS])
+
+
+def label(recheck: bool) -> None:
+    """Label each dose in turn, or with ``recheck`` only the doses labeled none or not sure."""
     items = json.loads((HERE / "items.json").read_text())
     keys = keys_of()
     path = HERE / "labels.json"
-    labels: dict[str, list[str]] = json.loads(path.read_text()) if path.exists() else {}
+    labels: dict[str, list[str] | None] = json.loads(path.read_text()) if path.exists() else {}
     texts: dict[str, str] = {}
     print("For each marked dose: which of the label's conditions does it belong to?")
-    print("Type a number, several numbers with commas (1,3), or 0 for none of them.\n")
-    i = next((k for k, it in enumerate(items) if it["id"] not in labels), len(items))
-    while i < len(items):
+    print("Type a number, or several numbers with commas (1,3) when the dose holds for each of")
+    print("those conditions, such as one dosage for the whole label. Type 0 only when the dose")
+    print("belongs to none of the conditions, and ? when you can't tell.")
+    print("Type s to read section 1 of the label, which says what each condition covers.")
+    print("Type m to see more of the text before the dose, with its heading.\n")
+    order = list(range(len(items)))
+    if recheck:
+        order = [k for k, it in enumerate(items) if labels.get(it["id"], [0]) in ([], None)]
+        print(f"Recheck: {len(order)} doses labeled 0 or ?.\n")
+    j = (
+        0
+        if recheck
+        else next((n for n, k in enumerate(order) if items[k]["id"] not in labels), len(order))
+    )
+    while j < len(order):
+        i = order[j]
         it = items[i]
         if it["doc"] not in texts:
             texts[it["doc"]] = (HERE / "docs" / f"{it['doc']}.txt").read_text(encoding="utf-8")
@@ -163,24 +191,39 @@ def label() -> None:
         for n, k in enumerate(keys[it["doc"]], 1):
             print(f"  {n}  {k}")
         print("  0  none of them")
-        was = f" (now: {labels[it['id']]})" if it["id"] in labels else ""
-        ans = input(f"Condition{was}: numbers, 0, b back, q quit: ").strip().lower()
+        print("  ?  not sure")
+        if it["id"] in labels:
+            now = labels[it["id"]]
+            was = " (now: not sure)" if now is None else f" (now: {'; '.join(now) or 'none'})"
+        else:
+            was = ""
+        ans = input(f"Condition{was}: numbers, 0, ?, m more text, s section 1, b back, q quit: ")
+        ans = ans.strip().lower()
         if ans == "q":
             break
+        if ans == "m":
+            print(f"\n{context(texts[it['doc']], it['span'], before=2500)}")
+            continue
+        if ans == "s":
+            print(f"\n{section_1(it['doc'])}")
+            continue
         if ans == "b":
-            i = max(0, i - 1)
+            j = max(0, j - 1)
             continue
-        try:
-            picked = sorted({int(x) for x in ans.split(",") if x.strip()})
-        except ValueError:
-            continue
-        if not picked or not all(0 <= n <= len(keys[it["doc"]]) for n in picked):
-            continue
-        if 0 in picked and len(picked) > 1:
-            continue
-        labels[it["id"]] = [keys[it["doc"]][n - 1] for n in picked if n]
+        if ans == "?":
+            labels[it["id"]] = None
+        else:
+            try:
+                picked = sorted({int(x) for x in ans.split(",") if x.strip()})
+            except ValueError:
+                continue
+            if not picked or not all(0 <= n <= len(keys[it["doc"]]) for n in picked):
+                continue
+            if 0 in picked and len(picked) > 1:
+                continue
+            labels[it["id"]] = [keys[it["doc"]][n - 1] for n in picked if n]
         path.write_text(json.dumps(dict(sorted(labels.items())), indent=1) + "\n")
-        i += 1
+        j += 1
     done = sum(x["id"] in labels for x in items)
     print(f"\n{done} of {len(items)} labeled, saved in bench/keys/labels.json")
 
@@ -225,6 +268,7 @@ def score(check: bool) -> None:
         raise SystemExit(f"{len(missing)} of {len(items)} doses have no label; run keys.py label")
     run = subprocess.run(SPEC02, capture_output=True, text=True, check=True)
     v02, v03 = json.loads(run.stdout), read()
+    # a dose the person could not label is left out of the counts
     rows = [
         {
             "id": it["id"],
@@ -233,7 +277,9 @@ def score(check: bool) -> None:
             "spec_0.3": v03[it["id"]],
         }
         for it in items
+        if labels[it["id"]] is not None
     ]
+    not_sure = [it["id"] for it in items if labels[it["id"]] is None]
     with_key = [
         "every right key, no wrong key",
         "every right key and a wrong key",
@@ -249,10 +295,12 @@ def score(check: bool) -> None:
     keyed = [r for r in rows if r["label"]]
     unkeyed = [r for r in rows if not r["label"]]
     results = {
-        "doses": len(rows),
+        "doses": len(items),
+        "doses_scored": len(rows),
         "labels": len({it["doc"] for it in items}),
         "labeled_with_a_key": len(keyed),
         "labeled_with_no_key": len(unkeyed),
+        "not_sure": not_sure,
         "by_spec": {
             s: {"with a key": tally(keyed, s, with_key), "no key": tally(unkeyed, s, no_key)}
             for s in specs
@@ -275,9 +323,10 @@ def score(check: bool) -> None:
         "[README.md](README.md) explains the set. Spec 0.2 is the released 0.2.0 wheel and spec "
         "0.3 is the core in this repository.",
         "",
-        f"{results['doses']} doses in {results['labels']} FDA labels, labeled by a person: "
+        f"{len(items)} doses in {results['labels']} FDA labels, labeled by a person: "
         f"{results['labeled_with_a_key']} with one or more of the label's keys, "
-        f"{results['labeled_with_no_key']} with none of them.",
+        f"{results['labeled_with_no_key']} with none of them, and {len(not_sure)} not sure, "
+        "which the counts leave out.",
         "",
         "| Label | Keys at the dose | What it means | Spec 0.2 | Spec 0.3 |",
         "|---|---|---|---:|---:|",
@@ -326,7 +375,8 @@ def main() -> None:
     p = sub.add_parser("pick")
     p.add_argument("--count", action="store_true", help="report dose counts; write nothing")
     sub.add_parser("items")
-    sub.add_parser("label")
+    p = sub.add_parser("label")
+    p.add_argument("--recheck", action="store_true", help="only the doses labeled 0 or ?")
     sub.add_parser("read")
     p = sub.add_parser("score")
     p.add_argument("--check", action="store_true", help="fail if the committed files differ")
@@ -336,7 +386,7 @@ def main() -> None:
     elif args.cmd == "items":
         find_items()
     elif args.cmd == "label":
-        label()
+        label(args.recheck)
     elif args.cmd == "read":
         print(json.dumps(read()))
     else:

@@ -1,0 +1,189 @@
+{
+ "name": "17c-label-lines",
+ "description": "When the value's sentence mentions no key, a label line between the nearest earlier mention and the value puts the value at no key: a line of at most 12 words with a blank line or the start of the text before it and a blank line after it, with no sentence end in it and no final `.` or `;`. Such a line names a condition in a form that is not a key (spec 0.3).",
+ "document": "2.1 Hypertension\n\nThe starting dose is 10 mg once daily.\n\nTreatment of HF:\n\nThe starting dose is 5 mg once daily.\n\n2.2 Heart Failure\n\nDo not crush;  \n\nThe maximum dose is 20 mg daily.\n\nTake it with water and food at the same time each day, as your doctor tells you\n\nThe low dose is 2.5 mg daily.\n\nOlder adults\nThe last dose is 7.5 mg daily.\n\nAdults\n\nThe usual dose is 15 mg daily.",
+ "schema": {
+  "fields": {
+   "starting_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "hf_starting_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "max_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "low_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "last_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "usual_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "l1",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 39,
+    "end": 44,
+    "text": "10 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "l2",
+   "field": "hf_starting_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 97,
+    "end": 101,
+    "text": "5 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "l3",
+   "field": "hf_starting_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 97,
+    "end": 101,
+    "text": "5 mg"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "l4",
+   "field": "max_dose",
+   "value": "20",
+   "unit": "mg",
+   "evidence": {
+    "start": 171,
+    "end": 176,
+    "text": "20 mg"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "l5",
+   "field": "low_dose",
+   "value": "2.5",
+   "unit": "mg",
+   "evidence": {
+    "start": 282,
+    "end": 288,
+    "text": "2.5 mg"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "l6",
+   "field": "last_dose",
+   "value": "7.5",
+   "unit": "mg",
+   "evidence": {
+    "start": 327,
+    "end": 333,
+    "text": "7.5 mg"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "l7",
+   "field": "usual_dose",
+   "value": "15",
+   "unit": "mg",
+   "evidence": {
+    "start": 368,
+    "end": 373,
+    "text": "15 mg"
+   },
+   "key": "heart failure"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

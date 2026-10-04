@@ -1,0 +1,1182 @@
+{
+ "doses": 100,
+ "doses_scored": 93,
+ "labels": 17,
+ "labeled_with_a_key": 92,
+ "labeled_with_no_key": 1,
+ "not_sure": [
+  "fda-anastrozole:33",
+  "fda-clozapine:65",
+  "fda-clozapine:174",
+  "fda-clozapine:183",
+  "fda-clozapine:227",
+  "fda-clozapine:237",
+  "fda-clozapine:346"
+ ],
+ "by_spec": {
+  "spec_0.2": {
+   "with a key": {
+    "every right key, no wrong key": 44,
+    "every right key and a wrong key": 14,
+    "a right key missing, no wrong key": 21,
+    "a right key missing and a wrong key": 13
+   },
+   "no key": {
+    "no key reaches it": 0,
+    "a wrong key reaches it": 1
+   }
+  },
+  "spec_0.3": {
+   "with a key": {
+    "every right key, no wrong key": 38,
+    "every right key and a wrong key": 14,
+    "a right key missing, no wrong key": 33,
+    "a right key missing and a wrong key": 7
+   },
+   "no key": {
+    "no key reaches it": 0,
+    "a wrong key reaches it": 1
+   }
+  }
+ },
+ "doses_read": [
+  {
+   "id": "fda-olanzapine:80",
+   "label": [
+    "Schizophrenia"
+   ],
+   "spec_0.2": [
+    "Schizophrenia"
+   ],
+   "spec_0.3": [
+    "Schizophrenia"
+   ]
+  },
+  {
+   "id": "fda-olanzapine:106",
+   "label": [
+    "Schizophrenia"
+   ],
+   "spec_0.2": [
+    "Schizophrenia"
+   ],
+   "spec_0.3": [
+    "Schizophrenia"
+   ]
+  },
+  {
+   "id": "fda-olanzapine:195",
+   "label": [
+    "Schizophrenia"
+   ],
+   "spec_0.2": [
+    "Schizophrenia"
+   ],
+   "spec_0.3": [
+    "Schizophrenia"
+   ]
+  },
+  {
+   "id": "fda-olanzapine:220",
+   "label": [
+    "Schizophrenia"
+   ],
+   "spec_0.2": [
+    "Schizophrenia"
+   ],
+   "spec_0.3": [
+    "Schizophrenia"
+   ]
+  },
+  {
+   "id": "fda-olanzapine:314",
+   "label": [
+    "Bipolar I Disorder (Manic or Mixed Episodes)"
+   ],
+   "spec_0.2": [
+    "Bipolar I Disorder (Manic or Mixed Episodes)"
+   ],
+   "spec_0.3": [
+    "Bipolar I Disorder (Manic or Mixed Episodes)"
+   ]
+  },
+  {
+   "id": "fda-olanzapine:421",
+   "label": [
+    "Bipolar I Disorder (Manic or Mixed Episodes)"
+   ],
+   "spec_0.2": [
+    "Bipolar I Disorder (Manic or Mixed Episodes)"
+   ],
+   "spec_0.3": [
+    "Bipolar I Disorder (Manic or Mixed Episodes)"
+   ]
+  },
+  {
+   "id": "fda-risperidone:176",
+   "label": [
+    "Schizophrenia"
+   ],
+   "spec_0.2": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ],
+   "spec_0.3": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ]
+  },
+  {
+   "id": "fda-risperidone:186",
+   "label": [
+    "Schizophrenia"
+   ],
+   "spec_0.2": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ],
+   "spec_0.3": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ]
+  },
+  {
+   "id": "fda-risperidone:196",
+   "label": [
+    "Schizophrenia"
+   ],
+   "spec_0.2": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ],
+   "spec_0.3": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ]
+  },
+  {
+   "id": "fda-risperidone:206",
+   "label": [
+    "Schizophrenia"
+   ],
+   "spec_0.2": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ],
+   "spec_0.3": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ]
+  },
+  {
+   "id": "fda-risperidone:245",
+   "label": [
+    "Schizophrenia"
+   ],
+   "spec_0.2": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ],
+   "spec_0.3": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ]
+  },
+  {
+   "id": "fda-risperidone:259",
+   "label": [
+    "Schizophrenia"
+   ],
+   "spec_0.2": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ],
+   "spec_0.3": [
+    "Bipolar Mania",
+    "Schizophrenia"
+   ]
+  },
+  {
+   "id": "fda-mirabegron:410",
+   "label": [
+    "Adult Overactive Bladder (OAB)"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-mirabegron:527",
+   "label": [
+    "Adult Overactive Bladder (OAB)"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-mirabegron:763",
+   "label": [
+    "Pediatric Neurogenic Detrusor Overactivity (NDO)"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-mirabegron:873",
+   "label": [
+    "Pediatric Neurogenic Detrusor Overactivity (NDO)"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-mirabegron:1954",
+   "label": [
+    "Adult Overactive Bladder (OAB)"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-mirabegron:2060",
+   "label": [
+    "Adult Overactive Bladder (OAB)"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-ropinirole:239",
+   "label": [
+    "Parkinson\u2019s Disease"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-ropinirole:307",
+   "label": [
+    "Parkinson\u2019s Disease"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-ropinirole:374",
+   "label": [
+    "Parkinson\u2019s Disease"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-ropinirole:510",
+   "label": [
+    "Restless Legs Syndrome"
+   ],
+   "spec_0.2": [
+    "Restless Legs Syndrome"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-ropinirole:600",
+   "label": [
+    "Restless Legs Syndrome"
+   ],
+   "spec_0.2": [
+    "Restless Legs Syndrome"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-ropinirole:672",
+   "label": [
+    "Restless Legs Syndrome"
+   ],
+   "spec_0.2": [
+    "Restless Legs Syndrome"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-valacyclovir:122",
+   "label": [
+    "Pediatric Patients"
+   ],
+   "spec_0.2": [
+    "Pediatric Patients"
+   ],
+   "spec_0.3": [
+    "Pediatric Patients"
+   ]
+  },
+  {
+   "id": "fda-valacyclovir:134",
+   "label": [
+    "Pediatric Patients"
+   ],
+   "spec_0.2": [
+    "Pediatric Patients"
+   ],
+   "spec_0.3": [
+    "Pediatric Patients"
+   ]
+  },
+  {
+   "id": "fda-valacyclovir:182",
+   "label": [
+    "Pediatric Patients"
+   ],
+   "spec_0.2": [
+    "Pediatric Patients"
+   ],
+   "spec_0.3": [
+    "Pediatric Patients"
+   ]
+  },
+  {
+   "id": "fda-valacyclovir:479",
+   "label": [
+    "Adult Patients"
+   ],
+   "spec_0.2": [
+    "Pediatric Patients"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-valacyclovir:671",
+   "label": [
+    "Adult Patients"
+   ],
+   "spec_0.2": [
+    "Pediatric Patients"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-valacyclovir:689",
+   "label": [
+    "Adult Patients"
+   ],
+   "spec_0.2": [
+    "Pediatric Patients"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-torsemide:90",
+   "label": [
+    "Edema"
+   ],
+   "spec_0.2": [
+    "Edema"
+   ],
+   "spec_0.3": [
+    "Edema"
+   ]
+  },
+  {
+   "id": "fda-torsemide:147",
+   "label": [
+    "Edema"
+   ],
+   "spec_0.2": [
+    "Edema"
+   ],
+   "spec_0.3": [
+    "Edema"
+   ]
+  },
+  {
+   "id": "fda-torsemide:223",
+   "label": [
+    "Edema"
+   ],
+   "spec_0.2": [
+    "Edema"
+   ],
+   "spec_0.3": [
+    "Edema"
+   ]
+  },
+  {
+   "id": "fda-torsemide:280",
+   "label": [
+    "Edema"
+   ],
+   "spec_0.2": [
+    "Edema"
+   ],
+   "spec_0.3": [
+    "Edema"
+   ]
+  },
+  {
+   "id": "fda-torsemide:357",
+   "label": [
+    "Edema"
+   ],
+   "spec_0.2": [
+    "Edema"
+   ],
+   "spec_0.3": [
+    "Edema"
+   ]
+  },
+  {
+   "id": "fda-torsemide:414",
+   "label": [
+    "Edema"
+   ],
+   "spec_0.2": [
+    "Edema"
+   ],
+   "spec_0.3": [
+    "Edema"
+   ]
+  },
+  {
+   "id": "fda-esomeprazole:194",
+   "label": [
+    "Healing of Erosive Esophagitis (EE)"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-esomeprazole:203",
+   "label": [
+    "Healing of Erosive Esophagitis (EE)"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-esomeprazole:315",
+   "label": [
+    "Healing of Erosive Esophagitis (EE)"
+   ],
+   "spec_0.2": [
+    "Maintenance of Healing of EE"
+   ],
+   "spec_0.3": [
+    "Maintenance of Healing of EE"
+   ]
+  },
+  {
+   "id": "fda-esomeprazole:324",
+   "label": [
+    "Healing of Erosive Esophagitis (EE)"
+   ],
+   "spec_0.2": [
+    "Maintenance of Healing of EE"
+   ],
+   "spec_0.3": [
+    "Maintenance of Healing of EE"
+   ]
+  },
+  {
+   "id": "fda-esomeprazole:397",
+   "label": [
+    "Maintenance of Healing of EE"
+   ],
+   "spec_0.2": [
+    "Maintenance of Healing of EE"
+   ],
+   "spec_0.3": [
+    "Maintenance of Healing of EE"
+   ]
+  },
+  {
+   "id": "fda-esomeprazole:501",
+   "label": [
+    "Treatment of Symptomatic GERD"
+   ],
+   "spec_0.2": [
+    "Treatment of Symptomatic GERD"
+   ],
+   "spec_0.3": [
+    "Treatment of Symptomatic GERD"
+   ]
+  },
+  {
+   "id": "fda-irbesartan:62",
+   "label": [
+    "Hypertension"
+   ],
+   "spec_0.2": [
+    "Hypertension"
+   ],
+   "spec_0.3": [
+    "Hypertension"
+   ]
+  },
+  {
+   "id": "fda-irbesartan:72",
+   "label": [
+    "Hypertension"
+   ],
+   "spec_0.2": [
+    "Hypertension"
+   ],
+   "spec_0.3": [
+    "Hypertension"
+   ]
+  },
+  {
+   "id": "fda-irbesartan:117",
+   "label": [
+    "Nephropathy in Type 2 Diabetic Patients"
+   ],
+   "spec_0.2": [
+    "Hypertension"
+   ],
+   "spec_0.3": [
+    "Hypertension"
+   ]
+  },
+  {
+   "id": "fda-irbesartan:338",
+   "label": [
+    "Hypertension"
+   ],
+   "spec_0.2": [
+    "Hypertension"
+   ],
+   "spec_0.3": [
+    "Hypertension"
+   ]
+  },
+  {
+   "id": "fda-irbesartan:406",
+   "label": [
+    "Hypertension"
+   ],
+   "spec_0.2": [
+    "Hypertension"
+   ],
+   "spec_0.3": [
+    "Hypertension"
+   ]
+  },
+  {
+   "id": "fda-irbesartan:561",
+   "label": [
+    "Nephropathy in Type 2 Diabetic Patients"
+   ],
+   "spec_0.2": [
+    "Nephropathy in Type 2 Diabetic Patients"
+   ],
+   "spec_0.3": [
+    "Nephropathy in Type 2 Diabetic Patients"
+   ]
+  },
+  {
+   "id": "fda-levofloxacin:585",
+   "label": [
+    "Nosocomial Pneumonia"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ]
+  },
+  {
+   "id": "fda-levofloxacin:635",
+   "label": [
+    "Community-Acquired Pneumonia: 7 to 14 day Treatment Regimen"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ]
+  },
+  {
+   "id": "fda-levofloxacin:685",
+   "label": [
+    "Community-Acquired Pneumonia: 5-day Treatment Regimen"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ]
+  },
+  {
+   "id": "fda-levofloxacin:717",
+   "label": [
+    "Complicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ]
+  },
+  {
+   "id": "fda-levofloxacin:757",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ]
+  },
+  {
+   "id": "fda-levofloxacin:808",
+   "label": [
+    "Chronic Bacterial Prostatitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Chronic Bacterial Prostatitis",
+    "Inhalational Anthrax (Post-Exposure)",
+    "Nosocomial Pneumonia",
+    "Plague"
+   ]
+  },
+  {
+   "id": "fda-methotrexate:302",
+   "label": [
+    "Neoplastic Diseases"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-methotrexate:443",
+   "label": [
+    "Neoplastic Diseases"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-methotrexate:452",
+   "label": [
+    "Neoplastic Diseases"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-methotrexate:493",
+   "label": [
+    "Neoplastic Diseases"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-methotrexate:637",
+   "label": [
+    "Neoplastic Diseases"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-methotrexate:789",
+   "label": [
+    "Rheumatoid Arthritis"
+   ],
+   "spec_0.2": [
+    "Rheumatoid Arthritis"
+   ],
+   "spec_0.3": [
+    "Rheumatoid Arthritis"
+   ]
+  },
+  {
+   "id": "fda-doxazosin:78",
+   "label": [
+    "Benign Prostatic Hyperplasia (BPH)"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-doxazosin:147",
+   "label": [
+    "Benign Prostatic Hyperplasia (BPH)"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-doxazosin:226",
+   "label": [
+    "Hypertension"
+   ],
+   "spec_0.2": [
+    "Hypertension"
+   ],
+   "spec_0.3": [
+    "Hypertension"
+   ]
+  },
+  {
+   "id": "fda-doxazosin:281",
+   "label": [
+    "Hypertension"
+   ],
+   "spec_0.2": [
+    "Hypertension"
+   ],
+   "spec_0.3": [
+    "Hypertension"
+   ]
+  },
+  {
+   "id": "fda-doxazosin:689",
+   "label": [
+    "Benign Prostatic Hyperplasia (BPH)"
+   ],
+   "spec_0.2": [
+    "Hypertension"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-doxazosin:873",
+   "label": [
+    "Benign Prostatic Hyperplasia (BPH)"
+   ],
+   "spec_0.2": [
+    "Hypertension"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-fenofibrate:97",
+   "label": [
+    "Primary Hypercholesterolemia or Mixed Dyslipidemia"
+   ],
+   "spec_0.2": [
+    "Primary Hypercholesterolemia or Mixed Dyslipidemia"
+   ],
+   "spec_0.3": [
+    "Primary Hypercholesterolemia or Mixed Dyslipidemia"
+   ]
+  },
+  {
+   "id": "fda-fenofibrate:168",
+   "label": [
+    "Severe Hypertriglyceridemia"
+   ],
+   "spec_0.2": [
+    "Severe Hypertriglyceridemia"
+   ],
+   "spec_0.3": [
+    "Severe Hypertriglyceridemia"
+   ]
+  },
+  {
+   "id": "fda-fenofibrate:177",
+   "label": [
+    "Severe Hypertriglyceridemia"
+   ],
+   "spec_0.2": [
+    "Severe Hypertriglyceridemia"
+   ],
+   "spec_0.3": [
+    "Severe Hypertriglyceridemia"
+   ]
+  },
+  {
+   "id": "fda-fenofibrate:212",
+   "label": [
+    "Severe Hypertriglyceridemia"
+   ],
+   "spec_0.2": [
+    "Severe Hypertriglyceridemia"
+   ],
+   "spec_0.3": [
+    "Severe Hypertriglyceridemia"
+   ]
+  },
+  {
+   "id": "fda-fenofibrate:270",
+   "label": [],
+   "spec_0.2": [
+    "Severe Hypertriglyceridemia"
+   ],
+   "spec_0.3": [
+    "Severe Hypertriglyceridemia"
+   ]
+  },
+  {
+   "id": "fda-fenofibrate:1809",
+   "label": [
+    "Severe Hypertriglyceridemia"
+   ],
+   "spec_0.2": [
+    "Severe Hypertriglyceridemia"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-anastrozole:132",
+   "label": [
+    "Adjuvant Treatment"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-anastrozole:1031",
+   "label": [
+    "Adjuvant Treatment"
+   ],
+   "spec_0.2": [
+    "Adjuvant Treatment"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-anastrozole:1145",
+   "label": [
+    "Adjuvant Treatment"
+   ],
+   "spec_0.2": [
+    "Adjuvant Treatment"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-carbamazepine:2373",
+   "label": [
+    "Epilepsy"
+   ],
+   "spec_0.2": [
+    "Epilepsy"
+   ],
+   "spec_0.3": [
+    "Epilepsy"
+   ]
+  },
+  {
+   "id": "fda-carbamazepine:2467",
+   "label": [
+    "Epilepsy"
+   ],
+   "spec_0.2": [
+    "Epilepsy"
+   ],
+   "spec_0.3": [
+    "Epilepsy"
+   ]
+  },
+  {
+   "id": "fda-carbamazepine:2525",
+   "label": [
+    "Epilepsy"
+   ],
+   "spec_0.2": [
+    "Epilepsy"
+   ],
+   "spec_0.3": [
+    "Epilepsy"
+   ]
+  },
+  {
+   "id": "fda-carbamazepine:2731",
+   "label": [
+    "Epilepsy"
+   ],
+   "spec_0.2": [
+    "Epilepsy"
+   ],
+   "spec_0.3": [
+    "Epilepsy"
+   ]
+  },
+  {
+   "id": "fda-carbamazepine:2784",
+   "label": [
+    "Epilepsy"
+   ],
+   "spec_0.2": [
+    "Epilepsy"
+   ],
+   "spec_0.3": [
+    "Epilepsy"
+   ]
+  },
+  {
+   "id": "fda-carbamazepine:2845",
+   "label": [
+    "Epilepsy"
+   ],
+   "spec_0.2": [
+    "Epilepsy"
+   ],
+   "spec_0.3": [
+    "Epilepsy"
+   ]
+  },
+  {
+   "id": "fda-lansoprazole:795",
+   "label": [
+    "Treatment of Active Duodenal Ulcer"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-lansoprazole:801",
+   "label": [
+    "Treatment of Active Duodenal Ulcer"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-lansoprazole:1106",
+   "label": [
+    "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+   ],
+   "spec_0.2": [
+    "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+   ],
+   "spec_0.3": [
+    "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+   ]
+  },
+  {
+   "id": "fda-lansoprazole:1119",
+   "label": [
+    "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+   ],
+   "spec_0.2": [
+    "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+   ],
+   "spec_0.3": [
+    "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+   ]
+  },
+  {
+   "id": "fda-lansoprazole:1126",
+   "label": [
+    "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+   ],
+   "spec_0.2": [
+    "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+   ],
+   "spec_0.3": [
+    "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+   ]
+  },
+  {
+   "id": "fda-lansoprazole:1335",
+   "label": [
+    "Treatment of Active Benign Gastric Ulcer"
+   ],
+   "spec_0.2": [
+    "Eradication of H. pylori to Reduce the Risk of Duodenal Ulcer Recurrence"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-cefuroxime:576",
+   "label": [
+    "Pharyngitis/Tonsillitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ]
+  },
+  {
+   "id": "fda-cefuroxime:656",
+   "label": [
+    "Acute Bacterial Maxillary Sinusitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ]
+  },
+  {
+   "id": "fda-cefuroxime:752",
+   "label": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ]
+  },
+  {
+   "id": "fda-cefuroxime:762",
+   "label": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ]
+  },
+  {
+   "id": "fda-cefuroxime:836",
+   "label": [
+    "Uncomplicated Skin and Skin-Structure Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ]
+  },
+  {
+   "id": "fda-cefuroxime:846",
+   "label": [
+    "Uncomplicated Skin and Skin-Structure Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ],
+   "spec_0.3": [
+    "Acute Bacterial Exacerbations of Chronic Bronchitis",
+    "Acute Bacterial Maxillary Sinusitis",
+    "Acute Bacterial Otitis Media",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Gonorrhea",
+    "Uncomplicated Skin and Skin-Structure Infections",
+    "Uncomplicated Urinary Tract Infections"
+   ]
+  }
+ ]
+}

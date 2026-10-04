@@ -409,12 +409,40 @@ def key_mentions(text: str, keys: tuple[str, ...]) -> list[tuple[int, int, str]]
     ]
 
 
+# a label line (SPEC §4.5): a line of its own, after a blank line or the start of the text and
+# before a blank line, that holds at most 12 words, no sentence end and no final "." or ";"
+_LABEL_MAX_WORDS = 12
+_INNER_END = re.compile(r"[.;]\s")
+_LINE_SPACE = " \t\r"
+
+
+def _label_line_in(text: str, start: int, end: int) -> bool:
+    """Whether a label line lies wholly in text[start:end]. A plain scan of the lines, so the
+    time is linear in the length of the region."""
+    lines = text[start:end].split("\n")
+    blank = [not line.strip(_LINE_SPACE) for line in lines]
+    # a line needs a full blank line before it (or the start of the text) and a full blank line
+    # after it, so it is never the first piece of the region, which may start inside a line
+    for i, line in enumerate(lines[:-2]):
+        before = (i >= 2 and blank[i - 1]) or (i == 0 and start == 0)
+        if not before or not blank[i + 1]:
+            continue
+        body = line.strip(_LINE_SPACE)
+        # the line break counts as whitespace, so a final "." or ";" is a sentence end too
+        if body and len(body.split()) <= _LABEL_MAX_WORDS and not _INNER_END.search(body + "\n"):
+            return True
+    return False
+
+
 def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[str]:
     """The keys a value at ``pos`` belongs to: those its sentence mentions, else the nearest
-    mention before it (SPEC §4.5)."""
+    mention before it, unless a label line stands between them (SPEC §4.5)."""
     s0, s1 = sentence(text, pos)
     inside = {k for a, b, k in mentions if s0 <= a and b <= s1}
     if inside:
         return inside
     before = [(b, k) for _, b, k in mentions if b <= pos]
-    return {max(before)[1]} if before else set()
+    if not before:
+        return set()
+    end, key = max(before)
+    return set() if _label_line_in(text, end, s0) else {key}
