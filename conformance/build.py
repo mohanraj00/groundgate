@@ -1360,10 +1360,10 @@ vector(
     "When the value's sentence mentions no key, a label line between the nearest earlier mention "
     "and the value puts the value at no key: a line of at most 12 words with a blank line or the "
     "start of the text before it and a blank line after it, with no sentence end in it and no "
-    "final `.`. Such a line names a condition in a form that is not a key (spec 0.3).",
+    "final `.` or `;`. Such a line names a condition in a form that is not a key (spec 0.3).",
     "2.1 Hypertension\n\nThe starting dose is 10 mg once daily.\n\n"
     "Treatment of HF:\n\nThe starting dose is 5 mg once daily.\n\n"
-    "2.2 Heart Failure\n\nThe maximum dose is 20 mg daily.\n\n"
+    "2.2 Heart Failure\n\nDo not crush;  \n\nThe maximum dose is 20 mg daily.\n\n"
     "Take it with water and food at the same time each day, as your doctor tells you\n\n"
     "The low dose is 2.5 mg daily.\n\n"
     "Older adults\nThe last dose is 7.5 mg daily.\n\n"
@@ -1401,7 +1401,7 @@ vector(
             ("needs_verification", ["KEY_NOT_AT_VALUE"]),
             key="heart failure",
         ),
-        # a one-line sentence that ends with "." is not a label line
+        # a line with ";" before its line break is not a label line, even with spaces between
         c("l4", "max_dose", "20", "mg", q("20 mg"), key="heart failure"),
         # a line of more than 12 words is not a label line
         c("l5", "low_dose", "2.5", "mg", q("2.5 mg"), key="heart failure"),

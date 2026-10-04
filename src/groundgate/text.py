@@ -420,12 +420,8 @@ def _label_line_in(text: str, start: int, end: int) -> bool:
     """Whether a label line lies wholly in text[start:end]."""
     for m in _LABEL_LINE.finditer(text, start, end):
         line = m.group(1)
-        if (
-            line
-            and len(line.split()) <= _LABEL_MAX_WORDS
-            and not line.endswith(".")
-            and not _INNER_END.search(line)
-        ):
+        # the line break counts as whitespace, so a final "." or ";" is a sentence end too
+        if line and len(line.split()) <= _LABEL_MAX_WORDS and not _INNER_END.search(line + "\n"):
             return True
     return False
 

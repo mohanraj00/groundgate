@@ -289,8 +289,8 @@ wholly between the end of that mention and the start of the value's sentence. Th
 `key` must be one of them.
 
 A **label line** is a line with a blank line (§4.2) or the start of the text before it and a
-blank line after it. It holds at most 12 words (runs of non-whitespace), no `.` or `;` followed
-by whitespace, and it does not end with `.`. Such a line names what follows in its own words,
+blank line after it. It holds at most 12 words (runs of non-whitespace) and no `.` or `;`
+followed by whitespace, where its own line break counts, so it does not end with `.` or `;`. Such a line names what follows in its own words,
 such as "Treatment of DVT and PE:" or "Adults", and a short form of a condition is not a key
 mention. So the key of an earlier heading does not reach past it, and a value under it goes to
 review.
