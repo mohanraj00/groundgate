@@ -22,6 +22,7 @@ import json
 import re
 import sys
 from collections import defaultdict
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -32,7 +33,7 @@ import dots  # noqa: E402  (bench/dots/dots.py)
 import pairs  # noqa: E402  (bench/patterns/pairs.py)
 import pick as walk  # noqa: E402  (bench/pick.py)
 
-PER_KIND, PER_DOC = 50, 5
+PER_KIND, PER_DOC, CONTEXT = 50, 5, 100
 KINDS = ("irs", "fr")
 # "U.S.", "No." or "Nos." as a whole word, then whitespace with at most one line break, then an
 # uppercase letter
@@ -44,6 +45,25 @@ def caps_in(text: str) -> list[re.Match[str]]:
     """The caps dots in ``text``, except those inside a Federal Register running head."""
     heads = [(h.start(), h.end()) for h in dots.RUNNING_HEAD.finditer(text)]
     return [m for m in CAP_DOT.finditer(text) if not any(a <= m.start() < b for a, b in heads)]
+
+
+def fresh_finder() -> Callable[[str], list[re.Match[str]]]:
+    """A finder of the caps dots on a page that passes over a dot when an earlier dot had the
+    same text, CONTEXT code points on each side, whitespace runs read as one space. Federal
+    Register rules share printed pages, and IRS publications repeat paragraphs, so the same dot
+    can turn up in two documents."""
+    seen: set[str] = set()
+
+    def find(page: str) -> list[re.Match[str]]:
+        out = []
+        for m in caps_in(page):
+            key = " ".join(page[max(0, m.start() - CONTEXT) : m.end() + CONTEXT].split())
+            if key not in seen:
+                seen.add(key)
+                out.append(m)
+        return out
+
+    return find
 
 
 def excluded() -> tuple[set[str], set[str]]:
@@ -67,7 +87,7 @@ def pick(count_only: bool) -> None:
     pubs, frs = excluded()
     log: list[dict[str, Any]] = []
     seen: dict[str, str] = {}
-    limits = {"find": caps_in, "per_kind": PER_KIND, "per_doc": PER_DOC, "group": "dots"}
+    limits = {"find": fresh_finder(), "per_kind": PER_KIND, "per_doc": PER_DOC, "group": "dots"}
     irs = [(f"irs-p{n.lower()}", u) for n, u in walk.irs_publications()]
     irs = [(i, u) for i, u in irs if i not in pubs]
     sources = pairs.pick_pdfs("irs", irs, log, seen, **limits)
@@ -99,15 +119,20 @@ def find_items() -> None:
     """items.json: the first PER_DOC caps dots of each document, as the code point offset of the
     abbreviation and of its dot in docs/<id>.txt."""
     out = []
+    find = fresh_finder()  # the same pages in the same order as the pick, so the same dots
     for src in json.loads((HERE / "sources.json").read_text())["sources"]:
         text = (HERE / "docs" / f"{src['id']}.txt").read_text(encoding="utf-8")
-        for m in caps_in(text)[:PER_DOC]:
+        spans, pos = [], 0
+        for page in text.split("\f"):
+            spans += [(pos + m.start(), pos + m.end()) for m in find(page)]
+            pos += len(page) + 1
+        for a, b in spans[:PER_DOC]:
             out.append(
                 {
-                    "id": f"{src['id']}:{m.end() - 1}",
+                    "id": f"{src['id']}:{b - 1}",
                     "doc": src["id"],
                     "kind": src["kind"],
-                    "abbreviation": [m.start(), m.end()],
+                    "abbreviation": [a, b],
                 }
             )
     (HERE / "items.json").write_text(json.dumps(out, indent=1) + "\n")

@@ -582,3 +582,14 @@ def test_a_caps_dot_is_us_or_no_before_whitespace_and_an_uppercase_letter() -> N
     assert [m.start() for m in caps.caps_in("Sold in the U.S.\r\n The")] == [12]
     head = "Federal Register / Vol. 89, No. 5 / Rules\nSee No. Five."
     assert [m.start() for m in caps.caps_in(head)] == [head.index("No. Five")]
+
+
+def test_a_caps_dot_with_the_text_of_an_earlier_dot_does_not_count_again() -> None:
+    sys.path.insert(0, str(BENCH / "caps"))
+    import caps
+
+    find = caps.fresh_finder()
+    page = "Rules of the U.S. Tax Court apply here."
+    assert len(find(page)) == 1
+    assert find("Rules of the  U.S.\nTax Court apply here.") == []
+    assert len(find("Rules of the U.S. Tax Court apply there.")) == 1

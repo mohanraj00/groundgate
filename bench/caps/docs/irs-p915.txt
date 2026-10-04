@@ -1,0 +1,634 @@
+my Social Security account. Social security beneficia-
+ries may quickly and easily obtain information from the So-
+cial Security Administration’s (SSA’s) website with a my
+Social Security account to:
+
+• Keep track of your earnings and verify them every
+
+year,
+
+• Get an estimate of your future benefits if you are still
+
+working,
+
+• Get a letter with proof of your benefits if you currently
+
+receive them,
+
+• Change your address,
+• Start or change your direct deposit,
+• Get a replacement Medicare card, and
+• Get a replacement Form SSA-1099 or SSA-1042S for
+
+the past 6 years.
+
+For more information and to set up an account, go to
+
+SSA.gov/myaccount.
+Photographs of missing children. The IRS is a proud
+partner with the National Center for Missing & Exploited
+Children® (NCMEC). Photographs of missing children se-
+lected by the Center may appear in this publication on pa-
+ges that would otherwise be blank. You can help bring
+these children home by looking at the photographs and
+calling 1-800-THE-LOST (1-800-843-5678) if you recog-
+nize a child.
+
+Introduction
+This publication explains the federal income tax rules for
+social security benefits and equivalent tier 1 railroad retire-
+ment benefits. It is prepared through the joint efforts of the
+IRS, the Social Security Administration (SSA), and the
+U.S. Railroad Retirement Board (RRB).
+
+Social security benefits include monthly retirement, sur-
+vivor, and disability benefits. They don’t include Supple-
+mental Security Income (SSI) payments, which aren’t tax-
+able.
+
+Equivalent tier 1 railroad retirement benefits are the part
+of tier 1 benefits that a railroad employee or beneficiary
+would have been entitled to receive under the social se-
+curity system. They are commonly called the social secur-
+ity equivalent benefit (SSEB) portion of tier 1 benefits.
+
+If you received these benefits during 2025, you should
+have received a Form SSA-1099, Social Security Benefit
+Statement; Form RRB-1099, Payments by the Railroad
+Retirement Board; Form SSA-1042S, Social Security Ben-
+efit Statement; or Form RRB-1042S, Statement for Non-
+resident Alien Recipients of Payments by the Railroad Re-
+tirement Board, showing the amount.
+
+Note: When the term “benefits” is used in this publica-
+tion, it applies to both social security benefits and the
+SSEB portion of tier 1 railroad retirement benefits.
+
+What is covered in this publication. This publication
+covers the following topics.
+
+• Whether any of your benefits are taxable.
+
+• How to report taxable benefits.
+• How much is taxable.
+• How to treat lump-sum benefit payments.
+• Deductions related to your benefits, including a de-
+
+duction or credit you can claim if your repayments are
+more than your gross benefits.
+
+The Appendix near the end of this publication explains
+items shown on your Form SSA-1099, SSA-1042S,
+RRB-1099, or RRB-1042S.
+
+What isn’t covered in this publication. This publication
+doesn’t cover the tax rules for the following railroad retire-
+ment benefits.
+• Non-social security equivalent benefit (NSSEB) por-
+
+tion of tier 1 benefits.
+
+• Tier 2 benefits.
+• Vested dual benefits.
+• Supplemental annuity benefits.
+For information on these taxable pension benefits, see
+Pub. 575, Pension and Annuity Income.
+
+This publication also doesn’t cover the tax rules for for-
+eign social security benefits. These benefits are taxable
+as annuities, unless they are exempt from U.S. tax or trea-
+ted as a U.S. social security benefit under a tax treaty.
+
+Comments and suggestions. We welcome your com-
+ments about this publication and suggestions for future
+editions.
+
+You can send us comments
+
+IRS.gov/
+FormComments. Or, you can write to the Internal Revenue
+Service, Tax Forms and Publications, 1111 Constitution
+Ave. NW, IR-6526, Washington, DC 20224.
+
+through
+
+Although we can’t respond individually to each com-
+ment received, we do appreciate your feedback and will
+consider your comments and suggestions as we revise
+our tax forms, instructions, and publications. Don’t send
+tax questions, tax returns, or payments to the above ad-
+dress.
+
+Getting answers to your tax questions. If you have
+a tax question not answered by this publication or the How
+To Get Tax Help section at the end of this publication, go
+to the IRS Interactive Tax Assistant page at IRS.gov/
+Help/ITA where you can find topics by using the search
+feature or viewing the categories listed.
+
+Getting tax forms, instructions, and publications.
+Go to IRS.gov/Forms to download current and prior-year
+forms, instructions, and publications.
+
+Ordering tax forms, instructions, and publications.
+Go to IRS.gov/OrderForms to order current forms, instruc-
+tions, and publications; call 800-829-3676
+to order
+prior-year forms and instructions. The IRS will process
+your order for forms and publications as soon as possible.
+Don’t resubmit requests you’ve already sent us. You can
+get forms and publications faster online.
+
+2
+
+Publication 915 (2025)
+Useful Items
+You may want to see:
+
+Publication
+
+501
+
+501 Dependents, Standard Deduction, and Filing
+Information
+
+505
+
+505 Tax Withholding and Estimated Tax
+
+519
+
+519 U.S. Tax Guide for Aliens
+
+575
+
+575 Pension and Annuity Income
+
+590-A
+
+590-A Contributions to Individual Retirement
+
+Arrangements (IRAs)
+
+Form (and Instructions)
+
+1040-ES
+
+1040-ES Estimated Tax for Individuals
+
+SSA-1099
+
+SSA-1099 Social Security Benefit Statement
+
+RRB-1099
+Board
+
+RRB-1099 Payments by the Railroad Retirement
+
+W-4V
+
+W-4V Voluntary Withholding Request
+
+See How To Get Tax Help at the end of this publication for
+information about getting these publications and forms.
+
+Are Any of Your Benefits
+Taxable?
+
+To find out whether any of your benefits shown on Forms
+SSA-1099 and RRB-1099 may be taxable, compare the
+base amount (explained later) for your filing status with the
+total of:
+
+1. One-half of your benefits; plus
+
+2. All your other income, including tax-exempt interest.
+
+Exclusions. When making this comparison, don’t reduce
+your other income by any exclusions for:
+
+• Interest from qualified U.S. savings bonds,
+• Employer-provided adoption benefits,
+• Interest on education loans,
+• Foreign earned income or foreign housing, or
+• Income earned by bona fide residents of American
+
+Samoa or Puerto Rico.
+
+Children’s benefits. The rules in this publication apply to
+benefits received by children. See Who is taxed, later.
+
+Tip: The SSA issues Forms SSA-1099 and SSA-1042S.
+The RRB issues Forms RRB-1099 and RRB-1042S.
+These forms (tax statements) report the amounts paid and
+repaid, and taxes withheld for a tax year. You may receive
+more than one of these forms for the same tax year. See
+the Appendix, later, for more information. Each original
+Form RRB-1099 or RRB-1042S is valid unless it has been
+corrected. The RRB will
+issue a corrected Form
+RRB-1099 or RRB-1042S if there is an error in the origi-
+nal. A corrected Form RRB-1099 or RRB-1042S is indica-
+ted as “CORRECTED” and replaces the corresponding
+original Form RRB-1099 or RRB-1042S. You must use the
+latest corrected Form RRB-1099 or RRB-1042S you re-
+ceived and any original Form RRB-1099 or RRB-1042S
+that the RRB hasn’t corrected when you determine what
+amounts to report on your tax return.
+
+Figuring total income. To figure the total of one-half of
+your benefits plus your other income, use Worksheet A,
+discussed later. If the total is more than your base amount,
+part of your benefits may be taxable.
+
+If you are married and file a joint return for 2025, you
+and your spouse must combine your incomes and your
+benefits to figure whether any of your combined benefits
+are taxable. Even if your spouse didn’t receive any bene-
+fits, you must add your spouse’s income to yours to figure
+whether any of your benefits are taxable.
+
+Tip: If the only income you received during 2025 was your
+social security or the SSEB portion of tier 1 railroad retire-
+ment benefits, your benefits generally aren’t taxable and
+you probably don’t have to file a return. If you have income
+in addition to your benefits, you may have to file a return
+even if none of your benefits are taxable. See Pub. 501 or
+your tax return instructions to find out if you have to file a
+return
+
+Base amount. Your base amount is:
+• $25,000 if you are single, head of household, or quali-
+
+fying surviving spouse;
+
+• $25,000 if you are married filing separately and lived
+
+apart from your spouse for all of 2025;
+• $32,000 if you are married filing jointly; or
+• $0 if you are married filing separately and lived with
+
+your spouse at any time during 2025.
+
+Worksheet A. You can use Worksheet A to figure the
+amount of income to compare with your base amount.
+This is a quick way to check whether some of your bene-
+fits may be taxable.
+
+Publication 915 (2025)
+
+3
+Examples
+
+Example 1. You are single and file Form 1040 for 2025. In addition to receiving social security payments, you received
+a fully taxable pension of $18,600, wages from a part-time job of $9,400, and taxable interest income of $990, for a
+total of $28,990. You received a Form SSA-1099 in January 2026 that shows your net social security benefits of $5,980
+in box 5.
+
+To figure your taxable benefits, you complete Worksheet 1, shown below. On line 6a of your Form 1040, you enter
+
+your net benefits of $5,980. On line 6b, you enter your taxable benefits of $2,990.
+
+Filled-in Worksheet 1. Figuring Your Taxable Benefits
+
+Keep for Your Records:
+
+Before you begin:
+
+line 6d.
+
+• If you are married filing separately and you lived apart from your spouse for all of 2025, check the box on Form 1040 or 1040-SR,
+
+• Don’t use this worksheet if you repaid benefits in 2025 and your total repayments (box 4 of Forms SSA-1099 and RRB-1099) were
+more than your gross benefits for 2025 (box 3 of Forms SSA-1099 and RRB-1099). None of your benefits are taxable for 2025. For
+more information, see Repayments More Than Gross Benefits.
+
+• If you are filing Form 8815, Exclusion of Interest From Series EE and I U.S. Savings Bonds Issued After 1989, don’t include the amount
+from line 2b of Form 1040 or 1040-SR, on line 3 of this worksheet. Instead, include the amount from Schedule B (Form 1040), line 2.
+
+1. Enter the total amount from box 5 of ALL your Forms SSA-1099 and RRB-1099. Also
+
+enter this amount on Form 1040 or 1040-SR, line 6a . . . . . . . . . . . . . . . . . . . . . . . . . . 1.
+
+$5,980
+
+2. Multiply line 1 by 50% (0.50)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.
+3. Combine the amounts from Form 1040 or 1040-SR, lines 1z, 2b, 3b, 4b, 5b, 7a, and 8 . . . . . . . . . . . . . . . . 3.
+4. Enter the amount, if any, from Form 1040 or 1040-SR, line 2a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4.
+5. Enter the total of any exclusions/adjustments for:
+• Adoption benefits (Form 8839, line 30),
+• Foreign earned income or housing (Form 2555, lines 45 and 50), and
+• Certain income of bona fide residents of American Samoa (Form 4563, line 15) or Puerto
+
+Rico . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5.
+6. Combine lines 2, 3, 4, and 5 above . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.
+7. Enter the total of the amounts from Schedule 1 (Form 1040), lines 11 through 20, and 23 and 25 . . . . . . . 7.
+8. Is the amount on line 7 less than the amount on line 6?
+
+No.
+
+None of your social security benefits are taxable. Enter -0- on Form 1040 or 1040-SR,
+line 6b.
+
+2,990
+28,990
+-0-
+
+-0-
+31,980
+-0-
+
+Subtract line 7 from line 6 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8.
+
+31,980
+
+Yes.
+9. If you are:
+
+• Married filing jointly, enter $32,000; or
+• Single, head of household, qualifying surviving spouse, or married filing separately and you lived
+
+apart from your spouse for all of 2025, enter $25,000 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.
+
+Note: If you are married filing separately and you lived with your spouse at any time in 2025, skip lines 9
+through 16, multiply line 8 by 85% (0.85), and enter the result on line 17. Then, go to line 18.
+
+10. Is the amount on line 9 less than the amount on line 8?
+
+No.
+
+None of your benefits are taxable. Enter -0- on Form 1040 or 1040-SR, line 6b. If you
+are married filing separately and you lived apart from your spouse for all of 2025,
+check the box on Form 1040 or 1040-SR, line 6d.
+
+Yes.
+
+Subtract line 9 from line 8 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10.
+
+11. Enter $12,000 if married filing jointly; or $9,000 if single, head of household, qualifying surviving spouse, or
+
+married filing separately and you lived apart from your spouse for all of 2025 . . . . . . . . . . . . . . . . . . . . . . 11.
+12. Subtract line 11 from line 10. If zero or less, enter -0-
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12.
+13. Enter the smaller of line 10 or line 11 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13.
+14. Multiply line 13 by 50% (0.50)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14.
+15. Enter the smaller of line 2 or line 14 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15.
+16. Multiply line 12 by 85% (0.85). If line 12 is zero, enter -0-
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16.
+17. Add lines 15 and 16 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17.
+18. Multiply line 1 by 85% (0.85)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18.
+19. Taxable benefits. Enter the smaller of line 17 or line 18. Also enter this amount on Form 1040 or
+
+1040-SR, line 6b . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19.
+
+25,000
+
+6,980
+
+9,000
+-0-
+6,980
+3,490
+2,990
+-0-
+2,990
+5,083
+
+$2,990
+
+Tip:
+
+If you received a lump-sum payment in 2025 that was for an earlier year, also complete
+Worksheet 2 or 3 and Worksheet 4 to see if you can report a lower taxable benefit.
+
+Publication 915 (2025)
+
+7
+
+STOP
+
+STOP
+Example 4.
+
+Kris and Taylor Jones are married and live together, but file separate Form 1040 returns for 2025. Taylor did not have
+any earned income for 2025. Kris earned $8,000 during 2025. The only other income Kris had for the year was $4,000
+net social security benefits (box 5 of Kris’s Form SSA-1099). Kris figures Kris’s taxable benefits by completing
+Worksheet 1, shown below. Kris must include 85% of Kris’s social security benefits in Kris’s taxable income because
+Kris is married filing separately and lived with Taylor during 2025. See How Much Is Taxable, earlier. Kris enters $4,000
+on Kris’s Form 1040, line 6a; and $3,400 on Form 1040, line 6b.
+
+Filled-in Worksheet 1. Figuring Your Taxable Benefits
+
+Keep for Your Records:
+
+Before you begin:
+
+line 6d.
+
+• If you are married filing separately and you lived apart from your spouse for all of 2025, check the box on Form 1040 or 1040-SR,
+
+• Don’t use this worksheet if you repaid benefits in 2025 and your total repayments (box 4 of Forms SSA-1099 and RRB-1099) were
+more than your gross benefits for 2025 (box 3 of Forms SSA-1099 and RRB-1099). None of your benefits are taxable for 2025. For
+more information, see Repayments More Than Gross Benefits.
+
+• If you are filing Form 8815, Exclusion of Interest From Series EE and I U.S. Savings Bonds Issued After 1989, don’t include the amount
+from line 2b of Form 1040 or 1040-SR on line 3 of this worksheet. Instead, include the amount from Schedule B (Form 1040), line 2.
+
+1. Enter the total amount from box 5 of ALL your Forms SSA-1099 and RRB-1099. Also
+
+enter this amount on Form 1040 or 1040-SR, line 6a . . . . . . . . . . . . . . . . . . . . . . . . . . 1.
+
+$4,000
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.
+2. Multiply line 1 by 50% (0.50)
+3. Combine the amounts from Form 1040 or 1040-SR, lines 1z, 2b, 3b, 4b, 5b, 7a, and 8 . . . . . . . . . . . . . . . . 3.
+4. Enter the amount, if any, from Form 1040 or 1040-SR, line 2a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4.
+5. Enter the total of any exclusions/adjustments for:
+• Adoption benefits (Form 8839, line 30),
+• Foreign earned income or housing (Form 2555, lines 45 and 50), and
+• Certain income of bona fide residents of American Samoa (Form 4563, line 15) or Puerto
+
+Rico . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5.
+6. Combine lines 2, 3, 4, and 5 above . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.
+7. Enter the total of the amounts from Schedule 1 (Form 1040), lines 11 through 20, and 23 and 25
+. . . . . . 7.
+8. Is the amount on line 7 less than the amount on line 6?
+
+No.
+
+None of your social security benefits are taxable. Enter -0- on Form 1040 or 1040-SR,
+line 6b.
+
+2,000
+8,000
+-0-
+
+-0-
+10,000
+-0-
+
+Subtract line 7 from line 6 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8.
+
+10,000
+
+Yes.
+9. If you are:
+
+• Married filing jointly, enter $32,000; or
+• Single, head of household, qualifying surviving spouse, or married filing separately and you lived
+
+apart from your spouse for all of 2025, enter $25,000 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.
+
+Note: If you are married filing separately and you lived with your spouse at any time in 2025, skip lines 9
+through 16, multiply line 8 by 85% (0.85), and enter the result on line 17. Then, go to line 18.
+
+10. Is the amount on line 9 less than the amount on line 8?
+
+No.
+
+None of your benefits are taxable. Enter -0- on Form 1040 or 1040-SR, line 6b. If you
+are married filing separately and you lived apart from your spouse for all of 2025,
+check the box on Form 1040 or 1040-SR, line 6d.
+
+Yes.
+
+Subtract line 9 from line 8 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10.
+
+11. Enter $12,000 if married filing jointly; or $9,000 if single, head of household, qualifying surviving spouse, or
+
+married filing separately and you lived apart from your spouse for all of 2025 . . . . . . . . . . . . . . . . . . . . . . 11.
+12. Subtract line 11 from line 10. If zero or less, enter -0-
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12.
+13. Enter the smaller of line 10 or line 11 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13.
+14. Multiply line 13 by 50% (0.50)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14.
+15. Enter the smaller of line 2 or line 14 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15.
+16. Multiply line 12 by 85% (0.85). If line 12 is zero, enter -0-
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16.
+17. Add lines 15 and 16 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17.
+18. Multiply line 1 by 85% (0.85)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18.
+19. Taxable benefits. Enter the smaller of line 17 or line 18. Also enter this amount on Form 1040 or
+
+1040-SR, line 6b . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19.
+
+8,500
+3,400
+
+$3,400
+
+Tip:
+
+If you received a lump-sum payment in 2025 that was for an earlier year, also complete
+Worksheet 2 or 3 and Worksheet 4 to see if you can report a lower taxable benefit.
+
+10
+
+Publication 915 (2025)
+
+STOP
+
+STOP
+Terry Jackson’s Filled-in Worksheet 2. Figure Your Additional Taxable Benefits (From a
+Lump-Sum Payment for a Year After 1993)
+
+Keep for Your Records:
+
+Enter earlier year
+
+2024
+
+1. Enter the total amount from box 5 of ALL your Forms SSA-1099 and RRB-1099 for the earlier
+
+year, plus the lump-sum payment for the earlier year received after that year
+Note: If line 1 is zero or less, skip lines 2 through 20 and enter -0- on line 21. Otherwise, go to
+line 2.
+
+. . . . . . . . . . . . . . . . . 1. $2,000
+
+2. Multiply line 1 by 50% (0.50)
+3. Enter your adjusted gross income for the earlier year
+4. Enter the total of any exclusions/adjustments you claimed in the earlier year for:
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3.
+
+• Adoption benefits (Form 8839),
+• Qualified U.S. savings bond interest (Form 8815),
+• Student loan interest (Schedule 1 (Form 1040), line 21),
+• Foreign earned income or housing (Form 2555), and
+• Certain income of bona fide residents of American Samoa (Form 4563) or Puerto Rico . . . . . . . . . . . . . . . . . . 4.
+5. Enter any tax-exempt interest received in the earlier year
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5.
+6. Add lines 2 through 5 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.
+7. Enter your taxable benefits for the earlier year that you previously reported . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.
+8. Subtract line 7 from line 6 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8.
+9.
+
+If, for the earlier year, you were:
+
+• Married filing jointly, enter $32,000; or
+• Single, head of household, qualifying surviving spouse, married filing separately and you lived apart from
+
+your spouse for all of the earlier year, enter $25,000 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.
+
+Note: If you were married filing separately and you lived with your spouse at any time during the earlier year, skip
+lines 9 through 16, multiply line 8 by 85% (0.85), and enter the result on line 17. Then, go to line 18.
+Is the amount on line 8 more than the amount on line 9?
+
+10.
+
+No. Skip lines 10 through 20 and enter -0- on line 21.
+Yes. Subtract line 9 from line 8 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10.
+
+1,000
+23,000
+
+-0-
+-0-
+24,000
+-0-
+24,000
+
+25,000
+
+11. Enter $12,000 if married filing jointly for the earlier year; or $9,000 if single, head of household, qualifying
+
+surviving spouse, or married filing separately and you lived apart from your spouse for all of the earlier
+year
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11.
+12. Subtract line 11 from line 10. If zero or less, enter -0-
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12.
+13. Enter the smaller of line 10 or line 11 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14.
+14. Multiply line 13 by 50% (0.50)
+15. Enter the smaller of line 2 or line 14 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15.
+16. Multiply line 12 by 85% (0.85). If line 12 is zero, enter -0-
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16.
+17. Add lines 15 and 16 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18.
+18. Multiply line 1 by 85% (0.85)
+19. Refigured taxable benefits. Enter the smaller of line 17 or line 18 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19.
+20. Enter your taxable benefits for the earlier year (or as refigured due to a previous lump-sum payment for the
+
+year) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20.
+
+21. Additional taxable benefits. Subtract line 20 from line 19. Also enter this amount on Worksheet
+
+4, line 20 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21.
+
+-0-
+
+Caution:
+
+Don’t file an amended return for this earlier year. Complete a separate Worksheet 2 or Worksheet 3 for each
+earlier year for which you received a lump-sum payment in 2025.
+
+Publication 915 (2025)
+
+13

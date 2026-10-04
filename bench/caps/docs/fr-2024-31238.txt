@@ -1,0 +1,291 @@
+106364
+
+Federal Register / Vol. 89, No. 249 / Monday, December 30, 2024 / Rules and Regulations
+
+*
+
+telephone number if the beneficiary is
+the appealing party and not represented.
+*
+*
+■ 6. Section 405.1210 is amended by
+adding paragraph (b)(3) to read as
+follows:
+
+*
+
+*
+
+§ 405.1210 Notifying eligible beneficiaries
+of appeal rights when a beneficiary is
+reclassified from an inpatient to an
+outpatient receiving observation services.
+*
+
+*
+*
+(b) * * *
+(3) When delivery of the notice is
+valid. Delivery of the written notice of
+appeal rights described in this section is
+valid if—
+
+*
+
+*
+
+(i) The eligible beneficiary (or the
+
+eligible beneficiary’s representative) has
+signed and dated the notice to indicate
+that he or she has received the notice
+and can comprehend its contents,
+except as provided in paragraph (b)(4) of
+this section; and
+
+(ii) The notice is delivered in
+
+accordance with paragraph (b)(1) of this
+section and contains all the elements
+described in paragraph (b)(2) of this
+section.
+*
+*
+
+*
+
+*
+
+*
+
+Elizabeth J. Gramling,
+Executive Secretary to the Department,
+Department of Health and Human Services.
+[FR Doc. 2024–31146 Filed 12–27–24; 8:45 am]
+
+BILLING CODE 4120–01–P
+
+DEPARTMENT OF HEALTH AND
+HUMAN SERVICES
+
+Administration for Children and
+Families
+
+45 CFR Part 1355
+
+[Docket #2024–28072]
+
+RIN 0970–AC98
+
+Adoption and Foster Care Analysis
+and Reporting System; Correction
+
+AGENCY: Children’s Bureau (CB),
+Administration on Children, Youth and
+Families (ACYF), Administration for
+Children and Families (ACF), U.S.
+Department of Health and Human
+Services (HHS).
+ACTION: Final rule; correction.
+
+SUMMARY: ACF is correcting a final rule
+(FR) that was published in the Federal
+Register on December 5, 2024, with an
+effective date of February 3, 2025. This
+rule finalizes revisions to the Adoption
+and Foster Care Analysis and Reporting
+System (AFCARS) regulations proposed
+on February 23, 2024. This final rule
+requires state title IV–E agencies to
+
+collect and report to ACF additional
+data related to the Indian Child Welfare
+Act of 1978 (ICWA) for children in the
+AFCARS Out-of-Home Care Reporting
+Population. This correction provides
+that this final rule will be effective 30
+days after its publication in accordance
+with the Administrative Procedure Act.
+DATES: Effective January 4, 2025.
+FOR FURTHER INFORMATION CONTACT: Joe
+Bock, Children’s Bureau, (202) 205–
+8618. Telecommunications Relay users
+may dial 711 first. Email inquiries to
+cbcomments@acf.hhs.gov.
+SUPPLEMENTARY INFORMATION: In the
+final rule published December 5, 2024,
+there was one technical error that is
+now identified and corrected in this
+document. The provisions in this
+correction document are effective as if
+they had been included in the document
+published December 5, 2024.
+Accordingly, the following corrections
+are effective January 4, 2025.
+
+Corrections to Regulations
+
+In FR Doc. 2024–28072, appearing on
+
+page 96569 in the Federal Register of
+Thursday, December 5, 2024, the
+following correction is made:
+
+1. On page 96569, in the second
+column, correct the DATES section to
+read as follows:.
+DATES: This rule is effective on January
+4, 2025, except for the amendments to
+§ 1355.44 (amendatory instruction 3),
+which are effective October 1, 2028.
+
+Elizabeth J. Gramling,
+Executive Secretary, Department of Health
+and Human Services.
+[FR Doc. 2024–31238 Filed 12–26–24; 8:45 am]
+
+BILLING CODE P
+
+DEPARTMENT OF DEFENSE
+
+GENERAL SERVICES
+ADMINISTRATION
+
+NATIONAL AERONAUTICS AND
+SPACE ADMINISTRATION
+
+48 CFR Parts 1, 12, 22, 47, and 52
+
+[FAC 2025–02; FAR Case 2019–017, Item
+I; Docket No. FAR–2019–0017; Sequence
+No. 1]
+
+RIN 9000–AO00
+
+Federal Acquisition Regulation:
+Training To Prevent Human Trafficking
+for Certain Air Carriers; Correction
+
+AGENCY: Department of Defense (DoD),
+General Services Administration (GSA),
+and National Aeronautics and Space
+Administration (NASA).
+ACTION: Final rule.
+
+SUMMARY: DoD, GSA, and NASA are
+issuing a final rule amending the
+Federal Acquisition Regulation (FAR) to
+implement a section of the Frederick
+Douglass Trafficking Victims Prevention
+and Protection Reauthorization Act of
+2018, which requires that domestic
+carriers who contract with the Federal
+Government to provide air
+transportation must submit an annual
+report with certain information related
+to prevention of human trafficking.
+DATES: Effective January 3, 2025.
+FOR FURTHER INFORMATION CONTACT: For
+clarification of content, contact Ms.
+Malissa Jones, Procurement Analyst, at
+571–882–4687 or by email at
+malissa.jones@gsa.gov. For information
+pertaining to status or publication
+schedules contact the Regulatory
+Secretariat Division at 202–501–4755 or
+GSARegSec@gsa.gov. Please cite FAC
+2025–02, FAR Case 2019–017.
+SUPPLEMENTARY INFORMATION: DoD, GSA,
+and NASA are correcting an effective
+date in the preamble under the
+Discussion and Analysis section of the
+rule.
+
+In the FR Doc. 2024–29373, published
+in the Federal Register at 89 FR 101821
+in the issue of December 16, 2024, make
+the following correction:
+
+4. Retroactive Applicability [Corrected]
+
+On page 101822, in the second
+column, in paragraph 4., Response,
+correct the date ‘‘November 1, 2024’’, to
+read ‘‘January 3, 2025’’.
+
+William F. Clark,
+Director, Office of Government-wide
+Acquisition Policy, Office of Acquisition
+Policy, Office of Government-wide Policy.
+[FR Doc. 2024–30935 Filed 12–27–24; 8:45 am]
+
+BILLING CODE 6820–EP–P
+
+DEPARTMENT OF DEFENSE
+
+GENERAL SERVICES
+ADMINISTRATION
+
+NATIONAL AERONAUTICS AND
+SPACE ADMINISTRATION
+
+48 CFR Parts 4, 13, 39, 40, and 52
+
+[FAR Case 2024–002; Docket No. 2024–
+0002, Sequence No. 1]
+
+RIN 9000–AO70
+
+Federal Acquisition Regulation:
+Prohibition on Unmanned Aircraft
+Systems From Covered Foreign
+Entities
+
+AGENCY: Department of Defense (DoD),
+General Services Administration (GSA),
+and National Aeronautics and Space
+Administration (NASA).
+
+VerDate Sep<11>2014 21:04 Dec 27, 2024 Jkt 265001 PO 00000 Frm 00134 Fmt 4700 Sfmt 4700 E:\FR\FM\30DER1.SGM 30DER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+3
+2
+N
+R
+0
+2
+1
+K
+S
+D
+n
+o
+
+r
+e
+
+l
+l
+
+e
+h
+m
+u
+r
+d
+d

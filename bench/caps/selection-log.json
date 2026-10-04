@@ -40,10 +40,7 @@
  {
   "kind": "irs",
   "id": "irs-p584-b",
-  "pages": [
-   2
-  ],
-  "pairs": 1
+  "skip": "no pair"
  },
  {
   "kind": "irs",
@@ -68,10 +65,7 @@
  {
   "kind": "irs",
   "id": "irs-p595",
-  "pages": [
-   6
-  ],
-  "pairs": 1
+  "skip": "no pair"
  },
  {
   "kind": "irs",
@@ -88,10 +82,9 @@
    1,
    4,
    8,
-   11,
    12
   ],
-  "pairs": 6
+  "pairs": 5
  },
  {
   "kind": "irs",
@@ -136,10 +129,9 @@
   "kind": "irs",
   "id": "irs-p907",
   "pages": [
-   4,
-   9
+   4
   ],
-  "pairs": 2
+  "pairs": 1
  },
  {
   "kind": "irs",
@@ -147,6 +139,18 @@
   "pages": [
    2,
    3
+  ],
+  "pairs": 5
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p915",
+  "pages": [
+   2,
+   3,
+   7,
+   10,
+   13
   ],
   "pairs": 5
  },
@@ -164,10 +168,9 @@
   "kind": "fr",
   "id": "fr-2024-31401",
   "pages": [
-   1,
    2
   ],
-  "pairs": 4
+  "pairs": 2
  },
  {
   "kind": "fr",
@@ -181,18 +184,14 @@
   "kind": "fr",
   "id": "fr-2024-31392",
   "pages": [
-   1,
    2
   ],
-  "pairs": 6
+  "pairs": 3
  },
  {
   "kind": "fr",
   "id": "fr-2024-31391",
-  "pages": [
-   1
-  ],
-  "pairs": 4
+  "skip": "no pair"
  },
  {
   "kind": "fr",
@@ -225,16 +224,12 @@
  {
   "kind": "fr",
   "id": "fr-2024-31225",
-  "skip": "same text as fr-2024-31396"
+  "skip": "no pair"
  },
  {
   "kind": "fr",
   "id": "fr-2024-31217",
-  "pages": [
-   1,
-   2
-  ],
-  "pairs": 6
+  "skip": "no pair"
  },
  {
   "kind": "fr",
@@ -256,11 +251,7 @@
  {
   "kind": "fr",
   "id": "fr-2024-30509",
-  "pages": [
-   1,
-   6
-  ],
-  "pairs": 3
+  "skip": "no pair"
  },
  {
   "kind": "fr",
@@ -279,5 +270,67 @@
    4
   ],
   "pairs": 2
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31274",
+  "pages": [
+   1,
+   2
+  ],
+  "pairs": 6
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31268",
+  "pages": [
+   1
+  ],
+  "pairs": 1
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31238",
+  "pages": [
+   1
+  ],
+  "pairs": 2
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31237",
+  "skip": "no pair"
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31234",
+  "pages": [
+   1
+  ],
+  "pairs": 1
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31188",
+  "pages": [
+   1,
+   2,
+   4
+  ],
+  "pairs": 12
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31146",
+  "skip": "no pair"
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31144",
+  "pages": [
+   1,
+   4
+  ],
+  "pairs": 3
  }
 ]
