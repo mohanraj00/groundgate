@@ -1,0 +1,51 @@
+6. Enhanced obligation on the system auditor:
+
+6.1 Considering the extensive use of technology by the stock brokers, the system
+
+auditor shall verify the following aspects during the audit:
+
+- Reporting of all technical glitches occurred in the system of SBs to the
+
+exchanges as per the requirements.
+
+- Remedial steps taken by SBs to resolve technical glitches occurred in past
+
+1 year
+
+-
+
+- Capacity planning in proportion to increase in clients/turnover etc.
+- Software testing and change management/patch management as per
+prescribed guidelines (including OMS/RMS systems provided by vendors)
+Implementation of Logging and Monitoring Mechanism (LAMA) to detect
+technical glitches as prescribed by exchanges in the technical glitch
+framework dated December 16,2022. Preservation of logs of LAMA
+parameters for the prescribed period
+
+- Servers/applications used for placing the orders or routing such orders to
+
+exchange are located at SBs’ premise.
+
+- Compliance with the requirements of DR site and conducting live DR drill
+
+etc.
+
+7. Other due diligence by Stock Exchanges:
+
+7.1 Exchanges shall carry out due diligence to ensure authenticity of the system audit
+report. In addition to the same, the system audit report submitted by SB/TM shall
+be validated against the last submitted report.
+
+7.2 Exchanges may discuss the findings of the system audit of QSBs with the auditor
+
+after submission of audit report.
+
+7.3 Stock Exchanges shall prescribe financial disincentive on SBs for instances where
+serious lacunas found in the system audit process and/or non-closure of
+observations found during the audit within defined timelines.
+
+7.4 Exchanges shall prescribe the period for preservation of documents such as
+working papers, logs, screenshots, records of visit to the premises of the entity
+and other evidence in support of the audit.
+
+Page 5 of 6

@@ -1,0 +1,964 @@
+{
+  "retrieved": "2026-10-03",
+  "sources": [
+    {
+      "id": "fda-fluoxetine",
+      "kind": "fda",
+      "groups": [
+        "change"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/a5fa64a6-3de3-4e2e-8b92-6d507fb8eee9.xml",
+      "sha256": "6529c517faf43f5f26f12ed46623334d1dd1cdd69a834ec7c1f631424dd47a4b",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "FLUOXETINE (FLUOXETINE HYDROCHLORIDE) CAPSULE [PD-RX PHARMACEUTICALS, INC.]; Part D 2024 claims rank 59"
+    },
+    {
+      "id": "fda-labetalol",
+      "kind": "fda",
+      "groups": [
+        "change"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/e2e50571-d8c1-43e7-b90f-877ba1c35c9b.xml",
+      "sha256": "de1fc642b98f0d9ffaa53e6e746ac96317a8ac16db939e91c99fd43bc1fc09f0",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "LABETALOL HYDROCHLORIDE TABLET, FILM COATED [REMEDYREPACK INC.]; Part D 2024 claims rank 239"
+    },
+    {
+      "id": "fda-sildenafil",
+      "kind": "fda",
+      "groups": [
+        "change"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/1add0cab-8873-4cd1-ab53-e05c4ac458b1.xml",
+      "sha256": "bf7bab71535a9a2a6982cc36ddc4193e548e67051ef5cbbdf7d3677b64078ed0",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "SILDENAFIL CITRATE TABLET [PROFICIENT RX LP]; Part D 2024 claims rank 261"
+    },
+    {
+      "id": "fda-candesartan",
+      "kind": "fda",
+      "groups": [
+        "change"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/9da86c48-5911-4512-8c71-eca4a6418cf6.xml",
+      "sha256": "af9eddc32ed6a0a9b99b1880b68f90dcee263b59b66fe8d97594ed44580df467",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "CANDESARTAN CILEXETIL TABLET [VIONA PHARMACEUTICALS INC]; Part D 2024 claims rank 336"
+    },
+    {
+      "id": "irs-p544",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p544.pdf",
+      "sha256": "b8282a22f637e147b6435787bf9e20db6c24d08d8124386cce75eaab05de0cfd",
+      "select": {
+        "pages": [
+          41
+        ]
+      }
+    },
+    {
+      "id": "irs-p550",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p550.pdf",
+      "sha256": "83552968a07e63d1c81e5b4f311fc0e54728b5ff9654b5a0d2ba6292c5574317",
+      "select": {
+        "pages": [
+          83,
+          102
+        ]
+      }
+    },
+    {
+      "id": "irs-p583",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p583.pdf",
+      "sha256": "c551e158204ab8365dbedc30b144a09e971375a362e0a9b9d5db46e106f3ac3c",
+      "select": {
+        "pages": [
+          5
+        ]
+      }
+    },
+    {
+      "id": "irs-p590-b",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p590b.pdf",
+      "sha256": "d18a592e55ce56d43953dc338272ece3984565792d6dca06989a6ca8121f7360",
+      "select": {
+        "pages": [
+          37
+        ]
+      }
+    },
+    {
+      "id": "irs-p598",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p598.pdf",
+      "sha256": "77643db9318bf04d520377caad491d70b9e0736e4b29de06b7d0980373c3d6f4",
+      "select": {
+        "pages": [
+          19
+        ]
+      }
+    },
+    {
+      "id": "irs-p926",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p926.pdf",
+      "sha256": "db57fe2911bc0baec40339cd898a2594e28d86eb033f13052786d12fee23e5e7",
+      "select": {
+        "pages": [
+          11
+        ]
+      }
+    },
+    {
+      "id": "irs-p946",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p946.pdf",
+      "sha256": "07fadfb2a6ee34767d77b9a2d3a28413c4afa2d0bd2f0488fd6a4b1b9b5904c4",
+      "select": {
+        "pages": [
+          50
+        ]
+      }
+    },
+    {
+      "id": "irs-p963",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p963.pdf",
+      "sha256": "9e7724798c802cc2bf28cb6cf5e18455b6804543c7e8fc8c9ed793b41dd6bb6c",
+      "select": {
+        "pages": [
+          82
+        ]
+      }
+    },
+    {
+      "id": "irs-p974",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p974.pdf",
+      "sha256": "e17265a7ff82e0b2541dbf7bd90797bdaa1eb5678c3d23d059f42939274f0845",
+      "select": {
+        "pages": [
+          28,
+          29,
+          33,
+          34
+        ]
+      }
+    },
+    {
+      "id": "irs-p1141",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1141.pdf",
+      "sha256": "10db0ccc5282b33057babe51f5bf6dd321785453cfcfcada0df7b6d41b2afa31",
+      "select": {
+        "pages": [
+          5
+        ]
+      }
+    },
+    {
+      "id": "irs-p1179",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1179.pdf",
+      "sha256": "a9d9b1ba27df7fc63f93c1704599fca1b82613c1e586f03176531d039d89288a",
+      "select": {
+        "pages": [
+          15
+        ]
+      }
+    },
+    {
+      "id": "irs-p1187",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1187.pdf",
+      "sha256": "d40f8fb6596dc89f7af295b22437f3a71a8f6bb5699f6781a8a22c9cb49466f0",
+      "select": {
+        "pages": [
+          34,
+          44
+        ]
+      }
+    },
+    {
+      "id": "irs-p1304",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1304.pdf",
+      "sha256": "3832a33716fc034c684b5f7c79786763d3e06704ea7c060deb95d0a6c660f110",
+      "select": {
+        "pages": [
+          6,
+          23
+        ]
+      }
+    },
+    {
+      "id": "irs-p1415",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1415.pdf",
+      "sha256": "85409a6e4056f925578cc7adf14a391998d52c20c3779399d8785ef1ef807d0c",
+      "select": {
+        "pages": [
+          12
+        ]
+      }
+    },
+    {
+      "id": "irs-p1457",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1457.pdf",
+      "sha256": "691de22007f53f303bf8b19b941fccc85eaec3cb76e6cde57f66820746a3db8b",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "irs-p1458",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1458.pdf",
+      "sha256": "44c4c7da1a5daf23d2611efb1eba68d75d9f3de89bbae84aae0dd1529a2c9b53",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "irs-p1459",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1459.pdf",
+      "sha256": "a58733bb0bc772b94a022b17bfff51d746998b49bcabbe51c70f6f9ac7993a48",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "irs-p1500",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1500.pdf",
+      "sha256": "152a087238571258431b36ddb75260884cd38f6acb495014eae76e0c2ca5c322",
+      "select": {
+        "pages": [
+          21,
+          30,
+          32,
+          33,
+          34
+        ]
+      }
+    },
+    {
+      "id": "irs-p1586",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1586.pdf",
+      "sha256": "2c6888398fc21060c74c7d7c6edba80bc4d8bd2f09f6b29a435cc14cca126052",
+      "select": {
+        "pages": [
+          17
+        ]
+      }
+    },
+    {
+      "id": "irs-p1915",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1915.pdf",
+      "sha256": "63a3cf3e79c2e73ed15738d5a0875ffb7496c2309e8c3e085836ade16b2e0920",
+      "select": {
+        "pages": [
+          5
+        ]
+      }
+    },
+    {
+      "id": "irs-p2104",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p2104.pdf",
+      "sha256": "a4b374d45b305bb71476b51537e5cfdb1290a6f648acde8abc179fc6fa346992",
+      "select": {
+        "pages": [
+          12,
+          26,
+          31,
+          71
+        ]
+      }
+    },
+    {
+      "id": "irs-p2104-c",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p2104c.pdf",
+      "sha256": "14a9965d3454e9ee5b6537d0ba34e5b0fe8adc029cf02665562caf06073bd776",
+      "select": {
+        "pages": [
+          11,
+          25,
+          30
+        ]
+      }
+    },
+    {
+      "id": "irs-p3151-a",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3151a.pdf",
+      "sha256": "b978902787c565f71bddd0f20767f7350b8685159faf1ea26d793eec44f977ae",
+      "select": {
+        "pages": [
+          26
+        ]
+      }
+    },
+    {
+      "id": "irs-p3373",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3373.pdf",
+      "sha256": "1c7a7f8bc5330ef862812811b3952b1a1fa80b8f180b590dad41edf21ff45bde",
+      "select": {
+        "pages": [
+          17
+        ]
+      }
+    },
+    {
+      "id": "irs-p3415",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3415.pdf",
+      "sha256": "2db8d7400c7596982a91600cbdb6457f932f4e573f25bdf7e00d6ccf176c0b96",
+      "select": {
+        "pages": [
+          27,
+          53
+        ]
+      }
+    },
+    {
+      "id": "irs-p3536",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3536.pdf",
+      "sha256": "f01ed113d0e321a72f7235b091a1cd9f4161e9a675048aa73a97cccfe721b0b9",
+      "select": {
+        "pages": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "irs-p3583",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3583.pdf",
+      "sha256": "fd7f7103c327e69d4b9c1a70ddd7773f3a6d62fea9164081ea5070dd1810aafd",
+      "select": {
+        "pages": [
+          6,
+          8
+        ]
+      }
+    },
+    {
+      "id": "irs-p3744",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3744.pdf",
+      "sha256": "3fecdb01c792fb0e077eedfb64790f6d07a9a9f17647176a1cdfc1363b0bc000",
+      "select": {
+        "pages": [
+          9,
+          143
+        ]
+      }
+    },
+    {
+      "id": "irs-p3744-a",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3744a.pdf",
+      "sha256": "cb5f08e5a9fd3befebf90e628a2cc04edc7e77cb11d2978f0df4b95ce5920d31",
+      "select": {
+        "pages": [
+          7,
+          35
+        ]
+      }
+    },
+    {
+      "id": "irs-p3908",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3908.pdf",
+      "sha256": "cc8ad4c8b8c8cf5832ca9e3e5a509fcbc5e2da2c81e13e5c73983e5526991176",
+      "select": {
+        "pages": [
+          20
+        ]
+      }
+    },
+    {
+      "id": "irs-p4012",
+      "kind": "irs",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4012.pdf",
+      "sha256": "7f44cf111b3b838dc637b7655dc208d682fc509c58eb582719a33d55ea6d3d37",
+      "select": {
+        "pages": [
+          129
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-24061",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-31/pdf/2025-24061.pdf",
+      "sha256": "eb453563493250a7644f50eb6b3a1d9817e803eb93076064a35961b809fe1326",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-23920",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-29/pdf/2025-23920.pdf",
+      "sha256": "8e2a1040d7f48ee35ad35a10c3d0c5ee77f4c3472ec162938af83b629bf43624",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-23860",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-29/pdf/2025-23860.pdf",
+      "sha256": "aa5d009a32950fec9ef1ec8640c3c2a10814068579db3bba2e3aff0cbe090cb0",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-23848",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-29/pdf/2025-23848.pdf",
+      "sha256": "44e7738008e2f23db8ad4632d068cce65931bbba09c5a0e2bb1979d5a6ad8d42",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-23837",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-29/pdf/2025-23837.pdf",
+      "sha256": "1c30c17698579d2f99c41e5f10a24016a7c37731279e730c388e84943ef3e4e8",
+      "select": {
+        "pages": [
+          2,
+          7,
+          8,
+          9
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-23786",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-23/pdf/2025-23786.pdf",
+      "sha256": "0e30c732b9bca31321c211c03b1bb89221c8bcd41f5e68a662de12e2b8fb1ec2",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-23746",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-23/pdf/2025-23746.pdf",
+      "sha256": "d2458d29d43f08f2c428bcd84cee7aba902befd79c80ba9da336aeb5174a01f2",
+      "select": {
+        "pages": [
+          4,
+          8,
+          9,
+          10
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-23634",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-22/pdf/2025-23634.pdf",
+      "sha256": "6192c0811fe70e3f0c0d6df36629615d4560e6d157f84b4f568f99ff7e4e104a",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-23626",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-22/pdf/2025-23626.pdf",
+      "sha256": "56b42a0d132e47c096d25319049bdb6881587a25c0b6cdf6cdf969537bf8bd27",
+      "select": {
+        "pages": [
+          5,
+          7
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-23389",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-19/pdf/2025-23389.pdf",
+      "sha256": "7aae6b28918218628f7db6d8551479e0eabf0b09ee2b9a152360934a1d3b9612",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-23125",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-17/pdf/2025-23125.pdf",
+      "sha256": "92d2bc0514b809c0db93186d6458de9d97a5f6e89ded430ce2e63e44db6ba478",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22968",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-16/pdf/2025-22968.pdf",
+      "sha256": "915d3c922055c066a554a4a5abf64f2544b91449e80f7240c580382ece725618",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22966",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-16/pdf/2025-22966.pdf",
+      "sha256": "12d11a57f0d12051c1df703fd86c21161eb839548d29f1f5d948459586e7086c",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22957",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-16/pdf/2025-22957.pdf",
+      "sha256": "9f7a2881062efcc70bd1c3b2b86c34bcc6ab76267248ef196d1416e402a8334a",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22927",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-16/pdf/2025-22927.pdf",
+      "sha256": "760ed6ad3784a5883719c3230e6d9c04e5149d932c6750d4666dcd64154cae03",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22875",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-16/pdf/2025-22875.pdf",
+      "sha256": "ab354c0fc3a52e1e8103bb3877331b9cb339c050699d3e5a928fef1a1412afcf",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22814",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-15/pdf/2025-22814.pdf",
+      "sha256": "e0b64608b90180a34f2897746c8670a065621d411c891931de2dd0d87f52cfd1",
+      "select": {
+        "pages": [
+          1,
+          2,
+          4,
+          6
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22813",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-15/pdf/2025-22813.pdf",
+      "sha256": "04dd96762b2d1a677bf3685f8321a048847e809cb876d6fb2fce857064c452fc",
+      "select": {
+        "pages": [
+          1,
+          2,
+          5
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22773",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-15/pdf/2025-22773.pdf",
+      "sha256": "c33dd9b0dc10259a7c52509c1cff2629854fdeae48f8d96c3065fe401083925b",
+      "select": {
+        "pages": [
+          7
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22759",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-15/pdf/2025-22759.pdf",
+      "sha256": "7a5da367f7a0e3af705a1c272f2c049cb937c74ce9ff1b50c9f8e93f29ba4171",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22738",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-15/pdf/2025-22738.pdf",
+      "sha256": "51829aa76e861b75565eaeaeed619d7563602a91cf42f27896efa902b5e4b9e3",
+      "select": {
+        "pages": [
+          12
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22672",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-12/pdf/2025-22672.pdf",
+      "sha256": "b101cc93df64d3b1059ed197b8533383f7f6947ecc88bec16d12b51ba749ed54",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22595",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-11/pdf/2025-22595.pdf",
+      "sha256": "9dbb6b8c85de2efb9c0b3aa4841f4f753c7f63bf6ec0c85e76d47db5a97dce1e",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22584",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-11/pdf/2025-22584.pdf",
+      "sha256": "b050595b8ed563611b94e341770b47b9ca5e75f60c527fb4d89db15862dee385",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22559",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-11/pdf/2025-22559.pdf",
+      "sha256": "b647d6c6bab737fa8f227bef40dbb02919695f4b04b479c0f10ecb5b2dfeb2ba",
+      "select": {
+        "pages": [
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22558",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-11/pdf/2025-22558.pdf",
+      "sha256": "e8e5599092c46a460426a59f3db3e42dabd94161239da753c27671c9ed94aa11",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22557",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-11/pdf/2025-22557.pdf",
+      "sha256": "524fcb334af32578778431c19c3446b0f0bb2c641ba7300356d96edf868ad5c9",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22545",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-11/pdf/2025-22545.pdf",
+      "sha256": "a738a69e85f8032ec965bc98b1754e78566c37f0741645882bf3d66edb2f7118",
+      "select": {
+        "pages": [
+          3,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22518",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-11/pdf/2025-22518.pdf",
+      "sha256": "ee02d6b075db85566511ad9f5395bb85f6b31438fca75a425f7029e92a7522cc",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-22516",
+      "kind": "fr",
+      "groups": [
+        "change"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-12-11/pdf/2025-22516.pdf",
+      "sha256": "087b98de3fe3bedb713fde1594bbbf05b91d94840adf23beaab6598fa96190f8",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    }
+  ]
+}

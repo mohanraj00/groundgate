@@ -1,0 +1,55 @@
+Federal Tax Compliance Research: Tax Gap Estimates for Tax Years 2014–2016
+
+3.2 Tax Gap Concepts: Ratio Measures
+
+Tax gap concepts include several ratio measures expressed as rates or percentages. The purpose of these
+measures is to provide a relative measure of compliance or noncompliance. These measures are ratios of
+dollar amounts in the aggregate.^2
+
+The voluntary compliance rate (VCR) is defined as the amount of tax paid voluntarily and timely divided
+by total true tax, expressed as a percentage. The VCR is a complement to the gross tax gap.
+
+The net compliance rate (NCR) is defined as the sum of all timely and enforced and other late payments
+divided by total true tax, expressed as a percentage. The NCR is a complement to the net tax gap. It is also
+equal to one minus the ratio of the net tax gap to total true tax.
+
+Two other measures are used only for the underreporting tax gap. The net misreporting percentage (NMP)
+for a given line item is the NMA divided by the sum of the absolute values of the amounts that should have
+been reported. For most return or schedule line items, amounts that should have been reported can be
+positive only. However, amounts can be either positive or negative for business-related net income and
+certain other lines. So, for those line items where amounts can be negative, the denominator of the NMP is
+not the net of positive and negative amounts, but instead it is the total of all the amounts disregarding the
+sign in the calculation—that is, it is the sum of the absolute values. The NMP is a complement to the NMA.
+
+The voluntary reporting rate, or VRR, is another underreporting tax gap measure. It is a measure of the
+overall extent of reporting compliance for a particular type of tax. It is defined as the amount of reported
+tax divided by the amount of tax that should have been reported. It reflects reporting compliance on timely
+filed returns and is a complement to the underreporting tax gap for a particular type of tax.
+
+3.3 Significant Tax Law and Other Changes Since Tax Year 2011-2013
+
+Tax law and the level of economic activity can affect the tax gap. Major tax legislation enacted for the
+TY 2014-2016 timeframe included the Protecting Americans from Tax Hikes (PATH) Act of 2015, which
+made permanent or extended the tax benefits for individual and business taxpayers and enacted program
+integrity provisions for certain individual tax credits.
+
+Legislation enacted in December 2017 and known as the Tax Cuts and Jobs Act (TCJA) made permanent
+changes to the corporation income tax and temporary changes to the individual income tax. The TCJA
+reduced the top corporate income tax rate from 35 percent to 21 percent. The corporation Alternative
+Minimum Tax was eliminated and there were rule changes for businesses regarding deductions,
+depreciation, expensing, credits, treatment of foreign source income, cost recovery, and accounting
+methods. Changes to the individual income tax made by TCJA included a general lowering of income tax
+rates, repeal of personal and dependent exemptions, increases in the standard deductions, elimination of or
+limits on certain itemized deductions, expansion of the child tax credit, and a new deduction related to pass-
+through business income.
+
+The total number of corporation income tax returns filed continued to decline during the TY 2014-2016
+timeframe, although the number of large corporation income tax returns increased. Reported income tax
+after credits on corporation income tax returns increased with the average for the TY 2014-2016 timeframe
+about $60 billion higher than for the TY 2011-2013 timeframe.
+
+2At a tax return level, these ratios may be undefined or have limited meaning because the numerator, denominator, or both may
+be zero.
+
+_____________________________________________________________________________________________________
+6 Internal Revenue Service | Research, Applied Analytics & Statistics

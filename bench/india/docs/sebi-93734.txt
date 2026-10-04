@@ -1,0 +1,272 @@
+the aforementioned circular, SEBI has also issued ‘Clarifications to Cybersecurity
+
+and Cyber Resilience Framework (CSCRF) for SEBI Regulated Entities (REs)’ vide
+
+circular SEBI/HO/ ITD-1/ITD_CSC_EXT/P/CIR/2024/184 dated December 31,
+
+2024 and ‘Extension towards Adoption and Implementation of Cybersecurity
+
+and Cyber Resilience Framework (CSCRF) for SEBI Regulated Entities (REs)’
+
+vide circular SEBI/HO/ITD-1/ ITD_CSC_EXT/P/ CIR/2025/45 dated March 28,
+
+2025.
+
+2. Based on further discussions with REs, it has been decided to revise the thresholds
+
+and categorization of following REs as contained in this circular. It may be noted
+
+that the category of REs shall be decided at the beginning of the financial year
+
+based on the data of the previous financial year. Once the category of RE is
+
+decided, RE shall remain in the same category throughout the financial year
+
+irrespective of any changes in the parameters during the financial year. The
+
+category shall be validated by the respective reporting authority at the
+
+time of compliance submission. Further, the criteria given and their thresholds
+
+for different categories will continue to be updated as and when required.
+
+2.1. Stock brokers:
+
+2.1.1. Stockbrokers fulfilling any one of the following parameters shall be
+
+classified
+
+accordingly
+
+(the
+
+parameters
+
+shall
+
+be
+
+applied
+
+independently). The higher categorisation shall be made applicable in
+
+case a stockbroker falls into two different categories based on the two
+
+parameters independently.
+
+Table 1: Criteria and thresholds for Stockbroker categorisation
+
+S.
+
+Parameters
+
+Qualified
+
+No.
+
+REs
+
+Mid-
+
+size
+
+REs
+
+Small-
+
+Self-
+
+size
+
+REs
+
+certification
+
+REs
+
+1.
+
+Number
+
+of
+
+More
+
+than
+
+More than
+
+More than
+
+More
+
+than
+
+total registered
+
+10 lakhs
+
+1 lakh and
+
+10,000
+
+1,000
+
+and
+
+clients
+
+up to 10
+
+and up to
+
+up to 10,000
+
+lakhs
+
+1 lakh
+
+Page 2 of 7
+S.
+
+Parameters
+
+Qualified
+
+No.
+
+REs
+
+Mid-
+
+size
+
+REs
+
+Small-
+
+Self-
+
+size
+
+REs
+
+certification
+
+REs
+
+2.
+
+Clientele
+
+More
+
+than
+
+More than
+
+More than
+
+More
+
+than
+
+trading volume
+
+10, 00,000
+
+1,00,000
+
+10,000
+
+1,000
+
+and
+
+in a year (in
+
+and up to
+
+and up to
+
+up to 10,000
+
+Crores)
+
+10,00,000
+
+1,00,000
+
+2.1.2. Stock Brokers with less than 1,000 crores clientele trading volume (in a
+
+year) and less than 1,000 total registered clients are exempted from
+
+CSCRF.
+
+2.2. Depository Participants (DPs):
+
+It shall be noted that categorisation of DP shall be decided based on the
+
+highest thresholds of below-mentioned classification. For example: if a DP is
+
+registered as both stock broker and Bank, then it will be categorised as
+
+Qualified RE. Further, DPs having clients less than 100 shall be exempted
+
+from the requirement of SOC services or on-boarding to Market-SOC (M-
+
+SOC).
+
+Table 2: Criteria and thresholds for DPs categorisation
+
+S.
+
+No
+
+1.
+
+2.
+
+Regulated
+
+DP
+
+also
+
+Classification
+
+for
+
+Entity
+
+registered as
+
+CSCRF
+
+Stock Broker
+
+To be classified as per
+
+Depository
+
+Participant (DP)
+
+the criteria followed for
+
+stock brokers.
+
+Other
+
+than Stock
+
+Qualified RE
+
+Brokers
+
+2.3. Investment Advisers (IAs):
+
+IAs not registered with SEBI in other capacities shall be exempted from
+
+provisions of CSCRF. With respect to IAs registered with SEBI in other
+
+Page 3 of 7

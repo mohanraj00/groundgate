@@ -1,0 +1,50 @@
+2. The correct answer is B, the Monthly Schedule. Since the total tax in the look-
+back period was less than $50,000, the Monthly Schedule would be followed.
+Taxes may only be remitted with a return if the total tax for the quarter was
+under $2,500. The Semiweekly Schedule would be used if the total tax during
+the lookback period was more than $50,000.
+
+3. The correct answer is B, the Monthly Schedule. Their total tax for the quarter is
+more than $2,500, so the tax deposits must be made. If an employer did not
+have any employees during the lookback period, their total tax for that time
+was -0-. A new employer follows the Monthly Schedule for deposits unless they
+meet the $100,000 rule. (See page 6.)
+
+practical exercise 3, page 20
+
+1. The correct answer is $3,030. The tax deposit due would be the total of the
+income tax withheld of $1,500, the employees’ withheld FICA tax of $765, and
+the employer’s share of FICA tax of $765.
+
+practical exercise 4, page 22
+
+1. True. If the tax is less than $2,500, the tax may be paid with the return or
+deposited by the return due date. If there is $2,500 or more in total tax in the
+current quarter and the prior quarter, the employer must follow the Monthly or
+Semiweekly Schedule for deposits.
+
+2.
+
+3.
+
+True. There is a four step penalty for late deposits, from 2% to 15%, depending
+on how late the deposit is made.
+
+False. The penalty is 10% if the deposit is 16 or more days late, but has been
+deposited before 10 days after the employer receives a bill. If the deposit is
+made earlier, the penalty is smaller. If the deposit is made 10 days after the
+employer receives a bill for the unpaid tax, the penalty increases to 15%.
+
+4.
+
+True. There are late filing and late payment penalties in addition to late depos-
+it penalties that can be charged if returns are not timely.
+
+5. False. If the prior quarter tax is less than $2,500, and the current quarter does
+not have a tax liability that reached $100,000 or more within a deposit period,
+the taxpayer may pay the tax with a timely filed tax return, or deposit by the
+due date.
+
+The ABCs of Federal Tax Deposits
+
+26

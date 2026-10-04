@@ -1,0 +1,308 @@
+Preface: Introductory Remarks by the National Taxpayer Advocate
+
+• Increased maximum tax deduction for state and local taxes.^24 The maximum deduction for state and
+
+local taxes will increase from $10,000 to $40,000 for both single filers and taxpayers filing jointly (half for
+married taxpayers filing separate returns). The deduction will only be available to taxpayers who itemize
+their deductions, and it is subject to an income limitation but not a full phaseout. The deduction begins
+to phase down for taxpayers with MAGI over $500,000 at a rate of 30% for each additional dollar of
+income, but it will remain at $10,000 for taxpayers with MAGI of $600,000 or more.
+
+Other taxpayer-favorable but complex provisions include the creation of Trump retirement accounts.^25
+
+It takes considerable work for IRS technology personnel to program IRS systems to administer each of these
+changes (e.g., to distinguish vehicles that underwent final assembly in the United States from those that did
+not). At the same time, taxpayers and tax professionals must learn and correctly apply dozens of new rules.
+Major law changes of this scope historically increase return errors, false positive rates in processing filters,
+taxpayer correspondence, and taxpayer contacts. These changes will place additional strain on IRS systems and
+employees at the very moment when staffing levels have been significantly reduced, heightening the risk that
+the 2026 filing season will be more difficult, frustrating, and costly for taxpayers, practitioners, and the IRS.
+The good news is the IRS leadership and its employees have worked hard to provide guidance, implement
+changes to its forms and instructions, and program its systems for the OBBB Act changes in advance of the
+filing season. The question remains whether taxpayers will understand these benefits and claim them correctly.
+
+The IRS Plans to Outsource the Processing of a Large Portion of Paper-Filed Tax Returns to
+Private Contractors, Which Creates Risks
+
+The overwhelming majority of individual taxpayers file their returns electronically. But about 11 million
+individuals continue to file on paper. IRS submission processing employees historically have transcribed
+paper-filed returns by keying every relevant digit from the returns into IRS systems. I have criticized the IRS
+in the past for continuing to rely on manual data transcription and have urged it to implement scanning
+technology to automate the data intake process.^26
+
+In April, the IRS launched a “Zero Paper Initiative” to digitize a wide swath of the agency’s operations,
+including return processing. Rather than do the work itself, the IRS entered into contracts with several
+private companies to scan returns using optical character recognition technology. While this approach has
+the potential to reduce processing times for paper returns, it introduces operational and confidentiality risks,
+particularly because most of these contractors have not previously worked with the IRS.
+
+Historically, IRS submission processing employees transcribed paper-filed returns on IRS campuses within a
+culture that places overriding emphasis on safeguarding tax return information. Although contracts require
+vendors to implement confidentiality protections and to require their employees who handle tax returns to
+take the same training as IRS employees, contractors doing this work for the first time may take shortcuts
+or otherwise fail to maintain adequate systemic safeguards. It was just a few years ago that an employee of
+an IRS contractor, Charles Littlejohn, stole the return information of thousands of taxpayers and sent it to
+media outlets. In the Purple Book, I make a recommendation to enhance penalties on contractors if they fail
+to protect taxpayer return information.^27 While I am pleased to see movement toward the use of scanning
+technology, the progress of this outsourcing initiative is still in its infancy stage and bears watching.
+
+24 One Big Beautiful Bill Act, Pub L. No. 119-21, § 70120, 139 Stat. 72, 170 (2025).
+25 One Big Beautiful Bill Act, Pub L. No. 119-21, § 70204, 139 Stat. 72, 179 (2025).
+26 See, e.g., Erin M. Collins, IRS Deputy Commissioners Respond to Taxpayer Advocate Directive on Scanning Technology;
+
+National Taxpayer Advocate Appeals Decision to Commissioner, NatioNal taxpayer advocate Blog (Aug. 4, 2022), https://www.
+taxpayeradvocate.irs.gov/news/nta-blog/nta-blog-irs-deputy-commissioners-respond-to-taxpayer-advocate-directive/2022/08 .
+27 See National Taxpayer Advocate 2026 Purple Book, Compilation of Legislative Recommendations to Strengthen Taxpayer Rights
+and Improve Tax Administration 175 (Strengthen Incentives for IRS Contractors to Ensure Their Employees Keep Taxpayer Return
+Information Confidential) .
+
+Annual Report to Congress
+
+ix
+Preface: Taxpayer Rights and Service Assessment
+
+free options to file their returns, means that about 65.5 million taxpayers will self-prepare their income tax
+returns using software. If the software to prepare and file these returns costs only $50, as a whole, taxpayers
+will spend over $3.3 billion.^18
+
+The high volume of returns processed by the IRS each year shows the size of the task laid upon the IRS’s
+shoulders. However, in addition to all these tax returns, the IRS must also process billions of information
+returns to enable it to review the compliance of the more than 160 million individual income tax returns.
+While the increased use of electronic filing greatly reduces the IRS resources necessary to process returns,
+taxpayers bear more of this cost.^19 The IRS must balance its resource constraints with its obligation to protect
+taxpayer rights. Timely return processing, transparent issuance of refunds, and appropriate detection and
+resolution of filing errors all reflect the agency’s commitment to the TBOR, including the rights to quality
+service and to a fair and just tax system.
+
+FIGURE 1.2.2, Income Tax Returns and Information and Reporting Documents Filed,
+FYs 2023-2025
+
+Measure/Indicator
+
+FY 2023
+
+FY 2024
+
+FY 2025
+
+Returns Filed (Primary Types)^20
+
+271,462,415
+
+266,580,671
+
+269,568,400
+
+Total Individual Income Tax Returns^21
+
+163,124,867
+
+161,052,673
+
+163,173,500
+
+Total Individual Income Tax Returns Filed on Paper 22
+
+15,159,438
+
+10,785,093
+
+9,649,200
+
+Total Individual Income Tax Returns Filed Electronically 23
+
+147,965,429
+
+150,267,580
+
+153,037,300
+
+Free File Consortium (Tax Year)^24
+
+2,437,000
+
+2,569,472
+
+2,702,389
+
+Fillable Forms (Tax Year)^25
+
+449,653
+
+399,181
+
+367,371
+
+Total Corporation Income Tax Returns^26
+
+8,269,075
+
+8,281,313
+
+8,210,200
+
+Total Corporation Income Tax Returns Filed on Paper 27
+
+1,356,072
+
+944,939
+
+910,100
+
+Total Corporation Income Tax Returns Filed Electronically^28
+
+6,913,003
+
+7,336,374
+
+7,300,100
+
+Total Forms W-2^29
+
+Total Forms 1099^30
+
+278,908,239
+
+275,028,211
+
+270,623,300
+
+4,669,826,769
+
+3,904,183,196
+
+4,041,175,200
+
+Observation: The percentage of electronically filed individual income tax returns continues to rise. In
+FY 2025, the IRS expects over 94% of individual taxpayers to file their income tax returns electronically,
+which is an increase of nearly 3 million returns from FY 2024. Meanwhile, the IRS expects the volume of
+paper-filed individual income tax returns to decrease to less than 10 million. Overall, the IRS expects fewer
+corporate returns to be filed, and it expects the percentage of corporate returns filed electronically to remain
+relatively constant. The IRS Form W-2 submissions dropped by approximately 1.4% from 2023 to 2024 and
+is expected to drop by about 1.6% in 2025. On the other hand, after over a 16% decrease in Forms 1099
+filed from 2023 to 2024, the number is expected to rise by about 4% in 2025. However, the volume is still
+expected to be over 600 million documents below the 2023 level. The IRS should continue pursuing solutions
+that reduce the volume of paper returns, including ensuring that all return types can be filed electronically.
+This step would improve processing speed, reduce backlogs, and advance taxpayers’ right to quality service.
+
+Annual Report to Congress
+
+xxiii
+Preface: Taxpayer Rights and Service Assessment
+
+Observation: After increasing for the past several FYs, the number of in-person TAC visits remained unchanged
+from FY 2024 to FY 2025. The individual correspondence inventory has continued to decline over the last
+three FYs; however, the rate of decline for this inventory decreased significantly from FY 2024 to FY 2025,
+while the business correspondence inventory increased slightly in FY 2025. The average age of closed individual
+correspondence decreased by 16 days from FY 2024 to FY 2025, but the percentage of overaged correspondence
+from individuals reached a three-year high, rising over seven percentage points from last FY. The average age
+of closed business correspondence more than doubled from FY 2024 to FY 2025, even as the percentage of
+overaged correspondence from business taxpayers decreased. The combination of these two statistics suggests
+that the IRS closed out a considerable amount of business correspondence and is now able to timely process
+more correspondence from businesses. The number of telephone calls received by the IRS has been increasing,
+while the number of calls answered by CSRs has been relatively consistent over the past three FYs. The IRS LOS
+measure decreased by over two percentage points from FY 2024 to FY 2025, going from 55.6% to 53.3%. While
+the percentage of calls answered by an IRS assistor remained relatively constant from the prior FY, the IRS routed
+over 35 million calls to be serviced by voicebots, answering only about 24% of the calls.^75
+
+The number of FY 2025 online IAs remained nearly unchanged from the prior FY. Where’s My Refund?
+inquiries decreased by over 20 million, a decrease of over 5%.
+
+TAXPAYER SERVICE: INFORMATION TECHNOLOGY
+
+The IRS continues to use Business Modernization funding to expand the number of digital services available
+to taxpayers and tax professionals. The IRS received approximately $4.8 billion of IRA funding to use for
+Business Systems Modernization.^76 As of the end of FY 2024, the IRS reported it has spent about $2 billion of
+this amount to modernize various Information Technology systems.^77 At the end of FY 2024, the IRS reported
+that it had 23 active business modernization projects including a modernization of its archaic Individual and
+Business Master Files.^78 The IRS has continued to modernize its customer services in FY 2025. However, in
+March 2025, the IRS paused these 23 active modernization projects for reevaluation of their priorities. In
+June 2025, the IRS introduced a draft modernization framework that focused on nine initiatives, including
+a unified application program database, an increased digitization of paper records, and increased taxpayer
+services.^79 Even though the IRS determined the need to make a course correction in its modernization effort,
+in its response to GAO audit findings on its modernization efforts the IRS mentioned three significant
+modernization accomplishments: expansion of individual online account features, taxpayer-facing chat and
+chatbot functionality, and increased digitization of paper.^80
+
+The IRS’s accomplishment of three modernization efforts to positively affect taxpayers’ experiences, and
+its reevaluation of its priorities for spending the Business Modernization funding to include an increased
+emphasis on taxpayer service, is a good sign for the taxpaying public. Nevertheless, providing taxpayers with
+modernized services is only effective if the technological advances result in a better experience for taxpayers.
+Certainly, some of the new individual online account features are beneficial to taxpayers, and taxpayers are
+starting to notice, with nearly 51 million taxpayers having established individual online accounts.^81 The
+IRS is also expanding its online accounts for tax professionals and businesses, although they still lag behind
+the features found in individual accounts.^82 Each of these efforts is good news for taxpayers. Despite these
+advances, significant challenges remain. The number of backlogged features for each of these online account
+types is extensive.^83 Additionally, taxpayer feedback indicates that some of the new technology is not helpful
+and is not meeting expectations. For example, IRS surveys show that 80% of taxpayers found the IRS chatbots
+to not be helpful.^84 To be effective, the IRS needs to efficiently use its Business Modernization funding to
+provide the digital services taxpayers expect in the 21st century, but these services must be focused on the
+TBOR. IRS implementation of new technology is only beneficial to taxpayers if that technology improves
+their experiences when interacting with the IRS.
+
+xxviii
+
+Taxpayer Advocate Service
+Most Serious Problem #3: Telephones
+
+However, these improvements also illustrate the fundamental limitation of LOS as a measure of service
+quality. At the enterprise level, the taxpayer experience remains uneven and, in many cases, poor. Across all
+IRS telephone lines, average wait times have remained substantially longer – approximately eight minutes
+during FSs 2023, 2024, and 2025 – and considerably longer on certain non-AM lines.^11 For example, during
+FSs 2023, 2024, and 2025 taxpayers calling the Taxpayer Protection Program (TPP) line, often because their
+refunds were frozen due to suspected identity theft, experienced average wait times ranging from 16 to 20
+minutes, while LOS on that line remained as low as 17% in FS 2024.^12 For these taxpayers, telephone access
+is not merely informational; it is a prerequisite to receiving their refunds. LOS figures focused on AM lines
+obscure these disparities and fail to reflect the experience of taxpayers who are unable to resolve critical issues
+despite repeated attempts to call.
+
+More importantly, the IRS’s emphasis on meeting LOS targets has required significant tradeoffs that LOS
+itself does not capture. To achieve high LOS on prioritized telephone lines, the IRS has repeatedly redirected
+staff away from processing paper returns, amended returns, and taxpayer correspondence, harming taxpayers
+awaiting refunds or responses to their correspondence. As a result, during FS 2025, the IRS still carried
+inventories of approximately 2.6 million unprocessed amended returns and nearly 750,000 unresolved
+correspondence cases.^13 For taxpayers, large backlogs of unprocessed amended returns and correspondence
+translate into months of uncertainty and unanswered questions. When mail goes unanswered and returns
+go unprocessed, calling the IRS is often the only way taxpayers can seek information or reassurance about
+their case, further straining telephone resources. Staffing strategies that emphasize answering calls – measured
+primarily through LOS – without addressing these underlying delays can trap taxpayers in a cycle of waiting,
+calling, and waiting again.
+
+Outcomes That Matter to Taxpayers:
+
+• fewer repeat contacts
+
+• timely processing of paper submissions
+
+• accurate and prompt resolution
+
+Maintaining reasonable telephone wait times is critically important, particularly for taxpayers who rely on
+live assistance. LOS can be an indication of access, but when the IRS treats it as a primary or standalone
+indicator of success, it becomes misleading and drives staffing decisions that increase taxpayer burden.
+Telephone service, automated assistance, and paper processing are not separate or competing functions from
+the taxpayer’s perspective – they are interconnected parts of a single service experience. The IRS needs to
+move beyond reliance on LOS as the primary measure and adopt integrated telephone, chatbot, voicebot,
+and paper processing metrics that focus on outcomes that matter to taxpayers: accurate information, first
+contact resolution, timely processing of submissions, and fewer repeat contacts across all channels. Without
+an integrated, outcome-based approach, improvements in one service channel risk shifting taxpayer burden to
+another rather than reducing it.
+
+11
+
+12
+
+IRS, JOC, Snapshot Reports: Enterprise Snapshot, Enterprise Total (weeks ending Apr. 15, 2023; Apr. 20, 2024; Apr. 19, 2025). When
+looking at full FYs 2023-2025 across all IRS telephone lines, average wait times ranged from 12-14 minutes. IRS, JOC, Snapshot
+Reports: Enterprise Snapshot, Enterprise Total (weeks ending Sept. 30, 2023; Sept. 30, 2024; Sept. 30, 2025).
+IRS, JOC, Snapshot Reports: Product Line Detail, TPP (weeks ending Apr. 15, 2023; Apr. 20, 2024; Apr. 19, 2025). When looking at full
+FYs 2023-2025, taxpayers calling the TPP line experienced average wait times ranging from 16 to 20 minutes, while LOS on that line
+remained as low as 20% in FY 2024. IRS, JOC, Snapshot Reports: Product Line Detail, TPP (weeks ending Sept. 30, 2023; Sept. 30,
+2024; Sept. 30, 2025).
+
+13 National Taxpayer Advocate Fiscal Year 2026 Objectives Report to Congress 4 (Review of the 2025 Filing Season), https://www.
+
+taxpayeradvocate.irs.gov/wp-content/uploads/2025/06/JRC26_SAO_ReviewFiling.pdf .
+
+36
+
+Taxpayer Advocate Service

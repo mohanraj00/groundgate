@@ -1,0 +1,167 @@
+{
+ "name": "03b-indian-grouping",
+ "description": "A number grouped the Indian way (the last three digits, then pairs) has its value, in the document and in a candidate; a mix of the two groupings has none (spec 0.3).",
+ "document": "The exemption is Rs 2,00,000 per year. The cap is ₹12,34,567. The fund holds 1,00,00,000 rupees. The figures 1,23,456,789 and 252,0000 have no value. The fee is 25,000.",
+ "schema": {
+  "fields": {
+   "exemption": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "exemption_as_written": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "cap": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "fund": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "mixed": {
+    "type": "integer"
+   },
+   "bad_group": {
+    "type": "integer"
+   },
+   "fee": {
+    "type": "integer"
+   },
+   "mixed_value": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "i1",
+   "field": "exemption",
+   "value": "200000",
+   "unit": "INR",
+   "evidence": {
+    "start": 20,
+    "end": 28,
+    "text": "2,00,000"
+   }
+  },
+  {
+   "id": "i2",
+   "field": "exemption_as_written",
+   "value": "2,00,000",
+   "unit": "INR",
+   "evidence": {
+    "start": 20,
+    "end": 28,
+    "text": "2,00,000"
+   }
+  },
+  {
+   "id": "i3",
+   "field": "cap",
+   "value": "1234567",
+   "unit": "INR",
+   "evidence": {
+    "start": 53,
+    "end": 62,
+    "text": "12,34,567"
+   }
+  },
+  {
+   "id": "i4",
+   "field": "fund",
+   "value": "10000000",
+   "unit": "INR",
+   "evidence": {
+    "start": 79,
+    "end": 90,
+    "text": "1,00,00,000"
+   }
+  },
+  {
+   "id": "i5",
+   "field": "mixed",
+   "value": "123456789",
+   "evidence": {
+    "start": 111,
+    "end": 123,
+    "text": "1,23,456,789"
+   }
+  },
+  {
+   "id": "i6",
+   "field": "bad_group",
+   "value": "2520000",
+   "evidence": {
+    "start": 128,
+    "end": 136,
+    "text": "252,0000"
+   }
+  },
+  {
+   "id": "i7",
+   "field": "fee",
+   "value": "25000",
+   "evidence": {
+    "start": 163,
+    "end": 169,
+    "text": "25,000"
+   }
+  },
+  {
+   "id": "i8",
+   "field": "mixed_value",
+   "value": "1,23,456,789",
+   "evidence": {
+    "start": 111,
+    "end": 123,
+    "text": "1,23,456,789"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,142 @@
+4. A nontaxable transaction other than a nonrecognition
+transaction (described earlier), a like-kind exchange
+or involuntary conversion, a technical termination of a
+partnership, or a transaction that is nontaxable only
+because it is a disposition from a GAA.
+
+If you choose to remove the property from the GAA, fig-
+ure your gain, loss, or other deduction resulting from the
+disposition in the manner described earlier under Abusive
+transactions.
+
+Like-kind exchanges and involuntary conversions. If
+you dispose of GAA property as a result of a like-kind ex-
+change or involuntary conversion, you must remove from
+the GAA the property that you transferred. See chapter 1
+of Pub. 544 for information on these transactions. Figure
+your gain, loss, or other deduction resulting from the dis-
+position in the manner described earlier under Abusive
+transactions.
+
+Example. Sankofa, a calendar year corporation, main-
+tains one GAA for 12 machines. Each machine costs
+$15,000 and was placed in service in 2023. Of the 12 ma-
+chines, nine cost a total of $135,000 and are used in San-
+kofa’s New York plant and three machines cost $45,000
+and are used in Sankofa’s New Jersey plant. Assume this
+GAA uses the 200% declining balance method, a 5-year
+recovery period, and a half-year convention. Sankofa does
+not claim the section 179 deduction and the machines do
+not qualify for a special depreciation allowance. As of Jan-
+uary 1, 2025, the depreciation reserve account for the
+GAA is $93,600.
+
+In May 2025, Sankofa sells its entire manufacturing
+plant in New Jersey to an unrelated person. The sales
+proceeds allocated to each of the three machines at the
+New Jersey plant is $5,000. This transaction is a qualify-
+ing disposition, so Sankofa chooses to remove the three
+machines from the GAA and figure the gain, loss, or other
+deduction by taking into account their adjusted bases.
+
+For Sankofa’s 2025 return, the depreciation allowance
+for the GAA is figured as follows. As of December 31,
+2024, the depreciation allowed or allowable for the three
+machines at the New Jersey plant is $23,400. As of Janu-
+ary 1, 2025, the unadjusted depreciable basis of the GAA
+is reduced from $180,000 to $135,000 ($180,000 minus
+the $45,000 unadjusted depreciable bases of the three
+machines), and the depreciation reserve account is de-
+creased
+to $70,200 ($93,600 minus
+$23,400 depreciation allowed or allowable for the three
+machines as of December 31, 2024). The depreciation al-
+lowance for the GAA in 2025 is $25,920 [($135,000 −
+$70,200) × 40% (0.40)].
+
+from $93,600
+
+For Sankofa’s 2025 return, gain or loss for each of the
+three machines at the New Jersey plant is determined as
+follows. The depreciation allowed or allowable in 2025 for
+each machine is $1,440 [(($15,000 − $7,800) × 40%
+(0.40)) ÷ 2]. The adjusted basis of each machine is $5,760
+(the adjusted depreciable basis of $7,200 removed from
+the account less the $1,440 depreciation allowed or allow-
+able in 2025). As a result, the loss recognized in 2025 for
+
+each machine is $760 ($5,760 − $5,000). This loss is sub-
+ject to section 1231 treatment. See chapter 3 of Pub. 544
+for information on section 1231 losses.
+
+Disposition of all property in a GAA. If you dispose of
+all the property, or the last item of property, in a GAA, you
+can choose to end the GAA. If you make this choice, you
+figure the gain or loss by comparing the adjusted depreci-
+able basis of the GAA with the amount realized.
+
+If there is a gain, the amount subject to recapture as or-
+
+dinary income is limited to the result of the following.
+
+• The depreciation allowed or allowable for the GAA, in-
+cluding any expensed cost (such as section 179 de-
+ductions or the additional depreciation allowed or al-
+lowable for the GAA), minus
+
+• The total gain previously recognized as ordinary in-
+come on the disposition of property from the GAA.
+
+Like-kind exchanges and involuntary conversions.
+If you dispose of all the property or the last item of prop-
+erty in a GAA as a result of a like-kind exchange or invol-
+untary conversion, the GAA terminates. You must figure
+the gain or loss in the manner described above under Dis-
+position of all property in a GAA.
+
+Example. Duforcelf, a calendar year corporation,
+maintains a GAA for 1,000 calculators that cost a total of
+$60,000 and were placed in service in 2022. Assume this
+GAA is depreciated under the 200% declining balance
+method, has a recovery period of 5 years, and uses a
+half-year convention. Duforcelf does not claim the section
+179 deduction and the calculators do not qualify for a spe-
+cial depreciation allowance. In 2024, Duforcelf sells 200 of
+the calculators to an unrelated person for $10,000. The
+$10,000 is recognized as ordinary income.
+
+In March 2025, Duforcelf sells the remaining calculators
+in the GAA to an unrelated person for $35,000. Duforcelf
+decides to end the GAA.
+
+On the date of the disposition, the adjusted depreciable
+basis of the account is $23,040 (unadjusted depreciable
+basis of $60,000 minus the depreciation allowed or allow-
+able of $36,960). In 2025, Duforcelf recognizes a gain of
+$11,960. This is the amount realized of $35,000 minus the
+adjusted depreciable basis of $23,040. The gain subject
+to recapture as ordinary income is limited to the deprecia-
+tion allowed or allowable minus the amounts previously
+recognized as ordinary income ($36,960 − $10,000 =
+$26,960). Therefore, the entire gain of $11,960 is recap-
+tured as ordinary income.
+
+Electing To Use a GAA
+
+An election to include property in a GAA is made sepa-
+rately by each owner of the property. This means that an
+election to include property in a GAA must be made by
+each member of a consolidated group and at the partner-
+ship or S corporation level (and not by each partner or
+shareholder separately).
+
+How to make the election. Make the election by com-
+pleting line 18 of Form 4562.
+
+50
+
+Chapter 4
+
+Figuring Depreciation Under MACRS
+
+Publication 946 (2025)

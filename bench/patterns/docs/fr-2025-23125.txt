@@ -1,0 +1,267 @@
+Federal Register / Vol. 90, No. 240 / Wednesday, December 17, 2025 / Rules and Regulations
+
+58509
+
+barge will remain on standby at the load
+location until the transit to the display
+location. From 10:45 p.m. to 11:15 p.m.
+on December 31, 2025, the loaded
+fireworks barge will transit from Pier 68,
+Wharf 4 to the launch site near the San
+Francisco Ferry Building in
+approximate position 37°47′45″ N,
+122°23′15″ W (NAD 83), where the barge
+will remain until the conclusion of the
+fireworks display.
+
+At approximately 11:45 p.m. on
+
+December 31, 2025, 15 minutes prior to
+the fireworks display, the safety zone
+will expand to encompass all navigable
+waters, from surface to bottom, within a
+circle formed by connecting all points
+1,000 feet out from the fireworks barge.
+The fireworks barge will be near the San
+Francisco Ferry Building in San
+Francisco, CA in approximate position
+37°47′45″ N, 122°23′15″ W (NAD 83) as
+set forth in 33 CFR 165.1191, Table 1,
+Item number 24. The safety zone will be
+enforced until 12:45 a.m. on January 1,
+2026, or as announced via Broadcast
+Notice to Mariners.
+
+In addition to this notification of
+
+enforcement in the Federal Register, the
+Coast Guard plans to provide
+notification of this enforcement period
+via the Local Notice to Mariners and
+Broadcast Notice to Mariners.
+
+Under the provisions of 33 CFR
+165.1191, unauthorized persons or
+vessels are prohibited from entering
+into, transiting through, or anchoring in
+the safety zone during all applicable
+effective dates and times, unless
+authorized to do so by the PATCOM or
+other Official Patrol defined as a federal,
+state, or local law enforcement agency
+on scene to assist the Coast Guard in
+enforcing the regulated area.
+Additionally, each person granted
+permission to enter the zone who
+receives notice of a lawful order or
+direction issued by the PATCOM or
+Official Patrol must obey the order or
+direction. The PATCOM or Official
+Patrol, may, upon request, allow the
+transit of commercial vessels through
+regulated areas when it is safe to do so.
+If the Captain of the Port determines
+
+that the regulated area need not be
+enforced for the full duration stated in
+this notice, a Broadcast Notice to
+Mariners may be used to grant general
+permission to enter the regulated area.
+
+Jordan M. Baldueza,
+Captain, U.S. Coast Guard, Captain of the
+Port San Francisco.
+[FR Doc. 2025–23125 Filed 12–16–25; 8:45 am]
+
+BILLING CODE 9110–04–P
+
+DEPARTMENT OF HEALTH AND
+HUMAN SERVICES
+
+Centers for Medicare & Medicaid
+Services
+
+42 CFR Part 412
+
+[CMS–1829–CN]
+
+RIN 0938–AV48
+
+Medicare Program; Inpatient
+Rehabilitation Facility Prospective
+Payment System for Federal Fiscal
+Year 2026 and Updates to the IRF
+Quality Reporting Program; Correction
+
+AGENCY: Centers for Medicare &
+Medicaid Services (CMS), Department
+of Health and Human Services (HHS).
+ACTION: Final rule; correction.
+
+SUMMARY: This document corrects
+typographical and technical errors in
+the final rule that appeared in the
+August 5, 2025, Federal Register
+entitled ‘‘Medicare Program; Inpatient
+Rehabilitation Facility Prospective
+Payment System for Federal Fiscal Year
+2026 and Updates to the IRF Quality
+Reporting Program’’ (hereinafter referred
+to as the ‘‘FY 2026 IRF final rule’’). The
+effective date was October 1, 2025.
+DATES:
+
+Effective date: This correction is
+
+effective December 17, 2025.
+
+Applicability date: This correction is
+
+applicable to October 1, 2025.
+FOR FURTHER INFORMATION CONTACT:
+Kimberly Schwartz, (410) 786–2571;
+Patricia Taft (410) 786–4561.
+SUPPLEMENTARY INFORMATION:
+
+I. Background
+
+In FR Doc. 2025–14780 of August 5,
+2025, the FY 2026 IRF final rule (90 FR
+37678), there were typographical and
+technical errors that are identified and
+corrected in this correcting document.
+
+II. Summary of Errors
+
+A. Summary of Errors in the Preamble
+
+On pages 37678, 37681, 37698, 37699,
+37718, 37719, 37720, 37721, and 37724,
+due to a technical error in the
+calculation of the final FY 2026 IRF PPS
+payment rates, we inadvertently
+excluded a provider from the FY 2026
+payment rate analysis and impacts,
+which required recalculation of the
+payment rates and impact analysis.
+On page 37681, we included an
+
+incorrect section reference.
+
+B. Summary of Errors and Corrections
+Posted on the CMS Website for the IRF
+Wage Index
+
+After the FY 2026 IRF PPS final rule
+
+was published, we identified CMS
+
+Certification Numbers (CCNs) with more
+than 6 characters in the provider-
+specific file indicating there are
+providers with multiple records that
+have different provider characteristics.
+In the FY 2026 IRF PPS final rule, we
+inadvertently only included records
+with 6 character CCNs in our rate setting
+analysis resulting in one IRF provider
+being excluded from the rate setting
+data. Therefore, in this document we
+include that provider record with more
+than 6 characters with the most recent
+effective date. The inclusion of the 236
+claims from this provider resulted in a
+change to the outlier threshold (section
+VI. of the FY 2026 IRF PPS final rule)
+and changes to the estimated payment
+impacts (section VII. of the FY 2026 IRF
+PPS final rule).
+
+III. Waiver of Proposed Rulemaking
+and Delay in Effective Date
+
+Section 1871(b)(1) of the Social
+Security Act (the Act) requires the
+Secretary to provide for notice of a
+proposed rule in the Federal Register
+and provide a period of not less than 60
+days for public comment. In addition,
+section 1871(e)(1)(B)(i) of the Act
+mandates a 30-day delay in effective
+date after issuance or publication of a
+rule. Section 1871(b)(2)(C) of the Act
+provides an exception from the notice
+and 60-day comment period and delay
+in effective date requirements of the
+Act, under the good cause standard set
+forth in 5 U.S.C. 553(b)(B). Section
+1871(e)(1)(B)(ii) of the Act provides an
+exception from the delay in effective
+date requirements of the Act as well.
+Section 553(b)(B) authorizes an agency
+to dispense with normal notice and
+comment rulemaking procedures for
+good cause if the agency makes a
+finding that the notice and comment
+process is impracticable, unnecessary,
+or contrary to the public interest, and
+includes a statement of the finding and
+the reasons for it in the rule. In addition,
+section 1871(e)(1)(B)(ii) of the Act
+allows the agency to avoid the 30-day
+delay in effective date where the waiver
+is necessary to comply with statutory
+requirements or such delay is contrary
+to the public interest and the agency
+includes in the rule a statement of the
+finding and the reasons for it. In our
+view, this correcting document does not
+constitute a rulemaking that would be
+subject to these requirements.
+
+This document merely corrects
+typographical and technical errors in
+the FY 2026 IRF final rule. The
+corrections contained in this document
+are consistent with, and do not make
+substantive changes to, the policies and
+payment methodologies that were
+proposed, subject to notice and
+
+VerDate Sep<11>2014 15:52 Dec 16, 2025 Jkt 268001 PO 00000 Frm 00003 Fmt 4700 Sfmt 4700 E:\FR\FM\17DER1.SGM 17DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

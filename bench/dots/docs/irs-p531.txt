@@ -1,0 +1,519 @@
+Department of the Treasury
+Internal Revenue Service
+
+Contents
+
+Publication 531
+(Rev. December 2024)
+Cat. No. 15059V
+
+Reporting
+Tip
+Income
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Sep 25, 2024
+
+Future Developments . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Keeping a Daily Tip Record . . . . . . . . . . . . . . . . . . 2
+
+Reporting Tips to Your Employer . . . . . . . . . . . . . . 3
+
+Reporting Tips on Your Tax Return . . . . . . . . . . . . . 4
+
+Allocated Tips . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+How To Get Tax Help . . . . . . . . . . . . . . . . . . . . . . . . 6
+
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+Future Developments
+For the latest information about developments related to
+Pub. 531, such as
+it was
+published, go to IRS.gov/Pub531.
+
+legislation enacted after
+
+Reminder
+Continuous use publication. Publication 531 will no
+longer be updated annually. Instead, it will only be upda-
+ted when necessary.
+
+Publication 1244 no longer available. Beginning in
+2024, the Publication 1244 has been made obsolete and
+will no longer be made available.
+
+Form 4070 and Form 4070A are historical. The Form
+4070, Employee's Report of Tips to Employer, and Form
+4070A, Employee's Daily Record of Tips, previously inclu-
+ded in the Publication 1244, were made historical. The
+steps on How to keep a daily tip record and How to report
+your tips to your employer are provided later. The previous
+revisions of the Forms 4070 and 4070A are still available
+on the Prior Year Forms and Instructions page at IRS.gov/
+prior-year-forms-and-instructions.
+
+Photographs of missing children. The IRS is a proud
+partner with the National Center for Missing & Exploited
+Children® (NCMEC). Photographs of missing children se-
+lected by the Center may appear in instructions on pages
+that would otherwise be blank. You can help bring these
+children home by looking at the photographs and calling
+1-800-THE-LOST (1-800-843-5678) if you recognize a
+child.
+
+Introduction
+This publication is for employees who receive tips. All tips
+you receive are income and are subject to federal income
+tax. You must include in gross income all tips you receive
+directly, charged tips paid to you by your employer, and
+your share of any tips you receive under a tip-splitting or
+tip-pooling arrangement.
+tips for the rest of the year totaled $7,000. You weren’t re-
+quired to report any June tips to your employer, but you re-
+ported all of the rest of your tips to your employer as re-
+quired.
+
+Your Form W-2 from Blue Ocean Restaurant shows
+$17,000 ($10,000 wages + $7,000 reported tips) in box 1.
+You must add the $18 unreported tips to that amount and
+report $17,018 as wages on your tax return.
+
+Reporting social security, Medicare, Additional Medi-
+care, or railroad retirement taxes on tips not reported
+to your employer. If you received $20 or more in cash
+and charge tips in a month from any one job and didn’t re-
+port all of those tips to your employer, you must report the
+social security, Medicare, and Additional Medicare taxes
+on the unreported tips as additional tax on your return. To
+report these taxes, you must file Form 1040, Form
+1040-SR, Form 1040-NR, Form 1040-PR, or Form
+1040-SS even if you won’t otherwise have to file.
+
+Use Form 4137, Social Security and Medicare Tax on
+Unreported Tip Income, to figure social security and Medi-
+care taxes and/or Form 8959, Additional Medicare Tax, to
+figure Additional Medicare Tax. Enter the tax(es) on your
+return as instructed, and attach the completed Form 4137
+and/or Form 8959 to your return.
+
+If you’re subject to the Railroad Retirement Tax
+Act, you can't use Form 4137 to pay railroad re-
+tirement tax on unreported tips. To get railroad re-
+
+tirement credit, you must report tips to your employer.
+
+Reporting uncollected social security, Medicare, Ad-
+ditional Medicare, or railroad retirement taxes on tips
+reported to your employer. You may have uncollected
+taxes if your regular pay wasn’t enough for your employer
+to withhold all the taxes you owe and you didn’t give your
+employer enough money to pay the rest of the taxes. For
+more information, see Giving your employer money for
+taxes under Reporting Tips to Your Employer, earlier.
+
+If your employer couldn’t collect all the social security,
+Medicare, and Additional Medicare taxes, or railroad re-
+tirement taxes you owe on tips reported in the tax year, the
+uncollected taxes will be shown in box 12 of your Form
+W-2 (codes A and B). You must report these amounts as
+additional tax on your return.
+
+If you worked in the U.S. territories and received Form
+W-2AS, W-2CM, W-2GU, or W-2VI, any uncollected taxes
+on tips will be shown in box 12 with codes A and B. If you
+received Form 499R-2/W-2PR, any uncollected taxes will
+be shown according to its instructions. Unlike the uncol-
+lected portion of the regular (1.45%) Medicare tax, the un-
+collected Additional Medicare Tax isn't reported on Form
+W-2. To report these uncollected taxes, you must file Form
+1040-NR or Form 1040-SS even if you wouldn’t otherwise
+have to file. You can report these taxes on Schedule 2
+(Form 1040), line 13, if you file Form 1040-NR. If you file
+Form 1040-SS, see the instructions for the form.
+
+Self-employed persons. If you receive tips as a self-em-
+ployed person, you should report these tips as income on
+Schedule C. See Publication 334, Tax Guide for Small
+
+Business, for more information on reporting business in-
+come.
+
+Allocated Tips
+
+If your employer allocated tips to you, they’re shown sepa-
+rately in box 8 of your Form W-2. They’re not included in
+box 1 with your wages and reported tips. If box 8 is blank,
+this discussion doesn't apply to you.
+
+What are allocated tips? These are tips that your em-
+ployer assigned to you in addition to the tips you reported
+to your employer for the year. Your employer will have
+done this only if:
+• You worked in an establishment (restaurant, cocktail
+lounge, or similar business) that must allocate tips to
+employees, and
+
+• The tips you reported to your employer were less than
+
+your share of 8% of food and drink sales.
+
+No income, social security, Medicare, Additional Medi-
+care, or railroad retirement taxes are withheld on allocated
+tips.
+
+How were your allocated tips figured? The tips alloca-
+ted to you are your share of an amount figured by sub-
+tracting the reported tips of all employees from 8% (or an
+approved lower rate) of food and drink sales (other than
+carryout sales and sales with a service charge of 10% or
+more). Your share of that amount was figured using either
+a method provided by an employer-employee agreement
+or a method provided by IRS regulations based on em-
+ployees' sales or hours worked. For information about the
+exact allocation method used, ask your employer.
+
+Must you report your allocated tips on your tax re-
+turn? You must report tips you received in the tax year
+(including both cash and noncash tips) on your tax return
+as explained in What tips to report, earlier. Any tips you re-
+ported to your employer in the tax year as required (ex-
+plained under Reporting Tips to Your Employer, earlier)
+are included in the wages shown in box 1 of your Form
+W-2. Add to the amount in box 1 only the tips you didn’t
+report to your employer as required. This should include
+any allocated tips shown in box 8 on your Form(s) W-2,
+unless you have adequate records to show that you re-
+ceived less tips in the year than the allocated amount.
+
+See What tips to report under Reporting Tips on Your
+
+Tax Return, and Keeping a Daily Tip Record, earlier.
+
+How to report allocated tips. If you received any tips in
+the tax year that you didn’t report to your employer as re-
+quired (including allocated tips that you are required to re-
+port on your tax return), add these tips to the amount in
+box 1 of your Form(s) W-2 and report this amount as wa-
+ges on Form 1040 or 1040-SR, line 1; or Form 1040-NR,
+line 1a.
+
+Because social security, Medicare, or Additional Medi-
+care taxes weren’t withheld from the allocated tips, you
+must report those taxes as additional tax on your return.
+
+Publication 531 (12-2024)
+
+5
+
+!
+
+CAUTION
+Complete Form 4137 and include the allocated tips on
+line 1 of the form as provided in its instructions. See Re-
+porting social security, Medicare, Additional Medicare, or
+railroad retirement taxes on tips not reported to your em-
+ployer under Reporting Tips on Your Tax Return, earlier.
+
+How to request an approved lower rate. Your em-
+ployer can use a tip rate lower than 8% (but not lower than
+2%) to figure allocated tips only if the IRS approves the
+lower rate. Either the employer or the employees can re-
+quest approval of a lower rate by filing a petition with the
+IRS. The petition must include specific information about
+the establishment that will justify the lower rate. A user fee
+must be paid with the petition.
+
+An employee petition can be filed only with the consent
+of a majority of the directly tipped employees (waiters, bar-
+tenders, and others who receive tips directly from custom-
+ers). The petition must state the total number of directly
+tipped employees and the number of employees consent-
+ing to the petition. Employees filing the petition must
+promptly notify the employer, and the employer must
+promptly give the IRS a copy of all Forms 8027, Employ-
+er's Annual Information Return of Tip Income and Alloca-
+ted Tips, filed for the establishment for the previous 3
+years.
+
+For more information about how to file a petition and
+what information to include, see Allocation of Tips in the
+Instructions for Form 8027.
+
+How To Get Tax Help
+
+If you have questions about a tax issue; need help prepar-
+ing your tax return; or want to download free publications,
+forms, or instructions, go to IRS.gov to find resources that
+can help you right away.
+
+Preparing and filing your tax return. After receiving all
+your wage and earnings statements (Forms W-2, W-2G,
+1099-R, 1099-MISC, 1099-NEC, etc.); unemployment
+compensation statements (by mail or in a digital format) or
+other government payment statements (Form 1099-G);
+and interest, dividend, and retirement statements from
+banks and investment firms (Forms 1099), you have sev-
+eral options to choose from to prepare and file your tax re-
+turn. You can prepare the tax return yourself, see if you
+qualify for free tax preparation, or hire a tax professional to
+prepare your return.
+
+Free options for tax preparation. Your options for pre-
+paring and filing your return online or in your local com-
+munity, if you qualify, include the following.
+
+• Direct File. Direct File is a permanent option to file in-
+dividual federal tax returns online—for free—directly
+and securely with the IRS. Direct File is an option for
+taxpayers in participating states who have relatively
+simple tax returns reporting certain types of income
+and claiming certain credits and deductions. While Di-
+rect File doesn't prepare state returns, if you live in a
+participating state, Direct File guides you to a
+state-supported tool you can use to prepare and file
+
+your state tax return for free. Go to IRS.gov/DirectFile
+for more information, program updates, and frequently
+asked questions.
+
+• Free File. This program lets you prepare and file your
+federal individual income tax return for free using soft-
+ware or Free File Fillable Forms. However, state tax
+preparation may not be available through Free File. Go
+to IRS.gov/FreeFile to see if you qualify for free online
+federal tax preparation, e-filing, and direct deposit or
+payment options.
+
+• VITA. The Volunteer Income Tax Assistance (VITA)
+
+program offers free tax help to people with
+low-to-moderate incomes, persons with disabilities,
+and limited-English-speaking taxpayers who need
+help preparing their own tax returns. Go to IRS.gov/
+VITA, download the free IRS2Go app, or call
+800-906-9887 for information on free tax return prepa-
+ration.
+
+• TCE. The Tax Counseling for the Elderly (TCE) pro-
+
+gram offers free tax help for all taxpayers, particularly
+those who are 60 years of age and older. TCE volun-
+teers specialize in answering questions about pen-
+sions and retirement-related issues unique to seniors.
+Go to IRS.gov/TCE or download the free IRS2Go app
+for information on free tax return preparation.
+
+• MilTax. Members of the U.S. Armed Forces and quali-
+fied veterans may use MilTax, a free tax service of-
+fered by the Department of Defense through Military
+OneSource. For more information, go to
+MilitaryOneSource (MilitaryOneSource.mil/MilTax).
+
+Also, the IRS offers Free Fillable Forms, which can
+be completed online and then e-filed regardless of in-
+come.
+
+Using online tools to help prepare your return. Go to
+IRS.gov/Tools for the following.
+
+• IRS.gov/DirectFile offers an Eligibility Checker to help
+you determine if Direct File is the right choice for your
+tax filing needs.
+
+• The Earned Income Tax Credit Assistant (IRS.gov/
+EITCAssistant) determines if you’re eligible for the
+earned income credit (EIC).
+
+• The Online EIN Application (IRS.gov/EIN) helps you
+get an employer identification number (EIN) at no
+cost.
+
+• The Tax Withholding Estimator (IRS.gov/W4App)
+
+makes it easier for you to estimate the federal income
+tax you want your employer to withhold from your pay-
+check. This is tax withholding. See how your withhold-
+ing affects your refund, take-home pay, or tax due.
+• The First-Time Homebuyer Credit Account Look-up
+(IRS.gov/HomeBuyer) tool provides information on
+your repayments and account balance.
+
+• The Sales Tax Deduction Calculator (IRS.gov/
+
+SalesTax) figures the amount you can claim if you
+itemize deductions on Schedule A (Form 1040).
+
+6
+
+Publication 531 (12-2024)
+instructions (including the Instructions for Form 1040) on
+mobile devices as eBooks at IRS.gov/eBooks.
+
+IRS eBooks have been tested using Apple's iBooks for
+iPad. Our eBooks haven’t been tested on other dedicated
+eBook readers, and eBook functionality may not operate
+as intended.
+
+Access your online account (individual taxpayers
+only). Go to IRS.gov/Account to securely access infor-
+mation about your federal tax account.
+
+• View the amount you owe and a breakdown by tax
+
+year.
+
+• See payment plan details or apply for a new payment
+
+plan.
+
+• Make a payment or view 5 years of payment history
+
+and any pending or scheduled payments.
+
+• Access your tax records, including key data from your
+
+most recent tax return, and transcripts.
+
+• View digital copies of select notices from the IRS.
+• Approve or reject authorization requests from tax pro-
+
+fessionals.
+
+• View your address on file or manage your communica-
+
+tion preferences.
+
+Get a transcript of your return. With an online account,
+you can access a variety of information to help you during
+the filing season. You can get a transcript, review your
+most recently filed tax return, and get your adjusted gross
+income. Create or access your online account at IRS.gov/
+Account.
+
+Tax Pro Account. This tool lets your tax professional
+submit an authorization request to access your individual
+taxpayer IRS OLA. For more information, go to IRS.gov/
+TaxProAccount.
+
+Using direct deposit. The safest and easiest way to re-
+ceive a tax refund is to e-file and choose direct deposit,
+which securely and electronically transfers your refund di-
+rectly into your financial account. Direct deposit also
+avoids the possibility that your check could be lost, stolen,
+destroyed, or returned undeliverable to the IRS. Eight in
+10 taxpayers use direct deposit to receive their refunds. If
+you don’t have a bank account, go
+IRS.gov/
+DirectDeposit for more information on where to find a bank
+or credit union that can open an account online.
+
+to
+
+Reporting and resolving your tax-related identity
+theft issues.
+
+• Tax-related identity theft happens when someone
+
+steals your personal information to commit tax fraud.
+Your taxes can be affected if your SSN is used to file a
+fraudulent return or to claim a refund or credit.
+• The IRS doesn’t initiate contact with taxpayers by
+
+email, text messages (including shortened links), tele-
+phone calls, or social media channels to request or
+verify personal or financial information. This includes
+requests for personal identification numbers (PINs),
+
+passwords, or similar information for credit cards,
+banks, or other financial accounts.
+
+• Go to IRS.gov/IdentityTheft, the IRS Identity Theft
+
+Central webpage, for information on identity theft and
+data security protection for taxpayers, tax professio-
+nals, and businesses. If your SSN has been lost or
+stolen or you suspect you’re a victim of tax-related
+identity theft, you can learn what steps you should
+take.
+
+• Get an Identity Protection PIN (IP PIN). IP PINs are
+six-digit numbers assigned to taxpayers to help pre-
+vent the misuse of their SSNs on fraudulent federal in-
+come tax returns. When you have an IP PIN, it pre-
+vents someone else from filing a tax return with your
+SSN. To learn more, go to IRS.gov/IPPIN.
+
+Ways to check on the status of your refund.
+
+• Go to IRS.gov/Refunds.
+• Download the official IRS2Go app to your mobile de-
+
+vice to check your refund status.
+
+• Call the automated refund hotline at 800-829-1954.
+
+The IRS can’t issue refunds before mid-February
+for returns that claimed the EIC or the additional
+child tax credit (ACTC). This applies to the entire
+
+refund, not just the portion associated with these credits.
+
+Making a tax payment. Payments of U.S. tax must be
+remitted to the IRS in U.S. dollars. Digital assets are not
+accepted. Go to IRS.gov/Payments for information on how
+to make a payment using any of the following options.
+
+• IRS Direct Pay: Pay your individual tax bill or estimated
+tax payment directly from your checking or savings ac-
+count at no cost to you.
+
+• Debit Card, Credit Card, or Digital Wallet: Choose an
+approved payment processor to pay online or by
+phone.
+
+• Electronic Funds Withdrawal: Schedule a payment
+
+when filing your federal taxes using tax return prepara-
+tion software or through a tax professional.
+
+• Electronic Federal Tax Payment System: This is the
+best option for businesses. Enrollment is required.
+• Check or Money Order: Mail your payment to the ad-
+
+dress listed on the notice or instructions.
+
+• Cash: You may be able to pay your taxes with cash at
+
+a participating retail store.
+
+• Same-Day Wire: You may be able to do same-day
+
+wire from your financial institution. Contact your finan-
+cial institution for availability, cost, and time frames.
+
+Note. The IRS uses the latest encryption technology to
+ensure that the electronic payments you make online, by
+phone, or from a mobile device using the IRS2Go app are
+safe and secure. Paying electronically is quick, easy, and
+faster than mailing in a check or money order.
+
+8
+
+Publication 531 (12-2024)
+
+!
+
+CAUTION

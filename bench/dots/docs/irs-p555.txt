@@ -1,0 +1,282 @@
+participation in the pension. See the example under Civil
+service retirement, later. These rules may vary between
+states. Check your state law.
+
+Lump-sum distributions. If you were born before
+January 2, 1936, and receive a lump-sum distribution from
+a qualified retirement plan, you may be able to choose an
+optional method of figuring the tax on the distribution. For
+the 10-year tax option, you must disregard community
+property laws. For more information, see Pub. 575, Pen-
+sion and Annuity Income; and Form 4972, Tax on
+Lump-Sum Distributions.
+
+Civil service retirement. For income tax purposes,
+community property laws apply to annuities payable under
+the Civil Service Retirement Act (CSRS) or Federal Em-
+ployee Retirement System (FERS).
+
+Whether a civil service annuity is separate or commun-
+ity income depends on your marital status (or registered
+domestic partnership) and domicile of the employee when
+the services were performed for which the annuity is paid.
+Even if you now live in a noncommunity property state and
+you receive a civil service annuity, it may be community in-
+come if it is based on services you performed while mar-
+ried (or during the registered domestic partnership) and
+domiciled in a community property state.
+
+If a civil service annuity is a mixture of community in-
+come and separate income, it must be divided between
+the two kinds of income. The division is based on the em-
+ployee's domicile and marital status (or registered domes-
+tic partnership) in community and noncommunity property
+states during his or her periods of service.
+
+Example. Henry Wright retired this year after 30 years
+of civil service. He and his spouse were domiciled in a
+community property state during the past 15 years.
+
+Because half the service was performed while the
+Wrights were married and domiciled in a community prop-
+erty state, half the civil service retirement pay is consid-
+ered to be community income. If Mr. Wright receives
+$1,000 a month in retirement pay, $500 is considered
+community income—half ($250) is his income and half
+($250) is his spouse's.
+
+Military retirement pay. State community property
+laws apply to military retirement pay. Generally, the pay is
+either separate or community income based on the marital
+status and domicile of the couple while the member of the
+Armed Forces was in active military service. For example,
+military retirement pay for services performed during mar-
+riage and domicile in a community property state is com-
+munity income.
+
+Active military pay earned while married and domiciled
+in a community property state is also community income.
+This income is considered to be received half by the mem-
+ber of the Armed Forces and half by the spouse.
+
+Partnership income. If an interest is held in a partner-
+ship, and income from the partnership is attributable to the
+efforts of either spouse (or RDP), the partnership income
+is community property. If it is a separate property partner-
+ship and the income from the partnership isn't attributable
+to the efforts of either spouse (or RDP), the partnership in-
+
+come will be characterized in accordance with the discus-
+sion under Income from separate property, later.
+
+Tax-exempt income. For spouses, community income
+exempt from federal tax generally keeps its exempt status
+for both spouses. For example, under certain circumstan-
+ces, income earned outside the United States is tax ex-
+empt. If you earned income and met the conditions that
+made it exempt, the income is also exempt for your
+spouse even though he or she may not have met the con-
+ditions. RDPs should consult the particular exclusion pro-
+vision to see if the exempt status applies to both.
+
+Income from separate property. In some states, in-
+come from separate property is separate income. These
+states include Arizona, California, Nevada, New Mexico,
+and Washington. Other states characterize income from
+separate property as community income. These states in-
+clude Idaho, Louisiana, Texas, and Wisconsin.
+
+Deductions
+
+If you file separate returns, your deductions generally de-
+pend on whether the expenses involve community or sep-
+arate income.
+
+Business and investment expenses. Investment ex-
+penses for the production of income, deductible under
+section 212 of the Internal Revenue Code, are suspended
+until 2025. However, the suspension does not apply to
+business expense deductions under section 162 of the
+Code.
+
+If you file separate returns, expenses incurred to earn
+or produce community business or investment income are
+generally divided equally between you and your spouse
+(or your RDP). Each of you is entitled to deduct one-half of
+the expenses on your separate returns. Expenses incur-
+red by a spouse (or RDP) to produce separate business or
+investment income is deductible by the spouse (or the
+RDP) who earns the corresponding separate business or
+investment income.
+
+Other limits may also apply to business and investment
+expenses. For more information, see chapter 8 of Pub.
+334, Tax Guide for Small Business; and Pub. 550, Invest-
+ment Income and Expenses.
+
+Payments not alimony. Prior to the enactment of the Tax
+Cuts and Jobs Act (TCJA) rules, payments that may other-
+wise qualify as alimony or separate maintenance aren’t
+deductible by the payer if they are the recipient spouse’s
+part of community income. See Example 1 below. Also
+see Alimony received, earlier.
+
+Example 1—pre-TCJA (old rule). You live in a com-
+munity property state. You are separated but the special
+rules explained later under Spouses living apart all year
+don't apply. Under a court order of separation executed on
+November 1, 2018, you pay your spouse as support
+$12,000 of your $20,000 total yearly community income.
+Your spouse receives no other community income. Under
+your state law, earnings of a spouse living separately and
+
+6
+
+Publication 555 (12-2024)
+include it in your gross income on your income tax return.
+Your earned income includes the entire amount you
+earned, even if part of it is treated as belonging to your
+spouse under your state's community property laws. The
+same rule applies to RDPs.
+
+This rule doesn't apply when determining your ad-
+justed gross income (AGI) for the EIC. Your AGI
+includes that part of both your and your spouse's
+(or your RDP’s) wages that you are required to include in
+the gross income shown on your tax return.
+
+For more information about the EIC, see Pub. 596,
+
+Earned Income Credit.
+
+Overpayments. The amount of an overpayment on a
+joint return is allocated under the community property laws
+of the state in which you are domiciled.
+• If, under the laws of your state, community property is
+subject to premarital or other separate debts of either
+spouse, the full joint overpayment may be used to off-
+set the obligation.
+
+• If, under the laws of your state, community property
+
+isn't subject to premarital or other separate debts of ei-
+ther spouse, only the portion of the joint overpayment
+allocated to the spouse liable for the obligation can be
+used to offset that liability. The portion allocated to the
+other spouse can be refunded.
+
+Community Property Laws
+Disregarded
+
+The following discussions are situations where special
+rules apply to community property and community income
+for spouses. These rules don't apply to RDPs.
+
+Certain community income not treated as community
+income by one spouse. Community property laws may
+not apply to an item of community income that you re-
+ceived but didn't treat as community income. You are re-
+sponsible for reporting all of that income item if:
+
+1. You treat the item as if only you are entitled to the in-
+
+come, and
+
+2. You don't notify your spouse of the nature and amount
+of the income by the due date for filing the return (in-
+cluding extensions).
+
+Relief from liability for tax attributable to an item of
+community income. You aren't responsible for the tax
+relating to an omitted item of community income if all the
+following conditions are met.
+
+1. You didn't file a joint return for the tax year.
+
+2. You didn't include the item of community income in
+
+gross income.
+
+3. The item of community income you didn't include in
+
+your gross income is one of the following.
+
+a. Wages, salaries, and other compensation your
+
+spouse (or former spouse) received for services
+he or she performed as an employee.
+
+b. Income your spouse (or former spouse) derived
+from a trade or business he or she operated as a
+sole proprietor.
+
+c. Your spouse's (or former spouse's) distributive
+
+share of partnership income.
+
+d. Income from your spouse's (or former spouse's)
+
+separate property (other than income described in
+(a), (b), or (c)). Use the appropriate community
+property law to determine what is separate prop-
+erty.
+
+e. Any other income that belongs to your spouse (or
+former spouse) under community property law.
+
+4. You establish that you didn't know of, and had no rea-
+
+son to know of, that community income.
+
+5. Under all facts and circumstances, it wouldn't be fair
+
+to include the item of community income in your gross
+income.
+
+Requesting relief. For information on how and when
+to request relief from liabilities arising from community
+property laws, see Community Property Laws in Pub. 971.
+
+Equitable relief. If you don't qualify for the relief dis-
+cussed earlier under Relief from liability for tax attributable
+to an item of community income and are now liable for an
+underpaid or understated tax you believe should be paid
+only by your spouse (or former spouse), you may request
+equitable relief. To request equitable relief, you must file
+Form 8857. Also see Pub. 971.
+
+Spousal agreements. In some states, a married couple
+may enter into an agreement that affects the status of
+property or income as community or separate property.
+Check your state law to determine how it affects you.
+
+Nonresident alien spouse. If you are a U.S. citizen or
+resident alien and you choose to treat your nonresident
+alien spouse as a U.S. resident for tax purposes and you
+are domiciled in a community property state or country,
+use the community property rules. You must file a joint re-
+turn for the year you make the choice. You can file sepa-
+rate returns in later years. For details on making this
+choice, see Pub. 519, U.S. Tax Guide for Aliens.
+
+If you are a U.S. citizen or resident alien and don't
+choose to treat your nonresident alien spouse as a U.S.
+resident for tax purposes, treat your community income as
+explained next under Spouses living apart all year. How-
+ever, you don't have to meet the four conditions discussed
+there.
+
+Spouses living apart all year. If you are married at any
+time during the calendar year, special rules apply for re-
+porting certain community income. You must meet all the
+following conditions for these special rules to apply.
+
+1. You and your spouse lived apart all year.
+
+8
+
+Publication 555 (12-2024)
+
+!
+
+CAUTION

@@ -1,0 +1,593 @@
+{
+  "retrieved": "2026-10-04",
+  "sources": [
+    {
+      "id": "sebi-101271",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/may-2026/1777994522786.pdf",
+      "sha256": "c6325430e8420812b02b48b4239ad559f77296a7d48f6c867a95d3c3aefbe6b8",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "sebi-99670",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/feb-2026/1770724484942.pdf",
+      "sha256": "7c86ca852afa75391a8d68c745db8480be686012e8581bc3a10b98b490391477",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "sebi-99006",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jan-2026/1767957683485.pdf",
+      "sha256": "6f9d80102c3d89e2d9709d1e3406279aedf7e41cf287265c15c2c9425dbf40b5",
+      "select": {
+        "pages": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "sebi-98831",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jan-2026/1767358255887.pdf",
+      "sha256": "bceb19f6e367f7d11cb2e8e4d5d26032846bf97b59e60dca4e758da2274a1685",
+      "select": {
+        "pages": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "sebi-98007",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/nov-2025/1764304839944.pdf",
+      "sha256": "f4f72ac9a9eabdee121d016dfbe0b8f263fd16066e9e801de6b8e54e438e41f6",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "sebi-96479",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/sep-2025/1757413322022.pdf",
+      "sha256": "a9e2a8d2911c90b64da1084aee59513525bd81fb4d0e243dd3289a41d4e06f83",
+      "select": {
+        "pages": [
+          14
+        ]
+      }
+    },
+    {
+      "id": "sebi-96376",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/sep-2025/1756745625835.pdf",
+      "sha256": "869a02813b0fcc107665ba8bea17a378220823652ad8b9f6476c8b3e26b2d48f",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "sebi-96329",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/aug-2025/1756380695925.pdf",
+      "sha256": "7eb58ae065db764eec8a118c35777c8d4fb3a3b4ceee15878c28cb9599f1c31d",
+      "select": {
+        "pages": [
+          10
+        ]
+      }
+    },
+    {
+      "id": "sebi-95950",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/aug-2025/1754653881911.pdf",
+      "sha256": "9d961348436012b090bef0c15a2a12a3ebc4ead24fa7d9148d260b9a475ebb2a",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "sebi-95549",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jul-2025/1753268710217.pdf",
+      "sha256": "81f6b40b91ad5463e3ccee08e0d67ccb5a7c7c7acbebb31bf24afc288eaae490",
+      "select": {
+        "pages": [
+          7
+        ]
+      }
+    },
+    {
+      "id": "sebi-94293",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/may-2025/1748521484014.pdf",
+      "sha256": "44034647ee0a8eb1e5723408f5cdea27f293095c07eedb788d1e09dbcd691d88",
+      "select": {
+        "pages": [
+          6,
+          8
+        ]
+      }
+    },
+    {
+      "id": "sebi-93734",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/apr-2025/1746016112057.pdf",
+      "sha256": "bd7105a2f1e2b985d9e34aec02c8760549c3b54629b3771b9f8ee80949a6875d",
+      "select": {
+        "pages": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "id": "sebi-93399",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/apr-2025/1744197105280.pdf",
+      "sha256": "8b05e85c2971cb787277762c7703227279db7eff42ce715c7bd0211ef2e7dcdf",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "sebi-93324",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/apr-2025/1743762107781.pdf",
+      "sha256": "cbd0fc6c518466261e0819ed78c41fcc8c11f20e2c228ca725fe622a31fb32b6",
+      "select": {
+        "pages": [
+          5
+        ]
+      }
+    },
+    {
+      "id": "sebi-92767",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/mar-2025/1742385740329.pdf",
+      "sha256": "aef1b161d40271da64b716ffeb3afbb4aa5e23ba34d27cf5b0c4dc84dbada3a5",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "sebi-92299",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/feb-2025/1740659043547.pdf",
+      "sha256": "f6368bff83eb31574bbcfe5f39827855a30f58c4167bbab224ad1f05afac9569",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "sebi-91965",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/feb-2025/1739794284694.pdf",
+      "sha256": "b02b1166ce2ff2da4388a048a6430f1113f78eb4a7f1bfaa25782db8ff052270",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "sebi-91963",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/feb-2025/1739794171881.pdf",
+      "sha256": "f5318f217afcfcbe7efb5ac6af40737fb42cd92622093b32ea6d0751a8439e1b",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "sebi-91424",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jan-2025/1738323780977.pdf",
+      "sha256": "8841247464be3503622cdd4fe5bd9cac52a259f6df73c072ae2f418dc19d3718",
+      "select": {
+        "pages": [
+          5
+        ]
+      }
+    },
+    {
+      "id": "sebi-90634",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jan-2025/1736338732932.pdf",
+      "sha256": "b0cc3ba46a2361da0afef5ce788161f981917c789781a00a78738754c9404c9d",
+      "select": {
+        "pages": [
+          2,
+          8
+        ]
+      }
+    },
+    {
+      "id": "sebi-90632",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jan-2025/1736338642778.pdf",
+      "sha256": "64a808ba45a688e9716a1cdaee8c7ba6cd46e39d5a8891b6a6a6a55cf85f4fcb",
+      "select": {
+        "pages": [
+          2,
+          7,
+          8
+        ]
+      }
+    },
+    {
+      "id": "sebi-90406",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/feb-2025/1738668300985.pdf",
+      "sha256": "da128ba8844283672861adc96861263ce3d6edc0ffa851e0bccf5df0b782f108",
+      "select": {
+        "pages": [
+          34
+        ]
+      }
+    },
+    {
+      "id": "sebi-90393",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jan-2025/1735711711401.pdf",
+      "sha256": "d7fd03a14b5e02aa34504df65ada7c719bcf3cbbd37b99aeb52eaaf56bceacf8",
+      "select": {
+        "pages": [
+          2,
+          4
+        ]
+      }
+    },
+    {
+      "id": "sebi-90097",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/dec-2024/1734952825314.pdf",
+      "sha256": "8eb7efe7a2fdaa48c41bd9d9f4d7896c2109e1a00dcaa860edcdea20db8ff2ea",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "sebi-89986",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/dec-2024/1734433925581.pdf",
+      "sha256": "1f3883210a8fc5dcd113057b0a846ce606f6128f7652cc20daf645db58528893",
+      "select": {
+        "pages": [
+          2,
+          4,
+          5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "sebi-87567",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/oct-2024/1728990538428.pdf",
+      "sha256": "7d8707c91bc991bcba4788f8a68c7da796f10530be8fdc0e9037665ea4846b9d",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "sebi-87534",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/oct-2024/1728905500483.pdf",
+      "sha256": "d625584209f04e213a359f5be96f73595379fd6a562325e5cb20ec36e26c3932",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "sebi-87209",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/oct-2024/1727788822669.pdf",
+      "sha256": "07d27df5bde8ef6713df6e89ff558f33ea9912e491dfd4dc3d145c63e096d6c2",
+      "select": {
+        "pages": [
+          8
+        ]
+      }
+    },
+    {
+      "id": "sebi-86878",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/sep-2024/1726832640520.pdf",
+      "sha256": "dcfb11e5a2d2c3ae5aefec9bbd6c1654be34c7172d485b14830d9159f3c3a42d",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "sebi-86680",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/sep-2024/1726235373009.pdf",
+      "sha256": "b7c865b59610ae2ae82183ebeda1fd7e71455dc1c1cfb2442b2abf6b3dcbf473",
+      "select": {
+        "pages": [
+          1,
+          6
+        ]
+      }
+    },
+    {
+      "id": "sebi-86373",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/aug-2024/1725027626764.pdf",
+      "sha256": "2e00749b4f34caf8013bad24cc55879cb53396607aecf91de2ec4147308c3cbc",
+      "select": {
+        "pages": [
+          3,
+          7,
+          8
+        ]
+      }
+    },
+    {
+      "id": "sebi-85964",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/aug-2024/1724326790365.pdf",
+      "sha256": "bd9ddb68bb49b9a92771ff01ed3138e01f0962b383e9ff643008b729290fc85d",
+      "select": {
+        "pages": [
+          40
+        ]
+      }
+    },
+    {
+      "id": "sebi-85371",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/aug-2024/1722509280080.pdf",
+      "sha256": "b7dd26988c2dac303f8d4a010b51ead46abd22aec1c67fa1e14244e295a1bdd5",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "sebi-84633",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jul-2024/1720440959972.pdf",
+      "sha256": "4756806ecb51f1df5ed18fe532d894840a3e9d9ca416cae7484918b75572f116",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "sebi-84588",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jul-2024/1720084253426.pdf",
+      "sha256": "832ab4ef6cb4280bd7e1c8e904b025822eec4be004e26fa3f7d44c0753d454e6",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "sebi-83650",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/may-2024/1716995348674.pdf",
+      "sha256": "0344bee4073562e95ef80314ad84015a3a04ca671e0deea868837d24710d6dc4",
+      "select": {
+        "pages": [
+          8
+        ]
+      }
+    },
+    {
+      "id": "sebi-83483",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/may-2024/1716289866904.pdf",
+      "sha256": "da2a6059d4b9a4cb0cc7f149c0e60e79ebe9bcda34261d1f403b1c3735559e0f",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "sebi-80842",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/jan-2024/1706016809510.pdf",
+      "sha256": "a87a4d326af1349dfd5c628ba8633b87e7d908364ebba28ef217eb4a5eb8b148",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "sebi-80110",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/dec-2023/1703148621867.pdf",
+      "sha256": "9a41f2784609ec380daf576ef53caec41b7c0db2613ec1aa45e75268fb8168d5",
+      "select": {
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "sebi-77975",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/oct-2023/1697197503176.pdf",
+      "sha256": "3d0fe9d0711bf5d5e3cf7a9c32cf3678db144c200a48be911589b4102238dc0b",
+      "select": {
+        "pages": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "sebi-75886",
+      "kind": "sebi",
+      "groups": [
+        "india"
+      ],
+      "url": "https://www.sebi.gov.in/sebi_data/attachdocs/aug-2023/1692890118636.pdf",
+      "sha256": "dec5472b7178c469064c1184f4f99b83d99b10c83b9cdd5fb0736d03dd556f6f",
+      "select": {
+        "pages": [
+          3,
+          4,
+          5
+        ]
+      }
+    }
+  ]
+}

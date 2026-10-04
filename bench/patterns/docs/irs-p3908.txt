@@ -1,0 +1,46 @@
+Resource
+
+The Employer’s Tax Calendar from Publication 509, Tax Calendars, lists due dates for filing returns and for
+making employment tax deposits throughout the year. Use this calendar with Publication 15, which explains
+the deposit rules.
+
+Employment Tax Penalties
+
+Employment tax penalties can multiply quickly. There are three main employment tax penalties: failure to
+deposit, failure to file and failure to pay. These penalties are often assessed at the same time.
+
+• Failure to deposit - this penalty reaches 10% when past due by 16 days. This means even before the return
+
+is due you could have a 10% penalty.
+
+• Failure to file - accrues at 5% per month reduced by applicable failure to pay penalty, capping at 25%.
+
+• Failure to pay - begins accruing once the return due date has passed and all tax is not paid, also capping
+
+at 25%.
+
+Example: The last deposit of the quarter is due at the end of the month and it is not paid. Your employment
+tax return preparer misses a week of work beginning near the last day of the next month (when the return is
+due). At this point, the deposit is late, the return is late and failure to pay the tax is now assessed. For being
+45 days late the penalties are 15% and increasing by 5% per month for the next 4 months, going from 15% to
+35%. If the last deposit was supposed to be $20,000 then the penalty at 45 days is $3,000 and at 5 months is
+$7,000.
+
+For more information see the chapter on penalties in Publication 4268, Employment Tax For Indian Tribal
+Governments, and Publication 5343, Helpful Hints for Indian Tribes and Tribal Entities to Avoid Penalties on
+Federal Tax Deposits and Information Returns.
+
+Trust Fund Recovery Penalty (Failure to Withhold and Pay Employment Tax)
+
+A trust fund recovery penalty may apply when an employer does not withhold or deposit employment tax
+that is withheld or supposed to be withheld. This penalty can be applied to any entity, including governmental
+entities such as Indian tribes. Under this penalty, officers or employees of a tribal gaming operation could
+become personally liable for the tax payment and could be penalized an amount equal to the unpaid tax.
+This penalty may apply when unpaid tax cannot be immediately collected from the tribal gaming operation.
+The trust fund recovery penalty may be imposed on anyone the IRS determines is responsible for collecting,
+accounting for and depositing this tax, and who acted willfully in not doing so. Willfully, in this case, means
+voluntarily, consciously and intentionally.
+
+17
+
+Gaming Tax Law and Bank Secrecy Act Issues

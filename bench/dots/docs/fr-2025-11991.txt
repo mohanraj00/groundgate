@@ -1,0 +1,565 @@
+27764
+
+Federal Register / Vol. 90, No. 123 / Monday, June 30, 2025 / Rules and Regulations
+
+AIRAC date
+
+State
+
+City
+
+Airport
+
+FDC No.
+
+FDC date
+
+Procedure name
+
+7–Aug–25 ..... WV
+
+Martinsburg ............. Eastern WV Rgnl/Shepherd
+
+5/6535
+
+6/2/2025 VOR–A, Amdt 10A.
+
+Fld.
+
+[FR Doc. 2025–12025 Filed 6–27–25; 8:45 am]
+
+II. Background
+
+BILLING CODE 4910–13–P
+
+DEPARTMENT OF THE TREASURY
+
+Financial Crimes Enforcement Network
+(FinCEN)
+
+31 CFR Part 1010
+
+Imposition of Special Measure
+Prohibiting Certain Transmittals of
+Funds Involving Vector Casa de Bolsa,
+S.A. de C.V.
+
+AGENCY: Financial Crimes Enforcement
+Network (FinCEN), Treasury.
+ACTION: Notice.
+
+SUMMARY: FinCEN is issuing notice of an
+order prohibiting certain transmittals of
+funds involving Vector Casa de Bolsa,
+S.A. de C.V., a financial institution
+operating outside of the United States
+determined to be of primary money
+laundering concern in connection with
+illicit opioid trafficking.
+DATES: This action is effective [21 DAYS
+AFTER PUBLICATION IN THE
+FEDERAL REGISTER].
+FOR FURTHER INFORMATION CONTACT: The
+FinCEN Resource Center at
+www.fincen.gov/contact.
+SUPPLEMENTARY INFORMATION:
+
+I. Summary of Order
+
+This order sets forth FinCEN’s finding
+
+that Vector Casa de Bolsa, S.A. de C.V.
+(Vector), a Mexico-based brokerage firm,
+is a financial institution operating
+outside of the United States that is of
+primary money laundering concern in
+connection with illicit opioid
+trafficking—specifically, through its
+provision of financial services that
+facilitate illicit opioid trafficking by
+Mexico-based drug trafficking
+organizations (DTOs), including (1) the
+Sinaloa Cartel and (2) the Gulf Cartel—
+and imposes a prohibition on certain
+transmittals of funds involving Vector
+by any covered financial institution.^1
+
+1 The application of FinCEN’s authorities in this
+
+order is specific to authorities provided by the
+Fentanyl Sanctions Act and codified at 21 U.S.C.
+2313a. It is not intended to otherwise reflect the
+applicability of, or obligations under, any provision
+of the Bank Secrecy Act (BSA) or its implementing
+regulations.
+
+A. Statutory Provisions
+
+In 2024, Congress enacted the FEND
+Off Fentanyl Act,^2 which among other
+things, added 21 U.S.C. 2313a 3 (section
+2313a). Section 2313a grants the
+Secretary of the Treasury (Secretary) the
+authority to make a finding that
+‘‘reasonable grounds exist for
+concluding’’ that any of the following is
+of primary money laundering concern in
+connection with illicit opioid
+trafficking:
+
+(1) One or more financial institutions
+operating outside of the United States;
+
+(2) One or more classes of transactions
+
+within, or involving, a jurisdiction outside of
+the United States; or
+
+(3) One or more types of accounts within,
+
+or involving, a jurisdiction outside of the
+United States.^4
+
+Upon making such a finding, the
+
+Secretary is authorized to require
+domestic financial institutions and
+domestic financial agencies to take
+certain ‘‘special measures,’’ which are
+safeguards that may be employed to
+defend the United States financial
+system from money laundering risks
+connected to illicit opioid trafficking.^5
+The authority of the Secretary to
+administer section 2313a has been
+delegated to FinCEN.^6
+
+Pursuant to section 2313a, the
+
+Secretary may impose one or more of six
+special measures.^7 First, the Secretary
+may impose any of the five special
+measures provided for in 31 U.S.C.
+5318A(b), commonly known as section
+311 of the USA PATRIOT Act.^8 Special
+measures one through four, codified at
+
+2 The FEND Off Fentanyl Act is Division E of
+
+Public Law 118–50 (Apr. 24, 2024).
+
+3 Section 2313a codifies section 7213A of the
+Fentanyl Sanctions Act, as amended by section
+3201(a) of the FEND Off Fentanyl Act. The Fentanyl
+Sanctions Act is Title LXXII of Public Law 116–92
+(Dec. 20, 2019).
+
+4 21 U.S.C. 2313a(a).
+5 See 21 U.S.C. 2313a(a).
+6 In accordance with Treasury Order 101–05 and
+
+31 U.S.C. 321(b), the authority vested in the
+Secretary under section 2313a has been delegated
+to the Director of FinCEN.
+7 21 U.S.C. 2313a(a).
+8 See 21 U.S.C. 2313a(a)(1). 21 U.S.C. 2313a(a)(1)
+
+explicitly references ‘‘the special measures
+provided for in section 9714(a)(1) of the National
+Defense Authorization Act for Fiscal Year 2021
+(Pub. L. 116–283; 31 U.S.C. 5318A note)’’ (section
+9714). Section 9714, in turn, references the five
+special measures set out in 31 U.S.C. 5318A(b)(1)–
+(5).
+
+31 U.S.C. 5318A(b)(1)–(4), describe
+additional recordkeeping, information
+collection, and reporting requirements.
+Through these special measures, the
+Secretary may impose such information
+collection and reporting requirements
+on covered domestic financial
+institutions and domestic financial
+agencies—collectively, ‘‘covered
+financial institutions.’’ 9 Special
+measure five, codified at 31 U.S.C.
+5318A(b)(5), authorizes the Secretary, in
+consultation with the Secretary of State,
+the Attorney General, and the Chairman
+of the Board of Governors of the Federal
+Reserve System, to prohibit, or impose
+conditions upon, the opening or
+maintaining in the United States of
+correspondent or payable-through
+accounts by any domestic financial
+institution or domestic financial agency
+for, or on behalf of, a foreign banking
+institution, if such correspondent
+account or payable-through account
+involves one or more financial
+institutions operating outside of the
+United States that the Secretary has
+found to be of primary money
+laundering concern.^10 Special measure
+six, codified at 21 U.S.C. 2313a(a)(2),
+allows the Secretary to ‘‘prohibit, or
+impose conditions upon, certain
+transmittals of funds (to be defined by
+the Secretary) by any domestic financial
+institution or domestic financial agency,
+if such transmittal of funds involves any
+such institution, class of transaction, or
+type of accounts.’’ 11
+
+Importantly, in connection with
+
+finding that a financial institution is of
+primary money laundering concern and
+imposing any special measure, section
+2313a requires a finding that the
+relevant financial institution is ‘‘of
+primary money laundering concern in
+connection with illicit opioid
+trafficking’’ (emphasis added). 21 U.S.C.
+2302 provides the operative definition
+of ‘‘opioid trafficking’’ for purposes of
+section 2313a, as any illicit activity:
+
+(1) to produce, manufacture, distribute,
+sell, or knowingly finance or transport—(a)
+synthetic opioids, including controlled
+substances that are synthetic opioids and
+listed chemicals that are synthetic opioids; or
+(b) active pharmaceutical ingredients or
+chemicals that are used in the production of
+
+9 31 U.S.C. 5318A(b)(1)–(4).
+10 31 U.S.C. 5318A(b)(5).
+11 21 U.S.C. 2313a(a)(2).
+
+VerDate Sep<11>2014 15:57 Jun 27, 2025 Jkt 265001 PO 00000 Frm 00004 Fmt 4700 Sfmt 4700 E:\FR\FM\30JNR1.SGM 30JNR1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+Federal Register / Vol. 90, No. 123 / Monday, June 30, 2025 / Rules and Regulations
+
+27765
+
+controlled substances that are synthetic
+opioids;
+
+(2) to attempt to carry out an activity
+
+described above; or
+
+(3) to assist, abet, conspire, or collude with
+other persons to carry out such an activity.^12
+For purposes of this order, FinCEN
+interprets the term ‘‘synthetic opioid’’ to
+include fentanyl and fentanyl analogs,
+as well as precursors to fentanyl and
+precursors to fentanyl analogs.^13
+
+B. Illicit Opioid Trafficking
+
+The sustained influx of fentanyl and
+other synthetic opioids into the United
+States has profound consequences,
+resulting in drug overdose becoming the
+leading cause of death for people aged
+18 to 44 in the United States.^14 To
+address the synthetic opioid crisis, it is
+necessary to target the money
+laundering efforts of the Mexico-based
+DTOs that are the primary source of
+fentanyl and other synthetic opioids
+trafficked into the United States. These
+DTOs manufacture synthetic opioids in
+clandestine laboratories in Mexico using
+precursor chemicals sourced largely
+from the People’s Republic of China
+(China), traffic these synthetic opioids
+into and throughout the United States,
+and launder the illicit profits back to
+Mexico.^15
+
+These DTOs could not profit on
+
+trafficking fentanyl and other synthetic
+opioids if not for their ability to launder
+
+12 21 U.S.C. 2302(8).
+13 See, e.g., Drug Enforcement Agency, Synthetic
+
+Opioids Fact Sheet (Dec. 2024), https://
+www.dea.gov/sites/default/files/2025-01/Synthetic-
+Opioids-Drug-Fact-Sheet.pdf; World Health
+Organization, Opioid Overdose (Aug. 29, 2023),
+https://www.who.int/news-room/fact-sheets/detail/
+opioid-overdose; See also Drug Enforcement
+Agency, Docket No. DEA–1086, Special
+Surveillance List of Chemicals, Products, Materials
+and Equipment Used in the Manufacture of
+Controlled Substances and Listed Chemicals (Oct.
+24, 2023) available at https://www.govinfo.gov/
+content/pkg/FR-2023-10-24/pdf/2023-23478.pdf.
+14 See Centers for Disease Control, CDC Reports
+Nearly 24% Decline in U.S. Drug Overdose Deaths
+(Feb. 25, 2025), https://www.cdc.gov/media/
+releases/2025/2025-cdc-reports-decline-in-us-drug-
+overdose-deaths.html; E.O. 14159, Imposing Duties
+To Address the Synthetic Opioid Supply Chain in
+the People’s Republic of China, 90 FR 9121 (Feb.
+7, 2025), https://www.federalregister.gov/
+documents/2025/02/07/2025-02408/imposing-
+duties-to-address-the-synthetic-opioid-supply-
+chain-in-the-peoples-republic-of-china.
+
+15 See Drug Enforcement Administration, DEA–
+
+DCT–DIR–010–24, 2024 National Drug Threat
+Assessment (May 2024), pp. 46–50, https://
+www.dea.gov/sites/default/files/2024-05/
+5.23.2024%20NDTA-updated.pdf; FinCEN, FIN–
+2024–A002, Supplemental Advisory on the
+Procurement of Precursor Chemicals and
+Manufacturing Equipment Used for the Synthesis of
+Illicit Fentanyl and Other Synthetic Opioids (June
+20, 2024), https://www.fincen.gov/sites/default/
+files/advisory/2024-06-20/FinCEN-Supplemental-
+Advisory-on-Fentanyl-508C.pdf; Congressional
+Research Service, Illicit Fentanyl and Mexico’s Role
+(Dec. 19, 2024), pp. 1–2, https://crsreports.
+congress.gov/product/pdf/IF/IF10400.
+
+and remit the monetary proceeds back
+to Mexico. DTOs and third-party money
+launderers use a diverse array of
+methods to launder money, including
+using financial institutions, remittance
+payments, bulk cash smuggling, trade-
+based money laundering, mirror trades,
+and cryptocurrencies.^16 It is therefore
+critical to address the role that financial
+institutions operating outside the
+United States play in facilitating the
+money laundering that enables and
+facilitates the DTOs and their illicit
+opioid trafficking and related money
+laundering.
+
+III. Finding That Vector Is a Financial
+Institution Operating Outside the
+United States That Is of Primary Money
+Laundering Concern in Connection
+With Illicit Opioid Trafficking
+
+Based on public and non-public
+
+information available to FinCEN,
+FinCEN finds that reasonable grounds
+exist to conclude that Vector, a financial
+institution operating outside the United
+States, is of primary money laundering
+concern in connection with illicit
+opioid trafficking through its provision
+of financial services that facilitate illicit
+opioid trafficking by Mexico-based
+DTOs, including the Sinaloa Cartel and
+the Gulf Cartel. In making this finding,
+FinCEN has considered the relevant
+evidence in light of factors identified in
+31 U.S.C. 5318A(c)(2)(B), taking into
+account the specific circumstances of
+money laundering activities in
+connection with illicit opioid trafficking
+and the protection of U.S. national
+security and the U.S. financial system.
+While FinCEN is under no obligation
+pursuant to section 2313a to consider
+any particular factor or set of factors
+when making a finding that a financial
+institution operating outside of the
+United States is of primary money
+laundering concern in connection with
+illicit opioid trafficking, it nonetheless
+finds these factors instructive in guiding
+the analysis set forth below.^17
+
+16 See Drug Enforcement Administration, DEA–
+
+DCT–DIR–010–24, 2024 National Drug Threat
+Assessment (May 2024), pp. 46–50, https://
+www.dea.gov/sites/default/files/2024-05/
+5.23.2024%20NDTA-updated.pdf.
+
+17 31 U.S.C. 5318A(c)(2)(B) provides, as relevant
+
+here, that in making a finding that reasonable
+grounds exist for concluding that a financial
+institution outside the United States is of primary
+money laundering concern and to apply one or
+more of special measures one through four to such
+a financial institution, the Secretary shall consider
+such information as the Secretary determines to be
+relevant, including the following potentially
+relevant factors:
+
+(1) the extent to which such financial institutions,
+
+transactions, or types of accounts are used to
+facilitate or promote money laundering in or
+through the jurisdiction, including any money
+laundering activity by organized criminal groups,
+
+A. Vector Is a Financial Institution
+Operating Outside the United States
+
+Vector is a Mexico-based brokerage
+firm. By its own account, Vector offers
+a variety of financial services including,
+but not limited to, mutual fund
+management, money market, foreign
+exchange, investment banking, and
+fiduciary services.^18 According to
+commercially available banking
+information, Vector is headquartered in
+San Pedro Garza Garcia, Mexico, and
+provides U.S. dollar (USD)
+correspondent banking services through
+at least one U.S. financial institution.^19
+Considering the services it provides,
+Vector is a financial institution within
+the meaning of 31 U.S.C. 5312(a)(2), and
+based on the foregoing, FinCEN has
+determined that Vector is a financial
+institution operating outside of the
+United States, as described in section
+2313a.
+
+B. Vector Is a Financial Institution of
+Primary Money Laundering Concern in
+Connection With Illicit Opioid
+Trafficking
+
+FinCEN has considered the extent to
+which Vector is used to promote money
+laundering including in connection
+with organized criminal groups
+associated with illicit opioid
+trafficking.^20 Based on information
+available to FinCEN, FinCEN has
+determined that Vector has a history of
+suspected ties to international DTOs
+and facilitation of transactions on their
+behalf. Vector’s exposure to, and
+facilitation of, transactions associated
+with suspected illicit opioid trafficking-
+related activities is consistent with its
+long-standing pattern of associations
+with, and conduct of transactions for
+multiple actors operating on behalf of or
+in tandem with, DTOs, including both
+the Sinaloa Cartel and the Gulf Cartel,
+each of which have been designated by
+
+international terrorists, or entities involved in the
+proliferation of weapons of mass destruction or
+missiles;
+
+(2) the extent to which such institutions,
+transactions, or types of accounts are used for
+legitimate business purposes in the jurisdiction;
+and
+
+(3) the extent to which such action is sufficient
+to ensure, with respect to transactions involving the
+jurisdiction and institutions operating in the
+jurisdiction, that the purposes of this subchapter
+continue to be fulfilled, and to guard against
+international money laundering and other financial
+crimes.
+
+18 Detailed descriptions of Vector’s financial
+
+services can be found under the Services dropdown
+menu, available at Vector.com.mx/en/ and e-
+vector.com.mx/guia-de-servicios/ (last accessed
+Apr. 14, 2025).
+
+19 BankCheck, Profile for Vector Casa de Bolsa
+available at https://bankcheck.app (last accessed
+Apr. 14, 2025).
+
+20 See 31 U.S.C. 5318A(c)(2)(B)(i).
+
+VerDate Sep<11>2014 15:57 Jun 27, 2025 Jkt 265001 PO 00000 Frm 00005 Fmt 4700 Sfmt 4700 E:\FR\FM\30JNR1.SGM 30JNR1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

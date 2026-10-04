@@ -1,0 +1,55 @@
+C:DC:TS:CAR:MP:P:TP:TP, ATSC, 4800 Buford Highway, Mail Stop 061-N,
+Chamblee, GA 30341, or substituteforms@irs.gov.
+
+.05 The Internal Revenue Service/Technical Service Operation (IRS/TSO)
+maintains a centralized customer service call site to answer questions related
+to information returns (Forms W-2, W-3, W-2c, W-3c, 1099 series, 1096, etc.).
+Contact the TSO at 866-455-7438 (toll free) or 304-263-8700 (not a toll-free
+number). Deaf or hard-of-hearing customers may call any of our toll-free
+numbers using their choice of relay service. Questions regarding the filing of
+information returns can be emailed to irs.e-helpmail@irs.gov. When you send
+emails concerning specific file information, include the company name and
+the electronic file name or Transmitter Control Code (TCC). Do not include
+taxpayer identification numbers (TINs) or attachments in emails because email
+is not secure.
+
+File paper or electronic Forms W-2 (Copy A) with the SSA. The IRS/TSO
+does not process Forms W-2 (Copy A). However, the IRS/TSO does process
+Form 8508, Application for a Waiver from Electronic Filing of Information
+Returns, and Form 8809, Application for Extension of Time To File Information
+Returns, for Forms W-2 (Copy A) and Form 15397, Application for Extension
+of Time to Furnish Recipient Statements. See Publication 1220, Specifications
+for Electronic Filing of Forms 1097, 1098, 1099, 3921, 3922, 5498, and W-2G,
+for information on waivers and extensions of time. See Regulations section
+301.6011-2 for information on when you are required to file electronically and
+the exclusions from the electronic filing requirements.
+
+.06 The following form instructions and publications provide more detailed
+filing procedures for certain information returns.
+•
+
+General Instructions for Forms W-2 and W-3 (Including Forms
+W-2AS, W-2CM, W-2GU, W-2VI, W-3SS, W-2c, and W-3c) available
+online at IRS.gov/FormW2.
+
+•
+
+Publication 1223, General Rules and Specifications for Substitute
+Forms W-2c and W-3c, available online at IRS.gov/Pub1223.
+
+Section 1.2 – What’s New
+
+.01 Wage reporting threshold increased. For wages paid after calendar year
+2025, P.L. 119-21 increases the wage reporting threshold from $600 to $2,000 if
+no federal income, social security, or Medicare tax was withheld. This threshold
+will be adjusted for inflation each calendar year after 2026.
+
+.02 Box 14 on the 2026 Forms W-2, W-2AS, W-2GU, W-2VI, and W-2c has
+been revised. Box 14 has been split into box 14a and box 14b. Information that
+was reported in box 14—Other will now be reported in box 14a—Other. Box
+14b was created to report the Treasury Tipped Occupation Code(s).
+
+The Form W-2c was released in January 2026 and has a revision date (Rev.
+1-2026) to the right of the bold W-2c.
+
+3

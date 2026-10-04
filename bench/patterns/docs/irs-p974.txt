@@ -1,0 +1,526 @@
+Lines 25, 27, and 29. Mark enters $3,000 APTC,
+which is the total of lines 12 through 23, column (f), on
+these lines and on his Schedule 2 (Form 1040), line 1a.
+
+Allocation of Policy Amounts
+Among Three or More
+Taxpayers
+
+This section covers allocations of policy amounts (enroll-
+ment premiums, applicable SLCSP premiums, and APTC)
+among three or more taxpayers.
+
+Before you read this section, first read Part IV—Alloca-
+tion of Policy Amounts in the Form 8962 instructions.
+Then, use the following instructions to complete Part IV of
+Form 8962 if one qualified health plan covers individuals
+from three or more tax families in the same month. Specifi-
+cally, these instructions apply to:
+
+• Taxpayers who must allocate policy amounts because
+of a divorce or legal separation in 2025 and must also
+allocate policy amounts with another taxpayer (for ex-
+ample, a grandparent who includes in their tax family a
+child enrolled with the former spouses);
+
+• Taxpayers who must allocate policy amounts because
+they are legally married but are not filing a joint return
+(for example, filing their returns as married filing sepa-
+rately), and must also allocate policy amounts with an-
+other taxpayer (for example, a grandparent who in-
+cludes in their tax family a child enrolled with the
+spouses); and
+
+• Other taxpayers who are including an individual in
+their tax family who is enrolled in a qualified health
+plan together with members of two or more other tax
+families.
+
+No APTC. If you or a member of your tax family is en-
+rolled in a qualified health plan with members of two or
+more other tax families and no APTC is paid for coverage
+under the plan, use the instructions for Form 8962 under
+Allocation Situation 3 to allocate the enrollment premiums
+from the qualified health plan among the tax families. You
+allocate the enrollment premiums in proportion to the
+SLCSP premium that applies to each taxpayer who has a
+coverage family member enrolled in the plan. For purpo-
+ses of this enrollment premium allocation, only coverage
+family members enrolled in the plan are considered in de-
+termining the SLCSP premium that applies to each tax-
+payer. You and the other taxpayers must complete column
+(e) on the appropriate line in Part IV to allocate the enroll-
+ment premiums to each family. Leave columns (f) and (g)
+blank. See Missing or incorrect SLCSP premium on Form
+1095-A under Line 10 in the Form 8962 instructions to de-
+termine your applicable SLCSP premium to use for the al-
+location.
+
+Allocation Among Two Taxpayers
+Who Divorced or Legally Separated in
+2025 and One or More Other
+Taxpayers
+
+Use this section to allocate policy amounts from a quali-
+fied health plan if you meet either of the following condi-
+tions and no other allocations for the policy are necessary.
+• You are allocating enrollment premiums, applicable
+
+SLCSP premiums, and APTC with a former spouse as
+a result of your divorce or legal separation in 2025 and
+are also allocating amounts with another taxpayer who
+is including an individual in their tax family who, when
+you were married to the former spouse, was enrolled
+in a qualified health plan with members of your and
+your former spouse’s tax families.
+
+• You are the taxpayer who is including in your tax family
+an individual enrolled in the plan with tax family mem-
+bers of taxpayers who must also allocate policy
+amounts as a result of divorce or separation in 2025.
+
+Example. Kara and David and their two children, Mer-
+edith and Sam, enroll in a qualified health plan for 2025.
+Kara and David were married at the beginning of 2025
+and divorce in 2025. Meredith and Sam move in with their
+grandmother, Lydia, in May of 2025. Lydia claims Meredith
+and Sam as dependents on her 2025 income tax return.
+Kara, David, and Lydia use this section to allocate policy
+amounts to compute their respective PTC and reconcile
+the PTC with the APTC paid.
+
+Kara and David use the allocation method under Rules
+for the Taxpayers Who Divorced or Legally Separated in
+2025 and Are Also Allocating With Another Taxpayer next.
+Lydia uses the allocation method under Rules for the
+Taxpayer(s) Allocating With Taxpayers Who Divorced or
+Legally Separated in 2025, later.
+
+Rules for the Taxpayers Who Divorced or
+Legally Separated in 2025 and Are Also
+Allocating With Another Taxpayer
+
+Use this allocation method if you divorced or legally sepa-
+rated during the year and you must allocate policy
+amounts (enrollment premiums, applicable SLCSP premi-
+ums, and APTC) with your former spouse as well as with
+another taxpayer who is including in their tax family an in-
+dividual enrolled in a qualified health plan with members
+of your and your former spouse’s tax families.
+
+Step 1. Determine an allocation percentage with your for-
+mer spouse. You use this percentage to allocate the total
+enrollment premiums, the applicable SLCSP premiums,
+and APTC for coverage under the plan during the months
+you were married. You will find these amounts on your
+Form(s) 1095-A, Part III, columns A, B, and C, respec-
+tively. You and your former spouse can allocate these
+amounts using any percentage you agree on from -0- to
+100, but you must allocate all amounts using the same
+percentage. If you do not agree on a percentage, you and
+
+28
+
+Publication 974 (2025)
+Column (c). Enter the first month you are allocating
+policy amounts. For example, if you are allocating a per-
+centage from January through June, enter “01” in column
+(c).
+
+Column (d). Enter the last month you are allocating
+policy amounts. For example, if you are allocating a per-
+centage from January through June, enter “06” in column
+(d).
+
+Columns (e), (f), and (g). Enter the decimal from
+
+Worksheet C, line 5.
+
+Rules for the Taxpayer(s) Allocating With
+Taxpayers Who Divorced or Legally
+Separated in 2025
+
+Use this allocation method if you are including in your tax
+family one or more individuals who were enrolled in a
+qualified health plan with members of the tax families of
+other taxpayers who must also allocate policy amounts as
+a result of divorce or legal separation in 2025.
+
+Step 1. Determine an allocation percentage with one of
+the former spouses. You may agree on any allocation per-
+centage from -0- to 100. You may use the percentage you
+agreed on for every month during which this allocation rule
+applies, or you may agree on different percentages for dif-
+ferent months. However, you must use the same allocation
+percentage for all policy amounts (enrollment premiums,
+applicable SLCSP premiums, and APTC) in a month. If
+you cannot agree on an allocation percentage, the alloca-
+tion percentage is equal to the number of individuals you
+include in your tax family for the tax year who were enrol-
+led in the qualified health plan for which you are allocating
+policy amounts, divided by the total number of individuals
+enrolled in the plan. The allocation percentage is the per-
+centage that applies to the amounts you must use to com-
+pute the PTC and reconcile it with APTC. The former
+spouse must compute the PTC and reconcile APTC using
+the remaining amounts.
+
+Step 2. Allocate the policy amounts with the second for-
+mer spouse using the same rules as Step 1 above. Enter
+the percentage on line 4 of Worksheet D.
+
+Step 3. Complete Worksheet D below.
+
+your former spouse must allocate 50% of each of these
+amounts to each of you.
+
+Step 2. Separately from the first allocation, determine an
+allocation percentage with the taxpayer(s) who included in
+their tax family the individual(s) enrolled in the plan with a
+member of your tax family or a member of your former
+spouse’s tax family. You may agree on any allocation per-
+centage from -0- to 100. You may use the percentage you
+agreed on for every month that this allocation rule applies,
+or you may agree on different percentages for different
+months. However, you must use the same allocation per-
+centage for all policy amounts (enrollment premiums, ap-
+plicable SLCSP premiums, and APTC) in a month. If you
+cannot agree on an allocation percentage, the allocation
+percentage is equal to the number of individuals the other
+taxpayer includes in their tax family for the tax year who
+were enrolled in the plan for which you are allocating pol-
+icy amounts, divided by the total number of individuals en-
+rolled in the qualified health plan. The allocation percent-
+age is the percentage that applies to the amounts the
+other taxpayer must use to compute the PTC and recon-
+cile it with APTC. You and your former spouse must com-
+pute the PTC and reconcile APTC using the remaining
+amounts.
+
+Step 3. Complete Worksheet C below.
+Worksheet C. Allocations for the Divorced or
+Legally Separated Taxpayers
+
+1.0
+
+1. Enter as a decimal your percentage from
+
+Step 1 above . . . . . . . . . . . . . . . . . . . . . . . . 1.
+2. Enter 1.0 . . . . . . . . . . . . . . . . . . . . . . . . . . . 2.
+3. Enter as a decimal the total of the
+
+percentage(s) from Step 2 above allocated
+to the other taxpayer(s).
+Note: See Example 2, later, for details on
+adding the percentages for multiple
+taxpayers
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . 3.
+4. Subtract line 3 from line 2 . . . . . . . . . . . . . 4.
+5. Multiply line 1 by line 4. Enter the result as
+
+a decimal. This is your allocation
+percentage. Go to Step 4 below . . . . . . . . 5.
+
+Step 4. If you use the same percentage in Step 2 above
+for every month to which this allocation method applies,
+use only one of lines 30 through 33 in Part IV to report the
+allocation. If you use different percentages for different
+months under Step 2, use a separate line in Part IV for
+each allocation percentage. Complete the line as ex-
+plained below.
+
+Column (a). Enter the Marketplace-assigned policy
+number from Form 1095-A, line 2. If the policy number on
+the Form 1095-A is more than 15 characters, enter only
+the last 15 characters.
+
+Column (b). Enter the SSN of your former spouse.
+
+Publication 974 (2025)
+
+29
+Kimberly’s Worksheet D. Taxpayer Allocating
+With Divorced or Legally Separated
+Taxpayers
+
+1. Enter the decimal from line 1 of the
+
+Worksheet C completed by one of the
+former spouses from Step 1
+above
+
+. . . . . . . . . . . . . . . . . . . . . . . . . 1.
+
+2. Enter as a decimal the percentage
+
+from Step 1 above . . . . . . . . . . . . . . . 2.
+3. Multiply line 1 by line 2 . . . . . . . . . . . . 3.
+4. Enter the decimal from line 1 of the
+
+Worksheet C completed by the other
+former spouse from Step 2
+above
+
+. . . . . . . . . . . . . . . . . . . . . . . . . 4.
+
+5. Enter as a decimal the percentage
+
+from Step 2 above . . . . . . . . . . . . . . . 5.
+6. Multiply line 4 by line 5 . . . . . . . . . . . . 6.
+7. Add line 3 and line 6. This is the
+
+allocation percentage. Go to Step 4
+below . . . . . . . . . . . . . . . . . . . . . . . . . . 7.
+
+0.40
+
+0.25
+
+0.10
+
+0.60
+
+0.25
+
+0.15
+
+0.25
+
+After completing Worksheet D, Kimberly completes
+
+Form 8962, Part IV, line 30, as follows.
+
+Column (a). Kimberly enters
+
+the Marketplace-as-
+
+signed policy number from Form 1095-A, line 2.
+
+Column (b). Kimberly enters Kara’s SSN.
+
+Column (c). Kimberly enters “01.”
+
+Column (d). Kimberly enters “09.”
+
+Columns (e), (f), and (g). Kimberly enters “0.25.”
+
+After completing Part IV, Kimberly completes her Form
+8962 in the same manner described for Lydia in Exam-
+ple 1, earlier, but applies the different allocation percent-
+age.
+
+Allocation Among Taxpayers Who Are
+Married But Not Filing a Joint Return
+and One or More Other Taxpayers
+
+Use this section if you meet either of the following condi-
+tions and no other allocations for the policy are necessary.
+• You are allocating enrollment premiums and APTC
+
+with a spouse to whom you are legally married but not
+filing a joint return in 2025 and you are also allocating
+enrollment premiums, applicable SLCSP premiums,
+and APTC with another taxpayer who is including in
+their tax family an individual who was enrolled in a
+qualified health plan with members of your and your
+spouse’s tax families.
+
+• You are the taxpayer who is including in your tax family
+an individual who was enrolled in the plan with tax
+family members of taxpayers who must also allocate
+policy amounts because the taxpayers are legally
+married but not filing a joint return in 2025.
+
+Example. Pat and Jamie were married for all of 2025
+and have three children, Jason, Alicia, and Dawn. All five
+individuals enrolled in a qualified health plan and were
+covered for all of 2025. At enrollment, Pat and Jamie ex-
+pected to file a joint return and include the children in their
+tax family for the year of coverage. However, Pat and Ja-
+mie change their minds and file as married filing sepa-
+rately and each includes only themselves in their respec-
+tive tax family. Neither checks the box in the top right-hand
+corner of Form 8962. Jason, Alicia, and Dawn moved in
+with their uncle, Andy, in April. Andy files as head of
+household and includes Jason, Alicia, and Dawn in his tax
+family.
+
+Pat and Jamie use the allocation method under Rules
+for the Married Taxpayers Not Filing a Joint Return and
+Also Allocating With Another Taxpayer next.
+
+Andy uses the allocation method under Rules for the
+Taxpayer(s) Allocating With Married Taxpayers Not Filing
+a Joint Return, later.
+
+Rules for the Married Taxpayers Not Filing a
+Joint Return and Also Allocating With
+Another Taxpayer
+
+Use this allocation method if you are married but not filing
+a joint return and you must allocate policy amounts with
+your spouse and with a taxpayer who is including in their
+tax family an individual enrolled in a qualified health plan
+with members of your and your spouse’s tax families. Un-
+der this method, you must first allocate 50% each of en-
+rollment premiums and APTC to yourself and your spouse.
+Line 4 of Worksheet E accomplishes this 50% allocation.
+Complete the steps below to determine the amounts to
+enter on your Form 8962, Part IV.
+
+Step 1. Determine the applicable SLCSP premium for
+your coverage family. See Determining the Premium for
+the Applicable Second Lowest Cost Silver Plan (SLCSP),
+earlier. For this purpose, your coverage family or your
+spouse’s coverage family (but not both) should include the
+individuals the other taxpayer is including in their tax fam-
+ily and who was enrolled in a qualified health plan with
+your and your spouse’s tax family members. Enter the ap-
+plicable SLCSP premium you determined on line 5 of
+Worksheet E.
+
+Step 2. Separately from the first allocation (the 50%
+spousal allocation), determine an allocation percentage
+with the taxpayer(s) including in their tax family the individ-
+ual(s) enrolled in the plan. You may agree on any alloca-
+tion percentage from -0- to 100. You may use the percent-
+age you agreed on for every month in which this allocation
+rule applies, or you may agree on different percentages for
+different months. However, you must use the same alloca-
+tion percentage for all policy amounts (enrollment premi-
+ums, applicable SLCSP premiums, and APTC) in a month.
+If you cannot agree on an allocation percentage, the allo-
+cation percentage is equal to the number of individuals the
+other taxpayer includes in their tax family for the tax year
+who were enrolled in the qualified health plan for which
+you are allocating amounts, divided by the total number of
+
+Publication 974 (2025)
+
+33
+individuals enrolled in the plan. The allocation percentage
+is the percentage that applies to the amounts the other
+taxpayer must use to compute the PTC and reconcile it
+with APTC. You must compute the PTC and reconcile
+APTC using the remaining amounts.
+
+Step 3. Complete Worksheet E below.
+Worksheet E. Allocations for Married
+Taxpayers Not Filing a Joint Return
+
+Column (f). If your filing status is married filing sepa-
+rately and you did not check the box in the top right-hand
+corner of Form 8962, leave column (f) blank. If you
+checked the box, or Exception 1 under Married taxpayers
+(discussed earlier under Terms You May Need To Know)
+applies to you, enter the decimal from line 3 of Worksheet
+E in column (f) and include the amount from line 6 of
+Worksheet E in the totals on the appropriate lines of Form
+8962, column (b), for the months allocated.
+
+Column (g). Enter the decimal from line 4 of Work-
+
+1.0
+
+sheet E.
+
+Rules for the Taxpayer(s) Allocating With
+Married Taxpayers Not Filing a Joint Return
+
+Use this allocation method if you are including in your tax
+family an individual who was enrolled in a qualified health
+plan with tax family members of taxpayers who must also
+allocate policy amounts because the taxpayers are legally
+married but not filing a joint return in 2025.
+
+Step 1. Determine an allocation percentage with one of
+the spouses. You may agree on any allocation percentage
+from -0- to 100. You may use the percentage you agreed
+on for every month in which this allocation rule applies, or
+you may agree on different percentages for different
+months. However, you must use the same allocation per-
+centage for all policy amounts (enrollment premiums, ap-
+plicable SLCSP premiums, and APTC) in a month. If you
+cannot agree on an allocation percentage, the allocation
+percentage is equal to the number of individuals you will
+include in your tax family for the tax year who were enrol-
+led in the qualified health plan for which you are allocating
+policy amounts, divided by the total number of individuals
+enrolled in the plan. The allocation percentage is the per-
+centage that applies to the amounts you must use to com-
+pute the PTC and reconcile it with APTC. The spouses
+must compute the PTC and reconcile APTC using the re-
+maining amounts. Enter the percentage as a decimal on
+line 1 of Worksheet F.
+
+Step 2. Allocate the policy amounts with the second
+spouse using the same rules as Step 1 above. Enter the
+percentage as a decimal on line 3 of Worksheet F.
+
+Step 3. Complete Worksheet F below.
+
+1. Enter 1.0 . . . . . . . . . . . . . . . . . . . . . . . 1.
+2. Enter as a decimal the total of the
+percentage(s) from Step 2 above
+allocated to the other
+taxpayer(s)
+
+. . . . . . . . . . . . . . . . . . . . . 2.
+3. Subtract line 2 from line 1 . . . . . . . . . 3.
+4. Divide line 3 by 2.0. Enter the result as
+
+a decimal
+
+. . . . . . . . . . . . . . . . . . . . . . 4.
+
+5. Enter the applicable SLCSP premium
+as determined in Step 1 above. Then,
+go to line 6 if you checked the box in
+the top right-hand corner of Form
+8962, or Exception 1 under Married
+taxpayers (discussed earlier under
+Terms You May Need To Know)
+applies to you. Otherwise, stop
+here . . . . . . . . . . . . . . . . . . . . . . . . . . . 5.
+
+6. Multiply line 5 by line 3. Complete
+
+Form 8962, Part IV, as instructed in
+Step 4 below . . . . . . . . . . . . . . . . . . . . 6.
+
+Step 4. If you use the same percentage for every month
+during which this allocation method applies, use only one
+of lines 30 through 33 in Part IV to report the allocation. If
+you use different percentages for different months under
+Step 2, use a separate line in Part IV for each allocation
+percentage. Complete the line as explained below.
+
+Column (a). Enter the Marketplace-assigned policy
+number from Form 1095-A, line 2. If the policy number on
+the Form 1095-A is more than 15 characters, enter only
+the last 15 characters.
+
+Column (b). Enter the SSN of your spouse.
+
+Column (c). Enter the first month you are allocating
+policy amounts. For example, if you are allocating a per-
+centage from January through June, enter “01” in column
+(c).
+
+Column (d). Enter the last month you are allocating
+policy amounts. For example, if you are allocating a per-
+centage from January through June, enter “06” in column
+(d).
+
+Column (e). If your filing status is married filing sepa-
+rately and you did not check the box in the top right-hand
+corner of Form 8962, leave column (e) blank. If you
+checked the box, or Exception 1 under Married taxpayers
+(discussed earlier under Terms You May Need To Know)
+applies to you, enter the decimal from line 4 of Worksheet
+E in column (e).
+
+34
+
+Publication 974 (2025)

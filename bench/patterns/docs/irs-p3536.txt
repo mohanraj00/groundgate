@@ -1,0 +1,53 @@
+Vessel operators are required to report receipts and disbursements of all liquid product to and from any
+location that has a Facility Control Number (FCN). Pipeline operators are required to report receipts and
+disbursements to and from any approved terminal with a Terminal Control Number (TCN).
+
+Terminal operators are required to report bulk and non-bulk receipts of all liquid products into a terminal
+and all disbursements by position holders from a terminal. In addition, terminal operators are required to
+report monthly inventory reconciliation by product.
+
+Scope
+
+This publication contains the required Electronic Data Interchange (EDI) data record and file formats as
+well as general plain text instructions. This guideline is provided for use by terminal operators and
+carriers (information providers) and EDI transmitters, collectively referred to as electronic participants.
+
+Transmission of Reports
+
+The transmission method for filing these information reports is EDI. To file electronically, use the
+American National Standards Institute (ANSI) Accredited Standard Committee (ASC) X 12 EDI
+Standards Release 4030.
+
+Required Date Formats
+
+The IRS processing system has changed to reflect the standard format established by the National
+Institute of Standards and Technology (NIST) for Century Date. The Century Date is for all electronic
+year dates, whether exchanged with non-IRS organizations or part of the internal IRS. All electronically
+prepared and transmitted tax reports submitted must be developed in compliance as follows:
+
+Most year date formats should expand to representations from 2 digits to 4 digits and must be reflected as
+follows: CCYYMMDD. For example, December 31, 2017, would be reflected as 20171231.
+
+See Section XI, Table 1, List of Attribute Conventions from ANSI ASC X12, for more information.
+
+Software
+
+Information providers may develop their own filing solution or purchase off-the-shelf EDI translation
+software for preparation of Forms 720-TO and 720-CS. Prior to EDI filing, all electronic participants
+must successfully test (see Section IV, Testing).
+
+II. General Information
+
+When to File
+
+Forms 720-TO and 720-CS must be filed monthly. The report is due the last day of the month following
+the reporting period. For each submission to be considered timely it should be filed by the due date of the
+report (including any extensions) and all 151 “must fix” errors must be corrected by the 15^th day of the
+following month. A submission is an uploaded 813 transaction set that generates both a 997 and 151
+acknowledgement transaction set, provided in the ExSTARS users out box.
+
+Each information report must be filed in chronological order without skipping any periods.
+
+Information reports due on a Saturday, Sunday, or legal holiday may be filed on the next business day.
+
+4

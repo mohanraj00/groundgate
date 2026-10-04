@@ -1,0 +1,124 @@
+Part – C: Re-categorisation of Portfolio Managers and
+Merchant Bankers (MBs)
+
+7. Based on further discussions, it has been decided to revise the thresholds and
+
+categorization of following REs as under:
+
+7.1. Portfolio Managers
+
+Table 1: Criteria and thresholds for Portfolio Managers categorization
+
+S.
+
+No.
+
+Criteria
+
+Qualified
+
+Mid-size
+
+Small-size REs
+
+Self-
+
+REs
+
+REs
+
+certification
+
+REs
+
+1.
+
+Asset Under
+
+N.A.
+
+Rs.
+
+10,000
+
+More than Rs. 3000
+
+Rs.
+
+3000
+
+Management
+
+(AUM)
+
+crores
+
+and
+
+Crores and
+
+less
+
+Crores
+
+and
+
+above
+
+than Rs. 10,000
+
+below
+
+Crores
+
+7.2. Merchant Bankers (MBs)
+
+Table 2: Criteria and thresholds for MBs categorization
+
+S.
+
+No.
+
+1.
+
+Criteria
+
+Merchant Bankers
+
+(MBs)
+
+categorisation for CSCRF
+
+All active Merchant Bankers (i.e., who have undertaken
+
+Small-size REs
+
+any merchant banking activity during the relevant
+
+period)
+
+2.
+
+All inactive Merchant Bankers (i.e., those have not
+
+Exempt from CSCRF
+
+undertaken any merchant banking activities in the
+
+relevant review period.
+
+Part – D: Cyber Security Audit Policy Guidelines from CERT-
+
+In
+
+8. CERT-In has issued comprehensive Cyber Security Audit Policy Guidelines^5.
+
+These guidelines are intended to serve as a reference both CERT-In empanelled
+
+auditing organisations and auditee organisations. REs shall follow these guidelines
+
+to ensure a consistent, effective and secure approach to cyber security audits.
+
+5 https://www.cert-in.org.in/PDF/Comprehensive_Cyber_Security_Audit_Policy_Guidelines.pdf
+
+Page 10 of 11

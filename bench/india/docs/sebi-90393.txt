@@ -1,0 +1,122 @@
+3. Categories of passive schemes to be covered under MF Lite framework
+
+i. Regulation 79(1)(b) of Chapter XI of the MF Regulation defines “MF Lite” as a
+
+mutual fund that is having only such index funds, exchange traded funds, fund
+
+of funds or other mutual fund schemes as may be specified by the Board from
+
+time to time.
+
+ii. As per Regulation 79(1)(d) of Chapter XI of the MF Regulation, MF Lite scheme
+
+is any scheme launched by an MF Lite or any other eligible passive scheme as
+
+may be specified by the Board from time to time.
+
+iii. In this regard, the passive schemes based on the following underlying indices
+
+shall be covered under phase- 1 of implementation of the MF Lite Framework.
+
+a. Passive funds based on only domestic equity passive indices (broad
+
+indices tracked by passive funds or act as primary benchmark for actively
+
+managed funds), with collective AUM of INR 5,000 Cr. and above as on
+
+December 31 of each Financial Year. AMFI, in consultation with SEBI,
+
+shall prescribe the list of such domestic equity indices on a periodic basis.
+
+b. (i) All G-Sec/ T-bills/ SDL based domestic target maturity debt passive
+
+funds and (ii) domestic constant duration passive funds based on such
+
+debt indices with collective AUM, which exceeds a threshold of INR 5,000
+
+Cr. and above as on December 31 of each Financial Year. AMFI, in
+
+consultation with SEBI, shall prescribe the list of such domestic debt
+
+indices on a periodic basis.
+
+c. All Gold ETFs, Silver ETFs and FoFs based on only Gold or Silver ETFs.
+
+d. Overseas ETFs and FoFs having single underlying overseas passive
+
+fund, wherein the underlying overseas benchmarks are as permitted
+
+under clause 4 of this circular.
+
+e. All FoFs investing only in single domestic/ overseas index, wherein the
+
+reference benchmarks of underlying passive funds are as permitted under
+
+clause 3 (in case of domestic underlying indices) and clause 4 (in case of
+
+overseas underlying indices) of this circular.
+
+f. All FoFs investing in more than one index shall not be covered under the
+
+MF Lite framework under the phase 1 of implementation.
+
+Page 2 of 19
+CCO may also act as the CRO of the AMC, subject to his/her eligibility and
+
+experience in risk management.
+
+B. Pooled Investment Vehicle as sponsor of Mutual Funds
+
+i. Second proviso to Regulation 81 of Chapter XI of the MF Regulations pro-
+
+vides for a private equity fund or a pooled investment vehicle or a pooled in-
+
+vestment fund to sponsor an MF Lite, subject to conditions as may be speci-
+
+fied by SEBI from time to time.
+
+ii. In this regard, the following has been decided.
+
+a. Among the pooled investment vehicles, only the private equity funds
+
+(PEs) can sponsor an MF Lite.
+
+b. Such PEs shall comply with clauses (i) to (vi) of the first proviso to Regu-
+
+lation 81 of Chapter XI of the MF Regulations.
+
+c. For any PE to qualify as a MF Lite sponsor, the following criteria shall be
+
+applicable;
+
+I. The applicant PE (scheme/ fund) is itself a body corporate or, a body
+
+corporate set up by a PE. The applicant body corporate may be set
+
+up in India or abroad.
+
+II. The applicant PE or its manager have a minimum of five years of
+
+experience in the capacity of fund/investment manager and an expe-
+
+rience of investing in the financial sector, where it should have man-
+
+aged committed and drawn-down capital of not less than INR 2,500
+
+Cr. as on the date of its application made to SEBI.
+
+d. The following additional safeguards shall also be applicable for PEs act-
+
+ing as MF Lite sponsor.
+
+I. There shall be no off-market transactions between the schemes of
+
+the MF Lite and
+
+a) Sponsor PE; or
+
+b) Schemes/ Funds managed by the manager of the sponsor PE;
+
+or
+
+Page 4 of 19

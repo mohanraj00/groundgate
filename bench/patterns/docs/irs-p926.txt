@@ -1,0 +1,135 @@
+Caution: The deduction that can be taken on Sched-
+ules C and F (Form 1040) for wages and employment
+taxes applies only to wages and taxes paid for business
+and farm employees. You can’t deduct the wages and em-
+ployment taxes paid for your household employees on
+your Schedule C or F.
+
+If you’re not required to file Form W-2, we encourage
+you to provide your household employee with a receipt for
+services that includes the dates worked, wages paid, and
+a general description of work completed. This receipt will
+help the household employee to report their wages on
+Form 1040 or 1040-SR.
+
+More information. For more information about paying
+taxes through federal income tax withholding and estima-
+ted tax payments, and figuring the estimated tax penalty,
+see Pub. 505.
+
+What Forms Must You File?
+
+You must file certain forms to report your household em-
+ployee’s wages and the federal employment taxes for the
+employee if you pay any of the following wages to the em-
+ployee.
+• Social security and Medicare wages.
+• FUTA wages.
+• Wages from which you withhold federal income tax.
+
+For information on getting employment tax forms, see
+
+How To Get Tax Help, later.
+
+Employer identification number (EIN). You must in-
+clude your EIN on the forms you file for your household
+employee. An EIN is a nine-digit number issued by the
+IRS. It isn’t the same as an SSN.
+
+Tip: You will ordinarily have an EIN if you previously
+paid taxes for employees, either as a household employer
+or as a sole proprietor of a business you own. If you al-
+ready have an EIN, use that number.
+
+If you don’t have an EIN, you may apply for one online
+by going to IRS.gov/EIN. You may also apply for an EIN by
+faxing or mailing Form SS-4 to the IRS. If you are an inter-
+national applicant, you may apply for an EIN by calling
+267-941-1099 (toll call), Monday through Friday from 6:00
+a.m. to 11:00 p.m. Eastern time.
+
+Form W-2. File a separate 2026 Form W-2 for each
+household employee to whom you pay either of the follow-
+ing wages during the year.
+• Social security and Medicare wages of $3,000 or
+
+more.
+
+• Wages from which you withhold federal income tax.
+You must complete Form W-2 and give Copies B, C, and 2
+to your employee by February 1, 2027. You must also
+send Copy A of Form W-2 with Form W-3 to the SSA by
+February 1, 2027. We encourage you to file Form W-2
+electronically. Electronic filing is available to all employers
+and is free, fast, and secure. Go to the SSA’s Employer
+W-2 Filing Instructions & Information website at SSA.gov/
+employer for guidelines on filing electronically. If filing
+electronically via the SSA’s W-2 Online service, the SSA
+will generate Form W-3 data from the electronic submis-
+sion of Form(s) W-2; no separate Form W-3 is required.
+
+Employee who leaves during the year. If an em-
+ployee stops working for you before the end of 2026, you
+can file Form W-2 and provide copies to your employee
+immediately after you make your final payment of wages.
+You don’t need to wait until 2027. If the employee asks you
+for Form W-2, give it to them within 30 days after the re-
+quest or the last wage payment, whichever is later.
+
+Schedule H. Use Schedule H (Form 1040) to report
+household employment taxes if you pay any of the follow-
+ing wages to the employee.
+
+• Social security and Medicare wages of $3,000 or
+
+more.
+
+• FUTA wages.
+• Wages from which you withhold federal income tax.
+File Schedule H (Form 1040) with your 2026 federal in-
+come tax return by April 15, 2027. If you get an extension
+to file your return, the extension will also apply to your
+Schedule H.
+
+Filing options when no return is required. If you’re
+not required to file a 2026 tax return, you have the follow-
+ing two options.
+
+1. You can file Schedule H (Form 1040) by itself. See the
+
+Schedule H (Form 1040) instructions for details.
+
+2. If, besides your household employee, you have other
+employees for whom you report employment taxes on
+Form 941, Form 944, or Form 943 and on Form 940,
+you can include your taxes for your household em-
+ployee on those forms. See Business employment tax
+returns, later.
+
+Employers having the options previously listed include
+certain tax-exempt organizations that don’t have to file a
+tax return, such as churches that pay a household worker
+to take care of a minister’s home.
+
+Business employment tax returns. Don’t use Sched-
+ule H (Form 1040) if you choose to pay the employment
+taxes for your household employee with business or farm
+employment taxes. (See Payment option for business em-
+ployers, earlier.) Instead, include the social security, Medi-
+care, and withheld federal income taxes for the employee
+on the Form 941 or Form 944 you file for your business or
+on the Form 943 you file for your farm. Include the FUTA
+tax for the employee on your Form 940.
+
+If you report the employment taxes for your household
+employee on Form 941, Form 943, or Form 944, file Form
+W-2 for that employee with the Form(s) W-2 and Form
+W-3 for your business or farm employees.
+
+For information on filing Form 941, Form 943, or Form
+944, see Pub. 15. Pub. 15 also provides information about
+filing Form 940.
+
+Publication 926 (2026)
+
+11

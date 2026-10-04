@@ -1,0 +1,59 @@
+4. In this context, taking into account feedback received from the various
+
+stakeholders, it is specified that a Benchmark or Index (including index of
+
+indices) based on listed securities shall be considered as ‘Significant Indices’,
+
+if the daily average cumulative Asset Under Management (AUM) tracking the
+
+Benchmark or Index across schemes of Mutual Fund(s) exceeds ₹20,000 Crore
+
+for each of the past six months, ending on 30th June and 31st December each
+
+year.
+
+5. Further, an Index specified by the Board in the list of ‘Significant Indices’ shall
+
+continue to remain in the list of ‘Significant Indices’ unless the value of
+
+cumulative AUM tracking or benchmarking such Index does not meet the
+
+specified threshold for a continuous period of three years (i.e., six consecutive
+
+half-yearly reviews).
+
+6. Accordingly, the list of ‘Significant Indices’ is specified in terms of Regulation
+
+2(1)(u) of IP Regulations, based on cumulative AUM of schemes of Mutual
+
+Funds tracking the Benchmark or Index for the period from July 01, 2025 to
+
+December 31, 2025, is placed at Annexure-A.
+
+7. Index Providers providing any of the ‘Significant Indices’ listed in Annexure-A
+
+shall submit an application for registration as an Index Provider to SEBI, in
+
+accordance with Regulation 4 of the IP Regulations, within a period of six
+
+months from the date of issuance of this circular. This requirement shall not
+
+apply to the Index Providers, if all the ‘Significant Indices’ provided by them are:
+
+a. Indices notified by RBI as ‘Significant Benchmarks’ under relevant
+
+directions issued by RBI under Section 45W of the RBI Act, 1934; or
+
+b. Indices classified by RBI as ‘Authorized Benchmarks’ under relevant
+
+directions issued by RBI under Section 45W of the RBI Act, 1934
+
+8. An Index Provider providing ‘Significant Indices’ as on the date of this circular,
+
+may continue to carry on its Index Provider activity, provided it submit an
+
+application for registration as an Index Provider to SEBI within a period of six
+
+months from the date of this circular.
+
+Page 2 of 5

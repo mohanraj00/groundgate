@@ -1,0 +1,306 @@
+57896
+
+Federal Register / Vol. 90, No. 238 / Monday, December 15, 2025 / Rules and Regulations
+
+A. For a loan amount greater than or equal
+
+to $134,841: 3 percent of the total loan
+amount;
+
+B. For a loan amount greater than or equal
+
+to $80,905 but less than $134,841: $4,045;
+
+C. For a loan amount greater than or equal
+
+to $26,968 but less than $80,905: 5 percent
+of the total loan amount;
+
+D. For a loan amount greater than or equal
+
+to $16,855 but less than $26,968: $1,305;
+
+E. For a loan amount less than $16,855: 8
+
+percent of the total loan amount.
+
+xii. For 2026, reflecting a 2.3 percent
+increase in the CPI–U that was reported on
+the preceding June 1, a covered transaction
+is not a qualified mortgage unless the
+transaction’s total points and fees do not
+exceed:
+
+necessary to establish a level of safety
+equivalent to that established by the
+existing airworthiness standards.
+DATES: These special conditions are
+effective January 14, 2026.
+FOR FURTHER INFORMATION CONTACT:
+Philip Haberlen, Engine and Propulsion
+Section, AIR–625, Technical Policy
+Branch, Policy and Standards Division,
+Aircraft Certification Service, Federal
+Aviation Administration, 1200 District
+Avenue, Burlington, MA 01803;
+telephone 781–238–7770; email
+Philip.Haberlen@faa.gov.
+SUPPLEMENTARY INFORMATION:
+
+A. For a loan amount greater than or equal
+
+Background
+
+to $137,958: 3 percent of the total loan
+amount;
+
+B. For a loan amount greater than or equal
+
+to $82,775 but less than $137,958: $4,139;
+
+C. For a loan amount greater than or equal
+
+to $27,592 but less than $82,775: 5 percent
+of the total loan amount;
+
+D. For a loan amount greater than or equal
+
+to $17,245 but less than $27,592: $1,380;
+
+E. For a loan amount less than $17,245: 8
+
+percent of the total loan amount.
+*
+
+*
+
+*
+
+*
+
+*
+
+Russell Vought,
+Acting Director, Consumer Financial
+Protection Bureau.
+[FR Doc. 2025–22773 Filed 12–12–25; 8:45 am]
+
+BILLING CODE 4810–AM–P
+
+DEPARTMENT OF TRANSPORTATION
+
+Federal Aviation Administration
+
+14 CFR Part 33
+
+[Docket No. FAA–2025–0950; Special
+Conditions No. 33–029–SC]
+
+Special Conditions: Pratt and Whitney
+Canada, PW220A; Flat 30-Second and
+2-Minute OEI Rating.
+
+AGENCY: Federal Aviation
+Administration (FAA), DOT.
+ACTION: Final special conditions.
+
+SUMMARY: These special conditions are
+issued for the Pratt and Whitney Canada
+(PWC) aircraft engine model PW220A.
+This engine will have a novel or
+unusual design feature when compared
+to the state of technology envisioned in
+the airworthiness standards for engines.
+This design feature is an additional one
+engine inoperative (OEI) power rating
+that combines the 30-second and 2-
+minute OEI power ratings into a single
+rating. The applicable airworthiness
+regulations do not contain adequate or
+appropriate safety standards for this
+design feature. These special conditions
+contain the additional safety standards
+that the Administrator considers
+
+On November 16, 2021, Pratt and
+Whitney Canada applied for a type
+certificate for the new engine model
+PW220A. The PW220A is a turboshaft
+engine designed for transport category
+twin-engine helicopters.
+
+Type Certification Basis
+
+Under the provisions of Title 14, Code
+
+of Federal Regulations (14 CFR) 21.17,
+Pratt and Whitney Canada must show
+that the model PW220A meets the
+applicable provisions of Part 33, as
+amended by Amendments 33–1 through
+33–34.
+
+If the Administrator finds that the
+applicable airworthiness regulations
+(e.g., 14 CFR part 33) do not contain
+adequate or appropriate safety standards
+for the model PW220A because of a
+novel or unusual design feature, special
+conditions are prescribed under the
+provisions of § 21.16.
+
+Special conditions are initially
+
+applicable to the model for which they
+are issued. Should the type certificate
+for that model be amended later to
+include any other model that
+incorporates the same novel or unusual
+design feature, these special conditions
+would also apply to the other model
+under § 21.101.
+
+The FAA issues special conditions, as
+defined in 14 CFR 11.19, in accordance
+with § 11.38, and they become part of
+the type certification basis under
+§ 21.17(a)(2).
+
+Novel or Unusual Design Features
+
+The PW220A will incorporate the
+
+following novel or unusual design
+feature:
+
+A ‘‘Flat 30-second and 2-minute’’ one
+
+engine inoperative (OEI) rating.
+
+Discussion
+
+These special conditions are
+necessary because current Part 33
+regulations do not contain airworthiness
+standards for extending the 2-minute
+OEI rating for 30 seconds. These special
+
+conditions extend the time-dependent
+requirements in §§ 33.87(f) and 33.88(b)
+applicable to the 30-second OEI and 2-
+minute OEI to the 2.5-minute time
+duration of the ‘‘Flat 30-second and 2-
+minute OEI’’ power. The 2.5-minute
+time duration for the rating may affect
+the engine’s structural and operational
+characteristics that are time-dependent,
+such as the values for transients, the
+time duration for stabilization to steady
+state, and part growth due to
+deformation.
+
+To address these aspects, the FAA
+proposed these special conditions on
+August 7, 2025 (90 FR 38076) based on
+§§ 33.7, 33.28(k), 33.29(c), 33.85(d),
+33.87(a)(7), 33.87(f), 33.88(b), and
+A33.4(b).
+
+In addition to § 33.7, an engine rating
+
+and operating limitation must be
+established for the flat 30-second and 2-
+minute OEI power rating.
+
+The 2.5-minute time duration for the
+
+rating necessitates extending the time
+duration requirement of § 33.28(k)
+applicable to the 30-second OEI rating
+from 30 seconds to 2.5 minutes. This
+requirement is for automatic availability
+and control of the engine for the entire
+duration of the rating’s usage.
+
+The rating’s 2.5-minute time duration
+
+also necessitates applying the
+requirements of § 33.29(c) to the flat 30-
+second and 2-minute OEI power rating.
+These special conditions will be used to
+ensure that the instrumentation
+requirements normally reserved for 30-
+second OEI and 2-minute OEI ratings
+are applied to the flat 30-second and 2-
+minute OEI power rating over its whole
+duration.
+
+Paragraph (c)(3) of these special
+conditions states that the engine must
+provide means or provision of means to
+alert maintenance personnel of the use
+of the flat 30-second and 2-minute OEI
+power rating; the retrieval of the
+recorded data must be available after the
+aircraft lands, so any required
+maintenance actions can be completed
+before the next flight.
+
+A special condition regarding
+
+calibration tests for the flat 30-second
+and 2-minute OEI power rating to mirror
+the requirements of § 33.85(d) is needed.
+This will permit the use of
+measurements taken during the
+endurance test, required by the special
+condition based on § 33.87(f), to show
+compliance with § 33.85(d).
+
+The 2.5-minute time duration for the
+
+rating affects the endurance test
+requirements of § 33.87. For the flat 30-
+second and 2-minute OEI power rating,
+a 2.5-minute time duration is needed to
+establish a level of safety equivalent to
+that established by § 33.87(f). For the 30-
+second OEI and 2-minute OEI, the test
+
+VerDate Sep<11>2014 15:49 Dec 12, 2025 Jkt 268001 PO 00000 Frm 00030 Fmt 4700 Sfmt 4700 E:\FR\FM\15DER1.SGM 15DER1
+
+1
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+3
+2
+N
+Q
+X
+1
+1
+K
+S
+D
+n
+o
+
+r
+e
+t
+t
+o
+
+l

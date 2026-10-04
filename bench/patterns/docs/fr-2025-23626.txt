@@ -1,0 +1,539 @@
+59738
+
+Federal Register / Vol. 90, No. 243 / Monday, December 22, 2025 / Rules and Regulations
+
+estimated that there were 576,122
+contracts. To estimate the share of these
+contracts that are new in a given year,
+the Department has used 20 percent
+(115,224), because the average length of
+an SCA contract is about 5 years.
+Therefore, the estimated undiscounted
+cost savings to contracting agencies is
+$31.76 million ($110.26 per hour × 2.5
+hours × 115,224 contracts).
+
+2. Recordkeeping Cost Savings
+
+The rescinded rule would have
+
+required a predecessor contractor to, no
+less than 30 calendar days before
+completion of the contractor’s
+performance of services on a contract,
+furnish the contracting officer a list of
+the names of all service employees
+under the contract and its subcontracts
+at that time. This list would have
+needed to include the anniversary dates
+of employment for each service
+employee under the contract and its
+predecessor contracts with either the
+current or predecessor contractors or
+their subcontractors. If changes to the
+workforce were made after the
+submission of this certified list, the rule
+also would have required a contractor to
+furnish the contracting officer with a
+certified list of the names of all service
+employees working under the contract
+and its subcontracts during the last
+month of contract performance not less
+than 10 business days before completion
+of the contract.
+
+The rule specified the records
+
+successor contractors would have been
+required to maintain, including copies
+of or documentation of any written or
+oral offers of employment, a copy of any
+written notice that may have been
+distributed, and the names of the
+employees from the predecessor
+contract to whom an offer was made.
+The rule also would have required
+contractors to maintain a copy of any
+record that forms the basis for any
+exclusion or exception claimed, the
+employee list provided to the
+contracting agency, and the employee
+list received from the contracting
+agency.
+
+The Department estimates that the
+extra time associated with keeping and
+providing these records, including the
+list of employees, to be an average of 1
+
+hour per firm per year, and that the
+work will be completed by a
+Compensation, Benefits, and Job
+Analysis Specialist, at a rate of $50.25
+per hour. Using the GDP deflator to
+inflate this into 2024 dollars
+corresponds to a rate of $57.10 per hour.
+The estimated undiscounted cost
+savings from eliminating the
+recordkeeping requirement is $6.83
+million ($57.10 per hour × 1 hour ×
+119,695).
+
+3. Displacement of Successor Contractor
+Employees
+
+There may be some limited cases of
+
+cost savings when a successor
+contractor has existing employees that
+they planned to assign to a newly-
+awarded contract, but the requirement
+to offer employment to predecessor
+contract workers might make their
+existing employees redundant. In this
+situation, if the successor contractor
+truly could not find another position for
+the employee on the new contract or on
+any of their other existing projects, the
+continued employment of a predecessor
+contract worker could be offset by the
+successor contract worker being laid off.
+The rescission of the rule may yield
+some additional cost savings to
+successor contractors in these cases.
+
+E. Summary of Costs and Cost Savings
+
+Costs and cost savings in Year 1
+
+consist of $8.01 million in undiscounted
+rule rescission familiarization costs,
+$40.30 million in implementation cost
+savings ($8.54 million for contractors
+and $31.76 million for contracting
+agencies), and $6.83 million in
+recordkeeping cost savings. Therefore,
+the total Year 1 undiscounted net cost
+savings of the are $39.12 million.
+Average annualized net cost savings
+over 10 years are $11.13 million using
+a 7 percent discount rate.
+
+F. Congressional Review Act
+
+Before a rule can take effect, 5 U.S.C.
+
+801, the Congressional Review Act
+(CRA) requires agencies to submit the
+rule and a report indicating whether it
+is a major rule to Congress and the
+Comptroller General. This final rule
+meets the criteria at 5 U.S.C. 804(2)(a)
+under the CRA because the revocation
+
+of 29 CFR part 9 is likely to have an
+annual effect on the economy of
+$100,000,000 or more. However, this
+final rule is not subject to the CRA’s
+general 60-day delayed effective date
+requirement, see 5 U.S.C. 801(a)(3),
+because the Department has determined
+that notice-and-comment rulemaking is
+unnecessary, for the reasons explained
+earlier. See 5 U.S.C. 808(2).
+
+VI. Regulatory Flexibility Act and
+Small Business Regulatory Enforcement
+Fairness Act
+
+The Regulatory Flexibility Act of 1980
+
+(RFA), 5 U.S.C. 601 et seq., as amended
+by the Small Business Regulatory
+Enforcement Fairness Act of 1996,
+Public Law 104–121 (March 29, 1996),
+requires Federal agencies engaged in
+rulemaking to consider the impact of
+their rules on small entities, consider
+alternatives to minimize that impact,
+and solicit public comment on their
+analyses. The RFA requires an
+assessment of the impact of a regulation
+on a wide range of small entities,
+including small businesses, not-for-
+profit organizations, and small
+governmental jurisdictions. Agencies
+must perform a review to determine
+whether a proposed or final rule would
+have a significant economic impact on
+a substantial number of small entities. 5
+U.S.C. 603, 604.
+
+A. Estimating the Number of Small
+Businesses Affected by the Rulemaking
+
+In order to determine the number of
+small businesses that will be affected by
+the rulemaking, the Department
+followed the same methodology laid out
+in section V.B.2. of the economic
+analysis. For the data from
+USASpending.gov, the business
+determination was based on the
+inclusion of ‘‘small’’ or ‘‘SBA’’ in the
+business type. For GSA’s System for
+Award Management (SAM) for October
+2022, if a company qualified as a small
+business in any reported NAICS, they
+were classified as ‘‘small.’’ Table 3
+shows the range of potentially affected
+small firms by industry. The total
+number of potentially affected small
+firms ranges from 74,097 to 329,470.
+
+TABLE 2—RANGE OF NUMBER OF POTENTIALLY AFFECTED SMALL FIRMS BY INDUSTRY
+
+Industry
+
+NAICS
+
+Total
+
+Small primes
+from
+USASpending.gov
+
+Small
+subcontractors
+from
+USASpending.gov
+
+Total
+
+Small
+firms
+from
+SAM
+
+Small
+subcontractors
+from
+USASpending.gov
+
+Lower-bound estimate
+
+Upper-bound estimate
+
+Agriculture, forestry, fishing and
+hunting ....................................
+
+11
+
+2,198
+
+2,198
+
+0
+
+3,849
+
+3,849
+
+0
+
+VerDate Sep<11>2014 21:18 Dec 19, 2025 Jkt 268001 PO 00000 Frm 00008 Fmt 4700 Sfmt 4700 E:\FR\FM\22DER1.SGM 22DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+3
+Y
+L
+W
+3
+H
+7
+P
+A
+L
+
+n
+o
+
+y
+e
+
+l
+l
+
+e
+k
+t
+59740
+
+Federal Register / Vol. 90, No. 243 / Monday, December 22, 2025 / Rules and Regulations
+
+Therefore, the Department estimates
+the total undiscounted net cost savings
+for small firms in the amount of $4.28
+million ($9.52 million in cost savings ¥
+$5.24 million in costs).
+
+email MST2 Erik Nadal, U.S. Coast
+Guard Sector San Francisco, Waterways
+Management Division; telephone (415)
+399–7440, email SFWaterways@
+uscg.mil.
+
+List of Subjects in 29 CFR Part 9
+
+Employment, Federal buildings and
+facilities, Government contracts, Law
+enforcement, Labor.
+
+PART 9—[REMOVED AND RESERVED]
+
+■ Accordingly, and under the authority
+of Executive Order 14148, 90 FR 8237,
+part 9 of title 29 of the Code of Federal
+Regulations is hereby removed and
+reserved.
+
+Dated: December 18, 2025.
+
+Andrew B. Rogers,
+Administrator, Wage and Hour Division.
+[FR Doc. 2025–23626 Filed 12–19–25; 8:45 am]
+
+BILLING CODE 4510–27–P
+
+DEPARTMENT OF HOMELAND
+SECURITY
+
+Coast Guard
+
+33 CFR Part 165
+
+[Docket No. USCG–2025–1056]
+
+Safety Zone; Stage Nine
+Entertainment, Sacramento NYE
+Fireworks, CA
+
+AGENCY: Coast Guard, DHS.
+ACTION: Notification of enforcement of
+regulation.
+
+SUMMARY: The Coast Guard will enforce
+the safety zone for the Stage Nine
+Entertainment, Sacramento New Year’s
+Eve Fireworks display in the Captain of
+the Port, San Francisco area of
+responsibility during the dates and
+times noted below. This action is
+necessary to protect life and property of
+the maritime public from the hazards
+associated with the fireworks display.
+During the enforcement period,
+unauthorized persons or vessels are
+prohibited from entering into, transiting
+through, or anchoring in the safety zone,
+unless authorized by the Patrol
+Commander (PATCOM) or other federal,
+state, or local law enforcement agencies
+assisting the Coast Guard in enforcing
+the regulated area.
+DATES: The regulations in 33 CFR
+165.1191, will be enforced for the
+location in Table 1 to § 165.1191, Item
+number 25, from 8:30 p.m. through 9:45
+p.m. on December 31, 2025.
+FOR FURTHER INFORMATION CONTACT: If
+you have questions about this
+notification of enforcement, call or
+
+SUPPLEMENTARY INFORMATION: The Coast
+Guard will enforce the safety zone
+established in 33 CFR 165.1191 Table 1,
+Item number 25, for the Stage Nine
+Entertainment, Sacramento New Year’s
+Eve Fireworks display from 8:30 p.m.
+through 9:45 p.m. on December 31,
+2025.
+
+The safety zone will extend to all
+navigable waters of Sacramento River,
+from surface to bottom, within a circle
+formed by connecting all points 700 feet
+of the Delta King Hotel (38.582805°,
+¥121.506880°), located near the Tower
+Bridge in Sacramento, CA. This zone
+will be in effect starting from 8:30 p.m.,
+which is 30 minutes prior to the
+fireworks display scheduled to begin at
+approximately 9 p.m. and conclude at
+9:45 p.m. on December 31, 2025.
+
+In addition to this notification of
+
+enforcement in the Federal Register, the
+Coast Guard plans to provide
+notification of this enforcement period
+via the Local Notice to Mariners and
+Broadcast Notice to Mariners.
+
+Under the provisions of 33 CFR
+165.1191, unauthorized persons or
+vessels are prohibited from entering
+into, transiting through, or anchoring in
+the safety zone during all applicable
+effective dates and times, unless
+authorized to do so by the PATCOM or
+other Official Patrol defined as a federal,
+state, or local law enforcement agency
+on scene to assist the Coast Guard in
+enforcing the regulated area.
+Additionally, each person granted
+permission to enter the zone who
+receives notice of a lawful order or
+direction issued by the PATCOM or
+Official Patrol must obey the order or
+direction. The PATCOM or Official
+Patrol, may, upon request, allow the
+transit of commercial vessels through
+regulated areas when it is safe to do so.
+If the Captain of the Port determines
+
+that the regulated area need not be
+enforced for the full duration stated in
+this notice, a Broadcast Notice to
+Mariners may be used to grant general
+permission to enter the regulated area.
+
+Jordan M. Baldueza,
+Captain, U.S. Coast Guard, Captain of the
+Port San Francisco.
+[FR Doc. 2025–23551 Filed 12–19–25; 8:45 am]
+
+BILLING CODE 9110–04–P
+
+DEPARTMENT OF COMMERCE
+
+National Oceanic and Atmospheric
+Administration
+
+50 CFR Part 660
+
+[Docket No. 250512–0084l; RTID 0648–
+XE941]
+
+Fisheries Off West Coast States;
+Modification of the West Coast Salmon
+Fisheries; Inseason Actions #1–#5
+
+AGENCY: National Marine Fisheries
+Service (NMFS), National Oceanic and
+Atmospheric Administration (NOAA),
+Commerce.
+ACTION: Inseason modification of 2025–
+2026 management measures.
+
+SUMMARY: NMFS announces five
+inseason actions for the 2025 portion of
+the 2025–2026 ocean salmon fisheries.
+These inseason actions modify the
+commercial salmon fisheries in the area
+from the United States/Canada border to
+Cape Falcon, Oregon.
+DATES: The effective dates for these
+inseason actions are set out in this
+document under the heading ‘‘Inseason
+Actions’’ and the actions remain in
+effect until superseded or modified.
+FOR FURTHER INFORMATION CONTACT:
+Shannon Penna, (562) 980–4239,
+Shannon.Penna@noaa.gov.
+SUPPLEMENTARY INFORMATION:
+
+Background
+
+The annual management measures for
+
+the 2025–2026 ocean salmon fisheries
+(90 FR 20810, May 16, 2025; 90 FR
+26943, June 25, 2025) govern the
+commercial and recreational fisheries in
+the area from the United States/Canada
+border to the United States/Mexico
+border, effective from 0001 hours Pacific
+Daylight Time (PDT), May 16, 2025,
+until the effective date of the 2026–2027
+management measures, as published in
+the Federal Register. NMFS is
+authorized to implement inseason
+management actions to modify fishing
+seasons, catch limits, and quotas as
+necessary to provide fishing
+opportunities while meeting
+management objectives for the affected
+species (50 CFR 660.409). Inseason
+actions in the salmon fishery may be
+taken directly by NMFS (50 CFR
+660.409(a)—Fixed inseason
+management provisions) or upon
+consultation with the Chairman of the
+Pacific Fishery Management Council
+(Council), and the appropriate State
+Directors (50 CFR 660.409(b)—Flexible
+inseason management provisions).
+
+VerDate Sep<11>2014 21:18 Dec 19, 2025 Jkt 268001 PO 00000 Frm 00010 Fmt 4700 Sfmt 4700 E:\FR\FM\22DER1.SGM 22DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+3
+Y
+L
+W
+3
+H
+7
+P
+A
+L
+
+n
+o
+
+y
+e
+
+l
+l
+
+e
+k
+t

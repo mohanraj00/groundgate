@@ -1,0 +1,69 @@
+Density readings on the solid Flint J-6983 (red) must be between the ranges of
+0.95 to 0.90. The optimal scanning range is 0.93. Density readings on the solid
+black must be between the ranges of 112 to 108. The optimal scanning range is
+110.
+
+Note: The readings are taken using an Ex-Rite 500 series densitometer, in
+Status T with Absolute or – paper setting under an Illuminate 5000 Kelvin Watt
+Light. You must maintain print contrast specification of ink and densitometer
+reflectivity reading throughout the entire production run.
+•
+
+MacBeth PCM-II. The tested Print Contrast Signal (PCS) values when
+using the MacBeth PCM-II tester on the “C” scale must range from
+0.01 minimum to 0.06 maximum.
+
+•
+
+•
+
+Kidder 082A. The tested PCS values when using the Kidder 082A
+tester on the Infra Red (IR) scale must range from 0.12 minimum to
+0.21 maximum. White calibration disc must be 100%. Sensitivity must
+be set at one (1).
+
+Alternative testers must be approved by the IRS to establish tested PCS
+values. You may obtain approval by writing to the following address.
+
+Internal Revenue Service
+Attn: Substitute Forms Program
+C:DC:TS:CAR:MP:P:TP:TP
+ATSC
+4800 Buford Highway
+Mail Stop 061-N
+Chamblee, GA 30341
+
+2.1.7
+Typography
+
+.
+Type must be substantially identical in size and shape to the official form. All
+rules are either 1/2-point or 3/4-point. Rules must be identical to those on the
+official IRS form.
+
+2.1.8
+Dimensions
+
+Note: The form identifying number must be nonreflective carbon-based black
+ink in OCR A font.
+
+.
+Generally, three Copies A of Forms 1098, 1099, 3921, and 3922 are contained
+on a single page (3-to-a-page), 8 inches wide (without any snap-stubs and/or
+pinfeed holes) by 11 inches deep.
+
+Exceptions. Forms 1097-BTC, 1098, 1098-Q, 1099-B, 1099-DIV, 1099-INT,
+1099-K, 1099-LPS, 1099-MISC, 1099-NEC, 1099-OID, 1099-R, and 5498
+contain two copies on a single page (2-to-a-page). Forms 1098-C, 1099-DA,
+and 1042-S are single-page documents.
+
+There is a 0.33-inch top margin from the top of the corrected box, and a 0.2- to
+0.25-inch right margin, with a +/- 1/20 (0.05) inch tolerance for the right margin.
+If the right and top margins are properly aligned, the left margin for all forms
+will be correct. All margins must be free of print. See Exhibits A through FF in
+Part 6 for correct form measurements.
+
+These measurements are constant for certain Forms 1098, 1099, and 5498.
+These measurements are shown only once in this publication, on Form
+
+12
