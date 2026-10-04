@@ -410,18 +410,26 @@ def key_mentions(text: str, keys: tuple[str, ...]) -> list[tuple[int, int, str]]
 
 
 # a label line (SPEC §4.5): a line of its own, after a blank line or the start of the text and
-# before a blank line, that holds at most 12 words, no sentence end and no final "."
-_LABEL_LINE = re.compile(r"(?:\A|\n[ \t\r]*\n)[ \t\r]*([^\n]*?)[ \t\r]*(?=\n[ \t\r]*\n)")
+# before a blank line, that holds at most 12 words, no sentence end and no final "." or ";"
 _LABEL_MAX_WORDS = 12
 _INNER_END = re.compile(r"[.;]\s")
+_LINE_SPACE = " \t\r"
 
 
 def _label_line_in(text: str, start: int, end: int) -> bool:
-    """Whether a label line lies wholly in text[start:end]."""
-    for m in _LABEL_LINE.finditer(text, start, end):
-        line = m.group(1)
+    """Whether a label line lies wholly in text[start:end]. A plain scan of the lines, so the
+    time is linear in the length of the region."""
+    lines = text[start:end].split("\n")
+    blank = [not line.strip(_LINE_SPACE) for line in lines]
+    # a line needs a full blank line before it (or the start of the text) and a full blank line
+    # after it, so it is never the first piece of the region, which may start inside a line
+    for i, line in enumerate(lines[:-2]):
+        before = (i >= 2 and blank[i - 1]) or (i == 0 and start == 0)
+        if not before or not blank[i + 1]:
+            continue
+        body = line.strip(_LINE_SPACE)
         # the line break counts as whitespace, so a final "." or ";" is a sentence end too
-        if line and len(line.split()) <= _LABEL_MAX_WORDS and not _INNER_END.search(line + "\n"):
+        if body and len(body.split()) <= _LABEL_MAX_WORDS and not _INNER_END.search(body + "\n"):
             return True
     return False
 
