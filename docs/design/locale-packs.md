@@ -5,7 +5,7 @@ numbers, number words and currency in any Latin-script language, and how that gr
 
 ## 1. The problem
 
-Every text rule in spec 0.2 assumes US English. I ran these on the current core:
+Every text rule in spec 0.2 assumes US English. I ran these on the spec 0.2 core:
 
 | Document | Value | Outcome | Correct outcome |
 |---|---|---|---|
@@ -17,9 +17,10 @@ Every text rule in spec 0.2 assumes US English. I ran these on the current core:
 | `Die Dosis beträgt 2.000 mg.` | 2 | admitted | rejected |
 | `The fee is $2.5M a year.` | 2500000 | rejected `VALUE_NOT_IN_EVIDENCE` | admitted |
 
-Two of these are escapes in English today. The dot in "approx." and "Rs." ends the sentence, so the
-qualifier before it is outside the window. Issue #63 tracks this. The German row is the worst: groundgate admits a
-value that is 1000 times too small.
+Two of these were escapes in English under spec 0.2. The dot in "approx." and "Rs." ended the
+sentence, so the qualifier before it was outside the window. Spec 0.3 fixes both (#63, PR #72) with
+an English list of 47 abbreviations, for the qualifier window only. The German row is the worst:
+groundgate admits a value that is 1000 times too small.
 
 **Terms.** The *packet* is all the inputs of one run: the document text, the schema, the policy
 and the candidates. A *token* is one unit of reading: a run of characters that groundgate reads as
@@ -257,8 +258,18 @@ directly ("pas plus de" is `le`). The inversion rule applies only in a pack that
 that has a measurement for it.
 
 **Sentence ends.** The pack lists the abbreviations that do not end a sentence: "approx.", "Rs.",
-"No.", "e.g.", "vs." in English, and "ca.", "z. B.", "Nr." in German. This fixes the two English
-escapes in §1.
+"No.", "e.g.", "vs." in English, and "ca.", "z. B.", "Nr." in German. Spec 0.3 already has the
+English list in the core (PR #72), so the `en-US` pack takes that list as it is. PR #72 found three
+limits that every pack keeps:
+
+- The list applies to the qualifier window only. A wider window can only add a flag. Key scope
+  and the unit search still end at every dot, because two security reviews showed that a join
+  there lets the key or unit of one sentence reach a value in the next.
+- A dot does not end a sentence only when a lowercase letter, a digit or a currency sign follows
+  it, and no blank line.
+- An abbreviation must not collide with a common word. English leaves out "ca", because it also
+  matches the state code "CA" before a ZIP code. The German pack can list "ca." only if its
+  vectors and its measurement show no such collision in German text.
 
 **Letters.** Word boundaries use Unicode letters (category L), not `[A-Za-z]`. "über" and "jusqu'à"
 are then whole words. The spec defines a letter and a digit by Unicode category, so Python and
@@ -281,8 +292,8 @@ choose which stages share a spec version later.
 | Stage | Work | Decision change |
 |---|---|---|
 | 0 | Move every current English list into a built-in `en-US` pack. | None: all vectors, the v0.1 rescore and the set-2 rescore stay byte for byte. |
-| 1 | Abbreviations that do not end a sentence; digits and letters by Unicode category. | Yes, in English. |
-| 2 | Number formats from the pack: `en-IN` (#59), `de`, `fr`, `es` formats; `NUMBER_FORMAT_AMBIGUOUS`. | Yes. |
+| 1 | Digits and letters by Unicode category. The English abbreviation list is already in spec 0.3 (PR #72); this stage moves it into the `en-US` pack. | Yes, in English (digits). |
+| 2 | Number formats from the pack: `en-IN`, `de`, `fr`, `es` formats; `NUMBER_FORMAT_AMBIGUOUS`. Indian grouping (#59) goes into spec 0.3 directly (PR #75); this stage moves it into the `en-IN` pack. | Yes. |
 | 3 | Currency in packs; scale abbreviations. | Yes. |
 | 4 | Qualifier, negation, range and change words for `de`, `fr` and `es`. | Yes, in those packs. |
 | 5 | Number words. | Yes. |
