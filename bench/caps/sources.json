@@ -12,7 +12,8 @@
       "select": {
         "pages": [
           2,
-          3
+          3,
+          6
         ]
       }
     },
@@ -56,7 +57,8 @@
         "pages": [
           1,
           14,
-          22
+          22,
+          23
         ]
       }
     },
@@ -71,8 +73,7 @@
       "select": {
         "pages": [
           4,
-          5,
-          6
+          5
         ]
       }
     },
@@ -163,7 +164,8 @@
       "select": {
         "pages": [
           2,
-          3
+          3,
+          4
         ]
       }
     },
@@ -178,10 +180,24 @@
       "select": {
         "pages": [
           2,
-          3,
           7,
-          10,
-          13
+          13,
+          14,
+          18
+        ]
+      }
+    },
+    {
+      "id": "irs-p925",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p925.pdf",
+      "sha256": "dda751f07a7059488659c18d3e81afaa1463528b0951b0f8351fa16137cda5d3",
+      "select": {
+        "pages": [
+          15
         ]
       }
     },
@@ -392,20 +408,6 @@
       }
     },
     {
-      "id": "fr-2024-31234",
-      "kind": "fr",
-      "groups": [
-        "dots"
-      ],
-      "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-30/pdf/2024-31234.pdf",
-      "sha256": "f117560934b754dcdd21af62ba59530101ebe8946c565d891a04d2886b9eb0f3",
-      "select": {
-        "pages": [
-          1
-        ]
-      }
-    },
-    {
       "id": "fr-2024-31188",
       "kind": "fr",
       "groups": [
@@ -433,6 +435,23 @@
         "pages": [
           1,
           4
+        ]
+      }
+    },
+    {
+      "id": "fr-2024-31141",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-30/pdf/2024-31141.pdf",
+      "sha256": "e49d16004b8ab062e3718ef217b6a84b30829929e3fdedcf12bfbe274bc0c7c4",
+      "select": {
+        "pages": [
+          1,
+          5,
+          6,
+          7
         ]
       }
     }

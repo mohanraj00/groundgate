@@ -33,7 +33,7 @@ import dots  # noqa: E402  (bench/dots/dots.py)
 import pairs  # noqa: E402  (bench/patterns/pairs.py)
 import pick as walk  # noqa: E402  (bench/pick.py)
 
-PER_KIND, PER_DOC, CONTEXT = 50, 5, 100
+PER_KIND, PER_DOC, CONTEXT = 50, 5, 40
 KINDS = ("irs", "fr")
 # "U.S.", "No." or "Nos." as a whole word, then whitespace with at most one line break, then an
 # uppercase letter
@@ -47,10 +47,14 @@ def caps_in(text: str) -> list[re.Match[str]]:
     return [m for m in CAP_DOT.finditer(text) if not any(a <= m.start() < b for a, b in heads)]
 
 
-def dot_key(page: str, m: re.Match[str]) -> str:
-    """The text around a dot: CONTEXT code points on each side, whitespace runs read as one
-    space."""
-    return " ".join(page[max(0, m.start() - CONTEXT) : m.end() + CONTEXT].split())
+def dot_keys(page: str, m: re.Match[str]) -> set[str]:
+    """The text on each side of a dot: CONTEXT code points before it through the abbreviation,
+    and the abbreviation through CONTEXT code points after it, whitespace runs read as one
+    space. One side is enough to match, because a copied sentence such as a sign-off can stand
+    between different text."""
+    before = page[max(0, m.start() - CONTEXT) : m.end()]
+    after = page[m.start() : m.end() + CONTEXT]
+    return {"<" + " ".join(before.split()), ">" + " ".join(after.split())}
 
 
 def dots_set_keys() -> set[str]:
@@ -58,22 +62,23 @@ def dots_set_keys() -> set[str]:
     keys = set()
     for path in sorted((HERE.parent / "dots" / "docs").glob("*.txt")):
         for page in path.read_text(encoding="utf-8").split("\f"):
-            keys |= {dot_key(page, m) for m in caps_in(page)}
+            for m in caps_in(page):
+                keys |= dot_keys(page, m)
     return keys
 
 
 def fresh_finder(seen: set[str] | None = None) -> Callable[[str], list[re.Match[str]]]:
     """A finder of the caps dots on a page that passes over a dot when an earlier dot, or a dot
-    in ``seen``, had the same text around it. Federal Register rules share printed pages, and
-    IRS publications repeat paragraphs, so the same dot can turn up in two documents."""
+    in ``seen``, had the same text on one side of it. Federal Register rules share printed
+    pages, and IRS publications repeat paragraphs, so the same dot can turn up twice."""
     seen = set(seen or ())
 
     def find(page: str) -> list[re.Match[str]]:
         out = []
         for m in caps_in(page):
-            key = dot_key(page, m)
-            if key not in seen:
-                seen.add(key)
+            keys = dot_keys(page, m)
+            if not keys & seen:
+                seen.update(keys)
                 out.append(m)
         return out
 

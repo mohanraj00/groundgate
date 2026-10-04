@@ -293,3 +293,134 @@ the payer.
 Publication 559 (2025)
 
 3
+be filed if you are claiming a refund and either of the fol-
+lowing applies to you.
+
+• You are a surviving spouse filing an original or amen-
+
+ded joint return with the decedent.
+
+• You are a court-appointed or certified personal repre-
+sentative filing the decedent’s original return and a
+copy of the court certificate showing your appointment
+is attached to the return.
+
+Note: If the personal representative is filing a claim for
+refund on Form 1040-X, Amended U.S. Individual Income
+Tax Return, or Form 843, Claim for Refund and Request
+for Abatement, you must attach a court certificate showing
+your appointment to Form 1310, even if you have previ-
+ously filed that certificate with the IRS.
+
+Example. E. Green died before filing the tax return.
+You were appointed the personal representative for E.
+Green's estate, and you file the Form 1040 or 1040-SR
+showing a refund due. You don't need Form 1310 to claim
+the refund if you attach a copy of the court certificate to
+the tax return showing you were appointed the personal
+representative.
+
+Tip: If you are a surviving spouse and you receive a tax
+refund check in both your name and your deceased spou-
+se's name, you can have the check reissued in your name
+alone. Return the joint-name check marked “VOID” along
+with Form 1310 to your local IRS office or the service cen-
+ter where you mailed your return, along with a written re-
+quest for reissuance of the refund check. A new check will
+be issued in your name and mailed to you.
+
+Death certificate. When filing the decedent's final in-
+come tax return, don't attach the death certificate or other
+proof of death to the final return. Instead, keep it for your
+records and provide it if requested.
+
+Nonresident Alien
+
+If the decedent was a nonresident alien who would have
+had to file Form 1040-NR, U.S. Nonresident Alien Income
+Tax Return, you must file that form for the decedent's final
+tax year. See the Instructions for Form 1040-NR for the fil-
+ing requirements, due date, and where to file.
+
+Joint Return
+
+Generally, the personal representative and the surviving
+spouse can file a joint return for the decedent and the sur-
+viving spouse. However, the surviving spouse alone can
+file the joint return if no personal representative has been
+appointed before the due date for filing the final joint return
+for the year of death. This also applies to the return for the
+preceding year if the decedent died after the close of the
+preceding tax year and before filing the return for that year.
+The income of the decedent that was includible on the de-
+cedent’s return for the year up to the date of death (see
+Income To Include, later) and the income of the surviving
+spouse for the entire year must be included on the final
+joint return.
+
+A final joint return with the decedent can't be filed if the
+surviving spouse remarried before the end of the year of
+the decedent's death. The filing status of the decedent in
+this instance is married filing a separate return.
+
+For information about tax benefits to which a surviving
+spouse may be entitled, see Tax Benefits for Survivors,
+later, under Other Tax Information.
+
+Personal representative may revoke joint return elec-
+tion. A court-appointed personal representative may re-
+voke an election to file a joint return previously made by
+the surviving spouse alone. This is done by filing a sepa-
+rate return for the decedent within 1 year from the due
+date of the return (including any extensions). The joint re-
+turn filed by the surviving spouse will then be regarded as
+the separate return of that spouse by excluding the dece-
+dent's items and refiguring the tax liability.
+
+Relief from joint liability. In some cases, one spouse
+may be relieved of joint liability for tax, interest, and penal-
+ties on a joint return for items of the other spouse that
+were incorrectly reported on the joint return. If the dece-
+dent qualified for this relief while alive, the personal repre-
+sentative can pursue an existing request, or file a request,
+for relief from joint liability. For information on requesting
+this relief, see Pub. 971, Innocent Spouse Relief.
+
+Income To Include
+
+The decedent's income includible on the final return is
+generally determined as if the person were still alive ex-
+cept that the tax period is usually shorter because it ends
+on the date of death. The method of accounting regularly
+used by the decedent before death also determines the in-
+come includible on the final return. This section explains
+how some types of income are reported on the final return.
+
+For more information about accounting methods, see
+
+Pub. 538, Accounting Periods and Methods.
+
+Cash Method
+
+If the decedent accounted for income under the cash
+method, only those items actually or constructively re-
+ceived before death are included on the final return.
+
+Constructive receipt of income. Interest from coupons
+on the decedent's bonds is constructively received by the
+decedent if the coupons matured in the decedent's final
+tax year but had not been cashed. Include the interest in-
+come on the final return.
+
+Generally, a dividend is considered constructively re-
+ceived if it was available for use by the decedent without
+restriction. If the corporation customarily mailed its divi-
+dend checks, the dividend was includible when received.
+If the individual died between the time the dividend was
+declared and the time it was received in the mail, the de-
+cedent didn't constructively receive it before death. Don't
+include the dividend on the final return.
+
+6
+
+Publication 559 (2025)

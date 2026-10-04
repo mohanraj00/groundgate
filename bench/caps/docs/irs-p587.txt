@@ -687,3 +687,142 @@ Subtract line 10 from line 6
 22
 
 Publication 587 (2025)
+Real estate taxes reported on Schedule A. When
+you figure your itemized deduction for state and local
+taxes on Schedule A, only include the personal portion of
+your real estate taxes on line 5b of Schedule A.
+
+Excess real estate taxes. See the instructions for
+line 15, later, to deduct the part of your real estate taxes
+for the home in which you conducted business that is not
+allowed on line 7 because of the limitation on deducting
+state and local taxes as a personal expense.
+
+Iteration instructions. Use these instructions if you
+
+answered “No” on line 7d of the Line 7 Worksheet, earlier.
+Step 1. Enter $10,000 ($5,000 if married filing sepa-
+
+rately) on line 8 of the Line 7 Worksheet.
+
+Step 2. Complete lines 9, 10, and 11 of the Line 7
+Worksheet. Use the results from the Line 7 Worksheet to
+complete the Worksheet to Figure the Deduction for Busi-
+ness Use of Your Home. Then use the results from the
+Worksheet to Figure the Deduction for Business Use of
+Your Home to determine the deduction for expenses for
+business use of your home on Schedule F, line 32. If you
+are a partner deducting unreimbursed partnership expen-
+ses, include the results in the appropriate column of
+Schedule E, line 28. See Partners under Where To De-
+duct, earlier.
+
+Step 3. Schedule E filers. Determine your total part-
+nership income or loss on line 32 using the amount from
+Step 2. Complete Schedule E, then figure any passive ac-
+tivity losses (Form 8582); net operating loss (Schedule 1,
+line 8a); self-employment tax (Schedule SE); the deduc-
+tion for one-half of self-employment tax (Schedule 1,
+line 15); self-employed SEP, SIMPLE, and qualified plans
+deduction (Schedule 1, line 16); self-employed health in-
+surance deduction (Schedule 1, line 17); IRA deduction
+(Schedule 1, line 20); student loan interest deduction
+(Schedule 1, line 21); adjustments to income (Schedule 1,
+line 26); and adjusted gross income (Form 1040 or
+1040-SR, line 11a).
+
+Schedule F filers. Determine your net profit (or loss)
+on line 34 using the amount from Step 2. Then figure your
+net operating loss (Schedule 1, line 8a); self-employment
+tax (Schedule SE); the deduction for one-half of self-em-
+ployment tax (Schedule 1, line 15); IRA deduction (Sched-
+ule 1, line 20); student loan interest deduction (Schedule
+1, line 21); adjustments to income (Schedule 1, line 26);
+and adjusted gross income (Form 1040 or 1040-SR,
+line 11a).
+
+Step 4. Enter the adjusted gross income amount deter-
+mined in Step 3 on line 2 of the State and Local Tax De-
+duction Worksheet in the Instructions for Schedule A
+(Form 1040). Figure your modified adjusted gross income
+on line 4 of the State and Local Tax Deduction Worksheet.
+• If this is the first time you completed Step 4, continue
+
+to Step 5.
+
+• If you are repeating Step 4, compare the current cal-
+culation of modified adjusted gross income from this
+step with the most recent prior calculation of modified
+adjusted gross income from this step. Is the difference
+between the current calculation of modified adjusted
+
+gross income and the most recent prior calculation of
+adjusted gross income more than $1?
+
+1. Yes. Continue to Step 5.
+
+2. No. Use the deduction for expenses for business use
+of your home determined in Step 2; the amounts de-
+termined in Step 3; the modified adjusted gross in-
+come determined in Step 4; and the overall limit on
+the deduction for state and local income, sales, and
+property taxes determined in the most recent calcula-
+tion in Step 5 to complete your return. STOP.
+
+Step 5. Use the modified adjusted gross income deter-
+mined in Step 4 to compute the overall limit on the deduc-
+tion for state and local income, sales, and property taxes
+on line 9 of the State and Local Tax Deduction Worksheet
+in the Instructions for Schedule A (Form 1040).
+
+Step 6. Enter the overall limit on the deduction for state
+and local income, sales, and property taxes determined in
+Step 5 on line 8 of the Pub. 587 Line 7 Worksheet. Repeat
+Steps 2 through 4.
+
+Lines 9 and 10. Multiply your total indirect expenses
+(line 8, column (b)) by the business percentage from
+line 3. Enter the result on line 9. Add this amount to the to-
+tal direct expenses (line 8, column (a)) and enter the total
+on line 10.
+
+Lines 11–13. Enter any other business expenses that are
+not attributable to business use of the home on line 11.
+Farmers should generally enter their total farm expenses
+before deducting office-in-the-home expenses. Do not en-
+ter the deductible part of your self-employment tax. Add
+the amounts on lines 10 and 11, and enter the total on
+line 12. Subtract line 12 from line 4, and enter the result on
+line 13. This is your deduction limit. You use it to deter-
+mine whether you can deduct any of your other expenses
+for business use of the home this year. If you cannot, you
+will carry them over to the next year in which you use ac-
+tual expenses to figure the deduction.
+
+If line 13 is zero or less, enter -0-. Deduct your expen-
+ses for deductible home mortgage interest, real estate
+taxes, casualty losses, and any business expenses not at-
+tributable to use of your home on the appropriate lines of
+the schedule(s) for Form 1040 or Form 1040-SR, as ex-
+plained earlier under Where To Deduct.
+
+Lines 14–23. On lines 14 through 20, enter your other-
+wise nondeductible expenses for the business use of your
+home. These include utilities, insurance, repairs, and
+maintenance. If you rent, report the amount paid on
+line 17. In column (a), enter the expenses that benefit only
+the business part of your home (direct expenses). In col-
+umn (b), enter the expenses that benefit the entire home
+(indirect expenses). Multiply line 21, column (b), by the
+business-use percentage (line 3) and enter this amount on
+line 22.
+
+If you deducted actual expenses for the business use of
+your home on your 2024 tax return, enter on line 23 the
+amount from line 41 of your 2024 worksheet. If you used
+the simplified method in 2024, enter on line 23 the amount
+from line 6a of your 2024 Simplified Method Worksheet.
+
+Publication 587 (2025)
+
+23

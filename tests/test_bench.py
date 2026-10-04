@@ -592,6 +592,10 @@ def test_a_caps_dot_with_the_text_of_an_earlier_dot_does_not_count_again() -> No
     page = "Rules of the U.S. Tax Court apply here."
     assert len(find(page)) == 1
     assert find("Rules of the  U.S.\nTax Court apply here.") == []
-    assert len(find("Rules of the U.S. Tax Court apply there.")) == 1
-    seeded = caps.fresh_finder({caps.dot_key(page, caps.caps_in(page)[0])})
+    assert len(find("Rules in the U.S. Code apply here.")) == 1
+    seeded = caps.fresh_finder(caps.dot_keys(page, caps.caps_in(page)[0]))
     assert seeded(page) == []
+    sign = "Captain, U.S. Coast Guard, Captain of the Port San Francisco."
+    find = caps.fresh_finder()
+    assert len(find("Dated: May 1. " + sign + " [FR Doc. 1]")) == 1
+    assert find("Dated: June 9. " + sign + " [FR Doc. 2]") == []

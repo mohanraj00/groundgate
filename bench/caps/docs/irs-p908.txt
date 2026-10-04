@@ -313,3 +313,132 @@ bankruptcy petition date in voluntary cases) is cause for
 Publication 908 (12-2025)
 
 3
+dismissal of the chapter 11 case, conversion to a chap-
+ter 7 case, or appointment of a chapter 11 trustee.
+
+Disclosure of debtor's return information to trustee.
+In bankruptcy cases filed under chapter 7 or 11 by individ-
+uals, the debtor's income tax returns for the year the bank-
+ruptcy case begins and for earlier years are, upon written
+request, open to inspection by or disclosure to the trustee.
+If the bankruptcy case was not voluntary, disclosure can-
+not be made before the bankruptcy court has entered an
+order for relief, unless the court rules that the disclosure is
+needed for determining whether relief should be ordered.
+
+In bankruptcy cases other than those of individuals fil-
+ing under chapter 7 or 11, the debtor's income tax returns
+for the current and prior years are, upon written request,
+open to inspection by or disclosure to the trustee, but only
+if the IRS finds that the trustee has a material interest that
+will be affected by information on the return. Material inter-
+est is generally defined as a financial or monetary interest.
+Material interest isn't limited to the trustee's responsibility
+to file a return on behalf of the bankruptcy estate.
+
+However, the U.S. Trustee (an officer of the Department
+of Justice responsible for maintaining and supervising a
+panel of private trustees for chapter 7 bankruptcy cases)
+and the standing chapter 13 trustee (the administrator of
+chapter 13 cases in a specific geographic region) gener-
+ally don't have a material interest in the debtor’s return or
+return information.
+
+Disclosure of bankruptcy estate's return information
+to debtor. The bankruptcy estate's tax return(s) is open,
+upon written request, to inspection by or disclosure to the
+individual debtor in a chapter 7 or 11 bankruptcy. Disclo-
+sure of the estate's return to the debtor may be necessary
+to enable the debtor to determine the amount and nature
+of the tax attributes, if any, that the debtor assumes when
+the bankruptcy estate terminates.
+
+Individuals in Chapter 12 or 13
+
+Only individuals may file a chapter 13 bankruptcy. Chap-
+ter 13 relief isn't available to corporations or partnerships.
+The bankruptcy estate is not treated as a separate entity
+for tax purposes when an individual files a petition under
+chapter 12 (Adjustment of Debts of a Family Farmer or
+Fisherman with Regular Annual Income) or 13 (Adjust-
+ment of Debts of an Individual with Regular Income) of the
+Bankruptcy Code. In these cases, the individual continues
+to file the same federal income tax returns that were filed
+prior to the bankruptcy petition, Form 1040 or 1040-SR.
+
+On the debtor's individual tax return, Form 1040 or
+1040-SR, report all income received during the entire year
+and deduct all allowable expenses. Don't include in in-
+come the amount from any debt canceled due to the debt-
+or's bankruptcy. To the extent the debtor has any basis in
+property, any losses, or any credits that were previously
+reduced as a result of canceled debt, these reductions
+must be included on the debtor's return. See Debt Cancel-
+lation, later.
+
+Interest on trust accounts in chapter 13 cases. In
+chapter 13 proceedings, do not include interest earned on
+amounts held by the trustee in trust accounts as income
+on the debtor's return. This interest isn't available to either
+the debtor or creditors; it is available only to the trustee for
+use by the U.S. Trustee system. The interest is also not
+taxable to the trustee as income.
+
+Individuals in Chapter 7 or 11
+
+When an individual debtor files for bankruptcy under
+chapter 7 or 11 of the Bankruptcy Code, the bankruptcy
+estate is treated as a new taxable entity, separate from the
+individual taxpayer.
+
+The bankruptcy estate in a chapter 7 case is represen-
+ted by a trustee. The trustee is appointed to administer the
+estate and liquidate any nonexempt assets. In chapter 11
+cases, the debtor often remains in control of the assets as
+a “debtor-in-possession” and acts as the bankruptcy
+trustee. However, the bankruptcy court, for cause, may
+appoint a trustee if such appointment is in the best inter-
+ests of the creditors and the estate.
+
+During the chapter 7 or 11 bankruptcy, the debtor con-
+tinues to file an individual tax return on Form 1040 or
+1040-SR. The bankruptcy trustee files a Form 1041 for the
+bankruptcy estate. However, when a debtor in a chap-
+ter 11 bankruptcy case remains a debtor-in-possession,
+the debtor must file both a Form 1040 or 1040-SR individ-
+ual return and a Form 1041 estate return for the bank-
+ruptcy estate (if return filing requirements are met).
+
+Although spouses may file a joint bankruptcy petition
+for their jointly administered bankruptcy estates, the es-
+tates are treated as two separate entities for tax purposes.
+Two separate bankruptcy estate income tax returns must
+be filed (if each spouse separately meets the filing re-
+quirements).
+
+For information about determining the tax due and pay-
+ing tax for a chapter 7 or 11 bankruptcy estate, see Bank-
+ruptcy Estate Tax Return Filing Requirements and Pay-
+ment of Tax Due, later.
+
+Debtor's Election To End Tax
+Year—Form 1040 or 1040-SR
+
+Short tax years. An individual debtor in a chapter 7 or 11
+case may elect to close the debtor's tax year for the year
+in which the bankruptcy petition is filed, as of the day be-
+fore the date on which the bankruptcy case commences. If
+the debtor makes this election, the debtor's tax year is
+divided into 2 short tax years of less than 12 months each.
+The first tax year ends on the day before the commence-
+ment date and the second tax year begins on the com-
+mencement date and ends on the normal year-end.
+
+If the election is made, the debtor's federal income tax
+liability for the first short tax year becomes an allowable
+claim against the bankruptcy estate arising before the
+bankruptcy filing. Also, the tax liability for the first short tax
+
+4
+
+Publication 908 (12-2025)
