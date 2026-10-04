@@ -1,0 +1,601 @@
+Federal Register / Vol. 89, No. 250 / Tuesday, December 31, 2024 / Rules and Regulations
+
+107021
+
+§ 309.130 How will Tribal IV–D programs
+be funded and what forms are required?
+
+(a) * * *
+(2) Tribes and Tribal organizations
+eligible for grants will receive a single
+annual award.
+*
+*
+
+*
+
+*
+
+*
+
+§ 309.135 [Amended]
+
+■ 50. Amend § 309.135(d) by removing
+the number ‘‘269A’’ and adding, in its
+place, the number ‘‘425’’.
+
+§ 309.145 [Amended]
+
+■ 51. Amend § 309.145(a)(3)(v) by
+removing the acronym ‘‘OCSE’’ and
+adding, in its place, the acronym
+‘‘OCSS’’.
+
+§ 309.160 [Amended]
+
+■ 52. Amend § 309.160 by removing the
+acronym ‘‘OCSE’’ everywhere it appears
+and adding, in its place, the acronym
+‘‘OCSS’’.
+
+§ 309.170 [Amended]
+
+■ 53. Amend § 309.170 by:
+■ a. Revising the first sentence of
+paragraph (a), the introductory text of
+paragraph (b), and paragraphs (b)(1) and
+(2);
+■ b. Adding the word ‘‘and’’ at the end
+of paragraph (b)(6);
+■ c. Removing paragraph (b)(7);
+■ d. Redesignate paragraph (b)(8) as
+paragraph (b)(7); and
+■ e. Revising paragraph (c).
+
+The revisions read as follows:
+
+§ 309.170 What statistical and narrative
+reporting requirements apply to Tribal IV–D
+programs?
+
+(a) Tribes and Tribal organizations
+operating a Tribal IV–D program must
+submit to OCSS the Child Support
+Services Program: Quarterly Report of
+Collections (Form OCSS–34). * * *
+(b) Tribes and Tribal organizations
+must submit the following information
+and statistics for Tribal IV–D program
+activity and caseload on the Tribal
+Annual Data Report (OCSS–75) for each
+annual funding period:
+
+(1) Total number of cases and, of the
+total number of cases, the number that
+are Tribal cases, the number that are
+State or Tribal TANF cases, and the
+number that are non-TANF cases;
+
+(2) Total number of children in cases
+
+open during the fiscal year and total
+number of children with paternity
+concluded;
+*
+*
+
+*
+
+*
+
+*
+
+(c) A Tribe or Tribal organization
+must submit the Tribal Annual Data
+Report (OCSS–75) required by
+paragraph (b) of this section no later
+than 90 days after the end of each
+funding period.
+
+PART 310—COMPUTERIZED TRIBAL
+IV–D SYSTEM AND OFFICE
+AUTOMATION
+
+DEPARTMENT OF TRANSPORTATION
+
+Federal Motor Carrier Safety
+Administration
+
+■ 54. The authority citation for part 310
+continues to read as follows:
+
+49 CFR Parts 386 and 387
+
+Authority: 42 U.S.C. 655(f) and 1302.
+
+[Docket No. FMCSA–2024–0280]
+
+§ 310.1 [Amended]
+
+RIN 2126–AC76
+
+■ 55. Amend § 310.1(a)(6) by removing
+the acronym ‘‘OCSE’’ and adding, in its
+place, the acronym ‘‘OCSS’’.
+
+§ 310.5 [Amended]
+
+■ 56. Amend § 310.5(b)(1) by:
+■ a. Removing the acronym ‘‘OCSE’’ and
+adding, in its place, the acronym
+‘‘OCSS’’; and
+■ b. Removing the words ‘‘of this part’’.
+
+§ 310.10 [Amended]
+
+■ 57. Amend § 310.10 by removing the
+acronym ‘‘OCSE’’ and adding, in its
+place, the acronym ‘‘OCSS’’ in
+paragraphs (a)(1), (f) introductory text,
+(f)(2), and (g).
+
+§ 310.20 [Amended]
+
+■ 58. Amend § 310.20 by removing the
+acronym ‘‘OCSE’’ everywhere it appears
+and adding, in its place, the acronym
+‘‘OCSS’’ in paragraphs (a)(1) and (b).
+
+§ 310.25 [Amended]
+
+■ 59. Amend § 310.25 by removing the
+acronym ‘‘OCSE’’ and adding, in its
+place, the acronym ‘‘OCSS’’ in
+paragraphs (b), (c)(2), and (d).
+
+§ 310.30 [Amended]
+
+■ 60. Amend § 310.30 by removing the
+acronym ‘‘OCSE’’ everywhere it appears
+and adding, in its place, the acronym
+‘‘OCSS’’ in paragraphs (a) and (b).
+
+§ 310.35 [Amended]
+
+■ 61. Amend § 310.35 by removing the
+acronym ‘‘OCSE’’ everywhere it appears
+and adding, in its place, the acronym
+‘‘OCSS’’ in paragraphs (a) introductory
+text, (a)(1) introductory text, (a)(1)(ii),
+(a)(2) introductory text, (a)(2)(ii), and
+(b).
+
+§ 310.40 [Amended]
+
+■ 62. Amend § 310.40 by removing the
+acronym ‘‘OCSE’’ everywhere it appears
+and adding, in its place, the acronym
+‘‘OCSS’’.
+[FR Doc. 2024–30987 Filed 12–30–24; 8:45 am]
+
+BILLING CODE 4184–41–P
+
+Broker and Freight Forwarder
+Financial Responsibility; Extension of
+Compliance Date
+
+AGENCY: Federal Motor Carrier Safety
+Administration (FMCSA), Department
+of Transportation (DOT).
+ACTION: Final rule.
+
+SUMMARY: FMCSA amends its November
+16, 2023, final rule, ‘‘Broker and Freight
+Forwarder Financial Responsibility,’’ by
+extending the compliance date for
+certain provisions from January 16,
+2025, to January 16, 2026. FMCSA is
+taking this action because the Agency
+determined that only its forthcoming
+online registration system will be used
+to accept filings and track notifications,
+and this functionality will not be added
+to its legacy systems. As the online
+registration system is not expected to be
+available before January 16, 2025,
+FMCSA extends the compliance date to
+provide regulated entities time to begin
+using and familiarizing themselves with
+the system before compliance is
+required.
+DATES: Effective date: This rule is
+effective December 31, 2024.
+
+Expiration dates: Section 387.307T,
+
+which contains the regulations on
+brokers of property surety bonds or trust
+funds which are currently in effect,
+expires as of January 16, 2026. Section
+387.307 is stayed until January 16, 2026.
+Compliance dates: Brokers, freight
+
+forwarders, surety providers, and
+financial institutions must comply with
+all the provisions of § 387.307 beginning
+on January 16, 2026.
+
+Petition submittal date: Petitions for
+reconsideration of this final rule must
+be submitted to the FMCSA
+Administrator no later than January 30,
+2025.
+FOR FURTHER INFORMATION CONTACT: Ana
+Alvarez, Financial Analyst, Office of
+Registration, Financial Responsibility
+Filings Division, FMCSA, 1200 New
+Jersey Avenue SE, West Building, 6th
+Floor, Washington, DC 20590; (202)
+366–0401; ana.alvarez@dot.gov. If you
+have questions on viewing or submitting
+material to the docket, call Dockets
+Operations at (202) 366–9826.
+SUPPLEMENTARY INFORMATION: FMCSA
+organizes this final rule as follows:
+
+VerDate Sep<11>2014 15:56 Dec 30, 2024 Jkt 265001 PO 00000 Frm 00045 Fmt 4700 Sfmt 4700 E:\FR\FM\31DER1.SGM 31DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+107026
+
+Federal Register / Vol. 89, No. 250 / Tuesday, December 31, 2024 / Rules and Regulations
+
+H. Privacy
+
+The Consolidated Appropriations Act,
+2005,^5 requires the Agency to assess the
+privacy impact of a regulation that will
+affect the privacy of individuals. This
+rule will not change any previously
+analyzed collections of personally
+identifiable information.
+
+The Privacy Act (5 U.S.C. 552a)
+
+applies only to Federal agencies and any
+non-Federal agency that receives
+records contained in a system of records
+from a Federal agency for use in a
+matching program.
+
+The E-Government Act of 2002,^6
+requires Federal agencies to conduct a
+Privacy Impact Assessment (PIA) for
+new or substantially changed
+technology that collects, maintains, or
+disseminates information in an
+identifiable form. No new or
+substantially changed technology will
+collect, maintain, or disseminate
+information as a result of this rule.
+Accordingly, FMCSA has not conducted
+a PIA. However, FMCSA will publish a
+PIA and a System of Records Notice
+covering all information that will be
+collected in the new online registration
+system.
+
+In addition, the Agency submitted a
+Privacy Threshold Assessment (PTA) to
+evaluate the risks and effects the
+proposed rulemaking might have on
+collecting, storing, and sharing
+personally identifiable information. The
+PTA was adjudicated by DOT’s Chief
+Privacy Officer on November 21, 2024.
+
+I. E.O. 13175 (Indian Tribal
+Governments)
+
+This rule does not have Tribal
+implications under E.O. 13175,
+Consultation and Coordination with
+Indian Tribal Governments, because it
+will not have a substantial direct effect
+on one or more Indian Tribes, on the
+relationship between the Federal
+Government and Indian Tribes, or on
+the distribution of power and
+responsibilities between the Federal
+Government and Indian Tribes.
+
+J. National Environmental Policy Act of
+1969
+
+FMCSA analyzed this rule pursuant to
+
+the National Environmental Policy Act
+of 1969 (42 U.S.C. 4321 et seq.) and
+determined this action is categorically
+excluded from further analysis and
+documentation in an environmental
+assessment or environmental impact
+statement under FMCSA Order 5610.1
+(69 FR 9680), appendix 2, paragraphs
+
+(6.k) and (6.q). The categorical
+exclusions (CEs) in paragraphs (6.k) and
+(6.q) cover broker activities and
+implementation of record preservation.
+The requirements in this rule are
+covered by these CEs.
+
+List of Subjects
+
+49 CFR Part 386
+
+Administrative practice and
+
+procedure, Brokers, Freight forwarders,
+Hazardous materials transportation,
+Highway safety, Highway and roads,
+Motor carriers, Motor vehicle safety,
+Penalties.
+
+49 CFR Part 387
+
+Buses, Freight, Freight forwarders,
+Hazardous materials transportation,
+Highway safety, Insurance,
+Intergovernmental relations, Motor
+carriers, Motor vehicle safety, Moving of
+household goods, Penalties, Reporting
+and recordkeeping requirements, Surety
+bonds.
+
+For the reasons set forth in the
+
+preamble, FMCSA amends 49 CFR parts
+386 and 387 as follows:
+
+PART 386—RULES OF PRACTICE FOR
+FMCSA PROCEEDINGS
+
+■ 1. The authority citation for part 386
+continues to read as follows:
+
+Authority: 28 U.S.C. 2461 note; 49 U.S.C.
+113, 1301 note, 31306a; 49 U.S.C. chapters 5,
+51, 131–141, 145–149, 311, 313, and 315; and
+49 CFR 1.81, 1.87.
+
+■ 2. Amend appendix B by revising and
+republishing paragraph (g)(24) to read as
+follows:
+
+Appendix B to Part 386—Penalty
+Schedule: Violations and Monetary
+Penalties
+
+*
+
+*
+
+*
+
+*
+*
+(g) * * *
+(24) Beginning on January 16, 2026, a
+surety company or financial institution
+for a broker or freight forwarder
+pursuant to § 387.307 of this subchapter
+that violates 49 U.S.C. 13906(b) or (c) or
+§ 387.307:
+
+(i) Is liable to the United States for a
+penalty of $12,882 for each violation;
+and
+
+(ii) Will be ineligible to provide
+broker financial security for 3 years.
+*
+*
+
+*
+
+*
+
+*
+
+PART 387—MINIMUM LEVELS OF
+FINANCIAL RESPONSIBILITY FOR
+MOTOR CARRIERS
+
+5 Public Law 108–447, 118 Stat. 2809, 3268, note
+
+following 5 U.S.C. 552a (Dec. 4, 2014).
+
+6 Public Law 107–347, sec. 208, 116 Stat. 2899,
+
+2921 (Dec. 17, 2002).
+
+■ 3. The authority citation for part 387
+continues to read as follows:
+
+Authority: 49 U.S.C. 13101, 13301, 13906,
+13908, 14701, 31138, 31139; sec. 204(a), Pub.
+
+L. 104–88, 109 Stat. 803, 941; and 49 CFR
+1.87.
+■ 4. Amend § 387.307 by:
+■ a. Lifting the stay of the section;
+■ b. Revising the introductory text and
+paragraphs (b) and (c)(6);
+■ c. Removing paragraph (c)(7);
+■ d. Redesignating paragraph (c)(8) as
+paragraph (c)(7); and
+■ e. Staying the section until January 16,
+2026.
+
+The revisions read as follows:
+
+§ 387.307 Property broker surety bond or
+trust fund.
+
+This section is effective January 16,
+
+2026.
+*
+
+*
+
+*
+
+*
+
+*
+
+(b) Acceptable assets. Trust funds
+under this section must contain assets
+aggregating to $75,000 that can be
+liquidated to cash within 7 calendar
+days. Acceptable assets included in any
+trust fund filed under this section are
+limited to cash, irrevocable letters of
+credit issued by a federally insured
+depository institution, and Treasury
+bonds.
+
+(c) * * *
+(6) An insurance company; or
+*
+
+*
+■ 5. Amend § 387.307T by revising the
+introductory text to read as follows:
+
+*
+
+*
+
+*
+
+§ 387.307T Property broker surety bond or
+trust fund.
+
+This section will remain in effect
+
+until January 16, 2026.
+*
+*
+*
+
+*
+
+*
+
+Issued under the authority of delegation in
+
+49 CFR 1.87.
+Vincent G. White,
+Deputy Administrator.
+[FR Doc. 2024–30509 Filed 12–30–24; 8:45 am]
+
+BILLING CODE 4910–EX–P
+
+DEPARTMENT OF THE INTERIOR
+
+Fish and Wildlife Service
+
+50 CFR Parts 19, 21, and 22
+
+[Docket No. FWS–HQ–MB–2022–0023;
+FXMB12320900000–245–FF09M31000]
+
+RIN 1018–BC76
+
+Regulatory Authorizations for
+Migratory Bird and Eagle Possession
+by the General Public, Educators, and
+Government Agencies
+
+AGENCY: Fish and Wildlife Service,
+Interior.
+ACTION: Final rule.
+
+SUMMARY: We, the U.S. Fish and
+Wildlife Service, are revising current
+regulatory authorizations and adding
+
+VerDate Sep<11>2014 15:56 Dec 30, 2024 Jkt 265001 PO 00000 Frm 00050 Fmt 4700 Sfmt 4700 E:\FR\FM\31DER1.SGM 31DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

@@ -1,0 +1,514 @@
+Department of the Treasury
+Internal Revenue Service
+
+Contents
+
+Publication 901
+(Rev. September 2024)
+Cat. No. 46849F
+
+U.S. Tax
+Treaties
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Sep 19, 2024
+
+What’s New . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Reminders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+Application of Treaties . . . . . . . . . . . . . . . . . . . . . . 2
+
+Tax Exemptions Provided by Treaties . . . . . . . . . . . 3
+Personal Services Income . . . . . . . . . . . . . . . . . . 3
+Professors, Teachers, and Researchers . . . . . . . 24
+Students and Apprentices . . . . . . . . . . . . . . . . . 29
+Wages and Pensions Paid by a Foreign
+
+Government
+
+. . . . . . . . . . . . . . . . . . . . . . . . . 43
+
+How To Get Tax Help . . . . . . . . . . . . . . . . . . . . . . . 52
+
+Taxpayer Assistance Inside the United States . . . 52
+
+Future Developments
+For the latest information about developments related to
+Pub. 901, such as treaties effective after it was published,
+go to IRS.gov/Pub901.
+
+What’s New
+U.S.-Chile income tax treaty. The United States and
+Chile entered into a tax treaty on December 19, 2023. The
+treaty is effective for withholding taxes on payments made
+on or after February 1, 2024, and is effective for tax years
+beginning on or after January 1, 2024, for any other taxes.
+U.S.-Hungary income tax treaty. On July 8, 2022, the
+United States terminated the income tax treaty between
+the government of the United States and the government
+of the Hungarian People's Republic. The termination of
+the treaty is effective for withholding taxes on payments
+made on or after January 1, 2024, and is effective for tax
+years beginning on or after January 1, 2024, for any other
+taxes.
+U.S.-Russia income tax treaty. On July 1, 2024, the
+United States provided formal notice to the Russian Fed-
+eration to confirm the suspension of paragraph 4 of Article
+1, and Articles 5-21 and 23 of the income tax treaty be-
+tween the United States and the Russian Federation, as
+well as the accompanying Protocol, by mutual agreement.
+The suspension of the treaty is effective both for taxes
+withheld at source and in respect of other taxes on August
+16, 2024. The suspension will continue until otherwise de-
+cided by the two governments.
+
+Reminders
+Disclosure of a treaty-based position that reduces
+your tax. If you take the position that any U.S. tax is over-
+(a
+ruled or otherwise
+treaty-based position), you must generally disclose that
+
+reduced by a U.S.
+
+treaty
+position on your affected return. See Application of Trea-
+ties, later.
+
+tax questions, tax returns, or payments to the above ad-
+dress.
+
+Tax treaty tables. The tax treaty tables previously con-
+tained in this publication have been updated and moved to
+IRS.gov. You can locate the tables on IRS.gov by entering
+"Tax Treaty Table" in the search box. Click on "Tax Treaty
+Tables." You can also access the tables by going to
+IRS.gov/TreatyTables.
+
+Getting answers to your tax questions. If you have
+a tax question not answered by this publication or the How
+To Get Tax Help section at the end of this publication, go
+to the IRS Interactive Tax Assistant page at IRS.gov/
+Help/ITA where you can find topics by using the search
+feature or viewing the categories listed.
+
+U.S.-U.S.S.R. income tax treaty. The U.S.-U.S.S.R. in-
+come tax treaty remains in effect for the following mem-
+bers of the Commonwealth of Independent States (C.I.S.):
+Armenia, Azerbaijan, Belarus, Georgia, Kyrgyzstan, Mol-
+dova, Tajikistan, Turkmenistan, and Uzbekistan. That
+treaty will remain in effect until new treaties with these indi-
+vidual countries are negotiated and ratified. Provisions of
+the U.S.-U.S.S.R. income tax treaty are discussed in this
+publication under Commonwealth of Independent States,
+later.
+
+U.S.-China income tax treaty. The U.S.-China income
+tax treaty does not apply to Hong Kong.
+
+Introduction
+This publication will tell you whether a tax treaty between
+the United States and a particular country offers a re-
+duced rate of, or possibly a complete exemption from,
+U.S. income tax for residents of that particular country.
+
+You should use this publication only for quick ref-
+erence. It is not a complete guide to all provisions
+of every income tax treaty.
+
+For more detailed information on treaty benefits, you
+should consult the text of the applicable treaty. The trea-
+ties are available at IRS.gov/TreatyTables.
+
+Obtaining copies of treaties. You can get complete in-
+formation about treaty provisions from the taxing authority
+in the country from which you receive income or from the
+treaty itself.
+
+You can obtain the text of most of the treaties at
+IRS.gov/TreatyTables. You can also obtain the text of most
+of the treaties at the following address.
+
+Department of the Treasury
+Office of Public Correspondence
+1500 Pennsylvania Ave. NW — Rm. 3419
+Washington, DC 20220
+
+Comments and suggestions. We welcome your com-
+ments about this publication and suggestions for future
+editions.
+
+You can send us comments
+
+IRS.gov/
+FormComments. Or, you can write to the Internal Revenue
+Service, Tax Forms and Publications, 1111 Constitution
+Ave. NW, IR-6526, Washington, DC 20224.
+
+through
+
+Although we can’t respond individually to each com-
+ment received, we do appreciate your feedback and will
+consider your comments and suggestions as we revise
+our tax forms, instructions, and publications. Don’t send
+
+Getting tax forms, instructions, and publications.
+Go to IRS.gov/Forms to download current and prior-year
+forms, instructions, and publications.
+
+Ordering tax forms, instructions, and publications.
+Go to IRS.gov/OrderForms to order current forms, instruc-
+tions, and publications; call 800-829-3676
+to order
+prior-year forms and instructions. The IRS will process
+your order for forms and publications as soon as possible.
+Don’t resubmit requests you’ve already sent us. You can
+get forms and publications faster online.
+
+Useful Items
+You may want to see:
+
+Publication
+
+519
+
+519 U.S. Tax Guide for Aliens
+
+597
+
+597 Information on the United States–Canada
+Income Tax Treaty
+
+Form (and Instructions)
+
+8833
+
+8833 Treaty-Based Return Position Disclosure
+Under Section 6114 or 7701(b)
+
+See How To Get Tax Help at the end of this publication for
+information about getting these publications and forms.
+
+Application of Treaties
+
+The United States has income tax treaties with a number
+of foreign countries. Under these treaties, residents (not
+necessarily citizens) of foreign countries are taxed at a re-
+duced rate, or are exempt from U.S. income taxes on cer-
+tain items of income they receive from sources within the
+United States. These reduced rates and exemptions vary
+among countries and specific items of income.
+
+If there is no treaty between your country and the Uni-
+ted States, you must pay tax on the income in the same
+way and at the same rates shown in the Instructions for
+Form 1040-NR, U.S. Nonresident Alien
+Income Tax
+Return. Also see Pub. 519 at IRS.gov/Pub519.
+
+Many of the individual states of the United States tax
+the income of their residents. Therefore, you should con-
+sult the tax authorities of the state in which you live to find
+out if that state taxes the income of individuals and, if so,
+whether the tax applies to any of your income.
+
+Tax treaties reduce the U.S. income taxes of residents
+of foreign countries. With certain exceptions, they do not
+reduce the U.S. income taxes of U.S. citizens or residents.
+
+2
+
+Publication 901 (9-2024)
+
+!
+
+CAUTION
+U.S. citizens and residents are subject to U.S. income tax
+on their worldwide income.
+
+means a day during any part of which you are physically
+present in the United States.
+
+Treaty provisions are generally reciprocal (apply to both
+treaty countries); therefore, a U.S. citizen or resident who
+receives income from a treaty country may refer to the ta-
+bles in this publication to see if a tax treaty might affect the
+tax to be paid to that foreign country. Foreign taxing au-
+thorities sometimes require certification from the U.S.
+Government that an applicant filed an income tax return
+as a U.S. citizen or resident, as part of the proof of entitle-
+ment to the treaty benefits. See Form 8802, Application for
+United States Residency Certification, to request a certifi-
+cation.
+
+Terms defined. Several terms appear in many of the dis-
+cussions that follow. The exact meanings of the terms are
+determined by the particular tax treaty under discussion;
+thus, the meanings vary among treaties. The definitions
+that follow are therefore general definitions that may not
+give the exact meaning intended by a particular treaty.
+
+The terms “fixed base” and “permanent establishment”
+generally mean a fixed place of business, such as a place
+of management, a branch, an office, a factory, a ware-
+house, or a mining site through which an enterprise car-
+ries on its business.
+
+to
+
+treaty
+
+reduced by a U.S.
+
+Disclosure of a treaty-based position that reduces
+your tax. If you take the position that any U.S. tax is over-
+(a
+ruled or otherwise
+treaty-based position), you must generally disclose that
+position on Form 8833 and attach it to your return. If you
+are not required
+file a return because of your
+treaty-based position, you must file a return anyway to re-
+port your position. The filing of Form 8833 does not apply
+to a reduced rate of withholding tax on noneffectively con-
+nected income, such as dividends, interest, rents, or royal-
+ties, or to a reduced rate of tax on pay received for serv-
+ices performed as an employee, including pensions,
+annuities, and social security. For more information, see
+Pub. 519 and the Form 8833 instructions.
+
+If you fail to file Form 8833, you may have to pay a
+$1,000 penalty. Corporations are subject to a $10,000
+penalty for each failure.
+
+Tax Exemptions Provided by
+Treaties
+
+This publication contains discussions of the exemptions
+from tax and certain other effects of the tax treaties on the
+following types of income.
+
+• Pay for certain personal services performed in the Uni-
+
+ted States.
+
+• Pay of a professor, teacher, or researcher who
+
+teaches or performs research in the United States for
+a limited time.
+
+• Amounts received for maintenance and studies by a
+foreign student or apprentice who is here for study or
+experience.
+
+• Wages, salaries, and pensions paid by a foreign gov-
+
+ernment.
+
+Personal Services Income
+
+Pay for certain personal services performed in the United
+States is exempt from U.S. income tax if you are a resident
+of one of the countries discussed below, if you are in the
+United States for a limited number of days, and if you meet
+certain other conditions. For this purpose, the word “day”
+
+The term “borne by” generally means having ultimate fi-
+nancial accounting responsibility for, or providing the mon-
+etary resources for, an expenditure or payment, even if an-
+the
+other entity
+expenditure or payment.
+
+location actually made
+
+in another
+
+Australia
+
+Income that residents of Australia receive for performing
+personal services as independent contractors or self-em-
+ployed individuals (independent personal services) in the
+United States during the tax year is exempt from U.S. in-
+come tax if the residents:
+
+• Are in the United States for no more than 183 days
+
+during the tax year, and
+
+• Do not have a fixed base regularly available to them in
+the United States for the purpose of performing the
+services.
+
+If they have a fixed base available in the United States,
+they are taxed on the income attributable to the fixed
+base.
+
+Pay that residents of Australia receive for labor or per-
+sonal services performed in the United States as employ-
+ees (dependent personal services), including services as
+a director of a company, is exempt from U.S. income tax if:
+• The residents are in the United States for no more
+
+than 183 days during the tax year;
+
+• The pay is paid by, or on behalf of, an employer or
+
+company that is not a resident of the United States;
+and
+
+• The pay is not deductible in determining the taxable
+income of the trade or business of the employer (or
+company) in the United States.
+
+These exemptions do not apply to entertainers (such as
+theater, motion picture, radio, or television artists; or musi-
+cians) or athletes from Australia who earn more than
+$10,000 in gross receipts, including reimbursed expenses,
+from their entertainment or athletic activities in the United
+States during the tax year.
+
+Publication 901 (9-2024)
+
+3
+China, People's Republic of
+
+An individual who is a resident of the People's Republic of
+China and who is temporarily in the United States primar-
+ily to teach, lecture, or conduct research at a university or
+other accredited educational institution or scientific re-
+search institution is exempt from U.S. income tax on in-
+come for the teaching, lecturing, or research for a total of
+not more than 3 years.
+
+The exemption does not apply to income from research
+carried on mainly for the private benefit of any person
+rather than in the public interest.
+
+Commonwealth of Independent States
+(C.I.S.)
+
+An individual who is a resident of a C.I.S. member on the
+date of arrival in the United States and who is temporarily
+in the United States at the invitation of the U.S. Govern-
+ment or an educational or scientific research institution in
+the United States primarily to teach, engage in research,
+or participate in scientific, technical, or professional con-
+ferences is exempt from U.S. income tax on income for
+teaching, research, or participation in these conferences
+for a maximum period of 2 years.
+
+The exemption does not apply to income from research
+carried on mainly for the benefit of a private person, in-
+cluding a commercial enterprise of the United States or a
+foreign trade organization of a C.I.S. member.
+
+The exemption does, however, apply if the research is
+conducted through an intergovernmental agreement on
+cooperation.
+
+The exemption also applies to journalists and corre-
+spondents who are temporarily in the United States for pe-
+riods not longer than 2 years and who receive their com-
+pensation from abroad. It is not necessary that the
+journalists or correspondents be invited by the U.S. Gov-
+ernment or other appropriate institution, nor does it matter
+that they are employed by a private person, including
+commercial enterprises and foreign trade organizations.
+
+Czech Republic
+
+An individual is exempt from U.S. income tax on income
+for teaching or research for up to 2 years if they:
+
+• Are a resident of the Czech Republic immediately be-
+
+fore visiting the United States; and
+
+• Are in the United States primarily to teach or conduct
+research at a university, college, school, or other ac-
+credited educational or research institution.
+
+A Czech resident is entitled to these benefits only once.
+
+However, the exemption does not apply if:
+• The resident claimed during the immediate preceding
+period the benefits described later under Students
+and Apprentices, or
+
+• The income is from research undertaken primarily for
+the private benefit of a specific person or persons.
+
+Egypt
+
+An individual who is a resident of Egypt on the date of ar-
+rival in the United States and who is temporarily in the Uni-
+ted States primarily to teach or engage in research, or
+both, at a university or other recognized educational insti-
+tution is exempt from U.S. income tax on income from the
+teaching or research for a maximum of 2 years from the
+date of arrival in the United States. The individual must
+have been invited to the United States for a period not ex-
+pected to be longer than 2 years by the U.S. Government
+or a state or local government, or by a university or other
+recognized educational institution in the United States.
+
+The exemption does not apply if the resident claimed,
+during the immediately preceding period, the benefits de-
+scribed later under Students and Apprentices.
+
+The exemption does not apply to income from research
+carried on mainly for the private benefit of any person
+rather than in the public interest.
+
+France
+
+An individual who is a resident of France on the date of ar-
+rival in the United States and who is temporarily in the Uni-
+ted States at the invitation of the U.S. Government, a uni-
+versity, or other recognized educational or research
+institution in the United States primarily to teach or en-
+gage in research, or both, at a university or other educa-
+tional or research institution is exempt from U.S. income
+tax on income from teaching or research for a maximum of
+2 years from the date of arrival in the United States.
+
+An individual may claim this benefit only once. Also,
+this benefit and the benefits described later under Stu-
+dents and Apprentices can be claimed for no more than 5
+years.
+
+The exemption does not apply to income from research
+carried on mainly for the private benefit of any person
+rather than in the public interest.
+
+Germany
+
+A professor or teacher who is a resident of Germany and
+who is temporarily in the United States to engage in ad-
+vanced study or research or teaching at an accredited ed-
+ucational institution or institution engaged in research for
+the public benefit is exempt from U.S. tax on income re-
+ceived for such study, research, or teaching for a maxi-
+mum of 2 years from the date of arrival in the United
+States.
+
+The exemption does not apply to income from research
+carried on mainly for the private benefit of any person
+rather than in the public interest. The exemption does not
+apply if, during the preceding period, the benefit described
+
+Publication 901 (9-2024)
+
+25

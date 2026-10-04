@@ -1,0 +1,804 @@
+Federal Register / Vol. 89, No. 250 / Tuesday, December 31, 2024 / Rules and Regulations
+
+106981
+
+DEPARTMENT OF AGRICULTURE
+
+Animal and Plant Health Inspection
+Service
+
+9 CFR Part 53
+
+[Docket No. APHIS–2023–0088]
+
+RIN 0579–AE79
+
+Payment of Indemnity and
+Compensation for Highly Pathogenic
+Avian Influenza
+
+AGENCY: Animal and Plant Health
+Inspection Service, USDA.
+ACTION: Interim rule and request for
+comments.
+
+SUMMARY: We are amending the
+regulations pertaining to conditions for
+payment of indemnity for highly
+pathogenic avian influenza (HPAI).
+Specifically, we are requiring
+commercial poultry premises to
+successfully pass a biosecurity audit
+prior to restocking if they were
+previously HPAI-infected and wish to
+be eligible for indemnity for the
+restocked poultry. We are also requiring
+a biosecurity audit for commercial
+poultry premises in the buffer zone
+prior to movement of poultry onto the
+premises, if the premises wishes to be
+eligible for indemnity for the poultry
+moved onto the premises. We are also
+revising the regulations to preclude
+indemnity payments for poultry moved
+onto premises in infected zones if the
+poultry become infected with HPAI
+within 14 days following the dissolution
+of the control area in which the infected
+zone is located. This action is necessary
+on an immediate basis in order to
+ensure that commercial poultry
+producers who receive indemnity
+payments for HPAI are taking measures
+to preclude the introduction and spread
+of HPAI, and avoiding actions that
+contribute to its spread. This action
+amends the regulations to condition
+indemnity for HPAI accordingly.
+DATES: This interim rule is effective
+December 31, 2024. We will consider all
+comments that we receive on or before
+March 3, 2025.
+ADDRESSES: You may submit comments
+by either of the following methods:
+
+• Federal eRulemaking Portal: Go to
+
+www.regulations.gov. Enter APHIS–
+2023–0088 in the Search field. Select
+the Documents tab, then select the
+Comment button in the list of
+documents.
+
+• Postal Mail/Commercial Delivery:
+
+Send your comment to Docket No.
+APHIS–2023–0088, Regulatory Analysis
+and Development, PPD, APHIS, Station
+
+2C–10.16, 4700 River Road, Unit 25,
+Riverdale, MD 20737–1238.
+
+Supporting documents and any
+comments we receive on this docket
+may be viewed at Regulations.gov or in
+our reading room, which is located in
+room 1620 of the USDA South Building,
+14th Street and Independence Avenue
+SW, Washington, DC. Normal reading
+room hours are 8 a.m. to 4:30 p.m.,
+Monday through Friday, except
+holidays. To be sure someone is there to
+help you, please call (202) 799–7039
+before coming.
+FOR FURTHER INFORMATION CONTACT: Dr.
+Leonardo L. Sevilla, DVM, Veterinary
+Medical Officer, Poultry Health Team,
+VS Strategy and Policy Aquaculture,
+Swine, Equine, and Poultry (ASEP),
+ASEP Health Center, 920 Main Campus
+Drive, Raleigh, NC 27606; (984) 766–
+1528; Leonardo.sevilla@usda.gov.
+SUPPLEMENTARY INFORMATION:
+
+Background
+
+The Animal and Plant Health
+Inspection Service (APHIS) of the
+United States Department of Agriculture
+(USDA or the Department) administers
+regulations at 9 CFR part 53 (referred to
+below as the regulations) that provide
+for the payment of indemnity to owners
+of animals that are required to be
+destroyed because of foot-and-mouth
+disease, pleuropneumonia, Newcastle
+disease, highly pathogenic avian
+influenza (HPAI), infectious salmon
+anemia, spring viremia of carp, or any
+other communicable disease of livestock
+or poultry that, in the opinion of the
+Secretary of Agriculture, constitutes an
+emergency and threatens the U.S.
+livestock or poultry population.
+Payment for animals destroyed is based
+on the fair market value of the animals
+at the time of their destruction.
+
+Section 53.2 of the regulations
+
+authorizes the APHIS Administrator to
+cooperate with a State in the control and
+eradication of disease, as that term is
+defined in § 53.1. Section 53.2(b) allows
+for payments to cover the costs for
+purchase, destruction, and disposition
+of animals required to be destroyed
+because of being infected with or
+exposed to such disease. Section 53.10
+of the regulations provides conditions
+under which indemnity claims are not
+allowed, whereas § 53.11 provides
+conditions under which payment will
+be made on indemnity claims resulting
+from HPAI outbreaks.
+
+HPAI Outbreaks and Responses
+
+wildlife, and producers’ livelihoods, as
+well as significant impacts on
+international trade in poultry and
+poultry products. Certain strains of
+avian influenza have the potential to
+affect humans. An HPAI outbreak in
+poultry in the United States is declared
+when the first case in domestic poultry
+meets the case definition of HPAI as
+defined in USDA APHIS’ National List
+of Reportable Animal Diseases (NLRAD)
+(https://www.aphis.usda.gov/sites/
+default/files/avian-influenza-case-
+definition.pdf). Stakeholders are
+notified of HPAI outbreaks through
+several routes of information; for
+example, online announcements are
+posted on the APHIS website at: https://
+www.aphis.usda.gov/news.
+Additionally, pursuant to the World
+Organization for Animal Health
+(WOAH) standards,^1 at the onset of an
+HPAI outbreak in the United States,
+national level outbreak information is
+posted on the World Animal Health
+Information System.^2 The HPAI
+outbreak applies to the entire country,
+and to the State in which the initial
+premises that tested positive is located.
+The outbreak ends in a specific State
+when the State regains freedom from
+HPAI pursuant to the WOAH standards.
+WOAH does not grant official
+recognition of freedom from HPAI in
+poultry. Per WOAH standards, the
+national HPAI outbreak ends when the
+United States declares freedom from
+HPAI in poultry by providing evidence
+demonstrating that the requirements for
+the disease status have been met in
+accordance with WOAH standards.
+Specifically, an outbreak ends when the
+country provides scientific data that
+explains the epidemiology of avian
+influenza in the region concerned and
+also demonstrates how all the risk
+factors are managed. This includes proof
+of effective surveillance strategies that
+mitigate the introduction of HPAI. The
+United States cannot declare freedom
+from HPAI in poultry for the entire
+country if HPAI exists in poultry in any
+State or territory within the country.
+
+Beginning in December 2014, the U.S.
+
+poultry industry experienced a severe
+outbreak of HPAI, discovered in
+
+1 Countries declare freedom from HPAI by
+
+providing evidence demonstrating that the
+requirements for the disease status have been met
+in accordance with WOAH standards found here:
+https://www.woah.org/fileadmin/Home/eng/
+
+Health_standards/tahc/2023/chapitre_avian_
+influenza_viruses.pdf. For more information on
+eradication see https://www.aphis.usda.gov/sites/
+default/files/hpai_response_plan.pdf.
+
+HPAI is an extremely infectious and
+fatal form of avian influenza in poultry.
+An HPAI outbreak can have significant
+consequences for the poultry industry,
+
+For more information on control area release see
+
+https://www.aphis.usda.gov/sites/default/files/
+control_area_release.pdf.
+
+2 For more information on reporting outbreaks see
+
+WAHIS—https://wahis.woah.org/#/home.
+
+VerDate Sep<11>2014 15:56 Dec 30, 2024 Jkt 265001 PO 00000 Frm 00005 Fmt 4700 Sfmt 4700 E:\FR\FM\31DER1.SGM 31DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+106982
+
+Federal Register / Vol. 89, No. 250 / Tuesday, December 31, 2024 / Rules and Regulations
+
+backyard flocks in the Pacific
+Northwest, and in two commercial
+turkey and chicken flocks in California.
+APHIS issued a final July 2015 report of
+the 2014–2015 outbreak, (https://
+www.aphis.usda.gov/animal_health/
+emergency_management/downloads/
+hpai/2015-hpai-final-report.pdf),
+regarding surveillance and other
+response services by APHIS, which has
+been provided to the public. APHIS
+determined that from January 2015 to
+March 2015, the disease spread slowly
+to multiple States, including Minnesota,
+Missouri, Arkansas, and Kansas. In June
+2015, the last case of HPAI was
+confirmed in a commercial flock.
+However, the cost associated with
+response activities was the most
+expensive animal health incident
+recorded in U.S. history. The final cost
+associated with the 2014–2015 outbreak
+was nearly $1 billion. The cost obligated
+for response activities totaled $650
+million and indemnity payments totaled
+$200 million, and an additional $100
+million was made available for further
+preparedness activities.
+
+The impact of the 2014–2015 HPAI
+
+outbreak spread beyond financial
+resources and economic concerns. The
+outbreak resulted in regulatory revisions
+to address biosecurity 3 concerns
+identified during the outbreak. In the
+July 2015 report, APHIS determined
+that, amongst other factors, poor
+biosecurity was responsible for the
+introduction of HPAI into some
+commercial poultry facilities. More
+specifically, APHIS stated in the report
+that ‘‘biosecurity measures must be
+improved on premises to not only stop
+HPAI transmission during an outbreak
+but prevent HPAI introductions into
+commercial poultry flocks in the
+future.’’ Biosecurity basics are aimed at
+evaluating a premises for possible
+introduction of disease onto the
+premises, and taking appropriate
+mitigations to address these possible
+sources of introduction and to limit the
+spread of disease, if introduced. Within
+the context of HPAI, these include, but
+are not limited to, the following: (1)
+Keeping visitors on the premises to a
+minimum (HPAI can be transmitted by
+
+3 ‘‘Biosecurity’’ refers to everything people do to
+keep diseases—and the viruses, bacteria, funguses,
+parasites, and other microorganisms that cause
+disease—away from birds, property, and people.
+Biosecurity includes both structural biosecurity and
+operational biosecurity. Structural Biosecurity
+refers to measures used in the physical construction
+and maintenance of coops, pens, poultry houses,
+family farms, commercial farms, and other facilities.
+Operational Biosecurity refers to practices,
+procedures, and policies that people follow
+consistently. For more information see https://
+www.aphis.usda.gov/livestock-poultry-disease/
+avian/defend-the-flock.
+
+fomites, such as clothing); (2) washing
+hands before coming in contact with
+live poultry (HPAI virus can be
+transmitted by persons coming into
+physical contact with affected poultry);
+(3) cleaning/disinfecting tools or
+equipment before moving them to a new
+poultry facility (HPAI virus can survive
+on the surfaces of farm equipment,
+including tools and means of
+conveyance); and (4) removing wild bird
+nesting and harborage, preventing
+access of wild birds to poultry
+enclosures, and precluding wild birds
+from coming in contact with feed used
+at the premises (as discussed below,
+wild birds can be a significant pathway
+for the spread of HPAI). APHIS poultry
+biosecurity recommendations can be
+found at: https://www.aphis.usda.gov/
+livestock-poultry-disease/avian/defend-
+the-flock.
+
+During the 2014–2015 outbreak,
+APHIS initially paid full indemnity to
+bird owners of poultry infected with
+HPAI, regardless of whether or not the
+owners had a biosecurity plan in place
+at their facilities at the time of
+introduction. In response, APHIS
+amended the regulations, in an interim
+rule published in the Federal Register,
+and effective, on February 9, 2016, (81
+FR 6745–6751, Docket No. APHIS–
+2015–0061),^4 pertaining to conditions
+for payment of HPAI indemnity claims.
+We added a requirement for owners and
+contractors to provide a statement that
+at the time of detection of HPAI in their
+facilities, they had in place and were
+following a poultry biosecurity plan.
+Section 53.1 defines a ‘‘poultry
+biosecurity plan’’ as ‘‘[a] document
+utilized by an owner and/or contractor
+describing the management practices
+and principles that are used to prevent
+the introduction and spread of
+infectious diseases of poultry at a
+specific facility.’’ The interim rule also
+exempted owners and contractors from
+this requirement if any of the following
+apply:
+
+• Premises meet the size criteria of
+the National Poultry Improvement Plan
+(NPIP) 5 regulations in that they are
+either:
+
+Æ Commercial table-egg laying
+
+premises with fewer than 75,000 birds;
+Æ Egg-type game bird and egg-type
+waterfowl premises with fewer than
+25,000 birds;
+
+4 To view the interim rule, its supporting
+
+documentation, or the comments that we received,
+go to https://www.regulations.gov/docket/APHIS-
+2015-0061.
+
+5 NPIP is a cooperative Federal-State-industry
+certification program administered by APHIS. For
+more information on NPIP, see https://www.poultry
+improvement.org.
+
+• Premises on which fewer than
+100,000 broilers are raised annually; or
+• Premises on which fewer than
+
+30,000 meat turkeys are raised annually.
+We took comment on the interim rule
+
+for 60 days, ending April 11, 2016. In
+response to comments received during
+the comment period, in a final rule
+published in the Federal Register on
+August 15, 2018 (83 FR 40433–40438,
+Docket No. APHIS–2015–0061),^6 we
+amended § 53.11 of the regulations to
+require biosecurity plan audits.
+Specifically, the final rule required
+facilities that are subject to the
+provisions of the 2016 interim rule to
+have their biosecurity plans audited at
+least once every 2 years. The final rule
+also subjected facilities to additional
+audits, as needed, during this biennial
+period to satisfy their Official State
+Agency (OSA). The OSA is the State
+authority that we recognize as a
+cooperator in the administration of the
+requirements of the NPIP. While this
+auditing mechanism was recommended
+by the comments on the 2016 interim
+rule, it is worth noting that the auditing
+mechanism was also recommended by
+NPIP at their 2016 biennial conference.^7
+As part of the audit, the OSA will, at
+minimum, evaluate the poultry
+biosecurity plan itself, which will
+include an evaluation of the poultry
+biosecurity plan against 14 biosecurity
+principles articulated in the NPIP
+Program Standards policy document,^8
+and review the documentation showing
+that the poultry biosecurity plan is
+being implemented.
+
+APHIS believed that the provisions of
+
+the 2016 HPAI indemnity rule, as
+amended to include this auditing
+provision, would be sufficient to reduce
+spread of the virus in the event of
+another HPAI outbreak.
+
+The 2022–2024 HPAI Outbreak and the
+Need for Revised Auditing Procedures
+
+Our experience with a subsequent
+outbreak of HPAI in poultry in 2022–
+2024 has indicated that the 2016 interim
+rule and the subsequent 2018 final rule
+were insufficient to address initial
+introduction of HPAI into flocks on
+premises in proximity to an infected
+premises, or subsequent reintroduction
+of HPAI into flocks on premises
+previously infected with HPAI. As of
+
+6 To access the 2018 final rule, go to https://
+
+www.regulations.gov/document/APHIS-2015-0061-
+0021.
+
+7 For more information on the NPIP biennial
+
+conference, see https://www.poultry
+improvement.org/.
+
+8 Approved biosecurity principles are listed in the
+
+NPIP Program Standards found here: https://
+www.poultryimprovement.org/documents/Program
+StandardsA-E.pdf.
+
+VerDate Sep<11>2014 15:56 Dec 30, 2024 Jkt 265001 PO 00000 Frm 00006 Fmt 4700 Sfmt 4700 E:\FR\FM\31DER1.SGM 31DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+Federal Register / Vol. 89, No. 250 / Tuesday, December 31, 2024 / Rules and Regulations
+
+106989
+
+audit), but also by how well the plan is
+implemented and maintained on-site.
+
+Through the current outbreak, APHIS
+
+has found that the effectiveness of a
+poultry biosecurity plan would likely be
+better evaluated by visual inspection of
+the premises in question, specifically
+visual inspection of the more at-risk
+premises in the control area. When
+producers fail to effectively implement
+and maintain their poultry biosecurity
+plan, the deficiencies can be quite
+pronounced and the consequences quite
+significant—namely that the premises
+gets infected with HPAI multiple times.
+In one particular case, APHIS
+determined that a producer had avoided
+the required biennial audits and had not
+effectively implemented a poultry
+biosecurity plan before HPAI was
+introduced onto the producer’s
+premises. Ultimately, six premises
+owned by the same producer and within
+the same control area were infected with
+HPAI. Significant biosecurity lapses
+were also identified at each of the
+affected premises. Biosecurity
+deficiencies may also be a contributing
+factor to premises becoming reinfected
+with HPAI. During the current HPAI
+outbreak, a total of 67 unique
+commercial poultry premises have been
+infected with HPAI at least twice,
+including 19 premises that have been
+infected 3 or more times.
+
+Third, in March 2024, HPAI was
+detected in dairy cattle. Prior to this,
+HPAI was sporadically detected in
+mammals, particularly those with close
+contact to infected poultry and wild
+birds, those that share feed or water
+sources, or those that scavenge
+carcasses. However, the confirmation of
+HPAI in dairy cattle in late March 2024,
+and the subsequent transmission of the
+disease largely due to the interstate and
+regional movement of livestock, people,
+and equipment, marked a significant
+change in the epidemiology of HPAI and
+posed another potential source of the
+virus for poultry flocks.
+
+As of November 2024, APHIS and
+State teams have conducted extensive
+epidemiological work to investigate the
+links between HPAI-affected dairy
+premises and evidence of spillover into
+poultry premises. This new, distinct
+HPAI virus genotype poses a new
+animal disease risk as it can infect both
+cattle and poultry. The phylogenetic
+and epidemiological data indicate
+spread between dairy premises, and
+from dairy premises to poultry
+premises.^15 While many factors
+
+15 For more information on the phylogenetic and
+
+epidemiological data, see https://
+www.aphis.usda.gov/sites/default/files/hpai-dairy-
+faqs.pdf and https://www.aphis.usda.gov/livestock-
+
+contribute to transmission between
+premises, small amounts of
+unpasteurized milk from affected dairy
+animals can harbor high levels of virus
+and can be easily spread among dairy
+farms and between dairy and poultry
+farms through the movements of people,
+vehicles, trucks, and other animals
+including non-migratory, peridomestic
+birds. Poultry are much more
+susceptible to small amounts of virus
+that results in infection, which increases
+the potential for ongoing disease spread.
+Finally, since April 2024, several cases
+in workers on affected dairy and poultry
+premises have been reported.
+
+This recent lateral spread of HPAI
+within and between dairy herds and
+spillover into poultry flocks, poses
+increased risks of HPAI introduction
+and spread for poultry that effectively
+implemented poultry biosecurity plans
+may mitigate. Without the biosecurity
+audits for at-risk poultry premises to
+confirm effective implementation of
+poultry biosecurity plans as established
+by this interim rule, the spread of HPAI
+in the United States could escalate, not
+only in poultry, but also in other
+livestock, increasing the impact of the
+current outbreak. As demonstrated by
+the current outbreak, that impact
+extends beyond the economic
+implications for the livelihood of
+poultry producers to the physical health
+of individual workers who come into
+contact with infected animals. In
+response to the current outbreak in
+dairy cattle, APHIS has issued a second
+Federal Order to require national
+surveillance to continue to address the
+risk the disease in dairy cattle, and as
+a result, potential spread to other
+species. Escalation in the introduction
+and spread of HPAI needs to be
+addressed immediately.
+
+Under these circumstances, the
+
+Administrator has determined for good
+cause under 5 U.S.C. 553(b)(B) that prior
+notice and opportunity for public
+comment is impracticable and that there
+is good cause under 5 U.S.C. 553(d)(3)
+for making this action effective less than
+30 days after publication in the Federal
+Register.
+
+We will consider comments we
+
+receive during the comment period for
+this interim rule (see DATES above).
+After the comment period closes, we
+will publish another document in the
+Federal Register. The document will
+include a discussion of any comments
+we receive and any amendments we are
+making to the interim rule.
+
+poultry-disease/avian/avian-influenza/hpai-
+livestock.
+
+Executive Orders 12866, 13563, and
+Regulatory Flexibility Act
+
+This interim rule has been determined
+
+to be significant for the purposes of
+Executive Order 12866 as amended by
+Executive Order 14094, ‘‘Modernizing
+Regulatory Review,’’ and, therefore, has
+been reviewed by the Office of
+Management and Budget (OMB).
+We have prepared an economic
+analysis for this interim rule. The
+economic analysis provides a cost-
+benefit analysis, as required by
+Executive Orders 12866 and 13563,
+which direct agencies to assess all costs
+and benefits of available regulatory
+alternatives and, if regulation is
+necessary, to select regulatory
+approaches that maximize net benefits
+(including potential economic,
+environmental, public health and safety
+effects, and equity). Executive Order
+13563 emphasizes the importance of
+quantifying both costs and benefits, of
+reducing costs, of harmonizing rules,
+and of promoting flexibility. The
+economic analysis also examines the
+potential economic effects of this
+interim rule on small entities, as
+required by the Regulatory Flexibility
+Act. The economic analysis is
+summarized below. The full analysis
+may be viewed on the Regulations.gov
+website (see ADDRESSES above for
+instructions for accessing
+Regulations.gov) or obtained from the
+person listed under FOR FURTHER
+INFORMATION CONTACT.
+
+APHIS is establishing requirements
+for certain poultry premises to complete
+a biosecurity audit as a condition for
+receiving indemnity payments for
+poultry depopulated because of an
+outbreak of HPAI. APHIS’ response to
+HPAI via regulation is not new. In 2016,
+APHIS published an interim rule (81 FR
+6745–6751, Docket No. APHIS–2015–
+0061) 16 that amended § 53.10 of the
+indemnity regulations to require
+producers provide, as a condition for
+receiving indemnity payments, a
+statement that at the time of HPAI
+detection on their premises, that they
+had in place and were following a
+poultry biosecurity plan consistent with
+NPIP biosecurity standards. In response
+to comments received during the
+comment period on the interim rule, in
+the final rule published in 2018, APHIS
+amended § 53.11 of the indemnity
+regulations to require poultry
+biosecurity plan audits at least once
+every 2 years or enough times during
+that period to satisfy the Official State
+
+16 To view the interim rule, its supporting
+
+documentation, or the comments that we received,
+go to https://www.regulations.gov/docket/APHIS-
+2015-0061.
+
+VerDate Sep<11>2014 15:56 Dec 30, 2024 Jkt 265001 PO 00000 Frm 00013 Fmt 4700 Sfmt 4700 E:\FR\FM\31DER1.SGM 31DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

@@ -1,0 +1,911 @@
+[
+ {
+  "id": "irs-p559:2623",
+  "doc": "irs-p559",
+  "kind": "irs",
+  "abbreviation": [
+   2620,
+   2624
+  ]
+ },
+ {
+  "id": "irs-p559:2705",
+  "doc": "irs-p559",
+  "kind": "irs",
+  "abbreviation": [
+   2702,
+   2706
+  ]
+ },
+ {
+  "id": "irs-p559:5337",
+  "doc": "irs-p559",
+  "kind": "irs",
+  "abbreviation": [
+   5334,
+   5338
+  ]
+ },
+ {
+  "id": "irs-p559:5389",
+  "doc": "irs-p559",
+  "kind": "irs",
+  "abbreviation": [
+   5386,
+   5390
+  ]
+ },
+ {
+  "id": "irs-p559:5429",
+  "doc": "irs-p559",
+  "kind": "irs",
+  "abbreviation": [
+   5426,
+   5430
+  ]
+ },
+ {
+  "id": "irs-p570:63",
+  "doc": "irs-p570",
+  "kind": "irs",
+  "abbreviation": [
+   60,
+   64
+  ]
+ },
+ {
+  "id": "irs-p570:2104",
+  "doc": "irs-p570",
+  "kind": "irs",
+  "abbreviation": [
+   2101,
+   2105
+  ]
+ },
+ {
+  "id": "irs-p570:2186",
+  "doc": "irs-p570",
+  "kind": "irs",
+  "abbreviation": [
+   2183,
+   2187
+  ]
+ },
+ {
+  "id": "irs-p570:2274",
+  "doc": "irs-p570",
+  "kind": "irs",
+  "abbreviation": [
+   2271,
+   2275
+  ]
+ },
+ {
+  "id": "irs-p570:2432",
+  "doc": "irs-p570",
+  "kind": "irs",
+  "abbreviation": [
+   2429,
+   2433
+  ]
+ },
+ {
+  "id": "irs-p575:234",
+  "doc": "irs-p575",
+  "kind": "irs",
+  "abbreviation": [
+   231,
+   235
+  ]
+ },
+ {
+  "id": "irs-p575:978",
+  "doc": "irs-p575",
+  "kind": "irs",
+  "abbreviation": [
+   975,
+   979
+  ]
+ },
+ {
+  "id": "irs-p575:1804",
+  "doc": "irs-p575",
+  "kind": "irs",
+  "abbreviation": [
+   1801,
+   1805
+  ]
+ },
+ {
+  "id": "irs-p575:1845",
+  "doc": "irs-p575",
+  "kind": "irs",
+  "abbreviation": [
+   1842,
+   1846
+  ]
+ },
+ {
+  "id": "irs-p575:3696",
+  "doc": "irs-p575",
+  "kind": "irs",
+  "abbreviation": [
+   3693,
+   3697
+  ]
+ },
+ {
+  "id": "irs-p584:3794",
+  "doc": "irs-p584",
+  "kind": "irs",
+  "abbreviation": [
+   3791,
+   3795
+  ]
+ },
+ {
+  "id": "irs-p584-b:4141",
+  "doc": "irs-p584-b",
+  "kind": "irs",
+  "abbreviation": [
+   4138,
+   4142
+  ]
+ },
+ {
+  "id": "irs-p587:1171",
+  "doc": "irs-p587",
+  "kind": "irs",
+  "abbreviation": [
+   1168,
+   1172
+  ]
+ },
+ {
+  "id": "irs-p587:6635",
+  "doc": "irs-p587",
+  "kind": "irs",
+  "abbreviation": [
+   6632,
+   6636
+  ]
+ },
+ {
+  "id": "irs-p587:6699",
+  "doc": "irs-p587",
+  "kind": "irs",
+  "abbreviation": [
+   6696,
+   6700
+  ]
+ },
+ {
+  "id": "irs-p587:11291",
+  "doc": "irs-p587",
+  "kind": "irs",
+  "abbreviation": [
+   11289,
+   11292
+  ]
+ },
+ {
+  "id": "irs-p587:11507",
+  "doc": "irs-p587",
+  "kind": "irs",
+  "abbreviation": [
+   11505,
+   11508
+  ]
+ },
+ {
+  "id": "irs-p594:1231",
+  "doc": "irs-p594",
+  "kind": "irs",
+  "abbreviation": [
+   1228,
+   1232
+  ]
+ },
+ {
+  "id": "irs-p594:11131",
+  "doc": "irs-p594",
+  "kind": "irs",
+  "abbreviation": [
+   11128,
+   11132
+  ]
+ },
+ {
+  "id": "irs-p594:22106",
+  "doc": "irs-p594",
+  "kind": "irs",
+  "abbreviation": [
+   22103,
+   22107
+  ]
+ },
+ {
+  "id": "irs-p595:1892",
+  "doc": "irs-p595",
+  "kind": "irs",
+  "abbreviation": [
+   1889,
+   1893
+  ]
+ },
+ {
+  "id": "irs-p597:707",
+  "doc": "irs-p597",
+  "kind": "irs",
+  "abbreviation": [
+   704,
+   708
+  ]
+ },
+ {
+  "id": "irs-p597:8038",
+  "doc": "irs-p597",
+  "kind": "irs",
+  "abbreviation": [
+   8035,
+   8039
+  ]
+ },
+ {
+  "id": "irs-p721:33",
+  "doc": "irs-p721",
+  "kind": "irs",
+  "abbreviation": [
+   30,
+   34
+  ]
+ },
+ {
+  "id": "irs-p721:3302",
+  "doc": "irs-p721",
+  "kind": "irs",
+  "abbreviation": [
+   3299,
+   3303
+  ]
+ },
+ {
+  "id": "irs-p721:11646",
+  "doc": "irs-p721",
+  "kind": "irs",
+  "abbreviation": [
+   11644,
+   11647
+  ]
+ },
+ {
+  "id": "irs-p721:16067",
+  "doc": "irs-p721",
+  "kind": "irs",
+  "abbreviation": [
+   16065,
+   16068
+  ]
+ },
+ {
+  "id": "irs-p721:22289",
+  "doc": "irs-p721",
+  "kind": "irs",
+  "abbreviation": [
+   22286,
+   22290
+  ]
+ },
+ {
+  "id": "irs-p892:2312",
+  "doc": "irs-p892",
+  "kind": "irs",
+  "abbreviation": [
+   2309,
+   2313
+  ]
+ },
+ {
+  "id": "irs-p892:2332",
+  "doc": "irs-p892",
+  "kind": "irs",
+  "abbreviation": [
+   2329,
+   2333
+  ]
+ },
+ {
+  "id": "irs-p892:2368",
+  "doc": "irs-p892",
+  "kind": "irs",
+  "abbreviation": [
+   2365,
+   2369
+  ]
+ },
+ {
+  "id": "irs-p892:3249",
+  "doc": "irs-p892",
+  "kind": "irs",
+  "abbreviation": [
+   3246,
+   3250
+  ]
+ },
+ {
+  "id": "irs-p892:3497",
+  "doc": "irs-p892",
+  "kind": "irs",
+  "abbreviation": [
+   3494,
+   3498
+  ]
+ },
+ {
+  "id": "irs-p901:121",
+  "doc": "irs-p901",
+  "kind": "irs",
+  "abbreviation": [
+   118,
+   122
+  ]
+ },
+ {
+  "id": "irs-p901:6252",
+  "doc": "irs-p901",
+  "kind": "irs",
+  "abbreviation": [
+   6249,
+   6253
+  ]
+ },
+ {
+  "id": "irs-p901:7170",
+  "doc": "irs-p901",
+  "kind": "irs",
+  "abbreviation": [
+   7167,
+   7171
+  ]
+ },
+ {
+  "id": "irs-p901:8280",
+  "doc": "irs-p901",
+  "kind": "irs",
+  "abbreviation": [
+   8277,
+   8281
+  ]
+ },
+ {
+  "id": "irs-p901:13459",
+  "doc": "irs-p901",
+  "kind": "irs",
+  "abbreviation": [
+   13456,
+   13460
+  ]
+ },
+ {
+  "id": "irs-p907:434",
+  "doc": "irs-p907",
+  "kind": "irs",
+  "abbreviation": [
+   431,
+   435
+  ]
+ },
+ {
+  "id": "irs-p907:9822",
+  "doc": "irs-p907",
+  "kind": "irs",
+  "abbreviation": [
+   9819,
+   9823
+  ]
+ },
+ {
+  "id": "irs-p908:4477",
+  "doc": "irs-p908",
+  "kind": "irs",
+  "abbreviation": [
+   4474,
+   4478
+  ]
+ },
+ {
+  "id": "irs-p908:4599",
+  "doc": "irs-p908",
+  "kind": "irs",
+  "abbreviation": [
+   4596,
+   4600
+  ]
+ },
+ {
+  "id": "irs-p908:4658",
+  "doc": "irs-p908",
+  "kind": "irs",
+  "abbreviation": [
+   4655,
+   4659
+  ]
+ },
+ {
+  "id": "irs-p908:4704",
+  "doc": "irs-p908",
+  "kind": "irs",
+  "abbreviation": [
+   4701,
+   4705
+  ]
+ },
+ {
+  "id": "irs-p908:5324",
+  "doc": "irs-p908",
+  "kind": "irs",
+  "abbreviation": [
+   5321,
+   5325
+  ]
+ },
+ {
+  "id": "fr-2024-31419:4112",
+  "doc": "fr-2024-31419",
+  "kind": "fr",
+  "abbreviation": [
+   4110,
+   4113
+  ]
+ },
+ {
+  "id": "fr-2024-31419:7250",
+  "doc": "fr-2024-31419",
+  "kind": "fr",
+  "abbreviation": [
+   7248,
+   7251
+  ]
+ },
+ {
+  "id": "fr-2024-31419:15271",
+  "doc": "fr-2024-31419",
+  "kind": "fr",
+  "abbreviation": [
+   15269,
+   15272
+  ]
+ },
+ {
+  "id": "fr-2024-31419:15527",
+  "doc": "fr-2024-31419",
+  "kind": "fr",
+  "abbreviation": [
+   15524,
+   15528
+  ]
+ },
+ {
+  "id": "fr-2024-31401:795",
+  "doc": "fr-2024-31401",
+  "kind": "fr",
+  "abbreviation": [
+   793,
+   796
+  ]
+ },
+ {
+  "id": "fr-2024-31401:1051",
+  "doc": "fr-2024-31401",
+  "kind": "fr",
+  "abbreviation": [
+   1048,
+   1052
+  ]
+ },
+ {
+  "id": "fr-2024-31401:12240",
+  "doc": "fr-2024-31401",
+  "kind": "fr",
+  "abbreviation": [
+   12238,
+   12241
+  ]
+ },
+ {
+  "id": "fr-2024-31401:13448",
+  "doc": "fr-2024-31401",
+  "kind": "fr",
+  "abbreviation": [
+   13445,
+   13449
+  ]
+ },
+ {
+  "id": "fr-2024-31396:1242",
+  "doc": "fr-2024-31396",
+  "kind": "fr",
+  "abbreviation": [
+   1240,
+   1243
+  ]
+ },
+ {
+  "id": "fr-2024-31392:5113",
+  "doc": "fr-2024-31392",
+  "kind": "fr",
+  "abbreviation": [
+   5111,
+   5114
+  ]
+ },
+ {
+  "id": "fr-2024-31392:6321",
+  "doc": "fr-2024-31392",
+  "kind": "fr",
+  "abbreviation": [
+   6318,
+   6322
+  ]
+ },
+ {
+  "id": "fr-2024-31392:9671",
+  "doc": "fr-2024-31392",
+  "kind": "fr",
+  "abbreviation": [
+   9668,
+   9672
+  ]
+ },
+ {
+  "id": "fr-2024-31392:9864",
+  "doc": "fr-2024-31392",
+  "kind": "fr",
+  "abbreviation": [
+   9862,
+   9865
+  ]
+ },
+ {
+  "id": "fr-2024-31392:11006",
+  "doc": "fr-2024-31392",
+  "kind": "fr",
+  "abbreviation": [
+   11003,
+   11007
+  ]
+ },
+ {
+  "id": "fr-2024-31391:2741",
+  "doc": "fr-2024-31391",
+  "kind": "fr",
+  "abbreviation": [
+   2738,
+   2742
+  ]
+ },
+ {
+  "id": "fr-2024-31391:2934",
+  "doc": "fr-2024-31391",
+  "kind": "fr",
+  "abbreviation": [
+   2932,
+   2935
+  ]
+ },
+ {
+  "id": "fr-2024-31391:4076",
+  "doc": "fr-2024-31391",
+  "kind": "fr",
+  "abbreviation": [
+   4073,
+   4077
+  ]
+ },
+ {
+  "id": "fr-2024-31391:6069",
+  "doc": "fr-2024-31391",
+  "kind": "fr",
+  "abbreviation": [
+   6066,
+   6070
+  ]
+ },
+ {
+  "id": "fr-2024-31388:520",
+  "doc": "fr-2024-31388",
+  "kind": "fr",
+  "abbreviation": [
+   518,
+   521
+  ]
+ },
+ {
+  "id": "fr-2024-31388:654",
+  "doc": "fr-2024-31388",
+  "kind": "fr",
+  "abbreviation": [
+   651,
+   655
+  ]
+ },
+ {
+  "id": "fr-2024-31388:1255",
+  "doc": "fr-2024-31388",
+  "kind": "fr",
+  "abbreviation": [
+   1252,
+   1256
+  ]
+ },
+ {
+  "id": "fr-2024-31388:12303",
+  "doc": "fr-2024-31388",
+  "kind": "fr",
+  "abbreviation": [
+   12300,
+   12304
+  ]
+ },
+ {
+  "id": "fr-2024-31388:17074",
+  "doc": "fr-2024-31388",
+  "kind": "fr",
+  "abbreviation": [
+   17071,
+   17075
+  ]
+ },
+ {
+  "id": "fr-2024-31384:194",
+  "doc": "fr-2024-31384",
+  "kind": "fr",
+  "abbreviation": [
+   192,
+   195
+  ]
+ },
+ {
+  "id": "fr-2024-31384:2061",
+  "doc": "fr-2024-31384",
+  "kind": "fr",
+  "abbreviation": [
+   2059,
+   2062
+  ]
+ },
+ {
+  "id": "fr-2024-31384:11309",
+  "doc": "fr-2024-31384",
+  "kind": "fr",
+  "abbreviation": [
+   11307,
+   11310
+  ]
+ },
+ {
+  "id": "fr-2024-31384:12942",
+  "doc": "fr-2024-31384",
+  "kind": "fr",
+  "abbreviation": [
+   12940,
+   12943
+  ]
+ },
+ {
+  "id": "fr-2024-31384:21882",
+  "doc": "fr-2024-31384",
+  "kind": "fr",
+  "abbreviation": [
+   21880,
+   21883
+  ]
+ },
+ {
+  "id": "fr-2024-31230:319",
+  "doc": "fr-2024-31230",
+  "kind": "fr",
+  "abbreviation": [
+   316,
+   320
+  ]
+ },
+ {
+  "id": "fr-2024-31230:2211",
+  "doc": "fr-2024-31230",
+  "kind": "fr",
+  "abbreviation": [
+   2208,
+   2212
+  ]
+ },
+ {
+  "id": "fr-2024-31217:2741",
+  "doc": "fr-2024-31217",
+  "kind": "fr",
+  "abbreviation": [
+   2738,
+   2742
+  ]
+ },
+ {
+  "id": "fr-2024-31217:2934",
+  "doc": "fr-2024-31217",
+  "kind": "fr",
+  "abbreviation": [
+   2932,
+   2935
+  ]
+ },
+ {
+  "id": "fr-2024-31217:4076",
+  "doc": "fr-2024-31217",
+  "kind": "fr",
+  "abbreviation": [
+   4073,
+   4077
+  ]
+ },
+ {
+  "id": "fr-2024-31217:6069",
+  "doc": "fr-2024-31217",
+  "kind": "fr",
+  "abbreviation": [
+   6066,
+   6070
+  ]
+ },
+ {
+  "id": "fr-2024-31217:7209",
+  "doc": "fr-2024-31217",
+  "kind": "fr",
+  "abbreviation": [
+   7206,
+   7210
+  ]
+ },
+ {
+  "id": "fr-2024-31015:5582",
+  "doc": "fr-2024-31015",
+  "kind": "fr",
+  "abbreviation": [
+   5580,
+   5583
+  ]
+ },
+ {
+  "id": "fr-2024-31015:5864",
+  "doc": "fr-2024-31015",
+  "kind": "fr",
+  "abbreviation": [
+   5861,
+   5865
+  ]
+ },
+ {
+  "id": "fr-2024-31015:7316",
+  "doc": "fr-2024-31015",
+  "kind": "fr",
+  "abbreviation": [
+   7313,
+   7317
+  ]
+ },
+ {
+  "id": "fr-2024-31015:7606",
+  "doc": "fr-2024-31015",
+  "kind": "fr",
+  "abbreviation": [
+   7604,
+   7607
+  ]
+ },
+ {
+  "id": "fr-2024-31015:8099",
+  "doc": "fr-2024-31015",
+  "kind": "fr",
+  "abbreviation": [
+   8096,
+   8100
+  ]
+ },
+ {
+  "id": "fr-2024-30987:2365",
+  "doc": "fr-2024-30987",
+  "kind": "fr",
+  "abbreviation": [
+   2363,
+   2366
+  ]
+ },
+ {
+  "id": "fr-2024-30509:2365",
+  "doc": "fr-2024-30509",
+  "kind": "fr",
+  "abbreviation": [
+   2363,
+   2366
+  ]
+ },
+ {
+  "id": "fr-2024-30509:11601",
+  "doc": "fr-2024-30509",
+  "kind": "fr",
+  "abbreviation": [
+   11599,
+   11602
+  ]
+ },
+ {
+  "id": "fr-2024-30509:11883",
+  "doc": "fr-2024-30509",
+  "kind": "fr",
+  "abbreviation": [
+   11880,
+   11884
+  ]
+ },
+ {
+  "id": "fr-2024-31311:3539",
+  "doc": "fr-2024-31311",
+  "kind": "fr",
+  "abbreviation": [
+   3536,
+   3540
+  ]
+ },
+ {
+  "id": "fr-2024-31311:5353",
+  "doc": "fr-2024-31311",
+  "kind": "fr",
+  "abbreviation": [
+   5350,
+   5354
+  ]
+ },
+ {
+  "id": "fr-2024-31311:5906",
+  "doc": "fr-2024-31311",
+  "kind": "fr",
+  "abbreviation": [
+   5903,
+   5907
+  ]
+ },
+ {
+  "id": "fr-2024-31311:10119",
+  "doc": "fr-2024-31311",
+  "kind": "fr",
+  "abbreviation": [
+   10116,
+   10120
+  ]
+ },
+ {
+  "id": "fr-2024-31311:11727",
+  "doc": "fr-2024-31311",
+  "kind": "fr",
+  "abbreviation": [
+   11724,
+   11728
+  ]
+ },
+ {
+  "id": "fr-2024-31310:1949",
+  "doc": "fr-2024-31310",
+  "kind": "fr",
+  "abbreviation": [
+   1947,
+   1950
+  ]
+ },
+ {
+  "id": "fr-2024-31310:11284",
+  "doc": "fr-2024-31310",
+  "kind": "fr",
+  "abbreviation": [
+   11282,
+   11285
+  ]
+ }
+]

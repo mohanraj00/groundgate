@@ -570,3 +570,15 @@ def test_an_india_token_is_a_number_token_with_a_comma() -> None:
         "1,2,3",
         "5,000",
     ]
+
+
+def test_a_caps_dot_is_us_or_no_before_whitespace_and_an_uppercase_letter() -> None:
+    sys.path.insert(0, str(BENCH / "caps"))
+    import caps
+
+    text = "In the U.S. Tax Court, Docket No. DEA-1086 and Nos. A-1 but no. 4 and U.S. citizens."
+    assert [m.group() for m in caps.caps_in(text)] == ["U.S.", "No.", "Nos."]
+    assert not caps.caps_in("Made in the U.S.A. Here.\nU.S.\n\nThe end. No.\r\n  \nThe")
+    assert [m.start() for m in caps.caps_in("Sold in the U.S.\r\n The")] == [12]
+    head = "Federal Register / Vol. 89, No. 5 / Rules\nSee No. Five."
+    assert [m.start() for m in caps.caps_in(head)] == [head.index("No. Five")]

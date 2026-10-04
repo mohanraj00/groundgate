@@ -1,0 +1,295 @@
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+Future Developments
+For the latest information about developments related to
+Pub. 559, such as
+it was
+published, go to IRS.gov/Pub 559.
+
+legislation enacted after
+
+Reminders
+Excess deductions on termination. Under IRS.gov/irb/
+2020–45_IRB#TD-9918, each excess deduction on termi-
+nation of an estate or trust retains its separate character
+as an amount allowed in arriving at adjusted gross income
+(AGI), a non-miscellaneous itemized deduction, or a mis-
+cellaneous itemized deduction. For more information, see
+the Instructions for Form 1041.
+
+Consistent treatment of estate and trust items. Bene-
+ficiaries must generally treat estate items the same way on
+their individual returns as they are treated on the estate's
+return.
+
+Consistent basis reporting between estate and per-
+son acquiring property from a decedent. Certain ex-
+ecutors are required to report the estate tax value of prop-
+erty passing from a decedent to the IRS and to the
+recipient of the property (beneficiary). See Consistent Ba-
+sis Reporting Requirement, later, for more information.
+
+Filing status name changed to qualifying surviving
+spouse. The filing status qualifying widow(er) is now
+called qualifying surviving spouse. The rules for the filing
+status have not changed. The same rules that applied to
+qualifying widow(er) apply to qualifying surviving spouse.
+See Qualifying surviving spouse, later.
+
+Extension of time to elect portability. Effective July 8,
+2022, Rev. Proc. 2022-32 provides a simplified method for
+certain estates to obtain an extension of time to file a re-
+turn on or before the fifth anniversary of the decedent’s
+death to elect portability of the deceased spousal unused
+exclusion (DSUE) amount. See Filing requirements, later,
+for more information.
+
+Photographs of missing children. The Internal Reve-
+nue Service is a proud partner with the National Center for
+Missing & Exploited Children® (NCMEC). Photographs of
+missing children selected by the Center may appear in
+this publication on pages that would otherwise be blank.
+You can help bring these children home by looking at the
+photographs
+1-800-THE-LOST
+and
+(1-800-843-5678) if you recognize a child.
+
+calling
+
+Introduction
+This publication is designed to help those in charge (per-
+sonal representatives) of the property (estate) of an indi-
+vidual who has died (decedent). It shows how to complete
+and file federal income tax returns and explains their re-
+sponsibility to pay any taxes due on behalf of the
+
+decedent. An example of the decedent's final tax return,
+Form 1040, U.S. Individual Income Tax Return, and the
+estate's income tax return, Form 1041, U.S. Income Tax
+Return for Estates and Trusts, are discussed in this publi-
+cation.
+
+The publication also explains how much money or
+property a taxpayer can give away during their lifetime or
+leave to their heirs at their death, before any tax will be
+owed. A discussion of Form 709, United States Gift (and
+Generation-Skipping Transfer) Tax Return, and Form 706,
+United States Estate (and Generation-Skipping Transfer)
+Tax Return, is included.
+
+Also included in this publication are the following items.
+
+• A checklist of the forms you may need and their due
+
+dates.
+
+• A worksheet to reconcile amounts reported in the de-
+cedent's name on information returns including Forms
+W-2, Wage and Tax Statement; 1099-INT, Interest In-
+come; 1099-DIV, Dividends and Distributions; etc. The
+worksheet will help you correctly determine the in-
+come to report on the decedent's final return and on
+the return for either the estate or a beneficiary.
+
+Comments and suggestions. We welcome your com-
+ments about this publication and your suggestions for fu-
+ture editions.
+
+You can send us comments
+
+IRS.gov/
+FormComments. Or, you can write to the Internal Revenue
+Service, Tax Forms and Publications, 1111 Constitution
+Ave. NW, IR-6526, Washington, DC 20224.
+
+through
+
+Although we can’t respond individually to each com-
+ment received, we do appreciate your feedback and will
+consider your comments and suggestions as we revise
+our tax forms, instructions, and publications. Don’t send
+tax questions, tax returns, or payments to the above ad-
+dress.
+
+Getting answers to your tax questions. If you have a
+tax question not answered by this publication, or the How
+To Get Tax Help section at the end of this publication, go
+to the IRS Interactive Tax Assistant page at IRS.gov/
+Help/ITA where you can find topics by using the search
+feature or viewing the categories listed.
+
+Getting tax forms, instructions, and publications. Go
+to IRS.gov/Forms to download current and prior-year
+forms, instructions, and publications.
+
+Ordering tax forms, instructions, and publications.
+Go to IRS.gov/OrderForms to order current forms, instruc-
+tions, and publications; call 800-829-3676
+to order
+prior-year forms and instructions. The IRS will process
+your order for forms and publications as soon as possible.
+Don’t resubmit requests you’ve already sent us. You can
+get forms and publications faster online.
+
+2
+
+Publication 559 (2025)
+Useful Items
+You may want to see:
+
+Publication
+
+3
+
+3 Armed Forces' Tax Guide
+
+Form (and Instructions)
+
+SS-4
+
+SS-4 Application for Employer Identification Number
+
+56
+
+56 Notice Concerning Fiduciary Relationship
+
+1040
+
+1040 U.S. Individual Income Tax Return
+
+1040-SR
+
+1040-SR U.S. Tax Return for Seniors
+
+1041
+
+1041 U.S. Income Tax Return for Estates and Trusts
+
+706
+
+706 United States Estate (and Generation-Skipping
+Transfer) Tax Return
+
+709
+
+709 United States Gift (and Generation-Skipping
+Transfer) Tax Return
+
+1310
+
+1310 Statement of Person Claiming Refund Due a
+Deceased Taxpayer
+
+See How To Get Tax Help near the end of this publication
+for information about getting publications and forms. Also
+near the end of this publication is Table A, a checklist of
+forms and their due dates for the executor, administrator,
+or personal representative.
+
+Personal Representative
+
+A personal representative of an estate is an executor, ad-
+ministrator, or anyone who is in charge of the decedent's
+property. Generally, an executor (or executrix) is named in
+a decedent's will to administer the estate and distribute
+properties as the decedent has directed. An administrator
+(or administratrix) is usually appointed by the court if no
+will exists, if no executor was named in the will, or if the
+named executor can't or won't serve.
+
+In general, an executor and an administrator perform
+
+the same duties and have the same responsibilities.
+
+For estate tax purposes, if there is no executor or ad-
+ministrator appointed, qualified, and acting within the Uni-
+ted States, the term “executor” includes anyone in actual
+or constructive possession of any property of the dece-
+dent. It includes, among others, the decedent's agents
+and representatives; safe-deposit companies, warehouse
+companies, and other custodians of property in this coun-
+try; brokers holding securities of the decedent as collat-
+eral; and the debtors of the decedent who are in this coun-
+try.
+
+Duties
+
+The primary duties of a personal representative are to col-
+lect all the decedent's assets, pay the decedent’s cred-
+itors, and distribute the remaining assets to the heirs or
+other beneficiaries.
+
+The personal representative must also perform the fol-
+
+lowing duties.
+• Apply for an employer identification number (EIN) for
+
+the estate.
+
+• File all tax returns, including income, estate, and gift
+
+tax returns, when due.
+
+• Pay the tax determined up to the date of discharge
+
+from duties.
+
+Other duties of the personal representative in federal tax
+matters are discussed in other sections of this publication.
+If any beneficiary is a nonresident alien, see Pub. 515,
+Withholding of Tax on Nonresident Aliens and Foreign En-
+tities, for information on the personal representative's du-
+ties as a withholding agent.
+
+Penalty. There is a penalty for failure to file a tax return
+when due unless the failure is due to reasonable cause.
+Reliance on an agent (attorney, accountant, etc.) isn't rea-
+sonable cause for late filing. It is the personal representati-
+ve's duty to file the returns for the decedent and the estate
+when due.
+
+Identification number. The first action you should take if
+you’re the personal representative for the decedent is to
+apply for an EIN for the estate. You should apply for this
+number as soon as possible because you need to enter it
+on returns, statements, and other documents you file con-
+cerning the estate. You must also give the identification
+number to payers of interest and dividends and other pay-
+ers who must file a return concerning the estate.
+
+You can get an EIN by applying online at IRS.gov/EIN.
+Generally, if you apply online, you will receive your EIN im-
+mediately upon completing the application. You can also
+apply using Form SS-4. Generally, if you apply by mail, it
+takes about 4 weeks to get your EIN. See IRS.gov/
+Businesses/Small-Businesses-&-Self-Employed/
+Employer-ID-Numbers-EINs for other ways to apply.
+
+Payers of interest and dividends report amounts on
+Forms 1099 using the identification number of the person
+to whom the account is payable. After a decedent's death,
+Forms 1099 must reflect the identification number (EIN, in-
+dividual identification number (ITIN), or social security
+number (SSN)) of the estate or beneficiary to whom the
+amounts are payable. As the personal representative han-
+dling the estate, you must furnish this identification num-
+ber to the payer. For example, if interest is payable to the
+estate, the estate's EIN must be provided to the payer and
+used to report the interest on Form 1099-INT. If the inter-
+est is payable to a surviving joint owner, the survivor's
+identification number, such as an SSN or ITIN, must be
+provided to the payer and used to report the interest.
+
+If the estate or a survivor may receive interest or divi-
+dends after you inform the payer of the decedent's death,
+the payer should give you (or the survivor) a Form W-9,
+Request for Taxpayer Identification Number and Certifica-
+tion, or a similar substitute form. Complete this form to in-
+form the payer of the estate's (or if completed by the survi-
+vor, the survivor's) identification number and return it to
+the payer.
+
+Publication 559 (2025)
+
+3

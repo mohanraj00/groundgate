@@ -1,0 +1,509 @@
+106998
+
+Federal Register / Vol. 89, No. 250 / Tuesday, December 31, 2024 / Rules and Regulations
+
+food products subject to the January 1,
+2028, compliance date must comply
+with the appropriate regulations when
+initially introduced into interstate
+commerce on or after January 1, 2028.
+If any food labeling regulation involves
+special circumstances that justify a
+compliance date other than January 1,
+2028, we will determine for that
+regulation an appropriate compliance
+date, which will be specified when the
+final regulation is published.
+
+Dated: December 26, 2024.
+
+P. Ritu Nalubola,
+Associate Commissioner for Policy.
+[FR Doc. 2024–31419 Filed 12–30–24; 8:45 am]
+
+BILLING CODE 4164–01–P
+
+DEPARTMENT OF HOUSING AND
+URBAN DEVELOPMENT
+
+24 CFR Parts 5, 92, 93, 570, 574, 576,
+and 578
+
+[Docket No. FR–6057–N–06]
+
+Housing Opportunity Through
+Modernization Act: Implementation of
+Sections 102, 103, and 104; Extension
+of Compliance Date and Safe Harbor
+Implementation
+
+AGENCY: Office of the Assistant
+Secretary for Community Planning and
+Development, U.S. Department of
+Housing and Urban Development
+(HUD).
+ACTION: Final rule; extension of
+compliance date.
+
+SUMMARY: This document extends the
+compliance date for HUD’s final rule
+entitled ‘‘Housing Opportunity Through
+Modernization Act of 2016:
+Implementation of Sections 102, 103,
+and 104’’ (HOTMA final rule) for
+Community Planning and Development
+(CPD) programs. Specifically, HUD is
+extending the compliance date for the
+HOME Investment Partnerships program
+(HOME), HOME-American Rescue Plan
+program, Housing Trust Fund (HTF),
+Housing Opportunities for Persons With
+AIDS (HOPWA), Community
+Development Block Grant program
+(CDBG), Emergency Solution Grants
+(ESG), Continuum of Care (CoC)
+programs, and CPD programs funded
+through competitive processes
+(Competitive Programs). HUD is
+extending the compliance deadline for
+all grantees and allowing grantees that
+are ready to comply to set an earlier
+compliance date between January 1,
+2024, and January 1, 2026. In addition,
+HUD is permitting the implementation
+of certain income safe harbors
+established in the HOTMA final rule
+
+prior to the extended HOTMA
+compliance date. HUD is taking this
+action due to delays in updating the
+HUD systems to comply with HOTMA
+and to allow additional time for
+jurisdictions, participants, and grantees
+to incorporate HUD’s income and asset
+requirements into their own programs
+and flexibility to transition
+implementing HOTMA requirements
+under their own timelines.
+DATES: The compliance date for the final
+rule published February 14, 2023, at 88
+FR 9600, is extended. CPD participating
+jurisdictions, participants, and grantees
+(CPD grantees) subject to 24 CFR parts
+5, 92, 93, 570, 574, 576, and 578, or who
+apply the income requirements in 24
+CFR part 5 pursuant to Notices of
+Funding Opportunity (NOFOs), are not
+required to comply with the changes
+established by the HOTMA final rule
+until January 1, 2026.
+FOR FURTHER INFORMATION CONTACT: For
+HOME and the HTF, Milagro Fisher,
+Senior Affordable Housing Specialist,
+Office of Affordable Housing Programs,
+at telephone (202) 708–2684, Room
+7160; for HOPWA, Lisa Steinhauer,
+Senior Program Specialist, Office of
+HIV/AIDS Housing, at telephone (215)
+861–7651, Room 7248; for CDBG, B.
+Cory Schwartz, Deputy Director, State &
+Small Cities Division, at telephone (202)
+402–4105, Room 7282. The mailing
+address for each office contact is
+Department of Housing and Urban
+Development, 451 Seventh Street SW,
+Washington, DC 20410–7000. HUD
+welcomes and is prepared to receive
+calls from individuals who are deaf or
+hard of hearing, as well as individuals
+with speech or communication
+disabilities. To learn more about how to
+make an accessible telephone call,
+please visit: https://www.fcc.gov/
+consumers/guides/telecommunications-
+relay-service-trs.
+SUPPLEMENTARY INFORMATION:
+
+I. Background
+
+On February 14, 2023, HUD published
+the HOTMA final rule (88 FR 9600). The
+HOTMA final rule established a January
+1, 2024, effective date for the revisions
+it made to HUD’s income regulations at
+24 CFR parts 5, 92, 93, 570, and 574.
+These revisions also affected CPD
+programs subject to 24 CFR parts 576
+and 578, as well as Competitive
+Programs using NOFOs that reference
+the regulations at 24 CFR part 5. On
+September 29, 2023, HUD’s Office of
+Public and Indian Housing (PIH) and
+Office of Housing (Housing) issued joint
+notification PIH 2023–27/H 2023–10,
+which enabled Public Housing Agencies
+(PHAs) and multifamily owners to
+
+establish their own compliance dates for
+sections 102 and 104 of HOTMA as
+early as January 1, 2024, and no later
+than January 1, 2025. Similarly, on
+December 8, 2023, HUD published the
+Housing Opportunity Through
+Modernization Act: Implementation of
+Sections 102, 103, and 104; Extension of
+Compliance Date (88 FR 85648) to
+extend the compliance date of the
+HOTMA final rule to January 1, 2025,
+for all CPD programs that use HUD’s 24
+CFR part 5 income regulations.
+
+II. Further Extensions of the HOTMA
+Final Rule Compliance Date
+
+On September 18, 2024, PIH
+announced that PHAs were not to
+implement and comply with the section
+102 and 104 income and assets
+provisions in the HOTMA final rule by
+January 1, 2025. This extension was due
+to delays in updating the HUD systems
+to comply with the rule. Then, on
+September 20, 2024, Housing issued
+notification H 2024–09 to announce that
+multifamily owners were not to
+implement and comply with the
+HOTMA final rule until July 1, 2025.
+This was also due to delays in updating
+the HUD systems to comply with the
+rule. Now, HUD has determined that
+CPD grantees receiving assistance
+through CPD programs, which often
+overlap with PIH and multifamily
+programs, must be provided with
+certain flexibilities. HUD is
+communicating these flexibilities
+through this document.
+
+HUD’s determination that these
+
+flexibilities are necessary was made in
+light of the fact that CPD grantees may
+not be able to comply with the
+requirements of the HOTMA final rule
+until after HUD has provided the
+guidance and performed the software
+updates necessary for CPD grantees to
+implement the HOTMA final rule. Even
+after the necessary guidance is provided
+and updates to HUD systems are made,
+CPD grantees will still need additional
+time to incorporate this guidance into
+their program policies and procedures
+and to update their own systems and
+software. Therefore, in recognition of
+these operational issues and challenges,
+HUD is allowing CPD grantees to set
+their own compliance dates for the
+applicable HOTMA final rule
+provisions. These compliance dates may
+be as early as January 1, 2024, and no
+later than January 1, 2026. Until these
+new compliance dates, CPD grantees
+must continue to adhere, as applicable,
+to the requirements found in both their
+program regulations and the regulations
+at 24 CFR 5.603, 24 CFR 5.609, 24 CFR
+5.611, and 24 CFR 5.617 as they existed
+prior to January 1, 2024. Furthermore,
+
+VerDate Sep<11>2014 15:56 Dec 30, 2024 Jkt 265001 PO 00000 Frm 00022 Fmt 4700 Sfmt 4700 E:\FR\FM\31DER1.SGM 31DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+Federal Register / Vol. 89, No. 250 / Tuesday, December 31, 2024 / Rules and Regulations
+
+106999
+
+CPD grantees must continue to rely on
+the instructions provided in the
+document published December 8, 2023
+at 88 FR 85648 for implementing the
+HOTMA final rule.
+
+III. Implementation of the HOTMA Safe
+Harbor for ESG, COC Programs, and
+HOPWA
+
+The HOTMA final rule established an
+income safe harbor provision at 24 CFR
+5.609(c)(3). This provision permits
+PHAs and multifamily owners to
+determine the annual income of a family
+prior to the application of any
+deductions applied in accordance with
+24 CFR 5.611 based on income
+determinations made under the rules of
+other Federal programs or means-tested
+forms of Federal public assistance. On
+September 13, 2024, PIH published
+updated HOTMA Implementation
+FAQs 1 describing that PHAs may
+implement the safe harbor provision at
+24 CFR 5.609(c)(3).
+
+Now, HUD is allowing certain CPD
+grantees that have program regulations
+that cross reference 24 CFR 5.609(c)(3)
+to use this safe harbor provision prior to
+implementing the HOTMA final rule.
+Grantees of the following CPD programs
+may use this safe harbor provision:
+HOPWA (see 24 CFR 574.310(e)), ESG
+(see 24 CFR 576.401(c)), and the CoC
+programs (see 24 CFR 578.77(b) and (c)).
+Before using this safe harbor provision,
+grantees of these CPD programs must
+update their program guidelines and
+establish policies and procedures that
+describe income verifications when
+using this safe harbor provision. HUD is
+providing these grantees, and
+specifically HOPWA grantees, the
+ability to use this income safe harbor
+provision so that its CPD program
+guidance more closely aligns with its
+Section 8 program guidance, as HUD’s
+HOPWA regulations closely track
+Housing Choice Voucher program
+regulations.
+
+IV. Implementation of the HOTMA Safe
+Harbor for HOME and HTF
+
+The HOTMA final rule also
+established separate safe harbor
+provisions at 24 CFR 92.203(a)(1) and
+(2) and at 24 CFR 92.252(h) for HOME
+and other safe harbor provisions at 24
+CFR 93.151(a)(1) through (3), and 24
+CFR 93.302(e) for HTF. Under 24 CFR
+92.203(a)(1) and 24 CFR 93.151(a)(3), a
+participating jurisdiction or HTF grantee
+must accept a PHA’s, owner’s, or rental
+subsidy provider’s income
+determinations, in accordance with 24
+
+1 https://www.hud.gov/sites/dfiles/PIH/
+
+documents/PIH%20HOTMA%20
+Implementation%20FAQ%209.13.2024.pdf
+updated September 13, 2024.
+
+CFR 5.609, if a family is applying for or
+living in a HOME-assisted or HTF-
+assisted rental unit and the unit is being
+assisted by Federal project-based rental
+subsidy. Similarly, a participating
+jurisdiction or HTF grantee must accept
+a State project-based rental subsidy
+provider’s income determination under
+the rules of that State program. In the
+same way, under 24 CFR 93.151(a)(1),
+for HTF-assisted units that are assisted
+under the public housing program, an
+HTF grantee must accept a PHA’s
+determination of a family’s annual
+income and adjusted income under 24
+CFR 5.609 and 24 CFR 5.611. Moreover,
+under 24 CFR 92.203(a)(2) and 24 CFR
+93.151(a)(2), a participating jurisdiction
+or HTF grantee may accept a Federal
+tenant-based rental assistance provider’s
+income determinations if a family is
+applying for or living in a HOME-
+assisted or HTF-assisted rental unit and
+the family is being assisted by a Federal
+tenant-based rental assistance program.
+Now, HUD is allowing participating
+jurisdictions and HTF grantees to use
+the safe harbor provisions in 24 CFR
+92.203(a) and 24 CFR 92.252(h), or 24
+CFR 93.151(a) and 24 CFR 93.302(e),
+prior to the new HOTMA final rule
+compliance date and upon publication
+of this document, even if they have not
+implemented the remaining provisions
+of the HOTMA final rule. Before using
+the safe harbor provisions, participating
+jurisdictions and HTF grantees must
+update their program guidelines and
+establish policies and procedures that
+describe income verification when using
+the safe harbor provisions. HUD is
+providing participating jurisdictions
+and HTF grantees the ability to use
+these safe harbor provisions so that its
+HOME and HTF guidance more closely
+aligns with its other HOTMA final rule
+implementation guidance and to reduce
+the administrative burden on CPD
+grantees associated with having to meet
+two different sets of income
+requirements for the same unit.
+
+V. Conclusion
+
+Accordingly, HUD extends the
+January 1, 2025, compliance date for
+implementing the changes made by the
+HOTMA final rule to 24 CFR parts 5, 92,
+93, 570, and 574 for the CPD programs
+described in this document until
+January 1, 2026. Until January 1, 2026,
+the grantees of these programs subject to
+these parts may instead choose to
+comply with these parts as they existed
+prior to January 1, 2024, and may also
+
+implement the income safe harbor
+provisions described in this document.
+
+Marion McFadden,
+Principal Deputy Assistant Secretary for
+Community Planning and Development,
+Office of Community Planning and
+Development.
+[FR Doc. 2024–31401 Filed 12–30–24; 8:45 am]
+
+BILLING CODE 4210–67–P
+
+DEPARTMENT OF HOMELAND
+SECURITY
+
+Coast Guard
+
+33 CFR Part 165
+
+[Docket No. USCG–2024–1071]
+
+Safety Zone; San Francisco New
+Year’s Eve Fireworks; San Francisco
+Bay, San Francisco, CA
+
+AGENCY: Coast Guard, Department of
+Homeland Security (DHS).
+ACTION: Notification of enforcement of
+regulation.
+
+SUMMARY: The Coast Guard will enforce
+the safety zone in the navigable waters
+of the San Francisco Bay near the San
+Francisco Ferry building for the San
+Francisco New Year’s Eve Fireworks
+Display. The safety zone will be
+enforced December 31, 2024, into
+January 1, 2025. This action is necessary
+to protect personnel, vessels, and the
+marine environment from the dangers
+associated with pyrotechnics. During
+the enforcement period, unauthorized
+persons or vessels are prohibited from
+entering, transiting through, or
+remaining in the safety zone, unless
+authorized by the Patrol Commander or
+other Federal, State, or local law
+enforcement agencies.
+DATES: The regulation in 33 CFR
+165.1191 will be enforced for the
+location described in table 1 to
+§ 165.1191, item number 24, from noon
+on December 31, 2024, through 12:45
+a.m. on January 1, 2025.
+FOR FURTHER INFORMATION CONTACT: If
+you have questions about this
+notification of enforcement, call or
+email Lieutenant William Harris, U.S.
+Coast Guard Sector San Francisco,
+Waterways Management Division;
+telephone (415) 399–7443, or email
+SFWaterways@uscg.mil.
+SUPPLEMENTARY INFORMATION: The Coast
+Guard will enforce the safety zone
+regulations in 33 CFR 165.1191 for the
+event and location listed in table 1 to
+§ 165.1191, item number 24, for the San
+Francisco New Year’s Eve Fireworks
+Display from noon on December 31,
+2024, through 12:45 a.m. on January 1,
+
+VerDate Sep<11>2014 15:56 Dec 30, 2024 Jkt 265001 PO 00000 Frm 00023 Fmt 4700 Sfmt 4700 E:\FR\FM\31DER1.SGM 31DER1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

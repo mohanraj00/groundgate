@@ -1,0 +1,315 @@
+What’s New
+Bankruptcy estate filing threshold. For tax year 2025,
+the requirement to file a return for a bankruptcy estate ap-
+plies only if gross income is at least $15,750. This amount
+is equal to the standard deduction for married individuals
+filing a separate return and is generally adjusted annually.
+See the Instructions for Form 1041 for updates to the filing
+threshold amount for future years.
+
+Reminders
+Bankruptcy administrative expenses. Bankruptcy ad-
+ministrative expenses are reported on Schedule 1 (Form
+1040) as allowable in arriving at adjusted gross income.
+These expenses were previously reported on Schedule A
+(Form 1040) as miscellaneous itemized deductions. See
+Internal Revenue Code section 67(e) and IRS.gov/irb/
+2020-45_IRB#TD-9918. For specific reporting instruc-
+tions, see Administrative expenses, later.
+Automatic 6-month extension of time to file a bank-
+ruptcy estate return. An automatic 6-month extension
+of time to file a bankruptcy estate income tax return is
+available for individuals in chapter 7 or chapter 11 bank-
+ruptcy proceedings upon filing a required application.
+Bankruptcy Code tax filing requirements. Debtors fil-
+ing under chapters 7, 11, 12, and 13 of the Bankruptcy
+Code must file all applicable federal, state, and local tax
+returns that become due after a case commences. Failure
+to file tax returns timely or obtain an extension can cause
+a bankruptcy case to be converted to another chapter or
+dismissed.
+
+In chapter 13 cases, the debtor must file all required
+tax returns for tax periods ending within 4 years of the fil-
+ing of the bankruptcy petition.
+Photographs of missing children. The Internal Reve-
+nue Service is a proud partner with the National Center for
+Missing & Exploited Children® (NCMEC). Photographs of
+missing children selected by the Center may appear in
+this publication on pages that would otherwise be blank.
+You can help bring these children home by looking at the
+photographs
+1-800-THE-LOST
+and
+(1-800-843-5678) if you recognize a child.
+
+calling
+
+Introduction
+Caution: This publication isn't intended to cover bank-
+ruptcy law in general, or to provide detailed discussions of
+the tax rules for the more complex corporate bankruptcy
+reorganizations or other highly technical transactions. Ad-
+ditionally, this publication isn't updated on an annual basis
+and may not reflect recent developments in bankruptcy or
+tax law. If you need more guidance on the bankruptcy or
+tax laws applicable to your case, you should seek profes-
+sional advice.
+
+A fundamental goal of the bankruptcy laws enacted by
+Congress is to give an honest debtor a financial “fresh
+start.” This is accomplished through the bankruptcy dis-
+charge, which is a permanent injunction (court-ordered
+prohibition) against the collection of certain debts as a
+personal liability of the debtor.
+
+Bankruptcy proceedings begin with the filing of either a
+voluntary petition in the United States Bankruptcy Court
+or, in certain cases, an involuntary petition filed by cred-
+itors. This filing creates the bankruptcy estate.
+• The bankruptcy estate generally consists of all of the
+assets the individual or entity owns on the date the
+bankruptcy petition was filed.
+
+• The bankruptcy estate is treated as a separate taxable
+entity for individuals filing bankruptcy petitions under
+chapter 7 or 11 of the Bankruptcy Code, discussed
+later.
+
+• The tax obligations of taxable bankruptcy estates are
+discussed later under Individuals in Chapter 7 or 11.
+
+Generally, when a debt owed to another person or en-
+tity is canceled, the amount canceled or forgiven is con-
+sidered income that is taxed to the person owing the debt.
+If a debt is canceled under a bankruptcy proceeding, the
+amount canceled isn't taxable income. However, the can-
+celed debt reduces other tax benefits to which the debtor
+would otherwise be entitled. See Debt Cancellation, later.
+
+Useful Items
+You may want to see:
+
+Publication
+
+225
+
+225 Farmer's Tax Guide
+
+525
+
+525 Taxable and Nontaxable Income
+
+536
+
+536 Net Operating Losses (NOLs) for Individuals,
+Estates, and Trusts
+
+538
+
+538 Accounting Periods and Methods
+
+544
+
+544 Sales and Other Dispositions of Assets
+
+551
+
+551 Basis of Assets
+
+4681
+
+4681 Canceled Debts, Foreclosures,
+Repossessions, and Abandonments
+
+Form (and Instructions)
+
+SS-4
+
+SS-4 Application for Employer Identification Number
+
+982
+
+982 Reduction of Tax Attributes Due to Discharge of
+Indebtedness (and Section 1082 Basis
+Adjustment)
+
+1040
+
+1040 U.S. Individual Income Tax Return
+
+Schedule SE (Form 1040)
+
+Schedule SE (Form 1040) Self-Employment Tax
+
+1040-SR
+
+1040-SR U.S. Income Tax Return for Seniors
+
+1040-X
+
+1040-X Amended U.S. Individual Income Tax Return
+
+1041
+
+1041 U.S. Income Tax Return for Estates and Trusts
+
+This publication explains the basic federal income tax
+
+1041-ES
+
+1041-ES Estimated Income Tax for Estates and
+
+aspects of bankruptcy.
+
+Trusts
+
+2
+
+Publication 908 (12-2025)
+1041-V
+4506
+4506-T
+4852
+
+4868
+
+7004
+
+1041-V Payment Voucher for Estates and Trusts
+
+4506 Request for Copy of Tax Return
+
+4506-T Request for Transcript of Tax Return
+4852 Substitute for Form W-2, Wage and Tax
+Statement, or Form 1099-R, Distributions From
+Pensions, Annuities, Retirement or
+Profit-Sharing Plans, IRAs, Insurance
+Contracts, etc.
+4868 Application for Automatic Extension of Time To
+File U.S. Individual Income Tax Return
+7004 Application for Automatic Extension of Time To
+File Certain Business Income Tax, Information,
+and Other Returns
+
+See How To Get Tax Help, later, for information about get-
+ting these publications and forms.
+
+Comments and suggestions. We welcome your com-
+ments about this publication and suggestions for future
+editions.
+
+You can send us comments
+
+IRS.gov/
+FormComments. Or, you can write to the Internal Revenue
+Service, Tax Forms and Publications, 1111 Constitution
+Ave. NW, IR-6526, Washington, DC 20224.
+
+through
+
+Although we can’t respond individually to each com-
+ment received, we do appreciate your feedback and will
+consider your comments and suggestions as we revise
+our tax forms, instructions, and publications. Don’t send
+tax questions, tax returns, or payments to the above ad-
+dress.
+
+Getting answers to your tax questions. If you have a
+tax question not answered by this publication or the How
+To Get Tax Help section at the end of this publication, go
+to the IRS Interactive Tax Assistant page at IRS.gov/
+Help/ITA where you can find topics by using the search
+feature or viewing the categories listed.
+
+Getting tax forms, instructions, and publications. Go
+to IRS.gov/Forms to download current and prior-year
+forms, instructions, and publications.
+
+Ordering tax forms, instructions, and publications.
+Go to IRS.gov/OrderForms to order current forms, instruc-
+tions, and publications; call 800-829-3676
+to order
+prior-year forms and instructions. The IRS will process
+your order for forms and publications as soon as possible.
+Don’t resubmit requests you’ve already sent us. You can
+get forms and publications faster online.
+
+Bankruptcy Code Tax
+Compliance Requirements
+
+Tax Returns Due for Periods Ending
+Before the Bankruptcy Filing in
+Chapter 13 Cases
+
+The Bankruptcy Code requires chapter 13 debtors to file
+all required tax returns for tax periods ending during
+
+the 4-year period prior to the date of the filing of the
+debtor's bankruptcy filing. All such federal tax returns
+must be filed with the IRS before the date first set for the
+first meeting of creditors. The debtor may request the
+trustee to hold the meeting open for an additional 120
+days to enable the debtor to file the returns (or until the
+day the returns are due under an automatic IRS extension,
+if later). After notice and hearing, the bankruptcy court
+may extend the period for another 30 days.
+
+Caution: Failure to timely file the returns can prevent
+confirmation of a chapter 13 plan and result in either dis-
+missal of the chapter 13 case or conversion to a chapter 7
+case.
+
+Note: An individual debtor should use their home ad-
+dress when filing Form 1040 or 1040-SR with the IRS. Re-
+turns should not be filed “in care of” the trustee's address.
+
+the
+
+Ordering tax transcripts and copies of returns. Trust-
+ees may require the debtor to submit copies or transcripts
+of the debtor's returns as proof of filing. The debtor can re-
+quest free transcripts of the debtor's income tax returns by
+filing Form 4506-T with the IRS or by going to IRS.gov/
+Transcripts. Click on either “Get Transcript Online” or “Get
+Transcript by Mail” to order a free copy of the transcript. If
+transcript can be ordered by calling
+preferred,
+800-908-9946. If requested through the phone system,
+the transcript will be mailed to the debtor's most current
+address according to the IRS's records. Transcripts re-
+quested using Form 4506-T may be mailed to any ad-
+dress, including to the attention of the trustee in the debt-
+or's bankruptcy case. Transcripts are normally mailed
+within 10 business days of receipt of the request by the
+IRS. A transcript contains most of the information on the
+debtor's filed return, but it isn't a copy of the return. To re-
+quest a copy of the debtor's filed return, file Form 4506
+with a $30 fee for each copy of each return requested. It
+may take up to 75 calendar days for the IRS to provide the
+copies after receipt of the debtor's request.
+
+Tax Returns Due After the Bankruptcy
+Filing
+
+For debtors filing bankruptcy under all chapters (chapters
+7, 11, 12, and 13), the Bankruptcy Code provides that if
+the debtor does not file a tax return that becomes due af-
+ter the commencement of the bankruptcy case, or obtain
+an extension for filing the return before the due date, the
+taxing authority may request that the bankruptcy court ei-
+ther dismiss the case or convert the case to a case under
+another chapter of the Bankruptcy Code. If the debtor
+does not file the required return or obtain an extension
+within 90 days after the request is made, the bankruptcy
+court must dismiss or convert the case.
+
+Tax returns and payment of taxes in chapter 11 ca-
+ses. The Bankruptcy Code provides that a chapter 11
+debtor's failure to file tax returns in a timely manner and
+pay taxes owed after the date of the “order for relief” (the
+bankruptcy petition date in voluntary cases) is cause for
+
+Publication 908 (12-2025)
+
+3

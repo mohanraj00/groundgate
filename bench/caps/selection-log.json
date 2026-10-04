@@ -1,0 +1,283 @@
+[
+ {
+  "kind": "irs",
+  "id": "irs-p487",
+  "skip": "no pair"
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p559",
+  "pages": [
+   2,
+   3
+  ],
+  "pairs": 5
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p570",
+  "pages": [
+   1
+  ],
+  "pairs": 7
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p575",
+  "pages": [
+   3
+  ],
+  "pairs": 7
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p584",
+  "pages": [
+   2
+  ],
+  "pairs": 1
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p584-b",
+  "pages": [
+   2
+  ],
+  "pairs": 1
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p587",
+  "pages": [
+   1,
+   14,
+   22
+  ],
+  "pairs": 5
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p594",
+  "pages": [
+   4,
+   5,
+   6
+  ],
+  "pairs": 3
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p595",
+  "pages": [
+   6
+  ],
+  "pairs": 1
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p597",
+  "pages": [
+   2
+  ],
+  "pairs": 2
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p721",
+  "pages": [
+   1,
+   4,
+   8,
+   11,
+   12
+  ],
+  "pairs": 6
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p785",
+  "skip": "no pair"
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p786",
+  "skip": "no pair"
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p794",
+  "skip": "no pair"
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p892",
+  "pages": [
+   3
+  ],
+  "pairs": 5
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p901",
+  "pages": [
+   1,
+   2,
+   3,
+   25
+  ],
+  "pairs": 8
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p904",
+  "skip": "no pair"
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p907",
+  "pages": [
+   4,
+   9
+  ],
+  "pairs": 2
+ },
+ {
+  "kind": "irs",
+  "id": "irs-p908",
+  "pages": [
+   2,
+   3
+  ],
+  "pairs": 5
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31419",
+  "pages": [
+   1,
+   2,
+   3
+  ],
+  "pairs": 4
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31401",
+  "pages": [
+   1,
+   2
+  ],
+  "pairs": 4
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31396",
+  "pages": [
+   1
+  ],
+  "pairs": 1
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31392",
+  "pages": [
+   1,
+   2
+  ],
+  "pairs": 6
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31391",
+  "pages": [
+   1
+  ],
+  "pairs": 4
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31388",
+  "pages": [
+   1,
+   2,
+   3
+  ],
+  "pairs": 6
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31384",
+  "pages": [
+   1,
+   2,
+   9
+  ],
+  "pairs": 5
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31230",
+  "pages": [
+   1
+  ],
+  "pairs": 2
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31225",
+  "skip": "same text as fr-2024-31396"
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31217",
+  "pages": [
+   1,
+   2
+  ],
+  "pairs": 6
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31015",
+  "pages": [
+   1,
+   2
+  ],
+  "pairs": 7
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-30987",
+  "pages": [
+   7
+  ],
+  "pairs": 1
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-30509",
+  "pages": [
+   1,
+   6
+  ],
+  "pairs": 3
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31311",
+  "pages": [
+   1,
+   4
+  ],
+  "pairs": 5
+ },
+ {
+  "kind": "fr",
+  "id": "fr-2024-31310",
+  "pages": [
+   1,
+   4
+  ],
+  "pairs": 2
+ }
+]
