@@ -1,0 +1,53 @@
+Stock exchanges shall issue detailed guidelines in this regard in
+
+consultation with SEBI.
+
+6. Applicability of framework:
+
+6.1 The framework shall be applicable to the stock brokers providing IBT/STWT
+
+trading platforms and having more than 10,000 registered clients (excluding
+
+closed accounts) as on 31^st March of previous financial year.
+
+6.2 Stock exchange shall issue detailed guidelines in this regard and
+
+disseminate the list of applicable stock brokers.
+
+7. Reporting Requirements:
+
+7.1 Stock brokers shall inform regarding the technical glitch to the stock
+
+exchanges and also to their clients within 2 hours from the time of occurrence
+
+of the glitch. Exchanges in turn shall disseminate the technical glitch
+
+incidents on their website.
+
+7.2 Stock brokers shall inform their clients regarding the occurrence of technical
+
+glitch by disseminating information on their website and any other mode such
+
+as SMS/email/pop-up in mobile based/ web based trading application etc.
+
+7.3 Stock brokers shall submit a Preliminary Incident Report (as per the format
+
+prescribed by stock exchanges) to the stock exchange within T+1 day of the
+
+incident (T being the date of the incident). However, if T+1 day falls on a
+
+trading holiday; submission may be done on next trading day.
+
+7.4 Stock brokers shall submit a Root Cause Analysis Report (RCA) (as per the
+
+format prescribed by stock exchanges) of the technical glitch to stock
+
+exchange, within 14 working days from the date of the incident.
+
+7.5 Stock brokers shall submit information/reports mentioned above, on
+
+‘Samuhik Prativedan Manch’ i.e. common portal for submissions by stock
+
+brokers.
+
+Page 4 of 7

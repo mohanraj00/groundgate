@@ -73,3 +73,11 @@ jobs:
           uv run --isolated --no-project --python 3.12 --with groundgate==0.2.0 \
             --with-requirements "$RUNNER_TEMP/bench-requirements.txt" \
             python bench/score.py --set bench/set2 --check
+      - name: Pattern-set results rescore, spec 0.3 in process and spec 0.2 on the 0.2.0 wheel
+        run: uv run --group langextract python bench/patterns/pairs.py score --check
+      - name: Dots-set results rescore, spec 0.3 in process
+        run: uv run python bench/dots/dots.py score --check
+      - name: India-set results rescore, spec 0.3 in process and spec 0.2 on the 0.2.0 wheel
+        run: uv run python bench/india/india.py score --check
+      - name: Model triage report matches its recorded answers
+        run: uv run python bench/patterns/triage.py report --check

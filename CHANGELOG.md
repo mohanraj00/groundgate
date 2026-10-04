@@ -16,6 +16,24 @@ milestone 0.3.
   $72,000" are now changes, so the new value is no longer flagged as a range end. The words
   between must start with a determiner and hold no digit, punctuation, preposition or range word,
   so "increased body weight from 20 to 40 kg" stays a range. Vector `07e-change-at-a-distance`.
+- Sentence ends (#63): for the qualifier window, the dot of a listed abbreviation such as `Rs.`,
+  `approx.`, `p.m.` or `U.S.` no longer ends a sentence when a lowercase letter, a digit or a
+  currency sign follows. "up to Rs. 50,000" is now qualified, and in "from 6 p.m. to 8 p.m." 8 is a
+  range end. A wider qualifier window can only add a flag. Key scope and the unit search still end
+  at every such dot, so a join never lets a key or unit of one sentence reach a value in the next.
+  `approx` joins the `approx` qualifiers, so "approx. 5 mg" is flagged. Vector
+  `07f-abbreviation-dots`. Measured on 116 abbreviation dots in documents no rule was written from
+  (`bench/dots`): of the 107 where the sentence goes on, spec 0.2 cuts all 107 and 0.3 cuts 53, and
+  0.3 joins none of the 9 real sentence ends.
+- Blank lines (#63): a blank line may hold a carriage return, so `\r\n\r\n` ends a sentence
+  too.
+- Numbers (#59): a number grouped the Indian way, the last three digits and then pairs, has its
+  value: `2,00,000` is 200000 and `1,00,00,000` is 10000000, in the document and in a candidate's
+  `value`. A mix of the two groupings, such as `1,23,456,789`, still has none. Vector
+  `03b-indian-grouping`. Measured on the India set (#76): 101 tokens with a comma in 41 SEBI
+  circulars, labeled before scoring. Spec 0.2 rejects 14 of the 88 tokens that are one number,
+  and spec 0.3 rejects 0. Both specs give a value to 1 of the 13 tokens that are not one
+  number, the same token.
 
 ## 0.2.0 (2026-10-03)
 

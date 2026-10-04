@@ -20,6 +20,7 @@ sys.path[:0] = [str(BENCH), str(BENCH / "label"), str(BENCH / "patterns")]  # no
 import app  # noqa: E402  (bench/label/app.py)
 import pairs  # noqa: E402  (bench/patterns/pairs.py)
 import score  # noqa: E402  (bench/score.py)
+import triage  # noqa: E402  (bench/patterns/triage.py)
 
 TEXT = "Tablets: 10 mg. The maximum dose is 40 mg once daily."
 
@@ -515,3 +516,57 @@ def test_the_label_context_marks_x_and_y_and_nothing_else() -> None:
     m = pairs.pairs_in(text)[0]
     shown = pairs.context(text, {"x": [m.start(1), m.end(1)], "y": [m.start(2), m.end(2)]})
     assert shown == "The fee went from $\033[1;7m5\033[0m to $\033[1;7m7\033[0m in 2027."
+
+
+def test_a_pattern_pair_is_tallied_by_its_label_and_reading() -> None:
+    pairs_read = [
+        {"id": "a", "spec_0.3": "change"},
+        {"id": "b", "spec_0.3": "range"},
+        {"id": "c", "spec_0.3": "change"},
+    ]
+    labels = {"a": "change", "b": "change", "c": "range"}
+    counts = pairs.tally(pairs_read, labels, "spec_0.3")
+    assert counts["change read as change"] == 1
+    assert counts["change read as range"] == 1
+    assert counts["range read as change"] == 1
+    assert sum(counts.values()) == 3
+
+
+def test_a_results_snippet_is_the_sentence_with_x_and_y_in_bold() -> None:
+    text = "First one. The fee rose\nfrom $5 to $7 in 2027. Next one."
+    m = pairs.pairs_in(text)[0]
+    p = {"x": [m.start(1), m.end(1)], "y": [m.start(2), m.end(2)]}
+    assert pairs.snippet(text, p) == "The fee rose from $**5** to $**7** in 2027."
+
+
+def test_a_model_sees_the_pair_in_brackets_and_one_fixed_question() -> None:
+    text = "The fee went\nfrom $5 to $7 in 2027."
+    m = pairs.pairs_in(text)[0]
+    p = {"x": [m.start(1), m.end(1)], "y": [m.start(2), m.end(2)]}
+    assert triage.state(text, p) == "The fee went from $[5] to $[7] in 2027."
+    q = triage.question("5", "7")["pair"]
+    assert q["type"] == "choice" and list(q["criteria"]) == ["change", "range", "neither"]
+
+
+def test_a_dot_is_a_listed_abbreviation_before_whitespace() -> None:
+    sys.path.insert(0, str(BENCH / "dots"))
+    import dots
+
+    text = "Up to Rs. 5 at 6 p.m. in the U.S. Mrs. Lee paid $9.50 on No.4 in Inc."
+    assert [m.group() for m in dots.dots_in(text)] == ["Rs.", "p.m.", "U.S.", "Mrs."]
+    head = "Next.\n12 Federal Register / Vol. 90, No. 5 / Rules\nSee No. 4 here."
+    assert [m.start() for m in dots.dots_in(head)] == [head.index("No. 4")]
+    split = "Federal Register\nVol. 90, No. 123 / Rules\nSee No. 4 here."
+    assert [m.start() for m in dots.dots_in(split)] == [split.index("No. 4")]
+
+
+def test_an_india_token_is_a_number_token_with_a_comma() -> None:
+    sys.path.insert(0, str(BENCH / "india"))
+    import india
+
+    text = "Rs 2,00,000 and 1,2,3, then 5,000, x12,3, page-width,-16,842 and 7."
+    assert [text[t.start : t.end] for t in india.commas_in(text)] == [
+        "2,00,000",
+        "1,2,3",
+        "5,000",
+    ]

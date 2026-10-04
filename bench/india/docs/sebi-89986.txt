@@ -1,0 +1,282 @@
+may process the request in such cases and issue a new FPI registration
+
+certificate.
+
+Provided the requirement of separate dedicated registration shall not
+
+apply
+
+for
+
+issuance of ODIs with Government securities as
+
+reference/underlying.
+
+ii. A Foreign Portfolio Investor shall not issue ODIs with derivatives as
+
+reference/underlying.
+
+iii. A Foreign Portfolio Investor shall not hedge their ODIs with derivative
+
+positions on Stock Exchanges in India. Accordingly, ODIs shall only have
+
+securities (other than derivatives) as underlying and shall be fully hedged
+
+with the same securities on a one-to-one basis, throughout the tenure of
+
+the ODI.”
+
+2.2. The following Para shall be inserted after Para 3 of Part D:
+
+“4. Mandating additional disclosures by ODI subscribers that fulfil certain
+
+objective criteria
+
+i. Granular details of all entities holding any ownership, economic interest,
+
+or exercising control in the ODI subscriber, on a full look through basis, up
+
+to the level of all natural persons, without any threshold, shall be collected
+
+by ODI issuing FPI from its ODI subscribers, that fulfil any of the criteria
+
+mentioned below
+
+in
+
+the specified
+
+format, and submitted
+
+to
+
+the
+
+Depositories:
+
+a) ODI subscriber having more than 50% of its equity ODI positions
+
+through the ODI issuing FPI in ODIs referenced to securities of a
+
+single Indian corporate group;
+
+b) ODI subscriber having equity positions worth more than INR 25,000
+
+crore in the Indian markets. For the purpose of this clause, equity
+
+positions shall include:
+
+I. Equity ODI positions taken by the ODI subscriber through one or
+
+more ODI issuing FPIs.
+
+II. Equity ODI positions taken by ODI subscribers (through one or
+
+more ODI issuing FPIs) having common ownership, directly or
+
+Page 2 of 11
+Exchanges of the permissible jurisdictions as may be notified by the
+
+Board from time to time. To start with, the list of permissible
+
+jurisdictions and exchanges as mentioned in Annexure A to SEBI
+
+circular SEBI/HO/MRD2/DCAP/CIR/P/2019/146 dated Nov 28, 2019
+
+shall be considered as permissible exchanges and jurisdictions for this
+
+clause.
+
+d) Pooled
+
+investment vehicles
+
+registered with/
+
+regulated by a
+
+Government/ regulatory authority in their home jurisdiction/ country of
+
+incorporation/ establishment/ formation, where:
+
+I. their positions in equity ODIs referenced to securities of a single
+
+Indian corporate group is below 25% of their overall global AUM at
+
+a scheme level, in case of ODI subscribers meeting the criteria
+
+under Para (i)(a) above; or
+
+II. their equity positions in the Indian markets is below 50% of their
+
+overall global AUM at a scheme level, in case of ODI subscribers
+
+meeting the criteria under Para (i)(b) above;
+
+subject to independent validation of disclosure of such holdings by the
+
+ODI issuing FPIs.
+
+‘Scheme’ for the purpose of this clause shall mean pooled investment
+
+vehicles with structures similar to ‘Scheme’ as defined in SEBI (Mutual
+
+Funds) Regulations, 1996.
+
+e) ODI subscribers that are unable to liquidate their excess ODI positions
+
+due to statutory restrictions (such as freeze on accounts or positions
+
+due to regulatory orders etc.), till the time such restrictions exist.
+
+f) University Funds and University related Endowments, registered or
+
+eligible to be registered as Category I FPI, subject to them fulfilling the
+
+following additional conditions:
+
+I. Indian equity ODI positions being less than 25% of global AUM
+
+II. Global AUM being more than INR 10,000 crore equivalent
+
+III. Appropriate return/filing to the respective tax authorities in their
+
+home jurisdiction to evidence the nature of a non-profit organisation
+
+exempt from tax.
+
+iv. ODI subscribers shall be exempted from making the additional disclosures
+
+if any of the entities referred in Para (i)(b) above qualifies for exemption
+
+Page 4 of 11
+and the net equity positions of remaining entities referred in Para (i)(b),
+
+after deducting the positions of such exempted entities, falls below INR
+
+25,000 crore. Post deduction, if the equity positions of the entities referred
+
+in Para (i)(b) above continues to exceed INR 25,000 crore, only the non-
+
+exempted ODI subscribers shall be liable for making the disclosures in
+
+terms of Para (i) and consequent actions, if any, as stated in the
+
+subsequent paragraphs.
+
+v. Where the entity identified on a look through basis in terms of Para (i)
+
+above, satisfies any of the criteria listed in Para (iii) above, further
+
+identification of entities having ownership interest, economic interest, or
+
+control rights of such an entity on look through basis, shall not be required.
+
+vi.
+
+In addition to the criteria listed under Para (iii) above, ODI subscriber
+
+having more than 50% of its equity ODI positions in ODIs referenced to
+
+securities of a single Indian corporate group shall not be required to make
+
+the additional disclosures as specified in Para (i) above, subject to
+
+compliance with all of the following conditions:
+
+a) The apex company of such corporate group has no identified
+
+promoter. For this purpose, the list of corporate groups based on the
+
+corporate repository published by the Stock Exchanges and their
+
+respective apex companies having no identified promoters has been
+
+made public by Depositories.
+
+b) The ODI subscriber does not have more than 50% of its equity ODI
+
+positions in ODIs referenced to securities of a single Indian corporate
+
+group, after disregarding its positions in ODIs referenced to securities
+
+of the apex company (with no identified promoter).
+
+c) The composite positions of all such ODI subscribers (that meet the
+
+50% concentration criteria excluding ODI subscribers which are either
+
+exempted or have disclosed) and all FPIs that meet the 50%
+
+concentration criteria in that corporate group, excluding FPIs which
+
+are either exempted or have disclosed, in the apex company is less
+
+than 3% of the total equity share capital of the apex company.
+
+Page 5 of 11
+Note: ODI positions of ODI subscribers and holdings of ODI issuing
+
+FPIs corresponding to the same underlying/reference shares may be
+
+counted only once so as to avoid double counting.
+
+vii. ODI issuing FPIs and Depositories shall track the utilisation of this 3% limit
+
+for apex companies, without an identified promoter, at the end of each
+
+day. When the 3% limit is met or breached, Depositories shall make this
+
+information public before start of trading on the next day.
+
+viii.
+
+Thereafter, for any prospective positions in equity ODI referenced to
+
+securities of the apex company by ODI subscribers, that meet the 50%
+
+concentration criteria in the corporate group, the ODI subscribers shall be
+
+required to either realign their positions below the 50% threshold within 10
+
+trading days or make additional disclosures prescribed above.
+
+Provided no such requirement, to realign or make disclosure, shall be
+
+applicable unless the 3% cumulative limit for the apex company continues
+
+to be met through the said 10 trading days.
+
+ix. Disclosures specified under Para (i) shall not be required in case ODI
+
+subscribers realign their positions with the prescribed thresholds, within
+
+the below mentioned timelines/ conditions:
+
+a) ODI subscribers meeting criteria specified at Para (i) (a): 10 trading
+
+days from the date of breach of specified threshold. Such ODI
+
+subscribers shall not be permitted to take fresh positions in equity
+
+ODIs referenced to securities of any company belonging to such
+
+Indian corporate group, during the next 30 calendar days from the date
+
+on which the ODI subscriber exceeded the threshold. A list of such
+
+ODI subscribers along with Indian corporate group shall be made
+
+public by the Depositories and ODI issuing FPIs shall ensure
+
+compliance with the same.
+
+b) ODI subscribers meeting criteria specified at Para (i) (b): 90 calendar
+
+days from the date of breach of specified threshold. Such ODI
+
+subscribers shall not be permitted to take fresh positions in equity
+
+ODIs until the equity positions are brought below INR 25,000 crore in
+
+Page 6 of 11

@@ -6,9 +6,14 @@ set 2 did not use, labeled by a person as a change, a range or neither.
     uv run python bench/fetch.py --set bench/patterns      # download, verify, write docs/
     uv run python bench/patterns/pairs.py pairs            # write pairs.json from docs/
     uv run python bench/patterns/pairs.py label            # label them in the terminal
+    uv run python bench/patterns/pairs.py score            # RESULTS.md: spec 0.2 and 0.3
+    uv run python bench/patterns/pairs.py score --check    # fail if the committed files differ
 
 The pick looks only at titles, section codes, page counts and pair counts, and prints no text.
 The label tool shows each pair in its sentence and never shows how a spec reads it.
+`score` reads each Y under spec 0.3 (the core in this repository) and under spec 0.2 (the
+released 0.2.0 wheel, through `pairs.py read` in a second process), and compares both with the
+labels.
 """
 
 from __future__ import annotations
@@ -18,8 +23,10 @@ import datetime
 import hashlib
 import json
 import re
+import subprocess
 import sys
 from collections import defaultdict
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -57,11 +64,26 @@ def pairs_in(text: str) -> list[re.Match[str]]:
     return list(PAIR.finditer(text))
 
 
-def pick_fda(log: list[dict[str, Any]], drugs: set[str]) -> list[dict[str, Any]]:
+Find = Callable[[str], list[re.Match[str]]]
+
+
+def pick_fda(
+    log: list[dict[str, Any]],
+    drugs: set[str],
+    find: Find = pairs_in,
+    per_kind: int = PAIRS_PER_KIND,
+    per_doc: int = PAIRS_PER_DOC,
+    group: str = "change",
+    max_rank: int = FDA_MAX_RANK,
+) -> list[dict[str, Any]]:
+    """Take labels in Part D order up to ``max_rank`` while the kind has fewer than ``per_kind``
+    items; a label counts its first ``per_doc`` items in sections 1 and 2."""
     chosen: list[dict[str, Any]] = []
     seen: set[str] = set()
     total = 0
-    for rank, name in enumerate(walk.ranked_generics()[:FDA_MAX_RANK], 1):
+    for rank, name in enumerate(walk.ranked_generics()[:max_rank], 1):
+        if total >= per_kind:
+            break
         base = walk.base_word(name)
         entry: dict[str, Any] = {"kind": "fda", "rank": rank, "name": name}
         log.append(entry)
@@ -79,18 +101,18 @@ def pick_fda(log: list[dict[str, Any]], drugs: set[str]) -> list[dict[str, Any]]
             entry["skip"] = why
             continue
         data = walk.get(label["url"], f"spl-{label['setid']}.xml")
-        found = len(pairs_in(spl_sections(data, [walk.INDICATIONS, walk.DOSAGE])))
+        found = len(find(spl_sections(data, [walk.INDICATIONS, walk.DOSAGE])))
         entry.update({"setid": label["setid"], "pairs": found})
         if not found:
             entry["skip"] = "no pair in sections 1 and 2"
             continue
-        total += min(found, PAIRS_PER_DOC)
+        total += min(found, per_doc)
         print(f"fda: rank {rank}, {len(chosen) + 1} documents, {total} pairs", file=sys.stderr)
         chosen.append(
             {
                 "id": f"fda-{base}",
                 "kind": "fda",
-                "groups": ["change"],
+                "groups": [group],
                 "url": label["url"],
                 "sha256": label["sha256"],
                 "select": {"sections": [walk.INDICATIONS, walk.DOSAGE]},
@@ -101,14 +123,21 @@ def pick_fda(log: list[dict[str, Any]], drugs: set[str]) -> list[dict[str, Any]]
 
 
 def pick_pdfs(
-    kind: str, docs: list[tuple[str, str]], log: list[dict[str, Any]], seen: dict[str, str]
+    kind: str,
+    docs: list[tuple[str, str]],
+    log: list[dict[str, Any]],
+    seen: dict[str, str],
+    find: Find = pairs_in,
+    per_kind: int = PAIRS_PER_KIND,
+    per_doc: int = PAIRS_PER_DOC,
+    group: str = "change",
 ) -> list[dict[str, Any]]:
-    """Take documents (id, url) in order until the kind has PAIRS_PER_KIND pairs. A document
-    gives the pages that hold its first PAIRS_PER_DOC pairs."""
+    """Take documents (id, url) in order until the kind has ``per_kind`` items. A document gives
+    the pages that hold its first ``per_doc`` items."""
     chosen: list[dict[str, Any]] = []
     total = 0
     for doc_id, url in docs:
-        if total >= PAIRS_PER_KIND:
+        if total >= per_kind:
             break
         entry: dict[str, Any] = {"kind": kind, "id": doc_id}
         log.append(entry)
@@ -120,9 +149,9 @@ def pick_pdfs(
         idx: list[int] = []
         found = 0
         for i, page in enumerate(pages):
-            if found >= PAIRS_PER_DOC:
+            if found >= per_doc:
                 break
-            if n := len(pairs_in(page)):
+            if n := len(find(page)):
                 idx.append(i)
                 found += n
         if not idx:
@@ -133,10 +162,10 @@ def pick_pdfs(
             entry["skip"] = f"same text as {seen[text_sha]}"
             continue
         seen[text_sha] = doc_id
-        total += min(found, PAIRS_PER_DOC)
+        total += min(found, per_doc)
         print(f"{kind}: {len(chosen) + 1} documents, {total} pairs", file=sys.stderr)
         entry.update({"pages": [i + 1 for i in idx], "pairs": found})
-        chosen.append(walk.source(doc_id, kind, url, sha, ["change"], [i + 1 for i in idx]))
+        chosen.append(walk.source(doc_id, kind, url, sha, [group], [i + 1 for i in idx]))
     return chosen
 
 
@@ -214,13 +243,19 @@ def context(text: str, p: dict[str, Any]) -> str:
     return " ".join("".join(parts).split())
 
 
-def label() -> None:
+def label(recheck: bool = False) -> None:
+    """Label every pair in labels.json, or with ``recheck`` the pairs in recheck.json, in its
+    order, in recheck-labels.json. A recheck never shows the first label."""
     pairs = json.loads((HERE / "pairs.json").read_text())
     path = HERE / "labels.json"
+    if recheck:
+        by_id = {p["id"]: p for p in pairs}
+        pairs = [by_id[i] for i in json.loads((HERE / "recheck.json").read_text())["ids"]]
+        path = HERE / "recheck-labels.json"
     labels: dict[str, str] = json.loads(path.read_text()) if path.exists() else {}
     texts: dict[str, str] = {}
     print("For each pair: is Y the new value that replaces X (a change), the end of a range,")
-    print("or neither (a form number, a phone number)?\n")
+    print("or neither (a form number, a phone number, the minutes of a clock time)?\n")
     i = next((k for k, p in enumerate(pairs) if p["id"] not in labels), len(pairs))
     while i < len(pairs):
         p = pairs[i]
@@ -245,7 +280,157 @@ def label() -> None:
         path.write_text(json.dumps(dict(sorted(labels.items())), indent=1) + "\n")
         i += 1
     done = sum(q["id"] in labels for q in pairs)
-    print(f"\n{done} of {len(pairs)} labeled, saved in bench/patterns/labels.json")
+    print(f"\n{done} of {len(pairs)} labeled, saved in bench/patterns/{path.name}")
+
+
+# ------------------------------------------------------------------------------- scoring
+
+SPEC02 = [
+    *("uv", "run", "--isolated", "--no-project", "--quiet", "--python", "3.12"),
+    *("--with", "groundgate[pdf]==0.2.0", "python", str(HERE / "pairs.py"), "read"),
+]
+READINGS = ("change", "range")
+
+
+def read() -> dict[str, str]:
+    """How the installed groundgate reads each Y: "range" if it is a range end, else "change"."""
+    from groundgate.text import qualifiers, tokens
+
+    out: dict[str, str] = {}
+    texts: dict[str, tuple[str, list[Any]]] = {}
+    for p in json.loads((HERE / "pairs.json").read_text()):
+        if p["doc"] not in texts:
+            text = (HERE / "docs" / f"{p['doc']}.txt").read_text(encoding="utf-8")
+            texts[p["doc"]] = (text, tokens(text))
+        text, toks = texts[p["doc"]]
+        y = p["y"][0]
+        tok = next(t for t in toks if t.start <= y < t.end)
+        out[p["id"]] = "range" if "range" in qualifiers(text, tok) else "change"
+    return out
+
+
+def tally(pairs: list[dict[str, Any]], labels: dict[str, str], spec: str) -> dict[str, int]:
+    counts = {f"{lab} read as {r}": 0 for lab in LABELS.values() for r in READINGS}
+    for p in pairs:
+        counts[f"{labels[p['id']]} read as {p[spec]}"] += 1
+    return counts
+
+
+def snippet(text: str, p: dict[str, Any]) -> str:
+    (x0, x1), (y0, y1) = p["x"], p["y"]
+    a = text.rfind(". ", max(0, x0 - 160), x0)
+    a = a + 2 if a >= 0 else max(0, x0 - 120)
+    b = text.find(". ", y1, y1 + 120)
+    b = b + 1 if b >= 0 else min(len(text), y1 + 80)
+    parts = [text[a:x0], f"**{text[x0:x1]}**", text[x1:y0], f"**{text[y0:y1]}**", text[y1:b]]
+    return " ".join("".join(parts).split()).replace("|", "\\|")
+
+
+def score(check: bool) -> None:
+    pairs = json.loads((HERE / "pairs.json").read_text())
+    labels = json.loads((HERE / "labels.json").read_text())
+    missing = [p["id"] for p in pairs if p["id"] not in labels]
+    if missing:
+        raise SystemExit(f"{len(missing)} of {len(pairs)} pairs have no label; run pairs.py label")
+    run = subprocess.run(SPEC02, capture_output=True, text=True, check=True)
+    v02, v03 = json.loads(run.stdout), read()
+    for p in pairs:
+        p.update({"label": labels[p["id"]], "spec_0.2": v02[p["id"]], "spec_0.3": v03[p["id"]]})
+    kinds = ("fda", "irs", "fr")
+    results: dict[str, Any] = {
+        "pairs": len(pairs),
+        "labels": {lab: sum(p["label"] == lab for p in pairs) for lab in LABELS.values()},
+        "by_spec": {s: tally(pairs, labels, s) for s in ("spec_0.2", "spec_0.3")},
+        "by_kind": {
+            k: {
+                s: tally([p for p in pairs if p["kind"] == k], labels, s)
+                for s in ("spec_0.2", "spec_0.3")
+            }
+            for k in kinds
+        },
+        "pairs_read": [{k: p[k] for k in ("id", "label", "spec_0.2", "spec_0.3")} for p in pairs],
+    }
+    texts = {
+        p["doc"]: (HERE / "docs" / f"{p['doc']}.txt").read_text(encoding="utf-8") for p in pairs
+    }
+    md = report(results, pairs, texts)
+    out = {
+        HERE / "results.json": json.dumps(results, indent=1) + "\n",
+        HERE / "RESULTS.md": md,
+    }
+    if check:
+        stale = [p.name for p, body in out.items() if not p.exists() or p.read_text() != body]
+        if stale:
+            raise SystemExit(f"out of date: {', '.join(stale)}; run pairs.py score")
+        print("results are up to date")
+        return
+    for path, body in out.items():
+        path.write_text(body)
+    print("wrote results.json, RESULTS.md")
+
+
+def report(res: dict[str, Any], pairs: list[dict[str, Any]], texts: dict[str, str]) -> str:
+    lab = res["labels"]
+    rows = [
+        ("change read as change", "Y passes as a new value: right"),
+        ("change read as range", "Y goes to review: more review"),
+        ("range read as range", "Y goes to review: right"),
+        ("range read as change", "Y passes without a range flag: a possible escape"),
+        ("neither read as change", "neither: Y passes without a range flag"),
+        ("neither read as range", "neither: Y goes to review"),
+    ]
+    md = [
+        "# Pattern set: the change rule",
+        "",
+        "Generated by `bench/patterns/pairs.py score` from `pairs.json` and `labels.json`. "
+        "[README.md](README.md) explains the set. Spec 0.2 is the released 0.2.0 wheel and spec "
+        "0.3 is the core in this repository.",
+        "",
+        f"{res['pairs']} pairs, labeled by a person: {lab['change']} changes, {lab['range']} "
+        f"ranges, {lab['neither']} neither.",
+        "",
+        "| Label and reading of Y | What happens | Spec 0.2 | Spec 0.3 |",
+        "|---|---|---:|---:|",
+    ]
+    for key, what in rows:
+        a, b = res["by_spec"]["spec_0.2"][key], res["by_spec"]["spec_0.3"][key]
+        md.append(f"| {key} | {what} | {a} | {b} |")
+    md += [
+        "",
+        "## By kind",
+        "",
+        "| Kind | Label and reading of Y | Spec 0.2 | Spec 0.3 |",
+        "|---|---|---:|---:|",
+    ]
+    for kind, by in res["by_kind"].items():
+        for key, _ in rows:
+            a, b = by["spec_0.2"][key], by["spec_0.3"][key]
+            if a or b:
+                md.append(f"| {kind} | {key} | {a} | {b} |")
+    sections = [
+        ("Read differently by 0.2 and 0.3", lambda p: p["spec_0.2"] != p["spec_0.3"]),
+        (
+            "Spec 0.3 reads a range as a change",
+            lambda p: p["label"] == "range" and p["spec_0.3"] == "change",
+        ),
+        (
+            "Spec 0.3 reads a change as a range",
+            lambda p: p["label"] == "change" and p["spec_0.3"] == "range",
+        ),
+    ]
+    for title, keep in sections:
+        chosen = [p for p in pairs if keep(p)]
+        md += ["", f"## {title} ({len(chosen)})", ""]
+        if not chosen:
+            md.append("None.")
+            continue
+        md += ["| Pair | Label | 0.2 | 0.3 | Text |", "|---|---|---|---|---|"]
+        for p in chosen:
+            text = snippet(texts[p["doc"]], p)
+            md.append(
+                f"| `{p['id']}` | {p['label']} | {p['spec_0.2']} | {p['spec_0.3']} | {text} |"
+            )
+    return "\n".join(md) + "\n"
 
 
 def main() -> None:
@@ -254,14 +439,22 @@ def main() -> None:
     p = sub.add_parser("pick")
     p.add_argument("--count", action="store_true", help="report pair counts; write nothing")
     sub.add_parser("pairs")
-    sub.add_parser("label")
+    p = sub.add_parser("label")
+    p.add_argument("--recheck", action="store_true", help="label the pairs in recheck.json")
+    sub.add_parser("read", help="print how the installed groundgate reads each Y (JSON)")
+    p = sub.add_parser("score")
+    p.add_argument("--check", action="store_true", help="fail if the committed files differ")
     args = ap.parse_args()
     if args.cmd == "pick":
         pick(args.count)
     elif args.cmd == "pairs":
         find_pairs()
+    elif args.cmd == "label":
+        label(args.recheck)
+    elif args.cmd == "read":
+        print(json.dumps(read()))
     else:
-        label()
+        score(args.check)
 
 
 if __name__ == "__main__":

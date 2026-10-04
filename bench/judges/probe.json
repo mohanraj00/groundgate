@@ -1,0 +1,316 @@
+{
+ "questions": {
+  "comparator": {
+   "type": "choice",
+   "state": "Value: {value}. Text: {text}",
+   "instructions": "What relation does the text state for the value {value}?",
+   "criteria": {
+    "exact": "the text states exactly this amount",
+    "at_most": "the amount is an upper limit or maximum",
+    "at_least": "the amount is a lower limit or minimum",
+    "more_than": "the amount is exceeded: more than or above it",
+    "less_than": "below or less than the amount",
+    "about": "an approximate amount",
+    "range": "one end of a range",
+    "old_value": "the old value before a change",
+    "new_value": "the new value after a change"
+   }
+  },
+  "key": {
+   "type": "choice",
+   "state": "Value: {value}. Text: {text}",
+   "instructions": "Which condition does the value {value} belong to?",
+   "criteria": "each key, with underscores written as spaces"
+  },
+  "field": {
+   "type": "noul",
+   "state": "{text}",
+   "instructions": "The text states the {field} as {value}."
+  },
+  "paraphrase": {
+   "type": "noul",
+   "state": "Quote: {quote}. Span: {span}.",
+   "instructions": "The quote and the span state the same fact."
+  }
+ },
+ "items": [
+  {
+   "id": "comparator-01",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "500",
+   "text": "The usual adult dose is 500 mg twice a day.",
+   "expected": "exact"
+  },
+  {
+   "id": "comparator-02",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "4000",
+   "text": "Do not take more than 4,000 mg in 24 hours.",
+   "expected": "at_most"
+  },
+  {
+   "id": "comparator-03",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "18",
+   "text": "Patients must be at least 18 years old to enrol.",
+   "expected": "at_least"
+  },
+  {
+   "id": "comparator-04",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "150",
+   "text": "The fee increased from $120 to $150 on 1 July.",
+   "expected": "new_value"
+  },
+  {
+   "id": "comparator-05",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "120",
+   "text": "The fee increased from $120 to $150 on 1 July.",
+   "expected": "old_value"
+  },
+  {
+   "id": "comparator-06",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "7",
+   "text": "Treatment lasts between 7 and 14 days.",
+   "expected": "range"
+  },
+  {
+   "id": "comparator-07",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "2300",
+   "text": "Approximately 2,300 people attended the hearing.",
+   "expected": "about"
+  },
+  {
+   "id": "comparator-08",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "7000",
+   "text": "Your contribution may not exceed $7,000 for the year.",
+   "expected": "at_most"
+  },
+  {
+   "id": "comparator-09",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "150000",
+   "text": "Income above $150,000 is taxed at the higher rate.",
+   "expected": "more_than"
+  },
+  {
+   "id": "comparator-10",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "43",
+   "text": "After the review the fee went from $41 to $43.",
+   "expected": "new_value"
+  },
+  {
+   "id": "comparator-11",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "250",
+   "text": "Doses range from 250 mg to 500 mg daily.",
+   "expected": "range"
+  },
+  {
+   "id": "comparator-12",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "50",
+   "text": "The tank holds up to 50 L of water.",
+   "expected": "at_most"
+  },
+  {
+   "id": "comparator-13",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "12",
+   "text": "Children under 12 years must not use this product.",
+   "expected": "less_than"
+  },
+  {
+   "id": "comparator-14",
+   "kind": "comparator",
+   "lang": "en",
+   "value": "30",
+   "text": "Store the vials at 30 degrees or below.",
+   "expected": "at_most"
+  },
+  {
+   "id": "comparator-15",
+   "kind": "comparator",
+   "lang": "de",
+   "value": "4000",
+   "text": "Die Tagesdosis beträgt höchstens 4.000 mg.",
+   "expected": "at_most"
+  },
+  {
+   "id": "comparator-16",
+   "kind": "comparator",
+   "lang": "de",
+   "value": "500",
+   "text": "Erwachsene nehmen 500 mg zweimal täglich.",
+   "expected": "exact"
+  },
+  {
+   "id": "comparator-17",
+   "kind": "comparator",
+   "lang": "de",
+   "value": "150",
+   "text": "Die Gebühr stieg von 120 € auf 150 €.",
+   "expected": "new_value"
+  },
+  {
+   "id": "comparator-18",
+   "kind": "comparator",
+   "lang": "de",
+   "value": "18",
+   "text": "Teilnehmer müssen mindestens 18 Jahre alt sein.",
+   "expected": "at_least"
+  },
+  {
+   "id": "key-01",
+   "kind": "key",
+   "lang": "en",
+   "value": "2.5",
+   "text": "For hypertension, the starting dose is 10 mg once daily. For heart failure, start with 2.5 mg.",
+   "keys": [
+    "hypertension",
+    "heart_failure"
+   ],
+   "expected": "heart_failure"
+  },
+  {
+   "id": "key-02",
+   "kind": "key",
+   "lang": "en",
+   "value": "10",
+   "text": "For hypertension, the starting dose is 10 mg once daily. For heart failure, start with 2.5 mg.",
+   "keys": [
+    "hypertension",
+    "heart_failure"
+   ],
+   "expected": "hypertension"
+  },
+  {
+   "id": "key-03",
+   "kind": "key",
+   "lang": "en",
+   "value": "2.5",
+   "text": "Indication Starting dose Hypertension 10 mg Heart failure 2.5 mg",
+   "keys": [
+    "hypertension",
+    "heart_failure"
+   ],
+   "expected": "heart_failure"
+  },
+  {
+   "id": "key-04",
+   "kind": "key",
+   "lang": "en",
+   "value": "40",
+   "text": "Adults with angina: 40 mg twice daily. Adults with migraine: 80 mg once daily.",
+   "keys": [
+    "angina",
+    "migraine"
+   ],
+   "expected": "angina"
+  },
+  {
+   "id": "field-01",
+   "kind": "field",
+   "lang": "en",
+   "field": "annual contribution limit",
+   "value": "7000",
+   "text": "The annual contribution limit is $7,000. If you are 50 or older, you can add an extra $1,000.",
+   "expected": true
+  },
+  {
+   "id": "field-02",
+   "kind": "field",
+   "lang": "en",
+   "field": "annual contribution limit",
+   "value": "1000",
+   "text": "The annual contribution limit is $7,000. If you are 50 or older, you can add an extra $1,000.",
+   "expected": false
+  },
+  {
+   "id": "field-03",
+   "kind": "field",
+   "lang": "en",
+   "field": "maximum daily dose",
+   "value": "4000",
+   "text": "The maximum daily dose is 4,000 mg. Each tablet contains 500 mg.",
+   "expected": true
+  },
+  {
+   "id": "field-04",
+   "kind": "field",
+   "lang": "en",
+   "field": "maximum daily dose",
+   "value": "500",
+   "text": "The maximum daily dose is 4,000 mg. Each tablet contains 500 mg.",
+   "expected": false
+  },
+  {
+   "id": "field-05",
+   "kind": "field",
+   "lang": "en",
+   "field": "number of fatalities",
+   "value": "2",
+   "text": "The accident injured 14 passengers. Two crew members died.",
+   "expected": true
+  },
+  {
+   "id": "field-06",
+   "kind": "field",
+   "lang": "en",
+   "field": "number of fatalities",
+   "value": "14",
+   "text": "The accident injured 14 passengers. Two crew members died.",
+   "expected": false
+  },
+  {
+   "id": "paraphrase-01",
+   "kind": "paraphrase",
+   "lang": "en",
+   "quote": "a maximum of 4 g per day",
+   "span": "no more than 4,000 mg in 24 hours",
+   "expected": true
+  },
+  {
+   "id": "paraphrase-02",
+   "kind": "paraphrase",
+   "lang": "en",
+   "quote": "the limit is $7,000",
+   "span": "an extra $1,000",
+   "expected": false
+  },
+  {
+   "id": "paraphrase-03",
+   "kind": "paraphrase",
+   "lang": "en",
+   "quote": "starting dose 10 mg",
+   "span": "the starting dose is 10 mg once daily",
+   "expected": true
+  },
+  {
+   "id": "paraphrase-04",
+   "kind": "paraphrase",
+   "lang": "en",
+   "quote": "two crew members died",
+   "span": "injured 14 passengers",
+   "expected": false
+  }
+ ]
+}

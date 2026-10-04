@@ -1,0 +1,488 @@
+{
+  "retrieved": "2026-10-03",
+  "sources": [
+    {
+      "id": "fda-benazepril",
+      "kind": "fda",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/ff732cfa-9ded-4226-b464-19c90a6865ae.xml",
+      "sha256": "89082c5e611adac7e3390cbd4f64275813e526eff886d40a6a162e46288cc811",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "BENAZEPRIL HYDROCHLORIDE TABLET [ANI PHARMACEUTICALS, INC.]; Part D 2024 claims rank 167"
+    },
+    {
+      "id": "fda-digoxin",
+      "kind": "fda",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/dfac7f13-28be-423d-9389-9089da29da17.xml",
+      "sha256": "430c1101dade95b26a2fcc553c345760b0c9787e39c529051ac76bf1ee4d3442",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "DIGOXIN TABLET [AMNEAL PHARMACEUTICALS OF NEW YORK LLC]; Part D 2024 claims rank 192"
+    },
+    {
+      "id": "fda-ramipril",
+      "kind": "fda",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/394a49a8-81bb-43ba-8d6a-fa6fa5030587.xml",
+      "sha256": "5d380b40a4ebddbf920d29616bbce607a86a4cf6f0f57880f619d253778903a7",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "RAMIPRIL CAPSULE [REMEDYREPACK INC.]; Part D 2024 claims rank 195"
+    },
+    {
+      "id": "fda-lurasidone",
+      "kind": "fda",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/b94e9272-ed67-4af8-827a-4b8cc3b168a1.xml",
+      "sha256": "8d965f0ed60c7ebd70571699a1470876f1f7a9fa269fd1091007ec48d6fa4d34",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "LURASIDONE HYDROCHLORIDE TABLET, FILM COATED [REMEDYREPACK INC.]; Part D 2024 claims rank 257"
+    },
+    {
+      "id": "fda-tolterodine",
+      "kind": "fda",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/8cd23ff7-71ba-4391-95bd-a3a7f347713d.xml",
+      "sha256": "01d371a59478bb27c98787a1e5a85080613a7bd224aad544b1597eda2e4daacc",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "TOLTERODINE TARTRATE (TOLTERODINE) CAPSULE, EXTENDED RELEASE [AMERICAN HEALTH PACKAGING]; Part D 2024 claims rank 263"
+    },
+    {
+      "id": "fda-tacrolimus",
+      "kind": "fda",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/46ac55cf-d85e-4c34-bb33-f49e078c4a03.xml",
+      "sha256": "5f2d5f51ab5e0152659d72ad22e6d9d9ece0ee2b005fdefe68b1e8dbec189eaf",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "TACROLIMUS CAPSULE [SANDOZ INC.]; Part D 2024 claims rank 288"
+    },
+    {
+      "id": "fda-hydroxyurea",
+      "kind": "fda",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/e76fd60e-7644-48c5-9857-3608a045000b.xml",
+      "sha256": "6503343d5a37de742b97e3416fd63a0d1ffba341cd35a6e9a9b228057f07209e",
+      "select": {
+        "sections": [
+          "34067-9",
+          "34068-7"
+        ]
+      },
+      "source": "HYDROXYUREA CAPSULE [MAJOR PHARMACEUTICALS]; Part D 2024 claims rank 327"
+    },
+    {
+      "id": "irs-p1",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1.pdf",
+      "sha256": "b76c98a904265a8a25b0fd1a6cfebfe03dd29c1da4c661f2808515ae01c440ac",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p216",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p216.pdf",
+      "sha256": "9f104372d500a528131c1bffe667e1f918dca920f05f40f9716b025f7c416065",
+      "select": {
+        "pages": [
+          1,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "id": "irs-p529",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p529.pdf",
+      "sha256": "ee7210f1fcc2e838b6e14ad054e71e022893248971085cbb231a25c99a44e1a0",
+      "select": {
+        "pages": [
+          1,
+          3,
+          6,
+          10
+        ]
+      }
+    },
+    {
+      "id": "irs-p531",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p531.pdf",
+      "sha256": "1fed00178d4b726296c0310b2a0edddeb2037f62833f9900b6131497e244562c",
+      "select": {
+        "pages": [
+          1,
+          5,
+          6,
+          8
+        ]
+      }
+    },
+    {
+      "id": "irs-p534",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p534.pdf",
+      "sha256": "528b4ba69d53cc81a04a4f8c9b18900d85c19cf39c8520a6c3e8f687c50887ba",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "irs-p541",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p541.pdf",
+      "sha256": "21b7dfe14dd52166ddfa11c63f02ad59715ad2473aad2b5560e031b4c21c7bb4",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "irs-p542",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p542.pdf",
+      "sha256": "9bae90126317b0de17313cdae8245209fd9de403a455d52f418f4a5b85c13b30",
+      "select": {
+        "pages": [
+          1,
+          2,
+          5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "irs-p547",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p547.pdf",
+      "sha256": "1389cd83618e75eb8294190fef200af688d876e6bcd850409e274dba00bd73d8",
+      "select": {
+        "pages": [
+          5,
+          13,
+          27,
+          29,
+          31
+        ]
+      }
+    },
+    {
+      "id": "irs-p551",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p551.pdf",
+      "sha256": "0fbd4f0d37d575f95bd3dbdff09be846a2bf62e882902e02f0318739c4f904d2",
+      "select": {
+        "pages": [
+          6,
+          7,
+          14,
+          17,
+          18
+        ]
+      }
+    },
+    {
+      "id": "irs-p555",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p555.pdf",
+      "sha256": "7a1e1f3a9e10d6ea64d6724fa1e1273bce78dae0937a45096989ef8fceeb38ca",
+      "select": {
+        "pages": [
+          6,
+          8
+        ]
+      }
+    },
+    {
+      "id": "irs-p556",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p556.pdf",
+      "sha256": "6080aaeb1ae32c1c328e4bf46384bd98373dae0c6bfceaba16bae1f2fb2a6dc6",
+      "select": {
+        "pages": [
+          1,
+          2,
+          3,
+          5,
+          11
+        ]
+      }
+    },
+    {
+      "id": "irs-p557",
+      "kind": "irs",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p557.pdf",
+      "sha256": "2665fb88d76798750c81c3713caf5a621f244f02587c40f226ef60bca071f8e2",
+      "select": {
+        "pages": [
+          2,
+          4,
+          5,
+          8
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-12035",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-30/pdf/2025-12035.pdf",
+      "sha256": "e2a7169307755c780aa86ff8fd0f097af8d2838424b0bf0a390d038ac9dc8710",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-12033",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-30/pdf/2025-12033.pdf",
+      "sha256": "4cf7e151b1a83f7eebcc5bf10ef1ea47f95fa0ef71a33c020ec92443db127266",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-12025",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-30/pdf/2025-12025.pdf",
+      "sha256": "ea4cf9c63fab1507ae5a6e2b9645c0333137d7e1df251577ac141ca0f6c873df",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-12024",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-30/pdf/2025-12024.pdf",
+      "sha256": "4663cd2886f131490ac7e6bfb45d83d695a870395cac435e94e245789fec0cf9",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-11993",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-30/pdf/2025-11993.pdf",
+      "sha256": "d34a4233c6c0f300b755442ccda63fa3272a9b68e506b308db6b177c6eeba449",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-11991",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-30/pdf/2025-11991.pdf",
+      "sha256": "137395267c5980be665c278bd7c60d8b9f78e776958ada63594682f1471a12a3",
+      "select": {
+        "pages": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-11990",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-30/pdf/2025-11990.pdf",
+      "sha256": "cfae1d40ee42364f4ffd14fc0f00b1710a312072fef7d6aecc2a69eb60d5db45",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-11922",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-27/pdf/2025-11922.pdf",
+      "sha256": "d499ab207be3887ea17f7443872cbd75cf304e48ec495596f3a77ab19aee0e36",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-11907",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-27/pdf/2025-11907.pdf",
+      "sha256": "18092b4fc8763a37e0b068e946bea7a5dce96cc620ef3eb50b6ba53954c67e5d",
+      "select": {
+        "pages": [
+          1,
+          4
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-11902",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-27/pdf/2025-11902.pdf",
+      "sha256": "33fe76b32c0fa67e7754e407d7446e090615277fc7032296a574b4905bf2d3cf",
+      "select": {
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-11867",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-27/pdf/2025-11867.pdf",
+      "sha256": "06ba65982bdba6c7af1e01c5d156b64c27fa768c3b18e180b953e96bf31540d2",
+      "select": {
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "fr-2025-11824",
+      "kind": "fr",
+      "groups": [
+        "dots"
+      ],
+      "url": "https://www.govinfo.gov/content/pkg/FR-2025-06-27/pdf/2025-11824.pdf",
+      "sha256": "cf840e92ca4253e4bdf828a99565875e92abb5e56e069d33751a6bb7739dc60e",
+      "select": {
+        "pages": [
+          1,
+          6,
+          9
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+1 INDICATIONS AND USAGE
+
+Hydroxyurea capsules are indicated for the treatment of:
+
+•
+
+Resistant chronic myeloid leukemia.
+
+•
+
+Locally advanced squamous cell carcinomas of the head and neck (excluding the lip) in combination with chemoradiation.
+
+Hydroxyurea capsules are an antimetabolite indicated for the treatment of:
+
+•
+
+Resistant chronic myeloid leukemia. (1)
+
+•
+
+Locally advanced squamous cell carcinomas of the head and neck, (excluding lip) in combination with concurrent chemoradiation. (1)
+
+2 DOSAGE AND ADMINISTRATION
+
+Individualize treatment based on tumor type, disease state, response to treatment, patient risk factors, and current clinical practice standards. (2.1)
+
+Renal impairment: Reduce the dose of hydroxyurea capsules by 50% in patients with creatinine clearance less than 60 mL/min. (2.3, 8.6, 12.3)
+
+2.1 Dosing Information
+
+Hydroxyurea capsules are used alone or in conjunction with other antitumor agents or radiation therapy to treat neoplastic diseases. Individualize treatment based on tumor type, disease state, response to treatment, patient risk factors, and current clinical practice standards.
+
+Base all dosage on the patient’s actual or ideal weight, whichever is less.
+
+Hydroxyurea capsules are a cytotoxic drug. Follow applicable special handling and disposal procedures [see References (15)].
+
+Swallow hydroxyurea capsules whole. Do NOT open, break, or chew capsules because hydroxyurea capsules are a cytotoxic drug.
+
+Prophylactic administration of folic acid is recommended [see Warnings and Precautions (5.8)].
+
+Monitor blood counts at least once a week during hydroxyurea capsules therapy. Severe anemia must be corrected before initiating therapy with hydroxyurea capsules.
+
+2.2 Dose Modifications for Toxicity
+
+Monitor for the following and reduce the dose or discontinue hydroxyurea capsules accordingly:
+
+•
+
+Myelosuppression [see Warnings and Precautions (5.1) ].
+
+•
+
+Cutaneous vasculitis [see Warnings and Precautions (5.5) ]
+
+Consider dose modifications for other toxicities.
+
+2.3 Dose Modifications for Renal Impairment
+
+Reduce the dose of hydroxyurea capsules by 50% in patients with measured creatinine clearance of less than 60 mL/min or with end-stage renal disease (ESRD) [see Use in Specific Populations (8.6) and Clinical Pharmacology (12.3) ].
+
+Creatinine Clearance
+
+(mL/min)
+
+Recommended Hydroxyurea
+
+Capsules Initial Dose
+
+(mg/kg once daily)
+
+≥60
+
+15
+
+<60 or ESRD*
+
+7.5
+
+*On dialysis days, administer hydroxyurea capsules to patients following hemodialysis.
+
+Close monitoring of hematologic parameters is advised in these patients.

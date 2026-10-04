@@ -1,0 +1,688 @@
+Department of the Treasury
+Internal Revenue Service
+
+Contents
+
+Publication 556
+(Rev. September 2013)
+Cat. No. 15104N
+
+Examination
+of Returns,
+Appeal Rights,
+and Claims for
+Refund
+
+Get forms and other Information
+faster and easier by:
+Internet IRS.gov
+
+Sep 26, 2013
+
+The IRS Mission . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Reminders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+Examination of Returns . . . . . . . . . . . . . . . . . . . . . 2
+
+Appeal Rights . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+Claims for Refund . . . . . . . . . . . . . . . . . . . . . . . . 13
+
+How To Get Tax Help . . . . . . . . . . . . . . . . . . . . . . 17
+
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+The IRS Mission
+Provide America's taxpayers top quality service by helping
+them understand and meet their tax responsibilities and
+by applying the tax law with integrity and fairness to all.
+
+Reminders
+Penalty for filing erroneous claim for refund or
+credit. You may have to pay a penalty if you file an erro-
+neous claim for refund or credit. See Penalty for errone­
+ous claim for refund, later under Claims for Refund.
+
+Interest and penalties suspended if notice not mailed
+within 36 months. If you file your return timely (including
+extensions), interest and certain penalties will be suspen-
+ded if the IRS does not mail a notice to you within 36
+months. See Suspension of interest and penalties, later
+under Examination of Returns.
+
+Fast track mediation. The IRS offers fast track media-
+tion services to help taxpayers resolve many disputes re-
+sulting from:
+
+Examinations (audits),
+
+Offers in compromise,
+
+Trust fund recovery penalties, and
+
+Other collection actions.
+
+See Fast track mediation under If You Do Not Agree.
+
+Introduction
+The Internal Revenue Service (IRS) accepts most federal
+tax returns as filed. However, the IRS examines (or audits)
+some returns to determine if income, expenses, and cred-
+its are being reported accurately.
+
+If your return is selected for examination, it does not
+suggest that you made an error or are dishonest. Returns
+are chosen by computerized screening, by random sam-
+ple, or by an income document matching program. See
+Examination selection criteria, later. You should also know
+that many examinations result in a refund or acceptance
+of the tax return without change.
+
+This publication discusses general rules and proce-
+dures that the IRS follows in examinations. It explains
+what happens during an examination and your appeal
+rights, both within the IRS and in the federal court system.
+It also explains how to file a claim for refund of tax you al-
+ready paid.
+
+As a taxpayer, you have the right to be treated fairly,
+professionally, promptly, and courteously by IRS employ-
+ees. Publication 1, Your Rights as a Taxpayer, explains
+your rights when dealing with the IRS.
+
+Comments and suggestions. We welcome your com-
+ments about this publication and your suggestions for fu-
+ture editions.
+
+You can write to us at the following address:
+
+1546
+
+Taxpayer Advocate Service–Your Voice at the
+IRS
+
+1660
+
+Collection Appeal Rights
+
+3605
+
+Fast Track Mediation
+
+3920
+
+Tax Relief for Victims of Terrorist Attacks
+
+4134
+
+Low Income Taxpayer Clinic List
+
+Form (and Instructions)
+
+843
+
+Claim for Refund and Request for Abatement
+
+911
+
+Request for Taxpayer Advocate Service
+Assistance (and Application for Taxpayer
+Assistance Order)
+
+1040X
+
+Amended U.S. Individual Income Tax Return
+
+Internal Revenue Service
+Tax Forms and Publications Division
+1111 Constitution Ave. NW, IR-6526
+Washington, DC 20224
+
+We respond to many letters by telephone. Therefore, it
+would be helpful if you would include your daytime phone
+number, including the area code, in your correspondence.
+You can send your comments from www.irs.gov/
+formspubs/. Click on “More Information” and then on
+“Comment on Tax Forms and Publications.”
+
+Although we cannot respond individually to each com-
+ment received, we do appreciate your feedback and will
+consider your comments as we revise our tax products.
+
+Ordering forms and publications. Visit www.irs.gov/
+formspubs to download forms and publications, call
+1-800-TAX-FORM (1-800-829-3676), or write to the ad-
+dress below and receive a response within 10 days after
+your request is received.
+
+Internal Revenue Service
+1201 N. Mitsubishi Motorway
+Bloomington, IL 61704-6613
+
+Tax questions. If you have a tax question, check the
+call
+information
+1-800-829-1040. We cannot answer tax questions sent to
+either of the above addresses.
+
+on www.irs.gov
+
+available
+
+or
+
+Useful Items
+You may want to see:
+
+Publication
+
+1
+
+5
+
+Your Rights as a Taxpayer
+
+Your Appeal Rights and How To Prepare a
+Protest If You Don't Agree
+
+547
+
+Casualties, Disasters, and Thefts
+
+594
+
+The IRS Collection Process
+
+910
+
+Guide to Free Tax Services
+
+971
+
+Innocent Spouse Relief
+
+2848
+
+Power of Attorney and Declaration of
+Representative
+
+4506
+
+Request for Copy of Tax Return
+
+4506-T
+
+Request for Transcript of Tax Return
+
+8379
+
+Injured Spouse Allocation
+
+8857
+
+Request for Innocent Spouse Relief
+
+See How To Get Tax Help, near the end of this publica-
+tion, for information about getting these publications and
+forms.
+
+Examination of Returns
+
+Your return may be examined for a variety of reasons, and
+the examination may take place in any one of several
+ways. After the examination, if any changes to your tax
+are proposed, you can either agree with those changes
+and pay any additional tax you may owe, or you can disa-
+gree with the changes and appeal the decision.
+
+Examination selection criteria. Your return may be se-
+lected for examination on the basis of computer scoring. A
+computer program called the Discriminant Inventory Func-
+tion System (DIF) assigns a numeric score to each individ-
+ual and some corporate tax returns after they have been
+processed. If your return is selected because of a high
+score under the DIF system, the potential is high that an
+examination of your return will result in a change to your
+income tax liability.
+
+Your return may also be selected for examination on
+the basis of information received from third-party docu-
+mentation, such as Forms 1099 and W-2, that does not
+match the information reported on your return. Or, your re-
+turn may be selected to address both the questionable
+treatment of an item and to study the behavior of similar
+taxpayers (a market segment) in handling a tax issue.
+
+In addition, your return may be selected as a result of
+information received from other sources on potential non-
+compliance with the tax laws or inaccurate filing. This in-
+formation can come from a number of sources, including
+
+Page 2
+
+Publication 556 (September 2013)
+newspapers, public records, and individuals. The informa-
+tion is evaluated for reliability and accuracy before it is
+used as the basis of an examination or investigation.
+
+Call 1-888-734-3247.
+
+Send an email to ombudsman@sba.gov.
+
+Notice of IRS contact of third parties. The IRS must
+give you reasonable notice before contacting other per-
+sons about your tax matters. You must be given reasona-
+ble notice in advance that, in examining or collecting your
+tax liability, the IRS may contact third parties such as your
+neighbors, banks, employers, or employees. The IRS
+must also give you notice of specific contacts by providing
+you with a record of persons contacted on both a periodic
+basis and upon your request.
+
+This provision does not apply:
+
+To any pending criminal investigation,
+
+When providing notice would jeopardize collection of
+any tax liability,
+
+Where providing notice may result in reprisal against
+any person, or
+
+When you authorized the contact.
+
+Taxpayer Advocate Service. The Taxpayer Advocate
+Service is an independent organization within the IRS
+whose goal is to help taxpayers resolve problems with the
+IRS. If you have an ongoing issue with the IRS that has
+not been resolved through normal processes, or your
+problems with the IRS are causing financial difficulty, con-
+tact the Taxpayer Advocate Service.
+
+Before contacting the Taxpayer Advocate Serv­
+ice, you should first discuss any problem with a
+supervisor. Your local Taxpayer Advocate will as­
+sist you if you are unable to resolve the problem with the
+supervisor.
+
+For more information, see Publication 1546. See How
+To Get Tax Help, near the end of this publication, for more
+information about contacting the Taxpayer Advocate
+Service.
+
+Comments from small business. The Small Business
+and Agricultural Regulatory Enforcement Ombudsman
+and 10 Regional Fairness Boards have been established
+to receive comments from small business about federal
+agency enforcement actions. The Ombudsman will annu-
+ally evaluate the enforcement activities of each agency
+and rate their responsiveness to small business. If you
+wish to comment on the enforcement actions of the IRS,
+you can take any of the following steps.
+
+Fax your comments to 1-202-481-5719.
+
+Write to the following address:
+Office of the National Ombudsman
+U.S. Small Business Administration
+409 3rd Street, SW
+Washington, DC 20416
+
+File a comment or complaint online at www.sba.gov/
+ombudsman.
+
+If Your Return Is Examined
+
+Some examinations are handled entirely by mail. Exami-
+nations not handled by mail can take place in your home,
+your place of business, an Internal Revenue office, or the
+office of your authorized representative. If the time, place,
+or method is not convenient for you, the examiner will try
+to work out something more suitable. However, the IRS
+makes the final determination of when, where, and how
+the examination will take place.
+
+Throughout the examination, you can act on your own
+behalf or have someone represent you or accompany
+you. If you filed a joint return, either you or your spouse, or
+both, can meet with the IRS. The person representing you
+can be any federally authorized practitioner, including an
+attorney, a certified public accountant, an enrolled agent
+(a person enrolled to practice before the IRS), an enrolled
+actuary, or the person who prepared the return and signed
+it as the preparer.
+
+If you want someone to represent you in your absence,
+you must furnish that person with proper written authoriza-
+tion. You can use Form 2848 or any other properly written
+authorization. If you want to consult with an attorney, a
+certified public accountant, an enrolled agent, or any other
+person permitted to represent a taxpayer during an inter-
+view for examining a tax return or collecting tax, you
+should make arrangements with that person to be availa-
+ble for the interview. In most cases, the IRS must suspend
+the interview and reschedule it. The IRS cannot suspend
+the interview if you are there because of an administrative
+summons.
+
+Third party authorization. If you checked the box in
+the signature area of your income tax return (Form 1040,
+Form 1040A, or Form 1040EZ) to allow the IRS to discuss
+your return with another person (a third party designee),
+this authorization does not replace Form 2848. The box
+you checked on your return only authorizes the other per-
+son to receive information about the processing of your re-
+turn and the status of your refund during the period your
+return is being processed. For more information, see the
+instructions for your return.
+
+Confidentiality privilege. Generally, the same confi-
+dentiality protection that you have with an attorney also
+applies to certain communications that you have with fed-
+erally authorized practitioners.
+
+Confidential communications are those that:
+
+Advise you on tax matters within the scope of the
+practitioner's authority to practice before the IRS,
+
+Would be confidential between an attorney and you,
+and
+
+Relate to noncriminal tax matters before the IRS, or
+
+Publication 556 (September 2013)
+
+Page 3
+
+!
+
+CAUTION
+
+TIP
+30-day letter and 90-day letter. Within a few weeks af-
+ter your closing conference with the examiner and/or su-
+pervisor, you will receive a package with:
+
+A letter (known as a 30-day letter) notifying you of
+your right to appeal the proposed changes within 30
+days,
+
+A copy of the examination report explaining the exam-
+iner's proposed changes,
+
+An agreement or waiver form, and
+
+A copy of Publication 5.
+
+You generally have 30 days from the date of the 30-day
+letter to tell the IRS whether you will accept or appeal the
+proposed changes. The letter will explain what steps you
+should take, depending on which action you choose. Be
+sure to follow the instructions carefully. Appeal Rights are
+explained later.
+
+90-day letter. If you do not respond to the 30-day let-
+ter, or if you later do not reach an agreement with an Ap-
+peals Officer, the IRS will send you a 90-day letter, which
+is also known as a notice of deficiency.
+
+You will have 90 days (150 days if it is addressed to
+you outside the United States) from the date of this notice
+to file a petition with the Tax Court. Filing a petition with
+the Tax Court is discussed later under Appeals to the
+Courts and Tax Court.
+
+The notice will show the 90th (or 150th) day by
+which you must file your petition with the Tax
+Court.
+
+Suspension of interest and penalties. Generally, the
+IRS has 3 years from the date you filed your return (or the
+date the return was due, if later) to assess any additional
+tax. However, if you file your return timely (including ex-
+tensions), interest and certain penalties will be suspended
+if the IRS does not mail a notice to you, stating your liabil-
+ity and the basis for that liability, within a 36-month period
+beginning on the later of:
+
+The date on which you filed your tax return, or
+
+The due date (without extensions) of your tax return.
+
+If the IRS mails a notice after the 36-month period, interest
+and certain penalties applicable to the suspension period
+will be suspended.
+
+The suspension period begins the day after the close of
+the 36-month period and ends 21 days after the IRS mails
+a notice to you stating your liability and the basis for that
+liability. Also, the suspension period applies separately to
+each notice stating your liability and the basis for that lia-
+bility received by you.
+
+The suspension does not apply to a:
+
+Failure­to­pay penalty,
+
+Fraudulent tax return,
+
+Penalty, interest, addition to tax, or additional amount
+with respect to any tax liability shown on your return or
+with respect to any gross misstatement,
+
+Penalty, interest, addition to tax, or additional amount
+with respect to any reportable transaction that is not
+adequately disclosed or any listed transaction, or
+
+Criminal penalty.
+
+Seeking relief from improperly assessed interest.
+You can seek relief if interest is assessed for periods dur-
+ing which interest should have been suspended because
+the IRS did not mail a notice to you in a timely manner.
+
+If you believe that interest was assessed with respect
+to a period during which interest should have been sus-
+pended, submit Form 843, writing “Section 6404(g) Notifi-
+cation” at the top of the form, with the IRS Service Center
+where you filed your return. The IRS will review the Form
+843 and notify you whether interest will be abated. If the
+IRS does not abate interest, you can pay the disputed in-
+terest assessment and file a claim for refund. If your claim
+is denied or not acted upon within 6 months from the date
+you filed it, you can file suit for a refund in your United
+States District Court or in the United States Court of Fed-
+eral Claims.
+
+If you believe that an IRS officer or employee has made
+an unreasonable error or delay in performing a ministerial
+or managerial act (discussed later under Abatement of In­
+terest Due to Error or Delay by the IRS), file Form 843 with
+the IRS Service Center where you filed the tax return. If
+the IRS denies your claim, the Tax Court may be able to
+review that determination. See Tax Court can review fail­
+ure to abate interest later under Abatement of Interest Due
+to Error or Delay by the IRS.
+
+If you later agree. If you agree with the examiner's
+changes after receiving the examination report or the
+30-day letter, sign and return either the examination report
+or the waiver form. Keep a copy for your records. You can
+pay any additional amount you owe without waiting for a
+bill. Include interest on the additional tax at the applicable
+rate. This interest rate is usually for the period from the
+due date of the return (excluding any extension of time to
+file) to the date of payment. The examiner can tell you the
+interest rate(s) or help you figure the amount.
+
+You must pay interest on penalties and additions to tax
+for failing to file returns, for overstating valuations, for un-
+derstating valuations on estate and gift tax returns, and for
+substantially understating tax liability. Interest is generally
+figured from the date (including extensions) the tax return
+is required to be filed to the date you pay the penalty
+and/or additions to tax.
+
+If you pay the amount due within 10 business days after
+the date of notice and demand for immediate payment,
+you will not have to pay any additional penalties and inter-
+est. This period is extended to 21 calendar days if the
+amount due is less than $100,000.
+
+Publication 556 (September 2013)
+
+Page 5
+
+TIP
+
+!
+
+CAUTION
+You must also meet the remaining requirements, including
+the exhaustion of administrative remedies and the net
+worth requirement, discussed earlier, to get the benefit of
+the qualified offer rule.
+
+Qualified offer. This is a written offer made by you
+during the qualified offer period. It must specify both the
+offered amount of your liability (not including interest) and
+that it is a qualified offer.
+
+To be a qualified offer, it must remain open from the
+
+date it is made until the earliest of:
+
+The date it is rejected,
+
+The date the trial begins, or
+
+90 days from the date it is made.
+
+Qualified offer period. This period begins on the day
+the IRS mails you the first letter of proposed deficiency
+that allows you to request review by the IRS Office of Ap-
+peals. It ends 30 days before your case is first set for trial.
+
+Attorney fees. Attorney fees generally may not ex-
+ceed $125 maximum hourly rate as set by statute and in-
+dexed for inflation. However, this amount can be higher in
+certain limited circumstances depending on the level of
+difficulty of the issues in the case and the local availability
+of tax expertise. See IRS.gov for more information.
+
+Attorney fees include the fees paid by a taxpayer
+for the services of anyone who is authorized to
+practice before the Tax Court or before the IRS.
+In addition, attorney fees can be awarded in civil actions
+for unauthorized inspection or disclosure of a taxpayer's
+return or return information.
+
+Fees can be awarded in excess of the actual amount
+
+charged if:
+
+You are represented for no fee, or for a nominal fee,
+as a pro bono service, and
+
+The award is paid to your representative or to your
+representative's employer.
+
+Jurisdiction for determination of employment status.
+The Tax Court can review IRS employment status deter-
+minations (for example, whether individuals hired by you
+are in fact your employees or independent contractors)
+and the amount of employment tax under such determina-
+tions. Tax Court review can take place only if, in connec-
+tion with an audit of any person, there is a controversy in-
+volving a determination by the IRS that either:
+
+One or more individuals performing services for that
+person are employees of that person, or
+
+That person is not entitled to relief under Section
+530(a) of the Revenue Act of 1978(discussed later).
+
+The following rules also apply to a Tax Court review of
+
+employment status:
+
+A Tax Court petition to review these determinations
+can be filed only by the person for whom the services
+are performed,
+
+If you receive a Notice of Determination by certified or
+registered mail, you must file a petition for Tax Court
+review within 90 days of the date of mailing that notice
+(150 days if the notice is addressed to you outside the
+United States),
+
+If during the Tax Court proceeding, you begin to treat
+as an employee an individual whose employment sta-
+tus is at issue, the Tax Court will not consider that
+change in its decision,
+
+Assessment and collection of tax is suspended while
+the Tax Court review is taking place,
+
+Payment of the asserted employment tax deficiency is
+not required to petition the U.S. Tax Court for a deter-
+mination of employment status.
+
+There can be a de novo review by the Tax Court (a re-
+view which does not consider IRS administrative find-
+ings), and
+
+At your request and with the Tax Court's agreement,
+small tax case procedures (discussed later) are avail-
+able to simplify the case resolution process when the
+amount at issue (including additions to tax and penal-
+ties) is $50,000 or less for each tax period involved.
+
+For further information, see Publication 3953, Ques-
+tions and Answers About Tax Court Proceedings for De-
+termination of Employment Status Under IRC Section
+7436.
+
+Section 530(a) of the Revenue Act of 1978. This
+section relieves an employer of certain employment tax
+responsibilities for individuals not treated as employees. It
+also provides relief to taxpayers under audit or involved in
+administrative or judicial proceedings.
+
+Tax Court review of request for relief from joint and
+several liability on a joint return. As discussed later, at
+Relief from joint and several liability on a joint return under
+Claims for Refund, you can request relief from liability for
+tax you owe, plus related penalties and interest, that you
+believe should be paid by your spouse (or former spouse).
+You also can petition (ask) the Tax Court to review your
+request for innocent spouse relief or separation of liability
+if either:
+
+The IRS sends you a determination notice denying, in
+whole or in part, your request, or
+
+You do not receive a determination notice from the
+IRS within 6 months from the date you file Form 8857.
+
+If you receive a determination notice, you must petition
+the Tax Court to review your request during the 90-day
+period that begins on the date the IRS mails the notice.
+See Publication 971 for more information.
+
+Note. Your spouse or former spouse may file a written
+protest and request an Appeals conference to protest
+your claim of innocent spouse relief or separation of liabil-
+ity. See Rev. Proc. 2003-19, which is on page 371 of the
+Internal Revenue Bulletin 2003-5 at
+www.irs.gov/pub/irs­irbs/irb03­05.pdf.
+
+Publication 556 (September 2013)
+
+Page 11
+
+TIP

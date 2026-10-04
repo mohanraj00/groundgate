@@ -1,0 +1,1348 @@
+{
+ "meta": {
+  "engine": "Laya 0.3.26",
+  "model": "convaiinnovations/laya at 7b928d828b7b0e022f929d9bd2e44165aa270148, on the CPU",
+  "same_on_rerun": true,
+  "choices_changed_on_rerun": 0,
+  "largest_confidence_change_on_rerun": 0.0,
+  "warnings": [
+   "laya: this checkpoint ships invalid temperatures or values outside [0.5, 5]; using choice:11+=0.10058280825614929 -> 0.5. Treat confidence from the affected entries as uncalibrated."
+  ],
+  "question": {
+   "pair": {
+    "type": "choice",
+    "instructions": "The text marks two numbers in brackets, [X] and [Y], in a phrase like 'from X to Y'. Is Y the new value that replaces X, the end of a range that starts at X, or neither?",
+    "criteria": {
+     "change": "a change: one quantity was X and is now Y",
+     "range": "a range: X and Y are the two ends of a span, and any value between them applies",
+     "neither": "neither: X and Y are not two values of one quantity, such as a form number, a phone number, or the minutes of one clock time and the hour of another"
+    }
+   }
+  }
+ },
+ "answers": {
+  "fda-fluoxetine:3789": {
+   "choice": "range",
+   "confidence": 0.4855,
+   "p": {
+    "change": 0.1378,
+    "range": 0.4855,
+    "neither": 0.3766
+   }
+  },
+  "fda-labetalol:3190": {
+   "choice": "range",
+   "confidence": 0.4522,
+   "p": {
+    "change": 0.2413,
+    "range": 0.4522,
+    "neither": 0.3065
+   }
+  },
+  "fda-sildenafil:412": {
+   "choice": "range",
+   "confidence": 0.8865,
+   "p": {
+    "change": 0.067,
+    "range": 0.8865,
+    "neither": 0.0465
+   }
+  },
+  "fda-sildenafil:827": {
+   "choice": "range",
+   "confidence": 0.7695,
+   "p": {
+    "change": 0.1051,
+    "range": 0.7695,
+    "neither": 0.1254
+   }
+  },
+  "fda-candesartan:4773": {
+   "choice": "range",
+   "confidence": 0.7985,
+   "p": {
+    "change": 0.1126,
+    "range": 0.7985,
+    "neither": 0.0889
+   }
+  },
+  "irs-p544:3825": {
+   "choice": "change",
+   "confidence": 0.3589,
+   "p": {
+    "change": 0.3589,
+    "range": 0.3103,
+    "neither": 0.3308
+   }
+  },
+  "irs-p550:3576": {
+   "choice": "change",
+   "confidence": 0.5028,
+   "p": {
+    "change": 0.5028,
+    "range": 0.2872,
+    "neither": 0.21
+   }
+  },
+  "irs-p550:5941": {
+   "choice": "change",
+   "confidence": 0.3806,
+   "p": {
+    "change": 0.3806,
+    "range": 0.2586,
+    "neither": 0.3607
+   }
+  },
+  "irs-p583:176": {
+   "choice": "range",
+   "confidence": 0.4027,
+   "p": {
+    "change": 0.3297,
+    "range": 0.4027,
+    "neither": 0.2677
+   }
+  },
+  "irs-p590-b:620": {
+   "choice": "neither",
+   "confidence": 0.6483,
+   "p": {
+    "change": 0.1526,
+    "range": 0.1991,
+    "neither": 0.6483
+   }
+  },
+  "irs-p598:4757": {
+   "choice": "change",
+   "confidence": 0.4595,
+   "p": {
+    "change": 0.4595,
+    "range": 0.3164,
+    "neither": 0.224
+   }
+  },
+  "irs-p926:1855": {
+   "choice": "range",
+   "confidence": 0.5107,
+   "p": {
+    "change": 0.2313,
+    "range": 0.5107,
+    "neither": 0.258
+   }
+  },
+  "irs-p946:2177": {
+   "choice": "change",
+   "confidence": 0.5562,
+   "p": {
+    "change": 0.5562,
+    "range": 0.2683,
+    "neither": 0.1756
+   }
+  },
+  "irs-p963:1238": {
+   "choice": "range",
+   "confidence": 0.8433,
+   "p": {
+    "change": 0.0749,
+    "range": 0.8433,
+    "neither": 0.0818
+   }
+  },
+  "irs-p974:5130": {
+   "choice": "range",
+   "confidence": 0.5307,
+   "p": {
+    "change": 0.2021,
+    "range": 0.5307,
+    "neither": 0.2672
+   }
+  },
+  "irs-p974:6194": {
+   "choice": "range",
+   "confidence": 0.3933,
+   "p": {
+    "change": 0.3201,
+    "range": 0.3933,
+    "neither": 0.2866
+   }
+  },
+  "irs-p974:7640": {
+   "choice": "neither",
+   "confidence": 0.3687,
+   "p": {
+    "change": 0.2703,
+    "range": 0.361,
+    "neither": 0.3687
+   }
+  },
+  "irs-p974:14613": {
+   "choice": "neither",
+   "confidence": 0.4086,
+   "p": {
+    "change": 0.3086,
+    "range": 0.2828,
+    "neither": 0.4086
+   }
+  },
+  "irs-p974:16675": {
+   "choice": "range",
+   "confidence": 0.3966,
+   "p": {
+    "change": 0.3152,
+    "range": 0.3966,
+    "neither": 0.2882
+   }
+  },
+  "irs-p1141:2195": {
+   "choice": "change",
+   "confidence": 0.6676,
+   "p": {
+    "change": 0.6676,
+    "range": 0.2026,
+    "neither": 0.1298
+   }
+  },
+  "irs-p1179:668": {
+   "choice": "range",
+   "confidence": 0.7766,
+   "p": {
+    "change": 0.0894,
+    "range": 0.7766,
+    "neither": 0.134
+   }
+  },
+  "irs-p1179:818": {
+   "choice": "range",
+   "confidence": 0.7856,
+   "p": {
+    "change": 0.0748,
+    "range": 0.7856,
+    "neither": 0.1396
+   }
+  },
+  "irs-p1187:1426": {
+   "choice": "change",
+   "confidence": 0.646,
+   "p": {
+    "change": 0.646,
+    "range": 0.1593,
+    "neither": 0.1947
+   }
+  },
+  "irs-p1187:3094": {
+   "choice": "change",
+   "confidence": 0.6098,
+   "p": {
+    "change": 0.6098,
+    "range": 0.172,
+    "neither": 0.2181
+   }
+  },
+  "irs-p1304:1116": {
+   "choice": "change",
+   "confidence": 0.5971,
+   "p": {
+    "change": 0.5971,
+    "range": 0.2204,
+    "neither": 0.1826
+   }
+  },
+  "irs-p1304:2925": {
+   "choice": "change",
+   "confidence": 0.4808,
+   "p": {
+    "change": 0.4808,
+    "range": 0.3313,
+    "neither": 0.1879
+   }
+  },
+  "irs-p1304:2995": {
+   "choice": "range",
+   "confidence": 0.4779,
+   "p": {
+    "change": 0.3533,
+    "range": 0.4779,
+    "neither": 0.1688
+   }
+  },
+  "irs-p1304:3065": {
+   "choice": "range",
+   "confidence": 0.403,
+   "p": {
+    "change": 0.4024,
+    "range": 0.403,
+    "neither": 0.1946
+   }
+  },
+  "irs-p1304:3936": {
+   "choice": "change",
+   "confidence": 0.8142,
+   "p": {
+    "change": 0.8142,
+    "range": 0.0935,
+    "neither": 0.0923
+   }
+  },
+  "irs-p1415:2664": {
+   "choice": "change",
+   "confidence": 0.8826,
+   "p": {
+    "change": 0.8826,
+    "range": 0.0603,
+    "neither": 0.0572
+   }
+  },
+  "irs-p1457:225": {
+   "choice": "range",
+   "confidence": 0.3966,
+   "p": {
+    "change": 0.3557,
+    "range": 0.3966,
+    "neither": 0.2477
+   }
+  },
+  "irs-p1457:260": {
+   "choice": "range",
+   "confidence": 0.3979,
+   "p": {
+    "change": 0.3759,
+    "range": 0.3979,
+    "neither": 0.2261
+   }
+  },
+  "irs-p1457:295": {
+   "choice": "change",
+   "confidence": 0.4208,
+   "p": {
+    "change": 0.4208,
+    "range": 0.3918,
+    "neither": 0.1873
+   }
+  },
+  "irs-p1457:331": {
+   "choice": "change",
+   "confidence": 0.4226,
+   "p": {
+    "change": 0.4226,
+    "range": 0.4014,
+    "neither": 0.176
+   }
+  },
+  "irs-p1457:368": {
+   "choice": "change",
+   "confidence": 0.4636,
+   "p": {
+    "change": 0.4636,
+    "range": 0.3592,
+    "neither": 0.1772
+   }
+  },
+  "irs-p1458:262": {
+   "choice": "range",
+   "confidence": 0.5211,
+   "p": {
+    "change": 0.2888,
+    "range": 0.5211,
+    "neither": 0.1902
+   }
+  },
+  "irs-p1458:310": {
+   "choice": "range",
+   "confidence": 0.4355,
+   "p": {
+    "change": 0.3359,
+    "range": 0.4355,
+    "neither": 0.2285
+   }
+  },
+  "irs-p1458:358": {
+   "choice": "change",
+   "confidence": 0.5407,
+   "p": {
+    "change": 0.5407,
+    "range": 0.3143,
+    "neither": 0.1449
+   }
+  },
+  "irs-p1458:407": {
+   "choice": "change",
+   "confidence": 0.6316,
+   "p": {
+    "change": 0.6316,
+    "range": 0.2628,
+    "neither": 0.1057
+   }
+  },
+  "irs-p1458:457": {
+   "choice": "change",
+   "confidence": 0.6974,
+   "p": {
+    "change": 0.6974,
+    "range": 0.219,
+    "neither": 0.0836
+   }
+  },
+  "irs-p1459:1035": {
+   "choice": "range",
+   "confidence": 0.6526,
+   "p": {
+    "change": 0.1762,
+    "range": 0.6526,
+    "neither": 0.1712
+   }
+  },
+  "irs-p1500:3014": {
+   "choice": "change",
+   "confidence": 0.6896,
+   "p": {
+    "change": 0.6896,
+    "range": 0.1262,
+    "neither": 0.1842
+   }
+  },
+  "irs-p1500:7211": {
+   "choice": "change",
+   "confidence": 0.5571,
+   "p": {
+    "change": 0.5571,
+    "range": 0.2939,
+    "neither": 0.149
+   }
+  },
+  "irs-p1500:11840": {
+   "choice": "range",
+   "confidence": 0.7095,
+   "p": {
+    "change": 0.1814,
+    "range": 0.7095,
+    "neither": 0.1091
+   }
+  },
+  "irs-p1500:17176": {
+   "choice": "range",
+   "confidence": 0.6047,
+   "p": {
+    "change": 0.2765,
+    "range": 0.6047,
+    "neither": 0.1188
+   }
+  },
+  "irs-p1500:17432": {
+   "choice": "range",
+   "confidence": 0.4424,
+   "p": {
+    "change": 0.432,
+    "range": 0.4424,
+    "neither": 0.1256
+   }
+  },
+  "irs-p1586:2549": {
+   "choice": "change",
+   "confidence": 0.5592,
+   "p": {
+    "change": 0.5592,
+    "range": 0.2685,
+    "neither": 0.1722
+   }
+  },
+  "irs-p1915:1316": {
+   "choice": "range",
+   "confidence": 0.5632,
+   "p": {
+    "change": 0.2707,
+    "range": 0.5632,
+    "neither": 0.1661
+   }
+  },
+  "irs-p2104:198": {
+   "choice": "change",
+   "confidence": 0.8803,
+   "p": {
+    "change": 0.8803,
+    "range": 0.0584,
+    "neither": 0.0613
+   }
+  },
+  "irs-p2104:7524": {
+   "choice": "change",
+   "confidence": 0.7665,
+   "p": {
+    "change": 0.7665,
+    "range": 0.124,
+    "neither": 0.1095
+   }
+  },
+  "irs-p2104:7654": {
+   "choice": "change",
+   "confidence": 0.4662,
+   "p": {
+    "change": 0.4662,
+    "range": 0.2498,
+    "neither": 0.284
+   }
+  },
+  "irs-p2104:9431": {
+   "choice": "change",
+   "confidence": 0.8603,
+   "p": {
+    "change": 0.8603,
+    "range": 0.082,
+    "neither": 0.0577
+   }
+  },
+  "irs-p2104:13487": {
+   "choice": "range",
+   "confidence": 0.6155,
+   "p": {
+    "change": 0.1558,
+    "range": 0.6155,
+    "neither": 0.2287
+   }
+  },
+  "irs-p2104-c:198": {
+   "choice": "change",
+   "confidence": 0.8803,
+   "p": {
+    "change": 0.8803,
+    "range": 0.0584,
+    "neither": 0.0613
+   }
+  },
+  "irs-p2104-c:7524": {
+   "choice": "change",
+   "confidence": 0.7665,
+   "p": {
+    "change": 0.7665,
+    "range": 0.124,
+    "neither": 0.1095
+   }
+  },
+  "irs-p2104-c:7654": {
+   "choice": "change",
+   "confidence": 0.4662,
+   "p": {
+    "change": 0.4662,
+    "range": 0.2498,
+    "neither": 0.284
+   }
+  },
+  "irs-p2104-c:9431": {
+   "choice": "change",
+   "confidence": 0.8603,
+   "p": {
+    "change": 0.8603,
+    "range": 0.082,
+    "neither": 0.0577
+   }
+  },
+  "irs-p3151-a:1313": {
+   "choice": "neither",
+   "confidence": 0.3459,
+   "p": {
+    "change": 0.3321,
+    "range": 0.322,
+    "neither": 0.3459
+   }
+  },
+  "irs-p3373:93": {
+   "choice": "change",
+   "confidence": 0.8802,
+   "p": {
+    "change": 0.8802,
+    "range": 0.0875,
+    "neither": 0.0323
+   }
+  },
+  "irs-p3415:2349": {
+   "choice": "change",
+   "confidence": 0.7183,
+   "p": {
+    "change": 0.7183,
+    "range": 0.1808,
+    "neither": 0.1009
+   }
+  },
+  "irs-p3415:5362": {
+   "choice": "range",
+   "confidence": 0.448,
+   "p": {
+    "change": 0.3105,
+    "range": 0.448,
+    "neither": 0.2415
+   }
+  },
+  "irs-p3415:8244": {
+   "choice": "range",
+   "confidence": 0.5712,
+   "p": {
+    "change": 0.2617,
+    "range": 0.5712,
+    "neither": 0.1671
+   }
+  },
+  "irs-p3415:8338": {
+   "choice": "range",
+   "confidence": 0.4123,
+   "p": {
+    "change": 0.3395,
+    "range": 0.4123,
+    "neither": 0.2482
+   }
+  },
+  "irs-p3415:8839": {
+   "choice": "range",
+   "confidence": 0.4207,
+   "p": {
+    "change": 0.3419,
+    "range": 0.4207,
+    "neither": 0.2374
+   }
+  },
+  "irs-p3536:1610": {
+   "choice": "change",
+   "confidence": 0.378,
+   "p": {
+    "change": 0.378,
+    "range": 0.3301,
+    "neither": 0.2919
+   }
+  },
+  "irs-p3583:104": {
+   "choice": "range",
+   "confidence": 0.3896,
+   "p": {
+    "change": 0.3189,
+    "range": 0.3896,
+    "neither": 0.2915
+   }
+  },
+  "irs-p3583:5355": {
+   "choice": "change",
+   "confidence": 0.3991,
+   "p": {
+    "change": 0.3991,
+    "range": 0.3719,
+    "neither": 0.2289
+   }
+  },
+  "irs-p3583:6808": {
+   "choice": "change",
+   "confidence": 0.399,
+   "p": {
+    "change": 0.399,
+    "range": 0.3372,
+    "neither": 0.2638
+   }
+  },
+  "irs-p3744:999": {
+   "choice": "range",
+   "confidence": 0.4638,
+   "p": {
+    "change": 0.3453,
+    "range": 0.4638,
+    "neither": 0.1909
+   }
+  },
+  "irs-p3744:3067": {
+   "choice": "change",
+   "confidence": 0.4528,
+   "p": {
+    "change": 0.4528,
+    "range": 0.3424,
+    "neither": 0.2048
+   }
+  },
+  "irs-p3744:3699": {
+   "choice": "range",
+   "confidence": 0.4539,
+   "p": {
+    "change": 0.3216,
+    "range": 0.4539,
+    "neither": 0.2245
+   }
+  },
+  "irs-p3744-a:411": {
+   "choice": "change",
+   "confidence": 0.6716,
+   "p": {
+    "change": 0.6716,
+    "range": 0.2125,
+    "neither": 0.1159
+   }
+  },
+  "irs-p3744-a:5280": {
+   "choice": "neither",
+   "confidence": 0.3859,
+   "p": {
+    "change": 0.2901,
+    "range": 0.324,
+    "neither": 0.3859
+   }
+  },
+  "irs-p3908:1278": {
+   "choice": "change",
+   "confidence": 0.6379,
+   "p": {
+    "change": 0.6379,
+    "range": 0.1076,
+    "neither": 0.2545
+   }
+  },
+  "irs-p4012:714": {
+   "choice": "range",
+   "confidence": 0.4038,
+   "p": {
+    "change": 0.3605,
+    "range": 0.4038,
+    "neither": 0.2357
+   }
+  },
+  "fr-2025-24061:5544": {
+   "choice": "change",
+   "confidence": 0.427,
+   "p": {
+    "change": 0.427,
+    "range": 0.3202,
+    "neither": 0.2527
+   }
+  },
+  "fr-2025-23920:3361": {
+   "choice": "change",
+   "confidence": 0.8064,
+   "p": {
+    "change": 0.8064,
+    "range": 0.1037,
+    "neither": 0.0898
+   }
+  },
+  "fr-2025-23860:3725": {
+   "choice": "change",
+   "confidence": 0.8888,
+   "p": {
+    "change": 0.8888,
+    "range": 0.06,
+    "neither": 0.0513
+   }
+  },
+  "fr-2025-23848:3725": {
+   "choice": "change",
+   "confidence": 0.8888,
+   "p": {
+    "change": 0.8888,
+    "range": 0.06,
+    "neither": 0.0513
+   }
+  },
+  "fr-2025-23848:10118": {
+   "choice": "change",
+   "confidence": 0.8064,
+   "p": {
+    "change": 0.8064,
+    "range": 0.1037,
+    "neither": 0.0898
+   }
+  },
+  "fr-2025-23837:6745": {
+   "choice": "change",
+   "confidence": 0.4472,
+   "p": {
+    "change": 0.4472,
+    "range": 0.2968,
+    "neither": 0.2561
+   }
+  },
+  "fr-2025-23837:7804": {
+   "choice": "neither",
+   "confidence": 0.408,
+   "p": {
+    "change": 0.304,
+    "range": 0.288,
+    "neither": 0.408
+   }
+  },
+  "fr-2025-23837:10822": {
+   "choice": "change",
+   "confidence": 0.8129,
+   "p": {
+    "change": 0.8129,
+    "range": 0.0862,
+    "neither": 0.1009
+   }
+  },
+  "fr-2025-23837:16265": {
+   "choice": "change",
+   "confidence": 0.6234,
+   "p": {
+    "change": 0.6234,
+    "range": 0.147,
+    "neither": 0.2296
+   }
+  },
+  "fr-2025-23837:23748": {
+   "choice": "change",
+   "confidence": 0.9678,
+   "p": {
+    "change": 0.9678,
+    "range": 0.0186,
+    "neither": 0.0136
+   }
+  },
+  "fr-2025-23786:2786": {
+   "choice": "change",
+   "confidence": 0.8878,
+   "p": {
+    "change": 0.8878,
+    "range": 0.049,
+    "neither": 0.0632
+   }
+  },
+  "fr-2025-23746:1603": {
+   "choice": "range",
+   "confidence": 0.4742,
+   "p": {
+    "change": 0.3627,
+    "range": 0.4742,
+    "neither": 0.1631
+   }
+  },
+  "fr-2025-23746:7868": {
+   "choice": "change",
+   "confidence": 0.8591,
+   "p": {
+    "change": 0.8591,
+    "range": 0.0773,
+    "neither": 0.0636
+   }
+  },
+  "fr-2025-23746:8008": {
+   "choice": "change",
+   "confidence": 0.7603,
+   "p": {
+    "change": 0.7603,
+    "range": 0.1516,
+    "neither": 0.0881
+   }
+  },
+  "fr-2025-23746:19599": {
+   "choice": "change",
+   "confidence": 0.9007,
+   "p": {
+    "change": 0.9007,
+    "range": 0.046,
+    "neither": 0.0533
+   }
+  },
+  "fr-2025-23746:26365": {
+   "choice": "range",
+   "confidence": 0.3506,
+   "p": {
+    "change": 0.3158,
+    "range": 0.3506,
+    "neither": 0.3336
+   }
+  },
+  "fr-2025-23634:1959": {
+   "choice": "change",
+   "confidence": 0.4312,
+   "p": {
+    "change": 0.4312,
+    "range": 0.3711,
+    "neither": 0.1976
+   }
+  },
+  "fr-2025-23634:2324": {
+   "choice": "change",
+   "confidence": 0.408,
+   "p": {
+    "change": 0.408,
+    "range": 0.3057,
+    "neither": 0.2863
+   }
+  },
+  "fr-2025-23626:6021": {
+   "choice": "range",
+   "confidence": 0.6077,
+   "p": {
+    "change": 0.2486,
+    "range": 0.6077,
+    "neither": 0.1437
+   }
+  },
+  "fr-2025-23626:8596": {
+   "choice": "change",
+   "confidence": 0.4312,
+   "p": {
+    "change": 0.4312,
+    "range": 0.3711,
+    "neither": 0.1976
+   }
+  },
+  "fr-2025-23626:8961": {
+   "choice": "change",
+   "confidence": 0.408,
+   "p": {
+    "change": 0.408,
+    "range": 0.3057,
+    "neither": 0.2863
+   }
+  },
+  "fr-2025-23389:2374": {
+   "choice": "change",
+   "confidence": 0.8644,
+   "p": {
+    "change": 0.8644,
+    "range": 0.0949,
+    "neither": 0.0407
+   }
+  },
+  "fr-2025-23389:2733": {
+   "choice": "change",
+   "confidence": 0.5419,
+   "p": {
+    "change": 0.5419,
+    "range": 0.2934,
+    "neither": 0.1647
+   }
+  },
+  "fr-2025-23125:200": {
+   "choice": "range",
+   "confidence": 0.6884,
+   "p": {
+    "change": 0.231,
+    "range": 0.6884,
+    "neither": 0.0806
+   }
+  },
+  "fr-2025-22968:1038": {
+   "choice": "change",
+   "confidence": 0.7996,
+   "p": {
+    "change": 0.7996,
+    "range": 0.1201,
+    "neither": 0.0804
+   }
+  },
+  "fr-2025-22966:5239": {
+   "choice": "range",
+   "confidence": 0.5011,
+   "p": {
+    "change": 0.3106,
+    "range": 0.5011,
+    "neither": 0.1883
+   }
+  },
+  "fr-2025-22966:5298": {
+   "choice": "change",
+   "confidence": 0.4847,
+   "p": {
+    "change": 0.4847,
+    "range": 0.3174,
+    "neither": 0.1978
+   }
+  },
+  "fr-2025-22957:1038": {
+   "choice": "change",
+   "confidence": 0.7996,
+   "p": {
+    "change": 0.7996,
+    "range": 0.1201,
+    "neither": 0.0804
+   }
+  },
+  "fr-2025-22957:8690": {
+   "choice": "change",
+   "confidence": 0.7834,
+   "p": {
+    "change": 0.7834,
+    "range": 0.1236,
+    "neither": 0.093
+   }
+  },
+  "fr-2025-22927:1930": {
+   "choice": "change",
+   "confidence": 0.7834,
+   "p": {
+    "change": 0.7834,
+    "range": 0.1236,
+    "neither": 0.093
+   }
+  },
+  "fr-2025-22875:1684": {
+   "choice": "change",
+   "confidence": 0.5953,
+   "p": {
+    "change": 0.5953,
+    "range": 0.24,
+    "neither": 0.1648
+   }
+  },
+  "fr-2025-22875:7740": {
+   "choice": "change",
+   "confidence": 0.7692,
+   "p": {
+    "change": 0.7692,
+    "range": 0.0784,
+    "neither": 0.1524
+   }
+  },
+  "fr-2025-22814:6183": {
+   "choice": "change",
+   "confidence": 0.6858,
+   "p": {
+    "change": 0.6858,
+    "range": 0.1627,
+    "neither": 0.1515
+   }
+  },
+  "fr-2025-22814:7698": {
+   "choice": "change",
+   "confidence": 0.4852,
+   "p": {
+    "change": 0.4852,
+    "range": 0.3189,
+    "neither": 0.196
+   }
+  },
+  "fr-2025-22814:13382": {
+   "choice": "change",
+   "confidence": 0.8484,
+   "p": {
+    "change": 0.8484,
+    "range": 0.0675,
+    "neither": 0.0842
+   }
+  },
+  "fr-2025-22814:20344": {
+   "choice": "range",
+   "confidence": 0.4391,
+   "p": {
+    "change": 0.384,
+    "range": 0.4391,
+    "neither": 0.1769
+   }
+  },
+  "fr-2025-22814:30882": {
+   "choice": "change",
+   "confidence": 0.4133,
+   "p": {
+    "change": 0.4133,
+    "range": 0.3943,
+    "neither": 0.1924
+   }
+  },
+  "fr-2025-22813:5706": {
+   "choice": "change",
+   "confidence": 0.6657,
+   "p": {
+    "change": 0.6657,
+    "range": 0.2157,
+    "neither": 0.1186
+   }
+  },
+  "fr-2025-22813:7241": {
+   "choice": "change",
+   "confidence": 0.5167,
+   "p": {
+    "change": 0.5167,
+    "range": 0.3474,
+    "neither": 0.1358
+   }
+  },
+  "fr-2025-22813:12922": {
+   "choice": "change",
+   "confidence": 0.8484,
+   "p": {
+    "change": 0.8484,
+    "range": 0.0675,
+    "neither": 0.0842
+   }
+  },
+  "fr-2025-22813:20883": {
+   "choice": "change",
+   "confidence": 0.6858,
+   "p": {
+    "change": 0.6858,
+    "range": 0.1627,
+    "neither": 0.1515
+   }
+  },
+  "fr-2025-22773:5454": {
+   "choice": "change",
+   "confidence": 0.6112,
+   "p": {
+    "change": 0.6112,
+    "range": 0.2572,
+    "neither": 0.1316
+   }
+  },
+  "fr-2025-22759:5454": {
+   "choice": "change",
+   "confidence": 0.6112,
+   "p": {
+    "change": 0.6112,
+    "range": 0.2572,
+    "neither": 0.1316
+   }
+  },
+  "fr-2025-22759:7573": {
+   "choice": "change",
+   "confidence": 0.4735,
+   "p": {
+    "change": 0.4735,
+    "range": 0.1712,
+    "neither": 0.3552
+   }
+  },
+  "fr-2025-22738:5706": {
+   "choice": "change",
+   "confidence": 0.6657,
+   "p": {
+    "change": 0.6657,
+    "range": 0.2157,
+    "neither": 0.1186
+   }
+  },
+  "fr-2025-22672:1058": {
+   "choice": "change",
+   "confidence": 0.5781,
+   "p": {
+    "change": 0.5781,
+    "range": 0.3453,
+    "neither": 0.0766
+   }
+  },
+  "fr-2025-22672:5112": {
+   "choice": "change",
+   "confidence": 0.5467,
+   "p": {
+    "change": 0.5467,
+    "range": 0.3062,
+    "neither": 0.1471
+   }
+  },
+  "fr-2025-22595:5320": {
+   "choice": "range",
+   "confidence": 0.6477,
+   "p": {
+    "change": 0.1256,
+    "range": 0.6477,
+    "neither": 0.2267
+   }
+  },
+  "fr-2025-22584:447": {
+   "choice": "change",
+   "confidence": 0.7704,
+   "p": {
+    "change": 0.7704,
+    "range": 0.1472,
+    "neither": 0.0824
+   }
+  },
+  "fr-2025-22584:495": {
+   "choice": "change",
+   "confidence": 0.6623,
+   "p": {
+    "change": 0.6623,
+    "range": 0.2672,
+    "neither": 0.0705
+   }
+  },
+  "fr-2025-22559:3861": {
+   "choice": "change",
+   "confidence": 0.793,
+   "p": {
+    "change": 0.793,
+    "range": 0.1476,
+    "neither": 0.0594
+   }
+  },
+  "fr-2025-22559:4754": {
+   "choice": "change",
+   "confidence": 0.8375,
+   "p": {
+    "change": 0.8375,
+    "range": 0.0749,
+    "neither": 0.0877
+   }
+  },
+  "fr-2025-22559:6306": {
+   "choice": "change",
+   "confidence": 0.7833,
+   "p": {
+    "change": 0.7833,
+    "range": 0.1503,
+    "neither": 0.0664
+   }
+  },
+  "fr-2025-22558:5009": {
+   "choice": "change",
+   "confidence": 0.4801,
+   "p": {
+    "change": 0.4801,
+    "range": 0.2791,
+    "neither": 0.2408
+   }
+  },
+  "fr-2025-22558:5155": {
+   "choice": "change",
+   "confidence": 0.4631,
+   "p": {
+    "change": 0.4631,
+    "range": 0.2862,
+    "neither": 0.2507
+   }
+  },
+  "fr-2025-22558:5295": {
+   "choice": "change",
+   "confidence": 0.5972,
+   "p": {
+    "change": 0.5972,
+    "range": 0.2852,
+    "neither": 0.1176
+   }
+  },
+  "fr-2025-22558:5477": {
+   "choice": "change",
+   "confidence": 0.4757,
+   "p": {
+    "change": 0.4757,
+    "range": 0.2017,
+    "neither": 0.3226
+   }
+  },
+  "fr-2025-22558:5572": {
+   "choice": "change",
+   "confidence": 0.4992,
+   "p": {
+    "change": 0.4992,
+    "range": 0.2687,
+    "neither": 0.232
+   }
+  },
+  "fr-2025-22557:159": {
+   "choice": "change",
+   "confidence": 0.7544,
+   "p": {
+    "change": 0.7544,
+    "range": 0.1982,
+    "neither": 0.0475
+   }
+  },
+  "fr-2025-22545:199": {
+   "choice": "change",
+   "confidence": 0.7095,
+   "p": {
+    "change": 0.7095,
+    "range": 0.1417,
+    "neither": 0.1488
+   }
+  },
+  "fr-2025-22545:7860": {
+   "choice": "change",
+   "confidence": 0.5242,
+   "p": {
+    "change": 0.5242,
+    "range": 0.2618,
+    "neither": 0.214
+   }
+  },
+  "fr-2025-22545:19368": {
+   "choice": "change",
+   "confidence": 0.4237,
+   "p": {
+    "change": 0.4237,
+    "range": 0.3851,
+    "neither": 0.1912
+   }
+  },
+  "fr-2025-22545:20801": {
+   "choice": "change",
+   "confidence": 0.4384,
+   "p": {
+    "change": 0.4384,
+    "range": 0.2492,
+    "neither": 0.3124
+   }
+  },
+  "fr-2025-22518:159": {
+   "choice": "change",
+   "confidence": 0.7544,
+   "p": {
+    "change": 0.7544,
+    "range": 0.1982,
+    "neither": 0.0475
+   }
+  },
+  "fr-2025-22518:11721": {
+   "choice": "change",
+   "confidence": 0.6893,
+   "p": {
+    "change": 0.6893,
+    "range": 0.2336,
+    "neither": 0.0771
+   }
+  },
+  "fr-2025-22518:12823": {
+   "choice": "range",
+   "confidence": 0.448,
+   "p": {
+    "change": 0.3062,
+    "range": 0.448,
+    "neither": 0.2458
+   }
+  },
+  "fr-2025-22518:12871": {
+   "choice": "change",
+   "confidence": 0.5305,
+   "p": {
+    "change": 0.5305,
+    "range": 0.1731,
+    "neither": 0.2964
+   }
+  },
+  "fr-2025-22516:5232": {
+   "choice": "change",
+   "confidence": 0.6893,
+   "p": {
+    "change": 0.6893,
+    "range": 0.2336,
+    "neither": 0.0771
+   }
+  },
+  "fr-2025-22516:6334": {
+   "choice": "range",
+   "confidence": 0.448,
+   "p": {
+    "change": 0.3062,
+    "range": 0.448,
+    "neither": 0.2458
+   }
+  },
+  "fr-2025-22516:6382": {
+   "choice": "change",
+   "confidence": 0.5305,
+   "p": {
+    "change": 0.5305,
+    "range": 0.1731,
+    "neither": 0.2964
+   }
+  },
+  "fr-2025-22516:7155": {
+   "choice": "change",
+   "confidence": 0.7704,
+   "p": {
+    "change": 0.7704,
+    "range": 0.1472,
+    "neither": 0.0824
+   }
+  },
+  "fr-2025-22516:7203": {
+   "choice": "change",
+   "confidence": 0.6623,
+   "p": {
+    "change": 0.6623,
+    "range": 0.2672,
+    "neither": 0.0705
+   }
+  }
+ }
+}

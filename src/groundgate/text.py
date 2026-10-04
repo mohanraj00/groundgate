@@ -7,8 +7,67 @@ from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 
 _TOKEN = re.compile(r"[-\u2212]?\d[\d,]*(?:\.\d+)?")
-_VALID = re.compile(r"^[-\u2212]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?$")
-_SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t]*\n")
+# ungrouped, grouped in threes ("200,000"), or grouped the Indian way: the last three digits,
+# then pairs ("2,00,000")
+_VALID = re.compile(r"^[-\u2212]?(?:\d{1,3}(?:,\d{3})+|\d{1,2}(?:,\d{2})*,\d{3}|\d+)(?:\.\d+)?$")
+_SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t\r]*\n")
+_ABBREVIATIONS = [
+    "a.m.",
+    "p.m.",
+    "approx.",
+    "ca.",
+    "cf.",
+    "e.g.",
+    "i.e.",
+    "etc.",
+    "vs.",
+    "viz.",
+    "no.",
+    "nos.",
+    "p.",
+    "pp.",
+    "para.",
+    "fig.",
+    "figs.",
+    "vol.",
+    "rs.",
+    "u.s.",
+    "u.k.",
+    "dr.",
+    "mr.",
+    "mrs.",
+    "ms.",
+    "jr.",
+    "sr.",
+    "st.",
+    "inc.",
+    "co.",
+    "corp.",
+    "ltd.",
+    "est.",
+    "min.",
+    "max.",
+    "hr.",
+    "hrs.",
+    "mo.",
+    "mos.",
+    "yr.",
+    "yrs.",
+    "wk.",
+    "wks.",
+    "wt.",
+    "oz.",
+    "lb.",
+    "lbs.",
+]
+# a listed abbreviation that ends at a dot, as a whole word ("Rs." but not the end of "Mrs.")
+_ABBREVIATION_END = re.compile(
+    r"(?<!\w)(?:" + "|".join(re.escape(a) for a in _ABBREVIATIONS) + r")\Z", re.I
+)
+_ABBREVIATION_MAX = max(len(a) for a in _ABBREVIATIONS)
+_BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
+_WS_RUN = re.compile(r"\s*")
+_CONTINUES = "$€£₹"
 _WS = re.compile(r"\s+")
 _HYPHEN_BREAK = re.compile(r"-\n\s*")
 _WINDOW = 40
@@ -83,18 +142,54 @@ def quote_pattern(quote: str) -> re.Pattern[str]:
     return re.compile(r"\s+".join(re.escape(p) for p in parts))
 
 
-def sentence(text: str, pos: int) -> tuple[int, int]:
+def _ends_sentence(text: str, m: re.Match[str]) -> bool:
+    """A "." that ends a listed abbreviation is not a sentence end when the next character is a
+    lowercase letter, a digit or a currency sign and no blank line comes first (SPEC §4.2)."""
+    if not m.group().startswith("."):
+        return True
+    dot = m.start()
+    if not _ABBREVIATION_END.search(text, max(0, dot + 1 - _ABBREVIATION_MAX), dot + 1):
+        return True
+    gap = _WS_RUN.match(text, dot + 1)  # in place: no copy of the rest of the text
+    assert gap is not None
+    nxt = gap.end()
+    if _BLANK_LINE.search(gap.group()) or nxt == len(text):
+        return True
+    # only a plain continuation joins; an uppercase letter or punctuation may start a sentence
+    ch = text[nxt]
+    return not (ch.islower() or "0" <= ch <= "9" or ch in _CONTINUES)
+
+
+def sentence(text: str, pos: int, qualifiers: bool = False) -> tuple[int, int]:
+    """The sentence around ``pos`` (SPEC §4.2). Only the qualifier window (``qualifiers``) reads
+    on past an abbreviation dot: there a join can only add a flag, while key scope and the unit
+    search must never reach into the next sentence."""
     left = 0
     for m in _SENTENCE_END.finditer(text, 0, pos):
-        left = m.end()
-    nxt = _SENTENCE_END.search(text, pos)
-    return left, (nxt.start() if nxt else len(text))
+        if not qualifiers or _ends_sentence(text, m):
+            left = m.end()
+    right = len(text)
+    for m in _SENTENCE_END.finditer(text, pos):
+        if not qualifiers or _ends_sentence(text, m):
+            right = m.start()
+            break
+    return left, right
 
 
 # ------------------------------------------------------------------ qualifiers
 
 _BEFORE = {
-    "approx": ["approximately", "about", "around", "nearly", "roughly", "generally", "~", "≈"],
+    "approx": [
+        "approximately",
+        "approx",
+        "about",
+        "around",
+        "nearly",
+        "roughly",
+        "generally",
+        "~",
+        "≈",
+    ],
     "gt": ["more than", "greater than", "above", "over", "exceed", "exceeds", "exceeding", ">"],
     "lt": ["less than", "fewer than", "below", "under", "<"],
     "ge": ["at least", "minimum of", "no less than", "≥"],
@@ -151,7 +246,7 @@ _CHANGE_FROM = re.compile(rf"\b(?:{_CHANGE}){_CHANGE_GAP}\s+from\s+\S{{0,4}}?$",
 
 def qualifiers(text: str, tok: Token) -> set[str]:
     """Comparators that apply to the value at ``tok`` (SPEC §4.2)."""
-    s0, s1 = sentence(text, tok.start)
+    s0, s1 = sentence(text, tok.start, qualifiers=True)
     nearby = tokens(text, s0, s1)
     prev_end = max([t.end for t in nearby if t.end <= tok.start] + [s0, tok.start - _WINDOW])
     next_start = min([t.start for t in nearby if t.start >= tok.end] + [s1, tok.end + _WINDOW])

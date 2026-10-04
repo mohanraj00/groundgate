@@ -1,0 +1,508 @@
+Department of the Treasury
+Internal Revenue Service
+
+Contents
+
+Publication 542
+(Rev. January 2024)
+Cat. No. 15072O
+
+Corporations
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Feb 9, 2024
+
+Future Developments . . . . . . . . . . . . . . . . . . . . . . . 2
+
+Photographs of Missing Children . . . . . . . . . . . . . . 2
+
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+Businesses Taxed as Corporations . . . . . . . . . . . . 2
+
+Property Exchanged for Stock . . . . . . . . . . . . . . . . 3
+
+Capital Contributions . . . . . . . . . . . . . . . . . . . . . . . 4
+
+Filing and Paying Income Taxes . . . . . . . . . . . . . . . 5
+Income Tax Return . . . . . . . . . . . . . . . . . . . . . . . 5
+Penalties . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+Estimated Tax . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+. . . . . . . . . . . . . . . . . 7
+U.S. Real Property Interest
+
+Estimated Tax Worksheet . . . . . . . . . . . . . . . . . . . . 7
+
+Accounting Methods . . . . . . . . . . . . . . . . . . . . . . . 8
+
+Accounting Periods . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+Recordkeeping . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+Income, Deductions, and Special Provisions . . . . . 9
+Costs of Going Into Business . . . . . . . . . . . . . . . . 9
+Related Persons . . . . . . . . . . . . . . . . . . . . . . . . . 9
+Corporate Preference Items . . . . . . . . . . . . . . . . 10
+Dividends-Received Deduction . . . . . . . . . . . . . 10
+Extraordinary Dividends . . . . . . . . . . . . . . . . . . 11
+Below-Market Loans . . . . . . . . . . . . . . . . . . . . . 11
+Charitable Contributions . . . . . . . . . . . . . . . . . . 12
+Capital Losses . . . . . . . . . . . . . . . . . . . . . . . . . 13
+Net Operating Losses . . . . . . . . . . . . . . . . . . . . 14
+At-Risk Limits . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+Passive Activity Limits . . . . . . . . . . . . . . . . . . . . 15
+
+Figuring Tax . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+Tax Rates
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+Base Erosion Minimum Tax . . . . . . . . . . . . . . . . 15
+Corporate Alternative Minimum Tax (CAMT) . . . . 15
+Credits . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+Recapture Taxes . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+Accumulated Earnings Tax . . . . . . . . . . . . . . . . . . 15
+
+Distributions to Shareholders . . . . . . . . . . . . . . . 16
+Money or Property Distributions . . . . . . . . . . . . . 16
+Distributions of Stock or Stock Rights . . . . . . . . . 16
+Constructive Distributions . . . . . . . . . . . . . . . . . 17
+Reporting Dividends and Other Distributions . . . . 17
+
+How To Get Tax Help . . . . . . . . . . . . . . . . . . . . . . . 19
+
+Other Useful Forms for Corporations . . . . . . . . . . 23
+
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+Future Developments
+For the latest information about developments related to
+it was
+Pub. 542, such as
+published, go to IRS.gov/Pub542. For changes that may
+affect the current tax year, see the Instructions for Form
+1120 or the applicable instructions for the corporation’s
+tax return.
+
+legislation enacted after
+
+What's New
+New corporate alternative minimum tax. For tax years
+beginning after 2022, the Inflation Reduction Act of 2022
+amended section 55 of the Internal Revenue Code to im-
+pose a new corporate alternative minimum tax (CAMT)
+based on the adjusted financial statement income (AFSI)
+of an applicable corporation. See Corporate Alternative
+Minimum Tax (CAMT), later.
+Form 1120-W now historical. Form 1120-W, Estimated
+Tax for Corporations, and the Instructions for Form
+1120-W are now historical. The 2022 revisions were the
+last revisions of both the form and its instructions. Prior
+versions are available on IRS.gov.
+
+Photographs of Missing
+Children
+The Internal Revenue Service is a proud partner with the
+National Center
+for Missing & Exploited Children®
+(NCMEC). Photographs of missing children selected by
+the Center may appear in instructions on pages that would
+otherwise be blank. You can help bring these children
+home by
+the photographs and calling
+800-THE-LOST (800-843-5678) if you recognize a child.
+
+looking at
+
+Introduction
+This publication discusses the general tax laws that apply
+to ordinary domestic corporations. It provides supplemen-
+tal federal income tax information for corporations. It also
+supplements the information provided in the Instructions
+for Form 1120, U.S. Corporation Income Tax Return. How-
+ever, the information given does not cover every situation
+and is not intended to replace the law or change its mean-
+ing.
+
+Comments and suggestions. We welcome your com-
+ments about this publication and suggestions for future
+editions.
+
+You can send us comments
+FormComments. Or, you can write to:
+
+through
+
+IRS.gov/
+
+Internal Revenue Service
+Tax Forms and Publications
+1111 Constitution Ave. NW, IR-6526
+Washington, DC 20224
+
+Although we can’t respond individually to each com-
+ment received, we do appreciate your feedback and will
+consider your comments and suggestions as we revise
+our tax forms, instructions, and publications. Do not send
+tax questions, tax returns, or payments to the above ad-
+dress.
+
+Getting answers to your tax questions. If you have
+a tax question not answered by this publication or the How
+To Get Tax Help section at the end of this publication, go
+to the IRS Interactive Tax Assistant page at IRS.gov/
+Help/ITA where you can find topics by using the search
+feature or viewing the categories listed.
+
+Getting tax forms, instructions, and publications.
+Go to IRS.gov/Forms to download current and prior-year
+forms, instructions, and publications.
+
+Ordering tax forms, instructions, and publications.
+Go to IRS.gov/OrderForms to order current forms, instruc-
+tions, and publications; call 800-829-3676
+to order
+prior-year forms and instructions. The IRS will process
+your order for forms and publications as soon as possible.
+Do not resubmit requests you’ve already sent us. You can
+get forms and publications faster online.
+
+Additional forms. A list of other forms and statements
+that a corporation may need to file is included at the end
+of this publication. Also, see the instructions for the corpo-
+ration’s tax return for additional forms and statements that
+may be required.
+
+Useful Items
+You may want to see:
+
+Publication
+
+510
+
+510 Excise Taxes (Including Fuel Tax Credits and
+Refunds)
+
+538
+
+538 Accounting Periods and Methods
+
+544
+
+544 Sales and Other Dispositions of Assets
+
+550
+
+550 Investment Income and Expenses
+
+925
+
+925 Passive Activity and At-Risk Rules
+
+946
+
+946 How To Depreciate Property
+
+Businesses Taxed as
+Corporations
+
+The rules used to determine whether a business is taxed
+as a corporation changed for businesses formed after
+1996.
+
+Business formed before 1997. A business formed be-
+fore 1997 and taxed as a corporation under the old rules
+will generally continue to be taxed as a corporation.
+
+2
+
+Publication 542 (1-2024)
+Basis of each piece of property
+
+Bases of all properties (within that category)
+
+If the corporation wishes to make this adjustment in some
+other way, it must get IRS approval. The corporation files a
+request for approval with its income tax return for the tax
+year in which it receives the contribution.
+
+Filing and Paying Income
+Taxes
+
+The federal income tax is a pay-as-you-go tax. A corpora-
+tion must generally make estimated tax payments as it
+earns or receives income during its tax year. After the end
+of the year, the corporation must file an income tax return.
+This section will help you determine when and how to pay
+and file corporate income taxes.
+
+For certain corporations affected by federally de-
+clared disasters such as hurricanes, the due
+dates for filing returns, paying taxes, and perform-
+ing other time-sensitive acts may be extended. The IRS
+may also forgive the interest and penalties on any under-
+paid tax for the length of any extension. For more informa-
+tion, visit IRS.gov/DisasterTaxRelief.
+
+Income Tax Return
+
+This section will help you determine when and how to re-
+port a corporation's income tax.
+
+Who must file. Unless exempt under section 501 of the
+Internal Revenue Code, all domestic corporations in exis-
+tence for any part of a tax year (including corporations in
+bankruptcy) must file an income tax return whether or not
+they have taxable income.
+
+Which form to file. A domestic entity electing to be clas-
+sified as an association taxable as a corporation must
+generally file Form 1120, U.S. Corporation Income Tax Re-
+turn, to report its income, gains, losses, deductions, cred-
+its, and to figure its income tax liability. Certain organiza-
+tions and entities must, or may elect to, file special returns.
+For more information, see Special Returns for Certain Or-
+ganizations in the Instructions for Form 1120.
+
+Electronic filing. Corporations can generally electroni-
+cally file (e-file) Form 1120 and certain related forms,
+schedules, and attachments. However, for returns filed on
+or after January 1, 2024, corporations that file 10 or more
+returns are required to efile. However, these corporations
+can request a waiver of the electronic filing requirements.
+For more information on electronic filing, see the Instruc-
+tions for Form 1120, or the applicable instructions for your
+income tax return.
+
+When to file. Generally, a corporation must file its in-
+come tax return by the 15th day of the 4th month after the
+end of its tax year. A new corporation filing a short-period
+
+return must generally file by the 15th day of the 4th month
+after the short period ends. A corporation that has dis-
+solved must generally file by the 15th day of the 4th month
+after the date it dissolved.
+
+However, a corporation with a fiscal tax year ending
+June 30 must file by the 15th day of the 3rd month after
+the end of its tax year. A corporation with a short tax year
+ending anytime in June will be treated as if the short pe-
+riod ended June 30 and must file by the 15th day of the
+3rd month after the end of its tax year.
+
+If the due date falls on a Saturday, Sunday, or legal holi-
+
+day, the due date is extended to the next business day.
+
+Extension of time to file. File Form 7004, Application
+for Automatic Extension of Time To File Certain Business
+Income Tax, Information, and Other Returns, to request an
+extension of time to file a corporation’s income tax return.
+The IRS will grant the extension if the corporation com-
+pletes the form properly, files it, and pays any tax due by
+the original due date for the return.
+
+Form 7004 does not extend the time for paying the tax
+due on the return. Interest, and possibly penalties, will be
+charged on any part of the final tax due not shown as a
+balance due on Form 7004. The interest is figured from
+the original due date of the return to the date of payment.
+
+For more information, see the Instructions for Form
+
+7004.
+
+How to pay your taxes. A corporation must pay its tax
+due in full no later than the due date for filing its tax return
+(not including extensions).
+
+Electronic Federal Tax Payment System (EFTPS).
+Corporations must generally use EFTPS to make deposits
+of all tax liabilities (including social security, Medicare,
+withheld income, excise, and corporate income taxes). For
+more
+information on EFTPS and enrollment, visit
+www.eftps.gov.
+
+Penalties
+
+Generally, if the corporation receives a notice
+about interest and penalties after it files its return,
+send the IRS an explanation and we will deter-
+mine if the corporation meets reasonable-cause criteria.
+Do not attach an explanation when the corporation's re-
+turn is filed. See the instructions for your income tax re-
+turn.
+
+Late filing of return. A corporation that does not file its
+tax return by the due date, including extensions, may be
+penalized 5% of the unpaid tax for each month or part of a
+month the return is late, up to a maximum of 25% of the
+unpaid tax. If the corporation is charged a penalty for late
+payment of tax (discussed next) for the same period of
+time, the penalty for late filing is reduced by the amount of
+the penalty for late payment. A minimum penalty applies
+for a return that is over 60 days late. The minimum penalty
+amount may be adjusted for inflation. See the Instructions
+for Form 1120 (or the instructions for your applicable re-
+turn) for the minimum penalty amount for the current tax
+year. The penalty will not be imposed if the corporation
+
+Publication 542 (1-2024)
+
+5
+
+TIP
+
+!
+
+CAUTION
+can show the failure to file on time was due to a reasona-
+ble cause.
+
+Note. If the corporation is charged a penalty for late
+payment of tax (discussed next) for the same period of
+time, the penalty for late filing is reduced by the amount of
+the penalty for late payment.
+
+Late payment of tax. A corporation that does not pay
+the tax when due may be penalized half of 1% of the un-
+paid tax for each month or part of a month the tax is not
+paid, up to a maximum of 25% of the unpaid tax. The pen-
+alty will not be imposed if the corporation can show that
+the failure to pay on time was due to a reasonable cause.
+
+Trust fund recovery penalty. If federal income, social
+security, or Medicare taxes that a corporation must with-
+hold from employee wages are not withheld or are not de-
+posited or paid to the U.S. Treasury, the trust fund recov-
+ery penalty may apply. The penalty is the full amount of
+the unpaid trust fund tax. This penalty may apply to you if
+these unpaid taxes cannot be immediately collected from
+the business.
+
+The trust fund recovery penalty may be imposed on all
+persons who are determined by the IRS to be responsible
+for collecting, accounting for, and paying these taxes, and
+who acted willfully in not doing so.
+
+A responsible person can be an officer or employee of
+a corporation, an accountant, or a volunteer director/
+trustee. A responsible person may also include one who
+signs checks for the corporation or otherwise has authority
+to cause the spending of business funds.
+
+“Willfully” means voluntarily, consciously, and intention-
+ally. A responsible person acts willfully if the person knows
+the required actions are not taking place or recklessly dis-
+regards obvious and known risks to the government’s right
+to receive trust fund taxes.
+
+For more information on withholding and paying these
+
+taxes, see Pub. 15 (Circular E), Employer's Tax Guide.
+
+Other penalties. Other penalties can be imposed for
+negligence, substantial understatement of tax, reportable
+transaction understatements, and fraud. See sections
+6662, 6662A, and 6663 of the Internal Revenue Code.
+
+Estimated Tax
+
+Generally, a corporation must make installment payments
+if it expects its estimated tax for the year to be $500 or
+more. If the corporation does not pay the installments
+when they are due, it could be subject to an underpay-
+ment penalty. This section will explain how to avoid this
+penalty.
+
+When to pay estimated tax. Installment payments are
+due by the 15th day of the 4th, 6th, 9th, and 12th months
+of the corporation's tax year.
+
+Example 1. Your corporation's tax year ends Decem-
+ber 31. Installment payments are due on April 15, June
+15, September 15, and December 15.
+
+Example 2. Your corporation's tax year ends June 30.
+Installment payments are due on October 15, December
+15, March 15, and June 15.
+
+If any due date falls on a Saturday, Sunday, or legal hol-
+
+iday, the installment is due on the next business day.
+
+How to figure each required installment. The Estima-
+ted Tax Worksheet, later, can be used to figure each re-
+quired installment. Form 1120-W, Estimated Tax for Cor-
+porations, is now historical. Prior versions are available on
+IRS.gov
+
+You generally use one of the following two methods to
+figure each required installment. You should use the
+method that yields the smallest installment payments. In
+these discussions, “return” generally refers to the corpora-
+tion's original return. However, an amended return is con-
+sidered the original return if it is filed by the due date (in-
+cluding extensions) of the original return.
+
+Method 1. Each required installment is 25% of the in-
+come tax the corporation will show on its return for the cur-
+rent year.
+
+Method 2. Each required installment is 25% of the in-
+come tax shown on the corporation's return for the previ-
+ous year.
+
+To use Method 2:
+
+1. The corporation must have filed a return for the previ-
+
+ous year,
+
+2. The return must have been for a full 12 months, and
+
+3. The return must have shown a positive tax liability (not
+
+zero).
+
+Also, if the corporation is a large corporation, it can use
+Method 2 to figure the first installment only.
+
+Large corporations. A large corporation is a corporation
+that had, or whose predecessor had, taxable income of $1
+million or more for any of the 3 tax years immediately pre-
+ceding the current tax year, or if less, the number of years
+the corporation has been in existence. For this purpose,
+taxable income is modified to exclude net operating loss
+and capital loss carrybacks or carryovers.
+
+Annualized income installment method and/or adjus-
+ted seasonal installment method. If the corporation's
+income is expected to vary during the year because, for
+example, it operates its business on a seasonal basis, it
+may be able to lower the amount of one or more required
+installments by using the annualized income installment
+method and/or the adjusted seasonal installment method.
+For example, a ski shop, which receives most of its in-
+come during the winter months, may be able to benefit
+from using one or both of these methods in figuring one or
+more of its required installments. See sections 6655(e)(2)
+and 6655(e)(3) of the Internal Revenue Code.
+
+Refiguring required installments. If after the corpora-
+tion figures and deposits its estimated tax it finds that its
+tax liability for the year will be more or less than originally
+estimated, it may have to refigure its required installments
+if an underpayment penalty may apply. An
+to see
+
+6
+
+Publication 542 (1-2024)
