@@ -1,0 +1,130 @@
+CSCRF
+
+S.
+No
+.
+1
+
+Criteria
+
+Active
+Client-
+base
+per UCC
+
+as
+
+Self-
+certification
+REs
+
+Less
+than or
+equal to 10 ,000
+active
+clients
+not
+and
+providing IBT or
+Algo
+trading
+facility
+
+Small-size REs Mid-size
+
+REs
+
+More
+than
+50,000
+and up to
+5,00,000
+
+More
+than.
+10,000 and up to
+50,000
+than or
+Less
+equal to 10,000
+active
+clients
+providing
+and
+IBT facility /Algo
+trading facility
+
+Qualified
+REs^14
+
+More than
+5,00,000
+
+4. Collective Investment Scheme (CIS)
+
+CIS shall be under Self-certification REs category.
+
+5. Credit Rating Agency (CRA)
+
+CRAs shall be under Self-certification REs category.
+
+6. Custodians
+
+Table 5: Criteria and thresholds for Custodians categorization
+S.
+No.
+
+Criteria Small-size REs
+
+Mid-size REs
+
+Qualified REs
+
+1 AUC
+
+Less than Rs. 1
+Lakh crores
+
+Rs. 1 Lakh crores and
+above but less than Rs. 10
+Lakh crores
+
+Rs.
+Lakh
+10
+crores and above
+
+7. Debenture Trustee (DT)
+
+DTs which have not added any new issuer of listed debt security as client in the
+last three financial years shall be excluded from submission of compliance with
+CSCRF. Remaining DTs shall be under the Self-certification REs category.
+
+8. Depository Participants (DPs)
+
+Table 6: Criteria and thresholds for DPs categorization
+Small-size REs Mid-size REs
+S. No. Criteria
+N.A.
+1
+
+Type of DP
+
+Non-institutional DP
+
+Qualified REs
+Institutional DP
+
+9. Designated Depository Participants (DDPs)
+
+To get approval as a DDP, an entity, inter alia, is required to have valid SEBI
+registration as a Depository Participant (DP) as well as a Custodian. Therefore,
+
+14 As per SEBI circular SEBI/HO/MIRSD/MIRSD-PoD-1/P/CIR/2023/24 dated February 06, 2023, enhanced
+obligations and responsibilities have been casted upon Qualified Stock Brokers (QSBs) defined based on their
+size of operations, trading volumes, amount of client funds handled by them etc. Hence, such QSBs shall be
+categorized as Qualified REs.
+
+Version 1.0
+
+Page 40 of 205

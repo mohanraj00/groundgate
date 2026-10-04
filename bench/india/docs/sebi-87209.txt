@@ -1,0 +1,45 @@
+communication, shall inform their respective categorization to SEBI within 7 days
+
+of issuance of this circular.
+
+9.3.2. Subsequently, CCs offering clearing and settlement services in the equity
+
+derivatives segment shall, within 15 days from the end of each financial year,
+
+shall inform SEBI about their respective categorization, by means of a joint
+
+communication.
+
+9.4. For CCs classified as Category B, as per the provisions of para 9.2. above, credit
+
+exposure shall be calculated by considering a simultaneous default of at least 2
+
+clearing members (and associates) causing the highest credit exposure.
+
+9.5. For a CC classified as category A, as per the provisions of para 9.2. above, credit
+
+exposure shall be calculated as follows:
+
+9.5.1. By considering simultaneous default of at least 3 clearing members (and
+
+associates) causing the highest credit exposure, OR
+
+9.5.2. INR 10,500 crores, whichever is higher.
+
+10. The existing hypothetical and historical stress testing methodologies for determining the
+
+MRC of the Core SGF in the equity derivatives segment shall continue to exist along with
+
+the new stress testing methodologies introduced vide this circular.
+
+11. Clearing Corporations and stock exchanges are directed to:
+
+11.1. Formulate a joint (Standard Operating Procedures) SOP document, within 30 days
+
+from the date of issue of this circular, pertaining to the following aspects of the said
+
+circular and get it approved by their respective Risk Committees:
+
+Page 8 of 9
+
+Non-Confidential

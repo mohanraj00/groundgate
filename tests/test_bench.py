@@ -558,3 +558,15 @@ def test_a_dot_is_a_listed_abbreviation_before_whitespace() -> None:
     assert [m.start() for m in dots.dots_in(head)] == [head.index("No. 4")]
     split = "Federal Register\nVol. 90, No. 123 / Rules\nSee No. 4 here."
     assert [m.start() for m in dots.dots_in(split)] == [split.index("No. 4")]
+
+
+def test_an_india_token_is_a_number_token_with_a_comma() -> None:
+    sys.path.insert(0, str(BENCH / "india"))
+    import india
+
+    text = "Rs 2,00,000 and 1,2,3, then 5,000, x12,3 and 7."
+    assert [text[f.start() : f.end()] for f in india.commas_in(text)] == [
+        "2,00,000",
+        "1,2,3",
+        "5,000",
+    ]
