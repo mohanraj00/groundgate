@@ -145,15 +145,34 @@ I ran Laya 0.3.26 locally and Jev through its API on the same 32 sentences. I wr
 and the expected answers by hand. None came from set 2 or the v0.1 set. This is a quick check, not
 a measurement (#67). The sentences are short and clean, unlike real documents.
 
-| Question | Jev | Laya `english` | Laya `typed-decisions` | Laya `multilingual` |
-|---|---|---|---|---|
-| Comparator, 18 (4 in German) | 18 | 12 | 11 | 1 |
-| Key, 4 | 4 | 3 | 3 | 3 |
-| Does this sentence state this field? 6 | 6 | 6 | 5 | 2 |
-| Quote and span state the same fact, 4 | 4 | 3 | 3 | 2 |
-| Total, 32 | 32 | 24 | 22 | 8 |
+| Question | Jev | Jeff 0.8B | Laya `english` | Laya `typed-decisions` | Laya `multilingual` |
+|---|---|---|---|---|---|
+| Comparator, 18 (4 in German) | 18 | 14 | 12 | 11 | 1 |
+| Key, 4 | 4 | 4 | 3 | 3 | 3 |
+| Does this sentence state this field? 6 | 6 | 6 | 6 | 5 | 2 |
+| Quote and span state the same fact, 4 | 4 | 3 | 3 | 3 | 2 |
+| Total, 32 | 32 | 27 | 24 | 22 | 8 |
 
-`jev-latest` and `jev-preview` gave the same answers, and both reported `jev-1.13.0`.
+`jev-latest` and `jev-preview` gave the same answers, and both reported `jev-1.13.0`. Jeff is
+`mstrasser/Jeff-Qwen3.5-0.8B` at revision `v1.2`, run locally with MLX.
+
+- Jeff answered correctly the cases where Laya was confidently wrong: the old value of a change
+  (0.709), "Do not take more than 4,000 mg" (0.898), "höchstens 4.000 mg" (0.829) and the
+  flattened table row (0.867). It answered all four German questions correctly, although its
+  README says "English only".
+- Jeff read "The tank holds up to 50 L" as exact with 0.703. If a model could clear
+  `QUALIFIED_VALUE` near that threshold, this value would be admitted as exact. Its other
+  errors had lower probabilities: "above $150,000" as exact (0.385), "under 12" as exact
+  (0.257), "30 degrees or below" as "less than" (0.509), and two different facts read as the
+  same fact (0.572).
+- Jeff's field-match margins were 0.72 to 0.94 for the true values and 0.11 to 0.38 for the
+  wrong ones.
+- Jeff with MLX repeated its probabilities exactly in two runs, at 92 ms to 152 ms for each
+  question. Its PyTorch backend on the CPU took 5 seconds for each question, moved the
+  probabilities by up to 0.021 and changed one answer ("above $150,000", 0.384 against 0.383).
+  So a model repeats on one backend, not across backends (rule 9 in §4).
+- Jeff's `orders=2` option asks each question again with the options reversed and averages the
+  two. It fixed one answer for twice the time.
 
 - Laya `english` was wrong with high confidence on cases that a script already gets right: the
   old value of "increased from $120 to $150" as the new value (0.941), "Do not take more than
@@ -267,8 +286,10 @@ errors. Human labels avoid that, and the test on human gold shows what is left.
 | Languages | 51 tested | English only |
 | Maturity | Release 0.3.26 | v1.2 on 1 October 2026, 14 commits |
 
-The Jeff figures come from its README, and I have not run it. A larger base model carries more
-general knowledge, which is what the Laya critics say that Laya lacks. #67 measures both.
+The Jeff figures in this table come from its README. My own first check of Jeff is above. A
+larger base model carries more general knowledge, which is what the Laya critics say that Laya
+lacks, and in the first check Jeff did better than Laya without any fine-tuning. #67 measures
+both.
 
 ## 4. The rules that keep the guarantees
 
@@ -300,7 +321,9 @@ The decision stays a pure function. A model's answer is an input to it, like a c
    one version of a hosted model. A default such as "the latest weights" or `jev-latest` is
    invalid, because the thresholds belong to one model. For Jev, the policy names the version
    that the response reports, for example `jev-1.13.0`. When a hosted version is retired, its
-   thresholds go with it, and the new version needs a new measurement.
+   thresholds go with it, and the new version needs a new measurement. For a local model, the
+   policy also names the backend, for example MLX or PyTorch, because two backends give
+   slightly different probabilities.
 10. **A question carries the smallest text that answers it.** That is the value's sentence, and
     the nearest heading for a key question. It is never the whole document. Accuracy falls when
     the text contains material that is not related to the question, and less text also costs
