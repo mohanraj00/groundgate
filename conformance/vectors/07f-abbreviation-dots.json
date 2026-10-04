@@ -1,7 +1,7 @@
 {
  "name": "07f-abbreviation-dots",
- "description": "The dot of a listed abbreviation does not end a sentence when the next character is a lowercase letter, a digit or a currency sign, so a qualifier before it still applies; `approx` is a qualifier (spec 0.3).",
- "document": "The refund is up to Rs. 50,000 a year. Take approx. 5 mg a day. Take approx 6 mg at night. The office is open from 6 p.m. to 8 p.m. on weekdays. Taxes are at most due in the U.S. The fee is $30. Taxes are at most due in the U.S.\r\n\r\nfee is $45. Pay approx. $12 a month. For hypertension, ship packs of 2 lb. (Heart failure dose is 7 mg.)",
+ "description": "For the qualifier window only, the dot of a listed abbreviation does not end a sentence when the next character is a lowercase letter, a digit or a currency sign, so a qualifier before it still applies; key scope still ends there. `approx` is a qualifier (spec 0.3).",
+ "document": "The refund is up to Rs. 50,000 a year. Take approx. 5 mg a day. Take approx 6 mg at night. The office is open from 6 p.m. to 8 p.m. on weekdays. Taxes are at most due in the U.S. The fee is $30. Taxes are at most due in the U.S.\r\n\r\nfee is $45. Pay approx. $12 a month. For hypertension, the package weight is 3 lb. 9 mg is the dose for heart failure. For hypertension, ship packs of 2 lb. (Heart failure dose is 7 mg.)",
  "schema": {
   "fields": {
    "refund": {
@@ -32,6 +32,14 @@
     "unit": "USD"
    },
    "keyed_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "Hypertension",
+     "Heart Failure"
+    ]
+   },
+   "weight_dose": {
     "type": "number",
     "unit": "mg",
     "keys": [
@@ -125,9 +133,21 @@
    "value": "7",
    "unit": "mg",
    "evidence": {
-    "start": 330,
-    "end": 334,
+    "start": 412,
+    "end": 416,
     "text": "7 mg"
+   },
+   "key": "Hypertension"
+  },
+  {
+   "id": "a9",
+   "field": "weight_dose",
+   "value": "9",
+   "unit": "mg",
+   "evidence": {
+    "start": 315,
+    "end": 319,
+    "text": "9 mg"
    },
    "key": "Hypertension"
   }
@@ -170,6 +190,12 @@
     "outcome": "needs_verification",
     "codes": [
      "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
     ]
    },
    {

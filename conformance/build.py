@@ -651,13 +651,14 @@ vector(
 
 vector(
     "07f-abbreviation-dots",
-    "The dot of a listed abbreviation does not end a sentence when the next character is a "
-    "lowercase letter, a digit or a currency sign, so a qualifier before it still applies; "
-    "`approx` is a qualifier (spec 0.3).",
+    "For the qualifier window only, the dot of a listed abbreviation does not end a sentence when "
+    "the next character is a lowercase letter, a digit or a currency sign, so a qualifier before "
+    "it still applies; key scope still ends there. `approx` is a qualifier (spec 0.3).",
     "The refund is up to Rs. 50,000 a year. Take approx. 5 mg a day. Take approx 6 mg at night. "
     "The office is open from 6 p.m. to 8 p.m. on weekdays. Taxes are at most due in the U.S. The "
     "fee is $30. Taxes are at most due in the U.S.\r\n\r\nfee is $45. Pay approx. $12 a month. "
-    "For hypertension, ship packs of 2 lb. (Heart failure dose is 7 mg.)",
+    "For hypertension, the package weight is 3 lb. 9 mg is the dose for heart failure. For "
+    "hypertension, ship packs of 2 lb. (Heart failure dose is 7 mg.)",
     {
         "fields": {
             "refund": {"type": "integer", "unit": "INR"},
@@ -668,6 +669,11 @@ vector(
             "crlf_fee": USD,
             "monthly": USD,
             "keyed_dose": {
+                "type": "number",
+                "unit": "mg",
+                "keys": ["Hypertension", "Heart Failure"],
+            },
+            "weight_dose": {
                 "type": "number",
                 "unit": "mg",
                 "keys": ["Hypertension", "Heart Failure"],
@@ -694,6 +700,16 @@ vector(
             "7",
             "mg",
             q("7 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="Hypertension",
+        ),
+        # a join never moves a key: key scope still ends at every dot
+        c(
+            "a9",
+            "weight_dose",
+            "9",
+            "mg",
+            q("9 mg"),
             ("needs_verification", ["KEY_NOT_AT_VALUE"]),
             key="Hypertension",
         ),

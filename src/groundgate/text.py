@@ -158,14 +158,17 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
     return not (ch.islower() or "0" <= ch <= "9" or ch in _CONTINUES)
 
 
-def sentence(text: str, pos: int) -> tuple[int, int]:
+def sentence(text: str, pos: int, qualifiers: bool = False) -> tuple[int, int]:
+    """The sentence around ``pos`` (SPEC §4.2). Only the qualifier window (``qualifiers``) reads
+    on past an abbreviation dot: there a join can only add a flag, while key scope and the unit
+    search must never reach into the next sentence."""
     left = 0
     for m in _SENTENCE_END.finditer(text, 0, pos):
-        if _ends_sentence(text, m):
+        if not qualifiers or _ends_sentence(text, m):
             left = m.end()
     right = len(text)
     for m in _SENTENCE_END.finditer(text, pos):
-        if _ends_sentence(text, m):
+        if not qualifiers or _ends_sentence(text, m):
             right = m.start()
             break
     return left, right
@@ -241,7 +244,7 @@ _CHANGE_FROM = re.compile(rf"\b(?:{_CHANGE}){_CHANGE_GAP}\s+from\s+\S{{0,4}}?$",
 
 def qualifiers(text: str, tok: Token) -> set[str]:
     """Comparators that apply to the value at ``tok`` (SPEC §4.2)."""
-    s0, s1 = sentence(text, tok.start)
+    s0, s1 = sentence(text, tok.start, qualifiers=True)
     nearby = tokens(text, s0, s1)
     prev_end = max([t.end for t in nearby if t.end <= tok.start] + [s0, tok.start - _WINDOW])
     next_start = min([t.start for t in nearby if t.start >= tok.end] + [s1, tok.end + _WINDOW])
