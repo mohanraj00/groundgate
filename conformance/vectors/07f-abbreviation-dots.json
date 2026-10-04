@@ -179,8 +179,10 @@
     ]
    },
    {
-    "outcome": "admitted",
-    "codes": []
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
    },
    {
     "outcome": "admitted",

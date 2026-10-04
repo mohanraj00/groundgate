@@ -177,9 +177,11 @@ points after it (qualifiers *after*). Sentences end at `.` or `;` followed by wh
 break counts), at `•`, or at a blank line (two line breaks with only spaces, tabs or carriage
 returns between them). For the qualifier window only, a `.` that ends a listed abbreviation, as a
 whole word, does not end a sentence when the first character after the whitespace is a lowercase
-letter, a digit, `$`, `€`, `£` or `₹`, and the whitespace holds no blank line. So for qualifiers
-"up to Rs. 50,000" and "from 6 p.m. to 8 p.m." are one sentence each, and "in the U.S. The fee" and
-"2 lb. (Heart failure" are two each. A wider qualifier window can only add a flag. Key scope (§4.5)
+letter, a digit, `$`, `€`, `£` or `₹`, and the whitespace holds no blank line. Two of them also
+join before any other character, when the whitespace holds no blank line: `u.s.` always, and `no.`
+or `nos.` when the next word holds a digit or starts with two uppercase letters A to Z. So for
+qualifiers "up to Rs. 50,000", "from 6 p.m. to 8 p.m.", "in the U.S. Tax Court" and "Docket No.
+DEA-1086" are one sentence each, and "No. The fee" and "2 lb. (Heart failure" are two each. A wider qualifier window can only add a flag. Key scope (§4.5)
 and the unit search (§4.3) still end the sentence at every such dot, because there a join would let
 a key or unit of one sentence reach a value in the next. The abbreviations, case-insensitive: a.m.,
 p.m., approx., ca., cf., e.g., i.e., etc., vs., viz., no., nos., p., pp., para., fig., figs., vol.,

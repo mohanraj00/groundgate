@@ -23,8 +23,12 @@ milestone 0.3.
   at every such dot, so a join never lets a key or unit of one sentence reach a value in the next.
   `approx` joins the `approx` qualifiers, so "approx. 5 mg" is flagged. Vector
   `07f-abbreviation-dots`. Measured on 116 abbreviation dots in documents no rule was written from
-  (`bench/dots`): of the 107 where the sentence goes on, spec 0.2 cuts all 107 and 0.3 cuts 53, and
-  0.3 joins none of the 9 real sentence ends.
+  (`bench/dots`): of the 107 where the sentence goes on, spec 0.2 cuts all 107 and 0.3, with the
+  #77 rule below, cuts 10. 0.3 joins none of the 9 real sentence ends.
+- Sentence ends (#77): for the qualifier window, the dot of `U.S.` no longer ends a sentence, and
+  the dot of `No.` or `Nos.` no longer ends one before a code such as `DEA-1086`. A blank line
+  still ends the sentence. Vector `07g-us-and-number-dots`, and `07f-abbreviation-dots` a5 is now
+  qualified.
 - Blank lines (#63): a blank line may hold a carriage return, so `\r\n\r\n` ends a sentence
   too.
 - Numbers (#59): a number grouped the Indian way, the last three digits and then pairs, has its

@@ -1,0 +1,144 @@
+{
+ "name": "07g-us-and-number-dots",
+ "description": "For the qualifier window only, the dot of `U.S.` never ends a sentence, and the dot of `No.` or `Nos.` does not end one when the next word holds a digit or starts with two uppercase letters. A blank line still ends the sentence, and key scope still ends at every dot (spec 0.3).",
+ "document": "Fees are up to the U.S. Code cap of $60. At most the sum in Docket No. FDA-N is $75. Is the fee at most a guess? No. The fee is $80. At least Nos. A1 and A2 cost $90. Fees are at most paid in the U.S.\n\nThe fee is $95. For hypertension, ask in the U.S. Heart failure dose is 7 mg.",
+ "schema": {
+  "fields": {
+   "code_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "docket_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "answer_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "item_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "blank_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "keyed_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "Hypertension",
+     "Heart Failure"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "u1",
+   "field": "code_fee",
+   "value": "60",
+   "unit": "USD",
+   "evidence": {
+    "start": 36,
+    "end": 39,
+    "text": "$60"
+   }
+  },
+  {
+   "id": "u2",
+   "field": "docket_fee",
+   "value": "75",
+   "unit": "USD",
+   "evidence": {
+    "start": 80,
+    "end": 83,
+    "text": "$75"
+   }
+  },
+  {
+   "id": "u3",
+   "field": "answer_fee",
+   "value": "80",
+   "unit": "USD",
+   "evidence": {
+    "start": 128,
+    "end": 131,
+    "text": "$80"
+   }
+  },
+  {
+   "id": "u4",
+   "field": "item_fee",
+   "value": "90",
+   "unit": "USD",
+   "evidence": {
+    "start": 162,
+    "end": 165,
+    "text": "$90"
+   }
+  },
+  {
+   "id": "u5",
+   "field": "blank_fee",
+   "value": "95",
+   "unit": "USD",
+   "evidence": {
+    "start": 213,
+    "end": 216,
+    "text": "$95"
+   }
+  },
+  {
+   "id": "u6",
+   "field": "keyed_dose",
+   "value": "7",
+   "unit": "mg",
+   "evidence": {
+    "start": 274,
+    "end": 278,
+    "text": "7 mg"
+   },
+   "key": "Hypertension"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
