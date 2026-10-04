@@ -96,11 +96,20 @@ often.
 | Speed | 7.2 ms per question in a batch on a T4 GPU (README); 140 ms to 365 ms for one question on my Mac | About 120 ms for one question, network included |
 | Determinism | The same answers and probabilities in each run, on Apple Silicon and on the CPU | The same answers in two runs; 9 of 32 probabilities moved, by up to 0.06 |
 | Languages | 51 tested (README) | Not stated |
+| Cost | Free; it runs on your own machine | $0.042 for each million input tokens; output tokens are free (TypeSafe's Models page) |
 | Versions | A Hugging Face revision and a weights digest | `jev-latest` and `jev-preview` are moving names. Each response names the real version, for example `jev-1.13.0`, and a request for that name returns it. |
 
 I took the Laya figures from its README and did not verify them. Jev is hosted only, and the
 maintainer can get an API key. Jev's pages do not document its licence, data handling or model
 versions.
+
+TypeSafe's Models page says that an alias can change when a new release ships, and that a user
+who tuned thresholds on one version should pin that version's ID. That is rule 9 in §4. The page
+does not say how long an old version stays available.
+
+Cost is not a reason to avoid Jev. One comparator question in the first check used 484 input
+tokens. Three questions for each of the 6903 values in set 2, at about 500 tokens each, are about
+10 million input tokens, or about $0.43. This is an estimate, not a measured cost.
 
 Which judge to use depends on the use. Development work on public documents, such as gold checks
 and escape sorting, uses Jev: it was much more accurate in the first check, and public documents
@@ -140,7 +149,7 @@ a measurement (#67). The sentences are short and clean, unlike real documents.
   versions are retired, a pinned threshold stops working with its version. Rule 9 in §4 covers
   both.
 - Each Jev response reports output tokens, for example 88 for one question. Jev does not charge
-  for them. I do not know what they are, for a model described as System 1, or whether they
+  for them, and the documentation does not explain them. I do not know what they are, for a model described as System 1, or whether they
   explain why the probabilities move between runs (§12).
 
 The Laya README says that its answers have the same schema as Jev's, so a Jev client needs only a
@@ -451,4 +460,7 @@ documents and a high review cost accepts lower ones.
 5. Is the field-match check (§5) worth its added review? #67 answers this with numbers.
 6. What are the output tokens in a Jev response? They cost nothing, but they can explain why
    Jev's probabilities move between runs. This is a question for TypeSafe.
-7. How long does TypeSafe serve an old Jev version?
+7. How long does TypeSafe serve an old Jev version? The Models page advises pinning, but it says
+   nothing about retirement.
+8. Do two identical Jev calls give the same probabilities? The documentation does not say, and it
+   has no temperature or seed parameter. In the first check, 9 of 32 probabilities moved.
