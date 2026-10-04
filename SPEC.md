@@ -167,16 +167,27 @@ exponent, trailing fractional zeros or a trailing `.`, with `-0` written `0`.
 
 ### 4.2 Qualifiers
 
-A qualifier applies when it appears between the value and the nearest of: the previous number token,
-the start of the sentence, or 40 code points before the value (qualifiers *before*); or between the
-value and the nearest of the next number token, the end of the sentence, or 40 code points after it
-(qualifiers *after*). Sentences end at `.` or `;` followed by whitespace (a line break counts), at
-`•`, or at a blank line. Matching is case-insensitive on whole words. `from` is deliberately absent:
-"from 7 to 8" is already a range through its connector, and "up from $236,000" is not a qualifier.
+A qualifier applies when it appears between the value and the nearest of: the previous number
+token, the start of the sentence, or 40 code points before the value (qualifiers *before*); or
+between the value and the nearest of the next number token, the end of the sentence, or 40 code
+points after it (qualifiers *after*). Sentences end at `.` or `;` followed by whitespace (a line
+break counts), at `•`, or at a blank line (two line breaks with only spaces, tabs or carriage
+returns between them). For the qualifier window only, a `.` that ends a listed abbreviation, as a
+whole word, does not end a sentence when the first character after the whitespace is a lowercase
+letter, a digit, `$`, `€`, `£` or `₹`, and the whitespace holds no blank line. So for qualifiers
+"up to Rs. 50,000" and "from 6 p.m. to 8 p.m." are one sentence each, and "in the U.S. The fee" and
+"2 lb. (Heart failure" are two each. A wider qualifier window can only add a flag. Key scope (§4.5)
+and the unit search (§4.3) still end the sentence at every such dot, because there a join would let
+a key or unit of one sentence reach a value in the next. The abbreviations, case-insensitive: a.m.,
+p.m., approx., ca., cf., e.g., i.e., etc., vs., viz., no., nos., p., pp., para., fig., figs., vol.,
+rs., u.s., u.k., dr., mr., mrs., ms., jr., sr., st., inc., co., corp., ltd., est., min., max., hr.,
+hrs., mo., mos., yr., yrs., wk., wks., wt., oz., lb. and lbs. Matching is case-insensitive on whole
+words. `from` is deliberately absent: "from 7 to 8" is already a range through its connector, and
+"up from $236,000" is not a qualifier.
 
 | Comparator | Before the value | After the value |
 |---|---|---|
-| `approx` | approximately, about, around, nearly, roughly, generally, ~, ≈ | |
+| `approx` | approximately, approx, about, around, nearly, roughly, generally, ~, ≈ | |
 | `gt` | more than, greater than, above, over, exceed, exceeds, exceeding, > | |
 | `lt` | less than, fewer than, below, under, < | |
 | `ge` | at least, minimum of, no less than, ≥ | or more, or greater, or older, or higher, or above |

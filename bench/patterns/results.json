@@ -17,10 +17,10 @@
   "spec_0.3": {
    "change read as change": 25,
    "change read as range": 22,
-   "range read as change": 15,
-   "range read as range": 60,
-   "neither read as change": 22,
-   "neither read as range": 3
+   "range read as change": 0,
+   "range read as range": 75,
+   "neither read as change": 0,
+   "neither read as range": 25
   }
  },
  "by_kind": {
@@ -56,8 +56,8 @@
     "change read as range": 11,
     "range read as change": 0,
     "range read as range": 46,
-    "neither read as change": 1,
-    "neither read as range": 1
+    "neither read as change": 0,
+    "neither read as range": 2
    }
   },
   "fr": {
@@ -72,10 +72,10 @@
    "spec_0.3": {
     "change read as change": 14,
     "change read as range": 11,
-    "range read as change": 15,
-    "range read as range": 9,
-    "neither read as change": 21,
-    "neither read as range": 2
+    "range read as change": 0,
+    "range read as range": 24,
+    "neither read as change": 0,
+    "neither read as range": 23
    }
   }
  },
@@ -150,7 +150,7 @@
    "id": "irs-p926:1855",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "irs-p946:2177",
@@ -540,25 +540,25 @@
    "id": "fr-2025-23920:3361",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-23860:3725",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-23848:3725",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-23848:10118",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-23837:6745",
@@ -630,13 +630,13 @@
    "id": "fr-2025-23634:1959",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-23634:2324",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-23626:6021",
@@ -648,13 +648,13 @@
    "id": "fr-2025-23626:8596",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-23626:8961",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-23389:2374",
@@ -672,43 +672,43 @@
    "id": "fr-2025-23125:200",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22968:1038",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22966:5239",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22966:5298",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22957:1038",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22957:8690",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22927:1930",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22875:1684",
@@ -816,73 +816,73 @@
    "id": "fr-2025-22595:5320",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22584:447",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22584:495",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22559:3861",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22559:4754",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22559:6306",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22558:5009",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22558:5155",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22558:5295",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22558:5477",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22558:5572",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22557:159",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22545:199",
@@ -912,55 +912,55 @@
    "id": "fr-2025-22518:159",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22518:11721",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22518:12823",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22518:12871",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22516:5232",
    "label": "neither",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22516:6334",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22516:6382",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22516:7155",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   },
   {
    "id": "fr-2025-22516:7203",
    "label": "range",
    "spec_0.2": "change",
-   "spec_0.3": "change"
+   "spec_0.3": "range"
   }
  ]
 }

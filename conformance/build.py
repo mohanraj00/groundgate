@@ -649,6 +649,73 @@ vector(
     ],
 )
 
+vector(
+    "07f-abbreviation-dots",
+    "For the qualifier window only, the dot of a listed abbreviation does not end a sentence when "
+    "the next character is a lowercase letter, a digit or a currency sign, so a qualifier before "
+    "it still applies; key scope still ends there. `approx` is a qualifier (spec 0.3).",
+    "The refund is up to Rs. 50,000 a year. Take approx. 5 mg a day. Take approx 6 mg at night. "
+    "The office is open from 6 p.m. to 8 p.m. on weekdays. Taxes are at most due in the U.S. The "
+    "fee is $30. Taxes are at most due in the U.S.\r\n\r\nfee is $45. Pay approx. $12 a month. "
+    "For hypertension, the package weight is 3 lb. 9 mg is the dose for heart failure. For "
+    "hypertension, ship packs of 2 lb. (Heart failure dose is 7 mg.)",
+    {
+        "fields": {
+            "refund": {"type": "integer", "unit": "INR"},
+            "day_dose": {"type": "integer", "unit": "mg"},
+            "night_dose": {"type": "integer", "unit": "mg"},
+            "closing_hour": {"type": "integer"},
+            "fee": USD,
+            "crlf_fee": USD,
+            "monthly": USD,
+            "keyed_dose": {
+                "type": "number",
+                "unit": "mg",
+                "keys": ["Hypertension", "Heart Failure"],
+            },
+            "weight_dose": {
+                "type": "number",
+                "unit": "mg",
+                "keys": ["Hypertension", "Heart Failure"],
+            },
+        }
+    },
+    [
+        # "up to" before "Rs.": one sentence now, so the value is qualified
+        c("a1", "refund", "50000", "INR", q("50,000"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        c("a2", "day_dose", "5", "mg", q("5 mg"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        c("a3", "night_dose", "6", "mg", q("6 mg"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # the first "p.m." no longer cuts the range
+        c("a4", "closing_hour", "8", None, q("8"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # "U.S." before an uppercase word still ends the sentence, so "at most" stays out
+        c("a5", "fee", "30", "USD", q("$30")),
+        # a blank line ends the sentence, with Windows line endings too
+        c("a6", "crlf_fee", "45", "USD", q("$45")),
+        # a currency sign after the dot keeps the sentence going
+        c("a7", "monthly", "12", "USD", q("$12"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        # a parenthesis after the dot ends it, so the other sentence's key does not reach 7 mg
+        c(
+            "a8",
+            "keyed_dose",
+            "7",
+            "mg",
+            q("7 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="Hypertension",
+        ),
+        # a join never moves a key: key scope still ends at every dot
+        c(
+            "a9",
+            "weight_dose",
+            "9",
+            "mg",
+            q("9 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="Hypertension",
+        ),
+    ],
+)
+
 # ---------------------------------------------------------------- scale words
 vector(
     "08-scale",

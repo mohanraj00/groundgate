@@ -174,7 +174,8 @@ def label() -> None:
 
 
 def reading(text: str, dot: int) -> str:
-    """Spec 0.3 (the core in this repository): "end" if a sentence starts after the dot."""
+    """Spec 0.3 (the core in this repository): "end" if a sentence of the qualifier window
+    starts after the dot."""
     from groundgate.text import sentence
 
     gap = re.match(r"\s*", text[dot + 1 :])
@@ -182,7 +183,7 @@ def reading(text: str, dot: int) -> str:
     nxt = dot + 1 + gap.end()
     if nxt >= len(text):
         return "end"
-    return "end" if sentence(text, nxt)[0] > dot else "goes on"
+    return "end" if sentence(text, nxt, qualifiers=True)[0] > dot else "goes on"
 
 
 def score(check: bool) -> None:

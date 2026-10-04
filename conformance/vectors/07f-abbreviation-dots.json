@@ -1,0 +1,210 @@
+{
+ "name": "07f-abbreviation-dots",
+ "description": "For the qualifier window only, the dot of a listed abbreviation does not end a sentence when the next character is a lowercase letter, a digit or a currency sign, so a qualifier before it still applies; key scope still ends there. `approx` is a qualifier (spec 0.3).",
+ "document": "The refund is up to Rs. 50,000 a year. Take approx. 5 mg a day. Take approx 6 mg at night. The office is open from 6 p.m. to 8 p.m. on weekdays. Taxes are at most due in the U.S. The fee is $30. Taxes are at most due in the U.S.\r\n\r\nfee is $45. Pay approx. $12 a month. For hypertension, the package weight is 3 lb. 9 mg is the dose for heart failure. For hypertension, ship packs of 2 lb. (Heart failure dose is 7 mg.)",
+ "schema": {
+  "fields": {
+   "refund": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "day_dose": {
+    "type": "integer",
+    "unit": "mg"
+   },
+   "night_dose": {
+    "type": "integer",
+    "unit": "mg"
+   },
+   "closing_hour": {
+    "type": "integer"
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "crlf_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "monthly": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "keyed_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "Hypertension",
+     "Heart Failure"
+    ]
+   },
+   "weight_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "Hypertension",
+     "Heart Failure"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a1",
+   "field": "refund",
+   "value": "50000",
+   "unit": "INR",
+   "evidence": {
+    "start": 24,
+    "end": 30,
+    "text": "50,000"
+   }
+  },
+  {
+   "id": "a2",
+   "field": "day_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 52,
+    "end": 56,
+    "text": "5 mg"
+   }
+  },
+  {
+   "id": "a3",
+   "field": "night_dose",
+   "value": "6",
+   "unit": "mg",
+   "evidence": {
+    "start": 76,
+    "end": 80,
+    "text": "6 mg"
+   }
+  },
+  {
+   "id": "a4",
+   "field": "closing_hour",
+   "value": "8",
+   "evidence": {
+    "start": 125,
+    "end": 126,
+    "text": "8"
+   }
+  },
+  {
+   "id": "a5",
+   "field": "fee",
+   "value": "30",
+   "unit": "USD",
+   "evidence": {
+    "start": 190,
+    "end": 193,
+    "text": "$30"
+   }
+  },
+  {
+   "id": "a6",
+   "field": "crlf_fee",
+   "value": "45",
+   "unit": "USD",
+   "evidence": {
+    "start": 239,
+    "end": 242,
+    "text": "$45"
+   }
+  },
+  {
+   "id": "a7",
+   "field": "monthly",
+   "value": "12",
+   "unit": "USD",
+   "evidence": {
+    "start": 256,
+    "end": 259,
+    "text": "$12"
+   }
+  },
+  {
+   "id": "a8",
+   "field": "keyed_dose",
+   "value": "7",
+   "unit": "mg",
+   "evidence": {
+    "start": 412,
+    "end": 416,
+    "text": "7 mg"
+   },
+   "key": "Hypertension"
+  },
+  {
+   "id": "a9",
+   "field": "weight_dose",
+   "value": "9",
+   "unit": "mg",
+   "evidence": {
+    "start": 315,
+    "end": 319,
+    "text": "9 mg"
+   },
+   "key": "Hypertension"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -54,3 +54,38 @@ the text.
 `dots.py label` shows each abbreviation in its text and asks one question: does the sentence end
 at its dot (`end`), or does it go on (`goes on`)? It never shows how a spec reads the dot. The
 labels go in `labels.json`.
+
+## Scoring
+
+```bash
+uv run python bench/dots/dots.py score            # RESULTS.md and results.json
+```
+
+[RESULTS.md](RESULTS.md) reads each dot under spec 0.2, which ends a sentence at every `.`
+followed by whitespace, and under spec 0.3 (the core in this repository), and counts each
+reading against the label. The rule was fixed at the head of #72 before anyone read a dot. CI
+runs `score --check`.
+
+What it found:
+
+- Of the 107 dots where the sentence goes on, spec 0.2 cuts all 107 and spec 0.3 cuts 53. A cut
+  sentence can lose a qualifier that stands before the dot.
+- Of the 9 real sentence ends, spec 0.3 joins none.
+- Most of the 53 cuts that remain are `U.S.` (37) and `No.` (9) before a capitalized word, as in
+  "U.S. Tax Court" and "Docket No. DEA-1086". Spec 0.3 reads those as sentence ends. That is a
+  follow-up for a later spec, measured on other documents (#77).
+
+The rule changed twice after the first scoring, both times from a security review of #72, not from
+this set. It first joined before any character that was not an uppercase letter, and a join before
+a parenthesis let the key of one sentence reach a value in the next. The join then needed a
+lowercase letter, a digit or a currency sign, and with the first rule spec 0.3 had cut 51 of the
+107 and joined 1 of the 9 real ends ("mL/min. ( 2.2)"). A second review showed that a real sentence
+can start with a digit too, so the join now applies only to the qualifier window, where it can only
+add a flag. Key scope and the unit search end at every dot, as in spec 0.2. This set measures the
+qualifier window.
+
+## Labels changed after scoring
+
+The labels were made blind. Three changed from "goes on" to "end" after the first scoring
+showed the dots: `irs-p556:17116` ("inter- est. This period", the word "interest" broken over a
+line), and `irs-p529:12011` and `irs-p547:8951` ("1040-SR." before a heading).
