@@ -50,20 +50,16 @@ DOT = re.compile(
 LABELS = {"e": "end", "c": "goes on"}
 
 
-# the running head of a Federal Register page: "Federal Register / Vol. 90, No. 123 / Monday, ..."
-RUNNING_HEAD = re.compile(r"Federal\s+Register\s*/\s*Vol\.", re.I)
+# the running head of a Federal Register page, "Federal Register / Vol. 90, No. 123", which may
+# be split over lines by the extraction
+RUNNING_HEAD = re.compile(r"Federal\s+Register\s*/?\s*Vol\.\s*\d+\s*,\s*No\.\s*\d+", re.I)
 
 
 def dots_in(text: str) -> list[re.Match[str]]:
-    """The listed-abbreviation dots in ``text``, except those on a line that holds a Federal
-    Register running head, which repeats on every page."""
-    out = []
-    for m in DOT.finditer(text):
-        a = text.rfind("\n", 0, m.start()) + 1
-        b = text.find("\n", m.end())
-        if not RUNNING_HEAD.search(text, a, len(text) if b < 0 else b):
-            out.append(m)
-    return out
+    """The listed-abbreviation dots in ``text``, except those inside a Federal Register running
+    head, which repeats on every page."""
+    heads = [(h.start(), h.end()) for h in RUNNING_HEAD.finditer(text)]
+    return [m for m in DOT.finditer(text) if not any(a <= m.start() < b for a, b in heads)]
 
 
 def excluded() -> tuple[set[str], set[str], set[str]]:

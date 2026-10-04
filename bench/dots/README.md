@@ -19,12 +19,12 @@ uv run python bench/dots/dots.py score            # RESULTS.md: spec 0.2 and 0.3
 
 ## A dot
 
-A listed abbreviation, as a whole word, whose dot is followed by whitespace. The list is the one
-in SPEC §4.2, written out in `dots.py`, so the pick does not run the rule it measures. A dot on a
-line that holds a Federal Register running head ("Federal Register / Vol. 90, No. 123 / ...")
-does not count, because the head repeats on every page. Both
-kinds count: a dot before an uppercase word, which spec 0.3 keeps as a sentence end, and a dot
-before any other character, which spec 0.3 does not.
+A listed abbreviation, as a whole word, whose dot is followed by whitespace. The list is the one in
+SPEC §4.2, written out in `dots.py`, so the pick does not run the rule it measures. A dot inside a
+Federal Register running head ("Federal Register / Vol. 90, No. 123") does not count, because the
+head repeats on every page. The head is matched across line breaks, because the extraction
+sometimes splits it. Both kinds count: a dot before an uppercase word, which spec 0.3 keeps as a
+sentence end, and a dot before any other character, which spec 0.3 does not.
 
 ## What is excluded
 
@@ -43,11 +43,12 @@ count.
   newest first. Set 2 took 2026 and the pattern set 2025-07-01 to 2025-12-31.
 
 116 dots in 31 documents: FDA 9 (7 labels), IRS 54 (12 publications), Federal Register 53 (12
-rules). The most common are `U.S.` (54) and `No.` (28).
+rules). The most common are `U.S.` (56) and `No.` (27).
 
-The first pick counted running heads, and the Codex review of #74 found that 30 of the 50
-Federal Register dots were `Vol.` and `No.` in them. The running-head rule was added and the
-pick run again before anyone read the text.
+The first pick counted running heads, and the Codex review of #74 found that 30 of the 50 Federal
+Register dots were `Vol.` and `No.` in them. The running-head rule was added, and then widened to a
+head split over lines, which the second review found. The pick ran again each time before anyone
+read the text.
 
 ## Labels
 

@@ -556,3 +556,5 @@ def test_a_dot_is_a_listed_abbreviation_before_whitespace() -> None:
     assert [m.group() for m in dots.dots_in(text)] == ["Rs.", "p.m.", "U.S.", "Mrs."]
     head = "Next.\n12 Federal Register / Vol. 90, No. 5 / Rules\nSee No. 4 here."
     assert [m.start() for m in dots.dots_in(head)] == [head.index("No. 4")]
+    split = "Federal Register\nVol. 90, No. 123 / Rules\nSee No. 4 here."
+    assert [m.start() for m in dots.dots_in(split)] == [split.index("No. 4")]
