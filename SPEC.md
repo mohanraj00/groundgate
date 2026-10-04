@@ -149,8 +149,11 @@ Coverage is per field, not per key.
 A **number token** is a maximal match of `[-−]?\d[\d,]*(\.\d+)?` that is not preceded by a letter,
 digit, `.` or `,`, with one trailing `,` dropped. A leading `-` or `−` (U+2212) counts only when
 it is not preceded by a letter or digit. The token has a value when its digits are either
-ungrouped (`\d+`) or grouped in threes after the first group (`\d{1,3}(,\d{3})+`); otherwise it
-has **no** value (`252,0000` never equals 252000 or 2520000). When tokens are read inside a span, a
+ungrouped (`\d+`), grouped in threes after the first group (`\d{1,3}(,\d{3})+`), or grouped the
+Indian way, the last three digits and then pairs (`\d{1,2}(,\d{2})*,\d{3}`, so `2,00,000` is
+200000 and `1,00,00,000` is 10000000); otherwise it has **no** value (`252,0000` never equals
+252000 or 2520000, and `1,23,456,789` mixes the two groupings). The value is the digits without
+the commas, so a string valid under both groupings, such as `25,000`, has one value. When tokens are read inside a span, a
 token that continues past the span's end is ignored, so a span can never read a prefix of a longer
 number.
 

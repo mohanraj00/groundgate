@@ -35,3 +35,21 @@ those tokens.
 number written with grouping commas (`one number`), or not one number, such as a list, two
 values or a reference (`not one number`)? It never shows the value a spec reads. The labels go
 in `labels.json`.
+
+## Scoring
+
+`india.py score` reads each token with spec 0.2, the released 0.2.0 wheel in its own
+environment, and with spec 0.3, the core in this repository. It puts each token in one of four
+cells: the label (one number or not) against the reading (a value or no value).
+[RESULTS.md](RESULTS.md) has the counts, and `results.json` has each token. CI runs
+`india.py score --check`, so the committed files must match the labels.
+
+## Findings
+
+- Every token that spec 0.2 rejects and the label calls one number is an Indian grouping, and
+  spec 0.3 reads each of them.
+- Spec 0.3 gives a value to no token that spec 0.2 does not. The one token that is not one number
+  and has a value under both specs is `00,000`, the end of `10,00,000` that the PDF text split
+  after its first comma. The comma rule cannot see this split, because the gap is in the text
+  extraction.
+- No label changed after scoring.

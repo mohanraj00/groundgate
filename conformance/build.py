@@ -173,6 +173,60 @@ vector(
 
 # ---------------------------------------------------------------- evidence
 vector(
+    "03b-indian-grouping",
+    "A number grouped the Indian way (the last three digits, then pairs) has its value, in the "
+    "document and in a candidate; a mix of the two groupings has none (spec 0.3).",
+    "The exemption is Rs 2,00,000 per year. The cap is ₹12,34,567. The fund holds 1,00,00,000 "
+    "rupees. The figures 1,23,456,789 and 252,0000 have no value. The fee is 25,000.",
+    {
+        "fields": {
+            "exemption": {"type": "integer", "unit": "INR"},
+            "exemption_as_written": {"type": "integer", "unit": "INR"},
+            "cap": {"type": "integer", "unit": "INR"},
+            "fund": {"type": "integer", "unit": "INR"},
+            "mixed": {"type": "integer"},
+            "bad_group": {"type": "integer"},
+            "fee": {"type": "integer"},
+            "mixed_value": {"type": "integer"},
+        }
+    },
+    [
+        c("i1", "exemption", "200000", "INR", q("2,00,000")),
+        # a candidate value may be written with the same grouping
+        c("i2", "exemption_as_written", "2,00,000", "INR", q("2,00,000")),
+        c("i3", "cap", "1234567", "INR", q("12,34,567")),
+        c("i4", "fund", "10000000", "INR", q("1,00,00,000")),
+        # pairs after a group of three, and four digits after a comma: no value
+        c(
+            "i5",
+            "mixed",
+            "123456789",
+            None,
+            q("1,23,456,789"),
+            ("rejected", ["VALUE_NOT_IN_EVIDENCE"]),
+        ),
+        c(
+            "i6",
+            "bad_group",
+            "2520000",
+            None,
+            q("252,0000"),
+            ("rejected", ["VALUE_NOT_IN_EVIDENCE"]),
+        ),
+        # grouping in threes still reads
+        c("i7", "fee", "25000", None, q("25,000")),
+        c(
+            "i8",
+            "mixed_value",
+            "1,23,456,789",
+            None,
+            q("1,23,456,789"),
+            ("rejected", ["TYPE_INVALID"]),
+        ),
+    ],
+)
+
+vector(
     "04-evidence",
     "Missing, invalid or unsupportive evidence is rejected.",
     "The limit is $7,000 and the fee is 30 dollars. Take 45 minutes. Altimeter 29.97 inches.",
