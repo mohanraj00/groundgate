@@ -220,13 +220,19 @@ def context(text: str, p: dict[str, Any]) -> str:
     return " ".join("".join(parts).split())
 
 
-def label() -> None:
+def label(recheck: bool = False) -> None:
+    """Label every pair in labels.json, or with ``recheck`` the pairs in recheck.json, in its
+    order, in recheck-labels.json. A recheck never shows the first label."""
     pairs = json.loads((HERE / "pairs.json").read_text())
     path = HERE / "labels.json"
+    if recheck:
+        by_id = {p["id"]: p for p in pairs}
+        pairs = [by_id[i] for i in json.loads((HERE / "recheck.json").read_text())["ids"]]
+        path = HERE / "recheck-labels.json"
     labels: dict[str, str] = json.loads(path.read_text()) if path.exists() else {}
     texts: dict[str, str] = {}
     print("For each pair: is Y the new value that replaces X (a change), the end of a range,")
-    print("or neither (a form number, a phone number)?\n")
+    print("or neither (a form number, a phone number, the minutes of a clock time)?\n")
     i = next((k for k, p in enumerate(pairs) if p["id"] not in labels), len(pairs))
     while i < len(pairs):
         p = pairs[i]
@@ -251,7 +257,7 @@ def label() -> None:
         path.write_text(json.dumps(dict(sorted(labels.items())), indent=1) + "\n")
         i += 1
     done = sum(q["id"] in labels for q in pairs)
-    print(f"\n{done} of {len(pairs)} labeled, saved in bench/patterns/labels.json")
+    print(f"\n{done} of {len(pairs)} labeled, saved in bench/patterns/{path.name}")
 
 
 # ------------------------------------------------------------------------------- scoring
@@ -410,7 +416,8 @@ def main() -> None:
     p = sub.add_parser("pick")
     p.add_argument("--count", action="store_true", help="report pair counts; write nothing")
     sub.add_parser("pairs")
-    sub.add_parser("label")
+    p = sub.add_parser("label")
+    p.add_argument("--recheck", action="store_true", help="label the pairs in recheck.json")
     sub.add_parser("read", help="print how the installed groundgate reads each Y (JSON)")
     p = sub.add_parser("score")
     p.add_argument("--check", action="store_true", help="fail if the committed files differ")
@@ -420,7 +427,7 @@ def main() -> None:
     elif args.cmd == "pairs":
         find_pairs()
     elif args.cmd == "label":
-        label()
+        label(args.recheck)
     elif args.cmd == "read":
         print(json.dumps(read()))
     else:

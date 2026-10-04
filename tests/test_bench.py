@@ -20,6 +20,7 @@ sys.path[:0] = [str(BENCH), str(BENCH / "label"), str(BENCH / "patterns")]  # no
 import app  # noqa: E402  (bench/label/app.py)
 import pairs  # noqa: E402  (bench/patterns/pairs.py)
 import score  # noqa: E402  (bench/score.py)
+import triage  # noqa: E402  (bench/patterns/triage.py)
 
 TEXT = "Tablets: 10 mg. The maximum dose is 40 mg once daily."
 
@@ -536,3 +537,12 @@ def test_a_results_snippet_is_the_sentence_with_x_and_y_in_bold() -> None:
     m = pairs.pairs_in(text)[0]
     p = {"x": [m.start(1), m.end(1)], "y": [m.start(2), m.end(2)]}
     assert pairs.snippet(text, p) == "The fee rose from $**5** to $**7** in 2027."
+
+
+def test_a_model_sees_the_pair_in_brackets_and_one_fixed_question() -> None:
+    text = "The fee went\nfrom $5 to $7 in 2027."
+    m = pairs.pairs_in(text)[0]
+    p = {"x": [m.start(1), m.end(1)], "y": [m.start(2), m.end(2)]}
+    assert triage.state(text, p) == "The fee went from $[5] to $[7] in 2027."
+    q = triage.question("5", "7")["pair"]
+    assert q["type"] == "choice" and list(q["criteria"]) == ["change", "range", "neither"]
