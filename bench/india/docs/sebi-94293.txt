@@ -1,0 +1,128 @@
+5.4.2. Stock Exchanges shall prepare a joint SOP, in consultation with SEBI, in
+
+this regard within one month from date of the circular (Implementation date
+
+of this measure is mentioned at Para 6 of the circular).
+
+5.5. Position Limits for Index Futures and Index Options
+
+5.5.1. In order to strike a balance between market stability / fear of manipulation
+
+of underlying constituents associated with a large size index position and
+
+the ability to take meaningful exposure by participants, following limits
+
+have been stipulated for index options at PAN level:
+
+5.5.1.1. Net end of day FutEq OI limit for options to be ₹1,500 cr. and gross
+
+FutEq OI to be ₹10,000 cr. (i.e. neither gross long FutEq OI nor gross
+
+short FutEq OI shall exceed ₹10,000 cr.).
+
+5.5.1.2. Stock Exchanges shall prepare a joint SOP, in consultation with SEBI,
+
+to strictly monitor intraday positions and trading activities of major
+
+participants from the perspective of market integrity / surveillance
+
+concerns and take appropriate measures.
+
+5.5.2. In order to facilitate market participants to take meaningful market wide
+
+exposure and to develop index futures segment further, following position
+
+limits are stipulated for index futures:
+
+5.5.2.1. FPI Category I / Mutual Funds / Trading Member (Proprietary) /
+
+Clients - higher of 15% of futures OI for that index or ₹500 cr.
+
+5.5.2.2. FPI Category II (other than individuals, family offices and corporates)
+
+- higher of 10% of futures OI or ₹500 cr.
+
+5.5.2.3. FPI Category II (Individuals, family offices and corporates) higher of
+
+5% of futures OI or ₹500 cr.
+
+5.5.2.4. The above stated position limits for index futures would be measured
+
+on gross notional basis.
+
+5.5.2.5. As Open Interest of both the participants and the market is dynamic
+
+and changing throughout the day and with a view to provide better
+
+clarity to the market participants in terms of their position limits, the
+
+following has been decided:
+
+Page 6 of 21
+5.5.4.1. By 9 PM on each trading day (T), Stock Exchanges shall intimate the
+
+entities (and their TM/CM) if the FutEq OI in options on any index is
+
+beyond the permissible limit (i.e. ₹1,500 cr. net or ₹10,000 cr. gross
+
+long / gross short as mentioned at Para 5.5.1.1 above).
+
+5.5.4.2. If the entity has long position beyond permissible limits then cash (or
+
+cash equivalent) would be required to be intimated to Stock
+
+Exchanges / CCs by 12 noon next trading day (T+1).
+
+5.5.4.3. If the entity has short position beyond permissible limits after
+
+considering the security holding value of T day or long position
+
+beyond permissible limits after considering the cash / cash equivalent
+
+reported by 12 noon on T+1 day, the entity will have to bring down
+
+options positions within permissible limit by end of T+1, as per delta
+
+value of derivatives contracts as of end of T+1.
+
+5.5.4.4. If entities don’t have systems to compute same day delta, bringing
+
+end of day position on T+1 day within the permissible limit with T day
+
+market close data provided by Stock Exchange for various derivatives
+
+contracts, shall also be considered acceptable.
+
+5.5.4.5. If the entity fails to reduce the position within the permissible limit on
+
+T+1 day, as mentioned above, the same would attract Additional
+
+Surveillance Deposit/Penalty as decided by Stock Exchanges.
+
+5.5.4.6. The aforesaid glide path will be applicable till December 05, 2025,
+
+post which entities willing to take large delta based positions in index
+
+options are expected to have their own delta computing / monitoring
+
+system.
+
+5.5.4.7. Subsequent to December 05, 2025, the end of day excess position in
+
+index options on each day shall be checked by exchanges against the
+
+holding of securities / reported cash or equivalent on that day. Excess
+
+position beyond permissible limits, will attract Additional Surveillance
+
+Deposit/Penalty, as decided by Stock Exchanges.
+
+5.5.4.8. It is emphasized that the provision of one day to reduce the position
+
+beyond permissible limit is only with the intention to provide time to
+
+implement delta monitoring system by entities / trading members who
+
+wish to take positions close to or beyond permissible limit. It would
+
+Page 8 of 21

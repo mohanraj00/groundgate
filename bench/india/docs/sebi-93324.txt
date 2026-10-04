@@ -1,0 +1,130 @@
+8. Executive Summary of findings (including identification tests, tools used and results of tests performed): -
+
+S.No Number of
+observations
+
+Risk rating
+Medium
+
+Low
+
+other
+
+Any
+comments
+
+High
+
+9. Control-wise compliance status of various SEBI Circulars /Advisories related to technology: -
+
+S.
+No.
+
+Date of
+SEBI
+circular/
+direction
+/ advice,
+etc.
+
+Requirement
+s
+specified
+by SEBI in
+brief
+
+Mechan
+ism put
+in place
+by MIIs
+
+Complian
+ce status
+(‘Yes’/
+‘No’)
+
+of
+
+Details
+Non
+Compliance
+with SEBI
+circulars/dir
+ections,
+etc.(applica
+ble only in
+case of non-
+compliance)
+
+of
+*List
+documentary
+evidence
+including
+physical
+verification
+
+**Unique
+Observation
+ID (in case
+of
+non-
+compliance/
+observation
+found
+during
+audit)
+
+Associated
+risks in case
+Compliance
+status
+is
+‘No’
+
+file
+Path of
+system where
+details
+of
+supporting
+annexures of
+non-
+compliances
+are placed
+
+*Explicit reference to the key auditee organisational documents (by date or version) including policy and
+procedure documents
+
+**Unique ID shall be assigned to each unique observation found during audit and its format shall be “Name of MII-
+
+SNFYYYY”. The description of the same is mentioned below: -
+
+S.NO Heading
+1
+
+Name of MII
+
+2
+3
+
+4
+
+S
+N
+
+F
+
+Interpretation
+Name of MII shall be written
+form such as
+NSE/BSE/NCL/ICCL/MSEI/NSDL/CDSL/MCX/MCXCCL/NCCL/NCDEX
+S represents observation found in System and Network audit
+N represents i^th observation found during particular audit period i.e. serial
+number of unique observation i.e. 1,2……n.
+F represents frequency of audit i.e. value of F=0 in case of audit is being
+done for full financial year, F=1 in case of audit is being done for first half
+
+in short
+
+Page 5 of 9

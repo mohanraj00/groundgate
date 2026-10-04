@@ -1,0 +1,142 @@
+b. FPIs that individually, or along with their investor group (in terms of
+Regulation 22(3) of the FPI Regulations), hold more than INR 25,000
+crore of equity AUM in the Indian markets.
+
+Note:
+
+I. Economic interest means returns from the investments made by
+
+the FPI.
+
+II. Ownership interest means ownership of shares or capital of the
+entity or entitlement to derive profits from the activity of the entity.
+III. Control shall have the same meaning as mentioned in Regulation
+
+2(f) of the FPI Regulations.
+
+8. However, FPIs having a broad based, pooled structure with widespread
+investor base, ownership interest by Government or Government related
+investors, etc. may not pose significant systemic risk. Further, certain genuine
+circumstances may also prevent some FPIs from adhering to the limits specified
+in Para 7 above. Considering the same, FPIs satisfying any of the criteria listed
+below shall not be required to make the disclosures as specified in Para 7
+above:
+
+a. Government and Government related investors registered as FPIs under
+
+Regulation 5 (a) (i) of the FPI Regulations.
+
+b. Public Retail Funds (‘PRFs’) as defined under Regulation 22(4) of the
+FPI Regulations, subject to independent validation of the same by DDPs/
+Custodians.
+
+c. Exchange Traded Funds (with less than 50% exposure to India and
+India-related equity securities) and Entities
+listed on specified
+Exchanges of the permissible jurisdictions as may be notified by the
+Board from time to time. To start with, the list of permissible jurisdictions
+and exchanges as mentioned in Annexure A to SEBI circular
+SEBI/HO/MRD2/DCAP/CIR/P/2019/146 dated Nov 28, 2019 shall be
+considered as permissible exchanges and jurisdictions for this clause.
+
+d. Pooled investment vehicles registered with/ regulated by a Government/
+regulatory authority in their home jurisdiction/ country of incorporation/
+establishment/ formation, where:
+
+i.
+
+their holding in an Indian corporate group is below 25% of their
+overall global AUM at a scheme level, in case of FPIs falling under
+Para 7 (a) above; or
+
+Page 3 of 6
+ii.
+
+their equity AUM in the Indian markets is below 50% of their overall
+global AUM at a scheme level, in case of FPIs falling under Para
+7 (b) above;
+
+subject to independent validation of disclosure of such holdings by the
+DDPs/ Custodians.
+
+‘Scheme’ for the purpose of this clause shall mean pooled investment
+vehicles with structures similar to ‘Scheme’ as defined in SEBI (Mutual
+Funds) Regulations, 1996.
+
+e. FPIs that are unable to liquidate their excess investments due to
+statutory restrictions (such as lock in restrictions of anchor investors in
+IPOs, moratoriums, freeze on accounts or shares due to regulatory
+orders etc.), till the time such restrictions exist.
+
+f. Newly registered FPIs, for the first 90 calendar days from the date of
+
+settlement of first trade by the FPIs in equity segment in India.
+
+g. FPIs in the process of winding down their investment and having
+intimated to their DDP, their intention to surrender their FPI registration.
+Such FPIs shall be required to bring down their holdings to ‘NIL’ within
+180 calendar days from the date of their intimation for surrender, failing
+which the account of the FPI shall be blocked for purchase as well as
+sale, and the FPI shall be liable for regulatory action as stipulated by the
+Board.
+
+The modalities for compliance with the above shall be detailed in the
+above referred SOP.
+
+9. The constituents of FPI investor group which collectively hold more than INR
+25,000 crore of equity AUM in the Indian markets, shall be exempted from
+making the additional disclosures if the investor group consists of FPIs that
+qualify for exemption in terms of any of the criteria in Para 8 above and the net
+equity AUM of the investor group, after deducting the AUM of such exempted
+FPIs, falls below INR 25,000 crore.
+
+After making the aforesaid deductions of AUM of such exempted FPIs, in case
+the equity AUM of the remaining FPIs of the investor group continues to exceed
+INR 25,000 crore, only the non – exempted FPIs of the investor group shall be
+liable for making the disclosures in terms of Para 7 and consequent actions, if
+any, as stated in the section below.
+
+Page 4 of 6
+10. Also, where the entity identified on a look through basis in terms of Para 7
+above, falls under any of the sub - categories specified in Para 8 above, further
+identification of entities having ownership interest, economic interest, or control
+rights of such an entity on look through basis, shall not be required.
+
+D. Timelines:
+
+11. Disclosures specified under Para 7 shall not be required to be made by FPIs in
+case their investments are realigned with the prescribed thresholds, within the
+below mentioned timelines/ conditions:
+
+a. FPIs holding more than 50% of their Indian Equity AUM in a single Indian
+corporate group: 10 trading days from the date on which such FPIs
+exceed the threshold. Such FPIs shall not make fresh purchases of the
+equity shares of any company belonging to such Indian corporate group,
+during the next 30 calendar days from the date on which the FPIs
+exceeded the threshold.
+
+b. FPIs, including their investor group, holding more than INR 25,000 crore
+of equity AUM in the Indian markets: 90 calendar days from date on
+which such FPIs exceed the threshold. Accounts of all FPIs, individually
+or belonging to such investor group, shall be blocked for further equity
+purchases until the holding is brought below INR 25,000 crore of equity
+AUM in the Indian markets.
+
+c. FPIs required to make disclosures specified in Para 7 above as on the
+date of applicability of this circular: 90 calendar days from the date of
+applicability of this circular.
+
+After realignment, in case the FPI’s holdings exceed the prescribed threshold
+on a subsequent date, the timeline for FPI to realign with the limits shall restart
+from such subsequent date.
+
+12. FPIs whose investments continue to exceed the prescribed threshold post
+expiry of timelines mentioned in Para 11 shall make the disclosures as specified
+in Para 7 to their DDPs within 30 trading days from the expiry of such timelines.
+Non – disclosures in this regard shall render the registration of the FPI invalid
+and the FPI shall not make any further purchases. Further, the FPI shall
+liquidate its securities and exit the Indian securities market by surrendering its
+FPI registration within 180 calendar days from the day the certificate becomes
+invalid.
+
+Page 5 of 6
