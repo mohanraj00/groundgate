@@ -231,7 +231,16 @@ def admit(
     policy: Policy | Mapping[str, Any] | None = None,
     document_id: str | None = None,
 ) -> Receipt:
-    """Decide every candidate and return the receipt."""
+    """Decide every candidate and return the receipt.
+
+    ``text`` is the document in Unicode NFC. ``schema`` and ``policy`` are dicts or ``Schema`` and
+    ``Policy`` objects; ``policy=None`` uses the defaults. ``candidates`` is a list of candidate
+    dicts with UTF-8 byte spans as evidence. A malformed candidate gets a ``rejected`` decision,
+    not an exception. ``document_id`` is copied into the receipt.
+
+    Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema
+    or policy is invalid. Then no receipt is made.
+    """
     if not isinstance(text, str) or not is_nfc(text):
         raise PacketError("document text must be a string in Unicode NFC")
     if not isinstance(schema, Schema):
@@ -345,7 +354,13 @@ def verify(
     candidates: Sequence[object],
     policy: Policy | Mapping[str, Any] | None = None,
 ) -> Verification:
-    """Re-derive the receipt from its inputs and compare it with ``receipt``."""
+    """Re-derive the receipt from its inputs and compare it with ``receipt``.
+
+    ``receipt`` is the JSON object that ``Receipt.to_dict()`` returned. The other arguments are
+    the inputs given to ``admit``. The result has ``ok`` and ``problems``: ``(True, ())`` when
+    every byte re-derives. A receipt from another spec version gives one problem and no further
+    checks. Raises ``PacketError`` when ``receipt`` is not a JSON object or an input is invalid.
+    """
     if not isinstance(receipt, Mapping):
         raise PacketError("receipt must be a JSON object")
     if (version := receipt.get("groundgate")) != SPEC_VERSION:

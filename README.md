@@ -262,7 +262,11 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec v0.2.
+- **No dates, arrays of records, or cross-document checks** in spec 0.3.
+- **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
+  number words (`five`) have no value, so a fact that cites them is rejected. The
+  [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
+  are a design ([docs/design/locale-packs.md](docs/design/locale-packs.md), #60).
 - **No OCR.** Scanned PDFs need a text layer first (for example `ocrmypdf`).
 - **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right. A
   planned optional tier (#66) records a small model's answers as inputs, so a receipt still
@@ -270,9 +274,15 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.2.0 implements spec v0.2, and a receipt names the spec version it was decided
-under. The next spec version starts from what the second set found: a change rule that fires on too
-few sentences (#51), and keys written in a short form (#52). See [CHANGELOG.md](CHANGELOG.md).
+Alpha. groundgate 0.2.0 on PyPI implements spec v0.2. Main is spec 0.3, a draft, and this README
+and the guide describe main. [CHANGELOG.md](CHANGELOG.md) lists what 0.3 changes so far: a wider
+change rule (#51), abbreviation dots that no longer end a sentence for qualifiers (#63, #77), and
+Indian digit grouping (#59). Keys written in a short form (#52) are next. A receipt names the
+spec version it was decided under, and only that version verifies it.
+
+Two designs are not yet code: [locale packs](docs/design/locale-packs.md) for number formats
+outside English, and [hybrid decisions](docs/design/hybrid-decisions.md), where a recorded
+model answer can send a fact to review or clear a measured kind of flag.
 
 ## License
 

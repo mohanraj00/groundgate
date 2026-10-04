@@ -127,6 +127,76 @@ A decision carries `candidate_id`, `candidate_sha256`, `field`, `key`, `outcome`
 canonical `value`, the candidate's `unit`, and the `evidence` span the decision rests on (the re-anchored
 one, if it moved).
 
+## How values are read
+
+SPEC §4 has the exact rules. This is what they mean for your documents.
+
+**Numbers.** groundgate reads numbers written with digits:
+
+| Written | Read as |
+|---|---|
+| `7000`, `-5`, `−5` | digits with no groups, and an optional minus sign |
+| `7,000`, `1,234.5` | groups of three with a comma, and a dot before the decimals |
+| `2,00,000`, `1,00,00,000` | Indian grouping: the last three digits, then pairs (spec 0.3) |
+
+These have no value, so a candidate that cites only them is rejected `VALUE_NOT_IN_EVIDENCE`:
+
+| Written | Why |
+|---|---|
+| `1.234,56`, `0,5` | a comma is the decimal mark |
+| `1 234`, `1'234` | a space or an apostrophe separates the groups, so `1 234` is two numbers |
+| `five`, `1/2`, `1.5e3` | a number word, a fraction or an exponent |
+| `252,0000`, `1,23,456,789` | the groups are malformed, or they mix the two groupings |
+
+These rules are for English text. Other number formats need locale packs, which are a design and
+not yet code ([design/locale-packs.md](design/locale-packs.md)).
+
+A span never reads part of a longer number. A span on `500 mg` inside `1,500 mg` does not hold 500,
+and a span that stops at `29.` inside `29.97` does not hold 29.
+
+**Scale words.** `thousand`, `million`, `billion`, `trillion`, `lakh` and `crore` after a number
+multiply it. Send the scaled value. For "$1.25 billion", `"1250000000"` admits and `"1.25"` is
+flagged `SCALE_WORD`.
+
+**Qualifiers.** groundgate looks for a qualifier in the same sentence, up to 40 code points before
+and after the value, and not past the next number. Each qualifier implies a comparator. When that
+comparator is not the field's, the fact is flagged `QUALIFIED_VALUE`. Some of the words:
+
+| Comparator | For example |
+|---|---|
+| `approx` | about, approximately, around, nearly |
+| `gt`, `lt` | more than, above, exceeds; less than, below, under |
+| `ge`, `le` | at least, or more; up to, at most, or less |
+| `range` | between; a second number after `to`, `through` or `-` |
+
+A negation directly before the word inverts it, so "may not exceed $19,000" is `le`. A change is
+not a range: in "increased from $70,000 to $72,000", $72,000 is the new value and has no
+qualifier. The full lists are in SPEC §4.2.
+
+**Sentence ends.** A sentence ends at `.` or `;` before whitespace, at `•`, and at a blank line.
+The qualifier window, the unit search and the key scope stop there. In spec 0.3, the dot of a
+listed abbreviation such as `approx.`, `Rs.`, `p.m.` or `U.S.` does not end the sentence for the
+qualifier window when a lowercase letter, a digit or a currency sign comes next. So "up to Rs.
+50,000" is qualified. The unit search and the key scope still stop at that dot.
+
+**Strings.** A `string` field matches when its value is in the span text. Whitespace runs count
+as one space on both sides. Case counts.
+
+## When a fact is rejected or flagged
+
+| Code | Usual cause | What to do |
+|---|---|---|
+| `CANDIDATE_INVALID` | A decimal is sent as a JSON float, such as `0.5`. | Send it as a string: `"0.5"`. |
+| `SPAN_INVALID` or `VALUE_NOT_IN_EVIDENCE` | Character offsets are sent as byte offsets, and the text has a character outside ASCII before the span. | Convert the offsets (see [Candidates](#candidates)). Send `evidence.text` too, so that re-anchoring can find the quote. |
+| `VALUE_NOT_IN_EVIDENCE` | The text writes the number in a form that groundgate does not read (see above). | A person checks the fact. |
+| `UNIT_NOT_IN_EVIDENCE` | The unit is not in the table, starts after `unit_window`, is past a sentence end, or is a per-unit such as `mg/kg`. | Add the unit's surfaces in the schema's `units`, or give the field its own code, such as `mg/kg`. |
+| `KEY_INVALID` | The candidate's `key` is not written exactly as one of the field's `keys`. | Send the key as the schema writes it. |
+| `QUALIFIED_VALUE` | The text says "up to" and the field is `eq`. | If the field is a limit, set its `comparator`. If not, a person checks the fact. |
+| `SCALE_WORD` | The value is sent as written, without its scale word. | Send the scaled value. |
+| `KEY_NOT_AT_VALUE` | The value is under a different condition in the text. | A person checks the fact. Inside a flattened table every key is at every value, so this flag cannot find a swap there. |
+| `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |
+| `NON_VERBATIM_EVIDENCE` | The extractor changed the quote. | A person compares the quote with the text at the span. |
+
 ## Python API
 
 ```python
@@ -195,3 +265,9 @@ coverage findings, a summary and its own hash. Hashes are over RFC 8785 canonica
 `groundgate/<spec version>:<kind>` prefix, so a receipt made in one language verifies in another.
 `verify` recomputes everything from the inputs; any change to the document, schema, policy, a
 candidate or a decision shows up as a problem.
+
+**Versions.** A receipt names the spec version it was decided under, and `verify` accepts only the
+version it implements. A groundgate that implements spec 0.3 reports a 0.2 receipt as one problem
+and checks nothing more. So pin the groundgate version where you keep receipts. To verify an old
+receipt, install the release for its spec version in a separate environment, for example
+`pip install groundgate==0.2.0` for spec 0.2.
