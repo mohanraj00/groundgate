@@ -101,6 +101,30 @@ I took the Laya figures from its README and did not verify them. Jev is hosted o
 maintainer can get an API key. Jev's pages do not document its licence, data handling or model
 versions. A local model is the default in this design, and Jev is the hosted option.
 
+### A first check
+
+I ran Laya 0.3.26 locally on 32 sentences that I wrote, with the expected answers written by hand.
+None came from set 2 or the v0.1 set. This is a quick check, not a measurement (#67).
+
+| Question | `english` | `typed-decisions` | `multilingual` |
+|---|---|---|---|
+| Comparator, 18 (4 in German) | 12 | 11 | 1 |
+| Key, 4 | 3 | 3 | 3 |
+| Does this sentence state this field? 6 | 6 | 5 | 2 |
+| Quote and span state the same fact, 4 | 3 | 3 | 2 |
+
+- The answers were the same in two runs on Apple Silicon and one run on the CPU.
+- One question took 140 ms to 365 ms, by checkpoint and device. Laya answers several questions
+  about one text in one pass.
+- The `english` checkpoint was wrong with high confidence on cases that a script already gets
+  right: the old value of "increased from $120 to $150" as the new value (0.941), "Do not take
+  more than 4,000 mg" as "more than" (0.690), and "höchstens 4.000 mg" as "more than" (0.770).
+  This is the reason for rule 8 in §4.
+- The field-match question was right 6 of 6 times on `english`, but with narrow margins. The model
+  is more useful to add doubt than to clear flags.
+- The default call loaded the latest weights, not the revision that the package pins. This is the
+  reason for rule 9 in §4.
+
 The Laya README says that its answers have the same schema as Jev's, so a Jev client needs only a
 different base URL. One adapter can then serve both: Laya on the local machine and Jev on the
 hosted API.
@@ -126,6 +150,13 @@ The decision stays a pure function. A model's answer is an input to it, like a c
    question, the model id and digest, the answer and the probability. `verify` re-derives the
    receipt byte for byte from those recorded answers. A separate replay check runs the model
    again and accepts a small difference in probability.
+8. **A model cannot clear a flag where a script has a specific reading.** The old value of a
+   change and a negated qualifier are examples. The script's rule exists because these cases are
+   dangerous, and a model reads them wrong with high confidence (§3, "A first check"). A model can
+   clear only the general flags that the scripts cannot resolve.
+9. **The model is pinned.** The policy names one model revision and the digest of its weights, or
+   one version of a hosted model. A default such as "the latest weights" or `jev-latest` is
+   invalid, because the thresholds belong to one model.
 
 The vectors can include model answers as inputs. Another implementation then proves that it
 agrees on the decision function without the model.
@@ -316,7 +347,8 @@ A `Question` is a primitive (`choice`, `score` or `noul`), the text, and the opt
 is the answer and its probability. Judges ship as extras that import lazily:
 `groundgate[laya]` for local Laya. Because the two answer schemas are the same, one HTTP
 adapter serves a local Laya server and the hosted Jev API. Only the base URL and the key differ.
-The key comes from the environment, never from the policy or the receipt. Other packages can
+The key comes from the environment (`TYPESAFE_API_KEY` for the Jev SDK), never from the policy or
+the receipt. Other packages can
 register a judge in the entry point group `groundgate.judges`. A hosted judge sends document text
 out of the machine, so it runs only when the policy names it.
 
