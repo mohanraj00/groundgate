@@ -54,3 +54,30 @@ the text.
 `dots.py label` shows each abbreviation in its text and asks one question: does the sentence end
 at its dot (`end`), or does it go on (`goes on`)? It never shows how a spec reads the dot. The
 labels go in `labels.json`.
+
+## Scoring
+
+```bash
+uv run python bench/dots/dots.py score            # RESULTS.md and results.json
+```
+
+[RESULTS.md](RESULTS.md) reads each dot under spec 0.2, which ends a sentence at every `.`
+followed by whitespace, and under spec 0.3 (the core in this repository), and counts each
+reading against the label. The rule was fixed at the head of #72 before anyone read a dot. CI
+runs `score --check`.
+
+What it found:
+
+- Of the 107 dots where the sentence goes on, spec 0.2 cuts all 107 and spec 0.3 cuts 51. A cut
+  sentence can lose a qualifier that stands before the dot.
+- Of the 9 real sentence ends, spec 0.3 joins 1: "mL/min. ( 2.2)", where the next character is
+  a parenthesis and not an uppercase letter.
+- Most of the 51 cuts that remain are `U.S.` (37) and `No.` (9) before a capitalized word, as in
+  "U.S. Tax Court" and "Docket No. DEA-1086". The uppercase test reads those as sentence ends.
+  That is a follow-up for a later spec, measured on other documents (#77).
+
+## Labels changed after scoring
+
+The labels were made blind. Three changed from "goes on" to "end" after the first scoring
+showed the dots: `irs-p556:17116` ("inter- est. This period", the word "interest" broken over a
+line), and `irs-p529:12011` and `irs-p547:8951` ("1040-SR." before a heading).

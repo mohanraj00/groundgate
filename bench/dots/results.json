@@ -1,0 +1,773 @@
+{
+ "dots": 116,
+ "dots_by_kind": {
+  "fda": 9,
+  "irs": 54,
+  "fr": 53
+ },
+ "documents_by_kind": {
+  "fda": 7,
+  "irs": 12,
+  "fr": 12
+ },
+ "labels": {
+  "end": 9,
+  "goes on": 107
+ },
+ "by_spec": {
+  "spec_0.2": {
+   "end read as end": 9,
+   "end read as goes on": 0,
+   "goes on read as end": 107,
+   "goes on read as goes on": 0
+  },
+  "spec_0.3": {
+   "end read as end": 8,
+   "end read as goes on": 1,
+   "goes on read as end": 51,
+   "goes on read as goes on": 56
+  }
+ },
+ "by_kind": {
+  "fda": {
+   "spec_0.2": {
+    "end read as end": 3,
+    "end read as goes on": 0,
+    "goes on read as end": 6,
+    "goes on read as goes on": 0
+   },
+   "spec_0.3": {
+    "end read as end": 2,
+    "end read as goes on": 1,
+    "goes on read as end": 3,
+    "goes on read as goes on": 3
+   }
+  },
+  "irs": {
+   "spec_0.2": {
+    "end read as end": 6,
+    "end read as goes on": 0,
+    "goes on read as end": 48,
+    "goes on read as goes on": 0
+   },
+   "spec_0.3": {
+    "end read as end": 6,
+    "end read as goes on": 0,
+    "goes on read as end": 23,
+    "goes on read as goes on": 25
+   }
+  },
+  "fr": {
+   "spec_0.2": {
+    "end read as end": 0,
+    "end read as goes on": 0,
+    "goes on read as end": 53,
+    "goes on read as goes on": 0
+   },
+   "spec_0.3": {
+    "end read as end": 0,
+    "end read as goes on": 0,
+    "goes on read as end": 25,
+    "goes on read as goes on": 28
+   }
+  }
+ },
+ "dots_read": [
+  {
+   "id": "fda-benazepril:5764",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fda-digoxin:3889",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fda-ramipril:7663",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fda-ramipril:8389",
+   "label": "end",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fda-lurasidone:6675",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fda-lurasidone:7603",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fda-tolterodine:917",
+   "label": "end",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fda-tacrolimus:12056",
+   "label": "end",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fda-hydroxyurea:805",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p1:2940",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p1:2956",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p1:2993",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p216:300",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p216:360",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p216:3070",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p216:3108",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p216:9539",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p529:107",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p529:2386",
+   "label": "end",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p529:7063",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p529:8745",
+   "label": "end",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p529:12011",
+   "label": "end",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p531:107",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p531:4834",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p531:12552",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p531:17659",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p531:17699",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p534:99",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p541:883",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p541:2408",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p541:2554",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p541:2732",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p541:3353",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p542:106",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p542:1066",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p542:4718",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p542:8767",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p542:13538",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p547:3622",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p547:8951",
+   "label": "end",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p547:12968",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p547:17603",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p547:22342",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p551:31",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p551:7678",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p551:11472",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p551:14632",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p551:20793",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p555:1942",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p555:9847",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p555:9937",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p555:10228",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p555:10269",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p556:108",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p556:3543",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p556:9088",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p556:17116",
+   "label": "end",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p556:20396",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p557:663",
+   "label": "end",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p557:13037",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p557:16336",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "irs-p557:25411",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "irs-p557:25438",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-12035:123",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-12033:899",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-12033:1027",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-12033:1937",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-12033:5069",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-12033:6013",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-12025:3588",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-12025:5213",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-12025:5230",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-12025:8529",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-12025:11411",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-12024:992",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-12024:1009",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-12024:2331",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-12024:5644",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-12024:9838",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11993:1455",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11993:10794",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11993:11112",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11993:11663",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11993:13454",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11991:132",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11991:8567",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11991:8896",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11991:9447",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11991:9942",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11990:1711",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11990:2029",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11990:2580",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11990:3075",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11990:4337",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11922:2456",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11922:2478",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11922:2732",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11922:2748",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11922:3549",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11907:177",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11907:215",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11907:2298",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11907:4911",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11907:12911",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11902:135",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11902:151",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11902:593",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11902:2791",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11902:2807",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11867:209",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11867:2888",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11824:4049",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11824:5524",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  },
+  {
+   "id": "fr-2025-11824:9587",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11824:9604",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "end"
+  },
+  {
+   "id": "fr-2025-11824:15300",
+   "label": "goes on",
+   "spec_0.2": "end",
+   "spec_0.3": "goes on"
+  }
+ ]
+}

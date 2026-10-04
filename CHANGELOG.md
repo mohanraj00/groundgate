@@ -20,6 +20,9 @@ milestone 0.3.
   `U.S.` no longer ends a sentence when the next word starts with no uppercase letter. "up to
   Rs. 50,000" is now qualified, and in "from 6 p.m. to 8 p.m." 8 is a range end. `approx` joins
   the `approx` qualifiers, so "approx. 5 mg" is flagged. Vector `07f-abbreviation-dots`.
+  Measured on 116 abbreviation dots in documents no rule was written from (`bench/dots`): of
+  the 107 where the sentence goes on, spec 0.2 cuts all 107 and 0.3 cuts 51, and 0.3 joins 1 of
+  the 9 real sentence ends.
 - Blank lines (#63): a blank line may hold a carriage return, so `\r\n\r\n` ends a sentence
   too.
 
