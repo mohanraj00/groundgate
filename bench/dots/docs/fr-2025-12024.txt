@@ -1,0 +1,589 @@
+Rules and Regulations
+
+27761
+
+Federal Register
+
+Vol. 90, No. 123
+
+Monday, June 30, 2025
+
+This section of the FEDERAL REGISTER
+contains regulatory documents having general
+applicability and legal effect, most of which
+are keyed to and codified in the Code of
+Federal Regulations, which is published under
+50 titles pursuant to 44 U.S.C. 1510.
+
+The Code of Federal Regulations is sold by
+the Superintendent of Documents.
+
+DEPARTMENT OF TRANSPORTATION
+
+Federal Aviation Administration
+
+14 CFR Part 97
+
+Avenue SE, West Bldg., Ground Floor,
+Washington, DC 20590–0001.
+
+2. The FAA Air Traffic Organization
+
+Service Area in which the affected
+airport is located;
+
+3. The office of Aeronautical
+Information Services, 6500 South
+MacArthur Blvd., Oklahoma City, OK
+73169 or,
+
+4. The National Archives and Records
+
+Administration (NARA). For
+information on the availability of this
+material at NARA, visit www.archives.
+gov/federal-register/cfr/ibr-locations or
+email fr.inspection@nara.gov.
+
+[Docket No. 31611; Amdt. No. 4171]
+
+Availability
+
+Standard Instrument Approach
+Procedures, and Takeoff Minimums
+and Obstacle Departure Procedures;
+Miscellaneous Amendments
+
+AGENCY: Federal Aviation
+Administration (FAA), DOT.
+ACTION: Final rule.
+
+SUMMARY: This rule establishes, amends,
+suspends, or removes Standard
+Instrument Approach Procedures
+(SIAPS) and associated Takeoff
+Minimums and Obstacle Departure
+procedures (ODPs) for operations at
+certain airports. These regulatory
+actions are needed because of the
+adoption of new or revised criteria, or
+because of changes occurring in the
+National Airspace System, such as the
+commissioning of new navigational
+facilities, adding new obstacles, or
+changing air traffic requirements. These
+changes are designed to provide safe
+and efficient use of the navigable
+airspace and to promote safe flight
+operations under instrument flight rules
+at the affected airports.
+DATES: This rule is effective June 30,
+2025. The compliance date for each
+SIAP, associated Takeoff Minimums,
+and ODP is specified in the amendatory
+provisions.
+
+The incorporation by reference of
+
+certain publications listed in the
+regulations is approved by the Director
+of the Federal Register as of June 30,
+2025.
+ADDRESSES: Availability of matters
+incorporated by reference in the
+amendment is as follows:
+
+For Examination
+
+1. U.S. Department of Transportation,
+
+Docket Ops-M30. 1200 New Jersey
+
+All SIAPs and Takeoff Minimums and
+ODPs are available online free of charge.
+Visit the National Flight Data Center at
+nfdc.faa.gov to register. Additionally,
+individual SIAP and Takeoff Minimums
+and ODP copies may be obtained from
+the FAA Air Traffic Organization
+Service Area in which the affected
+airport is located.
+FOR FURTHER INFORMATION CONTACT:
+Romana B. Wolf, Manager, Flight
+Procedures and Airspace Group, Flight
+Technologies and Procedures Division,
+Office of Safety Standards, Flight
+Standards Service, Aviation Safety,
+Federal Aviation Administration.
+Mailing Address: FAA Mike Monroney
+Aeronautical Center, Flight Procedures
+and Airspace Group, 6500 South
+MacArthur Blvd., STB Annex, Bldg. 26,
+Room 217, Oklahoma City, OK 73099.
+Telephone (405) 954–1139.
+SUPPLEMENTARY INFORMATION: This rule
+amends 14 CFR part 97 by establishing,
+amending, suspending, or removes
+SIAPS, Takeoff Minimums and/or
+ODPS. The complete regulatory
+description of each SIAP and its
+associated Takeoff Minimums or ODP
+for an identified airport is listed on FAA
+form documents which are incorporated
+by reference in this amendment under 5
+U.S.C. 552(a), 1 CFR part 51, and 14
+CFR 97.20. The applicable FAA Forms
+are 8260–3, 8260–4, 8260–5, 8260–15A,
+8260–15B, when required by an entry
+on 8260–15A, and 8260–15C.
+
+The large number of SIAPs, Takeoff
+Minimums and ODPs, their complex
+nature, and the need for a special format
+make publication in the Federal
+Register expensive and impractical.
+Further, pilots do not use the regulatory
+text of the SIAPs, Takeoff Minimums or
+ODPs, but instead refer to their graphic
+
+depiction on charts printed by
+publishers of aeronautical materials.
+Thus, the advantages of incorporation
+by reference are realized and
+publication of the complete description
+of each SIAP, Takeoff Minimums and
+ODP listed on FAA form documents is
+unnecessary. This amendment provides
+the affected CFR sections and specifies
+the types of SIAPS, Takeoff Minimums
+and ODPs with their applicable effective
+dates. This amendment also identifies
+the airport and its location, the
+procedure, and the amendment number.
+
+Availability and Summary of Material
+Incorporated by Reference
+
+The material incorporated by
+
+reference is publicly available as listed
+in the ADDRESSES section.
+
+The material incorporated by
+reference describes SIAPS, Takeoff
+Minimums and/or ODPs as identified in
+the amendatory language for part 97 of
+this final rule.
+
+The Rule
+
+This amendment to 14 CFR part 97 is
+
+effective upon publication of each
+separate SIAP, Takeoff Minimums and
+ODP as amended in the transmittal.
+Some SIAP and Takeoff Minimums and
+textual ODP amendments may have
+been issued previously by the FAA in a
+Flight Data Center (FDC) Notice to
+Airmen (NOTAM) as an emergency
+action of immediate flights safety
+relating directly to published
+aeronautical charts.
+
+The circumstances that created the
+
+need for some SIAP and Takeoff
+Minimums and ODP amendments may
+require making them effective in less
+than 30 days. For the remaining SIAPs
+and Takeoff Minimums and ODPs, an
+effective date at least 30 days after
+publication is provided.
+
+Further, the SIAPs and Takeoff
+
+Minimums and ODPs contained in this
+amendment are based on the criteria
+contained in the U.S. Standard for
+Terminal Instrument Procedures
+(TERPS). In developing these SIAPs and
+Takeoff Minimums and ODPs, the
+TERPS criteria were applied to the
+conditions existing or anticipated at the
+affected airports. Because of the close
+and immediate relationship between
+these SIAPs, Takeoff Minimums and
+ODPs, and safety in air commerce, I find
+that notice and public procedure under
+5 U.S.C. 553(b) are impracticable and
+
+VerDate Sep<11>2014 15:57 Jun 27, 2025 Jkt 265001 PO 00000 Frm 00001 Fmt 4700 Sfmt 4700 E:\FR\FM\30JNR1.SGM 30JNR1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k
+27762
+
+Federal Register / Vol. 90, No. 123 / Monday, June 30, 2025 / Rules and Regulations
+
+contrary to the public interest and,
+where applicable, under 5 U.S.C. 553(d),
+good cause exists for making some
+SIAPs effective in less than 30 days.
+The FAA has determined that this
+regulation only involves an established
+body of technical regulations for which
+frequent and routine amendments are
+necessary to keep them operationally
+current. It, therefore—(1) is not a
+‘‘significant regulatory action’’ under
+Executive Order 12866; (2) is not a
+‘‘significant rule’’ under DOT
+Regulatory Policies and Procedures (44
+FR 11034; February 26, 1979); and (3)
+does not warrant preparation of a
+regulatory evaluation as the anticipated
+impact is so minimal. For the same
+reason, the FAA certifies that this
+amendment will not have a significant
+economic impact on a substantial
+number of small entities under the
+criteria of the Regulatory Flexibility Act.
+
+Lists of Subjects in 14 CFR Part 97
+
+Air traffic control, Airports,
+
+Incorporation by reference, Navigation
+(air).
+
+Issued in Washington, DC, on June 20,
+
+2025.
+Romana B. Wolf,
+Manager, Flight Procedures and Airspace
+Group, Flight Technologies and Procedures
+Division, Office of Safety Standards, Flight
+Standards Service, Aviation Safety, Federal
+Aviation Administration.
+
+Adoption of the Amendment
+
+Accordingly, pursuant to the
+
+authority delegated to me, 14 CFR part
+97 is amended by establishing,
+amending, suspending, or removing
+Standard Instrument Approach
+Procedures and/or Takeoff Minimums
+and Obstacle Departure Procedures
+effective at 0901 UTC on the dates
+specified, as follows:
+
+PART 97—STANDARD INSTRUMENT
+APPROACH PROCEDURES
+
+Peru, IL, VYS, RNAV (GPS) RWY 36, Amdt
+
+2
+
+Portland, IN, PLD, RNAV (GPS) RWY 27,
+
+Amdt 2B
+
+Jackman, ME, 59B, Takeoff Minimums and
+
+Obstacle DP, Amdt 1A
+
+St Louis, MO, STL, ILS OR LOC RWY 6,
+
+Amdt 3, CANCELED
+
+St Louis, MO, STL, LOC RWY 6, Orig
+St Louis, MO, STL, RNAV (GPS) RWY 6,
+
+Amdt 3
+
+Engelhard, NC, 7W6, RNAV (GPS) RWY 11,
+
+Amdt 1
+
+Engelhard, NC, 7W6, Takeoff Minimums and
+
+Obstacle DP, Amdt 1
+
+Watertown, NY, ART, ILS OR LOC RWY 7,
+
+Amdt 9
+
+Watertown, NY, ART, RNAV (GPS) RWY 7,
+
+Amdt 4
+
+Oxford, OH, OXD, RNAV (GPS) RWY 5, Orig-
+
+C
+
+Redfield, SD, 1D8, RNAV (GPS) RWY 17,
+
+Orig
+
+Redfield, SD, 1D8, RNAV (GPS) RWY 35,
+
+Orig
+
+Redfield, SD, 1D8, Takeoff Minimums and
+
+Obstacle DP, Orig
+
+Sioux Falls, SD, FSD, ILS OR LOC RWY 3,
+
+Amdt 28
+
+Sioux Falls, SD, FSD, ILS OR LOC RWY 21,
+
+Amdt 10D
+
+Abilene, TX, ABI, VOR–A, Amdt 9
+Beeville, TX, BEA, RNAV (GPS) RWY 12,
+
+Amdt 2
+
+associated Takeoff Minimums and
+Obstacle Departure Procedures for
+operations at certain airports. These
+regulatory actions are needed because of
+the adoption of new or revised criteria,
+or because of changes occurring in the
+National Airspace System, such as the
+commissioning of new navigational
+facilities, adding new obstacles, or
+changing air traffic requirements. These
+changes are designed to provide for the
+safe and efficient use of the navigable
+airspace and to promote safe flight
+operations under instrument flight rules
+at the affected airports.
+DATES: This rule is effective June 30,
+2025. The compliance date for each
+SIAP, associated Takeoff Minimums,
+and ODP is specified in the amendatory
+provisions.
+
+The incorporation by reference of
+
+certain publications listed in the
+regulations is approved by the Director
+of the Federal Register as of June 30,
+2025.
+ADDRESSES: Availability of matter
+incorporated by reference in the
+amendment is as follows:
+
+For Examination
+
+Beeville, TX, BEA, VOR/DME RWY 12, Amdt
+
+1. U.S. Department of Transportation,
+
+6B, CANCELED
+
+San Antonio, TX, SSF, RNAV (GPS) RWY 28,
+
+Orig
+
+San Antonio, TX, SSF, RNAV (GPS) RWY 32,
+
+Orig-E
+
+San Antonio, TX, SSF, Takeoff Minimums
+
+and Obstacle DP, Amdt 3A
+
+San Antonio, TX, SSF, VOR RWY 32, Amdt
+
+14D
+
+Sinton, TX, T69, RNAV (GPS) RWY 14, Amdt
+
+1
+
+Wallops Island, VA, WAL, VOR OR TACAN
+
+RWY 17, Amdt 7B, CANCELED
+Beloit, WI, 44C, VOR–A, Amdt 6
+Fort Atkinson, WI, 61C, Takeoff Minimums
+
+and Obstacle DP, Amdt 1A
+
+[FR Doc. 2025–12024 Filed 6–27–25; 8:45 am]
+
+BILLING CODE 4910–13–P
+
+Docket Ops-M30, 1200 New Jersey
+Avenue SE, West Bldg., Ground Floor,
+Washington, DC, 20590–0001;
+
+2. The FAA Air Traffic Organization
+
+Service Area in which the affected
+airport is located;
+
+3. The office of Aeronautical
+Information Services, 6500 South
+MacArthur Blvd., Oklahoma City, OK
+73169 or,
+
+4. The National Archives and Records
+
+Administration (NARA).
+
+For information on the availability of
+
+this material at NARA, visit
+www.archives.gov/federal-register/cfr/
+ibr-locations or email fr.inspection@
+nara.gov.
+
+■ 1. The authority citation for part 97
+continues to read as follows:
+
+Authority: 49 U.S.C. 106(f), 106(g), 40103,
+
+40106, 40113, 40114, 40120, 44502, 44514,
+44701, 44719, 44721–44722.
+
+■ 2. Part 97 is amended to read as
+follows:
+
+Effective 7 August 2025
+
+Payson, AZ, PAN, RNAV (GPS) RWY 24, Orig
+Atlanta, GA, PDK, ILS OR LOC RWY 21L,
+
+Amdt 10
+
+Galesburg, IL, GBG, RNAV (GPS) RWY 21,
+
+Amdt 1
+
+Kewanee, IL, EZI, RNAV (GPS) RWY 27,
+
+Amdt 1B
+
+Peru, IL, VYS, RNAV (GPS) RWY 18, Amdt
+
+2
+
+DEPARTMENT OF TRANSPORTATION
+
+Federal Aviation Administration
+
+14 CFR Part 97
+
+[Docket No. 31612; Amdt. No. 4172]
+
+Standard Instrument Approach
+Procedures, and Takeoff Minimums
+and Obstacle Departure Procedures;
+Miscellaneous Amendments
+
+AGENCY: Federal Aviation
+Administration (FAA), DOT.
+ACTION: Final rule.
+
+SUMMARY: This rule amends, suspends,
+or removes Standard Instrument
+Approach Procedures (SIAPs) and
+
+Availability
+
+All SIAPs and Takeoff Minimums and
+ODPs are available online free of charge.
+Visit the National Flight Data Center
+online at nfdc.faa.gov to register.
+Additionally, individual SIAP and
+Takeoff Minimums and ODP copies may
+be obtained from the FAA Air Traffic
+Organization Service Area in which the
+affected airport is located.
+FOR FURTHER INFORMATION CONTACT:
+Romana B. Wolf, Manager, Flight
+Procedures and Airspace Group, Flight
+Technologies and Procedures Division,
+Office of Safety Standards, Flight
+Standards Service, Aviation Safety,
+Federal Aviation Administration.
+Mailing Address: FAA Mike Monroney
+Aeronautical Center, Flight Procedures
+
+VerDate Sep<11>2014 15:57 Jun 27, 2025 Jkt 265001 PO 00000 Frm 00002 Fmt 4700 Sfmt 4700 E:\FR\FM\30JNR1.SGM 30JNR1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

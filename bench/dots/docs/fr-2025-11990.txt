@@ -1,0 +1,294 @@
+27778
+
+Federal Register / Vol. 90, No. 123 / Monday, June 30, 2025 / Rules and Regulations
+
+as well as precursors to fentanyl and
+precursors to fentanyl analogs.^13
+
+B. Illicit Opioid Trafficking
+
+The sustained influx of fentanyl and
+other synthetic opioids into the United
+States has profound consequences,
+resulting in drug overdose becoming the
+leading cause of death for people aged
+18 to 44 in the United States.^14 To
+address the synthetic opioid crisis, it is
+necessary to target the money
+laundering efforts of the Mexico-based
+DTOs that are the primary source of
+fentanyl and other synthetic opioids
+trafficked into the United States. These
+DTOs manufacture synthetic opioids in
+clandestine laboratories in Mexico using
+precursor chemicals sourced largely
+from the People’s Republic of China
+(China), traffic these synthetic opioids
+into and throughout the United States,
+and launder the illicit profits back to
+Mexico.^15
+
+These DTOs could not profit on
+
+trafficking fentanyl and other synthetic
+opioids if not for their ability to launder
+and remit the monetary proceeds back
+to Mexico. DTOs and third-party money
+launderers use a diverse array of
+methods to launder money, including
+using financial institutions, remittance
+payments, bulk cash smuggling, trade-
+based money laundering, mirror trades,
+and cryptocurrencies.^16 It is therefore
+
+13 See, e.g., Drug Enforcement Administration,
+Synthetic Opioids Fact Sheet (Dec. 2024), https://
+www.dea.gov/sites/default/files/2025-01/Synthetic-
+Opioids-Drug-Fact-Sheet.pdf; World Health
+Organization, Opioid Overdose (Aug. 29, 2023),
+https://www.who.int/news-room/fact-sheets/detail/
+opioid-overdose; see also Drug Enforcement
+Administration, Docket No. DEA–1086, Special
+Surveillance List of Chemicals, Products, Materials
+and Equipment Used in the Manufacture of
+Controlled Substances and Listed Chemicals (Oct.
+24, 2023), https://www.govinfo.gov/content/pkg/FR-
+2023-10-24/pdf/2023-23478.pdf.
+
+14 See Centers for Disease Control, CDC Reports
+Nearly 24% Decline in U.S. Drug Overdose Deaths
+(Feb. 25, 2025), https://www.cdc.gov/media/
+releases/2025/2025-cdc-reports-decline-in-us-drug-
+overdose-deaths.html; E.O. 14159, Imposing Duties
+To Address the Synthetic Opioid Supply Chain in
+the People’s Republic of China, 90 FR 9121 (Feb.
+7, 2025), https://www.federalregister.gov/
+documents/2025/02/07/2025-02408/imposing-
+duties-to-address-the-synthetic-opioid-supply-
+chain-in-the-peoples-republic-of-china.
+
+15 See Drug Enforcement Administration, DEA–
+
+DCT–DIR–010–24, 2024 National Drug Threat
+Assessment (May 2024), pp. 46–50, https://
+www.dea.gov/sites/default/files/2024-05/
+5.23.2024%20NDTA-updated.pdf; FinCEN, FIN–
+2024–A002, Supplemental Advisory on the
+Procurement of Precursor Chemicals and
+Manufacturing Equipment Used for the Synthesis of
+Illicit Fentanyl and Other Synthetic Opioids (June
+20, 2024), https://www.fincen.gov/sites/default/
+files/advisory/2024-06-20/FinCEN-Supplemental-
+Advisory-on-Fentanyl-508C.pdf; Congressional
+Research Service, Illicit Fentanyl and Mexico’s Role
+(Dec. 19, 2024), pp. 1–2, https://crsreports.
+congress.gov/product/pdf/IF/IF10400.
+
+16 See Drug Enforcement Administration, DEA–
+
+DCT–DIR–010–24, 2024 National Drug Threat
+
+critical to address the role that financial
+institutions operating outside the
+United States play in facilitating the
+money laundering that enables and
+facilitates the DTOs and their illicit
+opioid trafficking and related money
+laundering.
+
+III. Finding That Intercam is a
+Financial Institution Operating Outside
+the United States That is of Primary
+Money Laundering Concern in
+Connection With Illicit Opioid
+Trafficking
+
+Based on public and non-public
+
+information available to FinCEN,
+FinCEN finds that reasonable grounds
+exist to conclude that Intercam, a
+financial institution operating outside of
+the United States, is of primary money
+laundering concern in connection with
+illicit opioid trafficking through its
+provision of financial services that
+facilitate illicit opioid trafficking by
+Mexico-based DTOs, including CJNG. In
+making this finding, FinCEN has
+considered the relevant evidence in
+light of factors identified in 31 U.S.C.
+5318A(c)(2)(B), taking into account the
+specific circumstances of money
+laundering activities in connection with
+illicit opioid trafficking and the
+protection of U.S. national security and
+the U.S. financial system. While FinCEN
+is under no obligation pursuant to
+section 2313a to consider any particular
+factor or set of factors when making a
+finding that a financial institution
+operating outside of the United States is
+of primary money laundering concern in
+connection with illicit opioid
+trafficking, it nonetheless finds these
+factors instructive in guiding the
+analysis set forth below.^17
+
+Assessment (May 2024), pp. 46–50, https://
+www.dea.gov/sites/default/files/2024-05/
+5.23.2024%20NDTA-updated.pdf.
+
+17 31 U.S.C. 5318A(c)(2)(B) provides, as relevant
+
+here, that in making a finding that reasonable
+grounds exist for concluding that a financial
+institution outside the United States is of primary
+money laundering concern and to apply one or
+more of special measures one through four to a
+financial institution, the Secretary shall consider
+such information as the Secretary determines to be
+relevant, including the following potentially
+relevant factors:
+
+(1) the extent to which such financial institutions,
+
+transactions, or types of accounts are used to
+facilitate or promote money laundering in or
+through the jurisdiction, including any money
+laundering activity by organized criminal groups,
+international terrorists, or entities involved in the
+proliferation of weapons of mass destruction or
+missiles;
+
+(2) the extent to which such institutions,
+transactions, or types of accounts are used for
+legitimate business purposes in the jurisdiction;
+and
+
+(3) the extent to which such action is sufficient
+to ensure, with respect to transactions involving the
+jurisdiction and institutions operating in the
+jurisdiction, that the purposes of this subchapter
+
+A. Intercam is a Financial Institution
+Operating Outside the United States
+
+Intercam is a Mexico-based
+
+commercial bank. By its own account,
+Intercam offers multiple financial
+services, including international
+banking, foreign exchange, insurance,
+investment services, and import and
+export services.^18 According to
+commercially available information,
+Intercam is headquartered in Mexico
+City, Mexico, has over 70 branches
+across Mexico, and provides U.S. dollar
+(USD) correspondent banking services
+through at least two U.S. financial
+institutions.^19 Considering the services
+it provides, Intercam is a financial
+institution within the meaning of 31
+U.S.C. 5312(a)(2), and based on the
+foregoing, FinCEN has determined that
+Intercam is a financial institution
+operating outside of the United States,
+as described in section 2313a.
+
+Intercam has a wholly owned U.S.-
+based subsidiary bank—Intercam Banco
+Internacional, Inc., which is
+headquartered in Guaynabo, Puerto
+Rico, and is a registered international
+financial entity in Puerto Rico.^20
+Intercam also owns other U.S.-based
+financial services companies—Intercam
+Futures, Inc. (d/b/a Intercam FX) and
+Intercam Wealth Management Group,
+including its affiliates Intercam
+Advisors, Inc., and Intercam Securities,
+Inc.^21 This order expressly excludes all
+
+continue to be fulfilled, and to guard against
+international money laundering and other financial
+crimes.
+
+18 See Intercam’s homepage, https://
+
+www.intercam.com.mx/one-stop-banking/?lang=en
+(last accessed Feb. 27, 2025).
+
+19 Detailed descriptions of Intercam’s financial
+services can be found under the About Intercam
+dropdown menu at https://www.intercam.com.mx/
+about-intercam/nuestra-vision/?lang=en (last
+accessed May 08, 2025). See also Bankers Almanac,
+Intercam Bank profile (last accessed Jan. 23, 2024).
+20 Intercam Banco Internacional, Who is Intercam
+Banco International, Inc., https://intercam.com.pr/
+english/Who-We-Are.html (last accessed May 08,
+2025).
+
+21 See Intercam International Wealth
+
+Management, about us, https://www.intercam.us/
+english/about-intercam-wealth-management/
+intercam-grupo-financiero.html (last accessed May
+20, 2025) (stating that Intercam Grupo Financiero is
+an integrated group of financial services companies
+headquartered in Mexico City, including Intercam
+Banco, Intercam Casa de Bolsa, and Intercam Banco
+Internacional, Inc. in Puerto Rico); Intercam
+International Wealth Management, affiliated
+entities, https://www.intercam.us/english/about-
+intercam-wealth-management/affiliated-
+entities.html (last accessed May 20, 2025) (stating
+that Intercam International Wealth Management
+conducts business through two affiliated entities,
+Intercam Advisors, Inc. and Intercam Securities,
+Inc.); IntercamFX, affiliated entities, https://
+www.intercamfx.us/affiliated-entities.html (last
+accessed May 20, 2025) (stating that ‘‘Intercam FX
+is an affiliated entity under common control of
+Intercam Grupo Financiero’’); FinCEN, Money
+Services Business Registration No. 31000289206987
+
+VerDate Sep<11>2014 15:57 Jun 27, 2025 Jkt 265001 PO 00000 Frm 00018 Fmt 4700 Sfmt 4700 E:\FR\FM\30JNR1.SGM 30JNR1
+
+S
+E
+L
+U
+R
+h
+t
+i
+
+w
+D
+O
+R
+P
+4
+4
+1
+S
+7
+W
+9
+K
+S
+D
+n
+o
+
+d
+n
+o
+m
+m
+a
+h
+k

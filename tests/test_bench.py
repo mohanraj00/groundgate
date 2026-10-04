@@ -546,3 +546,15 @@ def test_a_model_sees_the_pair_in_brackets_and_one_fixed_question() -> None:
     assert triage.state(text, p) == "The fee went from $[5] to $[7] in 2027."
     q = triage.question("5", "7")["pair"]
     assert q["type"] == "choice" and list(q["criteria"]) == ["change", "range", "neither"]
+
+
+def test_a_dot_is_a_listed_abbreviation_before_whitespace() -> None:
+    sys.path.insert(0, str(BENCH / "dots"))
+    import dots
+
+    text = "Up to Rs. 5 at 6 p.m. in the U.S. Mrs. Lee paid $9.50 on No.4 in Inc."
+    assert [m.group() for m in dots.dots_in(text)] == ["Rs.", "p.m.", "U.S.", "Mrs."]
+    head = "Next.\n12 Federal Register / Vol. 90, No. 5 / Rules\nSee No. 4 here."
+    assert [m.start() for m in dots.dots_in(head)] == [head.index("No. 4")]
+    split = "Federal Register\nVol. 90, No. 123 / Rules\nSee No. 4 here."
+    assert [m.start() for m in dots.dots_in(split)] == [split.index("No. 4")]
