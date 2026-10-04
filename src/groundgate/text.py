@@ -64,6 +64,7 @@ _ABBREVIATION_END = re.compile(
 )
 _ABBREVIATION_MAX = max(len(a) for a in _ABBREVIATIONS)
 _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
+_WS_RUN = re.compile(r"\s*")
 _WS = re.compile(r"\s+")
 _HYPHEN_BREAK = re.compile(r"-\n\s*")
 _WINDOW = 40
@@ -146,9 +147,9 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
     dot = m.start()
     if not _ABBREVIATION_END.search(text, max(0, dot + 1 - _ABBREVIATION_MAX), dot + 1):
         return True
-    gap = re.match(r"\s*", text[dot + 1 :])
+    gap = _WS_RUN.match(text, dot + 1)  # in place: no copy of the rest of the text
     assert gap is not None
-    nxt = dot + 1 + gap.end()
+    nxt = gap.end()
     return bool(_BLANK_LINE.search(gap.group())) or nxt == len(text) or text[nxt].isupper()
 
 
