@@ -93,37 +93,54 @@ often.
 | Source | Open source, Apache-2.0 | TypeSafe |
 | Model | ModernBERT-large, 421M parameters; mmBERT-base, 322M | Not in the pages I read |
 | Where it runs | Locally, on a CPU, a GPU or Apple Silicon. Offline after the first download of the weights. | A hosted API with an API key. There is no local option. |
-| Speed | 7.2 ms per question in a batch on a T4 GPU | Not stated |
-| Determinism | The same output on the same hardware and batch shape | Not stated |
-| Languages | 51 tested | Not stated |
+| Speed | 7.2 ms per question in a batch on a T4 GPU (README); 140 ms to 365 ms for one question on my Mac | About 120 ms for one question, network included |
+| Determinism | The same answers and probabilities in each run, on Apple Silicon and on the CPU | The same answers in two runs; 9 of 32 probabilities moved, by up to 0.06 |
+| Languages | 51 tested (README) | Not stated |
+| Versions | A Hugging Face revision and a weights digest | `jev-latest` and `jev-preview` are moving names. Each response names the real version, for example `jev-1.13.0`, and a request for that name returns it. |
 
 I took the Laya figures from its README and did not verify them. Jev is hosted only, and the
 maintainer can get an API key. Jev's pages do not document its licence, data handling or model
-versions. A local model is the default in this design, and Jev is the hosted option.
+versions.
+
+Which judge to use depends on the use. Development work on public documents, such as gold checks
+and escape sorting, uses Jev: it was much more accurate in the first check, and public documents
+can leave the machine. The default judge for live use is chosen after the measurement in #67.
+Live use weighs accuracy against two costs of a hosted judge: the text leaves the machine, and
+the probabilities vary between runs.
 
 ### A first check
 
-I ran Laya 0.3.26 locally on 32 sentences that I wrote, with the expected answers written by hand.
-None came from set 2 or the v0.1 set. This is a quick check, not a measurement (#67).
+I ran Laya 0.3.26 locally and Jev through its API on the same 32 sentences. I wrote the sentences
+and the expected answers by hand. None came from set 2 or the v0.1 set. This is a quick check, not
+a measurement (#67). The sentences are short and clean, unlike real documents.
 
-| Question | `english` | `typed-decisions` | `multilingual` |
-|---|---|---|---|
-| Comparator, 18 (4 in German) | 12 | 11 | 1 |
-| Key, 4 | 3 | 3 | 3 |
-| Does this sentence state this field? 6 | 6 | 5 | 2 |
-| Quote and span state the same fact, 4 | 3 | 3 | 2 |
+| Question | Jev | Laya `english` | Laya `typed-decisions` | Laya `multilingual` |
+|---|---|---|---|---|
+| Comparator, 18 (4 in German) | 18 | 12 | 11 | 1 |
+| Key, 4 | 4 | 3 | 3 | 3 |
+| Does this sentence state this field? 6 | 6 | 6 | 5 | 2 |
+| Quote and span state the same fact, 4 | 4 | 3 | 3 | 2 |
+| Total, 32 | 32 | 24 | 22 | 8 |
 
-- The answers were the same in two runs on Apple Silicon and one run on the CPU.
-- One question took 140 ms to 365 ms, by checkpoint and device. Laya answers several questions
-  about one text in one pass.
-- The `english` checkpoint was wrong with high confidence on cases that a script already gets
-  right: the old value of "increased from $120 to $150" as the new value (0.941), "Do not take
-  more than 4,000 mg" as "more than" (0.690), and "höchstens 4.000 mg" as "more than" (0.770).
-  This is the reason for rule 8 in §4.
-- The field-match question was right 6 of 6 times on `english`, but with narrow margins. The model
-  is more useful to add doubt than to clear flags.
-- The default call loaded the latest weights, not the revision that the package pins. This is the
-  reason for rule 9 in §4.
+`jev-latest` and `jev-preview` gave the same answers, and both reported `jev-1.13.0`.
+
+- Laya `english` was wrong with high confidence on cases that a script already gets right: the
+  old value of "increased from $120 to $150" as the new value (0.941), "Do not take more than
+  4,000 mg" as "more than" (0.690), and "höchstens 4.000 mg" as "more than" (0.770). Jev answered
+  all three correctly with 1.00. A different judge can make the same kind of error on other text,
+  so rule 8 in §4 stays.
+- On the field-match question, Jev gave 0.96 to 0.98 to the true values and 0.01 to 0.02 to the
+  wrong ones. Laya `english` gave 0.646 and 0.486 for one pair.
+- Jev's lowest confidences were on ranges and on "under 12": 0.65 to 0.78, all correct. A
+  threshold near 0.98 does not clear those.
+- Laya repeated its probabilities exactly. Jev repeated its answers, but its probabilities moved
+  by up to 0.06. Only recorded answers make a receipt re-derive byte for byte (rule 7 in §4).
+- Laya's default call loaded the latest weights, not the revision that the package pins. The API
+  rejects `jev-1.12.0` as an unknown model. I do not know if that version existed. If old
+  versions are retired, a pinned threshold stops working with its version. Rule 9 in §4 covers
+  both.
+- Each Jev response reports output tokens, for example 88 for one question. I do not know what
+  these are, for a model described as System 1 (§12).
 
 The Laya README says that its answers have the same schema as Jev's, so a Jev client needs only a
 different base URL. One adapter can then serve both: Laya on the local machine and Jev on the
@@ -149,14 +166,17 @@ The decision stays a pure function. A model's answer is an input to it, like a c
 7. **The receipt records the answer, not the run.** The receipt holds each model answer: the
    question, the model id and digest, the answer and the probability. `verify` re-derives the
    receipt byte for byte from those recorded answers. A separate replay check runs the model
-   again and accepts a small difference in probability.
+   again and accepts a small difference in probability. The tolerance comes from a measurement
+   for each judge: Jev's probabilities moved by up to 0.06 between two runs.
 8. **A model cannot clear a flag where a script has a specific reading.** The old value of a
    change and a negated qualifier are examples. The script's rule exists because these cases are
    dangerous, and a model reads them wrong with high confidence (§3, "A first check"). A model can
    clear only the general flags that the scripts cannot resolve.
 9. **The model is pinned.** The policy names one model revision and the digest of its weights, or
    one version of a hosted model. A default such as "the latest weights" or `jev-latest` is
-   invalid, because the thresholds belong to one model.
+   invalid, because the thresholds belong to one model. For Jev, the policy names the version
+   that the response reports, for example `jev-1.13.0`. When a hosted version is retired, its
+   thresholds go with it, and the new version needs a new measurement.
 
 The vectors can include model answers as inputs. Another implementation then proves that it
 agrees on the decision function without the model.
@@ -411,7 +431,7 @@ documents and a high review cost accepts lower ones.
 | Stage | Work | Human work removed |
 |---|---|---|
 | 0 | The judgment record, the `Judge` interface and recorded answers in the receipt. No model ships. | None |
-| 1 | Development tools: escape sorting, the gold check after the blind pass, pack drafts. | Maintainer time |
+| 1 | Development tools with Jev on public documents: escape sorting, the gold check after the blind pass, pack drafts. | Maintainer time |
 | 2 | The measurement in #67. | None, but it sets every later number |
 | 3 | Live clearing for the measured flags, probably `QUALIFIED_VALUE`, `KEY_NOT_AT_VALUE` and `NON_VERBATIM_EVIDENCE`. | Reviews of correct values |
 | 4 | The field-match doubt check. | Escapes, for more reviews |
@@ -425,6 +445,9 @@ documents and a high review cost accepts lower ones.
 2. In mode D, does a person's decision change the original receipt, or does it make a second
    receipt that names the first one?
 3. Does stage 0 need its own spec version? It adds receipt fields but changes no decision.
-4. Which model kind is the default judge: `laya-typed-decisions` for English, and
-   `laya-multilingual` when the locale is not English?
+4. Which judge is the default for live use, Jev or Laya? #67 decides it. Development work on
+   public documents uses Jev (§3).
 5. Is the field-match check (§5) worth its added review? #67 answers this with numbers.
+6. What are the output tokens in a Jev response, and do they affect cost or repeatability? This
+   is a question for TypeSafe.
+7. How long does TypeSafe serve an old Jev version?
