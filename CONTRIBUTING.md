@@ -30,8 +30,9 @@ real LangExtract install.
 - **Every reason code keeps two vectors.** `tests/test_conformance.py` enforces it.
 - **The core has no dependencies.** Anything that needs a package goes behind an extra
   (`[pdf]`, `[langextract]`) and imports it lazily.
-- **No model calls in groundgate itself.** Examples may call models; they cache the output so
-  they rebuild without keys.
+- **No model inside the decision.** The decision is a pure function of its inputs. A model's
+  answer enters only as a recorded input (#66), and the core never imports a model. Examples may
+  call models; they cache the output so they rebuild without keys.
 - **Examples rebuild byte for byte.** If you touch `src/`, run
   `uv run python examples/irs-590a/build.py` and commit any change it makes. CI fails otherwise.
 
