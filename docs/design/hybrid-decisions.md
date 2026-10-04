@@ -145,16 +145,17 @@ I ran Laya 0.3.26 locally and Jev through its API on the same 32 sentences. I wr
 and the expected answers by hand. None came from set 2 or the v0.1 set. This is a quick check, not
 a measurement (#67). The sentences are short and clean, unlike real documents.
 
-| Question | Jev | Jeff 0.8B | Laya `english` | Laya `typed-decisions` | Laya `multilingual` |
-|---|---|---|---|---|---|
-| Comparator, 18 (4 in German) | 18 | 14 | 12 | 11 | 1 |
-| Key, 4 | 4 | 4 | 3 | 3 | 3 |
-| Does this sentence state this field? 6 | 6 | 6 | 6 | 5 | 2 |
-| Quote and span state the same fact, 4 | 4 | 3 | 3 | 3 | 2 |
-| Total, 32 | 32 | 27 | 24 | 22 | 8 |
+| Question | Jev | Jeff 2B | Jeff 0.8B | Laya `english` | Laya `typed-decisions` | Laya `multilingual` |
+|---|---|---|---|---|---|---|
+| Comparator, 18 (4 in German) | 18 | 16 | 14 | 12 | 11 | 1 |
+| Key, 4 | 4 | 4 | 4 | 3 | 3 | 3 |
+| Does this sentence state this field? 6 | 6 | 6 | 6 | 6 | 5 | 2 |
+| Quote and span state the same fact, 4 | 4 | 3 | 3 | 3 | 3 | 2 |
+| Total, 32 | 32 | 29 | 27 | 24 | 22 | 8 |
 
-`jev-latest` and `jev-preview` gave the same answers, and both reported `jev-1.13.0`. Jeff is
-`mstrasser/Jeff-Qwen3.5-0.8B` at revision `v1.2`, run locally with MLX.
+`jev-latest` and `jev-preview` gave the same answers, and both reported `jev-1.13.0`. Jeff 0.8B
+and Jeff 2B are `mstrasser/Jeff-Qwen3.5-0.8B` and `mstrasser/Jeff-Qwen3.5-2B` at revision `v1.2`,
+run locally with MLX.
 
 - Jeff answered correctly the cases where Laya was confidently wrong: the old value of a change
   (0.709), "Do not take more than 4,000 mg" (0.898), "höchstens 4.000 mg" (0.829) and the
@@ -173,6 +174,17 @@ a measurement (#67). The sentences are short and clean, unlike real documents.
   So a model repeats on one backend, not across backends (rule 9 in §4).
 - Jeff's `orders=2` option asks each question again with the options reversed and averages the
   two. It fixed one answer for twice the time.
+- Jeff 2B fixed "up to 50 L" (at most, 0.776) and "above $150,000" (more than, only 0.311). Its
+  confidence on correct answers was higher, for example 0.962 on "Do not take more than" and
+  0.975 on "höchstens". Its field-match margins were 0.84 to 0.96 for the true values and 0.09 to
+  0.39 for the wrong ones.
+- Both Jeff sizes read "under 12" and "30 degrees or below" as exact. Jeff 2B gave 0.486 and 0.427.
+- Jeff 2B read "two crew members died" and "injured 14 passengers" as the same fact with 0.797,
+  and with 0.823 under `orders=2`. On the 0.8B model that error had 0.572. So the larger model
+  moved its most confident error from the comparator question to the paraphrase question. Each
+  question kind needs its own threshold for each model.
+- Jeff 2B took 220 ms for each question with MLX and repeated its probabilities exactly. Its
+  weights are 4.1 GB.
 
 - Laya `english` was wrong with high confidence on cases that a script already gets right: the
   old value of "increased from $120 to $150" as the new value (0.941), "Do not take more than
