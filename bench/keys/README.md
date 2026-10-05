@@ -71,6 +71,8 @@ What it found:
 - It also sends right keys to review, in the same number of doses as it fixes. Half of those are
   a bullet that the text puts on a line of its own, which the rule reads as a label line (#86).
   The rest are under headings that are not keys, such as "2.1 General Considerations".
-- A wrong key still reaches many doses under both specs, most of them where one sentence or a
-  flattened table mentions two or more keys (#87).
+- With the label-line rule alone, a wrong key still reached many doses, most of them in a
+  flattened table that mentions two or more keys. The table-sentence rule of #87 sends those to
+  review, and their right keys with them. This set found those tables, so it does not measure
+  that rule: the tables set (`bench/tables`) does. RESULTS.md reads spec 0.3 with both rules.
 - No label changed after scoring.

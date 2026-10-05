@@ -29,9 +29,9 @@
   "spec_0.3": {
    "with a key": {
     "every right key, no wrong key": 38,
-    "every right key and a wrong key": 14,
-    "a right key missing, no wrong key": 33,
-    "a right key missing and a wrong key": 7
+    "every right key and a wrong key": 0,
+    "a right key missing, no wrong key": 51,
+    "a right key missing and a wrong key": 3
    },
    "no key": {
     "no key reaches it": 0,
@@ -121,10 +121,7 @@
     "Bipolar Mania",
     "Schizophrenia"
    ],
-   "spec_0.3": [
-    "Bipolar Mania",
-    "Schizophrenia"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-risperidone:186",
@@ -135,10 +132,7 @@
     "Bipolar Mania",
     "Schizophrenia"
    ],
-   "spec_0.3": [
-    "Bipolar Mania",
-    "Schizophrenia"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-risperidone:196",
@@ -149,10 +143,7 @@
     "Bipolar Mania",
     "Schizophrenia"
    ],
-   "spec_0.3": [
-    "Bipolar Mania",
-    "Schizophrenia"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-risperidone:206",
@@ -163,10 +154,7 @@
     "Bipolar Mania",
     "Schizophrenia"
    ],
-   "spec_0.3": [
-    "Bipolar Mania",
-    "Schizophrenia"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-risperidone:245",
@@ -177,10 +165,7 @@
     "Bipolar Mania",
     "Schizophrenia"
    ],
-   "spec_0.3": [
-    "Bipolar Mania",
-    "Schizophrenia"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-risperidone:259",
@@ -191,10 +176,7 @@
     "Bipolar Mania",
     "Schizophrenia"
    ],
-   "spec_0.3": [
-    "Bipolar Mania",
-    "Schizophrenia"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-mirabegron:410",
@@ -584,13 +566,7 @@
     "Nosocomial Pneumonia",
     "Plague"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbation of Chronic Bronchitis",
-    "Chronic Bacterial Prostatitis",
-    "Inhalational Anthrax (Post-Exposure)",
-    "Nosocomial Pneumonia",
-    "Plague"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-levofloxacin:635",
@@ -604,13 +580,7 @@
     "Nosocomial Pneumonia",
     "Plague"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbation of Chronic Bronchitis",
-    "Chronic Bacterial Prostatitis",
-    "Inhalational Anthrax (Post-Exposure)",
-    "Nosocomial Pneumonia",
-    "Plague"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-levofloxacin:685",
@@ -624,13 +594,7 @@
     "Nosocomial Pneumonia",
     "Plague"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbation of Chronic Bronchitis",
-    "Chronic Bacterial Prostatitis",
-    "Inhalational Anthrax (Post-Exposure)",
-    "Nosocomial Pneumonia",
-    "Plague"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-levofloxacin:717",
@@ -644,13 +608,7 @@
     "Nosocomial Pneumonia",
     "Plague"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbation of Chronic Bronchitis",
-    "Chronic Bacterial Prostatitis",
-    "Inhalational Anthrax (Post-Exposure)",
-    "Nosocomial Pneumonia",
-    "Plague"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-levofloxacin:757",
@@ -664,13 +622,7 @@
     "Nosocomial Pneumonia",
     "Plague"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbation of Chronic Bronchitis",
-    "Chronic Bacterial Prostatitis",
-    "Inhalational Anthrax (Post-Exposure)",
-    "Nosocomial Pneumonia",
-    "Plague"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-levofloxacin:808",
@@ -684,13 +636,7 @@
     "Nosocomial Pneumonia",
     "Plague"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbation of Chronic Bronchitis",
-    "Chronic Bacterial Prostatitis",
-    "Inhalational Anthrax (Post-Exposure)",
-    "Nosocomial Pneumonia",
-    "Plague"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-methotrexate:302",
@@ -1048,15 +994,7 @@
     "Uncomplicated Skin and Skin-Structure Infections",
     "Uncomplicated Urinary Tract Infections"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbations of Chronic Bronchitis",
-    "Acute Bacterial Maxillary Sinusitis",
-    "Acute Bacterial Otitis Media",
-    "Pharyngitis/Tonsillitis",
-    "Uncomplicated Gonorrhea",
-    "Uncomplicated Skin and Skin-Structure Infections",
-    "Uncomplicated Urinary Tract Infections"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-cefuroxime:656",
@@ -1072,15 +1010,7 @@
     "Uncomplicated Skin and Skin-Structure Infections",
     "Uncomplicated Urinary Tract Infections"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbations of Chronic Bronchitis",
-    "Acute Bacterial Maxillary Sinusitis",
-    "Acute Bacterial Otitis Media",
-    "Pharyngitis/Tonsillitis",
-    "Uncomplicated Gonorrhea",
-    "Uncomplicated Skin and Skin-Structure Infections",
-    "Uncomplicated Urinary Tract Infections"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-cefuroxime:752",
@@ -1096,15 +1026,7 @@
     "Uncomplicated Skin and Skin-Structure Infections",
     "Uncomplicated Urinary Tract Infections"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbations of Chronic Bronchitis",
-    "Acute Bacterial Maxillary Sinusitis",
-    "Acute Bacterial Otitis Media",
-    "Pharyngitis/Tonsillitis",
-    "Uncomplicated Gonorrhea",
-    "Uncomplicated Skin and Skin-Structure Infections",
-    "Uncomplicated Urinary Tract Infections"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-cefuroxime:762",
@@ -1120,15 +1042,7 @@
     "Uncomplicated Skin and Skin-Structure Infections",
     "Uncomplicated Urinary Tract Infections"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbations of Chronic Bronchitis",
-    "Acute Bacterial Maxillary Sinusitis",
-    "Acute Bacterial Otitis Media",
-    "Pharyngitis/Tonsillitis",
-    "Uncomplicated Gonorrhea",
-    "Uncomplicated Skin and Skin-Structure Infections",
-    "Uncomplicated Urinary Tract Infections"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-cefuroxime:836",
@@ -1144,15 +1058,7 @@
     "Uncomplicated Skin and Skin-Structure Infections",
     "Uncomplicated Urinary Tract Infections"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbations of Chronic Bronchitis",
-    "Acute Bacterial Maxillary Sinusitis",
-    "Acute Bacterial Otitis Media",
-    "Pharyngitis/Tonsillitis",
-    "Uncomplicated Gonorrhea",
-    "Uncomplicated Skin and Skin-Structure Infections",
-    "Uncomplicated Urinary Tract Infections"
-   ]
+   "spec_0.3": []
   },
   {
    "id": "fda-cefuroxime:846",
@@ -1168,15 +1074,7 @@
     "Uncomplicated Skin and Skin-Structure Infections",
     "Uncomplicated Urinary Tract Infections"
    ],
-   "spec_0.3": [
-    "Acute Bacterial Exacerbations of Chronic Bronchitis",
-    "Acute Bacterial Maxillary Sinusitis",
-    "Acute Bacterial Otitis Media",
-    "Pharyngitis/Tonsillitis",
-    "Uncomplicated Gonorrhea",
-    "Uncomplicated Skin and Skin-Structure Infections",
-    "Uncomplicated Urinary Tract Infections"
-   ]
+   "spec_0.3": []
   }
  ]
 }

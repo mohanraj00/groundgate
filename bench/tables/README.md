@@ -44,3 +44,23 @@ As in the keys set: `tables.py label` shows each dose in its text and lists the 
 the answer is one key, more than one when the dose holds for each of them, `0` when it belongs to
 none, or `?` when the person can't tell. `m` shows more text, `s` shows section 1 of the label,
 and `label --recheck` shows the doses labeled `0` or `?` again. The labels go in `labels.json`.
+
+## Scoring
+
+```bash
+uv run python bench/tables/tables.py score --check    # fail if the committed files differ
+```
+
+[RESULTS.md](RESULTS.md) reads the keys at each dose under spec 0.2, the released 0.2.0 wheel in
+its own environment, and under spec 0.3, the core in this repository, as in the keys set. The
+rule was fixed on #87 before the pick. CI runs `score --check`.
+
+What it found:
+
+- Under spec 0.2, a wrong key reaches almost every dose of these tables, because each table is
+  one sentence that mentions two or more keys.
+- Under spec 0.3, no wrong key reaches a dose. The price is that almost every right key goes to
+  review too: in these labels a table puts one cell on each line, so the value's own line rarely
+  names its condition. That is the trade that #87 chose: a swapped key in a table is silent, and a
+  right key in review costs a look.
+- No label changed after scoring.

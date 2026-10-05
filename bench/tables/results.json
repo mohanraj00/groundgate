@@ -1,0 +1,866 @@
+{
+ "doses": 62,
+ "doses_scored": 62,
+ "labels": 7,
+ "labeled_with_a_key": 62,
+ "labeled_with_no_key": 0,
+ "not_sure": [],
+ "by_spec": {
+  "spec_0.2": {
+   "with a key": {
+    "every right key, no wrong key": 2,
+    "every right key and a wrong key": 53,
+    "a right key missing, no wrong key": 0,
+    "a right key missing and a wrong key": 7
+   },
+   "no key": {
+    "no key reaches it": 0,
+    "a wrong key reaches it": 0
+   }
+  },
+  "spec_0.3": {
+   "with a key": {
+    "every right key, no wrong key": 3,
+    "every right key and a wrong key": 0,
+    "a right key missing, no wrong key": 59,
+    "a right key missing and a wrong key": 0
+   },
+   "no key": {
+    "no key reaches it": 0,
+    "a wrong key reaches it": 0
+   }
+  }
+ },
+ "doses_read": [
+  {
+   "id": "fda-moxifloxacin:119",
+   "label": [
+    "Community Acquired Pneumonia"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:197",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:230",
+   "label": [
+    "Complicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:291",
+   "label": [
+    "Complicated Intra-Abdominal Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:320",
+   "label": [
+    "Plague"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:369",
+   "label": [
+    "Acute Bacterial Sinusitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:437",
+   "label": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:1142",
+   "label": [
+    "Community Acquired Pneumonia"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:1221",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:1254",
+   "label": [
+    "Complicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:1315",
+   "label": [
+    "Complicated Intra-Abdominal Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:1347",
+   "label": [
+    "Plague"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:1402",
+   "label": [
+    "Acute Bacterial Sinusitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-moxifloxacin:1478",
+   "label": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Bacterial Sinusitis",
+    "Community Acquired Pneumonia",
+    "Complicated Intra-Abdominal Infections",
+    "Plague",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-clarithromycin:1183",
+   "label": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Maxillary Sinusitis",
+    "Community-Acquired Pneumonia",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-clarithromycin:1229",
+   "label": [
+    "Acute Maxillary Sinusitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Maxillary Sinusitis",
+    "Community-Acquired Pneumonia",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-clarithromycin:1268",
+   "label": [
+    "Community-Acquired Pneumonia"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Maxillary Sinusitis",
+    "Community-Acquired Pneumonia",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-clarithromycin:1309",
+   "label": [
+    "Pharyngitis/Tonsillitis"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Maxillary Sinusitis",
+    "Community-Acquired Pneumonia",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-clarithromycin:1368",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Maxillary Sinusitis",
+    "Community-Acquired Pneumonia",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-clarithromycin:1490",
+   "label": [
+    "Treatment and Prophylaxis of Disseminated Mycobacterial Infections"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Maxillary Sinusitis",
+    "Community-Acquired Pneumonia",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-clarithromycin:1656",
+   "label": [
+    "Helicobacter pylori\u00a0 Infection and Duodenal Ulcer Disease"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Maxillary Sinusitis",
+    "Community-Acquired Pneumonia",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-clarithromycin:1794",
+   "label": [
+    "Helicobacter pylori\u00a0 Infection and Duodenal Ulcer Disease"
+   ],
+   "spec_0.2": [
+    "Acute Bacterial Exacerbation of Chronic Bronchitis",
+    "Acute Maxillary Sinusitis",
+    "Community-Acquired Pneumonia",
+    "Pharyngitis/Tonsillitis",
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:216",
+   "label": [
+    "Nosocomial Pneumonia"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:259",
+   "label": [
+    "Nosocomial Pneumonia"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:505",
+   "label": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:548",
+   "label": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:665",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:706",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:743",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:783",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:1235",
+   "label": [
+    "Nosocomial Pneumonia"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:1282",
+   "label": [
+    "Nosocomial Pneumonia"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:1532",
+   "label": [
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:1579",
+   "label": [
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:1700",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:1743",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:1782",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-linezolid:1824",
+   "label": [
+    "Uncomplicated Skin and Skin Structure Infections"
+   ],
+   "spec_0.2": [
+    "Community-acquired Pneumonia",
+    "Complicated Skin and Skin Structure Infections",
+    "Nosocomial Pneumonia",
+    "Uncomplicated Skin and Skin Structure Infections",
+    "Vancomycin-resistant Enterococcus faecium Infections"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-famciclovir:150",
+   "label": [
+    "Immunocompetent Adult Patients"
+   ],
+   "spec_0.2": [
+    "HIV-Infected Adult Patients",
+    "Immunocompetent Adult Patients"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-famciclovir:267",
+   "label": [
+    "Immunocompetent Adult Patients"
+   ],
+   "spec_0.2": [
+    "HIV-Infected Adult Patients",
+    "Immunocompetent Adult Patients"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-famciclovir:297",
+   "label": [
+    "Immunocompetent Adult Patients"
+   ],
+   "spec_0.2": [
+    "HIV-Infected Adult Patients",
+    "Immunocompetent Adult Patients"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-famciclovir:316",
+   "label": [
+    "Immunocompetent Adult Patients"
+   ],
+   "spec_0.2": [
+    "HIV-Infected Adult Patients",
+    "Immunocompetent Adult Patients"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-famciclovir:433",
+   "label": [
+    "HIV-Infected Adult Patients"
+   ],
+   "spec_0.2": [
+    "HIV-Infected Adult Patients",
+    "Immunocompetent Adult Patients"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-perampanel:105",
+   "label": [
+    "Partial-Onset Seizures",
+    "Primary Generalized Tonic-Clonic Seizures"
+   ],
+   "spec_0.2": [
+    "Partial-Onset Seizures",
+    "Primary Generalized Tonic-Clonic Seizures"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-perampanel:229",
+   "label": [
+    "Partial-Onset Seizures",
+    "Primary Generalized Tonic-Clonic Seizures"
+   ],
+   "spec_0.2": [
+    "Partial-Onset Seizures",
+    "Primary Generalized Tonic-Clonic Seizures"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-perampanel:394",
+   "label": [
+    "Partial-Onset Seizures"
+   ],
+   "spec_0.2": [
+    "Partial-Onset Seizures",
+    "Primary Generalized Tonic-Clonic Seizures"
+   ],
+   "spec_0.3": [
+    "Partial-Onset Seizures"
+   ]
+  },
+  {
+   "id": "fda-perampanel:402",
+   "label": [
+    "Partial-Onset Seizures"
+   ],
+   "spec_0.2": [
+    "Partial-Onset Seizures",
+    "Primary Generalized Tonic-Clonic Seizures"
+   ],
+   "spec_0.3": [
+    "Partial-Onset Seizures"
+   ]
+  },
+  {
+   "id": "fda-perampanel:534",
+   "label": [
+    "Primary Generalized Tonic-Clonic Seizures"
+   ],
+   "spec_0.2": [
+    "Partial-Onset Seizures",
+    "Primary Generalized Tonic-Clonic Seizures"
+   ],
+   "spec_0.3": [
+    "Primary Generalized Tonic-Clonic Seizures"
+   ]
+  },
+  {
+   "id": "fda-bromocriptine:5390",
+   "label": [
+    "Hyperprolactinemia-Associated Dysfunction"
+   ],
+   "spec_0.2": [
+    "Acromegaly",
+    "Hyperprolactinemia-Associated Dysfunction",
+    "Prolactin-Secreting Adenomas"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-bromocriptine:5432",
+   "label": [
+    "Hyperprolactinemia-Associated Dysfunction"
+   ],
+   "spec_0.2": [
+    "Acromegaly",
+    "Hyperprolactinemia-Associated Dysfunction",
+    "Prolactin-Secreting Adenomas"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-bromocriptine:5538",
+   "label": [
+    "Prolactin-Secreting Adenomas"
+   ],
+   "spec_0.2": [
+    "Acromegaly",
+    "Hyperprolactinemia-Associated Dysfunction",
+    "Prolactin-Secreting Adenomas"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-bromocriptine:5557",
+   "label": [
+    "Prolactin-Secreting Adenomas"
+   ],
+   "spec_0.2": [
+    "Acromegaly",
+    "Hyperprolactinemia-Associated Dysfunction",
+    "Prolactin-Secreting Adenomas"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-bromocriptine:5596",
+   "label": [
+    "Acromegaly"
+   ],
+   "spec_0.2": [
+    "Acromegaly",
+    "Hyperprolactinemia-Associated Dysfunction",
+    "Prolactin-Secreting Adenomas"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-bromocriptine:5615",
+   "label": [
+    "Acromegaly"
+   ],
+   "spec_0.2": [
+    "Acromegaly",
+    "Hyperprolactinemia-Associated Dysfunction",
+    "Prolactin-Secreting Adenomas"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-bromocriptine:5686",
+   "label": [
+    "Idiopathic Parkinson\u2019s Disease or Postencephalitic Parkinsonism"
+   ],
+   "spec_0.2": [
+    "Acromegaly",
+    "Hyperprolactinemia-Associated Dysfunction",
+    "Prolactin-Secreting Adenomas"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-bromocriptine:5705",
+   "label": [
+    "Idiopathic Parkinson\u2019s Disease or Postencephalitic Parkinsonism"
+   ],
+   "spec_0.2": [
+    "Acromegaly",
+    "Hyperprolactinemia-Associated Dysfunction",
+    "Prolactin-Secreting Adenomas"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-albendazole:814",
+   "label": [
+    "Hydatid Disease"
+   ],
+   "spec_0.2": [
+    "Hydatid Disease",
+    "Neurocysticercosis"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-albendazole:946",
+   "label": [
+    "Hydatid Disease"
+   ],
+   "spec_0.2": [
+    "Hydatid Disease",
+    "Neurocysticercosis"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-albendazole:1031",
+   "label": [
+    "Hydatid Disease"
+   ],
+   "spec_0.2": [
+    "Hydatid Disease",
+    "Neurocysticercosis"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-albendazole:1075",
+   "label": [
+    "Neurocysticercosis"
+   ],
+   "spec_0.2": [
+    "Hydatid Disease",
+    "Neurocysticercosis"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-albendazole:1135",
+   "label": [
+    "Neurocysticercosis"
+   ],
+   "spec_0.2": [
+    "Hydatid Disease",
+    "Neurocysticercosis"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "fda-albendazole:1220",
+   "label": [
+    "Neurocysticercosis"
+   ],
+   "spec_0.2": [
+    "Hydatid Disease",
+    "Neurocysticercosis"
+   ],
+   "spec_0.3": []
+  }
+ ]
+}

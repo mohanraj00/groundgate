@@ -1,0 +1,194 @@
+{
+ "fda-albendazole:1031": [
+  "Hydatid Disease"
+ ],
+ "fda-albendazole:1075": [
+  "Neurocysticercosis"
+ ],
+ "fda-albendazole:1135": [
+  "Neurocysticercosis"
+ ],
+ "fda-albendazole:1220": [
+  "Neurocysticercosis"
+ ],
+ "fda-albendazole:814": [
+  "Hydatid Disease"
+ ],
+ "fda-albendazole:946": [
+  "Hydatid Disease"
+ ],
+ "fda-bromocriptine:5390": [
+  "Hyperprolactinemia-Associated Dysfunction"
+ ],
+ "fda-bromocriptine:5432": [
+  "Hyperprolactinemia-Associated Dysfunction"
+ ],
+ "fda-bromocriptine:5538": [
+  "Prolactin-Secreting Adenomas"
+ ],
+ "fda-bromocriptine:5557": [
+  "Prolactin-Secreting Adenomas"
+ ],
+ "fda-bromocriptine:5596": [
+  "Acromegaly"
+ ],
+ "fda-bromocriptine:5615": [
+  "Acromegaly"
+ ],
+ "fda-bromocriptine:5686": [
+  "Idiopathic Parkinson\u2019s Disease or Postencephalitic Parkinsonism"
+ ],
+ "fda-bromocriptine:5705": [
+  "Idiopathic Parkinson\u2019s Disease or Postencephalitic Parkinsonism"
+ ],
+ "fda-clarithromycin:1183": [
+  "Acute Bacterial Exacerbation of Chronic Bronchitis"
+ ],
+ "fda-clarithromycin:1229": [
+  "Acute Maxillary Sinusitis"
+ ],
+ "fda-clarithromycin:1268": [
+  "Community-Acquired Pneumonia"
+ ],
+ "fda-clarithromycin:1309": [
+  "Pharyngitis/Tonsillitis"
+ ],
+ "fda-clarithromycin:1368": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-clarithromycin:1490": [
+  "Treatment and Prophylaxis of Disseminated Mycobacterial Infections"
+ ],
+ "fda-clarithromycin:1656": [
+  "Helicobacter pylori\u00a0 Infection and Duodenal Ulcer Disease"
+ ],
+ "fda-clarithromycin:1794": [
+  "Helicobacter pylori\u00a0 Infection and Duodenal Ulcer Disease"
+ ],
+ "fda-famciclovir:150": [
+  "Immunocompetent Adult Patients"
+ ],
+ "fda-famciclovir:267": [
+  "Immunocompetent Adult Patients"
+ ],
+ "fda-famciclovir:297": [
+  "Immunocompetent Adult Patients"
+ ],
+ "fda-famciclovir:316": [
+  "Immunocompetent Adult Patients"
+ ],
+ "fda-famciclovir:433": [
+  "HIV-Infected Adult Patients"
+ ],
+ "fda-linezolid:1235": [
+  "Nosocomial Pneumonia"
+ ],
+ "fda-linezolid:1282": [
+  "Nosocomial Pneumonia"
+ ],
+ "fda-linezolid:1532": [
+  "Vancomycin-resistant Enterococcus faecium Infections"
+ ],
+ "fda-linezolid:1579": [
+  "Vancomycin-resistant Enterococcus faecium Infections"
+ ],
+ "fda-linezolid:1700": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-linezolid:1743": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-linezolid:1782": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-linezolid:1824": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-linezolid:216": [
+  "Nosocomial Pneumonia"
+ ],
+ "fda-linezolid:259": [
+  "Nosocomial Pneumonia"
+ ],
+ "fda-linezolid:505": [
+  "Community-acquired Pneumonia",
+  "Complicated Skin and Skin Structure Infections",
+  "Vancomycin-resistant Enterococcus faecium Infections"
+ ],
+ "fda-linezolid:548": [
+  "Community-acquired Pneumonia",
+  "Complicated Skin and Skin Structure Infections",
+  "Vancomycin-resistant Enterococcus faecium Infections"
+ ],
+ "fda-linezolid:665": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-linezolid:706": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-linezolid:743": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-linezolid:783": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-moxifloxacin:1142": [
+  "Community Acquired Pneumonia"
+ ],
+ "fda-moxifloxacin:119": [
+  "Community Acquired Pneumonia"
+ ],
+ "fda-moxifloxacin:1221": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-moxifloxacin:1254": [
+  "Complicated Skin and Skin Structure Infections"
+ ],
+ "fda-moxifloxacin:1315": [
+  "Complicated Intra-Abdominal Infections"
+ ],
+ "fda-moxifloxacin:1347": [
+  "Plague"
+ ],
+ "fda-moxifloxacin:1402": [
+  "Acute Bacterial Sinusitis"
+ ],
+ "fda-moxifloxacin:1478": [
+  "Acute Bacterial Exacerbation of Chronic Bronchitis"
+ ],
+ "fda-moxifloxacin:197": [
+  "Uncomplicated Skin and Skin Structure Infections"
+ ],
+ "fda-moxifloxacin:230": [
+  "Complicated Skin and Skin Structure Infections"
+ ],
+ "fda-moxifloxacin:291": [
+  "Complicated Intra-Abdominal Infections"
+ ],
+ "fda-moxifloxacin:320": [
+  "Plague"
+ ],
+ "fda-moxifloxacin:369": [
+  "Acute Bacterial Sinusitis"
+ ],
+ "fda-moxifloxacin:437": [
+  "Acute Bacterial Exacerbation of Chronic Bronchitis"
+ ],
+ "fda-perampanel:105": [
+  "Partial-Onset Seizures",
+  "Primary Generalized Tonic-Clonic Seizures"
+ ],
+ "fda-perampanel:229": [
+  "Partial-Onset Seizures",
+  "Primary Generalized Tonic-Clonic Seizures"
+ ],
+ "fda-perampanel:394": [
+  "Partial-Onset Seizures"
+ ],
+ "fda-perampanel:402": [
+  "Partial-Onset Seizures"
+ ],
+ "fda-perampanel:534": [
+  "Primary Generalized Tonic-Clonic Seizures"
+ ]
+}

@@ -1,6 +1,6 @@
 {
  "name": "17b-keyed-tables",
- "description": "Conflicts are per field and key. Rows of a flattened table share one sentence, so every value in the table is at every key the table mentions.",
+ "description": "Conflicts are per field and key. Rows of a flattened table share one sentence. When it holds 3 or more line breaks and mentions 2 or more keys, a value is at the keys on its own line (spec 0.3).",
  "document": "Table 1. Recommended Dosage\nIndication\tStarting dose\tMaximum dose\nHypertension\t10 mg\t40 mg\nHeart failure\t5 mg\t20 mg\n\nIn heart failure, titrate every 2 weeks. The usual starting dose is 5 mg. Patients with hypertension start at 10 mg. Take it once daily for heart failure.",
  "schema": {
   "fields": {
@@ -142,8 +142,10 @@
     "codes": []
    },
    {
-    "outcome": "admitted",
-    "codes": []
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
    },
    {
     "outcome": "needs_verification",

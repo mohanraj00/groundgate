@@ -283,10 +283,10 @@ other, only the longer counts. A mention is in a sentence (§4.2) when it lies w
 
 The value is at its supporting number token (§3 steps 10–11), or at the start of the evidence
 span for a `string` field. The **keys at the value** are the keys mentioned in the value's
-sentence. When the sentence mentions none, they are the key of the nearest mention that ends at
-or before the value's start, or no key when there is no such mention or when a label line lies
-wholly between the end of that mention and the start of the value's sentence. The candidate's
-`key` must be one of them.
+sentence, except in a table sentence (below). When the sentence mentions none, they are the key
+of the nearest mention that ends at or before the value's start, or no key when there is no such
+mention or when a label line lies wholly between the end of that mention and the start of the
+value's sentence. The candidate's `key` must be one of them.
 
 A **label line** is a line with a blank line (§4.2) or the start of the text before it and a
 blank line after it. It holds at most 12 words (runs of non-whitespace) and no `.` or `;`
@@ -299,9 +299,15 @@ There is no other heading detection. A heading kept as a line of text is a menti
 other, so in "2.2 Heart Failure\n\nThe starting dose is 5 mg", 5 mg is at heart failure, and so
 is a value in a later sentence under that heading, until another key is mentioned or a label line
 comes. A sentence that mentions
-two conditions puts its values at both. Rows of a flattened table with no sentence end between
-them are one sentence, so every value in the table is at every key the table mentions, and a key
-swapped within a table is not caught.
+two conditions puts its values at both.
+
+Rows of a flattened table with no sentence end between them are one sentence. A **table
+sentence** is a sentence that holds 3 or more line breaks and mentions 2 or more keys of the
+field. In a table sentence, the keys at a value are the keys mentioned on the value's own line
+(from the line break before it, or the start of the sentence, to the line break after it, or the
+end of the sentence), and no key when that line mentions none. So a table with one row on each
+line keeps its row keys, and a table flattened to one cell on each line sends its keyed values to
+review. The nearest earlier mention does not apply inside a table sentence.
 
 ## 5. Receipt
 
