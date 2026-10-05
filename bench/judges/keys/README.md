@@ -45,7 +45,10 @@ not the answers, the gold or the split.
 - Jeff Gemma4 E2B did well on the probe sentences of `bench/judges` (#67), but it does much worse
   here, and it is often confident when it is wrong. The probe sentences are short and clean, and
   these doses are in long text with up to 15 options. A probe is not a measure.
-- Jev does not answer twice the same way (#71), so a second run can differ.
+- Jev does not answer twice the same way (#71). `answers-jev-2.json` is a second run on the same
+  prompts (`judge.py run jev --repeat 2`). The report compares it with the first run, at the
+  thresholds that the first run chose, because a user sets a threshold once and then applies it
+  to each new answer.
 - One label changed after a model run. Jev's only escape on the test part was
   `fda-lansoprazole:801`, and the labeler read the text again and changed the label (see the keys
   set README). A label that changed because of a model answer can't score that model, so this dose

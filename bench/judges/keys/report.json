@@ -209,6 +209,38 @@
     "prompts_sha256": "88fe424d433267fc13457592562d56936224cad10345c5d10025a1d149aaf979",
     "run": "2026-10-05"
    },
+   "repeats": {
+    "answers-jev-2": {
+     "by_ceiling": {
+      "0.05": null,
+      "0.1": {
+       "clears_changed": 1,
+       "test": {
+        "clears_right": 47,
+        "escapes": 0
+       },
+       "threshold": 0.5
+      },
+      "0.2": {
+       "clears_changed": 1,
+       "test": {
+        "clears_right": 47,
+        "escapes": 0
+       },
+       "threshold": 0.5
+      }
+     },
+     "confidence_change_max": 0.24,
+     "doses": 154,
+     "meta": {
+      "engine": "Jev (TypeSafe API)",
+      "model": "jev-1.13.0",
+      "prompts_sha256": "88fe424d433267fc13457592562d56936224cad10345c5d10025a1d149aaf979",
+      "run": "2026-10-05"
+     },
+     "same_choice": 152
+    }
+   },
    "test": {
     "by_threshold": {
      "0.5": {

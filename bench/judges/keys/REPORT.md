@@ -38,6 +38,14 @@ Jev (TypeSafe API), jev-1.13.0, run 2026-10-05.
 | 0.1 | 0.5 | 47 | 0 | 0.0618 |
 | 0.2 | 0.5 | 47 | 0 | 0.0618 |
 
+**Run again.** `answers-jev-2.json`, run 2026-10-05. 152 of 154 answers choose the same as the first run, and the confidence moves by up to 0.24. The table applies the thresholds of the first run to the answers of this run.
+
+| Ceiling | Threshold | Test: right flags cleared | Test: escapes | Clears that changed, both parts |
+|---:|---:|---:|---:|---:|
+| 0.05 | none | | | |
+| 0.1 | 0.5 | 47 | 0 | 1 |
+| 0.2 | 0.5 | 47 | 0 | 1 |
+
 ## Jeff
 
 Jeff (local jeff-serve), firelex/jeff d0173b4, mstrasser/Jeff-Gemma4-E2B v1.0, PyTorch on MPS, run 2026-10-05.
