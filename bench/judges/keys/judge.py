@@ -180,6 +180,12 @@ def jeff_engine(meta: dict[str, Any]) -> Ask:
     return ask
 
 
+def prompts_sha256(items: list[dict[str, Any]]) -> str:
+    """A digest of every prompt, in order: the dose id, the state and the question."""
+    prompts = [(it["id"], state(it), question(it["keys"])) for it in items]
+    return hashlib.sha256(json.dumps(prompts, sort_keys=True).encode()).hexdigest()
+
+
 def run(engine: str) -> None:
     if not (HERE / "split.json").exists():
         raise SystemExit("run judge.py split first, before any model run")
@@ -190,10 +196,9 @@ def run(engine: str) -> None:
     # engine, model and prompts: a resume never mixes the answers of two runs
     partial = HERE / f".answers-{engine}.partial.json"
     items = gold()
-    # the engine, the model and a digest of every prompt, in order: a resume needs all three
-    prompts = [(it["id"], state(it), question(it["keys"])) for it in items]
-    digest = hashlib.sha256(json.dumps(prompts, sort_keys=True).encode()).hexdigest()
-    record = {**{k: v for k, v in meta.items() if k != "run"}, "prompts_sha256": digest}
+    # the engine, the model and the prompts: a resume needs all three
+    meta["prompts_sha256"] = prompts_sha256(items)
+    record = {k: v for k, v in meta.items() if k != "run"}
     answers: dict[str, Any] = {}
     if partial.exists():
         saved = json.loads(partial.read_text())
@@ -305,6 +310,7 @@ def score(items: list[dict[str, Any]], answers: dict[str, Any]) -> dict[str, Any
 
 def report(check: bool) -> None:
     items = gold()
+    digest = prompts_sha256(items)
     parts = json.loads((HERE / "split.json").read_text())
     for it in items:
         it["part"] = parts[it["id"]]
@@ -332,6 +338,8 @@ def report(check: bool) -> None:
         if not path.exists():
             continue
         run_ = json.loads(path.read_text())
+        if run_["meta"].get("prompts_sha256") != digest:
+            raise SystemExit(f"{path.name} answers other prompts than the gold; run it again")
         s = score(items, run_["answers"])
         results["engines"][engine] = {"meta": run_["meta"], **s}
         md += [

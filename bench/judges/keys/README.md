@@ -51,4 +51,6 @@ not the answers, the gold or the split.
   set README). A label that changed because of a model answer can't score that model, so this dose
   is left out of the gold (`RELABELED_AFTER_A_RUN` in `judge.py`).
 - A stopped run goes on from a partial file, but only with the same engine, model and prompts
-  (a digest of every state and question), so one answers file never mixes two runs.
+  (a digest of every state and question), so one answers file never mixes two runs. Each answers
+  file keeps that digest, and the report refuses a file whose prompts are not the gold's. I added
+  the digest to the two files after the runs. No text, span, key or question changed since then.

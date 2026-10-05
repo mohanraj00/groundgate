@@ -638,3 +638,19 @@ def test_a_judge_clears_a_flag_only_for_a_key_spec_03_does_not_place() -> None:
     assert judge.clear(it, {"choice": "none", "confidence": 0.99}, 0.8) is None
     assert judge.clear({**it, "spec_0.3": ["A"]}, {"choice": "k1", "confidence": 0.9}, 0.8) is None
     assert judge.upper_95(0, 10) == 0.2589 and judge.upper_95(1, 20) == 0.2161
+
+
+def test_a_judge_report_refuses_answers_to_other_prompts(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    sys.path.insert(0, str(BENCH / "judges" / "keys"))
+    import judge
+
+    for name in ("split.json", "answers-jev.json"):
+        (tmp_path / name).write_text((judge.HERE / name).read_text())
+    monkeypatch.setattr(judge, "HERE", tmp_path)
+    monkeypatch.setattr(judge, "ENGINES", {"jev": "Jev"})
+    judge.report(check=False)  # the recorded digest matches the gold prompts
+    monkeypatch.setattr(judge, "question", lambda keys: {"key": keys})
+    with pytest.raises(SystemExit, match="other prompts"):
+        judge.report(check=False)

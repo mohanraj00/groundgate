@@ -71,6 +71,7 @@
    "meta": {
     "engine": "Jeff (local jeff-serve)",
     "model": "firelex/jeff d0173b4, mstrasser/Jeff-Gemma4-E2B v1.0, PyTorch on MPS",
+    "prompts_sha256": "88fe424d433267fc13457592562d56936224cad10345c5d10025a1d149aaf979",
     "run": "2026-10-05"
    },
    "test": {
@@ -202,6 +203,7 @@
    "meta": {
     "engine": "Jev (TypeSafe API)",
     "model": "jev-1.13.0",
+    "prompts_sha256": "88fe424d433267fc13457592562d56936224cad10345c5d10025a1d149aaf979",
     "run": "2026-10-05"
    },
    "test": {
