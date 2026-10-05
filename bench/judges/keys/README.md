@@ -29,9 +29,16 @@ label tool showed, with the dose in brackets.
 
 A model clears a flag when spec 0.3 does not put key K at the dose, the model chooses K, and its
 confidence is at least t. The clear is right when K is a labeled key, and an escape when it is not.
-The threshold is the lowest of 0.5, 0.7, 0.8, 0.9, 0.95 and 0.99 with no escape on the
-calibration part. [REPORT.md](REPORT.md) gives the test part at that threshold, with a 95% upper
-bound on the escape rate among cleared flags. CI runs `report --check` on the committed answers.
+A user sets a ceiling on the escape rate among cleared flags. For each ceiling, the threshold
+is the lowest of 0.5, 0.7, 0.8, 0.9, 0.95 and 0.99 whose 95% upper bound on the calibration part
+is below it, as in `docs/design/hybrid-decisions.md` §9, or none. [REPORT.md](REPORT.md) gives the
+test part at that threshold for ceilings of 0.05, 0.1 and 0.2. CI runs `report --check` on the
+committed answers.
+
+The plan on #67 first said "the lowest threshold with no escape on the calibration part". A
+review of #100 showed that this differs from §9 and is weaker: one cleared flag with no escape
+passes it. The rule changed to §9 after the first report. It changes how a threshold is chosen,
+not the answers, the gold or the split.
 
 ## Notes
 
@@ -43,5 +50,5 @@ bound on the escape rate among cleared flags. CI runs `report --check` on the co
   `fda-lansoprazole:801`, and the labeler read the text again and changed the label (see the keys
   set README). A label that changed because of a model answer can't score that model, so this dose
   is left out of the gold (`RELABELED_AFTER_A_RUN` in `judge.py`).
-- A stopped run goes on from a partial file, but only with the same engine and model, so one
-  answers file never mixes two models.
+- A stopped run goes on from a partial file, but only with the same engine, model and prompts
+  (a digest of every state and question), so one answers file never mixes two runs.

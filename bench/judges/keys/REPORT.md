@@ -30,7 +30,13 @@ Jev (TypeSafe API), jev-1.13.0, run 2026-10-05.
 | 0.95 | 52 | 52 | 40 | 0 |
 | 0.99 | 41 | 41 | 33 | 0 |
 
-The lowest threshold with no escape on the calibration part is 0.5. On the test part it clears 47 right flags and 0 wrong ones; the 95% upper bound of the escape rate among cleared flags is 0.0618.
+**Thresholds.** For each ceiling on the escape rate among cleared flags, the lowest threshold whose 95% upper bound on the calibration part is below it, and the test part at that threshold.
+
+| Ceiling | Threshold | Test: right flags cleared | Test: escapes | Test: bound |
+|---:|---:|---:|---:|---:|
+| 0.05 | none | 0 | 0 | |
+| 0.1 | 0.5 | 47 | 0 | 0.0618 |
+| 0.2 | 0.5 | 47 | 0 | 0.0618 |
 
 ## Jeff
 
@@ -58,4 +64,10 @@ Jeff (local jeff-serve), firelex/jeff d0173b4, mstrasser/Jeff-Gemma4-E2B v1.0, P
 | 0.95 | 0 | 0 | 0 | 0 |
 | 0.99 | 0 | 0 | 0 | 0 |
 
-The lowest threshold with no escape on the calibration part is 0.9. On the test part it clears 2 right flags and 2 wrong ones; the 95% upper bound of the escape rate among cleared flags is 0.9024.
+**Thresholds.** For each ceiling on the escape rate among cleared flags, the lowest threshold whose 95% upper bound on the calibration part is below it, and the test part at that threshold.
+
+| Ceiling | Threshold | Test: right flags cleared | Test: escapes | Test: bound |
+|---:|---:|---:|---:|---:|
+| 0.05 | none | 0 | 0 | |
+| 0.1 | none | 0 | 0 | |
+| 0.2 | none | 0 | 0 | |

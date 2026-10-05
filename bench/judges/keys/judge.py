@@ -33,6 +33,9 @@ HERE = Path(__file__).parent
 BENCH = HERE.parent.parent
 SETS = ("keys", "tables")
 THRESHOLDS = (0.5, 0.7, 0.8, 0.9, 0.95, 0.99)
+# a user sets the ceiling on the escape rate among cleared flags (docs/design/hybrid-decisions.md
+# §9), so the report shows three
+CEILINGS = (0.05, 0.1, 0.2)
 LAYA_MODEL = "english"
 JEV_MODEL = "jev-1.13.0"
 JEV_URL = "https://api.typesafe.ai/v1/systemone"
@@ -184,16 +187,19 @@ def run(engine: str) -> None:
     engines = {"laya": laya_engine, "jev": jev_engine, "jeff": jeff_engine}
     ask = engines[engine](meta)
     # answers so far, so that a stopped run goes on where it stopped, but only with the same
-    # engine and model: a resume never mixes the answers of two models
+    # engine, model and prompts: a resume never mixes the answers of two runs
     partial = HERE / f".answers-{engine}.partial.json"
-    record = {k: v for k, v in meta.items() if k != "run"}
+    items = gold()
+    # the engine, the model and a digest of every prompt, in order: a resume needs all three
+    prompts = [(it["id"], state(it), question(it["keys"])) for it in items]
+    digest = hashlib.sha256(json.dumps(prompts, sort_keys=True).encode()).hexdigest()
+    record = {**{k: v for k, v in meta.items() if k != "run"}, "prompts_sha256": digest}
     answers: dict[str, Any] = {}
     if partial.exists():
         saved = json.loads(partial.read_text())
         if saved["meta"] != record:
             raise SystemExit(f"{partial.name} is from {saved['meta']}, not {record}; delete it")
         answers = saved["answers"]
-    items = gold()
     for n, it in enumerate(items, 1):
         if it["id"] in answers:
             continue
@@ -278,15 +284,21 @@ def score(items: list[dict[str, Any]], answers: dict[str, Any]) -> dict[str, Any
             "doses_with_a_right_key_in_review": flags,
             "by_threshold": by_t,
         }
-    safe = [t for t in THRESHOLDS if out["calibration"]["by_threshold"][str(t)]["escapes"] == 0]
-    t = min(safe) if safe else None
-    out["threshold"] = t
-    if t is not None:
-        test = out["test"]["by_threshold"][str(t)]
-        cleared = test["clears_right"] + test["escapes"]
-        out["test_at_threshold"] = {
-            **test,
-            "escape_rate_upper_95": upper_95(test["escapes"], cleared),
+    for p in ("calibration", "test"):
+        for b in out[p]["by_threshold"].values():
+            b["escape_rate_upper_95"] = upper_95(b["escapes"], b["clears_right"] + b["escapes"])
+    # for each ceiling, the lowest threshold whose calibration bound is below it (§9)
+    out["by_ceiling"] = {}
+    for c in CEILINGS:
+        ok = [
+            t
+            for t in THRESHOLDS
+            if out["calibration"]["by_threshold"][str(t)]["escape_rate_upper_95"] < c
+        ]
+        t = min(ok) if ok else None
+        out["by_ceiling"][str(c)] = {
+            "threshold": t,
+            "test": out["test"]["by_threshold"][str(t)] if t is not None else None,
         }
     return out
 
@@ -346,16 +358,24 @@ def report(check: bool) -> None:
                     f"| {b['escapes']} |"
                 )
             md.append("")
-        if s["threshold"] is None:
-            md.append("No threshold clears flags without an escape on the calibration part.")
-        else:
-            t_ = s["test_at_threshold"]
-            md.append(
-                f"The lowest threshold with no escape on the calibration part is "
-                f"{s['threshold']}. On the test part it clears {t_['clears_right']} right flags "
-                f"and {t_['escapes']} wrong ones; the 95% upper bound of the escape rate among "
-                f"cleared flags is {t_['escape_rate_upper_95']}."
-            )
+        md += [
+            "**Thresholds.** For each ceiling on the escape rate among cleared flags, the lowest "
+            "threshold whose 95% upper bound on the calibration part is below it, and the test "
+            "part at that threshold.",
+            "",
+            "| Ceiling | Threshold | Test: right flags cleared | Test: escapes | Test: bound |",
+            "|---:|---:|---:|---:|---:|",
+        ]
+        for c in CEILINGS:
+            b = s["by_ceiling"][str(c)]
+            if b["threshold"] is None:
+                md.append(f"| {c} | none | 0 | 0 | |")
+            else:
+                t_ = b["test"]
+                md.append(
+                    f"| {c} | {b['threshold']} | {t_['clears_right']} | {t_['escapes']} "
+                    f"| {t_['escape_rate_upper_95']} |"
+                )
     out = {
         HERE / "report.json": json.dumps(results, indent=1, sort_keys=True) + "\n",
         HERE / "REPORT.md": "\n".join(md) + "\n",
