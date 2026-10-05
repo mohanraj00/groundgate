@@ -155,8 +155,9 @@ digits can block a value but never make one. A **letter or number** is a charact
 general category L or N.
 
 A **number token** is a maximal match of `[-−]?\d[\d,]*(\.\d+)?` that is not preceded by a letter
-or number, `.` or `,`, with one trailing `,` dropped, and that is not followed by a number
-character (general category N), so ASCII digits next to other digits are no token. A leading `-`
+or number, `.` or `,`, with one trailing `,` dropped. The match is no token when a number
+character (general category N) other than `0` to `9` follows it, directly or after one `.` or `,`,
+so ASCII digits next to other digits, as in `2,०००`, are no token. A leading `-`
 or `−` (U+2212) counts only when it is not preceded by a letter or number. The token has a value when its digits are either
 ungrouped (`\d+`), grouped in threes after the first group (`\d{1,3}(,\d{3})+`), or grouped the
 Indian way, the last three digits and then pairs (`\d{1,2}(,\d{2})*,\d{3}`, so `2,00,000` is

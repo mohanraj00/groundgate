@@ -104,6 +104,20 @@ def _number_char(ch: str) -> bool:
     return unicodedata.category(ch)[0] == "N"
 
 
+def _other_number_char(ch: str) -> bool:
+    """A number character that is not an ASCII digit."""
+    return _number_char(ch) and not "0" <= ch <= "9"
+
+
+def _other_digits_follow(text: str, i: int) -> bool:
+    """Whether a number character other than 0 to 9 comes at ``i``, or after a "." or "," at
+    ``i``: the ASCII digits before it start a number in other digits, as in "2" + DEVANAGARI
+    ZERO."""
+    if i < len(text) and _other_number_char(text[i]):
+        return True
+    return i + 1 < len(text) and text[i] in ".," and _other_number_char(text[i + 1])
+
+
 def tokens(text: str, start: int = 0, end: int | None = None) -> list[Token]:
     """Number tokens whose characters lie within text[start:end] (SPEC §4.1)."""
     end = len(text) if end is None else end
@@ -114,11 +128,11 @@ def tokens(text: str, start: int = 0, end: int | None = None) -> list[Token]:
             s, tok = s + 1, tok[1:]
         if s > 0 and (_letter_or_number(text[s - 1]) or text[s - 1] in ".,"):
             continue
+        if _other_digits_follow(text, m.end()):
+            continue
         if tok.endswith(","):
             tok = tok[:-1]
         e = s + len(tok)
-        if e < len(text) and _number_char(text[e]):
-            continue  # the ASCII start of a number in other digits
         whole = _TOKEN.match(text, s)
         if whole and s + len(whole.group().removesuffix(",")) > end:
             continue  # the number runs past the region: never read a prefix of it
