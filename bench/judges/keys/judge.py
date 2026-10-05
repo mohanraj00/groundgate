@@ -187,7 +187,9 @@ def prompts_sha256(items: list[dict[str, Any]]) -> str:
     return hashlib.sha256(json.dumps(prompts, sort_keys=True).encode()).hexdigest()
 
 
-def run(engine: str) -> None:
+def run(engine: str, repeat: int = 1) -> None:
+    """Ask every gold prompt once. A repeat writes answers-{engine}-{repeat}.json, to see if
+    the engine answers the same way twice."""
     if not (HERE / "split.json").exists():
         raise SystemExit("run judge.py split first, before any model run")
     meta: dict[str, Any] = {"run": datetime.date.today().isoformat()}
@@ -195,7 +197,10 @@ def run(engine: str) -> None:
     ask = engines[engine](meta)
     # answers so far, so that a stopped run goes on where it stopped, but only with the same
     # engine, model and prompts: a resume never mixes the answers of two runs
-    partial = HERE / f".answers-{engine}.partial.json"
+    name = engine if repeat == 1 else f"{engine}-{repeat}"
+    if repeat < 1 or (HERE / f"answers-{name}.json").exists():
+        raise SystemExit(f"answers-{name}.json is there already, or {repeat} is not a run number")
+    partial = HERE / f".answers-{name}.partial.json"
     items = gold()
     # the engine, the model and the prompts: a resume needs all three
     meta["prompts_sha256"] = prompts_sha256(items)
@@ -221,9 +226,9 @@ def run(engine: str) -> None:
         partial.write_text(json.dumps({"meta": record, "answers": answers}))
         print(f"{n}/{len(items)}", end="\r", flush=True)
     out = {"meta": meta, "answers": answers}
-    (HERE / f"answers-{engine}.json").write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
+    (HERE / f"answers-{name}.json").write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
     partial.unlink()
-    print(f"\nwrote answers-{engine}.json")
+    print(f"\nwrote answers-{name}.json")
 
 
 def chosen_key(it: dict[str, Any], choice: str) -> str | None:
@@ -311,6 +316,43 @@ def score(items: list[dict[str, Any]], answers: dict[str, Any]) -> dict[str, Any
     return out
 
 
+def cleared(it: dict[str, Any], a: dict[str, Any], t: float) -> tuple[str, str] | None:
+    """What the answer clears at threshold t, and the key whose flag it clears: a dose can have
+    more than one right key, so "right" alone can hide a change of key."""
+    done = clear(it, a, t)
+    return None if done is None else (done, str(chosen_key(it, a["choice"])))
+
+
+def repeat(
+    items: list[dict[str, Any]], first: dict[str, Any], again: dict[str, Any], s: dict[str, Any]
+) -> dict[str, Any]:
+    """How a second run of one engine differs from the first: the choices, the confidences, and
+    the clears at each threshold that the first run chose, on both parts."""
+    by_ceiling: dict[str, Any] = {}
+    for c in CEILINGS:
+        t = s["by_ceiling"][str(c)]["threshold"]
+        if t is None:
+            by_ceiling[str(c)] = None
+            continue
+        test = [clear(it, again[it["id"]], t) for it in items if it["part"] == "test"]
+        by_ceiling[str(c)] = {
+            "threshold": t,
+            "test": {"clears_right": test.count("right"), "escapes": test.count("escape")},
+            "clears_changed": sum(
+                cleared(it, first[it["id"]], t) != cleared(it, again[it["id"]], t) for it in items
+            ),
+        }
+    return {
+        "doses": len(items),
+        "same_choice": sum(first[it["id"]]["choice"] == again[it["id"]]["choice"] for it in items),
+        "confidence_change_max": round(
+            max(abs(first[it["id"]]["confidence"] - again[it["id"]]["confidence"]) for it in items),
+            4,
+        ),
+        "by_ceiling": by_ceiling,
+    }
+
+
 def report(check: bool) -> None:
     items = gold()
     digest = prompts_sha256(items)
@@ -388,6 +430,40 @@ def report(check: bool) -> None:
                     f"| {c} | {b['threshold']} | {t_['clears_right']} | {t_['escapes']} "
                     f"| {t_['escape_rate_upper_95']} |"
                 )
+        repeats = HERE.glob(f"answers-{engine}-*.json")
+        for path in sorted(repeats, key=lambda q: int(q.stem.rsplit("-", 1)[1])):
+            again = json.loads(path.read_text())
+            if again["meta"].get("prompts_sha256") != digest:
+                raise SystemExit(f"{path.name} answers other prompts than the gold; run it again")
+            # a threshold is for one model (hybrid design §9), so a repeat is the same model
+            same = ("engine", "model", "served_model")
+            if any(again["meta"].get(k) != run_["meta"].get(k) for k in same):
+                raise SystemExit(f"{path.name} is from another model than answers-{engine}.json")
+            r = repeat(items, run_["answers"], again["answers"], s)
+            results["engines"][engine].setdefault("repeats", {})[path.stem] = {
+                "meta": again["meta"],
+                **r,
+            }
+            md += [
+                "",
+                f"**Run again.** `{path.name}`, run {again['meta']['run']}. "
+                f"{r['same_choice']} of {r['doses']} answers choose the same as the first run, "
+                f"and the confidence moves by up to {r['confidence_change_max']}. The table "
+                "applies the thresholds of the first run to the answers of this run.",
+                "",
+                "| Ceiling | Threshold | Test: right flags cleared | Test: escapes "
+                "| Clears that changed, both parts |",
+                "|---:|---:|---:|---:|---:|",
+            ]
+            for c in CEILINGS:
+                b = r["by_ceiling"][str(c)]
+                if b is None:
+                    md.append(f"| {c} | none | | | |")
+                else:
+                    md.append(
+                        f"| {c} | {b['threshold']} | {b['test']['clears_right']} "
+                        f"| {b['test']['escapes']} | {b['clears_changed']} |"
+                    )
     out = {
         HERE / "report.json": json.dumps(results, indent=1, sort_keys=True) + "\n",
         HERE / "REPORT.md": "\n".join(md) + "\n",
@@ -409,13 +485,14 @@ def main() -> None:
     sub.add_parser("split")
     p = sub.add_parser("run")
     p.add_argument("engine", choices=sorted(ENGINES))
+    p.add_argument("--repeat", type=int, default=1, help="the number of this run, 2 or more")
     p = sub.add_parser("report")
     p.add_argument("--check", action="store_true", help="fail if the committed files differ")
     args = ap.parse_args()
     if args.cmd == "split":
         split()
     elif args.cmd == "run":
-        run(args.engine)
+        run(args.engine, args.repeat)
     else:
         report(args.check)
 

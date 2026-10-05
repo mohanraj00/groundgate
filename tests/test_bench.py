@@ -654,3 +654,52 @@ def test_a_judge_report_refuses_answers_to_other_prompts(
     monkeypatch.setattr(judge, "question", lambda keys: {"key": keys})
     with pytest.raises(SystemExit, match="other prompts"):
         judge.report(check=False)
+
+
+def test_a_judge_repeat_counts_changed_choices_and_clears() -> None:
+    sys.path.insert(0, str(BENCH / "judges" / "keys"))
+    import judge
+
+    items = [
+        {"id": "a", "keys": ["A", "B"], "label": ["A"], "spec_0.3": [], "part": "test"},
+        {"id": "b", "keys": ["A", "B"], "label": ["B"], "spec_0.3": [], "part": "calibration"},
+    ]
+    first = {"a": {"choice": "k1", "confidence": 0.9}, "b": {"choice": "k2", "confidence": 0.6}}
+    again = {"a": {"choice": "k1", "confidence": 0.8}, "b": {"choice": "k1", "confidence": 0.4}}
+    ceilings = {str(c): {"threshold": 0.5} for c in judge.CEILINGS}
+    ceilings["0.05"] = {"threshold": None}
+    r = judge.repeat(items, first, again, {"by_ceiling": ceilings})
+    assert (r["same_choice"], r["confidence_change_max"]) == (1, 0.2)
+    assert r["by_ceiling"]["0.05"] is None
+    assert r["by_ceiling"]["0.1"] == {
+        "threshold": 0.5,
+        "test": {"clears_right": 1, "escapes": 0},
+        "clears_changed": 1,
+    }
+    # a dose with two right keys: a switch from one to the other changes the cleared flag
+    two = [{"id": "c", "keys": ["A", "B"], "label": ["A", "B"], "spec_0.3": [], "part": "test"}]
+    r = judge.repeat(
+        two,
+        {"c": {"choice": "k1", "confidence": 0.9}},
+        {"c": {"choice": "k2", "confidence": 0.9}},
+        {"by_ceiling": ceilings},
+    )
+    assert r["by_ceiling"]["0.1"]["clears_changed"] == 1
+
+
+def test_a_judge_report_refuses_a_repeat_from_another_model(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    sys.path.insert(0, str(BENCH / "judges" / "keys"))
+    import judge
+
+    for name in ("split.json", "answers-jev.json", "answers-jev-2.json"):
+        (tmp_path / name).write_text((judge.HERE / name).read_text())
+    monkeypatch.setattr(judge, "HERE", tmp_path)
+    monkeypatch.setattr(judge, "ENGINES", {"jev": "Jev"})
+    judge.report(check=False)
+    again = json.loads((tmp_path / "answers-jev-2.json").read_text())
+    again["meta"]["model"] = "jev-2.0.0"
+    (tmp_path / "answers-jev-2.json").write_text(json.dumps(again))
+    with pytest.raises(SystemExit, match="another model"):
+        judge.report(check=False)
