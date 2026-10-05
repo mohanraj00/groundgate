@@ -227,6 +227,40 @@ vector(
 )
 
 vector(
+    "03c-ascii-digits",
+    "A digit is an ASCII digit, 0 to 9. A number in other digits, such as Devanagari, is not a "
+    "number token, and a candidate value in other digits is invalid (spec 0.3).",
+    "The limit is \u0968\u0966\u0966\u0966 rupees. The fee is 300 rupees.",
+    {
+        "fields": {
+            "limit": {"type": "integer", "unit": "INR"},
+            "fee": {"type": "integer", "unit": "INR"},
+            "fee_written": {"type": "integer", "unit": "INR"},
+        }
+    },
+    [
+        # the evidence holds the text, but no number token
+        c(
+            "d1",
+            "limit",
+            "2000",
+            "INR",
+            q("\u0968\u0966\u0966\u0966"),
+            ("rejected", ["VALUE_NOT_IN_EVIDENCE"]),
+        ),
+        c("d2", "fee", "300", "INR", q("300")),
+        c(
+            "d3",
+            "fee_written",
+            "\u0969\u0966\u0966",
+            "INR",
+            q("300"),
+            ("rejected", ["TYPE_INVALID"]),
+        ),
+    ],
+)
+
+vector(
     "04-evidence",
     "Missing, invalid or unsupportive evidence is rejected.",
     "The limit is $7,000 and the fee is 30 dollars. Take 45 minutes. Altimeter 29.97 inches.",

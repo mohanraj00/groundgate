@@ -1,0 +1,78 @@
+{
+ "name": "03c-ascii-digits",
+ "description": "A digit is an ASCII digit, 0 to 9. A number in other digits, such as Devanagari, is not a number token, and a candidate value in other digits is invalid (spec 0.3).",
+ "document": "The limit is २००० rupees. The fee is 300 rupees.",
+ "schema": {
+  "fields": {
+   "limit": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "fee_written": {
+    "type": "integer",
+    "unit": "INR"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "d1",
+   "field": "limit",
+   "value": "2000",
+   "unit": "INR",
+   "evidence": {
+    "start": 13,
+    "end": 25,
+    "text": "२०००"
+   }
+  },
+  {
+   "id": "d2",
+   "field": "fee",
+   "value": "300",
+   "unit": "INR",
+   "evidence": {
+    "start": 45,
+    "end": 48,
+    "text": "300"
+   }
+  },
+  {
+   "id": "d3",
+   "field": "fee_written",
+   "value": "३००",
+   "unit": "INR",
+   "evidence": {
+    "start": 45,
+    "end": 48,
+    "text": "300"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

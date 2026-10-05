@@ -146,6 +146,10 @@ Coverage is per field, not per key.
 
 ### 4.1 Numbers
 
+In these rules a digit, and `\d`, is an ASCII digit, `0` to `9`. Other digits, such as the
+Devanagari `२`, are not digits here, so `२०००` is not a number token and a candidate value written
+in them is invalid. They wait for a locale input (#60).
+
 A **number token** is a maximal match of `[-−]?\d[\d,]*(\.\d+)?` that is not preceded by a letter,
 digit, `.` or `,`, with one trailing `,` dropped. A leading `-` or `−` (U+2212) counts only when
 it is not preceded by a letter or digit. The token has a value when its digits are either

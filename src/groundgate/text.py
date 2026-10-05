@@ -6,10 +6,12 @@ import re
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 
-_TOKEN = re.compile(r"[-\u2212]?\d[\d,]*(?:\.\d+)?")
+_TOKEN = re.compile(r"[-\u2212]?[0-9][0-9,]*(?:\.[0-9]+)?")
 # ungrouped, grouped in threes ("200,000"), or grouped the Indian way: the last three digits,
 # then pairs ("2,00,000")
-_VALID = re.compile(r"^[-\u2212]?(?:\d{1,3}(?:,\d{3})+|\d{1,2}(?:,\d{2})*,\d{3}|\d+)(?:\.\d+)?$")
+_VALID = re.compile(
+    r"^[-\u2212]?(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]{1,2}(?:,[0-9]{2})*,[0-9]{3}|[0-9]+)(?:\.[0-9]+)?$"
+)
 _SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t\r]*\n")
 _ABBREVIATIONS = [
     "a.m.",
@@ -69,7 +71,7 @@ _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS_RUN = re.compile(r"\s*")
 _CONTINUES = "$€£₹"
 # "No." before a code such as "DEA-1086": a word that holds a digit or starts with two capitals
-_CODE = re.compile(r"\S*?\d|[A-Z]{2}")
+_CODE = re.compile(r"\S*?[0-9]|[A-Z]{2}")
 _WS = re.compile(r"\s+")
 _HYPHEN_BREAK = re.compile(r"-\n\s*")
 _WINDOW = 40
@@ -218,11 +220,11 @@ _BEFORE_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in
 _AFTER_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in _AFTER.items()}
 _INVERT = {"gt": "le", "le": "gt", "lt": "ge", "ge": "lt"}
 _NEGATION_END = re.compile(r"\b(?:not|cannot|can['\u2019]t)\s+(?:be\s+)?$", re.I)
-_RANGE_NEXT = re.compile(r"^\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
+_RANGE_NEXT = re.compile(r"^\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?(?=[-\u2212]?[0-9])", re.I)
 # one unit or scale word may stand before a word connector: "30 mg to 45", "$1 million to $2"
-_UNIT_WORD = r"(?:[^\s\d]{1,12}\s+(?=(?:through|thru|to|and)\b))?"
+_UNIT_WORD = r"(?:[^\s0-9]{1,12}\s+(?=(?:through|thru|to|and)\b))?"
 _RANGE_PREV = re.compile(rf"\s*{_UNIT_WORD}(?:through|thru|to|-|\u2013)\s*\S{{0,4}}?", re.I)
-_AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
+_AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?[0-9])", re.I)
 _AND_PREV = re.compile(rf"\s*{_UNIT_WORD}and\s*\S{{0,4}}?", re.I)
 _BETWEEN_END = re.compile(r"\bbetween\s*\S{0,4}?$", re.I)
 _CHANGE = (
@@ -298,7 +300,7 @@ def _before_qualifiers(text: str, s0: int, start: int, end: int) -> set[str]:
 
 def _strip_unit_suffix(rest: str) -> str:
     # "30 mg to 45 mg": skip a short unit word before the range connector.
-    m = re.match(r"^\s*[^\s\d]{1,12}(?=\s+(?:through|thru|to|and)\b)", rest)
+    m = re.match(r"^\s*[^\s0-9]{1,12}(?=\s+(?:through|thru|to|and)\b)", rest)
     return rest[m.end() :] if m else rest
 
 
@@ -344,7 +346,7 @@ def builtin_units() -> dict[str, tuple[list[str], list[str]]]:
 
 
 _PER_UNIT = re.compile(
-    r"\s*(?:/|per\b)\s*(?:\d+(?:\.\d+)?\s*)?"
+    r"\s*(?:/|per\b)\s*(?:[0-9]+(?:\.[0-9]+)?\s*)?"
     r"(?:kg|kilograms?|lbs?|pounds?|m2|m\u00b2|m\^2|square\s+met(?:er|re)s?"
     r"|mL|dL|L|lit(?:er|re)s?)(?![A-Za-z])",
     re.I,
