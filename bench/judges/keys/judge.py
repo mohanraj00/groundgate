@@ -1,0 +1,340 @@
+"""Can a typed-decision model clear the KEY_NOT_AT_VALUE flags that spec 0.3 raises (#67)? Asks
+one fixed question about each labeled dose of the keys and tables sets, and scores the answers
+against the labels and the spec 0.3 readings. The plan is on #67.
+
+    uv run python bench/judges/keys/judge.py split       # split.json, before any model run
+    TYPESAFE_API_KEY=... uv run python bench/judges/keys/judge.py run jev      # TypeSafe API
+    LAYA_REVISION=7b928d828b7b0e022f929d9bd2e44165aa270148 \\
+    uv run --isolated --no-project --python 3.12 --with laya==0.3.26 \\
+        python bench/judges/keys/judge.py run laya       # local, on the CPU
+    uv run python bench/judges/keys/judge.py report      # REPORT.md, report.json
+    uv run python bench/judges/keys/judge.py report --check
+
+This is a bench experiment. The core never calls a model. The question was written once, before
+the first run, and is not tuned on these doses.
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime
+import hashlib
+import json
+import os
+import urllib.request
+from collections.abc import Callable
+from pathlib import Path
+from typing import Any
+
+HERE = Path(__file__).parent
+BENCH = HERE.parent.parent
+SETS = ("keys", "tables")
+THRESHOLDS = (0.5, 0.7, 0.8, 0.9, 0.95, 0.99)
+LAYA_MODEL = "english"
+JEV_MODEL = "jev-1.13.0"
+JEV_URL = "https://api.typesafe.ai/v1/systemone"
+ENGINES = {"jev": "Jev", "laya": "Laya"}
+NONE = "none"
+
+Ask = Callable[[str, dict[str, Any]], dict[str, Any]]
+
+
+def load(name: str, file: str) -> Any:
+    return json.loads((BENCH / name / file).read_text())
+
+
+def gold() -> list[dict[str, Any]]:
+    """Each labeled dose of the keys and tables sets, with its label, its label's keys and the
+    keys that spec 0.3 puts at it. Doses labeled not sure are left out."""
+    out = []
+    for name in SETS:
+        keys = {s["id"]: s["keys"] for s in load(name, "sources.json")["sources"]}
+        labels = load(name, "labels.json")
+        read = {r["id"]: r["spec_0.3"] for r in load(name, "results.json")["doses_read"]}
+        for it in load(name, "items.json"):
+            if labels[it["id"]] is None:
+                continue
+            out.append(
+                {
+                    "id": f"{name}:{it['id']}",
+                    "set": name,
+                    "doc": it["doc"],
+                    "span": it["span"],
+                    "keys": keys[it["doc"]],
+                    "label": labels[it["id"]],
+                    "spec_0.3": read[it["id"]],
+                }
+            )
+    return out
+
+
+def part(doc: str) -> str:
+    """The calibration part holds a label whose sha256 starts with 0 to 7, the test part the
+    rest, so one label's text is never on both sides."""
+    return "calibration" if hashlib.sha256(doc.encode()).hexdigest()[0] in "01234567" else "test"
+
+
+def split() -> None:
+    items = gold()
+    out = {it["id"]: part(it["doc"]) for it in items}
+    (HERE / "split.json").write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
+    n = sum(v == "calibration" for v in out.values())
+    print(f"wrote split.json: {n} calibration, {len(out) - n} test")
+
+
+def state(it: dict[str, Any]) -> str:
+    """What the label tool showed: 400 code points before the dose and 150 after, line breaks
+    kept, the dose in brackets instead of bold."""
+    text = (BENCH / it["set"] / "docs" / f"{it['doc']}.txt").read_text(encoding="utf-8")
+    a, b = it["span"]
+    return text[max(0, a - 400) : a] + f"[{text[a:b]}]" + text[b : b + 150]
+
+
+def question(keys: list[str]) -> dict[str, Any]:
+    criteria = {f"k{n}": k for n, k in enumerate(keys, 1)}
+    criteria[NONE] = "none of these conditions: the dose belongs to another use, or to none"
+    return {
+        "key": {
+            "type": "choice",
+            "instructions": (
+                "The text is from the dosage section of a drug label and marks one dose in "
+                "brackets. Which of the drug's conditions does that dose belong to?"
+            ),
+            "criteria": criteria,
+        }
+    }
+
+
+def laya_engine(meta: dict[str, Any]) -> Ask:
+    import laya  # type: ignore[import-not-found]
+    from laya import Router
+
+    revision = os.environ.get("LAYA_REVISION")
+    if not revision:
+        raise SystemExit("set LAYA_REVISION to the checkpoint commit, as the docstring shows")
+    router = Router(device="cpu")
+    meta.update(
+        engine=f"Laya {laya.__version__}", model=f"convaiinnovations/laya at {revision}, CPU"
+    )
+
+    def ask(st: str, qs: dict[str, Any]) -> dict[str, Any]:
+        a = router.predict(st, qs, model=LAYA_MODEL)["answers"]["key"]
+        return {"choice": a["choice"], "confidence": a["answer_confidence"]}
+
+    return ask
+
+
+def jev_engine(meta: dict[str, Any]) -> Ask:
+    key = os.environ.get("TYPESAFE_API_KEY")
+    if not key:
+        raise SystemExit("set TYPESAFE_API_KEY")
+    meta.update(engine="Jev (TypeSafe API)", model=JEV_MODEL)
+
+    def ask(st: str, qs: dict[str, Any]) -> dict[str, Any]:
+        body = json.dumps({"state": st, "model": JEV_MODEL, "questions": qs}).encode()
+        req = urllib.request.Request(
+            JEV_URL,
+            data=body,
+            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(req, timeout=60) as r:
+            res = json.load(r)
+        if res["model"] != JEV_MODEL:
+            raise SystemExit(f"answered by {res['model']}, not {JEV_MODEL}")
+        a = res["answers"]["key"]
+        return {"choice": a["choice"], "confidence": a["confidence"]}
+
+    return ask
+
+
+def run(engine: str) -> None:
+    if not (HERE / "split.json").exists():
+        raise SystemExit("run judge.py split first, before any model run")
+    meta: dict[str, Any] = {"run": datetime.date.today().isoformat()}
+    ask = laya_engine(meta) if engine == "laya" else jev_engine(meta)
+    answers = {}
+    items = gold()
+    for n, it in enumerate(items, 1):
+        a = ask(state(it), question(it["keys"]))
+        answers[it["id"]] = {"choice": a["choice"], "confidence": round(a["confidence"], 4)}
+        print(f"{n}/{len(items)}", end="\r", flush=True)
+    out = {"meta": meta, "answers": answers}
+    (HERE / f"answers-{engine}.json").write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
+    print(f"\nwrote answers-{engine}.json")
+
+
+def chosen_key(it: dict[str, Any], choice: str) -> str | None:
+    """The key a choice names, or None for "none" or an unknown name."""
+    if choice.startswith("k") and choice[1:].isdigit() and 1 <= int(choice[1:]) <= len(it["keys"]):
+        return str(it["keys"][int(choice[1:]) - 1])
+    return None
+
+
+def clear(it: dict[str, Any], a: dict[str, Any], t: float) -> str | None:
+    """What the answer does to a flag at threshold t: "right" when it clears the flag of a
+    labeled key that spec 0.3 does not put at the dose, "escape" when it clears one of a key that
+    is not labeled, and None when it clears nothing."""
+    k = chosen_key(it, a["choice"])
+    if k is None or a["confidence"] < t or k in it["spec_0.3"]:
+        return None
+    return "right" if k in it["label"] else "escape"
+
+
+def correct(it: dict[str, Any], a: dict[str, Any]) -> bool:
+    k = chosen_key(it, a["choice"])
+    return (k in it["label"]) if k is not None else not it["label"]
+
+
+def upper_95(k: int, n: int) -> float:
+    """The one-sided 95% upper bound of a binomial rate, k of n (Clopper-Pearson), by bisection
+    on the binomial CDF."""
+    if n == 0 or k >= n:
+        return 1.0
+
+    def cdf(p: float) -> float:
+        total, term = 0.0, (1 - p) ** n
+        for i in range(k + 1):
+            total += term
+            term *= (n - i) / (i + 1) * p / (1 - p) if p < 1 else 0
+        return total
+
+    lo, hi = k / n, 1.0
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if cdf(mid) > 0.05 else (lo, mid)
+    return round(hi, 4)
+
+
+def score(items: list[dict[str, Any]], answers: dict[str, Any]) -> dict[str, Any]:
+    """Accuracy, calibration and clears for one engine, by part."""
+    out: dict[str, Any] = {}
+    for p in ("calibration", "test"):
+        rows = [(it, answers[it["id"]]) for it in items if it["part"] == p]
+        flags = sum(bool(set(it["label"]) - set(it["spec_0.3"])) for it, _ in rows)
+        by_t = {}
+        for t in THRESHOLDS:
+            done = [clear(it, a, t) for it, a in rows]
+            sure = [(it, a) for it, a in rows if a["confidence"] >= t]
+            by_t[str(t)] = {
+                "answered": len(sure),
+                "answered_correct": sum(correct(it, a) for it, a in sure),
+                "clears_right": done.count("right"),
+                "escapes": done.count("escape"),
+            }
+        out[p] = {
+            "doses": len(rows),
+            "correct": sum(correct(it, a) for it, a in rows),
+            "doses_with_a_right_key_in_review": flags,
+            "by_threshold": by_t,
+        }
+    safe = [t for t in THRESHOLDS if out["calibration"]["by_threshold"][str(t)]["escapes"] == 0]
+    t = min(safe) if safe else None
+    out["threshold"] = t
+    if t is not None:
+        test = out["test"]["by_threshold"][str(t)]
+        cleared = test["clears_right"] + test["escapes"]
+        out["test_at_threshold"] = {
+            **test,
+            "escape_rate_upper_95": upper_95(test["escapes"], cleared),
+        }
+    return out
+
+
+def report(check: bool) -> None:
+    items = gold()
+    parts = json.loads((HERE / "split.json").read_text())
+    for it in items:
+        it["part"] = parts[it["id"]]
+    results: dict[str, Any] = {
+        "doses": {p: sum(it["part"] == p for it in items) for p in ("calibration", "test")},
+        "labels": {
+            p: len({it["doc"] for it in items if it["part"] == p}) for p in ("calibration", "test")
+        },
+        "engines": {},
+    }
+    md = [
+        "# Clearing key flags with a typed-decision model",
+        "",
+        "Generated by `bench/judges/keys/judge.py report` from `split.json` and the "
+        "`answers-*.json` files. The plan is on #67. The gold is the labeled doses of the keys "
+        "and tables sets, split by label into a calibration part and a test part.",
+        "",
+        f"Calibration: {results['doses']['calibration']} doses in "
+        f"{results['labels']['calibration']} labels. Test: {results['doses']['test']} doses in "
+        f"{results['labels']['test']} labels.",
+    ]
+    for engine, name in ENGINES.items():
+        path = HERE / f"answers-{engine}.json"
+        if not path.exists():
+            continue
+        run_ = json.loads(path.read_text())
+        s = score(items, run_["answers"])
+        results["engines"][engine] = {"meta": run_["meta"], **s}
+        md += [
+            "",
+            f"## {name}",
+            "",
+            f"{run_['meta']['engine']}, {run_['meta']['model']}, run {run_['meta']['run']}.",
+            "",
+        ]
+        for p in ("calibration", "test"):
+            r = s[p]
+            md += [
+                f"**{p.capitalize()} part.** {r['correct']} of {r['doses']} answers match the "
+                f"label. {r['doses_with_a_right_key_in_review']} doses have a right key that "
+                "spec 0.3 sends to review.",
+                "",
+                "| Confidence at least | Answered | Correct | Flags cleared, right | Escapes |",
+                "|---:|---:|---:|---:|---:|",
+            ]
+            for t in THRESHOLDS:
+                b = r["by_threshold"][str(t)]
+                md.append(
+                    f"| {t} | {b['answered']} | {b['answered_correct']} | {b['clears_right']} "
+                    f"| {b['escapes']} |"
+                )
+            md.append("")
+        if s["threshold"] is None:
+            md.append("No threshold clears flags without an escape on the calibration part.")
+        else:
+            t_ = s["test_at_threshold"]
+            md.append(
+                f"The lowest threshold with no escape on the calibration part is "
+                f"{s['threshold']}. On the test part it clears {t_['clears_right']} right flags "
+                f"and {t_['escapes']} wrong ones; the 95% upper bound of the escape rate among "
+                f"cleared flags is {t_['escape_rate_upper_95']}."
+            )
+    out = {
+        HERE / "report.json": json.dumps(results, indent=1, sort_keys=True) + "\n",
+        HERE / "REPORT.md": "\n".join(md) + "\n",
+    }
+    if check:
+        stale = [p.name for p, body in out.items() if not p.exists() or p.read_text() != body]
+        if stale:
+            raise SystemExit(f"out of date: {', '.join(stale)}; run judge.py report")
+        print("REPORT.md is up to date")
+        return
+    for path, body in out.items():
+        path.write_text(body)
+    print("wrote REPORT.md, report.json")
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    sub.add_parser("split")
+    p = sub.add_parser("run")
+    p.add_argument("engine", choices=sorted(ENGINES))
+    p = sub.add_parser("report")
+    p.add_argument("--check", action="store_true", help="fail if the committed files differ")
+    args = ap.parse_args()
+    if args.cmd == "split":
+        split()
+    elif args.cmd == "run":
+        run(args.engine)
+    else:
+        report(args.check)
+
+
+if __name__ == "__main__":
+    main()
