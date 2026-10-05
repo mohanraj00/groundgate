@@ -4,7 +4,7 @@ Issues and pull requests are welcome. For anything that changes a decision, open
 with the "Spec change" form: decisions are defined by [SPEC.md](SPEC.md), not by the code.
 
 Issues labelled `spec` change a decision and ship as a new spec version. `benchmark` covers
-`bench/`. The `0.2` milestone holds what the next spec version is measured on.
+`bench/`. The milestone of the next spec version holds what it is measured on.
 
 ## Setup
 
@@ -40,7 +40,7 @@ real LangExtract install.
 
 1. Set `__version__` in `src/groundgate/__init__.py` and rename `CHANGELOG.md`'s "Unreleased"
    section to the version and date.
-2. Commit, then tag: `git tag v0.2.0 && git push origin v0.2.0`.
+2. Commit, then tag: `git tag v0.3.0 && git push origin v0.3.0`.
 3. The release workflow builds once, tests that exact wheel on Linux and macOS, publishes it to
    PyPI through trusted publishing (no token is stored), and creates the GitHub release with the
    changelog section as its notes.
