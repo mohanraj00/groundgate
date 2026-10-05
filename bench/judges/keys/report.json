@@ -1,0 +1,268 @@
+{
+ "doses": {
+  "calibration": 89,
+  "test": 65
+ },
+ "engines": {
+  "jeff": {
+   "by_ceiling": {
+    "0.05": {
+     "test": null,
+     "threshold": null
+    },
+    "0.1": {
+     "test": null,
+     "threshold": null
+    },
+    "0.2": {
+     "test": null,
+     "threshold": null
+    }
+   },
+   "calibration": {
+    "by_threshold": {
+     "0.5": {
+      "answered": 31,
+      "answered_correct": 17,
+      "clears_right": 12,
+      "escape_rate_upper_95": 0.554,
+      "escapes": 6
+     },
+     "0.7": {
+      "answered": 17,
+      "answered_correct": 10,
+      "clears_right": 10,
+      "escape_rate_upper_95": 0.4946,
+      "escapes": 3
+     },
+     "0.8": {
+      "answered": 11,
+      "answered_correct": 5,
+      "clears_right": 5,
+      "escape_rate_upper_95": 0.7108,
+      "escapes": 3
+     },
+     "0.9": {
+      "answered": 3,
+      "answered_correct": 1,
+      "clears_right": 1,
+      "escape_rate_upper_95": 0.95,
+      "escapes": 0
+     },
+     "0.95": {
+      "answered": 0,
+      "answered_correct": 0,
+      "clears_right": 0,
+      "escape_rate_upper_95": 1.0,
+      "escapes": 0
+     },
+     "0.99": {
+      "answered": 0,
+      "answered_correct": 0,
+      "clears_right": 0,
+      "escape_rate_upper_95": 1.0,
+      "escapes": 0
+     }
+    },
+    "correct": 51,
+    "doses": 89,
+    "doses_with_a_right_key_in_review": 63,
+    "right_flags_in_review": 65
+   },
+   "meta": {
+    "engine": "Jeff (local jeff-serve)",
+    "model": "firelex/jeff d0173b4, mstrasser/Jeff-Gemma4-E2B v1.0, PyTorch on MPS",
+    "prompts_sha256": "88fe424d433267fc13457592562d56936224cad10345c5d10025a1d149aaf979",
+    "run": "2026-10-05"
+   },
+   "test": {
+    "by_threshold": {
+     "0.5": {
+      "answered": 36,
+      "answered_correct": 24,
+      "clears_right": 18,
+      "escape_rate_upper_95": 0.5488,
+      "escapes": 11
+     },
+     "0.7": {
+      "answered": 22,
+      "answered_correct": 16,
+      "clears_right": 13,
+      "escape_rate_upper_95": 0.53,
+      "escapes": 6
+     },
+     "0.8": {
+      "answered": 16,
+      "answered_correct": 11,
+      "clears_right": 9,
+      "escape_rate_upper_95": 0.6096,
+      "escapes": 5
+     },
+     "0.9": {
+      "answered": 4,
+      "answered_correct": 2,
+      "clears_right": 2,
+      "escape_rate_upper_95": 0.9024,
+      "escapes": 2
+     },
+     "0.95": {
+      "answered": 0,
+      "answered_correct": 0,
+      "clears_right": 0,
+      "escape_rate_upper_95": 1.0,
+      "escapes": 0
+     },
+     "0.99": {
+      "answered": 0,
+      "answered_correct": 0,
+      "clears_right": 0,
+      "escape_rate_upper_95": 1.0,
+      "escapes": 0
+     }
+    },
+    "correct": 40,
+    "doses": 65,
+    "doses_with_a_right_key_in_review": 49,
+    "right_flags_in_review": 53
+   }
+  },
+  "jev": {
+   "by_ceiling": {
+    "0.05": {
+     "test": null,
+     "threshold": null
+    },
+    "0.1": {
+     "test": {
+      "answered": 63,
+      "answered_correct": 63,
+      "clears_right": 47,
+      "escape_rate_upper_95": 0.0618,
+      "escapes": 0
+     },
+     "threshold": 0.5
+    },
+    "0.2": {
+     "test": {
+      "answered": 63,
+      "answered_correct": 63,
+      "clears_right": 47,
+      "escape_rate_upper_95": 0.0618,
+      "escapes": 0
+     },
+     "threshold": 0.5
+    }
+   },
+   "calibration": {
+    "by_threshold": {
+     "0.5": {
+      "answered": 84,
+      "answered_correct": 80,
+      "clears_right": 57,
+      "escape_rate_upper_95": 0.0512,
+      "escapes": 0
+     },
+     "0.7": {
+      "answered": 78,
+      "answered_correct": 74,
+      "clears_right": 54,
+      "escape_rate_upper_95": 0.054,
+      "escapes": 0
+     },
+     "0.8": {
+      "answered": 74,
+      "answered_correct": 72,
+      "clears_right": 53,
+      "escape_rate_upper_95": 0.055,
+      "escapes": 0
+     },
+     "0.9": {
+      "answered": 71,
+      "answered_correct": 69,
+      "clears_right": 51,
+      "escape_rate_upper_95": 0.057,
+      "escapes": 0
+     },
+     "0.95": {
+      "answered": 65,
+      "answered_correct": 64,
+      "clears_right": 49,
+      "escape_rate_upper_95": 0.0593,
+      "escapes": 0
+     },
+     "0.99": {
+      "answered": 50,
+      "answered_correct": 50,
+      "clears_right": 39,
+      "escape_rate_upper_95": 0.0739,
+      "escapes": 0
+     }
+    },
+    "correct": 82,
+    "doses": 89,
+    "doses_with_a_right_key_in_review": 63,
+    "right_flags_in_review": 65
+   },
+   "meta": {
+    "engine": "Jev (TypeSafe API)",
+    "model": "jev-1.13.0",
+    "prompts_sha256": "88fe424d433267fc13457592562d56936224cad10345c5d10025a1d149aaf979",
+    "run": "2026-10-05"
+   },
+   "test": {
+    "by_threshold": {
+     "0.5": {
+      "answered": 63,
+      "answered_correct": 63,
+      "clears_right": 47,
+      "escape_rate_upper_95": 0.0618,
+      "escapes": 0
+     },
+     "0.7": {
+      "answered": 63,
+      "answered_correct": 63,
+      "clears_right": 47,
+      "escape_rate_upper_95": 0.0618,
+      "escapes": 0
+     },
+     "0.8": {
+      "answered": 63,
+      "answered_correct": 63,
+      "clears_right": 47,
+      "escape_rate_upper_95": 0.0618,
+      "escapes": 0
+     },
+     "0.9": {
+      "answered": 56,
+      "answered_correct": 56,
+      "clears_right": 42,
+      "escape_rate_upper_95": 0.0688,
+      "escapes": 0
+     },
+     "0.95": {
+      "answered": 52,
+      "answered_correct": 52,
+      "clears_right": 40,
+      "escape_rate_upper_95": 0.0722,
+      "escapes": 0
+     },
+     "0.99": {
+      "answered": 41,
+      "answered_correct": 41,
+      "clears_right": 33,
+      "escape_rate_upper_95": 0.0868,
+      "escapes": 0
+     }
+    },
+    "correct": 65,
+    "doses": 65,
+    "doses_with_a_right_key_in_review": 49,
+    "right_flags_in_review": 53
+   }
+  }
+ },
+ "labels": {
+  "calibration": 14,
+  "test": 9
+ }
+}
