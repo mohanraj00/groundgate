@@ -316,6 +316,13 @@ def score(items: list[dict[str, Any]], answers: dict[str, Any]) -> dict[str, Any
     return out
 
 
+def cleared(it: dict[str, Any], a: dict[str, Any], t: float) -> tuple[str, str] | None:
+    """What the answer clears at threshold t, and the key whose flag it clears: a dose can have
+    more than one right key, so "right" alone can hide a change of key."""
+    done = clear(it, a, t)
+    return None if done is None else (done, str(chosen_key(it, a["choice"])))
+
+
 def repeat(
     items: list[dict[str, Any]], first: dict[str, Any], again: dict[str, Any], s: dict[str, Any]
 ) -> dict[str, Any]:
@@ -332,7 +339,7 @@ def repeat(
             "threshold": t,
             "test": {"clears_right": test.count("right"), "escapes": test.count("escape")},
             "clears_changed": sum(
-                clear(it, first[it["id"]], t) != clear(it, again[it["id"]], t) for it in items
+                cleared(it, first[it["id"]], t) != cleared(it, again[it["id"]], t) for it in items
             ),
         }
     return {
@@ -428,6 +435,10 @@ def report(check: bool) -> None:
             again = json.loads(path.read_text())
             if again["meta"].get("prompts_sha256") != digest:
                 raise SystemExit(f"{path.name} answers other prompts than the gold; run it again")
+            # a threshold is for one model (hybrid design §9), so a repeat is the same model
+            same = ("engine", "model", "served_model")
+            if any(again["meta"].get(k) != run_["meta"].get(k) for k in same):
+                raise SystemExit(f"{path.name} is from another model than answers-{engine}.json")
             r = repeat(items, run_["answers"], again["answers"], s)
             results["engines"][engine].setdefault("repeats", {})[path.stem] = {
                 "meta": again["meta"],
