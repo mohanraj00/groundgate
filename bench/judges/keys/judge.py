@@ -163,10 +163,11 @@ def jeff_engine(meta: dict[str, Any]) -> Ask:
     served = os.environ.get("JEFF_MODEL")
     if not served:
         raise SystemExit("set JEFF_MODEL to the jeff commit and the weights it serves")
-    meta.update(engine="Jeff (local jeff-serve)", model=served)
     health = JEFF_URL.removesuffix("/v1/systemone") + "/health"
     with urllib.request.urlopen(health, timeout=30) as r:
         name = json.load(r)["model"]
+    # the name the server reports goes in the record too, so a resume can't change the model
+    meta.update(engine="Jeff (local jeff-serve)", model=served, served_model=name)
 
     def ask(st: str, qs: dict[str, Any]) -> dict[str, Any]:
         body = json.dumps({"state": st, "model": name, "questions": qs}).encode()
@@ -272,7 +273,7 @@ def score(items: list[dict[str, Any]], answers: dict[str, Any]) -> dict[str, Any
     out: dict[str, Any] = {}
     for p in ("calibration", "test"):
         rows = [(it, answers[it["id"]]) for it in items if it["part"] == p]
-        flags = sum(bool(set(it["label"]) - set(it["spec_0.3"])) for it, _ in rows)
+        right = [set(it["label"]) - set(it["spec_0.3"]) for it, _ in rows]
         by_t = {}
         for t in THRESHOLDS:
             done = [clear(it, a, t) for it, a in rows]
@@ -286,7 +287,9 @@ def score(items: list[dict[str, Any]], answers: dict[str, Any]) -> dict[str, Any
         out[p] = {
             "doses": len(rows),
             "correct": sum(correct(it, a) for it, a in rows),
-            "doses_with_a_right_key_in_review": flags,
+            "doses_with_a_right_key_in_review": sum(map(bool, right)),
+            # one answer clears at most one flag, so a dose with two right keys keeps one
+            "right_flags_in_review": sum(map(len, right)),
             "by_threshold": by_t,
         }
     for p in ("calibration", "test"):
@@ -354,7 +357,8 @@ def report(check: bool) -> None:
             md += [
                 f"**{p.capitalize()} part.** {r['correct']} of {r['doses']} answers match the "
                 f"label. {r['doses_with_a_right_key_in_review']} doses have a right key that "
-                "spec 0.3 sends to review.",
+                f"spec 0.3 sends to review, with {r['right_flags_in_review']} right flags in all. "
+                "One answer clears at most one flag.",
                 "",
                 "| Confidence at least | Answered | Correct | Flags cleared, right | Escapes |",
                 "|---:|---:|---:|---:|---:|",

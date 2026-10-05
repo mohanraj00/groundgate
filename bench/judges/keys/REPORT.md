@@ -8,7 +8,7 @@ Calibration: 89 doses in 14 labels. Test: 65 doses in 9 labels. Left out: 1 dose
 
 Jev (TypeSafe API), jev-1.13.0, run 2026-10-05.
 
-**Calibration part.** 82 of 89 answers match the label. 63 doses have a right key that spec 0.3 sends to review.
+**Calibration part.** 82 of 89 answers match the label. 63 doses have a right key that spec 0.3 sends to review, with 65 right flags in all. One answer clears at most one flag.
 
 | Confidence at least | Answered | Correct | Flags cleared, right | Escapes |
 |---:|---:|---:|---:|---:|
@@ -19,7 +19,7 @@ Jev (TypeSafe API), jev-1.13.0, run 2026-10-05.
 | 0.95 | 65 | 64 | 49 | 0 |
 | 0.99 | 50 | 50 | 39 | 0 |
 
-**Test part.** 65 of 65 answers match the label. 49 doses have a right key that spec 0.3 sends to review.
+**Test part.** 65 of 65 answers match the label. 49 doses have a right key that spec 0.3 sends to review, with 53 right flags in all. One answer clears at most one flag.
 
 | Confidence at least | Answered | Correct | Flags cleared, right | Escapes |
 |---:|---:|---:|---:|---:|
@@ -42,7 +42,7 @@ Jev (TypeSafe API), jev-1.13.0, run 2026-10-05.
 
 Jeff (local jeff-serve), firelex/jeff d0173b4, mstrasser/Jeff-Gemma4-E2B v1.0, PyTorch on MPS, run 2026-10-05.
 
-**Calibration part.** 51 of 89 answers match the label. 63 doses have a right key that spec 0.3 sends to review.
+**Calibration part.** 51 of 89 answers match the label. 63 doses have a right key that spec 0.3 sends to review, with 65 right flags in all. One answer clears at most one flag.
 
 | Confidence at least | Answered | Correct | Flags cleared, right | Escapes |
 |---:|---:|---:|---:|---:|
@@ -53,7 +53,7 @@ Jeff (local jeff-serve), firelex/jeff d0173b4, mstrasser/Jeff-Gemma4-E2B v1.0, P
 | 0.95 | 0 | 0 | 0 | 0 |
 | 0.99 | 0 | 0 | 0 | 0 |
 
-**Test part.** 40 of 65 answers match the label. 49 doses have a right key that spec 0.3 sends to review.
+**Test part.** 40 of 65 answers match the label. 49 doses have a right key that spec 0.3 sends to review, with 53 right flags in all. One answer clears at most one flag.
 
 | Confidence at least | Answered | Correct | Flags cleared, right | Escapes |
 |---:|---:|---:|---:|---:|

@@ -66,7 +66,8 @@
     },
     "correct": 51,
     "doses": 89,
-    "doses_with_a_right_key_in_review": 63
+    "doses_with_a_right_key_in_review": 63,
+    "right_flags_in_review": 65
    },
    "meta": {
     "engine": "Jeff (local jeff-serve)",
@@ -121,7 +122,8 @@
     },
     "correct": 40,
     "doses": 65,
-    "doses_with_a_right_key_in_review": 49
+    "doses_with_a_right_key_in_review": 49,
+    "right_flags_in_review": 53
    }
   },
   "jev": {
@@ -198,7 +200,8 @@
     },
     "correct": 82,
     "doses": 89,
-    "doses_with_a_right_key_in_review": 63
+    "doses_with_a_right_key_in_review": 63,
+    "right_flags_in_review": 65
    },
    "meta": {
     "engine": "Jev (TypeSafe API)",
@@ -253,7 +256,8 @@
     },
     "correct": 65,
     "doses": 65,
-    "doses_with_a_right_key_in_review": 49
+    "doses_with_a_right_key_in_review": 49,
+    "right_flags_in_review": 53
    }
   }
  },
