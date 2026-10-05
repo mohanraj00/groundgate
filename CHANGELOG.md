@@ -51,6 +51,13 @@ milestone 0.3.
   (`bench/tables`): a wrong key reaches 0 of them, down from 60 with spec 0.2, and every right key
   reaches 3, down from 55. In these tables a value's line rarely names its condition, so the right
   keys go to review with the wrong ones.
+- Digits (#94): in the number rules a digit is an ASCII digit, 0 to 9. Python's `\d` matched
+  every Unicode digit, so `२०००` was read as 2000, and an implementation in a language whose `\d`
+  is ASCII decided the same document differently. A number in other digits now has no token, nor
+  do ASCII digits next to it, and a candidate value in them is invalid. Where a digit only stops a
+  reading or adds a flag, as in a per-unit, any Unicode digit still counts, so other digits can
+  block a value but never make one. Vector `03c-ascii-digits`. The 322 benchmark documents
+  hold no other digits, so every set rescores unchanged.
 - Numbers (#59): a number grouped the Indian way, the last three digits and then pairs, has its
   value: `2,00,000` is 200000 and `1,00,00,000` is 10000000, in the document and in a candidate's
   `value`. A mix of the two groupings, such as `1,23,456,789`, still has none. Vector

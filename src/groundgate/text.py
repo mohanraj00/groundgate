@@ -3,13 +3,16 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 
-_TOKEN = re.compile(r"[-\u2212]?\d[\d,]*(?:\.\d+)?")
+_TOKEN = re.compile(r"[-\u2212]?[0-9][0-9,]*(?:\.[0-9]+)?")
 # ungrouped, grouped in threes ("200,000"), or grouped the Indian way: the last three digits,
 # then pairs ("2,00,000")
-_VALID = re.compile(r"^[-\u2212]?(?:\d{1,3}(?:,\d{3})+|\d{1,2}(?:,\d{2})*,\d{3}|\d+)(?:\.\d+)?$")
+_VALID = re.compile(
+    r"^[-\u2212]?(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]{1,2}(?:,[0-9]{2})*,[0-9]{3}|[0-9]+)(?:\.[0-9]+)?$"
+)
 _SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t\r]*\n")
 _ABBREVIATIONS = [
     "a.m.",
@@ -91,15 +94,41 @@ def _to_decimal(tok: str) -> Decimal | None:
         return None
 
 
+def _letter_or_number(ch: str) -> bool:
+    """A Unicode letter or number: general category L or N (SPEC §4.1)."""
+    return unicodedata.category(ch)[0] in "LN"
+
+
+def _number_char(ch: str) -> bool:
+    """A Unicode number character: general category N (SPEC §4.1)."""
+    return unicodedata.category(ch)[0] == "N"
+
+
+def _other_number_char(ch: str) -> bool:
+    """A number character that is not an ASCII digit."""
+    return _number_char(ch) and not "0" <= ch <= "9"
+
+
+def _other_digits_follow(text: str, i: int) -> bool:
+    """Whether a number character other than 0 to 9 comes at ``i``, or after a "." or "," at
+    ``i``: the ASCII digits before it start a number in other digits, as in "2" + DEVANAGARI
+    ZERO."""
+    if i < len(text) and _other_number_char(text[i]):
+        return True
+    return i + 1 < len(text) and text[i] in ".," and _other_number_char(text[i + 1])
+
+
 def tokens(text: str, start: int = 0, end: int | None = None) -> list[Token]:
     """Number tokens whose characters lie within text[start:end] (SPEC §4.1)."""
     end = len(text) if end is None else end
     out = []
     for m in _TOKEN.finditer(text, start, end):
         s, tok = m.start(), m.group()
-        if tok[0] in "-\u2212" and s > 0 and text[s - 1].isalnum():
+        if tok[0] in "-\u2212" and s > 0 and _letter_or_number(text[s - 1]):
             s, tok = s + 1, tok[1:]
-        if s > 0 and (text[s - 1].isalnum() or text[s - 1] in ".,"):
+        if s > 0 and (_letter_or_number(text[s - 1]) or text[s - 1] in ".,"):
+            continue
+        if _other_digits_follow(text, m.end()):
             continue
         if tok.endswith(","):
             tok = tok[:-1]
