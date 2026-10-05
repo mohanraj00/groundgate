@@ -46,7 +46,11 @@ milestone 0.3.
   sentence. A value in it is at the keys mentioned on its own line, or at no key when the line
   mentions none, so a key swapped within a flattened table goes to review. Before, every value
   in such a table was at every key it mentioned. Vector `17d-table-sentences`, and in
-  `17b-keyed-tables` 40 mg on the hypertension row is no longer at heart failure.
+  `17b-keyed-tables` 40 mg on the hypertension row is no longer at heart failure. Measured on all 62
+  doses in such tables in the FDA labels of the Part D ranking that no rule was written from
+  (`bench/tables`): a wrong key reaches 0 of them, down from 60 with spec 0.2, and every right key
+  reaches 3, down from 55. In these tables a value's line rarely names its condition, so the right
+  keys go to review with the wrong ones.
 - Numbers (#59): a number grouped the Indian way, the last three digits and then pairs, has its
   value: `2,00,000` is 200000 and `1,00,00,000` is 10000000, in the document and in a candidate's
   `value`. A mix of the two groupings, such as `1,23,456,789`, still has none. Vector

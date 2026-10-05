@@ -81,6 +81,8 @@ jobs:
         run: uv run python bench/caps/caps.py score --check
       - name: Keys-set results rescore, spec 0.3 in process and spec 0.2 on the 0.2.0 wheel
         run: uv run python bench/keys/keys.py score --check
+      - name: Tables-set results rescore, spec 0.3 in process and spec 0.2 on the 0.2.0 wheel
+        run: uv run python bench/tables/tables.py score --check
       - name: India-set results rescore, spec 0.3 in process and spec 0.2 on the 0.2.0 wheel
         run: uv run python bench/india/india.py score --check
       - name: Model triage report matches its recorded answers
