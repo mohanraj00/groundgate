@@ -1,0 +1,498 @@
+[
+ {
+  "id": "fda-moxifloxacin:119",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   119,
+   122
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:197",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   197,
+   200
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:230",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   230,
+   233
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:291",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   291,
+   294
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:320",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   320,
+   323
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:369",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   369,
+   372
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:437",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   437,
+   440
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:1142",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   1142,
+   1145
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:1221",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   1221,
+   1224
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:1254",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   1254,
+   1257
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:1315",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   1315,
+   1318
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:1347",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   1347,
+   1350
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:1402",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   1402,
+   1405
+  ]
+ },
+ {
+  "id": "fda-moxifloxacin:1478",
+  "doc": "fda-moxifloxacin",
+  "span": [
+   1478,
+   1481
+  ]
+ },
+ {
+  "id": "fda-clarithromycin:1183",
+  "doc": "fda-clarithromycin",
+  "span": [
+   1183,
+   1186
+  ]
+ },
+ {
+  "id": "fda-clarithromycin:1229",
+  "doc": "fda-clarithromycin",
+  "span": [
+   1229,
+   1232
+  ]
+ },
+ {
+  "id": "fda-clarithromycin:1268",
+  "doc": "fda-clarithromycin",
+  "span": [
+   1268,
+   1271
+  ]
+ },
+ {
+  "id": "fda-clarithromycin:1309",
+  "doc": "fda-clarithromycin",
+  "span": [
+   1309,
+   1312
+  ]
+ },
+ {
+  "id": "fda-clarithromycin:1368",
+  "doc": "fda-clarithromycin",
+  "span": [
+   1368,
+   1371
+  ]
+ },
+ {
+  "id": "fda-clarithromycin:1490",
+  "doc": "fda-clarithromycin",
+  "span": [
+   1490,
+   1493
+  ]
+ },
+ {
+  "id": "fda-clarithromycin:1656",
+  "doc": "fda-clarithromycin",
+  "span": [
+   1656,
+   1659
+  ]
+ },
+ {
+  "id": "fda-clarithromycin:1794",
+  "doc": "fda-clarithromycin",
+  "span": [
+   1794,
+   1797
+  ]
+ },
+ {
+  "id": "fda-linezolid:216",
+  "doc": "fda-linezolid",
+  "span": [
+   216,
+   218
+  ]
+ },
+ {
+  "id": "fda-linezolid:259",
+  "doc": "fda-linezolid",
+  "span": [
+   259,
+   262
+  ]
+ },
+ {
+  "id": "fda-linezolid:505",
+  "doc": "fda-linezolid",
+  "span": [
+   505,
+   507
+  ]
+ },
+ {
+  "id": "fda-linezolid:548",
+  "doc": "fda-linezolid",
+  "span": [
+   548,
+   551
+  ]
+ },
+ {
+  "id": "fda-linezolid:665",
+  "doc": "fda-linezolid",
+  "span": [
+   665,
+   667
+  ]
+ },
+ {
+  "id": "fda-linezolid:706",
+  "doc": "fda-linezolid",
+  "span": [
+   706,
+   708
+  ]
+ },
+ {
+  "id": "fda-linezolid:743",
+  "doc": "fda-linezolid",
+  "span": [
+   743,
+   746
+  ]
+ },
+ {
+  "id": "fda-linezolid:783",
+  "doc": "fda-linezolid",
+  "span": [
+   783,
+   786
+  ]
+ },
+ {
+  "id": "fda-linezolid:1235",
+  "doc": "fda-linezolid",
+  "span": [
+   1235,
+   1237
+  ]
+ },
+ {
+  "id": "fda-linezolid:1282",
+  "doc": "fda-linezolid",
+  "span": [
+   1282,
+   1285
+  ]
+ },
+ {
+  "id": "fda-linezolid:1532",
+  "doc": "fda-linezolid",
+  "span": [
+   1532,
+   1534
+  ]
+ },
+ {
+  "id": "fda-linezolid:1579",
+  "doc": "fda-linezolid",
+  "span": [
+   1579,
+   1582
+  ]
+ },
+ {
+  "id": "fda-linezolid:1700",
+  "doc": "fda-linezolid",
+  "span": [
+   1700,
+   1702
+  ]
+ },
+ {
+  "id": "fda-linezolid:1743",
+  "doc": "fda-linezolid",
+  "span": [
+   1743,
+   1745
+  ]
+ },
+ {
+  "id": "fda-linezolid:1782",
+  "doc": "fda-linezolid",
+  "span": [
+   1782,
+   1785
+  ]
+ },
+ {
+  "id": "fda-linezolid:1824",
+  "doc": "fda-linezolid",
+  "span": [
+   1824,
+   1827
+  ]
+ },
+ {
+  "id": "fda-famciclovir:150",
+  "doc": "fda-famciclovir",
+  "span": [
+   150,
+   154
+  ]
+ },
+ {
+  "id": "fda-famciclovir:267",
+  "doc": "fda-famciclovir",
+  "span": [
+   267,
+   271
+  ]
+ },
+ {
+  "id": "fda-famciclovir:297",
+  "doc": "fda-famciclovir",
+  "span": [
+   297,
+   300
+  ]
+ },
+ {
+  "id": "fda-famciclovir:316",
+  "doc": "fda-famciclovir",
+  "span": [
+   316,
+   319
+  ]
+ },
+ {
+  "id": "fda-famciclovir:433",
+  "doc": "fda-famciclovir",
+  "span": [
+   433,
+   436
+  ]
+ },
+ {
+  "id": "fda-perampanel:105",
+  "doc": "fda-perampanel",
+  "span": [
+   105,
+   106
+  ]
+ },
+ {
+  "id": "fda-perampanel:229",
+  "doc": "fda-perampanel",
+  "span": [
+   229,
+   230
+  ]
+ },
+ {
+  "id": "fda-perampanel:394",
+  "doc": "fda-perampanel",
+  "span": [
+   394,
+   395
+  ]
+ },
+ {
+  "id": "fda-perampanel:402",
+  "doc": "fda-perampanel",
+  "span": [
+   402,
+   404
+  ]
+ },
+ {
+  "id": "fda-perampanel:534",
+  "doc": "fda-perampanel",
+  "span": [
+   534,
+   535
+  ]
+ },
+ {
+  "id": "fda-bromocriptine:5390",
+  "doc": "fda-bromocriptine",
+  "span": [
+   5390,
+   5394
+  ]
+ },
+ {
+  "id": "fda-bromocriptine:5432",
+  "doc": "fda-bromocriptine",
+  "span": [
+   5432,
+   5436
+  ]
+ },
+ {
+  "id": "fda-bromocriptine:5538",
+  "doc": "fda-bromocriptine",
+  "span": [
+   5538,
+   5542
+  ]
+ },
+ {
+  "id": "fda-bromocriptine:5557",
+  "doc": "fda-bromocriptine",
+  "span": [
+   5557,
+   5560
+  ]
+ },
+ {
+  "id": "fda-bromocriptine:5596",
+  "doc": "fda-bromocriptine",
+  "span": [
+   5596,
+   5600
+  ]
+ },
+ {
+  "id": "fda-bromocriptine:5615",
+  "doc": "fda-bromocriptine",
+  "span": [
+   5615,
+   5617
+  ]
+ },
+ {
+  "id": "fda-bromocriptine:5686",
+  "doc": "fda-bromocriptine",
+  "span": [
+   5686,
+   5690
+  ]
+ },
+ {
+  "id": "fda-bromocriptine:5705",
+  "doc": "fda-bromocriptine",
+  "span": [
+   5705,
+   5709
+  ]
+ },
+ {
+  "id": "fda-albendazole:814",
+  "doc": "fda-albendazole",
+  "span": [
+   814,
+   817
+  ]
+ },
+ {
+  "id": "fda-albendazole:946",
+  "doc": "fda-albendazole",
+  "span": [
+   946,
+   948
+  ]
+ },
+ {
+  "id": "fda-albendazole:1031",
+  "doc": "fda-albendazole",
+  "span": [
+   1031,
+   1034
+  ]
+ },
+ {
+  "id": "fda-albendazole:1075",
+  "doc": "fda-albendazole",
+  "span": [
+   1075,
+   1078
+  ]
+ },
+ {
+  "id": "fda-albendazole:1135",
+  "doc": "fda-albendazole",
+  "span": [
+   1135,
+   1137
+  ]
+ },
+ {
+  "id": "fda-albendazole:1220",
+  "doc": "fda-albendazole",
+  "span": [
+   1220,
+   1223
+  ]
+ }
+]

@@ -614,3 +614,14 @@ def test_a_keys_dose_is_a_number_token_before_mg_or_mcg() -> None:
     assert keys.outcome(read, ["Heart Failure", "Angina"]) == "a right key missing and a wrong key"
     assert keys.outcome([], []) == "no key reaches it"
     assert keys.outcome(label, []) == "a right key missing, no wrong key"
+
+
+def test_a_tables_dose_lies_in_a_sentence_with_line_breaks_and_two_keys() -> None:
+    sys.path.insert(0, str(BENCH / "tables"))
+    import tables
+
+    conditions = ["Hypertension", "Heart Failure"]
+    table = "Dosage\nHypertension\n10 mg\nHeart failure\n5 mg\n\nFor hypertension, take 20 mg."
+    assert [table[a:b] for a, b in tables.table_doses_in(table, conditions)] == ["10", "5"]
+    prose = "For hypertension or\nheart failure, take 20 mg.\n\nAdults\ntake\n40 mg\nwith food."
+    assert tables.table_doses_in(prose, conditions) == []

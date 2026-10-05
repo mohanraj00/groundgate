@@ -1,0 +1,166 @@
+{
+  "retrieved": "2026-10-04",
+  "sources": [
+    {
+      "id": "fda-moxifloxacin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/54377276-96bf-4140-9e90-55623ab6b013.xml",
+      "sha256": "e71b72ce1aa224697f453f7bfa2987264ca8217e9c3642af2d91d54975aacdbc",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Community Acquired Pneumonia",
+        "Uncomplicated Skin and Skin Structure Infections",
+        "Complicated Skin and Skin Structure Infections",
+        "Complicated Intra-Abdominal Infections",
+        "Plague",
+        "Acute Bacterial Sinusitis",
+        "Acute Bacterial Exacerbation of Chronic Bronchitis",
+        "Usage"
+      ],
+      "source": "MOXIFLOXACIN HYDROCHLORIDE TABLET, FILM COATED [REMEDYREPACK INC.]; Part D 2024 claims rank 230"
+    },
+    {
+      "id": "fda-clarithromycin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/d836ae7e-fdbf-4dcb-a90d-ede1dcbc3e67.xml",
+      "sha256": "c7a0fb1837334c763d2f690b44c11eda615426053119ace9eb05ac96c8a9ad5f",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Acute Bacterial Exacerbation of Chronic Bronchitis",
+        "Acute Maxillary Sinusitis",
+        "Community-Acquired Pneumonia",
+        "Pharyngitis/Tonsillitis",
+        "Uncomplicated Skin and Skin Structure Infections",
+        "Acute Otitis Media",
+        "Treatment and Prophylaxis of Disseminated Mycobacterial Infections",
+        "Helicobacter pylori  Infection and Duodenal Ulcer Disease",
+        "Limitations of Use",
+        "Usage"
+      ],
+      "source": "CLARITHROMYCIN TABLET, FILM COATED [SPORTPHARM LLC]; Part D 2024 claims rank 481"
+    },
+    {
+      "id": "fda-linezolid",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/3d630d3d-510d-43a4-8703-8b6234831564.xml",
+      "sha256": "05050fd71fcc2ff5637b7f7f73657e823f83687067301ea1201da0b7fb123012",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Nosocomial Pneumonia",
+        "Community-acquired Pneumonia",
+        "Complicated Skin and Skin Structure Infections",
+        "Uncomplicated Skin and Skin Structure Infections",
+        "Vancomycin-resistant Enterococcus faecium Infections",
+        "Limitations of Use",
+        "Usage"
+      ],
+      "source": "LINEZOLID TABLET, FILM COATED [A-S MEDICATION SOLUTIONS]; Part D 2024 claims rank 525"
+    },
+    {
+      "id": "fda-famciclovir",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5723f50e-b0fa-65f0-e063-6294a90a350f.xml",
+      "sha256": "62f6e7fe3221a0ae72d68a6f0ea0826c6ae4ef1127bc769157c1d5d6fc9c5721",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Immunocompetent Adult Patients",
+        "HIV-Infected Adult Patients"
+      ],
+      "source": "FAMCICLOVIR TABLET, FILM COATED [AVKARE]; Part D 2024 claims rank 556"
+    },
+    {
+      "id": "fda-perampanel",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/bc8f7cf2-c19c-4235-859f-9ff1dd21908e.xml",
+      "sha256": "b35cd175a93d2dfa18bd49236291b288bbea93665c1b7af0d7aa4734dc287b71",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Partial-Onset Seizures",
+        "Primary Generalized Tonic-Clonic Seizures"
+      ],
+      "source": "PERAMPANEL TABLET, FILM COATED [TEVA PHARMACEUTICALS, INC.]; Part D 2024 claims rank 686"
+    },
+    {
+      "id": "fda-bromocriptine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/d69003ee-0b6f-47a9-834e-ba59c02f566c.xml",
+      "sha256": "fad45bb00bc2517b33c609bc6b7a9b3083dc39817de15ecf90ca306db22696bd",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Hyperprolactinemia-Associated Dysfunction",
+        "Prolactin-Secreting Adenomas",
+        "Acromegaly",
+        "Idiopathic Parkinson’s Disease or Postencephalitic Parkinsonism"
+      ],
+      "source": "BROMOCRIPTINE MESYLATE CAPSULE [ZYDUS PHARMACEUTICALS USA INC.]; Part D 2024 claims rank 769"
+    },
+    {
+      "id": "fda-albendazole",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/8de337eb-92e1-15b5-e053-2a95a90ac4f1.xml",
+      "sha256": "0dc8616697741bbedabd8ccc452c8635bbf8808e305bc5452502320b997ef7ed",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Neurocysticercosis",
+        "Hydatid Disease"
+      ],
+      "source": "ALBENDAZOLE TABLET [GOLDEN STATE MEDICAL SUPPLY, INC.]; Part D 2024 claims rank 962"
+    }
+  ]
+}
