@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 
@@ -71,7 +72,7 @@ _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS_RUN = re.compile(r"\s*")
 _CONTINUES = "$€£₹"
 # "No." before a code such as "DEA-1086": a word that holds a digit or starts with two capitals
-_CODE = re.compile(r"\S*?[0-9]|[A-Z]{2}")
+_CODE = re.compile(r"\S*?\d|[A-Z]{2}")
 _WS = re.compile(r"\s+")
 _HYPHEN_BREAK = re.compile(r"-\n\s*")
 _WINDOW = 40
@@ -93,19 +94,31 @@ def _to_decimal(tok: str) -> Decimal | None:
         return None
 
 
+def _letter_or_number(ch: str) -> bool:
+    """A Unicode letter or number: general category L or N (SPEC §4.1)."""
+    return unicodedata.category(ch)[0] in "LN"
+
+
+def _number_char(ch: str) -> bool:
+    """A Unicode number character: general category N (SPEC §4.1)."""
+    return unicodedata.category(ch)[0] == "N"
+
+
 def tokens(text: str, start: int = 0, end: int | None = None) -> list[Token]:
     """Number tokens whose characters lie within text[start:end] (SPEC §4.1)."""
     end = len(text) if end is None else end
     out = []
     for m in _TOKEN.finditer(text, start, end):
         s, tok = m.start(), m.group()
-        if tok[0] in "-\u2212" and s > 0 and text[s - 1].isalnum():
+        if tok[0] in "-\u2212" and s > 0 and _letter_or_number(text[s - 1]):
             s, tok = s + 1, tok[1:]
-        if s > 0 and (text[s - 1].isalnum() or text[s - 1] in ".,"):
+        if s > 0 and (_letter_or_number(text[s - 1]) or text[s - 1] in ".,"):
             continue
         if tok.endswith(","):
             tok = tok[:-1]
         e = s + len(tok)
+        if e < len(text) and _number_char(text[e]):
+            continue  # the ASCII start of a number in other digits
         whole = _TOKEN.match(text, s)
         if whole and s + len(whole.group().removesuffix(",")) > end:
             continue  # the number runs past the region: never read a prefix of it
@@ -220,11 +233,11 @@ _BEFORE_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in
 _AFTER_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in _AFTER.items()}
 _INVERT = {"gt": "le", "le": "gt", "lt": "ge", "ge": "lt"}
 _NEGATION_END = re.compile(r"\b(?:not|cannot|can['\u2019]t)\s+(?:be\s+)?$", re.I)
-_RANGE_NEXT = re.compile(r"^\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?(?=[-\u2212]?[0-9])", re.I)
+_RANGE_NEXT = re.compile(r"^\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
 # one unit or scale word may stand before a word connector: "30 mg to 45", "$1 million to $2"
-_UNIT_WORD = r"(?:[^\s0-9]{1,12}\s+(?=(?:through|thru|to|and)\b))?"
+_UNIT_WORD = r"(?:[^\s\d]{1,12}\s+(?=(?:through|thru|to|and)\b))?"
 _RANGE_PREV = re.compile(rf"\s*{_UNIT_WORD}(?:through|thru|to|-|\u2013)\s*\S{{0,4}}?", re.I)
-_AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?[0-9])", re.I)
+_AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
 _AND_PREV = re.compile(rf"\s*{_UNIT_WORD}and\s*\S{{0,4}}?", re.I)
 _BETWEEN_END = re.compile(r"\bbetween\s*\S{0,4}?$", re.I)
 _CHANGE = (
@@ -300,7 +313,7 @@ def _before_qualifiers(text: str, s0: int, start: int, end: int) -> set[str]:
 
 def _strip_unit_suffix(rest: str) -> str:
     # "30 mg to 45 mg": skip a short unit word before the range connector.
-    m = re.match(r"^\s*[^\s0-9]{1,12}(?=\s+(?:through|thru|to|and)\b)", rest)
+    m = re.match(r"^\s*[^\s\d]{1,12}(?=\s+(?:through|thru|to|and)\b)", rest)
     return rest[m.end() :] if m else rest
 
 
@@ -346,7 +359,7 @@ def builtin_units() -> dict[str, tuple[list[str], list[str]]]:
 
 
 _PER_UNIT = re.compile(
-    r"\s*(?:/|per\b)\s*(?:[0-9]+(?:\.[0-9]+)?\s*)?"
+    r"\s*(?:/|per\b)\s*(?:\d+(?:\.\d+)?\s*)?"
     r"(?:kg|kilograms?|lbs?|pounds?|m2|m\u00b2|m\^2|square\s+met(?:er|re)s?"
     r"|mL|dL|L|lit(?:er|re)s?)(?![A-Za-z])",
     re.I,

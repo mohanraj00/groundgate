@@ -146,13 +146,18 @@ Coverage is per field, not per key.
 
 ### 4.1 Numbers
 
-In these rules a digit, and `\d`, is an ASCII digit, `0` to `9`. Other digits, such as the
-Devanagari `२`, are not digits here, so `२०००` is not a number token and a candidate value written
-in them is invalid. They wait for a locale input (#60).
+In the rules that make a value, a digit, and `\d`, is an ASCII digit, `0` to `9`. Other digits,
+such as the Devanagari `२`, are not digits there, so `२०००` is not a number token and a candidate
+value written in them is invalid. They wait for a locale input (#60). In the rules that only stop
+a reading or add a flag (the per-unit check of §4.3, the range checks of §4.2 and the join before
+a code in §4.2), `\d` is any Unicode decimal digit (general category Nd), so a number in other
+digits can block a value but never make one. A **letter or number** is a character of Unicode
+general category L or N.
 
-A **number token** is a maximal match of `[-−]?\d[\d,]*(\.\d+)?` that is not preceded by a letter,
-digit, `.` or `,`, with one trailing `,` dropped. A leading `-` or `−` (U+2212) counts only when
-it is not preceded by a letter or digit. The token has a value when its digits are either
+A **number token** is a maximal match of `[-−]?\d[\d,]*(\.\d+)?` that is not preceded by a letter
+or number, `.` or `,`, with one trailing `,` dropped, and that is not followed by a number
+character (general category N), so ASCII digits next to other digits are no token. A leading `-`
+or `−` (U+2212) counts only when it is not preceded by a letter or number. The token has a value when its digits are either
 ungrouped (`\d+`), grouped in threes after the first group (`\d{1,3}(,\d{3})+`), or grouped the
 Indian way, the last three digits and then pairs (`\d{1,2}(,\d{2})*,\d{3}`, so `2,00,000` is
 200000 and `1,00,00,000` is 10000000); otherwise it has **no** value (`252,0000` never equals

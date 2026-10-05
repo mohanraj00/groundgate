@@ -1,7 +1,7 @@
 {
  "name": "03c-ascii-digits",
- "description": "A digit is an ASCII digit, 0 to 9. A number in other digits, such as Devanagari, is not a number token, and a candidate value in other digits is invalid (spec 0.3).",
- "document": "The limit is २००० rupees. The fee is 300 rupees.",
+ "description": "A digit is an ASCII digit, 0 to 9. A number in other digits, such as Devanagari, is not a number token, nor are ASCII digits next to it, and a candidate value in other digits is invalid. Other digits still block a reading, as in a per-unit (spec 0.3).",
+ "document": "The limit is २००० rupees. The fee is 300 rupees. The cap is २2000 rupees. The floor is 2000२ rupees. Give 250 mg/५ mL.",
  "schema": {
   "fields": {
    "limit": {
@@ -15,6 +15,18 @@
    "fee_written": {
     "type": "integer",
     "unit": "INR"
+   },
+   "cap": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "floor": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "dose": {
+    "type": "number",
+    "unit": "mg"
    }
   }
  },
@@ -52,6 +64,39 @@
     "end": 48,
     "text": "300"
    }
+  },
+  {
+   "id": "d4",
+   "field": "cap",
+   "value": "2000",
+   "unit": "INR",
+   "evidence": {
+    "start": 71,
+    "end": 75,
+    "text": "2000"
+   }
+  },
+  {
+   "id": "d5",
+   "field": "floor",
+   "value": "2000",
+   "unit": "INR",
+   "evidence": {
+    "start": 97,
+    "end": 101,
+    "text": "2000"
+   }
+  },
+  {
+   "id": "d6",
+   "field": "dose",
+   "value": "250",
+   "unit": "mg",
+   "evidence": {
+    "start": 118,
+    "end": 124,
+    "text": "250 mg"
+   }
   }
  ],
  "expected": {
@@ -70,6 +115,24 @@
     "outcome": "rejected",
     "codes": [
      "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
     ]
    }
   ],

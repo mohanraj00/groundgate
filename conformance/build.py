@@ -229,13 +229,18 @@ vector(
 vector(
     "03c-ascii-digits",
     "A digit is an ASCII digit, 0 to 9. A number in other digits, such as Devanagari, is not a "
-    "number token, and a candidate value in other digits is invalid (spec 0.3).",
-    "The limit is \u0968\u0966\u0966\u0966 rupees. The fee is 300 rupees.",
+    "number token, nor are ASCII digits next to it, and a candidate value in other digits is "
+    "invalid. Other digits still block a reading, as in a per-unit (spec 0.3).",
+    "The limit is \u0968\u0966\u0966\u0966 rupees. The fee is 300 rupees. The cap is "
+    "\u09682000 rupees. The floor is 2000\u0968 rupees. Give 250 mg/\u096b mL.",
     {
         "fields": {
             "limit": {"type": "integer", "unit": "INR"},
             "fee": {"type": "integer", "unit": "INR"},
             "fee_written": {"type": "integer", "unit": "INR"},
+            "cap": {"type": "integer", "unit": "INR"},
+            "floor": {"type": "integer", "unit": "INR"},
+            "dose": {"type": "number", "unit": "mg"},
         }
     },
     [
@@ -257,6 +262,11 @@ vector(
             q("300"),
             ("rejected", ["TYPE_INVALID"]),
         ),
+        # ASCII digits next to other digits are part of a number in other digits: no token
+        c("d4", "cap", "2000", "INR", q("2000"), ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("d5", "floor", "2000", "INR", q("2000", n=2), ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        # other digits still block: "mg/5 mL" in Devanagari is a concentration, not a dose
+        c("d6", "dose", "250", "mg", q("250 mg"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
     ],
 )
 
