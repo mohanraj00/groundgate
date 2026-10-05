@@ -149,7 +149,7 @@ These have no value, so a candidate that cites only them is rejected `VALUE_NOT_
 | `252,0000`, `1,23,456,789` | the groups are malformed, or they mix the two groupings |
 | `२०००`, `2,०००` | other digits, such as Devanagari, wait for a locale input (#60), and ASCII digits next to them are no number |
 
-A candidate value written in other digits, such as `"२०००"`, is `CANDIDATE_INVALID`.
+A candidate value written in other digits, such as `"२०००"`, is `TYPE_INVALID` for a number field.
 
 These rules are for English text. Other number formats need locale packs, which are a design and
 not yet code ([design/locale-packs.md](design/locale-packs.md)).
