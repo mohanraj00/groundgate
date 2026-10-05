@@ -1,0 +1,629 @@
+{
+ "answers": {
+  "keys:fda-anastrozole:1031": {
+   "choice": "none",
+   "confidence": 0.71
+  },
+  "keys:fda-anastrozole:1145": {
+   "choice": "none",
+   "confidence": 0.78
+  },
+  "keys:fda-anastrozole:132": {
+   "choice": "none",
+   "confidence": 0.91
+  },
+  "keys:fda-carbamazepine:2373": {
+   "choice": "k1",
+   "confidence": 0.98
+  },
+  "keys:fda-carbamazepine:2467": {
+   "choice": "k1",
+   "confidence": 0.94
+  },
+  "keys:fda-carbamazepine:2525": {
+   "choice": "k1",
+   "confidence": 0.98
+  },
+  "keys:fda-carbamazepine:2731": {
+   "choice": "k1",
+   "confidence": 0.28
+  },
+  "keys:fda-carbamazepine:2784": {
+   "choice": "none",
+   "confidence": 0.43
+  },
+  "keys:fda-carbamazepine:2845": {
+   "choice": "none",
+   "confidence": 0.45
+  },
+  "keys:fda-cefuroxime:576": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-cefuroxime:656": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "keys:fda-cefuroxime:752": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "keys:fda-cefuroxime:762": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "keys:fda-cefuroxime:836": {
+   "choice": "k5",
+   "confidence": 0.99
+  },
+  "keys:fda-cefuroxime:846": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "keys:fda-doxazosin:147": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "keys:fda-doxazosin:226": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "keys:fda-doxazosin:281": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "keys:fda-doxazosin:689": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-doxazosin:78": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-doxazosin:873": {
+   "choice": "k1",
+   "confidence": 0.98
+  },
+  "keys:fda-esomeprazole:194": {
+   "choice": "k1",
+   "confidence": 0.97
+  },
+  "keys:fda-esomeprazole:203": {
+   "choice": "k1",
+   "confidence": 0.92
+  },
+  "keys:fda-esomeprazole:315": {
+   "choice": "k1",
+   "confidence": 0.96
+  },
+  "keys:fda-esomeprazole:324": {
+   "choice": "k1",
+   "confidence": 0.84
+  },
+  "keys:fda-esomeprazole:397": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "keys:fda-esomeprazole:501": {
+   "choice": "k3",
+   "confidence": 0.99
+  },
+  "keys:fda-fenofibrate:168": {
+   "choice": "k2",
+   "confidence": 0.98
+  },
+  "keys:fda-fenofibrate:177": {
+   "choice": "k2",
+   "confidence": 0.98
+  },
+  "keys:fda-fenofibrate:1809": {
+   "choice": "k2",
+   "confidence": 0.44
+  },
+  "keys:fda-fenofibrate:212": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "keys:fda-fenofibrate:270": {
+   "choice": "none",
+   "confidence": 0.93
+  },
+  "keys:fda-fenofibrate:97": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "keys:fda-irbesartan:117": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "keys:fda-irbesartan:338": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "keys:fda-irbesartan:406": {
+   "choice": "k1",
+   "confidence": 0.98
+  },
+  "keys:fda-irbesartan:561": {
+   "choice": "k2",
+   "confidence": 0.99
+  },
+  "keys:fda-irbesartan:62": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "keys:fda-irbesartan:72": {
+   "choice": "k1",
+   "confidence": 0.97
+  },
+  "keys:fda-lansoprazole:1106": {
+   "choice": "k2",
+   "confidence": 0.99
+  },
+  "keys:fda-lansoprazole:1119": {
+   "choice": "k2",
+   "confidence": 0.99
+  },
+  "keys:fda-lansoprazole:1126": {
+   "choice": "k2",
+   "confidence": 0.94
+  },
+  "keys:fda-lansoprazole:1335": {
+   "choice": "k4",
+   "confidence": 0.86
+  },
+  "keys:fda-lansoprazole:795": {
+   "choice": "k1",
+   "confidence": 0.91
+  },
+  "keys:fda-lansoprazole:801": {
+   "choice": "k3",
+   "confidence": 0.94
+  },
+  "keys:fda-levofloxacin:585": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "keys:fda-levofloxacin:635": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "keys:fda-levofloxacin:685": {
+   "choice": "k3",
+   "confidence": 0.99
+  },
+  "keys:fda-levofloxacin:717": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "keys:fda-levofloxacin:757": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "keys:fda-levofloxacin:808": {
+   "choice": "k6",
+   "confidence": 1.0
+  },
+  "keys:fda-methotrexate:302": {
+   "choice": "none",
+   "confidence": 0.45
+  },
+  "keys:fda-methotrexate:443": {
+   "choice": "k1",
+   "confidence": 0.38
+  },
+  "keys:fda-methotrexate:452": {
+   "choice": "k1",
+   "confidence": 0.53
+  },
+  "keys:fda-methotrexate:493": {
+   "choice": "k1",
+   "confidence": 0.56
+  },
+  "keys:fda-methotrexate:637": {
+   "choice": "k1",
+   "confidence": 0.65
+  },
+  "keys:fda-methotrexate:789": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "keys:fda-mirabegron:1954": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-mirabegron:2060": {
+   "choice": "k1",
+   "confidence": 0.97
+  },
+  "keys:fda-mirabegron:410": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-mirabegron:527": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "keys:fda-mirabegron:763": {
+   "choice": "k2",
+   "confidence": 0.98
+  },
+  "keys:fda-mirabegron:873": {
+   "choice": "k2",
+   "confidence": 0.95
+  },
+  "keys:fda-olanzapine:106": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-olanzapine:195": {
+   "choice": "k1",
+   "confidence": 0.81
+  },
+  "keys:fda-olanzapine:220": {
+   "choice": "k1",
+   "confidence": 0.85
+  },
+  "keys:fda-olanzapine:314": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "keys:fda-olanzapine:421": {
+   "choice": "k2",
+   "confidence": 0.95
+  },
+  "keys:fda-olanzapine:80": {
+   "choice": "k1",
+   "confidence": 0.98
+  },
+  "keys:fda-risperidone:176": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-risperidone:186": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-risperidone:196": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "keys:fda-risperidone:206": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-risperidone:245": {
+   "choice": "k1",
+   "confidence": 0.98
+  },
+  "keys:fda-risperidone:259": {
+   "choice": "k1",
+   "confidence": 0.96
+  },
+  "keys:fda-ropinirole:239": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-ropinirole:307": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-ropinirole:374": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "keys:fda-ropinirole:510": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "keys:fda-ropinirole:600": {
+   "choice": "k2",
+   "confidence": 0.98
+  },
+  "keys:fda-ropinirole:672": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "keys:fda-torsemide:147": {
+   "choice": "k1",
+   "confidence": 0.87
+  },
+  "keys:fda-torsemide:223": {
+   "choice": "k1",
+   "confidence": 0.65
+  },
+  "keys:fda-torsemide:280": {
+   "choice": "k1",
+   "confidence": 0.72
+  },
+  "keys:fda-torsemide:357": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-torsemide:414": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "keys:fda-torsemide:90": {
+   "choice": "k1",
+   "confidence": 0.9
+  },
+  "keys:fda-valacyclovir:122": {
+   "choice": "k2",
+   "confidence": 0.9
+  },
+  "keys:fda-valacyclovir:134": {
+   "choice": "k2",
+   "confidence": 0.68
+  },
+  "keys:fda-valacyclovir:182": {
+   "choice": "k2",
+   "confidence": 0.54
+  },
+  "keys:fda-valacyclovir:479": {
+   "choice": "k1",
+   "confidence": 0.85
+  },
+  "keys:fda-valacyclovir:671": {
+   "choice": "k1",
+   "confidence": 0.94
+  },
+  "keys:fda-valacyclovir:689": {
+   "choice": "k1",
+   "confidence": 0.94
+  },
+  "tables:fda-albendazole:1031": {
+   "choice": "k2",
+   "confidence": 0.99
+  },
+  "tables:fda-albendazole:1075": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "tables:fda-albendazole:1135": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "tables:fda-albendazole:1220": {
+   "choice": "k1",
+   "confidence": 0.85
+  },
+  "tables:fda-albendazole:814": {
+   "choice": "k2",
+   "confidence": 0.99
+  },
+  "tables:fda-albendazole:946": {
+   "choice": "k2",
+   "confidence": 0.99
+  },
+  "tables:fda-bromocriptine:5390": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "tables:fda-bromocriptine:5432": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "tables:fda-bromocriptine:5538": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "tables:fda-bromocriptine:5557": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "tables:fda-bromocriptine:5596": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "tables:fda-bromocriptine:5615": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "tables:fda-bromocriptine:5686": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "tables:fda-bromocriptine:5705": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "tables:fda-clarithromycin:1183": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "tables:fda-clarithromycin:1229": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "tables:fda-clarithromycin:1268": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "tables:fda-clarithromycin:1309": {
+   "choice": "k4",
+   "confidence": 0.99
+  },
+  "tables:fda-clarithromycin:1368": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "tables:fda-clarithromycin:1490": {
+   "choice": "k7",
+   "confidence": 0.99
+  },
+  "tables:fda-clarithromycin:1656": {
+   "choice": "k8",
+   "confidence": 0.99
+  },
+  "tables:fda-clarithromycin:1794": {
+   "choice": "k8",
+   "confidence": 0.97
+  },
+  "tables:fda-famciclovir:150": {
+   "choice": "k1",
+   "confidence": 0.96
+  },
+  "tables:fda-famciclovir:267": {
+   "choice": "k1",
+   "confidence": 0.96
+  },
+  "tables:fda-famciclovir:297": {
+   "choice": "k1",
+   "confidence": 0.97
+  },
+  "tables:fda-famciclovir:316": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "tables:fda-famciclovir:433": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "tables:fda-linezolid:1235": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "tables:fda-linezolid:1282": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "tables:fda-linezolid:1532": {
+   "choice": "k5",
+   "confidence": 0.39
+  },
+  "tables:fda-linezolid:1579": {
+   "choice": "k5",
+   "confidence": 0.89
+  },
+  "tables:fda-linezolid:1700": {
+   "choice": "k4",
+   "confidence": 0.98
+  },
+  "tables:fda-linezolid:1743": {
+   "choice": "k4",
+   "confidence": 0.99
+  },
+  "tables:fda-linezolid:1782": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "tables:fda-linezolid:1824": {
+   "choice": "k4",
+   "confidence": 0.98
+  },
+  "tables:fda-linezolid:216": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "tables:fda-linezolid:259": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "tables:fda-linezolid:505": {
+   "choice": "k5",
+   "confidence": 0.81
+  },
+  "tables:fda-linezolid:548": {
+   "choice": "k5",
+   "confidence": 0.83
+  },
+  "tables:fda-linezolid:665": {
+   "choice": "k4",
+   "confidence": 0.98
+  },
+  "tables:fda-linezolid:706": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "tables:fda-linezolid:743": {
+   "choice": "k4",
+   "confidence": 0.99
+  },
+  "tables:fda-linezolid:783": {
+   "choice": "k4",
+   "confidence": 0.99
+  },
+  "tables:fda-moxifloxacin:1142": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:119": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:1221": {
+   "choice": "k2",
+   "confidence": 0.98
+  },
+  "tables:fda-moxifloxacin:1254": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:1315": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:1347": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:1402": {
+   "choice": "k6",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:1478": {
+   "choice": "k7",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:197": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:230": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:291": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:320": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:369": {
+   "choice": "k6",
+   "confidence": 1.0
+  },
+  "tables:fda-moxifloxacin:437": {
+   "choice": "k7",
+   "confidence": 1.0
+  },
+  "tables:fda-perampanel:105": {
+   "choice": "none",
+   "confidence": 0.97
+  },
+  "tables:fda-perampanel:229": {
+   "choice": "k1",
+   "confidence": 0.73
+  },
+  "tables:fda-perampanel:394": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "tables:fda-perampanel:402": {
+   "choice": "k1",
+   "confidence": 0.99
+  },
+  "tables:fda-perampanel:534": {
+   "choice": "k2",
+   "confidence": 1.0
+  }
+ },
+ "meta": {
+  "engine": "Jev (TypeSafe API)",
+  "model": "jev-1.13.0",
+  "run": "2026-10-05"
+ }
+}

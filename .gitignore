@@ -21,3 +21,4 @@ spikes/*/sources/*.xml
 # benchmark downloads (hash-pinned in each set's sources.json)
 bench/.cache/
 bench/*/.cache/
+bench/judges/keys/.answers-*.partial.json

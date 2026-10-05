@@ -4,6 +4,7 @@ against the labels and the spec 0.3 readings. The plan is on #67.
 
     uv run python bench/judges/keys/judge.py split       # split.json, before any model run
     TYPESAFE_API_KEY=... uv run python bench/judges/keys/judge.py run jev      # TypeSafe API
+    JEFF_MODEL="..." uv run python bench/judges/keys/judge.py run jeff   # a local jeff-serve
     LAYA_REVISION=7b928d828b7b0e022f929d9bd2e44165aa270148 \\
     uv run --isolated --no-project --python 3.12 --with laya==0.3.26 \\
         python bench/judges/keys/judge.py run laya       # local, on the CPU
@@ -21,6 +22,8 @@ import datetime
 import hashlib
 import json
 import os
+import time
+import urllib.error
 import urllib.request
 from collections.abc import Callable
 from pathlib import Path
@@ -33,7 +36,8 @@ THRESHOLDS = (0.5, 0.7, 0.8, 0.9, 0.95, 0.99)
 LAYA_MODEL = "english"
 JEV_MODEL = "jev-1.13.0"
 JEV_URL = "https://api.typesafe.ai/v1/systemone"
-ENGINES = {"jev": "Jev", "laya": "Laya"}
+ENGINES = {"jev": "Jev", "jeff": "Jeff", "laya": "Laya"}
+JEFF_URL = os.environ.get("JEFF_URL", "http://localhost:8790/v1/systemone")
 NONE = "none"
 
 Ask = Callable[[str, dict[str, Any]], dict[str, Any]]
@@ -147,19 +151,56 @@ def jev_engine(meta: dict[str, Any]) -> Ask:
     return ask
 
 
+def jeff_engine(meta: dict[str, Any]) -> Ask:
+    """A local jeff-serve, which takes the request format of Jev. JEFF_MODEL names the code commit
+    and the weights it serves, for the run record."""
+    served = os.environ.get("JEFF_MODEL")
+    if not served:
+        raise SystemExit("set JEFF_MODEL to the jeff commit and the weights it serves")
+    meta.update(engine="Jeff (local jeff-serve)", model=served)
+    health = JEFF_URL.removesuffix("/v1/systemone") + "/health"
+    with urllib.request.urlopen(health, timeout=30) as r:
+        name = json.load(r)["model"]
+
+    def ask(st: str, qs: dict[str, Any]) -> dict[str, Any]:
+        body = json.dumps({"state": st, "model": name, "questions": qs}).encode()
+        req = urllib.request.Request(
+            JEFF_URL, data=body, headers={"Content-Type": "application/json"}
+        )
+        with urllib.request.urlopen(req, timeout=120) as r:
+            a = json.load(r)["answers"]["key"]
+        return {"choice": a["choice"], "confidence": a["confidence"]}
+
+    return ask
+
+
 def run(engine: str) -> None:
     if not (HERE / "split.json").exists():
         raise SystemExit("run judge.py split first, before any model run")
     meta: dict[str, Any] = {"run": datetime.date.today().isoformat()}
-    ask = laya_engine(meta) if engine == "laya" else jev_engine(meta)
-    answers = {}
+    engines = {"laya": laya_engine, "jev": jev_engine, "jeff": jeff_engine}
+    ask = engines[engine](meta)
+    # answers so far, so that a stopped run goes on where it stopped
+    partial = HERE / f".answers-{engine}.partial.json"
+    answers = json.loads(partial.read_text()) if partial.exists() else {}
     items = gold()
     for n, it in enumerate(items, 1):
-        a = ask(state(it), question(it["keys"]))
+        if it["id"] in answers:
+            continue
+        for attempt in range(4):
+            try:
+                a = ask(state(it), question(it["keys"]))
+                break
+            except (TimeoutError, urllib.error.URLError) as e:
+                if attempt == 3:
+                    raise SystemExit(f"{it['id']}: {e}; run again to go on") from e
+                time.sleep(5 * (attempt + 1))
         answers[it["id"]] = {"choice": a["choice"], "confidence": round(a["confidence"], 4)}
+        partial.write_text(json.dumps(answers))
         print(f"{n}/{len(items)}", end="\r", flush=True)
     out = {"meta": meta, "answers": answers}
     (HERE / f"answers-{engine}.json").write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
+    partial.unlink()
     print(f"\nwrote answers-{engine}.json")
 
 

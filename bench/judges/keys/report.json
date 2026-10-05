@@ -1,0 +1,214 @@
+{
+ "doses": {
+  "calibration": 89,
+  "test": 66
+ },
+ "engines": {
+  "jeff": {
+   "calibration": {
+    "by_threshold": {
+     "0.5": {
+      "answered": 31,
+      "answered_correct": 17,
+      "clears_right": 12,
+      "escapes": 6
+     },
+     "0.7": {
+      "answered": 17,
+      "answered_correct": 10,
+      "clears_right": 10,
+      "escapes": 3
+     },
+     "0.8": {
+      "answered": 11,
+      "answered_correct": 5,
+      "clears_right": 5,
+      "escapes": 3
+     },
+     "0.9": {
+      "answered": 3,
+      "answered_correct": 1,
+      "clears_right": 1,
+      "escapes": 0
+     },
+     "0.95": {
+      "answered": 0,
+      "answered_correct": 0,
+      "clears_right": 0,
+      "escapes": 0
+     },
+     "0.99": {
+      "answered": 0,
+      "answered_correct": 0,
+      "clears_right": 0,
+      "escapes": 0
+     }
+    },
+    "correct": 51,
+    "doses": 89,
+    "doses_with_a_right_key_in_review": 63
+   },
+   "meta": {
+    "engine": "Jeff (local jeff-serve)",
+    "model": "firelex/jeff d0173b4, mstrasser/Jeff-Gemma4-E2B v1.0, PyTorch on MPS",
+    "run": "2026-10-05"
+   },
+   "test": {
+    "by_threshold": {
+     "0.5": {
+      "answered": 37,
+      "answered_correct": 25,
+      "clears_right": 19,
+      "escapes": 11
+     },
+     "0.7": {
+      "answered": 23,
+      "answered_correct": 17,
+      "clears_right": 14,
+      "escapes": 6
+     },
+     "0.8": {
+      "answered": 17,
+      "answered_correct": 12,
+      "clears_right": 10,
+      "escapes": 5
+     },
+     "0.9": {
+      "answered": 4,
+      "answered_correct": 2,
+      "clears_right": 2,
+      "escapes": 2
+     },
+     "0.95": {
+      "answered": 0,
+      "answered_correct": 0,
+      "clears_right": 0,
+      "escapes": 0
+     },
+     "0.99": {
+      "answered": 0,
+      "answered_correct": 0,
+      "clears_right": 0,
+      "escapes": 0
+     }
+    },
+    "correct": 41,
+    "doses": 66,
+    "doses_with_a_right_key_in_review": 50
+   },
+   "test_at_threshold": {
+    "answered": 4,
+    "answered_correct": 2,
+    "clears_right": 2,
+    "escape_rate_upper_95": 0.9024,
+    "escapes": 2
+   },
+   "threshold": 0.9
+  },
+  "jev": {
+   "calibration": {
+    "by_threshold": {
+     "0.5": {
+      "answered": 84,
+      "answered_correct": 80,
+      "clears_right": 57,
+      "escapes": 0
+     },
+     "0.7": {
+      "answered": 78,
+      "answered_correct": 74,
+      "clears_right": 54,
+      "escapes": 0
+     },
+     "0.8": {
+      "answered": 74,
+      "answered_correct": 72,
+      "clears_right": 53,
+      "escapes": 0
+     },
+     "0.9": {
+      "answered": 71,
+      "answered_correct": 69,
+      "clears_right": 51,
+      "escapes": 0
+     },
+     "0.95": {
+      "answered": 65,
+      "answered_correct": 64,
+      "clears_right": 49,
+      "escapes": 0
+     },
+     "0.99": {
+      "answered": 50,
+      "answered_correct": 50,
+      "clears_right": 39,
+      "escapes": 0
+     }
+    },
+    "correct": 82,
+    "doses": 89,
+    "doses_with_a_right_key_in_review": 63
+   },
+   "meta": {
+    "engine": "Jev (TypeSafe API)",
+    "model": "jev-1.13.0",
+    "run": "2026-10-05"
+   },
+   "test": {
+    "by_threshold": {
+     "0.5": {
+      "answered": 64,
+      "answered_correct": 64,
+      "clears_right": 48,
+      "escapes": 0
+     },
+     "0.7": {
+      "answered": 64,
+      "answered_correct": 64,
+      "clears_right": 48,
+      "escapes": 0
+     },
+     "0.8": {
+      "answered": 64,
+      "answered_correct": 64,
+      "clears_right": 48,
+      "escapes": 0
+     },
+     "0.9": {
+      "answered": 57,
+      "answered_correct": 57,
+      "clears_right": 43,
+      "escapes": 0
+     },
+     "0.95": {
+      "answered": 52,
+      "answered_correct": 52,
+      "clears_right": 40,
+      "escapes": 0
+     },
+     "0.99": {
+      "answered": 41,
+      "answered_correct": 41,
+      "clears_right": 33,
+      "escapes": 0
+     }
+    },
+    "correct": 66,
+    "doses": 66,
+    "doses_with_a_right_key_in_review": 50
+   },
+   "test_at_threshold": {
+    "answered": 64,
+    "answered_correct": 64,
+    "clears_right": 48,
+    "escape_rate_upper_95": 0.0605,
+    "escapes": 0
+   },
+   "threshold": 0.5
+  }
+ },
+ "labels": {
+  "calibration": 14,
+  "test": 9
+ }
+}

@@ -75,4 +75,8 @@ What it found:
   flattened table that mentions two or more keys. The table-sentence rule of #87 sends those to
   review, and their right keys with them. This set found those tables, so it does not measure
   that rule: the tables set (`bench/tables`) does. RESULTS.md reads spec 0.3 with both rules.
-- No label changed after scoring.
+- One label changed after scoring, and no count changed with it. A model run of #67 chose
+  another key for `fda-lansoprazole:801`, the second "15 mg" of a flattened duodenal ulcer table,
+  whose cells come column by column ("Short-Term Treatment / Maintenance of Healed / 15 mg /
+  15 mg / Once daily for 4 weeks / Once daily"). The labeler read the text again and changed it
+  from "Treatment of Active Duodenal Ulcer" to "Maintenance of Healed Duodenal Ulcers".

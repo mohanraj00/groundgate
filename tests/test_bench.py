@@ -625,3 +625,16 @@ def test_a_tables_dose_lies_in_a_sentence_with_line_breaks_and_two_keys() -> Non
     assert [table[a:b] for a, b in tables.table_doses_in(table, conditions)] == ["10", "5"]
     prose = "For hypertension or\nheart failure, take 20 mg.\n\nAdults\ntake\n40 mg\nwith food."
     assert tables.table_doses_in(prose, conditions) == []
+
+
+def test_a_judge_clears_a_flag_only_for_a_key_spec_03_does_not_place() -> None:
+    sys.path.insert(0, str(BENCH / "judges" / "keys"))
+    import judge
+
+    it = {"keys": ["A", "B"], "label": ["A"], "spec_0.3": []}
+    assert judge.clear(it, {"choice": "k1", "confidence": 0.9}, 0.8) == "right"
+    assert judge.clear(it, {"choice": "k2", "confidence": 0.9}, 0.8) == "escape"
+    assert judge.clear(it, {"choice": "k1", "confidence": 0.7}, 0.8) is None
+    assert judge.clear(it, {"choice": "none", "confidence": 0.99}, 0.8) is None
+    assert judge.clear({**it, "spec_0.3": ["A"]}, {"choice": "k1", "confidence": 0.9}, 0.8) is None
+    assert judge.upper_95(0, 10) == 0.2589 and judge.upper_95(1, 20) == 0.2161
