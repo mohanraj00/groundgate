@@ -131,7 +131,7 @@ one, if it moved).
 
 SPEC §4 has the exact rules. This is what they mean for your documents.
 
-**Numbers.** groundgate reads numbers written with digits:
+**Numbers.** groundgate reads numbers written with the ASCII digits 0 to 9 (spec 0.3):
 
 | Written | Read as |
 |---|---|
@@ -147,6 +147,7 @@ These have no value, so a candidate that cites only them is rejected `VALUE_NOT_
 | `1 234`, `1'234` | a space or an apostrophe separates the groups, so `1 234` is two numbers |
 | `five`, `1/2`, `1.5e3` | a number word, a fraction or an exponent |
 | `252,0000`, `1,23,456,789` | the groups are malformed, or they mix the two groupings |
+| `२०००`, `٢٠٠٠` | the digits are not ASCII digits. A candidate `value` written in them is rejected `TYPE_INVALID`. |
 
 These rules are for English text. Other number formats need locale packs, which are a design and
 not yet code ([design/locale-packs.md](design/locale-packs.md)).
