@@ -434,11 +434,23 @@ def _label_line_in(text: str, start: int, end: int) -> bool:
     return False
 
 
+# a table sentence (SPEC §4.5): 3 or more line breaks and mentions of 2 or more keys
+_TABLE_BREAKS, _TABLE_KEYS = 3, 2
+
+
 def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[str]:
-    """The keys a value at ``pos`` belongs to: those its sentence mentions, else the nearest
-    mention before it, unless a label line stands between them (SPEC §4.5)."""
+    """The keys a value at ``pos`` belongs to: those its sentence mentions, or in a table
+    sentence those its line mentions, else the nearest mention before it, unless a label line
+    stands between them (SPEC §4.5)."""
     s0, s1 = sentence(text, pos)
     inside = {k for a, b, k in mentions if s0 <= a and b <= s1}
+    if len(inside) >= _TABLE_KEYS and text.count("\n", s0, s1) >= _TABLE_BREAKS:
+        # a table sentence: only the value's own line decides
+        nl = text.rfind("\n", s0, pos)
+        l0 = nl + 1 if nl >= 0 else s0
+        l1 = text.find("\n", pos, s1)
+        l1 = s1 if l1 < 0 else l1
+        return {k for a, b, k in mentions if l0 <= a and b <= l1}
     if inside:
         return inside
     before = [(b, k) for _, b, k in mentions if b <= pos]

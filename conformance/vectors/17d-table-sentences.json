@@ -1,0 +1,139 @@
+{
+ "name": "17d-table-sentences",
+ "description": "A table sentence holds 3 or more line breaks and mentions 2 or more keys. A value in it is at the keys mentioned on its own line, or at no key when its line mentions none (spec 0.3).",
+ "document": "Recommended dosage\nIndication\nStarting dose\nHypertension\n10 mg\nHeart failure\n5 mg\n\nFor hypertension or heart failure, the maximum\ndose is 40 mg.\n\nIn hypertension and heart failure, take 20 mg\nat night\nwith water\nor food.",
+ "schema": {
+  "fields": {
+   "starting_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "hf_starting_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "max_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "night_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "d1",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 57,
+    "end": 62,
+    "text": "10 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "d2",
+   "field": "hf_starting_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 77,
+    "end": 81,
+    "text": "5 mg"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "d3",
+   "field": "hf_starting_dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 77,
+    "end": 81,
+    "text": "5 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "d4",
+   "field": "max_dose",
+   "value": "40",
+   "unit": "mg",
+   "evidence": {
+    "start": 138,
+    "end": 143,
+    "text": "40 mg"
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "d5",
+   "field": "night_dose",
+   "value": "20",
+   "unit": "mg",
+   "evidence": {
+    "start": 186,
+    "end": 191,
+    "text": "20 mg"
+   },
+   "key": "hypertension"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

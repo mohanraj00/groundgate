@@ -1290,8 +1290,9 @@ vector(
 
 vector(
     "17b-keyed-tables",
-    "Conflicts are per field and key. Rows of a flattened table share one sentence, so every "
-    "value in the table is at every key the table mentions.",
+    "Conflicts are per field and key. Rows of a flattened table share one sentence. When it holds "
+    "3 or more line breaks and mentions 2 or more keys, a value is at the keys on its own line "
+    "(spec 0.3).",
     "Table 1. Recommended Dosage\nIndication\tStarting dose\tMaximum dose\n"
     "Hypertension\t10 mg\t40 mg\nHeart failure\t5 mg\t20 mg\n\n"
     "In heart failure, titrate every 2 weeks. The usual starting dose is 5 mg. "
@@ -1314,7 +1315,16 @@ vector(
             key="hypertension",
         ),
         c("t2", "starting_dose", "5", "mg", q("5 mg"), key="heart failure"),
-        c("t3", "max_dose", "40", "mg", q("40 mg"), key="heart failure"),
+        # 40 mg is on the hypertension row, so heart failure no longer reaches it
+        c(
+            "t3",
+            "max_dose",
+            "40",
+            "mg",
+            q("40 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="heart failure",
+        ),
         c(
             "t4",
             "starting_dose",
@@ -1417,6 +1427,58 @@ vector(
             ("needs_verification", ["KEY_NOT_AT_VALUE"]),
             key="heart failure",
         ),
+    ],
+)
+
+vector(
+    "17d-table-sentences",
+    "A table sentence holds 3 or more line breaks and mentions 2 or more keys. A value in it is "
+    "at the keys mentioned on its own line, or at no key when its line mentions none (spec 0.3).",
+    "Recommended dosage\nIndication\nStarting dose\nHypertension\n10 mg\nHeart failure\n5 mg\n\n"
+    "For hypertension or heart failure, the maximum\ndose is 40 mg.\n\n"
+    "In hypertension and heart failure, take 20 mg\nat night\nwith water\nor food.",
+    {
+        "fields": {
+            "starting_dose": KEYED_MG,
+            "hf_starting_dose": KEYED_MG,
+            "max_dose": KEYED_MG,
+            "night_dose": KEYED_MG,
+        }
+    },
+    [
+        # one cell on each line: the value's line mentions no key, so the right key goes to review
+        c(
+            "d1",
+            "starting_dose",
+            "10",
+            "mg",
+            q("10 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="hypertension",
+        ),
+        c(
+            "d2",
+            "hf_starting_dose",
+            "5",
+            "mg",
+            q("5 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="heart failure",
+        ),
+        # and a swapped key is no longer admitted
+        c(
+            "d3",
+            "hf_starting_dose",
+            "5",
+            "mg",
+            q("5 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="hypertension",
+        ),
+        # 1 line break is not a table: the sentence puts 40 mg at both keys
+        c("d4", "max_dose", "40", "mg", q("40 mg"), key="heart failure"),
+        # a table sentence whose value line mentions both keys
+        c("d5", "night_dose", "20", "mg", q("20 mg"), key="hypertension"),
     ],
 )
 

@@ -38,10 +38,15 @@ milestone 0.3.
   "Treatment of DVT and PE:" or "Adults". The value is at no key, so a keyed candidate goes to
   review. A heading that is a key mention still reaches past its blank line. Vector
   `17c-label-lines`. Measured on 100 doses in 17 FDA labels no rule was written from
-  (`bench/keys`), 93 of them labeled: a wrong key reaches 22 doses, down from 28 with spec 0.2,
-  and every right key reaches 52, down from 58. The rule changes 12 doses, 6 each way. Half of the
-  right keys it loses are a bullet on a line of its own (#86), and most of the wrong keys left are
-  sentences or tables that mention two or more keys (#87).
+  (`bench/keys`), 93 of them labeled: the rule stops a wrong key at as many doses as it sends a
+  right key to review. Half of the right keys it loses are a bullet on a line of its own (#86).
+  With the table rule below, a wrong key reaches 4 of those doses, down from 28 with spec 0.2, and
+  every right key reaches 38, down from 58.
+- Keys (#87): a sentence with 3 or more line breaks that mentions 2 or more keys is a table
+  sentence. A value in it is at the keys mentioned on its own line, or at no key when the line
+  mentions none, so a key swapped within a flattened table goes to review. Before, every value
+  in such a table was at every key it mentioned. Vector `17d-table-sentences`, and in
+  `17b-keyed-tables` 40 mg on the hypertension row is no longer at heart failure.
 - Numbers (#59): a number grouped the Indian way, the last three digits and then pairs, has its
   value: `2,00,000` is 200000 and `1,00,00,000` is 10000000, in the document and in a candidate's
   `value`. A mix of the two groupings, such as `1,23,456,789`, still has none. Vector
