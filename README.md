@@ -274,11 +274,11 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.2.0 on PyPI implements spec v0.2. Main is spec 0.3, a draft, and this README
-and the guide describe main. [CHANGELOG.md](CHANGELOG.md) lists what 0.3 changes so far: a wider
-change rule (#51), abbreviation dots that no longer end a sentence for qualifiers (#63, #77), and
-Indian digit grouping (#59). Keys written in a short form (#52) are next. A receipt names the
-spec version it was decided under, and only that version verifies it.
+Alpha. groundgate 0.3.0 implements spec v0.3. [CHANGELOG.md](CHANGELOG.md) lists what 0.3
+changes, each with its measure: a wider change rule (#51), abbreviation dots that no longer end a
+sentence for qualifiers (#63, #77), Indian digit grouping (#59), ASCII digits (#94), and keys
+that stop at a label line (#52) or read a table by its lines (#87). A receipt names the spec
+version it was decided under, and only that version verifies it.
 
 Two designs are not yet code: [locale packs](docs/design/locale-packs.md) for number formats
 outside English, and [hybrid decisions](docs/design/hybrid-decisions.md), where a recorded

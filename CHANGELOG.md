@@ -3,11 +3,14 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
-## Unreleased
+## 0.3.0 (2026-10-05)
 
-Spec 0.3, in progress. Receipts name `"groundgate": "0.3"` and every digest uses the
-`groundgate/0.3:` prefix, so all hashes differ from 0.2.0. The decision changes are tracked in
-milestone 0.3.
+Spec 0.3. Receipts name `"groundgate": "0.3"` and every digest uses the `groundgate/0.3:` prefix,
+so all hashes differ from 0.2.0. Each rule that changes how real text reads was measured on a new
+set of documents that no rule was written from, labeled blind before scoring: the pattern, dots,
+caps, India, keys and tables sets in `bench/`. The digit rule (#94) takes values away only, and
+every set rescores unchanged under it. Every number below comes from the `results.json` of its
+set.
 
 - Set 2 is rescored on the released 0.2.0 wheel, the way the v0.1 set is rescored on 0.1.0, so
   its published numbers stay spec 0.2's.
