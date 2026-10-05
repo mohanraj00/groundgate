@@ -39,6 +39,9 @@ JEV_URL = "https://api.typesafe.ai/v1/systemone"
 ENGINES = {"jev": "Jev", "jeff": "Jeff", "laya": "Laya"}
 JEFF_URL = os.environ.get("JEFF_URL", "http://localhost:8790/v1/systemone")
 NONE = "none"
+# doses whose label changed after a model answered them: a model-led change can't score a model
+# in either direction, so these doses are left out of the gold (README)
+RELABELED_AFTER_A_RUN = {"keys:fda-lansoprazole:801"}
 
 Ask = Callable[[str, dict[str, Any]], dict[str, Any]]
 
@@ -56,7 +59,7 @@ def gold() -> list[dict[str, Any]]:
         labels = load(name, "labels.json")
         read = {r["id"]: r["spec_0.3"] for r in load(name, "results.json")["doses_read"]}
         for it in load(name, "items.json"):
-            if labels[it["id"]] is None:
+            if labels[it["id"]] is None or f"{name}:{it['id']}" in RELABELED_AFTER_A_RUN:
                 continue
             out.append(
                 {
@@ -180,9 +183,16 @@ def run(engine: str) -> None:
     meta: dict[str, Any] = {"run": datetime.date.today().isoformat()}
     engines = {"laya": laya_engine, "jev": jev_engine, "jeff": jeff_engine}
     ask = engines[engine](meta)
-    # answers so far, so that a stopped run goes on where it stopped
+    # answers so far, so that a stopped run goes on where it stopped, but only with the same
+    # engine and model: a resume never mixes the answers of two models
     partial = HERE / f".answers-{engine}.partial.json"
-    answers = json.loads(partial.read_text()) if partial.exists() else {}
+    record = {k: v for k, v in meta.items() if k != "run"}
+    answers: dict[str, Any] = {}
+    if partial.exists():
+        saved = json.loads(partial.read_text())
+        if saved["meta"] != record:
+            raise SystemExit(f"{partial.name} is from {saved['meta']}, not {record}; delete it")
+        answers = saved["answers"]
     items = gold()
     for n, it in enumerate(items, 1):
         if it["id"] in answers:
@@ -196,7 +206,7 @@ def run(engine: str) -> None:
                     raise SystemExit(f"{it['id']}: {e}; run again to go on") from e
                 time.sleep(5 * (attempt + 1))
         answers[it["id"]] = {"choice": a["choice"], "confidence": round(a["confidence"], 4)}
-        partial.write_text(json.dumps(answers))
+        partial.write_text(json.dumps({"meta": record, "answers": answers}))
         print(f"{n}/{len(items)}", end="\r", flush=True)
     out = {"meta": meta, "answers": answers}
     (HERE / f"answers-{engine}.json").write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
@@ -302,7 +312,8 @@ def report(check: bool) -> None:
         "",
         f"Calibration: {results['doses']['calibration']} doses in "
         f"{results['labels']['calibration']} labels. Test: {results['doses']['test']} doses in "
-        f"{results['labels']['test']} labels.",
+        f"{results['labels']['test']} labels. Left out: {len(RELABELED_AFTER_A_RUN)} dose whose "
+        "label changed after a model answered it ([README.md](README.md)).",
     ]
     for engine, name in ENGINES.items():
         path = HERE / f"answers-{engine}.json"

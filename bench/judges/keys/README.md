@@ -41,4 +41,7 @@ bound on the escape rate among cleared flags. CI runs `report --check` on the co
 - Jev does not answer twice the same way (#71), so a second run can differ.
 - One label changed after a model run. Jev's only escape on the test part was
   `fda-lansoprazole:801`, and the labeler read the text again and changed the label (see the keys
-  set README). With the first label, that answer counted as an escape.
+  set README). A label that changed because of a model answer can't score that model, so this dose
+  is left out of the gold (`RELABELED_AFTER_A_RUN` in `judge.py`).
+- A stopped run goes on from a partial file, but only with the same engine and model, so one
+  answers file never mixes two models.

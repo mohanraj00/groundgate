@@ -1,7 +1,7 @@
 {
  "doses": {
   "calibration": 89,
-  "test": 66
+  "test": 65
  },
  "engines": {
   "jeff": {
@@ -56,21 +56,21 @@
    "test": {
     "by_threshold": {
      "0.5": {
-      "answered": 37,
-      "answered_correct": 25,
-      "clears_right": 19,
+      "answered": 36,
+      "answered_correct": 24,
+      "clears_right": 18,
       "escapes": 11
      },
      "0.7": {
-      "answered": 23,
-      "answered_correct": 17,
-      "clears_right": 14,
+      "answered": 22,
+      "answered_correct": 16,
+      "clears_right": 13,
       "escapes": 6
      },
      "0.8": {
-      "answered": 17,
-      "answered_correct": 12,
-      "clears_right": 10,
+      "answered": 16,
+      "answered_correct": 11,
+      "clears_right": 9,
       "escapes": 5
      },
      "0.9": {
@@ -92,9 +92,9 @@
       "escapes": 0
      }
     },
-    "correct": 41,
-    "doses": 66,
-    "doses_with_a_right_key_in_review": 50
+    "correct": 40,
+    "doses": 65,
+    "doses_with_a_right_key_in_review": 49
    },
    "test_at_threshold": {
     "answered": 4,
@@ -157,27 +157,27 @@
    "test": {
     "by_threshold": {
      "0.5": {
-      "answered": 64,
-      "answered_correct": 64,
-      "clears_right": 48,
+      "answered": 63,
+      "answered_correct": 63,
+      "clears_right": 47,
       "escapes": 0
      },
      "0.7": {
-      "answered": 64,
-      "answered_correct": 64,
-      "clears_right": 48,
+      "answered": 63,
+      "answered_correct": 63,
+      "clears_right": 47,
       "escapes": 0
      },
      "0.8": {
-      "answered": 64,
-      "answered_correct": 64,
-      "clears_right": 48,
+      "answered": 63,
+      "answered_correct": 63,
+      "clears_right": 47,
       "escapes": 0
      },
      "0.9": {
-      "answered": 57,
-      "answered_correct": 57,
-      "clears_right": 43,
+      "answered": 56,
+      "answered_correct": 56,
+      "clears_right": 42,
       "escapes": 0
      },
      "0.95": {
@@ -193,15 +193,15 @@
       "escapes": 0
      }
     },
-    "correct": 66,
-    "doses": 66,
-    "doses_with_a_right_key_in_review": 50
+    "correct": 65,
+    "doses": 65,
+    "doses_with_a_right_key_in_review": 49
    },
    "test_at_threshold": {
-    "answered": 64,
-    "answered_correct": 64,
-    "clears_right": 48,
-    "escape_rate_upper_95": 0.0605,
+    "answered": 63,
+    "answered_correct": 63,
+    "clears_right": 47,
+    "escape_rate_upper_95": 0.0618,
     "escapes": 0
    },
    "threshold": 0.5
