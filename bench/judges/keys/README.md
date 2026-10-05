@@ -35,10 +35,10 @@ bound on the escape rate among cleared flags. CI runs `report --check` on the co
 
 ## Notes
 
-- Jeff Gemma4 E2B answered 31 of the 32 probe sentences of `bench/judges` right, but it does much
-  worse here, and it is often confident when it is wrong. The probe sentences are short and clean,
-  and these doses are in long text with up to 15 options. A probe is not a measure.
+- Jeff Gemma4 E2B did well on the probe sentences of `bench/judges` (#67), but it does much worse
+  here, and it is often confident when it is wrong. The probe sentences are short and clean, and
+  these doses are in long text with up to 15 options. A probe is not a measure.
 - Jev does not answer twice the same way (#71), so a second run can differ.
 - One label changed after a model run. Jev's only escape on the test part was
   `fda-lansoprazole:801`, and the labeler read the text again and changed the label (see the keys
-  set README). With the first label, Jev cleared 47 right flags and 1 wrong one at 0.5.
+  set README). With the first label, that answer counted as an escape.
