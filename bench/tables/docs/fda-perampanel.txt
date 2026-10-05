@@ -1,0 +1,70 @@
+2 DOSAGE AND ADMINISTRATION
+
+Dosing in the absence of moderate or strong CYP3A4 inducers
+
+Starting dose: 2 mg once daily orally at bedtime (2.1, 2.2)
+May increase dose based on clinical response and tolerability by increments of 2 mg once daily no more frequently than at weekly intervals (2.1, 2.2)
+Recommended maintenance dose in monotherapy or adjunctive therapy for partial-onset seizures: 8 mg to 12 mg once daily at bedtime (2.1)
+Recommended maintenance dose in adjunctive therapy for primary generalized tonic-clonic seizures: 8 mg once daily at bedtime (2.2)
+
+Dosing in the presence of concomitant moderate or strong CYP3A4 inducers:
+
+See section 2.3
+
+Specific Populations
+
+Mild and Moderate Hepatic Impairment: Maximum recommended daily dose is 6 mg (mild) and 4 mg (moderate) once daily at bedtime (2.4)
+Severe Hepatic Impairment: Not recommended (2.4)
+Severe Renal Impairment or on Hemodialysis: Not recommended (2.5)
+Elderly: Increase dose no more frequently than every 2 weeks (2.6)
+
+2.1 Dosage for Partial-Onset Seizures
+
+Monotherapy or Adjunctive Therapy
+
+The recommended starting dosage of perampanel tablets in adults and pediatric patients 4 years of age and older is 2 mg once daily taken orally at bedtime. Increase dosage no more frequently than at weekly intervals by increments of 2 mg once daily based on individual clinical response and tolerability.
+
+The recommended maintenance dose range is 8 mg to 12 mg once daily, although some patients may respond to a dose of 4 mg daily. A dose of 12 mg once daily resulted in somewhat greater reductions in seizure rates than the dose of 8 mg once daily, but with a substantial increase in adverse reactions.
+
+Dosage adjustment is recommended with concomitant use of moderate or strong CYP3A4 enzyme inducing drugs, which include certain antiepileptic drugs (AEDs) [see Dosage and Administration (2.3)].
+
+2.2 Dosage for Primary Generalized Tonic-Clonic Seizures
+
+Adjunctive Therapy
+
+The recommended starting dosage of perampanel tablets in adults and pediatric patients 12 years of age and older is 2 mg once daily taken orally at bedtime. Increase dosage no more frequently than at weekly intervals by increments of 2 mg once daily based on individual clinical response and tolerability.
+
+The recommended maintenance dose is 8 mg once daily taken at bedtime. Patients who are tolerating perampanel tablets at 8 mg once daily and require further reduction of seizures may benefit from a dose increase up to 12 mg once daily if tolerated.
+
+Dosage adjustment is recommended with concomitant use of moderate or strong CYP3A4 enzyme inducing drugs, which include certain AEDs [see Dosage and Administration (2.3)].
+
+2.3 Dosage Modifications with Concomitant Use of Moderate or Strong CYP3A4 Enzyme Inducers
+
+Moderate and strong CYP3A4 inducers, including enzyme-inducing AEDs such as phenytoin, carbamazepine, and oxcarbazepine, cause a reduction in perampanel plasma levels [see Drug Interactions (7.2), Clinical Pharmacology (12.3)]. Therefore, in adults and pediatric patients 4 years of age and older receiving these concomitant enzyme-inducing drugs, the recommended starting dosage of perampanel tablets is 4 mg once daily taken orally at bedtime.
+
+Increase dosage by increments of 2 mg once daily based on individual clinical response and tolerability, no more frequently than at weekly intervals. A maintenance dose has not been established in clinical trials. The highest dose studied in patients on concomitant enzyme-inducing AEDs was 12 mg once daily.
+
+When moderate or strong CYP3A4 inducers are introduced or withdrawn from a patient’s treatment regimen, the patient should be closely monitored for clinical response and tolerability. Dose adjustment of perampanel tablets may be necessary.
+
+2.4 Dosage Adjustment in Patients with Hepatic Impairment
+
+In patients with mild and moderate hepatic impairment, the starting dose of perampanel tablets is 2 mg once daily. Increase dosage by increments of 2 mg once daily no more frequently than every 2 weeks. The maximum recommended daily dose is 6 mg for patients with mild hepatic impairment and 4 mg for patients with moderate hepatic impairment. Perampanel tablets are not recommended for use in patients with severe hepatic impairment [see Use in Specific Populations (8.6), Clinical Pharmacology (12.3)].
+
+2.5 Dosage Information for Patients with Renal Impairment
+
+Perampanel tablets can be used in patients with moderate renal impairment with close monitoring. A slower titration may be considered, based on clinical response and tolerability. Perampanel tablets are not recommended in patients with severe renal impairment or patients undergoing hemodialysis [see Use in Specific Populations (8.7), Clinical Pharmacology (12.3)].
+
+2.6 Dosage Information for Elderly Patients
+
+In elderly patients, increase dosage no more frequently than every 2 weeks during titration [see Use in Specific Populations (8.5)].
+
+3 DOSAGE FORMS AND STRENGTHS
+
+2 mg: beige, round, biconvex, film-coated tablets, debossed with “TV” on one side and with “W2” on the other side.
+4 mg: pink, round, biconvex, film-coated tablets, debossed with “TV” on one side and with “W4” on the other side.
+6 mg: pink, round, biconvex, film-coated tablets, debossed with “TV” on one side and with “W6” on the other side.
+8 mg: purple, round, biconvex, film-coated tablets, debossed with “TV” on one side and with “W8” on the other side.
+10 mg: green, round, biconvex, film-coated tablets, debossed with “TV” on one side and with “W0” on the other side.
+12 mg: light blue, round, biconvex, film-coated tablets, debossed with “TV” on one side and with “W1” on the other side.
+
+Tablets: 2 mg, 4 mg, 6 mg, 8 mg, 10 mg, and 12 mg (3)

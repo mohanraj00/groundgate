@@ -1,0 +1,111 @@
+2 DOSAGE AND ADMINISTRATION
+
+Adults:Clarithromycin tablets 250 mg or 500 mg every 12 hours for 7 to 14 days ( 2.2)
+H. pylorieradication (in combination with lansoprazole/amoxicillin, omeprazole/amoxicillin, or omeprazole): Clarithromycin tablets 500 mg every 8 or 12 hours for 10 to 14 days. See full prescribing information (FPI) for additional information. ( 2.3)
+Pediatric Patients:Clarithromycin tablets 15 mg/kg/day divided every 12 hours for 10 days ( 2.4)
+Mycobacterial Infections:Clarithromycin tablets 500 mg every 12 hours; clarithromycin tablets 7.5 mg/kg up to 500 mg every 12 hours in pediatric patients ( 2.5)
+Reduce dose in moderate renal impairment with concomitant atazanavir or ritonavir-containing regimens and in severe renal impairment ( 2.6)
+
+2.1 Important Administration Instructions
+
+Clarithromycin tablets may be given with or without food.
+
+2.2 Adult Dosage
+
+The recommended dosages of clarithromycin tablets for the treatment of mild to moderate infections in adults are listed in Table 1.
+
+Table 1. Adult Dosage Guidelines
+
+Clarithromycin Tablets
+Infection
+Dosage
+(every 12 hours)
+Duration
+(days)
+Acute bacterial exacerbation of chronic bronchitis
+250 to 500 mg ^a
+7 ^bto 14
+Acute maxillary sinusitis
+500 mg
+14
+Community-acquired pneumonia
+250 mg
+7 ^dto 14
+Pharyngitis/Tonsillitis
+250 mg
+10
+Uncomplicated skin and skin structure infections
+250 mg
+7 to 14
+Treatment and prophylaxis of disseminated Mycobacterium aviumdisease [see Dosage and Administration (2.5)]
+500 mg ^e
+-
+H.pylorieradication to reduce the risk of duodenal ulcer recurrence with amoxicillin and omeprazole or lansoprazole [see Dosage and Administration (2.3)]
+500 mg
+10 to 14
+H.pylorieradication to reduce the risk of duodenal ulcer recurrence with omeprazole [see Dosage and Administration (2.3)]
+500 mg every 8 hours
+14
+^aFor M. catarrhalisand S. pneumoniaeuse 250 mg. For H. influenzaeand H. parainfluenzae, use 500 mg.
+^bFor H. parainfluenzae, the duration of therapy is 7 days.
+^dFor H. influenzae, the duration of therapy is 7 days.
+^eClarithromycin tablets therapy should continue if clinical response is observed. Clarithromycin tablets can be discontinued when the patient is considered at low risk of disseminated infection.
+
+2.3 Combination Dosing Regimens for H. pyloriInfection
+
+Triple therapy: Clarithromycin tablets/lansoprazole/amoxicillin
+
+The recommended adult dosage is 500 mg clarithromycin tablets, 30 mg lansoprazole, and 1 gram amoxicillin, all given every 12 hours for 10 or 14 days [see Indications and Usage (1.8)and Clinical Studies (14.3)] .
+
+Triple therapy: Clarithromycin tablets/omeprazole/amoxicillin
+
+The recommended adult dosage is 500 mg clarithromycin tablets, 20 mg omeprazole, and 1 gram amoxicillin; all given every 12 hours for 10 days. In patients with an ulcer present at the time of initiation of therapy, an additional 18 days of omeprazole 20 mg once daily is recommended for ulcer healing and symptom relief [see Indications and Usage (1.8)and Clinical Studies (14.3)] .
+
+Dual therapy: Clarithromycin tablets/omeprazole
+
+The recommended adult dosage is 500 mg clarithromycin tablets given every 8 hours and 40 mg omeprazole given once every morning for 14 days. An additional 14 days of omeprazole 20 mg once daily is recommended for ulcer healing and symptom relief [see Indications and Usage (1.8)and Clinical Studies (14.3)].
+
+2.4 Pediatric Dosage
+
+The recommended daily dosage is 15 mg/kg/day divided every 12 hours for 10 days (up to the adult dose). Refer to dosage regimens for mycobacterial infections in pediatric patients for additional dosage information [see Dosage and Administration (2.5)] .
+
+2.5 Dosage Regimens for Mycobacterial Infections
+
+For the treatment of disseminated infection due to Mycobacterium aviumcomplex (MAC), clarithromycin tablets are recommended as the primary agents. Clarithromycin tablets should be used in combination with other antimycobacterial drugs (e.g., ethambutol) that have shown in vitroactivity against MAC or clinical benefit in MAC treatment [see Clinical Studies (14.1)] .
+
+Adult Patients
+
+For treatment and prophylaxis of mycobacterial infections in adults, the recommended dose of clarithromycin tablets is 500 mg every 12 hours.
+
+Pediatric Patients
+
+For treatment and prophylaxis of mycobacterial infections in pediatric patients, the recommended dose is 7.5 mg/kg every 12 hours up to 500 mg every 12 hours. [See Use in Specific Populations (8.4)and Clinical Studies (14.1)] .
+
+Clarithromycin tablets therapy should continue if clinical response is observed. Clarithromycin tablets can be discontinued when the patient is considered at low risk of disseminated infection.
+
+2.6 Dosage Adjustment in Patients with Renal Impairment
+
+See Table 2 for dosage adjustment in patients with moderate or severe renal impairment with or without concomitant atazanavir or ritonavir-containing regimens [see Drug Interactions (7)] .
+
+Table 2. Clarithromycin Tablets Dosage Adjustments in Patients with Renal Impairment
+
+Recommended Clarithromycin Tablets Dosage Reduction
+Patients with severe renal impairment (CL _crof <30 mL/min)
+Reduce the dosage of clarithromycin tablets by 50%
+Patients with moderate renal impairment (CL _crof 30 to 60 mL/min) taking concomitant atazanavir or ritonavir-containing regimens
+Reduce the dosage of clarithromycin tablets by 50%
+Patients with severe renal impairment (CL _crof <30 mL/min) taking concomitant atazanavir or ritonavir-containing regimens
+Reduce the dosage of clarithromycin tablets by 75%
+
+2.7 Dosage Adjustment Due to Drug Interactions
+
+Decrease the dose of clarithromycin tablets by 50 % when co-administered with atazanavir [see Drug Interactions (7)] . Dosage adjustments for other drugs when co-administered with clarithromycin tablets may be recommended due to drug interactions [see Drug Interactions (7)] .
+
+3 DOSAGE FORMS AND STRENGTHS
+
+Clarithromycin tablets USP are available as:
+
+250 mg:light yellow colored, oval shaped, biconvex film-coated tablets, with ‘D’ debossed on one side and ‘62’ on the other side.
+500 mg:light yellow colored, oval shaped, biconvex film-coated tablets, with ‘D’ debossed on one side and ‘63’ on the other side.
+
+Tablets:250 mg and 500 mg ( 3)
