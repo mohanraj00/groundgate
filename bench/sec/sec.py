@@ -209,6 +209,8 @@ def cands(run: str) -> None:
 
     out = HERE / "cands"
     out.mkdir(exist_ok=True)
+    for old in out.glob("*.json"):  # never mix the candidates of two runs
+        old.unlink()
     n = 0
     for path in sorted((HERE / "runs").glob(f"{run}/*.json")):
         rec = json.loads(path.read_text(encoding="utf-8"))
