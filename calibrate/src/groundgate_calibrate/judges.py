@@ -57,14 +57,19 @@ class Jev:
 BUILT_IN: dict[str, Callable[[], Judge]] = {"jev": Jev}
 
 
-def available() -> dict[str, Callable[[], Judge]]:
-    """The built-in judges and those that installed packages register. A plug-in cannot take
-    the name of a built-in judge or of another plug-in."""
-    out = dict(BUILT_IN)
+def available() -> dict[str, Callable[[], Callable[[], Judge]]]:
+    """The names of the built-in judges and of those that installed packages register, each
+    with a loader. Only the judge that a user names is imported, so a broken plug-in never stops
+    another judge. A plug-in cannot take the name of a built-in judge or of another plug-in."""
+
+    def built_in(f: Callable[[], Judge]) -> Callable[[], Callable[[], Judge]]:
+        return lambda: f
+
+    out = {name: built_in(f) for name, f in BUILT_IN.items()}
     for ep in entry_points(group=GROUP):
         if ep.name in out:
             raise SystemExit(f"two judges are named {ep.name!r}; uninstall one of them")
-        out[ep.name] = ep.load()
+        out[ep.name] = ep.load
     return out
 
 
@@ -72,7 +77,7 @@ def load(name: str) -> Judge:
     judges = available()
     if name not in judges:
         raise SystemExit(f"no judge {name!r}; installed: {', '.join(sorted(judges))}")
-    judge = judges[name]()
+    judge = judges[name]()()
     for attr in ("id", "digest"):
         if not isinstance(getattr(judge, attr, None), str) or not getattr(judge, attr).strip():
             raise SystemExit(f"judge {name!r} has no {attr}")

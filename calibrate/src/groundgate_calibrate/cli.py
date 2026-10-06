@@ -253,8 +253,10 @@ def judge_packets(args: argparse.Namespace) -> None:
                 continue
             for it in q.sample(question, doc, text, schema, cands, rest):
                 cid = cands[int(it["id"].rsplit(":", 1)[1])].get("id")
-                if cid is None or sum(c.get("id") == cid for c in cands) != 1:
-                    raise SystemExit(f"{doc}: a judged candidate needs a unique id")
+                same = [c.get("id") for c in cands if type(c.get("id")) is type(cid)]
+                if type(cid) not in (str, int) or same.count(cid) != 1:
+                    # spec 0.4 names a judgment's candidate by a string or integer id
+                    raise SystemExit(f"{doc}: a judged candidate needs a unique string or int id")
                 st, qs = q.prompt(question, text, it, cfg["context"], cfg["descriptions"])
                 a = q.keep(question, call(jd, st, qs, it["id"]))
                 j: dict[str, Any] = {

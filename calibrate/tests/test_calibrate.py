@@ -259,6 +259,13 @@ def test_a_plug_in_judge_comes_from_an_entry_point(monkeypatch: pytest.MonkeyPat
     with pytest.raises(SystemExit, match="two judges"):
         judges.load("jev")
 
+    class Broken(EP):
+        def load(self) -> Any:
+            raise ImportError("a broken plug-in")
+
+    monkeypatch.setattr(judges, "entry_points", lambda group: [Broken("broken"), EP("fake")])
+    assert judges.load("fake").id == "fake"  # the broken plug-in is never imported
+
 
 def calibrated(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, Path, Path, Path]:
     """A key calibration of the fake judge on 2 documents, and its inputs."""
@@ -299,6 +306,14 @@ def test_judge_writes_recorded_judgments(tmp_path: Path, monkeypatch: pytest.Mon
     policy.write_text(json.dumps({"judge": {**block, "doubt": {"field_match": 0.2}}}))
     with pytest.raises(SystemExit, match="give its calibration"):
         cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+    # a judged candidate with an id that a judgment cannot name is refused
+    policy.write_text(json.dumps({"judge": block}))
+    good = (c / "doc0.json").read_text()
+    cands = json.loads(good)
+    (c / "doc0.json").write_text(json.dumps([{**cands[0], "id": True}, *cands[1:]]))
+    with pytest.raises(SystemExit, match="string or int id"):
+        cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+    (c / "doc0.json").write_text(good)
     # a calibration whose context changed after its run is refused
     cfg = json.loads((work / "config.json").read_text())
     (work / "config.json").write_text(json.dumps({**cfg, "context": "Another context."}))
