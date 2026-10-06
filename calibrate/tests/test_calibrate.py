@@ -73,6 +73,9 @@ def test_sample_takes_key_flags_and_admitted_values() -> None:
     assert TEXT[a:b] == "4,100"  # the value, not the whole evidence
     (field,) = q.sample("field", "d", TEXT, SCHEMA, cands)
     assert field["id"] == "d:1"
+    # a key judgment can admit the flagged one, so with a key threshold it gets the field question
+    both = q.sample("field", "d", TEXT, SCHEMA, cands, key_clear=True)
+    assert [it["id"] for it in both] == ["d:0", "d:1"]
     st, qs = q.prompt("key", TEXT, key, "The text is from a 10-K filing.", {})
     assert "[4,100]" in st
     assert qs["key"]["criteria"] == {
@@ -306,9 +309,17 @@ def test_judge_writes_recorded_judgments(tmp_path: Path, monkeypatch: pytest.Mon
     policy.write_text(json.dumps({"judge": {**block, "doubt": {"field_match": 0.2}}}))
     with pytest.raises(SystemExit, match="give its calibration"):
         cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
-    # a judged candidate with an id that a judgment cannot name is refused
-    policy.write_text(json.dumps({"judge": block}))
+    # two calibrations for one question are refused
+    with pytest.raises(SystemExit, match="two calibrations"):
+        cli.main(["judge", *run, "--calibration", str(work), str(work), "--out", str(out)])
+    # a malformed candidate next to a judged one is left to groundgate to reject
     good = (c / "doc0.json").read_text()
+    (c / "doc0.json").write_text(json.dumps([*json.loads(good), "not a candidate"]))
+    policy.write_text(json.dumps({"judge": block}))
+    cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+    assert len(json.loads((out / "doc0.json").read_text())) == 1
+    (c / "doc0.json").write_text(good)
+    # a judged candidate with an id that a judgment cannot name is refused
     cands = json.loads(good)
     (c / "doc0.json").write_text(json.dumps([{**cands[0], "id": True}, *cands[1:]]))
     with pytest.raises(SystemExit, match="string or int id"):

@@ -236,6 +236,8 @@ def judge_packets(args: argparse.Namespace) -> None:
         # descriptions and items must be those of the calibration run
         if prompts_sha256(w) != rec["meta"]["prompts_sha256"]:
             raise SystemExit(f"{path} changed after its judge answered; calibrate again")
+        if cfg["question"] in cals:
+            raise SystemExit(f"two calibrations for the {cfg['question']} question; give one")
         cals[cfg["question"]] = cfg
     for question, on in wanted.items():
         if on and question not in cals:
@@ -251,9 +253,10 @@ def judge_packets(args: argparse.Namespace) -> None:
         for question, cfg in sorted(cals.items()):
             if not wanted[question]:
                 continue
-            for it in q.sample(question, doc, text, schema, cands, rest):
+            for it in q.sample(question, doc, text, schema, cands, rest, wanted["key"]):
                 cid = cands[int(it["id"].rsplit(":", 1)[1])].get("id")
-                same = [c.get("id") for c in cands if type(c.get("id")) is type(cid)]
+                ids = [c.get("id") for c in cands if isinstance(c, dict)]
+                same = [x for x in ids if type(x) is type(cid)]
                 if type(cid) not in (str, int) or same.count(cid) != 1:
                     # spec 0.4 names a judgment's candidate by a string or integer id
                     raise SystemExit(f"{doc}: a judged candidate needs a unique string or int id")

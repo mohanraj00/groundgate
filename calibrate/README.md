@@ -101,7 +101,10 @@ groundgate-calibrate judge --docs D --candidates C --schema S --policy policy.js
 - Each question that the policy has a threshold for needs its calibration, and is asked as that
   calibration asked it: the same wording, context, descriptions and window.
 - A question is asked only where its answer can change the decision: the key question of each
-  candidate flagged `KEY_NOT_AT_VALUE`, and the field question of each admitted candidate.
+  candidate flagged `KEY_NOT_AT_VALUE`, and the field question of each admitted candidate. With
+  both thresholds, the field question also goes to each candidate whose only flag is
+  `KEY_NOT_AT_VALUE`, because the key judgment can admit it.
+- Give one calibration for each question.
 - A judged candidate needs a unique `id`, because a judgment names its candidate by `id`.
 - `J/<doc>.json` holds the judgments. Pass them to groundgate:
   `groundgate admit DOC SCHEMA CANDIDATES --policy policy.json --judgments J/<doc>.json`.
