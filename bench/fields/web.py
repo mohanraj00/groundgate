@@ -14,6 +14,7 @@ import html
 import json
 import sys
 import xml.etree.ElementTree as ET
+from collections.abc import Callable
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
@@ -128,16 +129,27 @@ def page(doc: str, items: list[dict[str, Any]], root: Path = HERE) -> str:
     return "".join(p.out)
 
 
-def serve(fields: dict[str, dict[str, Any]]) -> None:
-    items = json.loads((HERE / "items.json").read_text())
-    path = HERE / "labels.json"
+def serve(
+    fields: dict[str, dict[str, Any]],
+    root: Path = HERE,
+    render: Callable[[str, list[dict[str, Any]]], str] | None = None,
+    port: int = PORT,
+    pdf: Callable[[str], Path] | None = None,
+) -> None:
+    """Serve the label page for the set at root. render gives a doc's HTML with its items marked
+    (the SPL view by default), and pdf, when given, the source PDF of a doc: then each item with
+    a page links to that page of the PDF."""
+    items = json.loads((root / "items.json").read_text())
+    path = root / "labels.json"
     by_doc: dict[str, list[dict[str, Any]]] = {}
     for it in items:
         by_doc.setdefault(it["doc"], []).append(it)
-    pages = {doc: page(doc, its) for doc, its in by_doc.items()}  # check every doc at the start
+    show = render or (lambda doc, its: page(doc, its, root))
+    pages = {doc: show(doc, its) for doc, its in by_doc.items()}  # check every doc at the start
     state = {
-        "items": [{"id": it["id"], "doc": it["doc"]} for it in items],
+        "items": [{"id": it["id"], "doc": it["doc"], "page": it.get("page")} for it in items],
         "fields": [{"name": f, "description": d["description"]} for f, d in fields.items()],
+        "pdf": pdf is not None,
     }
 
     class Handler(BaseHTTPRequestHandler):
@@ -157,6 +169,13 @@ def serve(fields: dict[str, dict[str, Any]]) -> None:
                 self.send(json.dumps({**state, "labels": labels}))
             elif self.path.startswith("/doc/") and self.path[5:] in pages:
                 self.send(pages[self.path[5:]], "text/html")
+            elif pdf is not None and self.path.startswith("/pdf/") and self.path[5:] in pages:
+                raw = pdf(self.path[5:]).read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/pdf")
+                self.send_header("Content-Length", str(len(raw)))
+                self.end_headers()
+                self.wfile.write(raw)
             else:
                 self.send("{}", code=404)
 
@@ -178,5 +197,5 @@ def serve(fields: dict[str, dict[str, Any]]) -> None:
         def log_message(self, *args: Any) -> None:
             pass
 
-    print(f"Open http://127.0.0.1:{PORT} and press Ctrl-C here when you finish.")
-    ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
+    print(f"Open http://127.0.0.1:{port} and press Ctrl-C here when you finish.")
+    ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()

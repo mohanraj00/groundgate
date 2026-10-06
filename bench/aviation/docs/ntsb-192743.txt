@@ -1,0 +1,487 @@
+Aviation Investigation Final Report
+
+Location:
+
+East Palestine, Ohio
+
+Accident Number:
+
+DCA23LA383
+
+Date & Time:
+
+July 24, 2023, 15:30 Local
+
+Registration:
+
+N279WN
+
+Aircraft:
+
+Boeing 737
+
+Aircraft Damage:
+
+None
+
+Defining Event:
+
+Turbulence encounter
+
+Injuries:
+
+1 Serious, 149 None
+
+Flight Conducted Under:
+
+Part 121: Air carrier - Scheduled
+
+Analysis
+
+Southwest Airlines flight 1118 encountered moderate turbulence while descending through
+12,000 ft for landing at Pittsburg International Airport (PIT) Pittsburg, Pennsylvania, and a flight
+attendant fractured her wrist.
+
+The flight crew reported that while descending on the JESEY4 RNAV arrival into PIT they
+observed low cumulus clouds with tops at about 14,000 ft. The captain notified the flight
+attendants to take their seats due to the possibility of turbulence. As they descended through
+the cloud layer at about 12,000 ft the flight encountered an area of moderate turbulence for
+about 20-30 seconds.
+
+After receiving the notification from the captain to take their seats. The “B” and “C” position
+flight attendants (FAs) moved to their respective jumpseats and were attempting to fasten
+their safety harnesses when the turbulence event occurred. The “B” position FA was thrown
+into the air and impacted the jump seat. The “C” position FA was thrown into the air and
+impacted the aft lavatory fracturing her wrist. She described the turbulence as “like nothing I
+have ever felt almost like something hit the back of the airplane.” The flight crew stated that
+they were not notified of the injury until after the plane had landed and they were walking to
+their accommodations.
+
+At the time of the turbulence encounter there were no active significant meteorological
+information (SIGMETs), convective SIGMETs, airman’s meteorological information (AIRMETs),
+center weather advisories (CWAs), or pilot reports (PIREPs) of any significant turbulence other
+than occasional light turbulence/chop over the area.
+
+Page 1 of 6
+Eddy dissipation rate (EDR) is a universal measure of turbulence rate. Recorded data from the
+airplane revealed that about 1929 Coordinated Universal Time (UTC), or 1529 local, at an
+altitude of about 9,970 ft the EDR indicated 0.40 which equates to moderate turbulence.
+According to the flight crew, neither the clouds nor the turbulence were depicted on their
+Weather Services International (WSI) Pilotbrief weather application or displayed on their
+airplane weather radar.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+An inadvertent encounter with convectively induced turbulence (CIT) during descent.
+
+Findings
+
+Environmental issues
+
+Convective turbulence - Effect on personnel
+
+Environmental issues
+
+Convective turbulence - Awareness of condition
+
+Personnel issues
+
+Knowledge of meteorologic cond - Flight crew
+
+Page 2 of 6
+
+DCA23LA383
+Factual Information
+
+History of Flight
+
+Approach
+
+Turbulence encounter (Defining event)
+
+Pilot Information
+
+Certificate:
+
+Airline transport; Commercial
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land; Multi-engine
+land
+
+Seat Occupied:
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+Airplane
+
+Instructor Rating(s):
+
+Airplane multi-engine; Airplane
+single-engine
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+55,Male
+
+Left
+
+5-point
+
+Medical Certification:
+
+Class 1 With waivers/limitations
+
+Last FAA Medical Exam:
+
+July 7, 2023
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+October 23, 2022
+
+Flight Time:
+
+20328 hours (Total, all aircraft), 5000 hours (Total, this make and model), 10600 hours (Pilot In
+Command, all aircraft), 150 hours (Last 90 days, all aircraft), 55 hours (Last 30 days, all aircraft),
+12 hours (Last 24 hours, all aircraft)
+
+Co-pilot Information
+
+Certificate:
+
+Airline transport; Flight instructor
+
+Age:
+
+Airplane Rating(s):
+
+Multi-engine land
+
+Other Aircraft Rating(s): Helicopter
+
+Seat Occupied:
+
+Restraint Used:
+
+53,Male
+
+Right
+
+5-point
+
+Instrument Rating(s):
+
+Airplane; Helicopter
+
+Second Pilot Present:
+
+Instructor Rating(s):
+
+Airplane multi-engine; Instrument
+airplane; Instrument helicopter
+
+Toxicology Performed:
+
+Medical Certification:
+
+Class 1 Waiver time limited
+special
+
+Last FAA Medical Exam:
+
+June 26, 2023
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+June 2, 2023
+
+Flight Time:
+
+12600 hours (Total, all aircraft), 2755 hours (Total, this make and model), 7221 hours (Pilot In
+Command, all aircraft), 188 hours (Last 90 days, all aircraft), 91 hours (Last 30 days, all aircraft),
+7 hours (Last 24 hours, all aircraft)
+
+Page 3 of 6
+
+DCA23LA383
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Boeing
+
+737 7H4
+
+Year of Manufacture:
+
+2007
+
+Airworthiness Certificate:
+
+Transport
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+Serial Number:
+
+Landing Gear Type:
+
+Retractable - Tricycle
+
+Seats:
+
+N279WN
+
+Airplane
+
+32532
+
+140
+
+Date/Type of Last Inspection:
+
+July 23, 2023 Continuous
+airworthiness
+
+Certified Max Gross Wt.:
+
+155000 lbs
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+53731 Hrs as of last
+inspection
+
+Engines:
+
+2
+
+Engine Manufacturer:
+
+ELT:
+
+C126 installed, not activated
+
+Engine Model/Series:
+
+Registered Owner:
+
+SOUTHWEST AIRLINES CO
+
+Rated Power:
+
+Operator:
+
+SOUTHWEST AIRLINES CO
+
+Operating Certificate(s)
+Held:
+
+Flag carrier (121)
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Instrument (IMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KPIT,1119 ft msl
+
+Distance from Accident Site:
+
+1 Nautical Miles
+
+Observation Time:
+
+14:51 Local
+
+Direction from Accident Site:
+
+108°
+
+Lowest Cloud Condition:
+
+Scattered / 4600 ft AGL
+
+Visibility
+
+10 miles
+
+Lowest Ceiling:
+
+Wind Speed/Gusts:
+
+10 knots / None
+
+Wind Direction:
+
+270°
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+None / Convective
+
+N/A / Moderate
+
+Altimeter Setting:
+
+30.06 inches Hg
+
+Temperature/Dew Point:
+
+28°C / 15°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Chicago , IL (MDW)
+
+Type of Flight Plan Filed:
+
+Destination:
+
+East Palestine, OH
+
+Type of Clearance:
+
+Departure Time:
+
+13:43 Local
+
+Type of Airspace:
+
+IFR
+
+IFR
+
+Page 4 of 6
+
+DCA23LA383
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 Serious, 4 None
+
+Passenger Injuries:
+
+145 None
+
+Ground Injuries:
+
+Aircraft Damage:
+
+Aircraft Fire:
+
+None
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 Serious, 149 None
+
+Latitude, Longitude:
+
+40.88,-80.658(est)
+
+Page 5 of 6
+
+DCA23LA383
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Banning, David
+
+Additional Participating
+Persons:
+
+AVP-100; Federal Aviation Administration ; Washington, DC
+
+Original Publish Date:
+
+October 16, 2023
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192743
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+DCA23LA383

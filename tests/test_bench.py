@@ -828,3 +828,13 @@ def test_the_conflict_judge_clears_a_conflict_with_the_chosen_value() -> None:
     assert conflicts_judge.clear(it, {"choice": "none", "confidence": 1.0}, 0.5) is None
     # none is right when no admitted value is the labeled one
     assert conflicts_judge.correct({**it, "label": "20"}, {"choice": "none", "confidence": 0.6})
+
+
+def test_the_aviation_set_takes_numbers_in_hours_or_feet() -> None:
+    sys.path.insert(0, str(BENCH / "aviation"))
+    import aviation
+
+    text = "4200 hours (Total), 1913.7 Hrs, a 3,000-ft runway, 107 ft msl, 30.02 inches Hg, 4 knots"
+    got = [text[a:b] for a, b in aviation.numbers_in(text)]
+    assert got == ["4200", "1913.7", "3,000", "107"]
+    assert set(aviation.FIELDS) == set(aviation.NTSB_FIELDS)

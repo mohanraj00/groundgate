@@ -1,0 +1,468 @@
+Aviation Investigation Final Report
+
+Location:
+
+Tyler, Minnesota
+
+Accident Number:
+
+CEN23LA335
+
+Date & Time:
+
+July 28, 2023, 11:02 Local
+
+Registration:
+
+N7094Z
+
+Aircraft:
+
+Piper PA-25-235
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Loss of control in flight
+
+Injuries:
+
+1 None
+
+Flight Conducted Under:
+
+Part 137: Agricultural
+
+Analysis
+
+The pilot attempted the takeoff with the flaps in the half or first notch position. Unable to
+rotate during the takeoff roll, the pilot selected the full flap position, and the agricultural
+airplane lifted off the 2,500-ft long turf airstrip about 150 feet before the end of the runway.
+The airplane was unable to climb out of ground effect and contacted corn stalks that were
+located past the end of the runway. The airplane descended into the vegetation and came to
+rest nose down and upright. The airplane sustained substantial damage to both wings.
+
+According to the airplane owner’s handbook, a takeoff distance of about 1,370 feet was
+required to clear a 50-foot obstacle with the sprayer configuration. The handbook
+recommended that the wing flaps be retracted at all times during takeoff.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot’s improper flap position during takeoff, which resulted in degraded climb
+performance and a collision with terrain.
+
+Page 1 of 6
+Findings
+
+Aircraft
+
+Trailing edge flaps - Incorrect use/operation
+
+Personnel issues
+
+Incorrect action selection - Pilot
+
+Aircraft
+
+Climb rate - Attain/maintain not possible
+
+Page 2 of 6
+
+CEN23LA335
+Factual Information
+
+History of Flight
+
+Prior to flight
+
+Initial climb
+
+Initial climb
+
+Pilot Information
+
+Preflight or dispatch event
+
+Loss of control in flight (Defining event)
+
+Collision with terr/obj (non-CFIT)
+
+Certificate:
+
+Commercial
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+Airplane
+
+Instructor Rating(s):
+
+None
+
+Medical Certification:
+
+Class 3 Without
+waivers/limitations
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+25,Male
+
+Single
+
+4-point
+
+No
+
+Last FAA Medical Exam:
+
+February 3, 2021
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+March 21, 2022
+
+Flight Time:
+
+1126 hours (Total, all aircraft), 837 hours (Total, this make and model), 1070 hours (Pilot In
+Command, all aircraft), 60 hours (Last 90 days, all aircraft), 25 hours (Last 30 days, all aircraft),
+4 hours (Last 24 hours, all aircraft)
+
+Page 3 of 6
+
+CEN23LA335
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Piper
+
+PA-25-235
+
+Year of Manufacture:
+
+1969
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+N7094Z
+
+Airplane
+
+Airworthiness Certificate:
+
+Restricted (Special)
+
+Serial Number:
+
+25-5052
+
+Landing Gear Type:
+
+Tailwheel
+
+Seats:
+
+1
+
+Date/Type of Last Inspection: March 4, 2023 100 hour
+
+Certified Max Gross Wt.:
+
+2900 lbs
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+7029 Hrs as of last
+inspection
+
+Engines:
+
+1 Reciprocating
+
+Engine Manufacturer:
+
+Lycoming
+
+ELT:
+
+Not installed
+
+Engine Model/Series:
+
+O-540-B2-B5
+
+Registered Owner:
+
+Operator:
+
+On file
+
+On file
+
+Rated Power:
+
+235 Horsepower
+
+Operating Certificate(s)
+Held:
+
+Agricultural aircraft (137)
+
+Operator Does Business As:
+
+On file
+
+Operator Designator Code:
+
+1JKG
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KMML,1179 ft msl
+
+Distance from Accident Site:
+
+17 Nautical Miles
+
+Observation Time:
+
+10:56 Local
+
+Direction from Accident Site:
+
+57°
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Clear
+
+None
+
+Wind Speed/Gusts:
+
+8 knots / None
+
+Wind Direction:
+
+30°
+
+Visibility
+
+10 miles
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+/
+
+/
+
+Altimeter Setting:
+
+29.96 inches Hg
+
+Temperature/Dew Point:
+
+26°C / 22°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Tyler, MN (63Y)
+
+Type of Flight Plan Filed:
+
+Destination:
+
+Tyler, MN (63Y)
+
+Type of Clearance:
+
+None
+
+None
+
+Departure Time:
+
+11:00 Local
+
+Type of Airspace:
+
+Class G
+
+Page 4 of 6
+
+CEN23LA335
+Airport Information
+
+Airport:
+
+Tyler Municipal Airport 63Y
+
+Runway Surface Type:
+
+Grass/turf
+
+Airport Elevation:
+
+1742 ft msl
+
+Runway Surface Condition:
+
+Dry;Vegetation
+
+Runway Used:
+
+32
+
+IFR Approach:
+
+Runway Length/Width:
+
+2517 ft / 160 ft
+
+VFR Approach/Landing:
+
+None
+
+None
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 None
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+Ground Injuries:
+
+N/A
+
+N/A
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 None
+
+Latitude, Longitude:
+
+44.291693,-96.153769
+
+Page 5 of 6
+
+CEN23LA335
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Finne, Andrew
+
+Additional Participating
+Persons:
+
+Thurston, Gregory ; FAA-FSDO; Minneapolis, MN
+
+Original Publish Date:
+
+October 5, 2023
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192748
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+CEN23LA335
