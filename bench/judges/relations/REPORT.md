@@ -8,3 +8,83 @@ Calibration: 108 values in 21 labels. Test: 42 values in 7 labels. The comparato
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Calibration | 1 | 15 | 5 | 16 | 3 | 1 | 67 |
 | Test | 0 | 6 | 0 | 4 | 2 | 0 | 30 |
+
+## Jev
+
+Jev (TypeSafe API), jev-1.13.0, run 2026-10-05.
+
+**Calibration part.** 99 of 108 answers match the label.
+
+| Label | eq | le | lt | ge | gt | approx | range |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Values | 1 | 15 | 5 | 16 | 3 | 1 | 67 |
+| Correct | 1 | 13 | 5 | 14 | 3 | 1 | 62 |
+
+| Confidence at least | 0.5 | 0.7 | 0.8 | 0.9 | 0.95 | 0.99 |
+|---|---:|---:|---:|---:|---:|---:|
+| Answered | 103 | 90 | 80 | 59 | 48 | 28 |
+| Correct | 96 | 86 | 78 | 59 | 48 | 28 |
+
+**Test part.** 39 of 42 answers match the label.
+
+| Label | eq | le | lt | ge | gt | approx | range |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Values | 0 | 6 | 0 | 4 | 2 | 0 | 30 |
+| Correct | 0 | 6 | 0 | 4 | 2 | 0 | 27 |
+
+| Confidence at least | 0.5 | 0.7 | 0.8 | 0.9 | 0.95 | 0.99 |
+|---|---:|---:|---:|---:|---:|---:|
+| Answered | 41 | 32 | 28 | 22 | 18 | 10 |
+| Correct | 38 | 31 | 28 | 22 | 18 | 10 |
+
+**Clears.** For a field with comparator c, the right flags are the values labeled c that spec 0.3 flags, and an escape is a clear of a value with another label. The table gives both parts at the lowest threshold, 0.5. For each ceiling, the threshold is the lowest whose 95% upper bound of the escape rate on the calibration part is below the ceiling.
+
+| c | Right flags: calibration, test | Calibration: right cleared, escapes, bound | Test: right cleared, escapes | Threshold at 0.05 | Threshold at 0.1 | Threshold at 0.2 |
+|---|---:|---:|---:|---:|---:|---:|
+| eq | 1, 0 | 1, 3, 0.9873 | 0, 0 | none | none | none |
+| le | 4, 0 | 1, 0, 0.95 | 0, 0 | none | none | none |
+| lt | 0, 0 | 0, 0, 1.0 | 0, 1 | none | none | none |
+| ge | 3, 0 | 1, 0, 0.95 | 0, 2 | none | none | none |
+| gt | 0, 0 | 0, 0, 1.0 | 0, 0 | none | none | none |
+| approx | 0, 0 | 0, 0, 1.0 | 0, 0 | none | none | none |
+| range | 1, 3 | 1, 2, 0.983 | 0, 0 | none | none | none |
+
+## Jeff
+
+Jeff (local jeff-serve), firelex/jeff d0173b4, mstrasser/Jeff-Gemma4-E2B v1.0, PyTorch on MPS, run 2026-10-05.
+
+**Calibration part.** 75 of 108 answers match the label.
+
+| Label | eq | le | lt | ge | gt | approx | range |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Values | 1 | 15 | 5 | 16 | 3 | 1 | 67 |
+| Correct | 0 | 13 | 1 | 13 | 0 | 0 | 48 |
+
+| Confidence at least | 0.5 | 0.7 | 0.8 | 0.9 | 0.95 | 0.99 |
+|---|---:|---:|---:|---:|---:|---:|
+| Answered | 69 | 42 | 28 | 11 | 0 | 0 |
+| Correct | 59 | 40 | 27 | 11 | 0 | 0 |
+
+**Test part.** 30 of 42 answers match the label.
+
+| Label | eq | le | lt | ge | gt | approx | range |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Values | 0 | 6 | 0 | 4 | 2 | 0 | 30 |
+| Correct | 0 | 6 | 0 | 2 | 1 | 0 | 21 |
+
+| Confidence at least | 0.5 | 0.7 | 0.8 | 0.9 | 0.95 | 0.99 |
+|---|---:|---:|---:|---:|---:|---:|
+| Answered | 34 | 25 | 16 | 7 | 1 | 0 |
+| Correct | 26 | 17 | 11 | 6 | 1 | 0 |
+
+**Clears.** For a field with comparator c, the right flags are the values labeled c that spec 0.3 flags, and an escape is a clear of a value with another label. The table gives both parts at the lowest threshold, 0.5. For each ceiling, the threshold is the lowest whose 95% upper bound of the escape rate on the calibration part is below the ceiling.
+
+| c | Right flags: calibration, test | Calibration: right cleared, escapes, bound | Test: right cleared, escapes | Threshold at 0.05 | Threshold at 0.1 | Threshold at 0.2 |
+|---|---:|---:|---:|---:|---:|---:|
+| eq | 1, 0 | 0, 0, 1.0 | 0, 0 | none | none | none |
+| le | 4, 0 | 2, 7, 0.959 | 0, 6 | none | none | none |
+| lt | 0, 0 | 0, 0, 1.0 | 0, 0 | none | none | none |
+| ge | 3, 0 | 1, 0, 0.95 | 0, 1 | none | none | none |
+| gt | 0, 0 | 0, 0, 1.0 | 0, 0 | none | none | none |
+| approx | 0, 0 | 0, 2, 1.0 | 0, 0 | none | none | none |
+| range | 1, 3 | 0, 1, 1.0 | 1, 1 | none | none | none |

@@ -1,0 +1,610 @@
+{
+ "answers": {
+  "fda-allopurinol:1079": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-allopurinol:374": {
+   "choice": "le",
+   "confidence": 0.98
+  },
+  "fda-allopurinol:790": {
+   "choice": "range",
+   "confidence": 0.97
+  },
+  "fda-allopurinol:800": {
+   "choice": "range",
+   "confidence": 0.41
+  },
+  "fda-allopurinol:865": {
+   "choice": "range",
+   "confidence": 0.91
+  },
+  "fda-allopurinol:876": {
+   "choice": "range",
+   "confidence": 0.52
+  },
+  "fda-alprazolam:102": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-alprazolam:113": {
+   "choice": "range",
+   "confidence": 0.8
+  },
+  "fda-alprazolam:186": {
+   "choice": "range",
+   "confidence": 1.0
+  },
+  "fda-alprazolam:191": {
+   "choice": "range",
+   "confidence": 0.83
+  },
+  "fda-alprazolam:492": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-alprazolam:497": {
+   "choice": "range",
+   "confidence": 0.72
+  },
+  "fda-amiodarone:391": {
+   "choice": "range",
+   "confidence": 1.0
+  },
+  "fda-amiodarone:398": {
+   "choice": "range",
+   "confidence": 0.81
+  },
+  "fda-amiodarone:461": {
+   "choice": "range",
+   "confidence": 0.97
+  },
+  "fda-amiodarone:466": {
+   "choice": "range",
+   "confidence": 0.62
+  },
+  "fda-amiodarone:607": {
+   "choice": "range",
+   "confidence": 0.98
+  },
+  "fda-amiodarone:614": {
+   "choice": "range",
+   "confidence": 0.66
+  },
+  "fda-aripiprazole:159": {
+   "choice": "range",
+   "confidence": 0.93
+  },
+  "fda-aripiprazole:165": {
+   "choice": "range",
+   "confidence": 0.8
+  },
+  "fda-aripiprazole:176": {
+   "choice": "range",
+   "confidence": 0.85
+  },
+  "fda-aripiprazole:182": {
+   "choice": "range",
+   "confidence": 0.69
+  },
+  "fda-aripiprazole:410": {
+   "choice": "range",
+   "confidence": 0.85
+  },
+  "fda-aripiprazole:416": {
+   "choice": "range",
+   "confidence": 0.69
+  },
+  "fda-bupropion:1271": {
+   "choice": "ge",
+   "confidence": 0.99
+  },
+  "fda-bupropion:1318": {
+   "choice": "gt",
+   "confidence": 0.9
+  },
+  "fda-bupropion:1395": {
+   "choice": "le",
+   "confidence": 0.98
+  },
+  "fda-bupropion:1447": {
+   "choice": "le",
+   "confidence": 0.99
+  },
+  "fda-bupropion:265": {
+   "choice": "ge",
+   "confidence": 1.0
+  },
+  "fda-bupropion:894": {
+   "choice": "le",
+   "confidence": 0.82
+  },
+  "fda-citalopram:1196": {
+   "choice": "gt",
+   "confidence": 0.98
+  },
+  "fda-citalopram:1712": {
+   "choice": "ge",
+   "confidence": 1.0
+  },
+  "fda-citalopram:1883": {
+   "choice": "ge",
+   "confidence": 0.9
+  },
+  "fda-citalopram:211": {
+   "choice": "gt",
+   "confidence": 0.99
+  },
+  "fda-citalopram:2505": {
+   "choice": "eq",
+   "confidence": 0.7
+  },
+  "fda-citalopram:668": {
+   "choice": "gt",
+   "confidence": 0.89
+  },
+  "fda-donepezil:601": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-donepezil:606": {
+   "choice": "range",
+   "confidence": 0.91
+  },
+  "fda-donepezil:67": {
+   "choice": "range",
+   "confidence": 0.98
+  },
+  "fda-donepezil:75": {
+   "choice": "range",
+   "confidence": 0.85
+  },
+  "fda-donepezil:899": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-donepezil:904": {
+   "choice": "range",
+   "confidence": 0.86
+  },
+  "fda-duloxetine:225": {
+   "choice": "range",
+   "confidence": 0.98
+  },
+  "fda-duloxetine:238": {
+   "choice": "range",
+   "confidence": 0.78
+  },
+  "fda-duloxetine:518": {
+   "choice": "range",
+   "confidence": 0.91
+  },
+  "fda-duloxetine:523": {
+   "choice": "le",
+   "confidence": 0.43
+  },
+  "fda-duloxetine:551": {
+   "choice": "range",
+   "confidence": 0.95
+  },
+  "fda-duloxetine:557": {
+   "choice": "range",
+   "confidence": 0.89
+  },
+  "fda-ezetimibe:364": {
+   "choice": "ge",
+   "confidence": 0.96
+  },
+  "fda-ezetimibe:559": {
+   "choice": "ge",
+   "confidence": 0.97
+  },
+  "fda-ezetimibe:579": {
+   "choice": "ge",
+   "confidence": 0.92
+  },
+  "fda-glimepiride:1067": {
+   "choice": "range",
+   "confidence": 0.95
+  },
+  "fda-glimepiride:1072": {
+   "choice": "range",
+   "confidence": 0.64
+  },
+  "fda-glimepiride:144": {
+   "choice": "range",
+   "confidence": 0.54
+  },
+  "fda-glimepiride:146": {
+   "choice": "range",
+   "confidence": 0.64
+  },
+  "fda-glimepiride:1460": {
+   "choice": "range",
+   "confidence": 0.92
+  },
+  "fda-glimepiride:1465": {
+   "choice": "range",
+   "confidence": 0.69
+  },
+  "fda-glipizide:1551": {
+   "choice": "ge",
+   "confidence": 0.98
+  },
+  "fda-glipizide:1737": {
+   "choice": "eq",
+   "confidence": 0.57
+  },
+  "fda-meclizine:271": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-meclizine:280": {
+   "choice": "range",
+   "confidence": 0.77
+  },
+  "fda-meclizine:49": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-meclizine:58": {
+   "choice": "range",
+   "confidence": 0.82
+  },
+  "fda-meloxicam:1497": {
+   "choice": "ge",
+   "confidence": 0.99
+  },
+  "fda-meloxicam:1578": {
+   "choice": "gt",
+   "confidence": 0.87
+  },
+  "fda-meloxicam:1665": {
+   "choice": "lt",
+   "confidence": 0.6
+  },
+  "fda-memantine:3004": {
+   "choice": "range",
+   "confidence": 0.83
+  },
+  "fda-memantine:3009": {
+   "choice": "range",
+   "confidence": 0.58
+  },
+  "fda-mirtazapine:110": {
+   "choice": "le",
+   "confidence": 1.0
+  },
+  "fda-mirtazapine:1127": {
+   "choice": "ge",
+   "confidence": 0.99
+  },
+  "fda-mirtazapine:1287": {
+   "choice": "ge",
+   "confidence": 0.95
+  },
+  "fda-mirtazapine:562": {
+   "choice": "le",
+   "confidence": 1.0
+  },
+  "fda-mirtazapine:635": {
+   "choice": "range",
+   "confidence": 0.5
+  },
+  "fda-mirtazapine:640": {
+   "choice": "range",
+   "confidence": 0.38
+  },
+  "fda-morphine:11428": {
+   "choice": "range",
+   "confidence": 0.88
+  },
+  "fda-morphine:11433": {
+   "choice": "range",
+   "confidence": 0.8
+  },
+  "fda-morphine:3461": {
+   "choice": "ge",
+   "confidence": 1.0
+  },
+  "fda-morphine:502": {
+   "choice": "ge",
+   "confidence": 0.99
+  },
+  "fda-morphine:8326": {
+   "choice": "range",
+   "confidence": 0.97
+  },
+  "fda-morphine:8331": {
+   "choice": "range",
+   "confidence": 0.84
+  },
+  "fda-olmesartan:112": {
+   "choice": "range",
+   "confidence": 0.94
+  },
+  "fda-olmesartan:117": {
+   "choice": "range",
+   "confidence": 0.63
+  },
+  "fda-olmesartan:193": {
+   "choice": "range",
+   "confidence": 0.8
+  },
+  "fda-olmesartan:200": {
+   "choice": "lt",
+   "confidence": 0.72
+  },
+  "fda-olmesartan:224": {
+   "choice": "ge",
+   "confidence": 0.96
+  },
+  "fda-olmesartan:248": {
+   "choice": "range",
+   "confidence": 0.89
+  },
+  "fda-ondansetron:1015": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-ondansetron:1020": {
+   "choice": "range",
+   "confidence": 0.62
+  },
+  "fda-ondansetron:1120": {
+   "choice": "range",
+   "confidence": 0.96
+  },
+  "fda-ondansetron:1125": {
+   "choice": "range",
+   "confidence": 0.87
+  },
+  "fda-ondansetron:196": {
+   "choice": "le",
+   "confidence": 1.0
+  },
+  "fda-ondansetron:786": {
+   "choice": "ge",
+   "confidence": 0.94
+  },
+  "fda-oxybutynin:1048": {
+   "choice": "le",
+   "confidence": 1.0
+  },
+  "fda-oxybutynin:1442": {
+   "choice": "le",
+   "confidence": 1.0
+  },
+  "fda-oxybutynin:598": {
+   "choice": "le",
+   "confidence": 0.99
+  },
+  "fda-oxybutynin:639": {
+   "choice": "ge",
+   "confidence": 0.93
+  },
+  "fda-oxybutynin:758": {
+   "choice": "le",
+   "confidence": 0.98
+  },
+  "fda-oxycodone:1754": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-oxycodone:1759": {
+   "choice": "range",
+   "confidence": 0.75
+  },
+  "fda-oxycodone:1771": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-oxycodone:1776": {
+   "choice": "range",
+   "confidence": 0.83
+  },
+  "fda-oxycodone:6324": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-oxycodone:6329": {
+   "choice": "range",
+   "confidence": 0.81
+  },
+  "fda-paroxetine:1413": {
+   "choice": "range",
+   "confidence": 0.95
+  },
+  "fda-paroxetine:1422": {
+   "choice": "range",
+   "confidence": 0.84
+  },
+  "fda-paroxetine:1521": {
+   "choice": "le",
+   "confidence": 0.98
+  },
+  "fda-paroxetine:1612": {
+   "choice": "gt",
+   "confidence": 0.92
+  },
+  "fda-paroxetine:1842": {
+   "choice": "range",
+   "confidence": 0.97
+  },
+  "fda-paroxetine:957": {
+   "choice": "ge",
+   "confidence": 1.0
+  },
+  "fda-pioglitazone:1048": {
+   "choice": "le",
+   "confidence": 0.99
+  },
+  "fda-pioglitazone:2366": {
+   "choice": "range",
+   "confidence": 0.94
+  },
+  "fda-pioglitazone:2373": {
+   "choice": "range",
+   "confidence": 0.76
+  },
+  "fda-pioglitazone:2654": {
+   "choice": "approx",
+   "confidence": 0.98
+  },
+  "fda-pioglitazone:291": {
+   "choice": "le",
+   "confidence": 0.99
+  },
+  "fda-pravastatin:530": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-pravastatin:539": {
+   "choice": "range",
+   "confidence": 0.81
+  },
+  "fda-pravastatin:602": {
+   "choice": "range",
+   "confidence": 0.89
+  },
+  "fda-pravastatin:607": {
+   "choice": "range",
+   "confidence": 0.58
+  },
+  "fda-pravastatin:670": {
+   "choice": "range",
+   "confidence": 0.9
+  },
+  "fda-pravastatin:676": {
+   "choice": "range",
+   "confidence": 0.39
+  },
+  "fda-sitagliptin:223": {
+   "choice": "lt",
+   "confidence": 0.91
+  },
+  "fda-sitagliptin:339": {
+   "choice": "range",
+   "confidence": 0.68
+  },
+  "fda-sitagliptin:371": {
+   "choice": "lt",
+   "confidence": 0.7
+  },
+  "fda-sitagliptin:406": {
+   "choice": "lt",
+   "confidence": 0.97
+  },
+  "fda-sitagliptin:912": {
+   "choice": "range",
+   "confidence": 0.5
+  },
+  "fda-sitagliptin:944": {
+   "choice": "lt",
+   "confidence": 0.7
+  },
+  "fda-tizanidine:191": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-tizanidine:196": {
+   "choice": "range",
+   "confidence": 0.83
+  },
+  "fda-tizanidine:235": {
+   "choice": "le",
+   "confidence": 0.96
+  },
+  "fda-tizanidine:288": {
+   "choice": "eq",
+   "confidence": 0.79
+  },
+  "fda-tizanidine:296": {
+   "choice": "eq",
+   "confidence": 0.69
+  },
+  "fda-tizanidine:316": {
+   "choice": "range",
+   "confidence": 0.97
+  },
+  "fda-tramadol:2198": {
+   "choice": "le",
+   "confidence": 0.4
+  },
+  "fda-tramadol:2207": {
+   "choice": "range",
+   "confidence": 0.71
+  },
+  "fda-tramadol:2266": {
+   "choice": "range",
+   "confidence": 0.99
+  },
+  "fda-tramadol:2271": {
+   "choice": "range",
+   "confidence": 0.74
+  },
+  "fda-tramadol:2293": {
+   "choice": "le",
+   "confidence": 0.99
+  },
+  "fda-tramadol:3285": {
+   "choice": "le",
+   "confidence": 0.49
+  },
+  "fda-warfarin:1210": {
+   "choice": "range",
+   "confidence": 0.84
+  },
+  "fda-warfarin:1215": {
+   "choice": "range",
+   "confidence": 0.95
+  },
+  "fda-warfarin:1542": {
+   "choice": "ge",
+   "confidence": 0.99
+  },
+  "fda-warfarin:326": {
+   "choice": "range",
+   "confidence": 1.0
+  },
+  "fda-warfarin:331": {
+   "choice": "range",
+   "confidence": 0.72
+  },
+  "fda-warfarin:946": {
+   "choice": "gt",
+   "confidence": 0.98
+  },
+  "fda-zolpidem:109": {
+   "choice": "le",
+   "confidence": 1.0
+  },
+  "fda-zolpidem:1367": {
+   "choice": "le",
+   "confidence": 0.98
+  },
+  "fda-zolpidem:324": {
+   "choice": "ge",
+   "confidence": 0.62
+  },
+  "fda-zolpidem:329": {
+   "choice": "range",
+   "confidence": 0.74
+  },
+  "fda-zolpidem:952": {
+   "choice": "ge",
+   "confidence": 0.5
+  },
+  "fda-zolpidem:957": {
+   "choice": "range",
+   "confidence": 0.65
+  }
+ },
+ "meta": {
+  "engine": "Jev (TypeSafe API)",
+  "model": "jev-1.13.0",
+  "prompts_sha256": "228894dbd77b3654a9b9012d007b7c5078c098dbe4a3380e863f451a61654d2e",
+  "run": "2026-10-05"
+ }
+}

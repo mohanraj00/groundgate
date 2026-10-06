@@ -257,10 +257,9 @@ def report(check: bool) -> None:
     print("wrote REPORT.md, report.json")
 
 
-kj.HERE, kj.gold, kj.prompt, kj.ENGINES = HERE, gold, prompt, ENGINES
-
-
 def main() -> None:
+    # the key judge runs and splits with this judge's files, gold and prompts
+    kj.HERE, kj.gold, kj.prompt, kj.ENGINES = HERE, gold, prompt, ENGINES
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("split")
