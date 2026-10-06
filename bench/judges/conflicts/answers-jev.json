@@ -1,0 +1,298 @@
+{
+ "answers": {
+  "fda-abiraterone|hepatic_starting_dose": {
+   "choice": "250 mg",
+   "confidence": 1.0
+  },
+  "fda-abiraterone|max_daily_dose": {
+   "choice": "1000 mg",
+   "confidence": 0.94
+  },
+  "fda-abiraterone|starting_dose": {
+   "choice": "1000 mg",
+   "confidence": 1.0
+  },
+  "fda-atomoxetine|max_daily_dose": {
+   "choice": "100 mg",
+   "confidence": 0.97
+  },
+  "fda-atomoxetine|starting_dose": {
+   "choice": "40 mg",
+   "confidence": 1.0
+  },
+  "fda-budesonide|hepatic_starting_dose": {
+   "choice": "3 mg",
+   "confidence": 0.97
+  },
+  "fda-budesonide|max_daily_dose": {
+   "choice": "9 mg",
+   "confidence": 0.98
+  },
+  "fda-budesonide|starting_dose": {
+   "choice": "9 mg",
+   "confidence": 1.0
+  },
+  "fda-buprenorphine|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.97
+  },
+  "fda-buprenorphine|max_daily_dose": {
+   "choice": "24 mg",
+   "confidence": 0.48
+  },
+  "fda-buprenorphine|starting_dose": {
+   "choice": "8 mg",
+   "confidence": 0.4
+  },
+  "fda-cilostazol|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.98
+  },
+  "fda-cilostazol|max_daily_dose": {
+   "choice": "100 mg",
+   "confidence": 0.39
+  },
+  "fda-cilostazol|starting_dose": {
+   "choice": "100 mg",
+   "confidence": 1.0
+  },
+  "fda-eplerenone|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.97
+  },
+  "fda-eplerenone|starting_dose": {
+   "choice": "50 mg",
+   "confidence": 1.0
+  },
+  "fda-eszopiclone|hepatic_starting_dose": {
+   "choice": "2 mg",
+   "confidence": 0.53
+  },
+  "fda-eszopiclone|max_daily_dose": {
+   "choice": "3 mg",
+   "confidence": 0.98
+  },
+  "fda-eszopiclone|starting_dose": {
+   "choice": "1 mg",
+   "confidence": 1.0
+  },
+  "fda-etodolac|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.99
+  },
+  "fda-etodolac|max_daily_dose": {
+   "choice": "1000 mg",
+   "confidence": 0.98
+  },
+  "fda-etodolac|starting_dose": {
+   "choice": "200 mg",
+   "confidence": 0.71
+  },
+  "fda-febuxostat|hepatic_starting_dose": {
+   "choice": "40 mg",
+   "confidence": 0.54
+  },
+  "fda-febuxostat|max_daily_dose": {
+   "choice": "80 mg",
+   "confidence": 0.91
+  },
+  "fda-febuxostat|starting_dose": {
+   "choice": "40 mg",
+   "confidence": 1.0
+  },
+  "fda-fluvoxamine|hepatic_starting_dose": {
+   "choice": "100 mg",
+   "confidence": 0.99
+  },
+  "fda-fluvoxamine|max_daily_dose": {
+   "choice": "none",
+   "confidence": 0.99
+  },
+  "fda-fluvoxamine|starting_dose": {
+   "choice": "100 mg",
+   "confidence": 1.0
+  },
+  "fda-hydromorphone|max_daily_dose": {
+   "choice": "none",
+   "confidence": 0.97
+  },
+  "fda-hydromorphone|starting_dose": {
+   "choice": "2 mg",
+   "confidence": 1.0
+  },
+  "fda-leflunomide|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.94
+  },
+  "fda-leflunomide|max_daily_dose": {
+   "choice": "20 mg",
+   "confidence": 1.0
+  },
+  "fda-leflunomide|starting_dose": {
+   "choice": "20 mg",
+   "confidence": 0.9
+  },
+  "fda-mesalamine|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "fda-mesalamine|max_daily_dose": {
+   "choice": "none",
+   "confidence": 0.82
+  },
+  "fda-mesalamine|starting_dose": {
+   "choice": "800 mg",
+   "confidence": 0.98
+  },
+  "fda-methadone|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.99
+  },
+  "fda-methadone|max_daily_dose": {
+   "choice": "none",
+   "confidence": 0.49
+  },
+  "fda-methadone|starting_dose": {
+   "choice": "20 mg",
+   "confidence": 0.99
+  },
+  "fda-minocycline|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "fda-modafinil|starting_dose": {
+   "choice": "200 mg",
+   "confidence": 1.0
+  },
+  "fda-mycophenolate|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "fda-pitavastatin|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.99
+  },
+  "fda-pitavastatin|max_daily_dose": {
+   "choice": "4 mg",
+   "confidence": 1.0
+  },
+  "fda-pitavastatin|starting_dose": {
+   "choice": "2 mg",
+   "confidence": 0.94
+  },
+  "fda-prasugrel|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.98
+  },
+  "fda-prasugrel|max_daily_dose": {
+   "choice": "10 mg",
+   "confidence": 0.88
+  },
+  "fda-prasugrel|starting_dose": {
+   "choice": "60 mg",
+   "confidence": 0.63
+  },
+  "fda-rabeprazole|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.99
+  },
+  "fda-rabeprazole|max_daily_dose": {
+   "choice": "20 mg",
+   "confidence": 0.94
+  },
+  "fda-rabeprazole|starting_dose": {
+   "choice": "20 mg",
+   "confidence": 1.0
+  },
+  "fda-raloxifene|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.9
+  },
+  "fda-raloxifene|max_daily_dose": {
+   "choice": "60 mg",
+   "confidence": 0.92
+  },
+  "fda-raloxifene|starting_dose": {
+   "choice": "60 mg",
+   "confidence": 1.0
+  },
+  "fda-repaglinide|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.99
+  },
+  "fda-repaglinide|max_daily_dose": {
+   "choice": "16 mg",
+   "confidence": 0.99
+  },
+  "fda-repaglinide|starting_dose": {
+   "choice": "0.5 mg",
+   "confidence": 1.0
+  },
+  "fda-rizatriptan|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.99
+  },
+  "fda-rizatriptan|max_daily_dose": {
+   "choice": "30 mg",
+   "confidence": 0.97
+  },
+  "fda-rizatriptan|starting_dose": {
+   "choice": "5 mg",
+   "confidence": 1.0
+  },
+  "fda-silodosin|max_daily_dose": {
+   "choice": "8 mg",
+   "confidence": 0.99
+  },
+  "fda-silodosin|starting_dose": {
+   "choice": "8 mg",
+   "confidence": 1.0
+  },
+  "fda-ursodiol|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "fda-ursodiol|max_daily_dose": {
+   "choice": "none",
+   "confidence": 0.99
+  },
+  "fda-vancomycin|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.99
+  },
+  "fda-vancomycin|max_daily_dose": {
+   "choice": "none",
+   "confidence": 0.83
+  },
+  "fda-vancomycin|starting_dose": {
+   "choice": "125 mg",
+   "confidence": 1.0
+  },
+  "fda-varenicline|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.98
+  },
+  "fda-varenicline|starting_dose": {
+   "choice": "0.5 mg",
+   "confidence": 0.98
+  },
+  "fda-vilazodone|hepatic_starting_dose": {
+   "choice": "none",
+   "confidence": 0.98
+  },
+  "fda-vilazodone|max_daily_dose": {
+   "choice": "40 mg",
+   "confidence": 0.94
+  },
+  "fda-vilazodone|starting_dose": {
+   "choice": "10 mg",
+   "confidence": 0.86
+  }
+ },
+ "meta": {
+  "engine": "Jev (TypeSafe API)",
+  "model": "jev-1.13.0",
+  "prompts_sha256": "8d8143c64f2755169e0eb51a38098f80364706c98b986209592818a3a636fc83",
+  "run": "2026-10-06"
+ }
+}
