@@ -20,6 +20,7 @@ groundgate-calibrate split  --work bench/sec/work-field
 groundgate-calibrate label  --work bench/sec/work-field
 TYPESAFE_API_KEY=... groundgate-calibrate ask --work bench/sec/work-field --judge jev
 groundgate-calibrate report --work bench/sec/work-field
+# the same five steps for the key question, in bench/sec/work-key
 uv run python bench/sec/sec.py results                             # results.json, RESULTS.md
 ```
 
@@ -57,13 +58,17 @@ product, a quarter), a change, another measure or another period is wrong. "Cash
 `cash_and_equivalents` when it is the company's whole cash balance at the year end, and wrong
 when it is one account or a part, such as "cash in our operating account" or cash held in trust.
 
-The key items were sampled (`work-key/items.json`) but not labeled. The plan expected about one
-for each filing; the count is in RESULTS.md.
+The maintainer then labeled the key items too, blind, in a second pass: which of the fiscal
+years 2025, 2024 and 2023 the marked value belongs to, or none. Where extraction flattened a
+table to one cell on each line, the tool linked to the filing on EDGAR (`links.json`).
 
 ## What it shows
 
 - The tool works on a new kind from start to end: sample, split, label, ask, report, and a policy
   block for each ceiling with a threshold.
+- The key clear helps on real extractor output. Almost every `KEY_NOT_AT_VALUE` flag here is a
+  false alarm, and Jev clears most of the right ones on the test part with no escape. The FDA threshold gives the same result here. The
+  test part has few wrong flags, so the escape side rests on little data.
 - On these filings, the admitted values are almost all right already, so the field doubt has
   little to catch. The thresholds of the FDA and NTSB sets, applied unchanged, catch no wrong
   test value here, and the FDA threshold sends right values to review. A threshold does not travel

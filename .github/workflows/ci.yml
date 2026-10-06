@@ -107,4 +107,5 @@ jobs:
       - name: The 10-K calibration report and results match their recorded answers
         run: |
           uv run groundgate-calibrate report --work bench/sec/work-field --check
+          uv run groundgate-calibrate report --work bench/sec/work-key --check
           uv run python bench/sec/sec.py results --check

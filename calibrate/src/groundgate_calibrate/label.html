@@ -71,6 +71,7 @@ kbd { font: 11px ui-monospace, monospace; border: 1px solid var(--line); border-
       <div class="bar"><div id="bar"></div></div>
     </div>
     <div class="item" id="item"></div>
+    <a class="item" id="link" target="_blank" rel="noopener" hidden>Open the original document</a>
     <div class="q" id="q"></div>
     <div class="desc" id="desc"></div>
     <div id="opts"></div>
@@ -167,6 +168,9 @@ async function go(j) {
     $("q").textContent = `Does the text state the yellow value as ${it.field}?`;
     $("desc").textContent = it.description;
   }
+  const url = (S.links || {})[it.doc];
+  $("link").hidden = !url;
+  if (url) $("link").href = url;
   $("saved").textContent = it.id in S.labels ? `Saved now: ${tag(v)}` : "Not labeled yet.";
   paintOpts();
 }

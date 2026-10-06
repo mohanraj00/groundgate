@@ -103,6 +103,9 @@ def serve(w: Work, port: int) -> None:
         for it in items
     ]
     path = w.path / "labels.json"
+    # links.json, when the user gives one, maps a document to its original, such as the source
+    # web page, for text whose tables lost their shape in extraction
+    links = w.read("links.json", {})
 
     class Handler(BaseHTTPRequestHandler):
         def send(self, body: str, kind: str = "application/json", code: int = 200) -> None:
@@ -118,7 +121,7 @@ def serve(w: Work, port: int) -> None:
                 self.send(files(__package__).joinpath("label.html").read_text("utf-8"), "text/html")
             elif self.path == "/state":
                 labels = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
-                state = {"question": question, "items": shown, "labels": labels}
+                state = {"question": question, "items": shown, "labels": labels, "links": links}
                 self.send(json.dumps(state))
             elif self.path.startswith("/doc/") and unquote(self.path[5:]) in pages:
                 self.send(pages[unquote(self.path[5:])], "text/html")

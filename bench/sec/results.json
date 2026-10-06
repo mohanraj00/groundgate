@@ -64,5 +64,47 @@
    "wrong_caught": 0,
    "right_doubted": 1
   }
+ ],
+ "key_test": {
+  "flags": 53,
+  "right_flags": 51
+ },
+ "key_travel": [
+  {
+   "from": "10-K filings (this demo)",
+   "ceiling": "0.05",
+   "threshold": null
+  },
+  {
+   "from": "10-K filings (this demo)",
+   "ceiling": "0.1",
+   "threshold": null
+  },
+  {
+   "from": "10-K filings (this demo)",
+   "ceiling": "0.2",
+   "threshold": 0.5,
+   "clears_right": 34,
+   "escapes": 0
+  },
+  {
+   "from": "FDA labels",
+   "ceiling": "0.05",
+   "threshold": null
+  },
+  {
+   "from": "FDA labels",
+   "ceiling": "0.1",
+   "threshold": 0.5,
+   "clears_right": 34,
+   "escapes": 0
+  },
+  {
+   "from": "FDA labels",
+   "ceiling": "0.2",
+   "threshold": 0.5,
+   "clears_right": 34,
+   "escapes": 0
+  }
  ]
 }

@@ -26,6 +26,9 @@ groundgate-calibrate report --work W        # REPORT.md, report.json
 - `--descriptions` is an optional JSON file that maps each field name to a one-line meaning.
   The field question and the label tool show it.
 
+If extraction lost the shape of your tables, put a `links.json` in `W` that maps each document
+name to its original, such as the source web page. The label tool then links to it.
+
 `W` keeps everything that a later step needs: the config, a copy of each document with items,
 the items, the labels, the split, the answers and the report. A step never asks for an earlier
 input again.

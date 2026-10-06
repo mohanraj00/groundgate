@@ -1,0 +1,320 @@
+{
+ "answers": {
+  "sec-0000708781-26-000010:3": {
+   "choice": "none",
+   "confidence": 0.46
+  },
+  "sec-0000708781-26-000010:4": {
+   "choice": "none",
+   "confidence": 0.49
+  },
+  "sec-0000708781-26-000010:7": {
+   "choice": "k1",
+   "confidence": 0.88
+  },
+  "sec-0000737875-26-000009:2": {
+   "choice": "k3",
+   "confidence": 0.38
+  },
+  "sec-0000918541-26-000006:0": {
+   "choice": "k1",
+   "confidence": 0.89
+  },
+  "sec-0000918541-26-000006:1": {
+   "choice": "k2",
+   "confidence": 0.9
+  },
+  "sec-0001104659-26-021557:1": {
+   "choice": "k2",
+   "confidence": 0.78
+  },
+  "sec-0001104659-26-021557:5": {
+   "choice": "k2",
+   "confidence": 0.26
+  },
+  "sec-0001125376-26-000007:4": {
+   "choice": "k1",
+   "confidence": 0.94
+  },
+  "sec-0001125376-26-000007:5": {
+   "choice": "k2",
+   "confidence": 0.97
+  },
+  "sec-0001193125-26-057356:2": {
+   "choice": "k1",
+   "confidence": 0.88
+  },
+  "sec-0001193125-26-057356:3": {
+   "choice": "k2",
+   "confidence": 0.96
+  },
+  "sec-0001193125-26-057356:4": {
+   "choice": "k1",
+   "confidence": 0.85
+  },
+  "sec-0001193125-26-057356:5": {
+   "choice": "k2",
+   "confidence": 0.95
+  },
+  "sec-0001193125-26-066979:10": {
+   "choice": "k1",
+   "confidence": 0.91
+  },
+  "sec-0001193125-26-066979:11": {
+   "choice": "k2",
+   "confidence": 0.96
+  },
+  "sec-0001193125-26-066979:12": {
+   "choice": "k2",
+   "confidence": 0.53
+  },
+  "sec-0001193125-26-066979:13": {
+   "choice": "none",
+   "confidence": 0.39
+  },
+  "sec-0001193125-26-066979:8": {
+   "choice": "k1",
+   "confidence": 0.91
+  },
+  "sec-0001193125-26-066979:9": {
+   "choice": "k2",
+   "confidence": 0.98
+  },
+  "sec-0001193125-26-076810:12": {
+   "choice": "k1",
+   "confidence": 0.93
+  },
+  "sec-0001193125-26-076810:13": {
+   "choice": "k2",
+   "confidence": 0.97
+  },
+  "sec-0001193125-26-076810:14": {
+   "choice": "none",
+   "confidence": 0.27
+  },
+  "sec-0001193125-26-076810:15": {
+   "choice": "none",
+   "confidence": 0.22
+  },
+  "sec-0001193125-26-077343:0": {
+   "choice": "k1",
+   "confidence": 0.94
+  },
+  "sec-0001193125-26-077343:1": {
+   "choice": "k2",
+   "confidence": 0.94
+  },
+  "sec-0001193125-26-107971:8": {
+   "choice": "none",
+   "confidence": 0.6
+  },
+  "sec-0001193125-26-107971:9": {
+   "choice": "none",
+   "confidence": 0.64
+  },
+  "sec-0001193125-26-134736:0": {
+   "choice": "k1",
+   "confidence": 0.92
+  },
+  "sec-0001193125-26-134736:1": {
+   "choice": "k2",
+   "confidence": 0.92
+  },
+  "sec-0001213900-26-036517:1": {
+   "choice": "k2",
+   "confidence": 0.94
+  },
+  "sec-0001398659-26-000004:15": {
+   "choice": "k2",
+   "confidence": 0.97
+  },
+  "sec-0001398659-26-000004:16": {
+   "choice": "k1",
+   "confidence": 0.92
+  },
+  "sec-0001437749-26-005376:0": {
+   "choice": "k1",
+   "confidence": 0.6
+  },
+  "sec-0001437749-26-005875:6": {
+   "choice": "k1",
+   "confidence": 0.9
+  },
+  "sec-0001437749-26-005875:7": {
+   "choice": "k2",
+   "confidence": 0.96
+  },
+  "sec-0001437749-26-005875:8": {
+   "choice": "k3",
+   "confidence": 0.96
+  },
+  "sec-0001493152-26-009848:6": {
+   "choice": "k1",
+   "confidence": 0.95
+  },
+  "sec-0001493152-26-009848:7": {
+   "choice": "k2",
+   "confidence": 0.98
+  },
+  "sec-0001493152-26-013844:0": {
+   "choice": "k1",
+   "confidence": 0.75
+  },
+  "sec-0001571949-26-000004:0": {
+   "choice": "k1",
+   "confidence": 0.87
+  },
+  "sec-0001571949-26-000004:1": {
+   "choice": "k2",
+   "confidence": 0.87
+  },
+  "sec-0001571949-26-000004:12": {
+   "choice": "k1",
+   "confidence": 0.87
+  },
+  "sec-0001571949-26-000004:13": {
+   "choice": "k2",
+   "confidence": 0.9
+  },
+  "sec-0001571949-26-000004:14": {
+   "choice": "k3",
+   "confidence": 0.91
+  },
+  "sec-0001571949-26-000004:15": {
+   "choice": "k1",
+   "confidence": 0.94
+  },
+  "sec-0001571949-26-000004:16": {
+   "choice": "k2",
+   "confidence": 0.96
+  },
+  "sec-0001571949-26-000004:17": {
+   "choice": "none",
+   "confidence": 0.66
+  },
+  "sec-0001571949-26-000004:19": {
+   "choice": "k1",
+   "confidence": 0.82
+  },
+  "sec-0001571949-26-000004:2": {
+   "choice": "k3",
+   "confidence": 0.84
+  },
+  "sec-0001571949-26-000004:26": {
+   "choice": "k1",
+   "confidence": 0.78
+  },
+  "sec-0001571949-26-000004:27": {
+   "choice": "k2",
+   "confidence": 0.92
+  },
+  "sec-0001571949-26-000004:28": {
+   "choice": "k3",
+   "confidence": 0.9
+  },
+  "sec-0001571949-26-000004:29": {
+   "choice": "none",
+   "confidence": 0.67
+  },
+  "sec-0001571949-26-000004:3": {
+   "choice": "none",
+   "confidence": 0.45
+  },
+  "sec-0001571949-26-000004:30": {
+   "choice": "none",
+   "confidence": 0.52
+  },
+  "sec-0001571949-26-000004:31": {
+   "choice": "none",
+   "confidence": 0.6
+  },
+  "sec-0001571949-26-000004:32": {
+   "choice": "none",
+   "confidence": 0.54
+  },
+  "sec-0001571949-26-000004:33": {
+   "choice": "none",
+   "confidence": 0.59
+  },
+  "sec-0001571949-26-000004:34": {
+   "choice": "none",
+   "confidence": 0.28
+  },
+  "sec-0001571949-26-000004:4": {
+   "choice": "none",
+   "confidence": 0.3
+  },
+  "sec-0001571949-26-000004:5": {
+   "choice": "none",
+   "confidence": 0.4
+  },
+  "sec-0001571949-26-000004:6": {
+   "choice": "none",
+   "confidence": 0.48
+  },
+  "sec-0001571949-26-000004:7": {
+   "choice": "none",
+   "confidence": 0.46
+  },
+  "sec-0001571949-26-000004:8": {
+   "choice": "none",
+   "confidence": 0.36
+  },
+  "sec-0001628280-26-004357:15": {
+   "choice": "k1",
+   "confidence": 0.97
+  },
+  "sec-0001628280-26-004357:16": {
+   "choice": "k2",
+   "confidence": 0.98
+  },
+  "sec-0001628280-26-004357:17": {
+   "choice": "k3",
+   "confidence": 0.97
+  },
+  "sec-0001628369-26-000008:10": {
+   "choice": "k1",
+   "confidence": 0.94
+  },
+  "sec-0001628369-26-000008:9": {
+   "choice": "k1",
+   "confidence": 0.86
+  },
+  "sec-0001717307-26-000012:8": {
+   "choice": "k1",
+   "confidence": 0.94
+  },
+  "sec-0001717307-26-000012:9": {
+   "choice": "k2",
+   "confidence": 0.9
+  },
+  "sec-0001725160-26-000014:2": {
+   "choice": "k2",
+   "confidence": 0.96
+  },
+  "sec-0001759655-26-000010:10": {
+   "choice": "k2",
+   "confidence": 0.98
+  },
+  "sec-0001759655-26-000010:9": {
+   "choice": "k1",
+   "confidence": 0.97
+  },
+  "sec-0001828318-26-000006:1": {
+   "choice": "k1",
+   "confidence": 0.92
+  },
+  "sec-0001828318-26-000006:2": {
+   "choice": "k2",
+   "confidence": 0.96
+  }
+ },
+ "meta": {
+  "judge": "jev",
+  "labels_sha256": "6199cc4ae246207fe6399be059fd2b2eeb7aa4ffd854c309a48555b32111fa6d",
+  "model": "jev-1.13.0",
+  "prompts_sha256": "4135bb4f43a6218ef1a1c88590d0e50d43c60ae065839841f149c6c28691b0e5",
+  "run": "2026-10-06",
+  "scoring_sha256": "2c9fc285b632e7642c0a63d56691955bd88629a9a9b76a903197324c0b64dab8"
+ }
+}
