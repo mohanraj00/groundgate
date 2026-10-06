@@ -1,0 +1,19 @@
+{
+ "doses": {
+  "calibration": 69,
+  "test": 56
+ },
+ "engines": {},
+ "labels": {
+  "calibration": 14,
+  "test": 12
+ },
+ "pairs": {
+  "calibration": 261,
+  "test": 215
+ },
+ "right_pairs": {
+  "calibration": 56,
+  "test": 52
+ }
+}
