@@ -1,0 +1,115 @@
+A volunteer prepares a fraudulent return by adding household employee wages that the taxpayer
+did not earn. The taxpayer received a notice from IRS for additional information needed about the
+earnings that the taxpayer did not have so the IRS corrected the tax return and began assessing
+additional taxes, interest, and penalties.
+
+Hardship on the taxpayer
+
+For a low-income taxpayer, it could be impossible to make full payment and recover from return fraud. If
+full payment is not received, the taxpayer will receive several collection notices. If full payment is still not
+received, the taxpayer will be sent through the IRS collection process. This could also involve the filing of a
+tax lien or a levy (garnishment) on their bank accounts and/or wages. The taxpayer may be eligible for an
+installment agreement, but it could take several years to pay the IRS debt.
+
+A taxpayer’s return fraudulently contains the Earned Income Credit (EIC). The taxpayer has
+already received the refund when an audit notice is issued. During the audit, the taxpayer cannot
+provide documentation to support the EIC claim.
+
+The taxpayer is disallowed $3,000 in EIC and now has a balance due of over $4,000, including
+penalties and interest. This amount reflects only the EIC disallowance. An additional disallowance
+of the Head of Household (HOH) filing status and Child Tax Credit (CTC) could generate a balance
+of over $6,000.
+
+Identity Theft
+
+Nationwide, identity theft continues to grow at an alarming rate. Unfortunately, there are instances of
+unscrupulous volunteers using information they have obtained at a VITA/TCE site to steal the identity
+of taxpayers. For example, using a stolen SSN to file a false tax return to obtain a refund is a form of
+identity theft. Any suspicion of identity theft occurring at a VITA/TCE site must be reported to IRS Criminal
+Investigation (CI) and Treasury Inspector General for Tax Administration (TIGTA).
+
+The IRS considers this a very serious crime and put measures in place to detect possible identity theft
+situations at VITA/TCE sites. The IRS is continually implementing: new processes for handling returns,
+new filters to detect fraud, new initiatives to partner with stakeholders, and a continuing commitment to
+investigate the criminals who commit these crimes.
+
+Jane, an IRS tax law-certified volunteer, is working at a VITA site on the first day the site is open.
+She has volunteered to electronically file the tax returns for the site to help out the coordinator.
+Therefore, she is given the needed permission level in the tax preparation software.
+
+That day, Joe, the coordinator, opens the locked VITA file cabinet and discovers an e-file
+acceptance report he forgot to destroy from the previous year. He asks Jane to take the report
+down the hall to the shredder because it has several SSNs listed. Jane puts the report in her purse
+without Joe’s knowledge.
+
+Later that night at home, Jane opens the VITA tax preparation software and prepares falsified tax
+returns for the eight SSNs listed on the report she took from the VITA site that morning. She makes
+sure the returns all have large refunds. Jane puts her own bank account information in the direct
+deposit fields and electronically files the returns.
+
+Jane stole the identity of these eight taxpayers by preparing false federal tax returns to steal the
+refunds.
+
+SPEC has a system that extracts information pertaining to tax returns filed through the VITA/TCE
+program where multiple tax refunds are being deposited into a single bank account. Jane’s actions
+were reported to IRS CI and TIGTA.
+
+11
+Exercises
+
+Using your reference materials, answer the following questions.
+
+Question 1: Taxpayer Edna brings her tax documents to the site. She completes Form 13614-C,
+Intake/Interview and Quality Review Sheet. She indicates on page 2 of Form 13614-C that she has
+self-employment income, along with other income and expenses.
+
+Joe, a volunteer tax preparer, reviews Form 13614-C with Edna. He asks if she brought all of her
+documents today, and asks to see them. Included in the documents is Form 1099-NEC, Nonemployee
+Compensation, showing $7,500 of non-employee compensation in Box 1. She tells Joe that she has a
+cleaning business that provides services to local businesses.
+
+Edna says she also received $4,000 in cash payments for additional cleaning work. When Joe asks if she
+received any documentation supporting these payments, she says no, the payments were simply paid to
+her for each cleaning job she performed.
+
+Joe suggests because the IRS has no record of the cash payments, Edna does not need to report these
+payments on her return. Edna is concerned and feels like she could “get in trouble” with the IRS if she does
+not report all of her income. Joe assures her that the chance of the IRS discovering that she did not report
+cash income is very small.
+
+Joe prepares Form 1040, Individual Income Tax Return. On Schedule C, line 1, he reports only the $7,500
+reported in Box 1 of Form 1099-NEC. When Joe completes the return and after the quality review has been
+completed, he hands it to Edna to sign Form 8879, IRS e-file Signature Authorization.
+
+a. Is there a Volunteer Standards of Conduct violation? If so, identify the applicable VSC and explain.
+
+b. What should the volunteer have done?
+
+c. What could happen to the volunteer?
+
+Question 2: Taxpayer George completes Form 13614-C, indicating on page 1 that his marital status is
+single with one dependent, Amelia. Volunteer preparer Marge reviews George's intake form and taxpayer
+information documents.
+
+When Marge asks if Amelia is related to George, he says no, that Amelia is the child of a personal friend
+who is not filing a tax return. Amelia’s mother told George he could claim the child and even gave him
+Amelia’s Social Security card. Marge then asks whether George provided more than one-half of Amelia’s
+support, but George says no. He goes on to say that he should be able to claim Amelia as a dependent
+because no one else is claiming her.
+
+Marge agrees that, although Amelia is not George’s qualifying child or relative, he can still claim her as
+a dependent because no one else will. Marge further suggests that the child could be listed as George’s
+niece who lives with him, so that he can file as a Head of Household and claim the Earned Income Credit
+(EIC). Marge completes page 1 of Form 13614-C accordingly.
+
+Marge assures George that the chances of the IRS discovering that he and Amelia are not related would be
+very small. Marge prepares the return with the Head of Household status and claiming the EIC and Child
+Tax Credits for “qualifying child” Amelia. George signs Form 8879.
+
+a. Is there a Volunteer Standards of Conduct violation? If so, identify the applicable VSC and explain.
+
+b. What should the volunteer have done?
+
+c. What could happen to the volunteer?
+
+20

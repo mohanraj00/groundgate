@@ -1,0 +1,77 @@
+Chart B: Who Must File – Worksheet for Bona Fide Residents of Puerto Rico with
+Excluded Income (under IRC Section 933)
+
+1. Enter Standard Deduction ................................................................................................................
+
+If your filing status is:
+
+Single
+
+under 65 enter $15,750
+
+65 or older enter $17,750
+
+Married filing jointly
+
+both under 65 enter $31,500
+
+Head of household
+
+Qualifying Surviving spouse with
+dependent child
+
+one 65 or older enter $33,100
+
+both 65 or older enter $34,700
+
+under 65 enter $23,625
+
+65 or older enter $25,625
+
+under 65 enter $31,500
+
+65 or older enter $33,100
+
+Married filing separately
+
+See note after line 2d below
+
+If someone can claim you as a dependent, enter amount from the Standard Deduction Worksheet for
+Dependents in Instructions for Form 1040 or Form 1040SR, as applicable.
+
+2. Allowable portion of Standard Deduction
+
+a. Gross Income subject to U.S. tax (include taxable social security benefits) ..................................
+
+b. Total gross income from all sources (including excluded P.R. Income)..........................................
+
+c. Divide line 2a by line 2b .................................................................................................................
+
+d. Multiply Standard Deduction (line 1) by line 2c ............................................................................
+
+You must file a return if your gross income subject to U.S. tax (line 2a) is equal to or more than line
+2d. If you are married filing a separate return, you must file a return if your gross income subject to
+U.S. tax is equal to or more than $5.
+
+Chart C: Should you file a tax return?
+
+Question
+
+Answer
+
+Did you have federal income tax withheld from any
+income, including unemployment benefits?
+
+Yes: File form 1040 or 1040SR to claim a refund of
+taxes withheld.
+
+Do you qualify for the additional child tax credit?
+
+No: Continue
+
+Yes: File Form 1040 SS (sp) or Form 1040 SS to claim
+the credit.
+
+No: You should not file a federal tax return.
+
+6

@@ -33,6 +33,9 @@ real LangExtract install.
 - **No model inside the decision.** The decision is a pure function of its inputs. A model's
   answer enters only as a recorded input (#66), and the core never imports a model. Examples may
   call models; they cache the output so they rebuild without keys.
+- **A rule about keys or layout is measured on two kinds.** One of them is not the kind that the
+  rule was written from. The key rules of spec 0.3 came from FDA labels, and `bench/status`
+  measures them on IRS publications (#113).
 - **Examples rebuild byte for byte.** If you touch `src/`, run
   `uv run python examples/irs-590a/build.py` and commit any change it makes. CI fails otherwise.
 
