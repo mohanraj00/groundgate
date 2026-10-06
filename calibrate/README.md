@@ -76,8 +76,44 @@ documents for the ceiling that you need before you start.
 - **Text leaves the machine.** A hosted judge sends a window of each document out: 400 code
   points before the value and 150 after. Use it only on documents that you may send.
 
+## Judges
+
+A judge has an `id`, a `digest` that names one model version, and `ask(state, questions)`, which
+answers in the typed-decision format: `{"choice": ..., "confidence": ...}` for a choice question
+and `{"noul": ...}` for a noul question. Jev (`--judge jev`) is built in. A package adds a judge
+with an entry point:
+
+```toml
+[project.entry-points."groundgate.judges"]
+mine = "my_package:make_judge"   # a function with no arguments that returns the judge
+```
+
+Then `--judge mine` uses it. A plug-in cannot take the name of another judge.
+
+## In production: recorded judgments
+
+Spec 0.4 reads a judge's answers only as recorded inputs. `judge` writes them for your documents:
+
+```bash
+groundgate-calibrate judge --docs D --candidates C --schema S --policy policy.json \
+    --calibration W-key W-field --out J
+```
+
+- The policy's `judge` block names the judge, the model version and the thresholds, as `report`
+  wrote it. The judge must be that version, and each calibration must be of that version.
+- Each question that the policy has a threshold for needs its calibration, and is asked as that
+  calibration asked it: the same wording, context, descriptions and window.
+- A question is asked only where its answer can change the decision: the key question of each
+  candidate flagged `KEY_NOT_AT_VALUE`, and the field question of each admitted candidate. With
+  both thresholds, the field question also goes to each candidate whose only flag is
+  `KEY_NOT_AT_VALUE`, because the key judgment can admit it.
+- Give one calibration for each question.
+- A judged candidate needs a unique `id`, because a judgment names its candidate by `id`.
+- `J/<doc>.json` holds the judgments. Pass them to groundgate:
+  `groundgate admit DOC SCHEMA CANDIDATES --policy policy.json --judgments J/<doc>.json`.
+
 ## The result
 
 `report` writes, for each ceiling with a threshold, the `judge` block of a policy (hybrid
-design §7) with the model and the threshold. The groundgate core does not read it yet: a judge's
-answer can only enter a decision as a recorded input in a later spec version (#66).
+design §7) with the model and the threshold. Spec 0.4 reads it, with the judgments that `judge`
+writes (#116).

@@ -38,11 +38,19 @@ def state(text: str, item: dict[str, Any]) -> str:
 
 
 def sample(
-    question: str, doc: str, text: str, schema: dict[str, Any], cands: list[dict[str, Any]]
+    question: str,
+    doc: str,
+    text: str,
+    schema: dict[str, Any],
+    cands: list[dict[str, Any]],
+    policy: dict[str, Any] | None = None,
+    key_clear: bool = False,
 ) -> list[dict[str, Any]]:
     """The items of one document: each candidate flagged KEY_NOT_AT_VALUE for the key question,
-    and each admitted candidate for the field question."""
-    receipt = gg.admit(text, schema, cands)
+    and each admitted candidate for the field question. With key_clear, the field question also
+    takes each candidate whose only flag is KEY_NOT_AT_VALUE, because a key judgment can admit
+    it. An item's id is the document and the candidate's position."""
+    receipt = gg.admit(text, schema, cands, policy)
     by_sha = {d.candidate_sha256: d for d in receipt.decisions}
     out = []
     for n, c in enumerate(cands):
@@ -51,7 +59,8 @@ def sample(
             continue
         if question == "key" and "KEY_NOT_AT_VALUE" not in d.codes:
             continue
-        if question == "field" and d.outcome != "admitted":
+        clearable = key_clear and d.codes == ("KEY_NOT_AT_VALUE",)
+        if question == "field" and d.outcome != "admitted" and not clearable:
             continue
         it = {
             "id": f"{doc}:{n}",
