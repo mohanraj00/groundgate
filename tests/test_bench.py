@@ -859,3 +859,22 @@ def test_the_aviation_judge_admits_a_number_only_as_a_field_of_its_unit() -> Non
         "airframe_total_hours",
     ]
     assert aviation_judge.admitted(text, feet) == ["airport_elevation", "runway_length"]
+
+
+def test_the_quote_count_names_how_a_quote_differs_from_its_span() -> None:
+    import importlib.util
+
+    path = BENCH / "judges" / "quotes" / "count.py"
+    spec = importlib.util.spec_from_file_location("quote_count", path)
+    assert spec and spec.loader
+    quote_count = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(quote_count)
+
+    assert quote_count.difference("12 to 17 years", "12 to 17 Years") == "case only"
+    assert quote_count.difference("12 years", "12") == "the quote adds text"
+    assert quote_count.difference("12", "12 to 17") == "the quote drops text"
+    assert quote_count.difference("12 years", "12 to 17 years") == "the quote changes text"
+    # line-break hyphenation is joined before the classes, as in the verbatim comparison
+    assert quote_count.difference("costeffective 12 years", "cost-\neffective 12") == (
+        "the quote adds text"
+    )

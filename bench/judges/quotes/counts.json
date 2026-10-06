@@ -1,0 +1,31 @@
+{
+  "v0.1": {
+    "candidates": 4350,
+    "flags": 34,
+    "flags_by_kind": {
+      "fda": 34
+    },
+    "pairs": 12,
+    "pairs_by_difference": {
+      "case only": 6,
+      "the quote adds text": 3,
+      "the quote changes text": 3
+    }
+  },
+  "set 2": {
+    "candidates": 6986,
+    "flags": 176,
+    "flags_by_kind": {
+      "fda": 87,
+      "fr": 65,
+      "irs": 24
+    },
+    "pairs": 47,
+    "pairs_by_difference": {
+      "case only": 2,
+      "the quote adds text": 32,
+      "the quote changes text": 12,
+      "the quote drops text": 1
+    }
+  }
+}
