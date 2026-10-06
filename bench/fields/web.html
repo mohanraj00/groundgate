@@ -190,6 +190,8 @@ $("todo").onclick = () => {
   const any = S.items.findIndex((x) => !(x.id in S.labels));
   go(n >= 0 ? n : any >= 0 ? any : at);
 };
+// a clicked button keeps no focus, so Space or Enter later never clicks it again
+document.addEventListener("click", (e) => e.target.closest("button")?.blur());
 document.addEventListener("keydown", (e) => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   const n = Number(e.key);
