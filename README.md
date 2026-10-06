@@ -263,28 +263,32 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec 0.3.
+- **No dates, arrays of records, or cross-document checks** in spec 0.4.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
   are a design ([docs/design/locale-packs.md](docs/design/locale-packs.md), #60).
 - **No OCR.** Scanned PDFs need a text layer first (for example `ocrmypdf`).
 - **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right. Spec
-  0.4 (a draft on `main`, #116) reads a judge's answers only as recorded inputs, so a receipt
-  still re-derives byte for byte. `groundgate-calibrate` (#112) measures the thresholds on your
-  own documents.
+  0.4 reads a judge's answers only as recorded inputs, so a receipt still re-derives byte for
+  byte. This judge block is experimental: its one measure on real extractor output is the key
+  clear on 10-K filings (#120). `groundgate-calibrate` (#112) measures the thresholds on your own
+  documents.
 
 ## Status
 
-Alpha. groundgate 0.3.0 implements spec v0.3, and `main` holds the spec 0.4 draft. [CHANGELOG.md](CHANGELOG.md) lists what 0.3
-changes, each with its measure: a wider change rule (#51), abbreviation dots that no longer end a
-sentence for qualifiers (#63, #77), Indian digit grouping (#59), ASCII digits (#94), and keys
-that stop at a label line (#52) or read a table by its lines (#87). A receipt names the spec
+Alpha. groundgate 0.4.0 implements spec v0.4. [CHANGELOG.md](CHANGELOG.md) lists what each
+version changes, with its measure. 0.4 adds recorded judgments (#116), an experimental way for a
+judge's answers to clear a key flag or add doubt, with no model call in the decision. 0.3 brought
+a wider change rule (#51), abbreviation dots that no longer end a sentence for qualifiers (#63,
+#77), Indian digit grouping (#59), ASCII digits (#94), and keys that stop at a label line (#52) or
+read a table by its lines (#87). A receipt names the spec
 version it was decided under, and only that version verifies it.
 
-Two designs are not yet code: [locale packs](docs/design/locale-packs.md) for number formats
-outside English, and [hybrid decisions](docs/design/hybrid-decisions.md), where a recorded
-model answer can send a fact to review or clear a measured kind of flag.
+[Locale packs](docs/design/locale-packs.md) for number formats outside English are a design,
+not yet code. Of the [hybrid decisions](docs/design/hybrid-decisions.md) design, 0.4 has the
+recorded judgments for the key and field questions. The audit sample and model-proposed
+locations are not code yet.
 
 ## License
 

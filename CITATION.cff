@@ -5,8 +5,8 @@ type: software
 authors:
   - given-names: Mohan Raj
     alias: mohanraj00
-version: 0.1.0
-date-released: 2026-09-29
+version: 0.4.0
+date-released: 2026-10-06
 license: Apache-2.0
 repository-code: https://github.com/mohanraj00/groundgate
 abstract: >-

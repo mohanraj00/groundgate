@@ -3,9 +3,9 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
-## Unreleased: spec 0.4 (draft)
+## 0.4.0 (2026-10-06)
 
-Receipts name `"groundgate": "0.4"` and every digest uses the `groundgate/0.4:` prefix, so all
+Spec 0.4. Receipts name `"groundgate": "0.4"` and every digest uses the `groundgate/0.4:` prefix, so all
 hashes differ from 0.3.0. With no `judge` in the policy, every decision is the 0.3 decision: all
 earlier vectors and every bench set rescore unchanged.
 
@@ -20,6 +20,16 @@ earlier vectors and every bench set rescore unchanged.
     receipt lists each judgment that applied, and `verify` takes the same judgments.
   - Vectors `18-judgments-key`, `18b-judgments-field`, `18c-judgments-both`, and 8 invalid
     packets.
+- The judge block is experimental. Its one measure on real extractor output is the key clear on
+  10-K filings (`bench/sec/results.json`, #120): of 51 right `KEY_NOT_AT_VALUE` flags on the test
+  part, Jev at 0.5 cleared 34 with 0 escapes, and 0.5 is also the threshold that the FDA labels
+  gave (#100). The test part held only 2 wrong flags, so the escape side rests on little data.
+  The field doubt caught no wrong value on the same filings. groundgate ships no thresholds: a
+  threshold belongs to one model and one kind of document.
+- `groundgate-calibrate` (#112, #115, #119) is a separate package in `calibrate/`. It measures a
+  judge's thresholds on your own documents, writes the policy's `judge` block, and writes the
+  recorded judgments for production. Judges are plug-ins (entry point group
+  `groundgate.judges`). It is not on PyPI yet (#122).
 
 ## 0.3.0 (2026-10-05)
 
