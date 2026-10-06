@@ -1,0 +1,1202 @@
+[
+ {
+  "id": "fda-finasteride:185",
+  "doc": "fda-finasteride",
+  "span": [
+   185,
+   186
+  ]
+ },
+ {
+  "id": "fda-finasteride:255",
+  "doc": "fda-finasteride",
+  "span": [
+   255,
+   256
+  ]
+ },
+ {
+  "id": "fda-finasteride:410",
+  "doc": "fda-finasteride",
+  "span": [
+   410,
+   411
+  ]
+ },
+ {
+  "id": "fda-finasteride:561",
+  "doc": "fda-finasteride",
+  "span": [
+   561,
+   562
+  ]
+ },
+ {
+  "id": "fda-finasteride:694",
+  "doc": "fda-finasteride",
+  "span": [
+   694,
+   695
+  ]
+ },
+ {
+  "id": "fda-finasteride:827",
+  "doc": "fda-finasteride",
+  "span": [
+   827,
+   828
+  ]
+ },
+ {
+  "id": "fda-nitroglycerin:1430",
+  "doc": "fda-nitroglycerin",
+  "span": [
+   1430,
+   1433
+  ]
+ },
+ {
+  "id": "fda-nitroglycerin:1541",
+  "doc": "fda-nitroglycerin",
+  "span": [
+   1541,
+   1544
+  ]
+ },
+ {
+  "id": "fda-dicyclomine:298",
+  "doc": "fda-dicyclomine",
+  "span": [
+   298,
+   300
+  ]
+ },
+ {
+  "id": "fda-dicyclomine:398",
+  "doc": "fda-dicyclomine",
+  "span": [
+   398,
+   400
+  ]
+ },
+ {
+  "id": "fda-dicyclomine:579",
+  "doc": "fda-dicyclomine",
+  "span": [
+   579,
+   581
+  ]
+ },
+ {
+  "id": "fda-dicyclomine:701",
+  "doc": "fda-dicyclomine",
+  "span": [
+   701,
+   703
+  ]
+ },
+ {
+  "id": "fda-dicyclomine:802",
+  "doc": "fda-dicyclomine",
+  "span": [
+   802,
+   804
+  ]
+ },
+ {
+  "id": "fda-dicyclomine:949",
+  "doc": "fda-dicyclomine",
+  "span": [
+   949,
+   951
+  ]
+ },
+ {
+  "id": "fda-levocetirizine:76",
+  "doc": "fda-levocetirizine",
+  "span": [
+   76,
+   77
+  ]
+ },
+ {
+  "id": "fda-levocetirizine:144",
+  "doc": "fda-levocetirizine",
+  "span": [
+   144,
+   147
+  ]
+ },
+ {
+  "id": "fda-levocetirizine:336",
+  "doc": "fda-levocetirizine",
+  "span": [
+   336,
+   337
+  ]
+ },
+ {
+  "id": "fda-levocetirizine:398",
+  "doc": "fda-levocetirizine",
+  "span": [
+   398,
+   401
+  ]
+ },
+ {
+  "id": "fda-levocetirizine:688",
+  "doc": "fda-levocetirizine",
+  "span": [
+   688,
+   689
+  ]
+ },
+ {
+  "id": "fda-levocetirizine:777",
+  "doc": "fda-levocetirizine",
+  "span": [
+   777,
+   780
+  ]
+ },
+ {
+  "id": "fda-tiotropium:1719",
+  "doc": "fda-tiotropium",
+  "span": [
+   1719,
+   1721
+  ]
+ },
+ {
+  "id": "fda-tiotropium:2015",
+  "doc": "fda-tiotropium",
+  "span": [
+   2015,
+   2017
+  ]
+ },
+ {
+  "id": "fda-tiotropium:2051",
+  "doc": "fda-tiotropium",
+  "span": [
+   2051,
+   2055
+  ]
+ },
+ {
+  "id": "fda-tiotropium:2390",
+  "doc": "fda-tiotropium",
+  "span": [
+   2390,
+   2392
+  ]
+ },
+ {
+  "id": "fda-tiotropium:2430",
+  "doc": "fda-tiotropium",
+  "span": [
+   2430,
+   2434
+  ]
+ },
+ {
+  "id": "fda-sumatriptan:258",
+  "doc": "fda-sumatriptan",
+  "span": [
+   258,
+   261
+  ]
+ },
+ {
+  "id": "fda-sumatriptan:314",
+  "doc": "fda-sumatriptan",
+  "span": [
+   314,
+   316
+  ]
+ },
+ {
+  "id": "fda-sumatriptan:452",
+  "doc": "fda-sumatriptan",
+  "span": [
+   452,
+   454
+  ]
+ },
+ {
+  "id": "fda-sumatriptan:459",
+  "doc": "fda-sumatriptan",
+  "span": [
+   459,
+   461
+  ]
+ },
+ {
+  "id": "fda-sumatriptan:469",
+  "doc": "fda-sumatriptan",
+  "span": [
+   469,
+   472
+  ]
+ },
+ {
+  "id": "fda-sumatriptan:486",
+  "doc": "fda-sumatriptan",
+  "span": [
+   486,
+   488
+  ]
+ },
+ {
+  "id": "fda-ketorolac:721",
+  "doc": "fda-ketorolac",
+  "span": [
+   721,
+   723
+  ]
+ },
+ {
+  "id": "fda-ketorolac:747",
+  "doc": "fda-ketorolac",
+  "span": [
+   747,
+   749
+  ]
+ },
+ {
+  "id": "fda-ketorolac:777",
+  "doc": "fda-ketorolac",
+  "span": [
+   777,
+   779
+  ]
+ },
+ {
+  "id": "fda-ketorolac:858",
+  "doc": "fda-ketorolac",
+  "span": [
+   858,
+   860
+  ]
+ },
+ {
+  "id": "fda-ketorolac:884",
+  "doc": "fda-ketorolac",
+  "span": [
+   884,
+   886
+  ]
+ },
+ {
+  "id": "fda-ketorolac:914",
+  "doc": "fda-ketorolac",
+  "span": [
+   914,
+   916
+  ]
+ },
+ {
+  "id": "fda-colchicine:825",
+  "doc": "fda-colchicine",
+  "span": [
+   825,
+   828
+  ]
+ },
+ {
+  "id": "fda-colchicine:916",
+  "doc": "fda-colchicine",
+  "span": [
+   916,
+   919
+  ]
+ },
+ {
+  "id": "fda-colchicine:1475",
+  "doc": "fda-colchicine",
+  "span": [
+   1475,
+   1478
+  ]
+ },
+ {
+  "id": "fda-colchicine:1539",
+  "doc": "fda-colchicine",
+  "span": [
+   1539,
+   1542
+  ]
+ },
+ {
+  "id": "fda-colchicine:1691",
+  "doc": "fda-colchicine",
+  "span": [
+   1691,
+   1694
+  ]
+ },
+ {
+  "id": "fda-colchicine:1831",
+  "doc": "fda-colchicine",
+  "span": [
+   1831,
+   1834
+  ]
+ },
+ {
+  "id": "fda-linagliptin:68",
+  "doc": "fda-linagliptin",
+  "span": [
+   68,
+   69
+  ]
+ },
+ {
+  "id": "fda-linagliptin:206",
+  "doc": "fda-linagliptin",
+  "span": [
+   206,
+   207
+  ]
+ },
+ {
+  "id": "fda-linagliptin:322",
+  "doc": "fda-linagliptin",
+  "span": [
+   322,
+   323
+  ]
+ },
+ {
+  "id": "fda-linagliptin:467",
+  "doc": "fda-linagliptin",
+  "span": [
+   467,
+   468
+  ]
+ },
+ {
+  "id": "fda-nebivolol:183",
+  "doc": "fda-nebivolol",
+  "span": [
+   183,
+   184
+  ]
+ },
+ {
+  "id": "fda-nebivolol:248",
+  "doc": "fda-nebivolol",
+  "span": [
+   248,
+   250
+  ]
+ },
+ {
+  "id": "fda-nebivolol:415",
+  "doc": "fda-nebivolol",
+  "span": [
+   415,
+   416
+  ]
+ },
+ {
+  "id": "fda-nebivolol:618",
+  "doc": "fda-nebivolol",
+  "span": [
+   618,
+   620
+  ]
+ },
+ {
+  "id": "fda-nebivolol:805",
+  "doc": "fda-nebivolol",
+  "span": [
+   805,
+   808
+  ]
+ },
+ {
+  "id": "fda-nebivolol:1060",
+  "doc": "fda-nebivolol",
+  "span": [
+   1060,
+   1063
+  ]
+ },
+ {
+  "id": "fda-solifenacin:29",
+  "doc": "fda-solifenacin",
+  "span": [
+   29,
+   30
+  ]
+ },
+ {
+  "id": "fda-solifenacin:108",
+  "doc": "fda-solifenacin",
+  "span": [
+   108,
+   110
+  ]
+ },
+ {
+  "id": "fda-solifenacin:152",
+  "doc": "fda-solifenacin",
+  "span": [
+   152,
+   153
+  ]
+ },
+ {
+  "id": "fda-solifenacin:604",
+  "doc": "fda-solifenacin",
+  "span": [
+   604,
+   605
+  ]
+ },
+ {
+  "id": "fda-solifenacin:628",
+  "doc": "fda-solifenacin",
+  "span": [
+   628,
+   629
+  ]
+ },
+ {
+  "id": "fda-solifenacin:686",
+  "doc": "fda-solifenacin",
+  "span": [
+   686,
+   688
+  ]
+ },
+ {
+  "id": "fda-telmisartan:331",
+  "doc": "fda-telmisartan",
+  "span": [
+   331,
+   333
+  ]
+ },
+ {
+  "id": "fda-telmisartan:355",
+  "doc": "fda-telmisartan",
+  "span": [
+   355,
+   357
+  ]
+ },
+ {
+  "id": "fda-telmisartan:411",
+  "doc": "fda-telmisartan",
+  "span": [
+   411,
+   413
+  ]
+ },
+ {
+  "id": "fda-telmisartan:429",
+  "doc": "fda-telmisartan",
+  "span": [
+   429,
+   431
+  ]
+ },
+ {
+  "id": "fda-telmisartan:546",
+  "doc": "fda-telmisartan",
+  "span": [
+   546,
+   548
+  ]
+ },
+ {
+  "id": "fda-telmisartan:628",
+  "doc": "fda-telmisartan",
+  "span": [
+   628,
+   630
+  ]
+ },
+ {
+  "id": "fda-oxcarbazepine:79",
+  "doc": "fda-oxcarbazepine",
+  "span": [
+   79,
+   82
+  ]
+ },
+ {
+  "id": "fda-oxcarbazepine:144",
+  "doc": "fda-oxcarbazepine",
+  "span": [
+   144,
+   147
+  ]
+ },
+ {
+  "id": "fda-oxcarbazepine:249",
+  "doc": "fda-oxcarbazepine",
+  "span": [
+   249,
+   254
+  ]
+ },
+ {
+  "id": "fda-oxcarbazepine:261",
+  "doc": "fda-oxcarbazepine",
+  "span": [
+   261,
+   266
+  ]
+ },
+ {
+  "id": "fda-oxcarbazepine:691",
+  "doc": "fda-oxcarbazepine",
+  "span": [
+   691,
+   694
+  ]
+ },
+ {
+  "id": "fda-oxcarbazepine:701",
+  "doc": "fda-oxcarbazepine",
+  "span": [
+   701,
+   704
+  ]
+ },
+ {
+  "id": "fda-doxepin:98",
+  "doc": "fda-doxepin",
+  "span": [
+   98,
+   99
+  ]
+ },
+ {
+  "id": "fda-doxepin:136",
+  "doc": "fda-doxepin",
+  "span": [
+   136,
+   137
+  ]
+ },
+ {
+  "id": "fda-doxepin:251",
+  "doc": "fda-doxepin",
+  "span": [
+   251,
+   252
+  ]
+ },
+ {
+  "id": "fda-doxepin:390",
+  "doc": "fda-doxepin",
+  "span": [
+   390,
+   391
+  ]
+ },
+ {
+  "id": "fda-doxepin:409",
+  "doc": "fda-doxepin",
+  "span": [
+   409,
+   410
+  ]
+ },
+ {
+  "id": "fda-doxepin:602",
+  "doc": "fda-doxepin",
+  "span": [
+   602,
+   603
+  ]
+ },
+ {
+  "id": "fda-ranolazine:29",
+  "doc": "fda-ranolazine",
+  "span": [
+   29,
+   32
+  ]
+ },
+ {
+  "id": "fda-ranolazine:64",
+  "doc": "fda-ranolazine",
+  "span": [
+   64,
+   68
+  ]
+ },
+ {
+  "id": "fda-ranolazine:197",
+  "doc": "fda-ranolazine",
+  "span": [
+   197,
+   200
+  ]
+ },
+ {
+  "id": "fda-ranolazine:232",
+  "doc": "fda-ranolazine",
+  "span": [
+   232,
+   236
+  ]
+ },
+ {
+  "id": "fda-ranolazine:512",
+  "doc": "fda-ranolazine",
+  "span": [
+   512,
+   516
+  ]
+ },
+ {
+  "id": "fda-ranolazine:937",
+  "doc": "fda-ranolazine",
+  "span": [
+   937,
+   940
+  ]
+ },
+ {
+  "id": "fda-sotalol:113",
+  "doc": "fda-sotalol",
+  "span": [
+   113,
+   115
+  ]
+ },
+ {
+  "id": "fda-sotalol:177",
+  "doc": "fda-sotalol",
+  "span": [
+   177,
+   179
+  ]
+ },
+ {
+  "id": "fda-sotalol:214",
+  "doc": "fda-sotalol",
+  "span": [
+   214,
+   217
+  ]
+ },
+ {
+  "id": "fda-sotalol:1730",
+  "doc": "fda-sotalol",
+  "span": [
+   1730,
+   1732
+  ]
+ },
+ {
+  "id": "fda-sotalol:1793",
+  "doc": "fda-sotalol",
+  "span": [
+   1793,
+   1795
+  ]
+ },
+ {
+  "id": "fda-sotalol:2045",
+  "doc": "fda-sotalol",
+  "span": [
+   2045,
+   2048
+  ]
+ },
+ {
+  "id": "fda-lithium:137",
+  "doc": "fda-lithium",
+  "span": [
+   137,
+   140
+  ]
+ },
+ {
+  "id": "fda-lithium:262",
+  "doc": "fda-lithium",
+  "span": [
+   262,
+   265
+  ]
+ },
+ {
+  "id": "fda-lithium:2359",
+  "doc": "fda-lithium",
+  "span": [
+   2359,
+   2362
+  ]
+ },
+ {
+  "id": "fda-lithium:2385",
+  "doc": "fda-lithium",
+  "span": [
+   2385,
+   2388
+  ]
+ },
+ {
+  "id": "fda-lithium:2424",
+  "doc": "fda-lithium",
+  "span": [
+   2424,
+   2427
+  ]
+ },
+ {
+  "id": "fda-lithium:2482",
+  "doc": "fda-lithium",
+  "span": [
+   2482,
+   2485
+  ]
+ },
+ {
+  "id": "fda-alfuzosin:59",
+  "doc": "fda-alfuzosin",
+  "span": [
+   59,
+   61
+  ]
+ },
+ {
+  "id": "fda-alfuzosin:367",
+  "doc": "fda-alfuzosin",
+  "span": [
+   367,
+   369
+  ]
+ },
+ {
+  "id": "fda-alfuzosin:566",
+  "doc": "fda-alfuzosin",
+  "span": [
+   566,
+   568
+  ]
+ },
+ {
+  "id": "fda-alfuzosin:726",
+  "doc": "fda-alfuzosin",
+  "span": [
+   726,
+   728
+  ]
+ },
+ {
+  "id": "fda-metoclopramide:61",
+  "doc": "fda-metoclopramide",
+  "span": [
+   61,
+   63
+  ]
+ },
+ {
+  "id": "fda-metoclopramide:70",
+  "doc": "fda-metoclopramide",
+  "span": [
+   70,
+   72
+  ]
+ },
+ {
+  "id": "fda-metoclopramide:242",
+  "doc": "fda-metoclopramide",
+  "span": [
+   242,
+   244
+  ]
+ },
+ {
+  "id": "fda-metoclopramide:1708",
+  "doc": "fda-metoclopramide",
+  "span": [
+   1708,
+   1710
+  ]
+ },
+ {
+  "id": "fda-metoclopramide:1921",
+  "doc": "fda-metoclopramide",
+  "span": [
+   1921,
+   1923
+  ]
+ },
+ {
+  "id": "fda-metoclopramide:2450",
+  "doc": "fda-metoclopramide",
+  "span": [
+   2450,
+   2452
+  ]
+ },
+ {
+  "id": "fda-ticagrelor:78",
+  "doc": "fda-ticagrelor",
+  "span": [
+   78,
+   81
+  ]
+ },
+ {
+  "id": "fda-ticagrelor:142",
+  "doc": "fda-ticagrelor",
+  "span": [
+   142,
+   144
+  ]
+ },
+ {
+  "id": "fda-ticagrelor:210",
+  "doc": "fda-ticagrelor",
+  "span": [
+   210,
+   212
+  ]
+ },
+ {
+  "id": "fda-ticagrelor:295",
+  "doc": "fda-ticagrelor",
+  "span": [
+   295,
+   297
+  ]
+ },
+ {
+  "id": "fda-ticagrelor:393",
+  "doc": "fda-ticagrelor",
+  "span": [
+   393,
+   396
+  ]
+ },
+ {
+  "id": "fda-ticagrelor:454",
+  "doc": "fda-ticagrelor",
+  "span": [
+   454,
+   456
+  ]
+ },
+ {
+  "id": "fda-desvenlafaxine:48",
+  "doc": "fda-desvenlafaxine",
+  "span": [
+   48,
+   50
+  ]
+ },
+ {
+  "id": "fda-desvenlafaxine:140",
+  "doc": "fda-desvenlafaxine",
+  "span": [
+   140,
+   142
+  ]
+ },
+ {
+  "id": "fda-desvenlafaxine:196",
+  "doc": "fda-desvenlafaxine",
+  "span": [
+   196,
+   198
+  ]
+ },
+ {
+  "id": "fda-desvenlafaxine:532",
+  "doc": "fda-desvenlafaxine",
+  "span": [
+   532,
+   534
+  ]
+ },
+ {
+  "id": "fda-desvenlafaxine:620",
+  "doc": "fda-desvenlafaxine",
+  "span": [
+   620,
+   622
+  ]
+ },
+ {
+  "id": "fda-desvenlafaxine:637",
+  "doc": "fda-desvenlafaxine",
+  "span": [
+   637,
+   639
+  ]
+ },
+ {
+  "id": "fda-dutasteride:263",
+  "doc": "fda-dutasteride",
+  "span": [
+   263,
+   266
+  ]
+ },
+ {
+  "id": "fda-dutasteride:320",
+  "doc": "fda-dutasteride",
+  "span": [
+   320,
+   323
+  ]
+ },
+ {
+  "id": "fda-dutasteride:353",
+  "doc": "fda-dutasteride",
+  "span": [
+   353,
+   356
+  ]
+ },
+ {
+  "id": "fda-dutasteride:532",
+  "doc": "fda-dutasteride",
+  "span": [
+   532,
+   535
+  ]
+ },
+ {
+  "id": "fda-dutasteride:668",
+  "doc": "fda-dutasteride",
+  "span": [
+   668,
+   671
+  ]
+ },
+ {
+  "id": "fda-dutasteride:708",
+  "doc": "fda-dutasteride",
+  "span": [
+   708,
+   711
+  ]
+ },
+ {
+  "id": "fda-lacosamide:138",
+  "doc": "fda-lacosamide",
+  "span": [
+   138,
+   141
+  ]
+ },
+ {
+  "id": "fda-lacosamide:251",
+  "doc": "fda-lacosamide",
+  "span": [
+   251,
+   253
+  ]
+ },
+ {
+  "id": "fda-lacosamide:347",
+  "doc": "fda-lacosamide",
+  "span": [
+   347,
+   350
+  ]
+ },
+ {
+  "id": "fda-lacosamide:1745",
+  "doc": "fda-lacosamide",
+  "span": [
+   1745,
+   1748
+  ]
+ },
+ {
+  "id": "fda-lacosamide:1765",
+  "doc": "fda-lacosamide",
+  "span": [
+   1765,
+   1768
+  ]
+ },
+ {
+  "id": "fda-lacosamide:1801",
+  "doc": "fda-lacosamide",
+  "span": [
+   1801,
+   1803
+  ]
+ },
+ {
+  "id": "fda-methylphenidate:87",
+  "doc": "fda-methylphenidate",
+  "span": [
+   87,
+   89
+  ]
+ },
+ {
+  "id": "fda-methylphenidate:189",
+  "doc": "fda-methylphenidate",
+  "span": [
+   189,
+   191
+  ]
+ },
+ {
+  "id": "fda-methylphenidate:223",
+  "doc": "fda-methylphenidate",
+  "span": [
+   223,
+   225
+  ]
+ },
+ {
+  "id": "fda-methylphenidate:1024",
+  "doc": "fda-methylphenidate",
+  "span": [
+   1024,
+   1026
+  ]
+ },
+ {
+  "id": "fda-methylphenidate:1290",
+  "doc": "fda-methylphenidate",
+  "span": [
+   1290,
+   1292
+  ]
+ },
+ {
+  "id": "fda-methylphenidate:1315",
+  "doc": "fda-methylphenidate",
+  "span": [
+   1315,
+   1317
+  ]
+ },
+ {
+  "id": "fda-dexlansoprazole:748",
+  "doc": "fda-dexlansoprazole",
+  "span": [
+   748,
+   750
+  ]
+ },
+ {
+  "id": "fda-dexlansoprazole:842",
+  "doc": "fda-dexlansoprazole",
+  "span": [
+   842,
+   844
+  ]
+ },
+ {
+  "id": "fda-dexlansoprazole:1009",
+  "doc": "fda-dexlansoprazole",
+  "span": [
+   1009,
+   1011
+  ]
+ },
+ {
+  "id": "fda-dexlansoprazole:1237",
+  "doc": "fda-dexlansoprazole",
+  "span": [
+   1237,
+   1239
+  ]
+ },
+ {
+  "id": "fda-dexlansoprazole:3465",
+  "doc": "fda-dexlansoprazole",
+  "span": [
+   3465,
+   3467
+  ]
+ },
+ {
+  "id": "fda-dexlansoprazole:3623",
+  "doc": "fda-dexlansoprazole",
+  "span": [
+   3623,
+   3625
+  ]
+ },
+ {
+  "id": "fda-letrozole:112",
+  "doc": "fda-letrozole",
+  "span": [
+   112,
+   115
+  ]
+ },
+ {
+  "id": "fda-letrozole:191",
+  "doc": "fda-letrozole",
+  "span": [
+   191,
+   194
+  ]
+ },
+ {
+  "id": "fda-letrozole:298",
+  "doc": "fda-letrozole",
+  "span": [
+   298,
+   301
+  ]
+ },
+ {
+  "id": "fda-letrozole:1989",
+  "doc": "fda-letrozole",
+  "span": [
+   1989,
+   1992
+  ]
+ },
+ {
+  "id": "fda-letrozole:2404",
+  "doc": "fda-letrozole",
+  "span": [
+   2404,
+   2407
+  ]
+ },
+ {
+  "id": "fda-letrozole:2518",
+  "doc": "fda-letrozole",
+  "span": [
+   2518,
+   2521
+  ]
+ },
+ {
+  "id": "fda-ibandronate:40",
+  "doc": "fda-ibandronate",
+  "span": [
+   40,
+   43
+  ]
+ },
+ {
+  "id": "fda-ibandronate:617",
+  "doc": "fda-ibandronate",
+  "span": [
+   617,
+   620
+  ]
+ },
+ {
+  "id": "fda-ibandronate:2367",
+  "doc": "fda-ibandronate",
+  "span": [
+   2367,
+   2370
+  ]
+ }
+]

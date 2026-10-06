@@ -1,0 +1,1567 @@
+[
+ {
+  "kind": "fda",
+  "rank": 1,
+  "name": "Atorvastatin Calcium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 2,
+  "name": "Amlodipine Besylate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 3,
+  "name": "Levothyroxine Sodium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 4,
+  "name": "Gabapentin",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 5,
+  "name": "Losartan Potassium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 6,
+  "name": "Lisinopril",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 7,
+  "name": "Metformin HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 8,
+  "name": "Metoprolol Succinate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 9,
+  "name": "Rosuvastatin Calcium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 10,
+  "name": "Omeprazole",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 11,
+  "name": "Pantoprazole Sodium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 12,
+  "name": "Apixaban",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 13,
+  "name": "Furosemide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 14,
+  "name": "Tamsulosin HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 15,
+  "name": "Albuterol Sulfate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 16,
+  "name": "Hydrocodone/Acetaminophen",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 17,
+  "name": "Hydrochlorothiazide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 18,
+  "name": "Trazodone HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 19,
+  "name": "Sertraline HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 20,
+  "name": "Metoprolol Tartrate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 21,
+  "name": "Prednisone",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 22,
+  "name": "Carvedilol",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 23,
+  "name": "Potassium Chloride",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 24,
+  "name": "Simvastatin",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 25,
+  "name": "Famotidine",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 26,
+  "name": "Clopidogrel Bisulfate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 27,
+  "name": "Fluticasone Propionate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 28,
+  "name": "Tramadol HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 29,
+  "name": "Duloxetine HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 30,
+  "name": "Escitalopram Oxalate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 31,
+  "name": "Montelukast Sodium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 32,
+  "name": "Meloxicam",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 33,
+  "name": "Semaglutide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 34,
+  "name": "Alprazolam",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 35,
+  "name": "Empagliflozin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 36,
+  "name": "Latanoprost",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 37,
+  "name": "Quetiapine Fumarate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 38,
+  "name": "Bupropion HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 39,
+  "name": "Insulin Glargine,Hum.Rec.Anlog",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 40,
+  "name": "Allopurinol",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 41,
+  "name": "Oxycodone HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 42,
+  "name": "Amoxicillin",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 43,
+  "name": "Pravastatin Sodium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 44,
+  "name": "Spironolactone",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 45,
+  "name": "Oxycodone HCl/Acetaminophen",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 46,
+  "name": "Clonazepam",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 47,
+  "name": "Alendronate Sodium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 48,
+  "name": "Azithromycin",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 49,
+  "name": "Ezetimibe",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 50,
+  "name": "Mirtazapine",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 51,
+  "name": "Lorazepam",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 52,
+  "name": "Donepezil HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 53,
+  "name": "Zolpidem Tartrate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 54,
+  "name": "Buspirone HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 55,
+  "name": "Glipizide",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 56,
+  "name": "Amoxicillin/Potassium Clav",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 57,
+  "name": "Pregabalin",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 58,
+  "name": "Ibuprofen",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 59,
+  "name": "Fluoxetine HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 60,
+  "name": "Cephalexin",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 61,
+  "name": "Cyclobenzaprine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 62,
+  "name": "Finasteride",
+  "setid": "da4e8a51-cf1c-4018-976f-edecc4934a39",
+  "doses": 6
+ },
+ {
+  "kind": "fda",
+  "rank": 63,
+  "name": "Tizanidine HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 64,
+  "name": "Diclofenac Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 65,
+  "name": "Citalopram Hydrobromide",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 66,
+  "name": "Doxycycline Hyclate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 67,
+  "name": "Rivaroxaban",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 68,
+  "name": "Triamcinolone Acetonide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 69,
+  "name": "Diltiazem HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 70,
+  "name": "Atenolol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 71,
+  "name": "Memantine HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 72,
+  "name": "Fluticasone/Umeclidin/Vilanter",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 73,
+  "name": "Venlafaxine HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 74,
+  "name": "Hydralazine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 75,
+  "name": "Dapagliflozin Propanediol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 76,
+  "name": "Pen Needle, Diabetic",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 77,
+  "name": "Methylprednisolone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 78,
+  "name": "Celecoxib",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 79,
+  "name": "Lisinopril/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 80,
+  "name": "Losartan/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 81,
+  "name": "Oxybutynin Chloride",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 82,
+  "name": "Baclofen",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 83,
+  "name": "Divalproex Sodium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 84,
+  "name": "Estradiol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 85,
+  "name": "Tirzepatide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 86,
+  "name": "Warfarin Sodium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 87,
+  "name": "Fluticasone Propion/Salmeterol",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 88,
+  "name": "Ondansetron",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 89,
+  "name": "Levetiracetam",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 90,
+  "name": "Ciprofloxacin HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 91,
+  "name": "Isosorbide Mononitrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 92,
+  "name": "Sulfamethoxazole/Trimethoprim",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 93,
+  "name": "Valsartan",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 94,
+  "name": "Hydroxyzine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 95,
+  "name": "Glimepiride",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 96,
+  "name": "Lamotrigine",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 97,
+  "name": "Dulaglutide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 98,
+  "name": "Ketoconazole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 99,
+  "name": "Nitrofurantoin Monohyd/M-Cryst",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 100,
+  "name": "Ondansetron HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 101,
+  "name": "Propranolol HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 102,
+  "name": "Aripiprazole",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 103,
+  "name": "Sitagliptin Phosphate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 104,
+  "name": "Olanzapine",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 105,
+  "name": "Varicella-Zoster Ge/As01b/PF",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 106,
+  "name": "Mupirocin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 107,
+  "name": "Nystatin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 108,
+  "name": "Sacubitril/Valsartan",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 109,
+  "name": "Nifedipine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 110,
+  "name": "Prednisolone Acetate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 111,
+  "name": "Risperidone",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 112,
+  "name": "Carbidopa/Levodopa",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 113,
+  "name": "Fluconazole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 114,
+  "name": "Mirabegron",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 115,
+  "name": "Amitriptyline HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 116,
+  "name": "Budesonide/Formoterol Fumarate",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 117,
+  "name": "Olmesartan Medoxomil",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 118,
+  "name": "Clonidine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 119,
+  "name": "Ropinirole HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 120,
+  "name": "Paroxetine HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 121,
+  "name": "Insulin Lispro",
+  "skip": "same drug ranked higher"
+ },
+ {
+  "kind": "fda",
+  "rank": 122,
+  "name": "Topiramate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 123,
+  "name": "Valacyclovir HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 124,
+  "name": "Azelastine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 125,
+  "name": "Pioglitazone HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 126,
+  "name": "Methocarbamol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 127,
+  "name": "Amiodarone HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 128,
+  "name": "Meclizine HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 129,
+  "name": "Diazepam",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 130,
+  "name": "Torsemide",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 131,
+  "name": "Esomeprazole Magnesium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 132,
+  "name": "Hydrocortisone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 133,
+  "name": "Timolol Maleate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 134,
+  "name": "Dorzolamide HCl/Timolol Maleat",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 135,
+  "name": "Chlorthalidone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 136,
+  "name": "Naproxen",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 137,
+  "name": "Rsvpref3 Antigen/As01e/PF",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 138,
+  "name": "Triamterene/Hydrochlorothiazid",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 139,
+  "name": "Fluticasone/Vilanterol",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 140,
+  "name": "Clobetasol Propionate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 141,
+  "name": "Brimonidine Tartrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 142,
+  "name": "Morphine Sulfate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 143,
+  "name": "Chlorhexidine Gluconate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 144,
+  "name": "Irbesartan",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 145,
+  "name": "Hydroxychloroquine Sulfate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 146,
+  "name": "Nitroglycerin",
+  "setid": "5b150cd2-fac8-86ce-e063-6294a90a67b9",
+  "doses": 2
+ },
+ {
+  "kind": "fda",
+  "rank": 147,
+  "name": "Lovastatin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 148,
+  "name": "Dextroamphetamine/Amphetamine",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 149,
+  "name": "Linaclotide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 150,
+  "name": "Levofloxacin",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 151,
+  "name": "Methotrexate Sodium",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 152,
+  "name": "Bumetanide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 153,
+  "name": "Sucralfate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 154,
+  "name": "Dicyclomine HCl",
+  "setid": "765cc40c-306f-4719-aac1-00f0cd8bbe78",
+  "doses": 9
+ },
+ {
+  "kind": "fda",
+  "rank": 155,
+  "name": "Levocetirizine Dihydrochloride",
+  "setid": "717eb542-3a05-485e-be76-3930efb40d33",
+  "doses": 14
+ },
+ {
+  "kind": "fda",
+  "rank": 156,
+  "name": "Insulin Degludec",
+  "skip": "same drug ranked higher"
+ },
+ {
+  "kind": "fda",
+  "rank": 157,
+  "name": "Cefdinir",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 158,
+  "name": "Acetaminophen With Codeine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 159,
+  "name": "Ipratropium Bromide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 160,
+  "name": "Cyclosporine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 161,
+  "name": "Metronidazole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 162,
+  "name": "Evolocumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 163,
+  "name": "Insulin Aspart",
+  "skip": "same drug ranked higher"
+ },
+ {
+  "kind": "fda",
+  "rank": 164,
+  "name": "Temazepam",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 165,
+  "name": "Doxazosin Mesylate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 166,
+  "name": "Clindamycin HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 167,
+  "name": "Benazepril HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 168,
+  "name": "Tiotropium Bromide",
+  "setid": "496b38ee-45b6-4bb2-a35e-9023c3b73719",
+  "doses": 5
+ },
+ {
+  "kind": "fda",
+  "rank": 169,
+  "name": "Fenofibrate",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 170,
+  "name": "Icosapent Ethyl",
+  "setid": "886aa8d8-b293-258f-b16d-be40418787a8",
+  "doses": 0,
+  "skip": "no dose in sections 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 171,
+  "name": "Lactulose",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 172,
+  "name": "Acyclovir",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 173,
+  "name": "Enalapril Maleate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 174,
+  "name": "Nirmatrelvir/Ritonavir",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 175,
+  "name": "Doxycycline Monohydrate",
+  "skip": "same drug ranked higher"
+ },
+ {
+  "kind": "fda",
+  "rank": 176,
+  "name": "Fenofibrate Nanocrystallized",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 177,
+  "name": "Benztropine Mesylate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 178,
+  "name": "Sumatriptan Succinate",
+  "setid": "1d2cd01c-05e7-44cf-a71d-0f474e826b7e",
+  "doses": 23
+ },
+ {
+  "kind": "fda",
+  "rank": 179,
+  "name": "Buprenorphine HCl/Naloxone HCl",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 180,
+  "name": "Pramipexole Di-HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 181,
+  "name": "Alcohol Antiseptic Pads",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 182,
+  "name": "Clotrimazole/Betamethasone Dip",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 183,
+  "name": "Lidocaine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 184,
+  "name": "Ergocalciferol (Vitamin D2)",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 185,
+  "name": "Valsartan/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 186,
+  "name": "Amlodipine Besylate/Benazepril",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 187,
+  "name": "Anastrozole",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 188,
+  "name": "Ketorolac Tromethamine",
+  "setid": "515464a7-16c5-2811-e063-6294a90aa451",
+  "doses": 6
+ },
+ {
+  "kind": "fda",
+  "rank": 189,
+  "name": "Rsv Vacc, Pref A And Pref B/PF",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 190,
+  "name": "Midodrine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 191,
+  "name": "Verapamil HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 192,
+  "name": "Digoxin",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 193,
+  "name": "Hydroxyzine Pamoate",
+  "skip": "same drug ranked higher"
+ },
+ {
+  "kind": "fda",
+  "rank": 194,
+  "name": "Colchicine",
+  "setid": "5a0b4246-e7dd-29e5-e063-6294a90a2871",
+  "doses": 135
+ },
+ {
+  "kind": "fda",
+  "rank": 195,
+  "name": "Ramipril",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 196,
+  "name": "Diphth,Pertuss(Acell),Tet Vac",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 197,
+  "name": "Erythromycin Base",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 198,
+  "name": "Dexamethasone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 199,
+  "name": "Bimatoprost",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 200,
+  "name": "Ofloxacin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 201,
+  "name": "PEG3350/Sod Sulf,Bicarb,Cl/KCl",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 202,
+  "name": "Linagliptin",
+  "setid": "cbdbd4b2-c07b-00e1-e053-2995a90a5fc9",
+  "doses": 4
+ },
+ {
+  "kind": "fda",
+  "rank": 203,
+  "name": "Budesonide/Glycopyr/Formoterol",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 204,
+  "name": "Nebivolol HCl",
+  "setid": "1ce89dc5-018d-db40-e063-6294a90a9722",
+  "doses": 12
+ },
+ {
+  "kind": "fda",
+  "rank": 205,
+  "name": "Primidone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 206,
+  "name": "Solifenacin Succinate",
+  "setid": "fbd6e753-1ed2-418a-8667-c674b215eabb",
+  "doses": 13
+ },
+ {
+  "kind": "fda",
+  "rank": 207,
+  "name": "Umeclidinium Brm/Vilanterol Tr",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 208,
+  "name": "Vibegron",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 209,
+  "name": "Carbamazepine",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 210,
+  "name": "Calcitriol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 211,
+  "name": "Promethazine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 212,
+  "name": "Terazosin HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 213,
+  "name": "Telmisartan",
+  "setid": "dd2b0604-f887-40d9-9109-dafcc9987e4e",
+  "doses": 14
+ },
+ {
+  "kind": "fda",
+  "rank": 214,
+  "name": "Oxcarbazepine",
+  "setid": "a20e4a95-8ee1-e702-003e-e353ec1ee133",
+  "doses": 38
+ },
+ {
+  "kind": "fda",
+  "rank": 215,
+  "name": "Prazosin HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 216,
+  "name": "Flecainide Acetate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 217,
+  "name": "Nortriptyline HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 218,
+  "name": "Doxepin HCl",
+  "setid": "b4c4c0c7-5372-488c-82ad-4a0f8bb0e427",
+  "doses": 14
+ },
+ {
+  "kind": "fda",
+  "rank": 219,
+  "name": "Ammonium Lactate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 220,
+  "name": "Ranolazine",
+  "setid": "d74f3dea-7357-4e9a-be9a-2f498a44108a",
+  "doses": 10
+ },
+ {
+  "kind": "fda",
+  "rank": 221,
+  "name": "Ipratropium/Albuterol Sulfate",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 222,
+  "name": "Lansoprazole",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 223,
+  "name": "Clozapine",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 224,
+  "name": "Neomycin/Polymyxin B/Dexametha",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 225,
+  "name": "Cefuroxime Axetil",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 226,
+  "name": "Sotalol HCl",
+  "setid": "1a56c82e-7ecd-43b0-2899-f89e47adf7db",
+  "doses": 37
+ },
+ {
+  "kind": "fda",
+  "rank": 227,
+  "name": "Lithium Carbonate",
+  "setid": "b839ff4b-f62d-41ab-a823-550a756d58ec",
+  "doses": 18
+ },
+ {
+  "kind": "fda",
+  "rank": 228,
+  "name": "Sitagliptin Phos/Metformin HCl",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 229,
+  "name": "Testosterone Cypionate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 230,
+  "name": "Moxifloxacin HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 231,
+  "name": "Alfuzosin HCl",
+  "setid": "26fcc267-c8d7-e059-1bcf-830dded43690",
+  "doses": 4
+ },
+ {
+  "kind": "fda",
+  "rank": 232,
+  "name": "Metoclopramide HCl",
+  "setid": "7cd1dc35-2fb2-4f1d-8769-24c3c3aa34fa",
+  "doses": 32
+ },
+ {
+  "kind": "fda",
+  "rank": 233,
+  "name": "Bisoprolol Fumarate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 234,
+  "name": "Folic Acid",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 235,
+  "name": "Clotrimazole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 236,
+  "name": "Mometasone Furoate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 237,
+  "name": "Dorzolamide HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 238,
+  "name": "Lipase/Protease/Amylase",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 239,
+  "name": "Labetalol HCl",
+  "skip": "used in v0.1, set 2, the pattern, dots, keys, tables or relations set"
+ },
+ {
+  "kind": "fda",
+  "rank": 240,
+  "name": "Ticagrelor",
+  "setid": "d68b79ab-3104-410e-a63f-9919a23625af",
+  "doses": 26
+ },
+ {
+  "kind": "fda",
+  "rank": 241,
+  "name": "Brimonidine Tartrate/Timolol",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 242,
+  "name": "Olmesartan/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "kind": "fda",
+  "rank": 243,
+  "name": "Desvenlafaxine Succinate",
+  "setid": "c7c77c4d-dd04-4780-9fa4-8fea30aff8f9",
+  "doses": 37
+ },
+ {
+  "kind": "fda",
+  "rank": 244,
+  "name": "Dutasteride",
+  "setid": "c78d18cf-05df-4154-b2f9-39cc374ca9e3",
+  "doses": 6
+ },
+ {
+  "kind": "fda",
+  "rank": 245,
+  "name": "Omega-3 Acid Ethyl Esters",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 246,
+  "name": "Methimazole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 247,
+  "name": "Haloperidol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 248,
+  "name": "Lacosamide",
+  "setid": "5ca5b043-533e-2d1a-e063-6294a90a8d4a",
+  "doses": 76
+ },
+ {
+  "kind": "fda",
+  "rank": 249,
+  "name": "Sodium, Potassium,Mag Sulfates",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 250,
+  "name": "Methylphenidate HCl",
+  "setid": "f7a7ffd1-bc30-4db8-8391-dddf76acd639",
+  "doses": 27
+ },
+ {
+  "kind": "fda",
+  "rank": 251,
+  "name": "Loperamide HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 252,
+  "name": "Ciclopirox",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 253,
+  "name": "Methenamine Hippurate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "kind": "fda",
+  "rank": 254,
+  "name": "Dexlansoprazole",
+  "setid": "59e0c5d7-12e9-b5d7-e063-6394a90a7366",
+  "doses": 8
+ },
+ {
+  "kind": "fda",
+  "rank": 255,
+  "name": "Letrozole",
+  "setid": "3cc750a5-cc88-4b42-b4ab-a87e760f291d",
+  "doses": 6
+ },
+ {
+  "kind": "fda",
+  "rank": 256,
+  "name": "Ibandronate Sodium",
+  "setid": "6ca94cce-a2bb-421f-bd8f-6b14bc2bd985",
+  "doses": 6
+ }
+]

@@ -1,0 +1,389 @@
+{
+ "fda-alfuzosin:367": [
+  "starting_dose"
+ ],
+ "fda-alfuzosin:566": [
+  "strengths"
+ ],
+ "fda-alfuzosin:59": [
+  "starting_dose"
+ ],
+ "fda-alfuzosin:726": [
+  "strengths"
+ ],
+ "fda-colchicine:1475": [
+  "starting_dose"
+ ],
+ "fda-colchicine:1539": [
+  "starting_dose"
+ ],
+ "fda-colchicine:1691": [
+  "max_daily_dose"
+ ],
+ "fda-colchicine:1831": null,
+ "fda-colchicine:825": [
+  "starting_dose"
+ ],
+ "fda-colchicine:916": [
+  "max_daily_dose"
+ ],
+ "fda-desvenlafaxine:140": [
+  "max_daily_dose"
+ ],
+ "fda-desvenlafaxine:196": [],
+ "fda-desvenlafaxine:48": [
+  "starting_dose"
+ ],
+ "fda-desvenlafaxine:532": [
+  "max_daily_dose"
+ ],
+ "fda-desvenlafaxine:620": null,
+ "fda-desvenlafaxine:637": null,
+ "fda-dexlansoprazole:1009": [
+  "starting_dose",
+  "max_daily_dose"
+ ],
+ "fda-dexlansoprazole:1237": [
+  "starting_dose"
+ ],
+ "fda-dexlansoprazole:3465": [
+  "strengths"
+ ],
+ "fda-dexlansoprazole:3623": [
+  "strengths"
+ ],
+ "fda-dexlansoprazole:748": [
+  "starting_dose",
+  "max_daily_dose"
+ ],
+ "fda-dexlansoprazole:842": [
+  "starting_dose",
+  "max_daily_dose"
+ ],
+ "fda-dicyclomine:298": [
+  "starting_dose"
+ ],
+ "fda-dicyclomine:398": [
+  "max_daily_dose"
+ ],
+ "fda-dicyclomine:579": [],
+ "fda-dicyclomine:701": [
+  "starting_dose"
+ ],
+ "fda-dicyclomine:802": [
+  "max_daily_dose"
+ ],
+ "fda-dicyclomine:949": [],
+ "fda-doxepin:136": [],
+ "fda-doxepin:251": [
+  "max_daily_dose"
+ ],
+ "fda-doxepin:390": [
+  "starting_dose"
+ ],
+ "fda-doxepin:409": [],
+ "fda-doxepin:602": [],
+ "fda-doxepin:98": [
+  "starting_dose"
+ ],
+ "fda-dutasteride:263": [
+  "starting_dose"
+ ],
+ "fda-dutasteride:320": [
+  "starting_dose"
+ ],
+ "fda-dutasteride:353": [
+  "starting_dose"
+ ],
+ "fda-dutasteride:532": [
+  "starting_dose"
+ ],
+ "fda-dutasteride:668": [
+  "starting_dose"
+ ],
+ "fda-dutasteride:708": [
+  "starting_dose"
+ ],
+ "fda-finasteride:185": [
+  "starting_dose"
+ ],
+ "fda-finasteride:255": [
+  "starting_dose"
+ ],
+ "fda-finasteride:410": [
+  "starting_dose"
+ ],
+ "fda-finasteride:561": [
+  "starting_dose"
+ ],
+ "fda-finasteride:694": [
+  "strengths"
+ ],
+ "fda-finasteride:827": [
+  "strengths"
+ ],
+ "fda-ibandronate:2367": [
+  "starting_dose"
+ ],
+ "fda-ibandronate:40": [
+  "starting_dose"
+ ],
+ "fda-ibandronate:617": [
+  "starting_dose"
+ ],
+ "fda-ketorolac:721": [
+  "starting_dose"
+ ],
+ "fda-ketorolac:747": [],
+ "fda-ketorolac:777": [
+  "max_daily_dose"
+ ],
+ "fda-ketorolac:858": [],
+ "fda-ketorolac:884": [],
+ "fda-ketorolac:914": [],
+ "fda-lacosamide:138": [
+  "starting_dose"
+ ],
+ "fda-lacosamide:1745": [
+  "starting_dose"
+ ],
+ "fda-lacosamide:1765": [
+  "starting_dose"
+ ],
+ "fda-lacosamide:1801": [
+  "starting_dose"
+ ],
+ "fda-lacosamide:251": [
+  "starting_dose"
+ ],
+ "fda-lacosamide:347": [
+  "max_daily_dose"
+ ],
+ "fda-letrozole:112": [
+  "starting_dose"
+ ],
+ "fda-letrozole:191": [
+  "starting_dose"
+ ],
+ "fda-letrozole:1989": [
+  "starting_dose"
+ ],
+ "fda-letrozole:2404": [
+  "strengths"
+ ],
+ "fda-letrozole:2518": [
+  "strengths"
+ ],
+ "fda-letrozole:298": [
+  "starting_dose"
+ ],
+ "fda-levocetirizine:144": [
+  "starting_dose"
+ ],
+ "fda-levocetirizine:336": [
+  "starting_dose"
+ ],
+ "fda-levocetirizine:398": [
+  "starting_dose"
+ ],
+ "fda-levocetirizine:688": [
+  "starting_dose"
+ ],
+ "fda-levocetirizine:76": [
+  "starting_dose"
+ ],
+ "fda-levocetirizine:777": [],
+ "fda-linagliptin:206": [
+  "starting_dose"
+ ],
+ "fda-linagliptin:322": [
+  "strengths"
+ ],
+ "fda-linagliptin:467": [
+  "strengths"
+ ],
+ "fda-linagliptin:68": [
+  "starting_dose"
+ ],
+ "fda-lithium:137": [
+  "starting_dose"
+ ],
+ "fda-lithium:2359": [
+  "starting_dose"
+ ],
+ "fda-lithium:2385": [
+  "starting_dose"
+ ],
+ "fda-lithium:2424": [],
+ "fda-lithium:2482": [],
+ "fda-lithium:262": [
+  "starting_dose"
+ ],
+ "fda-methylphenidate:1024": [
+  "starting_dose"
+ ],
+ "fda-methylphenidate:1290": [
+  "starting_dose"
+ ],
+ "fda-methylphenidate:1315": [
+  "max_daily_dose"
+ ],
+ "fda-methylphenidate:189": [],
+ "fda-methylphenidate:223": [
+  "max_daily_dose"
+ ],
+ "fda-methylphenidate:87": [
+  "starting_dose"
+ ],
+ "fda-metoclopramide:1708": [],
+ "fda-metoclopramide:1921": [
+  "max_daily_dose"
+ ],
+ "fda-metoclopramide:242": [
+  "starting_dose"
+ ],
+ "fda-metoclopramide:2450": [
+  "starting_dose"
+ ],
+ "fda-metoclopramide:61": [
+  "starting_dose"
+ ],
+ "fda-metoclopramide:70": [],
+ "fda-nebivolol:1060": [
+  "hepatic_starting_dose"
+ ],
+ "fda-nebivolol:183": [
+  "starting_dose"
+ ],
+ "fda-nebivolol:248": [
+  "max_daily_dose"
+ ],
+ "fda-nebivolol:415": [
+  "starting_dose"
+ ],
+ "fda-nebivolol:618": [
+  "max_daily_dose"
+ ],
+ "fda-nebivolol:805": [
+  "starting_dose"
+ ],
+ "fda-nitroglycerin:1430": [
+  "strengths"
+ ],
+ "fda-nitroglycerin:1541": [
+  "strengths"
+ ],
+ "fda-oxcarbazepine:144": [],
+ "fda-oxcarbazepine:249": [],
+ "fda-oxcarbazepine:261": [],
+ "fda-oxcarbazepine:691": [],
+ "fda-oxcarbazepine:701": [],
+ "fda-oxcarbazepine:79": [
+  "starting_dose"
+ ],
+ "fda-ranolazine:197": [
+  "starting_dose"
+ ],
+ "fda-ranolazine:232": [],
+ "fda-ranolazine:29": [
+  "starting_dose"
+ ],
+ "fda-ranolazine:512": [
+  "max_daily_dose"
+ ],
+ "fda-ranolazine:64": [],
+ "fda-ranolazine:937": [
+  "starting_dose"
+ ],
+ "fda-solifenacin:108": [
+  "max_daily_dose"
+ ],
+ "fda-solifenacin:152": [
+  "max_daily_dose"
+ ],
+ "fda-solifenacin:29": [
+  "starting_dose"
+ ],
+ "fda-solifenacin:604": [
+  "starting_dose"
+ ],
+ "fda-solifenacin:628": null,
+ "fda-solifenacin:686": [
+  "max_daily_dose"
+ ],
+ "fda-sotalol:113": [
+  "starting_dose"
+ ],
+ "fda-sotalol:1730": [
+  "starting_dose"
+ ],
+ "fda-sotalol:177": [
+  "starting_dose"
+ ],
+ "fda-sotalol:1793": [
+  "starting_dose"
+ ],
+ "fda-sotalol:2045": [
+  "max_daily_dose"
+ ],
+ "fda-sotalol:214": [
+  "max_daily_dose"
+ ],
+ "fda-sumatriptan:258": [
+  "max_daily_dose"
+ ],
+ "fda-sumatriptan:314": [],
+ "fda-sumatriptan:452": [
+  "starting_dose"
+ ],
+ "fda-sumatriptan:459": [
+  "starting_dose"
+ ],
+ "fda-sumatriptan:469": [
+  "starting_dose"
+ ],
+ "fda-sumatriptan:486": [],
+ "fda-telmisartan:331": [
+  "starting_dose"
+ ],
+ "fda-telmisartan:355": [
+  "max_daily_dose"
+ ],
+ "fda-telmisartan:411": [
+  "starting_dose"
+ ],
+ "fda-telmisartan:429": [
+  "max_daily_dose"
+ ],
+ "fda-telmisartan:546": [
+  "starting_dose"
+ ],
+ "fda-telmisartan:628": [
+  "max_daily_dose"
+ ],
+ "fda-ticagrelor:142": null,
+ "fda-ticagrelor:210": null,
+ "fda-ticagrelor:295": [
+  "starting_dose"
+ ],
+ "fda-ticagrelor:393": [
+  "starting_dose"
+ ],
+ "fda-ticagrelor:454": [],
+ "fda-ticagrelor:78": [
+  "starting_dose"
+ ],
+ "fda-tiotropium:1719": [],
+ "fda-tiotropium:2015": [
+  "strengths"
+ ],
+ "fda-tiotropium:2051": [
+  "strengths"
+ ],
+ "fda-tiotropium:2390": [
+  "strengths"
+ ],
+ "fda-tiotropium:2430": [
+  "strengths"
+ ]
+}
