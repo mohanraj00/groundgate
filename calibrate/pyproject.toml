@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "groundgate-calibrate"
+dynamic = ["version"]
+description = "Measure a judge's thresholds for groundgate on your own documents."
+readme = "README.md"
+license = "Apache-2.0"
+authors = [{ name = "Mohan Raj" }]
+requires-python = ">=3.10"
+dependencies = ["groundgate>=0.3"]
+
+[project.scripts]
+groundgate-calibrate = "groundgate_calibrate.cli:main"
+
+[tool.hatch.version]
+path = "src/groundgate_calibrate/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/groundgate_calibrate"]
+
+[tool.uv.sources]
+groundgate = { workspace = true }

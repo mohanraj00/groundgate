@@ -47,6 +47,11 @@ jobs:
           python-version: "3.10"
       - run: uv build
       - run: uvx twine check --strict dist/*
+      - name: The calibration tool builds as its own package, outside the core wheel
+        run: |
+          uv build --package groundgate-calibrate -o dist-calibrate
+          uvx twine check --strict dist-calibrate/*
+          ! unzip -l dist/*.whl | grep -q groundgate_calibrate
       - name: The wheel installs into a clean venv, and the quickstart and vectors pass against it
         run: |
           python -m venv /tmp/clean
