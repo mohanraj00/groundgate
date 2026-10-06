@@ -22,3 +22,9 @@ spikes/*/sources/*.xml
 bench/.cache/
 bench/*/.cache/
 bench/judges/keys/.answers-*.partial.json
+
+# 10-K filings are not public-domain works; only their pins are committed (#112)
+bench/sec/docs/
+bench/sec/runs/
+bench/sec/cands/
+bench/sec/work-*/docs/

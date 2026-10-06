@@ -34,6 +34,52 @@ def page(text: str, items: list[dict[str, Any]]) -> str:
         out += [html.escape(text[a:b]), "</mark>"]
         at = b
     out.append(html.escape(text[at:]))
+    return tables("".join(out))
+
+
+SIGN_BEFORE = {"$", "€", "£", "₹", "US$"}
+SIGN_AFTER = {"%", ")", "%)"}
+
+
+def cells(row: str) -> list[str]:
+    """The cells of one table line. A cell that holds only a currency sign joins the next cell,
+    and one that holds only a percent sign or a closing parenthesis joins the one before, so the
+    numbers of each row stand in the same columns."""
+    out: list[str] = []
+    carry = ""
+    for c in row.split("\t"):
+        if c.strip() in SIGN_BEFORE:
+            carry += c.strip() + " "
+        elif c.strip() in SIGN_AFTER and out:
+            out[-1] += c.strip()
+        else:
+            out.append(carry + c)
+            carry = ""
+    if carry:
+        out.append(carry.strip())
+    return out
+
+
+def tables(marked: str) -> str:
+    """Draw each run of lines that hold a tab as an HTML table, one cell for each tab-separated
+    part. A mark holds one number token, so it never holds a tab or a line break, and each mark
+    stays inside one cell."""
+    out: list[str] = []
+    rows: list[str] = []
+
+    def flush() -> None:
+        if rows:
+            trs = ["<tr><td>" + "</td><td>".join(cells(r)) + "</td></tr>" for r in rows]
+            out.append('<table class="t">' + "".join(trs) + "</table>")
+            rows.clear()
+
+    for line in marked.split("\n"):
+        if "\t" in line:
+            rows.append(line)
+        else:
+            flush()
+            out.append(line + "\n")
+    flush()
     return "".join(out)
 
 

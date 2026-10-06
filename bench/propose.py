@@ -53,6 +53,7 @@ KIND = {
     "ntsb": "an NTSB aviation accident report",
     "irs": "two pages of an IRS publication",
     "fr": "a page of a Federal Register final rule",
+    "sec": "Item 7 (Management's Discussion and Analysis) of a 10-K annual report",
 }
 IRS_PAGES = {1: "one page of an IRS publication", 3: "three pages of an IRS publication"}
 
@@ -195,6 +196,42 @@ SET2_EXAMPLES = {  # set 2 renames the FDA fields and adds keys and the Federal 
                     attributes={"value": "9000000", "unit": "USD"},
                 ),
                 lx.data.Extraction("firms_qualifying", "1,200", attributes={"value": "1200"}),
+            ],
+        )
+    ],
+    "sec": [  # the 10-K demo of the calibration tool (#112); the text is made up
+        lx.data.ExampleData(
+            text=(
+                "Net sales were $4.2 billion in fiscal 2025, up from $3.9 billion in fiscal "
+                "2024. Operating income was $512 million in 2025.\n\n"
+                "(in millions)\t2025\t2024\nCash and cash equivalents\t$\t860\t$\t745\n"
+            ),
+            extractions=[
+                lx.data.Extraction(
+                    "revenue",
+                    "$4.2 billion",
+                    attributes={"value": "4200000000", "unit": "USD", "key": "2025"},
+                ),
+                lx.data.Extraction(
+                    "revenue",
+                    "$3.9 billion",
+                    attributes={"value": "3900000000", "unit": "USD", "key": "2024"},
+                ),
+                lx.data.Extraction(
+                    "operating_income",
+                    "$512 million",
+                    attributes={"value": "512000000", "unit": "USD", "key": "2025"},
+                ),
+                lx.data.Extraction(
+                    "cash_and_equivalents",
+                    "860",
+                    attributes={"value": "860", "unit": "USD", "key": "2025"},
+                ),
+                lx.data.Extraction(
+                    "cash_and_equivalents",
+                    "745",
+                    attributes={"value": "745", "unit": "USD", "key": "2024"},
+                ),
             ],
         )
     ],
@@ -405,8 +442,8 @@ def prompt_for(gold: dict[str, Any]) -> str:
 
 
 def examples_for(gold: dict[str, Any]) -> list[lx.data.ExampleData]:
-    if gold["kind"] == "fr":
-        return SET2_EXAMPLES["fr"]
+    if gold["kind"] in ("fr", "sec"):
+        return SET2_EXAMPLES[gold["kind"]]
     if gold["kind"] == "fda" and "starting_dose" in gold["fields"]:  # set 2's FDA field names
         return SET2_EXAMPLES["fda keyed" if keyed(gold) else "fda"]
     return EXAMPLES[gold["kind"]]

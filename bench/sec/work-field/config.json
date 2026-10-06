@@ -1,0 +1,66 @@
+{
+ "context": "The text is from Item 7 (Management's Discussion and Analysis) of a 10-K annual report.",
+ "descriptions": {
+  "cash_and_equivalents": "Cash and cash equivalents at the end of the fiscal year.",
+  "net_income": "Net income for the fiscal year.",
+  "operating_income": "Operating income (income from operations) for the fiscal year.",
+  "revenue": "Total revenue or net sales for the fiscal year.",
+  "total_debt": "Total debt at the end of the fiscal year."
+ },
+ "question": "field",
+ "schema": {
+  "fields": {
+   "cash_and_equivalents": {
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "multiple": true,
+    "type": "number",
+    "unit": "USD"
+   },
+   "net_income": {
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "multiple": true,
+    "type": "number",
+    "unit": "USD"
+   },
+   "operating_income": {
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "multiple": true,
+    "type": "number",
+    "unit": "USD"
+   },
+   "revenue": {
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "multiple": true,
+    "type": "number",
+    "unit": "USD"
+   },
+   "total_debt": {
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "multiple": true,
+    "type": "number",
+    "unit": "USD"
+   }
+  }
+ },
+ "spec": "0.4"
+}
