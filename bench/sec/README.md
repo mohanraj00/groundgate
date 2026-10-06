@@ -20,7 +20,7 @@ groundgate-calibrate split  --work bench/sec/work-field
 groundgate-calibrate label  --work bench/sec/work-field
 TYPESAFE_API_KEY=... groundgate-calibrate ask --work bench/sec/work-field --judge jev
 groundgate-calibrate report --work bench/sec/work-field
-uv run python bench/sec/sec.py results                             # RESULTS.md
+uv run python bench/sec/sec.py results                             # results.json, RESULTS.md
 ```
 
 ## Filings and text

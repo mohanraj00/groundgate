@@ -37,7 +37,7 @@ def page(text: str, items: list[dict[str, Any]]) -> str:
     return tables("".join(out))
 
 
-SIGN_BEFORE = {"$", "€", "£", "₹", "US$"}
+SIGN_BEFORE = {"$", "€", "£", "₹", "US$", "(", "$("}
 SIGN_AFTER = {"%", ")", "%)"}
 
 
@@ -49,7 +49,8 @@ def cells(row: str) -> list[str]:
     carry = ""
     for c in row.split("\t"):
         if c.strip() in SIGN_BEFORE:
-            carry += c.strip() + " "
+            # a currency sign stands apart from its number, an opening parenthesis does not
+            carry += c.strip() + ("" if c.strip().endswith("(") else " ")
         elif c.strip() in SIGN_AFTER and out:
             out[-1] += c.strip()
         else:

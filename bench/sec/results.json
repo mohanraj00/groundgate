@@ -1,0 +1,68 @@
+{
+ "filings": 40,
+ "field_items": 117,
+ "key_items": 77,
+ "test": {
+  "wrong": 6,
+  "right": 75
+ },
+ "travel": [
+  {
+   "from": "10-K filings (this demo)",
+   "ceiling": "0.05",
+   "threshold": null
+  },
+  {
+   "from": "10-K filings (this demo)",
+   "ceiling": "0.1",
+   "threshold": 0.1,
+   "wrong_caught": 0,
+   "right_doubted": 0
+  },
+  {
+   "from": "10-K filings (this demo)",
+   "ceiling": "0.2",
+   "threshold": 0.3,
+   "wrong_caught": 0,
+   "right_doubted": 5
+  },
+  {
+   "from": "FDA labels",
+   "ceiling": "0.05",
+   "threshold": null
+  },
+  {
+   "from": "FDA labels",
+   "ceiling": "0.1",
+   "threshold": 0.3,
+   "wrong_caught": 0,
+   "right_doubted": 5
+  },
+  {
+   "from": "FDA labels",
+   "ceiling": "0.2",
+   "threshold": 0.3,
+   "wrong_caught": 0,
+   "right_doubted": 5
+  },
+  {
+   "from": "NTSB reports",
+   "ceiling": "0.05",
+   "threshold": null
+  },
+  {
+   "from": "NTSB reports",
+   "ceiling": "0.1",
+   "threshold": 0.1,
+   "wrong_caught": 0,
+   "right_doubted": 0
+  },
+  {
+   "from": "NTSB reports",
+   "ceiling": "0.2",
+   "threshold": 0.2,
+   "wrong_caught": 0,
+   "right_doubted": 1
+  }
+ ]
+}

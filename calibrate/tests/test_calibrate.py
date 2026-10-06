@@ -242,3 +242,4 @@ def test_signs_join_their_numbers_in_a_table_row() -> None:
     assert label.cells("Net income\t$\t35,116\t$\t19,168\t83.2\t%") == [
         "Net income", "$ 35,116", "$ 19,168", "83.2%"
     ]  # fmt: skip
+    assert label.cells("Loss\t(\t123\t)\t$\t(\t45\t)") == ["Loss", "(123)", "$ (45)"]
