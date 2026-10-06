@@ -36,6 +36,8 @@ import pick as walk  # noqa: E402  (bench/pick.py)
 from fetch import download, spl_sections  # noqa: E402  (bench/fetch.py)
 
 PER_SET, PER_DOC, MAX_RANK = 100, 6, 600
+# a set whose items need no key can take labels with fewer subsections in section 1
+NEED_KEYS = True
 # a dose: a number token followed by mg or mcg
 UNIT_AFTER = re.compile(r"\s*(?:mg|mcg)(?![A-Za-z])")
 SPEC02 = [
@@ -91,7 +93,7 @@ def pick(count_only: bool) -> None:
             entry["skip"] = why
             continue
         entry["setid"] = label["setid"]
-        if not label["keyed"]:
+        if NEED_KEYS and not label["keyed"]:
             entry["skip"] = f"fewer than {walk.MIN_KEYS} subsections in section 1"
             continue
         data = walk.get(label["url"], f"spl-{label['setid']}.xml")

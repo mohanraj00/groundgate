@@ -703,3 +703,12 @@ def test_a_judge_report_refuses_a_repeat_from_another_model(
     (tmp_path / "answers-jev-2.json").write_text(json.dumps(again))
     with pytest.raises(SystemExit, match="another model"):
         judge.report(check=False)
+
+
+def test_a_relations_item_is_a_value_with_a_qualifier() -> None:
+    sys.path.insert(0, str(BENCH / "relations"))
+    import relations
+
+    text = "Take 20 mg daily. Do not take more than 40 mg a day. Patients 65 years or older."
+    found = [text[a:b] for a, b in relations.qualified_values_in(text, [])]
+    assert found == ["40", "65"]
