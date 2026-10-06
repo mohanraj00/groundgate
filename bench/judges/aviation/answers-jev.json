@@ -1,0 +1,802 @@
+{
+ "answers": {
+  "ntsb-192733:5981": {
+   "airframe_total_hours": 0.22,
+   "pilot_last_90_days_hours": 0.05,
+   "pilot_make_model_hours": 0.49,
+   "pilot_total_hours": 0.8
+  },
+  "ntsb-192733:6014": {
+   "airframe_total_hours": 0.26,
+   "pilot_last_90_days_hours": 0.09,
+   "pilot_make_model_hours": 0.82,
+   "pilot_total_hours": 0.23
+  },
+  "ntsb-192733:6164": {
+   "airframe_total_hours": 0.16,
+   "pilot_last_90_days_hours": 0.11,
+   "pilot_make_model_hours": 0.46,
+   "pilot_total_hours": 0.18
+  },
+  "ntsb-192733:6704": {
+   "airframe_total_hours": 0.81,
+   "pilot_last_90_days_hours": 0.09,
+   "pilot_make_model_hours": 0.16,
+   "pilot_total_hours": 0.2
+  },
+  "ntsb-192733:8042": {
+   "airport_elevation": 0.13,
+   "runway_length": 0.05
+  },
+  "ntsb-192733:8654": {
+   "airport_elevation": 0.88,
+   "runway_length": 0.19
+  },
+  "ntsb-192733:8754": {
+   "airport_elevation": 0.34,
+   "runway_length": 0.91
+  },
+  "ntsb-192733:8764": {
+   "airport_elevation": 0.4,
+   "runway_length": 0.28
+  },
+  "ntsb-192733:9648": {
+   "airport_elevation": 0.09,
+   "runway_length": 0.09
+  },
+  "ntsb-192734:2760": {
+   "airframe_total_hours": 0.31,
+   "pilot_last_90_days_hours": 0.39,
+   "pilot_make_model_hours": 0.27,
+   "pilot_total_hours": 0.48
+  },
+  "ntsb-192734:2794": {
+   "airframe_total_hours": 0.19,
+   "pilot_last_90_days_hours": 0.15,
+   "pilot_make_model_hours": 0.26,
+   "pilot_total_hours": 0.11
+  },
+  "ntsb-192734:2833": {
+   "airframe_total_hours": 0.14,
+   "pilot_last_90_days_hours": 0.04,
+   "pilot_make_model_hours": 0.08,
+   "pilot_total_hours": 0.87
+  },
+  "ntsb-192734:2878": {
+   "airframe_total_hours": 0.13,
+   "pilot_last_90_days_hours": 0.85,
+   "pilot_make_model_hours": 0.19,
+   "pilot_total_hours": 0.11
+  },
+  "ntsb-192734:2917": {
+   "airframe_total_hours": 0.13,
+   "pilot_last_90_days_hours": 0.09,
+   "pilot_make_model_hours": 0.2,
+   "pilot_total_hours": 0.08
+  },
+  "ntsb-192734:2956": {
+   "airframe_total_hours": 0.11,
+   "pilot_last_90_days_hours": 0.08,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.12
+  },
+  "ntsb-192734:2970": {
+   "airframe_total_hours": 0.13,
+   "pilot_last_90_days_hours": 0.15,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.19
+  },
+  "ntsb-192734:3469": {
+   "airframe_total_hours": 0.92,
+   "pilot_last_90_days_hours": 0.08,
+   "pilot_make_model_hours": 0.17,
+   "pilot_total_hours": 0.23
+  },
+  "ntsb-192734:4441": {
+   "airport_elevation": 0.87,
+   "runway_length": 0.21
+  },
+  "ntsb-192735:3312": {
+   "airframe_total_hours": 0.35,
+   "pilot_last_90_days_hours": 0.21,
+   "pilot_make_model_hours": 0.19,
+   "pilot_total_hours": 0.43
+  },
+  "ntsb-192735:3345": {
+   "airframe_total_hours": 0.27,
+   "pilot_last_90_days_hours": 0.08,
+   "pilot_make_model_hours": 0.67,
+   "pilot_total_hours": 0.08
+  },
+  "ntsb-192735:3385": {
+   "airframe_total_hours": 0.18,
+   "pilot_last_90_days_hours": 0.05,
+   "pilot_make_model_hours": 0.13,
+   "pilot_total_hours": 0.85
+  },
+  "ntsb-192735:3429": {
+   "airframe_total_hours": 0.13,
+   "pilot_last_90_days_hours": 0.82,
+   "pilot_make_model_hours": 0.17,
+   "pilot_total_hours": 0.11
+  },
+  "ntsb-192735:3469": {
+   "airframe_total_hours": 0.11,
+   "pilot_last_90_days_hours": 0.11,
+   "pilot_make_model_hours": 0.18,
+   "pilot_total_hours": 0.1
+  },
+  "ntsb-192735:3507": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.09,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.09
+  },
+  "ntsb-192735:3521": {
+   "airframe_total_hours": 0.12,
+   "pilot_last_90_days_hours": 0.21,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.19
+  },
+  "ntsb-192735:4029": {
+   "airframe_total_hours": 0.28,
+   "pilot_last_90_days_hours": 0.18,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.25
+  },
+  "ntsb-192735:4062": {
+   "airframe_total_hours": 0.18,
+   "pilot_last_90_days_hours": 0.15,
+   "pilot_make_model_hours": 0.66,
+   "pilot_total_hours": 0.11
+  },
+  "ntsb-192735:4100": {
+   "airframe_total_hours": 0.14,
+   "pilot_last_90_days_hours": 0.06,
+   "pilot_make_model_hours": 0.07,
+   "pilot_total_hours": 0.87
+  },
+  "ntsb-192735:4144": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.73,
+   "pilot_make_model_hours": 0.16,
+   "pilot_total_hours": 0.11
+  },
+  "ntsb-192735:4183": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.07,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.06
+  },
+  "ntsb-192735:4696": {
+   "airframe_total_hours": 0.88,
+   "pilot_last_90_days_hours": 0.09,
+   "pilot_make_model_hours": 0.21,
+   "pilot_total_hours": 0.31
+  },
+  "ntsb-192735:6090": {
+   "airport_elevation": 0.88,
+   "runway_length": 0.19
+  },
+  "ntsb-192735:6196": {
+   "airport_elevation": 0.44,
+   "runway_length": 0.91
+  },
+  "ntsb-192735:6206": {
+   "airport_elevation": 0.46,
+   "runway_length": 0.28
+  },
+  "ntsb-192735:672": {
+   "airport_elevation": 0.14,
+   "runway_length": 0.87
+  },
+  "ntsb-192741:1599": {
+   "airport_elevation": 0.34,
+   "runway_length": 0.12
+  },
+  "ntsb-192741:1822": {
+   "airport_elevation": 0.43,
+   "runway_length": 0.1
+  },
+  "ntsb-192741:4657": {
+   "airport_elevation": 0.29,
+   "runway_length": 0.87
+  },
+  "ntsb-192741:4669": {
+   "airport_elevation": 0.28,
+   "runway_length": 0.48
+  },
+  "ntsb-192741:4736": {
+   "airport_elevation": 0.28,
+   "runway_length": 0.1
+  },
+  "ntsb-192741:5312": {
+   "airport_elevation": 0.33,
+   "runway_length": 0.11
+  },
+  "ntsb-192741:5535": {
+   "airport_elevation": 0.26,
+   "runway_length": 0.07
+  },
+  "ntsb-192741:6050": {
+   "airframe_total_hours": 0.38,
+   "pilot_last_90_days_hours": 0.13,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.24
+  },
+  "ntsb-192741:6084": {
+   "airframe_total_hours": 0.2,
+   "pilot_last_90_days_hours": 0.07,
+   "pilot_make_model_hours": 0.32,
+   "pilot_total_hours": 0.08
+  },
+  "ntsb-192741:6124": {
+   "airframe_total_hours": 0.17,
+   "pilot_last_90_days_hours": 0.04,
+   "pilot_make_model_hours": 0.18,
+   "pilot_total_hours": 0.83
+  },
+  "ntsb-192741:6171": {
+   "airframe_total_hours": 0.18,
+   "pilot_last_90_days_hours": 0.7,
+   "pilot_make_model_hours": 0.14,
+   "pilot_total_hours": 0.14
+  },
+  "ntsb-192741:6213": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.08,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.07
+  },
+  "ntsb-192741:6255": {
+   "airframe_total_hours": 0.09,
+   "pilot_last_90_days_hours": 0.07,
+   "pilot_make_model_hours": 0.07,
+   "pilot_total_hours": 0.13
+  },
+  "ntsb-192741:6269": {
+   "airframe_total_hours": 0.14,
+   "pilot_last_90_days_hours": 0.18,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.31
+  },
+  "ntsb-192741:6702": {
+   "airframe_total_hours": 0.12,
+   "pilot_last_90_days_hours": 0.16,
+   "pilot_make_model_hours": 0.18,
+   "pilot_total_hours": 0.14
+  },
+  "ntsb-192741:6758": {
+   "airframe_total_hours": 0.82,
+   "pilot_last_90_days_hours": 0.08,
+   "pilot_make_model_hours": 0.13,
+   "pilot_total_hours": 0.17
+  },
+  "ntsb-192741:7357": {
+   "airport_elevation": 0.16,
+   "runway_length": 0.04
+  },
+  "ntsb-192741:8010": {
+   "airport_elevation": 0.86,
+   "runway_length": 0.2
+  },
+  "ntsb-192741:8116": {
+   "airport_elevation": 0.49,
+   "runway_length": 0.89
+  },
+  "ntsb-192741:8126": {
+   "airport_elevation": 0.34,
+   "runway_length": 0.22
+  },
+  "ntsb-192742:3850": {
+   "airframe_total_hours": 0.32,
+   "pilot_last_90_days_hours": 0.18,
+   "pilot_make_model_hours": 0.14,
+   "pilot_total_hours": 0.47
+  },
+  "ntsb-192742:3885": {
+   "airframe_total_hours": 0.33,
+   "pilot_last_90_days_hours": 0.1,
+   "pilot_make_model_hours": 0.66,
+   "pilot_total_hours": 0.1
+  },
+  "ntsb-192742:3926": {
+   "airframe_total_hours": 0.33,
+   "pilot_last_90_days_hours": 0.05,
+   "pilot_make_model_hours": 0.28,
+   "pilot_total_hours": 0.49
+  },
+  "ntsb-192742:3971": {
+   "airframe_total_hours": 0.15,
+   "pilot_last_90_days_hours": 0.64,
+   "pilot_make_model_hours": 0.13,
+   "pilot_total_hours": 0.21
+  },
+  "ntsb-192742:4011": {
+   "airframe_total_hours": 0.14,
+   "pilot_last_90_days_hours": 0.06,
+   "pilot_make_model_hours": 0.13,
+   "pilot_total_hours": 0.15
+  },
+  "ntsb-192742:4635": {
+   "airframe_total_hours": 0.41,
+   "pilot_last_90_days_hours": 0.15,
+   "pilot_make_model_hours": 0.14,
+   "pilot_total_hours": 0.36
+  },
+  "ntsb-192742:4669": {
+   "airframe_total_hours": 0.22,
+   "pilot_last_90_days_hours": 0.14,
+   "pilot_make_model_hours": 0.16,
+   "pilot_total_hours": 0.12
+  },
+  "ntsb-192742:4709": {
+   "airframe_total_hours": 0.36,
+   "pilot_last_90_days_hours": 0.06,
+   "pilot_make_model_hours": 0.17,
+   "pilot_total_hours": 0.78
+  },
+  "ntsb-192742:4754": {
+   "airframe_total_hours": 0.13,
+   "pilot_last_90_days_hours": 0.54,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.1
+  },
+  "ntsb-192742:4794": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.07,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.08
+  },
+  "ntsb-192742:4833": {
+   "airframe_total_hours": 0.11,
+   "pilot_last_90_days_hours": 0.07,
+   "pilot_make_model_hours": 0.08,
+   "pilot_total_hours": 0.1
+  },
+  "ntsb-192742:4847": {
+   "airframe_total_hours": 0.12,
+   "pilot_last_90_days_hours": 0.13,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.13
+  },
+  "ntsb-192742:5365": {
+   "airframe_total_hours": 0.81,
+   "pilot_last_90_days_hours": 0.06,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.12
+  },
+  "ntsb-192743:3550": {
+   "airframe_total_hours": 0.35,
+   "pilot_last_90_days_hours": 0.11,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.36
+  },
+  "ntsb-192743:3585": {
+   "airframe_total_hours": 0.22,
+   "pilot_last_90_days_hours": 0.08,
+   "pilot_make_model_hours": 0.7,
+   "pilot_total_hours": 0.09
+  },
+  "ntsb-192743:3626": {
+   "airframe_total_hours": 0.17,
+   "pilot_last_90_days_hours": 0.04,
+   "pilot_make_model_hours": 0.15,
+   "pilot_total_hours": 0.77
+  },
+  "ntsb-192743:3672": {
+   "airframe_total_hours": 0.13,
+   "pilot_last_90_days_hours": 0.86,
+   "pilot_make_model_hours": 0.08,
+   "pilot_total_hours": 0.06
+  },
+  "ntsb-192743:3712": {
+   "airframe_total_hours": 0.08,
+   "pilot_last_90_days_hours": 0.07,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.1
+  },
+  "ntsb-192743:3751": {
+   "airframe_total_hours": 0.09,
+   "pilot_last_90_days_hours": 0.03,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.07
+  },
+  "ntsb-192743:3766": {
+   "airframe_total_hours": 0.14,
+   "pilot_last_90_days_hours": 0.12,
+   "pilot_make_model_hours": 0.17,
+   "pilot_total_hours": 0.22
+  },
+  "ntsb-192743:4377": {
+   "airframe_total_hours": 0.51,
+   "pilot_last_90_days_hours": 0.16,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.22
+  },
+  "ntsb-192743:441": {
+   "airport_elevation": 0.2,
+   "runway_length": 0.04
+  },
+  "ntsb-192743:4412": {
+   "airframe_total_hours": 0.51,
+   "pilot_last_90_days_hours": 0.07,
+   "pilot_make_model_hours": 0.53,
+   "pilot_total_hours": 0.07
+  },
+  "ntsb-192743:4453": {
+   "airframe_total_hours": 0.17,
+   "pilot_last_90_days_hours": 0.04,
+   "pilot_make_model_hours": 0.15,
+   "pilot_total_hours": 0.78
+  },
+  "ntsb-192743:4498": {
+   "airframe_total_hours": 0.12,
+   "pilot_last_90_days_hours": 0.63,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.09
+  },
+  "ntsb-192743:4538": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.09,
+   "pilot_make_model_hours": 0.08,
+   "pilot_total_hours": 0.08
+  },
+  "ntsb-192743:4577": {
+   "airframe_total_hours": 0.08,
+   "pilot_last_90_days_hours": 0.06,
+   "pilot_make_model_hours": 0.08,
+   "pilot_total_hours": 0.09
+  },
+  "ntsb-192743:4591": {
+   "airframe_total_hours": 0.14,
+   "pilot_last_90_days_hours": 0.14,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.21
+  },
+  "ntsb-192743:5106": {
+   "airframe_total_hours": 0.8,
+   "pilot_last_90_days_hours": 0.05,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.13
+  },
+  "ntsb-192743:5699": {
+   "airport_elevation": 0.17,
+   "runway_length": 0.05
+  },
+  "ntsb-192747:3161": {
+   "airframe_total_hours": 0.33,
+   "pilot_last_90_days_hours": 0.11,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.7
+  },
+  "ntsb-192747:3195": {
+   "airframe_total_hours": 0.21,
+   "pilot_last_90_days_hours": 0.1,
+   "pilot_make_model_hours": 0.62,
+   "pilot_total_hours": 0.1
+  },
+  "ntsb-192747:3236": {
+   "airframe_total_hours": 0.24,
+   "pilot_last_90_days_hours": 0.07,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.89
+  },
+  "ntsb-192747:3281": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.82,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.2
+  },
+  "ntsb-192747:3321": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.45,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.16
+  },
+  "ntsb-192747:3361": {
+   "airframe_total_hours": 0.13,
+   "pilot_last_90_days_hours": 0.09,
+   "pilot_make_model_hours": 0.08,
+   "pilot_total_hours": 0.12
+  },
+  "ntsb-192747:3376": {
+   "airframe_total_hours": 0.15,
+   "pilot_last_90_days_hours": 0.24,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.21
+  },
+  "ntsb-192747:3877": {
+   "airframe_total_hours": 0.92,
+   "pilot_last_90_days_hours": 0.07,
+   "pilot_make_model_hours": 0.15,
+   "pilot_total_hours": 0.13
+  },
+  "ntsb-192747:5329": {
+   "airport_elevation": 0.9,
+   "runway_length": 0.2
+  },
+  "ntsb-192748:1003": {
+   "airport_elevation": 0.09,
+   "runway_length": 0.11
+  },
+  "ntsb-192748:2292": {
+   "airframe_total_hours": 0.39,
+   "pilot_last_90_days_hours": 0.16,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.29
+  },
+  "ntsb-192748:2326": {
+   "airframe_total_hours": 0.34,
+   "pilot_last_90_days_hours": 0.04,
+   "pilot_make_model_hours": 0.38,
+   "pilot_total_hours": 0.06
+  },
+  "ntsb-192748:2366": {
+   "airframe_total_hours": 0.21,
+   "pilot_last_90_days_hours": 0.03,
+   "pilot_make_model_hours": 0.17,
+   "pilot_total_hours": 0.68
+  },
+  "ntsb-192748:2411": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.62,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.11
+  },
+  "ntsb-192748:2450": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.08,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.1
+  },
+  "ntsb-192748:2489": {
+   "airframe_total_hours": 0.13,
+   "pilot_last_90_days_hours": 0.1,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.16
+  },
+  "ntsb-192748:2503": {
+   "airframe_total_hours": 0.12,
+   "pilot_last_90_days_hours": 0.12,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.22
+  },
+  "ntsb-192748:2901": {
+   "airframe_total_hours": 0.16,
+   "pilot_last_90_days_hours": 0.1,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.15
+  },
+  "ntsb-192748:2998": {
+   "airframe_total_hours": 0.84,
+   "pilot_last_90_days_hours": 0.06,
+   "pilot_make_model_hours": 0.15,
+   "pilot_total_hours": 0.16
+  },
+  "ntsb-192748:4331": {
+   "airport_elevation": 0.9,
+   "runway_length": 0.21
+  },
+  "ntsb-192748:4442": {
+   "airport_elevation": 0.3,
+   "runway_length": 0.91
+  },
+  "ntsb-192748:4452": {
+   "airport_elevation": 0.44,
+   "runway_length": 0.44
+  },
+  "ntsb-192748:556": {
+   "airport_elevation": 0.13,
+   "runway_length": 0.9
+  },
+  "ntsb-192749:2759": {
+   "airframe_total_hours": 0.38,
+   "pilot_last_90_days_hours": 0.15,
+   "pilot_make_model_hours": 0.13,
+   "pilot_total_hours": 0.34
+  },
+  "ntsb-192749:2793": {
+   "airframe_total_hours": 0.29,
+   "pilot_last_90_days_hours": 0.08,
+   "pilot_make_model_hours": 0.31,
+   "pilot_total_hours": 0.06
+  },
+  "ntsb-192749:2834": {
+   "airframe_total_hours": 0.15,
+   "pilot_last_90_days_hours": 0.05,
+   "pilot_make_model_hours": 0.15,
+   "pilot_total_hours": 0.78
+  },
+  "ntsb-192749:2879": {
+   "airframe_total_hours": 0.12,
+   "pilot_last_90_days_hours": 0.65,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.12
+  },
+  "ntsb-192749:2918": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.09,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.07
+  },
+  "ntsb-192749:2957": {
+   "airframe_total_hours": 0.12,
+   "pilot_last_90_days_hours": 0.07,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.12
+  },
+  "ntsb-192749:2971": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.12,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.24
+  },
+  "ntsb-192749:3475": {
+   "airframe_total_hours": 0.76,
+   "pilot_last_90_days_hours": 0.06,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.11
+  },
+  "ntsb-192750:2465": {
+   "airframe_total_hours": 0.08,
+   "pilot_last_90_days_hours": 0.09,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.1
+  },
+  "ntsb-192750:4108": {
+   "airframe_total_hours": 0.16,
+   "pilot_last_90_days_hours": 0.11,
+   "pilot_make_model_hours": 0.81,
+   "pilot_total_hours": 0.16
+  },
+  "ntsb-192750:485": {
+   "airframe_total_hours": 0.07,
+   "pilot_last_90_days_hours": 0.11,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.12
+  },
+  "ntsb-192750:5628": {
+   "airframe_total_hours": 0.57,
+   "pilot_last_90_days_hours": 0.1,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.16
+  },
+  "ntsb-192750:5663": {
+   "airframe_total_hours": 0.28,
+   "pilot_last_90_days_hours": 0.05,
+   "pilot_make_model_hours": 0.3,
+   "pilot_total_hours": 0.07
+  },
+  "ntsb-192750:5703": {
+   "airframe_total_hours": 0.14,
+   "pilot_last_90_days_hours": 0.04,
+   "pilot_make_model_hours": 0.13,
+   "pilot_total_hours": 0.83
+  },
+  "ntsb-192750:5749": {
+   "airframe_total_hours": 0.14,
+   "pilot_last_90_days_hours": 0.78,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.11
+  },
+  "ntsb-192750:5788": {
+   "airframe_total_hours": 0.11,
+   "pilot_last_90_days_hours": 0.11,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.09
+  },
+  "ntsb-192750:6251": {
+   "airframe_total_hours": 0.06,
+   "pilot_last_90_days_hours": 0.13,
+   "pilot_make_model_hours": 0.12,
+   "pilot_total_hours": 0.1
+  },
+  "ntsb-192750:6308": {
+   "airframe_total_hours": 0.86,
+   "pilot_last_90_days_hours": 0.06,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.09
+  },
+  "ntsb-192750:7530": {
+   "airport_elevation": 0.89,
+   "runway_length": 0.22
+  },
+  "ntsb-192750:7635": {
+   "airport_elevation": 0.33,
+   "runway_length": 0.91
+  },
+  "ntsb-192750:7645": {
+   "airport_elevation": 0.47,
+   "runway_length": 0.32
+  },
+  "ntsb-192751:5346": {
+   "airport_elevation": 0.24,
+   "runway_length": 0.07
+  },
+  "ntsb-192751:5832": {
+   "airport_elevation": 0.19,
+   "runway_length": 0.07
+  },
+  "ntsb-192751:7491": {
+   "airframe_total_hours": 0.41,
+   "pilot_last_90_days_hours": 0.23,
+   "pilot_make_model_hours": 0.13,
+   "pilot_total_hours": 0.2
+  },
+  "ntsb-192751:7526": {
+   "airframe_total_hours": 0.28,
+   "pilot_last_90_days_hours": 0.05,
+   "pilot_make_model_hours": 0.55,
+   "pilot_total_hours": 0.08
+  },
+  "ntsb-192751:7568": {
+   "airframe_total_hours": 0.15,
+   "pilot_last_90_days_hours": 0.04,
+   "pilot_make_model_hours": 0.1,
+   "pilot_total_hours": 0.61
+  },
+  "ntsb-192751:7612": {
+   "airframe_total_hours": 0.18,
+   "pilot_last_90_days_hours": 0.77,
+   "pilot_make_model_hours": 0.09,
+   "pilot_total_hours": 0.08
+  },
+  "ntsb-192751:7653": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.06,
+   "pilot_make_model_hours": 0.07,
+   "pilot_total_hours": 0.09
+  },
+  "ntsb-192751:7694": {
+   "airframe_total_hours": 0.13,
+   "pilot_last_90_days_hours": 0.06,
+   "pilot_make_model_hours": 0.08,
+   "pilot_total_hours": 0.09
+  },
+  "ntsb-192751:7710": {
+   "airframe_total_hours": 0.12,
+   "pilot_last_90_days_hours": 0.15,
+   "pilot_make_model_hours": 0.11,
+   "pilot_total_hours": 0.2
+  },
+  "ntsb-192751:8180": {
+   "airframe_total_hours": 0.1,
+   "pilot_last_90_days_hours": 0.25,
+   "pilot_make_model_hours": 0.26,
+   "pilot_total_hours": 0.19
+  },
+  "ntsb-192751:8237": {
+   "airframe_total_hours": 0.92,
+   "pilot_last_90_days_hours": 0.08,
+   "pilot_make_model_hours": 0.17,
+   "pilot_total_hours": 0.18
+  },
+  "ntsb-192751:8828": {
+   "airport_elevation": 0.17,
+   "runway_length": 0.06
+  },
+  "ntsb-192751:8889": {
+   "airport_elevation": 0.21,
+   "runway_length": 0.07
+  },
+  "ntsb-192751:9469": {
+   "airport_elevation": 0.85,
+   "runway_length": 0.36
+  },
+  "ntsb-192751:9578": {
+   "airport_elevation": 0.37,
+   "runway_length": 0.92
+  },
+  "ntsb-192751:9588": {
+   "airport_elevation": 0.39,
+   "runway_length": 0.21
+  }
+ },
+ "meta": {
+  "engine": "Jev (TypeSafe API)",
+  "model": "jev-1.13.0",
+  "prompts_sha256": "bbf1a946c926c50099095a85a08cc177473a97b62935d14da311adafd57bfc26",
+  "run": "2026-10-06"
+ }
+}

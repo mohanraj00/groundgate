@@ -838,3 +838,24 @@ def test_the_aviation_set_takes_numbers_in_hours_or_feet() -> None:
     got = [text[a:b] for a, b in aviation.numbers_in(text)]
     assert got == ["4200", "1913.7", "3,000", "107"]
     assert set(aviation.FIELDS) == set(aviation.NTSB_FIELDS)
+
+
+def test_the_aviation_judge_admits_a_number_only_as_a_field_of_its_unit() -> None:
+    import importlib.util
+
+    path = BENCH / "judges" / "aviation" / "judge.py"
+    spec = importlib.util.spec_from_file_location("aviation_judge", path)
+    assert spec and spec.loader
+    aviation_judge = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(aviation_judge)
+
+    text = "Flight Time: 4200 hours (Total, all aircraft). Runway: 3,000 ft."
+    hours = [text.index("4200"), text.index("4200") + 4]
+    feet = [text.index("3,000"), text.index("3,000") + 5]
+    assert aviation_judge.admitted(text, hours) == [
+        "pilot_total_hours",
+        "pilot_make_model_hours",
+        "pilot_last_90_days_hours",
+        "airframe_total_hours",
+    ]
+    assert aviation_judge.admitted(text, feet) == ["airport_elevation", "runway_length"]
