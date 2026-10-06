@@ -115,6 +115,18 @@ def question(keys: list[str]) -> dict[str, Any]:
     }
 
 
+def prompt(it: dict[str, Any]) -> tuple[str, dict[str, Any]]:
+    """The state and the question for one item. Another judge can reuse this module with its own
+    HERE, gold() and prompt()."""
+    return state(it), question(it["keys"])
+
+
+def only(answers: dict[str, Any]) -> dict[str, Any]:
+    """The answer to the one question of a prompt."""
+    (a,) = answers.values()
+    return dict(a)
+
+
 def laya_engine(meta: dict[str, Any]) -> Ask:
     import laya  # type: ignore[import-not-found]
     from laya import Router
@@ -128,7 +140,7 @@ def laya_engine(meta: dict[str, Any]) -> Ask:
     )
 
     def ask(st: str, qs: dict[str, Any]) -> dict[str, Any]:
-        a = router.predict(st, qs, model=LAYA_MODEL)["answers"]["key"]
+        a = only(router.predict(st, qs, model=LAYA_MODEL)["answers"])
         return {"choice": a["choice"], "confidence": a["answer_confidence"]}
 
     return ask
@@ -151,7 +163,7 @@ def jev_engine(meta: dict[str, Any]) -> Ask:
             res = json.load(r)
         if res["model"] != JEV_MODEL:
             raise SystemExit(f"answered by {res['model']}, not {JEV_MODEL}")
-        a = res["answers"]["key"]
+        a = only(res["answers"])
         return {"choice": a["choice"], "confidence": a["confidence"]}
 
     return ask
@@ -175,7 +187,7 @@ def jeff_engine(meta: dict[str, Any]) -> Ask:
             JEFF_URL, data=body, headers={"Content-Type": "application/json"}
         )
         with urllib.request.urlopen(req, timeout=120) as r:
-            a = json.load(r)["answers"]["key"]
+            a = only(json.load(r)["answers"])
         return {"choice": a["choice"], "confidence": a["confidence"]}
 
     return ask
@@ -183,7 +195,7 @@ def jeff_engine(meta: dict[str, Any]) -> Ask:
 
 def prompts_sha256(items: list[dict[str, Any]]) -> str:
     """A digest of every prompt, in order: the dose id, the state and the question."""
-    prompts = [(it["id"], state(it), question(it["keys"])) for it in items]
+    prompts = [(it["id"], *prompt(it)) for it in items]
     return hashlib.sha256(json.dumps(prompts, sort_keys=True).encode()).hexdigest()
 
 
@@ -216,7 +228,7 @@ def run(engine: str, repeat: int = 1) -> None:
             continue
         for attempt in range(4):
             try:
-                a = ask(state(it), question(it["keys"]))
+                a = ask(*prompt(it))
                 break
             except (TimeoutError, urllib.error.URLError) as e:
                 if attempt == 3:
