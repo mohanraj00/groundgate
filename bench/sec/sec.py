@@ -195,6 +195,8 @@ def fields() -> None:
     (HERE / "schema.json").write_text(json.dumps(SCHEMA, indent=1) + "\n")
     (HERE / "descriptions.json").write_text(json.dumps(FIELDS, indent=1) + "\n")
     (HERE / "gold").mkdir(exist_ok=True)
+    for old in (HERE / "gold").glob("*.json"):  # only the filings of the current pick
+        old.unlink()
     for src in json.loads((HERE / "sources.json").read_text())["sources"]:
         spec = {f: {"schema": SCHEMA["fields"][f], "description": d} for f, d in FIELDS.items()}
         rec = {"doc": src["id"], "kind": "sec", "fields": spec}
