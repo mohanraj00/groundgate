@@ -809,6 +809,27 @@ def test_the_conflicts_set_takes_the_lower_end_of_a_range_as_a_dose() -> None:
     assert got == ["20", "30", "5", "5", "10", "20"]
 
 
+def test_the_conflict_judge_clears_a_conflict_with_the_chosen_value() -> None:
+    import importlib.util
+
+    path = BENCH / "judges" / "conflicts" / "judge.py"
+    spec = importlib.util.spec_from_file_location("conflicts_judge", path)
+    assert spec and spec.loader
+    conflicts_judge = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(conflicts_judge)
+
+    assert conflicts_judge.value("Take 1,000.0 mg", [5, 12]) == "1000"
+    it = {"label": "5", "spec_0.3": ["5", "10"]}
+    sure = {"choice": "5 mg", "confidence": 0.96}
+    assert conflicts_judge.clear(it, sure, 0.95) == "right"
+    assert conflicts_judge.clear(it, sure, 0.99) is None
+    assert conflicts_judge.clear(it, {"choice": "10 mg", "confidence": 1.0}, 0.5) == "escape"
+    assert conflicts_judge.clear({**it, "label": None}, sure, 0.5) == "escape"
+    assert conflicts_judge.clear(it, {"choice": "none", "confidence": 1.0}, 0.5) is None
+    # none is right when no admitted value is the labeled one
+    assert conflicts_judge.correct({**it, "label": "20"}, {"choice": "none", "confidence": 0.6})
+
+
 def test_the_aviation_set_takes_numbers_in_hours_or_feet() -> None:
     sys.path.insert(0, str(BENCH / "aviation"))
     import aviation
