@@ -70,7 +70,7 @@ def serve(w: Work, port: int) -> None:
             if self.path == "/":
                 self.send(files(__package__).joinpath("label.html").read_text("utf-8"), "text/html")
             elif self.path == "/state":
-                labels = json.loads(path.read_text()) if path.exists() else {}
+                labels = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
                 state = {"question": question, "items": shown, "labels": labels}
                 self.send(json.dumps(state))
             elif self.path.startswith("/doc/") and unquote(self.path[5:]) in pages:
@@ -88,11 +88,12 @@ def serve(w: Work, port: int) -> None:
             if any(w.path.glob("answers-*.json")) or any(w.path.glob(".answers-*.partial.json")):
                 self.send('{"error": "the labels are frozen once a judge has answered"}', code=409)
                 return
-            labels = json.loads(path.read_text()) if path.exists() else {}
+            labels = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
             if question == "key" and value is not None:
                 value = [k for k in it["keys"] if k in value]
             labels[it["id"]] = value
-            path.write_text(json.dumps(dict(sorted(labels.items())), indent=1) + "\n")
+            body = json.dumps(dict(sorted(labels.items())), indent=1) + "\n"
+            path.write_text(body, encoding="utf-8")
             self.send(json.dumps({"labels": labels}))
 
         def log_message(self, *args: Any) -> None:

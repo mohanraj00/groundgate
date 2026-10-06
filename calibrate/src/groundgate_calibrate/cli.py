@@ -65,7 +65,9 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
     if (w.path / "items.json").exists():
         raise SystemExit(f"{w.path} has items already; use a new work directory")
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
-    descriptions = json.loads(args.descriptions.read_text()) if args.descriptions else {}
+    descriptions = (
+        json.loads(args.descriptions.read_text(encoding="utf-8")) if args.descriptions else {}
+    )
     (w.path / "docs").mkdir(parents=True, exist_ok=True)
     items: list[dict[str, Any]] = []
     for path in sorted(docs.glob("*.txt")):
@@ -81,7 +83,9 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
             # a document without its candidates would leave the sample quietly; an empty list
             # says that the extractor found nothing
             raise SystemExit(f"{cpath} is not there; write [] for a document with no candidates")
-        found = q.sample(args.question, doc, text, schema, json.loads(cpath.read_text()))
+        found = q.sample(
+            args.question, doc, text, schema, json.loads(cpath.read_text(encoding="utf-8"))
+        )
         if found:
             (w.path / "docs" / f"{doc}.txt").write_text(text, encoding="utf-8")
             items += found
@@ -174,7 +178,7 @@ def ask(w: Work, judge: str) -> None:
     partial = w.path / f".answers-{judge}.partial.json"
     answers: dict[str, Any] = {}
     if partial.exists():
-        saved = json.loads(partial.read_text())
+        saved = json.loads(partial.read_text(encoding="utf-8"))
         if saved["meta"] != record:
             raise SystemExit(f"{partial.name} is from another run; delete it")
         answers = saved["answers"]
@@ -191,7 +195,7 @@ def ask(w: Work, judge: str) -> None:
                     raise SystemExit(f"{iid}: {e}; run again to go on") from e
                 time.sleep(5 * (attempt + 1))
         answers[iid] = q.keep(question, a)
-        partial.write_text(json.dumps({"meta": record, "answers": answers}))
+        partial.write_text(json.dumps({"meta": record, "answers": answers}), encoding="utf-8")
         print(f"{n}/{len(ps)}", end="\r", flush=True)
     w.write(target.name, {"meta": {**record, "run": datetime.date.today().isoformat()},
                           "answers": answers})  # fmt: skip
@@ -207,7 +211,7 @@ def report(w: Work, check: bool) -> None:
         raise SystemExit(f"{len(missing)} items are not labeled yet")
     results: dict[str, Any] = {"question": cfg["question"], "judges": {}}
     for path in sorted(w.path.glob("answers-*.json")):
-        rec = json.loads(path.read_text())
+        rec = json.loads(path.read_text(encoding="utf-8"))
         if rec["meta"]["prompts_sha256"] != w.read("prompts.json")["prompts_sha256"]:
             raise SystemExit(f"{path.name} answers other prompts than the split's")
         if rec["meta"]["scoring_sha256"] != scoring_sha256(w):
@@ -224,7 +228,7 @@ def report(w: Work, check: bool) -> None:
         "REPORT.md": markdown(results),
     }
     if check:
-        stale = [n for n, body in out.items() if (w.path / n).read_text() != body]
+        stale = [n for n, body in out.items() if (w.path / n).read_text(encoding="utf-8") != body]
         if stale:
             raise SystemExit(f"out of date: {', '.join(stale)}; run report")
         print("REPORT.md is up to date")
