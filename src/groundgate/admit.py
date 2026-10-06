@@ -292,9 +292,9 @@ def _judge(policy: Policy, p: _Passed, js: dict[str, _Judgment]) -> list[_Judgme
     for j in js.values():
         if j.judge != (jp.id, jp.digest):
             continue
-        if j.question == "key" and jp.clear_key is not None and "KEY_NOT_AT_VALUE" in p.flags:
+        if j.question == "key" and jp.clear_key is not None:
             applied.append(j)
-            if j.p >= jp.clear_key:
+            if "KEY_NOT_AT_VALUE" in p.flags and j.p >= jp.clear_key:
                 if j.answer == p.key:
                     p.flags.remove("KEY_NOT_AT_VALUE")
                     p.cleared = True

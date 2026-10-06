@@ -1792,6 +1792,13 @@ INVALID.extend(
             "policy": {"judge": {**JEV, "clear": {"QUALIFIED_VALUE": 0.9}}},
         },
         {
+            "name": "policy-judge-null-threshold",
+            "description": "A threshold that is present is a number in [0, 1], not null.",
+            "document": "x",
+            "schema": {"fields": {}},
+            "policy": {"judge": {**JEV, "doubt": {"field_match": None}}},
+        },
+        {
             "name": "judgment-unknown-candidate",
             "description": "A judgment names the id of one candidate in the packet.",
             "document": "The fee is $40.",

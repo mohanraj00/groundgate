@@ -311,8 +311,23 @@ def test_malformed_judgments_are_invalid_packets(judgments: Any) -> None:
         {**JUDGE, "clear": []},
         {**JUDGE, "doubt": {"field_match": 1.5}},
         {**JUDGE, "doubt": {"field_match": True}},
+        {**JUDGE, "doubt": {"field_match": None}},
+        {**JUDGE, "clear": {"KEY_NOT_AT_VALUE": None}},
     ],
 )
 def test_a_malformed_policy_judge_is_invalid(judge: Any) -> None:
     with pytest.raises(gg.PacketError):
         gg.admit(DOC, SCHEMA, CANDS, {"judge": judge})
+
+
+def test_a_key_judgment_without_the_key_flag_is_recorded_and_changes_nothing() -> None:
+    doc = "Adults: take 10 mg. Children: take 5 mg."
+    schema = {"fields": {"dose": {"type": "number", "unit": "mg", "keys": ["Adults", "Children"]}}}
+    start = doc.encode().index(b"10 mg")
+    cand = {"id": "a", "field": "dose", "value": "10", "unit": "mg", "key": "Adults",
+            "evidence": {"start": start, "end": start + 5}}  # fmt: skip
+    policy = {"judge": {**JUDGE, "clear": {"KEY_NOT_AT_VALUE": 0.9}}}
+    js = [{"candidate_id": "a", "question": "key", "judge": JUDGE, "answer": None, "p": 0.99}]
+    r = gg.admit(doc, schema, [cand], policy, judgments=js).to_dict()
+    assert (r["decisions"][0]["outcome"], r["decisions"][0]["codes"]) == ("admitted", [])
+    assert [j["question"] for j in r["judgments"]] == ["key"]

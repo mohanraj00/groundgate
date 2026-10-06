@@ -162,7 +162,7 @@ class JudgePolicy:
             if not isinstance(block, dict) or set(block) - {name}:
                 raise PacketError(f"policy judge {k} can hold only {name}")
             t = block.get(name)
-            if t is not None and not _probability(t):
+            if name in block and not _probability(t):
                 raise PacketError(f"policy judge {k}.{name} must be a number in [0, 1]")
             found[k] = t
         return cls(d["id"], d["digest"], found["clear"], found["doubt"])

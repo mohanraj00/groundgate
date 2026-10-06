@@ -86,7 +86,8 @@ its thresholds:
 
 `id` and `digest` are non-blank strings. `digest` names one model version: the digest of the
 weights, or the version that a hosted model reports. `clear` and `doubt` are optional and default to `{}`;
-`clear` can hold only `KEY_NOT_AT_VALUE`, and `doubt` only `field_match`, each a number in [0, 1]. Other keys
+`clear` can hold only `KEY_NOT_AT_VALUE`, and `doubt` only `field_match`, each a number in [0, 1]
+when present (null is invalid). Other keys
 are invalid. With `judge` null, or with no threshold for a question, the decision is the same as
 without judgments.
 
@@ -186,7 +187,8 @@ flag.
 - `key`, on a candidate flagged `KEY_NOT_AT_VALUE`, with `p` at or above
   `clear.KEY_NOT_AT_VALUE`: when `answer` is the candidate's `key`, the flag is removed and the
   decision records `MODEL_CLEARED`; otherwise the decision gets `MODEL_DOUBT` and the flag stays.
-  A `key` judgment on a candidate without that flag changes nothing.
+  A `key` judgment on a candidate without that flag changes nothing, and the receipt still
+  lists it.
 - `field_match`, with `p` below `doubt.field_match`: the decision gets `MODEL_DOUBT`.
 
 The outcome then follows the flags that are left, as above. `MODEL_CLEARED` is informational.
