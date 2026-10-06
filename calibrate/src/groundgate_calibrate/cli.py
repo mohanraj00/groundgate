@@ -5,6 +5,8 @@
     groundgate-calibrate label  --work W        # label in the browser, blind, before ask
     groundgate-calibrate ask    --work W --judge jev
     groundgate-calibrate report --work W        # REPORT.md, report.json
+    groundgate-calibrate judge  --docs D --candidates C --schema S --policy P \
+        --calibration W [W2] --out J            # recorded judgments for spec 0.4
 
 D holds <doc>.txt files, C holds <doc>.json files with each document's candidates in the
 spec 0.3 candidate format, and S is a spec 0.3 schema. W keeps everything that a later step
@@ -25,8 +27,8 @@ from typing import Any
 
 from groundgate.canonical import SPEC_VERSION
 
+from . import judges
 from . import questions as q
-from .judges import JUDGES
 from .stats import CEILINGS, needed
 
 
@@ -168,9 +170,10 @@ def ask(w: Work, judge: str) -> None:
     missing = [iid for iid, _, _ in ps if iid not in labels]
     if missing:
         raise SystemExit(f"{len(missing)} items are not labeled yet; label before a judge answers")
-    meta, call = JUDGES[judge]()
+    jd = judges.load(judge)
     record = {
-        **meta,
+        "judge": jd.id,
+        "model": jd.digest,
         "prompts_sha256": digest,
         "labels_sha256": labels_sha256(labels),
         "scoring_sha256": scoring_sha256(w),
@@ -186,21 +189,94 @@ def ask(w: Work, judge: str) -> None:
     for n, (iid, st, qs) in enumerate(ps, 1):
         if iid in answers:
             continue
-        for attempt in range(4):
-            try:
-                a = call(st, qs)
-                break
-            except (TimeoutError, urllib.error.URLError) as e:
-                if attempt == 3:
-                    raise SystemExit(f"{iid}: {e}; run again to go on") from e
-                time.sleep(5 * (attempt + 1))
-        answers[iid] = q.keep(question, a)
+        answers[iid] = q.keep(question, call(jd, st, qs, iid))
         partial.write_text(json.dumps({"meta": record, "answers": answers}), encoding="utf-8")
         print(f"{n}/{len(ps)}", end="\r", flush=True)
     w.write(target.name, {"meta": {**record, "run": datetime.date.today().isoformat()},
                           "answers": answers})  # fmt: skip
     partial.unlink(missing_ok=True)
     print(f"\nwrote {target.name}")
+
+
+def call(jd: judges.Judge, st: str, qs: dict[str, Any], what: str) -> dict[str, Any]:
+    """Ask one prompt, with three retries on a network failure."""
+    for attempt in range(4):
+        try:
+            return jd.ask(st, qs)
+        except (TimeoutError, urllib.error.URLError) as e:
+            if attempt == 3:
+                raise SystemExit(f"{what}: {e}; run again to go on") from e
+            time.sleep(5 * (attempt + 1))
+    raise AssertionError("unreachable")
+
+
+def judge_packets(args: argparse.Namespace) -> None:
+    """Answer the questions that the policy names, for every document, and write the recorded
+    judgments (SPEC 0.4 §2.6) to --out/<doc>.json. A question is asked as its calibration asked
+    it, and only of the candidates where its answer can change the decision."""
+    policy = json.loads(args.policy.read_text(encoding="utf-8"))
+    block = policy.get("judge") if isinstance(policy, dict) else None
+    if not isinstance(block, dict):
+        raise SystemExit("the policy has no judge block; groundgate-calibrate report writes one")
+    jd = judges.load(str(block.get("id")))
+    if jd.digest != block.get("digest"):
+        raise SystemExit(f"the policy names {block.get('digest')}, the judge is {jd.digest}")
+    wanted = {
+        "key": block.get("clear", {}).get("KEY_NOT_AT_VALUE") is not None,
+        "field": block.get("doubt", {}).get("field_match") is not None,
+    }
+    cals: dict[str, dict[str, Any]] = {}
+    for path in args.calibration:
+        w = Work(path)
+        cfg = w.config  # refuses a calibration of another spec
+        rec = w.read(f"answers-{jd.id}.json")
+        if rec["meta"]["model"] != jd.digest:
+            raise SystemExit(f"{path} calibrated {rec['meta']['model']}, not {jd.digest}")
+        # the thresholds hold for the prompts that set them, so the wording, context,
+        # descriptions and items must be those of the calibration run
+        if prompts_sha256(w) != rec["meta"]["prompts_sha256"]:
+            raise SystemExit(f"{path} changed after its judge answered; calibrate again")
+        if cfg["question"] in cals:
+            raise SystemExit(f"two calibrations for the {cfg['question']} question; give one")
+        cals[cfg["question"]] = cfg
+    for question, on in wanted.items():
+        if on and question not in cals:
+            raise SystemExit(f"the policy has a {question} threshold; give its calibration")
+    # groundgate reads the judge block itself; here only the other policy keys decide the items
+    rest = {k: v for k, v in policy.items() if k != "judge"}
+    schema = json.loads(args.schema.read_text(encoding="utf-8"))
+    args.out.mkdir(parents=True, exist_ok=True)
+    for path in sorted(args.docs.glob("*.txt")):
+        doc, text = path.stem, path.read_text(encoding="utf-8")
+        cands = json.loads((args.candidates / f"{doc}.json").read_text(encoding="utf-8"))
+        out = []
+        for question, cfg in sorted(cals.items()):
+            if not wanted[question]:
+                continue
+            for it in q.sample(question, doc, text, schema, cands, rest, wanted["key"]):
+                cid = cands[int(it["id"].rsplit(":", 1)[1])].get("id")
+                ids = [c.get("id") for c in cands if isinstance(c, dict)]
+                same = [x for x in ids if type(x) is type(cid)]
+                if type(cid) not in (str, int) or same.count(cid) != 1:
+                    # spec 0.4 names a judgment's candidate by a string or integer id
+                    raise SystemExit(f"{doc}: a judged candidate needs a unique string or int id")
+                st, qs = q.prompt(question, text, it, cfg["context"], cfg["descriptions"])
+                a = q.keep(question, call(jd, st, qs, it["id"]))
+                j: dict[str, Any] = {
+                    "candidate_id": cid,
+                    "judge": {"id": jd.id, "digest": jd.digest},
+                }
+                if question == "key":
+                    j |= {
+                        "question": "key",
+                        "answer": q.chosen(it, a["choice"]),
+                        "p": a["confidence"],
+                    }
+                else:
+                    j |= {"question": "field_match", "p": a["p"]}
+                out.append(j)
+        (args.out / f"{doc}.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+        print(f"{doc}: {len(out)} judgments")
 
 
 def report(w: Work, check: bool) -> None:
@@ -316,12 +392,22 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--port", type=int, default=8780)
     sub.add_parser("split", help="split the items, before any model run")
     p = sub.add_parser("ask", help="ask a judge every question")
-    p.add_argument("--judge", choices=sorted(JUDGES), required=True)
+    p.add_argument("--judge", required=True, help="a judge name: jev, or an installed plug-in")
     p = sub.add_parser("report", help="write REPORT.md and report.json")
     p.add_argument("--check", action="store_true", help="fail if the written files differ")
     for s in sub.choices.values():
         s.add_argument("--work", type=Path, required=True, help="the work directory")
+    p = sub.add_parser("judge", help="write recorded judgments for your documents")
+    p.add_argument("--docs", type=Path, required=True)
+    p.add_argument("--candidates", type=Path, required=True)
+    p.add_argument("--schema", type=Path, required=True)
+    p.add_argument("--policy", type=Path, required=True, help="a policy with a judge block")
+    p.add_argument("--calibration", type=Path, nargs="+", required=True, help="work directories")
+    p.add_argument("--out", type=Path, required=True, help="a directory for <doc>.json")
     args = ap.parse_args(argv)
+    if args.cmd == "judge":
+        judge_packets(args)
+        return
     w = Work(args.work)
     if args.cmd == "sample":
         sample(w, args.docs, args.candidates, args.schema, args)

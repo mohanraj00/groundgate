@@ -15,6 +15,8 @@ from groundgate_calibrate import cli, judges, label
 from groundgate_calibrate import questions as q
 from groundgate_calibrate.stats import needed, pick, upper_95
 
+from groundgate.canonical import SPEC_VERSION
+
 TEXT = "In fiscal 2024 sales fell.\nRevenue was 4,100.\nIn fiscal 2025 revenue was 5,200.\n"
 SCHEMA = {
     "fields": {
@@ -71,6 +73,9 @@ def test_sample_takes_key_flags_and_admitted_values() -> None:
     assert TEXT[a:b] == "4,100"  # the value, not the whole evidence
     (field,) = q.sample("field", "d", TEXT, SCHEMA, cands)
     assert field["id"] == "d:1"
+    # a key judgment can admit the flagged one, so with a key threshold it gets the field question
+    both = q.sample("field", "d", TEXT, SCHEMA, cands, key_clear=True)
+    assert [it["id"] for it in both] == ["d:0", "d:1"]
     st, qs = q.prompt("key", TEXT, key, "The text is from a 10-K filing.", {})
     assert "[4,100]" in st
     assert qs["key"]["criteria"] == {
@@ -98,14 +103,21 @@ def test_a_label_is_checked_and_the_page_hides_the_candidates_key() -> None:
     assert f">{TEXT[37:44]}</mark>" in html  # one mark over both values
 
 
+class Fake:
+    id = "fake"
+    digest = "fake-1"
+
+    def __init__(self, answers: dict[str, dict[str, Any]]) -> None:
+        self.answers = answers
+        self.asked: list[str] = []
+
+    def ask(self, state: str, qs: dict[str, Any]) -> dict[str, Any]:
+        self.asked.append(state)
+        return {k: self.answers[k] for k in qs}
+
+
 def fake(answers: dict[str, dict[str, Any]]) -> Any:
-    def make() -> tuple[dict[str, str], judges.Ask]:
-        def ask(st: str, qs: dict[str, Any]) -> dict[str, Any]:
-            return {k: answers[k] for k in qs}
-
-        return {"judge": "fake", "model": "fake-1"}, ask
-
-    return make
+    return lambda: Fake(answers)
 
 
 def test_the_steps_from_sample_to_report(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -116,7 +128,9 @@ def test_the_steps_from_sample_to_report(tmp_path: Path, monkeypatch: pytest.Mon
               "--question", "key"])  # fmt: skip
     items = json.loads((work / "items.json").read_text())
     assert len(items) == 4
-    monkeypatch.setitem(cli.JUDGES, "fake", fake({"key": {"choice": "k1", "confidence": 0.97}}))
+    monkeypatch.setitem(
+        judges.BUILT_IN, "fake", fake({"key": {"choice": "k1", "confidence": 0.97}})
+    )
     with pytest.raises(SystemExit, match=r"split\.json"):
         cli.main(["ask", *run, "--judge", "fake"])
     cli.main(["split", *run])
@@ -193,7 +207,7 @@ def test_answers_to_other_prompts_are_refused(
     run = ["--work", str(work)]
     cli.main(["sample", *run, "--docs", str(d), "--candidates", str(c), "--schema", str(s),
               "--question", "key"])  # fmt: skip
-    monkeypatch.setitem(cli.JUDGES, "fake", fake({"key": {"choice": "k1", "confidence": 0.9}}))
+    monkeypatch.setitem(judges.BUILT_IN, "fake", fake({"key": {"choice": "k1", "confidence": 0.9}}))
     cli.main(["split", *run])
     cfg = json.loads((work / "config.json").read_text())
     (work / "config.json").write_text(json.dumps({**cfg, "context": "Another context."}))
@@ -227,3 +241,118 @@ def test_a_work_directory_of_another_spec_is_refused(tmp_path: Path) -> None:
     (work / "config.json").write_text(json.dumps({**cfg, "spec": "0.2"}))
     with pytest.raises(SystemExit, match=r"sampled under spec 0\.2"):
         cli.main(["split", "--work", str(work)])
+
+
+def test_a_plug_in_judge_comes_from_an_entry_point(monkeypatch: pytest.MonkeyPatch) -> None:
+    class EP:
+        def __init__(self, name: str) -> None:
+            self.name = name
+
+        def load(self) -> Any:
+            return fake({})
+
+    monkeypatch.setattr(judges, "entry_points", lambda group: [EP("fake")])
+    assert judges.load("fake").digest == "fake-1"
+    monkeypatch.setattr(judges, "entry_points", lambda group: [EP("mine")])
+    with pytest.raises(SystemExit, match="must be equal"):
+        judges.load("mine")
+    with pytest.raises(SystemExit, match="no judge"):
+        judges.load("other")
+    monkeypatch.setattr(judges, "entry_points", lambda group: [EP("jev")])
+    with pytest.raises(SystemExit, match="two judges"):
+        judges.load("jev")
+
+    class Broken(EP):
+        def load(self) -> Any:
+            raise ImportError("a broken plug-in")
+
+    monkeypatch.setattr(judges, "entry_points", lambda group: [Broken("broken"), EP("fake")])
+    assert judges.load("fake").id == "fake"  # the broken plug-in is never imported
+
+
+def calibrated(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, Path, Path, Path]:
+    """A key calibration of the fake judge on 2 documents, and its inputs."""
+    d, c, s = inputs(tmp_path, 2)
+    for n in range(2):  # judged candidates need ids
+        cands = json.loads((c / f"doc{n}.json").read_text())
+        (c / f"doc{n}.json").write_text(
+            json.dumps([{**x, "id": f"c{i}"} for i, x in enumerate(cands)])
+        )
+    work = tmp_path / "work"
+    run = ["--work", str(work)]
+    cli.main(["sample", *run, "--docs", str(d), "--candidates", str(c), "--schema", str(s),
+              "--question", "key"])  # fmt: skip
+    monkeypatch.setitem(
+        judges.BUILT_IN, "fake", fake({"key": {"choice": "k1", "confidence": 0.97}})
+    )
+    cli.main(["split", *run])
+    labels = {i["id"]: ["fiscal 2025"] for i in json.loads((work / "items.json").read_text())}
+    (work / "labels.json").write_text(json.dumps(labels))
+    cli.main(["ask", *run, "--judge", "fake"])
+    return d, c, s, work
+
+
+def test_judge_writes_recorded_judgments(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    d, c, s, work = calibrated(tmp_path, monkeypatch)
+    policy = tmp_path / "policy.json"
+    block = {"id": "fake", "digest": "fake-1", "clear": {"KEY_NOT_AT_VALUE": 0.9}}
+    policy.write_text(json.dumps({"judge": block}))
+    out = tmp_path / "judgments"
+    run = ["--docs", str(d), "--candidates", str(c), "--schema", str(s), "--policy", str(policy)]
+    cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+    js = json.loads((out / "doc0.json").read_text())
+    assert js == [
+        {"candidate_id": "c0", "judge": {"id": "fake", "digest": "fake-1"}, "question": "key",
+         "answer": "fiscal 2025", "p": 0.97}
+    ]  # fmt: skip
+    # a field threshold without a field calibration is refused
+    policy.write_text(json.dumps({"judge": {**block, "doubt": {"field_match": 0.2}}}))
+    with pytest.raises(SystemExit, match="give its calibration"):
+        cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+    # two calibrations for one question are refused
+    with pytest.raises(SystemExit, match="two calibrations"):
+        cli.main(["judge", *run, "--calibration", str(work), str(work), "--out", str(out)])
+    # a malformed candidate next to a judged one is left to groundgate to reject
+    good = (c / "doc0.json").read_text()
+    (c / "doc0.json").write_text(json.dumps([*json.loads(good), "not a candidate"]))
+    policy.write_text(json.dumps({"judge": block}))
+    cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+    assert len(json.loads((out / "doc0.json").read_text())) == 1
+    (c / "doc0.json").write_text(good)
+    # a judged candidate with an id that a judgment cannot name is refused
+    cands = json.loads(good)
+    (c / "doc0.json").write_text(json.dumps([{**cands[0], "id": True}, *cands[1:]]))
+    with pytest.raises(SystemExit, match="string or int id"):
+        cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+    (c / "doc0.json").write_text(good)
+    # a calibration whose context changed after its run is refused
+    cfg = json.loads((work / "config.json").read_text())
+    (work / "config.json").write_text(json.dumps({**cfg, "context": "Another context."}))
+    policy.write_text(json.dumps({"judge": block}))
+    with pytest.raises(SystemExit, match="calibrate again"):
+        cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+    (work / "config.json").write_text(json.dumps(cfg))
+    # another model version is refused
+    policy.write_text(json.dumps({"judge": {**block, "digest": "fake-2"}}))
+    with pytest.raises(SystemExit, match="fake-2"):
+        cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+
+
+@pytest.mark.skipif(SPEC_VERSION < "0.4", reason="recorded judgments are spec 0.4 (#116)")
+def test_recorded_judgments_clear_the_flag_in_groundgate(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import groundgate as gg
+
+    d, c, s, work = calibrated(tmp_path, monkeypatch)
+    pol = {"judge": {"id": "fake", "digest": "fake-1", "clear": {"KEY_NOT_AT_VALUE": 0.9}}}
+    (tmp_path / "policy.json").write_text(json.dumps(pol))
+    out = tmp_path / "judgments"
+    pol_path = str(tmp_path / "policy.json")
+    cli.main(["judge", "--docs", str(d), "--candidates", str(c), "--schema", str(s),
+              "--policy", pol_path, "--calibration", str(work), "--out", str(out)])  # fmt: skip
+    cands = json.loads((c / "doc0.json").read_text())
+    js = json.loads((out / "doc0.json").read_text())
+    r = gg.admit(TEXT, SCHEMA, cands, pol, judgments=js)
+    (d0,) = [x for x in r.decisions if x.candidate_id == "c0"]
+    assert (d0.outcome, d0.codes) == ("admitted", ("MODEL_CLEARED",))
