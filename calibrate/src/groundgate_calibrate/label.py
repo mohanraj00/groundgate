@@ -63,16 +63,22 @@ def cells(row: str) -> list[str]:
 
 def tables(marked: str) -> str:
     """Draw each run of lines that hold a tab as an HTML table, one cell for each tab-separated
-    part. A mark holds one number token, so it never holds a tab or a line break, and each mark
-    stays inside one cell."""
+    part. A run where a mark crosses a cell or a line stays plain text."""
     out: list[str] = []
     rows: list[str] = []
 
     def flush() -> None:
-        if rows:
-            trs = ["<tr><td>" + "</td><td>".join(cells(r)) + "</td></tr>" for r in rows]
+        if not rows:
+            return
+        split = [cells(r) for r in rows]
+        # a mark that crosses a cell or a line (the evidence of a string field can) would break
+        # the table, so such a run stays plain text
+        if all(c.count("<mark") == c.count("</mark>") for row in split for c in row):
+            trs = ["<tr><td>" + "</td><td>".join(row) + "</td></tr>" for row in split]
             out.append('<table class="t">' + "".join(trs) + "</table>")
-            rows.clear()
+        else:
+            out.extend(r + "\n" for r in rows)
+        rows.clear()
 
     for line in marked.split("\n"):
         if "\t" in line:

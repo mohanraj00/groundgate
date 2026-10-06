@@ -243,3 +243,10 @@ def test_signs_join_their_numbers_in_a_table_row() -> None:
         "Net income", "$ 35,116", "$ 19,168", "83.2%"
     ]  # fmt: skip
     assert label.cells("Loss\t(\t123\t)\t$\t(\t45\t)") == ["Loss", "(123)", "$ (45)"]
+
+
+def test_a_mark_across_table_cells_keeps_the_run_as_text() -> None:
+    text = "a\tfoo\nb\tbar\n"
+    a, b = text.index("foo"), text.index("bar") + 3
+    html = label.page(text, [{"id": "d:0", "mark": [a, b]}])
+    assert "<table" not in html and '<mark data-ids="d:0">foo\nb\tbar</mark>' in html
