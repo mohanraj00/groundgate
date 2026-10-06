@@ -93,3 +93,5 @@ jobs:
         run: uv run python bench/judges/relations/judge.py report --check
       - name: Field-judge report matches its recorded answers
         run: uv run python bench/judges/fields/judge.py report --check
+      - name: Conflict-judge report matches its recorded answers
+        run: uv run python bench/judges/conflicts/judge.py report --check
