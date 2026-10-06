@@ -198,3 +198,11 @@ def test_answers_to_other_prompts_are_refused(
     (work / "answers-fake.json").write_text(json.dumps(rec))
     with pytest.raises(SystemExit, match="other prompts"):
         cli.main(["report", *run])
+
+
+def test_a_sample_with_no_items_stops(tmp_path: Path) -> None:
+    d, c, s = inputs(tmp_path, 1)
+    (c / "doc0.json").write_text("[]")
+    with pytest.raises(SystemExit, match="nothing to label"):
+        cli.main(["sample", "--work", str(tmp_path / "w"), "--docs", str(d), "--candidates",
+                  str(c), "--schema", str(s), "--question", "key"])  # fmt: skip

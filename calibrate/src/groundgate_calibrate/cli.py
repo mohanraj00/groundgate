@@ -82,6 +82,8 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
         "descriptions": descriptions,
         "schema": schema,
     }
+    if not items:
+        raise SystemExit(f"no {args.question} items in these documents; there is nothing to label")
     w.write("config.json", config)
     w.write("items.json", items)
     print(f"{len(items)} items in {len({it['doc'] for it in items})} documents")
@@ -162,7 +164,7 @@ def ask(w: Work, judge: str) -> None:
         print(f"{n}/{len(ps)}", end="\r", flush=True)
     w.write(target.name, {"meta": {**record, "run": datetime.date.today().isoformat()},
                           "answers": answers})  # fmt: skip
-    partial.unlink()
+    partial.unlink(missing_ok=True)
     print(f"\nwrote {target.name}")
 
 
