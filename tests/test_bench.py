@@ -729,3 +729,15 @@ def test_a_relation_judge_clears_a_flag_only_for_the_field_comparator() -> None:
     assert relations_judge.clear(it, sure, 0.95, "le") is None
     assert relations_judge.clear(it, {"choice": "eq", "confidence": 0.9}, 0.8, "eq") == "escape"
     assert relations_judge.clear({**it, "spec_0.3": ["le"]}, sure, 0.8, "le") is None  # no flag
+
+
+def test_the_fields_set_uses_the_set_2_field_definitions() -> None:
+    sys.path.insert(0, str(BENCH / "fields"))
+    import fields
+
+    seen: dict[str, list[dict]] = {}
+    for path in sorted((BENCH / "set2" / "gold").glob("fda-*.json")):
+        for name, f in json.loads(path.read_text())["fields"].items():
+            seen.setdefault(name, []).append(f)
+    for name, f in fields.FIELDS.items():
+        assert f in seen[name], name

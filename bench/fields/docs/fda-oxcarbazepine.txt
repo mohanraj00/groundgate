@@ -1,0 +1,70 @@
+2 DOSAGE AND ADMINISTRATION
+
+Adult Patients: The recommended initial dosage is 600 mg once per day. Increase the dosage in weekly increments of 600 mg once per day, based on clinical response and tolerability, to a recommended maintenance dosage of 1,200 mg to 2,400 mg once per day. (2.2)
+In adult patients with a creatinine clearance <30 mL/min, initiate at one-half the usual starting dosage and increase slowly. (2.3)
+Pediatric Patients: The recommended dosage is based on body weight and is administered orally once per day. Increase the dosage in weekly intervals based on clinical response and tolerability, to the recommended dosage. (2.2)
+Geriatric Patients: Start at lower dosage (300 mg or 450 mg/day) and increase slowly. (2.4)
+In conversion of oxcarbazepine immediate-release to oxcarbazepine extended-release tablets, higher dosages of oxcarbazepine extended-release tablets may be necessary. (2.7, 12.3)
+
+2.1 Important Administration Instructions
+
+Administer oxcarbazepine extended-release tablets as a single daily dose taken on an empty stomach (at least 1 hour before or at least 2 hours after meals) [see Clinical Pharmacology (12.3)]. If oxcarbazepine extended-release tablets are taken with food, adverse reactions are more likely to occur because of increased peak levels [see Clinical Pharmacology (12.3)].
+
+Swallow oxcarbazepine extended-release tablets whole. Do not cut, crush, or chew the tablets. For ease of swallowing in pediatric patients or patients with difficulty swallowing, achieve daily dosages with multiples of appropriate lower strength tablets (e.g., 150 mg tablets).
+
+2.2 General Dosing Recommendations
+
+Monotherapy or Adjunctive Therapy
+
+Adult Patients
+
+Initiate treatment at a dosage of 600 mg/day given orally once daily for one week. Subsequent dosage increases can be made at weekly intervals in 600 mg/day increments to achieve the recommended daily dosage.
+
+The recommended daily dosage of oxcarbazepine extended-release tablets is 1,200 mg to 2,400 mg/day, given once daily. The dosage of 2,400 mg/day showed slightly greater efficacy than 1,200 mg/day, but was associated with an increase in adverse reactions [see Adverse Reactions (6.1) and Clinical Studies (14.1)].
+
+Dosage adjustment is recommended with concomitant use of strong CYP3A4 enzyme inducers or UGT inducers, which include certain antiepileptic drugs (AEDs) [see Drug Interactions (7.1, 7.2)].
+
+Pediatric Patients (6 to Less than 17 Years of Age)
+
+In pediatric patients 6 to less than 17 years of age, initiate treatment at a daily dosage of 8 mg/kg to 10 mg/kg orally once daily, not to exceed 600 mg per day in the first week.
+
+Subsequent dosage increases can be made at weekly intervals in 8 mg/kg to 10 mg/kg increments once daily, not to exceed 600 mg, to achieve the target daily dosage. The target maintenance dosage, achieved over two to three weeks, is displayed in Table 1.
+
+Table 1: Target Daily Dosage in Pediatric Patients (6 to Less Than 17 Years of Age)
+
+Weight 	Target Daily Dosage
+20 kg to 29 kg 	900 mg/day
+29.1 kg to 39 kg 	1,200 mg/day
+Greater than 39 kg 	1,800 mg/day
+
+Dosage adjustment is recommended with concomitant use of strong CYP3A4 enzyme inducers or UGT inducers, which include certain antiepileptic drugs (AEDs) [see Drug Interactions (7.1, 7.2)].
+
+2.3 Dosage Modifications in Adult Patients with Renal Impairment
+
+In adult patients with severe renal impairment (creatinine clearance less than 30 mL/minute), initiate oxcarbazepine extended-release tablets at one-half the usual starting dosage (300 mg/day). Subsequent dosage increases can be made at weekly intervals in increments of 300 mg to 450 mg/day to achieve the desired clinical response [see Use in Specific Populations (8.6)].
+
+2.4 Dosage Modifications in Geriatric Patients
+
+In geriatric patients, consider starting at a lower dosage (300 mg or 450 mg/day). Subsequent dosage increases can be made at weekly intervals in increments of 300 mg to 450 mg/day to achieve the desired clinical effect [see Use in Specific Populations (8.5)].
+
+2.5 Dosage Modification with Concomitant Use of Strong CYP3A4 Enzyme Inducers or UGT Enzyme Inducers
+
+Strong CYP3A4 inducers, including enzyme-inducing antiepileptic drugs such as carbamazepine, phenobarbital, and phenytoin, and UGT inducers (e.g., rifampin) decrease exposure to 10-monohydroxy derivative (MHD), the active metabolite [see Drug Interactions (7.2) and Clinical Pharmacology (12.3)]. Dosage adjustment of oxcarbazepine extended-release tablets may be required after initiation, dosage modification, or discontinuation of such inducers. Dosage increases of oxcarbazepine extended-release tablets may be necessary with concomitant use. Consider initiating at 900 mg once daily for adults and 12 to 15 mg/kg orally once daily (not to exceed 900 mg per day in the first week) in pediatric patients.
+
+2.6 Withdrawal of AEDs
+
+As with most antiepileptic drugs, oxcarbazepine extended-release tablets should be withdrawn gradually because of the risk of increased seizure frequency and status epilepticus [see Warnings and Precautions (5.6)].
+
+2.7 Conversion from Immediate-Release Oxcarbazepine to Oxcarbazepine Extended-Release Tablets
+
+In conversion of oxcarbazepine immediate-release to oxcarbazepine extended-release tablets, higher dosages of oxcarbazepine extended-release tablets may be necessary [see Clinical Pharmacology (12.3)].
+
+3 DOSAGE FORMS AND STRENGTHS
+
+Extended-release tablets:
+
+150 mg: Yellow, oval, biconvex film-coated tablet. Engraved “OX150” on one side, “APO” on the other side.
+300 mg: Brown, oval, biconvex film-coated tablet. Engraved “OX300” on one side, “APO” on the other side.
+600 mg: Brownish red, oval, biconvex film-coated tablet. Engraved “OX600” on one side, “APO” on the other side.
+
+Extended-release tablets: 150 mg, 300 mg and 600 mg (3)

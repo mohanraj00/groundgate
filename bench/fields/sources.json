@@ -1,0 +1,497 @@
+{
+  "retrieved": "2026-10-05",
+  "sources": [
+    {
+      "id": "fda-finasteride",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/da4e8a51-cf1c-4018-976f-edecc4934a39.xml",
+      "sha256": "5451a921a01133abd542095dd18ae63b1e6ebe07cdb40f7342a00acd34d93fa9",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Monotherapy",
+        "Combination with Alpha-Blocker",
+        "Limitations of Use"
+      ],
+      "source": "FINASTERIDE TABLET, FILM COATED [REMEDYREPACK INC.]; Part D 2024 claims rank 62"
+    },
+    {
+      "id": "fda-nitroglycerin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5b150cd2-fac8-86ce-e063-6294a90a67b9.xml",
+      "sha256": "b504575de151d409aa7b56ba06947d99e0788ed001c30614e74cc0ad67cb86c9",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "NITROGLYCERIN TABLET [MEDICAL PURCHASING SOLUTIONS, LLC.]; Part D 2024 claims rank 146"
+    },
+    {
+      "id": "fda-dicyclomine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/765cc40c-306f-4719-aac1-00f0cd8bbe78.xml",
+      "sha256": "0e043c89c20ea144a5d3714be66c80fbe08bd032b166730c9a54cc2ac2af4e60",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "DICYCLOMINE HYDROCHLORIDE (DICYCLOMINE HYDROCHLORIDE) TABLET [A-S MEDICATION SOLUTIONS]; Part D 2024 claims rank 154"
+    },
+    {
+      "id": "fda-levocetirizine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/717eb542-3a05-485e-be76-3930efb40d33.xml",
+      "sha256": "0b2a427072efca5f51281b0fe2b748972738f534bb7aeebaa8c1b7090b6e026c",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Chronic Idiopathic Urticaria"
+      ],
+      "source": "LEVOCETIRIZINE DIHYDROCHLORIDE (LEVOCETIRIZINE DIHYDROCHLORIDE) TABLET, FILM COATED [MICRO LABS LIMITED]; Part D 2024 claims rank 155"
+    },
+    {
+      "id": "fda-tiotropium",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/496b38ee-45b6-4bb2-a35e-9023c3b73719.xml",
+      "sha256": "855ac36585b58c68cdd072154d4b4f386f0f11dd3871579c2edd0b5c79cbdd9b",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "TIOTROPIUM BROMIDE CAPSULE [LUPIN PHARMACEUTICALS, INC.]; Part D 2024 claims rank 168"
+    },
+    {
+      "id": "fda-sumatriptan",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/1d2cd01c-05e7-44cf-a71d-0f474e826b7e.xml",
+      "sha256": "bdf4aeab8f2dacba22a0ac98975fbce428df7cf0228160abe6e3562b35b8960e",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "SUMATRIPTAN SUCCINATE TABLET, FILM COATED [MYLAN PHARMACEUTICALS INC.]; Part D 2024 claims rank 178"
+    },
+    {
+      "id": "fda-ketorolac",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/515464a7-16c5-2811-e063-6294a90aa451.xml",
+      "sha256": "014769dc5ad43cdcc33cd229827cc0cf2587497dc564a3ede291494f7648e238",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "KETOROLAC TROMETHAMINE TABLET, FILM COATED [INJECTA MEDCIAL LLC]; Part D 2024 claims rank 188"
+    },
+    {
+      "id": "fda-colchicine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5a0b4246-e7dd-29e5-e063-6294a90a2871.xml",
+      "sha256": "7c133c2d1bd2781cadcab81238a2f55614d8f425f5963e410d8c304108f5edd6",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "COLCHICINE TABLET, FILM COATED [DIRECT_RX]; Part D 2024 claims rank 194"
+    },
+    {
+      "id": "fda-linagliptin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/cbdbd4b2-c07b-00e1-e053-2995a90a5fc9.xml",
+      "sha256": "2d8b867396c96c0eaf3a8589ff4637b62bdaabd113296c5fd2c6eff6671ae55a",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "LINAGLIPTIN TABLET, FILM COATED [SUNSHINE LAKE PHARMA CO., LTD.]; Part D 2024 claims rank 202"
+    },
+    {
+      "id": "fda-nebivolol",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/1ce89dc5-018d-db40-e063-6294a90a9722.xml",
+      "sha256": "be387e7ed400ed51696fdbac5cc5b4845a8c8900765360f152be9114fc735d9d",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Hypertension"
+      ],
+      "source": "NEBIVOLOL (NEBIVOLOL HYDROCHLORIDE) TABLET [AVKARE]; Part D 2024 claims rank 204"
+    },
+    {
+      "id": "fda-solifenacin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/fbd6e753-1ed2-418a-8667-c674b215eabb.xml",
+      "sha256": "1969910a0daa16b34050a95a1137a34e2e2e34c6ad9095544f1ce18ebe1cdb03",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "SOLIFENACIN SUCCINATE TABLET, COATED [MACLEODS PHARMACEUTICALS LIMITED]; Part D 2024 claims rank 206"
+    },
+    {
+      "id": "fda-telmisartan",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/dd2b0604-f887-40d9-9109-dafcc9987e4e.xml",
+      "sha256": "ee0ce475016c55ce3914f27d0e041445c83bad26934c333a527fbad861cb3c54",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "TELMISARTAN TABLET [PREFERRED PHARMACEUTICALS INC.]; Part D 2024 claims rank 213"
+    },
+    {
+      "id": "fda-oxcarbazepine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/a20e4a95-8ee1-e702-003e-e353ec1ee133.xml",
+      "sha256": "a0e9a0781276980b387fca556ddcd441ea753d4a587576bede31f9b3b27d3b09",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "OXCARBAZEPINE TABLET, EXTENDED RELEASE [APOTEX CORP.]; Part D 2024 claims rank 214"
+    },
+    {
+      "id": "fda-doxepin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/b4c4c0c7-5372-488c-82ad-4a0f8bb0e427.xml",
+      "sha256": "f1452bc42a47a2a32e40247a9d31e045fef704e751ec4ad2cf7b4a991b3a734b",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "DOXEPIN (DOXEPIN HYDROCHLORIDE) TABLET [BRYANT RANCH PREPACK]; Part D 2024 claims rank 218"
+    },
+    {
+      "id": "fda-ranolazine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/d74f3dea-7357-4e9a-be9a-2f498a44108a.xml",
+      "sha256": "ba7aacb5b9e2a5cfac8f7cc6cbe4e1a8428601893b2a63763a7e45e6e0064536",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "RANOLAZINE TABLET, EXTENDED RELEASE [ZYDUS LIFESCIENCES LIMITED]; Part D 2024 claims rank 220"
+    },
+    {
+      "id": "fda-sotalol",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/1a56c82e-7ecd-43b0-2899-f89e47adf7db.xml",
+      "sha256": "247bdef52423b894ac75bb64d774506c0b2f3ce2d4c004ff118c8b6e0022100d",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Life-Threatening Ventricular Arrhythmias",
+        "Delay in Recurrence of Atrial Fibrillation/Atrial Flutter (AFIB/AFL)"
+      ],
+      "source": "SOTALOL HYDROCHLORIDE TABLET [APOTEX CORP.]; Part D 2024 claims rank 226"
+    },
+    {
+      "id": "fda-lithium",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/b839ff4b-f62d-41ab-a823-550a756d58ec.xml",
+      "sha256": "0f451e9563256bf1aa2a09c19ea3058993540c30648182465ad363741deabf90",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "LITHIUM CARBONATE TABLET LITHIUM CARBONATE CAPSULE, GELATIN COATED [HIKMA PHARMACEUTICALS USA INC.]; Part D 2024 claims rank 227"
+    },
+    {
+      "id": "fda-alfuzosin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/26fcc267-c8d7-e059-1bcf-830dded43690.xml",
+      "sha256": "3c2bc325f0ce6e480a4aa393ae6cbca0c2b64cff20bf31c897cd5816c56d890b",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ALFUZOSIN HYDROCHLORIDE TABLET, EXTENDED RELEASE [APOTEX CORP.]; Part D 2024 claims rank 231"
+    },
+    {
+      "id": "fda-metoclopramide",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/7cd1dc35-2fb2-4f1d-8769-24c3c3aa34fa.xml",
+      "sha256": "7e3fd6f11c9483ed522fac4132008bb3f9eacfc3708c5773d5655fd4bfa241c9",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "METOCLOPRAMIDE HYDROCHLORIDE TABLET, ORALLY DISINTEGRATING [LUPIN PHARMACEUTICALS,INC.]; Part D 2024 claims rank 232"
+    },
+    {
+      "id": "fda-ticagrelor",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/d68b79ab-3104-410e-a63f-9919a23625af.xml",
+      "sha256": "f986277c94dbd0131657916dce0757133462d1232eb170572dd221c74688da6e",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Acute Coronary Syndrome or a History of Myocardial Infarction",
+        "Coronary Artery Disease but No Prior Stroke or Myocardial Infarction",
+        "Acute Ischemic Stroke or Transient Ischemic Attack (TIA)"
+      ],
+      "source": "TICAGRELOR TABLET, FILM COATED [ALEMBIC PHARMACEUTICALS INC.]; Part D 2024 claims rank 240"
+    },
+    {
+      "id": "fda-desvenlafaxine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/c7c77c4d-dd04-4780-9fa4-8fea30aff8f9.xml",
+      "sha256": "f6e26d38ca06d0a5e079c1e2072b8abcb31d0f07ba066c649b4cf83fd2e62061",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "DESVENLAFAXINE (DESVENLAFAXINE SUCCINATE) TABLET, EXTENDED RELEASE [BRYANT RANCH PREPACK]; Part D 2024 claims rank 243"
+    },
+    {
+      "id": "fda-dutasteride",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/c78d18cf-05df-4154-b2f9-39cc374ca9e3.xml",
+      "sha256": "56c241670c0e3fd8e4b5798914598655c28ff8bc4a713705dd316266297c8b4a",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Monotherapy",
+        "Combination with Alpha-adrenergic Antagonist",
+        "Limitations of Use"
+      ],
+      "source": "DUTASTERIDE CAPSULE, LIQUID FILLED [STRIDES PHARMA SCIENCE LIMITED]; Part D 2024 claims rank 244"
+    },
+    {
+      "id": "fda-lacosamide",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5ca5b043-533e-2d1a-e063-6294a90a8d4a.xml",
+      "sha256": "4ca9ea38288b7a0f473159ba62ace75cd84bee706afee85004fce4a15f77969e",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Partial-Onset Seizures",
+        "Primary Generalized Tonic-Clonic Seizures"
+      ],
+      "source": "LACOSAMIDE TABLET [AVPAK]; Part D 2024 claims rank 248"
+    },
+    {
+      "id": "fda-methylphenidate",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/f7a7ffd1-bc30-4db8-8391-dddf76acd639.xml",
+      "sha256": "741dbe177ad436143b8883ebfff82ca50776bfe60553d0f873ac3da18788db67",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "METHYLPHENIDATE HYDROCHLORIDE CAPSULE, EXTENDED RELEASE [RHODES PHARMACEUTICALS LLC]; Part D 2024 claims rank 250"
+    },
+    {
+      "id": "fda-dexlansoprazole",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/59e0c5d7-12e9-b5d7-e063-6394a90a7366.xml",
+      "sha256": "660ae350dedd8b01c88aa1edccf62ee0c2abd166801c561df48ddd9db6b013e8",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Healing of Erosive Esophagitis",
+        "Maintenance of Healed Erosive Esophagitis and Relief of Heartburn",
+        "Treatment of Symptomatic Non-Erosive Gastroesophageal Reflux Disease"
+      ],
+      "source": "DEXLANSOPRAZOLE DELAYED RELEASE (DEXLANSOPRAZOLE) CAPSULE, DELAYED RELEASE [APHENA PHARMA SOLUTIONS - TENNESSEE, LLC ]; Part D 2024 claims rank 254"
+    },
+    {
+      "id": "fda-letrozole",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/3cc750a5-cc88-4b42-b4ab-a87e760f291d.xml",
+      "sha256": "22bcc640cd1671978279fd94ab09f421ede242d581d6ce61b1201f8e38a91d46",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Adjuvant Treatment of Early Breast Cancer",
+        "Extended Adjuvant Treatment of Early Breast Cancer",
+        "First and Second-Line Treatment of Advanced Breast Cancer"
+      ],
+      "source": "LETROZOLE TABLET [BRYANT RANCH PREPACK]; Part D 2024 claims rank 255"
+    },
+    {
+      "id": "fda-ibandronate",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/6ca94cce-a2bb-421f-bd8f-6b14bc2bd985.xml",
+      "sha256": "067c75d5db5a3610527dd740595f5a1a5f8508320f3a2e5ce3dd99236621b257",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Treatment and Prevention of Postmenopausal Osteoporosis",
+        "Important Limitations of Use"
+      ],
+      "source": "IBANDRONATE SODIUM TABLET [BIONPHARMA INC.]; Part D 2024 claims rank 256"
+    }
+  ]
+}
