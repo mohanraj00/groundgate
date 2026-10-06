@@ -3,6 +3,24 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## Unreleased: spec 0.4 (draft)
+
+Receipts name `"groundgate": "0.4"` and every digest uses the `groundgate/0.4:` prefix, so all
+hashes differ from 0.3.0. With no `judge` in the policy, every decision is the 0.3 decision: all
+earlier vectors and every bench set rescore unchanged.
+
+- Recorded judgments (#116). A packet can carry `judgments`: answers that a judge gave about one
+  candidate, recorded before the decision. The policy's new `judge` block names the one judge and
+  model version whose answers apply, and their thresholds. groundgate never calls the judge.
+  - `key`: on a candidate flagged `KEY_NOT_AT_VALUE`, the candidate's key at or above
+    `clear.KEY_NOT_AT_VALUE` removes the flag and records `MODEL_CLEARED`; another key or none at
+    that probability adds `MODEL_DOUBT`.
+  - `field_match`: a probability below `doubt.field_match` adds `MODEL_DOUBT`.
+  - A judgment never overturns a rejection and never admits a candidate with another flag. The
+    receipt lists each judgment that applied, and `verify` takes the same judgments.
+  - Vectors `18-judgments-key`, `18b-judgments-field`, `18c-judgments-both`, and 7 invalid
+    packets.
+
 ## 0.3.0 (2026-10-05)
 
 Spec 0.3. Receipts name `"groundgate": "0.3"` and every digest uses the `groundgate/0.3:` prefix,

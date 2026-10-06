@@ -1,0 +1,43 @@
+{
+ "name": "judgment-unknown-candidate",
+ "description": "A judgment names the id of one candidate in the packet.",
+ "document": "The fee is $40.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": {
+  "judge": {
+   "id": "jev",
+   "digest": "jev-1.13.0",
+   "doubt": {
+    "field_match": 0.2
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "a",
+   "field": "fee",
+   "value": 40
+  }
+ ],
+ "judgments": [
+  {
+   "candidate_id": "b",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.1
+  }
+ ],
+ "expected": {
+  "error": true
+ }
+}

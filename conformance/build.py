@@ -33,6 +33,7 @@ def vector(
     candidates: list[Any],
     policy: dict[str, Any] | None = None,
     coverage: list[dict[str, str]] | None = None,
+    judgments: list[dict[str, Any]] | None = None,
 ) -> None:
     VECTORS.append(
         {
@@ -43,6 +44,7 @@ def vector(
             "policy": policy,
             "candidates": candidates,
             "coverage": coverage or [],
+            "judgments": judgments,
         }
     )
 
@@ -86,6 +88,17 @@ def resolve(document: str, ev: Any) -> Any:
 
 
 USD = {"type": "integer", "unit": "USD"}
+JEV = {"id": "jev", "digest": "jev-1.13.0"}
+
+
+def j(cid: str, question: str, p: float, answer: Any = None, judge: Any = None) -> dict[str, Any]:
+    """A recorded judgment (SPEC §2.6) on the candidate with id ``cid``."""
+    out: dict[str, Any] = {"candidate_id": cid, "question": question, "judge": judge or JEV}
+    if question == "key":
+        out["answer"] = answer
+    out["p"] = p
+    return out
+
 
 # ---------------------------------------------------------------- admitted
 vector(
@@ -1539,6 +1552,179 @@ vector(
     ],
 )
 
+# ---------------------------------------------------------------- recorded judgments
+vector(
+    "18-judgments-key",
+    "A recorded key judgment clears KEY_NOT_AT_VALUE when it chooses the candidate's key with p at "
+    "or above the policy's threshold, and adds MODEL_DOUBT when it chooses another key or none at "
+    "that p. Judgments of another judge, on a rejected candidate, or for a question the policy "
+    "does not name change nothing.",
+    "2 DOSAGE AND ADMINISTRATION\nTake 20 mg tablets with water.\n\n"
+    "2.1 Hypertension\nThe recommended starting dose is 10 mg once daily. "
+    "The maximum dose is 40 mg daily.\n\n"
+    "2.2 Heart Failure\nThe recommended starting dose is 5 mg once daily, taken with diuretics.\n\n"
+    "2.3 Acute Myocardial Infarction\nGive 5 mg within 24 hours. "
+    "In patients who also have heart failure, start at 2.5 mg.",
+    {
+        "fields": {
+            "starting_dose": KEYED_MG,
+            "max_dose": KEYED_MG,
+            "adjusted_dose": KEYED_MG,
+        }
+    },
+    [
+        # cleared at exactly the threshold
+        c(
+            "j1",
+            "max_dose",
+            "40",
+            "mg",
+            q("40 mg"),
+            ("admitted", ["MODEL_CLEARED"]),
+            key="heart failure",
+        ),
+        # the right key, below the threshold: no change
+        c(
+            "j2",
+            "adjusted_dose",
+            "2.5",
+            "mg",
+            q("2.5 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="acute myocardial infarction",
+        ),
+        # none, at the threshold: doubt, and the flag stays
+        c(
+            "j3",
+            "adjusted_dose",
+            "20",
+            "mg",
+            q("20 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "MODEL_DOUBT"]),
+            key="hypertension",
+        ),
+        # another model version: ignored
+        c(
+            "j4",
+            "max_dose",
+            "40",
+            "mg",
+            q("40 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="acute myocardial infarction",
+        ),
+        # a rejection stays a rejection
+        c("j5", "starting_dose", "10", "mg", q("10 mg"), ("rejected", ["KEY_INVALID"])),
+        # the key flag clears, the quote flag stays
+        c(
+            "j6",
+            "max_dose",
+            "40",
+            "mg",
+            q("40 mg", text="40 mgs"),
+            ("needs_verification", ["NON_VERBATIM_EVIDENCE", "MODEL_CLEARED"]),
+            key="heart failure",
+        ),
+        # the policy names no field_match threshold: ignored
+        c("j7", "starting_dose", "10", "mg", q("10 mg"), key="hypertension"),
+    ],
+    policy={"judge": {**JEV, "clear": {"KEY_NOT_AT_VALUE": 0.9}}},
+    judgments=[
+        j("j1", "key", 0.9, "heart failure"),
+        j("j2", "key", 0.85, "acute myocardial infarction"),
+        j("j3", "key", 0.97, None),
+        j("j4", "key", 0.99, "acute myocardial infarction", {"id": "jev", "digest": "jev-1.12.0"}),
+        j("j5", "key", 0.99, "hypertension"),
+        j("j6", "key", 0.95, "heart failure"),
+        j("j7", "field_match", 0.0),
+    ],
+)
+
+vector(
+    "18b-judgments-field",
+    "A recorded field_match judgment whose p is below the policy's threshold adds MODEL_DOUBT to a "
+    "candidate that passes steps 1 to 11, so it goes to review. It never admits a value, and a "
+    "rejection stays a rejection.",
+    "The annual fee is $40. The late fee is $15. A processing fee of $5 applies. "
+    "The reserve is $2 million.",
+    {
+        "fields": {
+            "annual_fee": USD,
+            "deposit": USD,
+            "late_fee": USD,
+            "processing_fee": USD,
+            "reserve": USD,
+        }
+    },
+    [
+        c("f1", "annual_fee", 40, "USD", q("$40")),
+        # a number of another field: doubted
+        c("f2", "deposit", 40, "USD", q("$40"), ("needs_verification", ["MODEL_DOUBT"])),
+        # no judgment: as in 0.3
+        c("f3", "late_fee", 15, "USD", q("$15")),
+        # p equal to the threshold is not below it
+        c("f4", "processing_fee", 5, "USD", q("$5")),
+        # doubt joins a flag
+        c(
+            "f5",
+            "reserve",
+            2,
+            "USD",
+            q("$2 million"),
+            ("needs_verification", ["SCALE_WORD", "MODEL_DOUBT"]),
+        ),
+        c("f6", "late_fee", 99, "USD", q("$15"), ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+    ],
+    policy={"judge": {**JEV, "doubt": {"field_match": 0.2}}},
+    judgments=[
+        j("f1", "field_match", 0.9),
+        j("f2", "field_match", 0.05),
+        j("f4", "field_match", 0.2),
+        j("f5", "field_match", 0.1),
+        j("f6", "field_match", 0.01),
+    ],
+)
+
+vector(
+    "18c-judgments-both",
+    "With both thresholds, a key judgment and a field_match judgment act on one candidate "
+    "independently: a cleared key with a doubted field still goes to review.",
+    "2 DOSAGE AND ADMINISTRATION\nTake 20 mg tablets with water.\n\n"
+    "2.1 Hypertension\nThe recommended starting dose is 10 mg once daily. "
+    "The maximum dose is 40 mg daily.\n\n"
+    "2.2 Heart Failure\nThe recommended starting dose is 5 mg once daily, taken with diuretics.\n\n"
+    "2.3 Acute Myocardial Infarction\nGive 5 mg within 24 hours. "
+    "In patients who also have heart failure, start at 2.5 mg.",
+    {"fields": {"max_dose": KEYED_MG, "adjusted_dose": KEYED_MG}},
+    [
+        c(
+            "b1",
+            "adjusted_dose",
+            "2.5",
+            "mg",
+            q("2.5 mg"),
+            ("needs_verification", ["MODEL_DOUBT", "MODEL_CLEARED"]),
+            key="acute myocardial infarction",
+        ),
+        c(
+            "b2",
+            "max_dose",
+            "40",
+            "mg",
+            q("40 mg"),
+            ("admitted", ["MODEL_CLEARED"]),
+            key="heart failure",
+        ),
+    ],
+    policy={"judge": {**JEV, "clear": {"KEY_NOT_AT_VALUE": 0.9}, "doubt": {"field_match": 0.2}}},
+    judgments=[
+        j("b1", "key", 0.99, "acute myocardial infarction"),
+        j("b1", "field_match", 0.1),
+        j("b2", "field_match", 0.5),
+        j("b2", "key", 0.99, "heart failure"),
+    ],
+)
+
 # ---------------------------------------------------------------- invalid packets
 INVALID.extend(
     [
@@ -1592,6 +1778,68 @@ INVALID.extend(
             "policy": {"min_confidence": 2},
         },
         {
+            "name": "policy-judge-blank-digest",
+            "description": "A judge names one model version, so its digest is not blank.",
+            "document": "x",
+            "schema": {"fields": {}},
+            "policy": {"judge": {"id": "jev", "digest": " ", "clear": {"KEY_NOT_AT_VALUE": 0.9}}},
+        },
+        {
+            "name": "policy-judge-unknown-flag",
+            "description": "A judge can clear only KEY_NOT_AT_VALUE.",
+            "document": "x",
+            "schema": {"fields": {}},
+            "policy": {"judge": {**JEV, "clear": {"QUALIFIED_VALUE": 0.9}}},
+        },
+        {
+            "name": "judgment-unknown-candidate",
+            "description": "A judgment names the id of one candidate in the packet.",
+            "document": "The fee is $40.",
+            "schema": {"fields": {"fee": USD}},
+            "policy": {"judge": {**JEV, "doubt": {"field_match": 0.2}}},
+            "candidates": [{"id": "a", "field": "fee", "value": 40}],
+            "judgments": [j("b", "field_match", 0.1)],
+        },
+        {
+            "name": "judgment-ambiguous-candidate",
+            "description": "Two candidates with the id that a judgment names are invalid.",
+            "document": "The fee is $40.",
+            "schema": {"fields": {"fee": USD}},
+            "policy": {"judge": {**JEV, "doubt": {"field_match": 0.2}}},
+            "candidates": [
+                {"id": "a", "field": "fee", "value": 40},
+                {"id": "a", "field": "fee", "value": 41},
+            ],
+            "judgments": [j("a", "field_match", 0.1)],
+        },
+        {
+            "name": "judgment-twice",
+            "description": "One candidate has at most one judgment for each question.",
+            "document": "The fee is $40.",
+            "schema": {"fields": {"fee": USD}},
+            "policy": {"judge": {**JEV, "doubt": {"field_match": 0.2}}},
+            "candidates": [{"id": "a", "field": "fee", "value": 40}],
+            "judgments": [j("a", "field_match", 0.1), j("a", "field_match", 0.9)],
+        },
+        {
+            "name": "judgment-bad-p",
+            "description": "p is a number in [0, 1].",
+            "document": "The fee is $40.",
+            "schema": {"fields": {"fee": USD}},
+            "policy": {"judge": {**JEV, "doubt": {"field_match": 0.2}}},
+            "candidates": [{"id": "a", "field": "fee", "value": 40}],
+            "judgments": [j("a", "field_match", 1.5)],
+        },
+        {
+            "name": "judgment-unknown-question",
+            "description": "The question is key or field_match.",
+            "document": "The fee is $40.",
+            "schema": {"fields": {"fee": USD}},
+            "policy": {"judge": {**JEV, "doubt": {"field_match": 0.2}}},
+            "candidates": [{"id": "a", "field": "fee", "value": 40}],
+            "judgments": [{**j("a", "field_match", 0.1), "question": "unit"}],
+        },
+        {
             "name": "policy-unknown-key",
             "description": "Unknown policy keys are invalid.",
             "document": "x",
@@ -1626,6 +1874,7 @@ def main() -> None:
             "schema": v["schema"],
             "policy": v["policy"],
             "candidates": cands,
+            **({"judgments": v["judgments"]} if v["judgments"] is not None else {}),
             "expected": {"decisions": expected, "coverage": v["coverage"]},
         }
         (out_dir / f"{v['name']}.json").write_text(
@@ -1636,7 +1885,9 @@ def main() -> None:
     for inv in INVALID:
         (inv_dir / f"{inv['name']}.json").write_text(
             json.dumps(
-                {**inv, "candidates": [], "expected": {"error": True}}, indent=1, ensure_ascii=False
+                {**inv, "candidates": inv.get("candidates", []), "expected": {"error": True}},
+                indent=1,
+                ensure_ascii=False,
             )
             + "\n"
         )

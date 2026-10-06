@@ -1,0 +1,21 @@
+{
+ "name": "policy-judge-blank-digest",
+ "description": "A judge names one model version, so its digest is not blank.",
+ "document": "x",
+ "schema": {
+  "fields": {}
+ },
+ "policy": {
+  "judge": {
+   "id": "jev",
+   "digest": " ",
+   "clear": {
+    "KEY_NOT_AT_VALUE": 0.9
+   }
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

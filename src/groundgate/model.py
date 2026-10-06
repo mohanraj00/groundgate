@@ -138,16 +138,57 @@ class Schema:
 
 
 @dataclass(frozen=True)
+class JudgePolicy:
+    """The one judge whose recorded judgments a decision reads, and its thresholds (SPEC §2.4)."""
+
+    id: str
+    digest: str
+    clear_key: float | None = None  # clear.KEY_NOT_AT_VALUE
+    doubt_field: float | None = None  # doubt.field_match
+
+    @classmethod
+    def from_dict(cls, d: object) -> JudgePolicy:
+        if not isinstance(d, dict):
+            raise PacketError("policy judge must be an object or null")
+        unknown = set(d) - {"id", "digest", "clear", "doubt"}
+        if unknown:
+            raise PacketError(f"policy judge has unknown keys {sorted(unknown)}")
+        for k in ("id", "digest"):
+            if not isinstance(d.get(k), str) or not d[k].strip():
+                raise PacketError(f"policy judge {k} must be a non-blank string")
+        found: dict[str, float | None] = {}
+        for k, name in (("clear", "KEY_NOT_AT_VALUE"), ("doubt", "field_match")):
+            block = d.get(k, {})
+            if not isinstance(block, dict) or set(block) - {name}:
+                raise PacketError(f"policy judge {k} can hold only {name}")
+            t = block.get(name)
+            if t is not None and not _probability(t):
+                raise PacketError(f"policy judge {k}.{name} must be a number in [0, 1]")
+            found[k] = t
+        return cls(d["id"], d["digest"], found["clear"], found["doubt"])
+
+    def to_dict(self) -> dict[str, Any]:
+        clear = {} if self.clear_key is None else {"KEY_NOT_AT_VALUE": self.clear_key}
+        doubt = {} if self.doubt_field is None else {"field_match": self.doubt_field}
+        return {"id": self.id, "digest": self.digest, "clear": clear, "doubt": doubt}
+
+
+def _probability(x: object) -> bool:
+    return not isinstance(x, bool) and isinstance(x, (int, float)) and 0 <= x <= 1
+
+
+@dataclass(frozen=True)
 class Policy:
     min_confidence: float | None = None
     unit_window: int = 24
     reanchor: bool = True
+    judge: JudgePolicy | None = None
 
     @classmethod
     def from_dict(cls, d: object) -> Policy:
         if not isinstance(d, dict):
             raise PacketError("policy must be an object")
-        unknown = set(d) - {"min_confidence", "unit_window", "reanchor"}
+        unknown = set(d) - {"min_confidence", "unit_window", "reanchor", "judge"}
         if unknown:
             raise PacketError(f"policy has unknown keys {sorted(unknown)}")
         mc = d.get("min_confidence")
@@ -161,13 +202,16 @@ class Policy:
         ra = d.get("reanchor", True)
         if not isinstance(ra, bool):
             raise PacketError("policy reanchor must be a boolean")
-        return cls(min_confidence=mc, unit_window=uw, reanchor=ra)
+        judge = d.get("judge")
+        jp = None if judge is None else JudgePolicy.from_dict(judge)
+        return cls(min_confidence=mc, unit_window=uw, reanchor=ra, judge=jp)
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "min_confidence": self.min_confidence,
             "unit_window": self.unit_window,
             "reanchor": self.reanchor,
+            "judge": None if self.judge is None else self.judge.to_dict(),
         }
 
 
@@ -208,6 +252,7 @@ class Receipt:
     decisions: tuple[Decision, ...]
     coverage: tuple[tuple[str, str], ...]  # (field, code)
     receipt_sha256: str
+    judgments: tuple[dict[str, Any], ...] = ()  # the judgments that applied (SPEC §5)
 
     def body(self) -> dict[str, Any]:
         counts = {"admitted": 0, "needs_verification": 0, "rejected": 0}
@@ -220,6 +265,7 @@ class Receipt:
             "policy_sha256": self.policy_sha256,
             "decisions": [d.to_dict() for d in self.decisions],
             "coverage": [{"field": f, "code": c} for f, c in self.coverage],
+            "judgments": [dict(j) for j in self.judgments],
             "summary": counts,
         }
 

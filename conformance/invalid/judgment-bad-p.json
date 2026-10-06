@@ -1,0 +1,43 @@
+{
+ "name": "judgment-bad-p",
+ "description": "p is a number in [0, 1].",
+ "document": "The fee is $40.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": {
+  "judge": {
+   "id": "jev",
+   "digest": "jev-1.13.0",
+   "doubt": {
+    "field_match": 0.2
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "a",
+   "field": "fee",
+   "value": 40
+  }
+ ],
+ "judgments": [
+  {
+   "candidate_id": "a",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 1.5
+  }
+ ],
+ "expected": {
+  "error": true
+ }
+}

@@ -1,0 +1,123 @@
+{
+ "name": "18c-judgments-both",
+ "description": "With both thresholds, a key judgment and a field_match judgment act on one candidate independently: a cleared key with a doubted field still goes to review.",
+ "document": "2 DOSAGE AND ADMINISTRATION\nTake 20 mg tablets with water.\n\n2.1 Hypertension\nThe recommended starting dose is 10 mg once daily. The maximum dose is 40 mg daily.\n\n2.2 Heart Failure\nThe recommended starting dose is 5 mg once daily, taken with diuretics.\n\n2.3 Acute Myocardial Infarction\nGive 5 mg within 24 hours. In patients who also have heart failure, start at 2.5 mg.",
+ "schema": {
+  "fields": {
+   "max_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "adjusted_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   }
+  }
+ },
+ "policy": {
+  "judge": {
+   "id": "jev",
+   "digest": "jev-1.13.0",
+   "clear": {
+    "KEY_NOT_AT_VALUE": 0.9
+   },
+   "doubt": {
+    "field_match": 0.2
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "b1",
+   "field": "adjusted_dose",
+   "value": "2.5",
+   "unit": "mg",
+   "evidence": {
+    "start": 362,
+    "end": 368,
+    "text": "2.5 mg"
+   },
+   "key": "acute myocardial infarction"
+  },
+  {
+   "id": "b2",
+   "field": "max_dose",
+   "value": "40",
+   "unit": "mg",
+   "evidence": {
+    "start": 148,
+    "end": 153,
+    "text": "40 mg"
+   },
+   "key": "heart failure"
+  }
+ ],
+ "judgments": [
+  {
+   "candidate_id": "b1",
+   "question": "key",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "answer": "acute myocardial infarction",
+   "p": 0.99
+  },
+  {
+   "candidate_id": "b1",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.1
+  },
+  {
+   "candidate_id": "b2",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.5
+  },
+  {
+   "candidate_id": "b2",
+   "question": "key",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "answer": "heart failure",
+   "p": 0.99
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "MODEL_DOUBT",
+     "MODEL_CLEARED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "MODEL_CLEARED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

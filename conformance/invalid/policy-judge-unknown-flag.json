@@ -1,0 +1,21 @@
+{
+ "name": "policy-judge-unknown-flag",
+ "description": "A judge can clear only KEY_NOT_AT_VALUE.",
+ "document": "x",
+ "schema": {
+  "fields": {}
+ },
+ "policy": {
+  "judge": {
+   "id": "jev",
+   "digest": "jev-1.13.0",
+   "clear": {
+    "QUALIFIED_VALUE": 0.9
+   }
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}
