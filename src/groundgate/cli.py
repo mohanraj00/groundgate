@@ -97,6 +97,7 @@ def _parser() -> argparse.ArgumentParser:
         p.add_argument("schema", help="schema JSON")
         p.add_argument("candidates", help="JSON array of candidates")
         p.add_argument("--policy", help="policy JSON")
+        p.add_argument("--judgments", help="JSON array of recorded judgments (SPEC §2.6)")
 
     a = sub.add_parser("admit", help="decide candidates and write a receipt")
     inputs(a)
@@ -124,12 +125,13 @@ def main(argv: list[str] | None = None) -> int:
         policy = _json(args.policy) if args.policy else None
         text = _text(args.document)
         schema, candidates = _json(args.schema), _json(args.candidates)
+        judgments = _json(args.judgments) if args.judgments else None
         if args.command == "admit":
-            receipt = admit(text, schema, candidates, policy, document_id=args.document_id)
+            receipt = admit(text, schema, candidates, policy, args.document_id, judgments)
             _write(_dumps(receipt.to_dict()), args.output)
             return 0
         stored = _json(args.receipt)
-        result = verify(stored, text, schema, candidates, policy)
+        result = verify(stored, text, schema, candidates, policy, judgments)
         for problem in result.problems:
             print(f"mismatch: {problem}", file=sys.stderr)
         if args.command == "verify":
@@ -173,10 +175,18 @@ def _report(args: argparse.Namespace, receipt: Any, text: str, candidates: Any) 
     doc_id = receipt.get("document", {}).get("id") if isinstance(receipt, dict) else None
     title = args.title or doc_id or (Path(args.document).name if args.document != "-" else None)
     schema, policy = _json(args.schema), _json(args.policy) if args.policy else None
-    _write(
-        render(receipt, text, candidates, schema=schema, policy=policy, layout=layout, title=title),
-        args.output,
+    judgments = _json(args.judgments) if args.judgments else None
+    page = render(
+        receipt,
+        text,
+        candidates,
+        schema=schema,
+        policy=policy,
+        layout=layout,
+        title=title,
+        judgments=judgments,
     )
+    _write(page, args.output)
     return 0
 
 

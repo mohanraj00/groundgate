@@ -104,6 +104,50 @@ The LangExtract adapter does this for you.
 | `min_confidence` | `null` | Below this, a candidate is flagged `LOW_CONFIDENCE`. |
 | `unit_window` | `24` | How far after a number a unit suffix may start, in code points. |
 | `reanchor` | `true` | When the cited span misses the value but the quote occurs exactly once elsewhere with the right value and unit, move the evidence there (`EVIDENCE_REANCHORED`). |
+| `judge` | `null` | The one judge whose recorded judgments apply, and its thresholds. See [Recorded judgments](#recorded-judgments). |
+
+### Recorded judgments
+
+Spec 0.4 (draft). groundgate never calls a model. A judge, such as a small typed-decision model,
+answers questions about candidates before the decision, and you pass its answers as `judgments`:
+
+```python
+policy = {
+    "judge": {
+        "id": "jev",
+        "digest": "jev-1.13.0",
+        "clear": {"KEY_NOT_AT_VALUE": 0.9},
+        "doubt": {"field_match": 0.2},
+    }
+}
+judgments = [
+    {
+        "candidate_id": "c7",
+        "question": "key",
+        "judge": {"id": "jev", "digest": "jev-1.13.0"},
+        "answer": "heart failure",
+        "p": 0.97,
+    },
+    {
+        "candidate_id": "c9",
+        "question": "field_match",
+        "judge": {"id": "jev", "digest": "jev-1.13.0"},
+        "p": 0.04,
+    },
+]
+receipt = gg.admit(text, schema, candidates, policy, judgments=judgments)
+```
+
+- A `key` judgment on a candidate flagged `KEY_NOT_AT_VALUE` clears the flag when it chooses the
+  candidate's key with `p` at or above `clear.KEY_NOT_AT_VALUE` (`MODEL_CLEARED`). Another key
+  or none at that `p` adds `MODEL_DOUBT`.
+- A `field_match` judgment with `p` below `doubt.field_match` adds `MODEL_DOUBT`, so the value
+  goes to review.
+- Only judgments of the policy's judge and model version apply. A judgment never overturns a
+  rejection, and never admits a candidate that has another flag.
+
+The thresholds belong to one model and one kind of document. groundgate ships none: measure
+yours with `groundgate-calibrate` (#112).
 
 ## Decisions
 
@@ -116,7 +160,7 @@ Checks run in a fixed order and the first failure rejects:
 A fact that passes them all is checked for flags. Any flag makes it `needs_verification`:
 
 `NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `KEY_NOT_AT_VALUE`, `LOW_CONFIDENCE`,
-`CONFLICTING_CANDIDATES`.
+`CONFLICTING_CANDIDATES`, and `MODEL_DOUBT` from a recorded judgment.
 
 `CONFLICTING_CANDIDATES` is set on every candidate for a single-valued field (and key) when two
 of them passed the checks with different values. groundgate never picks between them. That is also why
@@ -203,12 +247,12 @@ as one space on both sides. Case counts.
 ```python
 import groundgate as gg
 
-receipt = gg.admit(text, schema, candidates, policy=None, document_id=None)
+receipt = gg.admit(text, schema, candidates, policy=None, document_id=None, judgments=None)
 receipt.decisions  # tuple of gg.Decision
 receipt.coverage  # tuple of (field, "REQUIRED_FIELD_MISSING")
 receipt.to_dict()  # the JSON receipt, including receipt_sha256
 
-check = gg.verify(receipt_dict, text, schema, candidates, policy=None)
+check = gg.verify(receipt_dict, text, schema, candidates, policy=None, judgments=None)
 check.ok, check.problems  # True, () when the receipt re-derives exactly
 ```
 
@@ -241,19 +285,19 @@ output into one call.
 ```python
 from groundgate.report import render
 
-html = render(receipt_dict, text, candidates, schema=schema, layout=None, title=None)
+html = render(receipt_dict, text, candidates, schema=schema, policy=policy, judgments=judgments)
 ```
 
-With `schema` (and `policy`, if you used one), the page re-derives the receipt first and says
-whether it matched. The page is one self-contained HTML file with no scripts.
+With `schema` (and `policy` and `judgments`, if you used them), the page re-derives the receipt
+first and says whether it matched. `layout=` and `title=` are optional. The page is one self-contained HTML file with no scripts.
 
 ## Command line
 
 ```bash
 groundgate extract FILE [--pages 1-3,7] [-o doc.txt] [--layout layout.json]
-groundgate admit   DOC SCHEMA CANDIDATES [--policy P] [--document-id ID] [-o receipt.json]
-groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P]
-groundgate report  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--layout L] [--title T] [-o report.html]
+groundgate admit   DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--document-id ID] [-o receipt.json]
+groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J]
+groundgate report  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--layout L] [--title T] [-o report.html]
 ```
 
 `DOC` may be `-` for standard input. Exit codes: 0 success, 1 the receipt does not match its

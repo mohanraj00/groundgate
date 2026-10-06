@@ -29,10 +29,12 @@ FLAG = {
     ),
     "LOW_CONFIDENCE": "The extractor's confidence is below the policy minimum.",
     "CONFLICTING_CANDIDATES": "Another candidate for this field and key has a different value.",
+    "MODEL_DOUBT": "A recorded judgment of the policy's judge doubts this value.",
 }
 
 INFO = {
     "EVIDENCE_REANCHORED": "The cited span did not hold the value; its one other occurrence did.",
+    "MODEL_CLEARED": "A recorded judgment of the policy's judge cleared KEY_NOT_AT_VALUE.",
 }
 
 COVERAGE = {

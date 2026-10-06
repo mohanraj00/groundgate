@@ -1,0 +1,52 @@
+{
+ "name": "judgment-twice",
+ "description": "One candidate has at most one judgment for each question.",
+ "document": "The fee is $40.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": {
+  "judge": {
+   "id": "jev",
+   "digest": "jev-1.13.0",
+   "doubt": {
+    "field_match": 0.2
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "a",
+   "field": "fee",
+   "value": 40
+  }
+ ],
+ "judgments": [
+  {
+   "candidate_id": "a",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.1
+  },
+  {
+   "candidate_id": "a",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.9
+  }
+ ],
+ "expected": {
+  "error": true
+ }
+}

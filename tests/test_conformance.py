@@ -22,7 +22,8 @@ REJECT_CODES = {
 }  # fmt: skip
 FLAG_CODES = {
     "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "KEY_NOT_AT_VALUE",
-    "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "EVIDENCE_REANCHORED",
+    "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "EVIDENCE_REANCHORED", "MODEL_DOUBT",
+    "MODEL_CLEARED",
 }  # fmt: skip
 
 
@@ -33,21 +34,22 @@ def _load(path: Path) -> dict[str, Any]:
 @pytest.mark.parametrize("path", VECTORS, ids=lambda p: p.stem)
 def test_vector(path: Path) -> None:
     v = _load(path)
-    receipt = gg.admit(v["document"], v["schema"], v["candidates"], v["policy"]).to_dict()
+    js = v.get("judgments")
+    receipt = gg.admit(v["document"], v["schema"], v["candidates"], v["policy"], None, js).to_dict()
     by_sha = {d["candidate_sha256"]: d for d in receipt["decisions"]}
     for cand, want in zip(v["candidates"], v["expected"]["decisions"], strict=True):
         got = by_sha[gg.digest("candidate", cand)]
         label = cand.get("id") if isinstance(cand, dict) else repr(cand)
         assert (got["outcome"], got["codes"]) == (want["outcome"], want["codes"]), label
     assert receipt["coverage"] == v["expected"]["coverage"]
-    assert gg.verify(receipt, v["document"], v["schema"], v["candidates"], v["policy"]).ok
+    assert gg.verify(receipt, v["document"], v["schema"], v["candidates"], v["policy"], js).ok
 
 
 @pytest.mark.parametrize("path", INVALID, ids=lambda p: p.stem)
 def test_invalid_packet(path: Path) -> None:
     v = _load(path)
     with pytest.raises(gg.PacketError):
-        gg.admit(v["document"], v["schema"], v["candidates"], v["policy"])
+        gg.admit(v["document"], v["schema"], v["candidates"], v["policy"], None, v.get("judgments"))
 
 
 def test_every_code_has_two_vectors() -> None:
