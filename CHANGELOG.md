@@ -18,7 +18,7 @@ earlier vectors and every bench set rescore unchanged.
   - `field_match`: a probability below `doubt.field_match` adds `MODEL_DOUBT`.
   - A judgment never overturns a rejection and never admits a candidate with another flag. The
     receipt lists each judgment that applied, and `verify` takes the same judgments.
-  - Vectors `18-judgments-key`, `18b-judgments-field`, `18c-judgments-both`, and 7 invalid
+  - Vectors `18-judgments-key`, `18b-judgments-field`, `18c-judgments-both`, and 8 invalid
     packets.
 
 ## 0.3.0 (2026-10-05)

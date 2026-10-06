@@ -288,8 +288,8 @@ from groundgate.report import render
 html = render(receipt_dict, text, candidates, schema=schema, layout=None, title=None)
 ```
 
-With `schema` (and `policy`, if you used one), the page re-derives the receipt first and says
-whether it matched. The page is one self-contained HTML file with no scripts.
+With `schema` (and `policy` and `judgments=`, if you used them), the page re-derives the receipt
+first and says whether it matched. The page is one self-contained HTML file with no scripts.
 
 ## Command line
 
