@@ -1,0 +1,37 @@
+2 DOSAGE AND ADMINISTRATION
+
+The recommended starting dose is 0.5 mg orally before each meal if HbA1c is less than 8%; and 1 or 2 mg orally before each meal if HbA1c is 8% or greater. (2.1)
+The recommended dose range is 0.5 mg to 4 mg before meals, with a maximum daily dose of 16 mg. (2.1)
+The patient’s dose should be doubled up to 4 mg with each meal until satisfactory glycemic control is achieved. At least one week should elapse to assess response after each dose adjustment. (2.1)
+Instruct patients to skip the dose of repaglinide tablets if a meal is skipped. In patients who experience hypoglycemia, the dose of repaglinide tablets should be reduced. (2.1; 5.1)
+Instruct patients to take repaglinide tablets within 30 minutes before meals. (2.1)
+In patients with severe renal impairment (CrCl = 20 to 40 mL/min), recommended starting dose is 0.5 mg orally before each meal. (2.2)
+Dose modifications are required when used concominantly with some medications. (2.3, 7)
+
+2.1 Recommended Dosage and Administration
+
+The recommended starting dose for patients whose HbA_1c is less than 8% is 0.5 mg orally before each meal. For patients whose HbA_1c is 8% or greater the starting dose is 1 mg or 2 mg orally before each meal.
+The recommended dose range is 0.5 mg to 4 mg before meals, with a maximum daily dose of 16 mg. The patient’s dose should be doubled up to 4 mg with each meal until satisfactory glycemic control is achieved. At least one week should elapse to assess response after each dose adjustment.
+Instruct patients to take repaglinide tablets within 30 minutes before meals. Repaglinide tablets may be dosed 2, 3, or 4 times a day in response to changes in the patient’s meal pattern.
+In patients who skip meals, instruct patients to skip the scheduled dose of repaglinide tablets to reduce the risk of hypoglycemia. In patients who experience hypoglycemia, the dose of repaglinide tablets should be reduced [see Warnings and Precautions (5.1)].
+
+2.2 Patients with Severe Renal Impairment
+
+In patients with severe renal impairment (CrCl = 20 to 40 mL/min) initiate repaglinide tablets 0.5 mg orally before each meal. Gradually titrate the dose, if needed to achieve glycemic control.
+
+2.3 Dose Modifications for Drug Interactions
+
+Dosage adjustments are recommended in patients taking concomitant strong CYP3A4 or CYP2C8 inhibitors or strong CYP3A4 or CYP2C8 inducers [see Drug Interactions (7), Clinical Pharmacology (12.3)].
+Concomitant use with gemfibrozil is contraindicated [see Contraindications (4)].
+
+Avoid concomitant use of repaglinide tablets with clopidogrel. If concomitant use cannot be avoided, initiate repaglinide tablets at 0.5 mg before each meal and do not exceed a total daily dose of 4 mg [see Drug Interactions (7), Clinical Pharmacology (12.3)].
+
+Do not exceed a total daily dose of 6 mg of repaglinide tablets in patients receiving cyclosporine [see Drug Interactions (7), Clinical Pharmacology (12.3)].
+
+3 DOSAGE FORMS AND STRENGTHS
+
+Repaglinide tablets USP, 0.5 mg are white to off white, round, biconvex uncoated tablets, debossed with ‘H’ on one side and ‘10’ on other side.
+Repaglinide tablets USP, 1 mg are yellow colored, round, biconvex uncoated tablets, debossed with ‘H’ on one side and ‘11’ on other side.
+Repaglinide tablets USP, 2 mg are peach colored, mottled round, biconvex uncoated tablets, debossed with ‘H’ on one side and ‘12’ on other side.
+
+Tablets: 0.5 mg, 1 mg, 2 mg (3)

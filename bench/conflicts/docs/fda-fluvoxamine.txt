@@ -1,0 +1,51 @@
+2 DOSAGE AND ADMINISTRATION
+
+Adults: Recommended starting dose is 100 mg at bedtime, with weekly increases of 50 mg as tolerated to maximum effect, not to exceed 300 mg/day (2.1).
+Pediatric patients naïve to fluvoxamine maleate: The lowest available dose of fluvoxamine maleate extended-release capsules may not be appropriate (2.2).
+Hepatically impaired: Decreased clearance may require modified dose and titration (2.3).
+Extended treatment: Adjust dose to maintain lowest effective dose; reassess patients periodically (2.4).
+Discontinuation: Gradual dose reduction is recommended [2.7, see Warnings and Precautions (5.10)] .
+
+2.1 OCD (Obsessive Compulsive Disorder)
+
+The recommended starting dose is 100 mg at bedtime, with weekly increases of 50 mg as tolerated to maximum therapeutic benefit, not to exceed 300 mg per day.
+
+Capsules should not be crushed or chewed.
+
+2.2 Pediatric Patients Naïve to Fluvoxamine Maleate
+
+Physicians should consider that the lowest available dose of fluvoxamine maleate extended-release capsules may not be appropriate for pediatric patients naïve to fluvoxamine maleate.
+
+2.3 Dosage for Elderly or Hepatically Impaired Patients
+
+Elderly patients and those with hepatic impairment have been observed to have a decreased clearance of fluvoxamine maleate. Consequently, it may be appropriate to titrate slowly following the initial dose of 100 mg in these patient groups.
+
+2.4 Maintenance/Continuation of Extended Treatment
+
+Although the efficacy of fluvoxamine maleate extended-release capsules beyond 12 weeks of dosing has not been documented in controlled trials, OCD is a chronic condition, and it is reasonable to consider continuation for a responding patient. The benefit of maintaining patients with OCD on immediate-release fluvoxamine maleate tablets after achieving a response for an average duration of about 4 weeks in a 10-week single-blind phase during which patients were titrated to effect was demonstrated in a controlled trial [see Clinical Trials (14.2)]. Dosage adjustments should be made to maintain the patient on the lowest effective dosage, and patients should be periodically reassessed to determine the need for continued treatment.
+
+2.5 Switching a Patient To or From a Monoamine Oxidase Inhibitor (MAOI) Intended to Treat Psychiatric Disorders
+
+At least 14 days should elapse between discontinuation of an MAOI intended to treat psychiatric disorders and initiation of therapy with fluvoxamine maleate extended-release capsules. Conversely, at least 14 days should be allowed after stopping fluvoxamine maleate extended-release capsules before starting an MAOI intended to treat psychiatric disorders [see Contraindications (4.1)].
+
+2.6 Use of Fluvoxamine Maleate Extended-release Capsules with Other MAOIs such as Linezolid or Methylene Blue
+
+Do not start fluvoxamine maleate extended-release capsules in a patient who is being treated with linezolid or intravenous methylene blue because there is an increased risk of serotonin syndrome. In a patient who requires more urgent treatment of a psychiatric condition, other interventions, including hospitalization, should be considered [see Contraindications (4.1)].
+
+In some cases, a patient already receiving fluvoxamine maleate extended-release capsules therapy may require urgent treatment with linezolid or intravenous methylene blue. If acceptable alternatives to linezolid or intravenous methylene blue treatment are not available and the potential benefits of linezolid or intravenous methylene blue treatment are judged to outweigh the risks of serotonin syndrome in a particular patient, fluvoxamine maleate extended-release capsules should be stopped promptly, and linezolid or intravenous methylene blue can be administered. The patient should be monitored for symptoms of serotonin syndrome for two weeks or until 24 hours after the last dose of linezolid or intravenous methylene blue, whichever comes first. Therapy with fluvoxamine maleate extended-release capsules may be resumed 24 hours after the last dose of linezolid or intravenous methylene blue [see Warnings and Precautions (5.2)].
+
+The risk of administering methylene blue by non-intravenous routes (such as oral tablets or by local injection) or in intravenous doses much lower than 1 mg/kg with fluvoxamine maleate extended-release capsules is unclear. The clinician should, nevertheless, be aware of the possibility of emergent symptoms of serotonin syndrome with such use [see Warnings and Precautions (5.2)].
+
+2.7 Discontinuation of Treatment with Fluvoxamine Maleate Extended-release Capsules
+
+Symptoms associated with discontinuation of other SSRIs or SNRIs have been reported [see Warnings and Precautions (5.10)]. Patients should be monitored for these symptoms when discontinuing treatment. A gradual reduction in the dose rather than abrupt cessation is recommended whenever possible. If intolerable symptoms occur following a decrease in the dose or upon discontinuation of treatment, then resuming the previously prescribed dose may be considered. Subsequently, the health care provider may continue decreasing the dose but at a more gradual rate.
+
+3 DOSAGE FORMS AND STRENGTHS
+
+Fluvoxamine maleate extended-release capsules are available as:
+
+100 mg extended-release capsules: Size "2" hard gelatin capsules with green opaque cap and grey opaque body imprinted with "AC" on cap and "563" on body in black ink, filled with white to off-white color pellets and free from physical defects.
+
+150 mg extended-release capsules: Size "1" hard gelatin capsules with green opaque cap and white opaque body imprinted with "AC" on cap and "564" on body in black ink, filled with white to off-white color pellets and free from physical defects.
+
+100 mg and 150 mg extended-release capsules (3)

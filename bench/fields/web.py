@@ -97,16 +97,16 @@ class Page:
             self.out.append(f"</{name}>")
 
 
-def page(doc: str, items: list[dict[str, Any]]) -> str:
-    """The HTML of the doc's sections, with its doses marked; it fails if it does not match the
-    text in docs/."""
-    sources = json.loads((HERE / "sources.json").read_text())["sources"]
+def page(doc: str, items: list[dict[str, Any]], root: Path = HERE) -> str:
+    """The HTML of the doc's sections in the set at root, with its doses marked; it fails if it
+    does not match the text in docs/."""
+    sources = json.loads((root / "sources.json").read_text())["sources"]
     src = next(s for s in sources if s["id"] == doc)
-    (HERE / ".cache").mkdir(exist_ok=True)
-    data = download(src["url"], HERE / ".cache" / f"{doc}.xml")
+    (root / ".cache").mkdir(exist_ok=True)
+    data = download(src["url"], root / ".cache" / f"{doc}.xml")
     if hashlib.sha256(data).hexdigest() != src["sha256"]:
         raise SystemExit(f"{doc}: the label is not the pinned revision; run bench/fetch.py")
-    text = (HERE / "docs" / f"{doc}.txt").read_text(encoding="utf-8")
+    text = (root / "docs" / f"{doc}.txt").read_text(encoding="utf-8")
     marks = {}
     for it in items:
         a, b = it["span"]

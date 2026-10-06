@@ -798,3 +798,12 @@ def test_the_field_judge_doubts_a_pair_below_the_threshold() -> None:
     assert s["test"]["by_threshold"]["0.1"]["wrong_caught"] == 0
     with pytest.raises(SystemExit):
         fields_judge.score(items, {**answers, "b": {"starting_dose": 0.5}})
+
+
+def test_the_conflicts_set_takes_the_lower_end_of_a_range_as_a_dose() -> None:
+    sys.path.insert(0, str(BENCH / "conflicts"))
+    import conflicts
+
+    text = "Give 20 to 30 mg, or a 5-mg dose, or 5, 10 or 20 mg; not 40 kg or 7 days."
+    got = [text[a:b] for a, b in conflicts.doses_in(text)]
+    assert got == ["20", "30", "5", "5", "10", "20"]
