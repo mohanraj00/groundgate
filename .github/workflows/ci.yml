@@ -97,5 +97,5 @@ jobs:
         run: uv run python bench/judges/conflicts/judge.py report --check
       - name: Aviation-judge report matches its recorded answers
         run: uv run python bench/judges/aviation/judge.py report --check
-      - name: Quote-flag counts match the recorded runs
+      - name: Quote-flag counts and COUNTS.md match the recorded runs
         run: uv run --group langextract python bench/judges/quotes/count.py --check

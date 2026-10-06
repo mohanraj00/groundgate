@@ -874,3 +874,7 @@ def test_the_quote_count_names_how_a_quote_differs_from_its_span() -> None:
     assert quote_count.difference("12 years", "12") == "the quote adds text"
     assert quote_count.difference("12", "12 to 17") == "the quote drops text"
     assert quote_count.difference("12 years", "12 to 17 years") == "the quote changes text"
+    # line-break hyphenation is joined before the classes, as in the verbatim comparison
+    assert quote_count.difference("costeffective 12 years", "cost-\neffective 12") == (
+        "the quote adds text"
+    )
