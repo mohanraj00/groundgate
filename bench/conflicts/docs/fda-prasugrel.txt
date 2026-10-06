@@ -1,0 +1,25 @@
+2 DOSAGE AND ADMINISTRATION
+
+Initiate treatment with a single 60 mg oral loading dose (2).
+Continue at 10 mg once daily with or without food. Consider 5 mg once daily for patients <60 kg (2).
+Patients should also take aspirin (75 mg to 325 mg) daily (2).
+
+Initiate prasugrel tablets treatment as a single 60 mg oral loading dose and then continue at 10 mg orally once daily. Patients taking prasugrel should also take aspirin (75 mg to 325 mg) daily [see DRUG INTERACTIONS (7.4) and CLINICAL PHARMACOLOGY (12.3)] . Prasugrel tablets may be administered with or without food [see CLINICAL PHARMACOLOGY (12.3) and CLINICAL STUDIES (14)] .
+
+Timing of Loading Dose
+
+In the clinical trial that established the efficacy and safety of prasugrel tablets, the loading dose of prasugrel tablets was not administered until coronary anatomy was established in UA/NSTEMI patients and in STEMI patients presenting more than 12 hours after symptom onset. In STEMI patients presenting within 12 hours of symptom onset, the loading dose of prasugrel tablets was administered at the time of diagnosis, although most received prasugrel tablets at the time of PCI [see CLINICAL STUDIES (14)]. For the small fraction of patients that required urgent CABG after treatment with prasugrel tablets, the risk of significant bleeding was substantial.
+
+Although it is generally recommended that antiplatelet therapy be administered promptly in the management of ACS because many cardiovascular events occur within hours of initial presentation, in a trial of 4033 NSTEMI patients, no clear benefit was observed when prasugrel tablets loading dose was administered prior to diagnostic coronary angiography compared to at the time of PCI; however, risk of bleeding was increased with early administration in patients undergoing PCI or early CABG.
+
+Dosing in Low Weight Patients
+
+Compared to patients weighing ≥60 kg, patients weighing <60 kg have an increased exposure to the active metabolite of prasugrel and an increased risk of bleeding on a 10 mg once daily maintenance dose. Consider lowering the maintenance dose to 5 mg in patients <60 kg. The effectiveness and safety of the 5 mg dose have not been prospectively studied [see WARNINGS AND PRECAUTIONS (5.1), ADVERSE REACTIONS (6.1), and CLINICAL PHARMACOLOGY (12.3)].
+
+3 DOSAGE FORMS AND STRENGTHS
+
+5 mg and 10 mg tablets (3).
+
+Prasugrel tablet USP, 5 mg is available as a yellow, modified capsule shaped film-coated tablets, debossed with "LU" on one side and "B71" on the other side.
+
+Prasugrel tablet USP, 10 mg is available as a beige, modified capsule shaped film-coated tablets, debossed with "LU" on one side and "B72" on the other side.

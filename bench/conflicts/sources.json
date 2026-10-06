@@ -1,0 +1,724 @@
+{
+  "retrieved": "2026-10-06",
+  "sources": [
+    {
+      "id": "fda-eszopiclone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/9dfe774a-2c7a-4e10-bedd-cde64ad28676.xml",
+      "sha256": "cc5226cbe2532d00a818c4e23f2a6195f1e4c5900204b2314b742664937020dd",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ESZOPICLONE TABLET, FILM COATED [REMEDYREPACK INC.]; Part D 2024 claims rank 259"
+    },
+    {
+      "id": "fda-terbinafine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/085e0809-6b7f-447e-976e-8276c29daad6.xml",
+      "sha256": "49daa400dfb89f1328a0e44ff2af31d1d4d574102dff1ee06251d76c1f2503ae",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "TERBINAFINE (TERBINAFINE HYDROCHLORIDE) TABLET [PREFERRED PHARMACEUTICALS, INC.]; Part D 2024 claims rank 264"
+    },
+    {
+      "id": "fda-cilostazol",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/ceac1ae3-c343-28ca-c083-b748d21a15e6.xml",
+      "sha256": "3f3589d44b56c380eccda46aac9b376ea33fdf36f5534014e98dd91adcb2bb92",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "CILOSTAZOL TABLET [APOTEX CORP.]; Part D 2024 claims rank 265"
+    },
+    {
+      "id": "fda-sevelamer",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/462a11b9-78a3-4d8b-ae5d-3d6528e4d743.xml",
+      "sha256": "40a577e291233bdb161613b8e919d382207e1fd1f4c45eb5d374e4565c3982ad",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "SEVELAMER CARBONATE TABLET, FILM COATED [BRYANT RANCH PREPACK]; Part D 2024 claims rank 266"
+    },
+    {
+      "id": "fda-hydromorphone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/59d88866-e1ba-9d97-e063-6394a90a7b27.xml",
+      "sha256": "6f78c2a3303097673f5d485f987158d76915c271232eb84186ed0e1eb348ccc4",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "HYDROMORPHONE HYDROCHLORIDE TABLET [REDPHARM DRUG]; Part D 2024 claims rank 267"
+    },
+    {
+      "id": "fda-liothyronine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/548d684a-86f5-4e57-9844-d8cf0a84e068.xml",
+      "sha256": "7e39a8e987747cb9f450724bf4caa0fbb5da6f57a7a5d05bcd272d14db7dd996",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Hypothyroidism",
+        "Pituitary Thyrotropin\n(Thyroid-Stimulating Hormone, TSH) Suppression",
+        "Thyroid Suppression Test"
+      ],
+      "source": "LIOTHYRONINE SODIUM TABLET [TEVA PHARMACEUTICALS USA, INC.]; Part D 2024 claims rank 272"
+    },
+    {
+      "id": "fda-rizatriptan",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/faf3bc1d-8818-47b0-8ad1-80bfbf40ab78.xml",
+      "sha256": "3814816ece681e373911c85c6622aebe3079387cdd7ca0a2ba882dfd1fc7c8fd",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "RIZATRIPTAN BENZOATE TABLET, ORALLY DISINTEGRATING [CHARTWELL RX, LLC]; Part D 2024 claims rank 276"
+    },
+    {
+      "id": "fda-raloxifene",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/3798c70b-a4b0-4811-9788-e4c9cff47ebe.xml",
+      "sha256": "509bbe4814456a14e4a7fc7abf583d37dfd6f78d05b95d89ca2c029999d876e9",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Treatment and Prevention of Osteoporosis in Postmenopausal Women",
+        "Reduction in the Risk of Invasive Breast Cancer in Postmenopausal Women with Osteoporosis",
+        "Reduction in the Risk of Invasive Breast Cancer in Postmenopausal Women at High Risk of Invasive Breast Cancer"
+      ],
+      "source": "RALOXIFENE HYDROCHLORIDE TABLET, FILM COATED [AMNEAL PHARMACEUTICALS LLC]; Part D 2024 claims rank 280"
+    },
+    {
+      "id": "fda-varenicline",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/d759167f-e0b2-46d5-a34a-3c8858e39590.xml",
+      "sha256": "d1fdf0448f0f358d64dd888a5b4d458fb54917409961be33b353c5eb28caacfe",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "VARENICLINE (VARENICLINE TARTRATE) TABLET, FILM COATED [REMEDYREPACK INC.]; Part D 2024 claims rank 290"
+    },
+    {
+      "id": "fda-mesalamine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/c1ed6fcc-7fd4-4b8a-9ddb-e772ea930e9e.xml",
+      "sha256": "b2f3ed17dfe86102717c672bdf16e78f694e53109bd1ee65fe936ab806b6f8a4",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Treatment of Mildly to Moderately Active Ulcerative Colitis",
+        "Maintenance of Remission of Ulcerative Colitis"
+      ],
+      "source": "MESALAMINE CAPSULE, DELAYED RELEASE [AMERICAN HEALTH PACKAGING]; Part D 2024 claims rank 293"
+    },
+    {
+      "id": "fda-budesonide",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5e39c491-2793-410e-b77f-8b3cbe9b6231.xml",
+      "sha256": "6980c31e00f4b3857373c8e5ce7fdb76aaf47f9d98c362cd2a8f3bfcd1581c68",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Treatment of Mild to Moderate Active Crohn’s Disease",
+        "Maintenance of Clinical Remission of Mild to Moderate Crohn’s Disease"
+      ],
+      "source": "BUDESONIDE CAPSULE, COATED PELLETS [REMEDYREPACK INC.]; Part D 2024 claims rank 295"
+    },
+    {
+      "id": "fda-buprenorphine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/9f7b0a28-f937-4d4d-b793-ca3468bd28e0.xml",
+      "sha256": "6ca850ac8e5a193e1c41ebc60178b29b74eb082ef9fed2ec33ca6d69a45b963f",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "BUPRENORPHINE HYDROCHLORIDE TABLET [REMEDYREPACK INC.]; Part D 2024 claims rank 309"
+    },
+    {
+      "id": "fda-leflunomide",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/fc044417-cd9a-42f6-8a3d-a14e7c2f81a2.xml",
+      "sha256": "0b7d353921f21861b0fa4c2c8d6b876c087d91b6e169966342ceafbfaa902a24",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "LEFLUNOMIDE TABLET, FILM COATED [BUREL PHARMACEUTICALS, LLC]; Part D 2024 claims rank 312"
+    },
+    {
+      "id": "fda-trospium",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/7a2fea88-266d-4fc0-a476-66dc6effcff7.xml",
+      "sha256": "7d5fb2bd00f6b71c30159c386b22b751d2aace33dcd47e694b30ff581c379b80",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "TROSPIUM CHLORIDE TABLET, FILM COATED [MAJOR PHARMACEUTICALS]; Part D 2024 claims rank 313"
+    },
+    {
+      "id": "fda-methadone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/c54baaee-8ea4-45f5-a5c8-bb84cf86832f.xml",
+      "sha256": "47d07746e854903329ecadbf01789a9972e439e55e3ddd3d5d1882ef5d4130ef",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "METHADONE HYDROCHLORIDE TABLET [VISTAPHARM, LLC]; Part D 2024 claims rank 318"
+    },
+    {
+      "id": "fda-mycophenolate",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/3eb584dc-f72d-4545-96fa-ab3d47be41ce.xml",
+      "sha256": "1e63c6cc1ddfcb63027082be8d26a531460ca225749fb38ef1cddc993e6f580d",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "MYCOPHENOLATE MOFETIL CAPSULE [AUROBINDO PHARMA LIMITED]; Part D 2024 claims rank 328"
+    },
+    {
+      "id": "fda-ursodiol",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/a3c98080-0a4d-4a93-8dcb-02ab8533050b.xml",
+      "sha256": "24ec0ddea5cb0142e6c147445f676e970fadcc8a4658369be8e1e85200f0b424",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "URSODIOL TABLET [BLUEPOINT LABORATORIES]; Part D 2024 claims rank 338"
+    },
+    {
+      "id": "fda-lubiprostone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/333acede-5075-464f-9418-4b22d43eef3c.xml",
+      "sha256": "091850a317fea92e5bd6a436bc2eb8aa44cc68d3a70a38ad4e856f2c32bb2b20",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Chronic Idiopathic Constipation in Adults",
+        "Opioid-Induced Constipation\nin Adult Patients with Chronic Non-Cancer Pain",
+        "Irritable Bowel Syndrome with Constipation"
+      ],
+      "source": "LUBIPROSTONE CAPSULE [AMNEAL PHARMACEUTICALS LLC]; Part D 2024 claims rank 349"
+    },
+    {
+      "id": "fda-fluvoxamine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/49601858-df61-4522-ac99-0d2892f92e11.xml",
+      "sha256": "5802ca86f51676dc756db5969995e734c913640f2c6ba84664d6a01ff8d4e986",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Obsessive Compulsive Disorder"
+      ],
+      "source": "FLUVOXAMINE MALEATE CAPSULE, EXTENDED RELEASE [UPSHER-SMITH LABORATORIES, LLC]; Part D 2024 claims rank 353"
+    },
+    {
+      "id": "fda-abiraterone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/2ac063f0-4177-c90f-27c3-e70e29689255.xml",
+      "sha256": "42d824b4c451aadad511431de978f670951ab7fa21d7ea0e83fb5ab10cf4288a",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ABIRATERONE ACETATE TABLET [APOTEX CORP.]; Part D 2024 claims rank 370"
+    },
+    {
+      "id": "fda-roflumilast",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/cb3781ff-5350-4f9a-b247-0b04eb0f2b92.xml",
+      "sha256": "421c0db964566463686a7f36106120a3fa787a1e95450672dabd1d62362f0a1a",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ROFLUMILAST TABLET [AMICI PHARMA INC.]; Part D 2024 claims rank 371"
+    },
+    {
+      "id": "fda-calcium",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/2072d9f4-abb1-4699-bde5-6041dd79cad5.xml",
+      "sha256": "39bc971bc7990f33beaf71b66d27b59af1b1d96d18ab01019e6020e2d5e25165",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "CALCIUM ACETATE CAPSULE [AMERICAN HEALTH PACKAGING]; Part D 2024 claims rank 372"
+    },
+    {
+      "id": "fda-vancomycin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/bc737938-ae36-460b-a2a8-609f3fe59156.xml",
+      "sha256": "4f948845462c7a3bf285da95d901befa0ebc6e212d792ef4692a92e1680e8cfa",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "VANCOMYCIN HYDROCHLORIDE CAPSULE [CAMERON PHARMACEUTICALS]; Part D 2024 claims rank 376"
+    },
+    {
+      "id": "fda-modafinil",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/bfe1b1b7-52ec-41b3-94d6-ac56036eea80.xml",
+      "sha256": "8efe8e06d4a5dc9a28088fada14a0414e14a346e251d1f7c37b1324889d98443",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "MODAFINIL TABLET [ASCLEMED USA INC.]; Part D 2024 claims rank 382"
+    },
+    {
+      "id": "fda-vilazodone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/a70fd858-cbef-7336-d7ce-c78499031644.xml",
+      "sha256": "64cbf8d621cd3d33ff270871f9e799a43b0ad191ca153e5822f0660cdae886b9",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "VILAZODONE HYDROCHLORIDE TABLET [APOTEX CORP.]; Part D 2024 claims rank 385"
+    },
+    {
+      "id": "fda-repaglinide",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/6ae28683-28cc-408e-90f9-6a3dddfc668d.xml",
+      "sha256": "da5785b24ef2f03e9104fca439304c593fa6ef6833118b098d0a417770c7f69b",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "REPAGLINIDE TABLET [BRYANT RANCH PREPACK]; Part D 2024 claims rank 386"
+    },
+    {
+      "id": "fda-minocycline",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/3e74e8a3-2670-97f5-e063-6394a90a361e.xml",
+      "sha256": "5402cb326ebb88f18f5915b8277b9bcba2d5fec6723c173a212112182c7a7a22",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "MINOCYCLINE HYDROCHLORIDE TABLET, FILM COATED, EXTENDED RELEASE [PD-RX PHARMACEUTICALS, INC.]; Part D 2024 claims rank 390"
+    },
+    {
+      "id": "fda-carisoprodol",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/b83f7fd1-11e3-4e94-ae53-4637e892b372.xml",
+      "sha256": "2bd6a94075982db8f7106872fb4ea248c1296adaa3062200653ab0e8c41a2d68",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "CARISOPRODOL TABLET [REMEDYREPACK INC.]; Part D 2024 claims rank 396"
+    },
+    {
+      "id": "fda-febuxostat",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/f2c338dc-5bab-49f4-a4ac-d8dea8afeea5.xml",
+      "sha256": "724a74651e7fa3a533fb0258e07d65fa5fabdf0fcff4950fc86665c9998c2d97",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "FEBUXOSTAT TABLET [REMEDYREPACK INC.]; Part D 2024 claims rank 398"
+    },
+    {
+      "id": "fda-prasugrel",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/8b67ca60-d7e4-4c04-bbc6-dae86a7c7675.xml",
+      "sha256": "7fccf1afe6e258a8671a21965bf6be5ce933e5fc105b94f6e7d3df58bbd87a31",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Acute Coronary Syndrome"
+      ],
+      "source": "PRASUGREL (PRASUGREL HYDROCHLORIDE) TABLET, FILM COATED [LUPIN PHARMACEUTICALS, INC.]; Part D 2024 claims rank 404"
+    },
+    {
+      "id": "fda-atomoxetine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/6d7ea8f7-981c-4acc-aeaf-7516325bfc0c.xml",
+      "sha256": "795543567fe7eda2bd719f82cf30a7569b64b0f8d0b6003a8f715269cdadeceb",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ATOMOXETINE HYDROCHLORIDE CAPSULE [REMEDYREPACK INC.]; Part D 2024 claims rank 409"
+    },
+    {
+      "id": "fda-eplerenone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/3a3047f2-0155-4a07-955f-839a312cf879.xml",
+      "sha256": "a6afb9b730cfbd39f8f1509667b96315bebb84e37f51fdb7a13a4a2755527fe3",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Hypertension"
+      ],
+      "source": "EPLERENONE TABLET, FILM COATED [AMERICAN HEALTH PACKAGING]; Part D 2024 claims rank 411"
+    },
+    {
+      "id": "fda-pitavastatin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/2d5a1b78-4aa6-537b-e063-6394a90a522f.xml",
+      "sha256": "9193fc1b51e483154d1efa56c31fa3597cad9a7fa1b769baf194be177fb29fa8",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "PITAVASTATIN (PITAVASTATIN CALCIUM) TABLET [GOLDEN STATE MEDICAL SUPPLY, INC.]; Part D 2024 claims rank 417"
+    },
+    {
+      "id": "fda-silodosin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/ee8d577e-948d-4164-9671-c876544ac83b.xml",
+      "sha256": "a540f41963b42ab6bc3ac68f1a1ded483d6bab6be045111d3152f72ef6bee8a8",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "SILODOSIN CAPSULE [NOVADOZ PHARMACEUTICALS LLC]; Part D 2024 claims rank 418"
+    },
+    {
+      "id": "fda-rabeprazole",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/63e0b7ca-6b2d-42a9-b9d4-4523b8a20425.xml",
+      "sha256": "7e747d91a74c5e38c61296135eee986ee5c6950da5452c8ca7f9c808564468e0",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Healing of Erosive or Ulcerative GERD in Adults",
+        "Maintenance of Healing of Erosive or Ulcerative GERD in Adults",
+        "Treatment of Symptomatic GERD in Adults",
+        "Healing of Duodenal Ulcers in Adults",
+        "Helicobacter pylori Eradication to Reduce the Risk of Duodenal Ulcer Recurrence in Adults",
+        "Treatment of Pathological Hypersecretory Conditions, Including Zollinger-Ellison Syndrome in Adults",
+        "Treatment of Symptomatic GERD in Adolescent Patients 12 Years of Age and Older"
+      ],
+      "source": "RABEPRAZOLE SODIUM TABLET, DELAYED RELEASE [REMEDYREPACK INC.]; Part D 2024 claims rank 422"
+    },
+    {
+      "id": "fda-risedronate",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/c89430be-15f1-4b8b-ab7e-738de716ee7d.xml",
+      "sha256": "9a10d3407ed392f97b893c53df404d894075fa5b3d538c3131550348eede6e2c",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Postmenopausal Osteoporosis",
+        "Important Limitations of Use"
+      ],
+      "source": "RISEDRONATE SODIUM TABLET, DELAYED RELEASE [MYLAN PHARMACEUTICALS, INC.]; Part D 2024 claims rank 425"
+    },
+    {
+      "id": "fda-pyridostigmine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/52d6f195-165a-400b-a13b-489e94bcf0b0.xml",
+      "sha256": "de0de32bd3900bab39c7ee3a425618493be9d51941f46484aa4d91a9b1f8f7e6",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "PYRIDOSTIGMINE BROMIDE TABLET, EXTENDED RELEASE [AMNEAL PHARMACEUTICALS LLC]; Part D 2024 claims rank 428"
+    },
+    {
+      "id": "fda-tretinoin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/9c4ae9d9-c2a0-4995-a27a-e3f0f0284db9.xml",
+      "sha256": "450dcb5e385fabd0188ed4a411fb9487ae8ff5b75829d9d79c29564b4ea0492a",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "TRETINOIN CAPSULE [PAR HEALTH USA, LLC]; Part D 2024 claims rank 431"
+    },
+    {
+      "id": "fda-colesevelam",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5ca9a9b7-5efd-09bf-e063-6294a90a681d.xml",
+      "sha256": "acd4c80242f982bcb7b88a2151126cf8d84bf3123131d34f4954fe713cba0e81",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Primary Hyperlipidemia",
+        "Type 2 Diabetes Mellitus",
+        "Limitations of Use"
+      ],
+      "source": "COLESEVELAM HYDROCHLORIDE TABLET, FILM COATED [BIONPHARMA INC.]; Part D 2024 claims rank 434"
+    },
+    {
+      "id": "fda-etodolac",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/1e04a6b7-a671-4999-ab03-aa1a243aac03.xml",
+      "sha256": "ccd5a68ca4bdfd4e58c902855e7f32e2c770fa42f9e7a20cdfbf83e16c4bf62c",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ETODOLAC CAPSULE [A-S MEDICATION SOLUTIONS]; Part D 2024 claims rank 435"
+    }
+  ]
+}

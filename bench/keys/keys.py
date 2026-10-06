@@ -38,6 +38,7 @@ from fetch import download, spl_sections  # noqa: E402  (bench/fetch.py)
 PER_SET, PER_DOC, MAX_RANK = 100, 6, 600
 # a set whose items need no key can take labels with fewer subsections in section 1
 NEED_KEYS = True
+MAX_DOSES: int | None = None  # skip a label with more doses than this
 # a dose: a number token followed by mg or mcg
 UNIT_AFTER = re.compile(r"\s*(?:mg|mcg)(?![A-Za-z])")
 SPEC02 = [
@@ -101,6 +102,9 @@ def pick(count_only: bool) -> None:
         entry["doses"] = found
         if not found:
             entry["skip"] = "no dose in sections 2 and 3"
+            continue
+        if MAX_DOSES is not None and found > MAX_DOSES:
+            entry["skip"] = f"more than {MAX_DOSES} doses in sections 2 and 3"
             continue
         total += min(found, PER_DOC)
         print(f"fda: rank {rank}, {len(chosen) + 1} labels, {total} doses", file=sys.stderr)

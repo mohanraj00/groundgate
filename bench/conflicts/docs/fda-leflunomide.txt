@@ -1,0 +1,38 @@
+2 DOSAGE AND ADMINISTRATION
+
+Loading dosage for patients at low risk for leflunomide-associated hepatotoxicity and leflunomide-associated myelosuppression: 100 mg daily for 3 days. (2.1)
+Maintenance dosage: 20 mg daily. (2.1)
+
+Maximum recommended daily dosage: 20 mg once daily. (2.1)
+If 20 mg once daily is not tolerated, may decrease dosage to 10 mg once daily. (2.1)
+
+Screen patients for active and latent tuberculosis, pregnancy test (females), blood pressure, and laboratory tests before starting leflunomide. (2.2)
+
+2.1 Recommended Dosage
+
+The recommended dosage of leflunomide is 20 mg once daily. Treatment may be initiated with or without a loading dose, depending upon the patient's risk of leflunomide-associated hepatotoxicity and leflunomide-associated myelosuppression. The loading dose provides steady-state concentrations more rapidly.
+
+For patients who are at low risk for leflunomide-associated hepatotoxicity and leflunomide-associated myelosuppression, the recommended leflunomide loading dose is 100 mg once daily for 3 days. Subsequently administer 20 mg once daily.
+For patients at high risk for leflunomide-associated hepatotoxicity (e.g., those taking concomitant methotrexate) or leflunomide-associated myelosuppression (e.g., patients taking concomitant immunosuppressants), the recommended leflunomide dosage is 20 mg once daily without a loading dose [see Warnings and Precautions (5.2, 5.4)].
+
+The maximum recommended daily dose is 20 mg once per day. Consider dosage reduction to 10 mg once daily for patients who are not able to tolerate 20 mg daily (i.e., for patients who experience any adverse events listed in Table 1).
+
+Monitor patients carefully after dosage reduction and after stopping therapy with leflunomide, since the active metabolite of leflunomide, teriflunomide, is slowly eliminated from the plasma [see Clinical Pharmacology (12.3)]. After stopping leflunomide treatment, an accelerated drug elimination procedure is recommended to reduce the plasma concentrations of the active metabolite, teriflunomide [see Warnings and Precautions (5.3)]. Without use of an accelerated drug elimination procedure, it may take up to 2 years to reach undetectable plasma teriflunomide concentrations after stopping leflunomide [see Clinical Pharmacology (12.3)].
+
+2.2 Evaluation and Testing Prior to Starting Leflunomide
+
+Prior to starting leflunomide treatment, the following evaluations and tests are recommended:
+
+Evaluate patients for active tuberculosis and screen patients for latent tuberculosis infection [see Warnings and Precautions (5.4)]
+Laboratory tests including serum alanine aminotransferase (ALT); and white blood cell, hemoglobin or hematocrit, and platelet counts [see Warnings and Precautions (5.2, 5.4)]
+For females of reproductive potential, pregnancy testing [see Warnings and Precautions (5.1)]
+Check blood pressure [see Warnings and Precautions (5.11)]
+
+3 DOSAGE FORMS AND STRENGTHS
+
+Leflunomide Tablets, USP are available in two strengths:
+
+Tablets: 10 mg, supplied as white to off-white, round, biconvex film-coated tablets debossed with "10" on one side and "LFL" on the other side.
+Tablets: 20 mg, supplied as white to off-white, round, biconvex film-coated tablets debossed with "20" on one side and "LFL" on the other side.
+
+Tablets: 10 mg, 20 mg. (3)

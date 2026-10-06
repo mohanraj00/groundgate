@@ -1,0 +1,111 @@
+2 DOSAGE AND ADMINISTRATION
+
+ADULTS
+DOSAGE
+Kidney Transplant
+1 g twice daily, orally (2.2)
+Heart Transplant
+1.5 g twice daily orally (2.3)
+Liver Transplant
+1.5 g twice daily orally (2.4)
+PEDIATRICS
+Kidney Transplant
+600 mg/m^2 orally twice daily, up to maximum of 2 g daily (2.2)
+Heart Transplant
+600 mg/m^2 orally twice daily (starting dose) up to a maximum of 900 mg/m^2 twice daily (3 g or 15 mL of oral suspension) (2.3)
+Liver Transplant
+600 mg/m^2 orally twice daily (starting dose) up to a maximum of 900 mg/m^2 twice daily (3 g or 15 mL of oral suspension) (2.4)
+
+Reduce or interrupt dosing in the event of neutropenia. (2.5)
+See full prescribing information (FPI) for: adjustments for renal impairment and neutropenia. (2.5)
+
+2.1 Important Administration Instructions
+
+Mycophenolate mofetil capsules should not be used without the supervision of a physician with experience in immunosuppressive therapy.
+Mycophenolate Mofetil Capsules, Tablets and Oral Suspension
+
+Mycophenolate mofetil oral dosage forms (capsules, tablets or oral suspension) should not be used interchangeably with mycophenolic acid delayed-release tablets without supervision of a physician with experience in immunosuppressive therapy because the rates of absorption following the administration of mycophenolate mofetil oral dosage forms and mycophenolic acid delayed-release tablets are not equivalent.
+CELLCEPT^® (mycophenolate mofetil) tablets should not be crushed and mycophenolate mofetil capsules should not be opened or crushed. Patients should avoid inhalation or contact of the skin or mucous membranes with the powder contained in mycophenolate mofetil capsules and oral suspension. If such contact occurs, they must wash the area of contact thoroughly with soap and water. In case of ocular contact, rinse eyes with plain water.
+The initial oral dose of mycophenolate mofetil should be given as soon as possible following kidney, heart or liver transplant. It is recommended that mycophenolate mofetil be administered on an empty stomach. In stable transplant patients, however, mycophenolate mofetil may be administered with food if necessary [see Clinical Pharmacology (12.3)]. Once reconstituted, CELLCEPT^® Oral Suspension (mycophenolate mofetil) for oral suspension must not be mixed with any liquids prior to dose administration. If needed, CELLCEPT^® Oral Suspension (mycophenolate mofetil) for oral suspension can be administered via a nasogastric tube with a minimum size of 8 French (minimum 1.7 mm interior diameter).
+Patients should be instructed to take a missed dose as soon as they remember, except if it is closer than 2 hours to the next scheduled dose; in this case, they should continue to take mycophenolate mofetil capsules at the usual times.
+
+2.2 Dosage Recommendations for Kidney Transplant Patients
+
+Adults
+
+The recommended dosage for adult kidney transplant patients is 1 g orally, twice daily (total daily dose of 2 g).
+
+Pediatrics (3 months and older)
+
+Pediatric dosing is based on body surface area (BSA). The recommended dosage of CELLCEPT^® Oral Suspension (mycophenolate mofetil) for oral suspension for pediatric kidney transplant patients 3 months and older is 600 mg/m^2, administered twice daily (maximum total daily dose of 2 g or 10 mL of the oral suspension). Pediatric patients with BSA ≥ 1.25 m^2 may be dosed with capsules or tablets as follows:
+
+Table 1 Pediatric Kidney Transplant: Dosage Using Capsules or Tablets
+
+Body Surface Area
+Dosage
+1.25 m^2 to <1.5 m^2
+Mycophenolate mofetil capsule 750 mg twice daily (1.5 g total daily dose)
+≥ 1.5 m^2
+Mycophenolate mofetil capsules or tablets 1 g twice daily (2 g total daily dose)
+
+2.3 Dosage Recommendations for Heart Transplant Patients
+
+Adults
+
+The recommended dosage of mycophenolate mofetil capsules for adult heart transplant patients is 1.5 g orally administered twice daily (total daily dose of 3 g).
+
+Pediatrics (3 months and older)
+
+The recommended starting dosage of CELLCEPT^® Oral Suspension (mycophenolate mofetil) for oral suspension for pediatric heart transplant patients 3 months and older is 600 mg/m^2, administered twice daily. If well tolerated, the dose can be increased to a maintenance dosage of 900 mg/m^2 twice daily (maximum total daily dose of 3 g or 15 mL of the oral suspension). The dose may be individualized based on clinical assessment.
+
+Pediatric patients with BSA ≥1.25 m^2 may be started on therapy with capsules or tablets as follows:
+
+Table 2 Pediatric Heart Transplant: Pediatric Starting Dosage Using Capsules or Tablets
+
+Body Surface Area
+Starting Dosage^*
+1.25 m^2 to ˂1.5 m^2
+Mycophenolate mofetil capsule 750 mg twice daily (1.5 g total daily dose)
+≥ 1.5 m^2
+Mycophenolate mofetil capsules or tablets 1 g twice daily (2 g total daily dose)
+
+^*Maximum maintenance dose: 3 g total daily.
+
+2.4 Dosage Recommendations for Liver Transplant Patients
+
+Adults
+
+The recommended dosage of mycophenolate mofetil capsules for adult liver transplant patients is 1.5 g administered orally twice daily (total daily dose of 3 g).
+
+Pediatrics (3 months and older)
+
+The recommended starting dosage of CELLCEPT^® Oral Suspension (mycophenolate mofetil) for oral suspension for pediatric liver transplant patients 3 months of age and older is 600 mg/m^2, administered twice daily. If well tolerated, the dose can be increased to a maintenance dosage of 900 mg/m^2 twice daily (maximum total daily dose of 3 g or 15 mL of the oral suspension). The dose may be individualized based on clinical assessment.
+
+Pediatric patients with BSA ≥1.25 m^2 may be started on therapy with capsules or tablets as follows:
+
+Table 3 Pediatric Liver Transplant: Pediatric Starting Dosage Using Capsules or Tablets
+
+Body Surface Area
+Starting Dosage^*
+1.25 m^2 to ˂1.5 m^2
+Mycophenolate mofetil capsule 750 mg twice daily (1.5 g total daily dose)
+≥ 1.5 m^2
+Mycophenolate mofetil capsules or tablets 1 g twice daily (2 g total daily dose)
+
+^*Maximum maintenance dose: 3 g total daily.
+
+2.5 Dosage Modifications: Patients with Renal Impairment, Neutropenia
+
+Renal Impairment
+
+No dosage modifications are needed in kidney transplant patients with delayed graft function postoperatively [see Clinical Pharmacology (12.3)]. In kidney transplant patients with severe chronic impairment of the graft (GFR <25 mL/min/1.73 m^2), do not administer doses of mycophenolate mofetil capsules greater than 1 g twice a day. These patients should be carefully monitored [see Clinical Pharmacology (12.3)].
+
+Neutropenia
+
+If neutropenia develops (ANC <1.3 x 10^3/µL), dosing with mycophenolate mofetil capsules should be interrupted or reduced, appropriate diagnostic tests performed, and the patient managed appropriately [see Warnings and Precautions (5.4) and Adverse Reactions (6.1)].
+
+3 DOSAGE FORMS AND STRENGTHS
+
+Mycophenolate Mofetil Capsules, USP 250 mg are red opaque cap and brown opaque body, hard gelatin capsule shell imprinted “MYMH” on cap and “250” on the body filled with white to off-white granules.
+
+Capsules: 250 mg

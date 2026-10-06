@@ -1,0 +1,59 @@
+2 DOSAGE AND ADMINISTRATION
+
+Metastatic castration-resistant prostate cancer:
+
+Abiraterone acetate tablets 1,000 mg orally once daily with prednisone 5 mg orally twice daily. (2.1)
+
+Metastatic castration-sensitive prostate cancer:
+
+Abiraterone acetate tablets 1,000 mg orally once daily with prednisone 5 mg orally once daily. (2.2)
+
+Patients receiving abiraterone acetate tablets should also receive a gonadotropin-releasing hormone (GnRH) analog concurrently or should have had bilateral orchiectomy. Abiraterone acetate tablets must be taken as a single dose once daily on an empty stomach. Do not eat food 2 hours before and 1 hour after taking abiraterone acetate tablets. The tablets must be swallowed whole with water. Do not crush or chew tablets. (2.3)
+
+Dose Modification:
+
+For patients with baseline moderate hepatic impairment (Child-Pugh Class B), reduce the abiraterone acetate starting dose to 250 mg once daily. (2.4)
+For patients who develop hepatotoxicity during treatment, hold abiraterone acetate tablets until recovery. Retreatment may be initiated at a reduced dose. Abiraterone acetate tablets should be discontinued if patients develop severe hepatotoxicity. (2.4 )
+
+2.1 Recommended Dose for Metastatic CRPC
+
+The recommended dose of abiraterone acetate tablets is 1,000 mg (four 250 mg tablets) orally once daily with prednisone 5 mg orally twice daily.
+
+2.2 Recommended Dose for Metastatic High-risk CSPC
+
+The recommended dose of abiraterone acetate tablets is 1,000 mg (four 250 mg tablets) orally once daily with prednisone 5 mg administered orally once daily.
+
+2.3 Important Administration Instructions
+
+Patients receiving abiraterone acetate tablets should also receive a gonadotropin-releasing hormone (GnRH) analog concurrently or should have had bilateral orchiectomy.
+
+Abiraterone acetate tablets must be taken as a single dose once daily on an empty stomach. Do not eat food 2 hours before and 1 hour after taking abiraterone acetate tablets. The tablets must be swallowed whole with water. Do not crush or chew tablets.
+
+2.4 Dose Modification Guidelines in Hepatic Impairment and Hepatotoxicity
+
+Hepatic Impairment
+In patients with baseline moderate hepatic impairment (Child-Pugh Class B), reduce the recommended dose of abiraterone acetate to 250 mg once daily. In patients with moderate hepatic impairment monitor ALT, AST, and bilirubin prior to the start of treatment, every week for the first month, every two weeks for the following two months of treatment and monthly thereafter. If elevations in ALT and/or AST greater than 5 x upper limit of normal (ULN) or total bilirubin greater than 3 x ULN occur in patients with baseline moderate hepatic impairment, discontinue abiraterone acetate tablets and do not re-treat patients with abiraterone acetate tablets [see Use in Specific Populations ( 8.6) and Clinical Pharmacology (12.3)].
+
+Do not use abiraterone acetate tablets in patients with baseline severe hepatic impairment (Child-Pugh Class C).
+
+Hepatotoxicity
+
+For patients who develop hepatotoxicity during treatment with abiraterone acetate tablets (ALT and/or AST greater than 5 X ULN or total bilirubin greater than 3 X ULN), interrupt treatment with abiraterone acetate tablets [see Warnings and Precautions (5.3)]. Treatment may be restarted at a reduced dose of 750 mg once daily following return of liver function tests to the patient’s baseline or to AST and ALT less than or equal to 2.5 X ULN and total bilirubin less than or equal to 1.5 X ULN. For patients who resume treatment, monitor serum transaminases and bilirubin at a minimum of every two weeks for three months and monthly thereafter.
+
+If hepatotoxicity recurs at the dose of 750 mg once daily, re-treatment may be restarted at a reduced dose of 500 mg once daily following return of liver function tests to the patient’s baseline or to AST and ALT less than or equal to 2.5 X ULN and total bilirubin less than or equal to 1.5 X ULN.
+
+If hepatotoxicity recurs at the reduced dose of 500 mg once daily, discontinue treatment with abiraterone acetate tablets.
+
+Permanently discontinue abiraterone acetate for patients who develop a concurrent elevation of ALT greater than 3 x ULN and total bilirubin greater than 2 x ULN in the absence of biliary obstruction or other causes responsible for the concurrent elevation [see Warnings and Precautions (5.3)].
+
+2.5 Dose Modification Guidelines for Strong CYP3A4 Inducers
+
+Avoid concomitant strong CYP3A4 inducers (e.g., phenytoin, carbamazepine, rifampin, rifabutin, rifapentine, phenobarbital) during abiraterone acetate treatment.
+
+If a strong CYP3A4 inducer must be co-administered, increase the abiraterone acetate dosing frequency to twice a day only during the co-administration period (e.g., from 1,000 mg once daily to 1,000 mg twice a day). Reduce the dose back to the previous dose and frequency, if the concomitant strong CYP3A4 inducer is discontinued [see Drug Interactions (7.1) and Clinical Pharmacology (12.3)].
+
+3 DOSAGE FORMS AND STRENGTHS
+
+Abiraterone acetate 250 mg tablets, USP are white to off-white, oval, biconvex uncoated tablets. Engraved "A250" on one side, "APO" on the other side.
+
+Uncoated Tablet 250 mg (3)
