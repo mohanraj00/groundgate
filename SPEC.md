@@ -1,7 +1,8 @@
-# groundgate specification v0.3
+# groundgate specification v0.4
 
-Status: released with groundgate 0.3.0. Version string: `groundgate/0.3`. Spec 0.2 was released
-with groundgate 0.2.0 and is in the `v0.2.0` tag, and spec 0.1 in the `v0.1.0` tag. Any change to how
+Status: draft, not released. Version string: `groundgate/0.4`. Spec 0.3 was released with
+groundgate 0.3.0 and is in the `v0.3.0` tag, spec 0.2 in the `v0.2.0` tag, and spec 0.1 in the
+`v0.1.0` tag. Any change to how
 a candidate is decided is a new version with a new version string. An implementation conforms if
 it produces the decisions and coverage findings in every vector under `conformance/vectors/`,
 and the receipt hashes for vectors that pin them.
@@ -24,7 +25,8 @@ receipt byte for byte.
 groundgate checks what can be checked mechanically: the value is present at the cited location,
 with the right unit, and nothing nearby changes its meaning (a qualifier, a scale word, a
 conflicting proposal). It does **not** judge whether the text means what the field claims.
-Anything it cannot prove is flagged, not silently admitted.
+Anything it cannot prove is flagged, not silently admitted. A model's answer can enter a decision
+only as a recorded judgment (§2.6), never as a call: the decision stays a function of its inputs.
 
 ## 2. Inputs
 
@@ -71,8 +73,23 @@ invalid.
 ### 2.4 Policy
 
 ```json
-{"min_confidence": null, "unit_window": 24, "reanchor": true}
+{"min_confidence": null, "unit_window": 24, "reanchor": true, "judge": null}
 ```
+
+`judge` is null or names the one judge whose recorded judgments (§2.6) the decision reads, with
+its thresholds:
+
+```json
+{"id": "jev", "digest": "jev-1.13.0",
+ "clear": {"KEY_NOT_AT_VALUE": 0.9}, "doubt": {"field_match": 0.2}}
+```
+
+`id` and `digest` are non-blank strings. `digest` names one model version: the digest of the
+weights, or the version that a hosted model reports. `clear` and `doubt` are optional and default to `{}`;
+`clear` can hold only `KEY_NOT_AT_VALUE`, and `doubt` only `field_match`, each a number in [0, 1]
+when present (null is invalid). Other keys
+are invalid. With `judge` null, or with no threshold for a question, the decision is the same as
+without judgments.
 
 `policy_sha256` is the digest of kind `policy` over the policy object after defaults.
 
@@ -97,6 +114,30 @@ invalid.
 
 Other keys are allowed and ignored by the checks (for example the proposer's name); they are covered
 by `candidate_sha256`, the digest of kind `candidate` over the candidate object as given.
+
+### 2.6 Judgments
+
+A packet may carry a list of **recorded judgments**: answers that a judge (a model, or a person)
+gave about one candidate before the decision. groundgate never calls a judge.
+
+```json
+{"candidate_id": "c1", "question": "key", "judge": {"id": "jev", "digest": "jev-1.13.0"},
+ "answer": "heart failure", "p": 0.97}
+```
+
+| Key | Meaning |
+|---|---|
+| `candidate_id` | The `id` of exactly one candidate in the packet. |
+| `question` | `key`: which of the field's keys the value belongs to. `field_match`: whether the text states the value as the field. |
+| `judge` | `id` and `digest`, non-blank strings. |
+| `answer` | `key` only: the chosen key as a string, or null for none of the keys. |
+| `p` | For `key`, the probability of the answer. For `field_match`, the probability that the text states the value as the field. A number in [0, 1]. |
+
+The packet is **invalid** when a judgment is malformed, names an id that no candidate or more than
+one candidate has, or repeats a question for one candidate.
+
+A judgment **applies** when its `judge` equals `policy.judge`'s `id` and `digest`, the policy has
+a threshold for its question, and its candidate passes steps 1–11. Other judgments change nothing.
 
 ## 3. Decision procedure
 
@@ -135,8 +176,22 @@ outcome `needs_verification`, no flag makes it `admitted`.
 | `KEY_NOT_AT_VALUE` | The field has `keys`, and the candidate's `key` is not a key at the value (§4.5). |
 | `LOW_CONFIDENCE` | `policy.min_confidence` is set and `confidence` is below it. |
 | `CONFLICTING_CANDIDATES` | Another candidate for the same non-`multiple` field, and on a keyed field the same `key`, also passed steps 1–11 with a different canonical value. Set on every such candidate. |
+| `MODEL_DOUBT` | An applying judgment doubts the value (step 12). |
 
 `EVIDENCE_REANCHORED` is informational: it never changes the outcome.
+
+**Recorded judgments (step 12).** After the flags, each applying judgment (§2.6) acts on its
+candidate. A judgment never overturns a rejection, and never admits a candidate that has another
+flag.
+
+- `key`, on a candidate flagged `KEY_NOT_AT_VALUE`, with `p` at or above
+  `clear.KEY_NOT_AT_VALUE`: when `answer` is the candidate's `key`, the flag is removed and the
+  decision records `MODEL_CLEARED`; otherwise the decision gets `MODEL_DOUBT` and the flag stays.
+  A `key` judgment on a candidate without that flag changes nothing, and the receipt still
+  lists it.
+- `field_match`, with `p` below `doubt.field_match`: the decision gets `MODEL_DOUBT`.
+
+The outcome then follows the flags that are left, as above. `MODEL_CLEARED` is informational.
 
 **Coverage.** For every `required` field with no candidate that is `admitted` or
 `needs_verification`, the receipt lists `{"field": <name>, "code": "REQUIRED_FIELD_MISSING"}`.
@@ -322,24 +377,27 @@ review. The nearest earlier mention does not apply inside a table sentence.
 ## 5. Receipt
 
 ```json
-{"groundgate": "0.3",
+{"groundgate": "0.4",
  "document": {"id": null, "sha256": "sha256:..."},
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "c1", "candidate_sha256": "sha256:...", "field": "...",
                 "key": null, "outcome": "admitted", "codes": [], "value": "2000", "unit": "mg",
                 "evidence": {"start": 120, "end": 128}}],
  "coverage": [],
+ "judgments": [],
  "summary": {"admitted": 1, "needs_verification": 0, "rejected": 0},
  "receipt_sha256": "sha256:..."}
 ```
 
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
-code, or the flag codes in the order of the table in §3, followed by `EVIDENCE_REANCHORED` when it
-applies. `value` is the canonical value and `unit` the candidate's unit, each `null` when the candidate
+code, or the flag codes in the order of the table in §3, followed by `EVIDENCE_REANCHORED` and
+then `MODEL_CLEARED` when they apply. `value` is the canonical value and `unit` the candidate's unit, each `null` when the candidate
 does not provide a parseable one. `key` is the candidate's `key` when its field has `keys` and the
 key is a string, otherwise `null`. `evidence` is the span the decision rests on: the re-anchored span
 when re-anchoring applied, otherwise the cited span if it is valid, otherwise `null`. Coverage is
-sorted by field name. `receipt_sha256` is the digest of kind `receipt` over the receipt without
+sorted by field name. `judgments` lists each judgment that applied, as `{"candidate_sha256",
+"question", "answer", "p"}` (`answer` only for `key`), sorted by `candidate_sha256`, then by input
+position of the candidate, then by question; the judge is in the policy. `receipt_sha256` is the digest of kind `receipt` over the receipt without
 its `receipt_sha256` key.
 
 ## 6. Canonical JSON and digests
@@ -349,11 +407,12 @@ strings escaped as ECMAScript `JSON.stringify` does, numbers serialised as ECMAS
 `Number.prototype.toString`. NaN and infinities are not permitted. Integers outside
 [-(2^53-1), 2^53-1] are not permitted (they are not exactly representable).
 
-`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.3:" + kind + "\0" + JCS(obj)))`, where
+`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.4:" + kind + "\0" + JCS(obj)))`, where
 the prefix is ASCII and `JCS(obj)` is UTF-8.
 
-## 7. Non-goals for v0.3
+## 7. Non-goals for v0.4
 
-Semantic correctness (whether the sentence describes the field), dates, arrays of records,
+Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
+`field_match` judgment can only add doubt. Calling a model, dates, arrays of records,
 cross-document checks, and PDF geometry (page and bounding box) as evidence. Adapters may convert
 richer evidence into spans.

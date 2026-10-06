@@ -33,7 +33,7 @@ CANDS = [
 
 def test_receipt_shape_and_summary() -> None:
     r = gg.admit(DOC, SCHEMA, CANDS, document_id="doc-1").to_dict()
-    assert r["groundgate"] == "0.3"
+    assert r["groundgate"] == "0.4"
     assert r["document"]["id"] == "doc-1"
     assert r["summary"] == {"admitted": 2, "needs_verification": 0, "rejected": 1}
     shas = [d["candidate_sha256"] for d in r["decisions"]]
@@ -75,7 +75,7 @@ def test_verify_names_a_receipt_from_another_spec_version() -> None:
     r["groundgate"] = "0.1"
     result = gg.verify(r, DOC, SCHEMA, CANDS)
     assert result.problems == (
-        "receipt was decided under spec 0.1; this groundgate implements 0.3",
+        "receipt was decided under spec 0.1; this groundgate implements 0.4",
     )
 
 
@@ -183,10 +183,13 @@ def test_flag_order_and_code_descriptions_are_pinned() -> None:
 
     assert FLAG_ORDER == (
         "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "KEY_NOT_AT_VALUE",
-        "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES",
+        "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "MODEL_DOUBT",
     )  # fmt: skip
     assert tuple(codes.FLAG) == FLAG_ORDER
-    assert len(codes.REJECT) == 11 and set(codes.INFO) == {"EVIDENCE_REANCHORED"}
+    assert len(codes.REJECT) == 11 and set(codes.INFO) == {
+        "EVIDENCE_REANCHORED",
+        "MODEL_CLEARED",
+    }
     assert set(codes.COVERAGE) == {"REQUIRED_FIELD_MISSING"}
 
 
@@ -225,3 +228,113 @@ def test_decisions_echo_the_key_of_a_keyed_field() -> None:
         4: ("rejected", None),
     }
     assert gg.Schema.from_dict(schema).to_dict()["fields"]["strength"]["keys"] is None
+
+
+JUDGE = {"id": "jev", "digest": "jev-1.13.0"}
+DOUBT = {"judge": {**JUDGE, "doubt": {"field_match": 0.2}}}
+
+
+def test_a_recorded_judgment_is_in_the_receipt_and_verify_needs_it() -> None:
+    js = [
+        {"candidate_id": "b", "question": "field_match", "judge": JUDGE, "p": 0.1},
+        {"candidate_id": "a", "question": "field_match", "judge": JUDGE, "p": 0.9},
+    ]
+    r = gg.admit(DOC, SCHEMA, CANDS, DOUBT, judgments=js).to_dict()
+    by_id = {d["candidate_id"]: d for d in r["decisions"]}
+    assert by_id["a"]["outcome"] == "admitted"
+    assert (by_id["b"]["outcome"], by_id["b"]["codes"]) == ("needs_verification", ["MODEL_DOUBT"])
+    sha = {d["candidate_id"]: d["candidate_sha256"] for d in r["decisions"]}
+    assert r["judgments"] == sorted(
+        [
+            {"candidate_sha256": sha["a"], "question": "field_match", "p": 0.9},
+            {"candidate_sha256": sha["b"], "question": "field_match", "p": 0.1},
+        ],
+        key=lambda j: j["candidate_sha256"],
+    )
+    assert gg.verify(r, DOC, SCHEMA, CANDS, DOUBT, js).ok
+    assert not gg.verify(r, DOC, SCHEMA, CANDS, DOUBT).ok
+    # with no judge in the policy, nothing applies and the receipt lists no judgment
+    plain = gg.admit(DOC, SCHEMA, CANDS, judgments=js).to_dict()
+    assert (
+        plain["judgments"] == []
+        and plain["decisions"] == gg.admit(DOC, SCHEMA, CANDS).to_dict()["decisions"]
+    )
+
+
+def test_cli_takes_recorded_judgments(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    doc = _write(tmp_path, "doc.txt", DOC)
+    schema = _write(tmp_path, "schema.json", SCHEMA)
+    cands = _write(tmp_path, "cands.json", CANDS)
+    policy = _write(tmp_path, "policy.json", DOUBT)
+    js = _write(
+        tmp_path,
+        "judgments.json",
+        [{"candidate_id": "b", "question": "field_match", "judge": JUDGE, "p": 0.1}],
+    )
+    out = str(tmp_path / "receipt.json")
+    run = [doc, schema, cands, "--policy", policy, "--judgments", js]
+    assert main(["admit", *run, "-o", out]) == 0
+    assert main(["verify", out, *run]) == 0
+    assert main(["verify", out, doc, schema, cands, "--policy", policy]) == 1
+    page = str(tmp_path / "report.html")
+    assert main(["report", out, *run, "-o", page]) == 0
+    assert "receipt verified" in Path(page).read_text()
+    capsys.readouterr()
+
+
+@pytest.mark.parametrize(
+    "judgments",
+    [
+        "not a list",
+        ["not an object"],
+        [{"candidate_id": "a", "question": "field_match", "judge": JUDGE, "p": 0.1, "x": 1}],
+        [{"candidate_id": "a", "question": "field_match", "judge": {"id": "jev"}, "p": 0.1}],
+        [{"candidate_id": "a", "question": "field_match", "judge": JUDGE, "p": True}],
+        [{"candidate_id": "a", "question": "key", "judge": JUDGE, "p": 0.1}],
+        [{"candidate_id": "a", "question": "key", "judge": JUDGE, "answer": 3, "p": 0.1}],
+        [{"candidate_id": "a", "question": "field_match", "judge": JUDGE, "answer": None, "p": 0}],
+        [{"candidate_id": True, "question": "field_match", "judge": JUDGE, "p": 0.1}],
+        [{"candidate_id": 1, "question": "field_match", "judge": JUDGE, "p": 0.1}],
+    ],
+)
+def test_malformed_judgments_are_invalid_packets(judgments: Any) -> None:
+    with pytest.raises(gg.PacketError):
+        gg.admit(DOC, SCHEMA, CANDS, DOUBT, judgments=judgments)
+
+
+@pytest.mark.parametrize(
+    "judge",
+    [
+        "jev",
+        {**JUDGE, "model": "x"},
+        {"id": "jev"},
+        {**JUDGE, "clear": []},
+        {**JUDGE, "doubt": {"field_match": 1.5}},
+        {**JUDGE, "doubt": {"field_match": True}},
+        {**JUDGE, "doubt": {"field_match": None}},
+        {**JUDGE, "clear": {"KEY_NOT_AT_VALUE": None}},
+    ],
+)
+def test_a_malformed_policy_judge_is_invalid(judge: Any) -> None:
+    with pytest.raises(gg.PacketError):
+        gg.admit(DOC, SCHEMA, CANDS, {"judge": judge})
+
+
+def test_a_key_judgment_without_the_key_flag_is_recorded_and_changes_nothing() -> None:
+    doc = "Adults: take 10 mg. Children: take 5 mg."
+    schema = {"fields": {"dose": {"type": "number", "unit": "mg", "keys": ["Adults", "Children"]}}}
+    start = doc.encode().index(b"10 mg")
+    cand = {"id": "a", "field": "dose", "value": "10", "unit": "mg", "key": "Adults",
+            "evidence": {"start": start, "end": start + 5}}  # fmt: skip
+    policy = {"judge": {**JUDGE, "clear": {"KEY_NOT_AT_VALUE": 0.9}}}
+    js = [{"candidate_id": "a", "question": "key", "judge": JUDGE, "answer": None, "p": 0.99}]
+    r = gg.admit(doc, schema, [cand], policy, judgments=js).to_dict()
+    assert (r["decisions"][0]["outcome"], r["decisions"][0]["codes"]) == ("admitted", [])
+    assert [j["question"] for j in r["judgments"]] == ["key"]
+
+
+def test_applied_judgments_in_a_receipt_are_immutable() -> None:
+    js = [{"candidate_id": "a", "question": "field_match", "judge": JUDGE, "p": 0.9}]
+    (j,) = gg.admit(DOC, SCHEMA, CANDS, DOUBT, judgments=js).judgments
+    with pytest.raises(AttributeError):
+        j.p = 0.1  # type: ignore[misc]

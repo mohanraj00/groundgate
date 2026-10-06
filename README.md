@@ -158,9 +158,9 @@ print(gg.verify(receipt.to_dict(), text, schema, candidates).ok)
 ```
 
 ```text
-admitted            ira_limit       7000
 rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
 needs_verification  phaseout_start  79000  QUALIFIED_VALUE
+admitted            ira_limit       7000
 True
 ```
 
@@ -238,14 +238,15 @@ vectors that pin every code, so another implementation can prove it agrees.
 ## Receipts
 
 ```json
-{"groundgate": "0.3",
- "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:da7797d569a5..."},
+{"groundgate": "0.4",
+ "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:82193ac6ea49..."},
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "Gemini_3.6_Flash_Medium/0", "field": "ira_limit_2025",
                 "outcome": "admitted", "codes": [], "value": "7000", "unit": "USD",
-                "evidence": {"start": 2317, "end": 2323}, "candidate_sha256": "sha256:aaf08a9a..."},
+                "evidence": {"start": 2317, "end": 2323}, "candidate_sha256": "sha256:ff8b82da..."},
                "..."],
  "coverage": [{"field": "roth_phaseout_single_2025_end", "code": "REQUIRED_FIELD_MISSING"}],
+ "judgments": [],
  "summary": {"admitted": 44, "needs_verification": 3, "rejected": 1},
  "receipt_sha256": "sha256:..."}
 ```
@@ -268,13 +269,14 @@ a changed document, schema, policy, candidate or outcome.
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
   are a design ([docs/design/locale-packs.md](docs/design/locale-packs.md), #60).
 - **No OCR.** Scanned PDFs need a text layer first (for example `ocrmypdf`).
-- **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right. A
-  planned optional tier (#66) records a small model's answers as inputs, so a receipt still
-  re-derives byte for byte.
+- **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right. Spec
+  0.4 (a draft on `main`, #116) reads a judge's answers only as recorded inputs, so a receipt
+  still re-derives byte for byte. `groundgate-calibrate` (#112) measures the thresholds on your
+  own documents.
 
 ## Status
 
-Alpha. groundgate 0.3.0 implements spec v0.3. [CHANGELOG.md](CHANGELOG.md) lists what 0.3
+Alpha. groundgate 0.3.0 implements spec v0.3, and `main` holds the spec 0.4 draft. [CHANGELOG.md](CHANGELOG.md) lists what 0.3
 changes, each with its measure: a wider change rule (#51), abbreviation dots that no longer end a
 sentence for qualifiers (#63, #77), Indian digit grouping (#59), ASCII digits (#94), and keys
 that stop at a label line (#52) or read a table by its lines (#87). A receipt names the spec

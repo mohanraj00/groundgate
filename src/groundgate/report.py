@@ -63,13 +63,16 @@ def render(
     policy: Policy | Mapping[str, Any] | None = None,
     layout: Layout | None = None,
     title: str | None = None,
+    judgments: Sequence[object] | None = None,
 ) -> str:
     """Render ``receipt`` over ``text``. ``candidates`` supply the quotes shown on each card.
 
-    With ``schema`` (and ``policy`` if one was used), the receipt is re-derived first and the page
-    says whether it matched. Without them the page says it is unverified.
+    With ``schema`` (and ``policy`` and ``judgments`` if they were used), the receipt is re-derived
+    first and the page says whether it matched. Without them the page says it is unverified.
     """
-    verified = None if schema is None else verify(receipt, text, schema, candidates, policy).ok
+    verified = (
+        None if schema is None else verify(receipt, text, schema, candidates, policy, judgments).ok
+    )
     offsets = Offsets(text)
     by_sha = {digest("candidate", c): c for c in candidates}
     items = []

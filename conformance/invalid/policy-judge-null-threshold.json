@@ -1,0 +1,21 @@
+{
+ "name": "policy-judge-null-threshold",
+ "description": "A threshold that is present is a number in [0, 1], not null.",
+ "document": "x",
+ "schema": {
+  "fields": {}
+ },
+ "policy": {
+  "judge": {
+   "id": "jev",
+   "digest": "jev-1.13.0",
+   "doubt": {
+    "field_match": null
+   }
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -9,7 +9,7 @@ from decimal import Decimal
 from typing import Any
 
 from .canonical import SPEC_VERSION, Offsets, digest, is_nfc
-from .model import Decision, Field, Outcome, PacketError, Policy, Receipt, Schema
+from .model import Decision, Field, Judgment, Outcome, PacketError, Policy, Receipt, Schema
 from .text import (
     Token,
     canonical,
@@ -34,8 +34,11 @@ FLAG_ORDER = (  # SPEC §3 table order; it is part of every receipt hash
     "KEY_NOT_AT_VALUE",
     "LOW_CONFIDENCE",
     "CONFLICTING_CANDIDATES",
+    "MODEL_DOUBT",
 )
 REANCHORED = "EVIDENCE_REANCHORED"
+CLEARED = "MODEL_CLEARED"
+QUESTIONS = ("key", "field_match")
 
 
 class _Reject(Exception):
@@ -94,6 +97,7 @@ class _Passed:
     token: Token | None
     flags: list[str]
     reanchored: bool
+    cleared: bool = False  # a recorded judgment removed KEY_NOT_AT_VALUE (step 12)
 
 
 def _value_at(
@@ -224,22 +228,103 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
     return _Passed(f, canon, unit, key, span, token, flags, reanchored)
 
 
+@dataclass(frozen=True)
+class _Judgment:
+    question: str
+    judge: tuple[str, str]
+    answer: str | None
+    p: float
+
+
+def _judgments(raw: object, candidates: Sequence[object]) -> dict[int, dict[str, _Judgment]]:
+    """The recorded judgments (SPEC §2.6) by candidate position and question."""
+    if raw is None:
+        return {}
+    if isinstance(raw, (str, bytes)) or not isinstance(raw, Sequence):
+        raise PacketError("judgments must be a list")
+    ids: dict[tuple[type, object], list[int]] = defaultdict(list)
+    for i, cand in enumerate(candidates):
+        cid = cand.get("id") if isinstance(cand, Mapping) else None
+        if isinstance(cid, (str, int)) and not isinstance(cid, bool):
+            ids[type(cid), cid].append(i)
+    out: dict[int, dict[str, _Judgment]] = defaultdict(dict)
+    for n, j in enumerate(raw):
+        where = f"judgment {n}"
+        if not isinstance(j, Mapping):
+            raise PacketError(f"{where} must be an object")
+        known = {"candidate_id", "question", "judge", "p"} | (
+            {"answer"} if j.get("question") == "key" else set()
+        )
+        if set(j) - known:
+            raise PacketError(f"{where} has unknown keys {sorted(set(j) - known)}")
+        question, judge, p = j.get("question"), j.get("judge"), j.get("p")
+        if question not in QUESTIONS:
+            raise PacketError(f"{where}: question must be one of {list(QUESTIONS)}")
+        if (
+            not isinstance(judge, Mapping)
+            or set(judge) != {"id", "digest"}
+            or not all(isinstance(judge[k], str) and judge[k].strip() for k in judge)
+        ):
+            raise PacketError(f"{where}: judge must hold a non-blank id and digest")
+        if isinstance(p, bool) or not isinstance(p, (int, float)) or not 0 <= p <= 1:
+            raise PacketError(f"{where}: p must be a number in [0, 1]")
+        answer = j.get("answer")
+        if question == "key" and ("answer" not in j or not isinstance(answer, (str, type(None)))):
+            raise PacketError(f"{where}: a key judgment needs an answer, a key or null")
+        cid = j.get("candidate_id")
+        if isinstance(cid, bool) or not isinstance(cid, (str, int)):
+            raise PacketError(f"{where}: candidate_id must be a string or an integer")
+        at = ids.get((type(cid), cid), [])
+        if len(at) != 1:
+            raise PacketError(f"{where}: {len(at)} candidates have the id {cid!r}, not 1")
+        if question in out[at[0]]:
+            raise PacketError(f"{where}: the candidate has a {question} judgment already")
+        out[at[0]][question] = _Judgment(question, (judge["id"], judge["digest"]), answer, float(p))
+    return out
+
+
+def _judge(policy: Policy, p: _Passed, js: dict[str, _Judgment]) -> list[_Judgment]:
+    """Step 12: apply the recorded judgments of one candidate; return those that applied."""
+    jp = policy.judge
+    if jp is None:
+        return []
+    applied = []
+    for j in js.values():
+        if j.judge != (jp.id, jp.digest):
+            continue
+        if j.question == "key" and jp.clear_key is not None:
+            applied.append(j)
+            if "KEY_NOT_AT_VALUE" in p.flags and j.p >= jp.clear_key:
+                if j.answer == p.key:
+                    p.flags.remove("KEY_NOT_AT_VALUE")
+                    p.cleared = True
+                else:
+                    p.flags.append("MODEL_DOUBT")
+        elif j.question == "field_match" and jp.doubt_field is not None:
+            applied.append(j)
+            if j.p < jp.doubt_field:
+                p.flags.append("MODEL_DOUBT")
+    return applied
+
+
 def admit(
     text: str,
     schema: Schema | Mapping[str, Any],
     candidates: Sequence[object],
     policy: Policy | Mapping[str, Any] | None = None,
     document_id: str | None = None,
+    judgments: Sequence[object] | None = None,
 ) -> Receipt:
     """Decide every candidate and return the receipt.
 
     ``text`` is the document in Unicode NFC. ``schema`` and ``policy`` are dicts or ``Schema`` and
     ``Policy`` objects; ``policy=None`` uses the defaults. ``candidates`` is a list of candidate
     dicts with UTF-8 byte spans as evidence. A malformed candidate gets a ``rejected`` decision,
-    not an exception. ``document_id`` is copied into the receipt.
+    not an exception. ``document_id`` is copied into the receipt. ``judgments`` are recorded
+    answers of a judge (SPEC §2.6); the policy's ``judge`` block says which apply.
 
-    Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema
-    or policy is invalid. Then no receipt is made.
+    Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema,
+    policy or judgments are invalid. Then no receipt is made.
     """
     if not isinstance(text, str) or not is_nfc(text):
         raise PacketError("document text must be a string in Unicode NFC")
@@ -249,6 +334,7 @@ def admit(
         policy = Policy() if policy is None else Policy.from_dict(policy)
     if isinstance(candidates, (str, bytes)) or not isinstance(candidates, Sequence):
         raise PacketError("candidates must be a list")
+    by_cand = _judgments(judgments, candidates)
     table = frozenset(x for _, suffixes in schema.units.values() for x in suffixes)
     ctx = _Ctx(text, Offsets(text), schema, policy, suffixes=table)
 
@@ -268,8 +354,12 @@ def admit(
         if isinstance(p, _Passed) and len(by_key.get((p.field.name, p.key), ())) > 1:
             p.flags.append("CONFLICTING_CANDIDATES")
 
-    decisions = []
-    for sha, _, cand, p in sorted(results, key=lambda r: (r[0], r[1])):
+    decisions: list[Decision] = []
+    applied: list[Judgment] = []
+    for sha, i, cand, p in sorted(results, key=lambda r: (r[0], r[1])):
+        if isinstance(p, _Passed):
+            for j in sorted(_judge(policy, p, by_cand.get(i, {})), key=lambda j: j.question):
+                applied.append(Judgment(sha, j.question, j.answer, j.p))
         cid = cand.get("id") if isinstance(cand, Mapping) else None
         decisions.append(_decision(ctx, sha, cand, cid, p))
 
@@ -288,6 +378,7 @@ def admit(
         tuple(decisions),
         coverage,
         "",
+        tuple(applied),
     )
     return Receipt(**{**draft.__dict__, "receipt_sha256": digest("receipt", draft.body())})
 
@@ -295,7 +386,7 @@ def admit(
 def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | str) -> Decision:
     if isinstance(p, _Passed):
         flags = [c for c in FLAG_ORDER if c in p.flags]
-        codes = [*flags, REANCHORED] if p.reanchored else flags
+        codes = [*flags, *([REANCHORED] if p.reanchored else []), *([CLEARED] if p.cleared else [])]
         byte_span = (ctx.offsets.to_bytes(p.span[0]), ctx.offsets.to_bytes(p.span[1]))
         outcome: Outcome = "needs_verification" if flags else "admitted"
         return Decision(
@@ -353,12 +444,14 @@ def verify(
     schema: Schema | Mapping[str, Any],
     candidates: Sequence[object],
     policy: Policy | Mapping[str, Any] | None = None,
+    judgments: Sequence[object] | None = None,
 ) -> Verification:
     """Re-derive the receipt from its inputs and compare it with ``receipt``.
 
     ``receipt`` is the JSON object that ``Receipt.to_dict()`` returned. The other arguments are
-    the inputs given to ``admit``. The result has ``ok`` and ``problems``: ``(True, ())`` when
-    every byte re-derives. A receipt from another spec version gives one problem and no further
+    the inputs given to ``admit``, with the same ``judgments``. The result has ``ok`` and
+    ``problems``: ``(True, ())`` when every byte re-derives. A receipt from another spec version
+    gives one problem and no further
     checks. Raises ``PacketError`` when ``receipt`` is not a JSON object or an input is invalid.
     """
     if not isinstance(receipt, Mapping):
@@ -375,8 +468,8 @@ def verify(
         if isinstance(receipt.get("document"), Mapping)
         else None
     )
-    fresh = admit(text, schema, candidates, policy, document_id=doc_id).to_dict()
-    for key in ("document", "schema_sha256", "policy_sha256", "coverage", "summary"):
+    fresh = admit(text, schema, candidates, policy, doc_id, judgments).to_dict()
+    for key in ("document", "schema_sha256", "policy_sha256", "coverage", "judgments", "summary"):
         if receipt.get(key) != fresh[key]:
             problems.append(f"{key} differs from the re-derived receipt")
     theirs, ours = receipt.get("decisions"), fresh["decisions"]

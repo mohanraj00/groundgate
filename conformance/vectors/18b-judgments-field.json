@@ -1,0 +1,189 @@
+{
+ "name": "18b-judgments-field",
+ "description": "A recorded field_match judgment whose p is below the policy's threshold adds MODEL_DOUBT to a candidate that passes steps 1 to 11, so it goes to review. It never admits a value, and a rejection stays a rejection.",
+ "document": "The annual fee is $40. The late fee is $15. A processing fee of $5 applies. The reserve is $2 million.",
+ "schema": {
+  "fields": {
+   "annual_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "deposit": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "late_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "processing_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "reserve": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": {
+  "judge": {
+   "id": "jev",
+   "digest": "jev-1.13.0",
+   "doubt": {
+    "field_match": 0.2
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "f1",
+   "field": "annual_fee",
+   "value": 40,
+   "unit": "USD",
+   "evidence": {
+    "start": 18,
+    "end": 21,
+    "text": "$40"
+   }
+  },
+  {
+   "id": "f2",
+   "field": "deposit",
+   "value": 40,
+   "unit": "USD",
+   "evidence": {
+    "start": 18,
+    "end": 21,
+    "text": "$40"
+   }
+  },
+  {
+   "id": "f3",
+   "field": "late_fee",
+   "value": 15,
+   "unit": "USD",
+   "evidence": {
+    "start": 39,
+    "end": 42,
+    "text": "$15"
+   }
+  },
+  {
+   "id": "f4",
+   "field": "processing_fee",
+   "value": 5,
+   "unit": "USD",
+   "evidence": {
+    "start": 64,
+    "end": 66,
+    "text": "$5"
+   }
+  },
+  {
+   "id": "f5",
+   "field": "reserve",
+   "value": 2,
+   "unit": "USD",
+   "evidence": {
+    "start": 91,
+    "end": 101,
+    "text": "$2 million"
+   }
+  },
+  {
+   "id": "f6",
+   "field": "late_fee",
+   "value": 99,
+   "unit": "USD",
+   "evidence": {
+    "start": 39,
+    "end": 42,
+    "text": "$15"
+   }
+  }
+ ],
+ "judgments": [
+  {
+   "candidate_id": "f1",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.9
+  },
+  {
+   "candidate_id": "f2",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.05
+  },
+  {
+   "candidate_id": "f4",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.2
+  },
+  {
+   "candidate_id": "f5",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.1
+  },
+  {
+   "candidate_id": "f6",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.01
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "MODEL_DOUBT"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD",
+     "MODEL_DOUBT"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
