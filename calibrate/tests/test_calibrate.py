@@ -248,8 +248,11 @@ def test_a_plug_in_judge_comes_from_an_entry_point(monkeypatch: pytest.MonkeyPat
         def load(self) -> Any:
             return fake({})
 
+    monkeypatch.setattr(judges, "entry_points", lambda group: [EP("fake")])
+    assert judges.load("fake").digest == "fake-1"
     monkeypatch.setattr(judges, "entry_points", lambda group: [EP("mine")])
-    assert judges.load("mine").digest == "fake-1"
+    with pytest.raises(SystemExit, match="must be equal"):
+        judges.load("mine")
     with pytest.raises(SystemExit, match="no judge"):
         judges.load("other")
     monkeypatch.setattr(judges, "entry_points", lambda group: [EP("jev")])
@@ -296,6 +299,13 @@ def test_judge_writes_recorded_judgments(tmp_path: Path, monkeypatch: pytest.Mon
     policy.write_text(json.dumps({"judge": {**block, "doubt": {"field_match": 0.2}}}))
     with pytest.raises(SystemExit, match="give its calibration"):
         cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+    # a calibration whose context changed after its run is refused
+    cfg = json.loads((work / "config.json").read_text())
+    (work / "config.json").write_text(json.dumps({**cfg, "context": "Another context."}))
+    policy.write_text(json.dumps({"judge": block}))
+    with pytest.raises(SystemExit, match="calibrate again"):
+        cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
+    (work / "config.json").write_text(json.dumps(cfg))
     # another model version is refused
     policy.write_text(json.dumps({"judge": {**block, "digest": "fake-2"}}))
     with pytest.raises(SystemExit, match="fake-2"):

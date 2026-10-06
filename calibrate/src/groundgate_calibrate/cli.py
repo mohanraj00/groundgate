@@ -232,6 +232,10 @@ def judge_packets(args: argparse.Namespace) -> None:
         rec = w.read(f"answers-{jd.id}.json")
         if rec["meta"]["model"] != jd.digest:
             raise SystemExit(f"{path} calibrated {rec['meta']['model']}, not {jd.digest}")
+        # the thresholds hold for the prompts that set them, so the wording, context,
+        # descriptions and items must be those of the calibration run
+        if prompts_sha256(w) != rec["meta"]["prompts_sha256"]:
+            raise SystemExit(f"{path} changed after its judge answered; calibrate again")
         cals[cfg["question"]] = cfg
     for question, on in wanted.items():
         if on and question not in cals:

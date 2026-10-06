@@ -76,4 +76,7 @@ def load(name: str) -> Judge:
     for attr in ("id", "digest"):
         if not isinstance(getattr(judge, attr, None), str) or not getattr(judge, attr).strip():
             raise SystemExit(f"judge {name!r} has no {attr}")
+    if judge.id != name:
+        # a policy names the judge by its id, and production loads it by that name
+        raise SystemExit(f"judge {name!r} says its id is {judge.id!r}; they must be equal")
     return judge
