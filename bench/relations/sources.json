@@ -1,0 +1,483 @@
+{
+  "retrieved": "2026-10-05",
+  "sources": [
+    {
+      "id": "fda-tramadol",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/5c2ac7cb-3a38-2174-e063-6394a90a95cc.xml",
+      "sha256": "654ff9855a0d6bbadec8a3a29668b991a37873a92e92be13155a62a9d5860aba",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "TRAMADOL HYDROCHLORIDE TABLET, COATED [UNIT DOSE SOLUTIONS, INC.]; Part D 2024 claims rank 28"
+    },
+    {
+      "id": "fda-duloxetine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/00628e5e-4c5b-2573-e063-6294a90a0e3b.xml",
+      "sha256": "e209716a7ab93d659eb3e1f65a3fb61ceb7f79d9fa8f0e8e24cb7cf96a7f5527",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "DULOXETINE DELAYED-RELEASE (DULOXETINE HYDROCHLORIDE) CAPSULE, DELAYED RELEASE PELLETS [GOLDEN STATE MEDICAL SUPPLY, INC.]; Part D 2024 claims rank 29"
+    },
+    {
+      "id": "fda-meloxicam",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/58dcbc65-d126-7b48-e063-6294a90a52e9.xml",
+      "sha256": "0d346efc0892b3f993ad8ce09e2239ee80a716d025636f0ba2f5cef4b0c318c0",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "MELOXICAM TABLET [DIRECT_RX]; Part D 2024 claims rank 32"
+    },
+    {
+      "id": "fda-alprazolam",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/a23063c0-099a-4256-b95f-3a857bbf704b.xml",
+      "sha256": "ecea1b06943c172f02074dc1244cebd6714fc6a8ac016d2d35ffcabe62b6b121",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ALPRAZOLAM TABLET [ACTAVIS PHARMA, INC.]; Part D 2024 claims rank 34"
+    },
+    {
+      "id": "fda-bupropion",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/0961f83e-25e9-4ffc-8669-44e4e9169978.xml",
+      "sha256": "78fa99691d0e28150aaeba53f6043ccefe766c6cc2ecfd8e76a43f566987f2bd",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "BUPROPION HYDROCHLORIDE TABLET, FILM COATED [MODAVAR PHARMACEUTICALS LLC]; Part D 2024 claims rank 38"
+    },
+    {
+      "id": "fda-allopurinol",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/76ca6bea-5f63-4e76-b161-1dbcbad18421.xml",
+      "sha256": "c5ef638158a0420654f3a1295aeae182e1af7b63d62a4491732247f0553cb71e",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ALLOPURINOL TABLET [SPORTPHARM LLC]; Part D 2024 claims rank 40"
+    },
+    {
+      "id": "fda-oxycodone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/338b5391-e5f7-40a2-8b15-57f47cbc4813.xml",
+      "sha256": "52cdbb0fbd9d3af6d24b8afaadea4165d4e67b04f99ae7694ef76c752f9e98fc",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "OXYCODONE HYDROCHLORIDE CAPSULE [KVK-TECH, INC.]; Part D 2024 claims rank 41"
+    },
+    {
+      "id": "fda-pravastatin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/ce15ad07-3286-478f-9f30-1db6a45ed402.xml",
+      "sha256": "69e3bb980be939191be3d8cf17c33bc474a1bd5f9b4e127ed76f8769ec16b6f6",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "PRAVASTATIN SODIUM TABLET [NORTHSTAR RXLLC]; Part D 2024 claims rank 43"
+    },
+    {
+      "id": "fda-ezetimibe",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/6407d7f3-fd92-4c36-b561-f95ab7ebe055.xml",
+      "sha256": "2ccc98cab15bad22de9abf24879006efbe3641ffdc87e3d369da4b28edb9ead5",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "EZETIMIBE TABLET [SAFECOR HEALTH, LLC]; Part D 2024 claims rank 49"
+    },
+    {
+      "id": "fda-mirtazapine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/b4b9b66e-87a1-4dbb-9eaf-71221bcb2265.xml",
+      "sha256": "cc434a7134dca3f9fbf4bd56ad29ce4944c0c621a43d0bae22fdf452b468a3fb",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "MIRTAZAPINE (MIRTAZAPINE) TABLET, FILM COATED [CAMBER PHARMACEUTICALS, INC.]; Part D 2024 claims rank 50"
+    },
+    {
+      "id": "fda-donepezil",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/603c07bb-61bf-410f-8abf-01ef09d61c14.xml",
+      "sha256": "0baf5d2cca0c27de86f3ab0681900b95d563864898d30b49f70174abefb80300",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "DONEPEZIL HYDROCHLORIDE TABLET, FILM COATED [ASCLEMED USA INC.]; Part D 2024 claims rank 52"
+    },
+    {
+      "id": "fda-zolpidem",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/d34336b1-7041-4078-beda-94bc9d9f771e.xml",
+      "sha256": "b3ee55324ac1da2f5693327cb3a1a75c64e60449ee0fe8f4bbb174b59aff5f8d",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ZOLPIDEM TARTRATE TABLET [MAJOR PHARMACEUTICALS]; Part D 2024 claims rank 53"
+    },
+    {
+      "id": "fda-glipizide",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/667dd68a-d3e7-4b50-bd0a-d17783a090d5.xml",
+      "sha256": "8d5ea601d4c2d8017150dcdbc4cdaa59086ca01bea27de7ffa6af9786dff74a2",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [
+        "Limitations of Use"
+      ],
+      "source": "GLIPIZIDE TABLET, EXTENDED RELEASE [REMEDYREPACK INC.]; Part D 2024 claims rank 55"
+    },
+    {
+      "id": "fda-tizanidine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/3dd09a0d-a782-1d6d-a552-b71e5bcbf2fe.xml",
+      "sha256": "5c9f8b0dc0a313af32ef33f359e3158fb97c789acbd64d525ab42ebe9c4b3f4d",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "TIZANIDINE HYDROCHLORIDE CAPSULE, GELATIN COATED [APOTEX CORP.]; Part D 2024 claims rank 63"
+    },
+    {
+      "id": "fda-citalopram",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/0109f365-bebd-4810-a56f-4451e10245db.xml",
+      "sha256": "b5af6df9599c7e5ad51a465e838a3bab42163f90a6557e9d7ba5c65540f8c4b4",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "CITALOPRAM (CITALOPRAM HYDROBROMIDE) TABLET, FILM COATED [REMEDYREPACK INC.]; Part D 2024 claims rank 65"
+    },
+    {
+      "id": "fda-memantine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/007d4cb9-3fa9-40f3-b5ca-4083eccd6038.xml",
+      "sha256": "1cbe5eca7f243ae64f0e0de86c50f285052a96894e0f67647440465ae776382d",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "MEMANTINE HYDROCHLORIDE CAPSULE, EXTENDED RELEASE [NCS HEALTHCARE OF KY, LLC DBA VANGARD LABS]; Part D 2024 claims rank 71"
+    },
+    {
+      "id": "fda-oxybutynin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/0c71bdfb-01db-49ac-a8e9-0037df0d24af.xml",
+      "sha256": "1074131e5ef61c0b7b903ed14321ac0a91cee35faeb7286dc72f98a5d7988d60",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "OXYBUTYNIN CHLORIDE EXTENDED RELEASE (OXYBUTYNIN CHLORIDE) TABLET, EXTENDED RELEASE [AMERICAN HEALTH PACKAGING]; Part D 2024 claims rank 81"
+    },
+    {
+      "id": "fda-warfarin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/654ca5d2-d4c1-48f8-90c4-130a21162bb0.xml",
+      "sha256": "fe1ae6c44ba395319d1854100e204bf092c8a6aab1856031817be723b92f5838",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "WARFARIN SODIUM TABLET [A-S MEDICATION SOLUTIONS]; Part D 2024 claims rank 86"
+    },
+    {
+      "id": "fda-ondansetron",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/960e2104-18c3-4cfa-abf6-f1b30c452918.xml",
+      "sha256": "8ee142f29e7fc3b8f6a238220914d1745cea5f66813279088b1493ba68a5ba83",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ONDANSETRON HYDROCHLORIDE TABLET, FILM COATED [REMEDYREPACK INC.]; Part D 2024 claims rank 88"
+    },
+    {
+      "id": "fda-glimepiride",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/aa533cde-4b32-450e-b080-127351524678.xml",
+      "sha256": "64b9f83e197f83c9a17288f14d74ec1faf4f7b3593d5a9f6ad64703ea9ec8dce",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "GLIMEPIRIDE TABLET [PREFERRED PHARMACEUTICALS INC.]; Part D 2024 claims rank 95"
+    },
+    {
+      "id": "fda-aripiprazole",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/abb8ad7e-7998-4485-a09f-a2892190f4ad.xml",
+      "sha256": "023bf5d64de9179a97cd0a2f92616ae4db966b45a4499108b5a764cb86ac1a6b",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "ARIPIPRAZOLE TABLET [SOLCO HEALTHCARE U.S., LLC]; Part D 2024 claims rank 102"
+    },
+    {
+      "id": "fda-sitagliptin",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/cebc8388-c9db-4e27-8d6b-0d9bdc9d766d.xml",
+      "sha256": "394e875c8ba12557c1dbb4d7a06c0821d99c230a36995ad787d127783342990d",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "SITAGLIPTIN PHOSPHATE TABLET, FILM COATED [SANDOZ INC]; Part D 2024 claims rank 103"
+    },
+    {
+      "id": "fda-olmesartan",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/c49a7f23-2af0-4607-9f21-114970f8630d.xml",
+      "sha256": "469a806157cb1998748698f7220534473a89127c1f5fe0af13c34add0ffab7cc",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "OLMESARTAN MEDOXOMIL TABLET [UMEDICA LABORATORIES USA INC.]; Part D 2024 claims rank 117"
+    },
+    {
+      "id": "fda-paroxetine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/e63fe922-b35a-406c-8737-f3f5e6d5a30d.xml",
+      "sha256": "efac89eb75029496de939fdedbbfb776f86e2122daa15eb8a7a1a703f8bce806",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "PAROXETINE (PAROXETINE HYDROCHLORIDE) TABLET, FILM COATED [GOLDEN STATE MEDICAL SUPPLY, INC.]; Part D 2024 claims rank 120"
+    },
+    {
+      "id": "fda-pioglitazone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/04577c39-a9c0-4c66-a775-4c79e2c3dea5.xml",
+      "sha256": "f6dafe8646e842f3efbb0fccc85019875a51daf58cdd3a87225727afc095f592",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "PIOGLITAZONE HYDROCHLORIDE TABLET [REMEDYREPACK INC.]; Part D 2024 claims rank 125"
+    },
+    {
+      "id": "fda-amiodarone",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/4c149392-a4f0-4e2d-a13f-2b94810005de.xml",
+      "sha256": "8f534fa7ef5bcfa8700615833f0844b191792d062b3fb1d4ac34457083b8dfae",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "AMIODARONE HYDROCHLORIDE TABLET [REMEDYREPACK INC.]; Part D 2024 claims rank 127"
+    },
+    {
+      "id": "fda-meclizine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/d53bf04e-5cfc-4974-9b24-2cce545d1bd0.xml",
+      "sha256": "83c789fc4a8c69e859297eda0b381f3377b19dac2754b35bf207a51a96db2c05",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "MECLIZINE HYDROCHLORIDE TABLET [REMEDYREPACK INC.]; Part D 2024 claims rank 128"
+    },
+    {
+      "id": "fda-morphine",
+      "kind": "fda",
+      "groups": [
+        "keys"
+      ],
+      "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/2da87bfa-11fd-43e3-8fef-d16ebeb15680.xml",
+      "sha256": "0fb061d7d21b4b9f0c8eec8fcf46bbe16c9941d688dc7e8f7a261f03ce0aa6da",
+      "select": {
+        "sections": [
+          "34068-7",
+          "43678-2"
+        ]
+      },
+      "keys": [],
+      "source": "MORPHINE SULFATE CAPSULE, EXTENDED RELEASE [ACTAVIS PHARMA, INC.]; Part D 2024 claims rank 142"
+    }
+  ]
+}
