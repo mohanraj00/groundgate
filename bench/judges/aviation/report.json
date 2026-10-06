@@ -1,0 +1,19 @@
+{
+ "engines": {},
+ "numbers": {
+  "calibration": 70,
+  "test": 75
+ },
+ "pairs": {
+  "calibration": 248,
+  "test": 254
+ },
+ "reports": {
+  "calibration": 6,
+  "test": 5
+ },
+ "right_pairs": {
+  "calibration": 34,
+  "test": 35
+ }
+}
