@@ -22,14 +22,14 @@ earlier vectors and every bench set rescore unchanged.
     packets.
 - The judge block is experimental. Its one measure on real extractor output is the key clear on
   10-K filings (`bench/sec/results.json`, #120): of 51 right `KEY_NOT_AT_VALUE` flags on the test
-  part, Jev at 0.5 cleared 34 with 0 escapes, and 0.5 is also the threshold that the FDA labels
-  gave (#100). The test part held only 2 wrong flags, so the escape side rests on little data.
-  The field doubt caught no wrong value on the same filings. groundgate ships no thresholds: a
-  threshold belongs to one model and one kind of document.
+  part, the built-in judge at 0.5 cleared 34 with 0 escapes, and 0.5 is also the threshold that
+  the FDA labels gave (#100). The test part held only 2 wrong flags, so the escape side rests on
+  little data. The field doubt caught no wrong value on the same filings. groundgate ships no
+  thresholds: a threshold belongs to one model and one kind of document.
 - `groundgate-calibrate` (#112, #115, #119) is a separate package in `calibrate/`. It measures a
   judge's thresholds on your own documents, writes the policy's `judge` block, and writes the
-  recorded judgments for production. Judges are plug-ins (entry point group
-  `groundgate.judges`). It is not on PyPI yet (#122).
+  recorded judgments for production. One judge is built in at this time. Other judges come in as
+  plug-ins (entry point group `groundgate.judges`, #124). It is not on PyPI yet (#122).
 
 ## 0.3.0 (2026-10-05)
 
