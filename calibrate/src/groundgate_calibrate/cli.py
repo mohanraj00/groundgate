@@ -1,8 +1,8 @@
 """groundgate-calibrate: measure a judge's thresholds on your own documents (hybrid design §9).
 
     groundgate-calibrate sample --work W --docs D --candidates C --schema S --question key
-    groundgate-calibrate label  --work W        # label in the browser, blind
     groundgate-calibrate split  --work W        # before any model run
+    groundgate-calibrate label  --work W        # label in the browser, blind, before ask
     groundgate-calibrate ask    --work W --judge jev
     groundgate-calibrate report --work W        # REPORT.md, report.json
 
@@ -123,6 +123,10 @@ def prompts(w: Work) -> list[tuple[str, str, dict[str, Any]]]:
     return out
 
 
+def labels_sha256(labels: dict[str, Any]) -> str:
+    return hashlib.sha256(json.dumps(labels, sort_keys=True).encode()).hexdigest()
+
+
 def prompts_sha256(w: Work) -> str:
     return hashlib.sha256(json.dumps(prompts(w)).encode()).hexdigest()
 
@@ -138,8 +142,13 @@ def ask(w: Work, judge: str) -> None:
     digest = hashlib.sha256(json.dumps(ps).encode()).hexdigest()
     if digest != w.read("prompts.json")["prompts_sha256"]:
         raise SystemExit("the documents, items or config changed after the split")
+    # every item is labeled before any judge answers, and those labels are the ones scored
+    labels = w.read("labels.json", {})
+    missing = [iid for iid, _, _ in ps if iid not in labels]
+    if missing:
+        raise SystemExit(f"{len(missing)} items are not labeled yet; label before a judge answers")
     meta, call = JUDGES[judge]()
-    record = {**meta, "prompts_sha256": digest}
+    record = {**meta, "prompts_sha256": digest, "labels_sha256": labels_sha256(labels)}
     partial = w.path / f".answers-{judge}.partial.json"
     answers: dict[str, Any] = {}
     if partial.exists():
@@ -179,6 +188,9 @@ def report(w: Work, check: bool) -> None:
         rec = json.loads(path.read_text())
         if rec["meta"]["prompts_sha256"] != w.read("prompts.json")["prompts_sha256"]:
             raise SystemExit(f"{path.name} answers other prompts than the split's")
+        if rec["meta"]["labels_sha256"] != labels_sha256(labels):
+            raise SystemExit(f"the labels changed after {path.name}; a judge's answers are scored "
+                             "only against the labels made before it answered")  # fmt: skip
         s = q.score(cfg["question"], items, labels, parts, rec["answers"])
         results["judges"][path.stem[8:]] = {"meta": rec["meta"], **s}
     if not results["judges"]:

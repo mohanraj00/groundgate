@@ -13,8 +13,8 @@ contains code that calls a model.
 ```bash
 groundgate-calibrate sample --work W --docs D --candidates C --schema S --question key \
     --context "The text is from a 10-K filing."
-groundgate-calibrate label  --work W        # label in the browser, blind
 groundgate-calibrate split  --work W        # before any model run
+groundgate-calibrate label  --work W        # label in the browser, blind, before ask
 TYPESAFE_API_KEY=... groundgate-calibrate ask --work W --judge jev
 groundgate-calibrate report --work W        # REPORT.md, report.json
 ```
@@ -58,6 +58,9 @@ documents for the ceiling that you need before you start.
   options. It never shows the candidate's key, spec 0.3's reading or a judge's answer.
 - **Split first.** `split` is written once, by document, on sha256 of the document name. It
   refuses to run after a judge has answered, and `ask` refuses to run without it.
+- **Labels first.** `ask` refuses to run until every item has a label (not sure counts), and it
+  records a digest of the labels. The label tool refuses changes once a judge has answered, and
+  `report` refuses answers whose labels changed.
 - **Fixed prompts.** `split` also records a digest of every prompt. `ask` refuses to run when the
   documents, items or config changed after the split, and `report` refuses answers to other
   prompts. `ask` goes on after a stop only with the same judge, model and prompts.

@@ -120,12 +120,16 @@ def test_the_steps_from_sample_to_report(tmp_path: Path, monkeypatch: pytest.Mon
     with pytest.raises(SystemExit, match=r"split\.json"):
         cli.main(["ask", *run, "--judge", "fake"])
     cli.main(["split", *run])
+    with pytest.raises(SystemExit, match="label before a judge answers"):
+        cli.main(["ask", *run, "--judge", "fake"])
+    labels = {it["id"]: ["fiscal 2025"] for it in items}
+    (work / "labels.json").write_text(json.dumps(labels))
     cli.main(["ask", *run, "--judge", "fake"])
     with pytest.raises(SystemExit, match="already"):
         cli.main(["split", *run])
-    with pytest.raises(SystemExit, match="not labeled"):
+    (work / "labels.json").write_text(json.dumps({**labels, items[0]["id"]: []}))
+    with pytest.raises(SystemExit, match="labels changed"):
         cli.main(["report", *run])
-    labels = {it["id"]: ["fiscal 2025"] for it in items}
     (work / "labels.json").write_text(json.dumps(labels))
     cli.main(["report", *run])
     rep = json.loads((work / "report.json").read_text())["judges"]["fake"]
@@ -190,9 +194,9 @@ def test_answers_to_other_prompts_are_refused(
     with pytest.raises(SystemExit, match="changed after the split"):
         cli.main(["ask", *run, "--judge", "fake"])
     (work / "config.json").write_text(json.dumps(cfg))
-    cli.main(["ask", *run, "--judge", "fake"])
     labels = {i["id"]: ["fiscal 2025"] for i in json.loads((work / "items.json").read_text())}
     (work / "labels.json").write_text(json.dumps(labels))
+    cli.main(["ask", *run, "--judge", "fake"])
     rec = json.loads((work / "answers-fake.json").read_text())
     rec["meta"]["prompts_sha256"] = "0" * 64
     (work / "answers-fake.json").write_text(json.dumps(rec))

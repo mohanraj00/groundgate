@@ -85,6 +85,9 @@ def serve(w: Work, port: int) -> None:
             if self.path != "/label" or it is None or not q.valid_label(question, it, value):
                 self.send("{}", code=400)
                 return
+            if any(w.path.glob("answers-*.json")) or any(w.path.glob(".answers-*.partial.json")):
+                self.send('{"error": "the labels are frozen once a judge has answered"}', code=409)
+                return
             labels = json.loads(path.read_text()) if path.exists() else {}
             if question == "key" and value is not None:
                 value = [k for k in it["keys"] if k in value]
