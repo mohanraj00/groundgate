@@ -61,3 +61,9 @@ Rules that the labeling settled, for the cases that the field descriptions leave
   maximum. At the labeler's request, I read those five texts (budesonide, cilostazol, mesalamine,
   raloxifene, terbinafine) and set their `max_daily_dose` to none. Each gives one fixed adult dose
   and no adult maximum. No model or spec 0.3 reading of this set existed then.
+- A review of #107 questioned six labels after labeling and before any model run. The labeler
+  read the text again and changed five: minocycline, tretinoin and ursodiol `starting_dose` to
+  not sure (a dose for each kg or m², and a tablet strength), eszopiclone
+  `hepatic_starting_dose` to none (the text gives a hepatic cap, not a start), and etodolac to a
+  start of 200 and a maximum of 1000 ("up to 1000 mg, given as 200-400 mg"). Eplerenone's
+  maximum stays not sure: the text never writes the value.
