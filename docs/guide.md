@@ -285,11 +285,11 @@ output into one call.
 ```python
 from groundgate.report import render
 
-html = render(receipt_dict, text, candidates, schema=schema, layout=None, title=None)
+html = render(receipt_dict, text, candidates, schema=schema, policy=policy, judgments=judgments)
 ```
 
-With `schema` (and `policy` and `judgments=`, if you used them), the page re-derives the receipt
-first and says whether it matched. The page is one self-contained HTML file with no scripts.
+With `schema` (and `policy` and `judgments`, if you used them), the page re-derives the receipt
+first and says whether it matched. `layout=` and `title=` are optional. The page is one self-contained HTML file with no scripts.
 
 ## Command line
 
