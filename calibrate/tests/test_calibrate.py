@@ -131,6 +131,12 @@ def test_the_steps_from_sample_to_report(tmp_path: Path, monkeypatch: pytest.Mon
     with pytest.raises(SystemExit, match="labels changed"):
         cli.main(["report", *run])
     (work / "labels.json").write_text(json.dumps(labels))
+    split = json.loads((work / "split.json").read_text())
+    moved = {k: "calibration" for k in split}
+    (work / "split.json").write_text(json.dumps(moved))
+    with pytest.raises(SystemExit, match="split changed"):
+        cli.main(["report", *run])
+    (work / "split.json").write_text(json.dumps(split, indent=1, sort_keys=True) + "\n")
     cli.main(["report", *run])
     rep = json.loads((work / "report.json").read_text())["judges"]["fake"]
     parts = json.loads((work / "split.json").read_text())
@@ -210,3 +216,14 @@ def test_a_sample_with_no_items_stops(tmp_path: Path) -> None:
     with pytest.raises(SystemExit, match="nothing to label"):
         cli.main(["sample", "--work", str(tmp_path / "w"), "--docs", str(d), "--candidates",
                   str(c), "--schema", str(s), "--question", "key"])  # fmt: skip
+
+
+def test_a_work_directory_of_another_spec_is_refused(tmp_path: Path) -> None:
+    d, c, s = inputs(tmp_path, 2)
+    work = tmp_path / "work"
+    cli.main(["sample", "--work", str(work), "--docs", str(d), "--candidates", str(c),
+              "--schema", str(s), "--question", "key"])  # fmt: skip
+    cfg = json.loads((work / "config.json").read_text())
+    (work / "config.json").write_text(json.dumps({**cfg, "spec": "0.2"}))
+    with pytest.raises(SystemExit, match=r"sampled under spec 0\.2"):
+        cli.main(["split", "--work", str(work)])

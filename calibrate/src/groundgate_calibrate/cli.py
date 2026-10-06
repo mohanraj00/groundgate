@@ -23,6 +23,8 @@ import urllib.error
 from pathlib import Path
 from typing import Any
 
+from groundgate.canonical import SPEC_VERSION
+
 from . import questions as q
 from .judges import JUDGES
 from .stats import CEILINGS, needed
@@ -49,7 +51,14 @@ class Work:
 
     @property
     def config(self) -> dict[str, Any]:
-        return dict(self.read("config.json"))
+        cfg = dict(self.read("config.json"))
+        if cfg.get("spec") != SPEC_VERSION:
+            # another spec can admit and flag other candidates, so the items would differ
+            raise SystemExit(
+                f"{self.path} was sampled under spec {cfg.get('spec')}; this groundgate "
+                f"implements {SPEC_VERSION}. Sample again in a new work directory."
+            )
+        return cfg
 
 
 def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.Namespace) -> None:
@@ -77,6 +86,7 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
             (w.path / "docs" / f"{doc}.txt").write_text(text, encoding="utf-8")
             items += found
     config = {
+        "spec": SPEC_VERSION,
         "question": args.question,
         "context": args.context,
         "descriptions": descriptions,
@@ -127,6 +137,13 @@ def labels_sha256(labels: dict[str, Any]) -> str:
     return hashlib.sha256(json.dumps(labels, sort_keys=True).encode()).hexdigest()
 
 
+def scoring_sha256(w: Work) -> str:
+    """A digest of what report scores besides the labels and answers: the items, with the
+    candidates' keys that the prompts do not show, and the split."""
+    both = {"items": w.read("items.json"), "split": w.read("split.json")}
+    return hashlib.sha256(json.dumps(both, sort_keys=True).encode()).hexdigest()
+
+
 def prompts_sha256(w: Work) -> str:
     return hashlib.sha256(json.dumps(prompts(w)).encode()).hexdigest()
 
@@ -148,7 +165,12 @@ def ask(w: Work, judge: str) -> None:
     if missing:
         raise SystemExit(f"{len(missing)} items are not labeled yet; label before a judge answers")
     meta, call = JUDGES[judge]()
-    record = {**meta, "prompts_sha256": digest, "labels_sha256": labels_sha256(labels)}
+    record = {
+        **meta,
+        "prompts_sha256": digest,
+        "labels_sha256": labels_sha256(labels),
+        "scoring_sha256": scoring_sha256(w),
+    }
     partial = w.path / f".answers-{judge}.partial.json"
     answers: dict[str, Any] = {}
     if partial.exists():
@@ -188,6 +210,8 @@ def report(w: Work, check: bool) -> None:
         rec = json.loads(path.read_text())
         if rec["meta"]["prompts_sha256"] != w.read("prompts.json")["prompts_sha256"]:
             raise SystemExit(f"{path.name} answers other prompts than the split's")
+        if rec["meta"]["scoring_sha256"] != scoring_sha256(w):
+            raise SystemExit(f"the items or the split changed after {path.name}")
         if rec["meta"]["labels_sha256"] != labels_sha256(labels):
             raise SystemExit(f"the labels changed after {path.name}; a judge's answers are scored "
                              "only against the labels made before it answered")  # fmt: skip

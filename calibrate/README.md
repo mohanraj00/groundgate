@@ -64,6 +64,10 @@ documents for the ceiling that you need before you start.
 - **Fixed prompts.** `split` also records a digest of every prompt. `ask` refuses to run when the
   documents, items or config changed after the split, and `report` refuses answers to other
   prompts. `ask` goes on after a stop only with the same judge, model and prompts.
+- **Fixed scoring.** `ask` also records a digest of the items and the split, and `report`
+  refuses answers when either changed.
+- **One spec.** `sample` records the groundgate spec version. Every later step refuses to run
+  under another version, because another spec can admit and flag other candidates.
 - **Your offsets stay right.** `sample` refuses a document that is not NFC, and never changes
   the text, because your candidates' byte offsets point into it.
 - **Text leaves the machine.** A hosted judge sends a window of each document out: 400 code
