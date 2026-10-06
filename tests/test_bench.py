@@ -712,3 +712,20 @@ def test_a_relations_item_is_a_value_with_a_qualifier() -> None:
     text = "Take 20 mg daily. Do not take more than 40 mg a day. Patients 65 years or older."
     found = [text[a:b] for a, b in relations.qualified_values_in(text, [])]
     assert found == ["40", "65"]
+
+
+def test_a_relation_judge_clears_a_flag_only_for_the_field_comparator() -> None:
+    import importlib.util
+
+    path = BENCH / "judges" / "relations" / "judge.py"
+    spec = importlib.util.spec_from_file_location("relations_judge", path)
+    assert spec and spec.loader
+    relations_judge = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(relations_judge)
+
+    it = {"label": "le", "spec_0.3": ["le", "range"]}
+    sure = {"choice": "le", "confidence": 0.9}
+    assert relations_judge.clear(it, sure, 0.8, "le") == "right"  # "range" is the flag
+    assert relations_judge.clear(it, sure, 0.95, "le") is None
+    assert relations_judge.clear(it, {"choice": "eq", "confidence": 0.9}, 0.8, "eq") == "escape"
+    assert relations_judge.clear({**it, "spec_0.3": ["le"]}, sure, 0.8, "le") is None  # no flag
