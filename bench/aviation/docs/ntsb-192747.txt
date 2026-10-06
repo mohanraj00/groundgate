@@ -1,0 +1,510 @@
+Aviation Investigation Final Report
+
+Location:
+
+Aberdeen, South Dakota
+
+Accident Number:
+
+CEN23LA334
+
+Date & Time:
+
+July 27, 2023, 14:30 Local
+
+Registration:
+
+N8503W
+
+Aircraft:
+
+Air Tractor AT802
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Loss of control on ground
+
+Injuries:
+
+1 None
+
+Flight Conducted Under:
+
+Part 137: Agricultural
+
+Analysis
+
+The pilot of the tailwheel-equipped airplane was taxiing from the loading ramp to runway 35 for
+his third aerial application flight of the day. As the airplane taxied, it did not respond to the
+pilot’s inputs and departed the taxiway before it ground looped. During the ground loop, the
+right main landing gear collapsed and the right wing impacted the surface which resulted in
+substantial damage. Postaccident examination of the airframe revealed no evidence of any
+preimpact mechanical malfunctions or failures that would have precluded normal operation.
+
+At the time of the accident, the pilot was taxiing the airplane to the south with wind from 050°
+at 12 kts, resulting in about a 6 kt tailwind component and a 10 kt left crosswind component. It
+is likely that the pilot lost directional control of the airplane when taxiing with a quartering
+tailwind.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot's failure to maintain directional control while taxiing with a quartering tailwind, which
+resulted in a ground loop.
+
+Page 1 of 7
+Findings
+
+Personnel issues
+
+Aircraft control - Pilot
+
+Aircraft
+
+Directional control - Not attained/maintained
+
+Environmental issues
+
+Crosswind - Ability to respond/compensate
+
+Page 2 of 7
+
+CEN23LA334
+Factual Information
+
+History of Flight
+
+Taxi-to runway
+
+Taxi-to runway
+
+Taxi-to runway
+
+Other weather encounter
+
+Loss of control on ground (Defining event)
+
+Attempted remediation/recovery
+
+On July 27, 2023, at 1430 central daylight time, an Air Tractor AT-802A airplane, N8503W, was
+substantially damaged when it was involved in an accident at the Aberdeen Regional Airport,
+(ABR) Aberdeen, South Dakota. The pilot was not injured. The airplane was operated as a Title
+14 Code of Federal Regulations Part 137 aerial application flight.
+
+The pilot reported that while taxiing from the loading ramp to depart for his third agricultural
+application flight of the day, the airplane veered left. He attempted to correct by braking, but
+the airplane did not respond and continued turning to the left. With the pilot unable to arrest
+the turn, the airplane ground looped to the left. During the ground loop, the right main landing
+gear collapsed, and the right wing impacted the surface which resulted in substantial damage.
+
+Pilot Information
+
+Certificate:
+
+Commercial
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+None
+
+Instructor Rating(s):
+
+None
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+32,Male
+
+Center
+
+4-point
+
+Medical Certification:
+
+Class 2 Without
+waivers/limitations
+
+Last FAA Medical Exam:
+
+May 22, 2023
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+Flight Time:
+
+5500 hours (Total, all aircraft), 1300 hours (Total, this make and model), 5500 hours (Pilot In
+Command, all aircraft), 250 hours (Last 90 days, all aircraft), 250 hours (Last 30 days, all
+aircraft), 12 hours (Last 24 hours, all aircraft)
+
+Page 3 of 7
+
+CEN23LA334
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Air Tractor
+
+AT802 A
+
+Year of Manufacture:
+
+2002
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+N8503W
+
+Airplane
+
+Airworthiness Certificate:
+
+Restricted (Special)
+
+Serial Number:
+
+802A-0134
+
+Landing Gear Type:
+
+Tailwheel
+
+Seats:
+
+1
+
+Date/Type of Last Inspection:
+
+June 22, 2023 Annual
+
+Certified Max Gross Wt.:
+
+16000 lbs
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+8144.4 Hrs at time of
+accident
+
+Engines:
+
+1 Turbo prop
+
+Engine Manufacturer:
+
+Pratt and Whitney Canada
+
+ELT:
+
+Not installed
+
+Engine Model/Series:
+
+PT6A-65AG
+
+Registered Owner:
+
+PIONEER AGVIATION 2 LLC
+
+Rated Power:
+
+1295 Horsepower
+
+Operator:
+
+PIONEER AGVIATION 2 LLC
+
+Operating Certificate(s)
+Held:
+
+Agricultural aircraft (137)
+
+Operator Does Business As:
+
+Operator Designator Code:
+
+753G
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KABR,1298 ft msl
+
+Distance from Accident Site:
+
+1 Nautical Miles
+
+Observation Time:
+
+13:53 Local
+
+Direction from Accident Site:
+
+73°
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Clear
+
+None
+
+Wind Speed/Gusts:
+
+12 knots / None
+
+Wind Direction:
+
+50°
+
+Visibility
+
+10 miles
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+None / None
+
+N/A / N/A
+
+Altimeter Setting:
+
+29.82 inches Hg
+
+Temperature/Dew Point:
+
+30°C / 20°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Destination:
+
+Departure Time:
+
+Aberdeen, SD
+
+Aberdeen, SD
+
+Type of Flight Plan Filed:
+
+None
+
+Type of Clearance:
+
+Type of Airspace:
+
+VFR
+
+Class G
+
+The calculated tailwind component was about 6 kts and the calculated crosswind component
+was about 10 kts.
+
+Page 4 of 7
+
+CEN23LA334
+Airport Information
+
+Airport:
+
+ABERDEEN RGNL ABR
+
+Runway Surface Type:
+
+Airport Elevation:
+
+1301 ft msl
+
+Runway Used:
+
+Runway Length/Width:
+
+Runway Surface Condition:
+
+Dry
+
+IFR Approach:
+
+VFR Approach/Landing:
+
+None
+
+None
+
+The north end of the general aviation ramp, taxiways D1, D2, D3, D between D2 and D3, and F,
+and runway 13/31 were closed by NOTAM at the time of the accident.
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 None
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+Ground Injuries:
+
+N/A
+
+N/A
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 None
+
+Latitude, Longitude:
+
+45.441366,-98.42646(est)
+
+Examination of the accident site revealed that the airplane was taxiing southbound on taxiway
+C toward runway 35, departed the left side of the taxiway, and came to rest on a 240° heading.
+The right main landing gear was separated from and folded beneath the fuselage. Dark, arcing
+tire marks on the taxiway surface continued into the grass and ended at the left main landing
+gear. Tire marks aligned with the right main landing gear began on the taxiway surface,
+continued into the grass, and terminated at the right main landing gear.
+
+Examination of the recovered wreckage revealed substantial damage to the right wing and the
+main landing gear mount structure. The right main landing gear attachment hardware was
+retained and forwarded to the NTSB Materials Laboratory in Washington, DC, for examination.
+The hardware was examined using a bench binocular microscope and a hardness tester, which
+revealed fracture features consistent with overstress separation, with no evidence of fatigue
+cracking.
+
+Postaccident examination of the brake system revealed no preimpact mechanical
+malfunctions or failures that would have precluded normal operation. The brake system was
+partially disassembled during the recovery of the wreckage from the accident site. Control
+continuity for the brake system was established from the cockpit controls to the left and right
+
+Page 5 of 7
+
+CEN23LA334
+main landing gear. The hardware for the brake system was installed and intact. Both brakes
+were actuated inside the cockpit with no issues or interference noted.
+
+There were no observed fluid leaks within the brake system. A small amount of brake fluid was
+extracted from the right side of the brake system. The brake fluid had a red appearance, with
+several small pieces of dark-colored debris. There was not enough fluid recovered to be tested
+for impurities.
+
+The brake cylinder in the cockpit was found connected and showed no fluid leaks. Both brake
+calipers were found removed and appeared to be in normal condition, with no damage or fluid
+leaks. Both brake discs showed normal wear with no damage or obvious warping. Both tires
+showed normal wear with no major damage.
+
+Page 6 of 7
+
+CEN23LA334
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Brown, Zane
+
+Additional Participating
+Persons:
+
+Brandon Caneva; FAA FSDO; Rapid City, SD
+Dakota Lowe; Air Tractor Inc.; Olney, TX
+
+Original Publish Date:
+
+August 20, 2025
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 3
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192747
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 7 of 7
+
+CEN23LA334

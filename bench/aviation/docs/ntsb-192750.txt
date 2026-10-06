@@ -1,0 +1,506 @@
+Aviation Investigation Final Report
+
+Location:
+
+Laconia, New Hampshire
+
+Accident Number:
+
+ERA23LA318
+
+Date & Time:
+
+July 30, 2023, 20:30 Local
+
+Registration:
+
+N9855A
+
+Aircraft:
+
+Cessna 195A
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Loss of control on ground
+
+Injuries:
+
+1 None
+
+Flight Conducted Under:
+
+Part 91: General aviation - Personal
+
+Analysis
+
+In a written statement, the pilot said that he completed the final, 3-hour leg of a multi-leg cross-
+country flight and landed 1 hour after official sunset. The pilot described the landing as being a
+routine 3-point landing in the tailwheel-equipped airplane in “perfect” weather conditions. He
+stated that, during the landing roll about 1,200 ft down the runway, the airplane “suddenly
+turned sharply to the right.” He applied full brakes but was unable to arrest the turn. The
+airplane departed the right side of the runway and came to rest with the left main landing gear
+folded beneath the fuselage, which was substantially damaged.
+
+The pilot initially reported a ground loop event, and then later stated the accident resulted from
+locked wheel brakes on either the right or left side, or perhaps a sheared left main landing gear
+attachment bolt.
+
+Examination of the airplane revealed no preimpact mechanical anomalies with the airplane. A
+secondary examination of the left main landing gear attachment hardware revealed damage
+and fracture signatures consistent with overstress. The pilot did not have any recent night
+flying experience.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot’s failure to maintain directional control of the tailwheel-equipped airplane, which
+resulted in a ground-loop.
+
+Page 1 of 7
+Findings
+
+Aircraft
+
+Yaw control - Capability exceeded
+
+Personnel issues
+
+Aircraft control - Pilot
+
+Page 2 of 7
+
+ERA23LA318
+Factual Information
+
+History of Flight
+
+Landing-landing roll
+
+Loss of control on ground (Defining event)
+
+Landing-landing roll
+
+Runway excursion
+
+On July 30, 2023, at 2030 eastern daylight time, a Cessna 195A, N9855A, was substantially
+damaged when it was involved in an accident near Laconia, New Hampshire. The airline
+transport pilot was not injured. The airplane was operated as a Title 14 Code of Federal
+Regulations Part 91 personal flight.
+
+In a written statement, the pilot said that he completed the final, 3-hour leg of a multi-leg cross-
+country flight and landed 1 hour after official sunset. The pilot described a “routine” 3-point
+landing in the tailwheel-equipped airplane in “perfect” weather conditions. During the landing
+roll, about 1,200 ft down runway 26, the airplane “suddenly turned sharply to the right.” The
+pilot applied “full brakes” but was unable to arrest the turn. The airplane departed the right side
+of the runway and came to rest on a 160° heading, with the left main landing gear folded
+beneath the fuselage. There were no witnesses. Surveillance video of the airplane’s final
+approach was captured by a camera about 1 mile from the approach end of the runway and
+lacked the definition to depict the accident sequence.
+
+In an interview with a Federal Aviation Administration (FAA) aviation safety inspector, the pilot
+initially reported that the airplane ground looped and then later suggested the “left main gear
+wheel locked up” and then suggested the “right brake likely stuck.”
+
+Photographs of the accident site depicted dark, arcing tire marks on the runway surface that
+continued into the grass and ended at the left main landing gear. Tire marks aligned with the
+right main landing gear began in the grass at the runway edge and terminated at the right main
+landing gear tire. Buckling of the right wing, fuselage, and the main landing gear mount
+structure revealed substantial damage in those areas.
+
+The pilot held airline transport and flight engineer certificates with ratings in both single and
+multiengine airplanes. The pilot completed the requirements for operation under BasicMed on
+June 3, 2022. The pilot declared 20,941 total hours of flight experience, of which 953 hours
+were in the accident airplane make and model. According to the FAA inspector and the pilot’s
+reported flight time, the pilot did not have any recent night flight time experience.
+
+According to FAA and maintenance records, the airplane was manufactured in 1950 and was
+powered by a Jacobs R755S, 350-horsepower engine. The airplane’s most recent annual
+inspection was completed May 23, 2023, at 3,370.5 total aircraft hours.
+
+Page 3 of 7
+
+ERA23LA318
+Examination of the airplane by the FAA inspector revealed no preimpact mechanical
+anomalies.
+
+The left main landing gear wheel and tire, mounting hardware, and shims were retained and
+forwarded to the National Transportation Safety Board Materials Laboratory in Washington,
+DC. The examination revealed that two of the three mounting studs were fractured and
+displayed features consistent with “shear/bending overstress fractures.” The third stud
+remained intact, but the attachment nut was missing, and the threads were “stripped” and
+“smeared.”
+
+Pilot Information
+
+Certificate:
+
+Airline transport; Flight engineer
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land; Multi-engine
+land
+
+Seat Occupied:
+
+Other Aircraft Rating(s): None
+
+Restraint Used:
+
+Instrument Rating(s):
+
+Airplane
+
+Instructor Rating(s):
+
+None
+
+Medical Certification:
+
+BasicMed Without
+waivers/limitations
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+Last FAA Medical Exam:
+
+79,Male
+
+Left
+
+4-point
+
+No
+
+Occupational Pilot:
+
+No
+
+Last Flight Review or Equivalent:
+
+April 18, 2022
+
+Flight Time:
+
+20941 hours (Total, all aircraft), 953 hours (Total, this make and model), 16098 hours (Pilot In
+Command, all aircraft), 32 hours (Last 90 days, all aircraft), 21 hours (Last 30 days, all aircraft)
+
+Page 4 of 7
+
+ERA23LA318
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Year of Manufacture:
+
+Cessna
+
+195A
+
+1950
+
+Airworthiness Certificate:
+
+Normal
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+Serial Number:
+
+Landing Gear Type:
+
+Tailwheel
+
+Seats:
+
+N9855A
+
+Airplane
+
+7548
+
+5
+
+Date/Type of Last Inspection: May 23, 2023 Annual
+
+Certified Max Gross Wt.:
+
+3350 lbs
+
+Time Since Last Inspection:
+
+19 Hrs
+
+Engines:
+
+1 Reciprocating
+
+Airframe Total Time:
+
+3370.5 Hrs as of last
+inspection
+
+Engine Manufacturer:
+
+Jacobs
+
+ELT:
+
+Installed, not activated
+
+Engine Model/Series:
+
+R755S
+
+Registered Owner:
+
+Operator:
+
+On file
+
+On file
+
+Rated Power:
+
+350 Horsepower
+
+Operating Certificate(s)
+Held:
+
+None
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Dusk
+
+Observation Facility, Elevation:
+
+LCI,545 ft msl
+
+Distance from Accident Site:
+
+1 Nautical Miles
+
+Observation Time:
+
+16:56 Local
+
+Direction from Accident Site:
+
+241°
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Clear
+
+None
+
+Wind Speed/Gusts:
+
+8 knots / 14 knots
+
+Wind Direction:
+
+280°
+
+Visibility
+
+10 miles
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+None / None
+
+N/A /
+
+Altimeter Setting:
+
+29.89 inches Hg
+
+Temperature/Dew Point:
+
+23°C / 11°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Johnstown, NY (NYQ)
+
+Type of Flight Plan Filed:
+
+Destination:
+
+Departure Time:
+
+Laconia, NH
+
+17:30 Local
+
+Type of Clearance:
+
+Type of Airspace:
+
+Class E
+
+None
+
+None
+
+Page 5 of 7
+
+ERA23LA318
+Airport Information
+
+Airport:
+
+LACONIA MUNI LCI
+
+Runway Surface Type:
+
+Asphalt
+
+Airport Elevation:
+
+545 ft msl
+
+Runway Used:
+
+26
+
+Runway Surface Condition:
+
+Dry
+
+IFR Approach:
+
+None
+
+Runway Length/Width:
+
+5890 ft / 100 ft
+
+VFR Approach/Landing:
+
+Straight-in
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 None
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+Ground Injuries:
+
+N/A
+
+N/A
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 None
+
+Latitude, Longitude:
+
+43.573042,-71.417842(est)
+
+Page 6 of 7
+
+ERA23LA318
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Rayner, Brian
+
+Additional Participating
+Persons:
+
+Matthew Hall; FAA/FSDO; Portland , ME
+
+Original Publish Date:
+
+June 4, 2025
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 3
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192750
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 7 of 7
+
+ERA23LA318

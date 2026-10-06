@@ -807,3 +807,13 @@ def test_the_conflicts_set_takes_the_lower_end_of_a_range_as_a_dose() -> None:
     text = "Give 20 to 30 mg, or a 5-mg dose, or 5, 10 or 20 mg; not 40 kg or 7 days."
     got = [text[a:b] for a, b in conflicts.doses_in(text)]
     assert got == ["20", "30", "5", "5", "10", "20"]
+
+
+def test_the_aviation_set_takes_numbers_in_hours_or_feet() -> None:
+    sys.path.insert(0, str(BENCH / "aviation"))
+    import aviation
+
+    text = "4200 hours (Total), 1913.7 Hrs, a 3,000-ft runway, 107 ft msl, 30.02 inches Hg, 4 knots"
+    got = [text[a:b] for a, b in aviation.numbers_in(text)]
+    assert got == ["4200", "1913.7", "3,000", "107"]
+    assert set(aviation.FIELDS) == set(aviation.NTSB_FIELDS)

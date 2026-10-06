@@ -1,0 +1,487 @@
+Aviation Investigation Final Report
+
+Location:
+
+Myrtle Beach, Atlantic Ocean
+
+Accident Number:
+
+DCA23LA382
+
+Date & Time:
+
+July 28, 2023, 08:16 Local
+
+Registration:
+
+N77431
+
+Aircraft:
+
+Boeing 737-924ER
+
+Aircraft Damage:
+
+None
+
+Defining Event:
+
+Turbulence encounter
+
+Injuries:
+
+1 Serious, 184 None
+
+Flight Conducted Under:
+
+Part 121: Air carrier - Scheduled
+
+Analysis
+
+United Airlines flight 2122 encountered severe turbulence while in cruise flight at flight level
+(FL) 330 enroute to Punta Cana Airport (PUJ), Dominican Republic, and a flight attendant (FA)
+sustained serious injuries.
+
+The flight crew reported that after reaching a cruise altitude of FL330 and before entering
+oceanic airspace they downloaded the latest Weather Services International (WSI) radar
+image, lightning data, and SkyPath ride reports. The airborne radar was in use which depicted
+some very small, scattered cells well below their altitude. Shortly thereafter, the captain
+visually acquired a cloud buildup immediately ahead and below their altitude. With no visual
+indication of the cloud on the weather radar they made a right turn to avoid any potential
+turbulence. While in the right turn, the airplane entered visual meteorological conditions and
+the captain visually acquired another cloud buildup directly ahead. To avoid the buildup the
+captain continued the right turn to no avail. The airplane entered the clouds and immediately
+encountered severe turbulence for about 5 seconds. A public address (PA) announcement was
+immediately made “be seated immediately, be seated immediately”. Following the turbulence
+encountered the flight crew was notified that two aft FAs had been injured.
+
+Just before the turbulence event, the number 2L and 2R FAs had moved the beverage cart to
+the aft galley, so the 2R FA could use the lavatory. After entering the lavatory, she was thrown
+into the air and landed on her left ankle and knee. The 2L FA stated that as soon as the 2R FA
+entered the lavatory, they encountered severe turbulence. She and the beverage cart were
+tossed into the air, and she impacted the floor of the airplane on her left side. She stated that
+the impact was like “slamming down from a 5^th floor building”. Upon being notified of the
+injuries, the flight crew declared an emergency and diverted to Myrtle Beach, South Carolina,
+
+Page 1 of 6
+for medical assistance. The two injured FAs were transported to local hospitals where one was
+diagnosed with serious injuries.
+
+At the time of the turbulence encounter there were no active significant meteorological
+information (SIGMETs), convective SIGMETs, airman’s meteorological information (AIRMETs),
+or pilot reports (PIREPs) of any significant turbulence.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+An encounter with convectively induced turbulence (CIT) while in cruise flight.
+
+Findings
+
+Environmental issues
+
+Convective turbulence - Effect on personnel
+
+Environmental issues
+
+Convective turbulence - Awareness of condition
+
+Personnel issues
+
+Knowledge of meteorologic cond - Flight crew
+
+Page 2 of 6
+
+DCA23LA382
+Factual Information
+
+History of Flight
+
+Enroute-cruise
+
+Turbulence encounter (Defining event)
+
+Pilot Information
+
+Certificate:
+
+Airline transport; Flight instructor
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land; Multi-engine
+land
+
+Seat Occupied:
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+Airplane
+
+Instructor Rating(s):
+
+Airplane multi-engine; Airplane
+single-engine; Instrument airplane
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+41,Male
+
+Left
+
+4-point
+
+Yes
+
+Medical Certification:
+
+Class 1 With waivers/limitations
+
+Last FAA Medical Exam:
+
+May 22, 2023
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+December 17, 2022
+
+Flight Time:
+
+(Estimated) 12900 hours (Total, all aircraft), 6850 hours (Total, this make and model), 1800
+hours (Pilot In Command, all aircraft), 180 hours (Last 90 days, all aircraft), 73 hours (Last 30
+days, all aircraft)
+
+Co-pilot Information
+
+Certificate:
+
+Airline transport
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land; Multi-engine
+land
+
+Seat Occupied:
+
+Other Aircraft Rating(s): Helicopter
+
+Restraint Used:
+
+Instrument Rating(s):
+
+Airplane; Helicopter
+
+Second Pilot Present:
+
+Instructor Rating(s):
+
+Airplane single-engine; Instrument
+airplane
+
+Toxicology Performed:
+
+35,Male
+
+Right
+
+4-point
+
+Yes
+
+Medical Certification:
+
+Class 1 Without
+waivers/limitations
+
+Last FAA Medical Exam:
+
+March 27, 2023
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+March 29, 2023
+
+Flight Time:
+
+(Estimated) 4223 hours (Total, all aircraft), 280 hours (Total, this make and model), 1298 hours
+(Pilot In Command, all aircraft), 218 hours (Last 90 days, all aircraft), 99 hours (Last 30 days, all
+aircraft), 5 hours (Last 24 hours, all aircraft)
+
+Page 3 of 6
+
+DCA23LA382
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Boeing
+
+737-924ER
+
+Year of Manufacture:
+
+2009
+
+Airworthiness Certificate:
+
+Transport
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+Serial Number:
+
+Landing Gear Type:
+
+Retractable - Tricycle
+
+Seats:
+
+N77431
+
+Airplane
+
+32833
+
+156
+
+Date/Type of Last Inspection: August 5, 2022 Continuous
+
+Certified Max Gross Wt.:
+
+187700 lbs
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+airworthiness
+
+43798 Hrs as of last
+inspection
+
+Engines:
+
+2 Turbo fan
+
+Engine Manufacturer:
+
+CFM INTL
+
+ELT:
+
+C126 installed, not activated
+
+Engine Model/Series:
+
+CFM56-7B26/3
+
+Registered Owner:
+
+UNITED AIRLINES INC
+
+Rated Power:
+
+27300 Lbs thrust
+
+Operator:
+
+UNITED AIRLINES INC
+
+Operating Certificate(s)
+Held:
+
+Flag carrier (121)
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Instrument (IMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KMYR,25 ft msl
+
+Distance from Accident Site:
+
+Observation Time:
+
+08:56 Local
+
+Direction from Accident Site:
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Wind Speed/Gusts:
+
+Broken
+
+/
+
+Wind Direction:
+
+Altimeter Setting:
+
+Precipitation and Obscuration:
+
+Visibility
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+Temperature/Dew Point:
+
+None / Convective
+
+N/A / Severe
+
+Departure Point:
+
+Newark, NJ (EWR)
+
+Type of Flight Plan Filed:
+
+Destination:
+
+Punta Cana, Dominican
+Republic (PUJ)
+
+Type of Clearance:
+
+IFR
+
+IFR
+
+Departure Time:
+
+07:24 Local
+
+Type of Airspace:
+
+Class A
+
+Page 4 of 6
+
+DCA23LA382
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 Serious, 5 None
+
+Passenger Injuries:
+
+179 None
+
+Ground Injuries:
+
+Aircraft Damage:
+
+Aircraft Fire:
+
+None
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 Serious, 184 None
+
+Latitude, Longitude:
+
+34.516667,-74.085278(est)
+
+Page 5 of 6
+
+DCA23LA382
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Banning, David
+
+Additional Participating
+Persons:
+
+AVP-100; Federal Aviation Administration ; Washington , DC
+
+Original Publish Date:
+
+November 15, 2023
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192742
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+DCA23LA382

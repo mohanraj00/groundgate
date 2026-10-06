@@ -1,0 +1,507 @@
+Aviation Investigation Final Report
+
+Location:
+
+Gillette, Wyoming
+
+Accident Number:
+
+WPR23FA289
+
+Date & Time:
+
+July 29, 2023, 12:05 Local
+
+Registration:
+
+N3357T
+
+Aircraft:
+
+Cessna 177
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Collision during takeoff/land
+
+Injuries:
+
+2 Serious
+
+Flight Conducted Under:
+
+Part 91: General aviation - Personal
+
+Analysis
+
+The pilot reported that, while taking off at maximum gross weight in high-density-altitude
+conditions, he believed he did not have the performance to clear the approaching rising terrain.
+Shortly after, about a mile from the end of the runway, the pilot initiated a 180° turn toward a
+field for a precautionary landing. During the landing flare, the airplane struck a hay bale and
+came to rest inverted. Subsequently, the airplane sustained substantial damage to both wings
+and fuselage.
+
+The pilot reported that there were no preaccident mechanical failures or malfunctions with the
+airplane that would have precluded normal operation. A postaccident examination of the
+airframe revealed no mechanical anomalies.
+
+An owner’s manual (OM) for a similar make and model of the airplane with an engine
+comparable to the accident engine reported that the maximum gross weight is 2,500. The OM
+allowed for the flap settings to be at 0° to 10°. The calculated takeoff distance from a hard
+surface with flaps 15° at a maximum weight of 2,500 pounds, and travelling at an indicated
+airspeed of 65 knots, was about 678 ft for the ground roll and about 1,524 ft total to clear a 50-
+ft obstacle (assuming 2,700 rpm, a 20-knot headwind, an altitude of 5,000 ft msl, and a
+temperature of 80°F). The calculated maximum rate of climb at a maximum gross weight of
+2,500 pounds, and travelling at an indicated airspeed of 89 knots, was about 470 feet per
+minute at an altitude of 5,000 ft msl and temperature of 80°F. It is likely that the airplane did
+not have the performance to climb out of the airport environment due to the high-density
+altitude and being at maximum gross weight.
+
+Page 1 of 6
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot's decision to depart the high-density-altitude airport with the airplane at the maximum
+gross weight limit.
+
+Findings
+
+Personnel issues
+
+Identification/recognition - Pilot
+
+Personnel issues
+
+Decision making/judgment - Pilot
+
+Environmental issues
+
+High density altitude - Decision related to condition
+
+Environmental issues
+
+(general) - Effect on equipment
+
+Page 2 of 6
+
+WPR23FA289
+Factual Information
+
+History of Flight
+
+Initial climb
+
+Landing
+
+Off-field or emergency landing
+
+Collision during takeoff/land (Defining event)
+
+On July 29, 2023, about 1205 mountain daylight time, a Cessna 177, N3357T, sustained
+substantial damage when it was involved in an accident near Gillette, Wyoming. The pilot and
+passenger sustained serious injuries. The airplane was operated as a Title 14 Code of Federal
+Regulations Part 91 personal flight.
+
+The pilot reported that he and a passenger were on a multi-leg cross-country flight from
+Whitman Regional Airport (OSH), Oshkosh, Wisconsin, to Felts Airport, Spokane, Washington.
+Witnesses reported that the airplane had been fueled before takeoff from the Northeast
+Wyoming Regional Airport (GCC), Gillette, Wyoming. Witnesses observed the airplane depart
+from runway 16 and reported that the engine seemed to be at full power.
+
+The pilot reported that during takeoff at a gross weight of 2,500 lbs., the airplane did not climb
+as he expected. Shortly after the airplane crossed the departure end of the runway with rising
+terrain ahead, the pilot made a shallow 180° right turn and elected to land in an open field as a
+precaution. The airplane impacted a hay bale during the landing flare and the airplane
+subsequently nosed over. The airplane sustained substantial damage to both wings and the
+fuselage.
+
+The pilot stated that he had previously executed takeoffs with full fuel during the trip. The pilot
+reported that there were no preaccident mechanical failures or malfunctions with the airplane
+that would have precluded normal operation.
+
+Postaccident examination of the airplane confirmed flight control continuity from the cockpit
+to each control surface. Review of the airplane’s airworthiness revealed the engine was
+changed from a Lycoming O-320 to a Lycoming O-360.
+
+The airport's automated weather observation station reported that, about the time of the
+accident, the wind was from 180° at 16 knots, gusting 21 knots and a temperature of 80.6°F.
+The airport elevation was about 4,365 ft, mean sea level (msl). Runway 16 was 7,501 ft by 150
+ft. The calculated pressure and density altitude was 4,035 and 6,607 ft, respectively.
+
+An owner’s manual (OM) for a similar make and model of the airplane with an engine
+comparable to the accident engine reported that the maximum gross weight is 2,500. The OM
+allowed for the flap settings to be at 0° to 10°. The calculated takeoff distance from a hard
+surface with flaps 15° at a maximum weight of 2,500 pounds, and travelling at an indicated
+
+Page 3 of 6
+
+WPR23FA289
+airspeed of 65 knots, was about 678 ft for the ground roll and about 1,524 ft total to clear a 50-
+ft obstacle (assuming 2,700 rpm, a 20-knot headwind, an altitude of 5,000 ft msl, and a
+temperature of 80°F). The calculated maximum rate of climb at a maximum gross weight of
+2,500 pounds, and travelling at an indicated airspeed of 89 knots, was about 470 feet per
+minute at an altitude of 5,000 ft msl and temperature of 80°F.
+
+Pilot Information
+
+Certificate:
+
+Private; Sport Pilot
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s): Gyroplane
+
+Seat Occupied:
+
+Restraint Used:
+
+60,Male
+
+Left
+
+Unknown
+
+Instrument Rating(s):
+
+None
+
+Second Pilot Present:
+
+No
+
+Instructor Rating(s):
+
+None
+
+Toxicology Performed:
+
+Medical Certification:
+
+Class 2 None
+
+Last FAA Medical Exam:
+
+August 1, 2021
+
+Occupational Pilot:
+
+No
+
+Last Flight Review or Equivalent:
+
+September 21, 2022
+
+Flight Time:
+
+1384 hours (Total, all aircraft), 537 hours (Total, this make and model), 1318.4 hours (Pilot In
+Command, all aircraft), 27.03 hours (Last 90 days, all aircraft), 21.53 hours (Last 30 days, all
+aircraft), 4 hours (Last 24 hours, all aircraft)
+
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Year of Manufacture:
+
+Cessna
+
+177
+
+1967
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+N3357T
+
+Airplane
+
+Airworthiness Certificate:
+
+Normal
+
+Serial Number:
+
+17700657
+
+Landing Gear Type:
+
+Tricycle
+
+Seats:
+
+4
+
+Date/Type of Last Inspection:
+
+September 21, 2022 Annual
+
+Certified Max Gross Wt.:
+
+2500 lbs
+
+Time Since Last Inspection:
+
+1 Hrs
+
+Engines:
+
+1 Reciprocating
+
+Airframe Total Time:
+
+2487.67 Hrs
+
+Engine Manufacturer:
+
+Lycoming
+
+ELT:
+
+C126 installed, not activated
+
+Engine Model/Series:
+
+O-360-A1A
+
+Registered Owner:
+
+HIGH WEST AERO LLC
+
+Rated Power:
+
+180 Horsepower
+
+Operator:
+
+HIGH WEST AERO LLC
+
+Operating Certificate(s)
+Held:
+
+None
+
+Page 4 of 6
+
+WPR23FA289
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KGCC,4365 ft msl
+
+Distance from Accident Site:
+
+13 Nautical Miles
+
+Observation Time:
+
+11:53 Local
+
+Direction from Accident Site:
+
+313°
+
+Lowest Cloud Condition:
+
+Scattered / 3300 ft AGL
+
+Visibility
+
+10 miles
+
+Lowest Ceiling:
+
+Wind Speed/Gusts:
+
+16 knots / 21 knots
+
+Wind Direction:
+
+180°
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+None / None
+
+N/A / N/A
+
+Altimeter Setting:
+
+30.25 inches Hg
+
+Temperature/Dew Point:
+
+27°C / 15°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Gillette, WY
+
+Type of Flight Plan Filed:
+
+Livingston, MT (KLVM)
+
+Type of Clearance:
+
+Type of Airspace:
+
+Class E
+
+None
+
+None
+
+Destination:
+
+Departure Time:
+
+Airport Information
+
+Airport:
+
+NORTHEAST WYOMING RGNL GCC Runway Surface Type:
+
+Asphalt
+
+Airport Elevation:
+
+4365 ft msl
+
+Runway Used:
+
+16
+
+Runway Surface Condition:
+
+Dry
+
+IFR Approach:
+
+None
+
+Runway Length/Width:
+
+7501 ft / 150 ft
+
+VFR Approach/Landing:
+
+Forced landing
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 Serious
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+1 Serious
+
+Ground Injuries:
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+2 Serious
+
+Latitude, Longitude:
+
+44.329643,-105.53788
+
+Page 5 of 6
+
+WPR23FA289
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Nepomuceno, Eleazar
+
+Additional Participating
+Persons:
+
+Ricardo Asensio; Textron; Whichita, KS
+Chad Glaza; FAA FSDO; Casper, WY
+
+Original Publish Date:
+
+August 20, 2025
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 3
+
+Note:
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192741
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+WPR23FA289

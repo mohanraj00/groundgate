@@ -1,0 +1,537 @@
+Aviation Investigation Final Report
+
+Location:
+
+Glendive, Montana
+
+Accident Number:
+
+WPR23FA286
+
+Date & Time:
+
+July 28, 2023, 14:10 Local
+
+Registration:
+
+N2442
+
+Aircraft:
+
+RISEN 915 iS
+
+Aircraft Damage:
+
+Destroyed
+
+Defining Event:
+
+Loss of control in flight
+
+Injuries:
+
+1 Fatal
+
+Flight Conducted Under:
+
+Part 91: General aviation - Personal
+
+Analysis
+
+The pilot was conducting a personal cross-country flight in his experimental, amateur-built
+airplane, and the accident occurred on day nine of the flight.
+
+The airport manager at the departure airport reported that he assisted the pilot with fueling the
+airplane with about 15 gallons of fuel. He reported that the engine sounded like it was at full
+power during takeoff; however, the airplane appeared to climb slower than he expected to
+about 300-400 ft above ground level (agl). The main landing gear were up but the nose gear
+appeared to be partially extended and had not completely retracted. He watched the airplane
+maintain a low altitude at a low airspeed until he observed a “wing drop,” and the airplane
+subsequently made two turns in a “flat spin” with about a 45-60° nose-down attitude as it
+descended behind terrain.
+
+Postaccident examination revealed no anomalies with the airframe or engine that would have
+precluded normal operation. Damage signatures and witness accounts indicated that the
+engine was producing power at the time of the accident. The debris path was consistent with a
+steep impact angle.
+
+Evidence suggests that the pilot failed to maintain airspeed during the climb, which resulted in
+an exceedance of the airplane’s critical angle of attack and a subsequent aerodynamic
+stall/spin. The pilot had texted the aircraft kit manufacturer that he was having problems with
+the engine overheating; however, had made modifications to the cooling system that appeared
+to be successful, according to his texts with the owner of a similar airplane. The airplane’s
+emergency parachute was found deployed at the accident site. Since the parachute was
+unfurled, it is likely that the parachute deployment was the result of ground contact.
+
+Page 1 of 7
+Evidence suggests that the pilot failed to maintain airspeed during the climb, which resulted in
+an exceedance of the airplane’s critical angle of attack and a subsequent aerodynamic
+stall/spin. The nose landing gear did not retract fully after takeoff. Although this may have
+created a distraction for the pilot that resulted in a loss of airspeed while he was
+troubleshooting the nose landing gear retraction, the investigation was not able to determine
+the reason for the pilot’s loss of control.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The pilot’s failure to maintain airspeed, which resulted in an exceedance of the airplane’s
+critical angle of attack and an aerodynamic stall/spin.
+
+Findings
+
+Personnel issues
+
+Aircraft control - Pilot
+
+Aircraft
+
+Aircraft
+
+Angle of attack - Not attained/maintained
+
+Nose/tail landing gear - Unknown/Not determined
+
+Page 2 of 7
+
+WPR23FA286
+Factual Information
+
+History of Flight
+
+Takeoff
+
+Takeoff
+
+Unknown or undetermined
+
+Loss of control in flight (Defining event)
+
+On July 28, 2023, about 1410 mountain daylight time, an experimental amateur-built Risen 915
+iS, N2442, was destroyed when it was involved in an accident near Glendive, Montana. The
+pilot was fatally injured. The airplane was operated as a Title 14 Code of Federal Regulations
+Part 91 personal flight.
+
+The pilot was conducting a personal cross-country flight that originated in Georgia eight days
+before the accident and had proceeded to Felts Field (SFF), Spokane, Washington. The day
+before the accident, the pilot departed SFF and flew to the Dawson Community Airport (GDV),
+Glendive, Montana. The pilot initially had planned to attend the EAA AirVenture Oshkosh Air
+Show in Oshkosh, Wisconsin. However, the pilot mentioned to a witness that he was
+abandoning his attempt to make the airshow due to operational delays. The pilot’s destination
+when he departed GDV is unknown.
+
+The GDV airport manager reported that he assisted the pilot with fueling the airplane with
+about 15 gallons of fuel, and he mentioned that the pilot was in good spirits. He expected that
+the pilot intended to do a fly-by the airport after takeoff to demonstrate the speed of the
+airplane, which had a cruise speed just under 200 knots. The airport manager reported that he
+observed the airplane depart runway 12 at 1408. . The engine sounded like it was at full power
+during takeoff; however, the airplane appeared to climb slower than he expected to about 300-
+400 ft agl. The main landing gear were up but the nose gear appeared to be partially extended
+and had not completely retracted. He watched the airplane maintain a low altitude at a low
+airspeed until he observed a “wing drop,” and the airplane subsequently made two turns in a
+“flat spin” with about a 45-60° nose-down attitude as it descended behind terrain.
+
+A second witness, who was located near the accident site, reported observing the airplane
+flying low and slow in a turn at the time of the accident; it appeared that the airplane was
+returning to the airport. The witness stated that he heard a loud pop and then observed a wing
+drop before the airplane entered a rotating nose-low attitude until it disappeared behind terrain.
+Subsequently, he observed smoke originating from the area where he had lost sight of the
+airplane.
+
+Page 3 of 7
+
+WPR23FA286
+Pilot Information
+
+Certificate:
+
+Commercial
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s): Helicopter
+
+Seat Occupied:
+
+Restraint Used:
+
+Instrument Rating(s):
+
+Airplane
+
+Second Pilot Present:
+
+57,Male
+
+Left
+
+Instructor Rating(s):
+
+None
+
+Toxicology Performed:
+
+Yes
+
+Medical Certification:
+
+Class 3 None
+
+Last FAA Medical Exam:
+
+May 17, 2023
+
+Occupational Pilot:
+
+No
+
+Last Flight Review or Equivalent:
+
+Flight Time:
+
+(Estimated) 500 hours (Total, all aircraft), 60 hours (Total, this make and model)
+
+The pilot's logbook was not recovered. This pilot reported civil flight experience that included
+492 total and 15 hours in last six months as of exam dated 5/17/2023.
+
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Year of Manufacture:
+
+RISEN
+
+915 iS
+
+2023
+
+Registration:
+
+Aircraft Category:
+
+Amateur Built:
+
+Airworthiness Certificate:
+
+Experimental (Special)
+
+Serial Number:
+
+Landing Gear Type:
+
+Retractable - Tricycle
+
+Seats:
+
+N2442
+
+Airplane
+
+Yes
+
+26
+
+2
+
+Date/Type of Last Inspection:
+
+July 19, 2023 Unknown
+
+Certified Max Gross Wt.:
+
+1378 lbs
+
+Time Since Last Inspection:
+
+Engines:
+
+1 Reciprocating
+
+Airframe Total Time:
+
+60 Hrs as of last inspection
+
+Engine Manufacturer:
+
+ELT:
+
+Registered Owner:
+
+Operator:
+
+On file
+
+On file
+
+Engine Model/Series:
+
+ROTAX
+
+915 iS
+
+Rated Power:
+
+135 Horsepower
+
+Operating Certificate(s)
+Held:
+
+None
+
+The pilot’s long cross-country journey was delayed due to maintenance issues with the
+airplane that presented themselves as the flight progressed. The pilot reported to the airplane
+kit manufacturer via text messages that the airplane was having an overheating issue during
+higher operating air temperatures on the ground, during taxi, and climbing after takeoff. The
+pilot had been diagnosing performance issues and made modifications to the cooling system.
+He texted the owner of a similar make and model airplane before the accident flight and
+indicated that the modifications had worked. No other information was available in regard to
+
+Page 4 of 7
+
+WPR23FA286
+the engine overheating. There was no mention of overheating in the squawks or airplane
+service records. A flight logbook was not recovered.
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KGDV,2457 ft msl
+
+Distance from Accident Site:
+
+1 Nautical Miles
+
+Observation Time:
+
+13:56 Local
+
+Direction from Accident Site:
+
+279°
+
+Lowest Cloud Condition:
+
+Scattered / 7000 ft AGL
+
+Visibility
+
+10 miles
+
+Lowest Ceiling:
+
+Wind Speed/Gusts:
+
+None
+
+/ None
+
+Wind Direction:
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+None / None
+
+N/A / N/A
+
+Altimeter Setting:
+
+30.16 inches Hg
+
+Temperature/Dew Point:
+
+28°C / 9°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Glendive , MT
+
+Type of Flight Plan Filed:
+
+Type of Clearance:
+
+Type of Airspace:
+
+Class G
+
+None
+
+None
+
+Destination:
+
+Departure Time:
+
+Airport Information
+
+Airport:
+
+DAWSON COMMUNITY GDV
+
+Runway Surface Type:
+
+Asphalt
+
+Airport Elevation:
+
+2458 ft msl
+
+Runway Surface Condition:
+
+Dry
+
+Runway Used:
+
+12
+
+IFR Approach:
+
+Runway Length/Width:
+
+5704 ft / 100 ft
+
+VFR Approach/Landing:
+
+None
+
+None
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 Fatal
+
+Aircraft Damage:
+
+Destroyed
+
+Passenger Injuries:
+
+Ground Injuries:
+
+N/A
+
+N/A
+
+Aircraft Fire:
+
+On-ground
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 Fatal
+
+Latitude, Longitude:
+
+47.13017,-104.77288
+
+Examination of the accident site revealed that the airplane impacted terrain about 1.5 miles
+southeast of GDV in a farmer’s field. The airplane was mostly consumed by a postimpact fire.
+
+Page 5 of 7
+
+WPR23FA286
+All major structural components of the airplane were accounted for at the accident site,
+including the fuel tanks, fuel system, and flight controls; no debris path was observed.
+Examination of these components revealed no anomalies. The main and nosewheel landing
+gear were mostly consumed by fire and not able to be functionally tested. Windshield
+fragments were found 30 ft forward of the nose. Carbon fiber airplane pieces were scattered
+aft of the tail for about 30 ft. The debris path was consistent with a steep impact angle. The
+emergency parachute had been discharged, but the chute had not unfurled. No track data of
+the accident flight was available. Flight control continuity was established and traced from the
+control inputs in the flight deck to their respective control surfaces in the wings and tail.
+
+Postaccident examination of the engine revealed it had sustained significant damage from the
+impact and the postimpact fire. Each of the cylinders passed the manufacturer’s hardness test
+to determine if the engine had experienced operational overheating. The examination found no
+evidence of overheating nor were any preimpact mechanical anomalies identified in the engine
+or accessories that would have precluded normal operation.
+
+Medical and Pathological Information
+
+An autopsy of the pilot was performed by the Department of Justice Forensic Science Division
+Montana State Chief Medical Examiner, Billings, Montana, which listed the cause of death as
+“blunt force injuries.” Toxicology testing performed by the FAA Forensic Sciences Laboratory
+did not identify any substances that are generally considered impairing.
+
+Page 6 of 7
+
+WPR23FA286
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Johnson, Scott
+
+Additional Participating
+Persons:
+
+Jeffery Simmon; Federal Aviation Administration; Helena, MT
+
+Original Publish Date:
+
+July 8, 2025
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 3
+
+Note:
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192733
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 7 of 7
+
+WPR23FA286

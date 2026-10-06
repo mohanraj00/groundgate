@@ -1,0 +1,436 @@
+Aviation Investigation Final Report
+
+Location:
+
+Alta, Iowa
+
+Accident Number:
+
+CEN23LA336
+
+Date & Time:
+
+July 29, 2023, 07:30 Local
+
+Registration:
+
+N402PR
+
+Aircraft:
+
+AIR TRACTOR INC AT-402B
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Collision with terr/obj (non-CFIT)
+
+Injuries:
+
+1 None
+
+Flight Conducted Under:
+
+Part 137: Agricultural
+
+Analysis
+
+The pilot reported that he was completing an aerial application flight over a cultivated field.
+During the fourth pass, the airplane encountered a dust devil (also called a whirlwind), lost lift
+and impacted powerlines. Upon impact with the powerlines the rudder separated from the
+airplane and the airplane began a left turn. Unable to arrest the turn, the pilot reduced power
+and made a forced landing to the field that he was spraying. Upon touch down the left main
+landing gear separated from the fuselage and the airplane slid to a stop.
+
+The airplane sustained substantial damage to the left wing, vertical stabilizer and rudder. The
+operator reported there were no preimpact mechanical malfunctions or failures with the
+airframe or the engine that would have precluded normal operation.
+
+A review of the Federal Aviation Administration Aviation (FAA) Weather Handbook (FAA-H-
+8083-28) and the FAA Aeronautical Information Manual found no detailed information listed
+about dust devils or the potential hazards of flying through dust devils.
+
+Probable Cause and Findings
+
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The airplane’s encounter with a dust devil, which resulted in a loss of lift, and subsequent
+collision with powerlines.
+
+Page 1 of 6
+Findings
+
+Aircraft
+
+Altitude - Attain/maintain not possible
+
+Personnel issues
+
+Aircraft control - Pilot
+
+Environmental issues
+
+Dust devil/whirlwind - Ability to respond/compensate
+
+Environmental issues
+
+Dust devil/whirlwind - Effect on equipment
+
+Environmental issues
+
+Dust devil/whirlwind - Contributed to outcome
+
+Page 2 of 6
+
+CEN23LA336
+Factual Information
+
+History of Flight
+
+Maneuvering-low-alt flying
+
+Other weather encounter
+
+Maneuvering-low-alt flying
+
+Collision with terr/obj (non-CFIT) (Defining event)
+
+Landing
+
+Off-field or emergency landing
+
+Pilot Information
+
+Certificate:
+
+Commercial; Flight instructor;
+Private
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s): Glider
+
+Seat Occupied:
+
+Restraint Used:
+
+Instrument Rating(s):
+
+Airplane
+
+Second Pilot Present:
+
+Instructor Rating(s):
+
+Airplane single-engine
+
+Toxicology Performed:
+
+52,Male
+
+Center
+
+3-point
+
+No
+
+Medical Certification:
+
+Class 2 Waiver time limited
+special
+
+Last FAA Medical Exam:
+
+December 21, 2022
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+October 24, 2022
+
+Flight Time:
+
+6600 hours (Total, all aircraft), 1500 hours (Total, this make and model), 6550 hours (Pilot In
+Command, all aircraft), 60 hours (Last 90 days, all aircraft), 40 hours (Last 30 days, all aircraft),
+8 hours (Last 24 hours, all aircraft)
+
+Page 3 of 6
+
+CEN23LA336
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+AT-402B
+
+Year of Manufacture:
+
+2013
+
+Aircraft Category:
+
+Amateur Built:
+
+N402PR
+
+Airplane
+
+AIR TRACTOR INC
+
+Registration:
+
+Airworthiness Certificate:
+
+Restricted (Special)
+
+Serial Number:
+
+402B-1282
+
+Landing Gear Type:
+
+Tailwheel
+
+Seats:
+
+1
+
+Date/Type of Last Inspection:
+
+June 15, 2023 Annual
+
+Certified Max Gross Wt.:
+
+7000 lbs
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+1679 Hrs as of last
+inspection
+
+Engines:
+
+1 Turbo prop
+
+Engine Manufacturer:
+
+Pratt & Whitney Canada
+
+ELT:
+
+Not installed
+
+Engine Model/Series:
+
+PT6A-15HE
+
+Registered Owner:
+
+BARTS FLYING SERVICE INC Rated Power:
+
+650 Horsepower
+
+Operator:
+
+BARTS FLYING SERVICE INC Operating Certificate(s)
+
+Agricultural aircraft (137)
+
+Held:
+
+Operator Does Business As:
+
+BARTS FLYING SERVICE INC Operator Designator Code:
+
+PFUG
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KSLB,1488 ft msl
+
+Distance from Accident Site:
+
+5 Nautical Miles
+
+Observation Time:
+
+07:35 Local
+
+Direction from Accident Site:
+
+149°
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Clear
+
+None
+
+Wind Speed/Gusts:
+
+8 knots / None
+
+Wind Direction:
+
+20°
+
+Visibility
+
+9 miles
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+/
+
+/
+
+Altimeter Setting:
+
+30.16 inches Hg
+
+Temperature/Dew Point:
+
+19°C / 18°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Destination:
+
+Departure Time:
+
+Type of Flight Plan Filed:
+
+Type of Clearance:
+
+None
+
+None
+
+Type of Airspace:
+
+Class G
+
+Page 4 of 6
+
+CEN23LA336
+Wreckage and Impact Information
+
+Crew Injuries:
+
+1 None
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+N/A
+
+Ground Injuries:
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+1 None
+
+Latitude, Longitude:
+
+42.675,-95.3042(est)
+
+Page 5 of 6
+
+CEN23LA336
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Brown, Zane
+
+Additional Participating
+Persons:
+
+Jason Glass; FAA FSDO; Des Moines, IA
+
+Original Publish Date:
+
+November 16, 2023
+
+Last Revision Date:
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192749
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+CEN23LA336

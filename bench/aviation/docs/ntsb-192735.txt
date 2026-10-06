@@ -1,0 +1,524 @@
+Aviation Investigation Final Report
+
+Location:
+
+MAIDEN, North Carolina
+
+Accident Number:
+
+ERA23LA316
+
+Date & Time:
+
+July 27, 2023, 12:11 Local
+
+Registration:
+
+N6194Q
+
+Aircraft:
+
+Cessna 152
+
+Aircraft Damage:
+
+Substantial
+
+Defining Event:
+
+Collision during takeoff/land
+
+Injuries:
+
+2 Minor
+
+Flight Conducted Under:
+
+Part 91: General aviation - Instructional
+
+Analysis
+
+The flight instructor and student departed on an instructional flight and flew to a nearby grass
+airstrip for pattern work. Although the flight instructor had flown into the airstrip before, he did
+not check the runway length before the flight departed and thought it was longer than the
+actual published 2,400-ft length. After arriving at the destination airstrip the, student entered
+left downwind for runway 13, resulting in a right quartering tailwind of about 5 knots. The flight
+instructor told the student to perform a short field landing. The student turned early onto the
+base leg of the airport traffic pattern, then turned onto final approach, resulting in the airplane
+being high and fast. After informing the student that the airplane was high and fast the student
+pitched the airplane down, which increased the airspeed, but he did not reduce power. The
+airplane continued to be high and fast, and somewhere before the midpoint of the runway the
+flight instructor told the student to go around. He repeated the instruction after the student
+hesitated. The student leveled off, added full power, removed carburetor heat, but left the flaps
+extended at 30° while he pitched for Vx airspeed. While climbing slightly, and with insufficient
+runway remaining to land, the flight instructor took the controls from the student and at that
+time realized the flaps were still at 30°. The airplane subsequently collided with trees beyond
+the end of the runway before descending to the ground resulting in substantial damage to the
+fuselage, wings, and empennage. The flight instructor reported there was no preimpact
+mechanical failures or malfunctions of the airplane that would have precluded normal
+operation. He also reported that the accident could have been prevented by executing a go-
+around much earlier.
+
+Probable Cause and Findings
+
+Page 1 of 6
+The National Transportation Safety Board determines the probable cause(s) of this accident to be:
+
+The flight instructor’s inadequate supervision of the landing approach and go-around, and his
+delayed remedial action.
+
+Findings
+
+Personnel issues
+
+Delayed action - Instructor/check pilot
+
+Personnel issues
+
+Monitoring other person - Instructor/check pilot
+
+Page 2 of 6
+
+ERA23LA316
+Factual Information
+
+History of Flight
+
+Approach-VFR go-around
+
+Collision during takeoff/land (Defining event)
+
+Pilot Information
+
+Certificate:
+
+Commercial; Flight instructor
+
+Age:
+
+Airplane Rating(s):
+
+Single-engine land; Multi-engine
+land
+
+Seat Occupied:
+
+25,Male
+
+Right
+
+3-point
+
+Yes
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+Airplane
+
+Instructor Rating(s):
+
+Airplane multi-engine; Airplane
+single-engine; Instrument airplane
+
+Medical Certification:
+
+Class 1 Without
+waivers/limitations
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+Last FAA Medical Exam:
+
+August 14, 2020
+
+Occupational Pilot:
+
+Yes
+
+Last Flight Review or Equivalent:
+
+September 23, 2022
+
+Flight Time:
+
+886 hours (Total, all aircraft), 121 hours (Total, this make and model), 797 hours (Pilot In
+Command, all aircraft), 184 hours (Last 90 days, all aircraft), 5 hours (Last 30 days, all aircraft),
+1 hours (Last 24 hours, all aircraft)
+
+Student pilot Information
+
+Certificate:
+
+Private
+
+Airplane Rating(s):
+
+Single-engine land
+
+Other Aircraft Rating(s): None
+
+Instrument Rating(s):
+
+Airplane
+
+Instructor Rating(s):
+
+None
+
+Age:
+
+Seat Occupied:
+
+Restraint Used:
+
+Second Pilot Present:
+
+Toxicology Performed:
+
+22,Male
+
+Left
+
+3-point
+
+Yes
+
+Medical Certification:
+
+Class 3 With waivers/limitations
+
+Last FAA Medical Exam:
+
+May 7, 2019
+
+Occupational Pilot:
+
+No
+
+Last Flight Review or Equivalent:
+
+July 12, 2023
+
+Flight Time:
+
+164 hours (Total, all aircraft), 3 hours (Total, this make and model), 118 hours (Pilot In
+Command, all aircraft), 46 hours (Last 90 days, all aircraft), 13 hours (Last 30 days, all aircraft)
+
+Page 3 of 6
+
+ERA23LA316
+Aircraft and Owner/Operator Information
+
+Aircraft Make:
+
+Model/Series:
+
+Cessna
+
+Registration:
+
+152 No Series Exists
+
+Aircraft Category:
+
+N6194Q
+
+Airplane
+
+Year of Manufacture:
+
+Airworthiness Certificate:
+
+1981
+
+Utility
+
+Amateur Built:
+
+Serial Number:
+
+15285189
+
+Landing Gear Type:
+
+Tricycle
+
+Seats:
+
+2
+
+Date/Type of Last Inspection:
+
+July 20, 2023 Annual
+
+Certified Max Gross Wt.:
+
+1675 lbs
+
+Time Since Last Inspection:
+
+Airframe Total Time:
+
+ELT:
+
+19000 Hrs as of last
+inspection
+
+C126 installed, activated, did
+not aid in locating accident
+
+Engines:
+
+1 Reciprocating
+
+Engine Manufacturer:
+
+Lycoming
+
+Engine Model/Series:
+
+O-235-L2C
+
+Registered Owner:
+
+PNL AERO LLC
+
+Rated Power:
+
+110 Horsepower
+
+Operator:
+
+Flight Level Aviation LLC
+
+Operating Certificate(s)
+Held:
+
+None
+
+Operator Does Business As:
+
+Race City Flight Operations
+
+Operator Designator Code:
+
+Meteorological Information and Flight Plan
+
+Conditions at Accident Site:
+
+Visual (VMC)
+
+Condition of Light:
+
+Day
+
+Observation Facility, Elevation:
+
+KIPJ,875 ft msl
+
+Distance from Accident Site:
+
+6 Nautical Miles
+
+Observation Time:
+
+12:25 Local
+
+Direction from Accident Site:
+
+204°
+
+Lowest Cloud Condition:
+
+Lowest Ceiling:
+
+Clear
+
+None
+
+Wind Speed/Gusts:
+
+3 knots / None
+
+Wind Direction:
+
+230°
+
+Visibility
+
+10 miles
+
+Visibility (RVR):
+
+Turbulence Type
+Forecast/Actual:
+
+Turbulence Severity
+Forecast/Actual:
+
+Unknown / None
+
+Unknown / N/A
+
+Altimeter Setting:
+
+30.15 inches Hg
+
+Temperature/Dew Point:
+
+32°C / 22°C
+
+Precipitation and Obscuration:
+
+No Obscuration; No Precipitation
+
+Departure Point:
+
+Mooresville, NC (14A)
+
+Type of Flight Plan Filed:
+
+Destination:
+
+Departure Time:
+
+MAIDEN, NC
+
+11:58 Local
+
+Type of Clearance:
+
+Type of Airspace:
+
+None
+
+None
+
+Page 4 of 6
+
+ERA23LA316
+Airport Information
+
+Airport:
+
+Laneys Airport N92
+
+Runway Surface Type:
+
+Grass/turf
+
+Airport Elevation:
+
+1025 ft msl
+
+Runway Used:
+
+13
+
+Runway Surface Condition:
+
+Dry
+
+IFR Approach:
+
+None
+
+Runway Length/Width:
+
+2400 ft / 75 ft
+
+VFR Approach/Landing:
+
+Go around;Traffic pattern
+
+Wreckage and Impact Information
+
+Crew Injuries:
+
+2 Minor
+
+Aircraft Damage:
+
+Substantial
+
+Passenger Injuries:
+
+Ground Injuries:
+
+Aircraft Fire:
+
+None
+
+Aircraft Explosion:
+
+None
+
+Total Injuries:
+
+2 Minor
+
+Latitude, Longitude:
+
+35.576147,-81.109913(est)
+
+Page 5 of 6
+
+ERA23LA316
+Administrative Information
+
+Investigator In Charge (IIC):
+
+Monville, Timothy
+
+Additional Participating
+Persons:
+
+Delbert L Areford; FAA/FSDO; Charlotte, NC
+
+Original Publish Date:
+
+November 30, 2023
+
+Last Revision Date:
+
+December 17, 2025
+
+Investigation Class:
+
+Class 4
+
+Note:
+
+The NTSB did not travel to the scene of this accident.
+
+Investigation Docket:
+
+https://data.ntsb.gov/Docket?ProjectID=192735
+
+The National Transportation Safety Board (NTSB) is an independent federal agency charged by Congress with
+investigating every civil aviation accident in the United States and significant events in other modes of transportation—
+railroad, transit, highway, marine, pipeline, and commercial space. We determine the probable causes of the accidents
+and events we investigate, and issue safety recommendations aimed at preventing future occurrences. In addition, we
+conduct transportation safety research studies and offer information and other assistance to family members and
+survivors for each accident or event we investigate. We also serve as the appellate authority for enforcement actions
+involving aviation and mariner certificates issued by the Federal Aviation Administration (FAA) and US Coast Guard, and
+we adjudicate appeals of civil penalty actions taken by the FAA.
+
+The NTSB does not assign fault or blame for an accident or incident; rather, as specified by NTSB regulation,
+“accident/incident investigations are fact-finding proceedings with no formal issues and no adverse parties … and are
+not conducted for the purpose of determining the rights or liabilities of any person” (Title 49 Code of Federal Regulations
+section 831.4). Assignment of fault or legal liability is not relevant to the NTSB’s statutory mission to improve
+transportation safety by investigating accidents and incidents and issuing safety recommendations. In addition,
+statutory language prohibits the admission into evidence or use of any part of an NTSB report related to an accident in a
+civil action for damages resulting from a matter mentioned in the report (Title 49 United States Code section 1154(b)). A
+factual report that may be admissible under 49 United States Code section 1154(b) is available here.
+
+Page 6 of 6
+
+ERA23LA316
