@@ -217,30 +217,31 @@ def report(check: bool) -> None:
                 + " |",
                 "",
             ]
+        t0 = str(kj.THRESHOLDS[0])
         md += [
             "**Clears.** For a field with comparator c, the right flags are the values labeled c "
-            "that spec 0.3 flags. For each ceiling, the lowest threshold whose 95% upper bound "
-            "of the escape rate on the calibration part is below it, and the test part at that "
-            "threshold. A comparator with no threshold at any ceiling is not in the table.",
+            "that spec 0.3 flags, and an escape is a clear of a value with another label. The "
+            f"table gives both parts at the lowest threshold, {t0}. For each ceiling, the "
+            "threshold is the lowest whose 95% upper bound of the escape rate on the calibration "
+            "part is below the ceiling.",
             "",
-            "| c | Right flags, calibration | Right flags, test | Ceiling | Threshold "
-            "| Test: right cleared | Test: escapes | Test: bound |",
-            "|---|---:|---:|---:|---:|---:|---:|---:|",
+            "| c | Right flags: calibration, test | Calibration: right cleared, escapes, bound "
+            "| Test: right cleared, escapes | "
+            + " | ".join(f"Threshold at {x}" for x in kj.CEILINGS)
+            + " |",
+            "|---|---:|---:|---:|" + "---:|" * len(kj.CEILINGS),
         ]
-        none = []
         for c in RELATIONS:
-            rows = [(x, s["by_ceiling"][f"{c} {x}"]) for x in kj.CEILINGS]
-            rows = [(x, b) for x, b in rows if b["threshold"] is not None]
-            if not rows:
-                none.append(f"`{c}`")
-            for x, b in rows:
-                md.append(
-                    f"| {c} | {s['calibration']['clears'][c]['right_flags']} "
-                    f"| {s['test']['clears'][c]['right_flags']} | {x} | {b['threshold']} "
-                    f"| {b['test']['clears_right']} | {b['test']['escapes']} "
-                    f"| {b['test']['escape_rate_upper_95']} |"
-                )
-        md += ["", f"No threshold at any ceiling: {', '.join(none) or 'none'}."]
+            cal, test = s["calibration"]["clears"][c], s["test"]["clears"][c]
+            b, bt = cal["by_threshold"][t0], test["by_threshold"][t0]
+            ts = [s["by_ceiling"][f"{c} {x}"]["threshold"] for x in kj.CEILINGS]
+            md.append(
+                f"| {c} | {cal['right_flags']}, {test['right_flags']} "
+                f"| {b['clears_right']}, {b['escapes']}, {b['escape_rate_upper_95']} "
+                f"| {bt['clears_right']}, {bt['escapes']} | "
+                + " | ".join("none" if t is None else str(t) for t in ts)
+                + " |"
+            )
     out = {
         HERE / "report.json": json.dumps(results, indent=1, sort_keys=True) + "\n",
         HERE / "REPORT.md": "\n".join(md) + "\n",
