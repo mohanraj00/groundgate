@@ -9,6 +9,7 @@ import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.resources import files
 from typing import TYPE_CHECKING, Any
+from urllib.parse import unquote
 
 from . import questions as q
 
@@ -71,8 +72,8 @@ def serve(w: Work, port: int) -> None:
                 labels = json.loads(path.read_text()) if path.exists() else {}
                 state = {"question": question, "items": shown, "labels": labels}
                 self.send(json.dumps(state))
-            elif self.path.startswith("/doc/") and self.path[5:] in pages:
-                self.send(pages[self.path[5:]], "text/html")
+            elif self.path.startswith("/doc/") and unquote(self.path[5:]) in pages:
+                self.send(pages[unquote(self.path[5:])], "text/html")
             else:
                 self.send("{}", code=404)
 

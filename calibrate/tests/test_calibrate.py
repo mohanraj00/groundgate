@@ -50,6 +50,8 @@ def test_upper_95_and_the_clears_that_each_ceiling_needs() -> None:
     assert upper_95(0, 0) == 1.0
     assert upper_95(0, 59) < 0.05 <= upper_95(0, 58)
     assert [needed(c) for c in (0.05, 0.1, 0.2)] == [59, 29, 14]
+    assert upper_95(3, 20) == 0.3437  # the same as the bench judges' bound on small counts
+    assert 0.1 < upper_95(960, 10000) < 0.102  # no underflow on a large count
     bound = {0.5: 0.3, 0.7: 0.04, 0.9: 0.01}.__getitem__
     assert pick((0.5, 0.7, 0.9), bound, 0.05, "lowest") == 0.7
     assert pick((0.5, 0.7, 0.9), bound, 0.05, "highest") == 0.9
@@ -148,3 +150,17 @@ def test_field_scoring_catches_wrong_values_and_counts_right_ones_doubted() -> N
         "right_doubted_upper_95": upper_95(1, 2),
     }
     assert s["by_ceiling"]["0.05"]["threshold"] is None
+
+
+def test_a_document_without_its_candidates_stops_the_sample(tmp_path: Path) -> None:
+    d, c, s = inputs(tmp_path, 2)
+    (c / "doc1.json").unlink()
+    with pytest.raises(SystemExit, match="write"):
+        cli.main(["sample", "--work", str(tmp_path / "w"), "--docs", str(d), "--candidates",
+                  str(c), "--schema", str(s), "--question", "key"])  # fmt: skip
+
+
+def test_the_policy_blocks_use_the_names_of_the_design() -> None:
+    meta = {"judge": "jev", "model": "jev-1.13.0"}
+    assert cli.policy("key", meta, 0.9)["judge"]["clear"] == {"KEY_NOT_AT_VALUE": 0.9}
+    assert cli.policy("field", meta, 0.2)["judge"]["doubt"] == {"field_match": 0.2}

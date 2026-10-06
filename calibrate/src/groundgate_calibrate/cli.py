@@ -66,7 +66,9 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
         text = unicodedata.normalize("NFC", path.read_text(encoding="utf-8"))
         cpath = cands / f"{doc}.json"
         if not cpath.exists():
-            continue
+            # a document without its candidates would leave the sample quietly; an empty list
+            # says that the extractor found nothing
+            raise SystemExit(f"{cpath} is not there; write [] for a document with no candidates")
         found = q.sample(args.question, doc, text, schema, json.loads(cpath.read_text()))
         if found:
             (w.path / "docs" / f"{doc}.txt").write_text(text, encoding="utf-8")
@@ -182,7 +184,9 @@ def report(w: Work, check: bool) -> None:
 
 def policy(question: str, meta: dict[str, Any], t: float) -> dict[str, Any]:
     """The judge block of a policy (hybrid design §7) for one threshold."""
-    rule = {"clear": {"KEY_NOT_AT_VALUE": t}} if question == "key" else {"doubt": {"field": t}}
+    rule = (
+        {"clear": {"KEY_NOT_AT_VALUE": t}} if question == "key" else {"doubt": {"field_match": t}}
+    )
     return {"judge": {"id": meta["judge"], "digest": meta["model"], **rule}}
 
 

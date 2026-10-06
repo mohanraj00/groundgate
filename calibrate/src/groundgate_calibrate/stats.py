@@ -3,6 +3,7 @@ picks for a ceiling."""
 
 from __future__ import annotations
 
+import math
 from collections.abc import Callable, Iterable
 
 CEILINGS = (0.05, 0.1, 0.2)
@@ -15,13 +16,15 @@ def upper_95(k: int, n: int) -> float:
         return 1.0
 
     def cdf(p: float) -> float:
-        total, term = 0.0, (1 - p) ** n
-        for i in range(k + 1):
-            total += term
-            term *= (n - i) / (i + 1) * p / (1 - p) if p < 1 else 0
-        return total
+        # each term in log space, so that (1 - p) ** n never underflows on a large n
+        lp, lq = math.log(p), math.log1p(-p)
+        top = math.lgamma(n + 1)
+        return sum(
+            math.exp(top - math.lgamma(i + 1) - math.lgamma(n - i + 1) + i * lp + (n - i) * lq)
+            for i in range(k + 1)
+        )
 
-    lo, hi = k / n, 1.0
+    lo, hi = k / n, 1.0  # mid stays inside (0, 1), so both logs are defined
     for _ in range(60):
         mid = (lo + hi) / 2
         lo, hi = (mid, hi) if cdf(mid) > 0.05 else (lo, mid)
