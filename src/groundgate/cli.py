@@ -175,10 +175,18 @@ def _report(args: argparse.Namespace, receipt: Any, text: str, candidates: Any) 
     doc_id = receipt.get("document", {}).get("id") if isinstance(receipt, dict) else None
     title = args.title or doc_id or (Path(args.document).name if args.document != "-" else None)
     schema, policy = _json(args.schema), _json(args.policy) if args.policy else None
-    _write(
-        render(receipt, text, candidates, schema=schema, policy=policy, layout=layout, title=title),
-        args.output,
+    judgments = _json(args.judgments) if args.judgments else None
+    page = render(
+        receipt,
+        text,
+        candidates,
+        schema=schema,
+        policy=policy,
+        layout=layout,
+        title=title,
+        judgments=judgments,
     )
+    _write(page, args.output)
     return 0
 
 

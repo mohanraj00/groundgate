@@ -276,6 +276,9 @@ def test_cli_takes_recorded_judgments(tmp_path: Path, capsys: pytest.CaptureFixt
     assert main(["admit", *run, "-o", out]) == 0
     assert main(["verify", out, *run]) == 0
     assert main(["verify", out, doc, schema, cands, "--policy", policy]) == 1
+    page = str(tmp_path / "report.html")
+    assert main(["report", out, *run, "-o", page]) == 0
+    assert "receipt verified" in Path(page).read_text()
     capsys.readouterr()
 
 
