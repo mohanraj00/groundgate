@@ -127,6 +127,13 @@ def only(answers: dict[str, Any]) -> dict[str, Any]:
     return dict(a)
 
 
+def keep(answers: dict[str, Any]) -> dict[str, Any]:
+    """What a run records of the answers to one prompt. Another judge can replace this, as it
+    can replace prompt()."""
+    a = only(answers)
+    return {"choice": a["choice"], "confidence": round(a["confidence"], 4)}
+
+
 def laya_engine(meta: dict[str, Any]) -> Ask:
     import laya  # type: ignore[import-not-found]
     from laya import Router
@@ -140,8 +147,8 @@ def laya_engine(meta: dict[str, Any]) -> Ask:
     )
 
     def ask(st: str, qs: dict[str, Any]) -> dict[str, Any]:
-        a = only(router.predict(st, qs, model=LAYA_MODEL)["answers"])
-        return {"choice": a["choice"], "confidence": a["answer_confidence"]}
+        answers = router.predict(st, qs, model=LAYA_MODEL)["answers"]
+        return {k: {**a, "confidence": a["answer_confidence"]} for k, a in answers.items()}
 
     return ask
 
@@ -163,8 +170,7 @@ def jev_engine(meta: dict[str, Any]) -> Ask:
             res = json.load(r)
         if res["model"] != JEV_MODEL:
             raise SystemExit(f"answered by {res['model']}, not {JEV_MODEL}")
-        a = only(res["answers"])
-        return {"choice": a["choice"], "confidence": a["confidence"]}
+        return dict(res["answers"])
 
     return ask
 
@@ -187,8 +193,7 @@ def jeff_engine(meta: dict[str, Any]) -> Ask:
             JEFF_URL, data=body, headers={"Content-Type": "application/json"}
         )
         with urllib.request.urlopen(req, timeout=120) as r:
-            a = only(json.load(r)["answers"])
-        return {"choice": a["choice"], "confidence": a["confidence"]}
+            return dict(json.load(r)["answers"])
 
     return ask
 
@@ -234,7 +239,7 @@ def run(engine: str, repeat: int = 1) -> None:
                 if attempt == 3:
                     raise SystemExit(f"{it['id']}: {e}; run again to go on") from e
                 time.sleep(5 * (attempt + 1))
-        answers[it["id"]] = {"choice": a["choice"], "confidence": round(a["confidence"], 4)}
+        answers[it["id"]] = keep(a)
         partial.write_text(json.dumps({"meta": record, "answers": answers}))
         print(f"{n}/{len(items)}", end="\r", flush=True)
     out = {"meta": meta, "answers": answers}

@@ -1,0 +1,736 @@
+{
+ "answers": {
+  "fda-alfuzosin:367": {
+   "hepatic_starting_dose": 0.17,
+   "max_daily_dose": 0.75,
+   "starting_dose": 0.91,
+   "strengths": 0.65
+  },
+  "fda-alfuzosin:566": {
+   "hepatic_starting_dose": 0.15,
+   "max_daily_dose": 0.64,
+   "starting_dose": 0.78,
+   "strengths": 0.74
+  },
+  "fda-alfuzosin:59": {
+   "hepatic_starting_dose": 0.22,
+   "max_daily_dose": 0.6,
+   "starting_dose": 0.74,
+   "strengths": 0.5
+  },
+  "fda-alfuzosin:726": {
+   "hepatic_starting_dose": 0.21,
+   "max_daily_dose": 0.66,
+   "starting_dose": 0.85,
+   "strengths": 0.85
+  },
+  "fda-colchicine:1475": {
+   "hepatic_starting_dose": 0.17,
+   "max_daily_dose": 0.32,
+   "starting_dose": 0.79,
+   "strengths": 0.58
+  },
+  "fda-colchicine:1539": {
+   "hepatic_starting_dose": 0.14,
+   "max_daily_dose": 0.44,
+   "starting_dose": 0.73,
+   "strengths": 0.62
+  },
+  "fda-colchicine:1691": {
+   "hepatic_starting_dose": 0.12,
+   "max_daily_dose": 0.47,
+   "starting_dose": 0.53,
+   "strengths": 0.66
+  },
+  "fda-colchicine:825": {
+   "hepatic_starting_dose": 0.14,
+   "max_daily_dose": 0.58,
+   "starting_dose": 0.74,
+   "strengths": 0.47
+  },
+  "fda-colchicine:916": {
+   "hepatic_starting_dose": 0.14,
+   "max_daily_dose": 0.83,
+   "starting_dose": 0.53,
+   "strengths": 0.5
+  },
+  "fda-desvenlafaxine:196": {
+   "hepatic_starting_dose": 0.14,
+   "max_daily_dose": 0.18,
+   "starting_dose": 0.26,
+   "strengths": 0.44
+  },
+  "fda-desvenlafaxine:48": {
+   "hepatic_starting_dose": 0.28,
+   "max_daily_dose": 0.74,
+   "starting_dose": 0.79,
+   "strengths": 0.49
+  },
+  "fda-desvenlafaxine:532": {
+   "hepatic_starting_dose": 0.23,
+   "max_daily_dose": 0.7,
+   "starting_dose": 0.48,
+   "strengths": 0.43
+  },
+  "fda-dexlansoprazole:1009": {
+   "hepatic_starting_dose": 0.21,
+   "max_daily_dose": 0.43,
+   "starting_dose": 0.54,
+   "strengths": 0.52
+  },
+  "fda-dexlansoprazole:1237": {
+   "hepatic_starting_dose": 0.86,
+   "max_daily_dose": 0.45,
+   "starting_dose": 0.73,
+   "strengths": 0.61
+  },
+  "fda-dexlansoprazole:3465": {
+   "hepatic_starting_dose": 0.28,
+   "max_daily_dose": 0.17,
+   "starting_dose": 0.55,
+   "strengths": 0.79
+  },
+  "fda-dexlansoprazole:3623": {
+   "hepatic_starting_dose": 0.39,
+   "max_daily_dose": 0.19,
+   "starting_dose": 0.56,
+   "strengths": 0.73
+  },
+  "fda-dexlansoprazole:748": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.38,
+   "starting_dose": 0.78,
+   "strengths": 0.46
+  },
+  "fda-dexlansoprazole:842": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.34,
+   "starting_dose": 0.47,
+   "strengths": 0.52
+  },
+  "fda-dicyclomine:298": {
+   "hepatic_starting_dose": 0.16,
+   "max_daily_dose": 0.18,
+   "starting_dose": 0.84,
+   "strengths": 0.39
+  },
+  "fda-dicyclomine:398": {
+   "hepatic_starting_dose": 0.1,
+   "max_daily_dose": 0.29,
+   "starting_dose": 0.34,
+   "strengths": 0.37
+  },
+  "fda-dicyclomine:701": {
+   "hepatic_starting_dose": 0.2,
+   "max_daily_dose": 0.36,
+   "starting_dose": 0.81,
+   "strengths": 0.44
+  },
+  "fda-dicyclomine:802": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.55,
+   "starting_dose": 0.62,
+   "strengths": 0.48
+  },
+  "fda-doxepin:136": {
+   "hepatic_starting_dose": 0.16,
+   "max_daily_dose": 0.43,
+   "starting_dose": 0.4,
+   "strengths": 0.35
+  },
+  "fda-doxepin:251": {
+   "max_daily_dose": 0.64
+  },
+  "fda-doxepin:390": {
+   "hepatic_starting_dose": 0.17,
+   "max_daily_dose": 0.71,
+   "starting_dose": 0.8,
+   "strengths": 0.37
+  },
+  "fda-doxepin:409": {
+   "hepatic_starting_dose": 0.1,
+   "max_daily_dose": 0.33,
+   "starting_dose": 0.44,
+   "strengths": 0.38
+  },
+  "fda-doxepin:602": {
+   "hepatic_starting_dose": 0.08,
+   "max_daily_dose": 0.52,
+   "starting_dose": 0.42,
+   "strengths": 0.36
+  },
+  "fda-doxepin:98": {
+   "hepatic_starting_dose": 0.19,
+   "max_daily_dose": 0.25,
+   "starting_dose": 0.63,
+   "strengths": 0.37
+  },
+  "fda-dutasteride:263": {
+   "hepatic_starting_dose": 0.15,
+   "max_daily_dose": 0.64,
+   "starting_dose": 0.84,
+   "strengths": 0.55
+  },
+  "fda-dutasteride:320": {
+   "hepatic_starting_dose": 0.12,
+   "max_daily_dose": 0.39,
+   "starting_dose": 0.63,
+   "strengths": 0.41
+  },
+  "fda-dutasteride:353": {
+   "hepatic_starting_dose": 0.11,
+   "max_daily_dose": 0.48,
+   "starting_dose": 0.66,
+   "strengths": 0.42
+  },
+  "fda-dutasteride:532": {
+   "hepatic_starting_dose": 0.15,
+   "max_daily_dose": 0.74,
+   "starting_dose": 0.86,
+   "strengths": 0.53
+  },
+  "fda-dutasteride:668": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.67,
+   "starting_dose": 0.85,
+   "strengths": 0.79
+  },
+  "fda-dutasteride:708": {
+   "hepatic_starting_dose": 0.14,
+   "max_daily_dose": 0.36,
+   "starting_dose": 0.53,
+   "strengths": 0.57
+  },
+  "fda-finasteride:185": {
+   "hepatic_starting_dose": 0.12,
+   "max_daily_dose": 0.61,
+   "starting_dose": 0.77,
+   "strengths": 0.52
+  },
+  "fda-finasteride:255": {
+   "hepatic_starting_dose": 0.11,
+   "max_daily_dose": 0.56,
+   "starting_dose": 0.72,
+   "strengths": 0.48
+  },
+  "fda-finasteride:410": {
+   "hepatic_starting_dose": 0.11,
+   "max_daily_dose": 0.63,
+   "starting_dose": 0.82,
+   "strengths": 0.55
+  },
+  "fda-finasteride:561": {
+   "hepatic_starting_dose": 0.12,
+   "max_daily_dose": 0.63,
+   "starting_dose": 0.9,
+   "strengths": 0.85
+  },
+  "fda-finasteride:694": {
+   "hepatic_starting_dose": 0.12,
+   "max_daily_dose": 0.73,
+   "starting_dose": 0.83,
+   "strengths": 0.85
+  },
+  "fda-finasteride:827": {
+   "hepatic_starting_dose": 0.14,
+   "max_daily_dose": 0.51,
+   "starting_dose": 0.78,
+   "strengths": 0.79
+  },
+  "fda-ibandronate:2367": {
+   "hepatic_starting_dose": 0.12,
+   "max_daily_dose": 0.17,
+   "starting_dose": 0.77,
+   "strengths": 0.68
+  },
+  "fda-ibandronate:40": {
+   "hepatic_starting_dose": 0.2,
+   "max_daily_dose": 0.16,
+   "starting_dose": 0.69,
+   "strengths": 0.48
+  },
+  "fda-ibandronate:617": {
+   "hepatic_starting_dose": 0.24,
+   "max_daily_dose": 0.25,
+   "starting_dose": 0.83,
+   "strengths": 0.57
+  },
+  "fda-ketorolac:721": {
+   "hepatic_starting_dose": 0.26,
+   "max_daily_dose": 0.57,
+   "starting_dose": 0.61,
+   "strengths": 0.59
+  },
+  "fda-ketorolac:747": {
+   "hepatic_starting_dose": 0.23,
+   "max_daily_dose": 0.61,
+   "starting_dose": 0.64,
+   "strengths": 0.63
+  },
+  "fda-ketorolac:777": {
+   "max_daily_dose": 0.63
+  },
+  "fda-ketorolac:858": {
+   "hepatic_starting_dose": 0.25,
+   "max_daily_dose": 0.48,
+   "starting_dose": 0.65,
+   "strengths": 0.59
+  },
+  "fda-ketorolac:884": {
+   "hepatic_starting_dose": 0.2,
+   "max_daily_dose": 0.51,
+   "starting_dose": 0.57,
+   "strengths": 0.58
+  },
+  "fda-ketorolac:914": {
+   "max_daily_dose": 0.66
+  },
+  "fda-lacosamide:138": {
+   "hepatic_starting_dose": 0.2,
+   "max_daily_dose": 0.41,
+   "starting_dose": 0.81,
+   "strengths": 0.42
+  },
+  "fda-lacosamide:1745": {
+   "hepatic_starting_dose": 0.18,
+   "max_daily_dose": 0.4,
+   "starting_dose": 0.83,
+   "strengths": 0.48
+  },
+  "fda-lacosamide:1765": {
+   "hepatic_starting_dose": 0.12,
+   "max_daily_dose": 0.28,
+   "starting_dose": 0.71,
+   "strengths": 0.36
+  },
+  "fda-lacosamide:1801": {
+   "hepatic_starting_dose": 0.23,
+   "max_daily_dose": 0.24,
+   "starting_dose": 0.65,
+   "strengths": 0.41
+  },
+  "fda-lacosamide:251": {
+   "hepatic_starting_dose": 0.23,
+   "max_daily_dose": 0.31,
+   "starting_dose": 0.5,
+   "strengths": 0.39
+  },
+  "fda-lacosamide:347": {
+   "hepatic_starting_dose": 0.1,
+   "max_daily_dose": 0.53,
+   "starting_dose": 0.59,
+   "strengths": 0.39
+  },
+  "fda-letrozole:112": {
+   "hepatic_starting_dose": 0.54,
+   "max_daily_dose": 0.72,
+   "starting_dose": 0.8,
+   "strengths": 0.48
+  },
+  "fda-letrozole:191": {
+   "hepatic_starting_dose": 0.78,
+   "max_daily_dose": 0.36,
+   "starting_dose": 0.55,
+   "strengths": 0.46
+  },
+  "fda-letrozole:1989": {
+   "hepatic_starting_dose": 0.81,
+   "max_daily_dose": 0.4,
+   "starting_dose": 0.64,
+   "strengths": 0.66
+  },
+  "fda-letrozole:2404": {
+   "hepatic_starting_dose": 0.34,
+   "max_daily_dose": 0.16,
+   "starting_dose": 0.52,
+   "strengths": 0.79
+  },
+  "fda-letrozole:2518": {
+   "hepatic_starting_dose": 0.18,
+   "max_daily_dose": 0.1,
+   "starting_dose": 0.34,
+   "strengths": 0.8
+  },
+  "fda-letrozole:298": {
+   "hepatic_starting_dose": 0.58,
+   "max_daily_dose": 0.69,
+   "starting_dose": 0.85,
+   "strengths": 0.46
+  },
+  "fda-levocetirizine:144": {
+   "hepatic_starting_dose": 0.24,
+   "max_daily_dose": 0.26,
+   "starting_dose": 0.48,
+   "strengths": 0.47
+  },
+  "fda-levocetirizine:336": {
+   "hepatic_starting_dose": 0.15,
+   "max_daily_dose": 0.67,
+   "starting_dose": 0.84,
+   "strengths": 0.53
+  },
+  "fda-levocetirizine:398": {
+   "hepatic_starting_dose": 0.09,
+   "max_daily_dose": 0.36,
+   "starting_dose": 0.44,
+   "strengths": 0.39
+  },
+  "fda-levocetirizine:688": {
+   "hepatic_starting_dose": 0.16,
+   "max_daily_dose": 0.65,
+   "starting_dose": 0.77,
+   "strengths": 0.6
+  },
+  "fda-levocetirizine:76": {
+   "hepatic_starting_dose": 0.22,
+   "max_daily_dose": 0.28,
+   "starting_dose": 0.51,
+   "strengths": 0.49
+  },
+  "fda-levocetirizine:777": {
+   "hepatic_starting_dose": 0.14,
+   "max_daily_dose": 0.33,
+   "starting_dose": 0.53,
+   "strengths": 0.49
+  },
+  "fda-linagliptin:206": {
+   "hepatic_starting_dose": 0.38,
+   "max_daily_dose": 0.74,
+   "starting_dose": 0.94,
+   "strengths": 0.89
+  },
+  "fda-linagliptin:322": {
+   "hepatic_starting_dose": 0.21,
+   "max_daily_dose": 0.61,
+   "starting_dose": 0.89,
+   "strengths": 0.89
+  },
+  "fda-linagliptin:467": {
+   "hepatic_starting_dose": 0.23,
+   "max_daily_dose": 0.67,
+   "starting_dose": 0.87,
+   "strengths": 0.85
+  },
+  "fda-linagliptin:68": {
+   "hepatic_starting_dose": 0.38,
+   "max_daily_dose": 0.73,
+   "starting_dose": 0.84,
+   "strengths": 0.48
+  },
+  "fda-lithium:137": {
+   "hepatic_starting_dose": 0.12,
+   "max_daily_dose": 0.2,
+   "starting_dose": 0.72,
+   "strengths": 0.37
+  },
+  "fda-lithium:2359": {
+   "hepatic_starting_dose": 0.22,
+   "max_daily_dose": 0.15,
+   "starting_dose": 0.73,
+   "strengths": 0.41
+  },
+  "fda-lithium:2385": {
+   "hepatic_starting_dose": 0.17,
+   "max_daily_dose": 0.14,
+   "starting_dose": 0.63,
+   "strengths": 0.42
+  },
+  "fda-lithium:2424": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.24,
+   "starting_dose": 0.5,
+   "strengths": 0.35
+  },
+  "fda-lithium:262": {
+   "hepatic_starting_dose": 0.07,
+   "max_daily_dose": 0.2,
+   "starting_dose": 0.58,
+   "strengths": 0.37
+  },
+  "fda-methylphenidate:1024": {
+   "hepatic_starting_dose": 0.1,
+   "max_daily_dose": 0.13,
+   "starting_dose": 0.48,
+   "strengths": 0.39
+  },
+  "fda-methylphenidate:1290": {
+   "hepatic_starting_dose": 0.08,
+   "max_daily_dose": 0.21,
+   "starting_dose": 0.42,
+   "strengths": 0.43
+  },
+  "fda-methylphenidate:189": {
+   "hepatic_starting_dose": 0.08,
+   "max_daily_dose": 0.46,
+   "starting_dose": 0.61,
+   "strengths": 0.37
+  },
+  "fda-methylphenidate:87": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.32,
+   "starting_dose": 0.6,
+   "strengths": 0.36
+  },
+  "fda-metoclopramide:1921": {
+   "hepatic_starting_dose": 0.27,
+   "max_daily_dose": 0.81,
+   "starting_dose": 0.45,
+   "strengths": 0.56
+  },
+  "fda-metoclopramide:242": {
+   "hepatic_starting_dose": 0.14,
+   "max_daily_dose": 0.23,
+   "starting_dose": 0.63,
+   "strengths": 0.43
+  },
+  "fda-metoclopramide:2450": {
+   "max_daily_dose": 0.41
+  },
+  "fda-nebivolol:1060": {
+   "hepatic_starting_dose": 0.86,
+   "max_daily_dose": 0.22,
+   "starting_dose": 0.56,
+   "strengths": 0.51
+  },
+  "fda-nebivolol:183": {
+   "hepatic_starting_dose": 0.14,
+   "max_daily_dose": 0.33,
+   "starting_dose": 0.77,
+   "strengths": 0.35
+  },
+  "fda-nebivolol:248": {
+   "max_daily_dose": 0.58
+  },
+  "fda-nebivolol:415": {
+   "hepatic_starting_dose": 0.17,
+   "max_daily_dose": 0.31,
+   "starting_dose": 0.89,
+   "strengths": 0.46
+  },
+  "fda-nebivolol:618": {
+   "max_daily_dose": 0.29
+  },
+  "fda-nebivolol:805": {
+   "hepatic_starting_dose": 0.15,
+   "max_daily_dose": 0.43,
+   "starting_dose": 0.69,
+   "strengths": 0.5
+  },
+  "fda-nitroglycerin:1430": {
+   "hepatic_starting_dose": 0.09,
+   "max_daily_dose": 0.11,
+   "starting_dose": 0.68,
+   "strengths": 0.85
+  },
+  "fda-nitroglycerin:1541": {
+   "hepatic_starting_dose": 0.11,
+   "max_daily_dose": 0.12,
+   "starting_dose": 0.49,
+   "strengths": 0.78
+  },
+  "fda-oxcarbazepine:144": {
+   "hepatic_starting_dose": 0.16,
+   "max_daily_dose": 0.36,
+   "starting_dose": 0.71,
+   "strengths": 0.4
+  },
+  "fda-oxcarbazepine:691": {
+   "hepatic_starting_dose": 0.21,
+   "max_daily_dose": 0.19,
+   "starting_dose": 0.58,
+   "strengths": 0.39
+  },
+  "fda-oxcarbazepine:701": {
+   "hepatic_starting_dose": 0.41,
+   "max_daily_dose": 0.24,
+   "starting_dose": 0.52,
+   "strengths": 0.34
+  },
+  "fda-oxcarbazepine:79": {
+   "hepatic_starting_dose": 0.25,
+   "max_daily_dose": 0.36,
+   "starting_dose": 0.82,
+   "strengths": 0.39
+  },
+  "fda-ranolazine:197": {
+   "hepatic_starting_dose": 0.18,
+   "max_daily_dose": 0.3,
+   "starting_dose": 0.85,
+   "strengths": 0.47
+  },
+  "fda-ranolazine:232": {
+   "hepatic_starting_dose": 0.18,
+   "max_daily_dose": 0.43,
+   "starting_dose": 0.71,
+   "strengths": 0.49
+  },
+  "fda-ranolazine:29": {
+   "hepatic_starting_dose": 0.23,
+   "max_daily_dose": 0.29,
+   "starting_dose": 0.74,
+   "strengths": 0.35
+  },
+  "fda-ranolazine:512": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.77,
+   "starting_dose": 0.54,
+   "strengths": 0.49
+  },
+  "fda-ranolazine:64": {
+   "hepatic_starting_dose": 0.18,
+   "max_daily_dose": 0.42,
+   "starting_dose": 0.64,
+   "strengths": 0.45
+  },
+  "fda-ranolazine:937": {
+   "hepatic_starting_dose": 0.17,
+   "max_daily_dose": 0.56,
+   "starting_dose": 0.37,
+   "strengths": 0.42
+  },
+  "fda-solifenacin:108": {
+   "hepatic_starting_dose": 0.23,
+   "max_daily_dose": 0.57,
+   "starting_dose": 0.59,
+   "strengths": 0.51
+  },
+  "fda-solifenacin:152": {
+   "max_daily_dose": 0.52
+  },
+  "fda-solifenacin:29": {
+   "hepatic_starting_dose": 0.39,
+   "max_daily_dose": 0.47,
+   "starting_dose": 0.79,
+   "strengths": 0.55
+  },
+  "fda-solifenacin:604": {
+   "hepatic_starting_dose": 0.31,
+   "max_daily_dose": 0.63,
+   "starting_dose": 0.81,
+   "strengths": 0.51
+  },
+  "fda-solifenacin:686": {
+   "hepatic_starting_dose": 0.46,
+   "max_daily_dose": 0.69,
+   "starting_dose": 0.64,
+   "strengths": 0.58
+  },
+  "fda-sotalol:113": {
+   "hepatic_starting_dose": 0.24,
+   "max_daily_dose": 0.58,
+   "starting_dose": 0.84,
+   "strengths": 0.48
+  },
+  "fda-sotalol:1730": {
+   "hepatic_starting_dose": 0.12,
+   "max_daily_dose": 0.17,
+   "starting_dose": 0.89,
+   "strengths": 0.44
+  },
+  "fda-sotalol:177": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.48,
+   "starting_dose": 0.64,
+   "strengths": 0.38
+  },
+  "fda-sotalol:1793": {
+   "hepatic_starting_dose": 0.1,
+   "max_daily_dose": 0.18,
+   "starting_dose": 0.75,
+   "strengths": 0.45
+  },
+  "fda-sotalol:214": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.72,
+   "starting_dose": 0.44,
+   "strengths": 0.41
+  },
+  "fda-sumatriptan:258": {
+   "hepatic_starting_dose": 0.33,
+   "max_daily_dose": 0.56,
+   "starting_dose": 0.37,
+   "strengths": 0.33
+  },
+  "fda-sumatriptan:314": {
+   "max_daily_dose": 0.45
+  },
+  "fda-sumatriptan:452": {
+   "hepatic_starting_dose": 0.27,
+   "max_daily_dose": 0.43,
+   "starting_dose": 0.64,
+   "strengths": 0.46
+  },
+  "fda-sumatriptan:459": {
+   "hepatic_starting_dose": 0.36,
+   "max_daily_dose": 0.56,
+   "starting_dose": 0.52,
+   "strengths": 0.55
+  },
+  "fda-sumatriptan:469": {
+   "hepatic_starting_dose": 0.3,
+   "max_daily_dose": 0.53,
+   "starting_dose": 0.54,
+   "strengths": 0.52
+  },
+  "fda-sumatriptan:486": {
+   "hepatic_starting_dose": 0.45,
+   "max_daily_dose": 0.61,
+   "starting_dose": 0.51,
+   "strengths": 0.49
+  },
+  "fda-telmisartan:331": {
+   "hepatic_starting_dose": 0.21,
+   "max_daily_dose": 0.38,
+   "starting_dose": 0.87,
+   "strengths": 0.42
+  },
+  "fda-telmisartan:411": {
+   "hepatic_starting_dose": 0.14,
+   "max_daily_dose": 0.35,
+   "starting_dose": 0.53,
+   "strengths": 0.48
+  },
+  "fda-telmisartan:429": {
+   "hepatic_starting_dose": 0.15,
+   "max_daily_dose": 0.47,
+   "starting_dose": 0.69,
+   "strengths": 0.51
+  },
+  "fda-telmisartan:546": {
+   "hepatic_starting_dose": 0.23,
+   "max_daily_dose": 0.51,
+   "starting_dose": 0.91,
+   "strengths": 0.5
+  },
+  "fda-ticagrelor:295": {
+   "hepatic_starting_dose": 0.17,
+   "max_daily_dose": 0.36,
+   "starting_dose": 0.58,
+   "strengths": 0.51
+  },
+  "fda-ticagrelor:393": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.33,
+   "starting_dose": 0.79,
+   "strengths": 0.49
+  },
+  "fda-ticagrelor:454": {
+   "hepatic_starting_dose": 0.17,
+   "max_daily_dose": 0.44,
+   "starting_dose": 0.69,
+   "strengths": 0.48
+  },
+  "fda-ticagrelor:78": {
+   "hepatic_starting_dose": 0.13,
+   "max_daily_dose": 0.31,
+   "starting_dose": 0.79,
+   "strengths": 0.48
+  }
+ },
+ "meta": {
+  "engine": "Jev (TypeSafe API)",
+  "model": "jev-1.13.0",
+  "prompts_sha256": "cfed996383722b8ed95908d32a85480073dda3cbd72b5b2dd7b88ee7fe583b6c",
+  "run": "2026-10-06"
+ }
+}

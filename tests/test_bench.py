@@ -769,6 +769,37 @@ def test_the_fields_web_page_marks_a_dose_by_its_non_space_characters() -> None:
     assert '<td><mark id="50">50</mark> mg</td>' in out
 
 
+def test_the_field_judge_doubts_a_pair_below_the_threshold() -> None:
+    import importlib.util
+
+    path = BENCH / "judges" / "fields" / "judge.py"
+    spec = importlib.util.spec_from_file_location("fields_judge", path)
+    assert spec and spec.loader
+    fields_judge = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fields_judge)
+
+    assert fields_judge.keep({"strengths": {"type": "noul", "noul": 0.123456}}) == {
+        "strengths": 0.1235
+    }
+    items = [
+        {
+            "id": "a",
+            "part": "calibration",
+            "label": ["starting_dose"],
+            "spec_0.3": ["starting_dose", "strengths"],
+        },
+        {"id": "b", "part": "test", "label": [], "spec_0.3": ["strengths"]},
+    ]
+    answers = {"a": {"starting_dose": 0.9, "strengths": 0.04}, "b": {"strengths": 0.15}}
+    s = fields_judge.score(items, answers)
+    cal = s["calibration"]["by_threshold"]
+    assert (cal["0.05"]["wrong_caught"], cal["0.05"]["right_doubted"]) == (1, 0)
+    assert s["test"]["by_threshold"]["0.2"]["wrong_caught"] == 1
+    assert s["test"]["by_threshold"]["0.1"]["wrong_caught"] == 0
+    with pytest.raises(SystemExit):
+        fields_judge.score(items, {**answers, "b": {"starting_dose": 0.5}})
+
+
 def test_the_conflicts_set_takes_the_lower_end_of_a_range_as_a_dose() -> None:
     sys.path.insert(0, str(BENCH / "conflicts"))
     import conflicts
