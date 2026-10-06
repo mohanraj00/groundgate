@@ -58,7 +58,11 @@ documents for the ceiling that you need before you start.
   options. It never shows the candidate's key, spec 0.3's reading or a judge's answer.
 - **Split first.** `split` is written once, by document, on sha256 of the document name. It
   refuses to run after a judge has answered, and `ask` refuses to run without it.
-- **One run at a time.** `ask` goes on after a stop only with the same judge, model and prompts.
+- **Fixed prompts.** `split` also records a digest of every prompt. `ask` refuses to run when the
+  documents, items or config changed after the split, and `report` refuses answers to other
+  prompts. `ask` goes on after a stop only with the same judge, model and prompts.
+- **Your offsets stay right.** `sample` refuses a document that is not NFC, and never changes
+  the text, because your candidates' byte offsets point into it.
 - **Text leaves the machine.** A hosted judge sends a window of each document out: 400 code
   points before the value and 150 after. Use it only on documents that you may send.
 

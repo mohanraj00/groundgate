@@ -93,8 +93,9 @@ def test_a_label_is_checked_and_the_page_hides_the_candidates_key() -> None:
     assert not q.valid_label("key", it, ["fiscal 2023"])
     assert q.valid_label("field", it, False)
     assert not q.valid_label("field", it, "no")
-    html = label.page(TEXT, [it, {**it, "id": "d:1"}])
+    html = label.page(TEXT, [it, {**it, "id": "d:1", "mark": [38, 44]}])
     assert html.count("<mark") == 1 and 'data-ids="d:0 d:1"' in html
+    assert f">{TEXT[37:44]}</mark>" in html  # one mark over both values
 
 
 def fake(answers: dict[str, dict[str, Any]]) -> Any:
@@ -164,3 +165,36 @@ def test_the_policy_blocks_use_the_names_of_the_design() -> None:
     meta = {"judge": "jev", "model": "jev-1.13.0"}
     assert cli.policy("key", meta, 0.9)["judge"]["clear"] == {"KEY_NOT_AT_VALUE": 0.9}
     assert cli.policy("field", meta, 0.2)["judge"]["doubt"] == {"field_match": 0.2}
+
+
+def test_a_text_that_is_not_nfc_stops_the_sample(tmp_path: Path) -> None:
+    d, c, s = inputs(tmp_path, 1)
+    (d / "doc0.txt").write_text("Cafe\u0301 " + TEXT)
+    with pytest.raises(SystemExit, match="NFC"):
+        cli.main(["sample", "--work", str(tmp_path / "w"), "--docs", str(d), "--candidates",
+                  str(c), "--schema", str(s), "--question", "key"])  # fmt: skip
+
+
+def test_answers_to_other_prompts_are_refused(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    d, c, s = inputs(tmp_path, 2)
+    work = tmp_path / "work"
+    run = ["--work", str(work)]
+    cli.main(["sample", *run, "--docs", str(d), "--candidates", str(c), "--schema", str(s),
+              "--question", "key"])  # fmt: skip
+    monkeypatch.setitem(cli.JUDGES, "fake", fake({"key": {"choice": "k1", "confidence": 0.9}}))
+    cli.main(["split", *run])
+    cfg = json.loads((work / "config.json").read_text())
+    (work / "config.json").write_text(json.dumps({**cfg, "context": "Another context."}))
+    with pytest.raises(SystemExit, match="changed after the split"):
+        cli.main(["ask", *run, "--judge", "fake"])
+    (work / "config.json").write_text(json.dumps(cfg))
+    cli.main(["ask", *run, "--judge", "fake"])
+    labels = {i["id"]: ["fiscal 2025"] for i in json.loads((work / "items.json").read_text())}
+    (work / "labels.json").write_text(json.dumps(labels))
+    rec = json.loads((work / "answers-fake.json").read_text())
+    rec["meta"]["prompts_sha256"] = "0" * 64
+    (work / "answers-fake.json").write_text(json.dumps(rec))
+    with pytest.raises(SystemExit, match="other prompts"):
+        cli.main(["report", *run])

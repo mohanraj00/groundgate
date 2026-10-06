@@ -19,12 +19,13 @@ if TYPE_CHECKING:
 
 def page(text: str, items: list[dict[str, Any]]) -> str:
     """The document text with a <mark> around each item's value. A mark lists its items in
-    data-ids: two items on one value, or on values that overlap, share the first mark."""
+    data-ids: two items on one value, or on values that overlap, share one mark over both."""
     marks: list[tuple[int, int, list[str]]] = []
     for it in sorted(items, key=lambda x: (x["mark"][0], x["id"])):
         a, b = it["mark"]
         if marks and a < marks[-1][1]:
-            marks[-1][2].append(it["id"])
+            s0, e0, ids = marks[-1]
+            marks[-1] = (s0, max(e0, b), [*ids, it["id"]])
         else:
             marks.append((a, b, [it["id"]]))
     out, at = [], 0

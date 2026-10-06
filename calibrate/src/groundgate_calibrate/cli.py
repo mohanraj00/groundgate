@@ -63,7 +63,10 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
         doc = path.stem
         if any(ch.isspace() for ch in doc):
             raise SystemExit(f"{path.name}: a document name has no spaces")
-        text = unicodedata.normalize("NFC", path.read_text(encoding="utf-8"))
+        text = path.read_text(encoding="utf-8")
+        if not unicodedata.is_normalized("NFC", text):
+            # the candidates' byte offsets point into this text, so it is never changed here
+            raise SystemExit(f"{path.name} is not NFC; normalise it before you extract")
         cpath = cands / f"{doc}.json"
         if not cpath.exists():
             # a document without its candidates would leave the sample quietly; an empty list
@@ -101,6 +104,8 @@ def split(w: Work) -> None:
         raise SystemExit("a model has answered already; a split comes before any model run")
     out = {it["id"]: part(it["doc"]) for it in w.read("items.json")}
     w.write("split.json", out)
+    # the prompts that the split is for: ask asks only these, and report scores only their answers
+    w.write("prompts.json", {"prompts_sha256": prompts_sha256(w)})
     n = sum(v == "calibration" for v in out.values())
     print(f"wrote split.json: {n} calibration, {len(out) - n} test")
 
@@ -116,6 +121,10 @@ def prompts(w: Work) -> list[tuple[str, str, dict[str, Any]]]:
     return out
 
 
+def prompts_sha256(w: Work) -> str:
+    return hashlib.sha256(json.dumps(prompts(w)).encode()).hexdigest()
+
+
 def ask(w: Work, judge: str) -> None:
     """Ask every prompt once. A stopped run goes on where it stopped, but only with the same
     judge, model and prompts: a resume never mixes the answers of two runs."""
@@ -123,9 +132,12 @@ def ask(w: Work, judge: str) -> None:
     target = w.path / f"answers-{judge}.json"
     if target.exists():
         raise SystemExit(f"{target.name} is there already")
-    meta, call = JUDGES[judge]()
     ps = prompts(w)
-    record = {**meta, "prompts_sha256": hashlib.sha256(json.dumps(ps).encode()).hexdigest()}
+    digest = hashlib.sha256(json.dumps(ps).encode()).hexdigest()
+    if digest != w.read("prompts.json")["prompts_sha256"]:
+        raise SystemExit("the documents, items or config changed after the split")
+    meta, call = JUDGES[judge]()
+    record = {**meta, "prompts_sha256": digest}
     partial = w.path / f".answers-{judge}.partial.json"
     answers: dict[str, Any] = {}
     if partial.exists():
@@ -163,6 +175,8 @@ def report(w: Work, check: bool) -> None:
     results: dict[str, Any] = {"question": cfg["question"], "judges": {}}
     for path in sorted(w.path.glob("answers-*.json")):
         rec = json.loads(path.read_text())
+        if rec["meta"]["prompts_sha256"] != w.read("prompts.json")["prompts_sha256"]:
+            raise SystemExit(f"{path.name} answers other prompts than the split's")
         s = q.score(cfg["question"], items, labels, parts, rec["answers"])
         results["judges"][path.stem[8:]] = {"meta": rec["meta"], **s}
     if not results["judges"]:
