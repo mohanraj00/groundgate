@@ -178,6 +178,8 @@ def docs() -> None:
     """docs/<id>.txt: Item 7 of each pinned filing, from the cache, after a check of its
     sha256. The cache and docs/ stay out of git."""
     (HERE / "docs").mkdir(exist_ok=True)
+    for old in (HERE / "docs").glob("*.txt"):  # only the filings of the current pick
+        old.unlink()
     for src in json.loads((HERE / "sources.json").read_text())["sources"]:
         acc = src["id"][4:]
         data = get(src["url"], f"{acc}.htm")
