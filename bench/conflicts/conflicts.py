@@ -15,7 +15,9 @@ or a model reads.
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -29,6 +31,25 @@ from fields import FIELDS as ALL_FIELDS  # noqa: E402  (bench/fields/fields.py)
 LABELS, MAX_DOSES, MAX_RANK = 40, 30, 3000
 # the set-2 fields that take one value; a conflict is two values for one of them
 FIELDS = {f: d for f, d in ALL_FIELDS.items() if not d["schema"].get("multiple")}
+# what joins a number to the dose after it, as in "20 to 30 mg" or "5, 10 or 20 mg"
+# a unit joined by a hyphen, as in "a 5-mg dose"
+HYPHEN_UNIT = re.compile(r"-(?:mg|mcg)(?![A-Za-z])")
+JOIN = re.compile(r"\s*(?:,\s*(?:or|and)?|or|and|to|-|\u2013|\u2014)\s*")
+
+
+def doses_in(text: str) -> list[tuple[int, int]]:
+    """The doses of the keys set, a number with a hyphen before its unit, and each number that
+    JOIN links to a dose after it: the lower end of a range is a dose too."""
+    from groundgate.text import tokens
+
+    toks = [t for t in tokens(text) if t.value is not None]
+    dose = {(a, b) for a, b in keys.doses_in(text)}
+    dose |= {(t.start, t.end) for t in toks if HYPHEN_UNIT.match(text, t.end)}
+    for t, after in reversed(list(itertools.pairwise(toks))):
+        m = JOIN.match(text, t.end)
+        if (after.start, after.end) in dose and m and m.end() == after.start:
+            dose.add((t.start, t.end))
+    return sorted(dose)
 
 
 def excluded() -> set[str]:
@@ -45,7 +66,7 @@ def items() -> None:
     out: list[dict[str, Any]] = []
     for src in json.loads((HERE / "sources.json").read_text())["sources"]:
         text = (HERE / "docs" / f"{src['id']}.txt").read_text(encoding="utf-8")
-        for a, b in keys.doses_in(text):
+        for a, b in doses_in(text):
             out.append({"id": f"{src['id']}:{a}", "doc": src["id"], "span": [a, b]})
     (HERE / "items.json").write_text(json.dumps(out, indent=1) + "\n")
     print(f"wrote items.json: {len(out)} doses in {len({it['doc'] for it in out})} labels")

@@ -512,6 +512,14 @@
   ]
  },
  {
+  "id": "fda-rizatriptan:37",
+  "doc": "fda-rizatriptan",
+  "span": [
+   37,
+   38
+  ]
+ },
+ {
   "id": "fda-rizatriptan:42",
   "doc": "fda-rizatriptan",
   "span": [
@@ -616,6 +624,14 @@
   ]
  },
  {
+  "id": "fda-rizatriptan:2530",
+  "doc": "fda-rizatriptan",
+  "span": [
+   2530,
+   2531
+  ]
+ },
+ {
   "id": "fda-rizatriptan:2626",
   "doc": "fda-rizatriptan",
   "span": [
@@ -717,6 +733,22 @@
   "span": [
    271,
    274
+  ]
+ },
+ {
+  "id": "fda-varenicline:297",
+  "doc": "fda-varenicline",
+  "span": [
+   297,
+   298
+  ]
+ },
+ {
+  "id": "fda-varenicline:302",
+  "doc": "fda-varenicline",
+  "span": [
+   302,
+   303
   ]
  },
  {
@@ -1136,6 +1168,14 @@
   ]
  },
  {
+  "id": "fda-buprenorphine:4870",
+  "doc": "fda-buprenorphine",
+  "span": [
+   4870,
+   4871
+  ]
+ },
+ {
   "id": "fda-buprenorphine:4876",
   "doc": "fda-buprenorphine",
   "span": [
@@ -1408,6 +1448,14 @@
   ]
  },
  {
+  "id": "fda-methadone:460",
+  "doc": "fda-methadone",
+  "span": [
+   460,
+   462
+  ]
+ },
+ {
   "id": "fda-methadone:466",
   "doc": "fda-methadone",
   "span": [
@@ -1416,11 +1464,43 @@
   ]
  },
  {
+  "id": "fda-methadone:614",
+  "doc": "fda-methadone",
+  "span": [
+   614,
+   616
+  ]
+ },
+ {
   "id": "fda-methadone:620",
   "doc": "fda-methadone",
   "span": [
    620,
    623
+  ]
+ },
+ {
+  "id": "fda-methadone:5818",
+  "doc": "fda-methadone",
+  "span": [
+   5818,
+   5820
+  ]
+ },
+ {
+  "id": "fda-methadone:5860",
+  "doc": "fda-methadone",
+  "span": [
+   5860,
+   5862
+  ]
+ },
+ {
+  "id": "fda-methadone:6873",
+  "doc": "fda-methadone",
+  "span": [
+   6873,
+   6875
   ]
  },
  {
@@ -1437,6 +1517,14 @@
   "span": [
    6991,
    6993
+  ]
+ },
+ {
+  "id": "fda-methadone:7153",
+  "doc": "fda-methadone",
+  "span": [
+   7153,
+   7154
   ]
  },
  {
@@ -1477,6 +1565,14 @@
   "span": [
    9794,
    9796
+  ]
+ },
+ {
+  "id": "fda-methadone:10361",
+  "doc": "fda-methadone",
+  "span": [
+   10361,
+   10363
   ]
  },
  {
@@ -2581,6 +2677,14 @@
   "span": [
    62,
    65
+  ]
+ },
+ {
+  "id": "fda-repaglinide:123",
+  "doc": "fda-repaglinide",
+  "span": [
+   123,
+   124
   ]
  },
  {
@@ -4016,6 +4120,14 @@
   ]
  },
  {
+  "id": "fda-etodolac:266",
+  "doc": "fda-etodolac",
+  "span": [
+   266,
+   269
+  ]
+ },
+ {
   "id": "fda-etodolac:273",
   "doc": "fda-etodolac",
   "span": [
@@ -4080,6 +4192,14 @@
   ]
  },
  {
+  "id": "fda-etodolac:1058",
+  "doc": "fda-etodolac",
+  "span": [
+   1058,
+   1061
+  ]
+ },
+ {
   "id": "fda-etodolac:1065",
   "doc": "fda-etodolac",
   "span": [
@@ -4125,6 +4245,14 @@
   "span": [
    2636,
    2640
+  ]
+ },
+ {
+  "id": "fda-etodolac:2654",
+  "doc": "fda-etodolac",
+  "span": [
+   2654,
+   2657
   ]
  },
  {

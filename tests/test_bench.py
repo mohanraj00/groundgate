@@ -767,3 +767,12 @@ def test_the_fields_web_page_marks_a_dose_by_its_non_space_characters() -> None:
     out = "".join(p.out)
     assert '<b><mark id="25">25</mark> mg</b>' in out
     assert '<td><mark id="50">50</mark> mg</td>' in out
+
+
+def test_the_conflicts_set_takes_the_lower_end_of_a_range_as_a_dose() -> None:
+    sys.path.insert(0, str(BENCH / "conflicts"))
+    import conflicts
+
+    text = "Give 20 to 30 mg, or a 5-mg dose, or 5, 10 or 20 mg; not 40 kg or 7 days."
+    got = [text[a:b] for a, b in conflicts.doses_in(text)]
+    assert got == ["20", "30", "5", "5", "10", "20"]

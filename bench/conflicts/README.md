@@ -32,13 +32,32 @@ relations set or the fields set used.
 
 ## Doses and fields
 
-A dose is a number token followed by mg or mcg, as in the keys set. `items.json` holds every dose
-of each label. The fields are the three set-2 FDA fields in mg that take one value, with the
-set-2 schemas and descriptions for a label without keys (`FIELDS` in `conflicts.py`):
+A dose is a number token followed by mg or mcg, as in the keys set, or by a hyphen and the unit
+("a 5-mg dose"). The lower end of a range or a list is a dose too: a number that "to", "or",
+"and", a comma or a dash joins to a dose ("20 to 30 mg", "5 or 10 mg"). `items.json` holds every
+dose of each label. The fields are the three set-2 FDA fields in mg that take one value, with
+the set-2 schemas and descriptions for a label without keys (`FIELDS` in `conflicts.py`):
 `starting_dose`, `max_daily_dose` and `hepatic_starting_dose`.
+
+The first `items.json` had only the doses with a unit after them. The labeler found that the
+lower end of "20 to 30 mg" could not be clicked, so I added the two other kinds during
+labeling. Every dose of the first file kept its id, so no label changed.
 
 ## A label
 
 For each label and field, the dose that the text states as the field (its item id), `none` when
 the text states no dose as the field, or `null` for not sure, which is left out of the gold.
 When the text states the value more than once, any of those doses is the label.
+
+Rules that the labeling settled, for the cases that the field descriptions leave open:
+
+- A field stated, but not as a number in mg or mcg, is not sure: a dose in grams, a count of
+  tablets or capsules, or a dose for each kg or m² of body. A dose here is in mg or mcg, so no
+  candidate can hold it.
+- A fixed daily dose with no stated maximum is not a maximum, as in set 2: azithromycin's "500 mg
+  once daily" has no `max_daily_dose` there. The upper end of a recommended daily range is the
+  maximum, as in set 2.
+- The maximum rule came after the labeler had labeled five labels with the fixed dose as the
+  maximum. At the labeler's request, I read those five texts (budesonide, cilostazol, mesalamine,
+  raloxifene, terbinafine) and set their `max_daily_dose` to none. Each gives one fixed adult dose
+  and no adult maximum. No model or spec 0.3 reading of this set existed then.
