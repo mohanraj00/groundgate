@@ -244,6 +244,22 @@ class Decision:
 
 
 @dataclass(frozen=True)
+class Judgment:
+    """A recorded judgment that applied to a decision (SPEC §5)."""
+
+    candidate_sha256: str
+    question: str
+    answer: str | None
+    p: float
+
+    def to_dict(self) -> dict[str, Any]:
+        out: dict[str, Any] = {"candidate_sha256": self.candidate_sha256, "question": self.question}
+        if self.question == "key":
+            out["answer"] = self.answer
+        return {**out, "p": self.p}
+
+
+@dataclass(frozen=True)
 class Receipt:
     document_id: str | None
     document_sha256: str
@@ -252,7 +268,7 @@ class Receipt:
     decisions: tuple[Decision, ...]
     coverage: tuple[tuple[str, str], ...]  # (field, code)
     receipt_sha256: str
-    judgments: tuple[dict[str, Any], ...] = ()  # the judgments that applied (SPEC §5)
+    judgments: tuple[Judgment, ...] = ()  # the judgments that applied (SPEC §5)
 
     def body(self) -> dict[str, Any]:
         counts = {"admitted": 0, "needs_verification": 0, "rejected": 0}
@@ -265,7 +281,7 @@ class Receipt:
             "policy_sha256": self.policy_sha256,
             "decisions": [d.to_dict() for d in self.decisions],
             "coverage": [{"field": f, "code": c} for f, c in self.coverage],
-            "judgments": [dict(j) for j in self.judgments],
+            "judgments": [j.to_dict() for j in self.judgments],
             "summary": counts,
         }
 

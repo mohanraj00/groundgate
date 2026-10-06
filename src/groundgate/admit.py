@@ -9,7 +9,7 @@ from decimal import Decimal
 from typing import Any
 
 from .canonical import SPEC_VERSION, Offsets, digest, is_nfc
-from .model import Decision, Field, Outcome, PacketError, Policy, Receipt, Schema
+from .model import Decision, Field, Judgment, Outcome, PacketError, Policy, Receipt, Schema
 from .text import (
     Token,
     canonical,
@@ -354,14 +354,12 @@ def admit(
         if isinstance(p, _Passed) and len(by_key.get((p.field.name, p.key), ())) > 1:
             p.flags.append("CONFLICTING_CANDIDATES")
 
-    decisions, applied = [], []
+    decisions: list[Decision] = []
+    applied: list[Judgment] = []
     for sha, i, cand, p in sorted(results, key=lambda r: (r[0], r[1])):
         if isinstance(p, _Passed):
             for j in sorted(_judge(policy, p, by_cand.get(i, {})), key=lambda j: j.question):
-                rec: dict[str, Any] = {"candidate_sha256": sha, "question": j.question}
-                if j.question == "key":
-                    rec["answer"] = j.answer
-                applied.append({**rec, "p": j.p})
+                applied.append(Judgment(sha, j.question, j.answer, j.p))
         cid = cand.get("id") if isinstance(cand, Mapping) else None
         decisions.append(_decision(ctx, sha, cand, cid, p))
 

@@ -331,3 +331,10 @@ def test_a_key_judgment_without_the_key_flag_is_recorded_and_changes_nothing() -
     r = gg.admit(doc, schema, [cand], policy, judgments=js).to_dict()
     assert (r["decisions"][0]["outcome"], r["decisions"][0]["codes"]) == ("admitted", [])
     assert [j["question"] for j in r["judgments"]] == ["key"]
+
+
+def test_applied_judgments_in_a_receipt_are_immutable() -> None:
+    js = [{"candidate_id": "a", "question": "field_match", "judge": JUDGE, "p": 0.9}]
+    (j,) = gg.admit(DOC, SCHEMA, CANDS, DOUBT, judgments=js).judgments
+    with pytest.raises(AttributeError):
+        j.p = 0.1  # type: ignore[misc]
