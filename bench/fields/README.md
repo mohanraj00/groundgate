@@ -8,7 +8,8 @@ anyone read a document of this set.
 
 `fields.py` is the pick of the keys set (`bench/keys/keys.py`) with its own documents. The pick
 looks only at label metadata and dose counts, and prints no text. The label tool never shows
-what spec 0.3 or a model reads.
+what spec 0.3 or a model reads. The web tool shows sections 2 and 3 as the pinned SPL formats
+them, with their headings, lists and tables, and marks each dose in place.
 
 ```bash
 uv run python bench/fields/fields.py pick --count   # how many doses the walk finds
@@ -16,6 +17,7 @@ uv run python bench/fields/fields.py pick           # write sources.json, select
 uv run python bench/fetch.py --set bench/fields     # download, verify, write docs/
 uv run python bench/fields/fields.py items          # write items.json from docs/
 uv run python bench/fields/fields.py label          # label them in the terminal
+uv run python bench/fields/fields.py web            # or at http://127.0.0.1:8770
 ```
 
 ## Labels

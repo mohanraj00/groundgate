@@ -6,6 +6,7 @@ other set used, each labeled by a person with the set-2 fields that the text sta
     uv run python bench/fetch.py --set bench/fields     # download, verify, write docs/
     uv run python bench/fields/fields.py items          # write items.json from docs/
     uv run python bench/fields/fields.py label          # label them in the terminal
+    uv run python bench/fields/fields.py web            # or in a browser, as the label formats it
 
 This is the pick of the keys-set tool (bench/keys/keys.py) with its own documents. The pick looks
 only at counts and prints no text, and the label tool never shows what spec 0.3 or a model reads.
@@ -135,11 +136,16 @@ def main() -> None:
     p.add_argument("--count", action="store_true", help="report dose counts; write nothing")
     sub.add_parser("items")
     sub.add_parser("label")
+    sub.add_parser("web")
     args = ap.parse_args()
     if args.cmd == "pick":
         keys.pick(args.count)
     elif args.cmd == "items":
         keys.find_items()
+    elif args.cmd == "web":
+        import web  # bench/fields/web.py
+
+        web.serve(FIELDS)
     else:
         label()
 

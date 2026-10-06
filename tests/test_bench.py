@@ -741,3 +741,29 @@ def test_the_fields_set_uses_the_set_2_field_definitions() -> None:
             seen.setdefault(name, []).append(f)
     for name, f in fields.FIELDS.items():
         assert f in seen[name], name
+
+
+def test_the_fields_web_page_marks_a_dose_by_its_non_space_characters() -> None:
+    import xml.etree.ElementTree as ET
+
+    sys.path.insert(0, str(BENCH / "fields"))
+    import web
+
+    from groundgate.extract.markup import xml_text
+
+    xml = (
+        '<section xmlns="urn:hl7-org:v3"><title>2 DOSAGE</title><paragraph>Take 10<sup>3</sup> '
+        "or <content styleCode='bold'>25 mg</content> daily.</paragraph><table><tr><td>50 mg</td>"
+        "</tr></table></section>"
+    )
+    text = xml_text(xml.encode())
+    marks = {}
+    for dose in ("25", "50"):
+        a = web.non_space(text[: text.index(dose)])
+        marks[a] = (a + 2, dose)
+    p = web.Page(marks)
+    p.walk(ET.fromstring(xml), 0)
+    assert p.seen == "".join(c for c in text if not c.isspace())
+    out = "".join(p.out)
+    assert '<b><mark id="25">25</mark> mg</b>' in out
+    assert '<td><mark id="50">50</mark> mg</td>' in out
