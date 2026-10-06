@@ -1,0 +1,71 @@
+{
+ "doc": "sec-0001628369-26-000008",
+ "kind": "sec",
+ "fields": {
+  "revenue": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   },
+   "description": "Total revenue or net sales for the fiscal year."
+  },
+  "net_income": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   },
+   "description": "Net income for the fiscal year."
+  },
+  "operating_income": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   },
+   "description": "Operating income (income from operations) for the fiscal year."
+  },
+  "cash_and_equivalents": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   },
+   "description": "Cash and cash equivalents at the end of the fiscal year."
+  },
+  "total_debt": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   },
+   "description": "Total debt at the end of the fiscal year."
+  }
+ }
+}

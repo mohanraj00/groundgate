@@ -1,0 +1,54 @@
+{
+ "fields": {
+  "revenue": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024",
+    "2023"
+   ]
+  },
+  "net_income": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024",
+    "2023"
+   ]
+  },
+  "operating_income": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024",
+    "2023"
+   ]
+  },
+  "cash_and_equivalents": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024",
+    "2023"
+   ]
+  },
+  "total_debt": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024",
+    "2023"
+   ]
+  }
+ }
+}

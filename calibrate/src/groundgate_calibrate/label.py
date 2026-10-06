@@ -34,6 +34,59 @@ def page(text: str, items: list[dict[str, Any]]) -> str:
         out += [html.escape(text[a:b]), "</mark>"]
         at = b
     out.append(html.escape(text[at:]))
+    return tables("".join(out))
+
+
+SIGN_BEFORE = {"$", "€", "£", "₹", "US$", "(", "$("}
+SIGN_AFTER = {"%", ")", "%)"}
+
+
+def cells(row: str) -> list[str]:
+    """The cells of one table line. A cell that holds only a currency sign joins the next cell,
+    and one that holds only a percent sign or a closing parenthesis joins the one before, so the
+    numbers of each row stand in the same columns."""
+    out: list[str] = []
+    carry = ""
+    for c in row.split("\t"):
+        if c.strip() in SIGN_BEFORE:
+            # a currency sign stands apart from its number, an opening parenthesis does not
+            carry += c.strip() + ("" if c.strip().endswith("(") else " ")
+        elif c.strip() in SIGN_AFTER and out:
+            out[-1] += c.strip()
+        else:
+            out.append(carry + c)
+            carry = ""
+    if carry:
+        out.append(carry.strip())
+    return out
+
+
+def tables(marked: str) -> str:
+    """Draw each run of lines that hold a tab as an HTML table, one cell for each tab-separated
+    part. A run where a mark crosses a cell or a line stays plain text."""
+    out: list[str] = []
+    rows: list[str] = []
+
+    def flush() -> None:
+        if not rows:
+            return
+        split = [cells(r) for r in rows]
+        # a mark that crosses a cell or a line (the evidence of a string field can) would break
+        # the table, so such a run stays plain text
+        if all(c.count("<mark") == c.count("</mark>") for row in split for c in row):
+            trs = ["<tr><td>" + "</td><td>".join(row) + "</td></tr>" for row in split]
+            out.append('<table class="t">' + "".join(trs) + "</table>")
+        else:
+            out.extend(r + "\n" for r in rows)
+        rows.clear()
+
+    for line in marked.split("\n"):
+        if "\t" in line:
+            rows.append(line)
+        else:
+            flush()
+            out.append(line + "\n")
+    flush()
     return "".join(out)
 
 
@@ -56,6 +109,9 @@ def serve(w: Work, port: int) -> None:
         for it in items
     ]
     path = w.path / "labels.json"
+    # links.json, when the user gives one, maps a document to its original, such as the source
+    # web page, for text whose tables lost their shape in extraction
+    links = w.read("links.json", {})
 
     class Handler(BaseHTTPRequestHandler):
         def send(self, body: str, kind: str = "application/json", code: int = 200) -> None:
@@ -71,7 +127,7 @@ def serve(w: Work, port: int) -> None:
                 self.send(files(__package__).joinpath("label.html").read_text("utf-8"), "text/html")
             elif self.path == "/state":
                 labels = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
-                state = {"question": question, "items": shown, "labels": labels}
+                state = {"question": question, "items": shown, "labels": labels, "links": links}
                 self.send(json.dumps(state))
             elif self.path.startswith("/doc/") and unquote(self.path[5:]) in pages:
                 self.send(pages[unquote(self.path[5:])], "text/html")

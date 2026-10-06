@@ -23,6 +23,10 @@ body { margin: 0; background: var(--bg); color: var(--ink);
 .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 380px; height: 100vh; }
 #doc { overflow-y: auto; padding: 24px 40px 60vh; }
 #text { white-space: pre-wrap; }
+#text table.t { border-collapse: collapse; margin: 4px 0 10px; white-space: normal; }
+#text table.t td { border: 1px solid var(--line); padding: 2px 8px; vertical-align: top; }
+#text table.t td:first-child { min-width: 16em; }
+#text table.t td:not(:first-child) { text-align: right; white-space: nowrap; }
 #doc mark { background: transparent; color: inherit; cursor: pointer; border-radius: 3px;
   outline: 2px dashed var(--todo); outline-offset: 1px; padding: 0 1px; }
 #doc mark.done { outline: none; background: var(--done); }
@@ -67,6 +71,7 @@ kbd { font: 11px ui-monospace, monospace; border: 1px solid var(--line); border-
       <div class="bar"><div id="bar"></div></div>
     </div>
     <div class="item" id="item"></div>
+    <a class="item" id="link" target="_blank" rel="noopener" hidden>Open the original document</a>
     <div class="q" id="q"></div>
     <div class="desc" id="desc"></div>
     <div id="opts"></div>
@@ -163,6 +168,9 @@ async function go(j) {
     $("q").textContent = `Does the text state the yellow value as ${it.field}?`;
     $("desc").textContent = it.description;
   }
+  const url = (S.links || {})[it.doc];
+  $("link").hidden = !url;
+  if (url) $("link").href = url;
   $("saved").textContent = it.id in S.labels ? `Saved now: ${tag(v)}` : "Not labeled yet.";
   paintOpts();
 }

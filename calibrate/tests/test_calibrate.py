@@ -243,6 +243,29 @@ def test_a_work_directory_of_another_spec_is_refused(tmp_path: Path) -> None:
         cli.main(["split", "--work", str(work)])
 
 
+def test_the_label_page_draws_tab_lines_as_a_table() -> None:
+    text = "Results\nRevenue\t2025\t2024\nTotal\t5,200\t4,100\nEnd.\n"
+    a = text.index("4,100")
+    html = label.page(text, [{"id": "d:0", "mark": [a, a + 5]}])
+    assert html.count("<table") == 1 and html.count("<tr>") == 2
+    assert '<td><mark data-ids="d:0">4,100</mark></td>' in html
+    assert html.startswith("Results\n") and html.endswith("</table>End.\n\n")
+
+
+def test_signs_join_their_numbers_in_a_table_row() -> None:
+    assert label.cells("Net income\t$\t35,116\t$\t19,168\t83.2\t%") == [
+        "Net income", "$ 35,116", "$ 19,168", "83.2%"
+    ]  # fmt: skip
+    assert label.cells("Loss\t(\t123\t)\t$\t(\t45\t)") == ["Loss", "(123)", "$ (45)"]
+
+
+def test_a_mark_across_table_cells_keeps_the_run_as_text() -> None:
+    text = "a\tfoo\nb\tbar\n"
+    a, b = text.index("foo"), text.index("bar") + 3
+    html = label.page(text, [{"id": "d:0", "mark": [a, b]}])
+    assert "<table" not in html and '<mark data-ids="d:0">foo\nb\tbar</mark>' in html
+
+
 def test_a_plug_in_judge_comes_from_an_entry_point(monkeypatch: pytest.MonkeyPatch) -> None:
     class EP:
         def __init__(self, name: str) -> None:
