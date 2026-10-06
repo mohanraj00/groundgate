@@ -38,11 +38,17 @@ def state(text: str, item: dict[str, Any]) -> str:
 
 
 def sample(
-    question: str, doc: str, text: str, schema: dict[str, Any], cands: list[dict[str, Any]]
+    question: str,
+    doc: str,
+    text: str,
+    schema: dict[str, Any],
+    cands: list[dict[str, Any]],
+    policy: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     """The items of one document: each candidate flagged KEY_NOT_AT_VALUE for the key question,
-    and each admitted candidate for the field question."""
-    receipt = gg.admit(text, schema, cands)
+    and each admitted candidate for the field question. An item's id is the document and the
+    candidate's position."""
+    receipt = gg.admit(text, schema, cands, policy)
     by_sha = {d.candidate_sha256: d for d in receipt.decisions}
     out = []
     for n, c in enumerate(cands):
