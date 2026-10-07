@@ -1,0 +1,262 @@
+{
+ "sets": {
+  "status": {
+   "labeled_amounts": 67,
+   "runs": {
+    "plain": {
+     "0.4": {
+      "facts": {
+       "right keys admitted": 15,
+       "wrong keys admitted": 0
+      },
+      "amounts": {
+       "a right key not proposed": 35,
+       "every right key admitted": 9,
+       "a right key in review": 23
+      }
+     },
+     "0.5": {
+      "facts": {
+       "right keys admitted": 15,
+       "wrong keys admitted": 0
+      },
+      "amounts": {
+       "a right key not proposed": 35,
+       "every right key admitted": 9,
+       "a right key in review": 23
+      }
+     }
+    },
+    "key span": {
+     "0.4": {
+      "facts": {
+       "right keys admitted": 15,
+       "wrong keys admitted": 0
+      },
+      "amounts": {
+       "a right key not proposed": 35,
+       "a right key in review": 23,
+       "every right key admitted": 9
+      }
+     },
+     "0.5": {
+      "facts": {
+       "right keys admitted": 17,
+       "wrong keys admitted": 0
+      },
+      "amounts": {
+       "a right key not proposed": 33,
+       "every right key admitted": 12,
+       "a right key in review": 22
+      }
+     }
+    }
+   }
+  }
+ },
+ "cited": [
+  {
+   "set": "status",
+   "doc": "irs-p1167",
+   "at": 2683,
+   "field": "amount",
+   "key": "Single",
+   "value": "12950",
+   "label": [
+    "Single",
+    "Married filing separately"
+   ],
+   "verdict": "right"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p1167",
+   "at": 2683,
+   "field": "amount",
+   "key": "Married filing separately",
+   "value": "12950",
+   "label": [
+    "Single",
+    "Married filing separately"
+   ],
+   "verdict": "right"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p1167",
+   "at": 2756,
+   "field": "amount",
+   "key": "Married filing jointly",
+   "value": "25900",
+   "label": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "verdict": "right"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p1167",
+   "at": 2756,
+   "field": "amount",
+   "key": "Qualifying surviving spouse",
+   "value": "25900",
+   "label": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "verdict": "right"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p1167",
+   "at": 2783,
+   "field": "amount",
+   "key": "Head of household",
+   "value": "19400",
+   "label": [
+    "Head of household"
+   ],
+   "verdict": "right"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p4801",
+   "at": 5486,
+   "field": "amount",
+   "key": "Single",
+   "value": "13850",
+   "label": [
+    "Single",
+    "Married filing separately"
+   ],
+   "verdict": "right"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p4801",
+   "at": 5553,
+   "field": "amount",
+   "key": "Married filing jointly",
+   "value": "27700",
+   "label": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "verdict": "right"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p4801",
+   "at": 8154,
+   "field": "amount",
+   "key": "Single",
+   "value": "13850",
+   "label": [
+    "Single",
+    "Married filing separately"
+   ],
+   "verdict": "right"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p4801",
+   "at": 8221,
+   "field": "amount",
+   "key": "Married filing jointly",
+   "value": "27700",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p4832",
+   "at": 374,
+   "field": "amount",
+   "key": "Single",
+   "value": "55200",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p4832",
+   "at": 383,
+   "field": "amount",
+   "key": "Single",
+   "value": "22400",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p4832",
+   "at": 383,
+   "field": "amount",
+   "key": "Head of household",
+   "value": "22400",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p4832",
+   "at": 392,
+   "field": "amount",
+   "key": "Single",
+   "value": "32200",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p4832",
+   "at": 392,
+   "field": "amount",
+   "key": "Head of household",
+   "value": "32200",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p5187",
+   "at": 464,
+   "field": "amount",
+   "key": "Single",
+   "value": "300",
+   "label": [
+    "Single"
+   ],
+   "verdict": "right"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p5187",
+   "at": 470,
+   "field": "amount",
+   "key": "Single",
+   "value": "800",
+   "label": [
+    "Single"
+   ],
+   "verdict": "right"
+  },
+  {
+   "set": "status",
+   "doc": "irs-p5187",
+   "at": 476,
+   "field": "amount",
+   "key": "Single",
+   "value": "1325",
+   "label": [
+    "Single"
+   ],
+   "verdict": "right"
+  }
+ ],
+ "cited_verdicts": {
+  "right": 11,
+  "unlabeled": 6
+ }
+}

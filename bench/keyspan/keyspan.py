@@ -88,9 +88,12 @@ def _at(text: str, ev: list[int] | None, value: str | None) -> int | None:
     return None
 
 
-def decide() -> None:
-    out: dict[str, Any] = {}
+def decide(only: str | None) -> None:
+    path = HERE / "decisions.json"
+    out: dict[str, Any] = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     for name, set_dir in (("status", STATUS), ("sec", SEC)):
+        if only and name != only:
+            continue
         schema = _schema(name)
         out[name] = {}
         for run, rel in RUNS.items():
@@ -98,8 +101,8 @@ def decide() -> None:
             paths = sorted((set_dir / "runs" / rel).glob("*.json"))
             if not paths:
                 raise SystemExit(f"no run in {set_dir / 'runs' / rel}")
-            for path in paths:
-                rec = json.loads(path.read_text(encoding="utf-8"))
+            for run_file in paths:
+                rec = json.loads(run_file.read_text(encoding="utf-8"))
                 doc = rec["document"]["document_id"]
                 text = (set_dir / "docs" / f"{doc}.txt").read_text(encoding="utf-8")
                 rec["document"]["text"] = text
@@ -133,7 +136,8 @@ def decide() -> None:
                         }
                     )
             out[name][run] = rows
-    (HERE / "decisions.json").write_text(_dump(out), encoding="utf-8")
+    out = {name: out[name] for name in ("status", "sec") if name in out}
+    path.write_text(_dump(out), encoding="utf-8")
     print("wrote decisions.json")
 
 
@@ -304,14 +308,15 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("gold")
-    sub.add_parser("decide")
+    d = sub.add_parser("decide")
+    d.add_argument("--set", choices=["status", "sec"], help="only this set")
     r = sub.add_parser("results")
     r.add_argument("--check", action="store_true")
     args = ap.parse_args()
     if args.cmd == "gold":
         gold()
     elif args.cmd == "decide":
-        decide()
+        decide(args.set)
     else:
         results(args.check)
 

@@ -1,0 +1,21 @@
+{
+ "doc": "irs-p5035",
+ "kind": "irs",
+ "fields": {
+  "amount": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "Single",
+     "Married filing jointly",
+     "Married filing separately",
+     "Head of household",
+     "Qualifying surviving spouse"
+    ]
+   },
+   "description": "A dollar amount that the text states for one or more filing statuses."
+  }
+ }
+}
