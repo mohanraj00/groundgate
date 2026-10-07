@@ -61,3 +61,18 @@ uv run python bench/status/status.py score --check    # fail if the committed fi
 its own environment, and under spec 0.3, the core in this repository. Spec 0.4 keeps the key
 rules of 0.3. For an amount with keys, it asks whether every labeled key reaches the amount and
 whether a wrong key does. CI runs `score --check`.
+
+What it found:
+
+- The key rules of spec 0.3 transfer to IRS publications for safety. A wrong key reaches 7
+  amounts under spec 0.3, against 28 (2 + 26) under spec 0.2.
+- They cost right keys. Every right key and no wrong key reaches 18 amounts under spec 0.3,
+  against 29 under spec 0.2. Under spec 0.3, a right key goes to review on 42 amounts.
+- The label-line rule decides most of the amounts that change. IRS publications put many short
+  lines between blank lines, such as bullets, form lines and table cells, and the rule reads
+  them as label lines. It stops a wrong key and a right key alike.
+- 33 of the 100 amounts are labeled not sure, more than in the FDA sets. They are listed in
+  `results.json`.
+
+No rule changes here. A rule that sends fewer right keys to review is measured on another set,
+by the rule in CONTRIBUTING.

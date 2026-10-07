@@ -1,0 +1,846 @@
+{
+ "amounts": 100,
+ "amounts_scored": 67,
+ "docs": 18,
+ "labeled_with_a_key": 67,
+ "labeled_with_no_key": 0,
+ "not_sure": [
+  "irs-p1040:5980",
+  "irs-p3920:1401",
+  "irs-p3920:1419",
+  "irs-p3920:1441",
+  "irs-p3920:1603",
+  "irs-p3920:2417",
+  "irs-p3920:2481",
+  "irs-p4011:1887",
+  "irs-p4011:2324",
+  "irs-p4011:2388",
+  "irs-p4011:2499",
+  "irs-p4054:95",
+  "irs-p4054:877",
+  "irs-p4054:3615",
+  "irs-p4054:3625",
+  "irs-p4491:679",
+  "irs-p4491:728",
+  "irs-p4491:1456",
+  "irs-p4491-x:453",
+  "irs-p4491-x:466",
+  "irs-p4491-x:641",
+  "irs-p4491-x:654",
+  "irs-p4491-x:662",
+  "irs-p4491-x:675",
+  "irs-p4832:374",
+  "irs-p4832:383",
+  "irs-p4832:392",
+  "irs-p4961:1137",
+  "irs-p4961:1185",
+  "irs-p4961:4140",
+  "irs-p4961:4306",
+  "irs-p4961:4966",
+  "irs-p5209:1344"
+ ],
+ "by_spec": {
+  "spec_0.2": {
+   "with a key": {
+    "every right key, no wrong key": 29,
+    "every right key and a wrong key": 2,
+    "a right key missing, no wrong key": 10,
+    "a right key missing and a wrong key": 26
+   },
+   "no key": {
+    "no key reaches it": 0,
+    "a wrong key reaches it": 0
+   }
+  },
+  "spec_0.3": {
+   "with a key": {
+    "every right key, no wrong key": 18,
+    "every right key and a wrong key": 0,
+    "a right key missing, no wrong key": 42,
+    "a right key missing and a wrong key": 7
+   },
+   "no key": {
+    "no key reaches it": 0,
+    "a wrong key reaches it": 0
+   }
+  }
+ },
+ "amounts_read": [
+  {
+   "id": "irs-p1040:213",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1040:243",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1040:439",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": [
+    "Married filing jointly"
+   ]
+  },
+  {
+   "id": "irs-p1040:12033",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": [
+    "Single"
+   ]
+  },
+  {
+   "id": "irs-p1040:12055",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": [
+    "Single"
+   ]
+  },
+  {
+   "id": "irs-p1167:1121",
+   "label": [
+    "Married filing separately"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1167:2683",
+   "label": [
+    "Single",
+    "Married filing separately"
+   ],
+   "spec_0.2": [
+    "Married filing separately",
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1167:2756",
+   "label": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Head of household",
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1167:2783",
+   "label": [
+    "Head of household"
+   ],
+   "spec_0.2": [
+    "Head of household",
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1167:7059",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Head of household"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1167:8620",
+   "label": [
+    "Single",
+    "Married filing separately"
+   ],
+   "spec_0.2": [
+    "Married filing separately",
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1494:3104",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": [
+    "Single"
+   ]
+  },
+  {
+   "id": "irs-p1494:3445",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1494:3479",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1494:3492",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1494:3596",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p1494:3883",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p3524:1638",
+   "label": [
+    "Single",
+    "Married filing jointly",
+    "Married filing separately",
+    "Head of household",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Married filing separately"
+   ],
+   "spec_0.3": [
+    "Married filing separately"
+   ]
+  },
+  {
+   "id": "irs-p3524:1700",
+   "label": [
+    "Single",
+    "Married filing jointly",
+    "Married filing separately",
+    "Head of household",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Married filing separately"
+   ],
+   "spec_0.3": [
+    "Married filing separately"
+   ]
+  },
+  {
+   "id": "irs-p3524:1782",
+   "label": [
+    "Single",
+    "Married filing separately",
+    "Head of household",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": [
+    "Married filing jointly"
+   ]
+  },
+  {
+   "id": "irs-p3524:1791",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": [
+    "Married filing jointly"
+   ]
+  },
+  {
+   "id": "irs-p3524:1886",
+   "label": [
+    "Single",
+    "Married filing separately",
+    "Head of household",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": [
+    "Married filing jointly"
+   ]
+  },
+  {
+   "id": "irs-p3524:1895",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": [
+    "Married filing jointly"
+   ]
+  },
+  {
+   "id": "irs-p4011:2117",
+   "label": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": [
+    "Qualifying surviving spouse"
+   ]
+  },
+  {
+   "id": "irs-p4011:2158",
+   "label": [
+    "Single",
+    "Married filing separately"
+   ],
+   "spec_0.2": [
+    "Married filing separately",
+    "Single"
+   ],
+   "spec_0.3": [
+    "Married filing separately",
+    "Single"
+   ]
+  },
+  {
+   "id": "irs-p4012-a:684",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4012-a:693",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4012-a:702",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4012-a:711",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4012-a:720",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4012-a:729",
+   "label": [
+    "Married filing separately"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4054:3762",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": [
+    "Married filing jointly"
+   ]
+  },
+  {
+   "id": "irs-p4054:3772",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": [
+    "Married filing jointly"
+   ]
+  },
+  {
+   "id": "irs-p4054-d:544",
+   "label": [
+    "Single",
+    "Head of household"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4054-d:552",
+   "label": [
+    "Single",
+    "Head of household"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4054-d:558",
+   "label": [
+    "Single",
+    "Head of household"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4054-d:573",
+   "label": [
+    "Single",
+    "Head of household"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4054-d:589",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4054-d:597",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4491:981",
+   "label": [
+    "Single",
+    "Married filing jointly",
+    "Married filing separately",
+    "Head of household",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4491:1113",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": [
+    "Married filing jointly"
+   ]
+  },
+  {
+   "id": "irs-p4491:1122",
+   "label": [
+    "Married filing separately"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": [
+    "Married filing jointly"
+   ]
+  },
+  {
+   "id": "irs-p4696:313",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": [
+    "Single"
+   ]
+  },
+  {
+   "id": "irs-p4696:340",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4696:393",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Married filing jointly"
+   ],
+   "spec_0.3": [
+    "Married filing jointly"
+   ]
+  },
+  {
+   "id": "irs-p4696:493",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": [
+    "Qualifying surviving spouse"
+   ]
+  },
+  {
+   "id": "irs-p4696:525",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4696:549",
+   "label": [
+    "Head of household"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4801:872",
+   "label": [
+    "Married filing separately"
+   ],
+   "spec_0.2": [],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4801:5486",
+   "label": [
+    "Single",
+    "Married filing separately"
+   ],
+   "spec_0.2": [
+    "Married filing separately"
+   ],
+   "spec_0.3": [
+    "Married filing separately"
+   ]
+  },
+  {
+   "id": "irs-p4801:5553",
+   "label": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": [
+    "Qualifying surviving spouse"
+   ]
+  },
+  {
+   "id": "irs-p4801:5583",
+   "label": [
+    "Head of household"
+   ],
+   "spec_0.2": [
+    "Head of household"
+   ],
+   "spec_0.3": [
+    "Head of household"
+   ]
+  },
+  {
+   "id": "irs-p4801:6647",
+   "label": [
+    "Married filing jointly"
+   ],
+   "spec_0.2": [
+    "Head of household"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p4801:8154",
+   "label": [
+    "Single",
+    "Married filing separately"
+   ],
+   "spec_0.2": [
+    "Married filing separately"
+   ],
+   "spec_0.3": [
+    "Married filing separately"
+   ]
+  },
+  {
+   "id": "irs-p4961:1407",
+   "label": [
+    "Head of household"
+   ],
+   "spec_0.2": [
+    "Head of household"
+   ],
+   "spec_0.3": [
+    "Head of household"
+   ]
+  },
+  {
+   "id": "irs-p5035:1404",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ]
+  },
+  {
+   "id": "irs-p5035:1414",
+   "label": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ]
+  },
+  {
+   "id": "irs-p5035:1483",
+   "label": [
+    "Head of household"
+   ],
+   "spec_0.2": [
+    "Head of household"
+   ],
+   "spec_0.3": [
+    "Head of household"
+   ]
+  },
+  {
+   "id": "irs-p5035:2454",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ]
+  },
+  {
+   "id": "irs-p5035:2464",
+   "label": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.3": [
+    "Married filing jointly",
+    "Qualifying surviving spouse"
+   ]
+  },
+  {
+   "id": "irs-p5035:2533",
+   "label": [
+    "Head of household"
+   ],
+   "spec_0.2": [
+    "Head of household"
+   ],
+   "spec_0.3": [
+    "Head of household"
+   ]
+  },
+  {
+   "id": "irs-p5187:464",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p5187:470",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p5187:476",
+   "label": [
+    "Single"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p5187:494",
+   "label": [
+    "Married filing jointly",
+    "Married filing separately",
+    "Head of household",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p5187:500",
+   "label": [
+    "Married filing jointly",
+    "Married filing separately",
+    "Head of household",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  },
+  {
+   "id": "irs-p5187:508",
+   "label": [
+    "Married filing jointly",
+    "Married filing separately",
+    "Head of household",
+    "Qualifying surviving spouse"
+   ],
+   "spec_0.2": [
+    "Single"
+   ],
+   "spec_0.3": []
+  }
+ ]
+}
