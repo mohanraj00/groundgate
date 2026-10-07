@@ -242,7 +242,7 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
             shown = key_ev.get("text")
             if ok and isinstance(shown, str):
                 assert key_span is not None
-                ok = normalize_ws(shown) == normalize_ws(ctx.text[key_span[0] : key_span[1]])
+                ok = verbatim_equal(shown, ctx.text[key_span[0] : key_span[1]])
             if ok:
                 key_used = not held
                 held = True
@@ -323,12 +323,16 @@ def _judge(policy: Policy, p: _Passed, js: dict[str, _Judgment]) -> list[_Judgme
             continue
         if j.question == "key" and jp.clear_key is not None:
             applied.append(j)
-            if "KEY_NOT_AT_VALUE" in p.flags and j.p >= jp.clear_key:
+            if j.p < jp.clear_key:
+                continue
+            if "KEY_NOT_AT_VALUE" in p.flags:
                 if j.answer == p.key:
                     p.flags.remove("KEY_NOT_AT_VALUE")
                     p.cleared = True
                 else:
                     p.flags.append("MODEL_DOUBT")
+            elif p.cited and j.answer != p.key:  # a judge that names another key doubts a citation
+                p.flags.append("MODEL_DOUBT")
         elif j.question == "field_match" and jp.doubt_field is not None:
             applied.append(j)
             if j.p < jp.doubt_field:

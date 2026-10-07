@@ -21,8 +21,9 @@ Mapping, per extraction:
   An extraction LangExtract could not align has no evidence and is rejected ``NO_EVIDENCE``;
 - ``key_evidence``: from the ``key_text`` attribute, when present: the words that name the key,
   such as a heading or a row label. The span is the last occurrence of ``key_text``, not inside a
-  longer word, that ends at or before the value's ``char_interval``. When there is none, the
-  span is empty, so groundgate flags ``KEY_CITATION_INVALID``.
+  longer word, that ends at or before the value: the number token in ``char_interval`` that
+  equals ``value``, or the interval's start. When there is none, the span is empty, so
+  groundgate flags ``KEY_CITATION_INVALID``.
 
 ``alignment_status`` and ``extraction_class`` are kept on the candidate for the report; the
 checks ignore them.
@@ -30,13 +31,15 @@ checks ignore them.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping
 from typing import Any
 
 from ..admit import admit
 from ..canonical import Offsets, is_nfc
 from ..model import PacketError, Policy, Receipt, Schema
-from ..text import quote_pattern
+from ..text import _NOT_ALNUM_AFTER, _NOT_ALNUM_BEFORE, parse_value, quote_pattern, scaled_value
+from ..text import tokens as number_tokens
 
 
 def _get(obj: Any, name: str) -> Any:
@@ -103,9 +106,21 @@ def to_candidates(
             }
             key_text = attrs.get(key_text_attribute)
             if isinstance(key_text, str) and key_text.strip():
-                cand["key_evidence"] = _key_span(text, offsets, key_text, start)
+                at = _value_start(text, start, end, cand["value"])
+                cand["key_evidence"] = _key_span(text, offsets, key_text, at)
         out.append(cand)
     return out
+
+
+def _value_start(text: str, start: int, end: int, value: object) -> int:
+    """Where groundgate puts a numeric value in the interval: its first number token that equals
+    the value, as written or scaled. Else the interval's start, as for a string field."""
+    want = parse_value(str(value))
+    if want is not None:
+        for t in number_tokens(text, start, end):
+            if t.value is not None and want in (t.value, scaled_value(text, t)):
+                return t.start
+    return start
 
 
 def _key_span(text: str, offsets: Offsets, key_text: str, at: int) -> dict[str, Any]:
@@ -113,10 +128,12 @@ def _key_span(text: str, offsets: Offsets, key_text: str, at: int) -> dict[str, 
     longer word, in UTF-8 bytes. With none, an empty span at ``at``: groundgate reads it as not
     valid and flags the citation."""
     s = e = at
-    for m in quote_pattern(key_text).finditer(text, 0, at):
-        a, b = m.start(), m.end()
-        if (a == 0 or not text[a - 1].isalnum()) and (b == len(text) or not text[b].isalnum()):
-            s, e = a, b
+    whole = re.compile(_NOT_ALNUM_BEFORE + quote_pattern(key_text).pattern + _NOT_ALNUM_AFTER)
+    pos = 0
+    # search the whole text, so the word check sees the character after a match at ``at``
+    while (m := whole.search(text, pos)) is not None and m.end() <= at:
+        s, e = m.start(), m.end()
+        pos = s + 1  # an occurrence may overlap the one before it
     return {"start": offsets.to_bytes(s), "end": offsets.to_bytes(e), "text": key_text}
 
 

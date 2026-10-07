@@ -8,6 +8,10 @@ threshold belongs to one model and one kind of document: the field doubt gave 0.
 yours, as hybrid design §9 describes. It is a separate package, so the groundgate core never
 contains code that calls a model.
 
+```bash
+pip install groundgate-calibrate
+```
+
 ## Steps
 
 ```bash

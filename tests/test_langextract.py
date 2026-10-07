@@ -134,7 +134,7 @@ def test_key_text_missing_outside_or_after_the_value() -> None:
     assert "key_evidence" not in c
     (d,) = admit_document(keyed(key="single"), KEYED_SCHEMA).decisions
     assert (d.outcome, d.codes) == ("needs_verification", ("KEY_NOT_AT_VALUE",))
-    at = KEYED_TEXT.encode().index(b"$15,000")
+    at = KEYED_TEXT.encode().index(b"15,000")  # the value's number token, after the "$"
     for key_text in ("Joint filers", "Single filers"):  # not in the text, or only after the value
         (c,) = to_candidates(keyed(key="single", key_text=key_text))
         assert c["key_evidence"] == {"start": at, "end": at, "text": key_text}
@@ -149,3 +149,14 @@ def test_key_text_is_not_found_inside_a_longer_word() -> None:
     ext = x("p", "$40", text.index("$40"), "40", key="south", key_text="South")
     (c,) = to_candidates({"text": text, "extractions": [ext]})
     assert c["key_evidence"] == {"start": 0, "end": 5, "text": "South"}
+
+
+def test_key_text_inside_the_quote_and_overlapping_occurrences() -> None:
+    text = "Label:\n\nWages $40"
+    ext = x("p", "Wages $40", text.index("Wages"), "40", key="wages", key_text="Wages")
+    (c,) = to_candidates({"text": text, "extractions": [ext]})
+    assert c["key_evidence"] == {"start": 8, "end": 13, "text": "Wages"}
+    text = "xWages Wages Wages\n\nNotes:\n\nThe amount is $40."
+    ext = x("p", "$40", text.index("$40"), "40", key="wages", key_text="Wages Wages")
+    (c,) = to_candidates({"text": text, "extractions": [ext]})
+    assert c["key_evidence"] == {"start": 7, "end": 18, "text": "Wages Wages"}

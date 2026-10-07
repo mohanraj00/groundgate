@@ -77,8 +77,9 @@ line, goes to review.
 
 **Key citations** (spec 0.5). A candidate can also cite the words that name its key, such as a
 heading, a row or column label, or a bullet, as `key_evidence`. groundgate checks the citation: the
-span holds a mention of the key, it ends at or before the value, and no other key is mentioned
-between the span and the value. A citation that passes puts the key at the value past a label line
+span holds a mention of the key, it is on one line and ends at or before the value, no number
+follows the key inside it, no other key is mentioned between the span and the value, and the
+value's own sentence (or table line) names no other key instead. A citation that passes puts the key at the value past a label line
 or a table cell, and records `KEY_CITED` when it removed `KEY_NOT_AT_VALUE`. A citation that fails
 is flagged `KEY_CITATION_INVALID`. A citation never removes another flag. Without `key_evidence`,
 nothing changes.

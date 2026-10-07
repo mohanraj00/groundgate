@@ -108,7 +108,7 @@ without judgments.
 | `unit` | no | Unit code the extractor claims. |
 | `key` | no | For a keyed field, the key the value belongs to. Ignored on a field without `keys`. |
 | `evidence` | no | Span the extractor cites, with the text it quoted (`text` optional). |
-| `key_evidence` | no | For a keyed field, the span that names the key (§4.5), with the text it quoted (`text` optional). Ignored on a field without `keys`. |
+| `key_evidence` | no | For a keyed field, the span that names the key (§4.5), with the text it quoted (`text` optional). Ignored on a field without `keys`, but step 1 checks its form there too. |
 | `search_region` | no | Span within which re-anchoring may look (§3 step 10). Default: the whole document. |
 | `confidence` | no | Number in [0, 1]. |
 | `id` | no | Caller's identifier, echoed in the decision. |
@@ -147,7 +147,7 @@ later check runs. `value` means the candidate's value parsed per its field type.
 
 | Step | Code | Rejects when |
 |---:|---|---|
-| 1 | `CANDIDATE_INVALID` | The candidate is not an object, `field` is not a string, `value` is missing or not a string/integer, `unit` or `key` is not a string, `confidence` is not a number in [0, 1], or `evidence`, `key_evidence` or `search_region` is present but not an object with integer `start` and `end`. |
+| 1 | `CANDIDATE_INVALID` | The candidate is not an object, `field` is not a string, `value` is missing or not a string/integer, `unit` or `key` is not a string, `confidence` is not a number in [0, 1], or `evidence`, `key_evidence` or `search_region` is present but not an object with integer `start` and `end`, or `evidence` or `key_evidence` has a `text` that is not a string. A member whose value is null counts as absent. This step checks `key_evidence` on every field, also where it is ignored. |
 | 2 | `FIELD_UNKNOWN` | `field` is not in the schema. |
 | 3 | `NULL_STRING_LITERAL` | `value`, trimmed and lower-cased, is `null`, `none`, `nil` or `n/a`. |
 | 4 | `TYPE_INVALID` | `value` does not parse as the field type (§4.1). |
@@ -191,8 +191,9 @@ flag.
 - `key`, on a candidate flagged `KEY_NOT_AT_VALUE`, with `p` at or above
   `clear.KEY_NOT_AT_VALUE`: when `answer` is the candidate's `key`, the flag is removed and the
   decision records `MODEL_CLEARED`; otherwise the decision gets `MODEL_DOUBT` and the flag stays.
-  A `key` judgment on a candidate without that flag changes nothing, and the receipt still
-  lists it.
+  On a candidate whose citation removed that flag (`KEY_CITED`, §4.5), a `key` judgment at
+  that probability with another `answer` adds `MODEL_DOUBT`. Any other `key` judgment changes
+  nothing, and the receipt still lists it.
 - `field_match`, with `p` below `doubt.field_match`: the decision gets `MODEL_DOUBT`.
 
 The outcome then follows the flags that are left, as above. `MODEL_CLEARED` is informational.
@@ -382,18 +383,26 @@ A candidate on a keyed field may **cite the span that names its key**, `key_evid
 offsets as `evidence`. The check runs after steps 1–11, with the value at the place of the
 `KEY_NOT_AT_VALUE` check (after re-anchoring). The citation **passes** when all of these hold:
 
-1. The span is a valid span (§2.2), and its `text`, if present, equals the span's text after
-   whitespace normalisation (§4.4).
+1. The span is a valid span (§2.2), and its `text`, if present, is verbatim-equal to the span's
+   text, as `NON_VERBATIM_EVIDENCE` compares them (§4.4).
 2. A key mention of the candidate's `key` lies wholly inside the span.
-3. The span ends at or before the value, so it never holds the value or text after it.
-4. No mention of another key of the field lies wholly between the end of the span and the value.
-   A mention of the candidate's own key there, or of another key inside the span, does not count.
+3. The span holds no line break (U+000A) and ends at or before the value, so it never holds the
+   value or text after it.
+4. No number token (§4.1) lies in the span after the end of the last mention of the candidate's
+   key in it. So "Single or Married filing separately" names both keys, but "Hypertension 5 mg,
+   heart failure" does not name hypertension for a later value.
+5. No mention of another key of the field lies wholly between the end of the span and the value.
+   A mention of the candidate's own key there does not count.
+6. The value's own text names the candidate's key or no key: in a table sentence, the value's
+   line; otherwise, the value's sentence.
 
 When it passes, the candidate's key is a key at the value, so the label-line stop and the
 table-sentence limit do not apply. The decision records `KEY_CITED` when this removed
 `KEY_NOT_AT_VALUE`, and no code when the key held without the citation. When a check fails, the
 decision gets `KEY_CITATION_INVALID`, even if the key held without the citation, and the
-`KEY_NOT_AT_VALUE` check goes on as without a citation. Without `key_evidence`, the decision is
+`KEY_NOT_AT_VALUE` check goes on as without a citation. A recorded `key` judgment (step 12) that
+applies, at or above `clear.KEY_NOT_AT_VALUE`, and names another key adds `MODEL_DOUBT` to a
+decision with `KEY_CITED`. Without `key_evidence`, the decision is
 the same as in spec 0.4. There is no limit on the distance between the span and the value.
 
 ## 5. Receipt
