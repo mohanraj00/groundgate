@@ -206,7 +206,7 @@ def test_report_shows_the_cited_key_span() -> None:
     html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
     assert "key cited “Single”" in html
     assert '<a href="#k0">show key</a>' in html
-    assert '<span class="anchor" id="k0"></span><mark class="key"' in html
+    assert '<span class="anchor" id="k0"></span></span><mark class="key"' in html
 
 
 def test_report_marks_a_key_span_inside_the_value_evidence() -> None:

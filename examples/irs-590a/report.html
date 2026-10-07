@@ -71,9 +71,7 @@ mark.needs_verification { background: var(--warn-bg); box-shadow: inset 0 -2px v
 mark.rejected { background: var(--bad-bg); box-shadow: inset 0 -2px var(--bad); }
 mark.key { text-decoration: underline 2px var(--focus); text-underline-offset: 3px; }
 .anchor { scroll-margin-top: 40vh; }
-.anchor:target + mark, .anchor:target + .anchor + mark,
-.anchor:target + .anchor + .anchor + mark { outline: 2px solid var(--focus);
-  outline-offset: 2px; }
+.anchors:has(.anchor:target) + mark { outline: 2px solid var(--focus); outline-offset: 2px; }
 .page { display: block; border-top: 1px dashed var(--line); margin: 18px 0 8px; }
 .page::after { content: attr(data-page); display: block; color: var(--muted);
   font: 11px ui-monospace, Menlo, monospace; margin-top: 2px; }
@@ -162,8 +160,8 @@ published, go to IRS.gov/Pub590A.
 
 What’s New for 2025
 IRA contribution limit for 2025. For 2025, the IRA con-
-tribution limit remains <span class="anchor" id="d33"></span><span class="anchor" id="d35"></span><mark class="admitted" title="ira_limit_2025 = 7000 USD: Admitted
-ira_limit_2025 = 7000 USD: Admitted">$7,000</mark> (<span class="anchor" id="d37"></span><span class="anchor" id="d38"></span><mark class="admitted" title="ira_limit_age_50_2025 = 8000 USD: Admitted
+tribution limit remains <span class="anchors"><span class="anchor" id="d33"></span><span class="anchor" id="d35"></span></span><mark class="admitted" title="ira_limit_2025 = 7000 USD: Admitted
+ira_limit_2025 = 7000 USD: Admitted">$7,000</mark> (<span class="anchors"><span class="anchor" id="d37"></span><span class="anchor" id="d38"></span></span><mark class="admitted" title="ira_limit_age_50_2025 = 8000 USD: Admitted
 ira_limit_age_50_2025 = 8000 USD: Admitted">$8,000</mark> for individuals age
 50 or older).
 Trump account and new Form 4547. Recent legislation
@@ -173,7 +171,7 @@ account, called a Trump account, for the exclusive benefit
 of certain children. If the child was born after 2024 and be-
 fore 2029, is a U.S. citizen, and meets certain other re-
 quirements, the authorized individual may also elect to re-
-ceive a <span class="anchor" id="d11"></span><span class="anchor" id="d36"></span><mark class="admitted" title="trump_account_pilot_contribution = 1000 USD: Admitted
+ceive a <span class="anchors"><span class="anchor" id="d11"></span><span class="anchor" id="d36"></span></span><mark class="admitted" title="trump_account_pilot_contribution = 1000 USD: Admitted
 trump_account_pilot_contribution = 1000 USD: Admitted">$1,000</mark> pilot program contribution to the child’s
 Trump account. Both elections can be made on Form
 
@@ -191,14 +189,14 @@ For 2025, if you are covered by a retirement plan at work,
 your deduction for contributions to a traditional IRA is re-
 duced (phased out) if your modified AGI is:
 
-• More than <span class="anchor" id="d21"></span><span class="anchor" id="d32"></span><mark class="admitted" title="traditional_phaseout_joint_2025_start = 126000 USD: Admitted
-traditional_phaseout_joint_2025_start = 126000 USD: Admitted">$126,000</mark> but less than <span class="anchor" id="d23"></span><span class="anchor" id="d39"></span><mark class="admitted" title="traditional_phaseout_joint_2025_end = 146000 USD: Admitted
+• More than <span class="anchors"><span class="anchor" id="d21"></span><span class="anchor" id="d32"></span></span><mark class="admitted" title="traditional_phaseout_joint_2025_start = 126000 USD: Admitted
+traditional_phaseout_joint_2025_start = 126000 USD: Admitted">$126,000</mark> but less than <span class="anchors"><span class="anchor" id="d23"></span><span class="anchor" id="d39"></span></span><mark class="admitted" title="traditional_phaseout_joint_2025_end = 146000 USD: Admitted
 traditional_phaseout_joint_2025_end = 146000 USD: Admitted">$146,000</mark> for a mar-
 ried couple filing a joint return or a qualifying surviving
 spouse,
 
-• More than <span class="anchor" id="d3"></span><span class="anchor" id="d29"></span><mark class="admitted" title="traditional_phaseout_single_2025_start = 79000 USD: Admitted
-traditional_phaseout_single_2025_start = 79000 USD: Admitted">$79,000</mark> but less than <span class="anchor" id="d4"></span><span class="anchor" id="d16"></span><mark class="admitted" title="traditional_phaseout_single_2025_end = 89000 USD: Admitted
+• More than <span class="anchors"><span class="anchor" id="d3"></span><span class="anchor" id="d29"></span></span><mark class="admitted" title="traditional_phaseout_single_2025_start = 79000 USD: Admitted
+traditional_phaseout_single_2025_start = 79000 USD: Admitted">$79,000</mark> but less than <span class="anchors"><span class="anchor" id="d4"></span><span class="anchor" id="d16"></span></span><mark class="admitted" title="traditional_phaseout_single_2025_end = 89000 USD: Admitted
 traditional_phaseout_single_2025_end = 89000 USD: Admitted">$89,000</mark> for a single
 
 individual or head of household, or
@@ -211,9 +209,9 @@ Modified AGI limit for certain married individuals.
 If you are married and your spouse is covered by a retire-
 ment plan at work and you aren’t, and you live with your
 spouse or file a joint return, your deduction is phased out if
-your modified AGI is more than <span class="anchor" id="d1"></span><span class="anchor" id="d6"></span><mark class="needs_verification" title="roth_phaseout_joint_2025_start = 236000 USD: Needs verification (QUALIFIED_VALUE)
+your modified AGI is more than <span class="anchors"><span class="anchor" id="d1"></span><span class="anchor" id="d6"></span></span><mark class="needs_verification" title="roth_phaseout_joint_2025_start = 236000 USD: Needs verification (QUALIFIED_VALUE)
 spousal_phaseout_2025_start = 236000 USD: Admitted">$236,000</mark> (up from
-$230,000 for 2024) but less than <span class="anchor" id="d20"></span><span class="anchor" id="d30"></span><mark class="needs_verification" title="roth_phaseout_joint_2025_end = 246000 USD: Needs verification (QUALIFIED_VALUE)
+$230,000 for 2024) but less than <span class="anchors"><span class="anchor" id="d20"></span><span class="anchor" id="d30"></span></span><mark class="needs_verification" title="roth_phaseout_joint_2025_end = 246000 USD: Needs verification (QUALIFIED_VALUE)
 spousal_phaseout_2025_end = 246000 USD: Admitted">$246,000</mark> (up from
 $240,000 for 2024). If your modified AGI is $246,000 or
 more, you can’t take a deduction for contributions to a tra-
@@ -225,13 +223,13 @@ out) in the following situations.
 
 • Your filing status is married filing jointly or qualifying
 surviving spouse and your modified AGI is at least
-<span class="anchor" id="d9"></span><mark class="admitted" title="roth_phaseout_joint_2025_start = 236000 USD: Admitted">$236,000</mark>. You can’t make a Roth IRA contribution if
-your modified AGI is <span class="anchor" id="d8"></span><mark class="admitted" title="roth_phaseout_joint_2025_end = 246000 USD: Admitted">$246,000</mark> or more.
+<span class="anchors"><span class="anchor" id="d9"></span></span><mark class="admitted" title="roth_phaseout_joint_2025_start = 236000 USD: Admitted">$236,000</mark>. You can’t make a Roth IRA contribution if
+your modified AGI is <span class="anchors"><span class="anchor" id="d8"></span></span><mark class="admitted" title="roth_phaseout_joint_2025_end = 246000 USD: Admitted">$246,000</mark> or more.
 
 • Your filing status is single, head of household, or mar-
 ried filing separately and you didn’t live with your
 spouse at any time in 2025 and your modified AGI is at
-least <span class="anchor" id="d15"></span><span class="anchor" id="d22"></span><mark class="admitted" title="roth_phaseout_single_2025_start = 150000 USD: Admitted
+least <span class="anchors"><span class="anchor" id="d15"></span><span class="anchor" id="d22"></span></span><mark class="admitted" title="roth_phaseout_single_2025_start = 150000 USD: Admitted
 roth_phaseout_single_2025_start = 150000 USD: Admitted">$150,000</mark>. You can’t make a Roth IRA contribu-
 tion if your modified AGI is $165,000 or more.
 
@@ -243,9 +241,9 @@ more.
 
 What’s New for 2026
 IRA contribution limit increased for 2026. Beginning
-in 2026, the IRA contribution limit is increased to <span class="anchor" id="d10"></span><span class="anchor" id="d17"></span><mark class="admitted" title="ira_limit_2026 = 7500 USD: Admitted
+in 2026, the IRA contribution limit is increased to <span class="anchors"><span class="anchor" id="d10"></span><span class="anchor" id="d17"></span></span><mark class="admitted" title="ira_limit_2026 = 7500 USD: Admitted
 ira_limit_2026 = 7500 USD: Admitted">$7,500</mark>
-(<span class="anchor" id="d18"></span><span class="anchor" id="d41"></span><mark class="admitted" title="ira_limit_age_50_2026 = 8600 USD: Admitted
+(<span class="anchors"><span class="anchor" id="d18"></span><span class="anchor" id="d41"></span></span><mark class="admitted" title="ira_limit_age_50_2026 = 8600 USD: Admitted
 ira_limit_age_50_2026 = 8600 USD: Admitted">$8,600</mark> for individuals age 50 or older) from $7,000
 ($8,000 for individuals age 50 or older).
 
@@ -253,14 +251,14 @@ Modified AGI limit for traditional IRA contributions in-
 creased. For 2026, if you are covered by a retirement
 plan at work, your deduction for contributions to a tradi-
 tional IRA is reduced (phased out) if your modified AGI is:
-• More than <span class="anchor" id="d34"></span><span class="anchor" id="d42"></span><mark class="admitted" title="traditional_phaseout_joint_2026_start = 129000 USD: Admitted
-traditional_phaseout_joint_2026_start = 129000 USD: Admitted">$129,000</mark> but less than <span class="anchor" id="d2"></span><span class="anchor" id="d13"></span><mark class="admitted" title="traditional_phaseout_joint_2026_end = 149000 USD: Admitted
+• More than <span class="anchors"><span class="anchor" id="d34"></span><span class="anchor" id="d42"></span></span><mark class="admitted" title="traditional_phaseout_joint_2026_start = 129000 USD: Admitted
+traditional_phaseout_joint_2026_start = 129000 USD: Admitted">$129,000</mark> but less than <span class="anchors"><span class="anchor" id="d2"></span><span class="anchor" id="d13"></span></span><mark class="admitted" title="traditional_phaseout_joint_2026_end = 149000 USD: Admitted
 traditional_phaseout_joint_2026_end = 149000 USD: Admitted">$149,000</mark> for a mar-
 ried couple filing a joint return or a qualifying surviving
 spouse,
 
-• More than <span class="anchor" id="d28"></span><span class="anchor" id="d31"></span><mark class="admitted" title="traditional_phaseout_single_2026_start = 81000 USD: Admitted
-traditional_phaseout_single_2026_start = 81000 USD: Admitted">$81,000</mark> but less than <span class="anchor" id="d0"></span><span class="anchor" id="d24"></span><mark class="admitted" title="traditional_phaseout_single_2026_end = 91000 USD: Admitted
+• More than <span class="anchors"><span class="anchor" id="d28"></span><span class="anchor" id="d31"></span></span><mark class="admitted" title="traditional_phaseout_single_2026_start = 81000 USD: Admitted
+traditional_phaseout_single_2026_start = 81000 USD: Admitted">$81,000</mark> but less than <span class="anchors"><span class="anchor" id="d0"></span><span class="anchor" id="d24"></span></span><mark class="admitted" title="traditional_phaseout_single_2026_end = 91000 USD: Admitted
 traditional_phaseout_single_2026_end = 91000 USD: Admitted">$91,000</mark> for a single
 
 individual or head of household, or
@@ -273,12 +271,12 @@ Modified AGI limit for certain married individuals
 increased. If you are married and your spouse is covered
 by a retirement plan at work and you aren’t, and you live
 with your spouse or file a joint return, your deduction is
-phased out if your modified AGI is more than <span class="anchor" id="d43"></span><span class="anchor" id="d47"></span><mark class="admitted" title="spousal_phaseout_2026_start = 242000 USD: Admitted
+phased out if your modified AGI is more than <span class="anchors"><span class="anchor" id="d43"></span><span class="anchor" id="d47"></span></span><mark class="admitted" title="spousal_phaseout_2026_start = 242000 USD: Admitted
 spousal_phaseout_2026_start = 242000 USD: Admitted">$242,000</mark>
-(up from <span class="anchor" id="d12"></span><span class="anchor" id="d40"></span><mark class="admitted" title="spousal_phaseout_2025_start = 236000 USD: Admitted
-spousal_phaseout_2025_start = 236000 USD: Admitted">$236,000</mark> for 2025) but less than <span class="anchor" id="d46"></span><mark class="admitted" title="spousal_phaseout_2026_end = 252000 USD: Admitted">$252,000</mark> (up
-from <span class="anchor" id="d14"></span><span class="anchor" id="d27"></span><mark class="admitted" title="spousal_phaseout_2025_end = 246000 USD: Admitted
-spousal_phaseout_2025_end = 246000 USD: Admitted">$246,000</mark> for 2025). If your modified AGI is <span class="anchor" id="d19"></span><span class="anchor" id="d44"></span><mark class="needs_verification" title="roth_phaseout_joint_2026_end = 252000 USD: Admitted
+(up from <span class="anchors"><span class="anchor" id="d12"></span><span class="anchor" id="d40"></span></span><mark class="admitted" title="spousal_phaseout_2025_start = 236000 USD: Admitted
+spousal_phaseout_2025_start = 236000 USD: Admitted">$236,000</mark> for 2025) but less than <span class="anchors"><span class="anchor" id="d46"></span></span><mark class="admitted" title="spousal_phaseout_2026_end = 252000 USD: Admitted">$252,000</mark> (up
+from <span class="anchors"><span class="anchor" id="d14"></span><span class="anchor" id="d27"></span></span><mark class="admitted" title="spousal_phaseout_2025_end = 246000 USD: Admitted
+spousal_phaseout_2025_end = 246000 USD: Admitted">$246,000</mark> for 2025). If your modified AGI is <span class="anchors"><span class="anchor" id="d19"></span><span class="anchor" id="d44"></span></span><mark class="needs_verification" title="roth_phaseout_joint_2026_end = 252000 USD: Admitted
 spousal_phaseout_2026_end = 252000 USD: Needs verification (QUALIFIED_VALUE)">$252,000</mark>
 or more, you can’t take a deduction for contributions to a
 traditional IRA.
@@ -287,15 +285,15 @@ creased. For 2026, your Roth IRA contribution limit is re-
 duced (phased out) in the following situations.
 • Your filing status is married filing jointly or qualifying
 surviving spouse and your modified AGI is at least
-<span class="anchor" id="d7"></span><span class="anchor" id="d25"></span><mark class="admitted" title="roth_phaseout_joint_2026_start = 242000 USD: Admitted
+<span class="anchors"><span class="anchor" id="d7"></span><span class="anchor" id="d25"></span></span><mark class="admitted" title="roth_phaseout_joint_2026_start = 242000 USD: Admitted
 roth_phaseout_joint_2026_start = 242000 USD: Admitted">$242,000</mark>. You can’t make a Roth IRA contribution if
-your modified AGI is <span class="anchor" id="d26"></span><mark class="rejected" title="roth_phaseout_joint_2026_end = 2520000 USD: Rejected (VALUE_NOT_IN_EVIDENCE)">$252,0000</mark> or more.
+your modified AGI is <span class="anchors"><span class="anchor" id="d26"></span></span><mark class="rejected" title="roth_phaseout_joint_2026_end = 2520000 USD: Rejected (VALUE_NOT_IN_EVIDENCE)">$252,0000</mark> or more.
 
 • Your filing status is single, head of household, or mar-
 ried filing separately and you didn’t live with your
 spouse at any time in 2026 and your modified AGI is at
-least <span class="anchor" id="d45"></span><mark class="admitted" title="roth_phaseout_single_2026_start = 153000 USD: Admitted">$153,000</mark>. You can’t make a Roth IRA contribu-
-tion if your modified AGI is <span class="anchor" id="d5"></span><mark class="admitted" title="roth_phaseout_single_2026_end = 168000 USD: Admitted">$168,000</mark> or more.
+least <span class="anchors"><span class="anchor" id="d45"></span></span><mark class="admitted" title="roth_phaseout_single_2026_start = 153000 USD: Admitted">$153,000</mark>. You can’t make a Roth IRA contribu-
+tion if your modified AGI is <span class="anchors"><span class="anchor" id="d5"></span></span><mark class="admitted" title="roth_phaseout_single_2026_end = 168000 USD: Admitted">$168,000</mark> or more.
 
 • Your filing status is married filing separately, you lived
 with your spouse at any time during the year, and your

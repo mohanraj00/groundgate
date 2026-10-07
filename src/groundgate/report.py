@@ -256,7 +256,9 @@ def _document(text: str, items: list[_Item], layout: Layout | None) -> str:
     if first is not None:
         out.append(f'<span class="page first" data-page="page {_e(first)}"></span>')
     for a, b in pairwise(bounds):
-        out.extend(f'<span class="anchor" id="{n}"></span>' for n in starts.get(a, []))
+        if here := starts.get(a):
+            ids = "".join(f'<span class="anchor" id="{n}"></span>' for n in here)
+            out.append(f'<span class="anchors">{ids}</span>')
         covering = [i for i in spans if i.span and i.span[0] <= a and b <= i.span[1]]
         naming = [i for i in keyed if i.key_span and i.key_span[0] <= a and b <= i.key_span[1]]
         if not covering and not naming:
@@ -356,9 +358,7 @@ mark.needs_verification {{ background: var(--warn-bg); box-shadow: inset 0 -2px 
 mark.rejected {{ background: var(--bad-bg); box-shadow: inset 0 -2px var(--bad); }}
 mark.key {{ text-decoration: underline 2px var(--focus); text-underline-offset: 3px; }}
 .anchor {{ scroll-margin-top: 40vh; }}
-.anchor:target + mark, .anchor:target + .anchor + mark,
-.anchor:target + .anchor + .anchor + mark {{ outline: 2px solid var(--focus);
-  outline-offset: 2px; }}
+.anchors:has(.anchor:target) + mark {{ outline: 2px solid var(--focus); outline-offset: 2px; }}
 .page {{ display: block; border-top: 1px dashed var(--line); margin: 18px 0 8px; }}
 .page::after {{ content: attr(data-page); display: block; color: var(--muted);
   font: 11px ui-monospace, Menlo, monospace; margin-top: 2px; }}
