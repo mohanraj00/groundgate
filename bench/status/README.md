@@ -64,16 +64,19 @@ whether a wrong key does. CI runs `score --check`.
 
 What it found:
 
-- The key rules of spec 0.3 transfer to IRS publications for safety. A wrong key reaches 7
-  amounts under spec 0.3, against 28 (2 + 26) under spec 0.2.
-- They cost right keys. Every right key and no wrong key reaches 18 amounts under spec 0.3,
-  against 29 under spec 0.2. A right key goes to review on 49 amounts (42 + 7) under spec 0.3,
-  against 36 (10 + 26) under spec 0.2.
+- The key rules of spec 0.3 transfer to IRS publications for safety. A wrong key reaches 6
+  amounts under spec 0.3, against 27 (2 + 25) under spec 0.2.
+- They cost right keys. Every right key and no wrong key reaches 19 amounts under spec 0.3,
+  against 30 under spec 0.2. A right key goes to review on 48 amounts (42 + 6) under spec 0.3,
+  against 35 (10 + 25) under spec 0.2.
 - The label-line rule decides most of the amounts that change. IRS publications put many short
   lines between blank lines, such as bullets, form lines and table cells, and the rule reads
   them as label lines. It stops a wrong key and a right key alike.
 - 33 of the 100 amounts are labeled not sure, more than in the FDA sets. They are listed in
   `results.json`.
+- Three labels changed after scoring. A review pointed at six labels, and I checked them again
+  against the rule above: `irs-p1167:1121`, `irs-p4491:1122` and `irs-p4801:872` changed from
+  married filing separately to married filing jointly. The counts above are after the change.
 
 No rule changes here. A rule that sends fewer right keys to review is measured on another set,
 by the rule in CONTRIBUTING.
