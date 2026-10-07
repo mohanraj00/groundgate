@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import re
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from html import escape
 from itertools import pairwise
 from typing import Any
@@ -31,13 +31,29 @@ _SURROGATE = re.compile("[\ud800-\udfff]")
 SEVERITY = {"admitted": 0, "needs_verification": 1, "rejected": 2}
 
 
+ROLES = ("sign", "scale", "unit", "field", "key")  # SPEC §2.5 role items
+NOT_IN_DOCUMENT = ("reference", "external", "knowledge")  # sources whose spans are elsewhere
+
+
+@dataclass
+class _Part:
+    j: int
+    role: str
+    passed: bool
+    found: bool  # the receipt gives the part a span
+    span: tuple[int, int] | None  # code points in the decision's text
+    cited: str | None  # the text at the span, when the report has that text
+
+
 @dataclass
 class _Item:
     n: int
     decision: Mapping[str, Any]
     candidate: Any
-    span: tuple[int, int] | None  # code points
-    key_span: tuple[int, int] | None = None  # code points of the span cited for the key
+    span: tuple[int, int] | None  # code points in the decision's text
+    in_document: bool = True  # the spans are in the document text
+    cited: str | None = None  # the text at the value span, when the report has that text
+    parts: list[_Part] = field(default_factory=list)
 
 
 def _e(s: object) -> str:
@@ -65,28 +81,64 @@ def render(
     layout: Layout | None = None,
     title: str | None = None,
     judgments: Sequence[object] | None = None,
+    references: Sequence[object] | None = None,
+    document_source: str | None = None,
 ) -> str:
     """Render ``receipt`` over ``text``. ``candidates`` supply the quotes shown on each card.
 
-    With ``schema`` (and ``policy`` and ``judgments`` if they were used), the receipt is re-derived
-    first and the page says whether it matched. Without them the page says it is unverified.
+    With ``schema`` (and ``policy``, ``judgments``, ``references`` and ``document_source`` if they
+    were used), the receipt is re-derived first and the page says whether it matched. Without them
+    the page says it is unverified. The page shows the cited text of a reference decision only
+    when ``references`` holds that reference.
     """
     verified = (
-        None if schema is None else verify(receipt, text, schema, candidates, policy, judgments).ok
+        None
+        if schema is None
+        else verify(
+            receipt,
+            text,
+            schema,
+            candidates,
+            policy,
+            judgments,
+            references=references,
+            document_source=document_source,
+        ).ok
     )
-    offsets = Offsets(text)
+    texts: dict[str, tuple[str, Offsets]] = {}
+    for r in references or ():
+        if (
+            isinstance(r, Mapping)
+            and isinstance(r.get("id"), str)
+            and isinstance(r.get("text"), str)
+        ):
+            texts.setdefault(r["id"], (r["text"], Offsets(r["text"])))
+    document = (text, Offsets(text))
     by_sha = {digest("candidate", c): c for c in candidates}
     items = []
-
-    def char_span(obj: object) -> tuple[int, int] | None:
-        if not isinstance(obj, Mapping):
-            return None
-        s, e = offsets.to_char(obj["start"]), offsets.to_char(obj["end"])
-        return None if s is None or e is None else (s, e)
-
     for n, d in enumerate(receipt.get("decisions", [])):
-        span, key_span = char_span(d.get("evidence")), char_span(d.get("key_evidence"))
-        items.append(_Item(n, d, by_sha.get(d.get("candidate_sha256")), span, key_span))
+        # The spans of a decision are in the text of its value item: the document, or a
+        # reference. External and knowledge decisions have no spans.
+        source, ref = d.get("source"), d.get("ref")
+        in_document = source not in NOT_IN_DOCUMENT
+        own: tuple[str, Offsets] | None = None
+        if in_document:
+            own = document
+        elif source == "reference" and isinstance(ref, str):
+            own = texts.get(ref)
+        span = _span(own, d.get("evidence"))
+        item = _Item(n, d, by_sha.get(d.get("candidate_sha256")), span, in_document)
+        item.cited = _cited(own, span)
+        raw = d.get("parts")
+        for j, p in enumerate(raw if isinstance(raw, list) else []):
+            if not isinstance(p, Mapping):
+                continue
+            role = str(p.get("role")) if p.get("role") in ROLES else "other"
+            found = p.get("start") is not None or p.get("end") is not None
+            pspan = _span(own, p)
+            part = _Part(j, role, p.get("passed") is True, found, pspan, _cited(own, pspan))
+            item.parts.append(part)
+        items.append(item)
 
     doc = receipt.get("document", {})
     heading = title or doc.get("id") or "Admission report"
@@ -140,7 +192,7 @@ def render(
             continue
         label = LABELS.get(o, "Unrecognised outcome")
         parts.append(f'<section class="group {o}"><h2>{label} <span>{len(group)}</span></h2>')
-        parts.extend(_card(i, layout, text) for i in group)
+        parts.extend(_card(i, layout) for i in group)
         parts.append("</section>")
     parts.append('</aside><article class="doc">')
     parts.append(_document(text, items, layout))
@@ -148,12 +200,44 @@ def render(
     return "".join(parts)
 
 
+def _span(own: tuple[str, Offsets] | None, obj: object) -> tuple[int, int] | None:
+    """The code-point span of ``obj`` in its text, or None when it has no valid span there."""
+    if own is None or not isinstance(obj, Mapping):
+        return None
+    s, e = obj.get("start"), obj.get("end")
+    if type(s) is not int or type(e) is not int:
+        return None
+    a, b = own[1].to_char(s), own[1].to_char(e)
+    return None if a is None or b is None or a > b else (a, b)
+
+
+def _cited(own: tuple[str, Offsets] | None, span: tuple[int, int] | None) -> str | None:
+    return None if own is None or span is None else own[0][span[0] : span[1]]
+
+
+def _evidence(c: object) -> list[Mapping[str, Any]]:
+    """The candidate's evidence items. One item object counts as a list that holds it."""
+    ev = c.get("evidence") if isinstance(c, Mapping) else None
+    if isinstance(ev, Mapping):
+        return [ev]
+    return [i for i in ev if isinstance(i, Mapping)] if isinstance(ev, list) else []
+
+
+def _item_text(c: object, role: str) -> str | None:
+    """The quoted text of the candidate's document or reference item with this role."""
+    for i in _evidence(c):
+        source, r = i.get("source", "document"), i.get("role", "value")
+        if source in ("document", "reference") and r == role and isinstance(i.get("text"), str):
+            return str(i["text"])
+    return None
+
+
 def _outcome(item: _Item) -> str:
     o = item.decision.get("outcome")
     return o if isinstance(o, str) and o in LABELS else "other"
 
 
-def _card(item: _Item, layout: Layout | None, text: str) -> str:
+def _card(item: _Item, layout: Layout | None) -> str:
     d, c = item.decision, item.candidate
     outcome = _outcome(item)
     value = d.get("value")
@@ -181,43 +265,71 @@ def _card(item: _Item, layout: Layout | None, text: str) -> str:
         for code in codes:
             out.append(f"<li><code>{_e(code)}</code> {_e(DESCRIPTIONS.get(str(code), ''))}</li>")
         out.append("</ul>")
-    quote = None
-    if isinstance(c, Mapping) and isinstance(c.get("evidence"), Mapping):
-        quote = c["evidence"].get("text")
+    source = d.get("source")
+    if source == "reference":
+        out.append(f'<p class="where">from reference <code>{_e(d.get("ref"))}</code></p>')
+    elif source == "external":
+        out.append(f'<p class="where">from an external page <code>{_e(d.get("url"))}</code></p>')
+    elif source == "knowledge":
+        out.append('<p class="where">from the extractor\'s knowledge</p>')
+    quote = _item_text(c, "value")
     where = []
-    if item.span is not None:
-        cited = text[item.span[0] : item.span[1]]
-        line = f"cited “{_e(_clip(cited))}”"
-        if isinstance(quote, str) and quote != cited:
+    if item.cited is not None:
+        line = f"cited “{_e(_clip(item.cited))}”"
+        if quote is not None and quote != item.cited:
             line += f", quoted “{_e(_clip(quote))}”"
-        if item.key_span is not None:
-            named = text[item.key_span[0] : item.key_span[1]]
-            line += f"; key cited “{_e(_clip(named))}”"
-            kev = c.get("key_evidence") if isinstance(c, Mapping) else None
-            key_quote = kev.get("text") if isinstance(kev, Mapping) else None
-            if isinstance(key_quote, str) and key_quote != named:
-                line += f", quoted “{_e(_clip(key_quote))}”"
         out.append(f'<p class="quote">{line}</p>')
+    elif quote is not None:
+        out.append(f'<p class="quote">quoted “{_e(_clip(quote))}”</p>')
+    if source in ("external", "knowledge"):
+        for i in _evidence(c):
+            if i.get("source") == "external" and isinstance(i.get("text"), str):
+                out.append(
+                    f'<p class="quote">quoted “{_e(_clip(i["text"]))}” from '
+                    f"<code>{_e(i.get('url'))}</code></p>"
+                )
+            elif i.get("source") == "knowledge" and isinstance(i.get("text"), str):
+                out.append(f'<p class="quote">stated “{_e(_clip(i["text"]))}”</p>')
+    if item.parts:
+        out.append('<ul class="parts">')
+        for p in item.parts:
+            state = (
+                '<span class="ok">passed</span>' if p.passed else '<span class="bad">failed</span>'
+            )
+            line = f"<b>{_e(p.role)}</b> {state}"
+            pquote = _item_text(c, p.role)
+            if p.cited is not None:
+                line += f", cited “{_e(_clip(p.cited))}”"
+                if pquote is not None and pquote != p.cited:
+                    line += f", quoted “{_e(_clip(pquote))}”"
+            elif pquote is not None:
+                line += f", quoted “{_e(_clip(pquote))}”"
+            if not p.found:
+                line += ", not found"
+            if item.in_document and p.span is not None:
+                line += f' · <a href="#p{item.n}-{p.j}">show</a>'
+            out.append(f"<li>{line}</li>")
+        out.append("</ul>")
+    missing = d.get("missing")
+    if isinstance(missing, list) and missing:
+        out.append(f'<p class="missing">missing: {_e(", ".join(map(str, missing)))}</p>')
+    if item.in_document and item.span is not None:
         if layout is not None and isinstance(d.get("evidence"), Mapping):
             page = layout.page_at(d["evidence"]["start"])
             if page is not None:
                 where.append(f"page {page}")
         where.append(f'<a href="#d{item.n}">show in document</a>')
-        if item.key_span is not None:
-            where.append(f'<a href="#k{item.n}">show key</a>')
     else:
-        if isinstance(quote, str):
-            out.append(f'<p class="quote">quoted “{_e(_clip(quote))}”</p>')
         where.append("no location in the document")
     out.append(f'<p class="where">{" · ".join(where)}</p>')
-    source = []
+    proposer = []
     if isinstance(c, Mapping):
         if isinstance(c.get("proposer"), str):
-            source.append(_e(c["proposer"]))
+            proposer.append(_e(c["proposer"]))
         if isinstance(c.get("alignment_status"), str):
-            source.append(f"LangExtract alignment {_e(c['alignment_status'])}")
-    if source:
-        out.append(f'<p class="where">{" · ".join(source)}</p>')
+            proposer.append(f"LangExtract alignment {_e(c['alignment_status'])}")
+    if proposer:
+        out.append(f'<p class="where">{" · ".join(proposer)}</p>')
     out.append("</div>")
     return "".join(out)
 
@@ -228,20 +340,20 @@ def _clip(s: str, n: int = 120) -> str:
 
 
 def _document(text: str, items: list[_Item], layout: Layout | None) -> str:
-    spans = [i for i in items if i.span is not None]
-    keyed = [i for i in items if i.key_span is not None]
+    spans = [i for i in items if i.in_document and i.span is not None]
+    parts = [(i, p) for i in items if i.in_document for p in i.parts if p.span is not None]
     bounds = sorted(
         {0, len(text)}
-        | {p for i in spans for p in i.span or ()}
-        | {p for i in keyed for p in i.key_span or ()}
+        | {x for i in spans for x in i.span or ()}
+        | {x for _, p in parts for x in p.span or ()}
     )
     starts: dict[int, list[str]] = {}
     for i in spans:
         assert i.span is not None
         starts.setdefault(i.span[0], []).append(f"d{i.n}")
-    for i in keyed:
-        assert i.key_span is not None
-        starts.setdefault(i.key_span[0], []).append(f"k{i.n}")
+    for i, p in parts:
+        assert p.span is not None
+        starts.setdefault(p.span[0], []).append(f"p{i.n}-{p.j}")
     page_numbers = [p.number for p in layout.pages] if layout else []  # none: unnumbered
     breaks = 0
 
@@ -264,7 +376,7 @@ def _document(text: str, items: list[_Item], layout: Layout | None) -> str:
             ids = "".join(f'<span class="anchor" id="{n}"></span>' for n in here)
             out.append(f'<span class="anchors">{ids}</span>')
         covering = [i for i in spans if i.span and i.span[0] <= a and b <= i.span[1]]
-        naming = [i for i in keyed if i.key_span and i.key_span[0] <= a and b <= i.key_span[1]]
+        naming = [(i, p) for i, p in parts if p.span and p.span[0] <= a and b <= p.span[1]]
         if not covering and not naming:
             out.append(body(text[a:b]))
             continue
@@ -272,10 +384,18 @@ def _document(text: str, items: list[_Item], layout: Layout | None) -> str:
         if covering:
             classes.append(_outcome(max(covering, key=lambda i: SEVERITY.get(_outcome(i), 0))))
         if naming:
-            classes += ["key", *sorted({f"key-{_outcome(i)}" for i in naming})]
+            extra = {f"part-{p.role}" for _, p in naming} | {
+                f"part-{_outcome(i)}" for i, _ in naming
+            }
+            if any(not p.passed for _, p in naming):
+                extra.add("part-failed")
+            classes += ["part", *sorted(extra)]
         tip = "\n".join(
             [_tooltip(i.decision) for i in covering]
-            + ["key of " + _tooltip(i.decision) for i in naming]
+            + [
+                f"{p.role} of {_tooltip(i.decision)}" + ("" if p.passed else " (failed)")
+                for i, p in naming
+            ]
         )
         out.append(f'<mark class="{" ".join(classes)}" title="{_e(tip)}">{body(text[a:b])}</mark>')
     return "".join(out)
@@ -355,14 +475,18 @@ main {{ flex: 1; min-height: 0; display: grid;
   border: 1px solid var(--line); }}
 .quote {{ margin: 6px 0; font-size: 12.5px; color: var(--muted); overflow-wrap: anywhere; }}
 .where {{ margin: 4px 0 0; font-size: 12px; color: var(--muted); }}
+.parts {{ margin: 6px 0; padding-left: 18px; font-size: 12.5px; color: var(--muted); }}
+.parts b {{ color: var(--fg); font-weight: 600; }}
+.missing {{ margin: 6px 0; font-size: 12.5px; color: var(--warn); }}
 a {{ color: var(--focus); }}
 mark {{ color: inherit; border-radius: 2px; padding: 1px 0; }}
 mark.admitted {{ background: var(--ok-bg); box-shadow: inset 0 -2px var(--ok); }}
 mark.needs_verification {{ background: var(--warn-bg); box-shadow: inset 0 -2px var(--warn); }}
 mark.rejected {{ background: var(--bad-bg); box-shadow: inset 0 -2px var(--bad); }}
-mark.key {{ text-underline-offset: 3px; text-decoration-thickness: 2px;
-  text-decoration-color: var(--focus); }}
-mark.key:not(.admitted):not(.needs_verification):not(.rejected) {{ background: none; }}
+mark.part {{ text-underline-offset: 3px; text-decoration-thickness: 2px;
+  text-decoration-color: var(--focus); text-decoration-style: solid; }}
+mark.part-failed {{ text-decoration-color: var(--bad); text-decoration-style: wavy; }}
+mark.part:not(.admitted):not(.needs_verification):not(.rejected) {{ background: none; }}
 .anchor {{ scroll-margin-top: 40vh; }}
 .anchors:has(.anchor:target) + mark {{ outline: 2px solid var(--focus); outline-offset: 2px; }}
 .page {{ display: block; border-top: 1px dashed var(--line); margin: 18px 0 8px; }}
@@ -375,10 +499,10 @@ body:has(#show-rejected:not(:checked)) .group.rejected {{ display: none; }}
 body:has(#show-admitted:not(:checked)) mark.admitted,
 body:has(#show-needs_verification:not(:checked)) mark.needs_verification,
 body:has(#show-rejected:not(:checked)) mark.rejected {{ background: none; box-shadow: none; }}
-mark.key-other,
-body:has(#show-admitted:checked) mark.key-admitted,
-body:has(#show-needs_verification:checked) mark.key-needs_verification,
-body:has(#show-rejected:checked) mark.key-rejected {{ text-decoration-line: underline; }}
+mark.part-other,
+body:has(#show-admitted:checked) mark.part-admitted,
+body:has(#show-needs_verification:checked) mark.part-needs_verification,
+body:has(#show-rejected:checked) mark.part-rejected {{ text-decoration-line: underline; }}
 @media (max-width: 800px) {{
   body {{ height: auto; display: block; }}
   main {{ grid-template-columns: minmax(0, 1fr); }}

@@ -48,6 +48,7 @@ box of every word so the report can show page numbers.
 | `required` | `false` | A required field with nothing admitted or flagged is listed in the receipt's `coverage`. |
 | `multiple` | `false` | The field holds a list, so different values don't conflict. |
 | `keys` | `null` | The conditions a value can belong to, in the document's words. Each candidate names one as `key`. |
+| `aliases` | `null` | The field's names in the document's words, such as "loss from operations". A field item is checked against them (spec 0.5). |
 
 The comparator is how a field says "up to" is fine. `max_daily_dose` above is `le`, so "up to
 4,000 mg" admits; an `eq` field citing the same text is flagged.
@@ -75,40 +76,71 @@ between the heading and the value stops the heading's key, and in a table senten
 value's own line counts. So a right key under a label line, or in a table with one cell on each
 line, goes to review.
 
-**Key citations** (spec 0.5). A candidate can also cite the words that name its key, such as a
-heading, a row or column label, or a bullet, as `key_evidence`. groundgate checks the citation: the
-span holds a mention of the key, it is on one line and ends at or before the value, no number
-follows the key inside it, no other key is mentioned between the span and the value, and the
-value's own sentence (or table line) names no other key instead. A citation that passes puts the key at the value past a label line
-or a table cell, and records `KEY_CITED` when it removed `KEY_NOT_AT_VALUE`. A citation that fails
-is flagged `KEY_CITATION_INVALID`. A citation never removes another flag. Without `key_evidence`,
-nothing changes.
-
 ## Candidates
 
 ```json
 {"id": "c1", "field": "max_daily_dose", "value": "4000", "unit": "mg",
- "evidence": {"start": 120, "end": 128, "text": "4,000 mg"},
+ "evidence": [{"start": 120, "end": 128, "text": "4,000 mg"}],
  "confidence": 0.93, "proposer": "gemini-3.6-flash"}
 ```
 
 - `value` is a string, or a JSON integer. Write decimals as strings (`"0.5"`), never as floats.
-- `evidence` is a **UTF-8 byte** span, half-open. `text` is what the extractor quoted; when it
-  differs from the text at the span, the fact is flagged `NON_VERBATIM_EVIDENCE`.
-- `search_region` limits where re-anchoring may look. It defaults to the whole document.
+- `evidence` is a list of evidence items (below). One item object also works, as in spec 0.4.
+- `search_region` limits where groundgate looks for a quote and where re-anchoring may look. It
+  defaults to the whole document.
 - `key` names the condition on a keyed field. On other fields it is ignored.
-- `key_evidence` is the byte span of the words that name the key, with optional `text`, as for
-  `evidence`. On other fields it is ignored.
 - Any other key (a proposer name, a chunk id) is kept, ignored by the checks, and covered by the
   candidate's hash.
 
-Most extractors give character offsets. Convert them before you build candidates:
+### Evidence items
 
-```python
-start_byte = len(text[:start_char].encode("utf-8"))
+Spec 0.5. A right value often needs more than one place in the text. In a 10-K table,
+`-105198000` for operating income in 2024 needs the bracketed `(105,198)`, the header "(in
+thousands", the `$` at the top of the column, the row "Loss from operations" and the "2024" column.
+The extractor cites each part as one item:
+
+```json
+"evidence": [{"text": "(105,198\n)"},
+             {"role": "scale", "text": "(in thousands"},
+             {"role": "unit", "text": "$"},
+             {"role": "field", "text": "Loss from operations"},
+             {"role": "key", "text": "2024"}]
 ```
 
-The LangExtract adapter does this for you.
+An item from the document has a `role` and either a byte span (`start`, `end`, optional `text`)
+or only `text`. With only `text`, the item is a quote, and groundgate finds it: the occurrence at
+the value, else the nearest one before it. For the value item, groundgate takes the first
+occurrence that holds the value with its unit.
+
+| Role | What it supports | What groundgate checks |
+|---|---|---|
+| `value` (default) | The number as written. | The value is there, as in spec 0.4. |
+| `sign` | A negative value. | Brackets around the number, or a loss word ("loss", "deficit") before it in the same sentence with no number or gain word between. In a table, only brackets count. |
+| `scale` | A value in thousands or millions. | A scale word ("thousands") before the value, with no other scale word between. |
+| `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The item holds a form of the field's unit, and no other unit is next to the number. |
+| `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. |
+| `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). |
+
+groundgate computes the value from the parts. The extractor does not state the steps. Brackets
+that enclose the number make it negative with no item. When the value needs a sign, a scale or a
+unit that no item supports, the fact goes to review with `PART_MISSING`, and the decision lists
+the part in `missing`. An item that fails its check flags the fact (`SIGN_CITATION_INVALID` and so
+on). groundgate never swaps in a part that it found itself.
+
+### Evidence from outside the document
+
+Some right values are not in the document. An item can come from three other sources:
+
+| `source` | Who supplies the text | Members | groundgate can check it |
+|---|---|---|---|
+| `reference` | the app | `ref` (the id of a reference in the packet), then as a document item | yes, like the document |
+| `external` | the extractor | `url`, `retrieved` (a date), `text` (the quoted passage) | only that the quote holds the value |
+| `knowledge` | the extractor | `text` (its statement) | no |
+
+A reference is a source text that you pass to `admit` as `references`, such as a tax table. It can
+hold only the part that matters. A candidate with no value item takes the outside path: the
+policy's `sources` decide what happens to it (below). The receipt says which source a decision
+rests on.
 
 ## Policy
 
@@ -118,6 +150,22 @@ The LangExtract adapter does this for you.
 | `unit_window` | `24` | How far after a number a unit suffix may start, in code points. |
 | `reanchor` | `true` | When the cited span misses the value but the quote occurs exactly once elsewhere with the right value and unit, move the evidence there (`EVIDENCE_REANCHORED`). |
 | `judge` | `null` | The one judge whose recorded judgments apply, and its thresholds. See [Recorded judgments](#recorded-judgments). |
+| `sources` | review | What happens to a value that only external or knowledge evidence supports. See below. |
+
+```json
+{"sources": {"external": {"allow": ["document-domain", "https://www.law.cornell.edu/"],
+                          "other": "review"},
+             "knowledge": "review"}}
+```
+
+groundgate cannot check evidence from outside the pinned texts, so you decide. An external item
+whose URL matches an `allow` entry is admitted with `ADMITTED_BY_POLICY`. `"*"` matches every URL,
+`"document-domain"` matches the host of the document source (`document_source=` in `admit`), and
+any other entry is a URL prefix, so end it with `/`. Other external items get `other`: `review`
+(`EVIDENCE_QUOTED`) or `reject` (`SOURCE_REJECTED`). Knowledge items get `knowledge`: `admit`,
+`review` (`EVIDENCE_STATED`) or `reject`. The defaults send both to review, so nothing from outside
+the document is admitted unless you say so (ADR
+[0001](adr/0001-admit-by-policy.md)).
 
 ### Recorded judgments
 
@@ -167,14 +215,16 @@ yours with `groundgate-calibrate` (#112).
 Checks run in a fixed order and the first failure rejects:
 
 `CANDIDATE_INVALID`, `FIELD_UNKNOWN`, `NULL_STRING_LITERAL`, `TYPE_INVALID`, `RANGE_INVALID`,
-`UNIT_INVALID`, `KEY_INVALID`, `NO_EVIDENCE`, `SPAN_INVALID`, `VALUE_NOT_IN_EVIDENCE`,
-`UNIT_NOT_IN_EVIDENCE`.
+`UNIT_INVALID`, `KEY_INVALID`, `NO_EVIDENCE`, `SPAN_INVALID`, `QUOTE_NOT_FOUND`,
+`VALUE_NOT_IN_EVIDENCE`, `UNIT_NOT_IN_EVIDENCE`, and on the outside path `SOURCE_REJECTED`.
 
 A fact that passes them all is checked for flags. Any flag makes it `needs_verification`:
 
-`NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `KEY_NOT_AT_VALUE`,
-`KEY_CITATION_INVALID`, `LOW_CONFIDENCE`, `CONFLICTING_CANDIDATES`, and `MODEL_DOUBT` from a
-recorded judgment. `EVIDENCE_REANCHORED`, `KEY_CITED` and `MODEL_CLEARED` only inform.
+`NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `PART_MISSING`, `SIGN_CITATION_INVALID`,
+`SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_NOT_AT_VALUE`,
+`KEY_CITATION_INVALID`, `EVIDENCE_QUOTED`, `EVIDENCE_STATED`, `LOW_CONFIDENCE`,
+`CONFLICTING_CANDIDATES`, and `MODEL_DOUBT` from a recorded judgment. `EVIDENCE_REANCHORED`,
+`VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and `MODEL_CLEARED` only inform.
 
 `CONFLICTING_CANDIDATES` is set on every candidate for a single-valued field (and key) when two
 of them passed the checks with different values. groundgate never picks between them. That is also why
@@ -182,8 +232,10 @@ it helps to send several proposers' candidates through one `admit` call: disagre
 flag. It only helps when they disagree.
 
 A decision carries `candidate_id`, `candidate_sha256`, `field`, `key`, `outcome`, `codes`, the
-canonical `value`, the candidate's `unit`, the `evidence` span the decision rests on (the re-anchored
-one, if it moved), and the `key_evidence` span the candidate cited for its key, or null.
+canonical `value`, the candidate's `unit`, the `source` it rests on (with `ref` or `url`), the
+value's `evidence` span (the re-anchored one, if it moved, or null on the outside path), the
+`parts` (each role item's span and whether it passed), and the `missing` parts. An app can send
+`missing` back to its extractor and ask for those parts, or ignore it.
 
 ## How values are read
 
@@ -252,8 +304,11 @@ as one space on both sides. Case counts.
 | `KEY_INVALID` | The candidate's `key` is not written exactly as one of the field's `keys`. | Send the key as the schema writes it. |
 | `QUALIFIED_VALUE` | The text says "up to" and the field is `eq`. | If the field is a limit, set its `comparator`. If not, a person checks the fact. |
 | `SCALE_WORD` | The value is sent as written, without its scale word. | Send the scaled value. |
-| `KEY_NOT_AT_VALUE` | The value is under a different condition in the text, or a label line or a table cell stands between the key and the value. | Ask the extractor for the key span (see [LangExtract](#langextract)). Otherwise a person checks the fact. |
-| `KEY_CITATION_INVALID` | The cited key span does not name the key, comes after the value, or has another key between it and the value. | A person checks the fact. |
+| `KEY_NOT_AT_VALUE` | The value is under a different condition in the text, or a label line or a table cell stands between the key and the value. | In a table, ask the extractor for a `field` item and a `key` item, and give the field `aliases`. Otherwise a person checks the fact. |
+| `KEY_CITATION_INVALID` | The key item does not hold a mention of the key, or is not in the value's text. | A person checks the fact. |
+| `PART_MISSING` | The value needs a sign, a scale or a unit that no item supports. `missing` names it. | Ask the extractor for those items. |
+| `QUOTE_NOT_FOUND` | The extractor changed the quote of the value. | Ask for the text copied exactly. |
+| `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | Only outside evidence supports the value. | Check the source. If you trust it, add it to `sources`. |
 | `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |
 | `NON_VERBATIM_EVIDENCE` | The extractor changed the quote. | A person compares the quote with the text at the span. |
 
@@ -262,12 +317,30 @@ as one space on both sides. Case counts.
 ```python
 import groundgate as gg
 
-receipt = gg.admit(text, schema, candidates, policy=None, document_id=None, judgments=None)
+receipt = gg.admit(
+    text,
+    schema,
+    candidates,
+    policy=None,
+    document_id=None,
+    judgments=None,
+    references=None,
+    document_source=None,
+)
 receipt.decisions  # tuple of gg.Decision
 receipt.coverage  # tuple of (field, "REQUIRED_FIELD_MISSING")
 receipt.to_dict()  # the JSON receipt, including receipt_sha256
 
-check = gg.verify(receipt_dict, text, schema, candidates, policy=None, judgments=None)
+check = gg.verify(
+    receipt_dict,
+    text,
+    schema,
+    candidates,
+    policy=None,
+    judgments=None,
+    references=None,
+    document_source=None,
+)
 check.ok, check.problems  # True, () when the receipt re-derives exactly
 ```
 
@@ -289,20 +362,30 @@ LangExtract is never imported. Per extraction:
 - `field` is the `extraction_class`, renamed through `fields={"class": "field"}` if you pass it;
 - `value` is the `value` attribute (`value_attribute=` to change it), or the `extraction_text`;
 - `unit` is the `unit` attribute (`unit_attribute=`);
-- `evidence` is the `char_interval`, converted to bytes, quoting the `extraction_text`;
-- `key_evidence` comes from the `key_text` attribute (`key_text_attribute=`): the last place where
-  those words occur, not inside a longer word, and end at or before the value. When they do not
-  occur there, the span is empty and the fact is flagged `KEY_CITATION_INVALID`. Pass `schema=`
-  to `to_candidates` so the span goes before the very number that groundgate reads;
-  `admit_document` does this for you.
+- `key` is the `key` attribute (`key_attribute=`);
+- `evidence` is a list. The first item is the value item: the `char_interval`, converted to
+  bytes, with the `extraction_text` as its text.
 
-An extraction LangExtract could not align has no interval and is rejected `NO_EVIDENCE`.
-`to_candidates` returns the candidates without admitting them, so you can merge several models'
-output into one call.
+These attributes add evidence items:
+
+| Attribute | Evidence item |
+|---|---|
+| `sign_text`, `scale_text`, `unit_text`, `key_text`, `field_text` | A quote with the role `sign`, `scale`, `unit`, `key` or `field`. |
+| `source_url`, `source_retrieved`, `source_quote` | One `external` item. All three must hold text. |
+| `knowledge` | One `knowledge` item. |
+
+A quote has no offsets. groundgate finds it near the value and writes the span to the receipt.
+The adapter skips an attribute that is blank or not a string. If your prompt uses other names,
+map them: `attributes={"key_text": "row_label"}`.
+
+If LangExtract could not align an extraction, it has no value item. With outside items, the
+evidence is those items, and your policy decides. Without them, the extraction is rejected
+`NO_EVIDENCE`. `to_candidates` returns the candidates without admitting them, so you can merge
+several models' output into one call.
 
 #### The key span
 
-A model cannot count characters, so ask it for the words, and the adapter finds them. Add this to
+A model cannot count characters, so ask it for the words, and groundgate finds them. Add this to
 the prompt for keyed fields, and give `key_text` in the examples:
 
 ```text
@@ -311,53 +394,57 @@ bullet, also give "key_text" in the attributes: those words copied verbatim from
 nearest ones before the value. Leave "key_text" out when no words before the value name its key.
 ```
 
-In this made-up price list, the label line "All prices before tax:" stops the key of "North
-region". The first extraction gives `key_text`, the second does not:
+A cited key puts the key at a table value only by the column rule. That rule also needs the row
+label, so ask for `field_text` too, and give the field its `aliases`. In this made-up table, the
+first two extractions cite the scale, the row and the column. The third cites nothing:
 
 ```python
 from groundgate.adapters.langextract import admit_document
 
-text = (
-    "Price list\n\nNorth region\n\nAll prices before tax:\n\nThe unit price is $40.\n\n"
-    "South region\n\nThe unit price is $35."
-)
+text = "Sales by region (in thousands)\n\nNorth\n\nSouth\n\nWidgets\n\n$\n\n40\n\n$\n\n35"
 schema = {
     "fields": {
-        "unit_price": {"type": "integer", "unit": "USD", "keys": ["north region", "south region"]}
+        "sales": {
+            "type": "integer",
+            "unit": "USD",
+            "keys": ["north", "south"],
+            "aliases": ["widgets"],
+            "multiple": True,
+        }
     }
 }
 
 
-def extraction(quote, key, key_text=None):  # what LangExtract returns for one value
-    attributes = {"value": quote[1:], "unit": "USD", "key": key}
-    if key_text:
-        attributes["key_text"] = key_text
+def extraction(quote, value, key, **texts):  # what LangExtract returns for one value
     start = text.index(quote)
     return {
-        "extraction_class": "unit_price",
+        "extraction_class": "sales",
         "extraction_text": quote,
         "char_interval": {"start_pos": start, "end_pos": start + len(quote)},
-        "attributes": attributes,
+        "attributes": {"value": value, "unit": "USD", "key": key, **texts},
     }
 
 
+cited = {"scale_text": "(in thousands", "field_text": "Widgets"}
 result = {
     "text": text,
     "extractions": [
-        extraction("$40", "north region", "North region"),
-        extraction("$40", "north region"),
-        extraction("$35", "south region", "South region"),
+        extraction("40", "40000", "north", key_text="North", **cited),
+        extraction("35", "35000", "south", key_text="South", **cited),
+        extraction("35", "35000", "south"),
     ],
 }
 for d in sorted(admit_document(result, schema).decisions, key=lambda d: d.candidate_id):
-    print(f"{d.outcome:<19} {d.key:<13} {d.value:<3} {' '.join(d.codes)}".rstrip())
+    print(f"{d.outcome:<19} {d.key:<6} {d.value:<6} {' '.join(d.codes)}".rstrip())
 ```
 
 ```text
-admitted            north region  40  KEY_CITED
-needs_verification  north region  40  KEY_NOT_AT_VALUE
-admitted            south region  35
+admitted            north  40000  VALUE_DERIVED KEY_CITED
+admitted            south  35000  VALUE_DERIVED KEY_CITED
+needs_verification  south  35000  PART_MISSING KEY_NOT_AT_VALUE
 ```
+
+The third value misses its scale and its key, so a person checks it.
 
 ### Report
 

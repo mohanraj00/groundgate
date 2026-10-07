@@ -179,18 +179,17 @@ def test_schema_defaults_are_hashed() -> None:
 
 def test_flag_order_and_code_descriptions_are_pinned() -> None:
     from groundgate import codes
-    from groundgate.admit import FLAG_ORDER
+    from groundgate.admit import FLAG_ORDER, INFO_ORDER
 
     assert FLAG_ORDER == (
-        "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "KEY_NOT_AT_VALUE",
-        "KEY_CITATION_INVALID", "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "MODEL_DOUBT",
+        "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "PART_MISSING",
+        "SIGN_CITATION_INVALID", "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID",
+        "FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID", "EVIDENCE_QUOTED",
+        "EVIDENCE_STATED", "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "MODEL_DOUBT",
     )  # fmt: skip
     assert tuple(codes.FLAG) == FLAG_ORDER
-    assert len(codes.REJECT) == 11 and set(codes.INFO) == {
-        "EVIDENCE_REANCHORED",
-        "KEY_CITED",
-        "MODEL_CLEARED",
-    }
+    assert tuple(codes.INFO) == INFO_ORDER
+    assert len(codes.REJECT) == 13
     assert set(codes.COVERAGE) == {"REQUIRED_FIELD_MISSING"}
 
 
@@ -347,41 +346,39 @@ KEYED_SCHEMA: dict[str, Any] = {
 }
 
 
-def _keyed(key_evidence: Any) -> dict[str, Any]:
+def _keyed(*roles: Any) -> dict[str, Any]:
     start = KEYED_DOC.encode().index(b"$15,000")
-    cand = {
+    return {
         "id": "k",
         "field": "d",
         "value": "15000",
         "unit": "USD",
         "key": "single",
-        "evidence": {"start": start, "end": start + 7},
+        "evidence": [{"start": start, "end": start + 7}, *roles],
     }
-    if key_evidence is not None:
-        cand["key_evidence"] = key_evidence
-    return cand
 
 
-def test_key_citation_reports_its_byte_span_and_verifies() -> None:
+def test_parts_report_byte_spans_and_verify() -> None:
     start = KEYED_DOC.encode().index(b"Single")
-    cand = _keyed({"start": start, "end": start + 6, "text": "Single"})
+    cand = _keyed({"role": "key", "text": "Single"})
     r = gg.admit(KEYED_DOC, KEYED_SCHEMA, [cand])
     d = r.to_dict()["decisions"][0]
-    assert (d["outcome"], d["codes"]) == ("admitted", ["KEY_CITED"])
-    assert d["key_evidence"] == {"start": start, "end": start + 6}
-    assert gg.verify(r.to_dict(), KEYED_DOC, KEYED_SCHEMA, [cand]).ok
-    # without the citation the label line stops the key, and key_evidence is null
-    d0 = gg.admit(KEYED_DOC, KEYED_SCHEMA, [_keyed(None)]).to_dict()["decisions"][0]
-    assert (d0["outcome"], d0["codes"], d0["key_evidence"]) == (
+    # the label line stops the key, and without a field item the column rule does not apply
+    assert (d["outcome"], d["codes"], d["missing"]) == (
         "needs_verification",
         ["KEY_NOT_AT_VALUE"],
-        None,
+        [],
     )
+    assert d["parts"] == [{"role": "key", "start": start, "end": start + 6, "passed": True}]
+    assert (d["source"], d["ref"], d["url"]) == ("document", None, None)
+    assert gg.verify(r.to_dict(), KEYED_DOC, KEYED_SCHEMA, [cand]).ok
+    d0 = gg.admit(KEYED_DOC, KEYED_SCHEMA, [_keyed()]).to_dict()["decisions"][0]
+    assert (d0["codes"], d0["parts"], d0["missing"]) == (["KEY_NOT_AT_VALUE"], [], ["key"])
 
 
-def test_failed_key_citation_is_not_cleared_by_a_judgment() -> None:
+def test_failed_key_item_is_not_cleared_by_a_judgment() -> None:
     start = KEYED_DOC.encode().index(b"Notes")
-    cand = _keyed({"start": start, "end": start + 5})
+    cand = _keyed({"role": "key", "start": start, "end": start + 5})
     judge = {"id": "j", "digest": "j-1"}
     policy = {"judge": {**judge, "clear": {"KEY_NOT_AT_VALUE": 0.5}}}
     js = [
@@ -400,6 +397,64 @@ def test_failed_key_citation_is_not_cleared_by_a_judgment() -> None:
     )
 
 
-def test_a_key_citation_that_is_not_a_span_makes_the_candidate_invalid() -> None:
+def test_a_role_item_that_is_not_an_object_makes_the_candidate_invalid() -> None:
     d = gg.admit(KEYED_DOC, KEYED_SCHEMA, [_keyed("Single")]).to_dict()["decisions"][0]
     assert (d["outcome"], d["codes"]) == ("rejected", ["CANDIDATE_INVALID"])
+
+
+FEE_SCHEMA = {"fields": {"fee": {"type": "integer", "unit": "USD"}}}
+
+
+def test_receipt_lists_references_and_the_document_source() -> None:
+    refs = [
+        {"id": "b", "text": "The fee is $40.", "source": "https://example.org/b"},
+        {"id": "a", "text": "Fees: $40."},
+    ]
+    cand = {"field": "fee", "value": 40, "unit": "USD",
+            "evidence": [{"source": "reference", "ref": "b", "text": "$40"}]}  # fmt: skip
+    r = gg.admit(
+        DOC, FEE_SCHEMA, [cand], references=refs, document_source="https://example.org/doc"
+    )
+    body = r.to_dict()
+    assert body["document"]["source"] == "https://example.org/doc"
+    assert body["references"] == [
+        {"id": "a", "sha256": gg.digest("reference", {"text": "Fees: $40."}), "source": None},
+        {"id": "b", "sha256": gg.digest("reference", {"text": "The fee is $40."}),
+         "source": "https://example.org/b"},
+    ]  # fmt: skip
+    d = body["decisions"][0]
+    assert (d["outcome"], d["source"], d["ref"], d["evidence"]) == (
+        "admitted", "reference", "b", {"start": 11, "end": 14},
+    )  # fmt: skip
+    assert gg.verify(body, DOC, FEE_SCHEMA, [cand], references=refs,
+                     document_source="https://example.org/doc").ok  # fmt: skip
+    # another document source changes the receipt
+    assert not gg.verify(body, DOC, FEE_SCHEMA, [cand], references=refs).ok
+
+
+def test_a_rejected_outside_candidate_reports_its_deciding_item() -> None:
+    cand = {"field": "fee", "value": 40, "unit": "USD",
+            "evidence": [{"source": "external", "url": "https://example.org/fees",
+                          "retrieved": "2026-10-01", "text": "The fee is $40."}]}  # fmt: skip
+    policy = {"sources": {"external": {"other": "reject"}}}
+    d = gg.admit(DOC, FEE_SCHEMA, [cand], policy).to_dict()["decisions"][0]
+    assert (d["codes"], d["source"], d["url"], d["evidence"]) == (
+        ["SOURCE_REJECTED"], "external", "https://example.org/fees", None,
+    )  # fmt: skip
+
+
+def test_policy_sources_defaults() -> None:
+    assert gg.Policy().to_dict()["sources"] == {
+        "external": {"allow": [], "other": "review"},
+        "knowledge": "review",
+    }
+    p = gg.Policy.from_dict({"sources": {"knowledge": "admit"}})
+    assert p.to_dict()["sources"]["external"] == {"allow": [], "other": "review"}
+
+
+def test_host_of_a_url() -> None:
+    from groundgate.text import host
+
+    assert host("https://user@WWW.Example.org:8080/a?b#c") == "www.example.org"
+    assert host("https://example.org?x=1") == "example.org"
+    assert host("mailto:someone") is None

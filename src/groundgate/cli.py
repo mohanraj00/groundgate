@@ -98,6 +98,8 @@ def _parser() -> argparse.ArgumentParser:
         p.add_argument("candidates", help="JSON array of candidates")
         p.add_argument("--policy", help="policy JSON")
         p.add_argument("--judgments", help="JSON array of recorded judgments (SPEC §2.6)")
+        p.add_argument("--references", help="JSON array of references (SPEC §2.1)")
+        p.add_argument("--document-source", help="the URL of the document (SPEC §2.1)")
 
     a = sub.add_parser("admit", help="decide candidates and write a receipt")
     inputs(a)
@@ -126,12 +128,16 @@ def main(argv: list[str] | None = None) -> int:
         text = _text(args.document)
         schema, candidates = _json(args.schema), _json(args.candidates)
         judgments = _json(args.judgments) if args.judgments else None
+        extra = {
+            "references": _json(args.references) if args.references else None,
+            "document_source": args.document_source,
+        }
         if args.command == "admit":
-            receipt = admit(text, schema, candidates, policy, args.document_id, judgments)
+            receipt = admit(text, schema, candidates, policy, args.document_id, judgments, **extra)
             _write(_dumps(receipt.to_dict()), args.output)
             return 0
         stored = _json(args.receipt)
-        result = verify(stored, text, schema, candidates, policy, judgments)
+        result = verify(stored, text, schema, candidates, policy, judgments, **extra)
         for problem in result.problems:
             print(f"mismatch: {problem}", file=sys.stderr)
         if args.command == "verify":
@@ -141,7 +147,7 @@ def main(argv: list[str] | None = None) -> int:
         if not result.ok:
             print("groundgate: not rendering a receipt that does not match", file=sys.stderr)
             return 1
-        return _report(args, stored, text, candidates)
+        return _report(args, stored, text, candidates, extra)
     except (PacketError, ValueError, OSError, ImportError) as e:  # JSON, UTF-8: ValueError
         print(f"groundgate: {e}", file=sys.stderr)
         return 2
@@ -162,7 +168,9 @@ def _extract(args: argparse.Namespace) -> int:
     return 0
 
 
-def _report(args: argparse.Namespace, receipt: Any, text: str, candidates: Any) -> int:
+def _report(
+    args: argparse.Namespace, receipt: Any, text: str, candidates: Any, extra: dict[str, Any]
+) -> int:
     from .canonical import digest
     from .extract import Layout
     from .report import render
@@ -185,6 +193,7 @@ def _report(args: argparse.Namespace, receipt: Any, text: str, candidates: Any) 
         layout=layout,
         title=title,
         judgments=judgments,
+        **extra,
     )
     _write(page, args.output)
     return 0

@@ -229,8 +229,10 @@ Checks run in a fixed order. The first failure rejects the fact.
 | `KEY_INVALID` | the field is keyed by condition, and the key is missing or not one of its keys |
 | `NO_EVIDENCE` | no evidence is cited |
 | `SPAN_INVALID` | the span is outside the document or splits a character |
-| `VALUE_NOT_IN_EVIDENCE` | no number in the span equals the value |
-| `UNIT_NOT_IN_EVIDENCE` | the value is there, but not with the field's unit |
+| `QUOTE_NOT_FOUND` | the quoted value text is not in the document |
+| `VALUE_NOT_IN_EVIDENCE` | no number in the span equals the value, with the sign and scale the evidence gives |
+| `UNIT_NOT_IN_EVIDENCE` | the value is there, but with another unit |
+| `SOURCE_REJECTED` | only outside evidence supports the value, and the policy rejects it |
 
 A fact that passes every check can still be flagged for a person:
 
@@ -239,7 +241,11 @@ A fact that passes every check can still be flagged for a person:
 | `NON_VERBATIM_EVIDENCE` | the quote differs from the text at the span |
 | `QUALIFIED_VALUE` | "up to", "approximately", "or more" changes the value, and the schema didn't declare it |
 | `SCALE_WORD` | "million", "lakh" and similar follow the value, and the value was given unscaled |
+| `PART_MISSING` | the value needs a sign, a scale or a unit that no evidence item supports |
+| `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID` | a cited part fails its check |
 | `KEY_NOT_AT_VALUE` | the text puts the value under another condition, such as another indication's heading |
+| `KEY_CITATION_INVALID` | the cited key item does not name the key |
+| `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | only an external quote, or the extractor's own knowledge, supports the value |
 | `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
 | `CONFLICTING_CANDIDATES` | another proposal for the same field and key has a different value |
 
@@ -256,12 +262,14 @@ vectors that pin every code, so another implementation can prove it agrees.
 
 ```json
 {"groundgate": "0.5",
- "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:2fb2495b5dfb..."},
+ "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:2fb2495b5dfb...", "source": null},
+ "references": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "Gemini_3.6_Flash_Medium/0", "field": "ira_limit_2025",
                 "outcome": "admitted", "codes": [], "value": "7000", "unit": "USD",
-                "evidence": {"start": 2317, "end": 2323}, "key_evidence": null,
-                "candidate_sha256": "sha256:b55fa952..."},
+                "source": "document", "ref": null, "url": null,
+                "evidence": {"start": 2317, "end": 2323}, "parts": [], "missing": [],
+                "candidate_sha256": "sha256:a15c9d8b..."},
                "..."],
  "coverage": [{"field": "roth_phaseout_single_2025_end", "code": "REQUIRED_FIELD_MISSING"}],
  "judgments": [],

@@ -169,11 +169,27 @@ def judge(g: Gold, cand: dict[str, Any]) -> tuple[str, bool]:
         return "wrong_key", False
     if cand.get("unit") != g.schema["fields"][name]["unit"]:
         return "wrong_unit", False
-    ev = cand.get("evidence")
+    ev = value_item(cand)
     ok = isinstance(ev, dict) and any(
         ev["start"] < e and s < ev["end"] for s, e in g.evidence.get((name, value), [])
     )
     return "correct", ok
+
+
+def value_item(cand: dict[str, Any]) -> dict[str, Any] | None:
+    """The candidate's value item with offsets in the document, or None (SPEC §2.5). Evidence is
+    one item object (spec 0.4) or a list of items (spec 0.5)."""
+    ev = cand.get("evidence")
+    for item in [ev] if isinstance(ev, dict) else ev if isinstance(ev, list) else []:
+        if (
+            isinstance(item, dict)
+            and item.get("source", "document") == "document"
+            and item.get("role", "value") == "value"
+            and isinstance(item.get("start"), int)
+            and isinstance(item.get("end"), int)
+        ):
+            return item
+    return None
 
 
 # ---------------------------------------------------------------------------- scoring
@@ -239,7 +255,7 @@ SPEC01: Spec01 | None = None
 
 def control_item(g: Gold, c: dict[str, Any]) -> tuple[Any, ...]:
     """What identifies a control candidate for its judgment: the same claim at the same place."""
-    ev = c.get("evidence")
+    ev = value_item(c)
     span = (ev["start"], ev["end"]) if isinstance(ev, dict) else (None, None)
     claim = (str(c.get("field")), norm_key(c.get("key")), str(c.get("value")), c.get("unit"))
     return (g.doc, *claim, *span)
@@ -261,7 +277,7 @@ def write_controls() -> None:
         if "example" not in item:  # judged before, but no longer decided differently
             continue
         g, c = item.pop("example")
-        ev = c.get("evidence") if isinstance(c.get("evidence"), dict) else {}
+        ev = value_item(c) or {}
         items.append(
             {
                 "doc": g.doc,
@@ -309,7 +325,7 @@ def rows_for(g: Gold, cands: list[dict[str, Any]], model: str, buffer: int) -> l
                     item["judgment"], "unjudged"
                 )
                 ev_ok = label == "correct"
-        ev = c.get("evidence")
+        ev = value_item(c)
         span = (ev["start"], ev["end"]) if isinstance(ev, dict) else None
         out.append(
             Row(

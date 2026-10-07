@@ -45,7 +45,7 @@ def test_offsets_become_utf8_bytes() -> None:
         "unit": "USD",
         "extraction_class": "limit",
         "alignment_status": "match_exact",
-        "evidence": {"start": start, "end": start + 6, "text": "$7,000"},
+        "evidence": [{"start": start, "end": start + 6, "text": "$7,000"}],
     }
 
 
@@ -104,7 +104,8 @@ def test_real_langextract_objects() -> None:
     annotated = lx.data.AnnotatedDocument(document_id="real", text=text, extractions=aligned)
     (c,) = to_candidates(annotated)
     assert c["alignment_status"] == "match_exact"
-    assert c["evidence"]["text"] == "$8,000"
+    start = text.index("$8,000")
+    assert c["evidence"] == [{"start": start, "end": start + 6, "text": "$8,000"}]
     (d,) = admit_document(annotated, SCHEMA).decisions
     assert (d.outcome, d.codes) == ("rejected", ("VALUE_NOT_IN_EVIDENCE",))
     unnamed = lx.data.AnnotatedDocument(text=text, extractions=aligned)
@@ -112,75 +113,98 @@ def test_real_langextract_objects() -> None:
     assert admit_document(unnamed, SCHEMA, document_id="x").document_id == "x"
 
 
-KEYED_TEXT = "Café\nSingle\n\nNotes:\n\nThe deduction is $15,000. Single filers only."
-KEYED_SCHEMA = {"fields": {"d": {"type": "integer", "unit": "USD", "keys": ["single", "joint"]}}}
+def test_role_attributes_become_quotes() -> None:
+    at = TEXT.index("$7,000")
+    texts = {"sign_text": "minus", "scale_text": "thousands", "unit_text": "$",
+             "key_text": "Café", "field_text": "limit"}  # fmt: skip
+    (c,) = to_candidates(doc(x("limit", "$7,000", at, "7000", **texts)))
+    value, *roles = c["evidence"]
+    assert value == {"start": at + 1, "end": at + 7, "text": "$7,000"}
+    assert roles == [
+        {"role": "sign", "text": "minus"},
+        {"role": "scale", "text": "thousands"},
+        {"role": "unit", "text": "$"},
+        {"role": "key", "text": "Café"},
+        {"role": "field", "text": "limit"},
+    ]
+    # blank or not text: no item
+    (c,) = to_candidates(doc(x("limit", "$7,000", at, key_text=" ", scale_text=3, field_text=None)))
+    assert c["evidence"] == [value]
 
 
-def keyed(**attrs: Any) -> dict[str, Any]:
-    ext = x("d", "$15,000", KEYED_TEXT.index("$15,000"), "15000", unit="USD", **attrs)
-    return {"text": KEYED_TEXT, "extractions": [ext]}
+def test_outside_attributes_become_outside_items() -> None:
+    at = TEXT.index("$7,000")
+    source = {"source_url": "https://example.org/limits", "source_retrieved": "2026-10-01",
+              "source_quote": "The limit is $7,000."}  # fmt: skip
+    external = {"source": "external", "url": "https://example.org/limits",
+                "retrieved": "2026-10-01", "text": "The limit is $7,000."}  # fmt: skip
+    knowledge = {"source": "knowledge", "text": "The limit is $7,000 (IRC 219)."}
+    ext = x("limit", "$7,000", at, "7000", knowledge=knowledge["text"], **source)
+    (c,) = to_candidates(doc(ext))
+    assert c["evidence"][1:] == [external, knowledge]
+    for member in source:  # all three or no external item
+        (c,) = to_candidates(doc(x("limit", "$7,000", at, **{**source, member: ""})))
+        assert len(c["evidence"]) == 1
 
 
-def test_key_text_becomes_a_key_citation() -> None:
-    (c,) = to_candidates(keyed(key="single", key_text="Single"))
-    start = KEYED_TEXT.encode().index(b"Single")
-    assert c["key_evidence"] == {"start": start, "end": start + 6, "text": "Single"}
-    (d,) = admit_document(keyed(key="single", key_text="Single"), KEYED_SCHEMA).decisions
-    assert (d.outcome, d.codes) == ("admitted", ("KEY_CITED",))
+def test_an_unaligned_extraction_keeps_only_its_outside_items() -> None:
+    ext = x("limit", "$9,000", None, "9000", unit="USD", key_text="Café", knowledge="It is $9,000.")
+    (c,) = to_candidates(doc(ext))
+    assert c["evidence"] == [{"source": "knowledge", "text": "It is $9,000."}]
+    (d,) = admit_document(doc(ext), SCHEMA).decisions
+    assert (d.outcome, d.codes) == ("needs_verification", ("EVIDENCE_STATED",))
+    (c,) = to_candidates(doc(x("limit", "$9,000", None, "9000", key_text="Café")))
+    assert "evidence" not in c  # no value item and no outside item: NO_EVIDENCE, as before
 
 
-def test_key_text_missing_outside_or_after_the_value() -> None:
-    (c,) = to_candidates(keyed(key="single"))
-    assert "key_evidence" not in c
-    (d,) = admit_document(keyed(key="single"), KEYED_SCHEMA).decisions
-    assert (d.outcome, d.codes) == ("needs_verification", ("KEY_NOT_AT_VALUE",))
-    at = KEYED_TEXT.encode().index(b"15,000")  # the value's number token, after the "$"
-    for key_text in ("Joint filers", "Single filers"):  # not in the text, or only after the value
-        (c,) = to_candidates(keyed(key="single", key_text=key_text))
-        assert c["key_evidence"] == {"start": at, "end": at, "text": key_text}
-        (d,) = admit_document(keyed(key="single", key_text=key_text), KEYED_SCHEMA).decisions
-        assert d.codes == ("KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID")
-    (c,) = to_candidates(keyed(key="single", label="Single"), key_text_attribute="label")
-    assert c["key_evidence"]["text"] == "Single"
+def test_the_app_renames_the_evidence_attributes() -> None:
+    at = TEXT.index("$7,000")
+    ext = x("limit", "$7,000", at, "7000", row="limit", key_text="Café", note="It is $7,000.")
+    (c,) = to_candidates(doc(ext), attributes={"field_text": "row", "knowledge": "note"})
+    assert c["evidence"][1:] == [
+        {"role": "key", "text": "Café"},
+        {"role": "field", "text": "limit"},
+        {"source": "knowledge", "text": "It is $7,000."},
+    ]
+    (c,) = to_candidates(doc(ext), attributes={"key_text": "label"})
+    assert c["evidence"][1:] == []  # "key_text" is not read once it is renamed
+    with pytest.raises(ValueError, match="unknown evidence attributes"):
+        to_candidates(doc(ext), attributes={"key": "label"})
 
 
-def test_key_text_is_not_found_inside_a_longer_word() -> None:
-    text = "South\n\nSouthwest office\n\nPrice: $40"
-    ext = x("p", "$40", text.index("$40"), "40", key="south", key_text="South")
-    (c,) = to_candidates({"text": text, "extractions": [ext]})
-    assert c["key_evidence"] == {"start": 0, "end": 5, "text": "South"}
+TABLE = (
+    "Year Ended December 31,\n(in thousands)\n\n2025\n\n2024\n\n"
+    "Revenue\n\n$\n\n46,016\n\n$\n\n434,433\n\n"
+    "Loss from operations\n\n$\n\n(140,102\n)\n\n$\n\n(105,198\n)"
+)
+TABLE_SCHEMA = {
+    "fields": {
+        name: {"type": "integer", "unit": "USD", "keys": ["2025", "2024"], "multiple": True,
+               "aliases": [alias]}
+        for name, alias in (("revenue", "revenue"), ("op_income", "loss from operations"))
+    }
+}  # fmt: skip
 
 
-def test_key_text_inside_the_quote_and_overlapping_occurrences() -> None:
-    text = "Label:\n\nWages $40"
-    ext = x("p", "Wages $40", text.index("Wages"), "40", key="wages", key_text="Wages")
-    (c,) = to_candidates({"text": text, "extractions": [ext]})
-    assert c["key_evidence"] == {"start": 8, "end": 13, "text": "Wages"}
-    text = "xWages Wages Wages\n\nNotes:\n\nThe amount is $40."
-    ext = x("p", "$40", text.index("$40"), "40", key="wages", key_text="Wages Wages")
-    (c,) = to_candidates({"text": text, "extractions": [ext]})
-    assert c["key_evidence"] == {"start": 7, "end": 18, "text": "Wages Wages"}
+def test_a_table_value_is_admitted_with_its_cited_parts() -> None:
+    def cell(cls: str, quote: str, value: str, key: str, **texts: str) -> Any:
+        return x(cls, quote, TABLE.index(quote), value, unit="USD", key=key, **texts)
 
-
-def test_key_text_before_a_later_occurrence_of_the_value() -> None:
-    # the first 40 has no $, so groundgate reads the later one; the key comes between them
-    text = "40 units\n\nWages\n\nNotes:\n\nPay $40."
-    ext = x("p", text, 0, "40", unit="USD", key="wages", key_text="Wages")
-    (c,) = to_candidates({"text": text, "extractions": [ext]})
-    start = text.index("Wages")
-    assert c["key_evidence"] == {"start": start, "end": start + 5, "text": "Wages"}
-
-
-def test_with_the_schema_key_text_goes_before_the_value_that_groundgate_reads() -> None:
-    # 40 without $ has key text before it, then another key, then fresh key text and $40
-    text = "Single\n\n40 units\n\nJoint\n\nSingle\n\nNotes:\n\nPay $40."
-    schema = {"fields": {"p": {"type": "integer", "unit": "USD", "keys": ["single", "joint"]}}}
-    ext = x("p", text, 0, "40", unit="USD", key="single", key_text="Single")
-    doc = {"text": text, "extractions": [ext]}
-    (c,) = to_candidates(doc)  # without the schema, the first 40 decides
-    assert c["key_evidence"]["start"] == 0
-    (c,) = to_candidates(doc, schema=schema)
-    start = text.rindex("Single")
-    assert c["key_evidence"] == {"start": start, "end": start + 6, "text": "Single"}
-    (d,) = admit_document(doc, schema).decisions
-    assert (d.outcome, d.codes) == ("admitted", ("KEY_CITED",))
+    scale = {"scale_text": "(in thousands"}
+    extractions = [
+        cell("revenue", "434,433", "434433000", "2024", field_text="Revenue", key_text="2024",
+             **scale),
+        cell("revenue", "434,433", "434433000", "2025", field_text="Revenue", key_text="2025",
+             **scale),
+        cell("op_income", "105,198", "-105198000", "2024", field_text="Loss from operations",
+             key_text="2024", unit_text="$", **scale),
+        cell("revenue", "434,433", "434433000", "2024"),
+    ]  # fmt: skip
+    receipt = admit_document({"text": TABLE, "extractions": extractions}, TABLE_SCHEMA)
+    got = sorted((d.candidate_id, d.outcome, d.codes) for d in receipt.decisions)
+    assert got == [
+        (0, "admitted", ("VALUE_DERIVED", "KEY_CITED")),
+        (1, "needs_verification", ("KEY_NOT_AT_VALUE", "VALUE_DERIVED")),  # the wrong column
+        (2, "admitted", ("VALUE_DERIVED", "KEY_CITED")),
+        (3, "needs_verification", ("PART_MISSING", "KEY_NOT_AT_VALUE")),  # nothing cited
+    ]

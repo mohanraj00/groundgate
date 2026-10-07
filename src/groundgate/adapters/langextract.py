@@ -17,13 +17,18 @@ Mapping, per extraction:
 - ``value``: the ``value`` attribute, or ``extraction_text`` when there is none;
 - ``unit``: the ``unit`` attribute, when present;
 - ``key``: the ``key`` attribute, when present, for a keyed field;
-- ``evidence``: ``char_interval`` converted to UTF-8 byte offsets, quoting ``extraction_text``.
-  An extraction LangExtract could not align has no evidence and is rejected ``NO_EVIDENCE``;
-- ``key_evidence``: from the ``key_text`` attribute, when present: the words that name the key,
-  such as a heading or a row label. The span is the last occurrence of ``key_text``, not inside a
-  longer word, that ends at or before the value: the number token in ``char_interval`` that
-  equals ``value``, or the interval's start. When there is none, the span is empty, so
-  groundgate flags ``KEY_CITATION_INVALID``.
+- ``evidence``: a list of evidence items. The first is the value item: ``char_interval``
+  converted to UTF-8 byte offsets, quoting ``extraction_text``. Then one quote for each of the
+  attributes ``sign_text``, ``scale_text``, ``unit_text``, ``key_text`` and ``field_text`` that
+  holds text, with the role ``sign``, ``scale``, ``unit``, ``key`` or ``field``. A quote has no
+  offsets: groundgate finds it near the value. Then the outside items: one ``external`` item from
+  ``source_url``, ``source_retrieved`` and ``source_quote`` when all three hold text, and one
+  ``knowledge`` item from ``knowledge``.
+
+An extraction LangExtract could not align has no value item. With outside items, its evidence is
+those items, and groundgate takes the outside path. Without them, it has no evidence and is
+rejected ``NO_EVIDENCE``. ``attributes`` renames the evidence attributes, for example
+``{"key_text": "row_label"}``.
 
 ``alignment_status`` and ``extraction_class`` are kept on the candidate for the report; the
 checks ignore them.
@@ -31,15 +36,24 @@ checks ignore them.
 
 from __future__ import annotations
 
-import re
 from collections.abc import Mapping
 from typing import Any
 
-from ..admit import admit, value_place
+from ..admit import admit
 from ..canonical import Offsets, is_nfc
 from ..model import PacketError, Policy, Receipt, Schema
-from ..text import _NOT_ALNUM_AFTER, _NOT_ALNUM_BEFORE, parse_value, quote_pattern, scaled_value
-from ..text import tokens as number_tokens
+
+ROLES = {
+    "sign": "sign_text",
+    "scale": "scale_text",
+    "unit": "unit_text",
+    "key": "key_text",
+    "field": "field_text",
+}
+"""The role of each quote item, and the attribute that gives its text."""
+
+ATTRIBUTES = (*ROLES.values(), "source_url", "source_quote", "source_retrieved", "knowledge")
+"""The attributes that become evidence items. ``attributes=`` renames them."""
 
 
 def _get(obj: Any, name: str) -> Any:
@@ -54,6 +68,10 @@ def _status(raw: Any) -> str | None:
     return str(getattr(raw, "value", raw))  # an AlignmentStatus enum or its string value
 
 
+def _text(raw: Any) -> str | None:
+    return raw if isinstance(raw, str) and raw.strip() else None
+
+
 def document_text(document: Any) -> str:
     text = _get(document, "text")
     if not isinstance(text, str):
@@ -66,6 +84,39 @@ def document_text(document: Any) -> str:
     return text
 
 
+def _names(attributes: Mapping[str, str] | None) -> dict[str, str]:
+    """Each evidence attribute's name in the app, from our name."""
+    unknown = sorted(set(attributes or {}) - set(ATTRIBUTES))
+    if unknown:
+        raise ValueError(f"unknown evidence attributes {unknown}; use names from {ATTRIBUTES}")
+    return {name: (attributes or {}).get(name, name) for name in ATTRIBUTES}
+
+
+def _role_items(attrs: Mapping[str, Any], names: Mapping[str, str]) -> list[dict[str, Any]]:
+    """One quote for each role attribute that holds text. groundgate finds it."""
+    out = []
+    for role, name in ROLES.items():
+        text = _text(attrs.get(names[name]))
+        if text is not None:
+            out.append({"role": role, "text": text})
+    return out
+
+
+def _outside_items(attrs: Mapping[str, Any], names: Mapping[str, str]) -> list[dict[str, Any]]:
+    """The external item, when the URL, the date and the quote all hold text, and the knowledge
+    item."""
+    out: list[dict[str, Any]] = []
+    url, retrieved, quote = (
+        _text(attrs.get(names[n])) for n in ("source_url", "source_retrieved", "source_quote")
+    )
+    if url is not None and retrieved is not None and quote is not None:
+        out.append({"source": "external", "url": url, "retrieved": retrieved, "text": quote})
+    knowledge = _text(attrs.get(names["knowledge"]))
+    if knowledge is not None:
+        out.append({"source": "knowledge", "text": knowledge})
+    return out
+
+
 def to_candidates(
     document: Any,
     *,
@@ -73,15 +124,13 @@ def to_candidates(
     value_attribute: str = "value",
     unit_attribute: str = "unit",
     key_attribute: str = "key",
-    key_text_attribute: str = "key_text",
-    schema: Schema | Mapping[str, Any] | None = None,
-    policy: Policy | Mapping[str, Any] | None = None,
+    attributes: Mapping[str, str] | None = None,
 ) -> list[dict[str, Any]]:
-    """One groundgate candidate per extraction in a LangExtract ``AnnotatedDocument``. With the
-    ``schema`` (and ``policy``), a key citation is placed before the very token where groundgate
-    reads the value; ``admit_document`` passes them."""
+    """One groundgate candidate per extraction in a LangExtract ``AnnotatedDocument``.
+    ``attributes`` maps an evidence attribute in ``ATTRIBUTES`` to the name the app gives it."""
     text = document_text(document)
     offsets = Offsets(text)
+    names = _names(attributes)
     out = []
     for i, x in enumerate(_get(document, "extractions") or []):
         cls = _get(x, "extraction_class")
@@ -98,61 +147,18 @@ def to_candidates(
             cand["unit"] = attrs[unit_attribute]
         if attrs.get(key_attribute) is not None:
             cand["key"] = attrs[key_attribute]
+        outside = _outside_items(attrs, names)
         interval = _get(x, "char_interval")
         start, end = _get(interval, "start_pos"), _get(interval, "end_pos")
         if isinstance(start, int) and isinstance(end, int):
             if not 0 <= start <= end <= len(text):
                 raise PacketError(f"extraction {i} has a char_interval outside the document text")
-            cand["evidence"] = {
-                "start": offsets.to_bytes(start),
-                "end": offsets.to_bytes(end),
-                "text": quote,
-            }
-            key_text = attrs.get(key_text_attribute)
-            if isinstance(key_text, str) and key_text.strip():
-                place = None if schema is None else value_place(text, schema, cand, policy)
-                ats = (
-                    [place] if place is not None else _value_starts(text, start, end, cand["value"])
-                )
-                cand["key_evidence"] = _key_span(text, offsets, key_text, ats)
+            value = {"start": offsets.to_bytes(start), "end": offsets.to_bytes(end), "text": quote}
+            cand["evidence"] = [value, *_role_items(attrs, names), *outside]
+        elif outside:  # not aligned: only the outside items can support the value
+            cand["evidence"] = outside
         out.append(cand)
     return out
-
-
-def _value_starts(text: str, start: int, end: int, value: object) -> list[int]:
-    """Where groundgate may put a numeric value in the interval: each number token that equals
-    the value, as written or scaled, in order. groundgate takes the first one with the field's
-    unit, which the adapter does not know. With none, the interval's start, as for a string
-    field."""
-    want = parse_value(str(value))
-    if want is None:
-        return [start]
-    hits = [
-        t.start
-        for t in number_tokens(text, start, end)
-        if t.value is not None and want in (t.value, scaled_value(text, t))
-    ]
-    return hits or [start]
-
-
-def _key_span(text: str, offsets: Offsets, key_text: str, ats: list[int]) -> dict[str, Any]:
-    """The last occurrence of ``key_text`` that is not part of a longer word and ends at or
-    before the first place in ``ats`` that has one, in UTF-8 bytes. With none, an empty span at
-    the first place: groundgate reads it as not valid and flags the citation."""
-    whole = re.compile(_NOT_ALNUM_BEFORE + quote_pattern(key_text).pattern + _NOT_ALNUM_AFTER)
-    found: list[tuple[int, int]] = []
-    pos = 0
-    while (m := whole.search(text, pos)) is not None and m.end() <= ats[-1]:
-        found.append((m.start(), m.end()))
-        pos = m.start() + 1  # an occurrence may overlap the one before it
-    for at in ats:
-        before = [span for span in found if span[1] <= at]
-        if before:
-            s, e = before[-1]
-            break
-    else:
-        s = e = ats[0]
-    return {"start": offsets.to_bytes(s), "end": offsets.to_bytes(e), "text": key_text}
 
 
 def admit_document(
@@ -177,7 +183,7 @@ def admit_document(
     return admit(
         document_text(document),
         schema,
-        to_candidates(document, schema=schema, policy=policy, **options),
+        to_candidates(document, **options),
         policy,
         document_id=document_id,
     )
