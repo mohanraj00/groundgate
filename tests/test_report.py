@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+from html import escape
 from pathlib import Path
 from typing import Any
 
@@ -198,42 +199,114 @@ def test_cli_rejects_ambiguous_json(tmp_path: Path, capsys: pytest.CaptureFixtur
         main(["extract", str(doc), "--pages", "3-"])
 
 
-def test_report_shows_the_cited_key_span() -> None:
-    text = "Single\n\nNotes:\n\nThe deduction is $15,000."
-    schema = {"fields": {"d": {"type": "integer", "unit": "USD", "keys": ["single"]}}}
-    cands = [{"field": "d", "value": "15000", "unit": "USD", "key": "single",
-              "evidence": ev("$15,000", text), "key_evidence": ev("Single", text)}]  # fmt: skip
-    html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
-    assert "key cited “Single”" in html
-    assert '<a href="#k0">show key</a>' in html
-    assert '<span class="anchor" id="k0"></span></span><mark class="key key-admitted"' in html
-    cands[0]["key_evidence"]["text"] = "single filers"
-    html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
-    assert "key cited “Single”, quoted “single filers”" in html
+TABLE = (
+    "Year Ended December 31, (in thousands)\n\n2025\n\n2024\n\n"
+    "Revenue\n\n$\n\n46,016\n\n$\n\n434,433\n\nThe fee was $9,000."
+)
+TABLE_SCHEMA: dict[str, Any] = {
+    "fields": {
+        "rev": {"type": "integer", "unit": "USD", "keys": ["2025", "2024"],
+                "aliases": ["revenue"], "multiple": True},
+        "fee": {"type": "integer", "unit": "USD", "multiple": True},
+    }
+}  # fmt: skip
+TABLE_CANDS: list[Any] = [
+    {"id": "rev", "field": "rev", "key": "2025", "value": "46016000", "unit": "USD",
+     "evidence": [{"text": "46,016"}, {"role": "scale", "text": "(in thousands"},
+                  {"role": "field", "text": "Revenue"}, {"role": "key", "text": "2025"}]},
+    {"id": "fee", "field": "fee", "value": "-9000", "unit": "USD",
+     "evidence": [{"text": "$9,000"}, {"role": "sign", "text": "fee"}]},
+    {"id": "known", "field": "fee", "value": "5", "unit": "USD",
+     "evidence": {"source": "knowledge", "text": "The fee is $5."}},
+]  # fmt: skip
 
 
-def test_report_marks_a_key_span_inside_the_value_evidence() -> None:
-    text = "Single: the deduction is $15,000."
-    schema = {"fields": {"d": {"type": "integer", "unit": "USD", "keys": ["single"]}}}
-    cands = [{"field": "d", "value": "15000", "unit": "USD", "key": "single",
-              "evidence": ev(text, text), "key_evidence": ev("Single", text)}]  # fmt: skip
-    html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
-    mark = r'<mark class="(admitted|needs_verification) key key-\1" title="[^"]*key of d'
-    assert re.search(mark, html)
+def table_page() -> tuple[dict[str, Any], str]:
+    receipt = gg.admit(TABLE, TABLE_SCHEMA, TABLE_CANDS).to_dict()
+    html = render(receipt, TABLE, TABLE_CANDS, schema=TABLE_SCHEMA)
+    return receipt, html
 
 
-def test_report_keeps_every_outcome_on_a_shared_key_span() -> None:
-    text = "Single\n\nNotes:\n\nThe deduction is $15,000. The credit is $500."
+def n_of(receipt: dict[str, Any], cid: str) -> int:
+    return next(n for n, d in enumerate(receipt["decisions"]) if d["candidate_id"] == cid)
+
+
+def test_report_marks_the_parts_of_a_table_value() -> None:
+    receipt, html = table_page()
+    assert "✓ receipt verified" in html
+    n = n_of(receipt, "rev")
+    for j, (role, quote) in enumerate([("scale", "(in thousands"), ("field", "Revenue"),
+                                       ("key", "2025")]):  # fmt: skip
+        anchor = f'<span class="anchor" id="p{n}-{j}"></span></span>'
+        assert re.search(
+            re.escape(anchor) + f'<mark class="part part-admitted part-{role}" '
+            f'title="{role} of rev = 46016000 USD for 2025: Admitted[^"]*">'
+            + re.escape(escape(quote))
+            + "</mark>",
+            html,
+        )
+        assert f'<b>{role}</b> <span class="ok">passed</span>, cited “{escape(quote)}”' in html
+        assert f'<a href="#p{n}-{j}">show</a>' in html
+    assert '<p class="missing">' not in html
+
+
+def test_report_marks_a_failed_part() -> None:
+    receipt, html = table_page()
+    n = n_of(receipt, "fee")
+    assert re.search(
+        f'<span class="anchor" id="p{n}-0"></span></span>'
+        '<mark class="part part-failed part-needs_verification part-sign" '
+        'title="sign of fee = -9000 USD: Needs verification [^"]*\\(failed\\)">fee</mark>',
+        html,
+    )
+    assert '<b>sign</b> <span class="bad">failed</span>, cited “fee”' in html
+    assert "SIGN_CITATION_INVALID" in html
+
+
+def test_report_shows_an_outside_decision_and_a_missing_part() -> None:
+    receipt, html = table_page()
+    n = n_of(receipt, "known")
+    assert receipt["decisions"][n]["evidence"] is None and receipt["decisions"][n]["parts"] == []
+    assert "from the extractor's knowledge" in html
+    assert "stated “The fee is $5.”" in html
+    assert f'id="d{n}"' not in html and f'id="p{n}-' not in html
+    cands = [{"field": "fee", "value": "-9000", "unit": "USD", "evidence": [{"text": "$9,000"}]}]
+    receipt = gg.admit(TABLE, TABLE_SCHEMA, cands).to_dict()
+    assert receipt["decisions"][0]["missing"] == ["sign"]
+    html = render(receipt, TABLE, cands, schema=TABLE_SCHEMA)
+    assert '<p class="missing">missing: sign</p>' in html
+    assert '<ul class="parts">' not in html
+
+
+def test_report_shows_a_reference_decision_and_verifies_its_packet() -> None:
+    text = "Single filers may deduct the interest. The phase-out starts at $85,000."
     schema = {
         "fields": {
-            "d": {"type": "integer", "unit": "USD", "keys": ["single"]},
-            "c": {"type": "integer", "unit": "USD", "keys": ["single"]},
+            "p": {
+                "type": "integer",
+                "unit": "USD",
+                "keys": ["single", "married filing jointly"],
+                "multiple": True,
+            }
         }
     }
-    cands = [{"field": "d", "value": "15000", "unit": "USD", "key": "single",
-              "evidence": ev("$15,000", text), "key_evidence": ev("Single", text)},
-             {"field": "c", "value": "500", "unit": "USD", "key": "single", "confidence": 0.1,
-              "evidence": ev("$500", text), "key_evidence": ev("Single", text)}]  # fmt: skip
-    policy = {"min_confidence": 0.5}
-    html = render(gg.admit(text, schema, cands, policy).to_dict(), text, cands)
-    assert '<mark class="key key-admitted key-needs_verification"' in html
+    ref_text = "For married filing jointly, the phase-out starts at $170,000."
+    refs = [{"id": "irs <221>", "text": ref_text, "source": "https://www.irs.gov/p970"}]
+    cands = [{"field": "p", "value": "170000", "unit": "USD", "key": "married filing jointly",
+              "evidence": [{"source": "reference", "ref": "irs <221>", "text": "$170,000"},
+                           {"source": "reference", "ref": "irs <221>", "role": "key",
+                            "text": "married filing jointly"}]}]  # fmt: skip
+    source = "https://www.irs.gov/p4491x"
+    receipt = gg.admit(text, schema, cands, references=refs, document_source=source).to_dict()
+    d = receipt["decisions"][0]
+    assert d["source"] == "reference" and d["parts"][0]["passed"] is True
+    html = render(receipt, text, cands, schema=schema, references=refs, document_source=source)
+    assert "✓ receipt verified" in html
+    assert "from reference <code>irs &lt;221&gt;</code>" in html
+    assert "cited “$170,000”" in html
+    assert '<b>key</b> <span class="ok">passed</span>, cited “married filing jointly”' in html
+    assert "no location in the document" in html
+    assert "<mark" not in html and 'id="d0"' not in html and 'href="#p0-0"' not in html
+    assert "does not match" in render(receipt, text, cands, schema=schema)  # no references
+    html = render(receipt, text, cands)  # no reference text: no cited text
+    assert "cited" not in html and "quoted “$170,000”" in html

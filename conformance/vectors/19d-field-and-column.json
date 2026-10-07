@@ -1,0 +1,569 @@
+{
+ "name": "19d-field-and-column",
+ "description": "A field item holds an alias of the field, at the value's row or in its sentence. The column rule puts a key item's key at a table value: the key is the n-th of its header, and the value is the n-th cell after the row label, where a lone dash is a cell. It records KEY_CITED. A field item on a field without aliases changes nothing (spec 0.5).",
+ "document": "Year Ended December 31,\n\n2025\n\n2024\n\nChange\n\nRevenue\n\n$\n\n46,016\n\n$\n\n434,433\n\nGain on sale\n\n—\n\n40,390\n\nLoss from operations\n\n$\n\n(140,102\n)\n\n$\n\n(105,198\n)\n\nThree Months Ended\n\n2025\n\n2024\n\nRevenue\n\n$\n\n9,100\n\n$\n\n8,800\n\nIn 2024, revenue was $434,433 and operating income was $12.",
+ "schema": {
+  "fields": {
+   "revenue": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "multiple": true,
+    "aliases": [
+     "revenue",
+     "total revenue"
+    ]
+   },
+   "op_income": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "multiple": true,
+    "aliases": [
+     "operating income",
+     "loss from operations"
+    ]
+   },
+   "gain": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "multiple": true,
+    "aliases": [
+     "gain on sale"
+    ]
+   },
+   "other": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": {
+  "judge": {
+   "id": "jev",
+   "digest": "jev-1.13.0",
+   "clear": {
+    "KEY_NOT_AT_VALUE": 0.9
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "k1",
+   "field": "revenue",
+   "value": "46016",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 57,
+     "end": 63,
+     "text": "46,016"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "key",
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "k2",
+   "field": "revenue",
+   "value": "434433",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 75,
+     "text": "434,433"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k3",
+   "field": "revenue",
+   "value": "434433",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 75,
+     "text": "434,433"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "key",
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "k4",
+   "field": "gain",
+   "value": "40390",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 96,
+     "end": 102,
+     "text": "40,390"
+    },
+    {
+     "role": "field",
+     "text": "Gain on sale"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k5",
+   "field": "gain",
+   "value": "40390",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 96,
+     "end": 102,
+     "text": "40,390"
+    },
+    {
+     "role": "field",
+     "text": "Gain on sale"
+    },
+    {
+     "role": "key",
+     "text": "2025"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "k6",
+   "field": "op_income",
+   "value": "-105198",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 145,
+     "end": 152,
+     "text": "105,198"
+    },
+    {
+     "role": "field",
+     "text": "Loss from operations"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k7",
+   "field": "revenue",
+   "value": "9100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 200,
+     "end": 205,
+     "text": "9,100"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "key",
+     "start": 25,
+     "end": 29,
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "k8",
+   "field": "other",
+   "value": "434433",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 75,
+     "text": "434,433"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k9",
+   "field": "op_income",
+   "value": "434433",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 75,
+     "text": "434,433"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k10",
+   "field": "revenue",
+   "value": "434433",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 238,
+     "end": 246,
+     "text": "$434,433"
+    },
+    {
+     "role": "field",
+     "text": "revenue"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k11",
+   "field": "revenue",
+   "value": "12",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 272,
+     "end": 275,
+     "text": "$12"
+    },
+    {
+     "role": "field",
+     "text": "revenue"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k12",
+   "field": "revenue",
+   "value": "434433",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 75,
+     "text": "434,433"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k13",
+   "field": "revenue",
+   "value": "434433",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 75,
+     "text": "434,433"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "key",
+     "text": "Change"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k14",
+   "field": "revenue",
+   "value": "46016",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 57,
+     "end": 63,
+     "text": "46,016"
+    },
+    {
+     "role": "field",
+     "text": "Sales"
+    },
+    {
+     "role": "key",
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "k15",
+   "field": "revenue",
+   "value": "434433",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 75,
+     "text": "434,433"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k16",
+   "field": "revenue",
+   "value": "434433",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 75,
+     "text": "434,433"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "k17",
+   "field": "op_income",
+   "value": "12",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 272,
+     "end": 275,
+     "text": "$12"
+    },
+    {
+     "role": "field",
+     "text": "operating income"
+    }
+   ],
+   "key": "2024"
+  }
+ ],
+ "judgments": [
+  {
+   "candidate_id": "k15",
+   "question": "key",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "answer": "2025",
+   "p": 0.95
+  },
+  {
+   "candidate_id": "k16",
+   "question": "key",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "answer": "2024",
+   "p": 0.95
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "MODEL_DOUBT",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "MODEL_CLEARED"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

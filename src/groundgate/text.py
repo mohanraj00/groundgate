@@ -463,24 +463,6 @@ def _label_line_in(text: str, start: int, end: int) -> bool:
     return False
 
 
-def key_cited(
-    text: str, mentions: list[tuple[int, int, str]], key: str, span: tuple[int, int], at: int
-) -> bool:
-    """Whether the span that a candidate cites for its key puts the key at the value ``at``
-    (SPEC §4.5 checks 2-6): the span holds a mention of the key, holds no line break and ends
-    at or before the value, no number token follows the last mention of the key in it, no
-    mention of another key lies between its end and the value, and the value's own sentence or
-    table line names the key or no key."""
-    s, e = span
-    own = [b for a, b, k in mentions if s <= a and b <= e and k == key]
-    if not own or e > at or "\n" in text[s:e] or tokens(text, max(own), e):
-        return False
-    if any(e <= a and b <= at and k != key for a, b, k in mentions):
-        return False
-    named = _own_keys(text, mentions, at)
-    return not named or key in named
-
-
 # a table sentence (SPEC §4.5): 3 or more line breaks and mentions of 2 or more keys
 _TABLE_BREAKS, _TABLE_KEYS = 3, 2
 
@@ -513,3 +495,156 @@ def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[st
         return set()
     end, key = max(before)
     return set() if _label_line_in(text, end, s0) else {key}
+
+
+# -------------------------------------------------------------- evidence items
+
+_LOSS = re.compile(r"(?<![^\W_])(?:loss|losses|deficit|deficits)(?![^\W_])", re.I)
+_GAIN = re.compile(r"(?<![^\W_])(?:income|gain|gains|profit|profits|earnings)(?![^\W_])", re.I)
+_ITEM_SCALE = re.compile(
+    r"(?<![^\W_])(thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
+)
+_LONE_DASH = re.compile("(?<!\\S)[-\u2013\u2014](?!\\S)")
+_IN_SCALE = re.compile(
+    r"(?<![^\W_])in\s+(?:thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
+)
+_NEGATION = re.compile(r"(?<![^\W_])(?:no|not|without)\s+\Z", re.I)
+_WORD = re.compile(r"[^\W\d_]+")
+_LOSS_REACH = 4  # words between a loss word and the value (SPEC §4.6)
+
+
+def form_next(text: str, tok: Token, prefixes: list[str], suffixes: list[str], window: int) -> bool:
+    """Whether a unit form is next to the token (SPEC §3.1): a prefix ends at its start, or a
+    suffix starts within ``window`` code points after it in its sentence. A per-unit counts."""
+    head = text[: tok.start].rstrip()
+    for p in prefixes:
+        if head.endswith(p):
+            before = head[: len(head) - len(p)]
+            if not (p[0].isalnum() and before and before[-1].isalnum()):
+                return True
+    _, s1 = sentence(text, tok.start)
+    region = text[tok.end : min(s1, tok.end + window + max((len(x) for x in suffixes), default=0))]
+    for suffix in suffixes:
+        pat = re.escape(suffix)
+        if suffix[-1].isalnum():
+            pat += r"(?![A-Za-z0-9])"
+        if suffix[0].isalnum():
+            pat = r"(?<![A-Za-z0-9])" + pat
+        m = re.search(pat, region)
+        if m and m.start() <= window:
+            return True
+    return False
+
+
+def brackets_around(text: str, tok: Token, prefixes: list[str]) -> tuple[int, int] | None:
+    """The span from "(" to ")" when brackets enclose the token, with only whitespace and unit
+    prefixes between "(" and the token and only whitespace between the token and ")" (SPEC
+    §4.6), else None."""
+    i = tok.start
+    longest = sorted(prefixes, key=len, reverse=True)  # "US$" before "$"
+    while True:
+        j = len(text[:i].rstrip())
+        for p in longest:
+            if text.endswith(p, 0, j):
+                i = j - len(p)
+                break
+        else:
+            i = j
+            break
+    if i == 0 or text[i - 1] != "(":
+        return None
+    k = tok.end
+    while k < len(text) and text[k].isspace():
+        k += 1
+    if k == len(text) or text[k] != ")":
+        return None
+    return i - 1, k + 1
+
+
+def loss_sign(text: str, start: int, end: int, at: int) -> bool:
+    """Whether text[start:end] holds a loss word with no negation directly before it and at most
+    four words between it and ``at`` (SPEC §4.6)."""
+    for m in _LOSS.finditer(text, start, end):
+        if _NEGATION.search(text, 0, m.start()):
+            continue
+        if len(_WORD.findall(text, m.end(), at)) <= _LOSS_REACH:
+            return True
+    return False
+
+
+def gain_word(text: str, start: int, end: int) -> bool:
+    return bool(_GAIN.search(text, start, end))
+
+
+def in_scale(text: str, start: int, end: int) -> bool:
+    """Whether text[start:end] holds "in" and a scale word, such as "in thousands" (SPEC §4.6)."""
+    return bool(_IN_SCALE.search(text, start, end))
+
+
+def item_scale(text: str, start: int, end: int) -> int | None:
+    """The power of ten of the first scale word in text[start:end], also with a final "s"."""
+    m = _ITEM_SCALE.search(text, start, end)
+    return None if m is None else _SCALE_EXP[m.group(1).lower()]
+
+
+def holds_form(text: str, start: int, end: int, forms: list[str]) -> bool:
+    """Whether text[start:end] holds one of the unit forms as a whole: a form that starts or ends
+    with a letter or digit has no letter or digit next to it there (SPEC §4.6)."""
+    for form in forms:
+        pat = re.escape(form)
+        if form[0].isalnum():
+            pat = _NOT_ALNUM_BEFORE + pat
+        if form[-1].isalnum():
+            pat += _NOT_ALNUM_AFTER
+        if re.compile(pat).search(text, start, end):
+            return True
+    return False
+
+
+def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
+    """The starts of the table cells in text[start:end] (SPEC §4.5, the column rule): number
+    tokens, lone dashes, and a unit prefix that stands alone with no number after it."""
+    toks = tokens(text, start, end)
+    starts = [t.start for t in toks]
+    starts += [
+        m.start() for m in _LONE_DASH.finditer(text) if start <= m.start() and m.end() <= end
+    ]
+    numbers = {t.start for t in toks}
+    empty: set[int] = set()  # a prefix listed twice is still one cell
+    for p in prefixes:
+        for m in re.finditer(re.escape(p), text[start:end]):
+            a, b = start + m.start(), start + m.end()
+            if (a > 0 and not text[a - 1].isspace()) or (b < len(text) and not text[b].isspace()):
+                continue
+            rest = len(text[b:end]) - len(text[b:end].lstrip())
+            nxt = b + rest
+            if nxt >= end or nxt in numbers or text[nxt] == "(":
+                continue
+            empty.add(a)
+    return sorted(starts + list(empty))
+
+
+def header(text: str, mentions: list[tuple[int, int, str]], at: int) -> list[tuple[int, int]]:
+    """The run of key mentions that holds the mention starting at ``at``, where only whitespace
+    stands between two mentions of the run (SPEC §4.5)."""
+    spans = sorted((a, b) for a, b, _ in mentions)
+    i = next(n for n, (a, _) in enumerate(spans) if a == at)
+    lo = hi = i
+    while lo > 0 and not text[spans[lo - 1][1] : spans[lo][0]].strip():
+        lo -= 1
+    while hi + 1 < len(spans) and not text[spans[hi][1] : spans[hi + 1][0]].strip():
+        hi += 1
+    return spans[lo : hi + 1]
+
+
+def host(url: str) -> str | None:
+    """The host of a URL (SPEC §2.4), or None when it has no "://"."""
+    if "://" not in url:
+        return None
+    rest = url.split("://", 1)[1]
+    rest = re.split(r"[/\\?#]", rest, maxsplit=1)[0]
+    rest = rest.rsplit("@", 1)[-1]
+    if rest.startswith("["):  # an IPv6 literal keeps its brackets and its colons
+        end = rest.find("]")
+        return (rest if end < 0 else rest[: end + 1]).lower()
+    return rest.split(":", 1)[0].lower()

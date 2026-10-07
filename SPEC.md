@@ -24,7 +24,11 @@ receipt byte for byte.
 
 groundgate checks what can be checked mechanically: the value is present at the cited location,
 with the right unit, and nothing nearby changes its meaning (a qualifier, a scale word, a
-conflicting proposal). It does **not** judge whether the text means what the field claims.
+conflicting proposal). The extractor can cite more than the value: the sign, the scale, the unit,
+the key and the field's own words, each at its own place (§4.6). It can also cite a reference that
+the app supplies, an external source, or its own knowledge (§2.5). groundgate admits what checked
+evidence supports, plus what the app's policy allows for evidence that it cannot check (§2.4), and
+the receipt says which. It does **not** judge whether the text means what the field claims.
 Anything it cannot prove is flagged, not silently admitted. A model's answer can enter a decision
 only as a recorded judgment (§2.6), never as a call: the decision stays a function of its inputs.
 
@@ -37,10 +41,25 @@ the implementation raises an error and emits no receipt. Callers normalise befor
 
 `document_sha256` is the digest (§6) of kind `document` over `{"text": <text>}`.
 
+A packet may give the **document source**: the URL that the app got the document from, a
+non-blank string, or null. It goes into the receipt, and the policy can trust external sources on
+its domain (§2.4).
+
+A packet may also carry **references**: other source texts that the app, not the extractor,
+supplies. A reference can hold only the part of its source that matters.
+
+```json
+{"id": "irs-p17", "text": "...", "source": "https://www.irs.gov/publications/p17"}
+```
+
+`id` is a non-blank string, unique in the packet. `text` is a non-empty string in NFC. `source` is
+a non-blank string or null (default). Other keys, or a malformed reference, make the packet
+invalid. A reference's digest is of kind `reference` over `{"text": <text>}`.
+
 ### 2.2 Offsets
 
 A **span** is `{"start": s, "end": e}`: zero-based, half-open **UTF-8 byte** offsets into the
-document. A span is valid when `0 <= s < e <= len(bytes)` and both `s` and `e` fall on character
+document, or into a reference for an item from that reference. A span is valid when `0 <= s < e <= len(bytes)` and both `s` and `e` fall on character
 boundaries. Heuristic windows in §4 are measured in Unicode code points.
 
 ### 2.3 Schema
@@ -54,27 +73,48 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
   "maximum": "<decimal>" | null,
   "required": false,
   "multiple": false,
-  "keys": ["<key>"] | null
+  "keys": ["<key>"] | null,
+  "aliases": ["<words>"] | null
 }},
  "units": {"<unit code>": {"prefix": ["<surface>"], "suffix": ["<surface>"]}}}
 ```
 
 Defaults: `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false,
-`keys` null.
+`keys` null, `aliases` null.
 
 `keys` makes a field **keyed**: its values belong to one of several conditions, such as the
 indications of a drug, and each candidate names its condition. The keys are written in the
 document's words (§4.5). `keys` is null or a non-empty list of strings, no key is blank, and no
 two keys are equal after whitespace normalisation (§4.4) and lower-casing; otherwise the packet is
 invalid.
+`aliases` are the field's names in the document's words, such as "loss from operations" for an
+operating income field. A field item (§4.6) is checked against them. They follow the same rules as
+`keys`: null or a non-empty list of strings, none blank, no two equal after whitespace
+normalisation and lower-casing.
 `units` extends and overrides the built-in table (§4.3). `schema_sha256` is the digest of kind
 `schema` over the schema object **after** defaults are filled in.
 
 ### 2.4 Policy
 
 ```json
-{"min_confidence": null, "unit_window": 24, "reanchor": true, "judge": null}
+{"min_confidence": null, "unit_window": 24, "reanchor": true, "judge": null,
+ "sources": {"external": {"allow": [], "other": "review"}, "knowledge": "review"}}
 ```
+
+`sources` says what happens to a candidate that only evidence from outside the pinned texts
+supports (§3, the outside path). groundgate cannot check such evidence, so the app decides:
+
+- `external.allow` is a list of non-blank strings. An external item whose URL matches an entry is
+  admitted. `"*"` matches every URL. `"document-domain"` matches a URL whose host equals the host
+  of the document source, and nothing when the packet has no document source. Any other entry
+  matches a URL that starts with it, so write the entry with its final `/`.
+- `external.other` is `review` or `reject`: what happens to an external item that matches no entry.
+- `knowledge` is `admit`, `review` or `reject`.
+
+The **host** of a URL is the text after its first `://` up to the first `/`, `\`, `?` or `#`, after the
+last `@`, without a `:` and port, lower-cased. A host that starts with `[` (an IPv6 literal)
+ends at its `]` and keeps its colons. A URL without `://` has no host. Defaults fill in
+each member that is absent; other keys or values are invalid.
 
 `judge` is null or names the one judge whose recorded judgments (§2.6) the decision reads, with
 its thresholds:
@@ -107,14 +147,43 @@ without judgments.
 | `value` | yes | A string, or a JSON integer. JSON numbers with a fraction are not allowed (use a decimal string). |
 | `unit` | no | Unit code the extractor claims. |
 | `key` | no | For a keyed field, the key the value belongs to. Ignored on a field without `keys`. |
-| `evidence` | no | Span the extractor cites, with the text it quoted (`text` optional). |
-| `key_evidence` | no | For a keyed field, the span that names the key (§4.5), with the text it quoted (`text` optional). Ignored on a field without `keys`, but step 1 checks its form there too. |
+| `evidence` | no | The evidence items the extractor gives, as a list. One item object counts as a list that holds it. |
 | `search_region` | no | Span within which re-anchoring may look (§3 step 10). Default: the whole document. |
 | `confidence` | no | Number in [0, 1]. |
 | `id` | no | Caller's identifier, echoed in the decision. |
 
 Other keys are allowed and ignored by the checks (for example the proposer's name); they are covered
 by `candidate_sha256`, the digest of kind `candidate` over the candidate object as given.
+
+An **evidence item** is one piece of support for the value. Its `source` says where it comes from:
+
+| `source` | Who supplies the text | Members | Trust |
+|---|---|---|---|
+| `document` (default) | the app | `role`, `start` and `end`, `text` | checked |
+| `reference` | the app | `ref`, `role`, `start` and `end`, `text` | checked |
+| `external` | the extractor | `url`, `retrieved`, `text` | quoted |
+| `knowledge` | the extractor | `text` | stated |
+
+- `role` is one of `value` (default), `sign`, `scale`, `unit`, `key` and `field` (§4.6).
+- `ref` is the `id` of a reference in the packet. The item's offsets are in that reference.
+- `start` and `end` are a span (§2.2). Give both or neither. Without them, `text` is a **quote**,
+  and groundgate finds it (§4.6).
+- `text` is the text that the item quotes. For `knowledge`, it is the extractor's statement, for
+  example "The phase-out starts at $165,000 for married filing jointly (IRC §221)".
+- `url` is the external page, and `retrieved` the date that the extractor read it, each a
+  non-blank string.
+
+```json
+{"id": "c7", "field": "operating_income", "key": "2024", "value": "-105198000", "unit": "USD",
+ "evidence": [{"text": "(105,198\n)"},
+              {"role": "scale", "text": "(in thousands"},
+              {"role": "unit", "text": "$"},
+              {"role": "field", "text": "Loss from operations"},
+              {"role": "key", "text": "2024"}]}
+```
+
+The **value item** is the document or reference item with role `value`. The other document and
+reference items are **role items**. External and knowledge items are **outside items**.
 
 ### 2.6 Judgments
 
@@ -138,7 +207,7 @@ The packet is **invalid** when a judgment is malformed, names an id that no cand
 one candidate has, or repeats a question for one candidate.
 
 A judgment **applies** when its `judge` equals `policy.judge`'s `id` and `digest`, the policy has
-a threshold for its question, and its candidate passes steps 1–11. Other judgments change nothing.
+a threshold for its question, and its candidate passed (§3.3). Other judgments change nothing.
 
 ## 3. Decision procedure
 
@@ -147,42 +216,138 @@ later check runs. `value` means the candidate's value parsed per its field type.
 
 | Step | Code | Rejects when |
 |---:|---|---|
-| 1 | `CANDIDATE_INVALID` | The candidate is not an object, `field` is not a string, `value` is missing or not a string/integer, `unit` or `key` is not a string, `confidence` is not a number in [0, 1], or `evidence`, `key_evidence` or `search_region` is present but not an object with integer `start` and `end`, or `evidence` or `key_evidence` has a `text` that is not a string. A member of the candidate itself whose value is null counts as absent; a null `text` inside `evidence` or `key_evidence` is not a string. This step checks `key_evidence` on every field, also where it is ignored. |
+| 1 | `CANDIDATE_INVALID` | The candidate is malformed (below). |
 | 2 | `FIELD_UNKNOWN` | `field` is not in the schema. |
 | 3 | `NULL_STRING_LITERAL` | `value`, trimmed and lower-cased, is `null`, `none`, `nil` or `n/a`. |
 | 4 | `TYPE_INVALID` | `value` does not parse as the field type (§4.1). |
 | 5 | `RANGE_INVALID` | `value` is below `minimum` or above `maximum`. |
 | 6 | `UNIT_INVALID` | The candidate's `unit` differs from the field's `unit` (both absent is a match). |
 | 7 | `KEY_INVALID` | The field has `keys`, and the candidate's `key` is absent or not exactly one of them. |
-| 8 | `NO_EVIDENCE` | `evidence` is absent. |
-| 9 | `SPAN_INVALID` | The evidence span, or `search_region`, is not a valid span (§2.2). |
-| 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value`, by its value or its scaled value (for `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text). |
+| 8 | `NO_EVIDENCE` | The candidate has no value item and no outside item. |
+
+Step 1 rejects when the candidate is not an object, `field` is not a string, `value` is missing or
+not a string/integer, `unit` or `key` is not a string, `confidence` is not a number in [0, 1],
+`search_region` is present but not an object with integer `start` and `end`, or `evidence` is
+present but not an object or a list of objects. It also rejects when an evidence item:
+
+- has a `source` other than the four kinds, or a `role` other than the six;
+- is an outside item with a `role`, `start` or `end`, or a document or reference item with a `url`
+  or `retrieved`;
+- has a `ref` on an item that is not from a reference, or a reference item has no `ref` or a `ref`
+  that names no reference in the packet;
+- has only one of `start` and `end`, or one that is not an integer;
+- has a `text` that is not a string, or has neither offsets nor a non-blank `text`;
+- is external and lacks a non-blank `url`, `retrieved` or `text`, or is knowledge and lacks a
+  non-blank `text`;
+- has the same role as another document or reference item of the candidate.
+
+A member of the candidate itself whose value is null counts as absent. Inside an evidence item, a
+null member is invalid.
+
+After step 8, a candidate with a value item takes the **checked path**. A candidate with no value
+item takes the **outside path**. On the checked path, outside items change nothing, and the receipt
+does not list them.
+
+### 3.1 The checked path
+
+The value item's **text** is the document, or its reference. The checks read that text.
+
+| Step | Code | Rejects when |
+|---:|---|---|
+| 9 | `SPAN_INVALID` | The value item's span, or `search_region`, is not a valid span (§2.2). |
+| 9a | `QUOTE_NOT_FOUND` | The value item is a quote, and it does not occur in the text (§4.6). |
+| 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value`, by its value, its scaled value or a derived value (§4.6), and no part is missing (below). For `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text. |
 | 11 | `UNIT_NOT_IN_EVIDENCE` | The field has a unit, and no matching number token in the span has that unit at its location (§4.3). |
 
-**Re-anchoring (steps 10–11).** When step 10 or 11 fails, `policy.reanchor` is true and the candidate
-has a non-blank `evidence.text`, the implementation finds every occurrence of `evidence.text` inside
-`search_region` (whitespace runs in the quote match any whitespace run in the document). If
-**exactly one** occurrence other than the cited span passes steps 10 and 11, that occurrence becomes
-the evidence, the decision records code `EVIDENCE_REANCHORED`, and checking continues. Otherwise
-the original failure stands.
+`search_region` limits the search for a quote and for re-anchoring in the document. It does not
+apply to a reference.
+
+**A part is missing** when no item supports a part that the value needs. Step 10 then does not
+reject. The candidate continues at the first number token in the span for which one of these
+holds, and the decision lists the part in `missing`:
+
+- `sign`: the candidate has no sign item, and `value` equals the negative of a value of the token
+  that step 10 tried.
+- `scale`: the candidate has no scale item, the token has no scaled value, and `value` equals the
+  token's value, with any sign applied, times 10^3, 10^5, 10^6, 10^7, 10^9 or 10^12.
+- `sign` and `scale`: neither item is there, and `value` equals the negative of the token's value
+  times one of those powers of ten.
+
+At a token, the sign alone is tried first, then the scale alone, then both.
+
+Step 11 does not reject at a matching token where **no unit form is next to the token**: no
+prefix of a unit in the table (§4.3) ends at the token's start (whitespace between them allowed),
+and no suffix of one starts within `policy.unit_window` code points after the token without
+crossing a sentence end. A per-unit counts as a form here, so "75 mg/m2" still rejects a value in
+mg. With a unit item, the item then supplies the unit, and it is checked at the value (§4.6).
+Without one, the decision lists `unit` in `missing`. A missing part adds the flag
+`PART_MISSING`, so the outcome is at best `needs_verification`.
+
+**Re-anchoring (steps 10–11).** When step 10 or 11 fails, `policy.reanchor` is true, the value item
+has offsets and a non-blank `text`, the implementation finds every occurrence of `text` inside
+`search_region`, or in the whole reference (whitespace runs in the quote match any whitespace run
+in the text). If **exactly one** occurrence other than the cited span passes steps 10 and 11
+without a missing part, that occurrence becomes the evidence, the decision records code
+`EVIDENCE_REANCHORED`, and checking continues. Otherwise the original failure stands, and a part
+can still be missing at the cited span.
+
+The value is at its supporting number token, or at the start of the evidence span for a `string`
+field. The role items are then checked at the value (§4.6).
+
+### 3.2 The outside path
+
+On the outside path, the candidate's support is its outside items. groundgate cannot check them,
+and `policy.sources` decides (§2.4).
+
+1. An external item **holds the value** when its `text`, read as a text of its own with the whole
+   text as the span, passes steps 10 and 11 without a missing part. A knowledge item always holds
+   the value.
+2. When no item holds the value, the candidate is rejected with `VALUE_NOT_IN_EVIDENCE`.
+3. Each item that holds the value gets an **action**. An external item gets `admit` when its URL
+   matches an entry of `external.allow`, and `external.other` when not. A knowledge item gets
+   `knowledge`.
+4. The **deciding item** is the first item, in list order, with the best action: `admit`, then
+   `review`, then `reject`, and an external item before a knowledge item at the same action.
+5. With `reject`, the candidate is rejected with `SOURCE_REJECTED`. With `review`, the decision
+   gets the flag `EVIDENCE_QUOTED` for an external deciding item, or `EVIDENCE_STATED` for a
+   knowledge item. With `admit`, it records `ADMITTED_BY_POLICY`.
+
+When the deciding item is external, the flags `QUALIFIED_VALUE`, `SCALE_WORD` and
+`KEY_NOT_AT_VALUE` read its text as the text. When it is knowledge, they do not apply.
+`NON_VERBATIM_EVIDENCE` and the role flags do not apply on the outside path.
+
+### 3.3 Flags
 
 A candidate that passes every step is then **flagged**. Each flag adds its code; any flag makes the
-outcome `needs_verification`, no flag makes it `admitted`.
+outcome `needs_verification`, no flag makes it `admitted`. A candidate **passed** when it was not
+rejected by steps 1–11 or on the outside path.
 
 | Code | Flags when |
 |---|---|
-| `NON_VERBATIM_EVIDENCE` | `evidence.text` is present and differs from the span's text after whitespace normalisation and joining of line-break hyphenation (§4.4). |
-| `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the document and its comparator differs from the field's `comparator`. |
+| `NON_VERBATIM_EVIDENCE` | The value item has offsets and a `text` that differs from the span's text after whitespace normalisation and joining of line-break hyphenation (§4.4). |
+| `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the text and its comparator differs from the field's `comparator`. |
 | `SCALE_WORD` | A scale word (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. |
-| `KEY_NOT_AT_VALUE` | The field has `keys`, and the candidate's `key` is not a key at the value (§4.5), and a passed key citation does not put it there. |
-| `KEY_CITATION_INVALID` | The field has `keys`, the candidate has `key_evidence`, and the citation fails a check of §4.5. |
+| `PART_MISSING` | The decision lists a part in `missing` (§3.1). |
+| `SIGN_CITATION_INVALID` | The sign item fails its check (§4.6). |
+| `SCALE_CITATION_INVALID` | The scale item fails its check. |
+| `UNIT_CITATION_INVALID` | The unit item fails its check. |
+| `FIELD_CITATION_INVALID` | The field item fails its check. |
+| `KEY_NOT_AT_VALUE` | The field has `keys`, and the candidate's `key` is not a key at the value (§4.5), and a passing key item does not put it there. |
+| `KEY_CITATION_INVALID` | The key item fails its check. |
+| `EVIDENCE_QUOTED` | On the outside path, the deciding item is external, with the action `review`. |
+| `EVIDENCE_STATED` | On the outside path, the deciding item is knowledge, with the action `review`. |
 | `LOW_CONFIDENCE` | `policy.min_confidence` is set and `confidence` is below it. |
-| `CONFLICTING_CANDIDATES` | Another candidate for the same non-`multiple` field, and on a keyed field the same `key`, also passed steps 1–11 with a different canonical value. Set on every such candidate. |
+| `CONFLICTING_CANDIDATES` | Another candidate for the same non-`multiple` field, and on a keyed field the same `key`, also passed with a different canonical value. Set on every such candidate. |
 | `MODEL_DOUBT` | An applying judgment doubts the value (step 12). |
 
-`EVIDENCE_REANCHORED` and `KEY_CITED` are informational: they never change the outcome. A key
-citation (§4.5) never removes a flag other than `KEY_NOT_AT_VALUE`, so it never admits a candidate
-that another check flags.
+`EVIDENCE_REANCHORED`, `VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and `MODEL_CLEARED` are
+informational: they never change the outcome. `VALUE_DERIVED` says that the value is a derived
+value (§4.6), not the number as written or its scaled value. A passing role item never removes a
+flag other than `KEY_NOT_AT_VALUE`, so it never admits a candidate that another check flags.
+
+When the field has `keys`, the decision lists `key` in `missing` when it gets `KEY_NOT_AT_VALUE`
+and the candidate has no key item. This adds no `PART_MISSING`, because `KEY_NOT_AT_VALUE` is
+already a flag.
 
 **Recorded judgments (step 12).** After the flags, each applying judgment (§2.6) acts on its
 candidate. A judgment never overturns a rejection, and never admits a candidate that has another
@@ -191,12 +356,13 @@ flag.
 - `key`, on a candidate flagged `KEY_NOT_AT_VALUE`, with `p` at or above
   `clear.KEY_NOT_AT_VALUE`: when `answer` is the candidate's `key`, the flag is removed and the
   decision records `MODEL_CLEARED`; otherwise the decision gets `MODEL_DOUBT` and the flag stays.
-  On a candidate whose citation removed that flag (`KEY_CITED`, §4.5), a `key` judgment at
-  that probability with another `answer` adds `MODEL_DOUBT`. Any other `key` judgment changes
-  nothing, and the receipt still lists it.
+  On a candidate whose key item removed that flag (`KEY_CITED`, §4.6), a `key` judgment at that
+  probability with another `answer` adds `MODEL_DOUBT`. Any other `key` judgment changes nothing,
+  and the receipt still lists it.
 - `field_match`, with `p` below `doubt.field_match`: the decision gets `MODEL_DOUBT`.
 
-The outcome then follows the flags that are left, as above. `MODEL_CLEARED` is informational.
+The outcome then follows the flags that are left, as above. When `MODEL_CLEARED` removes
+`KEY_NOT_AT_VALUE`, `key` stays in `missing`.
 
 **Coverage.** For every `required` field with no candidate that is `admitted` or
 `needs_verification`, the receipt lists `{"field": <name>, "code": "REQUIRED_FIELD_MISSING"}`.
@@ -379,59 +545,118 @@ end of the sentence), and no key when that line mentions none. So a table with o
 line keeps its row keys, and a table flattened to one cell on each line sends its keyed values to
 review. The nearest earlier mention does not apply inside a table sentence.
 
-A candidate on a keyed field may **cite the span that names its key**, `key_evidence`, in the same
-offsets as `evidence`. The check runs after steps 1–11, with the value at the place of the
-`KEY_NOT_AT_VALUE` check (after re-anchoring). The citation **passes** when all of these hold:
+A key item (§4.6) can put the key at the value in a table. This is the **column rule**. It
+applies when the keys at the value are none, the candidate has a passing field item at the row
+(§4.6), and a passing key item. Let the **header** be the longest run of key mentions of the field
+that holds the key item's mention, where only whitespace stands between two mentions of the run.
+The key item's mention is the n-th of the header. The column rule puts the key at the value when
+all of these hold:
 
-1. The span is a valid span (§2.2), and its `text`, if present, is verbatim-equal to the span's
-   text, as `NON_VERBATIM_EVIDENCE` compares them (§4.4).
-2. A key mention of the candidate's `key` lies wholly inside the span.
-3. The span holds no line break (U+000A) and ends at or before the value, so it never holds the
-   value or text after it.
-4. No number token (§4.1) lies in the span after the end of the last mention of the candidate's
-   key in it. So "Single or Married filing separately" names both keys, but "Hypertension 5 mg,
-   heart failure" does not name hypertension for a later value.
-5. No mention of another key of the field lies wholly between the end of the span and the value.
-   A mention of the candidate's own key there does not count.
-6. The value's own text names the candidate's key or no key: in a table sentence, the value's
-   line; otherwise, the value's sentence.
+1. The header ends before the field item starts.
+2. No key mention of the field lies between the end of the header and the start of the field item.
+3. No number token follows the field item on its own line with only spaces between them, such as
+   a footnote marker "(1)".
+4. Between the end of the field item and the value, the **cells** are the number tokens, the lone
+   dashes (`-`, `–` or `—` with whitespace or a line end on both sides in the text), and the
+   **empty cells**: a prefix of the field's unit with whitespace or a line end on both sides, where
+   the next character after the whitespace is not the start of a number token or `(`, and comes
+   before the value. The value's token is the n-th cell from the field item.
 
-When it passes, the candidate's key is a key at the value, so the label-line stop and the
-table-sentence limit do not apply. The decision records `KEY_CITED` when this removed
-`KEY_NOT_AT_VALUE`, and no code when the key held without the citation. When a check fails, the
-decision gets `KEY_CITATION_INVALID`, even if the key held without the citation, and the
-`KEY_NOT_AT_VALUE` check goes on as without a citation. A recorded `key` judgment (step 12) that
-applies, at or above `clear.KEY_NOT_AT_VALUE`, and names another key adds `MODEL_DOUBT` to a
-decision with `KEY_CITED`. Without `key_evidence`, the decision is
-the same as in spec 0.4. There is no limit on the distance between the span and the value.
+So a cell that shows a dash for zero, or a `$` with no number, still counts, and a second header
+between the two moves the value out of the rule.
+
+### 4.6 Evidence items
+
+**Finding an item.** An item with offsets is at its span, which must be valid in its text. An item
+without offsets is a quote. Its **occurrences** are the matches of its `text` in its text, where
+each whitespace run in the quote matches any whitespace run.
+
+The quote is trimmed of whitespace at both ends first.
+
+- For the value item, the occurrences are those inside `search_region` (document only). The first
+  occurrence where steps 10 and 11 pass without a missing part is the evidence. When there is no
+  such occurrence, the evidence is the first occurrence, and steps 10 and 11 run there. When there
+  is no occurrence, step 9a rejects.
+- For a role item, the occurrence is the one that holds the value's token; else the last one that
+  ends at or before the value; else the first one after the value.
+
+An item's **text** is its `text`, or, when it has offsets and no `text`, the text at its span in
+its own source (the document or its reference).
+
+A role item **fails** its check when it is not found, when its span is not valid, when its `text`
+is not verbatim-equal to the span's text (as `NON_VERBATIM_EVIDENCE` compares them), or when its
+`source` and `ref` differ from those of the value item. On a `string` field, every role item other
+than a key or field item fails. Otherwise it passes when its role's check holds:
+
+| Role | Passes when |
+|---|---|
+| `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. The item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
+| `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands". It ends at or before the token, and no scale word, also with a final `s`, lies between its end and the token. |
+| `unit` | The candidate's field item passes, the item holds a prefix or suffix of the field's unit as a whole (§4.3), ends at or before the token, and no unit form is next to the token (§3.1). |
+| `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5), and the item ends at or before the token. Then either no letter (general category L) lies between the item's end and the token (the item is at the **row**), or the item is in the value's sentence with no number token between its end and the token. |
+| `key` | The item holds a key mention of the candidate's `key`. |
+
+The scale and the sign of a token are its **parts**. A token is **negative** when the candidate
+has a sign item, or, on a field with a unit, when brackets enclose it in the text, as the sign
+check reads them. The token's **derived values**
+are its value, and its scaled value if it has one. When the candidate has a scale item whose text
+holds a scale word (also with a final `s`), a token with no scaled value also has its value times
+the first such word's factor. When the token is negative, each of these also has its negative (minus its absolute
+value). A failing sign or scale item still gives its part: the decision then has the item's
+flag.
+
+A field item without `aliases` is not checked: it changes nothing. A key item that passes puts its
+key at the value only by the column rule (§4.5). The decision records `KEY_CITED` when that removed
+`KEY_NOT_AT_VALUE`. A recorded `key` judgment that applies, at or above `clear.KEY_NOT_AT_VALUE`,
+and names another key adds `MODEL_DOUBT` to a decision with `KEY_CITED`.
 
 ## 5. Receipt
 
 ```json
 {"groundgate": "0.5",
- "document": {"id": null, "sha256": "sha256:..."},
+ "document": {"id": null, "sha256": "sha256:...", "source": null},
+ "references": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "c1", "candidate_sha256": "sha256:...", "field": "...",
                 "key": null, "outcome": "admitted", "codes": [], "value": "2000", "unit": "mg",
-                "evidence": {"start": 120, "end": 128}, "key_evidence": null}],
+                "source": "document", "ref": null, "url": null,
+                "evidence": {"start": 120, "end": 128}, "parts": [], "missing": []}],
  "coverage": [],
  "judgments": [],
  "summary": {"admitted": 1, "needs_verification": 0, "rejected": 0},
  "receipt_sha256": "sha256:..."}
 ```
 
+`document.source` is the document source, or null. `references` lists each reference as
+`{"id", "sha256", "source"}`, sorted by `id`.
+
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
-code, or the flag codes in the order of the table in §3, followed by `EVIDENCE_REANCHORED`,
-`KEY_CITED` and then `MODEL_CLEARED` when they apply. `value` is the canonical value and `unit` the candidate's unit, each `null` when the candidate
-does not provide a parseable one. `key` is the candidate's `key` when its field has `keys` and the
-key is a string, otherwise `null`. `evidence` is the span the decision rests on: the re-anchored span
-when re-anchoring applied, otherwise the cited span if it is valid, otherwise `null`. `key_evidence`
-is the span cited for the key, when the candidate passed steps 1–11, its field has `keys` and the
-span is valid, whether or not the citation passed; otherwise `null`. Coverage is
-sorted by field name. `judgments` lists each judgment that applied, as `{"candidate_sha256",
-"question", "answer", "p"}` (`answer` only for `key`), sorted by `candidate_sha256`, then by input
-position of the candidate, then by question; the judge is in the policy. `receipt_sha256` is the digest of kind `receipt` over the receipt without
-its `receipt_sha256` key.
+code, or the flag codes in the order of the table in §3.3, followed by `EVIDENCE_REANCHORED`,
+`VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and then `MODEL_CLEARED` when they apply.
+`value` is the canonical value and `unit` the candidate's unit, each `null` when the candidate does
+not provide a parseable one. `key` is the candidate's `key` when its field has `keys` and the key
+is a string, otherwise `null`.
+
+- `source` is the kind of the item that the decision rests on: the value item's on the checked
+  path from step 9 on, the deciding item's on the outside path, and for a candidate rejected
+  before step 9, the value item's when its evidence is well-formed and has one; otherwise
+  `null`. `ref` is the
+  value item's `ref` for a reference, and `url` the deciding item's URL for an external item, otherwise `null`.
+- `evidence` is the value span that the decision rests on: the re-anchored span when re-anchoring
+  applied, the found occurrence for a quote, otherwise the cited span if it is valid, otherwise
+  `null`. It is in the value item's text.
+- `parts` lists each role item of a candidate that reached the role checks, as
+  `{"role", "start", "end", "passed"}`, in the role order `sign`, `scale`, `unit`, `field`, `key`.
+  `start` and `end` are the item's span in the value's text: the found occurrence of a quote, or
+  the item's offsets when they are valid there. They are null when the item is not in that text.
+  A field item without `aliases` is listed with `passed` false.
+- `missing` lists the missing parts in the order `sign`, `scale`, `unit`, `key`.
+
+Coverage is sorted by field name. `judgments` lists each judgment that applied, as
+`{"candidate_sha256", "question", "answer", "p"}` (`answer` only for `key`), sorted by
+`candidate_sha256`, then by input position of the candidate, then by question; the judge is in the
+policy. `receipt_sha256` is the digest of kind `receipt` over the receipt without its
+`receipt_sha256` key.
 
 ## 6. Canonical JSON and digests
 
@@ -446,6 +671,7 @@ the prefix is ASCII and `JCS(obj)` is UTF-8.
 ## 7. Non-goals for v0.5
 
 Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
-`field_match` judgment can only add doubt. Calling a model, dates, arrays of records,
-cross-document checks, and PDF geometry (page and bounding box) as evidence. Adapters may convert
-richer evidence into spans.
+`field_match` judgment can only add doubt, and a field item checks only the field's own aliases.
+Calling a model, fetching a URL, dates, arrays of records, arithmetic over several numbers, the
+subject of the document (groundgate assumes one subject per document), and PDF geometry (page and
+bounding box) as evidence. Adapters may convert richer evidence into spans.

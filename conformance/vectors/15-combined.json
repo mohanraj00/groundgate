@@ -49,9 +49,13 @@
     ]
    },
    {
-    "outcome": "rejected",
+    "outcome": "needs_verification",
     "codes": [
-     "UNIT_NOT_IN_EVIDENCE"
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
     ]
    }
   ],

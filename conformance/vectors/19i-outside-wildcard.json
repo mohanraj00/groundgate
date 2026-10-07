@@ -1,0 +1,83 @@
+{
+ "name": "19i-outside-wildcard",
+ "description": "The allow entry \"*\" admits every external item that holds the value; knowledge keeps its default, review (spec 0.5).",
+ "document": "Taxpayers with MAGI more than $85,000 cannot take the full deduction.",
+ "schema": {
+  "fields": {
+   "threshold": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "gt",
+    "multiple": true
+   },
+   "mfj": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   },
+   "mfj_keyed": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "single",
+     "married filing jointly"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": {
+  "sources": {
+   "external": {
+    "allow": [
+     "*"
+    ]
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "i1",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://example.org/a",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $165,000 for joint filers."
+    }
+   ]
+  },
+  {
+   "id": "i2",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "knowledge",
+     "text": "It is $165,000."
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "EVIDENCE_STATED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

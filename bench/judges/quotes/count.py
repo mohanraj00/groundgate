@@ -67,7 +67,8 @@ def count(path: Path) -> dict[str, Any]:
                 kinds[g.kind] += 1
                 a, b = d.evidence
                 span = raw[a:b].decode()
-                quote = c["evidence"]["text"]
+                ev = c["evidence"]  # the value item: one object, or first in a list
+                quote = (ev[0] if isinstance(ev, list) else ev)["text"]
                 assert not verbatim_equal(quote, span)
                 pairs[(doc, a, b, quote)] = difference(quote, span)
     return {

@@ -1,0 +1,507 @@
+{
+ "name": "19-evidence-list",
+ "description": "Evidence is a list of evidence items; one object counts as a list that holds it. A value item can be a quote with no offsets: the first occurrence where steps 10 and 11 pass is the evidence, and a quote that does not occur is QUOTE_NOT_FOUND. A candidate with only role items has no evidence. Malformed items are CANDIDATE_INVALID (spec 0.5).",
+ "document": "Take 40 mg daily. The filing fee is $40.\n\nThe late fee is $25, or $40 after 30 days.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "late": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "l1",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 36,
+     "end": 39,
+     "text": "$40"
+    }
+   ]
+  },
+  {
+   "id": "l2",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": {
+    "start": 66,
+    "end": 69,
+    "text": "$40"
+   }
+  },
+  {
+   "id": "l3",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$40"
+    }
+   ]
+  },
+  {
+   "id": "l4",
+   "field": "late",
+   "value": "25",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$25"
+    }
+   ]
+  },
+  {
+   "id": "l5",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$45"
+    }
+   ]
+  },
+  {
+   "id": "l6",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "is  $40."
+    }
+   ]
+  },
+  {
+   "id": "l7",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "sign",
+     "text": "("
+    }
+   ]
+  },
+  {
+   "id": "l8",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": []
+  },
+  {
+   "id": "l9",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "40"
+    }
+   ]
+  },
+  {
+   "id": "l10",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "40 mg"
+    }
+   ]
+  },
+  {
+   "id": "bad0",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "web",
+     "text": "$40"
+    }
+   ]
+  },
+  {
+   "id": "bad1",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "$40",
+     "role": "value"
+    }
+   ]
+  },
+  {
+   "id": "bad2",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 31
+    }
+   ]
+  },
+  {
+   "id": "bad3",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 31,
+     "end": "34"
+    }
+   ]
+  },
+  {
+   "id": "bad4",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "  "
+    }
+   ]
+  },
+  {
+   "id": "bad5",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 36,
+     "end": 39,
+     "text": "$40"
+    },
+    {
+     "text": "$40"
+    }
+   ]
+  },
+  {
+   "id": "bad6",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$40",
+     "role": null
+    }
+   ]
+  },
+  {
+   "id": "bad7",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "text": "$40"
+    }
+   ]
+  },
+  {
+   "id": "bad8",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "knowledge",
+     "text": ""
+    }
+   ]
+  },
+  {
+   "id": "bad9",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "nope",
+     "text": "$40"
+    }
+   ]
+  },
+  {
+   "id": "bad10",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "text": "$40"
+    }
+   ]
+  },
+  {
+   "id": "bad11",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "ref": "nope",
+     "text": "$40"
+    }
+   ]
+  },
+  {
+   "id": "bad12",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "colour",
+     "text": "$40"
+    }
+   ]
+  },
+  {
+   "id": "bad13",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": 40
+    }
+   ]
+  },
+  {
+   "id": "bad14",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$40",
+     "url": "https://www.irs.gov/publications/p970"
+    }
+   ]
+  },
+  {
+   "id": "bad15",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "$40",
+     "start": 0
+    }
+   ]
+  },
+  {
+   "id": "bad16",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": "$40"
+  },
+  {
+   "id": "bad17",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    5
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "QUOTE_NOT_FOUND"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NO_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NO_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "name": "policy-sources-unknown-key",
+ "description": "policy.sources holds external (allow, other) and knowledge, with their listed values only (unknown-key).",
+ "document": "x",
+ "schema": {
+  "fields": {}
+ },
+ "policy": {
+  "sources": {
+   "web": "admit"
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

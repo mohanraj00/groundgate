@@ -1,0 +1,19 @@
+{
+ "name": "document-source-blank",
+ "description": "The document source is a non-blank string or null.",
+ "document": "The fee is $40.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "document_source": "  ",
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

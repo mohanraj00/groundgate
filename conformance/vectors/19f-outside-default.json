@@ -1,0 +1,180 @@
+{
+ "name": "19f-outside-default",
+ "description": "A candidate with no value item takes the outside path. By default, an external item that holds the value goes to review with EVIDENCE_QUOTED, and a knowledge item with EVIDENCE_STATED. An external quote that does not hold the value supports nothing. On the checked path, outside items change nothing (spec 0.5).",
+ "document": "Taxpayers with MAGI more than $85,000 cannot take the full deduction.",
+ "schema": {
+  "fields": {
+   "threshold": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "gt",
+    "multiple": true
+   },
+   "mfj": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   },
+   "mfj_keyed": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "single",
+     "married filing jointly"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "document_source": "https://www.irs.gov/publications/p4491x",
+ "candidates": [
+  {
+   "id": "o1",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $165,000 for joint filers."
+    }
+   ]
+  },
+  {
+   "id": "o2",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "knowledge",
+     "text": "The phase-out starts at $165,000 for joint filers."
+    }
+   ]
+  },
+  {
+   "id": "o3",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $160,000."
+    }
+   ]
+  },
+  {
+   "id": "o4",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $160,000."
+    },
+    {
+     "source": "knowledge",
+     "text": "I know it."
+    }
+   ]
+  },
+  {
+   "id": "o5",
+   "field": "threshold",
+   "value": "85000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 30,
+     "end": 37,
+     "text": "$85,000"
+    },
+    {
+     "source": "knowledge",
+     "text": "It is $90,000."
+    }
+   ]
+  },
+  {
+   "id": "o6",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "MAGI more than $165,000"
+    }
+   ]
+  },
+  {
+   "id": "o7",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "knowledge",
+     "text": "The law sets it."
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "EVIDENCE_QUOTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "EVIDENCE_STATED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "EVIDENCE_STATED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE",
+     "EVIDENCE_QUOTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "EVIDENCE_STATED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

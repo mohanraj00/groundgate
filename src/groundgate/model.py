@@ -12,6 +12,7 @@ from .text import builtin_units, normalize_ws, parse_value
 FieldType = Literal["number", "integer", "string"]
 Comparator = Literal["eq", "gt", "ge", "lt", "le", "approx", "range"]
 Outcome = Literal["admitted", "needs_verification", "rejected"]
+Action = Literal["admit", "review", "reject"]
 
 _TYPES = ("number", "integer", "string")
 _COMPARATORS = ("eq", "gt", "ge", "lt", "le", "approx", "range")
@@ -43,6 +44,7 @@ class Field:
     required: bool = False
     multiple: bool = False
     keys: tuple[str, ...] | None = None
+    aliases: tuple[str, ...] | None = None
     _raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
 
     @classmethod
@@ -58,6 +60,7 @@ class Field:
             "required",
             "multiple",
             "keys",
+            "aliases",
         }
         if unknown:
             raise PacketError(f"field {name!r} has unknown keys {sorted(unknown)}")
@@ -70,6 +73,7 @@ class Field:
             "required": d.get("required", False),
             "multiple": d.get("multiple", False),
             "keys": d.get("keys"),
+            "aliases": d.get("aliases"),
         }
         if raw["type"] not in _TYPES:
             raise PacketError(f"field {name!r} has unknown type {raw['type']!r}")
@@ -80,14 +84,21 @@ class Field:
         for flag in ("required", "multiple"):
             if not isinstance(raw[flag], bool):
                 raise PacketError(f"field {name!r} {flag} must be a boolean")
-        keys = raw["keys"]
-        if keys is not None:
-            if not isinstance(keys, list) or not keys or not all(isinstance(k, str) for k in keys):
-                raise PacketError(f"field {name!r} keys must be null or a list of strings")
-            seen = [normalize_ws(k).lower() for k in keys]
+        for member in ("keys", "aliases"):
+            words = raw[member]
+            if words is None:
+                continue
+            if (
+                not isinstance(words, list)
+                or not words
+                or not all(isinstance(k, str) for k in words)
+            ):
+                raise PacketError(f"field {name!r} {member} must be null or a list of strings")
+            seen = [normalize_ws(k).lower() for k in words]
             if "" in seen or len(set(seen)) != len(seen):
-                raise PacketError(f"field {name!r} keys must be distinct, non-blank text")
-            raw["keys"] = list(keys)
+                raise PacketError(f"field {name!r} {member} must be distinct, non-blank text")
+            raw[member] = list(words)
+        keys, aliases = raw["keys"], raw["aliases"]
         return cls(
             name=name,
             type=raw["type"],
@@ -98,6 +109,7 @@ class Field:
             required=raw["required"],
             multiple=raw["multiple"],
             keys=None if keys is None else tuple(keys),
+            aliases=None if aliases is None else tuple(aliases),
             _raw=raw,
         )
 
@@ -178,17 +190,51 @@ def _probability(x: object) -> bool:
 
 
 @dataclass(frozen=True)
+class Sources:
+    """What happens to a candidate that only outside evidence supports (SPEC §2.4)."""
+
+    allow: tuple[str, ...] = ()  # external.allow
+    other: Action = "review"  # external.other
+    knowledge: Action = "review"
+
+    @classmethod
+    def from_dict(cls, d: object) -> Sources:
+        if not isinstance(d, dict) or set(d) - {"external", "knowledge"}:
+            raise PacketError("policy sources can hold only external and knowledge")
+        ext = d.get("external", {})
+        if not isinstance(ext, dict) or set(ext) - {"allow", "other"}:
+            raise PacketError("policy sources.external can hold only allow and other")
+        allow = ext.get("allow", [])
+        if not isinstance(allow, list) or not all(isinstance(a, str) and a.strip() for a in allow):
+            raise PacketError("policy sources.external.allow must be a list of non-blank strings")
+        other = ext.get("other", "review")
+        if other not in ("review", "reject"):
+            raise PacketError("policy sources.external.other must be review or reject")
+        knowledge = d.get("knowledge", "review")
+        if knowledge not in ("admit", "review", "reject"):
+            raise PacketError("policy sources.knowledge must be admit, review or reject")
+        return cls(tuple(allow), other, knowledge)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "external": {"allow": list(self.allow), "other": self.other},
+            "knowledge": self.knowledge,
+        }
+
+
+@dataclass(frozen=True)
 class Policy:
     min_confidence: float | None = None
     unit_window: int = 24
     reanchor: bool = True
     judge: JudgePolicy | None = None
+    sources: Sources = Sources()
 
     @classmethod
     def from_dict(cls, d: object) -> Policy:
         if not isinstance(d, dict):
             raise PacketError("policy must be an object")
-        unknown = set(d) - {"min_confidence", "unit_window", "reanchor", "judge"}
+        unknown = set(d) - {"min_confidence", "unit_window", "reanchor", "judge", "sources"}
         if unknown:
             raise PacketError(f"policy has unknown keys {sorted(unknown)}")
         mc = d.get("min_confidence")
@@ -204,7 +250,8 @@ class Policy:
             raise PacketError("policy reanchor must be a boolean")
         judge = d.get("judge")
         jp = None if judge is None else JudgePolicy.from_dict(judge)
-        return cls(min_confidence=mc, unit_window=uw, reanchor=ra, judge=jp)
+        sources = Sources.from_dict(d.get("sources", {}))
+        return cls(min_confidence=mc, unit_window=uw, reanchor=ra, judge=jp, sources=sources)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -212,6 +259,7 @@ class Policy:
             "unit_window": self.unit_window,
             "reanchor": self.reanchor,
             "judge": None if self.judge is None else self.judge.to_dict(),
+            "sources": self.sources.to_dict(),
         }
 
 
@@ -224,9 +272,13 @@ class Decision:
     codes: tuple[str, ...]
     value: str | None
     unit: str | None
-    evidence: tuple[int, int] | None  # UTF-8 byte span
+    evidence: tuple[int, int] | None  # UTF-8 byte span in the value item's text
     key: str | None = None
-    key_evidence: tuple[int, int] | None = None  # UTF-8 byte span cited for the key
+    source: str | None = None  # the kind of the item the decision rests on
+    ref: str | None = None
+    url: str | None = None
+    parts: tuple[Part, ...] = ()
+    missing: tuple[str, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -238,13 +290,28 @@ class Decision:
             "codes": list(self.codes),
             "value": self.value,
             "unit": self.unit,
+            "source": self.source,
+            "ref": self.ref,
+            "url": self.url,
             "evidence": None
             if self.evidence is None
             else {"start": self.evidence[0], "end": self.evidence[1]},
-            "key_evidence": None
-            if self.key_evidence is None
-            else {"start": self.key_evidence[0], "end": self.key_evidence[1]},
+            "parts": [p.to_dict() for p in self.parts],
+            "missing": list(self.missing),
         }
+
+
+@dataclass(frozen=True)
+class Part:
+    """A role item that reached the role checks (SPEC §5)."""
+
+    role: str
+    span: tuple[int, int] | None  # UTF-8 byte span, None when the item was not found
+    passed: bool
+
+    def to_dict(self) -> dict[str, Any]:
+        start, end = (None, None) if self.span is None else self.span
+        return {"role": self.role, "start": start, "end": end, "passed": self.passed}
 
 
 @dataclass(frozen=True)
@@ -273,6 +340,8 @@ class Receipt:
     coverage: tuple[tuple[str, str], ...]  # (field, code)
     receipt_sha256: str
     judgments: tuple[Judgment, ...] = ()  # the judgments that applied (SPEC §5)
+    document_source: str | None = None
+    references: tuple[tuple[str, str, str | None], ...] = ()  # (id, sha256, source)
 
     def body(self) -> dict[str, Any]:
         counts = {"admitted": 0, "needs_verification": 0, "rejected": 0}
@@ -280,7 +349,12 @@ class Receipt:
             counts[d.outcome] += 1
         return {
             "groundgate": SPEC_VERSION,
-            "document": {"id": self.document_id, "sha256": self.document_sha256},
+            "document": {
+                "id": self.document_id,
+                "sha256": self.document_sha256,
+                "source": self.document_source,
+            },
+            "references": [{"id": i, "sha256": h, "source": s} for i, h, s in self.references],
             "schema_sha256": self.schema_sha256,
             "policy_sha256": self.policy_sha256,
             "decisions": [d.to_dict() for d in self.decisions],

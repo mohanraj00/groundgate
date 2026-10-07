@@ -1,0 +1,19 @@
+{
+ "name": "policy-sources-allow-not-list",
+ "description": "policy.sources holds external (allow, other) and knowledge, with their listed values only (allow-not-list).",
+ "document": "x",
+ "schema": {
+  "fields": {}
+ },
+ "policy": {
+  "sources": {
+   "external": {
+    "allow": "*"
+   }
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}
