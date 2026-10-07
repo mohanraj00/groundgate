@@ -13,7 +13,7 @@ outcomes:
 Every run writes a receipt with hashes of every input. Anyone can re-derive it byte for byte.
 
 The goal is to admit as many fields as possible with the right value, while wrong values almost
-never get in. I judge every rule by two numbers: the fields admitted with a right value, and the
+never get in. I judge every rule by two numbers: the facts admitted with a right value, and the
 wrong extractions admitted (escapes). Reviews are the cost between them: each one is a value that
 a person confirms by hand.
 
@@ -79,11 +79,12 @@ for a field the document doesn't state, the wrong unit, or not a number.
 | wrong extractions accepted without review | 98.3% (115/117) | 6.8% (8/117) |
 | correct extractions citing the right place, rejected | 4.6% (194/4,233) | 0.3% (14/4,233) |
 | extractions sent to a person | 0% | 12.1% (526/4,350) |
-| fields admitted with a right value | 92.5% (3,588/3,878) | 87.1% (3,379/3,878) |
+| gold facts admitted with a right value | 92.5% (3,588/3,878) | 87.1% (3,379/3,878) |
 
-groundgate admits fewer right fields than `MATCH_EXACT`, and lets in 8 wrong values instead of
-115. With the reviews, 96.5% (3,742/3,878) of fields get a right value. A field counts once in
-each run.
+A gold fact is one value that a document states for a field, so a field with 12 strengths counts
+12 times, and each fact counts once in each run. groundgate admits fewer right facts than
+`MATCH_EXACT`, and lets in 8 wrong values instead of 115. With the reviews, 96.5% (3,742/3,878)
+of gold facts get a right value.
 
 Of the 526 extractions groundgate sent to a person, 92 were wrong; a random sample that size
 would have held about 14. groundgate also rejected 71 correct values that LangExtract had aligned
@@ -123,7 +124,7 @@ candidate was decided twice, by spec 0.1 (the released 0.1.0 wheel) and by spec 
 | wrong extractions accepted without review | 85.7% (705/823) | 30.7% (253/823) | 8.8% (72/823) |
 | correct extractions citing the right place, rejected | 3.8% (230/6,080) | 11.3% (690/6,080) | 0.5% (28/6,080) |
 | extractions sent to a person | 0% | 28.2% (1,950/6,903) | 39.6% (2,730/6,903) |
-| fields admitted with a right value | 84.6% (4,751/5,614) | 51.0% (2,862/5,614) | 53.2% (2,985/5,614) |
+| gold facts admitted with a right value | 84.6% (4,751/5,614) | 51.0% (2,862/5,614) | 53.2% (2,985/5,614) |
 
 642 of 0.1's 690 false rejects are in the 19 documents picked for amounts like "$1.2 million",
 which 0.1 could not match. 82 of its 253 escapes were a right value under the wrong indication;
@@ -131,7 +132,7 @@ which 0.1 could not match. 82 of its 253 escapes were a right value under the wr
 one by one in [bench/set2/RESULTS.md](bench/set2/RESULTS.md), and two rules that need work are
 open for the next version (#51, #52).
 
-This set shows the gap that matters most. Spec 0.2 admits a right value for 53.2% of fields,
+This set shows the gap that matters most. Spec 0.2 admits a right value for 53.2% of gold facts,
 and the reviews bring it to 86.8% (4,873/5,614). Closing that gap without new escapes is the work
 of the next versions: the 0.4 key clear and a basis that the extractor states (#125) both aim at
 it.
