@@ -206,7 +206,10 @@ def test_report_shows_the_cited_key_span() -> None:
     html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
     assert "key cited “Single”" in html
     assert '<a href="#k0">show key</a>' in html
-    assert '<span class="anchor" id="k0"></span></span><mark class="key"' in html
+    assert '<span class="anchor" id="k0"></span></span><mark class="key key-admitted"' in html
+    cands[0]["key_evidence"]["text"] = "single filers"
+    html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
+    assert "key cited “Single”, quoted “single filers”" in html
 
 
 def test_report_marks_a_key_span_inside_the_value_evidence() -> None:
@@ -215,4 +218,5 @@ def test_report_marks_a_key_span_inside_the_value_evidence() -> None:
     cands = [{"field": "d", "value": "15000", "unit": "USD", "key": "single",
               "evidence": ev(text, text), "key_evidence": ev("Single", text)}]  # fmt: skip
     html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
-    assert re.search(r'<mark class="(admitted|needs_verification) key" title="[^"]*key of d', html)
+    mark = r'<mark class="(admitted|needs_verification) key key-\1" title="[^"]*key of d'
+    assert re.search(mark, html)

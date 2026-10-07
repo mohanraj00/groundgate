@@ -193,6 +193,10 @@ def _card(item: _Item, layout: Layout | None, text: str) -> str:
         if item.key_span is not None:
             named = text[item.key_span[0] : item.key_span[1]]
             line += f"; key cited “{_e(_clip(named))}”"
+            kev = c.get("key_evidence") if isinstance(c, Mapping) else None
+            key_quote = kev.get("text") if isinstance(kev, Mapping) else None
+            if isinstance(key_quote, str) and key_quote != named:
+                line += f", quoted “{_e(_clip(key_quote))}”"
         out.append(f'<p class="quote">{line}</p>')
         if layout is not None and isinstance(d.get("evidence"), Mapping):
             page = layout.page_at(d["evidence"]["start"])
@@ -268,7 +272,8 @@ def _document(text: str, items: list[_Item], layout: Layout | None) -> str:
         if covering:
             classes.append(_outcome(max(covering, key=lambda i: SEVERITY.get(_outcome(i), 0))))
         if naming:
-            classes.append("key")
+            worst_key = max(naming, key=lambda i: SEVERITY.get(_outcome(i), 0))
+            classes += ["key", f"key-{_outcome(worst_key)}"]
         tip = "\n".join(
             [_tooltip(i.decision) for i in covering]
             + ["key of " + _tooltip(i.decision) for i in naming]
@@ -369,6 +374,9 @@ body:has(#show-rejected:not(:checked)) .group.rejected {{ display: none; }}
 body:has(#show-admitted:not(:checked)) mark.admitted,
 body:has(#show-needs_verification:not(:checked)) mark.needs_verification,
 body:has(#show-rejected:not(:checked)) mark.rejected {{ background: none; box-shadow: none; }}
+body:has(#show-admitted:not(:checked)) mark.key-admitted,
+body:has(#show-needs_verification:not(:checked)) mark.key-needs_verification,
+body:has(#show-rejected:not(:checked)) mark.key-rejected {{ text-decoration: none; }}
 @media (max-width: 800px) {{
   body {{ height: auto; display: block; }}
   main {{ grid-template-columns: minmax(0, 1fr); }}

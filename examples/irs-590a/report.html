@@ -82,6 +82,9 @@ body:has(#show-rejected:not(:checked)) .group.rejected { display: none; }
 body:has(#show-admitted:not(:checked)) mark.admitted,
 body:has(#show-needs_verification:not(:checked)) mark.needs_verification,
 body:has(#show-rejected:not(:checked)) mark.rejected { background: none; box-shadow: none; }
+body:has(#show-admitted:not(:checked)) mark.key-admitted,
+body:has(#show-needs_verification:not(:checked)) mark.key-needs_verification,
+body:has(#show-rejected:not(:checked)) mark.key-rejected { text-decoration: none; }
 @media (max-width: 800px) {
   body { height: auto; display: block; }
   main { grid-template-columns: minmax(0, 1fr); }
