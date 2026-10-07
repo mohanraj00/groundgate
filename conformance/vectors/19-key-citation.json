@@ -1,0 +1,300 @@
+{
+ "name": "19-key-citation",
+ "description": "A candidate on a keyed field may cite the span that names its key (`key_evidence`, same offsets as `evidence`). A passed citation puts the key at the value: it skips the label-line stop and the table-sentence limit, and records `KEY_CITED` when it removed `KEY_NOT_AT_VALUE`. The span must hold a mention of the key and start at or before the value, and no mention of another key may lie between the span and the value. A citation never removes another flag (spec 0.5).",
+ "document": "Heart Failure\n\nTreatment of HF:\n\nThe first dose is 1 mg daily.\n\nHypertension\n\nThe second dose is 2 mg daily.\n\nHypertension\n\nDosing:\n\nHypertension\n\nDosing:\n\nThe third dose is 3 mg daily.\n\nHypertension\n\nDosing:\n\nThe fourth dose is 4 mg daily.\n\nHypertension or heart failure\n\nDosing:\n\nThe fifth dose is 5 mg daily.\n\nHypertension\n\nDosing:\n\nThe sixth dose is at least 6 mg daily.\n\nDose by indication\nHypertension\n7 mg\nHeart failure\n8 mg",
+ "schema": {
+  "fields": {
+   "first": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "second": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "third": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "fourth": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "fifth": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "sixth": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "seventh": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "eighth": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "eighth_wrong": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "k1",
+   "field": "first",
+   "value": "1",
+   "unit": "mg",
+   "evidence": {
+    "start": 51,
+    "end": 55,
+    "text": "1 mg"
+   },
+   "key": "heart failure",
+   "key_evidence": {
+    "start": 0,
+    "end": 13,
+    "text": "Heart Failure"
+   }
+  },
+  {
+   "id": "k2",
+   "field": "second",
+   "value": "2",
+   "unit": "mg",
+   "evidence": {
+    "start": 97,
+    "end": 101,
+    "text": "2 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 64,
+    "end": 76,
+    "text": "Hypertension"
+   }
+  },
+  {
+   "id": "k3",
+   "field": "third",
+   "value": "3",
+   "unit": "mg",
+   "evidence": {
+    "start": 174,
+    "end": 178,
+    "text": "3 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 110,
+    "end": 122,
+    "text": "Hypertension"
+   }
+  },
+  {
+   "id": "k4",
+   "field": "fourth",
+   "value": "4",
+   "unit": "mg",
+   "evidence": {
+    "start": 229,
+    "end": 233,
+    "text": "4 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "k5",
+   "field": "fifth",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 300,
+    "end": 304,
+    "text": "5 mg"
+   },
+   "key": "heart failure",
+   "key_evidence": {
+    "start": 242,
+    "end": 271,
+    "text": "Hypertension or heart failure"
+   }
+  },
+  {
+   "id": "k6",
+   "field": "sixth",
+   "value": "6",
+   "unit": "mg",
+   "evidence": {
+    "start": 363,
+    "end": 367,
+    "text": "6 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 313,
+    "end": 325,
+    "text": "Hypertension"
+   }
+  },
+  {
+   "id": "k7",
+   "field": "seventh",
+   "value": "7",
+   "unit": "mg",
+   "evidence": {
+    "start": 408,
+    "end": 412,
+    "text": "7 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 395,
+    "end": 407,
+    "text": "Hypertension"
+   }
+  },
+  {
+   "id": "k8",
+   "field": "eighth",
+   "value": "8",
+   "unit": "mg",
+   "evidence": {
+    "start": 427,
+    "end": 431,
+    "text": "8 mg"
+   },
+   "key": "heart failure",
+   "key_evidence": {
+    "start": 413,
+    "end": 426,
+    "text": "Heart failure"
+   }
+  },
+  {
+   "id": "k9",
+   "field": "eighth_wrong",
+   "value": "8",
+   "unit": "mg",
+   "evidence": {
+    "start": 427,
+    "end": 431,
+    "text": "8 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 395,
+    "end": 407,
+    "text": "Hypertension"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

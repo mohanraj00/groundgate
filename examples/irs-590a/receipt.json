@@ -19,7 +19,8 @@
       "evidence": {
         "start": 5699,
         "end": 5706
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/7",
@@ -35,7 +36,8 @@
       "evidence": {
         "start": 4016,
         "end": 4024
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/13",
@@ -49,7 +51,8 @@
       "evidence": {
         "start": 5574,
         "end": 5582
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/5",
@@ -63,7 +66,8 @@
       "evidence": {
         "start": 3594,
         "end": 3601
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/6",
@@ -77,7 +81,8 @@
       "evidence": {
         "start": 3616,
         "end": 3623
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/25",
@@ -91,7 +96,8 @@
       "evidence": {
         "start": 6927,
         "end": 6935
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/7",
@@ -105,7 +111,8 @@
       "evidence": {
         "start": 4016,
         "end": 4024
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/22",
@@ -119,7 +126,8 @@
       "evidence": {
         "start": 6578,
         "end": 6586
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/10",
@@ -133,7 +141,8 @@
       "evidence": {
         "start": 4552,
         "end": 4560
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/9",
@@ -147,7 +156,8 @@
       "evidence": {
         "start": 4477,
         "end": 4485
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/10",
@@ -161,7 +171,8 @@
       "evidence": {
         "start": 5204,
         "end": 5210
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/2",
@@ -175,7 +186,8 @@
       "evidence": {
         "start": 2785,
         "end": 2791
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/16",
@@ -189,7 +201,8 @@
       "evidence": {
         "start": 6125,
         "end": 6133
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/15",
@@ -203,7 +216,8 @@
       "evidence": {
         "start": 5574,
         "end": 5582
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/21",
@@ -217,7 +231,8 @@
       "evidence": {
         "start": 6176,
         "end": 6184
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/9",
@@ -231,7 +246,8 @@
       "evidence": {
         "start": 4748,
         "end": 4756
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/6",
@@ -245,7 +261,8 @@
       "evidence": {
         "start": 3616,
         "end": 3623
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/12",
@@ -259,7 +276,8 @@
       "evidence": {
         "start": 5204,
         "end": 5210
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/11",
@@ -273,7 +291,8 @@
       "evidence": {
         "start": 5212,
         "end": 5218
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/21",
@@ -287,7 +306,8 @@
       "evidence": {
         "start": 6220,
         "end": 6228
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/8",
@@ -303,7 +323,8 @@
       "evidence": {
         "start": 4067,
         "end": 4075
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/3",
@@ -317,7 +338,8 @@
       "evidence": {
         "start": 3468,
         "end": 3476
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/11",
@@ -331,7 +353,8 @@
       "evidence": {
         "start": 4748,
         "end": 4756
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/4",
@@ -345,7 +368,8 @@
       "evidence": {
         "start": 3491,
         "end": 3499
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/17",
@@ -359,7 +383,8 @@
       "evidence": {
         "start": 5699,
         "end": 5706
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/20",
@@ -373,7 +398,8 @@
       "evidence": {
         "start": 6578,
         "end": 6586
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/23",
@@ -389,7 +415,8 @@
       "evidence": {
         "start": 6653,
         "end": 6662
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/17",
@@ -403,7 +430,8 @@
       "evidence": {
         "start": 6176,
         "end": 6184
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/16",
@@ -417,7 +445,8 @@
       "evidence": {
         "start": 5677,
         "end": 5684
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/5",
@@ -431,7 +460,8 @@
       "evidence": {
         "start": 3594,
         "end": 3601
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/8",
@@ -445,7 +475,8 @@
       "evidence": {
         "start": 4067,
         "end": 4075
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/14",
@@ -459,7 +490,8 @@
       "evidence": {
         "start": 5677,
         "end": 5684
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/3",
@@ -473,7 +505,8 @@
       "evidence": {
         "start": 3468,
         "end": 3476
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/0",
@@ -487,7 +520,8 @@
       "evidence": {
         "start": 2317,
         "end": 2323
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/12",
@@ -501,7 +535,8 @@
       "evidence": {
         "start": 5551,
         "end": 5559
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/0",
@@ -515,7 +550,8 @@
       "evidence": {
         "start": 2317,
         "end": 2323
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/2",
@@ -529,7 +565,8 @@
       "evidence": {
         "start": 2785,
         "end": 2791
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/1",
@@ -543,7 +580,8 @@
       "evidence": {
         "start": 2325,
         "end": 2331
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/1",
@@ -557,7 +595,8 @@
       "evidence": {
         "start": 2325,
         "end": 2331
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/4",
@@ -571,7 +610,8 @@
       "evidence": {
         "start": 3491,
         "end": 3499
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/19",
@@ -585,7 +625,8 @@
       "evidence": {
         "start": 6125,
         "end": 6133
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/13",
@@ -599,7 +640,8 @@
       "evidence": {
         "start": 5212,
         "end": 5218
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/14",
@@ -613,7 +655,8 @@
       "evidence": {
         "start": 5551,
         "end": 5559
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/18",
@@ -627,7 +670,8 @@
       "evidence": {
         "start": 6107,
         "end": 6115
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/19",
@@ -643,7 +687,8 @@
       "evidence": {
         "start": 6220,
         "end": 6228
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/24",
@@ -657,7 +702,8 @@
       "evidence": {
         "start": 6850,
         "end": 6858
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/20",
@@ -671,7 +717,8 @@
       "evidence": {
         "start": 6158,
         "end": 6166
-      }
+      },
+      "key_evidence": null
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/18",
@@ -685,7 +732,8 @@
       "evidence": {
         "start": 6107,
         "end": 6115
-      }
+      },
+      "key_evidence": null
     }
   ],
   "coverage": [
@@ -700,5 +748,5 @@
     "needs_verification": 3,
     "rejected": 1
   },
-  "receipt_sha256": "sha256:3a6f79daceda5feab1cd47f6d946c718e4ffe72754dfd6f8c46ae51aba4e3f0d"
+  "receipt_sha256": "sha256:51cc0cfe7cdd475aa78cbff26db0bca588f82ee18353d5881c91cb03f557f1de"
 }

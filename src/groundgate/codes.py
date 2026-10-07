@@ -27,6 +27,9 @@ FLAG = {
     "KEY_NOT_AT_VALUE": (
         "The key the document mentions at the value is not the candidate's key, or none is."
     ),
+    "KEY_CITATION_INVALID": (
+        "The span that the candidate cites for its key does not put the key at the value."
+    ),
     "LOW_CONFIDENCE": "The extractor's confidence is below the policy minimum.",
     "CONFLICTING_CANDIDATES": "Another candidate for this field and key has a different value.",
     "MODEL_DOUBT": "A recorded judgment of the policy's judge doubts this value.",
@@ -34,6 +37,7 @@ FLAG = {
 
 INFO = {
     "EVIDENCE_REANCHORED": "The cited span did not hold the value; its one other occurrence did.",
+    "KEY_CITED": "The span that the candidate cites for its key removed KEY_NOT_AT_VALUE.",
     "MODEL_CLEARED": "A recorded judgment of the policy's judge cleared KEY_NOT_AT_VALUE.",
 }
 
