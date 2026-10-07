@@ -917,6 +917,7 @@ def test_key_span_prompt_differs_only_in_its_request(monkeypatch: pytest.MonkeyP
 def test_role_example_admits_every_value_under_spec_05() -> None:
     """The made-up 10-K example of --roles (#141) shows parts that the core accepts: a prompt that
     teaches parts groundgate then rejects would measure the prompt, not the rule."""
+    pytest.importorskip("langextract")
     import propose
 
     import groundgate as gg
