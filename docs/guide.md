@@ -290,7 +290,7 @@ LangExtract is never imported. Per extraction:
 - `unit` is the `unit` attribute (`unit_attribute=`);
 - `evidence` is the `char_interval`, converted to bytes, quoting the `extraction_text`;
 - `key_evidence` comes from the `key_text` attribute (`key_text_attribute=`): the last place where
-  those words occur and end at or before the value. When they do not occur there, the span is
+  those words occur, not inside a longer word, and end at or before the value. When they do not occur there, the span is
   empty and the fact is flagged `KEY_CITATION_INVALID`.
 
 An extraction LangExtract could not align has no interval and is rejected `NO_EVIDENCE`.

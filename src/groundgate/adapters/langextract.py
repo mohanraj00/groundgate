@@ -20,9 +20,9 @@ Mapping, per extraction:
 - ``evidence``: ``char_interval`` converted to UTF-8 byte offsets, quoting ``extraction_text``.
   An extraction LangExtract could not align has no evidence and is rejected ``NO_EVIDENCE``;
 - ``key_evidence``: from the ``key_text`` attribute, when present: the words that name the key,
-  such as a heading or a row label. The span is the last occurrence of ``key_text`` that ends at
-  or before the value's ``char_interval``. When there is none, the span is empty, so groundgate
-  flags ``KEY_CITATION_INVALID``.
+  such as a heading or a row label. The span is the last occurrence of ``key_text``, not inside a
+  longer word, that ends at or before the value's ``char_interval``. When there is none, the
+  span is empty, so groundgate flags ``KEY_CITATION_INVALID``.
 
 ``alignment_status`` and ``extraction_class`` are kept on the candidate for the report; the
 checks ignore them.
@@ -109,11 +109,14 @@ def to_candidates(
 
 
 def _key_span(text: str, offsets: Offsets, key_text: str, at: int) -> dict[str, Any]:
-    """The last occurrence of ``key_text`` that ends at or before ``at``, in UTF-8 bytes. With
-    none, an empty span at ``at``: groundgate reads it as not valid and flags the citation."""
+    """The last occurrence of ``key_text`` that ends at or before ``at`` and is not part of a
+    longer word, in UTF-8 bytes. With none, an empty span at ``at``: groundgate reads it as not
+    valid and flags the citation."""
     s = e = at
     for m in quote_pattern(key_text).finditer(text, 0, at):
-        s, e = m.start(), m.end()
+        a, b = m.start(), m.end()
+        if (a == 0 or not text[a - 1].isalnum()) and (b == len(text) or not text[b].isalnum()):
+            s, e = a, b
     return {"start": offsets.to_bytes(s), "end": offsets.to_bytes(e), "text": key_text}
 
 

@@ -510,6 +510,8 @@ def main() -> None:
     SET = args.set.resolve()
     KEY_SPAN = args.key_span
     label = args.label or args.model
+    if KEY_SPAN:  # a run of the other prompt never shares a cache or a name with this one
+        label += " + key span"
 
     out_dir = SET / "runs" / safe(label) / str(args.buffer)
     out_dir.mkdir(parents=True, exist_ok=True)

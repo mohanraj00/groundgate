@@ -142,3 +142,10 @@ def test_key_text_missing_outside_or_after_the_value() -> None:
         assert d.codes == ("KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID")
     (c,) = to_candidates(keyed(key="single", label="Single"), key_text_attribute="label")
     assert c["key_evidence"]["text"] == "Single"
+
+
+def test_key_text_is_not_found_inside_a_longer_word() -> None:
+    text = "South\n\nSouthwest office\n\nPrice: $40"
+    ext = x("p", "$40", text.index("$40"), "40", key="south", key_text="South")
+    (c,) = to_candidates({"text": text, "extractions": [ext]})
+    assert c["key_evidence"] == {"start": 0, "end": 5, "text": "South"}
