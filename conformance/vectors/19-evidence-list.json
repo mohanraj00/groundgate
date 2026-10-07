@@ -304,10 +304,37 @@
    "field": "fee",
    "value": "40",
    "unit": "USD",
-   "evidence": "$40"
+   "evidence": [
+    {
+     "text": "$40",
+     "url": "https://www.irs.gov/publications/p970"
+    }
+   ]
   },
   {
    "id": "bad15",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "$40",
+     "start": 0
+    }
+   ]
+  },
+  {
+   "id": "bad16",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": "$40"
+  },
+  {
+   "id": "bad17",
    "field": "fee",
    "value": "40",
    "unit": "USD",
@@ -364,6 +391,18 @@
     "outcome": "rejected",
     "codes": [
      "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
     ]
    },
    {

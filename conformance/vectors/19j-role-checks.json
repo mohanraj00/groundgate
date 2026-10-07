@@ -251,6 +251,7 @@
    {
     "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
     ]

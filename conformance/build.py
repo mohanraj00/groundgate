@@ -1796,6 +1796,8 @@ vector(
                     [{"ref": "nope", "text": "$40"}],
                     [{"role": "colour", "text": "$40"}],
                     [{"text": 40}],
+                    [{"text": "$40", "url": URL}],
+                    [{**ext("$40"), "start": 0}],
                     "$40",
                     [5],
                 ]
@@ -1836,7 +1838,21 @@ vector(
     ],
 )  # fmt: skip
 
-MONEY = {"type": "number", "unit": "USD", "multiple": True}
+
+def row(label: str) -> dict[str, Any]:
+    return {"role": "field", "text": label}
+
+
+def year(y: str, n: int | None = None) -> dict[str, Any]:
+    return q(y, n, role="key") if n is not None else {"role": "key", "text": y}
+
+
+MONEY = {
+    "type": "number",
+    "unit": "USD",
+    "multiple": True,
+    "aliases": ["operating expenses", "loss from operations", "other items", "interest income"],
+}
 THOUSANDS = {"role": "scale", "text": "(in thousands"}
 DOLLAR = {"role": "unit", "text": "$"}
 vector(
@@ -1844,7 +1860,7 @@ vector(
     "A scale item multiplies a token that has no scaled value by its scale word, when no other "
     "scale word lies between it and the value. A unit item supplies the unit when no unit is at "
     "the token; another unit at the token still rejects. A missing scale or unit is a missing part "
-    "(spec 0.5).",
+    "(spec 0.5). A unit item needs a passing field item.",
     "Consolidated statements of operations\n(in thousands, except percentages)\n\n"
     "Revenue\n\n$\n\n46,016\n\n$\n\n434,433\n\n"
     "Gross margin\n\n12%\n\n"
@@ -1856,13 +1872,14 @@ vector(
     {"fields": {"amount": MONEY}},
     [
         c("r1", "amount", "46016000", "USD", [q("46,016"), THOUSANDS], ("admitted", ["VALUE_DERIVED"])),
-        c("r2", "amount", "195334000", "USD", [q("195,334"), THOUSANDS, DOLLAR],
+        c("r2", "amount", "195334000", "USD", [q("195,334"), THOUSANDS, DOLLAR, row("Operating expenses")],
           ("admitted", ["VALUE_DERIVED"])),
         c("r3", "amount", "195334000", "USD", [q("195,334"), THOUSANDS],
           (REVIEW, ["PART_MISSING", "VALUE_DERIVED"], ["unit"])),
-        c("r4", "amount", "1250000", "USD", [q("1,250"), THOUSANDS, DOLLAR],
+        c("r4", "amount", "1250000", "USD", [q("1,250"), THOUSANDS, DOLLAR, row("Interest income")],
           (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
-        c("r5", "amount", "7500000", "USD", [q("7.5"), {"role": "scale", "text": "(in millions)"}, DOLLAR],
+        c("r5", "amount", "7500000", "USD",
+          [q("7.5"), {"role": "scale", "text": "(in millions)"}, DOLLAR, row("Other items (in millions)")],
           ("admitted", ["VALUE_DERIVED"])),
         c("r6", "amount", "46016000", "USD", [q("46,016")], (REVIEW, ["PART_MISSING"], ["scale"])),
         c("r7", "amount", "12000", "USD", [q("12"), THOUSANDS, DOLLAR],
@@ -1870,11 +1887,13 @@ vector(
         c("r8", "amount", "2200000", "USD", [q("$2.2 million")]),
         c("r9", "amount", "2200000000", "USD", [q("$2.2 million"), THOUSANDS],
           ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
-        c("r11", "amount", "-105198000", "USD", [q("105,198"), THOUSANDS, DOLLAR],
+        c("r11", "amount", "-105198000", "USD",
+          [q("105,198"), THOUSANDS, DOLLAR, row("Loss from operations")],
           ("admitted", ["VALUE_DERIVED"])),
         c("r12", "amount", "-105198000", "USD", [q("105,198")],
           (REVIEW, ["PART_MISSING"], ["scale", "unit"])),
-        c("r13", "amount", "195334000", "USD", [q("195,334"), THOUSANDS, {"role": "unit", "text": "%"}],
+        c("r13", "amount", "195334000", "USD",
+          [q("195,334"), THOUSANDS, {"role": "unit", "text": "%"}, row("Operating expenses")],
           (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED"])),
     ],
 )  # fmt: skip
@@ -1888,14 +1907,6 @@ def money(*aliases: str) -> dict[str, Any]:
     if aliases:
         out["aliases"] = list(aliases)
     return out
-
-
-def row(label: str) -> dict[str, Any]:
-    return {"role": "field", "text": label}
-
-
-def year(y: str, n: int | None = None) -> dict[str, Any]:
-    return q(y, n, role="key") if n is not None else {"role": "key", "text": y}
 
 
 vector(
@@ -2056,6 +2067,8 @@ vector(
           ("admitted", ["ADMITTED_BY_POLICY"])),
         c("g9", "mfj_keyed", "165000", "USD", [ext(JOINT)],
           (REVIEW, ["KEY_NOT_AT_VALUE", "ADMITTED_BY_POLICY"], ["key"]), key="married filing jointly"),
+        c("g11", "mfj", "165000", "USD", [ext(JOINT, "https://evil.example\\@www.irs.gov/p")],
+          ("rejected", ["SOURCE_REJECTED"])),
         c("g10", "mfj_keyed", "165000", "USD",
           [ext("For married filing jointly, the phase-out begins at $165,000.")],
           ("admitted", ["ADMITTED_BY_POLICY"]), key="married filing jointly"),
@@ -2129,13 +2142,84 @@ vector(
           (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED", "KEY_CITED"]), key="2024"),
         c("j5", "net_income", "6500", "USD",
           [q("6,500"), row("Shares outstanding"), year("2024"), DOLLAR],
-          (REVIEW, ["FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE"]), key="2024"),
+          (REVIEW, ["UNIT_CITATION_INVALID", "FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE"]),
+          key="2024"),
         c("j6", "title", "Results", None, [q("Results"), {"role": "sign", "text": "Net loss"}],
           (REVIEW, ["SIGN_CITATION_INVALID"])),
         c("j7", "net_income", "-9", "USD", [q("$9"), {"role": "sign", "text": "deficit"}],
           ("admitted", ["VALUE_DERIVED"]), key="2024"),
         c("j8", "net_income", "-3", "USD", [q("$3"), {"role": "sign", "text": "deficit"}],
           (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"]), key="2024"),
+    ],
+)  # fmt: skip
+
+
+LIMITS_YEARS = ["2025", "2024"]
+
+
+def keyed(*aliases: str, unit: str | None = "USD") -> dict[str, Any]:
+    out: dict[str, Any] = {"type": "integer", "keys": LIMITS_YEARS, "multiple": True}
+    if unit:
+        out["unit"] = unit
+    if aliases:
+        out["aliases"] = list(aliases)
+    return out
+
+
+vector(
+    "19k-role-limits",
+    "Limits of the role checks: a dash next to a number is not a cell, a number after the row "
+    "label on its line (a footnote) stops the column rule, a $ with no number is an empty cell, a "
+    "scale item needs 'in' before its scale word, a unit item needs a passing field item, brackets "
+    "alone make no sign on a field without a unit, a negated or distant loss word makes no sign, "
+    "and a scale item with offsets and no text reads its span. A quote is trimmed (spec 0.5).",
+    "Amounts (in thousands)\n\nYear\n\n2025\n\n2024\n\n"
+    "Units sold\n\n\u2013434,433\n\n46,016\n\n"
+    "Sales (1)\n\n$\n\n7,100\n\n$\n\n6,900\n\n"
+    "Costs\n\n$\n\n\n\n$\n\n5,500\n\n"
+    "We serve a thousand customers. The filing fee is $40.\n\n"
+    "Employees\n\n120\n\n"
+    "There were 12 adverse events (5) in the trial.\n\n"
+    "The company had no loss this year and paid $9,000. We recorded a loss on the sale and paid "
+    "dividends of $8,000.",
+    {
+        "fields": {
+            "units_sold": keyed("units sold", unit=None),
+            "sales": keyed("sales"),
+            "costs": keyed("costs"),
+            "fee": {"type": "integer", "unit": "USD", "multiple": True},
+            "payroll": {"type": "integer", "unit": "USD", "multiple": True},
+            "events": {"type": "integer", "multiple": True},
+            "paid": {"type": "integer", "unit": "USD", "multiple": True},
+            "paid_keyed": keyed(),
+        }
+    },
+    [
+        c("m1", "units_sold", "434433", None, [q("434,433"), row("Units sold"), year("2024")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("m2", "sales", "7100", "USD", [q("7,100"), row("Sales"), year("2024")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("m3", "costs", "5500", "USD", [q("5,500"), row("Costs"), year("2025")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("m4", "costs", "5500", "USD", [q("5,500"), row("Costs"), year("2024")],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+        c("m5", "fee", "40000", "USD", [q("$40"), {"role": "scale", "text": "thousand"}],
+          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("m6", "payroll", "120", "USD", [q("120"), DOLLAR], (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("m7", "events", "-5", None, [q("(5)")], (REVIEW, ["PART_MISSING"], ["sign"])),
+        c("m8", "paid", "-9000", "USD", [q("$9,000"), {"role": "sign", "text": "no loss"}],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("m9", "paid", "-8000", "USD", [q("$8,000"), {"role": "sign", "text": "loss"}],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("m10", "costs", "5500000", "USD",
+          [q("5,500"), q("in thousands", text=NO_TEXT, role="scale"), row("Costs"), year("2024")],
+          ("admitted", ["VALUE_DERIVED", "KEY_CITED"]), key="2024"),
+        c("m11", "costs", "5500000", "USD",
+          [q("5,500"), {"role": "scale", "text": "(in"}, row("Costs"), year("2024")],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"]), key="2024"),
+        c("m12", "paid_keyed", "9000", "USD", [year("2024"), ext("We paid $9,000.")],
+          (REVIEW, ["KEY_NOT_AT_VALUE", "EVIDENCE_QUOTED"], []), key="2024"),
+        c("m13", "fee", "40", "USD", [{"text": " $40. "}]),
     ],
 )  # fmt: skip
 

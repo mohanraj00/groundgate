@@ -32,10 +32,11 @@ from .text import (
     header,
     holds_form,
     host,
+    in_scale,
     item_scale,
     key_mentions,
     keys_at,
-    loss_word,
+    loss_sign,
     normalize_ws,
     parse_value,
     qualifiers,
@@ -212,6 +213,8 @@ def _items(ev: object, refs: Mapping[str, _Text]) -> list[_Item]:
         if source == "reference" and (not isinstance(ref, str) or ref not in refs):
             raise _Reject("CANDIDATE_INVALID")
         if source in ("document", "reference"):
+            if "url" in it or "retrieved" in it:
+                raise _Reject("CANDIDATE_INVALID")
             if role is None:
                 role = "value"
             if role not in ROLES or (span is None and not (text and text.strip())):
@@ -232,29 +235,36 @@ def _items(ev: object, refs: Mapping[str, _Text]) -> list[_Item]:
 
 
 def _values(
-    t: _Text, tok: Token, neg_item: bool, scale: int | None, prefixes: list[str]
+    t: _Text, tok: Token, neg_item: bool, scale: int | None, prefixes: list[str] | None
 ) -> tuple[set[Decimal], bool]:
-    """The token's derived values (SPEC §4.6), and whether the token is negative."""
+    """The token's derived values (SPEC §4.6), and whether the token is negative. ``prefixes``
+    is None on a field without a unit, where brackets alone do not make a sign."""
     assert tok.value is not None
     sv = scaled_value(t.text, tok)
     out = {tok.value} if sv is None else {tok.value, sv}
     if sv is None and scale is not None:
         out.add(tok.value.scaleb(scale))
-    neg = neg_item or brackets_around(t.text, tok, prefixes) is not None
+    neg = neg_item or (prefixes is not None and brackets_around(t.text, tok, prefixes) is not None)
     if neg:
         out |= {-abs(v) for v in out}
     return out, neg
 
 
 def _missing(
-    t: _Text, tok: Token, value: Decimal, neg_item: bool, scale: int | None, prefixes: list[str]
+    t: _Text,
+    tok: Token,
+    value: Decimal,
+    neg_item: bool,
+    scale_item: bool,
+    scale: int | None,
+    prefixes: list[str] | None,
 ) -> set[str] | None:
     """The parts that the value needs at this token and has no item for (SPEC §3.1)."""
     assert tok.value is not None
     base, neg = _values(t, tok, neg_item, scale, prefixes)
     if not neg_item and value in {-abs(v) for v in base}:
         return {"sign"}
-    if scale is not None or scaled_value(t.text, tok) is not None:
+    if scale_item or scaled_value(t.text, tok) is not None:
         return None
     for k in _SCALES:
         times = tok.value.scaleb(k)
@@ -285,20 +295,25 @@ def _value_at(
         return _At(item, t, span, None), None
     assert isinstance(value, Decimal)
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
+    signs = prefixes if f.unit is not None else None  # brackets make a sign only with a unit
     neg_item = "sign" in roles
     scale_item = roles.get("scale")
     scale = None
-    if scale_item is not None and scale_item.text is not None:
-        scale = item_scale(scale_item.text, 0, len(scale_item.text))
+    if scale_item is not None:
+        words = scale_item.text
+        if words is None and scale_item.span is not None and _same(scale_item, item):
+            at_span = _valid(t.offsets, scale_item.span)
+            words = None if at_span is None else t.text[at_span[0] : at_span[1]]
+        scale = None if words is None else item_scale(words, 0, len(words))
     toks = [k for k in tokens(t.text, s, e) if k.value is not None]
     hits: list[tuple[Token, set[str]]] = []
     for k in toks:
-        vals, _ = _values(t, k, neg_item, scale, prefixes)
+        vals, _ = _values(t, k, neg_item, scale, signs)
         if value in vals:
             hits.append((k, set()))
     if not hits and lenient:
         for k in toks:
-            need = _missing(t, k, value, neg_item, scale, prefixes)
+            need = _missing(t, k, value, neg_item, scale_item is not None, scale, signs)
             if need is not None:
                 hits = [(k, need)]
                 break
@@ -324,6 +339,11 @@ def _value_at(
                 a.derived = not need and value not in {k.value, scaled_value(t.text, k)}
                 return a, None
     return None, "UNIT_NOT_IN_EVIDENCE"
+
+
+def _same(a: _Item, b: _Item) -> bool:
+    """Whether two items are in the same text."""
+    return a.source == b.source and a.ref == b.ref
 
 
 def _occurrences(t: _Text, quote: str, region: tuple[int, int]) -> list[tuple[int, int]]:
@@ -390,7 +410,7 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
         raise _Reject("NO_EVIDENCE")
     canon = value if isinstance(value, str) else canonical(value)
     if vitem is None:
-        p = _outside(ctx, f, value, key, outside)
+        p = _outside(ctx, f, value, key, outside, "key" in checked)
         p.value, p.unit = canon, unit
     else:
         p = _checked(ctx, f, value, key, vitem, checked, region_span)
@@ -415,7 +435,7 @@ def _checked(
     # 9. spans
     search = (0, len(ctx.doc.text)) if region_span is None else _valid(ctx.doc.offsets, region_span)
     if search is None:
-        raise _Reject("SPAN_INVALID")
+        raise _Reject("SPAN_INVALID", item=vitem)
     region = search if t is ctx.doc else (0, len(t.text))
     flags: list[str] = []
     info: set[str] = set()
@@ -424,7 +444,7 @@ def _checked(
         assert vitem.text is not None
         found = _occurrences(t, vitem.text, region)
         if not found:
-            raise _Reject("QUOTE_NOT_FOUND")
+            raise _Reject("QUOTE_NOT_FOUND", item=vitem)
         at: _At | None = None
         for occ in found:
             at, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=False)
@@ -438,7 +458,7 @@ def _checked(
     else:
         span = _valid(t.offsets, vitem.span)
         if span is None:
-            raise _Reject("SPAN_INVALID")
+            raise _Reject("SPAN_INVALID", item=vitem)
         # 10-11. value and unit at the evidence, with re-anchoring
         at, failure = _value_at(ctx, vitem, t, f, value, span, roles, lenient=False)
         if at is None:
@@ -477,28 +497,34 @@ def _checked(
     return p
 
 
-def _find(t: _Text, item: _Item, at: _At, region: tuple[int, int]) -> tuple[int, int] | None:
-    """Where a role item is in the value's text (SPEC §4.6), or None."""
+def _find(
+    t: _Text, item: _Item, at: _At, region: tuple[int, int]
+) -> tuple[tuple[int, int] | None, bool]:
+    """Where a role item is in the value's text (SPEC §4.6), or None, and whether it is found
+    there: an item with offsets whose ``text`` differs from its span is at its span, but not
+    found."""
     if item.span is not None:
         span = _valid(t.offsets, item.span)
         if span is None:
-            return None
-        if item.text is not None and not verbatim_equal(item.text, t.text[span[0] : span[1]]):
-            return None
-        return span
+            return None, False
+        shown = item.text
+        return span, shown is None or verbatim_equal(shown, t.text[span[0] : span[1]])
     assert item.text is not None
     found = _occurrences(t, item.text, region)
     tok = at.token
     if tok is not None:
         for a, b in found:
             if a <= tok.start and tok.end <= b:
-                return a, b
+                return (a, b), True
     pos = tok.start if tok is not None else at.span[0]
     before = [(a, b) for a, b in found if b <= pos]
     if before:
-        return before[-1]
+        return before[-1], True
     after = [(a, b) for a, b in found if a >= pos]
-    return after[0] if after else None
+    return (after[0], True) if after else (None, False)
+
+
+_CHECK_ORDER = ("field", "sign", "scale", "unit", "key")  # the unit check reads the field's
 
 
 def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, int]) -> None:
@@ -511,15 +537,13 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
     found: dict[str, tuple[int, int]] = {}
     passed: dict[str, bool] = {}
     row = False  # the field item is at the value's row
-    for role in PART_ORDER:
+    for role in _CHECK_ORDER:
         item = roles.get(role)
         if item is None:
             continue
-        span = None
-        if item.source == at.item.source and item.ref == at.item.ref:
-            span = _find(t, item, at, region)
+        span, located = _find(t, item, at, region) if _same(item, at.item) else (None, False)
         ok = False
-        if span is not None:
+        if span is not None and located:
             found[role] = span
             a, b = span
             if role == "key":
@@ -539,7 +563,7 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
                 br = brackets_around(t.text, tok, prefixes)
                 if br is not None and a <= br[0] and br[1] <= b:
                     ok = True
-                elif loss_word(t.text, a, b) and b <= tok.start:
+                elif b <= tok.start and loss_sign(t.text, a, b, tok.start):
                     s0, _ = sentence(t.text, tok.start)
                     between = t.text[a : tok.start]
                     ok = (
@@ -551,27 +575,21 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
                     )
             elif role == "scale":
                 ok = (
-                    item_scale(t.text, a, b) is not None
+                    in_scale(t.text, a, b)
                     and b <= tok.start
                     and item_scale(t.text, b, tok.start) is None
                 )
             elif role == "unit":
                 ok = (
                     f.unit is not None
+                    and passed.get("field", False)
                     and holds_form(t.text, a, b, prefixes + suffixes)
                     and b <= tok.start
                     and not ctx.any_unit_at(t, tok)
                 )
         passed[role] = ok
-        p.parts.append(
-            Part(
-                role,
-                None
-                if span is None
-                else (t.offsets.to_bytes(span[0]), t.offsets.to_bytes(span[1])),
-                ok,
-            )
-        )
+        byte_span = None if span is None else _bytes(t, span)
+        p.parts.append(Part(role, byte_span, ok))
         if role == "field" and f.aliases is None:
             continue  # not checked: changes nothing
         if not ok:
@@ -587,10 +605,14 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
         run = header(t.text, mentions, mine)
         n = [x for x, _ in run].index(mine) + 1
         fa, fb = found["field"]
+        line_end = t.text.find("\n", fb, pos)
+        line_end = pos if line_end < 0 else line_end
+        note = any("\t" not in t.text[fb : k.start] for k in tokens(t.text, fb, line_end))
         if (
             run[-1][1] <= fa
             and not any(run[-1][1] <= x and y <= fa for x, y, _ in mentions)
-            and len(cells(t.text, fb, pos)) == n - 1
+            and not note  # a number after the row label on its line, such as a footnote "(1)"
+            and len(cells(t.text, fb, pos, prefixes)) == n - 1
         ):
             ok_key = p.cited = True
     if not ok_key:
@@ -600,7 +622,12 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
 
 
 def _outside(
-    ctx: _Ctx, f: Field, value: Decimal | str, key: str | None, items: list[_Item]
+    ctx: _Ctx,
+    f: Field,
+    value: Decimal | str,
+    key: str | None,
+    items: list[_Item],
+    key_item: bool,
 ) -> _Passed:
     """The outside path (SPEC §3.2)."""
     holding: list[tuple[_Item, _At | None]] = []
@@ -648,7 +675,8 @@ def _outside(
         pos = tok.start if tok is not None else 0
         if key not in keys_at(at.t.text, at.t.key_mentions(f.keys), pos):
             p.flags.append("KEY_NOT_AT_VALUE")
-            p.missing.add("key")
+            if not key_item:
+                p.missing.add("key")
     if act == "review":
         p.flags.append("EVIDENCE_QUOTED" if item.source == "external" else "EVIDENCE_STATED")
     else:
@@ -911,29 +939,28 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | _Reje
                 value = canonical(parsed)
     if p.at is not None:
         span, source, ref = _bytes(p.at.t, p.at.span), p.at.item.source, p.at.item.ref
-    elif p.item is not None:
-        source, url = p.item.source, p.item.url
-    elif isinstance(cand, Mapping):
-        span, source, ref = _cited(ctx, cand.get("evidence"))
+    else:
+        if p.item is not None:
+            source, ref, url = p.item.source, p.item.ref, p.item.url
+        if isinstance(cand, Mapping):
+            span = _cited(ctx, cand.get("evidence"))
     return Decision(
         _json_id(cid), sha, field_name, "rejected", (p.code,), value, unit, span, key, source, ref,
         url,
     )  # fmt: skip
 
 
-def _cited(ctx: _Ctx, ev: object) -> tuple[tuple[int, int] | None, str | None, str | None]:
-    """The value item's valid span, source and ref, for a candidate rejected before its value
-    was placed; Nones when there is none."""
+def _cited(ctx: _Ctx, ev: object) -> tuple[int, int] | None:
+    """The value item's cited span when it is valid in its text, else None (SPEC §5)."""
     try:
         items = _items(ev, ctx.refs)
     except _Reject:
-        return None, None, None
+        return None
     for it in items:
-        if it.role == "value":
+        if it.role == "value" and it.span is not None:
             t = ctx.doc if it.source == "document" else ctx.refs[it.ref or ""]
-            span = None if it.span is None else _valid(t.offsets, it.span)
-            return (None if span is None else it.span), it.source, it.ref
-    return None, None, None
+            return it.span if _valid(t.offsets, it.span) is not None else None
+    return None
 
 
 def _json_id(cid: object) -> object:

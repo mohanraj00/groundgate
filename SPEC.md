@@ -111,7 +111,7 @@ supports (§3, the outside path). groundgate cannot check such evidence, so the 
 - `external.other` is `review` or `reject`: what happens to an external item that matches no entry.
 - `knowledge` is `admit`, `review` or `reject`.
 
-The **host** of a URL is the text after its first `://` up to the first `/`, `?` or `#`, after the
+The **host** of a URL is the text after its first `://` up to the first `/`, `\`, `?` or `#`, after the
 last `@`, without a `:` and port, lower-cased. A URL without `://` has no host. Defaults fill in
 each member that is absent; other keys or values are invalid.
 
@@ -229,8 +229,9 @@ not a string/integer, `unit` or `key` is not a string, `confidence` is not a num
 `search_region` is present but not an object with integer `start` and `end`, or `evidence` is
 present but not an object or a list of objects. It also rejects when an evidence item:
 
-- has a `source` other than the four kinds, or a `role` other than the six, or a `role` on an
-  outside item;
+- has a `source` other than the four kinds, or a `role` other than the six;
+- is an outside item with a `role`, `start` or `end`, or a document or reference item with a `url`
+  or `retrieved`;
 - has a `ref` on an item that is not from a reference, or a reference item has no `ref` or a `ref`
   that names no reference in the packet;
 - has only one of `start` and `end`, or one that is not an integer;
@@ -552,18 +553,24 @@ all of these hold:
 
 1. The header ends before the field item starts.
 2. No key mention of the field lies between the end of the header and the start of the field item.
-3. Between the end of the field item and the value, the **cells** are the number tokens and the
-   lone dashes (`-`, `–` or `—` with whitespace or a line end on both sides). The value's token is
-   the n-th cell from the field item.
+3. No number token follows the field item on its own line with only spaces between them, such as
+   a footnote marker "(1)".
+4. Between the end of the field item and the value, the **cells** are the number tokens, the lone
+   dashes (`-`, `–` or `—` with whitespace or a line end on both sides in the text), and the
+   **empty cells**: a prefix of the field's unit with whitespace or a line end on both sides, where
+   the next character after the whitespace is not the start of a number token or `(`, and comes
+   before the value. The value's token is the n-th cell from the field item.
 
-So a cell that shows a dash for zero still counts, and a second header between the two moves the
-value out of the rule.
+So a cell that shows a dash for zero, or a `$` with no number, still counts, and a second header
+between the two moves the value out of the rule.
 
 ### 4.6 Evidence items
 
 **Finding an item.** An item with offsets is at its span, which must be valid in its text. An item
 without offsets is a quote. Its **occurrences** are the matches of its `text` in its text, where
 each whitespace run in the quote matches any whitespace run.
+
+The quote is trimmed of whitespace at both ends first.
 
 - For the value item, the occurrences are those inside `search_region` (document only). The first
   occurrence where steps 10 and 11 pass without a missing part is the evidence. When there is no
@@ -572,6 +579,8 @@ each whitespace run in the quote matches any whitespace run.
 - For a role item, the occurrence is the one that holds the value's token; else the last one that
   ends at or before the value; else the first one after the value.
 
+An item's **text** is its `text`, or the text at its span when it has offsets and no `text`.
+
 A role item **fails** its check when it is not found, when its span is not valid, when its `text`
 is not verbatim-equal to the span's text (as `NON_VERBATIM_EVIDENCE` compares them), or when its
 `source` and `ref` differ from those of the value item. On a `string` field, every role item other
@@ -579,17 +588,18 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 
 | Role | Passes when |
 |---|---|
-| `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`), ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
-| `scale` | The item holds a scale word (§4.1), also with a final `s` (`thousands`), ends at or before the token, and no other scale word lies between its end and the token. |
-| `unit` | The item holds a prefix or suffix of the field's unit as a whole (§4.3), ends at or before the token, and no unit form is next to the token (§3.1). |
+| `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. The item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
+| `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands". It ends at or before the token, and no scale word, also with a final `s`, lies between its end and the token. |
+| `unit` | The candidate's field item passes, the item holds a prefix or suffix of the field's unit as a whole (§4.3), ends at or before the token, and no unit form is next to the token (§3.1). |
 | `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5), and the item ends at or before the token. Then either no letter (general category L) lies between the item's end and the token (the item is at the **row**), or the item is in the value's sentence with no number token between its end and the token. |
 | `key` | The item holds a key mention of the candidate's `key`. |
 
 The scale and the sign of a token are its **parts**. A token is **negative** when the candidate
-has a sign item, or when brackets enclose it in the text, as the sign check reads them. The token's **derived values**
+has a sign item, or, on a field with a unit, when brackets enclose it in the text, as the sign
+check reads them. The token's **derived values**
 are its value, and its scaled value if it has one. When the candidate has a scale item whose text
-holds a scale word, a token with no scaled value also has its value times the first such word's
-factor. When the token is negative, each of these also has its negative (minus its absolute
+holds a scale word (also with a final `s`), a token with no scaled value also has its value times
+the first such word's factor. When the token is negative, each of these also has its negative (minus its absolute
 value). A failing sign or scale item still gives its part: the decision then has the item's
 flag.
 
@@ -626,15 +636,16 @@ not provide a parseable one. `key` is the candidate's `key` when its field has `
 is a string, otherwise `null`.
 
 - `source` is the kind of the item that the decision rests on: the value item's on the checked
-  path, the deciding item's on the outside path, otherwise `null`. `ref` is the value item's `ref`
+  path from step 9 on, the deciding item's on the outside path, otherwise `null`. `ref` is the value item's `ref`
   for a reference, and `url` the deciding item's URL for an external item, otherwise `null`.
 - `evidence` is the value span that the decision rests on: the re-anchored span when re-anchoring
   applied, the found occurrence for a quote, otherwise the cited span if it is valid, otherwise
   `null`. It is in the value item's text.
 - `parts` lists each role item of a candidate that reached the role checks, as
   `{"role", "start", "end", "passed"}`, in the role order `sign`, `scale`, `unit`, `field`, `key`.
-  `start` and `end` are the item's span, or null when it was not found. A field item without
-  `aliases` is listed with `passed` false.
+  `start` and `end` are the item's span in the value's text: the found occurrence of a quote, or
+  the item's offsets when they are valid there. They are null when the item is not in that text.
+  A field item without `aliases` is listed with `passed` false.
 - `missing` lists the missing parts in the order `sign`, `scale`, `unit`, `key`.
 
 Coverage is sorted by field name. `judgments` lists each judgment that applied, as

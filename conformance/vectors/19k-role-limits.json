@@ -1,0 +1,415 @@
+{
+ "name": "19k-role-limits",
+ "description": "Limits of the role checks: a dash next to a number is not a cell, a number after the row label on its line (a footnote) stops the column rule, a $ with no number is an empty cell, a scale item needs 'in' before its scale word, a unit item needs a passing field item, brackets alone make no sign on a field without a unit, a negated or distant loss word makes no sign, and a scale item with offsets and no text reads its span. A quote is trimmed (spec 0.5).",
+ "document": "Amounts (in thousands)\n\nYear\n\n2025\n\n2024\n\nUnits sold\n\n–434,433\n\n46,016\n\nSales (1)\n\n$\n\n7,100\n\n$\n\n6,900\n\nCosts\n\n$\n\n\n\n$\n\n5,500\n\nWe serve a thousand customers. The filing fee is $40.\n\nEmployees\n\n120\n\nThere were 12 adverse events (5) in the trial.\n\nThe company had no loss this year and paid $9,000. We recorded a loss on the sale and paid dividends of $8,000.",
+ "schema": {
+  "fields": {
+   "units_sold": {
+    "type": "integer",
+    "keys": [
+     "2025",
+     "2024"
+    ],
+    "multiple": true,
+    "aliases": [
+     "units sold"
+    ]
+   },
+   "sales": {
+    "type": "integer",
+    "keys": [
+     "2025",
+     "2024"
+    ],
+    "multiple": true,
+    "unit": "USD",
+    "aliases": [
+     "sales"
+    ]
+   },
+   "costs": {
+    "type": "integer",
+    "keys": [
+     "2025",
+     "2024"
+    ],
+    "multiple": true,
+    "unit": "USD",
+    "aliases": [
+     "costs"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   },
+   "payroll": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   },
+   "events": {
+    "type": "integer",
+    "multiple": true
+   },
+   "paid": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   },
+   "paid_keyed": {
+    "type": "integer",
+    "keys": [
+     "2025",
+     "2024"
+    ],
+    "multiple": true,
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "m1",
+   "field": "units_sold",
+   "value": "434433",
+   "evidence": [
+    {
+     "start": 57,
+     "end": 64,
+     "text": "434,433"
+    },
+    {
+     "role": "field",
+     "text": "Units sold"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "m2",
+   "field": "sales",
+   "value": "7100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 88,
+     "end": 93,
+     "text": "7,100"
+    },
+    {
+     "role": "field",
+     "text": "Sales"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "m3",
+   "field": "costs",
+   "value": "5500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 120,
+     "end": 125,
+     "text": "5,500"
+    },
+    {
+     "role": "field",
+     "text": "Costs"
+    },
+    {
+     "role": "key",
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "m4",
+   "field": "costs",
+   "value": "5500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 120,
+     "end": 125,
+     "text": "5,500"
+    },
+    {
+     "role": "field",
+     "text": "Costs"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "m5",
+   "field": "fee",
+   "value": "40000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 176,
+     "end": 179,
+     "text": "$40"
+    },
+    {
+     "role": "scale",
+     "text": "thousand"
+    }
+   ]
+  },
+  {
+   "id": "m6",
+   "field": "payroll",
+   "value": "120",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 193,
+     "end": 196,
+     "text": "120"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "m7",
+   "field": "events",
+   "value": "-5",
+   "evidence": [
+    {
+     "start": 227,
+     "end": 230,
+     "text": "(5)"
+    }
+   ]
+  },
+  {
+   "id": "m8",
+   "field": "paid",
+   "value": "-9000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 289,
+     "end": 295,
+     "text": "$9,000"
+    },
+    {
+     "role": "sign",
+     "text": "no loss"
+    }
+   ]
+  },
+  {
+   "id": "m9",
+   "field": "paid",
+   "value": "-8000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 350,
+     "end": 356,
+     "text": "$8,000"
+    },
+    {
+     "role": "sign",
+     "text": "loss"
+    }
+   ]
+  },
+  {
+   "id": "m10",
+   "field": "costs",
+   "value": "5500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 120,
+     "end": 125,
+     "text": "5,500"
+    },
+    {
+     "role": "scale",
+     "start": 9,
+     "end": 21
+    },
+    {
+     "role": "field",
+     "text": "Costs"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "m11",
+   "field": "costs",
+   "value": "5500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 120,
+     "end": 125,
+     "text": "5,500"
+    },
+    {
+     "role": "scale",
+     "text": "(in"
+    },
+    {
+     "role": "field",
+     "text": "Costs"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "m12",
+   "field": "paid_keyed",
+   "value": "9000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "key",
+     "text": "2024"
+    },
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "We paid $9,000."
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "m13",
+   "field": "fee",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": " $40. "
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "sign"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "EVIDENCE_QUOTED"
+    ],
+    "missing": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

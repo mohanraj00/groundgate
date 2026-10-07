@@ -115,14 +115,14 @@ occurrence that holds the value with its unit.
 | Role | What it supports | What groundgate checks |
 |---|---|---|
 | `value` (default) | The number as written. | The value is there, as in spec 0.4. |
-| `sign` | A negative value. | Brackets around the number, or a loss word ("loss", "deficit") before it in the same sentence with no number or gain word between. In a table, only brackets count. |
-| `scale` | A value in thousands or millions. | A scale word ("thousands") before the value, with no other scale word between. |
-| `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The item holds a form of the field's unit, and no other unit is next to the number. |
+| `sign` | A negative value. | Brackets around the number, or a loss word ("loss", "deficit") at most 4 words before it in the same sentence, with no "no" or "not" before it and no number or gain word between. In a table, only brackets count. |
+| `scale` | A value in thousands or millions. | "in thousands" or "in millions" before the value, with no other scale word between. |
+| `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The field item passes, the item holds a form of the field's unit, and no other unit is next to the number. |
 | `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. |
-| `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). |
+| `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). A dash or a `$` with no number counts as a cell. A footnote number after the row label stops the rule. |
 
-groundgate computes the value from the parts. The extractor does not state the steps. Brackets
-that enclose the number make it negative with no item. When the value needs a sign, a scale or a
+groundgate computes the value from the parts. The extractor does not state the steps. On a field
+with a unit, brackets that enclose the number make it negative with no item. When the value needs a sign, a scale or a
 unit that no item supports, the fact goes to review with `PART_MISSING`, and the decision lists
 the part in `missing`. An item that fails its check flags the fact (`SIGN_CITATION_INVALID` and so
 on). groundgate never swaps in a part that it found itself.

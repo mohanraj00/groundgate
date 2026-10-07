@@ -1,13 +1,19 @@
 {
  "name": "19c-derived-scale-unit",
- "description": "A scale item multiplies a token that has no scaled value by its scale word, when no other scale word lies between it and the value. A unit item supplies the unit when no unit is at the token; another unit at the token still rejects. A missing scale or unit is a missing part (spec 0.5).",
+ "description": "A scale item multiplies a token that has no scaled value by its scale word, when no other scale word lies between it and the value. A unit item supplies the unit when no unit is at the token; another unit at the token still rejects. A missing scale or unit is a missing part (spec 0.5). A unit item needs a passing field item.",
  "document": "Consolidated statements of operations\n(in thousands, except percentages)\n\nRevenue\n\n$\n\n46,016\n\n$\n\n434,433\n\nGross margin\n\n12%\n\nOperating expenses\n\n195,334\n\n203,625\n\nLoss from operations\n\n(105,198\n)\n\nOther items (in millions)\n\n7.5\n\nInterest income\n\n1,250\n\nDeferred revenue was $2.2 million at year end.",
  "schema": {
   "fields": {
    "amount": {
     "type": "number",
     "unit": "USD",
-    "multiple": true
+    "multiple": true,
+    "aliases": [
+     "operating expenses",
+     "loss from operations",
+     "other items",
+     "interest income"
+    ]
    }
   }
  },
@@ -48,6 +54,10 @@
     {
      "role": "unit",
      "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Operating expenses"
     }
    ]
   },
@@ -86,6 +96,10 @@
     {
      "role": "unit",
      "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Interest income"
     }
    ]
   },
@@ -107,6 +121,10 @@
     {
      "role": "unit",
      "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Other items (in millions)"
     }
    ]
   },
@@ -192,6 +210,10 @@
     {
      "role": "unit",
      "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Loss from operations"
     }
    ]
   },
@@ -226,6 +248,10 @@
     {
      "role": "unit",
      "text": "%"
+    },
+    {
+     "role": "field",
+     "text": "Operating expenses"
     }
    ]
   }
