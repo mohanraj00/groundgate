@@ -10,7 +10,7 @@ readme = "README.md"
 license = "Apache-2.0"
 authors = [{ name = "Mohan Raj" }]
 requires-python = ">=3.10"
-dependencies = ["groundgate>=0.3"]
+dependencies = ["groundgate>=0.4"]
 
 [project.scripts]
 groundgate-calibrate = "groundgate_calibrate.cli:main"

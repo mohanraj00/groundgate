@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -9,7 +10,8 @@ from typing import Any
 
 import pytest
 
-sys.path.insert(0, str(Path(__file__).parents[1] / "src"))
+if importlib.util.find_spec("groundgate_calibrate") is None:  # the release job tests the wheel
+    sys.path.insert(0, str(Path(__file__).parents[1] / "src"))
 
 from groundgate_calibrate import cli, judges, label
 from groundgate_calibrate import questions as q
