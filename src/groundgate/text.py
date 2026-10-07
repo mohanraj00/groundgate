@@ -541,9 +541,10 @@ def brackets_around(text: str, tok: Token, prefixes: list[str]) -> tuple[int, in
     prefixes between "(" and the token and only whitespace between the token and ")" (SPEC
     §4.6), else None."""
     i = tok.start
+    longest = sorted(prefixes, key=len, reverse=True)  # "US$" before "$"
     while True:
         j = len(text[:i].rstrip())
-        for p in prefixes:
+        for p in longest:
             if text.endswith(p, 0, j):
                 i = j - len(p)
                 break

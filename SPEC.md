@@ -579,7 +579,8 @@ The quote is trimmed of whitespace at both ends first.
 - For a role item, the occurrence is the one that holds the value's token; else the last one that
   ends at or before the value; else the first one after the value.
 
-An item's **text** is its `text`, or the text at its span when it has offsets and no `text`.
+An item's **text** is its `text`, or, when it has offsets and no `text`, the text at its span in
+its own source (the document or its reference).
 
 A role item **fails** its check when it is not found, when its span is not valid, when its `text`
 is not verbatim-equal to the span's text (as `NON_VERBATIM_EVIDENCE` compares them), or when its

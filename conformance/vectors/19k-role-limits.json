@@ -1,7 +1,7 @@
 {
  "name": "19k-role-limits",
- "description": "Limits of the role checks: a dash next to a number is not a cell, a number after the row label on its line (a footnote) stops the column rule, a $ with no number is an empty cell, a scale item needs 'in' before its scale word, a unit item needs a passing field item, brackets alone make no sign on a field without a unit, a negated or distant loss word makes no sign, and a scale item with offsets and no text reads its span. A quote is trimmed (spec 0.5).",
- "document": "Amounts (in thousands)\n\nYear\n\n2025\n\n2024\n\nUnits sold\n\n–434,433\n\n46,016\n\nSales (1)\n\n$\n\n7,100\n\n$\n\n6,900\n\nCosts\n\n$\n\n\n\n$\n\n5,500\n\nWe serve a thousand customers. The filing fee is $40.\n\nEmployees\n\n120\n\nThere were 12 adverse events (5) in the trial.\n\nThe company had no loss this year and paid $9,000. We recorded a loss on the sale and paid dividends of $8,000.",
+ "description": "Limits of the role checks: a dash next to a number is not a cell, a number after the row label on its line (a footnote) stops the column rule, a $ with no number is an empty cell, a scale item needs 'in' before its scale word, a unit item needs a passing field item, brackets alone make no sign on a field without a unit, a negated or distant loss word makes no sign, and a scale item with offsets and no text reads its span. A quote is trimmed. Brackets take the longest unit prefix first (spec 0.5).",
+ "document": "Amounts (in thousands)\n\nYear\n\n2025\n\n2024\n\nUnits sold\n\n–434,433\n\n46,016\n\nSales (1)\n\n$\n\n7,100\n\n$\n\n6,900\n\nCosts\n\n$\n\n\n\n$\n\n5,500\n\nWe serve a thousand customers. The filing fee is $40.\n\nEmployees\n\n120\n\nThere were 12 adverse events (5) in the trial.\n\nA refund (US$5) was paid.\n\nThe company had no loss this year and paid $9,000. We recorded a loss on the sale and paid dividends of $8,000.",
  "schema": {
   "fields": {
    "units_sold": {
@@ -66,6 +66,19 @@
     ],
     "multiple": true,
     "unit": "USD"
+   },
+   "refund": {
+    "type": "integer",
+    "unit": "UXD",
+    "multiple": true
+   }
+  },
+  "units": {
+   "UXD": {
+    "prefix": [
+     "$",
+     "US$"
+    ]
    }
   }
  },
@@ -211,8 +224,8 @@
    "unit": "USD",
    "evidence": [
     {
-     "start": 289,
-     "end": 295,
+     "start": 316,
+     "end": 322,
      "text": "$9,000"
     },
     {
@@ -228,8 +241,8 @@
    "unit": "USD",
    "evidence": [
     {
-     "start": 350,
-     "end": 356,
+     "start": 377,
+     "end": 383,
      "text": "$8,000"
     },
     {
@@ -320,6 +333,19 @@
      "text": " $40. "
     }
    ]
+  },
+  {
+   "id": "m14",
+   "field": "refund",
+   "value": "-5",
+   "unit": "UXD",
+   "evidence": [
+    {
+     "start": 256,
+     "end": 260,
+     "text": "US$5"
+    }
+   ]
   }
  ],
  "expected": {
@@ -408,6 +434,12 @@
    {
     "outcome": "admitted",
     "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
    }
   ],
   "coverage": []

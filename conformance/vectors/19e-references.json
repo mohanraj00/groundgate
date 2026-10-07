@@ -1,6 +1,6 @@
 {
  "name": "19e-references",
- "description": "A reference is a source text that the app supplies. A reference item is checked like a document item, in the reference's own text and offsets; search_region does not apply to it. A role item must be from the same text as the value item (spec 0.5).",
+ "description": "A reference is a source text that the app supplies. A reference item is checked like a document item, in the reference's own text and offsets; search_region does not apply to it. A role item must be from the same text as the value item, but a scale item with offsets and no text still reads its words from its own text (spec 0.5).",
  "document": "Single filers may deduct student loan interest. The phase-out starts at a MAGI of $85,000.",
  "schema": {
   "fields": {
@@ -22,6 +22,10 @@
    "id": "irs-221",
    "text": "For married filing jointly, the phase-out starts at $170,000.",
    "source": "https://www.irs.gov/publications/p970"
+  },
+  {
+   "id": "irs-scale",
+   "text": "Amounts are in thousands."
   }
  ],
  "candidates": [
@@ -118,6 +122,27 @@
     "start": 0,
     "end": 10
    }
+  },
+  {
+   "id": "e7",
+   "field": "phase_out",
+   "value": "85000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 82,
+     "end": 89,
+     "text": "$85,000"
+    },
+    {
+     "role": "scale",
+     "source": "reference",
+     "ref": "irs-scale",
+     "start": 12,
+     "end": 24
+    }
+   ],
+   "key": "single"
   }
  ],
  "expected": {
@@ -149,6 +174,13 @@
    {
     "outcome": "admitted",
     "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
    }
   ],
   "coverage": []

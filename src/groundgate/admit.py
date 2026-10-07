@@ -301,9 +301,10 @@ def _value_at(
     scale = None
     if scale_item is not None:
         words = scale_item.text
-        if words is None and scale_item.span is not None and _same(scale_item, item):
-            at_span = _valid(t.offsets, scale_item.span)
-            words = None if at_span is None else t.text[at_span[0] : at_span[1]]
+        if words is None and scale_item.span is not None:  # the text at its span, in its own text
+            own = ctx.doc if scale_item.source == "document" else ctx.refs[scale_item.ref or ""]
+            at_span = _valid(own.offsets, scale_item.span)
+            words = None if at_span is None else own.text[at_span[0] : at_span[1]]
         scale = None if words is None else item_scale(words, 0, len(words))
     toks = [k for k in tokens(t.text, s, e) if k.value is not None]
     hits: list[tuple[Token, set[str]]] = []

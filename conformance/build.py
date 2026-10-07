@@ -1984,7 +1984,8 @@ vector(
     "19e-references",
     "A reference is a source text that the app supplies. A reference item is checked like a "
     "document item, in the reference's own text and offsets; search_region does not apply to "
-    "it. A role item must be from the same text as the value item (spec 0.5).",
+    "it. A role item must be from the same text as the value item, but a scale item with offsets "
+    "and no text still reads its words from its own text (spec 0.5).",
     "Single filers may deduct student loan interest. The phase-out starts at a MAGI of $85,000.",
     {"fields": {"phase_out": PHASE}},
     [
@@ -2004,8 +2005,12 @@ vector(
         c("e6", "phase_out", "170000", "USD",
           [{"source": "reference", "ref": "irs-221", "text": "$170,000"}],
           key="married filing jointly", search_region={"start": 0, "end": 10}),
+        c("e7", "phase_out", "85000000", "USD",
+          [q("$85,000"), q("in thousands", text=NO_TEXT, role="scale", source="reference",
+                           ref="irs-scale")],
+          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"]), key="single"),
     ],
-    references=[IRS_REF],
+    references=[IRS_REF, {"id": "irs-scale", "text": "Amounts are in thousands."}],
     document_source="https://www.irs.gov/publications/p4491x",
 )  # fmt: skip
 
@@ -2172,7 +2177,8 @@ vector(
     "label on its line (a footnote) stops the column rule, a $ with no number is an empty cell, a "
     "scale item needs 'in' before its scale word, a unit item needs a passing field item, brackets "
     "alone make no sign on a field without a unit, a negated or distant loss word makes no sign, "
-    "and a scale item with offsets and no text reads its span. A quote is trimmed (spec 0.5).",
+    "and a scale item with offsets and no text reads its span. A quote is trimmed. Brackets take "
+    "the longest unit prefix first (spec 0.5).",
     "Amounts (in thousands)\n\nYear\n\n2025\n\n2024\n\n"
     "Units sold\n\n\u2013434,433\n\n46,016\n\n"
     "Sales (1)\n\n$\n\n7,100\n\n$\n\n6,900\n\n"
@@ -2180,6 +2186,7 @@ vector(
     "We serve a thousand customers. The filing fee is $40.\n\n"
     "Employees\n\n120\n\n"
     "There were 12 adverse events (5) in the trial.\n\n"
+    "A refund (US$5) was paid.\n\n"
     "The company had no loss this year and paid $9,000. We recorded a loss on the sale and paid "
     "dividends of $8,000.",
     {
@@ -2192,7 +2199,9 @@ vector(
             "events": {"type": "integer", "multiple": True},
             "paid": {"type": "integer", "unit": "USD", "multiple": True},
             "paid_keyed": keyed(),
-        }
+            "refund": {"type": "integer", "unit": "UXD", "multiple": True},
+        },
+        "units": {"UXD": {"prefix": ["$", "US$"]}},
     },
     [
         c("m1", "units_sold", "434433", None, [q("434,433"), row("Units sold"), year("2024")],
@@ -2220,6 +2229,7 @@ vector(
         c("m12", "paid_keyed", "9000", "USD", [year("2024"), ext("We paid $9,000.")],
           (REVIEW, ["KEY_NOT_AT_VALUE", "EVIDENCE_QUOTED"], []), key="2024"),
         c("m13", "fee", "40", "USD", [{"text": " $40. "}]),
+        c("m14", "refund", "-5", "UXD", [q("US$5")], ("admitted", ["VALUE_DERIVED"])),
     ],
 )  # fmt: skip
 
