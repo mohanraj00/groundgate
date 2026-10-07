@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Status labels</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+  body { margin: 0; font: 15px/1.45 system-ui, sans-serif; color: #1d1d1f; background: #f4f4f2; }
+  .wrap { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); height: 100vh; }
+  #view { overflow: auto; padding: 16px; background: #8a8a8a; }
+  #sheet { position: relative; margin: 0 auto; width: max-content; box-shadow: 0 2px 8px #0005; }
+  #sheet canvas { display: block; background: #fff; }
+  #hit { position: absolute; border: 3px solid #e8590c; background: #ffd43b55; border-radius: 3px; }
+  #side { overflow: auto; padding: 16px 20px; border-left: 1px solid #ccc; background: #fff; }
+  h1 { font-size: 15px; margin: 0 0 4px; }
+  .meta { color: #666; font-size: 13px; margin-bottom: 12px; }
+  .q { font-weight: 600; margin: 14px 0 8px; }
+  #text { white-space: pre-wrap; font: 13px/1.4 ui-monospace, monospace; background: #f6f6f4;
+          border: 1px solid #ddd; padding: 10px; max-height: 38vh; overflow: auto; }
+  mark { background: #ffd43b; outline: 2px solid #e8590c; }
+  .keys { display: grid; gap: 6px; }
+  .key { text-align: left; padding: 8px 10px; border: 1px solid #bbb; border-radius: 6px;
+         background: #fff; font: inherit; cursor: pointer; }
+  .key.on { background: #1c7ed6; border-color: #1c7ed6; color: #fff; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .row button { padding: 7px 12px; border: 1px solid #bbb; border-radius: 6px; background: #f1f1ef;
+                font: inherit; cursor: pointer; }
+  .row button.main { background: #2b8a3e; border-color: #2b8a3e; color: #fff; }
+  .now { margin-top: 10px; font-size: 13px; color: #444; }
+  .help { margin-top: 14px; font-size: 12px; color: #666; }
+  kbd { font: 11px ui-monospace, monospace; border: 1px solid #bbb; border-radius: 3px; padding: 0 3px; }
+  a { color: #1c7ed6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="view"><div id="sheet"><canvas id="canvas"></canvas><div id="hit"></div></div></div>
+  <div id="side">
+    <h1 id="title"></h1>
+    <div class="meta" id="meta"></div>
+    <div class="q">Which filing statuses does the marked amount belong to?</div>
+    <div class="keys" id="keys"></div>
+    <div class="row">
+      <button class="main" id="save">Save <kbd>Enter</kbd></button>
+      <button id="none">None of them <kbd>0</kbd></button>
+      <button id="unsure">Not sure <kbd>?</kbd></button>
+    </div>
+    <div class="row">
+      <button id="back">Back <kbd>b</kbd></button>
+      <button id="next">Next <kbd>n</kbd></button>
+      <button id="todo">Next without a label</button>
+    </div>
+    <div class="now" id="now"></div>
+    <div class="q">The text that groundgate reads</div>
+    <div id="text"></div>
+    <div class="help">
+      Select one status, or several when the amount holds for each of them. An amount that holds
+      whatever the filing status holds for each of the five. Use <b>None of them</b> only when the
+      amount belongs to no status, and <b>Not sure</b> when you can't tell. Keys
+      <kbd>1</kbd> to <kbd>5</kbd> select a status, and <kbd>+</kbd> and <kbd>-</kbd> zoom the
+      page.
+    </div>
+  </div>
+</div>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+let S, i = 0, picked = new Set(), zoom = 1.6;
+const docs = {};
+const $ = (id) => document.getElementById(id);
+
+function fmt(label) {
+  if (label === undefined) return "no label yet";
+  if (label === null) return "not sure";
+  return label.length ? label.join("; ") : "none of them";
+}
+
+let drawn = 0, task = null;  // the newest render wins; an older one stops or is dropped
+
+async function render(it) {
+  const mine = ++drawn;
+  if (task) task.cancel();
+  if (!docs[it.doc]) docs[it.doc] = pdfjsLib.getDocument("/pdf/" + it.doc).promise;
+  const pdf = await docs[it.doc];
+  const page = await pdf.getPage(it.page);
+  if (mine !== drawn) return;
+  const width = $("view").clientWidth - 32;
+  const scale = zoom * Math.max(1, width / page.getViewport({ scale: 1 }).width);
+  const vp = page.getViewport({ scale });
+  const dpr = window.devicePixelRatio || 1;
+  const c = $("canvas");
+  c.width = vp.width * dpr; c.height = vp.height * dpr;
+  c.style.width = vp.width + "px"; c.style.height = vp.height + "px";
+  const ctx = c.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  task = page.render({ canvasContext: ctx, viewport: vp });
+  try {
+    await task.promise;
+  } catch (e) {
+    if (e && e.name === "RenderingCancelledException") return;
+    throw e;
+  }
+  if (mine !== drawn) return;
+  // the box is in points from the top left of the crop box; pdf.js wants PDF user space
+  const [vx0, , , vy1] = page.view;
+  const [x0, top, x1, bottom] = it.box;
+  const r = vp.convertToViewportRectangle([vx0 + x0, vy1 - bottom, vx0 + x1, vy1 - top]);
+  const pad = 4, hit = $("hit");
+  hit.style.left = Math.min(r[0], r[2]) - pad + "px";
+  hit.style.top = Math.min(r[1], r[3]) - pad + "px";
+  hit.style.width = Math.abs(r[2] - r[0]) + 2 * pad + "px";
+  hit.style.height = Math.abs(r[3] - r[1]) + 2 * pad + "px";
+  hit.scrollIntoView({ block: "center", inline: "center" });
+}
+
+function show() {
+  const it = S.items[i];
+  const done = S.items.filter((x) => x.id in S.labels).length;
+  $("title").textContent = `Amount ${i + 1} of ${S.items.length}`;
+  $("meta").innerHTML = `${it.doc}, PDF page ${it.page}. ${done} labeled. ` +
+    `<a href="/pdf/${it.doc}#page=${it.page}" target="_blank">Open the PDF</a>`;
+  const now = S.labels[it.id];
+  picked = new Set(Array.isArray(now) ? now : []);
+  $("now").textContent = "Saved: " + fmt(now);
+  const t = $("text");
+  t.textContent = "";
+  t.append(it.before);
+  const m = document.createElement("mark");
+  m.textContent = it.amount;
+  t.append(m, it.after);
+  keys();
+  m.scrollIntoView({ block: "center" });
+  render(it);
+}
+
+function keys() {
+  const box = $("keys");
+  box.textContent = "";
+  S.keys.forEach((k, n) => {
+    const b = document.createElement("button");
+    b.className = "key" + (picked.has(k) ? " on" : "");
+    b.innerHTML = `<kbd>${n + 1}</kbd> ${k}`;
+    b.onclick = () => { toggle(k); b.blur(); };
+    box.append(b);
+  });
+}
+
+function toggle(k) {
+  picked.has(k) ? picked.delete(k) : picked.add(k);
+  keys();
+}
+
+let busy = false;  // one save at a time, so a double click cannot label the next amount
+
+async function save(label) {
+  if (busy) return;
+  busy = true;
+  try {
+    await send(label);
+  } finally {
+    busy = false;
+  }
+}
+
+async function send(label) {
+  const it = S.items[i];
+  const r = await fetch("/label", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: it.id, label }),
+  });
+  if (!r.ok) { alert("The label was not saved."); return; }
+  S.labels[it.id] = label;
+  go(S.items.indexOf(it) + 1);  // from the saved amount, whatever the page shows now
+}
+
+function move(to) {
+  if (!busy) go(to);  // no moving while a save is open
+}
+
+function go(to) {
+  i = Math.max(0, Math.min(S.items.length - 1, to));
+  history.replaceState(null, "", "#" + (i + 1));
+  show();
+}
+function todo() {
+  const n = S.items.findIndex((x, k) => k > i && !(x.id in S.labels));
+  const m = n >= 0 ? n : S.items.findIndex((x) => !(x.id in S.labels));
+  if (m >= 0) move(m);
+}
+
+const order = () => S.keys.filter((k) => picked.has(k));
+$("save").onclick = (e) => { e.target.blur(); if (picked.size) save(order()); };
+$("none").onclick = (e) => { e.target.blur(); save([]); };
+$("unsure").onclick = (e) => { e.target.blur(); save(null); };
+$("back").onclick = (e) => { e.target.blur(); move(i - 1); };
+$("next").onclick = (e) => { e.target.blur(); move(i + 1); };
+$("todo").onclick = (e) => { e.target.blur(); todo(); };
+
+document.addEventListener("keydown", (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+  const n = Number(e.key);
+  if (e.key >= "1" && e.key <= "5" && n <= S.keys.length) toggle(S.keys[n - 1]);
+  else if (e.key === "0") save([]);
+  else if (e.key === "?") save(null);
+  else if (e.key === "Enter") { if (picked.size) save(order()); }
+  else if (e.key === "b" || e.key === "ArrowLeft") move(i - 1);
+  else if (e.key === "n" || e.key === "ArrowRight") move(i + 1);
+  else if (e.key === "+" || e.key === "=") { zoom = Math.min(4, zoom * 1.25); render(S.items[i]); }
+  else if (e.key === "-") { zoom = Math.max(0.5, zoom / 1.25); render(S.items[i]); }
+  else return;
+  e.preventDefault();
+});
+
+fetch("/state").then((r) => r.json()).then((s) => {
+  S = s;
+  // #12 opens amount 12; otherwise the first amount without a label
+  const asked = Number(location.hash.slice(1));
+  const n = S.items.findIndex((x) => !(x.id in S.labels));
+  i = asked >= 1 && asked <= S.items.length ? asked - 1 : n >= 0 ? n : 0;
+  show();
+});
+</script>
+</body>
+</html>

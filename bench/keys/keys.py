@@ -39,6 +39,18 @@ PER_SET, PER_DOC, MAX_RANK = 100, 6, 600
 # a set whose items need no key can take labels with fewer subsections in section 1
 NEED_KEYS = True
 MAX_DOSES: int | None = None  # skip a label with more doses than this
+# the words for an item and a document, and the results.json key for the document count
+ITEM, ITEMS, DOCS, DOCS_KEY = "dose", "doses", "FDA labels", "labels"
+THEIR_KEYS = "the label's keys"
+INTRO = (
+    "For each marked dose: which of the label's conditions does it belong to?",
+    "Type a number, or several numbers with commas (1,3) when the dose holds for each of",
+    "those conditions, such as one dosage for the whole label. Type 0 only when the dose",
+    "belongs to none of the conditions, and ? when you can't tell.",
+    "Type s to read section 1 of the label, which says what each condition covers.",
+    "Type m to see more of the text before the dose, with its heading.\n",
+)
+SECTION_1 = True  # the label tool offers s, section 1 of the label
 # a dose: a number token followed by mg or mcg
 UNIT_AFTER = re.compile(r"\s*(?:mg|mcg)(?![A-Za-z])")
 SPEC02 = [
@@ -145,7 +157,7 @@ def find_items() -> None:
             out.append({"id": f"{src['id']}:{a}", "doc": src["id"], "span": [a, b]})
     out = out[:PER_SET]  # the last label gives only the doses the set still needs
     (HERE / "items.json").write_text(json.dumps(out, indent=1) + "\n")
-    print(f"wrote items.json: {len(out)} doses in {len({it['doc'] for it in out})} labels")
+    print(f"wrote items.json: {len(out)} {ITEMS} in {len({it['doc'] for it in out})} {DOCS}")
 
 
 def keys_of() -> dict[str, list[str]]:
@@ -178,16 +190,11 @@ def label(recheck: bool) -> None:
     path = HERE / "labels.json"
     labels: dict[str, list[str] | None] = json.loads(path.read_text()) if path.exists() else {}
     texts: dict[str, str] = {}
-    print("For each marked dose: which of the label's conditions does it belong to?")
-    print("Type a number, or several numbers with commas (1,3) when the dose holds for each of")
-    print("those conditions, such as one dosage for the whole label. Type 0 only when the dose")
-    print("belongs to none of the conditions, and ? when you can't tell.")
-    print("Type s to read section 1 of the label, which says what each condition covers.")
-    print("Type m to see more of the text before the dose, with its heading.\n")
+    print("\n".join(INTRO))
     order = list(range(len(items)))
     if recheck:
         order = [k for k, it in enumerate(items) if labels.get(it["id"], [0]) in ([], None)]
-        print(f"Recheck: {len(order)} doses labeled 0 or ?.\n")
+        print(f"Recheck: {len(order)} {ITEMS} labeled 0 or ?.\n")
     j = (
         0
         if recheck
@@ -211,14 +218,15 @@ def label(recheck: bool) -> None:
             was = " (now: not sure)" if now is None else f" (now: {'; '.join(now) or 'none'})"
         else:
             was = ""
-        ans = input(f"Condition{was}: numbers, 0, ?, m more text, s section 1, b back, q quit: ")
+        s1 = " s section 1," if SECTION_1 else ""
+        ans = input(f"Condition{was}: numbers, 0, ?, m more text,{s1} b back, q quit: ")
         ans = ans.strip().lower()
         if ans == "q":
             break
         if ans == "m":
             print(f"\n{context(texts[it['doc']], it['span'], before=2500)}")
             continue
-        if ans == "s":
+        if ans == "s" and SECTION_1:
             print(f"\n{section_1(it['doc'])}")
             continue
         if ans == "b":
@@ -279,7 +287,9 @@ def score(check: bool) -> None:
     labels = json.loads((HERE / "labels.json").read_text())
     missing = [it["id"] for it in items if it["id"] not in labels]
     if missing:
-        raise SystemExit(f"{len(missing)} of {len(items)} doses have no label; run {NAME}.py label")
+        raise SystemExit(
+            f"{len(missing)} of {len(items)} {ITEMS} have no label; run {NAME}.py label"
+        )
     run = subprocess.run(SPEC02, capture_output=True, text=True, check=True)
     v02, v03 = json.loads(run.stdout), read()
     # a dose the person could not label is left out of the counts
@@ -309,9 +319,9 @@ def score(check: bool) -> None:
     keyed = [r for r in rows if r["label"]]
     unkeyed = [r for r in rows if not r["label"]]
     results = {
-        "doses": len(items),
-        "doses_scored": len(rows),
-        "labels": len({it["doc"] for it in items}),
+        ITEMS: len(items),
+        f"{ITEMS}_scored": len(rows),
+        DOCS_KEY: len({it["doc"] for it in items}),
         "labeled_with_a_key": len(keyed),
         "labeled_with_no_key": len(unkeyed),
         "not_sure": not_sure,
@@ -319,7 +329,7 @@ def score(check: bool) -> None:
             s: {"with a key": tally(keyed, s, with_key), "no key": tally(unkeyed, s, no_key)}
             for s in specs
         },
-        "doses_read": rows,
+        f"{ITEMS}_read": rows,
     }
     what = {
         "every right key, no wrong key": "right",
@@ -337,12 +347,12 @@ def score(check: bool) -> None:
         "[README.md](README.md) explains the set. Spec 0.2 is the released 0.2.0 wheel and spec "
         "0.3 is the core in this repository.",
         "",
-        f"{len(items)} doses in {results['labels']} FDA labels, labeled by a person: "
-        f"{results['labeled_with_a_key']} with one or more of the label's keys, "
+        f"{len(items)} {ITEMS} in {results[DOCS_KEY]} {DOCS}, labeled by a person: "
+        f"{results['labeled_with_a_key']} with one or more of {THEIR_KEYS}, "
         f"{results['labeled_with_no_key']} with none of them, and {len(not_sure)} not sure, "
         "which the counts leave out.",
         "",
-        "| Label | Keys at the dose | What it means | Spec 0.2 | Spec 0.3 |",
+        f"| Label | Keys at the {ITEM} | What it means | Spec 0.2 | Spec 0.3 |",
         "|---|---|---|---:|---:|",
     ]
     for group, names in (("with a key", with_key), ("no key", no_key)):
@@ -355,11 +365,15 @@ def score(check: bool) -> None:
     }
     spans = {it["id"]: (it["doc"], it["span"]) for it in items}
     changed = [r for r in rows if r["spec_0.2"] != r["spec_0.3"]]
-    md += ["", f"## Doses that spec 0.3 reads differently from 0.2 ({len(changed)})", ""]
+    md += [
+        "",
+        f"## {ITEMS.capitalize()} that spec 0.3 reads differently from 0.2 ({len(changed)})",
+        "",
+    ]
     if not changed:
         md.append("None.")
     else:
-        md += ["| Dose | Label | 0.2 | 0.3 | Text |", "|---|---|---|---|---|"]
+        md += [f"| {ITEM.capitalize()} | Label | 0.2 | 0.3 | Text |", "|---|---|---|---|---|"]
         for r in changed:
             doc, span = spans[r["id"]]
             text = dots.context(texts[doc], {"abbreviation": span}, "**{}**").replace("|", "\\|")

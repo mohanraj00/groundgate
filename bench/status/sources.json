@@ -1,0 +1,388 @@
+{
+  "retrieved": "2026-10-06",
+  "sources": [
+    {
+      "id": "irs-p1040",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1040.pdf",
+      "sha256": "8ae019bd3b28b07b37e46e18597d8e899222a2224ce7482c015b130033403532",
+      "select": {
+        "pages": [
+          2,
+          13,
+          14
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p1167",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1167.pdf",
+      "sha256": "bb077361c08d76334776b0446d0f2a833f78fea277518a81a1ff9edebb8a3874",
+      "select": {
+        "pages": [
+          44,
+          46
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p1494",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p1494.pdf",
+      "sha256": "32037d77704eca9e49c283e293a38f4456e717745c039e5f04e00c36905ab956",
+      "select": {
+        "pages": [
+          1
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p3524",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3524.pdf",
+      "sha256": "91102546a29ba376fba30c55301e184fc2b566c06f1b0e26267bef73e5ffea27",
+      "select": {
+        "pages": [
+          1
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p3920",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p3920.pdf",
+      "sha256": "bcc93a12b012a7cc6a0fc2aa1b0105c94d1717647ef87e016732d22fed2c2218",
+      "select": {
+        "pages": [
+          5
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p4011",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4011.pdf",
+      "sha256": "c2fbca5b638b7bcacc88546ba53aa667bd135ba5494951288daa2ba696638763",
+      "select": {
+        "pages": [
+          4
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p4012-a",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4012a.pdf",
+      "sha256": "5f5cc89fcda272f71abd5b203b5dc21477bbe3c08fe0abc2016914687c22a53c",
+      "select": {
+        "pages": [
+          37
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p4054",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4054.pdf",
+      "sha256": "92f7aa3331c5940c79981c7d3dd4d28ea15207d63f172c0ab5451a2d156cca74",
+      "select": {
+        "pages": [
+          38
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p4054-d",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4054d.pdf",
+      "sha256": "fa71d69267714a3791fd9771486913ade4e2c30230d5e59ddb3380b999f7434d",
+      "select": {
+        "pages": [
+          59
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p4491",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4491.pdf",
+      "sha256": "13b6ef6372f32e70d0fbb1e0d71078bc056b119c9da07ddf75d20f101e04891a",
+      "select": {
+        "pages": [
+          12
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p4491-x",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4491x.pdf",
+      "sha256": "d3cd3b8287be84b39faaf9085f34f5dfd1c0f34cd56b64be64414f5ab6187c0b",
+      "select": {
+        "pages": [
+          5
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p4696",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4696pr.pdf",
+      "sha256": "862faf8b7ff7e688af34a75b3fe199b399831995bf352bbb0476c5c76eca2969",
+      "select": {
+        "pages": [
+          10
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p4801",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4801.pdf",
+      "sha256": "49686f6c909452bc775bed40f10a633629e8ce486d7f47ee131cb093d1d04d81",
+      "select": {
+        "pages": [
+          15,
+          16
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p4832",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4832.pdf",
+      "sha256": "5eb8119e9708978101954c57014e1a9ee6d19a6f9c33dfcf920fb7b67cc6191c",
+      "select": {
+        "pages": [
+          15
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p4961",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p4961.pdf",
+      "sha256": "fb3ec9ebe43dc566c44a3860f9e3afebc1d64a90120997196c1804a42efaa8cb",
+      "select": {
+        "pages": [
+          14,
+          23
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p5035",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p5035.pdf",
+      "sha256": "4421dc77a4474cc2814997db80dbc305c6215bf98fa8aabf9fd9a0cc1202259d",
+      "select": {
+        "pages": [
+          73
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p5187",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p5187.pdf",
+      "sha256": "8c0819d376c3703fbe97cc057c8abd5c121e12b97c68bcc1ede6e1ba5de37cef",
+      "select": {
+        "pages": [
+          14
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    },
+    {
+      "id": "irs-p5209",
+      "kind": "irs",
+      "groups": [
+        "status"
+      ],
+      "url": "https://www.irs.gov/pub/irs-pdf/p5209.pdf",
+      "sha256": "0a7eacd8cbd3bc63be9918d0dbefcb3a0debe85509260666d35e4dba7736132f",
+      "select": {
+        "pages": [
+          1
+        ]
+      },
+      "keys": [
+        "Single",
+        "Married filing jointly",
+        "Married filing separately",
+        "Head of household",
+        "Qualifying surviving spouse"
+      ]
+    }
+  ]
+}

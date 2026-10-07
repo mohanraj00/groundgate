@@ -1,0 +1,276 @@
+{
+ "irs-p1040:12033": [
+  "Single"
+ ],
+ "irs-p1040:12055": [
+  "Single"
+ ],
+ "irs-p1040:213": [
+  "Married filing jointly"
+ ],
+ "irs-p1040:243": [
+  "Married filing jointly"
+ ],
+ "irs-p1040:439": [
+  "Married filing jointly"
+ ],
+ "irs-p1040:5980": null,
+ "irs-p1167:1121": [
+  "Married filing jointly"
+ ],
+ "irs-p1167:2683": [
+  "Single",
+  "Married filing separately"
+ ],
+ "irs-p1167:2756": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1167:2783": [
+  "Head of household"
+ ],
+ "irs-p1167:7059": [
+  "Married filing jointly"
+ ],
+ "irs-p1167:8620": [
+  "Single",
+  "Married filing separately"
+ ],
+ "irs-p1494:3104": [
+  "Single"
+ ],
+ "irs-p1494:3445": [
+  "Single"
+ ],
+ "irs-p1494:3479": [
+  "Single"
+ ],
+ "irs-p1494:3492": [
+  "Single"
+ ],
+ "irs-p1494:3596": [
+  "Married filing jointly"
+ ],
+ "irs-p1494:3883": [
+  "Married filing jointly"
+ ],
+ "irs-p3524:1638": [
+  "Single",
+  "Married filing jointly",
+  "Married filing separately",
+  "Head of household",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p3524:1700": [
+  "Single",
+  "Married filing jointly",
+  "Married filing separately",
+  "Head of household",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p3524:1782": [
+  "Single",
+  "Married filing separately",
+  "Head of household",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p3524:1791": [
+  "Married filing jointly"
+ ],
+ "irs-p3524:1886": [
+  "Single",
+  "Married filing separately",
+  "Head of household",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p3524:1895": [
+  "Married filing jointly"
+ ],
+ "irs-p3920:1401": null,
+ "irs-p3920:1419": null,
+ "irs-p3920:1441": null,
+ "irs-p3920:1603": null,
+ "irs-p3920:2417": null,
+ "irs-p3920:2481": null,
+ "irs-p4011:1887": null,
+ "irs-p4011:2117": [
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4011:2158": [
+  "Single",
+  "Married filing separately"
+ ],
+ "irs-p4011:2324": null,
+ "irs-p4011:2388": null,
+ "irs-p4011:2499": null,
+ "irs-p4012-a:684": [
+  "Single"
+ ],
+ "irs-p4012-a:693": [
+  "Single"
+ ],
+ "irs-p4012-a:702": [
+  "Married filing jointly"
+ ],
+ "irs-p4012-a:711": [
+  "Married filing jointly"
+ ],
+ "irs-p4012-a:720": [
+  "Married filing jointly"
+ ],
+ "irs-p4012-a:729": [
+  "Married filing separately"
+ ],
+ "irs-p4054-d:544": [
+  "Single",
+  "Head of household"
+ ],
+ "irs-p4054-d:552": [
+  "Single",
+  "Head of household"
+ ],
+ "irs-p4054-d:558": [
+  "Single",
+  "Head of household"
+ ],
+ "irs-p4054-d:573": [
+  "Single",
+  "Head of household"
+ ],
+ "irs-p4054-d:589": [
+  "Married filing jointly"
+ ],
+ "irs-p4054-d:597": [
+  "Married filing jointly"
+ ],
+ "irs-p4054:3615": null,
+ "irs-p4054:3625": null,
+ "irs-p4054:3762": [
+  "Married filing jointly"
+ ],
+ "irs-p4054:3772": [
+  "Married filing jointly"
+ ],
+ "irs-p4054:877": null,
+ "irs-p4054:95": null,
+ "irs-p4491-x:453": null,
+ "irs-p4491-x:466": null,
+ "irs-p4491-x:641": null,
+ "irs-p4491-x:654": null,
+ "irs-p4491-x:662": null,
+ "irs-p4491-x:675": null,
+ "irs-p4491:1113": [
+  "Single"
+ ],
+ "irs-p4491:1122": [
+  "Married filing jointly"
+ ],
+ "irs-p4491:1456": null,
+ "irs-p4491:679": null,
+ "irs-p4491:728": null,
+ "irs-p4491:981": [
+  "Single",
+  "Married filing jointly",
+  "Married filing separately",
+  "Head of household",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4696:313": [
+  "Single"
+ ],
+ "irs-p4696:340": [
+  "Single"
+ ],
+ "irs-p4696:393": [
+  "Married filing jointly"
+ ],
+ "irs-p4696:493": [
+  "Married filing jointly"
+ ],
+ "irs-p4696:525": [
+  "Married filing jointly"
+ ],
+ "irs-p4696:549": [
+  "Head of household"
+ ],
+ "irs-p4801:5486": [
+  "Single",
+  "Married filing separately"
+ ],
+ "irs-p4801:5553": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4801:5583": [
+  "Head of household"
+ ],
+ "irs-p4801:6647": [
+  "Married filing jointly"
+ ],
+ "irs-p4801:8154": [
+  "Single",
+  "Married filing separately"
+ ],
+ "irs-p4801:872": [
+  "Married filing jointly"
+ ],
+ "irs-p4832:374": null,
+ "irs-p4832:383": null,
+ "irs-p4832:392": null,
+ "irs-p4961:1137": null,
+ "irs-p4961:1185": null,
+ "irs-p4961:1407": [
+  "Head of household"
+ ],
+ "irs-p4961:4140": null,
+ "irs-p4961:4306": null,
+ "irs-p4961:4966": null,
+ "irs-p5035:1404": [
+  "Single"
+ ],
+ "irs-p5035:1414": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p5035:1483": [
+  "Head of household"
+ ],
+ "irs-p5035:2454": [
+  "Single"
+ ],
+ "irs-p5035:2464": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p5035:2533": [
+  "Head of household"
+ ],
+ "irs-p5187:464": [
+  "Single"
+ ],
+ "irs-p5187:470": [
+  "Single"
+ ],
+ "irs-p5187:476": [
+  "Single"
+ ],
+ "irs-p5187:494": [
+  "Married filing jointly",
+  "Married filing separately",
+  "Head of household",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p5187:500": [
+  "Married filing jointly",
+  "Married filing separately",
+  "Head of household",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p5187:508": [
+  "Married filing jointly",
+  "Married filing separately",
+  "Head of household",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p5209:1344": null
+}
