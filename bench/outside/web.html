@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outside labels</title>
+<style>
+  body { margin: 0; font: 15px/1.45 system-ui, sans-serif; color: #1d1d1f; background: #f4f4f2; }
+  .wrap { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); height: 100vh; }
+  #view { overflow: auto; padding: 16px 20px; }
+  #side { overflow: auto; padding: 16px 20px; border-left: 1px solid #ccc; background: #fff; }
+  h1 { font-size: 15px; margin: 0 0 4px; }
+  .meta { color: #666; font-size: 13px; margin-bottom: 12px; }
+  .q { font-weight: 600; margin: 14px 0 8px; }
+  .value { font-size: 22px; font-weight: 600; }
+  .field { font: 13px ui-monospace, monospace; }
+  #text { white-space: pre-wrap; font: 13px/1.4 ui-monospace, monospace; background: #fff;
+          border: 1px solid #ddd; padding: 10px; }
+  mark { background: #ffd43b; outline: 2px solid #e8590c; }
+  .opts { display: grid; gap: 6px; }
+  .opt { text-align: left; padding: 8px 10px; border: 1px solid #bbb; border-radius: 6px;
+         background: #fff; font: inherit; cursor: pointer; }
+  .opt.on { background: #1c7ed6; border-color: #1c7ed6; color: #fff; }
+  .opt:disabled { opacity: .4; cursor: default; }
+  input[type=text] { width: 100%; box-sizing: border-box; padding: 7px; font: inherit;
+                     border: 1px solid #bbb; border-radius: 6px; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .row button { padding: 7px 12px; border: 1px solid #bbb; border-radius: 6px; background: #f1f1ef;
+                font: inherit; cursor: pointer; }
+  .row button.main { background: #2b8a3e; border-color: #2b8a3e; color: #fff; }
+  .now { margin-top: 10px; font-size: 13px; color: #444; }
+  .help { margin-top: 14px; font-size: 12px; color: #666; }
+  .err { color: #c92a2a; font-size: 13px; }
+  a { color: #1c7ed6; }
+  @media (max-width: 800px) { .wrap { display: block; height: auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="view">
+    <div class="q">The extractor's quote</div>
+    <div id="quote"></div>
+    <div class="q">The text around the cited span</div>
+    <div id="text"></div>
+  </div>
+  <div id="side">
+    <h1 id="title"></h1>
+    <div class="meta" id="meta"></div>
+    <div class="field" id="field"></div>
+    <div class="meta" id="desc"></div>
+    <div class="value" id="value"></div>
+    <div class="q">Is this value true for the field and the document's subject?</div>
+    <div class="opts">
+      <button class="opt" data-v="right">Right</button>
+      <button class="opt" data-v="wrong">Wrong</button>
+      <button class="opt" data-v="not sure">Not sure</button>
+    </div>
+    <div class="q">If right: where does it come from?</div>
+    <div class="opts">
+      <button class="opt" data-b="document">From the document (a computation, a sign, or a table scale)</button>
+      <button class="opt" data-b="outside">From outside the document</button>
+    </div>
+    <div class="q">If right: the source (a URL, or "the document")</div>
+    <input type="text" id="source" placeholder="https://...">
+    <div class="row">
+      <button class="main" id="save">Save</button>
+      <button id="back">Back</button>
+      <button id="next">Next</button>
+      <button id="todo">Next without a label</button>
+    </div>
+    <div class="err" id="err"></div>
+    <div class="now" id="now"></div>
+    <div class="help">
+      The value is not anywhere in the document as written, so groundgate rejected it. Label it
+      <b>right</b> only when it is true for this field and this document's subject (the drug, the
+      company and fiscal year, the publication, the rule, the accident). Then say whether the
+      document's own numbers give it (for example a loss in brackets, a table "in thousands", or
+      two numbers added), or whether it needs knowledge from outside the document, and give the
+      source. <b>Not sure</b> when you can't tell.
+    </div>
+  </div>
+</div>
+<script>
+let S, i = 0, verdict = null, basis = null;
+const $ = (id) => document.getElementById(id);
+
+function fmt(l) {
+  if (!l) return "no label yet";
+  return l.verdict + (l.basis ? ", " + l.basis : "") + (l.source ? " (" + l.source + ")" : "");
+}
+
+function show() {
+  const it = S.items[i], l = S.labels[it.id];
+  $("title").textContent = it.doc;
+  $("meta").innerHTML = "";
+  if (it.url) {
+    const a = document.createElement("a");
+    a.href = it.url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = "source document";
+    $("meta").append(it.kind + " · ", a);
+  }
+  $("field").textContent = it.field + (it.key ? "  for  " + it.key : "");
+  $("desc").textContent = it.description;
+  $("value").textContent = it.value + (it.unit ? " " + it.unit : "");
+  $("quote").textContent = it.quote || "(no quote)";
+  const t = $("text"); t.textContent = "";
+  if (it.cited) {
+    const m = document.createElement("mark"); m.textContent = it.cited;
+    t.append(it.before, m, it.after);
+  } else {
+    t.textContent = "(the quote is not in the document, so there is no cited span)";
+  }
+  verdict = l ? l.verdict : null; basis = l ? l.basis : null;
+  $("source").value = l && l.source ? l.source : "";
+  paint();
+  const done = Object.keys(S.labels).length;
+  $("now").textContent = `Item ${i + 1} of ${S.items.length} · ${done} labeled · this one: ${fmt(l)}`;
+  $("err").textContent = "";
+}
+
+function paint() {
+  document.querySelectorAll("[data-v]").forEach((b) => b.classList.toggle("on", b.dataset.v === verdict));
+  document.querySelectorAll("[data-b]").forEach((b) => {
+    b.classList.toggle("on", b.dataset.b === basis);
+    b.disabled = verdict !== "right";
+  });
+  $("source").disabled = verdict !== "right";
+}
+
+document.querySelectorAll("[data-v]").forEach((b) => b.onclick = () => {
+  verdict = b.dataset.v; if (verdict !== "right") basis = null; paint();
+});
+document.querySelectorAll("[data-b]").forEach((b) => b.onclick = () => { basis = b.dataset.b; paint(); });
+
+async function save() {
+  const it = S.items[i];
+  const body = { id: it.id, verdict };
+  if (verdict === "right") {
+    body.basis = basis; body.source = $("source").value.trim();
+    if (!basis || !body.source) { $("err").textContent = "A right value needs its basis and a source."; return; }
+  }
+  if (!verdict) { $("err").textContent = "Pick right, wrong or not sure."; return; }
+  const r = await fetch("/label", { method: "POST", headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify(body) });
+  if (!r.ok) { $("err").textContent = "Not saved: " + (await r.text()); return; }
+  S.labels[it.id] = { verdict, basis: body.basis || null, source: body.source || null };
+  next(true);
+}
+
+function next(todo) {
+  const n = S.items.length;
+  for (let k = 1; k <= n; k++) {
+    const j = (i + k) % n;
+    if (!todo || !S.labels[S.items[j].id]) { i = j; show(); return; }
+  }
+  show();
+}
+
+$("save").onclick = save;
+$("next").onclick = () => { i = (i + 1) % S.items.length; show(); };
+$("back").onclick = () => { i = (i - 1 + S.items.length) % S.items.length; show(); };
+$("todo").onclick = () => next(true);
+
+fetch("/state").then((r) => r.json()).then((s) => {
+  S = s;
+  const first = S.items.findIndex((it) => !S.labels[it.id]);
+  i = first < 0 ? 0 : first;
+  show();
+});
+</script>
+</body>
+</html>
