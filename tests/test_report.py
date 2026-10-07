@@ -207,3 +207,12 @@ def test_report_shows_the_cited_key_span() -> None:
     assert "key cited “Single”" in html
     assert '<a href="#k0">show key</a>' in html
     assert '<span class="anchor" id="k0"></span><mark class="key"' in html
+
+
+def test_report_marks_a_key_span_inside_the_value_evidence() -> None:
+    text = "Single: the deduction is $15,000."
+    schema = {"fields": {"d": {"type": "integer", "unit": "USD", "keys": ["single"]}}}
+    cands = [{"field": "d", "value": "15000", "unit": "USD", "key": "single",
+              "evidence": ev(text, text), "key_evidence": ev("Single", text)}]  # fmt: skip
+    html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
+    assert re.search(r'<mark class="(admitted|needs_verification) key" title="[^"]*key of d', html)

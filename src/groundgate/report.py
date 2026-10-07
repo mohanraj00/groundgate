@@ -258,17 +258,20 @@ def _document(text: str, items: list[_Item], layout: Layout | None) -> str:
     for a, b in pairwise(bounds):
         out.extend(f'<span class="anchor" id="{n}"></span>' for n in starts.get(a, []))
         covering = [i for i in spans if i.span and i.span[0] <= a and b <= i.span[1]]
-        if not covering:
-            naming = [i for i in keyed if i.key_span and i.key_span[0] <= a and b <= i.key_span[1]]
-            if naming:
-                tip = "\n".join("key of " + _tooltip(i.decision) for i in naming)
-                out.append(f'<mark class="key" title="{_e(tip)}">{body(text[a:b])}</mark>')
-            else:
-                out.append(body(text[a:b]))
+        naming = [i for i in keyed if i.key_span and i.key_span[0] <= a and b <= i.key_span[1]]
+        if not covering and not naming:
+            out.append(body(text[a:b]))
             continue
-        worst = max(covering, key=lambda i: SEVERITY.get(_outcome(i), 0))
-        tip = "\n".join(_tooltip(i.decision) for i in covering)
-        out.append(f'<mark class="{_outcome(worst)}" title="{_e(tip)}">{body(text[a:b])}</mark>')
+        classes = []
+        if covering:
+            classes.append(_outcome(max(covering, key=lambda i: SEVERITY.get(_outcome(i), 0))))
+        if naming:
+            classes.append("key")
+        tip = "\n".join(
+            [_tooltip(i.decision) for i in covering]
+            + ["key of " + _tooltip(i.decision) for i in naming]
+        )
+        out.append(f'<mark class="{" ".join(classes)}" title="{_e(tip)}">{body(text[a:b])}</mark>')
     return "".join(out)
 
 
@@ -351,7 +354,7 @@ mark {{ color: inherit; border-radius: 2px; padding: 1px 0; }}
 mark.admitted {{ background: var(--ok-bg); box-shadow: inset 0 -2px var(--ok); }}
 mark.needs_verification {{ background: var(--warn-bg); box-shadow: inset 0 -2px var(--warn); }}
 mark.rejected {{ background: var(--bad-bg); box-shadow: inset 0 -2px var(--bad); }}
-mark.key {{ background: none; box-shadow: inset 0 -2px var(--focus); }}
+mark.key {{ text-decoration: underline 2px var(--focus); text-underline-offset: 3px; }}
 .anchor {{ scroll-margin-top: 40vh; }}
 .anchor:target + mark, .anchor:target + .anchor + mark,
 .anchor:target + .anchor + .anchor + mark {{ outline: 2px solid var(--focus);
