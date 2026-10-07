@@ -106,8 +106,9 @@ jobs:
         run: uv run python bench/judges/aviation/judge.py report --check
       - name: Quote-flag counts and COUNTS.md match the recorded runs
         run: uv run --group langextract python bench/judges/quotes/count.py --check
-      - name: The 10-K calibration report and results match their recorded answers
+      - name: The 10-K calibration report and results match their recorded answers, on the 0.4.0 wheel
         run: |
-          uv run groundgate-calibrate report --work bench/sec/work-field --check
-          uv run groundgate-calibrate report --work bench/sec/work-key --check
-          uv run python bench/sec/sec.py results --check
+          run04="uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.4.0 --with ./calibrate"
+          $run04 groundgate-calibrate report --work bench/sec/work-field --check
+          $run04 groundgate-calibrate report --work bench/sec/work-key --check
+          $run04 python bench/sec/sec.py results --check
