@@ -147,7 +147,7 @@ later check runs. `value` means the candidate's value parsed per its field type.
 
 | Step | Code | Rejects when |
 |---:|---|---|
-| 1 | `CANDIDATE_INVALID` | The candidate is not an object, `field` is not a string, `value` is missing or not a string/integer, `unit` or `key` is not a string, `confidence` is not a number in [0, 1], or `evidence`, `key_evidence` or `search_region` is present but not an object with integer `start` and `end`, or `evidence` or `key_evidence` has a `text` that is not a string. A member whose value is null counts as absent. This step checks `key_evidence` on every field, also where it is ignored. |
+| 1 | `CANDIDATE_INVALID` | The candidate is not an object, `field` is not a string, `value` is missing or not a string/integer, `unit` or `key` is not a string, `confidence` is not a number in [0, 1], or `evidence`, `key_evidence` or `search_region` is present but not an object with integer `start` and `end`, or `evidence` or `key_evidence` has a `text` that is not a string. A member of the candidate itself whose value is null counts as absent; a null `text` inside `evidence` or `key_evidence` is not a string. This step checks `key_evidence` on every field, also where it is ignored. |
 | 2 | `FIELD_UNKNOWN` | `field` is not in the schema. |
 | 3 | `NULL_STRING_LITERAL` | `value`, trimmed and lower-cased, is `null`, `none`, `nil` or `n/a`. |
 | 4 | `TYPE_INVALID` | `value` does not parse as the field type (§4.1). |

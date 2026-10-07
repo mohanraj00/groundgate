@@ -1937,6 +1937,17 @@ vector(
             key="hypertension",
             key_evidence={"start": True, "end": 5},
         ),
+        # a null text inside the citation is not a string
+        c(
+            "m11",
+            "sixth",
+            "7",
+            "mg",
+            q("7 mg"),
+            ("rejected", ["CANDIDATE_INVALID"]),
+            key="hypertension",
+            key_evidence={"quote": "Hypertension", "n": 5, "text": None},
+        ),
         # on a field without keys, a citation must still be well formed
         c(
             "m10",

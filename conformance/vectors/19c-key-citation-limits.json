@@ -223,6 +223,23 @@
    }
   },
   {
+   "id": "m11",
+   "field": "sixth",
+   "value": "7",
+   "unit": "mg",
+   "evidence": {
+    "start": 366,
+    "end": 370,
+    "text": "7 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 326,
+    "end": 338,
+    "text": null
+   }
+  },
+  {
    "id": "m10",
    "field": "plain",
    "value": "7",
@@ -306,6 +323,12 @@
     "outcome": "needs_verification",
     "codes": [
      "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
     ]
    },
    {
