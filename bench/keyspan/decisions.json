@@ -2772,9 +2772,10 @@
       2680
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -2800,9 +2801,10 @@
       2680
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -2828,9 +2830,10 @@
       2753
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -2856,9 +2859,10 @@
       2753
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -2884,9 +2888,10 @@
       2780
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -3699,10 +3704,7 @@
       2466,
       2472
      ],
-     "key_evidence": [
-      2477,
-      2504
-     ],
+     "key_evidence": null,
      "0.5": [
       "needs_verification",
       [
@@ -3754,10 +3756,7 @@
       2525,
       2531
      ],
-     "key_evidence": [
-      2536,
-      2584
-     ],
+     "key_evidence": null,
      "0.5": [
       "needs_verification",
       [
@@ -3989,9 +3988,10 @@
       5483
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -4017,8 +4017,10 @@
       5483
      ],
      "0.5": [
-      "admitted",
-      []
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
      ],
      "0.4": [
       "admitted",
@@ -4041,9 +4043,10 @@
       5550
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -4069,8 +4072,10 @@
       5550
      ],
      "0.5": [
-      "admitted",
-      []
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
      ],
      "0.4": [
       "admitted",
@@ -4093,8 +4098,10 @@
       5580
      ],
      "0.5": [
-      "admitted",
-      []
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
      ],
      "0.4": [
       "admitted",
@@ -4117,9 +4124,10 @@
       8151
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -4145,8 +4153,10 @@
       8151
      ],
      "0.5": [
-      "admitted",
-      []
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
      ],
      "0.4": [
       "admitted",
@@ -4169,9 +4179,10 @@
       8218
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -4197,8 +4208,10 @@
       8218
      ],
      "0.5": [
-      "admitted",
-      []
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
      ],
      "0.4": [
       "admitted",
@@ -4221,8 +4234,10 @@
       8248
      ],
      "0.5": [
-      "admitted",
-      []
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
      ],
      "0.4": [
       "admitted",
@@ -4616,9 +4631,10 @@
       284
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -4644,9 +4660,10 @@
       284
      ],
      "0.5": [
-      "admitted",
+      "needs_verification",
       [
-       "KEY_CITED"
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
       ]
      ],
      "0.4": [
@@ -4672,6 +4689,5385 @@
       284
      ],
      "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "sec": {
+  "population": {
+   "sec-0000708781-26-000010:3": 16345,
+   "sec-0000708781-26-000010:4": 16355,
+   "sec-0000708781-26-000010:7": 56611,
+   "sec-0000737875-26-000009:2": 3334,
+   "sec-0000918541-26-000006:0": 7288,
+   "sec-0000918541-26-000006:1": 7299,
+   "sec-0001104659-26-021557:1": 6747,
+   "sec-0001104659-26-021557:5": 12873,
+   "sec-0001125376-26-000007:4": 43485,
+   "sec-0001125376-26-000007:5": 43498,
+   "sec-0001193125-26-057356:2": 12376,
+   "sec-0001193125-26-057356:3": 12385,
+   "sec-0001193125-26-057356:4": 12376,
+   "sec-0001193125-26-057356:5": 12385,
+   "sec-0001193125-26-066979:8": 42586,
+   "sec-0001193125-26-066979:9": 42597,
+   "sec-0001193125-26-066979:10": 42813,
+   "sec-0001193125-26-066979:11": 42823,
+   "sec-0001193125-26-066979:12": 42098,
+   "sec-0001193125-26-066979:13": 42109,
+   "sec-0001193125-26-076810:12": 35318,
+   "sec-0001193125-26-076810:13": 35327,
+   "sec-0001193125-26-076810:14": 35770,
+   "sec-0001193125-26-076810:15": 35780,
+   "sec-0001193125-26-077343:0": 11415,
+   "sec-0001193125-26-077343:1": 11427,
+   "sec-0001193125-26-107971:8": 32547,
+   "sec-0001193125-26-107971:9": 32559,
+   "sec-0001193125-26-134736:0": 7506,
+   "sec-0001193125-26-134736:1": 7517,
+   "sec-0001213900-26-036517:1": 16570,
+   "sec-0001398659-26-000004:15": 56532,
+   "sec-0001398659-26-000004:16": 56541,
+   "sec-0001437749-26-005376:0": 1808,
+   "sec-0001437749-26-005875:6": 15290,
+   "sec-0001437749-26-005875:7": 15302,
+   "sec-0001437749-26-005875:8": 15314,
+   "sec-0001493152-26-009848:6": 12328,
+   "sec-0001493152-26-009848:7": 12338,
+   "sec-0001493152-26-013844:0": 1937,
+   "sec-0001571949-26-000004:0": 6245,
+   "sec-0001571949-26-000004:1": 6254,
+   "sec-0001571949-26-000004:2": 6277,
+   "sec-0001571949-26-000004:3": 6599,
+   "sec-0001571949-26-000004:4": 6608,
+   "sec-0001571949-26-000004:5": 6632,
+   "sec-0001571949-26-000004:6": 7053,
+   "sec-0001571949-26-000004:7": 7062,
+   "sec-0001571949-26-000004:8": 7086,
+   "sec-0001571949-26-000004:12": 38197,
+   "sec-0001571949-26-000004:13": 38204,
+   "sec-0001571949-26-000004:14": 38224,
+   "sec-0001571949-26-000004:15": 84508,
+   "sec-0001571949-26-000004:16": 84517,
+   "sec-0001571949-26-000004:17": 39689,
+   "sec-0001571949-26-000004:19": 46917,
+   "sec-0001571949-26-000004:26": 84535,
+   "sec-0001571949-26-000004:27": 84544,
+   "sec-0001571949-26-000004:28": 84553,
+   "sec-0001571949-26-000004:29": 85201,
+   "sec-0001571949-26-000004:30": 85210,
+   "sec-0001571949-26-000004:31": 85219,
+   "sec-0001571949-26-000004:32": 85594,
+   "sec-0001571949-26-000004:33": 85603,
+   "sec-0001571949-26-000004:34": 85612,
+   "sec-0001628280-26-004357:15": 29487,
+   "sec-0001628280-26-004357:16": 29496,
+   "sec-0001628280-26-004357:17": 29505,
+   "sec-0001628369-26-000008:9": 29446,
+   "sec-0001628369-26-000008:10": 36686,
+   "sec-0001717307-26-000012:8": 22754,
+   "sec-0001717307-26-000012:9": 22765,
+   "sec-0001725160-26-000014:2": 24613,
+   "sec-0001759655-26-000010:9": 34483,
+   "sec-0001759655-26-000010:10": 34493,
+   "sec-0001828318-26-000006:1": 15053,
+   "sec-0001828318-26-000006:2": 15063
+  },
+  "runs": {
+   "plain": [
+    {
+     "doc": "sec-0000708781-26-000010",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "190800000",
+     "at": 16795,
+     "evidence": [
+      16794,
+      16808
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000708781-26-000010",
+     "id": 3,
+     "field": "net_income",
+     "key": "2025",
+     "value": "35116",
+     "at": 16345,
+     "evidence": [
+      16343,
+      16351
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0000708781-26-000010",
+     "id": 4,
+     "field": "net_income",
+     "key": "2024",
+     "value": "19168",
+     "at": 16355,
+     "evidence": [
+      16353,
+      16361
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0000708781-26-000010",
+     "id": 5,
+     "field": "net_income",
+     "key": "2023",
+     "value": "30059",
+     "at": 16365,
+     "evidence": [
+      16363,
+      16371
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000708781-26-000010",
+     "id": 6,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "392300000",
+     "at": 48056,
+     "evidence": [
+      48055,
+      48069
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000708781-26-000010",
+     "id": 7,
+     "field": "net_income",
+     "key": "2025",
+     "value": "35100000",
+     "at": 56611,
+     "evidence": [
+      56610,
+      56623
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 0,
+     "field": "net_income",
+     "key": "2025",
+     "value": "6152000",
+     "at": 702,
+     "evidence": [
+      701,
+      711
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 2,
+     "field": "net_income",
+     "key": "2023",
+     "value": "5560",
+     "at": 3334,
+     "evidence": [
+      3331,
+      3339
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 5,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "121249000",
+     "at": 26597,
+     "evidence": [
+      26596,
+      26608
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 6,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "17254000",
+     "at": 26636,
+     "evidence": [
+      26635,
+      26646
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 7,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "242845000",
+     "at": 69960,
+     "evidence": [
+      69959,
+      69971
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 8,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "240426000",
+     "at": 70010,
+     "evidence": [
+      70009,
+      70021
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000918541-26-000006",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "422207",
+     "at": 7288,
+     "evidence": [
+      7286,
+      7295
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0000918541-26-000006",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "464290",
+     "at": 7299,
+     "evidence": [
+      7297,
+      7306
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001079973-26-000129",
+     "id": 2,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "1136000",
+     "at": 10623,
+     "evidence": [
+      10622,
+      10632
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001079973-26-000129",
+     "id": 3,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "477000",
+     "at": 10678,
+     "evidence": [
+      10677,
+      10685
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001079973-26-000129",
+     "id": 4,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "1000000",
+     "at": 12962,
+     "evidence": [
+      12947,
+      12971
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 0,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "646000000",
+     "at": 5827,
+     "evidence": [
+      5826,
+      5840
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 1,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "559200000",
+     "at": 5924,
+     "evidence": [
+      5923,
+      5937
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 8,
+     "field": "revenue",
+     "key": "2025",
+     "value": "46000000",
+     "at": 27905,
+     "evidence": [
+      27904,
+      27917
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 9,
+     "field": "revenue",
+     "key": "2024",
+     "value": "434400000",
+     "at": 29002,
+     "evidence": [
+      29001,
+      29015
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 10,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "646000000",
+     "at": 34068,
+     "evidence": [
+      34067,
+      34081
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 11,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "559200000",
+     "at": 34087,
+     "evidence": [
+      34086,
+      34100
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 12,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "646000000",
+     "at": 37844,
+     "evidence": [
+      37843,
+      37857
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2665948",
+     "at": 9268,
+     "evidence": [
+      9267,
+      9277
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2443942",
+     "at": 6747,
+     "evidence": [
+      6744,
+      6756
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 2,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2665948",
+     "at": 9268,
+     "evidence": [
+      9267,
+      9277
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 3,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2443942",
+     "at": 9341,
+     "evidence": [
+      9340,
+      9350
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 4,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2665948",
+     "at": 9268,
+     "evidence": [
+      9267,
+      9277
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 5,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2443942",
+     "at": 12873,
+     "evidence": [
+      12870,
+      12882
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 8,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "1308529",
+     "at": 27881,
+     "evidence": [
+      27880,
+      27890
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001125376-26-000007",
+     "id": 4,
+     "field": "revenue",
+     "key": "2025",
+     "value": "4837809",
+     "at": 43485,
+     "evidence": [
+      43485,
+      43494
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001125376-26-000007",
+     "id": 5,
+     "field": "revenue",
+     "key": "2024",
+     "value": "4076825",
+     "at": 43498,
+     "evidence": [
+      43498,
+      43507
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-051382",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "531800000",
+     "at": 4924,
+     "evidence": [
+      4923,
+      4937
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-051382",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "428500000",
+     "at": 4943,
+     "evidence": [
+      4942,
+      4956
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2240900000",
+     "at": 3487,
+     "evidence": [
+      3486,
+      3502
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2178000000",
+     "at": 3509,
+     "evidence": [
+      3508,
+      3524
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 2,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "77.3",
+     "at": 12376,
+     "evidence": [
+      12376,
+      12380
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 3,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "48",
+     "at": 12385,
+     "evidence": [
+      12385,
+      12389
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 4,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "77.3",
+     "at": 12376,
+     "evidence": [
+      12373,
+      12380
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 5,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "48",
+     "at": 12385,
+     "evidence": [
+      12382,
+      12389
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 6,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "460.8",
+     "at": 17268,
+     "evidence": [
+      17268,
+      17273
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "SCALE_WORD",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "SCALE_WORD",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 8,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "460800000",
+     "at": 17268,
+     "evidence": [
+      17267,
+      17281
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 0,
+     "field": "net_income",
+     "key": "2025",
+     "value": "13800000",
+     "at": 17078,
+     "evidence": [
+      17077,
+      17090
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 1,
+     "field": "net_income",
+     "key": "2024",
+     "value": "24900000",
+     "at": 17096,
+     "evidence": [
+      17095,
+      17108
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 2,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "215800000",
+     "at": 16870,
+     "evidence": [
+      16869,
+      16883
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 3,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "150000000",
+     "at": 16889,
+     "evidence": [
+      16888,
+      16902
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 4,
+     "field": "net_income",
+     "key": "2025",
+     "value": "9600000",
+     "at": 28601,
+     "evidence": [
+      28600,
+      28612
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 5,
+     "field": "net_income",
+     "key": "2024",
+     "value": "10500000",
+     "at": 28618,
+     "evidence": [
+      28617,
+      28630
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 6,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "94500000",
+     "at": 32068,
+     "evidence": [
+      32067,
+      32080
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 7,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "96600000",
+     "at": 32086,
+     "evidence": [
+      32085,
+      32098
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 8,
+     "field": "revenue",
+     "key": "2025",
+     "value": "18821",
+     "at": 42586,
+     "evidence": [
+      42586,
+      42592
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 9,
+     "field": "revenue",
+     "key": "2024",
+     "value": "24330",
+     "at": 42597,
+     "evidence": [
+      42597,
+      42603
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 10,
+     "field": "net_income",
+     "key": "2025",
+     "value": "8459",
+     "at": 42813,
+     "evidence": [
+      42813,
+      42818
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 11,
+     "field": "net_income",
+     "key": "2024",
+     "value": "12745",
+     "at": 42823,
+     "evidence": [
+      42823,
+      42829
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 12,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "92657",
+     "at": 42098,
+     "evidence": [
+      42098,
+      42104
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 13,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "95028",
+     "at": 42109,
+     "evidence": [
+      42109,
+      42115
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 14,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "350000000",
+     "at": 67748,
+     "evidence": [
+      67747,
+      67759
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-067872",
+     "id": 5,
+     "field": "net_income",
+     "key": "2025",
+     "value": "6000000",
+     "at": 39255,
+     "evidence": [
+      39254,
+      39264
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-067872",
+     "id": 6,
+     "field": "net_income",
+     "key": "2024",
+     "value": "8000000",
+     "at": 39288,
+     "evidence": [
+      39287,
+      39297
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "615200000",
+     "at": 22123,
+     "evidence": [
+      22122,
+      22136
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "522400000",
+     "at": 22150,
+     "evidence": [
+      22149,
+      22163
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 2,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "57300000",
+     "at": 22222,
+     "evidence": [
+      22221,
+      22234
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 10,
+     "field": "revenue",
+     "key": "2025",
+     "value": "615200000",
+     "at": 28520,
+     "evidence": [
+      28519,
+      28533
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 11,
+     "field": "revenue",
+     "key": "2024",
+     "value": "522400000",
+     "at": 28556,
+     "evidence": [
+      28555,
+      28569
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 12,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "19.5",
+     "at": 35318,
+     "evidence": [
+      35318,
+      35322
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 13,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "20.2",
+     "at": 35327,
+     "evidence": [
+      35327,
+      35331
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 14,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "441",
+     "at": 35770,
+     "evidence": [
+      35770,
+      35775
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 15,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "485.2",
+     "at": 35780,
+     "evidence": [
+      35780,
+      35785
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-077343",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "251281",
+     "at": 11415,
+     "evidence": [
+      11412,
+      11422
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-077343",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "259701",
+     "at": 11427,
+     "evidence": [
+      11424,
+      11434
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-107971",
+     "id": 8,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "600895",
+     "at": 32547,
+     "evidence": [
+      32544,
+      32554
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-107971",
+     "id": 9,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "169891",
+     "at": 32559,
+     "evidence": [
+      32556,
+      32566
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-134736",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "17597",
+     "at": 7506,
+     "evidence": [
+      7506,
+      7512
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-134736",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "17055",
+     "at": 7517,
+     "evidence": [
+      7517,
+      7523
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-134736",
+     "id": 2,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "50000000",
+     "at": 20349,
+     "evidence": [
+      20348,
+      20361
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "648900000",
+     "at": 2303,
+     "evidence": [
+      2302,
+      2316
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "624600000",
+     "at": 2372,
+     "evidence": [
+      2371,
+      2385
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 2,
+     "field": "revenue",
+     "key": "2025",
+     "value": "648900000",
+     "at": 45073,
+     "evidence": [
+      45072,
+      45086
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 3,
+     "field": "revenue",
+     "key": "2024",
+     "value": "624600000",
+     "at": 45140,
+     "evidence": [
+      45139,
+      45153
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 4,
+     "field": "net_income",
+     "key": "2025",
+     "value": "31600000",
+     "at": 58217,
+     "evidence": [
+      58216,
+      58229
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 5,
+     "field": "net_income",
+     "key": "2024",
+     "value": "16100000",
+     "at": 58244,
+     "evidence": [
+      58243,
+      58256
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 10,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "96400000",
+     "at": 79098,
+     "evidence": [
+      79097,
+      79110
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-021201",
+     "id": 0,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "228000",
+     "at": 5799,
+     "evidence": [
+      5784,
+      5806
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-024633",
+     "id": 0,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "25000",
+     "at": 12482,
+     "evidence": [
+      12481,
+      12488
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-024633",
+     "id": 1,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "0",
+     "at": 12494,
+     "evidence": [
+      12493,
+      12495
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-024633",
+     "id": 2,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "397000",
+     "at": 13635,
+     "evidence": [
+      13620,
+      13642
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-024633",
+     "id": 3,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "0",
+     "at": 13648,
+     "evidence": [
+      13647,
+      13649
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-024633",
+     "id": 4,
+     "field": "net_income",
+     "key": "2025",
+     "value": "18000",
+     "at": 15177,
+     "evidence": [
+      15162,
+      15183
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036517",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2426609",
+     "at": 16570,
+     "evidence": [
+      16568,
+      16579
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036517",
+     "id": 6,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "6436082",
+     "at": 22203,
+     "evidence": [
+      22202,
+      22212
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036517",
+     "id": 7,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "164812",
+     "at": 22272,
+     "evidence": [
+      22271,
+      22279
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 0,
+     "field": "revenue",
+     "key": "2024",
+     "value": "176600000",
+     "at": 2807,
+     "evidence": [
+      2806,
+      2820
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 1,
+     "field": "revenue",
+     "key": "2025",
+     "value": "195200000",
+     "at": 2826,
+     "evidence": [
+      2825,
+      2839
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 2,
+     "field": "net_income",
+     "key": "2024",
+     "value": "9600000",
+     "at": 2938,
+     "evidence": [
+      2937,
+      2949
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 10,
+     "field": "revenue",
+     "key": "2025",
+     "value": "89200000",
+     "at": 16345,
+     "evidence": [
+      16344,
+      16357
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 11,
+     "field": "revenue",
+     "key": "2024",
+     "value": "40000000",
+     "at": 16419,
+     "evidence": [
+      16418,
+      16431
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 12,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "18400000",
+     "at": 20569,
+     "evidence": [
+      20568,
+      20581
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 13,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "8800000",
+     "at": 20659,
+     "evidence": [
+      20658,
+      20670
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 14,
+     "field": "net_income",
+     "key": "2025",
+     "value": "11000000",
+     "at": 21902,
+     "evidence": [
+      21901,
+      21914
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 15,
+     "field": "net_income",
+     "key": "2024",
+     "value": "9600000",
+     "at": 21982,
+     "evidence": [
+      21981,
+      21993
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "6800000000",
+     "at": 17742,
+     "evidence": [
+      17741,
+      17754
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "5960000000",
+     "at": 17796,
+     "evidence": [
+      17795,
+      17808
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 2,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "2080000000",
+     "at": 18255,
+     "evidence": [
+      18254,
+      18267
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 3,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "1800000000",
+     "at": 18309,
+     "evidence": [
+      18308,
+      18321
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "5100000000",
+     "at": 2713,
+     "evidence": [
+      2712,
+      2724
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 1,
+     "field": "revenue",
+     "key": "2025",
+     "value": "5079900000",
+     "at": 37508,
+     "evidence": [
+      37507,
+      37523
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 2,
+     "field": "revenue",
+     "key": "2024",
+     "value": "4767100000",
+     "at": 37567,
+     "evidence": [
+      37566,
+      37582
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 3,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "750200000",
+     "at": 44491,
+     "evidence": [
+      44490,
+      44504
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 4,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "702100000",
+     "at": 44465,
+     "evidence": [
+      44464,
+      44478
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 5,
+     "field": "net_income",
+     "key": "2025",
+     "value": "552500000",
+     "at": 46500,
+     "evidence": [
+      46499,
+      46513
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 6,
+     "field": "net_income",
+     "key": "2024",
+     "value": "513700000",
+     "at": 46474,
+     "evidence": [
+      46473,
+      46487
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 7,
+     "field": "revenue",
+     "key": "2025",
+     "value": "5079900000",
+     "at": 37508,
+     "evidence": [
+      37507,
+      37523
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 8,
+     "field": "revenue",
+     "key": "2024",
+     "value": "4767100000",
+     "at": 37567,
+     "evidence": [
+      37566,
+      37582
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 9,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "750200000",
+     "at": 44491,
+     "evidence": [
+      44490,
+      44504
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 10,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "702100000",
+     "at": 44465,
+     "evidence": [
+      44464,
+      44478
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 11,
+     "field": "net_income",
+     "key": "2025",
+     "value": "552500000",
+     "at": 46500,
+     "evidence": [
+      46499,
+      46513
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 12,
+     "field": "net_income",
+     "key": "2024",
+     "value": "513700000",
+     "at": 46474,
+     "evidence": [
+      46473,
+      46487
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 13,
+     "field": "net_income",
+     "key": "2024",
+     "value": "513700000",
+     "at": 46474,
+     "evidence": [
+      46473,
+      46479
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 14,
+     "field": "net_income",
+     "key": "2025",
+     "value": "552500000",
+     "at": 46500,
+     "evidence": [
+      46499,
+      46505
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 15,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "648.2",
+     "at": 56532,
+     "evidence": [
+      56532,
+      56537
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 16,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "853.8",
+     "at": 56541,
+     "evidence": [
+      56541,
+      56546
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005376",
+     "id": 0,
+     "field": "net_income",
+     "key": "2025",
+     "value": "57400000",
+     "at": 1808,
+     "evidence": [
+      1807,
+      1820
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005376",
+     "id": 1,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "41900000",
+     "at": 23965,
+     "evidence": [
+      23964,
+      23977
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005376",
+     "id": 2,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "42500000",
+     "at": 24008,
+     "evidence": [
+      24007,
+      24020
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005875",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "455700000",
+     "at": 3467,
+     "evidence": [
+      3466,
+      3480
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005875",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "249400000",
+     "at": 3483,
+     "evidence": [
+      3482,
+      3496
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005875",
+     "id": 2,
+     "field": "revenue",
+     "key": "2023",
+     "value": "217600000",
+     "at": 3502,
+     "evidence": [
+      3501,
+      3515
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005875",
+     "id": 6,
+     "field": "revenue",
+     "key": "2025",
+     "value": "455715",
+     "at": 15290,
+     "evidence": [
+      15288,
+      15297
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005875",
+     "id": 7,
+     "field": "revenue",
+     "key": "2024",
+     "value": "249365",
+     "at": 15302,
+     "evidence": [
+      15300,
+      15309
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005875",
+     "id": 8,
+     "field": "revenue",
+     "key": "2023",
+     "value": "217646",
+     "at": 15314,
+     "evidence": [
+      15312,
+      15321
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-009848",
+     "id": 6,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "5400",
+     "at": 12328,
+     "evidence": [
+      12326,
+      12333
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-009848",
+     "id": 7,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "3760",
+     "at": 12338,
+     "evidence": [
+      12336,
+      12343
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-009848",
+     "id": 8,
+     "field": "net_income",
+     "key": "2025",
+     "value": "1200000",
+     "at": 15376,
+     "evidence": [
+      15375,
+      15387
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-013844",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "4215",
+     "at": 1937,
+     "evidence": [
+      1935,
+      1942
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-013844",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "465",
+     "at": 1953,
+     "evidence": [
+      1951,
+      1956
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-013844",
+     "id": 6,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "2189232",
+     "at": 7632,
+     "evidence": [
+      7631,
+      7641
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-013844",
+     "id": 7,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "468998",
+     "at": 7656,
+     "evidence": [
+      7655,
+      7663
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "9931",
+     "at": 6245,
+     "evidence": [
+      6245,
+      6250
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "9279",
+     "at": 6254,
+     "evidence": [
+      6254,
+      6259
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 2,
+     "field": "revenue",
+     "key": "2023",
+     "value": "7988",
+     "at": 6277,
+     "evidence": [
+      6277,
+      6282
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 3,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "4929",
+     "at": 6599,
+     "evidence": [
+      6599,
+      6604
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 4,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "4309",
+     "at": 6608,
+     "evidence": [
+      6608,
+      6613
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 5,
+     "field": "operating_income",
+     "key": "2023",
+     "value": "3694",
+     "at": 6632,
+     "evidence": [
+      6632,
+      6637
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 6,
+     "field": "net_income",
+     "key": "2025",
+     "value": "3315",
+     "at": 7053,
+     "evidence": [
+      7053,
+      7058
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 7,
+     "field": "net_income",
+     "key": "2024",
+     "value": "2754",
+     "at": 7062,
+     "evidence": [
+      7062,
+      7067
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 8,
+     "field": "net_income",
+     "key": "2023",
+     "value": "2368",
+     "at": 7086,
+     "evidence": [
+      7086,
+      7091
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 12,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "933",
+     "at": 38197,
+     "evidence": [
+      38195,
+      38200
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 13,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "843",
+     "at": 38204,
+     "evidence": [
+      38202,
+      38207
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 14,
+     "field": "operating_income",
+     "key": "2023",
+     "value": "811",
+     "at": 38224,
+     "evidence": [
+      38222,
+      38227
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 15,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2101",
+     "at": 84508,
+     "evidence": [
+      84508,
+      84513
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 16,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2022",
+     "at": 84517,
+     "evidence": [
+      84517,
+      84522
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 17,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "14",
+     "at": 39689,
+     "evidence": [
+      39687,
+      39691
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 19,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "14",
+     "at": 46917,
+     "evidence": [
+      46917,
+      46919
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 22,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "837000000",
+     "at": 63981,
+     "evidence": [
+      63980,
+      63992
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 23,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "844000000",
+     "at": 63998,
+     "evidence": [
+      63997,
+      64009
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 24,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "19600000000",
+     "at": 70899,
+     "evidence": [
+      70898,
+      70911
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 25,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "20400000000",
+     "at": 71436,
+     "evidence": [
+      71435,
+      71448
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 26,
+     "field": "revenue",
+     "key": "2025",
+     "value": "9931",
+     "at": 84535,
+     "evidence": [
+      84535,
+      84540
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 27,
+     "field": "revenue",
+     "key": "2024",
+     "value": "9279",
+     "at": 84544,
+     "evidence": [
+      84544,
+      84549
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 28,
+     "field": "revenue",
+     "key": "2023",
+     "value": "7988",
+     "at": 84553,
+     "evidence": [
+      84553,
+      84558
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 29,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "4929",
+     "at": 85201,
+     "evidence": [
+      85201,
+      85206
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 30,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "4309",
+     "at": 85210,
+     "evidence": [
+      85210,
+      85215
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 31,
+     "field": "operating_income",
+     "key": "2023",
+     "value": "3694",
+     "at": 85219,
+     "evidence": [
+      85219,
+      85224
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 32,
+     "field": "net_income",
+     "key": "2025",
+     "value": "3315",
+     "at": 85594,
+     "evidence": [
+      85594,
+      85599
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 33,
+     "field": "net_income",
+     "key": "2024",
+     "value": "2754",
+     "at": 85603,
+     "evidence": [
+      85603,
+      85608
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 34,
+     "field": "net_income",
+     "key": "2023",
+     "value": "2368",
+     "at": 85612,
+     "evidence": [
+      85612,
+      85617
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 35,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "19600000000",
+     "at": 94754,
+     "evidence": [
+      94753,
+      94766
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 36,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "19600000000",
+     "at": 113160,
+     "evidence": [
+      113159,
+      113172
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 15,
+     "field": "revenue",
+     "key": "2025",
+     "value": "41494",
+     "at": 29487,
+     "evidence": [
+      29486,
+      29493
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 16,
+     "field": "revenue",
+     "key": "2024",
+     "value": "22861",
+     "at": 29496,
+     "evidence": [
+      29495,
+      29502
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 17,
+     "field": "revenue",
+     "key": "2023",
+     "value": "33901",
+     "at": 29505,
+     "evidence": [
+      29504,
+      29511
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 36,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "54100000000",
+     "at": 61005,
+     "evidence": [
+      61004,
+      61017
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 37,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "53900000000",
+     "at": 61023,
+     "evidence": [
+      61022,
+      61035
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 38,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "10900000000",
+     "at": 61968,
+     "evidence": [
+      61967,
+      61980
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "10300000000",
+     "at": 2082,
+     "evidence": [
+      2081,
+      2094
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 1,
+     "field": "net_income",
+     "key": "2025",
+     "value": "88200000",
+     "at": 2615,
+     "evidence": [
+      2614,
+      2627
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 2,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "800000000",
+     "at": 3543,
+     "evidence": [
+      3542,
+      3554
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 9,
+     "field": "revenue",
+     "key": "2025",
+     "value": "10300000000",
+     "at": 29446,
+     "evidence": [
+      29445,
+      29458
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 10,
+     "field": "net_income",
+     "key": "2025",
+     "value": "88200000",
+     "at": 36686,
+     "evidence": [
+      36685,
+      36698
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 11,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "800000000",
+     "at": 50735,
+     "evidence": [
+      50734,
+      50746
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001683168-26-000203",
+     "id": 2,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "0",
+     "at": 1812,
+     "evidence": [
+      1811,
+      1813
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001683168-26-000203",
+     "id": 3,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "159",
+     "at": 1819,
+     "evidence": [
+      1818,
+      1822
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001683168-26-000412",
+     "id": 3,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "0",
+     "at": 3540,
+     "evidence": [
+      3539,
+      3541
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001717307-26-000012",
+     "id": 8,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "183031",
+     "at": 22754,
+     "evidence": [
+      22754,
+      22761
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001717307-26-000012",
+     "id": 9,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "242480",
+     "at": 22765,
+     "evidence": [
+      22765,
+      22772
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001717307-26-000012",
+     "id": 10,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "94812",
+     "at": 24271,
+     "evidence": [
+      24270,
+      24277
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001717307-26-000012",
+     "id": 11,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "4214036",
+     "at": 27402,
+     "evidence": [
+      27401,
+      27411
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001725160-26-000014",
+     "id": 2,
+     "field": "revenue",
+     "key": "2024",
+     "value": "67425",
+     "at": 24613,
+     "evidence": [
+      24611,
+      24619
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001725160-26-000014",
+     "id": 7,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "36000000",
+     "at": 30812,
+     "evidence": [
+      30811,
+      30824
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001753539-26-000032",
+     "id": 0,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "207900000",
+     "at": 26387,
+     "evidence": [
+      26386,
+      26400
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001753539-26-000032",
+     "id": 1,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "109000000",
+     "at": 26345,
+     "evidence": [
+      26344,
+      26358
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001753539-26-000032",
+     "id": 4,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "42400000",
+     "at": 31630,
+     "evidence": [
+      31629,
+      31642
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001753539-26-000032",
+     "id": 5,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "13100000",
+     "at": 31648,
+     "evidence": [
+      31647,
+      31660
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2120000000",
+     "at": 3245,
+     "evidence": [
+      3244,
+      3257
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "1740000000",
+     "at": 3260,
+     "evidence": [
+      3259,
+      3272
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 2,
+     "field": "revenue",
+     "key": "2023",
+     "value": "1660000000",
+     "at": 3278,
+     "evidence": [
+      3277,
+      3290
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 3,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "34200000",
+     "at": 3384,
+     "evidence": [
+      3383,
+      3396
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 4,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "17000000",
+     "at": 3399,
+     "evidence": [
+      3398,
+      3411
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 5,
+     "field": "operating_income",
+     "key": "2023",
+     "value": "20600000",
+     "at": 3417,
+     "evidence": [
+      3416,
+      3429
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 6,
+     "field": "net_income",
+     "key": "2025",
+     "value": "22900000",
+     "at": 3563,
+     "evidence": [
+      3562,
+      3575
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 7,
+     "field": "net_income",
+     "key": "2024",
+     "value": "14400000",
+     "at": 3578,
+     "evidence": [
+      3577,
+      3590
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 8,
+     "field": "net_income",
+     "key": "2023",
+     "value": "23100000",
+     "at": 3596,
+     "evidence": [
+      3595,
+      3608
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 9,
+     "field": "net_income",
+     "key": "2025",
+     "value": "22919",
+     "at": 34483,
+     "evidence": [
+      34483,
+      34489
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 10,
+     "field": "net_income",
+     "key": "2024",
+     "value": "14385",
+     "at": 34493,
+     "evidence": [
+      34493,
+      34499
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 11,
+     "field": "net_income",
+     "key": "2023",
+     "value": "23079",
+     "at": 34503,
+     "evidence": [
+      34503,
+      34509
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 16,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2120000000",
+     "at": 40008,
+     "evidence": [
+      40007,
+      40020
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 17,
+     "field": "revenue",
+     "key": "2024",
+     "value": "1740000000",
+     "at": 40077,
+     "evidence": [
+      40076,
+      40089
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 20,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "479700000",
+     "at": 44525,
+     "evidence": [
+      44524,
+      44538
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 21,
+     "field": "net_income",
+     "key": "2025",
+     "value": "29700000",
+     "at": 47782,
+     "evidence": [
+      47781,
+      47794
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 22,
+     "field": "net_income",
+     "key": "2024",
+     "value": "17000000",
+     "at": 47862,
+     "evidence": [
+      47861,
+      47874
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001828318-26-000006",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "31800000",
+     "at": 4990,
+     "evidence": [
+      4989,
+      5002
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001828318-26-000006",
+     "id": 1,
+     "field": "revenue",
+     "key": "2025",
+     "value": "31821",
+     "at": 15053,
+     "evidence": [
+      15053,
+      15059
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001828318-26-000006",
+     "id": 2,
+     "field": "revenue",
+     "key": "2024",
+     "value": "23074",
+     "at": 15063,
+     "evidence": [
+      15063,
+      15069
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001828318-26-000006",
+     "id": 5,
+     "field": "revenue",
+     "key": "2025",
+     "value": "31800000",
+     "at": 16233,
+     "evidence": [
+      16232,
+      16245
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001828318-26-000006",
+     "id": 6,
+     "field": "revenue",
+     "key": "2024",
+     "value": "23100000",
+     "at": 16251,
+     "evidence": [
+      16250,
+      16263
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    }
+   ],
+   "key span": [
+    {
+     "doc": "sec-0000708781-26-000010",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "190800000",
+     "at": 16795,
+     "evidence": [
+      16794,
+      16808
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000708781-26-000010",
+     "id": 1,
+     "field": "net_income",
+     "key": "2025",
+     "value": "35100000",
+     "at": 17168,
+     "evidence": [
+      17167,
+      17180
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000708781-26-000010",
+     "id": 8,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "392300000",
+     "at": 48056,
+     "evidence": [
+      48055,
+      48069
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000708781-26-000010",
+     "id": 9,
+     "field": "net_income",
+     "key": "2025",
+     "value": "35100000",
+     "at": 56611,
+     "evidence": [
+      56610,
+      56623
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 0,
+     "field": "net_income",
+     "key": "2025",
+     "value": "6152000",
+     "at": 702,
+     "evidence": [
+      701,
+      711
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 7,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "121249000",
+     "at": 26597,
+     "evidence": [
+      26596,
+      26608
+     ],
+     "key_evidence": [
+      26304,
+      26321
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 8,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "17254000",
+     "at": 26636,
+     "evidence": [
+      26635,
+      26646
+     ],
+     "key_evidence": [
+      26326,
+      26343
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 9,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "242845000",
+     "at": 69960,
+     "evidence": [
+      69959,
+      69971
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000737875-26-000009",
+     "id": 10,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "240426000",
+     "at": 70010,
+     "evidence": [
+      70009,
+      70021
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0000918541-26-000006",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "422207",
+     "at": 7288,
+     "evidence": [
+      7288,
+      7295
+     ],
+     "key_evidence": [
+      7257,
+      7261
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0000918541-26-000006",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "464290",
+     "at": 7299,
+     "evidence": [
+      7299,
+      7306
+     ],
+     "key_evidence": [
+      7262,
+      7266
+     ],
+     "0.5": [
       "admitted",
       [
        "KEY_CITED"
@@ -4682,6 +10078,4272 @@
       [
        "KEY_NOT_AT_VALUE"
       ]
+     ]
+    },
+    {
+     "doc": "sec-0001079973-26-000129",
+     "id": 2,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "1136000",
+     "at": 10623,
+     "evidence": [
+      10622,
+      10632
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001079973-26-000129",
+     "id": 3,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "477000",
+     "at": 10678,
+     "evidence": [
+      10677,
+      10685
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001079973-26-000129",
+     "id": 4,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "1000000",
+     "at": 12962,
+     "evidence": [
+      12961,
+      12971
+     ],
+     "key_evidence": [
+      12912,
+      12929
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 0,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "646000000",
+     "at": 5827,
+     "evidence": [
+      5826,
+      5840
+     ],
+     "key_evidence": [
+      5743,
+      5754
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 1,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "559200000",
+     "at": 5924,
+     "evidence": [
+      5923,
+      5937
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 8,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "646000000",
+     "at": 34068,
+     "evidence": [
+      34067,
+      34081
+     ],
+     "key_evidence": [
+      33573,
+      33590
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-019696",
+     "id": 9,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "559200000",
+     "at": 34087,
+     "evidence": [
+      34086,
+      34100
+     ],
+     "key_evidence": [
+      33940,
+      33957
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2665948",
+     "at": 9268,
+     "evidence": [
+      9267,
+      9277
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2443942",
+     "at": 6747,
+     "evidence": [
+      6744,
+      6756
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 2,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2665948",
+     "at": 9268,
+     "evidence": [
+      9267,
+      9277
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 3,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2443942",
+     "at": 9341,
+     "evidence": [
+      9340,
+      9350
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 4,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2665948",
+     "at": 9268,
+     "evidence": [
+      9267,
+      9277
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 5,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2443942",
+     "at": 12873,
+     "evidence": [
+      12870,
+      12882
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001104659-26-021557",
+     "id": 8,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "1308529",
+     "at": 27881,
+     "evidence": [
+      27880,
+      27890
+     ],
+     "key_evidence": [
+      27841,
+      27858
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001125376-26-000007",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "5057841",
+     "at": 42055,
+     "evidence": [
+      42053,
+      42064
+     ],
+     "key_evidence": [
+      41893,
+      41921
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001125376-26-000007",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "4260485",
+     "at": 42465,
+     "evidence": [
+      42463,
+      42474
+     ],
+     "key_evidence": [
+      42304,
+      42332
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001125376-26-000007",
+     "id": 2,
+     "field": "net_income",
+     "key": "2025",
+     "value": "344264",
+     "at": 40540,
+     "evidence": [
+      40538,
+      40547
+     ],
+     "key_evidence": [
+      40461,
+      40465
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001125376-26-000007",
+     "id": 3,
+     "field": "net_income",
+     "key": "2024",
+     "value": "298458",
+     "at": 40551,
+     "evidence": [
+      40549,
+      40558
+     ],
+     "key_evidence": [
+      40466,
+      40470
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001125376-26-000007",
+     "id": 6,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "503881",
+     "at": 61392,
+     "evidence": [
+      61392,
+      61399
+     ],
+     "key_evidence": [
+      61032,
+      61036
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001125376-26-000007",
+     "id": 7,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "464598",
+     "at": 61403,
+     "evidence": [
+      61403,
+      61410
+     ],
+     "key_evidence": [
+      61037,
+      61041
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-051382",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "531800000",
+     "at": 4924,
+     "evidence": [
+      4923,
+      4937
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-051382",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "428500000",
+     "at": 4943,
+     "evidence": [
+      4942,
+      4956
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2240900000",
+     "at": 3487,
+     "evidence": [
+      3486,
+      3502
+     ],
+     "key_evidence": [
+      3463,
+      3467
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2178000000",
+     "at": 3509,
+     "evidence": [
+      3508,
+      3524
+     ],
+     "key_evidence": [
+      3030,
+      3034
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 2,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "77.3",
+     "at": 12376,
+     "evidence": [
+      12373,
+      12380
+     ],
+     "key_evidence": [
+      12308,
+      12325
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 3,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "48",
+     "at": 12385,
+     "evidence": [
+      12382,
+      12389
+     ],
+     "key_evidence": [
+      12327,
+      12344
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 4,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "460.8",
+     "at": 17268,
+     "evidence": [
+      17268,
+      17273
+     ],
+     "key_evidence": [
+      17225,
+      17229
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "SCALE_WORD",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "SCALE_WORD",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-057356",
+     "id": 6,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "460800000",
+     "at": 17268,
+     "evidence": [
+      17267,
+      17281
+     ],
+     "key_evidence": [
+      17212,
+      17229
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 0,
+     "field": "net_income",
+     "key": "2025",
+     "value": "13800000",
+     "at": 17078,
+     "evidence": [
+      17077,
+      17090
+     ],
+     "key_evidence": [
+      17007,
+      17024
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 1,
+     "field": "net_income",
+     "key": "2024",
+     "value": "24900000",
+     "at": 17096,
+     "evidence": [
+      17095,
+      17108
+     ],
+     "key_evidence": [
+      17029,
+      17046
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 2,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "215800000",
+     "at": 16870,
+     "evidence": [
+      16869,
+      16883
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 3,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "150000000",
+     "at": 16889,
+     "evidence": [
+      16888,
+      16902
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 4,
+     "field": "net_income",
+     "key": "2025",
+     "value": "2600000",
+     "at": 19922,
+     "evidence": [
+      19921,
+      19933
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 6,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "237500000",
+     "at": 19702,
+     "evidence": [
+      19701,
+      19715
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 7,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "261000000",
+     "at": 19721,
+     "evidence": [
+      19720,
+      19734
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 8,
+     "field": "net_income",
+     "key": "2025",
+     "value": "25100000",
+     "at": 22158,
+     "evidence": [
+      22157,
+      22170
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 9,
+     "field": "net_income",
+     "key": "2024",
+     "value": "12000000",
+     "at": 22176,
+     "evidence": [
+      22175,
+      22188
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 10,
+     "field": "net_income",
+     "key": "2025",
+     "value": "9600000",
+     "at": 28601,
+     "evidence": [
+      28600,
+      28612
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 11,
+     "field": "net_income",
+     "key": "2024",
+     "value": "10500000",
+     "at": 28618,
+     "evidence": [
+      28617,
+      28630
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-066979",
+     "id": 14,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "350000000",
+     "at": 67748,
+     "evidence": [
+      67747,
+      67759
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-067872",
+     "id": 0,
+     "field": "net_income",
+     "key": "2025",
+     "value": "193",
+     "at": 1234,
+     "evidence": [
+      1234,
+      1237
+     ],
+     "key_evidence": [
+      1086,
+      1090
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-067872",
+     "id": 1,
+     "field": "net_income",
+     "key": "2024",
+     "value": "180",
+     "at": 1242,
+     "evidence": [
+      1242,
+      1245
+     ],
+     "key_evidence": [
+      1092,
+      1096
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-067872",
+     "id": 2,
+     "field": "net_income",
+     "key": "2023",
+     "value": "171",
+     "at": 1250,
+     "evidence": [
+      1250,
+      1253
+     ],
+     "key_evidence": [
+      1098,
+      1102
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-067872",
+     "id": 3,
+     "field": "net_income",
+     "key": "2025",
+     "value": "6000000",
+     "at": 39255,
+     "evidence": [
+      39254,
+      39264
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-067872",
+     "id": 4,
+     "field": "net_income",
+     "key": "2024",
+     "value": "8000000",
+     "at": 39288,
+     "evidence": [
+      39287,
+      39297
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "615200000",
+     "at": 22123,
+     "evidence": [
+      22122,
+      22136
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "522400000",
+     "at": 22150,
+     "evidence": [
+      22149,
+      22163
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 2,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "57300000",
+     "at": 22222,
+     "evidence": [
+      22221,
+      22234
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 10,
+     "field": "revenue",
+     "key": "2025",
+     "value": "615200000",
+     "at": 28520,
+     "evidence": [
+      28519,
+      28533
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-076810",
+     "id": 11,
+     "field": "revenue",
+     "key": "2024",
+     "value": "522400000",
+     "at": 28556,
+     "evidence": [
+      28555,
+      28569
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-077343",
+     "id": 5,
+     "field": "net_income",
+     "key": "2024",
+     "value": "1114",
+     "at": 22614,
+     "evidence": [
+      22614,
+      22619
+     ],
+     "key_evidence": [
+      22571,
+      22575
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-077343",
+     "id": 11,
+     "field": "net_income",
+     "key": "2024",
+     "value": "1114",
+     "at": 35705,
+     "evidence": [
+      35705,
+      35710
+     ],
+     "key_evidence": [
+      35662,
+      35666
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-077343",
+     "id": 12,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "1600000000",
+     "at": 49641,
+     "evidence": [
+      49626,
+      49652
+     ],
+     "key_evidence": [
+      49530,
+      49547
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-104547",
+     "id": 4,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "245800000",
+     "at": 20308,
+     "evidence": [
+      20307,
+      20321
+     ],
+     "key_evidence": [
+      20264,
+      20284
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-104547",
+     "id": 5,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "245800000",
+     "at": 39998,
+     "evidence": [
+      39997,
+      40011
+     ],
+     "key_evidence": [
+      39957,
+      39974
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-107971",
+     "id": 2,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "600895",
+     "at": 32547,
+     "evidence": [
+      32544,
+      32554
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-107971",
+     "id": 3,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "169891",
+     "at": 32559,
+     "evidence": [
+      32556,
+      32566
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001193125-26-134736",
+     "id": 2,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "50000000",
+     "at": 20349,
+     "evidence": [
+      20348,
+      20361
+     ],
+     "key_evidence": [
+      20327,
+      20344
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "648900000",
+     "at": 2303,
+     "evidence": [
+      2302,
+      2316
+     ],
+     "key_evidence": [
+      2293,
+      2297
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "624600000",
+     "at": 2372,
+     "evidence": [
+      2371,
+      2385
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 2,
+     "field": "revenue",
+     "key": "2025",
+     "value": "648900000",
+     "at": 45073,
+     "evidence": [
+      45072,
+      45086
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 3,
+     "field": "revenue",
+     "key": "2024",
+     "value": "624600000",
+     "at": 45140,
+     "evidence": [
+      45139,
+      45153
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 4,
+     "field": "net_income",
+     "key": "2025",
+     "value": "31600000",
+     "at": 58217,
+     "evidence": [
+      58216,
+      58229
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 5,
+     "field": "net_income",
+     "key": "2024",
+     "value": "16100000",
+     "at": 58244,
+     "evidence": [
+      58243,
+      58256
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 10,
+     "field": "net_income",
+     "key": "2025",
+     "value": "25300000",
+     "at": 59026,
+     "evidence": [
+      59025,
+      59038
+     ],
+     "key_evidence": [
+      59016,
+      59020
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 11,
+     "field": "net_income",
+     "key": "2024",
+     "value": "10100000",
+     "at": 59053,
+     "evidence": [
+      59052,
+      59065
+     ],
+     "key_evidence": [
+      58491,
+      58495
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 12,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "158900000",
+     "at": 63625,
+     "evidence": [
+      63624,
+      63638
+     ],
+     "key_evidence": [
+      63253,
+      63257
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 13,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "176500000",
+     "at": 63644,
+     "evidence": [
+      63643,
+      63657
+     ],
+     "key_evidence": [
+      63194,
+      63198
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001201792-26-000004",
+     "id": 14,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "96400000",
+     "at": 74514,
+     "evidence": [
+      74513,
+      74526
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-021201",
+     "id": 0,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "228000",
+     "at": 5799,
+     "evidence": [
+      5784,
+      5806
+     ],
+     "key_evidence": [
+      5750,
+      5767
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-024633",
+     "id": 0,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "25000",
+     "at": 12482,
+     "evidence": [
+      12481,
+      12488
+     ],
+     "key_evidence": [
+      12446,
+      12463
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-024633",
+     "id": 1,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "0",
+     "at": 12494,
+     "evidence": [
+      12493,
+      12495
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-024633",
+     "id": 2,
+     "field": "net_income",
+     "key": "2025",
+     "value": "18000",
+     "at": 15177,
+     "evidence": [
+      15162,
+      15183
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036517",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "2426609",
+     "at": 16570,
+     "evidence": [
+      16568,
+      16579
+     ],
+     "key_evidence": [
+      16521,
+      16525
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036517",
+     "id": 6,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "6436082",
+     "at": 22203,
+     "evidence": [
+      22202,
+      22212
+     ],
+     "key_evidence": [
+      22189,
+      22193
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036517",
+     "id": 7,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "164812",
+     "at": 22272,
+     "evidence": [
+      22271,
+      22279
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 0,
+     "field": "revenue",
+     "key": "2024",
+     "value": "176600000",
+     "at": 2807,
+     "evidence": [
+      2806,
+      2820
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 1,
+     "field": "revenue",
+     "key": "2025",
+     "value": "195200000",
+     "at": 2826,
+     "evidence": [
+      2825,
+      2839
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 2,
+     "field": "net_income",
+     "key": "2024",
+     "value": "9600000",
+     "at": 2938,
+     "evidence": [
+      2937,
+      2949
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 11,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "8800000",
+     "at": 20659,
+     "evidence": [
+      20658,
+      20670
+     ],
+     "key_evidence": [
+      20365,
+      20369
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 13,
+     "field": "net_income",
+     "key": "2024",
+     "value": "9600000",
+     "at": 21982,
+     "evidence": [
+      21981,
+      21993
+     ],
+     "key_evidence": [
+      21770,
+      21774
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 14,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "75700000",
+     "at": 22402,
+     "evidence": [
+      22401,
+      22414
+     ],
+     "key_evidence": [
+      22326,
+      22343
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 15,
+     "field": "net_income",
+     "key": "2025",
+     "value": "4400000",
+     "at": 60749,
+     "evidence": [
+      60748,
+      60760
+     ],
+     "key_evidence": [
+      60623,
+      60655
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001213900-26-036952",
+     "id": 16,
+     "field": "net_income",
+     "key": "2024",
+     "value": "23400000",
+     "at": 61604,
+     "evidence": [
+      61603,
+      61616
+     ],
+     "key_evidence": [
+      61478,
+      61510
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "6800000000",
+     "at": 17742,
+     "evidence": [
+      17741,
+      17754
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "5960000000",
+     "at": 17796,
+     "evidence": [
+      17795,
+      17808
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 2,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "2080000000",
+     "at": 18255,
+     "evidence": [
+      18254,
+      18267
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 3,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "1800000000",
+     "at": 18309,
+     "evidence": [
+      18308,
+      18321
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 18,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "2080000000",
+     "at": 58729,
+     "evidence": [
+      58728,
+      58741
+     ],
+     "key_evidence": [
+      58351,
+      58355
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 19,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "1800000000",
+     "at": 58803,
+     "evidence": [
+      58802,
+      58815
+     ],
+     "key_evidence": [
+      58368,
+      58372
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 20,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "2495.3",
+     "at": 64844,
+     "evidence": [
+      64844,
+      64851
+     ],
+     "key_evidence": [
+      64787,
+      64791
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 21,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "2875.9",
+     "at": 64855,
+     "evidence": [
+      64855,
+      64862
+     ],
+     "key_evidence": [
+      64792,
+      64796
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001262039-26-000007",
+     "id": 22,
+     "field": "cash_and_equivalents",
+     "key": "2023",
+     "value": "1397.9",
+     "at": 64866,
+     "evidence": [
+      64866,
+      64873
+     ],
+     "key_evidence": [
+      64797,
+      64801
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "5100000000",
+     "at": 2713,
+     "evidence": [
+      2712,
+      2724
+     ],
+     "key_evidence": [
+      2689,
+      2693
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 1,
+     "field": "revenue",
+     "key": "2025",
+     "value": "5079900000",
+     "at": 37508,
+     "evidence": [
+      37507,
+      37523
+     ],
+     "key_evidence": [
+      37414,
+      37418
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 2,
+     "field": "revenue",
+     "key": "2024",
+     "value": "4767100000",
+     "at": 37567,
+     "evidence": [
+      37566,
+      37582
+     ],
+     "key_evidence": [
+      37466,
+      37470
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 3,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "750200000",
+     "at": 44491,
+     "evidence": [
+      44490,
+      44504
+     ],
+     "key_evidence": [
+      44403,
+      44407
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 4,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "702100000",
+     "at": 44465,
+     "evidence": [
+      44464,
+      44478
+     ],
+     "key_evidence": [
+      44386,
+      44390
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 5,
+     "field": "net_income",
+     "key": "2025",
+     "value": "552500000",
+     "at": 46500,
+     "evidence": [
+      46499,
+      46513
+     ],
+     "key_evidence": [
+      46307,
+      46311
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 6,
+     "field": "net_income",
+     "key": "2024",
+     "value": "513700000",
+     "at": 46474,
+     "evidence": [
+      46473,
+      46487
+     ],
+     "key_evidence": [
+      46274,
+      46278
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 7,
+     "field": "revenue",
+     "key": "2025",
+     "value": "5079900000",
+     "at": 37508,
+     "evidence": [
+      37507,
+      37523
+     ],
+     "key_evidence": [
+      37414,
+      37418
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 8,
+     "field": "revenue",
+     "key": "2024",
+     "value": "4767100000",
+     "at": 37567,
+     "evidence": [
+      37566,
+      37582
+     ],
+     "key_evidence": [
+      37466,
+      37470
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 9,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "750200000",
+     "at": 44491,
+     "evidence": [
+      44490,
+      44504
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 10,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "702100000",
+     "at": 44465,
+     "evidence": [
+      44464,
+      44478
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 11,
+     "field": "net_income",
+     "key": "2025",
+     "value": "552500000",
+     "at": 46500,
+     "evidence": [
+      46499,
+      46513
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 12,
+     "field": "net_income",
+     "key": "2024",
+     "value": "513700000",
+     "at": 46474,
+     "evidence": [
+      46473,
+      46487
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 13,
+     "field": "net_income",
+     "key": "2024",
+     "value": "513700000",
+     "at": 46474,
+     "evidence": [
+      46474,
+      46479
+     ],
+     "key_evidence": [
+      46274,
+      46278
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001398659-26-000004",
+     "id": 14,
+     "field": "net_income",
+     "key": "2025",
+     "value": "552500000",
+     "at": 46500,
+     "evidence": [
+      46500,
+      46505
+     ],
+     "key_evidence": [
+      46307,
+      46311
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005376",
+     "id": 0,
+     "field": "net_income",
+     "key": "2025",
+     "value": "57400000",
+     "at": 1808,
+     "evidence": [
+      1807,
+      1820
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005376",
+     "id": 1,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "41900000",
+     "at": 23965,
+     "evidence": [
+      23964,
+      23977
+     ],
+     "key_evidence": [
+      18314,
+      18331
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005376",
+     "id": 2,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "42500000",
+     "at": 24008,
+     "evidence": [
+      24007,
+      24020
+     ],
+     "key_evidence": [
+      18085,
+      18102
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005875",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "455700000",
+     "at": 3467,
+     "evidence": [
+      3466,
+      3480
+     ],
+     "key_evidence": [
+      3429,
+      3433
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005875",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "249400000",
+     "at": 3483,
+     "evidence": [
+      3482,
+      3496
+     ],
+     "key_evidence": [
+      3435,
+      3439
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001437749-26-005875",
+     "id": 2,
+     "field": "revenue",
+     "key": "2023",
+     "value": "217600000",
+     "at": 3502,
+     "evidence": [
+      3501,
+      3515
+     ],
+     "key_evidence": [
+      3444,
+      3448
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-009848",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "18789",
+     "at": 9278,
+     "evidence": [
+      9278,
+      9284
+     ],
+     "key_evidence": [
+      9218,
+      9222
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-009848",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "14162",
+     "at": 9289,
+     "evidence": [
+      9289,
+      9295
+     ],
+     "key_evidence": [
+      9225,
+      9229
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-009848",
+     "id": 4,
+     "field": "net_income",
+     "key": "2025",
+     "value": "1194",
+     "at": 9971,
+     "evidence": [
+      9971,
+      9976
+     ],
+     "key_evidence": [
+      9218,
+      9222
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-009848",
+     "id": 5,
+     "field": "net_income",
+     "key": "2024",
+     "value": "74",
+     "at": 9981,
+     "evidence": [
+      9981,
+      9983
+     ],
+     "key_evidence": [
+      9225,
+      9229
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-009848",
+     "id": 8,
+     "field": "net_income",
+     "key": "2025",
+     "value": "1200000",
+     "at": 15376,
+     "evidence": [
+      15375,
+      15387
+     ],
+     "key_evidence": [
+      15318,
+      15325
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-013844",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "4215",
+     "at": 1937,
+     "evidence": [
+      1935,
+      1942
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001493152-26-013844",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "465",
+     "at": 1953,
+     "evidence": [
+      1951,
+      1956
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 15,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "14",
+     "at": 46917,
+     "evidence": [
+      46917,
+      46919
+     ],
+     "key_evidence": [
+      46712,
+      46716
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 18,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "837000000",
+     "at": 63981,
+     "evidence": [
+      63980,
+      63992
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 19,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "844000000",
+     "at": 63998,
+     "evidence": [
+      63997,
+      64009
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 26,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "19600000000",
+     "at": 94754,
+     "evidence": [
+      94753,
+      94766
+     ],
+     "key_evidence": [
+      94721,
+      94744
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001571949-26-000004",
+     "id": 27,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "19600000000",
+     "at": 113160,
+     "evidence": [
+      113159,
+      113172
+     ],
+     "key_evidence": [
+      113133,
+      113150
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 30,
+     "field": "revenue",
+     "key": "2025",
+     "value": "20923",
+     "at": 53196,
+     "evidence": [
+      53195,
+      53202
+     ],
+     "key_evidence": [
+      53171,
+      53175
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 31,
+     "field": "revenue",
+     "key": "2024",
+     "value": "19954",
+     "at": 53205,
+     "evidence": [
+      53204,
+      53211
+     ],
+     "key_evidence": [
+      53176,
+      53180
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 32,
+     "field": "revenue",
+     "key": "2023",
+     "value": "19127",
+     "at": 53214,
+     "evidence": [
+      53213,
+      53220
+     ],
+     "key_evidence": [
+      53181,
+      53185
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 33,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "13474",
+     "at": 53293,
+     "evidence": [
+      53292,
+      53299
+     ],
+     "key_evidence": [
+      53171,
+      53175
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 34,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "3618",
+     "at": 53302,
+     "evidence": [
+      53301,
+      53307
+     ],
+     "key_evidence": [
+      53176,
+      53180
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 35,
+     "field": "operating_income",
+     "key": "2023",
+     "value": "3329",
+     "at": 53310,
+     "evidence": [
+      53309,
+      53315
+     ],
+     "key_evidence": [
+      53181,
+      53185
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 36,
+     "field": "net_income",
+     "key": "2025",
+     "value": "2238",
+     "at": 54884,
+     "evidence": [
+      54883,
+      54889
+     ],
+     "key_evidence": [
+      54848,
+      54852
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628280-26-004357",
+     "id": 41,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "53900000000",
+     "at": 61023,
+     "evidence": [
+      61022,
+      61035
+     ],
+     "key_evidence": [
+      60977,
+      60981
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "10300000000",
+     "at": 2082,
+     "evidence": [
+      2081,
+      2094
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 1,
+     "field": "net_income",
+     "key": "2025",
+     "value": "88200000",
+     "at": 2615,
+     "evidence": [
+      2614,
+      2627
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 2,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "800000000",
+     "at": 3543,
+     "evidence": [
+      3542,
+      3554
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 7,
+     "field": "net_income",
+     "key": "2025",
+     "value": "88.2",
+     "at": 23460,
+     "evidence": [
+      23460,
+      23464
+     ],
+     "key_evidence": [
+      22299,
+      22303
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 8,
+     "field": "net_income",
+     "key": "2024",
+     "value": "131.3",
+     "at": 23467,
+     "evidence": [
+      23467,
+      23472
+     ],
+     "key_evidence": [
+      22304,
+      22308
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 9,
+     "field": "revenue",
+     "key": "2025",
+     "value": "10300000000",
+     "at": 29446,
+     "evidence": [
+      29445,
+      29458
+     ],
+     "key_evidence": [
+      29356,
+      29384
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 10,
+     "field": "net_income",
+     "key": "2025",
+     "value": "88200000",
+     "at": 36686,
+     "evidence": [
+      36685,
+      36698
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001628369-26-000008",
+     "id": 11,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "800000000",
+     "at": 50735,
+     "evidence": [
+      50734,
+      50746
+     ],
+     "key_evidence": [
+      50572,
+      50589
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001683168-26-000203",
+     "id": 0,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "0",
+     "at": 1812,
+     "evidence": [
+      1811,
+      1813
+     ],
+     "key_evidence": [
+      1758,
+      1762
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001683168-26-000203",
+     "id": 1,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "159",
+     "at": 1819,
+     "evidence": [
+      1818,
+      1822
+     ],
+     "key_evidence": [
+      1781,
+      1785
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001683168-26-000412",
+     "id": 3,
+     "field": "cash_and_equivalents",
+     "key": "2024",
+     "value": "0",
+     "at": 3540,
+     "evidence": [
+      3539,
+      3541
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001717307-26-000012",
+     "id": 8,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "94812",
+     "at": 24271,
+     "evidence": [
+      24270,
+      24277
+     ],
+     "key_evidence": [
+      24160,
+      24183
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001717307-26-000012",
+     "id": 9,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "4214036",
+     "at": 27402,
+     "evidence": [
+      27401,
+      27411
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001725160-26-000014",
+     "id": 2,
+     "field": "revenue",
+     "key": "2024",
+     "value": "67400000",
+     "at": 25423,
+     "evidence": [
+      25422,
+      25435
+     ],
+     "key_evidence": [
+      24507,
+      24511
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001725160-26-000014",
+     "id": 7,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "36000000",
+     "at": 30812,
+     "evidence": [
+      30811,
+      30824
+     ],
+     "key_evidence": [
+      30785,
+      30802
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001753539-26-000032",
+     "id": 0,
+     "field": "total_debt",
+     "key": "2024",
+     "value": "109000000",
+     "at": 26345,
+     "evidence": [
+      26344,
+      26358
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001753539-26-000032",
+     "id": 1,
+     "field": "total_debt",
+     "key": "2025",
+     "value": "207900000",
+     "at": 26387,
+     "evidence": [
+      26386,
+      26400
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2120000000",
+     "at": 3245,
+     "evidence": [
+      3244,
+      3257
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 1,
+     "field": "revenue",
+     "key": "2024",
+     "value": "1740000000",
+     "at": 3260,
+     "evidence": [
+      3259,
+      3272
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 2,
+     "field": "revenue",
+     "key": "2023",
+     "value": "1660000000",
+     "at": 3278,
+     "evidence": [
+      3277,
+      3290
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 3,
+     "field": "operating_income",
+     "key": "2025",
+     "value": "34200000",
+     "at": 3384,
+     "evidence": [
+      3383,
+      3396
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 4,
+     "field": "operating_income",
+     "key": "2024",
+     "value": "17000000",
+     "at": 3399,
+     "evidence": [
+      3398,
+      3411
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 5,
+     "field": "operating_income",
+     "key": "2023",
+     "value": "20600000",
+     "at": 3417,
+     "evidence": [
+      3416,
+      3429
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 6,
+     "field": "net_income",
+     "key": "2025",
+     "value": "22900000",
+     "at": 3563,
+     "evidence": [
+      3562,
+      3575
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 7,
+     "field": "net_income",
+     "key": "2024",
+     "value": "14400000",
+     "at": 3578,
+     "evidence": [
+      3577,
+      3590
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 8,
+     "field": "net_income",
+     "key": "2023",
+     "value": "23100000",
+     "at": 3596,
+     "evidence": [
+      3595,
+      3608
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 16,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2120000000",
+     "at": 40008,
+     "evidence": [
+      40007,
+      40020
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 18,
+     "field": "revenue",
+     "key": "2025",
+     "value": "2122842",
+     "at": 39951,
+     "evidence": [
+      39949,
+      39960
+     ],
+     "key_evidence": [
+      39580,
+      39584
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 19,
+     "field": "revenue",
+     "key": "2024",
+     "value": "1736390",
+     "at": 39964,
+     "evidence": [
+      39962,
+      39973
+     ],
+     "key_evidence": [
+      39585,
+      39589
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "NON_VERBATIM_EVIDENCE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 22,
+     "field": "cash_and_equivalents",
+     "key": "2025",
+     "value": "479700000",
+     "at": 44525,
+     "evidence": [
+      44524,
+      44538
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 23,
+     "field": "net_income",
+     "key": "2025",
+     "value": "29700000",
+     "at": 47782,
+     "evidence": [
+      47781,
+      47794
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001759655-26-000010",
+     "id": 24,
+     "field": "net_income",
+     "key": "2024",
+     "value": "17000000",
+     "at": 47862,
+     "evidence": [
+      47861,
+      47874
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001828318-26-000006",
+     "id": 0,
+     "field": "revenue",
+     "key": "2025",
+     "value": "31800000",
+     "at": 4990,
+     "evidence": [
+      4989,
+      5002
+     ],
+     "key_evidence": [
+      4693,
+      4709
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001828318-26-000006",
+     "id": 1,
+     "field": "revenue",
+     "key": "2025",
+     "value": "31821",
+     "at": 15053,
+     "evidence": [
+      15053,
+      15059
+     ],
+     "key_evidence": [
+      14986,
+      15003
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001828318-26-000006",
+     "id": 2,
+     "field": "revenue",
+     "key": "2024",
+     "value": "23074",
+     "at": 15063,
+     "evidence": [
+      15063,
+      15069
+     ],
+     "key_evidence": [
+      15004,
+      15021
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "sec-0001828318-26-000006",
+     "id": 5,
+     "field": "revenue",
+     "key": "2025",
+     "value": "31800000",
+     "at": 16233,
+     "evidence": [
+      16232,
+      16245
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "sec-0001828318-26-000006",
+     "id": 6,
+     "field": "revenue",
+     "key": "2024",
+     "value": "23100000",
+     "at": 16251,
+     "evidence": [
+      16250,
+      16263
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
      ]
     }
    ]

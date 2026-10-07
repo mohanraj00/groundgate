@@ -161,7 +161,7 @@ def decide(only: str | None) -> None:
                     raise SystemExit(f"{run_file}: document {doc} is not this file's source")
                 text = (set_dir / "docs" / f"{doc}.txt").read_text(encoding="utf-8")
                 rec["document"]["text"] = text
-                cands = to_candidates(rec["document"])
+                cands = to_candidates(rec["document"], schema=schema)  # as admit_document does
                 plain = [{k: v for k, v in c.items() if k != "key_evidence"} for c in cands]
                 by_spec = {
                     "0.5": gg.admit(text, schema, cands).decisions,

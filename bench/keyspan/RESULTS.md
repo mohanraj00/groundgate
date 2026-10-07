@@ -11,13 +11,24 @@ Labeled amounts: 67. Labeled not sure, and not scored: 33.
 | plain | 0.4 | 15 | 0 | 9 | 0 | 0 | 23 | 35 |
 | plain | 0.5 | 15 | 0 | 9 | 0 | 0 | 23 | 35 |
 | key span | 0.4 | 15 | 0 | 9 | 0 | 0 | 23 | 35 |
-| key span | 0.5 | 17 | 0 | 12 | 0 | 0 | 22 | 33 |
+| key span | 0.5 | 2 | 0 | 2 | 0 | 0 | 32 | 33 |
 
-Escapes for the ship rule, key span run: 0 under spec 0.4 and 0 under spec 0.5 (0 in the population, 0 cited outside it). 1 cited amount outside the population has no label yet.
+Escapes for the ship rule, key span run: 0 under spec 0.4 and 0 under spec 0.5 (0 in the population, 0 cited outside it).
 
 ## 10-K fiscal years
 
-No decisions yet. Run `keyspan.py decide --set sec`.
+The 10-K population is biased. Its items come from the review queue of the #120 plain run, so on the plain run spec 0.4 admits 0 right keys here by construction. Compare the two specs on the key-span run, not the two runs.
+
+Labeled amounts: 74. Labeled not sure, and not scored: 1.
+
+| Run | Spec | Right keys admitted | Wrong keys admitted (escapes) | Every right key admitted | No key, none admitted | A wrong key admitted | A right key in review | A right key neither admitted nor in review |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| plain | 0.4 | 0 | 0 | 0 | 0 | 0 | 72 | 2 |
+| plain | 0.5 | 0 | 0 | 0 | 0 | 0 | 72 | 2 |
+| key span | 0.4 | 0 | 0 | 0 | 0 | 0 | 16 | 58 |
+| key span | 0.5 | 2 | 0 | 2 | 0 | 0 | 14 | 58 |
+
+Escapes for the ship rule, key span run: 0 under spec 0.4 and 0 under spec 0.5 (0 in the population, 0 cited outside it). 9 cited amounts outside the population have no label yet.
 
 ## Every key admitted by a cited span
 
@@ -25,20 +36,19 @@ Each candidate that spec 0.5 admits with `KEY_CITED`, once per amount and key, i
 
 | Set | Amount | Field | Key | Label | Verdict |
 |---|---|---|---|---|---|
-| status | `irs-p1167:2683` | amount | Single | Single; Married filing separately | right |
-| status | `irs-p1167:2683` | amount | Married filing separately | Single; Married filing separately | right |
-| status | `irs-p1167:2756` | amount | Married filing jointly | Married filing jointly; Qualifying surviving spouse | right |
-| status | `irs-p1167:2756` | amount | Qualifying surviving spouse | Married filing jointly; Qualifying surviving spouse | right |
-| status | `irs-p1167:2783` | amount | Head of household | Head of household | right |
-| status | `irs-p4801:5486` | amount | Single | Single; Married filing separately | right |
-| status | `irs-p4801:5553` | amount | Married filing jointly | Married filing jointly; Qualifying surviving spouse | right |
-| status | `irs-p4801:8154` | amount | Single | Single; Married filing separately | right |
-| status | `irs-p4801:8221` | amount | hidden until labeled | unlabeled | unlabeled |
 | status | `irs-p4832:374` | amount | Single | not sure | not sure |
 | status | `irs-p4832:383` | amount | Single | not sure | not sure |
 | status | `irs-p4832:383` | amount | Head of household | not sure | not sure |
 | status | `irs-p4832:392` | amount | Single | not sure | not sure |
 | status | `irs-p4832:392` | amount | Head of household | not sure | not sure |
-| status | `irs-p5187:464` | amount | Single | Single | right |
-| status | `irs-p5187:470` | amount | Single | Single | right |
-| status | `irs-p5187:476` | amount | Single | Single | right |
+| sec | `sec-0000918541-26-000006:7299` | revenue | 2024 | 2024 | right |
+| sec | `sec-0001125376-26-000007:61403` | cash_and_equivalents | hidden until labeled | unlabeled | unlabeled |
+| sec | `sec-0001193125-26-067872:1250` | net_income | hidden until labeled | unlabeled | unlabeled |
+| sec | `sec-0001193125-26-077343:22614` | net_income | hidden until labeled | unlabeled | unlabeled |
+| sec | `sec-0001193125-26-077343:35705` | net_income | hidden until labeled | unlabeled | unlabeled |
+| sec | `sec-0001262039-26-000007:64866` | cash_and_equivalents | hidden until labeled | unlabeled | unlabeled |
+| sec | `sec-0001493152-26-009848:9289` | revenue | hidden until labeled | unlabeled | unlabeled |
+| sec | `sec-0001493152-26-009848:9981` | net_income | hidden until labeled | unlabeled | unlabeled |
+| sec | `sec-0001628280-26-004357:53214` | revenue | hidden until labeled | unlabeled | unlabeled |
+| sec | `sec-0001628280-26-004357:53310` | operating_income | hidden until labeled | unlabeled | unlabeled |
+| sec | `sec-0001828318-26-000006:15063` | revenue | 2024 | 2024 | right |

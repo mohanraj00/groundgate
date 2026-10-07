@@ -48,14 +48,14 @@
      },
      "0.5": {
       "facts": {
-       "right keys admitted": 17,
+       "right keys admitted": 2,
        "wrong keys admitted": 0
       },
       "amounts": {
-       "every right key admitted": 12,
+       "every right key admitted": 2,
        "no key, none admitted": 0,
        "a wrong key admitted": 0,
-       "a right key in review": 22,
+       "a right key in review": 32,
        "a right key neither admitted nor in review": 33
       }
      }
@@ -67,124 +67,81 @@
     "0.5": 0,
     "0.5 wrong keys admitted in the population": 0,
     "0.5 cited escapes outside the population": 0,
-    "0.5 cited outside the population, unlabeled amounts": 1
+    "0.5 cited outside the population, unlabeled amounts": 0
+   }
+  },
+  "sec": {
+   "labeled_amounts": 74,
+   "not_sure_amounts": 1,
+   "runs": {
+    "plain": {
+     "0.4": {
+      "facts": {
+       "right keys admitted": 0,
+       "wrong keys admitted": 0
+      },
+      "amounts": {
+       "every right key admitted": 0,
+       "no key, none admitted": 0,
+       "a wrong key admitted": 0,
+       "a right key in review": 72,
+       "a right key neither admitted nor in review": 2
+      }
+     },
+     "0.5": {
+      "facts": {
+       "right keys admitted": 0,
+       "wrong keys admitted": 0
+      },
+      "amounts": {
+       "every right key admitted": 0,
+       "no key, none admitted": 0,
+       "a wrong key admitted": 0,
+       "a right key in review": 72,
+       "a right key neither admitted nor in review": 2
+      }
+     }
+    },
+    "key span": {
+     "0.4": {
+      "facts": {
+       "right keys admitted": 0,
+       "wrong keys admitted": 0
+      },
+      "amounts": {
+       "every right key admitted": 0,
+       "no key, none admitted": 0,
+       "a wrong key admitted": 0,
+       "a right key in review": 16,
+       "a right key neither admitted nor in review": 58
+      }
+     },
+     "0.5": {
+      "facts": {
+       "right keys admitted": 2,
+       "wrong keys admitted": 0
+      },
+      "amounts": {
+       "every right key admitted": 2,
+       "no key, none admitted": 0,
+       "a wrong key admitted": 0,
+       "a right key in review": 14,
+       "a right key neither admitted nor in review": 58
+      }
+     }
+    }
+   },
+   "escapes for the ship rule": {
+    "run": "key span",
+    "0.4": 0,
+    "0.5": 0,
+    "0.5 wrong keys admitted in the population": 0,
+    "0.5 cited escapes outside the population": 0,
+    "0.5 cited outside the population, unlabeled amounts": 9
    }
   }
  },
  "cited": [
-  {
-   "set": "status",
-   "doc": "irs-p1167",
-   "at": 2683,
-   "field": "amount",
-   "key": "Single",
-   "value": "12950",
-   "label": [
-    "Single",
-    "Married filing separately"
-   ],
-   "verdict": "right"
-  },
-  {
-   "set": "status",
-   "doc": "irs-p1167",
-   "at": 2683,
-   "field": "amount",
-   "key": "Married filing separately",
-   "value": "12950",
-   "label": [
-    "Single",
-    "Married filing separately"
-   ],
-   "verdict": "right"
-  },
-  {
-   "set": "status",
-   "doc": "irs-p1167",
-   "at": 2756,
-   "field": "amount",
-   "key": "Married filing jointly",
-   "value": "25900",
-   "label": [
-    "Married filing jointly",
-    "Qualifying surviving spouse"
-   ],
-   "verdict": "right"
-  },
-  {
-   "set": "status",
-   "doc": "irs-p1167",
-   "at": 2756,
-   "field": "amount",
-   "key": "Qualifying surviving spouse",
-   "value": "25900",
-   "label": [
-    "Married filing jointly",
-    "Qualifying surviving spouse"
-   ],
-   "verdict": "right"
-  },
-  {
-   "set": "status",
-   "doc": "irs-p1167",
-   "at": 2783,
-   "field": "amount",
-   "key": "Head of household",
-   "value": "19400",
-   "label": [
-    "Head of household"
-   ],
-   "verdict": "right"
-  },
-  {
-   "set": "status",
-   "doc": "irs-p4801",
-   "at": 5486,
-   "field": "amount",
-   "key": "Single",
-   "value": "13850",
-   "label": [
-    "Single",
-    "Married filing separately"
-   ],
-   "verdict": "right"
-  },
-  {
-   "set": "status",
-   "doc": "irs-p4801",
-   "at": 5553,
-   "field": "amount",
-   "key": "Married filing jointly",
-   "value": "27700",
-   "label": [
-    "Married filing jointly",
-    "Qualifying surviving spouse"
-   ],
-   "verdict": "right"
-  },
-  {
-   "set": "status",
-   "doc": "irs-p4801",
-   "at": 8154,
-   "field": "amount",
-   "key": "Single",
-   "value": "13850",
-   "label": [
-    "Single",
-    "Married filing separately"
-   ],
-   "verdict": "right"
-  },
-  {
-   "set": "status",
-   "doc": "irs-p4801",
-   "at": 8221,
-   "field": "amount",
-   "key": "hidden until labeled",
-   "value": "27700",
-   "label": "unlabeled",
-   "verdict": "unlabeled"
-  },
   {
    "set": "status",
    "doc": "irs-p4832",
@@ -236,45 +193,123 @@
    "verdict": "not sure"
   },
   {
-   "set": "status",
-   "doc": "irs-p5187",
-   "at": 464,
-   "field": "amount",
-   "key": "Single",
-   "value": "300",
+   "set": "sec",
+   "doc": "sec-0000918541-26-000006",
+   "at": 7299,
+   "field": "revenue",
+   "key": "2024",
+   "value": "464290",
    "label": [
-    "Single"
+    "2024"
    ],
    "verdict": "right"
   },
   {
-   "set": "status",
-   "doc": "irs-p5187",
-   "at": 470,
-   "field": "amount",
-   "key": "Single",
-   "value": "800",
-   "label": [
-    "Single"
-   ],
-   "verdict": "right"
+   "set": "sec",
+   "doc": "sec-0001125376-26-000007",
+   "at": 61403,
+   "field": "cash_and_equivalents",
+   "key": "hidden until labeled",
+   "value": "464598",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
   },
   {
-   "set": "status",
-   "doc": "irs-p5187",
-   "at": 476,
-   "field": "amount",
-   "key": "Single",
-   "value": "1325",
+   "set": "sec",
+   "doc": "sec-0001193125-26-067872",
+   "at": 1250,
+   "field": "net_income",
+   "key": "hidden until labeled",
+   "value": "171",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "sec",
+   "doc": "sec-0001193125-26-077343",
+   "at": 22614,
+   "field": "net_income",
+   "key": "hidden until labeled",
+   "value": "1114",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "sec",
+   "doc": "sec-0001193125-26-077343",
+   "at": 35705,
+   "field": "net_income",
+   "key": "hidden until labeled",
+   "value": "1114",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "sec",
+   "doc": "sec-0001262039-26-000007",
+   "at": 64866,
+   "field": "cash_and_equivalents",
+   "key": "hidden until labeled",
+   "value": "1397.9",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "sec",
+   "doc": "sec-0001493152-26-009848",
+   "at": 9289,
+   "field": "revenue",
+   "key": "hidden until labeled",
+   "value": "14162",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "sec",
+   "doc": "sec-0001493152-26-009848",
+   "at": 9981,
+   "field": "net_income",
+   "key": "hidden until labeled",
+   "value": "74",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "sec",
+   "doc": "sec-0001628280-26-004357",
+   "at": 53214,
+   "field": "revenue",
+   "key": "hidden until labeled",
+   "value": "19127",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "sec",
+   "doc": "sec-0001628280-26-004357",
+   "at": 53310,
+   "field": "operating_income",
+   "key": "hidden until labeled",
+   "value": "3329",
+   "label": "unlabeled",
+   "verdict": "unlabeled"
+  },
+  {
+   "set": "sec",
+   "doc": "sec-0001828318-26-000006",
+   "at": 15063,
+   "field": "revenue",
+   "key": "2024",
+   "value": "23074",
    "label": [
-    "Single"
+    "2024"
    ],
    "verdict": "right"
   }
  ],
  "cited_verdicts": {
   "not sure": 5,
-  "right": 11,
-  "unlabeled": 1
+  "right": 2,
+  "unlabeled": 9
  }
 }
