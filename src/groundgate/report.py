@@ -272,8 +272,7 @@ def _document(text: str, items: list[_Item], layout: Layout | None) -> str:
         if covering:
             classes.append(_outcome(max(covering, key=lambda i: SEVERITY.get(_outcome(i), 0))))
         if naming:
-            worst_key = max(naming, key=lambda i: SEVERITY.get(_outcome(i), 0))
-            classes += ["key", f"key-{_outcome(worst_key)}"]
+            classes += ["key", *sorted({f"key-{_outcome(i)}" for i in naming})]
         tip = "\n".join(
             [_tooltip(i.decision) for i in covering]
             + ["key of " + _tooltip(i.decision) for i in naming]
@@ -361,7 +360,7 @@ mark {{ color: inherit; border-radius: 2px; padding: 1px 0; }}
 mark.admitted {{ background: var(--ok-bg); box-shadow: inset 0 -2px var(--ok); }}
 mark.needs_verification {{ background: var(--warn-bg); box-shadow: inset 0 -2px var(--warn); }}
 mark.rejected {{ background: var(--bad-bg); box-shadow: inset 0 -2px var(--bad); }}
-mark.key {{ text-decoration: underline 2px var(--focus); text-underline-offset: 3px; }}
+mark.key {{ text-underline-offset: 3px; }}
 .anchor {{ scroll-margin-top: 40vh; }}
 .anchors:has(.anchor:target) + mark {{ outline: 2px solid var(--focus); outline-offset: 2px; }}
 .page {{ display: block; border-top: 1px dashed var(--line); margin: 18px 0 8px; }}
@@ -374,9 +373,11 @@ body:has(#show-rejected:not(:checked)) .group.rejected {{ display: none; }}
 body:has(#show-admitted:not(:checked)) mark.admitted,
 body:has(#show-needs_verification:not(:checked)) mark.needs_verification,
 body:has(#show-rejected:not(:checked)) mark.rejected {{ background: none; box-shadow: none; }}
-body:has(#show-admitted:not(:checked)) mark.key-admitted,
-body:has(#show-needs_verification:not(:checked)) mark.key-needs_verification,
-body:has(#show-rejected:not(:checked)) mark.key-rejected {{ text-decoration: none; }}
+mark.key-other,
+body:has(#show-admitted:checked) mark.key-admitted,
+body:has(#show-needs_verification:checked) mark.key-needs_verification,
+body:has(#show-rejected:checked) mark.key-rejected {{
+  text-decoration: underline 2px var(--focus); }}
 @media (max-width: 800px) {{
   body {{ height: auto; display: block; }}
   main {{ grid-template-columns: minmax(0, 1fr); }}
