@@ -151,7 +151,19 @@ function toggle(k) {
   keys();
 }
 
+let busy = false;  // one save at a time, so a double click cannot label the next amount
+
 async function save(label) {
+  if (busy) return;
+  busy = true;
+  try {
+    await send(label);
+  } finally {
+    busy = false;
+  }
+}
+
+async function send(label) {
   const it = S.items[i];
   const r = await fetch("/label", {
     method: "POST",
@@ -164,7 +176,11 @@ async function save(label) {
   show();
 }
 
-function go(to) { i = Math.max(0, Math.min(S.items.length - 1, to)); show(); }
+function go(to) {
+  i = Math.max(0, Math.min(S.items.length - 1, to));
+  history.replaceState(null, "", "#" + (i + 1));
+  show();
+}
 function todo() {
   const n = S.items.findIndex((x, k) => k > i && !(x.id in S.labels));
   const m = n >= 0 ? n : S.items.findIndex((x) => !(x.id in S.labels));
@@ -180,7 +196,7 @@ $("next").onclick = (e) => { e.target.blur(); go(i + 1); };
 $("todo").onclick = (e) => { e.target.blur(); todo(); };
 
 document.addEventListener("keydown", (e) => {
-  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
   const n = Number(e.key);
   if (e.key >= "1" && e.key <= "5" && n <= S.keys.length) toggle(S.keys[n - 1]);
   else if (e.key === "0") save([]);
@@ -196,8 +212,10 @@ document.addEventListener("keydown", (e) => {
 
 fetch("/state").then((r) => r.json()).then((s) => {
   S = s;
+  // #12 opens amount 12; otherwise the first amount without a label
+  const asked = Number(location.hash.slice(1));
   const n = S.items.findIndex((x) => !(x.id in S.labels));
-  i = n >= 0 ? n : 0;
+  i = asked >= 1 && asked <= S.items.length ? asked - 1 : n >= 0 ? n : 0;
   show();
 });
 </script>

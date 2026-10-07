@@ -101,7 +101,8 @@ def serve(port: int) -> None:
             if self.path == "/":
                 self.send(200, page, "text/html; charset=utf-8")
             elif self.path == "/state":
-                labels = json.loads(path.read_text()) if path.exists() else {}
+                with lock:
+                    labels = json.loads(path.read_text()) if path.exists() else {}
                 body = {"keys": status.KEYS, "items": items, "labels": labels}
                 self.send(200, json.dumps(body).encode(), "application/json")
             elif self.path.startswith("/pdf/") and self.path[5:] in srcs:
@@ -130,7 +131,9 @@ def serve(port: int) -> None:
                 labels[got["id"]] = (
                     None if answer is None else sorted(answer, key=status.KEYS.index)
                 )
-                path.write_text(json.dumps(dict(sorted(labels.items())), indent=1) + "\n")
+                tmp = path.with_suffix(".tmp")
+                tmp.write_text(json.dumps(dict(sorted(labels.items())), indent=1) + "\n")
+                tmp.replace(path)  # a reader never sees half a file
             self.send(200, b"{}", "application/json")
 
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
