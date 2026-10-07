@@ -1,7 +1,7 @@
 {
  "name": "19b-derived-sign",
  "description": "A sign item makes a token negative: brackets around the value, or a loss word before it in the same sentence with no number, line break, tab or gain word between. Brackets around the token make it negative with no item. A failing sign item still gives its part, with its flag. A negative value with no sign is a missing part (spec 0.5).",
- "document": "For the year ended December 31, 2024, we had a net loss of $71,000, which consisted of $71,000 of general and administrative expenses.\n\nLoss from operations\n\n($105,198\n)\n\n($34,904\n)\n\nNet (loss) income\n\n$6,152\n\n($13,203\n)\n\nIn 2023 the company reported a loss of $5,000 and revenue of $9,000.",
+ "document": "For the year ended December 31, 2024, we had a net loss of $71,000, which consisted of $71,000 of general and administrative expenses.\n\nLoss from operations\n\n($105,198\n)\n\n($34,904\n)\n\nNet (loss) income\n\n$6,152\n\n($13,203\n)\n\nIn 2023 the company reported a loss of $5,000 and revenue of $9,000.\n\nLoss was $5 million in 2022.",
  "schema": {
   "fields": {
    "amount": {
@@ -153,6 +153,23 @@
      "text": "loss"
     }
    ]
+  },
+  {
+   "id": "s10",
+   "field": "amount",
+   "value": "-5",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 301,
+     "end": 311,
+     "text": "$5 million"
+    },
+    {
+     "role": "sign",
+     "text": "Loss"
+    }
+   ]
   }
  ],
  "expected": {
@@ -212,6 +229,13 @@
     "outcome": "needs_verification",
     "codes": [
      "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD",
      "VALUE_DERIVED"
     ]
    }

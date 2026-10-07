@@ -342,6 +342,11 @@ def _value_at(
     return None, "UNIT_NOT_IN_EVIDENCE"
 
 
+def _unscaled(tok: Token, value: Decimal | str) -> bool:
+    """The value is the number as written, with any sign, not its scaled value (SCALE_WORD)."""
+    return tok.value is not None and isinstance(value, Decimal) and abs(tok.value) == abs(value)
+
+
 def _same(a: _Item, b: _Item) -> bool:
     """Whether two items are in the same text."""
     return a.source == b.source and a.ref == b.ref
@@ -487,7 +492,7 @@ def _checked(
     if token is not None:
         if qualifiers(t.text, token) - {f.comparator}:
             flags.append("QUALIFIED_VALUE")
-        if scale_word(t.text, token) and token.value == value:  # written, not scaled
+        if scale_word(t.text, token) and _unscaled(token, value):  # written, not scaled
             flags.append("SCALE_WORD")
     if at.missing:
         flags.append("PART_MISSING")
@@ -670,7 +675,7 @@ def _outside(
     if at is not None and tok is not None:
         if qualifiers(at.t.text, tok) - {f.comparator}:
             p.flags.append("QUALIFIED_VALUE")
-        if scale_word(at.t.text, tok) and tok.value == value:
+        if scale_word(at.t.text, tok) and _unscaled(tok, value):
             p.flags.append("SCALE_WORD")
     if at is not None and f.keys is not None:
         pos = tok.start if tok is not None else 0

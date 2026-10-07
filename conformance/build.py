@@ -1817,7 +1817,8 @@ vector(
     "$71,000 of general and administrative expenses.\n\n"
     "Loss from operations\n\n($105,198\n)\n\n($34,904\n)\n\n"
     "Net (loss) income\n\n$6,152\n\n($13,203\n)\n\n"
-    "In 2023 the company reported a loss of $5,000 and revenue of $9,000.",
+    "In 2023 the company reported a loss of $5,000 and revenue of $9,000.\n\n"
+    "Loss was $5 million in 2022.",
     {"fields": {"amount": AMOUNT}},
     [
         c("s1", "amount", "-71000", "USD", [q("$71,000"), {"role": "sign", "text": "net loss"}],
@@ -1835,6 +1836,8 @@ vector(
           ("admitted", ["VALUE_DERIVED"])),
         c("s9", "amount", "-9000", "USD", [q("$9,000"), {"role": "sign", "text": "loss"}],
           (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("s10", "amount", "-5", "USD", [q("$5 million"), {"role": "sign", "text": "Loss"}],
+          (REVIEW, ["SCALE_WORD", "VALUE_DERIVED"])),
     ],
 )  # fmt: skip
 
