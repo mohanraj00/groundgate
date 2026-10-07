@@ -1,0 +1,109 @@
+{
+ "doc": "sec-0001364479-26-000050",
+ "kind": "sec",
+ "fields": {
+  "revenue": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "aliases": [
+     "revenue",
+     "revenues",
+     "total revenue",
+     "total revenues",
+     "net revenue",
+     "net revenues",
+     "net sales",
+     "total net sales",
+     "sales"
+    ]
+   },
+   "description": "Total revenue or net sales for the fiscal year."
+  },
+  "net_income": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "aliases": [
+     "net income",
+     "net loss",
+     "net income (loss)",
+     "net (loss) income",
+     "net earnings",
+     "net loss and comprehensive loss"
+    ]
+   },
+   "description": "Net income for the fiscal year."
+  },
+  "operating_income": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "aliases": [
+     "operating income",
+     "operating loss",
+     "income from operations",
+     "loss from operations",
+     "operating income (loss)",
+     "(loss) income from operations",
+     "income (loss) from operations"
+    ]
+   },
+   "description": "Operating income (income from operations) for the fiscal year."
+  },
+  "cash_and_equivalents": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "aliases": [
+     "cash and cash equivalents",
+     "cash and equivalents"
+    ]
+   },
+   "description": "Cash and cash equivalents at the end of the fiscal year."
+  },
+  "total_debt": {
+   "schema": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ],
+    "aliases": [
+     "total debt",
+     "long-term debt",
+     "total long-term debt",
+     "total borrowings"
+    ]
+   },
+   "description": "Total debt at the end of the fiscal year."
+  }
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "run": "Claude_Haiku_4.5_roles/4000",
+ "sets": {
+  "sec2": {
+   "0.4": {
+    "right": 23,
+    "escapes": 1,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 0
+   },
+   "0.5": {
+    "right": 26,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 13
+   },
+   "0.5 without sign": {
+    "right": 24,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 16
+   },
+   "0.5 without scale": {
+    "right": 22,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 83
+   },
+   "0.5 without unit": {
+    "right": 33,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 35
+   },
+   "0.5 without field": {
+    "right": 24,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 13
+   },
+   "0.5 without key": {
+    "right": 22,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 13
+   }
+  },
+  "status": {
+   "0.4": {
+    "right": 28,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 0
+   },
+   "0.5": {
+    "right": 28,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 20
+   },
+   "0.5 without sign": {
+    "right": 28,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 20
+   },
+   "0.5 without scale": {
+    "right": 28,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 20
+   },
+   "0.5 without unit": {
+    "right": 28,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 20
+   },
+   "0.5 without field": {
+    "right": 28,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 20
+   },
+   "0.5 without key": {
+    "right": 28,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "part missing": 20
+   }
+  }
+ },
+ "role failures": {
+  "sec2": {
+   "FIELD_CITATION_INVALID": 23,
+   "KEY_CITATION_INVALID": 1,
+   "SCALE_CITATION_INVALID": 65,
+   "SIGN_CITATION_INVALID": 5,
+   "UNIT_CITATION_INVALID": 84,
+   "scale not in the text": 35,
+   "unit next to the number": 80
+  },
+  "status": {
+   "KEY_CITATION_INVALID": 22
+  }
+ }
+}

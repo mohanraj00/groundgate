@@ -1,0 +1,185 @@
+{
+  "retrieved": "2026-10-07",
+  "sources": [
+    {
+      "id": "sec-0001628280-26-007051",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1025996/000162828026007051/krc-20251231.htm",
+      "sha256": "729774a530f42801ded22ea11977bbeccb7126f22c8b3d32b8fc3c299fce1c49",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0000805928-26-000031",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/805928/000080592826000031/axgn-20251231.htm",
+      "sha256": "4ea09efea597796d4b0efa436c6532f5932d0d8fd7c56c4b7f19eb355d6b15c3",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001737706-26-000010",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1737706/000173770626000010/sdrl-20251231.htm",
+      "sha256": "6cd96936d829c3812834285284a9eb2867111c7bcf8704be35a06e94ce3ea4ca",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001819493-26-000008",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1819493/000181949326000008/xos-20251231.htm",
+      "sha256": "6db5a845b85b4cae48a360f30fd28b740b1bb4f9d31a51b6afc6d9380533ddb5",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001409970-26-000018",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1409970/000140997026000018/lc-20251231.htm",
+      "sha256": "20d9ca863a3d914a3586303abc3ded86ed0c7e6389eae61a3cfba66ea60bd70a",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001642380-26-000004",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1642380/000164238026000004/imdx-20251231.htm",
+      "sha256": "cbe525a3bf56095a5f834b526d44154998e4cb7abff743713c141fa6390db9e1",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001834622-26-000008",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1834622/000183462226000008/hayw-20251231.htm",
+      "sha256": "12193ae3c9fb477e86fb8a8c24c2f41a44241d26c05a79d2899768023f92ec69",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001628280-26-017376",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1818093/000162828026017376/skin-20251231.htm",
+      "sha256": "d032dcc47f456234ca9b1d8f2e6a5eb76f768ac5ed65c81c847834e969a1b6b7",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001660134-26-000020",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm",
+      "sha256": "9b86a92bca086b9458e24fb6cd37dc443b9810a0dce19116a065ccd749da8811",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0000818479-26-000075",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/818479/000081847926000075/xray-20251231.htm",
+      "sha256": "84e0c3148cd537e9c2594f8168ed4070ee70518b4631de5dab63e59406c8d452",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001437749-26-005354",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/729580/000143774926005354/belfb20251231d_10k.htm",
+      "sha256": "06ada8ed4cac46cceab6baca482c149b99d90485fb3c7ed19f8e4d83dd68bef7",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001058290-26-000008",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1058290/000105829026000008/ctsh-20251231.htm",
+      "sha256": "891cc6e122e24f19508e33b79685490738b4a86671058156846da016794155f2",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001050797-26-000028",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050797/000105079726000028/colm-20251231.htm",
+      "sha256": "2896b22fc651c05b72c556fb7d0e3d66d9379999cf15ec314a5015717efec343",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001104659-26-037084",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/2083002/000110465926037084/adac-20251231x10k.htm",
+      "sha256": "0feb14f4a4fd1045b9040dcc2076a849d59534a43eb90a45b770114499acdf34",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001957132-26-000015",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1957132/000195713226000015/sharkninja-20251231.htm",
+      "sha256": "a0a7eb2e0f6e5e4504edd838718f8d6d90b11cfe0c2dfcd891ab1557c849a0a3",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001364479-26-000050",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1364479/000136447926000050/hri-20251231.htm",
+      "sha256": "6fbe0ccb8a34f29aa209f759258339ac41bbb5eb97549128ba59277bcbe62175",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0000857855-26-000008",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/857855/000085785526000008/ucbi-20251231.htm",
+      "sha256": "16ead45c5562028596a32d526926702fbf2088cbc9fa65916625e4211351a184",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0000093556-26-000009",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/93556/000009355626000009/swk-20260103.htm",
+      "sha256": "d96a3e0a3bda339b1f13a66addd90e94220d11d4f4fab98bfdfb2c9435dc3c33",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0001628280-26-020177",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/1392272/000162828026020177/chnbrdg-20251231.htm",
+      "sha256": "ef17af006b6fe65dbe243f72095f6be1ccdc970d4bfb5d5f29a5c8a97dea1282",
+      "select": {
+        "item": "7"
+      }
+    },
+    {
+      "id": "sec-0000914475-26-000007",
+      "kind": "sec",
+      "url": "https://www.sec.gov/Archives/edgar/data/914475/000091447526000007/nbix-20251231.htm",
+      "sha256": "44fe8d39f1c62cf2744513cb1c45a4d3d00470b546ee1582ff611de4fd993c00",
+      "select": {
+        "item": "7"
+      }
+    }
+  ]
+}

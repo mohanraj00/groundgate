@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evidence labels</title>
+<style>
+  body { margin: 0; font: 15px/1.45 system-ui, sans-serif; color: #1d1d1f; background: #f4f4f2; }
+  .wrap { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); height: 100vh; }
+  #view { overflow: auto; padding: 16px 20px; }
+  #side { overflow: auto; padding: 16px 20px; border-left: 1px solid #ccc; background: #fff; }
+  h1 { font-size: 15px; margin: 0 0 4px; }
+  .meta { color: #666; font-size: 13px; margin-bottom: 12px; }
+  .q { font-weight: 600; margin: 14px 0 8px; }
+  .value { font-size: 22px; font-weight: 600; }
+  .field { font: 13px ui-monospace, monospace; }
+  #text { white-space: pre-wrap; font: 13px/1.4 ui-monospace, monospace; background: #fff;
+          border: 1px solid #ddd; padding: 10px; }
+  mark { background: #ffd43b; outline: 2px solid #e8590c; }
+  .opts { display: grid; gap: 6px; }
+  .opt { text-align: left; padding: 8px 10px; border: 1px solid #bbb; border-radius: 6px;
+         background: #fff; font: inherit; cursor: pointer; }
+  .opt.on { background: #1c7ed6; border-color: #1c7ed6; color: #fff; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .row button { padding: 7px 12px; border: 1px solid #bbb; border-radius: 6px; background: #f1f1ef;
+                font: inherit; cursor: pointer; }
+  .now { margin-top: 10px; font-size: 13px; color: #444; }
+  .help { margin-top: 14px; font-size: 12px; color: #666; }
+  .err { color: #c92a2a; font-size: 13px; }
+  @media (max-width: 800px) { .wrap { display: block; height: auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="view"><div id="text"></div></div>
+  <div id="side">
+    <h1 id="title"></h1>
+    <div class="field" id="field"></div>
+    <div class="meta" id="desc"></div>
+    <div class="value" id="value"></div>
+    <div class="q">Is this value true for the field, the key and the document's subject?</div>
+    <div class="opts">
+      <button class="opt" data-v="right">1 · Right</button>
+      <button class="opt" data-v="wrong">2 · Wrong</button>
+      <button class="opt" data-v="not sure">3 · Not sure</button>
+    </div>
+    <div class="row">
+      <button id="back">Back</button>
+      <button id="next">Next</button>
+      <button id="todo">Next without a label</button>
+    </div>
+    <div class="err" id="err"></div>
+    <div class="now" id="now"></div>
+    <div class="help">
+      The marked text is where the value was found. Label it <b>right</b> only when the value is
+      true for this field and this key, for this document's subject (the company and its whole
+      fiscal year, or the publication), with its sign and scale: a loss is negative, and a table
+      "in thousands" multiplies its numbers by 1,000. A part (a segment, a quarter), a change,
+      another measure or another period is <b>wrong</b>. <b>Not sure</b> when you can't tell.
+      A click saves the label and goes to the next item without one.
+    </div>
+  </div>
+</div>
+<script>
+let S, i = 0;
+const $ = (id) => document.getElementById(id);
+
+function show() {
+  const it = S.items[i], l = S.labels[it.id];
+  $("title").textContent = it.doc;
+  $("field").textContent = it.field + (it.key ? "  for  " + it.key : "");
+  $("desc").textContent = it.description;
+  $("value").textContent = Number(it.value).toLocaleString("en-US", { maximumFractionDigits: 20 });
+  const t = $("text"); t.textContent = "";
+  if (it.start !== null) {
+    const m = document.createElement("mark"); m.textContent = it.text.slice(it.start, it.end);
+    t.append(it.text.slice(0, it.start), m, it.text.slice(it.end));
+    m.scrollIntoView({ block: "center" });
+  } else {
+    t.textContent = it.text;
+  }
+  document.querySelectorAll("[data-v]").forEach((b) => b.classList.toggle("on", !!l && b.dataset.v === l.verdict));
+  const done = S.items.filter((x) => S.labels[x.id]).length;
+  $("now").textContent = `Item ${i + 1} of ${S.items.length} · ${done} labeled · this one: ${l ? l.verdict : "no label yet"}`;
+  $("err").textContent = "";
+}
+
+async function save(verdict) {
+  const it = S.items[i];
+  const r = await fetch("/label", { method: "POST", headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({ id: it.id, verdict }) });
+  if (!r.ok) { $("err").textContent = "Not saved: " + (await r.text()); return; }
+  S.labels[it.id] = { verdict };
+  next(true);
+}
+
+function next(todo) {
+  const n = S.items.length;
+  for (let k = 1; k <= n; k++) {
+    const j = (i + k) % n;
+    if (!todo || !S.labels[S.items[j].id]) { i = j; show(); return; }
+  }
+  show();
+}
+
+document.querySelectorAll("[data-v]").forEach((b) => b.onclick = () => save(b.dataset.v));
+$("next").onclick = () => { i = (i + 1) % S.items.length; show(); };
+$("back").onclick = () => { i = (i - 1 + S.items.length) % S.items.length; show(); };
+$("todo").onclick = () => next(true);
+document.addEventListener("keydown", (e) => {
+  const v = { "1": "right", "2": "wrong", "3": "not sure" }[e.key];
+  if (v) save(v);
+});
+
+fetch("/state").then((r) => r.json()).then((s) => {
+  S = s;
+  if (!S.items.length) { $("title").textContent = "Nothing to label."; return; }
+  const first = S.items.findIndex((it) => !S.labels[it.id]);
+  i = first < 0 ? 0 : first;
+  show();
+});
+</script>
+</body>
+</html>

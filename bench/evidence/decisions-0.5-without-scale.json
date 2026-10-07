@@ -1,0 +1,4800 @@
+{
+ "sec2": {
+  "sec-0000093556-26-000009": [
+   {
+    "id": 0,
+    "field": "net_income",
+    "key": "2025",
+    "value": "401900000",
+    "evidence": [
+     22684,
+     22689
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "net_income",
+    "key": "2024",
+    "value": "286300000",
+    "evidence": [
+     23139,
+     23144
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0000805928-26-000031": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "225208000",
+    "evidence": [
+     4522,
+     4529
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "187338000",
+    "evidence": [
+     6833,
+     6840
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "net_income",
+    "key": "2025",
+    "value": "-15703000",
+    "evidence": [
+     7483,
+     7489
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "net_income",
+    "key": "2024",
+    "value": "-9964000",
+    "evidence": [
+     7502,
+     7507
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "-7849000",
+    "evidence": [
+     7186,
+     7191
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "-3287000",
+    "evidence": [
+     7200,
+     7205
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "total_debt",
+    "key": "2025",
+    "value": "50000000",
+    "evidence": [
+     15318,
+     15325
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0000818479-26-000075": [
+   {
+    "id": 0,
+    "field": "net_income",
+    "key": "2025",
+    "value": "-598000000",
+    "evidence": [
+     2575,
+     2587
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "net_income",
+    "key": "2024",
+    "value": "-910000000",
+    "evidence": [
+     2615,
+     2627
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "net_income",
+    "key": "2025",
+    "value": "-598000000",
+    "evidence": [
+     2576,
+     2579
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "EVIDENCE_REANCHORED",
+     "VALUE_DERIVED"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "net_income",
+    "key": "2024",
+    "value": "-910000000",
+    "evidence": [
+     2616,
+     2619
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "EVIDENCE_REANCHORED",
+     "VALUE_DERIVED"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "326000000",
+    "evidence": [
+     42325,
+     42328
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "cash_and_equivalents",
+    "key": "2024",
+    "value": "272000000",
+    "evidence": [
+     42330,
+     42333
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0000857855-26-000008": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "1063152000",
+    "evidence": [
+     4094,
+     4095
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "952124000",
+    "evidence": [
+     7132,
+     7139
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "revenue",
+    "key": "2023",
+    "value": "893248000",
+    "evidence": [
+     7141,
+     7148
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "net_income",
+    "key": "2025",
+    "value": "328095000",
+    "evidence": [
+     7358,
+     7365
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "net_income",
+    "key": "2024",
+    "value": "252397000",
+    "evidence": [
+     7367,
+     7374
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "net_income",
+    "key": "2023",
+    "value": "187544000",
+    "evidence": [
+     7376,
+     7383
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "395754000",
+    "evidence": [
+     43904,
+     43911
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "cash_and_equivalents",
+    "key": "2024",
+    "value": "519873000",
+    "evidence": [
+     43915,
+     43922
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "total_debt",
+    "key": "2025",
+    "value": "120000000",
+    "evidence": [
+     53936,
+     53948
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "total_debt",
+    "key": "2024",
+    "value": "254000000",
+    "evidence": [
+     53953,
+     53965
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 10,
+    "field": "net_income",
+    "key": "2025",
+    "value": "328000000",
+    "evidence": [
+     68428,
+     68440
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 11,
+    "field": "net_income",
+    "key": "2025",
+    "value": "328095000",
+    "evidence": [
+     78415,
+     78422
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 12,
+    "field": "net_income",
+    "key": "2024",
+    "value": "252397000",
+    "evidence": [
+     78426,
+     78433
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 13,
+    "field": "net_income",
+    "key": "2023",
+    "value": "187544000",
+    "evidence": [
+     78437,
+     78444
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0000914475-26-000007": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "2830000000",
+    "evidence": [
+     3356,
+     3369
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2025",
+    "value": "2860500000",
+    "evidence": [
+     7880,
+     7887
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "revenue",
+    "key": "2024",
+    "value": "2355300000",
+    "evidence": [
+     7891,
+     7898
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "revenue",
+    "key": "2023",
+    "value": "1887100000",
+    "evidence": [
+     7902,
+     7909
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "619100000",
+    "evidence": [
+     7972,
+     7977
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "570500000",
+    "evidence": [
+     7979,
+     7984
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "operating_income",
+    "key": "2023",
+    "value": "250900000",
+    "evidence": [
+     7986,
+     7991
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "revenue",
+    "key": "2025",
+    "value": "2860500000",
+    "evidence": [
+     8503,
+     8512
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "revenue",
+    "key": "2024",
+    "value": "2355300000",
+    "evidence": [
+     8514,
+     8523
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "revenue",
+    "key": "2023",
+    "value": "1887100000",
+    "evidence": [
+     8525,
+     8534
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 10,
+    "field": "net_income",
+    "key": "2025",
+    "value": "478.6",
+    "evidence": [
+     8090,
+     8097
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 11,
+    "field": "net_income",
+    "key": "2024",
+    "value": "341.3",
+    "evidence": [
+     8099,
+     8106
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 12,
+    "field": "net_income",
+    "key": "2023",
+    "value": "249.7",
+    "evidence": [
+     9476,
+     9477
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001050797-26-000028": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "3397351000",
+    "evidence": [
+     11326,
+     11335
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "3368582000",
+    "evidence": [
+     11348,
+     11357
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "207039000",
+    "evidence": [
+     11694,
+     11701
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "270741000",
+    "evidence": [
+     11710,
+     11717
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "revenue",
+    "key": "2025",
+    "value": "3397351000",
+    "evidence": [
+     12782,
+     12793
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "revenue",
+    "key": "2024",
+    "value": "3368582000",
+    "evidence": [
+     12818,
+     12829
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "net_income",
+    "key": "2025",
+    "value": "177224000",
+    "evidence": [
+     12900,
+     12901
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "net_income",
+    "key": "2024",
+    "value": "223273000",
+    "evidence": [
+     13224,
+     13225
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001058290-26-000008": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "21108000000",
+    "evidence": [
+     10451,
+     10457
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "EVIDENCE_REANCHORED"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "19736000000",
+    "evidence": [
+     8946,
+     8952
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "net_income",
+    "key": "2025",
+    "value": "2230000000",
+    "evidence": [
+     9644,
+     9649
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "net_income",
+    "key": "2024",
+    "value": "2240000000",
+    "evidence": [
+     9658,
+     9663
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "3389000000",
+    "evidence": [
+     9362,
+     9367
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "2892000000",
+    "evidence": [
+     9374,
+     9379
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "3389000000",
+    "evidence": [
+     18051,
+     18056
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "2892000000",
+    "evidence": [
+     18066,
+     18071
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "3389000000",
+    "evidence": [
+     24408,
+     24413
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "2892000000",
+    "evidence": [
+     24425,
+     24430
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001104659-26-037084": [
+   {
+    "id": 0,
+    "field": "net_income",
+    "key": "2025",
+    "value": "94700",
+    "evidence": [
+     2421,
+     2428
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   }
+  ],
+  "sec-0001364479-26-000050": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "4376000000",
+    "evidence": [
+     8864,
+     8869
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "3568000000",
+    "evidence": [
+     8871,
+     8876
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "net_income",
+    "key": "2025",
+    "value": "1000000",
+    "evidence": [
+     8472,
+     8473
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "EVIDENCE_REANCHORED"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "net_income",
+    "key": "2024",
+    "value": "211000000",
+    "evidence": [
+     9508,
+     9511
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "52000000",
+    "evidence": [
+     14868,
+     14879
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "EVIDENCE_REANCHORED"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "total_debt",
+    "key": "2025",
+    "value": "8100000000",
+    "evidence": [
+     14732,
+     14744
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE",
+     "FIELD_CITATION_INVALID"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001409970-26-000018": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "998848000",
+    "evidence": [
+     7545,
+     7552
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "787011000",
+    "evidence": [
+     7554,
+     7561
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "revenue",
+    "key": "2023",
+    "value": "864619000",
+    "evidence": [
+     7563,
+     7570
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "net_income",
+    "key": "2025",
+    "value": "135677000",
+    "evidence": [
+     7844,
+     7851
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "net_income",
+    "key": "2024",
+    "value": "51330000",
+    "evidence": [
+     7855,
+     7861
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "net_income",
+    "key": "2023",
+    "value": "38939000",
+    "evidence": [
+     7865,
+     7871
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "revenue",
+    "key": "2025",
+    "value": "998848000",
+    "evidence": [
+     13214,
+     13221
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "revenue",
+    "key": "2024",
+    "value": "787011000",
+    "evidence": [
+     13223,
+     13230
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "revenue",
+    "key": "2023",
+    "value": "864619000",
+    "evidence": [
+     13232,
+     13239
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "net_income",
+    "key": "2025",
+    "value": "135677000",
+    "evidence": [
+     13955,
+     13962
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 10,
+    "field": "net_income",
+    "key": "2024",
+    "value": "51330000",
+    "evidence": [
+     13966,
+     13972
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 11,
+    "field": "net_income",
+    "key": "2023",
+    "value": "38939000",
+    "evidence": [
+     13976,
+     13982
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 12,
+    "field": "revenue",
+    "key": "2025",
+    "value": "998848000",
+    "evidence": [
+     45425,
+     45432
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 13,
+    "field": "revenue",
+    "key": "2024",
+    "value": "787011000",
+    "evidence": [
+     45436,
+     45443
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 14,
+    "field": "revenue",
+    "key": "2023",
+    "value": "864619000",
+    "evidence": [
+     45447,
+     45454
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 15,
+    "field": "net_income",
+    "key": "2025",
+    "value": "135677000",
+    "evidence": [
+     44996,
+     45003
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 16,
+    "field": "net_income",
+    "key": "2024",
+    "value": "51330000",
+    "evidence": [
+     45007,
+     45013
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 17,
+    "field": "net_income",
+    "key": "2023",
+    "value": "38939000",
+    "evidence": [
+     45017,
+     45023
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 18,
+    "field": "revenue",
+    "key": "2025",
+    "value": "998848000",
+    "evidence": [
+     48123,
+     48130
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 19,
+    "field": "revenue",
+    "key": "2024",
+    "value": "787011000",
+    "evidence": [
+     48132,
+     48139
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 20,
+    "field": "revenue",
+    "key": "2023",
+    "value": "864619000",
+    "evidence": [
+     48141,
+     48148
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 21,
+    "field": "net_income",
+    "key": "2025",
+    "value": "135677000",
+    "evidence": [
+     48429,
+     48438
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 22,
+    "field": "net_income",
+    "key": "2024",
+    "value": "51330000",
+    "evidence": [
+     48440,
+     48448
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 23,
+    "field": "net_income",
+    "key": "2023",
+    "value": "38939000",
+    "evidence": [
+     48450,
+     48458
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 24,
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "901246000",
+    "evidence": [
+     58398,
+     58405
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 25,
+    "field": "cash_and_equivalents",
+    "key": "2024",
+    "value": "932463000",
+    "evidence": [
+     58409,
+     58416
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001437749-26-005354": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "675455000",
+    "evidence": [
+     15118,
+     15125
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "534792000",
+    "evidence": [
+     15130,
+     15137
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "revenue",
+    "key": "2023",
+    "value": "639813000",
+    "evidence": [
+     15142,
+     15149
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "57800000",
+    "evidence": [
+     37193,
+     37206
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "total_debt",
+    "key": "2025",
+    "value": "197500000",
+    "evidence": [
+     49516,
+     49523
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001628280-26-007051": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "1099557000",
+    "evidence": [
+     35735,
+     35744
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "1128563000",
+    "evidence": [
+     35779,
+     35788
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "net_income",
+    "key": "2025",
+    "value": "302640000",
+    "evidence": [
+     34220,
+     34229
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "net_income",
+    "key": "2024",
+    "value": "232954000",
+    "evidence": [
+     34231,
+     34240
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "total_debt",
+    "key": "2025",
+    "value": "4625442000",
+    "evidence": [
+     55454,
+     55463
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "net_income",
+    "key": "2025",
+    "value": "276121000",
+    "evidence": [
+     89606,
+     89613
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "net_income",
+    "key": "2024",
+    "value": "210969000",
+    "evidence": [
+     89617,
+     89624
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001628280-26-017376": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "300800000",
+    "evidence": [
+     9902,
+     9907
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "334300000",
+    "evidence": [
+     9920,
+     9925
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "-20800000",
+    "evidence": [
+     10246,
+     10250
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "-67800000",
+    "evidence": [
+     10259,
+     10263
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "net_income",
+    "key": "2025",
+    "value": "-9500000",
+    "evidence": [
+     10658,
+     10661
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "net_income",
+    "key": "2024",
+    "value": "-29100000",
+    "evidence": [
+     10674,
+     10678
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "232700000",
+    "evidence": [
+     16680,
+     16694
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "net_income",
+    "key": "2025",
+    "value": "-9500000",
+    "evidence": [
+     28433,
+     28438
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "net_income",
+    "key": "2024",
+    "value": "-29100000",
+    "evidence": [
+     28439,
+     28445
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "revenue",
+    "key": "2023",
+    "value": "17000000",
+    "evidence": [
+     32671,
+     32696
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001628280-26-020177": [
+   {
+    "id": 0,
+    "field": "net_income",
+    "key": "2025",
+    "value": "20200000",
+    "evidence": [
+     3843,
+     3856
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "net_income",
+    "key": "2024",
+    "value": "20900000",
+    "evidence": [
+     3907,
+     3920
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "net_income",
+    "key": "2025",
+    "value": "20237000",
+    "evidence": [
+     30206,
+     30212
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "net_income",
+    "key": "2024",
+    "value": "20949000",
+    "evidence": [
+     30216,
+     30222
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001642380-26-000004": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "4055000",
+    "evidence": [
+     11470,
+     11478
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "1881000",
+    "evidence": [
+     11480,
+     11488
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "revenue",
+    "key": "2025",
+    "value": "4100000",
+    "evidence": [
+     12411,
+     12423
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "revenue",
+    "key": "2024",
+    "value": "1900000",
+    "evidence": [
+     12474,
+     12486
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "net_income",
+    "key": "2025",
+    "value": "-50222000",
+    "evidence": [
+     12143,
+     12149
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "SIGN_CITATION_INVALID",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "net_income",
+    "key": "2024",
+    "value": "-60663000",
+    "evidence": [
+     12155,
+     12161
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "SIGN_CITATION_INVALID",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "-51124000",
+    "evidence": [
+     12029,
+     12035
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "SIGN_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "-61041000",
+    "evidence": [
+     12041,
+     12047
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "SIGN_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "revenue",
+    "key": "2025",
+    "value": "4055000",
+    "evidence": [
+     16916,
+     16921
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "revenue",
+    "key": "2024",
+    "value": "1881000",
+    "evidence": [
+     16926,
+     16931
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 10,
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "11600000",
+    "evidence": [
+     30895,
+     30908
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   }
+  ],
+  "sec-0001660134-26-000020": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "2610000000",
+    "evidence": [
+     6170,
+     6184
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "2263000000",
+    "evidence": [
+     6189,
+     6203
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "net_income",
+    "key": "2025",
+    "value": "28000000",
+    "evidence": [
+     6370,
+     6381
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "net_income",
+    "key": "2024",
+    "value": "-355000000",
+    "evidence": [
+     6445,
+     6457
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "revenue",
+    "key": "2025",
+    "value": "2610000000",
+    "evidence": [
+     6171,
+     6176
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "EVIDENCE_REANCHORED"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "revenue",
+    "key": "2024",
+    "value": "2263000000",
+    "evidence": [
+     6190,
+     6195
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "EVIDENCE_REANCHORED"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "net_income",
+    "key": "2025",
+    "value": "28000000",
+    "evidence": [
+     6371,
+     6373
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "EVIDENCE_REANCHORED"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "net_income",
+    "key": "2024",
+    "value": "-355000000",
+    "evidence": [
+     16957,
+     16958
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "-74000000",
+    "evidence": [
+     17352,
+     17356
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "-516000000",
+    "evidence": [
+     17357,
+     17362
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001737706-26-000010": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "1437000000",
+    "evidence": [
+     9825,
+     9830
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "1385000000",
+    "evidence": [
+     9832,
+     9837
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "47000000",
+    "evidence": [
+     9958,
+     9960
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "412000000",
+    "evidence": [
+     9962,
+     9965
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "net_income",
+    "key": "2025",
+    "value": "-77000000",
+    "evidence": [
+     10211,
+     10213
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "net_income",
+    "key": "2024",
+    "value": "446000000",
+    "evidence": [
+     10215,
+     10218
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "total_debt",
+    "key": "2025",
+    "value": "613000000",
+    "evidence": [
+     36948,
+     36951
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001819493-26-000008": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "45992000",
+    "evidence": [
+     24793,
+     24799
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "55961000",
+    "evidence": [
+     24803,
+     24809
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "-33083000",
+    "evidence": [
+     25181,
+     25187
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "-45874000",
+    "evidence": [
+     25190,
+     25196
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "net_income",
+    "key": "2025",
+    "value": "-25320000",
+    "evidence": [
+     25593,
+     25599
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "net_income",
+    "key": "2024",
+    "value": "-50159000",
+    "evidence": [
+     25604,
+     25610
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "net_income",
+    "key": "2025",
+    "value": "-25300000",
+    "evidence": [
+     34787,
+     34800
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE",
+     "EVIDENCE_REANCHORED",
+     "VALUE_DERIVED"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "14000000",
+    "evidence": [
+     34523,
+     34536
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   }
+  ],
+  "sec-0001834622-26-000008": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "1122155000",
+    "evidence": [
+     12695,
+     12704
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "1051606000",
+    "evidence": [
+     12708,
+     12717
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "233250000",
+    "evidence": [
+     13028,
+     13035
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "208787000",
+    "evidence": [
+     13037,
+     13044
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "net_income",
+    "key": "2025",
+    "value": "151570000",
+    "evidence": [
+     13305,
+     13312
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "net_income",
+    "key": "2024",
+    "value": "118655000",
+    "evidence": [
+     13316,
+     13323
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "233300000",
+    "evidence": [
+     17383,
+     17397
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "208800000",
+    "evidence": [
+     17423,
+     17437
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "net_income",
+    "key": "2025",
+    "value": "151600000",
+    "evidence": [
+     19512,
+     19526
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "net_income",
+    "key": "2024",
+    "value": "118700000",
+    "evidence": [
+     19573,
+     19587
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 10,
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "329600000",
+    "evidence": [
+     37447,
+     37461
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 11,
+    "field": "cash_and_equivalents",
+    "key": "2024",
+    "value": "196600000",
+    "evidence": [
+     37531,
+     37545
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 12,
+    "field": "total_debt",
+    "key": "2025",
+    "value": "963465000",
+    "evidence": [
+     41969,
+     41976
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 13,
+    "field": "total_debt",
+    "key": "2024",
+    "value": "973909000",
+    "evidence": [
+     41978,
+     41985
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "sec-0001957132-26-000015": [
+   {
+    "id": 0,
+    "field": "revenue",
+    "key": "2025",
+    "value": "6399188000",
+    "evidence": [
+     11532,
+     11541
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "revenue",
+    "key": "2024",
+    "value": "5528639000",
+    "evidence": [
+     11544,
+     11553
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "operating_income",
+    "key": "2025",
+    "value": "920281000",
+    "evidence": [
+     11836,
+     11843
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "operating_income",
+    "key": "2024",
+    "value": "644162000",
+    "evidence": [
+     11844,
+     11851
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "revenue",
+    "key": "2025",
+    "value": "6399188000",
+    "evidence": [
+     13126,
+     13137
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "revenue",
+    "key": "2024",
+    "value": "5528639000",
+    "evidence": [
+     13138,
+     13149
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "net_income",
+    "key": "2025",
+    "value": "701374000",
+    "evidence": [
+     29260,
+     29269
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "net_income",
+    "key": "2024",
+    "value": "438705000",
+    "evidence": [
+     29270,
+     29279
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "revenue",
+    "key": "2025",
+    "value": "6399188000",
+    "evidence": [
+     34384,
+     34393
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "revenue",
+    "key": "2024",
+    "value": "5528639000",
+    "evidence": [
+     34396,
+     34405
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 10,
+    "field": "net_income",
+    "key": "2025",
+    "value": "701374000",
+    "evidence": [
+     33917,
+     33924
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 11,
+    "field": "net_income",
+    "key": "2024",
+    "value": "438705000",
+    "evidence": [
+     33927,
+     33934
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
+     "KEY_CITED"
+    ],
+    "why": []
+   },
+   {
+    "id": 12,
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "777300000",
+    "evidence": [
+     36391,
+     36405
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 13,
+    "field": "total_debt",
+    "key": "2025",
+    "value": "739100000",
+    "evidence": [
+     39391,
+     39405
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   }
+  ]
+ },
+ "status": {
+  "irs-p1040": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Single",
+    "value": "5086",
+    "evidence": [
+     12426,
+     12436
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "5086",
+    "evidence": [
+     12426,
+     12436
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Single",
+    "value": "7153",
+    "evidence": [
+     12438,
+     12448
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "7153",
+    "evidence": [
+     12438,
+     12448
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "amount",
+    "key": "Single",
+    "value": "22937",
+    "evidence": [
+     12450,
+     12461
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "22937",
+    "evidence": [
+     12450,
+     12461
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "amount",
+    "key": "Single",
+    "value": "30452.75",
+    "evidence": [
+     12463,
+     12474
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "30452.75",
+    "evidence": [
+     12463,
+     12474
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "amount",
+    "key": "Single",
+    "value": "42979.75",
+    "evidence": [
+     12476,
+     12487
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "42979.75",
+    "evidence": [
+     12476,
+     12487
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 10,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "10172",
+    "evidence": [
+     13244,
+     13255
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 11,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "10172",
+    "evidence": [
+     13244,
+     13255
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 12,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "14306",
+    "evidence": [
+     13257,
+     13268
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 13,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "14306",
+    "evidence": [
+     13257,
+     13268
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 14,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "45874",
+    "evidence": [
+     13270,
+     13281
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 15,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "45874",
+    "evidence": [
+     13270,
+     13281
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 16,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "60905.5",
+    "evidence": [
+     13283,
+     13294
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 17,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "60905.5",
+    "evidence": [
+     13283,
+     13294
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 18,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "75937.5",
+    "evidence": [
+     13296,
+     13307
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 19,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "75937.5",
+    "evidence": [
+     13296,
+     13307
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "EVIDENCE_REANCHORED"
+    ],
+    "why": []
+   },
+   {
+    "id": 20,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "5086",
+    "evidence": [
+     13947,
+     13957
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 21,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "7153",
+    "evidence": [
+     13959,
+     13969
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 22,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "22937",
+    "evidence": [
+     13971,
+     13982
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 23,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "30452.75",
+    "evidence": [
+     13984,
+     13995
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 24,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "37968.75",
+    "evidence": [
+     13997,
+     14008
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "irs-p1167": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Single",
+    "value": "12950",
+    "evidence": [
+     2698,
+     2705
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "12950",
+    "evidence": [
+     2698,
+     2705
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "25900",
+    "evidence": [
+     2777,
+     2784
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "19400",
+    "evidence": [
+     2804,
+     2811
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "25900",
+    "evidence": [
+     2777,
+     2784
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "irs-p1494": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Single",
+    "value": "61.92",
+    "evidence": [
+     552,
+     557
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Single",
+    "value": "309.62",
+    "evidence": [
+     698,
+     704
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Single",
+    "value": "619.23",
+    "evidence": [
+     756,
+     762
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "amount",
+    "key": "Single",
+    "value": "670.83",
+    "evidence": [
+     821,
+     827
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "amount",
+    "key": "Single",
+    "value": "1341.67",
+    "evidence": [
+     882,
+     889
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "123.85",
+    "evidence": [
+     642,
+     648
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "619.23",
+    "evidence": [
+     756,
+     762
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "1238.46",
+    "evidence": [
+     1161,
+     1168
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "1341.67",
+    "evidence": [
+     882,
+     889
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "2683.33",
+    "evidence": [
+     1291,
+     1298
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 10,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "92.88",
+    "evidence": [
+     1802,
+     1807
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 11,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "464.42",
+    "evidence": [
+     1947,
+     1953
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 12,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "928.85",
+    "evidence": [
+     2005,
+     2011
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 13,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "1006.25",
+    "evidence": [
+     2071,
+     2078
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 14,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "2012.5",
+    "evidence": [
+     2134,
+     2141
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 15,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "61.92",
+    "evidence": [
+     552,
+     557
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 16,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "309.62",
+    "evidence": [
+     698,
+     704
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 17,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "619.23",
+    "evidence": [
+     756,
+     762
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 18,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "670.83",
+    "evidence": [
+     821,
+     827
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 19,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "1341.67",
+    "evidence": [
+     882,
+     889
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE",
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   }
+  ],
+  "irs-p3524": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "26214",
+    "evidence": [
+     1796,
+     1803
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "57554",
+    "evidence": [
+     1902,
+     1909
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "64430",
+    "evidence": [
+     2003,
+     2010
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "68675",
+    "evidence": [
+     2107,
+     2114
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   }
+  ],
+  "irs-p3920": [],
+  "irs-p4011": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "32200",
+    "evidence": [
+     2150,
+     2157
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Single",
+    "value": "16100",
+    "evidence": [
+     2195,
+     2202
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "16100",
+    "evidence": [
+     2195,
+     2202
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "EVIDENCE_REANCHORED"
+    ],
+    "why": []
+   }
+  ],
+  "irs-p4012-a": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Single",
+    "value": "15750",
+    "evidence": [
+     697,
+     704
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Single",
+    "value": "17750",
+    "evidence": [
+     706,
+     713
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "31500",
+    "evidence": [
+     715,
+     722
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "33100",
+    "evidence": [
+     724,
+     731
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "34700",
+    "evidence": [
+     733,
+     740
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "5",
+    "evidence": [
+     742,
+     744
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "23625",
+    "evidence": [
+     746,
+     753
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "25625",
+    "evidence": [
+     755,
+     762
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "31500",
+    "evidence": [
+     764,
+     771
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "33100",
+    "evidence": [
+     773,
+     780
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "irs-p4054-d": [],
+  "irs-p4054": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Single",
+    "value": "200000",
+    "evidence": [
+     3624,
+     3632
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Single",
+    "value": "168600",
+    "evidence": [
+     3634,
+     3642
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "200000",
+    "evidence": [
+     3773,
+     3781
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "168600",
+    "evidence": [
+     3783,
+     3791
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "250000",
+    "evidence": [
+     3919,
+     3927
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "125000",
+    "evidence": [
+     4022,
+     4030
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "irs-p4491-x": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "20000",
+    "evidence": [
+     1160,
+     1167
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "150000",
+    "evidence": [
+     2353,
+     2361
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   }
+  ],
+  "irs-p4491": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Single",
+    "value": "15750",
+    "evidence": [
+     1757,
+     1764
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "15750",
+    "evidence": [
+     1757,
+     1764
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "31500",
+    "evidence": [
+     1653,
+     1660
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "31500",
+    "evidence": [
+     1653,
+     1660
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "23625",
+    "evidence": [
+     1723,
+     1730
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "amount",
+    "key": "Single",
+    "value": "2000",
+    "evidence": [
+     2482,
+     2488
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "2000",
+    "evidence": [
+     2482,
+     2488
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "EVIDENCE_REANCHORED"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "1600",
+    "evidence": [
+     2543,
+     2549
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "1600",
+    "evidence": [
+     2543,
+     2549
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID",
+     "EVIDENCE_REANCHORED"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "1600",
+    "evidence": [
+     2543,
+     2549
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   }
+  ],
+  "irs-p4696": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Single",
+    "value": "15750",
+    "evidence": [
+     314,
+     321
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Single",
+    "value": "17750",
+    "evidence": [
+     341,
+     348
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "31500",
+    "evidence": [
+     394,
+     401
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "33100",
+    "evidence": [
+     494,
+     501
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "34700",
+    "evidence": [
+     526,
+     533
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "23625",
+    "evidence": [
+     550,
+     557
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "25625",
+    "evidence": [
+     577,
+     584
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "31500",
+    "evidence": [
+     601,
+     608
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "33100",
+    "evidence": [
+     628,
+     635
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "5",
+    "evidence": [
+     1652,
+     1654
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE",
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "irs-p4801": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Single",
+    "value": "13850",
+    "evidence": [
+     5501,
+     5508
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "13850",
+    "evidence": [
+     5501,
+     5508
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "27700",
+    "evidence": [
+     5570,
+     5577
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "27700",
+    "evidence": [
+     5570,
+     5577
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "20800",
+    "evidence": [
+     5602,
+     5609
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "amount",
+    "key": "Single",
+    "value": "13850",
+    "evidence": [
+     8193,
+     8200
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "amount",
+    "key": "Married filing separately",
+    "value": "13850",
+    "evidence": [
+     8193,
+     8200
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "27700",
+    "evidence": [
+     8262,
+     8269
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "27700",
+    "evidence": [
+     8262,
+     8269
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 9,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "20800",
+    "evidence": [
+     8294,
+     8301
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   }
+  ],
+  "irs-p4832": [],
+  "irs-p4961": [],
+  "irs-p5035": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "300000",
+    "evidence": [
+     1423,
+     1431
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "300000",
+    "evidence": [
+     1423,
+     1431
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "225000",
+    "evidence": [
+     1492,
+     1500
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 3,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "300000",
+    "evidence": [
+     2475,
+     2483
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 4,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "300000",
+    "evidence": [
+     1423,
+     1431
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 5,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "225000",
+    "evidence": [
+     2544,
+     2552
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 6,
+    "field": "amount",
+    "key": "Married filing jointly",
+    "value": "150000",
+    "evidence": [
+     3244,
+     3252
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   },
+   {
+    "id": 7,
+    "field": "amount",
+    "key": "Qualifying surviving spouse",
+    "value": "150000",
+    "evidence": [
+     2465,
+     2473
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 8,
+    "field": "amount",
+    "key": "Head of household",
+    "value": "112500",
+    "evidence": [
+     3313,
+     3321
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "why": []
+   }
+  ],
+  "irs-p5187": [
+   {
+    "id": 0,
+    "field": "amount",
+    "key": "Single",
+    "value": "300",
+    "evidence": [
+     463,
+     467
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 1,
+    "field": "amount",
+    "key": "Single",
+    "value": "800",
+    "evidence": [
+     469,
+     473
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   },
+   {
+    "id": 2,
+    "field": "amount",
+    "key": "Single",
+    "value": "1325",
+    "evidence": [
+     475,
+     481
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "why": []
+   }
+  ],
+  "irs-p5209": []
+ }
+}
