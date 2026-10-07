@@ -34,14 +34,14 @@ def _status_web() -> Any:
 
 
 def todo() -> list[dict[str, Any]]:
-    """The cited values with no label in the sets or in labels.json, in a fixed order."""
+    """The cited values with no label in the sets or in labels.json, in a fixed order. An amount
+    that a set labels "not sure" has a label, so the page does not ask for it again."""
     decisions = json.loads((HERE / "decisions.json").read_text(encoding="utf-8"))
-    extra = keyspan._extra_labels()
+    known = {name: keyspan.labeled_ids(name, decisions) for name in decisions}
     out: dict[str, dict[str, Any]] = {}
     for c in keyspan.cited(decisions):
-        pop = {keyspan.label_id(c["set"], d, a) for d, a in keyspan._population(c["set"])}
         lid = keyspan.label_id(c["set"], c["doc"], c["at"])
-        if c["at"] is not None and lid not in pop and lid not in extra:
+        if lid not in known[c["set"]]:
             out[lid] = {"id": lid, "set": c["set"], "doc": c["doc"], "at": c["at"],
                         "field": c["field"]}  # fmt: skip
     return [out[k] for k in sorted(out)]

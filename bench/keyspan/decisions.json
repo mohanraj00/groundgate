@@ -1,4586 +1,4690 @@
 {
  "status": {
-  "plain": [
-   {
-    "doc": "irs-p1494",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "615.38",
-    "at": 3104,
-    "evidence": [
-     3103,
-     3110
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p1494",
-    "id": 1,
-    "field": "amount",
-    "key": "Single",
-    "value": "654.8",
-    "at": 3445,
-    "evidence": [
-     3444,
-     3451
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p1494",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "1646.16",
-    "at": 3596,
-    "evidence": [
-     3595,
-     3604
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p1494",
-    "id": 3,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "1773.08",
-    "at": 3883,
-    "evidence": [
-     3882,
-     3891
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p3524",
-    "id": 0,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "26214",
-    "at": 1791,
-    "evidence": [
-     1790,
-     1797
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p3524",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "57554",
-    "at": 1895,
-    "evidence": [
-     1894,
-     1901
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p3524",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "64430",
-    "at": 1994,
-    "evidence": [
-     1993,
-     2000
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p3524",
-    "id": 3,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "68675",
-    "at": 2096,
-    "evidence": [
-     2095,
-     2102
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4011",
-    "id": 0,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "32200",
-    "at": 2117,
-    "evidence": [
-     2116,
-     2123
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4011",
-    "id": 1,
-    "field": "amount",
-    "key": "Single",
-    "value": "16100",
-    "at": 2158,
-    "evidence": [
-     2157,
-     2164
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4011",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "16100",
-    "at": 2158,
-    "evidence": [
-     2157,
-     2164
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     [
-      "EVIDENCE_REANCHORED"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     [
-      "EVIDENCE_REANCHORED"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "15750",
-    "at": 684,
-    "evidence": [
-     683,
-     690
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 1,
-    "field": "amount",
-    "key": "Single",
-    "value": "17750",
-    "at": 693,
-    "evidence": [
-     692,
-     699
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "31500",
-    "at": 702,
-    "evidence": [
-     701,
-     708
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 3,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "33100",
-    "at": 711,
-    "evidence": [
-     710,
-     717
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 4,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "34700",
-    "at": 720,
-    "evidence": [
-     719,
-     726
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 5,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "5",
-    "at": 729,
-    "evidence": [
-     728,
-     730
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 6,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "23625",
-    "at": 733,
-    "evidence": [
-     732,
-     739
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 7,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "25625",
-    "at": 742,
-    "evidence": [
-     741,
-     748
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 8,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "31500",
-    "at": 751,
-    "evidence": [
-     750,
-     757
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 9,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "33100",
-    "at": 760,
-    "evidence": [
-     759,
-     766
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "6780",
-    "at": 544,
-    "evidence": [
-     543,
-     549
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 1,
-    "field": "amount",
-    "key": "Single",
-    "value": "10180",
-    "at": 633,
-    "evidence": [
-     632,
-     639
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 2,
-    "field": "amount",
-    "key": "Single",
-    "value": "14290",
-    "at": 729,
-    "evidence": [
-     728,
-     735
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 3,
-    "field": "amount",
-    "key": "Single",
-    "value": "14290",
-    "at": 729,
-    "evidence": [
-     728,
-     735
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 4,
-    "field": "amount",
-    "key": "Single",
-    "value": "519",
-    "at": 552,
-    "evidence": [
-     551,
-     555
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 5,
-    "field": "amount",
-    "key": "Single",
-    "value": "3461",
-    "at": 642,
-    "evidence": [
-     641,
-     647
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 6,
-    "field": "amount",
-    "key": "Single",
-    "value": "5716",
-    "at": 738,
-    "evidence": [
-     737,
-     743
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 7,
-    "field": "amount",
-    "key": "Single",
-    "value": "6431",
-    "at": 834,
-    "evidence": [
-     833,
-     839
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 8,
-    "field": "amount",
-    "key": "Single",
-    "value": "8490",
-    "at": 558,
-    "evidence": [
-     557,
-     563
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 9,
-    "field": "amount",
-    "key": "Single",
-    "value": "18660",
-    "at": 650,
-    "evidence": [
-     649,
-     656
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 10,
-    "field": "amount",
-    "key": "Single",
-    "value": "18660",
-    "at": 650,
-    "evidence": [
-     649,
-     656
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 11,
-    "field": "amount",
-    "key": "Single",
-    "value": "18660",
-    "at": 650,
-    "evidence": [
-     649,
-     656
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 12,
-    "field": "amount",
-    "key": "Single",
-    "value": "15270",
-    "at": 573,
-    "evidence": [
-     572,
-     579
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 13,
-    "field": "amount",
-    "key": "Single",
-    "value": "40320",
-    "at": 667,
-    "evidence": [
-     666,
-     673
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 14,
-    "field": "amount",
-    "key": "Single",
-    "value": "45802",
-    "at": 763,
-    "evidence": [
-     762,
-     769
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 15,
-    "field": "amount",
-    "key": "Single",
-    "value": "49194",
-    "at": 859,
-    "evidence": [
-     858,
-     865
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 16,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "6780",
-    "at": 589,
-    "evidence": [
-     588,
-     594
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 17,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "10180",
-    "at": 633,
-    "evidence": [
-     632,
-     639
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 18,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "14290",
-    "at": 729,
-    "evidence": [
-     728,
-     735
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 19,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "14290",
-    "at": 729,
-    "evidence": [
-     728,
-     735
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 20,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "519",
-    "at": 597,
-    "evidence": [
-     596,
-     600
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 21,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "3461",
-    "at": 642,
-    "evidence": [
-     641,
-     647
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 22,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "5716",
-    "at": 738,
-    "evidence": [
-     737,
-     743
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 23,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "6431",
-    "at": 834,
-    "evidence": [
-     833,
-     839
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 24,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "8490",
-    "at": 558,
-    "evidence": [
-     557,
-     563
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 25,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "18660",
-    "at": 650,
-    "evidence": [
-     649,
-     656
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 26,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "18660",
-    "at": 650,
-    "evidence": [
-     649,
-     656
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 27,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "18660",
-    "at": 650,
-    "evidence": [
-     649,
-     656
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 28,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "15270",
-    "at": 573,
-    "evidence": [
-     572,
-     579
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 29,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "40320",
-    "at": 667,
-    "evidence": [
-     666,
-     673
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 30,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "45802",
-    "at": 763,
-    "evidence": [
-     762,
-     769
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 31,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "49194",
-    "at": 859,
-    "evidence": [
-     858,
-     865
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 32,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "6780",
-    "at": 544,
-    "evidence": [
-     543,
-     549
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 33,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "10180",
-    "at": 681,
-    "evidence": [
-     680,
-     687
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 34,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "14290",
-    "at": 729,
-    "evidence": [
-     728,
-     735
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 35,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "14290",
-    "at": 777,
-    "evidence": [
-     776,
-     783
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 36,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "519",
-    "at": 552,
-    "evidence": [
-     551,
-     555
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 37,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "3461",
-    "at": 642,
-    "evidence": [
-     641,
-     647
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 38,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "5716",
-    "at": 786,
-    "evidence": [
-     785,
-     791
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 39,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "6431",
-    "at": 834,
-    "evidence": [
-     833,
-     839
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 40,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "14170",
-    "at": 603,
-    "evidence": [
-     602,
-     609
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 41,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "24350",
-    "at": 794,
-    "evidence": [
-     793,
-     800
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 42,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "24350",
-    "at": 698,
-    "evidence": [
-     697,
-     704
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 43,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "24350",
-    "at": 698,
-    "evidence": [
-     697,
-     704
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 44,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "20950",
-    "at": 619,
-    "evidence": [
-     618,
-     625
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 45,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "46010",
-    "at": 715,
-    "evidence": [
-     714,
-     721
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "EVIDENCE_REANCHORED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "EVIDENCE_REANCHORED"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 46,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "51492",
-    "at": 811,
-    "evidence": [
-     810,
-     817
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 47,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "54884",
-    "at": 907,
-    "evidence": [
-     906,
-     913
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "EVIDENCE_REANCHORED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "EVIDENCE_REANCHORED"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 48,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "14290",
-    "at": 825,
-    "evidence": [
-     824,
-     831
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 49,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "6431",
-    "at": 834,
-    "evidence": [
-     833,
-     839
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 50,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "24350",
-    "at": 890,
-    "evidence": [
-     889,
-     896
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054-d",
-    "id": 51,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "54884",
-    "at": 907,
-    "evidence": [
-     906,
-     913
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "15750",
-    "at": 1746,
-    "evidence": [
-     1745,
-     1752
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "15750",
-    "at": 1746,
-    "evidence": [
-     1745,
-     1752
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "31500",
-    "at": 1650,
-    "evidence": [
-     1649,
-     1656
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 3,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "31500",
-    "at": 1650,
-    "evidence": [
-     1649,
-     1656
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 4,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "23625",
-    "at": 1716,
-    "evidence": [
-     1715,
-     1722
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 5,
-    "field": "amount",
-    "key": "Single",
-    "value": "2000",
-    "at": 2467,
-    "evidence": [
-     2466,
-     2472
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 6,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "2000",
-    "at": 2467,
-    "evidence": [
-     2466,
-     2472
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     [
-      "EVIDENCE_REANCHORED"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     [
-      "EVIDENCE_REANCHORED"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 7,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "1600",
-    "at": 2526,
-    "evidence": [
-     2525,
-     2531
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 8,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "1600",
-    "at": 2526,
-    "evidence": [
-     2525,
-     2531
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     [
-      "EVIDENCE_REANCHORED"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     [
-      "EVIDENCE_REANCHORED"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "15750",
-    "at": 313,
-    "evidence": [
-     312,
-     319
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 1,
-    "field": "amount",
-    "key": "Single",
-    "value": "17750",
-    "at": 340,
-    "evidence": [
-     339,
-     346
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "31500",
-    "at": 393,
-    "evidence": [
-     392,
-     399
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 3,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "33100",
-    "at": 493,
-    "evidence": [
-     492,
-     499
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 4,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "34700",
-    "at": 525,
-    "evidence": [
-     524,
-     531
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 5,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "23625",
-    "at": 549,
-    "evidence": [
-     548,
-     555
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 6,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "25625",
-    "at": 576,
-    "evidence": [
-     575,
-     582
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 7,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "31500",
-    "at": 600,
-    "evidence": [
-     599,
-     606
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 8,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "33100",
-    "at": 627,
-    "evidence": [
-     626,
-     633
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "13850",
-    "at": 5486,
-    "evidence": [
-     5485,
-     5492
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "13850",
-    "at": 5486,
-    "evidence": [
-     5485,
-     5492
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "27700",
-    "at": 5553,
-    "evidence": [
-     5552,
-     5559
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 3,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "27700",
-    "at": 5553,
-    "evidence": [
-     5552,
-     5559
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 4,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "20800",
-    "at": 5583,
-    "evidence": [
-     5582,
-     5589
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 5,
-    "field": "amount",
-    "key": "Single",
-    "value": "13850",
-    "at": 8154,
-    "evidence": [
-     8153,
-     8160
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 6,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "13850",
-    "at": 8154,
-    "evidence": [
-     8153,
-     8160
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 7,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "27700",
-    "at": 8221,
-    "evidence": [
-     8220,
-     8227
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 8,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "27700",
-    "at": 8221,
-    "evidence": [
-     8220,
-     8227
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 9,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "20800",
-    "at": 8251,
-    "evidence": [
-     8250,
-     8257
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 0,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "300000",
-    "at": 1414,
-    "evidence": [
-     1413,
-     1421
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 1,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "300000",
-    "at": 2464,
-    "evidence": [
-     2463,
-     2471
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 2,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "225000",
-    "at": 2533,
-    "evidence": [
-     2532,
-     2540
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 3,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "150000",
-    "at": 3229,
-    "evidence": [
-     3228,
-     3236
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 4,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "150000",
-    "at": 2454,
-    "evidence": [
-     2453,
-     2461
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 5,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "112500",
-    "at": 3298,
-    "evidence": [
-     3297,
-     3305
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5187",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "300",
-    "at": 464,
-    "evidence": [
-     463,
-     467
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p5187",
-    "id": 1,
-    "field": "amount",
-    "key": "Single",
-    "value": "800",
-    "at": 470,
-    "evidence": [
-     469,
-     473
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p5187",
-    "id": 2,
-    "field": "amount",
-    "key": "Single",
-    "value": "1325",
-    "at": 476,
-    "evidence": [
-     475,
-     481
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   }
-  ],
-  "key span": [
-   {
-    "doc": "irs-p1167",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "12950",
-    "at": 2683,
-    "evidence": [
-     2682,
-     2689
-    ],
-    "key_evidence": [
-     2645,
-     2680
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p1167",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "12950",
-    "at": 2683,
-    "evidence": [
-     2682,
-     2689
-    ],
-    "key_evidence": [
-     2645,
-     2680
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p1167",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "25900",
-    "at": 2756,
-    "evidence": [
-     2755,
-     2762
-    ],
-    "key_evidence": [
-     2700,
-     2753
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p1167",
-    "id": 3,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "25900",
-    "at": 2756,
-    "evidence": [
-     2755,
-     2762
-    ],
-    "key_evidence": [
-     2700,
-     2753
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p1167",
-    "id": 4,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "19400",
-    "at": 2783,
-    "evidence": [
-     2782,
-     2789
-    ],
-    "key_evidence": [
-     2763,
-     2780
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p1494",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "615.38",
-    "at": 3104,
-    "evidence": [
-     3103,
-     3110
-    ],
-    "key_evidence": [
-     3034,
-     3098
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p1494",
-    "id": 1,
-    "field": "amount",
-    "key": "Single",
-    "value": "654.8",
-    "at": 3445,
-    "evidence": [
-     3444,
-     3451
-    ],
-    "key_evidence": [
-     3316,
-     3354
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p1494",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "1646.16",
-    "at": 3596,
-    "evidence": [
-     3595,
-     3604
-    ],
-    "key_evidence": [
-     3504,
-     3590
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p1494",
-    "id": 3,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "1773.08",
-    "at": 3883,
-    "evidence": [
-     3882,
-     3891
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p3524",
-    "id": 0,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "26214",
-    "at": 1791,
-    "evidence": [
-     1790,
-     1797
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p3524",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "57554",
-    "at": 1895,
-    "evidence": [
-     1894,
-     1901
-    ],
-    "key_evidence": [
-     1798,
-     1823
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p3524",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "64430",
-    "at": 1994,
-    "evidence": [
-     1993,
-     2000
-    ],
-    "key_evidence": [
-     1902,
-     1927
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p3524",
-    "id": 3,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "68675",
-    "at": 2096,
-    "evidence": [
-     2095,
-     2102
-    ],
-    "key_evidence": [
-     2001,
-     2026
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4011",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "16100",
-    "at": 2158,
-    "evidence": [
-     2157,
-     2164
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4011",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "16100",
-    "at": 2158,
-    "evidence": [
-     2157,
-     2164
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4011",
-    "id": 2,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "32200",
-    "at": 2117,
-    "evidence": [
-     2116,
-     2123
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "15750",
-    "at": 684,
-    "evidence": [
-     683,
-     690
-    ],
-    "key_evidence": [
-     306,
-     312
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 1,
-    "field": "amount",
-    "key": "Single",
-    "value": "17750",
-    "at": 693,
-    "evidence": [
-     692,
-     699
-    ],
-    "key_evidence": [
-     306,
-     312
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "31500",
-    "at": 702,
-    "evidence": [
-     701,
-     708
-    ],
-    "key_evidence": [
-     314,
-     336
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 3,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "33100",
-    "at": 711,
-    "evidence": [
-     710,
-     717
-    ],
-    "key_evidence": [
-     314,
-     336
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 4,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "34700",
-    "at": 720,
-    "evidence": [
-     719,
-     726
-    ],
-    "key_evidence": [
-     314,
-     336
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 5,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "5",
-    "at": 729,
-    "evidence": [
-     728,
-     730
-    ],
-    "key_evidence": [
-     340,
-     365
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 6,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "23625",
-    "at": 733,
-    "evidence": [
-     732,
-     739
-    ],
-    "key_evidence": [
-     404,
-     421
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4012-a",
-    "id": 7,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "25625",
-    "at": 742,
-    "evidence": [
-     741,
-     748
-    ],
-    "key_evidence": [
-     404,
-     421
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054",
-    "id": 0,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "200000",
-    "at": 3615,
-    "evidence": [
-     3614,
-     3622
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE",
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE",
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "168600",
-    "at": 3625,
-    "evidence": [
-     3624,
-     3632
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "250000",
-    "at": 3908,
-    "evidence": [
-     3907,
-     3915
-    ],
-    "key_evidence": [
-     3821,
-     3906
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4054",
-    "id": 3,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "125000",
-    "at": 4009,
-    "evidence": [
-     4008,
-     4016
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4491-x",
-    "id": 0,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "20000",
-    "at": 1151,
-    "evidence": [
-     1150,
-     1157
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491-x",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "150000",
-    "at": 2326,
-    "evidence": [
-     2325,
-     2333
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "15750",
-    "at": 1746,
-    "evidence": [
-     1745,
-     1752
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "15750",
-    "at": 1746,
-    "evidence": [
-     1745,
-     1752
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "31500",
-    "at": 1650,
-    "evidence": [
-     1649,
-     1656
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 3,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "31500",
-    "at": 1650,
-    "evidence": [
-     1649,
-     1656
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 4,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "23625",
-    "at": 1716,
-    "evidence": [
-     1715,
-     1722
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 5,
-    "field": "amount",
-    "key": "Single",
-    "value": "2000",
-    "at": 2467,
-    "evidence": [
-     2466,
-     2472
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 6,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "2000",
-    "at": 2467,
-    "evidence": [
-     2466,
-     2472
-    ],
-    "key_evidence": [
-     2477,
-     2504
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID",
-      "EVIDENCE_REANCHORED"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     [
-      "EVIDENCE_REANCHORED"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 7,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "1600",
-    "at": 2526,
-    "evidence": [
-     2525,
-     2531
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 8,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "1600",
-    "at": 2526,
-    "evidence": [
-     2525,
-     2531
-    ],
-    "key_evidence": [
-     2536,
-     2584
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID",
-      "EVIDENCE_REANCHORED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "EVIDENCE_REANCHORED"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4491",
-    "id": 9,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "1600",
-    "at": 2526,
-    "evidence": [
-     2525,
-     2531
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "15750",
-    "at": 313,
-    "evidence": [
-     312,
-     319
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 1,
-    "field": "amount",
-    "key": "Single",
-    "value": "17750",
-    "at": 340,
-    "evidence": [
-     339,
-     346
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "31500",
-    "at": 393,
-    "evidence": [
-     392,
-     399
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 3,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "33100",
-    "at": 493,
-    "evidence": [
-     492,
-     499
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 4,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "34700",
-    "at": 525,
-    "evidence": [
-     524,
-     531
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 5,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "23625",
-    "at": 549,
-    "evidence": [
-     548,
-     555
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4696",
-    "id": 6,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "25625",
-    "at": 576,
-    "evidence": [
-     575,
-     582
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE",
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "13850",
-    "at": 5486,
-    "evidence": [
-     5485,
-     5492
-    ],
-    "key_evidence": [
-     5447,
-     5483
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "13850",
-    "at": 5486,
-    "evidence": [
-     5485,
-     5492
-    ],
-    "key_evidence": [
-     5447,
-     5483
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 2,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "27700",
-    "at": 5553,
-    "evidence": [
-     5552,
-     5559
-    ],
-    "key_evidence": [
-     5496,
-     5550
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 3,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "27700",
-    "at": 5553,
-    "evidence": [
-     5552,
-     5559
-    ],
-    "key_evidence": [
-     5496,
-     5550
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 4,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "20800",
-    "at": 5583,
-    "evidence": [
-     5582,
-     5589
-    ],
-    "key_evidence": [
-     5562,
-     5580
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 5,
-    "field": "amount",
-    "key": "Single",
-    "value": "13850",
-    "at": 8154,
-    "evidence": [
-     8153,
-     8160
-    ],
-    "key_evidence": [
-     8115,
-     8151
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 6,
-    "field": "amount",
-    "key": "Married filing separately",
-    "value": "13850",
-    "at": 8154,
-    "evidence": [
-     8153,
-     8160
-    ],
-    "key_evidence": [
-     8115,
-     8151
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 7,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "27700",
-    "at": 8221,
-    "evidence": [
-     8220,
-     8227
-    ],
-    "key_evidence": [
-     8164,
-     8218
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 8,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "27700",
-    "at": 8221,
-    "evidence": [
-     8220,
-     8227
-    ],
-    "key_evidence": [
-     8164,
-     8218
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4801",
-    "id": 9,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "20800",
-    "at": 8251,
-    "evidence": [
-     8250,
-     8257
-    ],
-    "key_evidence": [
-     8230,
-     8248
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4832",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "55200",
-    "at": 374,
-    "evidence": [
-     373,
-     380
-    ],
-    "key_evidence": [
-     265,
-     292
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4832",
-    "id": 1,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "55200",
-    "at": 374,
-    "evidence": [
-     373,
-     380
-    ],
-    "key_evidence": [
-     265,
-     292
-    ],
-    "0.5": [
-     "admitted",
-     []
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p4832",
-    "id": 2,
-    "field": "amount",
-    "key": "Single",
-    "value": "22400",
-    "at": 383,
-    "evidence": [
-     382,
-     389
-    ],
-    "key_evidence": [
-     265,
-     292
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4832",
-    "id": 3,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "22400",
-    "at": 383,
-    "evidence": [
-     382,
-     389
-    ],
-    "key_evidence": [
-     265,
-     292
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4832",
-    "id": 4,
-    "field": "amount",
-    "key": "Single",
-    "value": "32200",
-    "at": 392,
-    "evidence": [
-     391,
-     398
-    ],
-    "key_evidence": [
-     265,
-     292
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p4832",
-    "id": 5,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "32200",
-    "at": 392,
-    "evidence": [
-     391,
-     398
-    ],
-    "key_evidence": [
-     265,
-     292
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "150000",
-    "at": 1404,
-    "evidence": [
-     1403,
-     1411
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE",
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE",
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 1,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "300000",
-    "at": 1414,
-    "evidence": [
-     1413,
-     1421
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 2,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "300000",
-    "at": 2464,
-    "evidence": [
-     2463,
-     2471
-    ],
-    "key_evidence": [
-     1453,
-     1480
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 3,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "225000",
-    "at": 2533,
-    "evidence": [
-     2532,
-     2540
-    ],
-    "key_evidence": [
-     1494,
-     1511
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 4,
-    "field": "amount",
-    "key": "Single",
-    "value": "75000",
-    "at": 3220,
-    "evidence": [
-     3219,
-     3226
-    ],
-    "key_evidence": null,
-    "0.5": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE",
-      "KEY_NOT_AT_VALUE"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "QUALIFIED_VALUE",
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 5,
-    "field": "amount",
-    "key": "Married filing jointly",
-    "value": "150000",
-    "at": 3229,
-    "evidence": [
-     3228,
-     3236
-    ],
-    "key_evidence": [
-     2475,
-     2497
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 6,
-    "field": "amount",
-    "key": "Qualifying surviving spouse",
-    "value": "150000",
-    "at": 3229,
-    "evidence": [
-     3228,
-     3236
-    ],
-    "key_evidence": [
-     2503,
-     2530
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5035",
-    "id": 7,
-    "field": "amount",
-    "key": "Head of household",
-    "value": "112500",
-    "at": 3298,
-    "evidence": [
-     3297,
-     3305
-    ],
-    "key_evidence": [
-     2544,
-     2561
-    ],
-    "0.5": [
-     "needs_verification",
-     [
-      "KEY_CITATION_INVALID"
-     ]
-    ],
-    "0.4": [
-     "admitted",
-     []
-    ]
-   },
-   {
-    "doc": "irs-p5187",
-    "id": 0,
-    "field": "amount",
-    "key": "Single",
-    "value": "300",
-    "at": 464,
-    "evidence": [
-     463,
-     467
-    ],
-    "key_evidence": [
-     256,
-     284
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p5187",
-    "id": 1,
-    "field": "amount",
-    "key": "Single",
-    "value": "800",
-    "at": 470,
-    "evidence": [
-     469,
-     473
-    ],
-    "key_evidence": [
-     256,
-     284
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   },
-   {
-    "doc": "irs-p5187",
-    "id": 2,
-    "field": "amount",
-    "key": "Single",
-    "value": "1325",
-    "at": 476,
-    "evidence": [
-     475,
-     481
-    ],
-    "key_evidence": [
-     256,
-     284
-    ],
-    "0.5": [
-     "admitted",
-     [
-      "KEY_CITED"
-     ]
-    ],
-    "0.4": [
-     "needs_verification",
-     [
-      "KEY_NOT_AT_VALUE"
-     ]
-    ]
-   }
-  ]
+  "population": {
+   "irs-p1040:213": 213,
+   "irs-p1040:243": 243,
+   "irs-p1040:439": 439,
+   "irs-p1040:5980": 5980,
+   "irs-p1040:12033": 12033,
+   "irs-p1040:12055": 12055,
+   "irs-p1167:1121": 1121,
+   "irs-p1167:2683": 2683,
+   "irs-p1167:2756": 2756,
+   "irs-p1167:2783": 2783,
+   "irs-p1167:7059": 7059,
+   "irs-p1167:8620": 8620,
+   "irs-p1494:3104": 3104,
+   "irs-p1494:3445": 3445,
+   "irs-p1494:3479": 3479,
+   "irs-p1494:3492": 3492,
+   "irs-p1494:3596": 3596,
+   "irs-p1494:3883": 3883,
+   "irs-p3524:1638": 1638,
+   "irs-p3524:1700": 1700,
+   "irs-p3524:1782": 1782,
+   "irs-p3524:1791": 1791,
+   "irs-p3524:1886": 1886,
+   "irs-p3524:1895": 1895,
+   "irs-p3920:1401": 1401,
+   "irs-p3920:1419": 1419,
+   "irs-p3920:1441": 1441,
+   "irs-p3920:1603": 1603,
+   "irs-p3920:2417": 2417,
+   "irs-p3920:2481": 2481,
+   "irs-p4011:1887": 1887,
+   "irs-p4011:2117": 2117,
+   "irs-p4011:2158": 2158,
+   "irs-p4011:2324": 2324,
+   "irs-p4011:2388": 2388,
+   "irs-p4011:2499": 2499,
+   "irs-p4012-a:684": 684,
+   "irs-p4012-a:693": 693,
+   "irs-p4012-a:702": 702,
+   "irs-p4012-a:711": 711,
+   "irs-p4012-a:720": 720,
+   "irs-p4012-a:729": 729,
+   "irs-p4054:95": 95,
+   "irs-p4054:877": 877,
+   "irs-p4054:3615": 3615,
+   "irs-p4054:3625": 3625,
+   "irs-p4054:3762": 3762,
+   "irs-p4054:3772": 3772,
+   "irs-p4054-d:544": 544,
+   "irs-p4054-d:552": 552,
+   "irs-p4054-d:558": 558,
+   "irs-p4054-d:573": 573,
+   "irs-p4054-d:589": 589,
+   "irs-p4054-d:597": 597,
+   "irs-p4491:679": 679,
+   "irs-p4491:728": 728,
+   "irs-p4491:981": 981,
+   "irs-p4491:1113": 1113,
+   "irs-p4491:1122": 1122,
+   "irs-p4491:1456": 1456,
+   "irs-p4491-x:453": 453,
+   "irs-p4491-x:466": 466,
+   "irs-p4491-x:641": 641,
+   "irs-p4491-x:654": 654,
+   "irs-p4491-x:662": 662,
+   "irs-p4491-x:675": 675,
+   "irs-p4696:313": 313,
+   "irs-p4696:340": 340,
+   "irs-p4696:393": 393,
+   "irs-p4696:493": 493,
+   "irs-p4696:525": 525,
+   "irs-p4696:549": 549,
+   "irs-p4801:872": 872,
+   "irs-p4801:5486": 5486,
+   "irs-p4801:5553": 5553,
+   "irs-p4801:5583": 5583,
+   "irs-p4801:6647": 6647,
+   "irs-p4801:8154": 8154,
+   "irs-p4832:374": 374,
+   "irs-p4832:383": 383,
+   "irs-p4832:392": 392,
+   "irs-p4961:1137": 1137,
+   "irs-p4961:1185": 1185,
+   "irs-p4961:1407": 1407,
+   "irs-p4961:4140": 4140,
+   "irs-p4961:4306": 4306,
+   "irs-p4961:4966": 4966,
+   "irs-p5035:1404": 1404,
+   "irs-p5035:1414": 1414,
+   "irs-p5035:1483": 1483,
+   "irs-p5035:2454": 2454,
+   "irs-p5035:2464": 2464,
+   "irs-p5035:2533": 2533,
+   "irs-p5187:464": 464,
+   "irs-p5187:470": 470,
+   "irs-p5187:476": 476,
+   "irs-p5187:494": 494,
+   "irs-p5187:500": 500,
+   "irs-p5187:508": 508,
+   "irs-p5209:1344": 1344
+  },
+  "runs": {
+   "plain": [
+    {
+     "doc": "irs-p1494",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "615.38",
+     "at": 3104,
+     "evidence": [
+      3103,
+      3110
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p1494",
+     "id": 1,
+     "field": "amount",
+     "key": "Single",
+     "value": "654.8",
+     "at": 3445,
+     "evidence": [
+      3444,
+      3451
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p1494",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "1646.16",
+     "at": 3596,
+     "evidence": [
+      3595,
+      3604
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p1494",
+     "id": 3,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "1773.08",
+     "at": 3883,
+     "evidence": [
+      3882,
+      3891
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p3524",
+     "id": 0,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "26214",
+     "at": 1791,
+     "evidence": [
+      1790,
+      1797
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p3524",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "57554",
+     "at": 1895,
+     "evidence": [
+      1894,
+      1901
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p3524",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "64430",
+     "at": 1994,
+     "evidence": [
+      1993,
+      2000
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p3524",
+     "id": 3,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "68675",
+     "at": 2096,
+     "evidence": [
+      2095,
+      2102
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4011",
+     "id": 0,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "32200",
+     "at": 2117,
+     "evidence": [
+      2116,
+      2123
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4011",
+     "id": 1,
+     "field": "amount",
+     "key": "Single",
+     "value": "16100",
+     "at": 2158,
+     "evidence": [
+      2157,
+      2164
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4011",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "16100",
+     "at": 2158,
+     "evidence": [
+      2157,
+      2164
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "15750",
+     "at": 684,
+     "evidence": [
+      683,
+      690
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 1,
+     "field": "amount",
+     "key": "Single",
+     "value": "17750",
+     "at": 693,
+     "evidence": [
+      692,
+      699
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "31500",
+     "at": 702,
+     "evidence": [
+      701,
+      708
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 3,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "33100",
+     "at": 711,
+     "evidence": [
+      710,
+      717
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 4,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "34700",
+     "at": 720,
+     "evidence": [
+      719,
+      726
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 5,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "5",
+     "at": 729,
+     "evidence": [
+      728,
+      730
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 6,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "23625",
+     "at": 733,
+     "evidence": [
+      732,
+      739
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 7,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "25625",
+     "at": 742,
+     "evidence": [
+      741,
+      748
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 8,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "31500",
+     "at": 751,
+     "evidence": [
+      750,
+      757
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 9,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "33100",
+     "at": 760,
+     "evidence": [
+      759,
+      766
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "6780",
+     "at": 544,
+     "evidence": [
+      543,
+      549
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 1,
+     "field": "amount",
+     "key": "Single",
+     "value": "10180",
+     "at": 633,
+     "evidence": [
+      632,
+      639
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 2,
+     "field": "amount",
+     "key": "Single",
+     "value": "14290",
+     "at": 729,
+     "evidence": [
+      728,
+      735
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 3,
+     "field": "amount",
+     "key": "Single",
+     "value": "14290",
+     "at": 729,
+     "evidence": [
+      728,
+      735
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 4,
+     "field": "amount",
+     "key": "Single",
+     "value": "519",
+     "at": 552,
+     "evidence": [
+      551,
+      555
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 5,
+     "field": "amount",
+     "key": "Single",
+     "value": "3461",
+     "at": 642,
+     "evidence": [
+      641,
+      647
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 6,
+     "field": "amount",
+     "key": "Single",
+     "value": "5716",
+     "at": 738,
+     "evidence": [
+      737,
+      743
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 7,
+     "field": "amount",
+     "key": "Single",
+     "value": "6431",
+     "at": 834,
+     "evidence": [
+      833,
+      839
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 8,
+     "field": "amount",
+     "key": "Single",
+     "value": "8490",
+     "at": 558,
+     "evidence": [
+      557,
+      563
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 9,
+     "field": "amount",
+     "key": "Single",
+     "value": "18660",
+     "at": 650,
+     "evidence": [
+      649,
+      656
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 10,
+     "field": "amount",
+     "key": "Single",
+     "value": "18660",
+     "at": 650,
+     "evidence": [
+      649,
+      656
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 11,
+     "field": "amount",
+     "key": "Single",
+     "value": "18660",
+     "at": 650,
+     "evidence": [
+      649,
+      656
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 12,
+     "field": "amount",
+     "key": "Single",
+     "value": "15270",
+     "at": 573,
+     "evidence": [
+      572,
+      579
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 13,
+     "field": "amount",
+     "key": "Single",
+     "value": "40320",
+     "at": 667,
+     "evidence": [
+      666,
+      673
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 14,
+     "field": "amount",
+     "key": "Single",
+     "value": "45802",
+     "at": 763,
+     "evidence": [
+      762,
+      769
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 15,
+     "field": "amount",
+     "key": "Single",
+     "value": "49194",
+     "at": 859,
+     "evidence": [
+      858,
+      865
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 16,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "6780",
+     "at": 589,
+     "evidence": [
+      588,
+      594
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 17,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "10180",
+     "at": 633,
+     "evidence": [
+      632,
+      639
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 18,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "14290",
+     "at": 729,
+     "evidence": [
+      728,
+      735
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 19,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "14290",
+     "at": 729,
+     "evidence": [
+      728,
+      735
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 20,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "519",
+     "at": 597,
+     "evidence": [
+      596,
+      600
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 21,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "3461",
+     "at": 642,
+     "evidence": [
+      641,
+      647
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 22,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "5716",
+     "at": 738,
+     "evidence": [
+      737,
+      743
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 23,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "6431",
+     "at": 834,
+     "evidence": [
+      833,
+      839
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 24,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "8490",
+     "at": 558,
+     "evidence": [
+      557,
+      563
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 25,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "18660",
+     "at": 650,
+     "evidence": [
+      649,
+      656
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 26,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "18660",
+     "at": 650,
+     "evidence": [
+      649,
+      656
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 27,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "18660",
+     "at": 650,
+     "evidence": [
+      649,
+      656
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 28,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "15270",
+     "at": 573,
+     "evidence": [
+      572,
+      579
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 29,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "40320",
+     "at": 667,
+     "evidence": [
+      666,
+      673
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 30,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "45802",
+     "at": 763,
+     "evidence": [
+      762,
+      769
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 31,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "49194",
+     "at": 859,
+     "evidence": [
+      858,
+      865
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 32,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "6780",
+     "at": 544,
+     "evidence": [
+      543,
+      549
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 33,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "10180",
+     "at": 681,
+     "evidence": [
+      680,
+      687
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 34,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "14290",
+     "at": 729,
+     "evidence": [
+      728,
+      735
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 35,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "14290",
+     "at": 777,
+     "evidence": [
+      776,
+      783
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 36,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "519",
+     "at": 552,
+     "evidence": [
+      551,
+      555
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 37,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "3461",
+     "at": 642,
+     "evidence": [
+      641,
+      647
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 38,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "5716",
+     "at": 786,
+     "evidence": [
+      785,
+      791
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 39,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "6431",
+     "at": 834,
+     "evidence": [
+      833,
+      839
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 40,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "14170",
+     "at": 603,
+     "evidence": [
+      602,
+      609
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 41,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "24350",
+     "at": 794,
+     "evidence": [
+      793,
+      800
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 42,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "24350",
+     "at": 698,
+     "evidence": [
+      697,
+      704
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 43,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "24350",
+     "at": 698,
+     "evidence": [
+      697,
+      704
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 44,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "20950",
+     "at": 619,
+     "evidence": [
+      618,
+      625
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 45,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "46010",
+     "at": 715,
+     "evidence": [
+      714,
+      721
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 46,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "51492",
+     "at": 811,
+     "evidence": [
+      810,
+      817
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 47,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "54884",
+     "at": 907,
+     "evidence": [
+      906,
+      913
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 48,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "14290",
+     "at": 825,
+     "evidence": [
+      824,
+      831
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 49,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "6431",
+     "at": 834,
+     "evidence": [
+      833,
+      839
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 50,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "24350",
+     "at": 890,
+     "evidence": [
+      889,
+      896
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054-d",
+     "id": 51,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "54884",
+     "at": 907,
+     "evidence": [
+      906,
+      913
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "15750",
+     "at": 1746,
+     "evidence": [
+      1745,
+      1752
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "15750",
+     "at": 1746,
+     "evidence": [
+      1745,
+      1752
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "31500",
+     "at": 1650,
+     "evidence": [
+      1649,
+      1656
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 3,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "31500",
+     "at": 1650,
+     "evidence": [
+      1649,
+      1656
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 4,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "23625",
+     "at": 1716,
+     "evidence": [
+      1715,
+      1722
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 5,
+     "field": "amount",
+     "key": "Single",
+     "value": "2000",
+     "at": 2467,
+     "evidence": [
+      2466,
+      2472
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 6,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "2000",
+     "at": 2467,
+     "evidence": [
+      2466,
+      2472
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 7,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "1600",
+     "at": 2526,
+     "evidence": [
+      2525,
+      2531
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 8,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "1600",
+     "at": 2526,
+     "evidence": [
+      2525,
+      2531
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "15750",
+     "at": 313,
+     "evidence": [
+      312,
+      319
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 1,
+     "field": "amount",
+     "key": "Single",
+     "value": "17750",
+     "at": 340,
+     "evidence": [
+      339,
+      346
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "31500",
+     "at": 393,
+     "evidence": [
+      392,
+      399
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 3,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "33100",
+     "at": 493,
+     "evidence": [
+      492,
+      499
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 4,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "34700",
+     "at": 525,
+     "evidence": [
+      524,
+      531
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 5,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "23625",
+     "at": 549,
+     "evidence": [
+      548,
+      555
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 6,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "25625",
+     "at": 576,
+     "evidence": [
+      575,
+      582
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 7,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "31500",
+     "at": 600,
+     "evidence": [
+      599,
+      606
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 8,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "33100",
+     "at": 627,
+     "evidence": [
+      626,
+      633
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "13850",
+     "at": 5486,
+     "evidence": [
+      5485,
+      5492
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "13850",
+     "at": 5486,
+     "evidence": [
+      5485,
+      5492
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "27700",
+     "at": 5553,
+     "evidence": [
+      5552,
+      5559
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 3,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "27700",
+     "at": 5553,
+     "evidence": [
+      5552,
+      5559
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 4,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "20800",
+     "at": 5583,
+     "evidence": [
+      5582,
+      5589
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 5,
+     "field": "amount",
+     "key": "Single",
+     "value": "13850",
+     "at": 8154,
+     "evidence": [
+      8153,
+      8160
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 6,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "13850",
+     "at": 8154,
+     "evidence": [
+      8153,
+      8160
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 7,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "27700",
+     "at": 8221,
+     "evidence": [
+      8220,
+      8227
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 8,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "27700",
+     "at": 8221,
+     "evidence": [
+      8220,
+      8227
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 9,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "20800",
+     "at": 8251,
+     "evidence": [
+      8250,
+      8257
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 0,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "300000",
+     "at": 1414,
+     "evidence": [
+      1413,
+      1421
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 1,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "300000",
+     "at": 2464,
+     "evidence": [
+      2463,
+      2471
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 2,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "225000",
+     "at": 2533,
+     "evidence": [
+      2532,
+      2540
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 3,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "150000",
+     "at": 3229,
+     "evidence": [
+      3228,
+      3236
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 4,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "150000",
+     "at": 2454,
+     "evidence": [
+      2453,
+      2461
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 5,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "112500",
+     "at": 3298,
+     "evidence": [
+      3297,
+      3305
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5187",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "300",
+     "at": 464,
+     "evidence": [
+      463,
+      467
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p5187",
+     "id": 1,
+     "field": "amount",
+     "key": "Single",
+     "value": "800",
+     "at": 470,
+     "evidence": [
+      469,
+      473
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p5187",
+     "id": 2,
+     "field": "amount",
+     "key": "Single",
+     "value": "1325",
+     "at": 476,
+     "evidence": [
+      475,
+      481
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    }
+   ],
+   "key span": [
+    {
+     "doc": "irs-p1167",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "12950",
+     "at": 2683,
+     "evidence": [
+      2682,
+      2689
+     ],
+     "key_evidence": [
+      2645,
+      2680
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p1167",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "12950",
+     "at": 2683,
+     "evidence": [
+      2682,
+      2689
+     ],
+     "key_evidence": [
+      2645,
+      2680
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p1167",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "25900",
+     "at": 2756,
+     "evidence": [
+      2755,
+      2762
+     ],
+     "key_evidence": [
+      2700,
+      2753
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p1167",
+     "id": 3,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "25900",
+     "at": 2756,
+     "evidence": [
+      2755,
+      2762
+     ],
+     "key_evidence": [
+      2700,
+      2753
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p1167",
+     "id": 4,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "19400",
+     "at": 2783,
+     "evidence": [
+      2782,
+      2789
+     ],
+     "key_evidence": [
+      2763,
+      2780
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p1494",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "615.38",
+     "at": 3104,
+     "evidence": [
+      3103,
+      3110
+     ],
+     "key_evidence": [
+      3034,
+      3098
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p1494",
+     "id": 1,
+     "field": "amount",
+     "key": "Single",
+     "value": "654.8",
+     "at": 3445,
+     "evidence": [
+      3444,
+      3451
+     ],
+     "key_evidence": [
+      3316,
+      3354
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p1494",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "1646.16",
+     "at": 3596,
+     "evidence": [
+      3595,
+      3604
+     ],
+     "key_evidence": [
+      3504,
+      3590
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p1494",
+     "id": 3,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "1773.08",
+     "at": 3883,
+     "evidence": [
+      3882,
+      3891
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p3524",
+     "id": 0,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "26214",
+     "at": 1791,
+     "evidence": [
+      1790,
+      1797
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p3524",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "57554",
+     "at": 1895,
+     "evidence": [
+      1894,
+      1901
+     ],
+     "key_evidence": [
+      1798,
+      1823
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p3524",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "64430",
+     "at": 1994,
+     "evidence": [
+      1993,
+      2000
+     ],
+     "key_evidence": [
+      1902,
+      1927
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p3524",
+     "id": 3,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "68675",
+     "at": 2096,
+     "evidence": [
+      2095,
+      2102
+     ],
+     "key_evidence": [
+      2001,
+      2026
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4011",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "16100",
+     "at": 2158,
+     "evidence": [
+      2157,
+      2164
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4011",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "16100",
+     "at": 2158,
+     "evidence": [
+      2157,
+      2164
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4011",
+     "id": 2,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "32200",
+     "at": 2117,
+     "evidence": [
+      2116,
+      2123
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "15750",
+     "at": 684,
+     "evidence": [
+      683,
+      690
+     ],
+     "key_evidence": [
+      306,
+      312
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 1,
+     "field": "amount",
+     "key": "Single",
+     "value": "17750",
+     "at": 693,
+     "evidence": [
+      692,
+      699
+     ],
+     "key_evidence": [
+      306,
+      312
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "31500",
+     "at": 702,
+     "evidence": [
+      701,
+      708
+     ],
+     "key_evidence": [
+      314,
+      336
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 3,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "33100",
+     "at": 711,
+     "evidence": [
+      710,
+      717
+     ],
+     "key_evidence": [
+      314,
+      336
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 4,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "34700",
+     "at": 720,
+     "evidence": [
+      719,
+      726
+     ],
+     "key_evidence": [
+      314,
+      336
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 5,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "5",
+     "at": 729,
+     "evidence": [
+      728,
+      730
+     ],
+     "key_evidence": [
+      340,
+      365
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 6,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "23625",
+     "at": 733,
+     "evidence": [
+      732,
+      739
+     ],
+     "key_evidence": [
+      404,
+      421
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4012-a",
+     "id": 7,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "25625",
+     "at": 742,
+     "evidence": [
+      741,
+      748
+     ],
+     "key_evidence": [
+      404,
+      421
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054",
+     "id": 0,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "200000",
+     "at": 3615,
+     "evidence": [
+      3614,
+      3622
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "168600",
+     "at": 3625,
+     "evidence": [
+      3624,
+      3632
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "250000",
+     "at": 3908,
+     "evidence": [
+      3907,
+      3915
+     ],
+     "key_evidence": [
+      3821,
+      3906
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4054",
+     "id": 3,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "125000",
+     "at": 4009,
+     "evidence": [
+      4008,
+      4016
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4491-x",
+     "id": 0,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "20000",
+     "at": 1151,
+     "evidence": [
+      1150,
+      1157
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491-x",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "150000",
+     "at": 2326,
+     "evidence": [
+      2325,
+      2333
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "15750",
+     "at": 1746,
+     "evidence": [
+      1745,
+      1752
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "15750",
+     "at": 1746,
+     "evidence": [
+      1745,
+      1752
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "31500",
+     "at": 1650,
+     "evidence": [
+      1649,
+      1656
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 3,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "31500",
+     "at": 1650,
+     "evidence": [
+      1649,
+      1656
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 4,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "23625",
+     "at": 1716,
+     "evidence": [
+      1715,
+      1722
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 5,
+     "field": "amount",
+     "key": "Single",
+     "value": "2000",
+     "at": 2467,
+     "evidence": [
+      2466,
+      2472
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 6,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "2000",
+     "at": 2467,
+     "evidence": [
+      2466,
+      2472
+     ],
+     "key_evidence": [
+      2477,
+      2504
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      [
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 7,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "1600",
+     "at": 2526,
+     "evidence": [
+      2525,
+      2531
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 8,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "1600",
+     "at": 2526,
+     "evidence": [
+      2525,
+      2531
+     ],
+     "key_evidence": [
+      2536,
+      2584
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID",
+       "EVIDENCE_REANCHORED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "EVIDENCE_REANCHORED"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4491",
+     "id": 9,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "1600",
+     "at": 2526,
+     "evidence": [
+      2525,
+      2531
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "15750",
+     "at": 313,
+     "evidence": [
+      312,
+      319
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 1,
+     "field": "amount",
+     "key": "Single",
+     "value": "17750",
+     "at": 340,
+     "evidence": [
+      339,
+      346
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "31500",
+     "at": 393,
+     "evidence": [
+      392,
+      399
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 3,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "33100",
+     "at": 493,
+     "evidence": [
+      492,
+      499
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 4,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "34700",
+     "at": 525,
+     "evidence": [
+      524,
+      531
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 5,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "23625",
+     "at": 549,
+     "evidence": [
+      548,
+      555
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4696",
+     "id": 6,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "25625",
+     "at": 576,
+     "evidence": [
+      575,
+      582
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE",
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "13850",
+     "at": 5486,
+     "evidence": [
+      5485,
+      5492
+     ],
+     "key_evidence": [
+      5447,
+      5483
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "13850",
+     "at": 5486,
+     "evidence": [
+      5485,
+      5492
+     ],
+     "key_evidence": [
+      5447,
+      5483
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 2,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "27700",
+     "at": 5553,
+     "evidence": [
+      5552,
+      5559
+     ],
+     "key_evidence": [
+      5496,
+      5550
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 3,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "27700",
+     "at": 5553,
+     "evidence": [
+      5552,
+      5559
+     ],
+     "key_evidence": [
+      5496,
+      5550
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 4,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "20800",
+     "at": 5583,
+     "evidence": [
+      5582,
+      5589
+     ],
+     "key_evidence": [
+      5562,
+      5580
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 5,
+     "field": "amount",
+     "key": "Single",
+     "value": "13850",
+     "at": 8154,
+     "evidence": [
+      8153,
+      8160
+     ],
+     "key_evidence": [
+      8115,
+      8151
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 6,
+     "field": "amount",
+     "key": "Married filing separately",
+     "value": "13850",
+     "at": 8154,
+     "evidence": [
+      8153,
+      8160
+     ],
+     "key_evidence": [
+      8115,
+      8151
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 7,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "27700",
+     "at": 8221,
+     "evidence": [
+      8220,
+      8227
+     ],
+     "key_evidence": [
+      8164,
+      8218
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 8,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "27700",
+     "at": 8221,
+     "evidence": [
+      8220,
+      8227
+     ],
+     "key_evidence": [
+      8164,
+      8218
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4801",
+     "id": 9,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "20800",
+     "at": 8251,
+     "evidence": [
+      8250,
+      8257
+     ],
+     "key_evidence": [
+      8230,
+      8248
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4832",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "55200",
+     "at": 374,
+     "evidence": [
+      373,
+      380
+     ],
+     "key_evidence": [
+      265,
+      292
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4832",
+     "id": 1,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "55200",
+     "at": 374,
+     "evidence": [
+      373,
+      380
+     ],
+     "key_evidence": [
+      265,
+      292
+     ],
+     "0.5": [
+      "admitted",
+      []
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p4832",
+     "id": 2,
+     "field": "amount",
+     "key": "Single",
+     "value": "22400",
+     "at": 383,
+     "evidence": [
+      382,
+      389
+     ],
+     "key_evidence": [
+      265,
+      292
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4832",
+     "id": 3,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "22400",
+     "at": 383,
+     "evidence": [
+      382,
+      389
+     ],
+     "key_evidence": [
+      265,
+      292
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4832",
+     "id": 4,
+     "field": "amount",
+     "key": "Single",
+     "value": "32200",
+     "at": 392,
+     "evidence": [
+      391,
+      398
+     ],
+     "key_evidence": [
+      265,
+      292
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p4832",
+     "id": 5,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "32200",
+     "at": 392,
+     "evidence": [
+      391,
+      398
+     ],
+     "key_evidence": [
+      265,
+      292
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "150000",
+     "at": 1404,
+     "evidence": [
+      1403,
+      1411
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 1,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "300000",
+     "at": 1414,
+     "evidence": [
+      1413,
+      1421
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 2,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "300000",
+     "at": 2464,
+     "evidence": [
+      2463,
+      2471
+     ],
+     "key_evidence": [
+      1453,
+      1480
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 3,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "225000",
+     "at": 2533,
+     "evidence": [
+      2532,
+      2540
+     ],
+     "key_evidence": [
+      1494,
+      1511
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 4,
+     "field": "amount",
+     "key": "Single",
+     "value": "75000",
+     "at": 3220,
+     "evidence": [
+      3219,
+      3226
+     ],
+     "key_evidence": null,
+     "0.5": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "QUALIFIED_VALUE",
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 5,
+     "field": "amount",
+     "key": "Married filing jointly",
+     "value": "150000",
+     "at": 3229,
+     "evidence": [
+      3228,
+      3236
+     ],
+     "key_evidence": [
+      2475,
+      2497
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 6,
+     "field": "amount",
+     "key": "Qualifying surviving spouse",
+     "value": "150000",
+     "at": 3229,
+     "evidence": [
+      3228,
+      3236
+     ],
+     "key_evidence": [
+      2503,
+      2530
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5035",
+     "id": 7,
+     "field": "amount",
+     "key": "Head of household",
+     "value": "112500",
+     "at": 3298,
+     "evidence": [
+      3297,
+      3305
+     ],
+     "key_evidence": [
+      2544,
+      2561
+     ],
+     "0.5": [
+      "needs_verification",
+      [
+       "KEY_CITATION_INVALID"
+      ]
+     ],
+     "0.4": [
+      "admitted",
+      []
+     ]
+    },
+    {
+     "doc": "irs-p5187",
+     "id": 0,
+     "field": "amount",
+     "key": "Single",
+     "value": "300",
+     "at": 464,
+     "evidence": [
+      463,
+      467
+     ],
+     "key_evidence": [
+      256,
+      284
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p5187",
+     "id": 1,
+     "field": "amount",
+     "key": "Single",
+     "value": "800",
+     "at": 470,
+     "evidence": [
+      469,
+      473
+     ],
+     "key_evidence": [
+      256,
+      284
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    },
+    {
+     "doc": "irs-p5187",
+     "id": 2,
+     "field": "amount",
+     "key": "Single",
+     "value": "1325",
+     "at": 476,
+     "evidence": [
+      475,
+      481
+     ],
+     "key_evidence": [
+      256,
+      284
+     ],
+     "0.5": [
+      "admitted",
+      [
+       "KEY_CITED"
+      ]
+     ],
+     "0.4": [
+      "needs_verification",
+      [
+       "KEY_NOT_AT_VALUE"
+      ]
+     ]
+    }
+   ]
+  }
  }
 }

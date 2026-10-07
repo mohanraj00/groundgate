@@ -2,6 +2,7 @@
  "sets": {
   "status": {
    "labeled_amounts": 67,
+   "not_sure_amounts": 33,
    "runs": {
     "plain": {
      "0.4": {
@@ -10,9 +11,11 @@
        "wrong keys admitted": 0
       },
       "amounts": {
-       "a right key not proposed": 35,
        "every right key admitted": 9,
-       "a right key in review": 23
+       "no key, none admitted": 0,
+       "a wrong key admitted": 0,
+       "a right key in review": 23,
+       "a right key neither admitted nor in review": 35
       }
      },
      "0.5": {
@@ -21,9 +24,11 @@
        "wrong keys admitted": 0
       },
       "amounts": {
-       "a right key not proposed": 35,
        "every right key admitted": 9,
-       "a right key in review": 23
+       "no key, none admitted": 0,
+       "a wrong key admitted": 0,
+       "a right key in review": 23,
+       "a right key neither admitted nor in review": 35
       }
      }
     },
@@ -34,9 +39,11 @@
        "wrong keys admitted": 0
       },
       "amounts": {
-       "a right key not proposed": 35,
+       "every right key admitted": 9,
+       "no key, none admitted": 0,
+       "a wrong key admitted": 0,
        "a right key in review": 23,
-       "every right key admitted": 9
+       "a right key neither admitted nor in review": 35
       }
      },
      "0.5": {
@@ -45,12 +52,22 @@
        "wrong keys admitted": 0
       },
       "amounts": {
-       "a right key not proposed": 33,
        "every right key admitted": 12,
-       "a right key in review": 22
+       "no key, none admitted": 0,
+       "a wrong key admitted": 0,
+       "a right key in review": 22,
+       "a right key neither admitted nor in review": 33
       }
      }
     }
+   },
+   "escapes for the ship rule": {
+    "run": "key span",
+    "0.4": 0,
+    "0.5": 0,
+    "0.5 wrong keys admitted in the population": 0,
+    "0.5 cited escapes outside the population": 0,
+    "0.5 cited outside the population, unlabeled amounts": 1
    }
   }
  },
@@ -163,7 +180,7 @@
    "doc": "irs-p4801",
    "at": 8221,
    "field": "amount",
-   "key": "Married filing jointly",
+   "key": "hidden until labeled",
    "value": "27700",
    "label": "unlabeled",
    "verdict": "unlabeled"
@@ -175,8 +192,8 @@
    "field": "amount",
    "key": "Single",
    "value": "55200",
-   "label": "unlabeled",
-   "verdict": "unlabeled"
+   "label": null,
+   "verdict": "not sure"
   },
   {
    "set": "status",
@@ -185,8 +202,8 @@
    "field": "amount",
    "key": "Single",
    "value": "22400",
-   "label": "unlabeled",
-   "verdict": "unlabeled"
+   "label": null,
+   "verdict": "not sure"
   },
   {
    "set": "status",
@@ -195,8 +212,8 @@
    "field": "amount",
    "key": "Head of household",
    "value": "22400",
-   "label": "unlabeled",
-   "verdict": "unlabeled"
+   "label": null,
+   "verdict": "not sure"
   },
   {
    "set": "status",
@@ -205,8 +222,8 @@
    "field": "amount",
    "key": "Single",
    "value": "32200",
-   "label": "unlabeled",
-   "verdict": "unlabeled"
+   "label": null,
+   "verdict": "not sure"
   },
   {
    "set": "status",
@@ -215,8 +232,8 @@
    "field": "amount",
    "key": "Head of household",
    "value": "32200",
-   "label": "unlabeled",
-   "verdict": "unlabeled"
+   "label": null,
+   "verdict": "not sure"
   },
   {
    "set": "status",
@@ -256,7 +273,8 @@
   }
  ],
  "cited_verdicts": {
+  "not sure": 5,
   "right": 11,
-  "unlabeled": 6
+  "unlabeled": 1
  }
 }
