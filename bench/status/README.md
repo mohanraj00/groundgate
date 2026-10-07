@@ -15,6 +15,7 @@ uv run python bench/status/status.py pick             # write sources.json, sele
 uv run python bench/fetch.py --set bench/status       # download, verify, write docs/
 uv run python bench/status/status.py items            # write items.json from docs/
 uv run python bench/status/status.py label            # label them in the terminal
+uv run python bench/status/web.py                     # or in a browser, at 127.0.0.1:8767
 uv run python bench/status/status.py score            # RESULTS.md: spec 0.2 and 0.3
 ```
 
@@ -41,7 +42,9 @@ amounts in 18 publications.
 5 keys. It asks one question: which filing statuses does the amount belong to? The answer is one
 key, more than one when the amount holds for each of them, `0` when it belongs to none, or `?`
 when the person can't tell. An amount that holds whatever the filing status holds for each key.
-`m` shows more of the text before the amount. The tool never shows which keys a spec puts at the
+`m` shows more of the text before the amount. IRS tables are hard to read as text, so
+`web.py` shows the same question in a browser, next to the PDF page with the amount boxed. Both
+write the same `labels.json`. The tool never shows which keys a spec puts at the
 amount. The labels go in `labels.json`, and the amounts labeled `?` are left out of the counts.
 
 ## Scoring
