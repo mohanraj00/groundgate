@@ -245,6 +245,31 @@ SET2_EXAMPLES = {  # set 2 renames the FDA fields and adds keys and the Federal 
     ],
 }
 
+_IRS_KEYED_TEXT = (  # made up for the status set run (#131), before any status document was read
+    "Standard deduction for most people\n\nSingle or Married filing separately\n\n$15,000\n\n"
+    "Married filing jointly\n\n$30,000\n\nHead of household\n\n$22,500\n\n"
+    "If you are single and age 65 or older, add $2,000."
+)
+
+
+def _usd(quote: str, key: str) -> lx.data.Extraction:
+    attrs = {"value": quote.lstrip("$").replace(",", ""), "unit": "USD", "key": key}
+    return lx.data.Extraction("amount", quote, attributes=attrs)
+
+
+SET2_EXAMPLES["irs keyed"] = [
+    lx.data.ExampleData(
+        text=_IRS_KEYED_TEXT,
+        extractions=[
+            _usd("$15,000", "Single"),
+            _usd("$15,000", "Married filing separately"),
+            _usd("$30,000", "Married filing jointly"),
+            _usd("$22,500", "Head of household"),
+            _usd("$2,000", "Single"),
+        ],
+    )
+]
+
 # the key span of each keyed example extraction, by example and extraction text (--key-span)
 KEY_TEXTS = {
     "fda keyed": {
@@ -252,7 +277,14 @@ KEY_TEXTS = {
         ("80 mg", "Gout"): "Gout",
         ("10 mg", "Psoriasis"): "Psoriasis",
     },
-    "sec": {("860", "2025"): "2025", ("745", "2024"): "2024"},  # the others name it after the value
+    "sec": {("860", "2025"): "2025", ("745", "2024"): "2024"},
+    "irs keyed": {
+        ("$15,000", "Single"): "Single or Married filing separately",
+        ("$15,000", "Married filing separately"): "Single or Married filing separately",
+        ("$30,000", "Married filing jointly"): "Married filing jointly",
+        ("$22,500", "Head of household"): "Head of household",
+        ("$2,000", "Single"): "single",
+    },  # the others name it after the value
 }
 
 
@@ -483,6 +515,8 @@ def examples_for(gold: dict[str, Any]) -> list[lx.data.ExampleData]:
         name = gold["kind"]
     elif gold["kind"] == "fda" and "starting_dose" in gold["fields"]:  # set 2's FDA field names
         name = "fda keyed" if keyed(gold) else "fda"
+    elif gold["kind"] == "irs" and keyed(gold):  # the status set (#131)
+        name = "irs keyed"
     if name is None:
         return EXAMPLES[gold["kind"]]
     if KEY_SPAN and keyed(gold):
