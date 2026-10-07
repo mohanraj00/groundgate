@@ -107,7 +107,9 @@ def walk() -> Iterator[tuple[dict[str, Any], dict[str, Any], gg.Decision, str]]:
                     "unit": d.unit,
                     "code": d.codes[0],
                 }
-                yield {"id": item_id(it), **it}, c, d, text
+                # The extractor's quote, also for candidates that have no aligned evidence.
+                quote = rec["document"]["extractions"][c["id"]].get("extraction_text")
+                yield {"id": item_id(it), **it}, {**c, "extraction_text": quote}, d, text
 
 
 def items() -> None:

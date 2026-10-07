@@ -34,8 +34,7 @@ def build() -> list[dict[str, Any]]:
     for it, cand, d, text in outside.walk():
         if it["id"] in cards:
             continue
-        ev = cand.get("evidence")
-        quote = ev.get("text") if isinstance(ev, dict) else cand.get("value")
+        quote = cand.get("extraction_text")
         before = after = cited = ""
         if d.evidence is not None:
             raw = text.encode("utf-8")
