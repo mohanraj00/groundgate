@@ -307,7 +307,7 @@ as one space on both sides. Case counts.
 | `KEY_NOT_AT_VALUE` | The value is under a different condition in the text, or a label line or a table cell stands between the key and the value. | In a table, ask the extractor for a `field` item and a `key` item, and give the field `aliases`. Otherwise a person checks the fact. |
 | `KEY_CITATION_INVALID` | The key item does not hold a mention of the key, or is not in the value's text. | A person checks the fact. |
 | `PART_MISSING` | The value needs a sign, a scale or a unit that no item supports. `missing` names it. | Ask the extractor for those items. |
-| `QUOTE_NOT_FOUND` | The extractor changed the quote of the value. | Ask for the text copied exactly. |
+| `QUOTE_NOT_FOUND` | The extractor changed the quote of the value, or cited the wrong reference. | Ask for the text copied exactly, from the text that it cites. |
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | Only outside evidence supports the value. | Check the source. If you trust it, add it to `sources`. |
 | `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |
 | `NON_VERBATIM_EVIDENCE` | The extractor changed the quote. | A person compares the quote with the text at the span. |
