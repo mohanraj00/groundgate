@@ -110,3 +110,42 @@ def test_real_langextract_objects() -> None:
     unnamed = lx.data.AnnotatedDocument(text=text, extractions=aligned)
     assert admit_document(unnamed, SCHEMA).document_id is None  # not LangExtract's random id
     assert admit_document(unnamed, SCHEMA, document_id="x").document_id == "x"
+
+
+KEYED_TEXT = "Café\nSingle\n\nNotes:\n\nThe deduction is $15,000. Single filers only."
+KEYED_SCHEMA = {"fields": {"d": {"type": "integer", "unit": "USD", "keys": ["single", "joint"]}}}
+
+
+def keyed(**attrs: Any) -> dict[str, Any]:
+    ext = x("d", "$15,000", KEYED_TEXT.index("$15,000"), "15000", unit="USD", **attrs)
+    return {"text": KEYED_TEXT, "extractions": [ext]}
+
+
+def test_key_text_becomes_a_key_citation() -> None:
+    (c,) = to_candidates(keyed(key="single", key_text="Single"))
+    start = KEYED_TEXT.encode().index(b"Single")
+    assert c["key_evidence"] == {"start": start, "end": start + 6, "text": "Single"}
+    (d,) = admit_document(keyed(key="single", key_text="Single"), KEYED_SCHEMA).decisions
+    assert (d.outcome, d.codes) == ("admitted", ("KEY_CITED",))
+
+
+def test_key_text_missing_outside_or_after_the_value() -> None:
+    (c,) = to_candidates(keyed(key="single"))
+    assert "key_evidence" not in c
+    (d,) = admit_document(keyed(key="single"), KEYED_SCHEMA).decisions
+    assert (d.outcome, d.codes) == ("needs_verification", ("KEY_NOT_AT_VALUE",))
+    at = KEYED_TEXT.encode().index(b"$15,000")
+    for key_text in ("Joint filers", "Single filers"):  # not in the text, or only after the value
+        (c,) = to_candidates(keyed(key="single", key_text=key_text))
+        assert c["key_evidence"] == {"start": at, "end": at, "text": key_text}
+        (d,) = admit_document(keyed(key="single", key_text=key_text), KEYED_SCHEMA).decisions
+        assert d.codes == ("KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID")
+    (c,) = to_candidates(keyed(key="single", label="Single"), key_text_attribute="label")
+    assert c["key_evidence"]["text"] == "Single"
+
+
+def test_key_text_is_not_found_inside_a_longer_word() -> None:
+    text = "South\n\nSouthwest office\n\nPrice: $40"
+    ext = x("p", "$40", text.index("$40"), "40", key="south", key_text="South")
+    (c,) = to_candidates({"text": text, "extractions": [ext]})
+    assert c["key_evidence"] == {"start": 0, "end": 5, "text": "South"}

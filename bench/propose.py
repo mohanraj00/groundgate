@@ -5,7 +5,9 @@
 
 Each document is extracted with its own field list and descriptions from bench/gold/<id>.json.
 The prompt never sees the gold facts. A keyed field (set 2) lists its keys, and the prompt asks for
-the key of each value; documents without keyed fields get the v0.1 prompt byte for byte. Results
+the key of each value; documents without keyed fields get the v0.1 prompt byte for byte. With
+--key-span (#130), a keyed prompt also asks for "key_text", the words before the value that name
+its key, and the keyed examples carry it; without the flag the prompt is unchanged. Results
 go to bench/runs/<model>/<buffer>/<id>.json; an existing file is skipped, so an interrupted run
 resumes where it stopped.
 
@@ -46,6 +48,7 @@ from langextract.core import types as lx_types
 
 HERE = Path(__file__).parent
 SET = HERE  # the benchmark set: gold, docs and runs (--set)
+KEY_SPAN = False  # ask a keyed prompt for the key span (--key-span)
 HOME = str(Path.home())
 
 KIND = {
@@ -73,6 +76,11 @@ KEYS_NOTE = """
 A field marked "one per key" can have one value for each key it lists. Give each of its
 extractions a "key" in the attributes: the key of the condition the value belongs to, copied
 exactly from the field's list.
+"""
+KEY_SPAN_NOTE = """
+When words before the value name its key, such as a heading, a table row or column label, or a
+bullet, also give "key_text" in the attributes: those words copied verbatim from the text, the
+nearest ones before the value. Leave "key_text" out when no words before the value name its key.
 """
 
 EXAMPLES = {
@@ -236,6 +244,32 @@ SET2_EXAMPLES = {  # set 2 renames the FDA fields and adds keys and the Federal 
         )
     ],
 }
+
+# the key span of each keyed example extraction, by example and extraction text (--key-span)
+KEY_TEXTS = {
+    "fda keyed": {
+        ("20 mg", "Gout"): "Gout",
+        ("80 mg", "Gout"): "Gout",
+        ("10 mg", "Psoriasis"): "Psoriasis",
+    },
+    "sec": {("860", "2025"): "2025", ("745", "2024"): "2024"},  # the others name it after the value
+}
+
+
+def with_key_text(name: str, examples: list[lx.data.ExampleData]) -> list[lx.data.ExampleData]:
+    """A copy of the examples with "key_text" on each keyed extraction that has a key span."""
+    spans = KEY_TEXTS.get(name, {})
+    out = []
+    for ex in examples:
+        xs = []
+        for x in ex.extractions:
+            attrs = dict(x.attributes or {})
+            if (span := spans.get((x.extraction_text, attrs.get("key")))) is not None:
+                attrs["key_text"] = span
+            xs.append(lx.data.Extraction(x.extraction_class, x.extraction_text, attributes=attrs))
+        out.append(lx.data.ExampleData(text=ex.text, extractions=xs))
+    return out
+
 
 CLAUDE_SYSTEM = "You extract facts from documents. Answer only from the text you are given."
 AGY_PREFIX = (
@@ -438,15 +472,22 @@ def field_line(name: str, spec: dict[str, Any]) -> str:
 def prompt_for(gold: dict[str, Any]) -> str:
     lines = [field_line(name, spec) for name, spec in gold["fields"].items()]
     prompt = PROMPT.format(kind=kind_text(gold), fields="\n".join(lines))
-    return prompt + KEYS_NOTE if keyed(gold) else prompt
+    if not keyed(gold):
+        return prompt
+    return prompt + KEYS_NOTE + (KEY_SPAN_NOTE if KEY_SPAN else "")
 
 
 def examples_for(gold: dict[str, Any]) -> list[lx.data.ExampleData]:
+    name = None
     if gold["kind"] in ("fr", "sec"):
-        return SET2_EXAMPLES[gold["kind"]]
-    if gold["kind"] == "fda" and "starting_dose" in gold["fields"]:  # set 2's FDA field names
-        return SET2_EXAMPLES["fda keyed" if keyed(gold) else "fda"]
-    return EXAMPLES[gold["kind"]]
+        name = gold["kind"]
+    elif gold["kind"] == "fda" and "starting_dose" in gold["fields"]:  # set 2's FDA field names
+        name = "fda keyed" if keyed(gold) else "fda"
+    if name is None:
+        return EXAMPLES[gold["kind"]]
+    if KEY_SPAN and keyed(gold):
+        return with_key_text(name, SET2_EXAMPLES[name])
+    return SET2_EXAMPLES[name]
 
 
 def safe(name: str) -> str:
@@ -463,10 +504,14 @@ def main() -> None:
     ap.add_argument("--effort", help="codex reasoning effort (low, medium, high)")
     ap.add_argument("--label", help='name in the results, e.g. "GPT-6 Luna (Medium)"')
     ap.add_argument("--set", type=Path, default=HERE, help="benchmark set directory")
+    ap.add_argument("--key-span", action="store_true", help='ask for "key_text" (#130)')
     args = ap.parse_args()
-    global SET
+    global SET, KEY_SPAN
     SET = args.set.resolve()
+    KEY_SPAN = args.key_span
     label = args.label or args.model
+    if KEY_SPAN:  # a run of the other prompt never shares a cache or a name with this one
+        label += " + key span"
 
     out_dir = SET / "runs" / safe(label) / str(args.buffer)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -517,6 +562,7 @@ def main() -> None:
             "model": label,
             "model_id": args.model,
             "effort": args.effort,
+            **({"key_span": True} if args.key_span else {}),
             "langextract": importlib.metadata.version("langextract"),
             "max_char_buffer": args.buffer,
             "seconds": round(time.time() - t0),

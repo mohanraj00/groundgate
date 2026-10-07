@@ -18,7 +18,11 @@ Mapping, per extraction:
 - ``unit``: the ``unit`` attribute, when present;
 - ``key``: the ``key`` attribute, when present, for a keyed field;
 - ``evidence``: ``char_interval`` converted to UTF-8 byte offsets, quoting ``extraction_text``.
-  An extraction LangExtract could not align has no evidence and is rejected ``NO_EVIDENCE``.
+  An extraction LangExtract could not align has no evidence and is rejected ``NO_EVIDENCE``;
+- ``key_evidence``: from the ``key_text`` attribute, when present: the words that name the key,
+  such as a heading or a row label. The span is the last occurrence of ``key_text``, not inside a
+  longer word, that ends at or before the value's ``char_interval``. When there is none, the
+  span is empty, so groundgate flags ``KEY_CITATION_INVALID``.
 
 ``alignment_status`` and ``extraction_class`` are kept on the candidate for the report; the
 checks ignore them.
@@ -32,6 +36,7 @@ from typing import Any
 from ..admit import admit
 from ..canonical import Offsets, is_nfc
 from ..model import PacketError, Policy, Receipt, Schema
+from ..text import quote_pattern
 
 
 def _get(obj: Any, name: str) -> Any:
@@ -65,6 +70,7 @@ def to_candidates(
     value_attribute: str = "value",
     unit_attribute: str = "unit",
     key_attribute: str = "key",
+    key_text_attribute: str = "key_text",
 ) -> list[dict[str, Any]]:
     """One groundgate candidate per extraction in a LangExtract ``AnnotatedDocument``."""
     text = document_text(document)
@@ -95,8 +101,23 @@ def to_candidates(
                 "end": offsets.to_bytes(end),
                 "text": quote,
             }
+            key_text = attrs.get(key_text_attribute)
+            if isinstance(key_text, str) and key_text.strip():
+                cand["key_evidence"] = _key_span(text, offsets, key_text, start)
         out.append(cand)
     return out
+
+
+def _key_span(text: str, offsets: Offsets, key_text: str, at: int) -> dict[str, Any]:
+    """The last occurrence of ``key_text`` that ends at or before ``at`` and is not part of a
+    longer word, in UTF-8 bytes. With none, an empty span at ``at``: groundgate reads it as not
+    valid and flags the citation."""
+    s = e = at
+    for m in quote_pattern(key_text).finditer(text, 0, at):
+        a, b = m.start(), m.end()
+        if (a == 0 or not text[a - 1].isalnum()) and (b == len(text) or not text[b].isalnum()):
+            s, e = a, b
+    return {"start": offsets.to_bytes(s), "end": offsets.to_bytes(e), "text": key_text}
 
 
 def admit_document(
