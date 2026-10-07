@@ -172,8 +172,11 @@ async function send(label) {
   });
   if (!r.ok) { alert("The label was not saved."); return; }
   S.labels[it.id] = label;
-  if (i < S.items.length - 1) i++;
-  show();
+  go(S.items.indexOf(it) + 1);  // from the saved amount, whatever the page shows now
+}
+
+function move(to) {
+  if (!busy) go(to);  // no moving while a save is open
 }
 
 function go(to) {
@@ -184,15 +187,15 @@ function go(to) {
 function todo() {
   const n = S.items.findIndex((x, k) => k > i && !(x.id in S.labels));
   const m = n >= 0 ? n : S.items.findIndex((x) => !(x.id in S.labels));
-  if (m >= 0) go(m);
+  if (m >= 0) move(m);
 }
 
 const order = () => S.keys.filter((k) => picked.has(k));
 $("save").onclick = (e) => { e.target.blur(); if (picked.size) save(order()); };
 $("none").onclick = (e) => { e.target.blur(); save([]); };
 $("unsure").onclick = (e) => { e.target.blur(); save(null); };
-$("back").onclick = (e) => { e.target.blur(); go(i - 1); };
-$("next").onclick = (e) => { e.target.blur(); go(i + 1); };
+$("back").onclick = (e) => { e.target.blur(); move(i - 1); };
+$("next").onclick = (e) => { e.target.blur(); move(i + 1); };
 $("todo").onclick = (e) => { e.target.blur(); todo(); };
 
 document.addEventListener("keydown", (e) => {
@@ -202,8 +205,8 @@ document.addEventListener("keydown", (e) => {
   else if (e.key === "0") save([]);
   else if (e.key === "?") save(null);
   else if (e.key === "Enter") { if (picked.size) save(order()); }
-  else if (e.key === "b" || e.key === "ArrowLeft") go(i - 1);
-  else if (e.key === "n" || e.key === "ArrowRight") go(i + 1);
+  else if (e.key === "b" || e.key === "ArrowLeft") move(i - 1);
+  else if (e.key === "n" || e.key === "ArrowRight") move(i + 1);
   else if (e.key === "+" || e.key === "=") { zoom = Math.min(4, zoom * 1.25); render(S.items[i]); }
   else if (e.key === "-") { zoom = Math.max(0.5, zoom / 1.25); render(S.items[i]); }
   else return;
