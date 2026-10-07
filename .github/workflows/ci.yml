@@ -92,6 +92,8 @@ jobs:
         run: uv run python bench/status/status.py score --check
       - name: India-set results rescore, spec 0.3 in process and spec 0.2 on the 0.2.0 wheel
         run: uv run python bench/india/india.py score --check
+      - name: Evidence-list measure results match the recorded decisions and labels
+        run: uv run python bench/evidence/measure.py results --check
       - name: Model triage report matches its recorded answers
         run: uv run python bench/patterns/triage.py report --check
       - name: Key-judge report matches its recorded answers

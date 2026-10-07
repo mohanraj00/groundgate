@@ -107,16 +107,38 @@ def decide(specs: tuple[str, ...], out: Path) -> None:
                             "evidence": None if d.evidence is None else list(d.evidence),
                             "outcome": d.outcome,
                             "codes": list(d.codes),
+                            "why": _why(text, d) if spec == "0.5" else [],
                         }
                     )
                 found[spec][name][doc] = rows
     for spec in specs:
-        _dump(out / f"decisions-{spec}.json", found[spec])
+        _dump(out / f"decisions-{spec.replace(' ', '-')}.json", found[spec])
     print(f"wrote decisions for {', '.join(specs)}")
 
 
+def _why(text: str, d: Any) -> list[str]:
+    """Why the unit and scale items of a decision fail, for the report: a unit item whose number
+    already has a unit form next to it, and a scale item that is not in the text as written."""
+    from groundgate.text import builtin_units, form_next, tokens
+
+    out = []
+    parts = {p.role: p for p in d.parts}
+    if "UNIT_CITATION_INVALID" in d.codes and d.evidence is not None:
+        raw = text.encode("utf-8")
+        a, b = len(raw[: d.evidence[0]].decode()), len(raw[: d.evidence[1]].decode())
+        units = builtin_units().values()
+        prefixes = [x for pre, _ in units for x in pre]
+        suffixes = sorted({x for _, suf in units for x in suf})
+        toks = [t for t in tokens(text, a, b) if t.value is not None]
+        if toks and form_next(text, toks[0], prefixes, suffixes, 24):
+            out.append("unit next to the number")
+    if "SCALE_CITATION_INVALID" in d.codes and parts["scale"].span is None:
+        out.append("scale not in the text")
+    return out
+
+
 def _decisions() -> dict[str, Any]:
-    return {spec: _read(HERE / f"decisions-{spec}.json") for spec in SPECS}
+    return {spec: _read(HERE / f"decisions-{spec.replace(' ', '-')}.json") for spec in SPECS}
 
 
 def item_id(name: str, doc: str, field: str, key: str | None, value: str) -> str:
@@ -151,7 +173,7 @@ def facts() -> dict[str, dict[str, Any]]:
     """Every value that a decision admits, once per fact, with the verdict that the set's own
     labels give, if any."""
     status = _status_labels()
-    texts: dict[tuple[str, str], str] = {}
+    texts: dict[str, str] = {}
     out: dict[str, dict[str, Any]] = {}
     for sets in _decisions().values():
         for name, docs in sets.items():
@@ -162,13 +184,12 @@ def facts() -> dict[str, dict[str, Any]]:
                     fid = item_id(name, doc, r["field"], r["key"], r["value"])
                     if fid in out:
                         continue
-                    if (name, doc) not in texts:
-                        path = SETS[name] / "docs" / f"{doc}.txt"
-                        texts[name, doc] = path.read_text(encoding="utf-8")
-                    text = texts[name, doc]
                     own = None
-                    if name == "status" and r["evidence"] is not None:
-                        at = _token_start(text, r["evidence"], r["value"])
+                    if name == "status" and r["evidence"] is not None:  # its text is in git
+                        if doc not in texts:
+                            path = SETS[name] / "docs" / f"{doc}.txt"
+                            texts[doc] = path.read_text(encoding="utf-8")
+                        at = _token_start(texts[doc], r["evidence"], r["value"])
                         if at is not None and (doc, at) in status:
                             keys = status[doc, at]
                             own = (
@@ -304,8 +325,15 @@ def score() -> dict[str, Any]:
         for spec, sets in _decisions().items():
             seen: set[str] = set()
             count = {"right": 0, "escapes": 0, "not sure": 0, "unlabeled": 0, "part missing": 0}
+            fails: dict[str, int] = {}
             for doc, ds in sets[name].items():
                 for r in ds:
+                    if r["outcome"] != "rejected":
+                        for code in r["codes"]:
+                            if code.endswith("_CITATION_INVALID"):
+                                fails[code] = fails.get(code, 0) + 1
+                        for why in r.get("why", []):
+                            fails[why] = fails.get(why, 0) + 1
                     if r["outcome"] == "needs_verification" and "PART_MISSING" in r["codes"]:
                         count["part missing"] += 1
                     if r["outcome"] != "admitted":
@@ -318,6 +346,8 @@ def score() -> dict[str, Any]:
                     key = {"right": "right", "wrong": "escapes", "not sure": "not sure"}
                     count[key[v] if v else "unlabeled"] += 1
             rows[spec] = count
+            if spec == "0.5":
+                res.setdefault("role failures", {})[name] = dict(sorted(fails.items()))
         res["sets"][name] = rows
     return res
 
@@ -345,6 +375,20 @@ def render(res: dict[str, Any]) -> str:
                 f"{c['unlabeled']} | {c['part missing']} |"
             )
         lines.append("")
+    lines += [
+        "## Failed role items under spec 0.5",
+        "",
+        "Proposals, not facts: a fact can have several. A unit item fails when a unit form is "
+        "already next to the number, and a scale item fails when its quote is not in the text "
+        "as written.",
+        "",
+        "| Set | Failure | Proposals |",
+        "|---|---|---:|",
+    ]
+    for name, fails in res.get("role failures", {}).items():
+        for what, n in fails.items():
+            lines.append(f"| {NAMES[name]} | {what} | {n} |")
+    lines.append("")
     return "\n".join(lines)
 
 
