@@ -1,0 +1,79 @@
+name: Release groundgate-calibrate
+
+on:
+  push:
+    tags: ["calibrate-v*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv build --package groundgate-calibrate -o dist
+      - name: The tag matches the package version
+        run: test -f "dist/groundgate_calibrate-${GITHUB_REF_NAME#calibrate-v}-py3-none-any.whl"
+      - run: uvx twine check --strict dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  test:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ["3.10", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: The wheel that will be published passes its tests, with groundgate from PyPI
+        run: |
+          python -m venv /tmp/clean
+          /tmp/clean/bin/pip install -q dist/*.whl pytest
+          /tmp/clean/bin/groundgate-calibrate --help > /dev/null
+          /tmp/clean/bin/python -m pytest -p no:cacheprovider calibrate/tests
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write  # PyPI trusted publishing: no token is stored anywhere
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Release notes are the version's section of calibrate/CHANGELOG.md
+        run: |
+          awk -v v="${GITHUB_REF_NAME#calibrate-v}" '
+            $0 ~ "^## " { if (on) exit; on = index($0, "## " v) == 1; next }
+            on' calibrate/CHANGELOG.md > notes.md
+          test -s notes.md
+          gh release create "$GITHUB_REF_NAME" dist/* --title "groundgate-calibrate ${GITHUB_REF_NAME#calibrate-v}" \
+            --notes-file notes.md
+        env:
+          GH_TOKEN: ${{ github.token }}

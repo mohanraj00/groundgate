@@ -48,6 +48,14 @@ real LangExtract install.
    PyPI through trusted publishing (no token is stored), and creates the GitHub release with the
    changelog section as its notes.
 
+groundgate-calibrate (`calibrate/`) is released on its own:
+
+1. Set `__version__` in `calibrate/src/groundgate_calibrate/__init__.py`, and add the version's
+   section to `calibrate/CHANGELOG.md`.
+2. Commit, then tag: `git tag calibrate-v0.1.0 && git push origin calibrate-v0.1.0`.
+3. `release-calibrate.yml` builds it, tests that wheel with groundgate from PyPI, publishes it
+   through its own trusted publisher, and creates the GitHub release.
+
 ## License
 
 By contributing you agree that your work is licensed under Apache-2.0.
