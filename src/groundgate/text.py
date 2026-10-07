@@ -610,6 +610,7 @@ def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
         m.start() for m in _LONE_DASH.finditer(text) if start <= m.start() and m.end() <= end
     ]
     numbers = {t.start for t in toks}
+    empty: set[int] = set()  # a prefix listed twice is still one cell
     for p in prefixes:
         for m in re.finditer(re.escape(p), text[start:end]):
             a, b = start + m.start(), start + m.end()
@@ -619,8 +620,8 @@ def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
             nxt = b + rest
             if nxt >= end or nxt in numbers or text[nxt] == "(":
                 continue
-            starts.append(a)
-    return sorted(starts)
+            empty.add(a)
+    return sorted(starts + list(empty))
 
 
 def header(text: str, mentions: list[tuple[int, int, str]], at: int) -> list[tuple[int, int]]:

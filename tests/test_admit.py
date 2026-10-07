@@ -475,3 +475,10 @@ def test_host_of_an_ipv6_url() -> None:
 
     assert host("https://[2001:DB8::1]:443/p") == "[2001:db8::1]"
     assert host("https://[2001:db8::1]/") != host("https://[2001:db8::2]/")
+
+
+def test_a_repeated_unit_prefix_is_one_empty_cell() -> None:
+    from groundgate.text import cells
+
+    text = "Costs\n\n$\n\n\n\n$\n\n5,500"
+    assert cells(text, 5, text.index("5,500"), ["$", "$"]) == [7]
