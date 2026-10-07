@@ -584,6 +584,13 @@ def track_b(golds: dict[str, Gold]) -> dict[str, Any]:
             )
             for m in ("escape", "false_reject", "review_load")
         }
+        | {
+            f"recall_{m}": rate(
+                sum(r[c]["recall"][m]["k"] for r in out["runs"].values()),
+                sum(r[c]["recall"][m]["n"] for r in out["runs"].values()),
+            )
+            for m in ("accepted", "accepted_or_review")
+        }
         for c in CONFIGS
     }
     return out
