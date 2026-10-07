@@ -19,10 +19,11 @@ VECTORS: list[dict[str, Any]] = []
 INVALID: list[dict[str, Any]] = []
 
 
-def q(quote: str, n: int = 1, text: object = None) -> dict[str, Any]:
+def q(quote: str, n: int = 1, text: object = None, **item: Any) -> dict[str, Any]:
     """Evidence marker: the n-th occurrence of ``quote``, cited with ``text`` (default: the quote;
-    NO_TEXT: no text key)."""
-    return {"quote": quote, "n": n, "text": quote if text is None else text}
+    NO_TEXT: no text key). ``item`` adds evidence item members, such as ``role``; with ``ref``,
+    the quote is found in that reference."""
+    return {"quote": quote, "n": n, "text": quote if text is None else text, **item}
 
 
 def vector(
@@ -34,6 +35,8 @@ def vector(
     policy: dict[str, Any] | None = None,
     coverage: list[dict[str, str]] | None = None,
     judgments: list[dict[str, Any]] | None = None,
+    references: list[dict[str, Any]] | None = None,
+    document_source: str | None = None,
 ) -> None:
     VECTORS.append(
         {
@@ -45,6 +48,8 @@ def vector(
             "candidates": candidates,
             "coverage": coverage or [],
             "judgments": judgments,
+            "references": references,
+            "document_source": document_source,
         }
     )
 
@@ -64,24 +69,36 @@ def c(
     if evidence is not None:
         cand["evidence"] = evidence
     cand.update(extra)
-    return {"candidate": cand, "expect": {"outcome": expect[0], "codes": expect[1]}}
+    return {"candidate": cand, "expect": _expect(expect)}
 
 
-def raw(candidate: Any, expect: tuple[str, list[str]]) -> dict[str, Any]:
+def raw(candidate: Any, expect: tuple[Any, ...]) -> dict[str, Any]:
     """A candidate written exactly as given (may be malformed)."""
-    return {"candidate": candidate, "expect": {"outcome": expect[0], "codes": expect[1]}}
+    return {"candidate": candidate, "expect": _expect(expect)}
 
 
-def resolve(document: str, ev: Any) -> Any:
+def _expect(expect: tuple[Any, ...]) -> dict[str, Any]:
+    """(outcome, codes) or (outcome, codes, missing): the decision a candidate must get."""
+    out: dict[str, Any] = {"outcome": expect[0], "codes": expect[1]}
+    if len(expect) > 2:
+        out["missing"] = expect[2]
+    return out
+
+
+def resolve(document: str, ev: Any, refs: dict[str, str] | None = None) -> Any:
+    if isinstance(ev, list):
+        return [resolve(document, item, refs) for item in ev]
     if not (isinstance(ev, dict) and "quote" in ev):
         return ev
-    data, needle = document.encode("utf-8"), ev["quote"].encode("utf-8")
+    source = (refs or {})[ev["ref"]] if "ref" in ev else document
+    data, needle = source.encode("utf-8"), ev["quote"].encode("utf-8")
     i = -1
     for _ in range(ev["n"]):
         i = data.find(needle, i + 1)
         if i < 0:
             raise SystemExit(f"quote {ev['quote']!r} occurrence {ev['n']} not in document")
-    out = {"start": i, "end": i + len(needle)}
+    out = {k: v for k, v in ev.items() if k not in ("quote", "n", "text")}
+    out.update({"start": i, "end": i + len(needle)})
     if ev["text"] is not NO_TEXT:
         out["text"] = ev["text"]
     return out
@@ -1189,7 +1206,7 @@ vector(
             "2",
             "USD",
             q("(2)", text="$2 million."),
-            ("rejected", ["UNIT_NOT_IN_EVIDENCE"]),
+            ("needs_verification", ["NON_VERBATIM_EVIDENCE", "PART_MISSING"], ["unit"]),
         ),
     ],
     policy={"min_confidence": 0.5},
@@ -1554,416 +1571,6 @@ vector(
 
 # ---------------------------------------------------------------- recorded judgments
 vector(
-    "19-key-citation",
-    "A candidate on a keyed field may cite the span that names its key (`key_evidence`, same offsets "
-    "as `evidence`). A passed citation puts the key at the value: it skips the label-line stop and "
-    "the table-sentence limit, and records `KEY_CITED` when it removed `KEY_NOT_AT_VALUE`. The span "
-    "must hold a mention of the key and end at or before the value, and no mention of another key "
-    "may lie between the span and the value. A citation never removes another flag (spec 0.5).",
-    "Heart Failure\n\nTreatment of HF:\n\nThe first dose is 1 mg daily.\n\n"
-    "Hypertension\n\nThe second dose is 2 mg daily.\n\n"
-    "Hypertension\n\nDosing:\n\nHypertension\n\nDosing:\n\nThe third dose is 3 mg daily.\n\n"
-    "Hypertension\n\nDosing:\n\nThe fourth dose is 4 mg daily.\n\n"
-    "Hypertension or heart failure\n\nDosing:\n\nThe fifth dose is 5 mg daily.\n\n"
-    "Hypertension\n\nDosing:\n\nThe sixth dose is at least 6 mg daily.\n\n"
-    "Dose by indication\nHypertension\n7 mg\nHeart failure\n8 mg",
-    {
-        "fields": {
-            "first": KEYED_MG,
-            "second": KEYED_MG,
-            "third": KEYED_MG,
-            "fourth": KEYED_MG,
-            "fifth": KEYED_MG,
-            "sixth": KEYED_MG,
-            "seventh": KEYED_MG,
-            "eighth": KEYED_MG,
-            "eighth_wrong": KEYED_MG,
-        }
-    },
-    [
-        # a label line stops the key of the heading; the citation of the heading passes it
-        c(
-            "k1",
-            "first",
-            "1",
-            "mg",
-            q("1 mg"),
-            ("admitted", ["KEY_CITED"]),
-            key="heart failure",
-            key_evidence=q("Heart Failure"),
-        ),
-        # the key held without the citation: no code
-        c(
-            "k2",
-            "second",
-            "2",
-            "mg",
-            q("2 mg"),
-            key="hypertension",
-            key_evidence=q("Hypertension"),
-        ),
-        # a mention of the candidate's own key between the span and the value does not stop it
-        c(
-            "k3",
-            "third",
-            "3",
-            "mg",
-            q("3 mg"),
-            ("admitted", ["KEY_CITED"]),
-            key="hypertension",
-            key_evidence=q("Hypertension", n=2),
-        ),
-        # no citation: the 0.4 decision
-        c(
-            "k4",
-            "fourth",
-            "4",
-            "mg",
-            q("4 mg"),
-            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
-            key="hypertension",
-        ),
-        # a span that names two keys holds both
-        c(
-            "k5",
-            "fifth",
-            "5",
-            "mg",
-            q("5 mg"),
-            ("admitted", ["KEY_CITED"]),
-            key="heart failure",
-            key_evidence=q("Hypertension or heart failure"),
-        ),
-        # a citation removes no other flag
-        c(
-            "k6",
-            "sixth",
-            "6",
-            "mg",
-            q("6 mg"),
-            ("needs_verification", ["QUALIFIED_VALUE", "KEY_CITED"]),
-            key="hypertension",
-            key_evidence=q("Hypertension", n=6),
-        ),
-        # a table with one cell on each line: the cited row label gives the key
-        c(
-            "k7",
-            "seventh",
-            "7",
-            "mg",
-            q("7 mg"),
-            ("admitted", ["KEY_CITED"]),
-            key="hypertension",
-            key_evidence=q("Hypertension", n=7),
-        ),
-        c(
-            "k8",
-            "eighth",
-            "8",
-            "mg",
-            q("8 mg"),
-            ("admitted", ["KEY_CITED"]),
-            key="heart failure",
-            key_evidence=q("Heart failure"),
-        ),
-        # "Heart failure" lies between the cited label and the value
-        c(
-            "k9",
-            "eighth_wrong",
-            "8",
-            "mg",
-            q("8 mg"),
-            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
-            key="hypertension",
-            key_evidence=q("Hypertension", n=7),
-        ),
-    ],
-)
-
-vector(
-    "19b-key-citation-fails",
-    "A citation that fails a check adds `KEY_CITATION_INVALID`, even when the key holds without it, "
-    "and the candidate goes to review. The checks: a valid span, a `text` that equals the span's "
-    "text, a mention of the key in the span, a span that ends at or before the value, and no "
-    "mention of another key between the span and the value. A `key_evidence` that is not an "
-    "object with integer `start` and `end` is `CANDIDATE_INVALID`, and it is ignored on a field "
-    "without keys (spec 0.5).",
-    "Hypertension\n\nThe first dose is 1 mg daily.\n\n"
-    "Hypertension\n\nThe second dose is 2 mg daily.\n\n"
-    "Hypertension\n\nThe third dose is 3 mg daily.\n\n"
-    "Hypertension\n\nThe fourth dose is 4 mg daily.\n\nHeart failure\n\n"
-    "Hypertension\n\nHeart failure\n\nThe fifth dose is 5 mg daily.\n\n"
-    "Hypertension\n\nDosing:\n\nThe sixth dose is 6 mg daily.\n\n"
-    "The seventh dose is 7 mg daily.\n\n"
-    "Hypertension\n\nThe eighth dose is 8 mg daily. Heart failure.",
-    {
-        "fields": {
-            "first": KEYED_MG,
-            "second": KEYED_MG,
-            "third": KEYED_MG,
-            "fourth": KEYED_MG,
-            "fifth": KEYED_MG,
-            "sixth": KEYED_MG,
-            "seventh": KEYED_MG,
-            "eighth": KEYED_MG,
-            "plain": {"type": "number", "unit": "mg"},
-        }
-    },
-    [
-        # the span is not valid (start after end)
-        c(
-            "f1",
-            "first",
-            "1",
-            "mg",
-            q("1 mg"),
-            ("needs_verification", ["KEY_CITATION_INVALID"]),
-            key="hypertension",
-            key_evidence={"start": 10, "end": 2},
-        ),
-        # `text` differs from the span's text
-        c(
-            "f2",
-            "second",
-            "2",
-            "mg",
-            q("2 mg"),
-            ("needs_verification", ["KEY_CITATION_INVALID"]),
-            key="hypertension",
-            key_evidence=q("Hypertension", n=2, text="Hypertensive"),
-        ),
-        # the span names no key
-        c(
-            "f3",
-            "third",
-            "3",
-            "mg",
-            q("3 mg"),
-            ("needs_verification", ["KEY_CITATION_INVALID"]),
-            key="hypertension",
-            key_evidence=q("The third dose"),
-        ),
-        # the span starts after the value
-        c(
-            "f4",
-            "fourth",
-            "4",
-            "mg",
-            q("4 mg"),
-            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
-            key="heart failure",
-            key_evidence=q("Heart failure"),
-        ),
-        # another key lies between the span and the value
-        c(
-            "f5",
-            "fifth",
-            "5",
-            "mg",
-            q("5 mg"),
-            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
-            key="hypertension",
-            key_evidence=q("Hypertension", n=5),
-        ),
-        # a passed citation next to the failed ones
-        c(
-            "f6",
-            "sixth",
-            "6",
-            "mg",
-            q("6 mg"),
-            ("admitted", ["KEY_CITED"]),
-            key="hypertension",
-            key_evidence=q("Hypertension", n=6),
-        ),
-        # a citation that is not an object makes the candidate invalid
-        c(
-            "f7",
-            "seventh",
-            "7",
-            "mg",
-            q("7 mg"),
-            ("rejected", ["CANDIDATE_INVALID"]),
-            key="hypertension",
-            key_evidence="Hypertension",
-        ),
-        # a span that holds the value: the key named after the value does not count
-        c(
-            "f9",
-            "eighth",
-            "8",
-            "mg",
-            q("8 mg"),
-            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
-            key="heart failure",
-            key_evidence=q("The eighth dose is 8 mg daily. Heart failure"),
-        ),
-        # a field without keys ignores a citation
-        c(
-            "f8",
-            "plain",
-            "6",
-            "mg",
-            q("6 mg"),
-            key_evidence=q("Hypertension"),
-        ),
-    ],
-)
-
-vector(
-    "19c-key-citation-limits",
-    "A key citation also fails when the span holds a line break, when a number follows the last "
-    "mention of the candidate's key in the span, or when the value's sentence (or, in a table "
-    "sentence, its line) mentions keys and none of them is the candidate's. A recorded key "
-    "judgment that names another key adds `MODEL_DOUBT` to a cited key. `key_evidence: null` is "
-    "absent, and a `key_evidence` with a `text` that is not a string, or a `start` that is not an "
-    "integer, is `CANDIDATE_INVALID`, also on a field without keys. The text starts with a "
-    "character of two bytes, so code-point offsets would miss every span (spec 0.5).",
-    "Café menu\n\n"
-    "Hypertension\n\nHeart failure\n\nThe first dose is 1 mg daily.\n\n"
-    "Hypertension 2 mg, heart failure:\n\nNotes:\n\nThe second dose is 3 mg daily.\n\n"
-    "Heart failure\n\nNotes:\n\nThe third dose is 4 mg for hypertension.\n\n"
-    "Hypertension\ndosing\n\nNotes:\n\nThe fourth dose is 5 mg daily.\n\n"
-    "Hypertension\n\nNotes:\n\nThe fifth dose is 6 mg daily.\n\n"
-    "Hypertension\n\nNotes:\n\nThe sixth dose is 7 mg daily.",
-    {
-        "fields": {
-            "first": KEYED_MG,
-            "second": KEYED_MG,
-            "third": KEYED_MG,
-            "fourth": KEYED_MG,
-            "fifth": KEYED_MG,
-            "sixth": KEYED_MG,
-            "plain": {"type": "number", "unit": "mg"},
-        }
-    },
-    [
-        # a wide span that holds another key fails: it holds line breaks
-        c(
-            "m1",
-            "first",
-            "1",
-            "mg",
-            q("1 mg"),
-            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
-            key="hypertension",
-            key_evidence=q("Hypertension\n\nHeart failure\n\nThe first dose is "),
-        ),
-        # a number after the key's mention in the span: the span holds another row
-        c(
-            "m2",
-            "second",
-            "3",
-            "mg",
-            q("3 mg"),
-            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
-            key="hypertension",
-            key_evidence=q("Hypertension 2 mg, heart failure"),
-        ),
-        # the value's own sentence names another key
-        c(
-            "m3",
-            "third",
-            "4",
-            "mg",
-            q("4 mg"),
-            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
-            key="heart failure",
-            key_evidence=q("Heart failure", n=2),
-        ),
-        # a span with a line break fails
-        c(
-            "m4",
-            "fourth",
-            "5",
-            "mg",
-            q("5 mg"),
-            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
-            key="hypertension",
-            key_evidence=q("Hypertension\ndosing"),
-        ),
-        # a judge that names another key doubts a cited key
-        c(
-            "m5",
-            "fifth",
-            "6",
-            "mg",
-            q("6 mg"),
-            ("needs_verification", ["MODEL_DOUBT", "KEY_CITED"]),
-            key="hypertension",
-            key_evidence=q("Hypertension", n=4),
-        ),
-        # a judge that names the same key changes nothing
-        c(
-            "m6",
-            "sixth",
-            "7",
-            "mg",
-            q("7 mg"),
-            ("admitted", ["KEY_CITED"]),
-            key="hypertension",
-            key_evidence=q("Hypertension", n=5),
-        ),
-        # null is absent: the 0.4 decision
-        c(
-            "m7",
-            "sixth",
-            "7",
-            "mg",
-            q("7 mg"),
-            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
-            key="hypertension",
-            key_evidence=None,
-        ),
-        # a text that is not a string
-        c(
-            "m8",
-            "sixth",
-            "7",
-            "mg",
-            q("7 mg"),
-            ("rejected", ["CANDIDATE_INVALID"]),
-            key="hypertension",
-            key_evidence=q("Hypertension", n=5, text=5),
-        ),
-        # a start that is not an integer
-        c(
-            "m9",
-            "sixth",
-            "7",
-            "mg",
-            q("7 mg"),
-            ("rejected", ["CANDIDATE_INVALID"]),
-            key="hypertension",
-            key_evidence={"start": True, "end": 5},
-        ),
-        # a null text inside the citation is not a string
-        c(
-            "m11",
-            "sixth",
-            "7",
-            "mg",
-            q("7 mg"),
-            ("rejected", ["CANDIDATE_INVALID"]),
-            key="hypertension",
-            key_evidence={"quote": "Hypertension", "n": 5, "text": None},
-        ),
-        # on a field without keys, a citation must still be well formed
-        c(
-            "m10",
-            "plain",
-            "7",
-            "mg",
-            q("7 mg"),
-            ("rejected", ["CANDIDATE_INVALID"]),
-            key_evidence={"start": 0},
-        ),
-    ],
-    policy={"judge": {**JEV, "clear": {"KEY_NOT_AT_VALUE": 0.9}}},
-    judgments=[j("m5", "key", 0.95, "heart failure"), j("m6", "key", 0.95, "hypertension")],
-)
-
-vector(
     "18-judgments-key",
     "A recorded key judgment clears KEY_NOT_AT_VALUE when it chooses the candidate's key with p at "
     "or above the policy's threshold, and adds MODEL_DOUBT when it chooses another key or none at "
@@ -2135,6 +1742,403 @@ vector(
     ],
 )
 
+# ---------------------------------------------------------------- evidence items (spec 0.5)
+REVIEW = "needs_verification"
+URL = "https://www.irs.gov/publications/p970"
+DAY = "2026-10-01"
+
+
+def ext(text: str, url: str = URL) -> dict[str, Any]:
+    """An external evidence item (SPEC §2.5)."""
+    return {"source": "external", "url": url, "retrieved": DAY, "text": text}
+
+
+def know(text: str) -> dict[str, Any]:
+    """A knowledge evidence item (SPEC §2.5)."""
+    return {"source": "knowledge", "text": text}
+
+
+FEE = {"type": "integer", "unit": "USD"}
+vector(
+    "19-evidence-list",
+    "Evidence is a list of evidence items; one object counts as a list that holds it. A value "
+    "item can be a quote with no offsets: the first occurrence where steps 10 and 11 pass is the "
+    "evidence, and a quote that does not occur is QUOTE_NOT_FOUND. A candidate with only role "
+    "items has no evidence. Malformed items are CANDIDATE_INVALID (spec 0.5).",
+    "Take 40 mg daily. The filing fee is $40.\n\nThe late fee is $25, or $40 after 30 days.",
+    {"fields": {"fee": FEE, "late": FEE}},
+    [
+        c("l1", "fee", "40", "USD", [q("$40")]),
+        c("l2", "fee", "40", "USD", q("$40", 2)),
+        c("l3", "fee", "40", "USD", [{"text": "$40"}]),
+        c("l4", "late", "25", "USD", [{"text": "$25"}]),
+        c("l5", "fee", "40", "USD", [{"text": "$45"}], ("rejected", ["QUOTE_NOT_FOUND"])),
+        c("l6", "fee", "40", "USD", [{"text": "is  $40."}]),
+        c("l7", "fee", "40", "USD", [{"role": "sign", "text": "("}], ("rejected", ["NO_EVIDENCE"])),
+        c("l8", "fee", "40", "USD", [], ("rejected", ["NO_EVIDENCE"])),
+        c("l9", "fee", "40", "USD", [{"text": "40"}]),
+        c("l10", "fee", "40", "USD", [{"text": "40 mg"}], ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        *[
+            c(f"bad{n}", "fee", "40", "USD", ev, ("rejected", ["CANDIDATE_INVALID"]))
+            for n, ev in enumerate(
+                [
+                    [{"source": "web", "text": "$40"}],
+                    [{**ext("$40"), "role": "value"}],
+                    [{"start": 31}],
+                    [{"start": 31, "end": "34"}],
+                    [{"text": "  "}],
+                    [q("$40"), {"text": "$40"}],
+                    [{"text": "$40", "role": None}],
+                    [{"source": "external", "url": URL, "text": "$40"}],
+                    [{"source": "knowledge", "text": ""}],
+                    [{"source": "reference", "ref": "nope", "text": "$40"}],
+                    [{"source": "reference", "text": "$40"}],
+                    [{"ref": "nope", "text": "$40"}],
+                    [{"role": "colour", "text": "$40"}],
+                    [{"text": 40}],
+                    "$40",
+                    [5],
+                ]
+            )
+        ],
+    ],
+)
+
+AMOUNT = {"type": "integer", "unit": "USD", "multiple": True}
+vector(
+    "19b-derived-sign",
+    "A sign item makes a token negative: brackets around the value, or a loss word before it in "
+    "the same sentence with no number, line break, tab or gain word between. Brackets around the "
+    "token make it negative with no item. A failing sign item still gives its part, with its flag. "
+    "A negative value with no sign is a missing part (spec 0.5).",
+    "For the year ended December 31, 2024, we had a net loss of $71,000, which consisted of "
+    "$71,000 of general and administrative expenses.\n\n"
+    "Loss from operations\n\n($105,198\n)\n\n($34,904\n)\n\n"
+    "Net (loss) income\n\n$6,152\n\n($13,203\n)\n\n"
+    "In 2023 the company reported a loss of $5,000 and revenue of $9,000.",
+    {"fields": {"amount": AMOUNT}},
+    [
+        c("s1", "amount", "-71000", "USD", [q("$71,000"), {"role": "sign", "text": "net loss"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("s2", "amount", "-71000", "USD", [q("$71,000", 2), {"role": "sign", "text": "net loss"}],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("s3", "amount", "-71000", "USD", [q("$71,000")], (REVIEW, ["PART_MISSING"], ["sign"])),
+        c("s4", "amount", "-105198", "USD", [q("$105,198")], ("admitted", ["VALUE_DERIVED"])),
+        c("s5", "amount", "105198", "USD", [q("$105,198")]),
+        c("s6", "amount", "-6152", "USD", [q("$6,152"), {"role": "sign", "text": "(loss)"}],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("s7", "amount", "-13203", "USD",
+          [q("$13,203"), {"role": "sign", "text": "($13,203\n)"}], ("admitted", ["VALUE_DERIVED"])),
+        c("s8", "amount", "-5000", "USD", [q("$5,000"), {"role": "sign", "text": "loss"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("s9", "amount", "-9000", "USD", [q("$9,000"), {"role": "sign", "text": "loss"}],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+    ],
+)  # fmt: skip
+
+MONEY = {"type": "number", "unit": "USD", "multiple": True}
+THOUSANDS = {"role": "scale", "text": "(in thousands"}
+DOLLAR = {"role": "unit", "text": "$"}
+vector(
+    "19c-derived-scale-unit",
+    "A scale item multiplies a token that has no scaled value by its scale word, when no other "
+    "scale word lies between it and the value. A unit item supplies the unit when no unit is at "
+    "the token; another unit at the token still rejects. A missing scale or unit is a missing part "
+    "(spec 0.5).",
+    "Consolidated statements of operations\n(in thousands, except percentages)\n\n"
+    "Revenue\n\n$\n\n46,016\n\n$\n\n434,433\n\n"
+    "Gross margin\n\n12%\n\n"
+    "Operating expenses\n\n195,334\n\n203,625\n\n"
+    "Loss from operations\n\n(105,198\n)\n\n"
+    "Other items (in millions)\n\n7.5\n\n"
+    "Interest income\n\n1,250\n\n"
+    "Deferred revenue was $2.2 million at year end.",
+    {"fields": {"amount": MONEY}},
+    [
+        c("r1", "amount", "46016000", "USD", [q("46,016"), THOUSANDS], ("admitted", ["VALUE_DERIVED"])),
+        c("r2", "amount", "195334000", "USD", [q("195,334"), THOUSANDS, DOLLAR],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("r3", "amount", "195334000", "USD", [q("195,334"), THOUSANDS],
+          (REVIEW, ["PART_MISSING", "VALUE_DERIVED"], ["unit"])),
+        c("r4", "amount", "1250000", "USD", [q("1,250"), THOUSANDS, DOLLAR],
+          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("r5", "amount", "7500000", "USD", [q("7.5"), {"role": "scale", "text": "(in millions)"}, DOLLAR],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("r6", "amount", "46016000", "USD", [q("46,016")], (REVIEW, ["PART_MISSING"], ["scale"])),
+        c("r7", "amount", "12000", "USD", [q("12"), THOUSANDS, DOLLAR],
+          ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("r8", "amount", "2200000", "USD", [q("$2.2 million")]),
+        c("r9", "amount", "2200000000", "USD", [q("$2.2 million"), THOUSANDS],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("r11", "amount", "-105198000", "USD", [q("105,198"), THOUSANDS, DOLLAR],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("r12", "amount", "-105198000", "USD", [q("105,198")],
+          (REVIEW, ["PART_MISSING"], ["scale", "unit"])),
+        c("r13", "amount", "195334000", "USD", [q("195,334"), THOUSANDS, {"role": "unit", "text": "%"}],
+          (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED"])),
+    ],
+)  # fmt: skip
+
+YEARS = ["2025", "2024", "2023"]
+
+
+def money(*aliases: str) -> dict[str, Any]:
+    """A keyed USD field by fiscal year, with aliases when given."""
+    out: dict[str, Any] = {"type": "integer", "unit": "USD", "keys": YEARS, "multiple": True}
+    if aliases:
+        out["aliases"] = list(aliases)
+    return out
+
+
+def row(label: str) -> dict[str, Any]:
+    return {"role": "field", "text": label}
+
+
+def year(y: str, n: int | None = None) -> dict[str, Any]:
+    return q(y, n, role="key") if n is not None else {"role": "key", "text": y}
+
+
+vector(
+    "19d-field-and-column",
+    "A field item holds an alias of the field, at the value's row or in its sentence. The column "
+    "rule puts a key item's key at a table value: the key is the n-th of its header, and the value "
+    "is the n-th cell after the row label, where a lone dash is a cell. It records KEY_CITED. A "
+    "field item on a field without aliases changes nothing (spec 0.5).",
+    "Year Ended December 31,\n\n2025\n\n2024\n\nChange\n\n"
+    "Revenue\n\n$\n\n46,016\n\n$\n\n434,433\n\n"
+    "Gain on sale\n\n—\n\n40,390\n\n"
+    "Loss from operations\n\n$\n\n(140,102\n)\n\n$\n\n(105,198\n)\n\n"
+    "Three Months Ended\n\n2025\n\n2024\n\n"
+    "Revenue\n\n$\n\n9,100\n\n$\n\n8,800\n\n"
+    "In 2024, revenue was $434,433 and operating income was $12.",
+    {
+        "fields": {
+            "revenue": money("revenue", "total revenue"),
+            "op_income": money("operating income", "loss from operations"),
+            "gain": money("gain on sale"),
+            "other": money(),
+        }
+    },
+    [
+        c("k1", "revenue", "46016", "USD", [q("46,016"), row("Revenue"), year("2025")],
+          ("admitted", ["KEY_CITED"]), key="2025"),
+        c("k2", "revenue", "434433", "USD", [q("434,433"), row("Revenue"), year("2024")],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+        c("k3", "revenue", "434433", "USD", [q("434,433"), row("Revenue"), year("2025")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], []), key="2025"),
+        c("k4", "gain", "40390", "USD", [q("40,390"), row("Gain on sale"), year("2024"), DOLLAR],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+        c("k5", "gain", "40390", "USD", [q("40,390"), row("Gain on sale"), year("2025"), DOLLAR],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("k6", "op_income", "-105198", "USD",
+          [q("105,198"), row("Loss from operations"), year("2024"), DOLLAR],
+          ("admitted", ["VALUE_DERIVED", "KEY_CITED"]), key="2024"),
+        c("k7", "revenue", "9100", "USD", [q("9,100"), row("Revenue"), year("2025", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("k8", "other", "434433", "USD", [q("434,433"), row("Revenue"), year("2024")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], []), key="2024"),
+        c("k9", "op_income", "434433", "USD", [q("434,433"), row("Revenue"), year("2024")],
+          (REVIEW, ["FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE"]), key="2024"),
+        c("k10", "revenue", "434433", "USD", [q("$434,433"), row("revenue")], key="2024"),
+        c("k11", "revenue", "12", "USD", [q("$12"), row("revenue")],
+          (REVIEW, ["FIELD_CITATION_INVALID"]), key="2024"),
+        c("k12", "revenue", "434433", "USD", [q("434,433")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2024"),
+        c("k13", "revenue", "434433", "USD", [q("434,433"), row("Revenue"), year("Change")],
+          (REVIEW, ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]), key="2024"),
+        c("k14", "revenue", "46016", "USD", [q("46,016"), row("Sales"), year("2025")],
+          (REVIEW, ["FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE"]), key="2025"),
+        c("k15", "revenue", "434433", "USD", [q("434,433"), row("Revenue"), year("2024")],
+          (REVIEW, ["MODEL_DOUBT", "KEY_CITED"]), key="2024"),
+        c("k16", "revenue", "434433", "USD", [q("434,433")],
+          ("admitted", ["MODEL_CLEARED"], ["key"]), key="2024"),
+        c("k17", "op_income", "12", "USD", [q("$12"), row("operating income")], key="2024"),
+    ],
+    policy={"judge": {**JEV, "clear": {"KEY_NOT_AT_VALUE": 0.9}}},
+    judgments=[j("k15", "key", 0.95, "2025"), j("k16", "key", 0.95, "2024")],
+)  # fmt: skip
+
+PHASE = {
+    "type": "integer",
+    "unit": "USD",
+    "keys": ["single", "married filing jointly"],
+    "multiple": True,
+}
+IRS_REF = {
+    "id": "irs-221",
+    "text": "For married filing jointly, the phase-out starts at $170,000.",
+    "source": "https://www.irs.gov/publications/p970",
+}
+vector(
+    "19e-references",
+    "A reference is a source text that the app supplies. A reference item is checked like a "
+    "document item, in the reference's own text and offsets; search_region does not apply to "
+    "it. A role item must be from the same text as the value item (spec 0.5).",
+    "Single filers may deduct student loan interest. The phase-out starts at a MAGI of $85,000.",
+    {"fields": {"phase_out": PHASE}},
+    [
+        c("e1", "phase_out", "170000", "USD",
+          [{"source": "reference", "ref": "irs-221", "text": "$170,000"}],
+          key="married filing jointly"),
+        c("e2", "phase_out", "85000", "USD", [q("$85,000")], key="single"),
+        c("e3", "phase_out", "170000", "USD",
+          [q("$170,000", source="reference", ref="irs-221")], key="married filing jointly"),
+        c("e4", "phase_out", "170000", "USD",
+          [{"source": "reference", "ref": "irs-221", "text": "$170,000"},
+           {"role": "key", "text": "married filing jointly"}],
+          (REVIEW, ["KEY_CITATION_INVALID"]), key="married filing jointly"),
+        c("e5", "phase_out", "170000", "USD",
+          [{"source": "reference", "ref": "irs-221", "text": "$165,000"}],
+          ("rejected", ["QUOTE_NOT_FOUND"]), key="married filing jointly"),
+        c("e6", "phase_out", "170000", "USD",
+          [{"source": "reference", "ref": "irs-221", "text": "$170,000"}],
+          key="married filing jointly", search_region={"start": 0, "end": 10}),
+    ],
+    references=[IRS_REF],
+    document_source="https://www.irs.gov/publications/p4491x",
+)  # fmt: skip
+
+OUTSIDE_DOC = "Taxpayers with MAGI more than $85,000 cannot take the full deduction."
+OUTSIDE_SCHEMA = {
+    "fields": {
+        "threshold": {"type": "integer", "unit": "USD", "comparator": "gt", "multiple": True},
+        "mfj": {"type": "integer", "unit": "USD", "multiple": True},
+        "mfj_keyed": PHASE,
+    }
+}
+JOINT = "The phase-out begins at $165,000 for joint filers."
+vector(
+    "19f-outside-default",
+    "A candidate with no value item takes the outside path. By default, an external item that "
+    "holds the value goes to review with EVIDENCE_QUOTED, and a knowledge item with "
+    "EVIDENCE_STATED. An external quote that does not hold the value supports nothing. On the "
+    "checked path, outside items change nothing (spec 0.5).",
+    OUTSIDE_DOC,
+    OUTSIDE_SCHEMA,
+    [
+        c("o1", "mfj", "165000", "USD", [ext(JOINT)], (REVIEW, ["EVIDENCE_QUOTED"])),
+        c("o2", "mfj", "165000", "USD", [know("The phase-out starts at $165,000 for joint filers.")],
+          (REVIEW, ["EVIDENCE_STATED"])),
+        c("o3", "mfj", "165000", "USD", [ext("The phase-out begins at $160,000.")],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("o4", "mfj", "165000", "USD", [ext("The phase-out begins at $160,000."), know("I know it.")],
+          (REVIEW, ["EVIDENCE_STATED"])),
+        c("o5", "threshold", "85000", "USD", [q("$85,000"), know("It is $90,000.")]),
+        c("o6", "mfj", "165000", "USD", [ext("MAGI more than $165,000")],
+          (REVIEW, ["QUALIFIED_VALUE", "EVIDENCE_QUOTED"])),
+        c("o7", "mfj", "165000", "USD", [know("The law sets it.")], (REVIEW, ["EVIDENCE_STATED"])),
+    ],
+    document_source="https://www.irs.gov/publications/p4491x",
+)  # fmt: skip
+
+vector(
+    "19g-outside-policy",
+    "The policy admits an external item whose URL matches an allow entry: document-domain matches "
+    "the host of the document source, and other entries are URL prefixes. Other external items "
+    "get external.other, and knowledge items get knowledge. The best action decides, and an "
+    "admitted candidate records ADMITTED_BY_POLICY; the quote's flags still apply (spec 0.5).",
+    OUTSIDE_DOC,
+    OUTSIDE_SCHEMA,
+    [
+        c("g1", "mfj", "165000", "USD", [ext(JOINT)], ("admitted", ["ADMITTED_BY_POLICY"])),
+        c("g2", "mfj", "165000", "USD", [ext(JOINT, "https://irs.gov/p970")],
+          ("rejected", ["SOURCE_REJECTED"])),
+        c("g3", "mfj", "165000", "USD", [ext(JOINT, "https://www.law.cornell.edu/uscode/text/26/221")],
+          ("admitted", ["ADMITTED_BY_POLICY"])),
+        c("g4", "mfj", "165000", "USD", [ext(JOINT, "https://www.law.cornell.edu.example.com/x")],
+          ("rejected", ["SOURCE_REJECTED"])),
+        c("g5", "mfj", "165000", "USD", [know("It is $165,000.")], ("admitted", ["ADMITTED_BY_POLICY"])),
+        c("g6", "mfj", "165000", "USD", [ext(JOINT, "https://irs.gov/p970"), know("It is $165,000.")],
+          ("admitted", ["ADMITTED_BY_POLICY"])),
+        c("g7", "mfj", "165000", "USD", [ext("MAGI more than $165,000")],
+          (REVIEW, ["QUALIFIED_VALUE", "ADMITTED_BY_POLICY"])),
+        c("g8", "mfj", "165000", "USD", [ext(JOINT, "https://user@WWW.IRS.GOV:443/p970")],
+          ("admitted", ["ADMITTED_BY_POLICY"])),
+        c("g9", "mfj_keyed", "165000", "USD", [ext(JOINT)],
+          (REVIEW, ["KEY_NOT_AT_VALUE", "ADMITTED_BY_POLICY"], ["key"]), key="married filing jointly"),
+        c("g10", "mfj_keyed", "165000", "USD",
+          [ext("For married filing jointly, the phase-out begins at $165,000.")],
+          ("admitted", ["ADMITTED_BY_POLICY"]), key="married filing jointly"),
+    ],
+    policy={
+        "sources": {
+            "external": {"allow": ["document-domain", "https://www.law.cornell.edu/"], "other": "reject"},
+            "knowledge": "admit",
+        }
+    },
+    document_source="https://www.irs.gov/publications/p4491x",
+)  # fmt: skip
+
+vector(
+    "19h-outside-no-source",
+    "With no document source, document-domain matches nothing, so an external item gets "
+    "external.other. A knowledge action of reject rejects with SOURCE_REJECTED (spec 0.5).",
+    OUTSIDE_DOC,
+    OUTSIDE_SCHEMA,
+    [
+        c("h1", "mfj", "165000", "USD", [ext(JOINT)], (REVIEW, ["EVIDENCE_QUOTED"])),
+        c("h2", "mfj", "165000", "USD", [know("It is $165,000.")], ("rejected", ["SOURCE_REJECTED"])),
+        c("h3", "mfj", "165000", "USD", [ext("It is $160,000."), know("It is $165,000.")],
+          ("rejected", ["SOURCE_REJECTED"])),
+    ],
+    policy={"sources": {"external": {"allow": ["document-domain"]}, "knowledge": "reject"}},
+)  # fmt: skip
+
+vector(
+    "19i-outside-wildcard",
+    'The allow entry "*" admits every external item that holds the value; knowledge keeps its '
+    "default, review (spec 0.5).",
+    OUTSIDE_DOC,
+    OUTSIDE_SCHEMA,
+    [
+        c("i1", "mfj", "165000", "USD", [ext(JOINT, "https://example.org/a")],
+          ("admitted", ["ADMITTED_BY_POLICY"])),
+        c("i2", "mfj", "165000", "USD", [know("It is $165,000.")], (REVIEW, ["EVIDENCE_STATED"])),
+    ],
+    policy={"sources": {"external": {"allow": ["*"]}}},
+)  # fmt: skip
+
+NET = {
+    "type": "integer",
+    "unit": "USD",
+    "keys": ["2025", "2024"],
+    "aliases": ["net loss", "net income"],
+    "multiple": True,
+}
+vector(
+    "19j-role-checks",
+    "Each role item is checked at the value: in a table only brackets make a sign, a scale item "
+    "after the value fails, a unit item that is not found fails, a field item that holds no alias "
+    "fails, and on a string field every role item but a key or field item fails (spec 0.5).",
+    "Results\n\nYear\n\n2025\n\n2024\n\n"
+    "Net loss\n\n$\n\n(2,500\n)\n\n$\n\n(1,900\n)\n\n"
+    "Shares outstanding\n\n7,000\n\n6,500\n\n"
+    "The net loss for 2025 was $2,500 thousand. The deficit grew to $9 in 2024, and income was $3.",
+    {"fields": {"net_income": NET, "title": {"type": "string"}}},
+    [
+        c("j1", "net_income", "-1900", "USD", [q("1,900"), row("Net loss"), year("2024"), DOLLAR],
+          ("admitted", ["VALUE_DERIVED", "KEY_CITED"]), key="2024"),
+        c("j2", "net_income", "-2500", "USD",
+          [q("2,500"), {"role": "sign", "text": "Net loss"}, row("Net loss"), year("2025"), DOLLAR],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED", "KEY_CITED"]), key="2025"),
+        c("j3", "net_income", "-2500000", "USD",
+          [q("2,500"), {"role": "scale", "text": "thousand"}, row("Net loss"), year("2025"), DOLLAR],
+          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED", "KEY_CITED"]), key="2025"),
+        c("j4", "net_income", "-1900", "USD",
+          [q("1,900"), row("Net loss"), year("2024"), {"role": "unit", "text": "dollars"}],
+          (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED", "KEY_CITED"]), key="2024"),
+        c("j5", "net_income", "6500", "USD",
+          [q("6,500"), row("Shares outstanding"), year("2024"), DOLLAR],
+          (REVIEW, ["FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE"]), key="2024"),
+        c("j6", "title", "Results", None, [q("Results"), {"role": "sign", "text": "Net loss"}],
+          (REVIEW, ["SIGN_CITATION_INVALID"])),
+        c("j7", "net_income", "-9", "USD", [q("$9"), {"role": "sign", "text": "deficit"}],
+          ("admitted", ["VALUE_DERIVED"]), key="2024"),
+        c("j8", "net_income", "-3", "USD", [q("$3"), {"role": "sign", "text": "deficit"}],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"]), key="2024"),
+    ],
+)  # fmt: skip
+
 # ---------------------------------------------------------------- invalid packets
 INVALID.extend(
     [
@@ -2263,6 +2267,69 @@ INVALID.extend(
             "schema": {"fields": {}},
             "policy": {"strict": True},
         },
+        *[
+            {
+                "name": f"references-{name}",
+                "description": f"References must be a list of objects with a unique non-blank "
+                f"id, a non-empty NFC text and a non-blank or null source ({name}).",
+                "document": "The fee is $40.",
+                "schema": {"fields": {"fee": USD}},
+                "policy": None,
+                "references": refs,
+            }
+            for name, refs in [
+                ("not-a-list", {"id": "r", "text": "x"}),
+                ("duplicate-id", [{"id": "r", "text": "x"}, {"id": "r", "text": "y"}]),
+                ("blank-id", [{"id": " ", "text": "x"}]),
+                ("empty-text", [{"id": "r", "text": ""}]),
+                ("not-nfc", [{"id": "r", "text": "Cafe\u0301"}]),
+                ("blank-source", [{"id": "r", "text": "x", "source": ""}]),
+                ("unknown-key", [{"id": "r", "text": "x", "page": 2}]),
+            ]
+        ],
+        {
+            "name": "document-source-blank",
+            "description": "The document source is a non-blank string or null.",
+            "document": "The fee is $40.",
+            "schema": {"fields": {"fee": USD}},
+            "policy": None,
+            "document_source": "  ",
+        },
+        *[
+            {
+                "name": f"policy-sources-{name}",
+                "description": f"policy.sources holds external (allow, other) and knowledge, with "
+                f"their listed values only ({name}).",
+                "document": "x",
+                "schema": {"fields": {}},
+                "policy": {"sources": sources},
+            }
+            for name, sources in [
+                ("unknown-key", {"web": "admit"}),
+                ("other-admit", {"external": {"other": "admit"}}),
+                ("allow-blank", {"external": {"allow": [""]}}),
+                ("allow-not-list", {"external": {"allow": "*"}}),
+                ("external-unknown-key", {"external": {"deny": []}}),
+                ("knowledge-bad", {"knowledge": "trust"}),
+                ("null-knowledge", {"knowledge": None}),
+            ]
+        ],
+        *[
+            {
+                "name": f"schema-aliases-{name}",
+                "description": "Aliases follow the rules of keys: null or a non-empty list of "
+                f"non-blank strings, no two equal after normalisation ({name}).",
+                "document": "x",
+                "schema": {"fields": {"op": {"type": "integer", "aliases": aliases}}},
+                "policy": None,
+            }
+            for name, aliases in [
+                ("empty", []),
+                ("blank", ["operating income", " "]),
+                ("duplicate", ["Operating  income", "operating income"]),
+                ("not-a-list", "operating income"),
+            ]
+        ],
     ]
 )
 
@@ -2274,14 +2341,13 @@ def main() -> None:
         old.unlink()
     for v in VECTORS:
         doc = v["document"]
+        refs = {r["id"]: r["text"] for r in v["references"] or []}
         cands, expected = [], []
         for item in v["candidates"]:
             cand = item["candidate"]
             if isinstance(cand, dict):
                 cand = {
-                    k: resolve(doc, val)
-                    if k in ("evidence", "search_region", "key_evidence")
-                    else val
+                    k: resolve(doc, val, refs) if k in ("evidence", "search_region") else val
                     for k, val in cand.items()
                 }
             cands.append(cand)
@@ -2292,6 +2358,8 @@ def main() -> None:
             "document": doc,
             "schema": v["schema"],
             "policy": v["policy"],
+            **({"document_source": v["document_source"]} if v["document_source"] else {}),
+            **({"references": v["references"]} if v["references"] is not None else {}),
             "candidates": cands,
             **({"judgments": v["judgments"]} if v["judgments"] is not None else {}),
             "expected": {"decisions": expected, "coverage": v["coverage"]},

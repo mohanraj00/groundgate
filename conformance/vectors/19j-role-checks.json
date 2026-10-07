@@ -1,0 +1,280 @@
+{
+ "name": "19j-role-checks",
+ "description": "Each role item is checked at the value: in a table only brackets make a sign, a scale item after the value fails, a unit item that is not found fails, a field item that holds no alias fails, and on a string field every role item but a key or field item fails (spec 0.5).",
+ "document": "Results\n\nYear\n\n2025\n\n2024\n\nNet loss\n\n$\n\n(2,500\n)\n\n$\n\n(1,900\n)\n\nShares outstanding\n\n7,000\n\n6,500\n\nThe net loss for 2025 was $2,500 thousand. The deficit grew to $9 in 2024, and income was $3.",
+ "schema": {
+  "fields": {
+   "net_income": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024"
+    ],
+    "aliases": [
+     "net loss",
+     "net income"
+    ],
+    "multiple": true
+   },
+   "title": {
+    "type": "string"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "j1",
+   "field": "net_income",
+   "value": "-1900",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 54,
+     "end": 59,
+     "text": "1,900"
+    },
+    {
+     "role": "field",
+     "text": "Net loss"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "j2",
+   "field": "net_income",
+   "value": "-2500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 41,
+     "end": 46,
+     "text": "2,500"
+    },
+    {
+     "role": "sign",
+     "text": "Net loss"
+    },
+    {
+     "role": "field",
+     "text": "Net loss"
+    },
+    {
+     "role": "key",
+     "text": "2025"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "j3",
+   "field": "net_income",
+   "value": "-2500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 41,
+     "end": 46,
+     "text": "2,500"
+    },
+    {
+     "role": "scale",
+     "text": "thousand"
+    },
+    {
+     "role": "field",
+     "text": "Net loss"
+    },
+    {
+     "role": "key",
+     "text": "2025"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "j4",
+   "field": "net_income",
+   "value": "-1900",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 54,
+     "end": 59,
+     "text": "1,900"
+    },
+    {
+     "role": "field",
+     "text": "Net loss"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    },
+    {
+     "role": "unit",
+     "text": "dollars"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "j5",
+   "field": "net_income",
+   "value": "6500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 90,
+     "end": 95,
+     "text": "6,500"
+    },
+    {
+     "role": "field",
+     "text": "Shares outstanding"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "j6",
+   "field": "title",
+   "value": "Results",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 7,
+     "text": "Results"
+    },
+    {
+     "role": "sign",
+     "text": "Net loss"
+    }
+   ]
+  },
+  {
+   "id": "j7",
+   "field": "net_income",
+   "value": "-9",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 160,
+     "end": 162,
+     "text": "$9"
+    },
+    {
+     "role": "sign",
+     "text": "deficit"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "j8",
+   "field": "net_income",
+   "value": "-3",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 187,
+     "end": 189,
+     "text": "$3"
+    },
+    {
+     "role": "sign",
+     "text": "deficit"
+    }
+   ],
+   "key": "2024"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

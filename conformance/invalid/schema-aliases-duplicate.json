@@ -1,0 +1,21 @@
+{
+ "name": "schema-aliases-duplicate",
+ "description": "Aliases follow the rules of keys: null or a non-empty list of non-blank strings, no two equal after normalisation (duplicate).",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "op": {
+    "type": "integer",
+    "aliases": [
+     "Operating  income",
+     "operating income"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

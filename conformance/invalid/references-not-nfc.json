@@ -1,0 +1,24 @@
+{
+ "name": "references-not-nfc",
+ "description": "References must be a list of objects with a unique non-blank id, a non-empty NFC text and a non-blank or null source (not-nfc).",
+ "document": "The fee is $40.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "references": [
+  {
+   "id": "r",
+   "text": "Café"
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

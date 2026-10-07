@@ -1,0 +1,321 @@
+{
+ "name": "19c-derived-scale-unit",
+ "description": "A scale item multiplies a token that has no scaled value by its scale word, when no other scale word lies between it and the value. A unit item supplies the unit when no unit is at the token; another unit at the token still rejects. A missing scale or unit is a missing part (spec 0.5).",
+ "document": "Consolidated statements of operations\n(in thousands, except percentages)\n\nRevenue\n\n$\n\n46,016\n\n$\n\n434,433\n\nGross margin\n\n12%\n\nOperating expenses\n\n195,334\n\n203,625\n\nLoss from operations\n\n(105,198\n)\n\nOther items (in millions)\n\n7.5\n\nInterest income\n\n1,250\n\nDeferred revenue was $2.2 million at year end.",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "r1",
+   "field": "amount",
+   "value": "46016000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 86,
+     "end": 92,
+     "text": "46,016"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    }
+   ]
+  },
+  {
+   "id": "r2",
+   "field": "amount",
+   "value": "195334000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 145,
+     "end": 152,
+     "text": "195,334"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "r3",
+   "field": "amount",
+   "value": "195334000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 145,
+     "end": 152,
+     "text": "195,334"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    }
+   ]
+  },
+  {
+   "id": "r4",
+   "field": "amount",
+   "value": "1250000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 246,
+     "end": 251,
+     "text": "1,250"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "r5",
+   "field": "amount",
+   "value": "7500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 224,
+     "end": 227,
+     "text": "7.5"
+    },
+    {
+     "role": "scale",
+     "text": "(in millions)"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "r6",
+   "field": "amount",
+   "value": "46016000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 86,
+     "end": 92,
+     "text": "46,016"
+    }
+   ]
+  },
+  {
+   "id": "r7",
+   "field": "amount",
+   "value": "12000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 120,
+     "end": 122,
+     "text": "12"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "r8",
+   "field": "amount",
+   "value": "2200000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 274,
+     "end": 286,
+     "text": "$2.2 million"
+    }
+   ]
+  },
+  {
+   "id": "r9",
+   "field": "amount",
+   "value": "2200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 274,
+     "end": 286,
+     "text": "$2.2 million"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    }
+   ]
+  },
+  {
+   "id": "r11",
+   "field": "amount",
+   "value": "-105198000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 186,
+     "end": 193,
+     "text": "105,198"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "r12",
+   "field": "amount",
+   "value": "-105198000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 186,
+     "end": 193,
+     "text": "105,198"
+    }
+   ]
+  },
+  {
+   "id": "r13",
+   "field": "amount",
+   "value": "195334000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 145,
+     "end": 152,
+     "text": "195,334"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "unit",
+     "text": "%"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale",
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,156 @@
+{
+ "name": "19e-references",
+ "description": "A reference is a source text that the app supplies. A reference item is checked like a document item, in the reference's own text and offsets; search_region does not apply to it. A role item must be from the same text as the value item (spec 0.5).",
+ "document": "Single filers may deduct student loan interest. The phase-out starts at a MAGI of $85,000.",
+ "schema": {
+  "fields": {
+   "phase_out": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "single",
+     "married filing jointly"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "document_source": "https://www.irs.gov/publications/p4491x",
+ "references": [
+  {
+   "id": "irs-221",
+   "text": "For married filing jointly, the phase-out starts at $170,000.",
+   "source": "https://www.irs.gov/publications/p970"
+  }
+ ],
+ "candidates": [
+  {
+   "id": "e1",
+   "field": "phase_out",
+   "value": "170000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "irs-221",
+     "text": "$170,000"
+    }
+   ],
+   "key": "married filing jointly"
+  },
+  {
+   "id": "e2",
+   "field": "phase_out",
+   "value": "85000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 82,
+     "end": 89,
+     "text": "$85,000"
+    }
+   ],
+   "key": "single"
+  },
+  {
+   "id": "e3",
+   "field": "phase_out",
+   "value": "170000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "irs-221",
+     "start": 52,
+     "end": 60,
+     "text": "$170,000"
+    }
+   ],
+   "key": "married filing jointly"
+  },
+  {
+   "id": "e4",
+   "field": "phase_out",
+   "value": "170000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "irs-221",
+     "text": "$170,000"
+    },
+    {
+     "role": "key",
+     "text": "married filing jointly"
+    }
+   ],
+   "key": "married filing jointly"
+  },
+  {
+   "id": "e5",
+   "field": "phase_out",
+   "value": "170000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "irs-221",
+     "text": "$165,000"
+    }
+   ],
+   "key": "married filing jointly"
+  },
+  {
+   "id": "e6",
+   "field": "phase_out",
+   "value": "170000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "irs-221",
+     "text": "$170,000"
+    }
+   ],
+   "key": "married filing jointly",
+   "search_region": {
+    "start": 0,
+    "end": 10
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "QUOTE_NOT_FOUND"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,221 @@
+{
+ "name": "19b-derived-sign",
+ "description": "A sign item makes a token negative: brackets around the value, or a loss word before it in the same sentence with no number, line break, tab or gain word between. Brackets around the token make it negative with no item. A failing sign item still gives its part, with its flag. A negative value with no sign is a missing part (spec 0.5).",
+ "document": "For the year ended December 31, 2024, we had a net loss of $71,000, which consisted of $71,000 of general and administrative expenses.\n\nLoss from operations\n\n($105,198\n)\n\n($34,904\n)\n\nNet (loss) income\n\n$6,152\n\n($13,203\n)\n\nIn 2023 the company reported a loss of $5,000 and revenue of $9,000.",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "amount",
+   "value": "-71000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 59,
+     "end": 66,
+     "text": "$71,000"
+    },
+    {
+     "role": "sign",
+     "text": "net loss"
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "field": "amount",
+   "value": "-71000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 87,
+     "end": 94,
+     "text": "$71,000"
+    },
+    {
+     "role": "sign",
+     "text": "net loss"
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "field": "amount",
+   "value": "-71000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 59,
+     "end": 66,
+     "text": "$71,000"
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "field": "amount",
+   "value": "-105198",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 159,
+     "end": 167,
+     "text": "$105,198"
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "field": "amount",
+   "value": "105198",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 159,
+     "end": 167,
+     "text": "$105,198"
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "field": "amount",
+   "value": "-6152",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 202,
+     "end": 208,
+     "text": "$6,152"
+    },
+    {
+     "role": "sign",
+     "text": "(loss)"
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "field": "amount",
+   "value": "-13203",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 211,
+     "end": 218,
+     "text": "$13,203"
+    },
+    {
+     "role": "sign",
+     "text": "($13,203\n)"
+    }
+   ]
+  },
+  {
+   "id": "s8",
+   "field": "amount",
+   "value": "-5000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 261,
+     "end": 267,
+     "text": "$5,000"
+    },
+    {
+     "role": "sign",
+     "text": "loss"
+    }
+   ]
+  },
+  {
+   "id": "s9",
+   "field": "amount",
+   "value": "-9000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 283,
+     "end": 289,
+     "text": "$9,000"
+    },
+    {
+     "role": "sign",
+     "text": "loss"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "sign"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

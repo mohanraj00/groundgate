@@ -1,0 +1,17 @@
+{
+ "name": "policy-sources-knowledge-bad",
+ "description": "policy.sources holds external (allow, other) and knowledge, with their listed values only (knowledge-bad).",
+ "document": "x",
+ "schema": {
+  "fields": {}
+ },
+ "policy": {
+  "sources": {
+   "knowledge": "trust"
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

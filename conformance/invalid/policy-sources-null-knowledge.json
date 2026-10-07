@@ -1,0 +1,17 @@
+{
+ "name": "policy-sources-null-knowledge",
+ "description": "policy.sources holds external (allow, other) and knowledge, with their listed values only (null-knowledge).",
+ "document": "x",
+ "schema": {
+  "fields": {}
+ },
+ "policy": {
+  "sources": {
+   "knowledge": null
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

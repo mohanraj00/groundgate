@@ -1,0 +1,19 @@
+{
+ "name": "policy-sources-other-admit",
+ "description": "policy.sources holds external (allow, other) and knowledge, with their listed values only (other-admit).",
+ "document": "x",
+ "schema": {
+  "fields": {}
+ },
+ "policy": {
+  "sources": {
+   "external": {
+    "other": "admit"
+   }
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

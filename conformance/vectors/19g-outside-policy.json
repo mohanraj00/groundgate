@@ -1,0 +1,258 @@
+{
+ "name": "19g-outside-policy",
+ "description": "The policy admits an external item whose URL matches an allow entry: document-domain matches the host of the document source, and other entries are URL prefixes. Other external items get external.other, and knowledge items get knowledge. The best action decides, and an admitted candidate records ADMITTED_BY_POLICY; the quote's flags still apply (spec 0.5).",
+ "document": "Taxpayers with MAGI more than $85,000 cannot take the full deduction.",
+ "schema": {
+  "fields": {
+   "threshold": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "gt",
+    "multiple": true
+   },
+   "mfj": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   },
+   "mfj_keyed": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "single",
+     "married filing jointly"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": {
+  "sources": {
+   "external": {
+    "allow": [
+     "document-domain",
+     "https://www.law.cornell.edu/"
+    ],
+    "other": "reject"
+   },
+   "knowledge": "admit"
+  }
+ },
+ "document_source": "https://www.irs.gov/publications/p4491x",
+ "candidates": [
+  {
+   "id": "g1",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $165,000 for joint filers."
+    }
+   ]
+  },
+  {
+   "id": "g2",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://irs.gov/p970",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $165,000 for joint filers."
+    }
+   ]
+  },
+  {
+   "id": "g3",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.law.cornell.edu/uscode/text/26/221",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $165,000 for joint filers."
+    }
+   ]
+  },
+  {
+   "id": "g4",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.law.cornell.edu.example.com/x",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $165,000 for joint filers."
+    }
+   ]
+  },
+  {
+   "id": "g5",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "knowledge",
+     "text": "It is $165,000."
+    }
+   ]
+  },
+  {
+   "id": "g6",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://irs.gov/p970",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $165,000 for joint filers."
+    },
+    {
+     "source": "knowledge",
+     "text": "It is $165,000."
+    }
+   ]
+  },
+  {
+   "id": "g7",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "MAGI more than $165,000"
+    }
+   ]
+  },
+  {
+   "id": "g8",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://user@WWW.IRS.GOV:443/p970",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $165,000 for joint filers."
+    }
+   ]
+  },
+  {
+   "id": "g9",
+   "field": "mfj_keyed",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $165,000 for joint filers."
+    }
+   ],
+   "key": "married filing jointly"
+  },
+  {
+   "id": "g10",
+   "field": "mfj_keyed",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "For married filing jointly, the phase-out begins at $165,000."
+    }
+   ],
+   "key": "married filing jointly"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SOURCE_REJECTED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SOURCE_REJECTED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE",
+     "ADMITTED_BY_POLICY"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "ADMITTED_BY_POLICY"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
