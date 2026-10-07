@@ -76,10 +76,15 @@ function fmt(label) {
   return label.length ? label.join("; ") : "none of them";
 }
 
+let drawn = 0, task = null;  // the newest render wins; an older one stops or is dropped
+
 async function render(it) {
+  const mine = ++drawn;
+  if (task) task.cancel();
   if (!docs[it.doc]) docs[it.doc] = pdfjsLib.getDocument("/pdf/" + it.doc).promise;
   const pdf = await docs[it.doc];
   const page = await pdf.getPage(it.page);
+  if (mine !== drawn) return;
   const width = $("view").clientWidth - 32;
   const scale = zoom * Math.max(1, width / page.getViewport({ scale: 1 }).width);
   const vp = page.getViewport({ scale });
@@ -89,7 +94,14 @@ async function render(it) {
   c.style.width = vp.width + "px"; c.style.height = vp.height + "px";
   const ctx = c.getContext("2d");
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  await page.render({ canvasContext: ctx, viewport: vp }).promise;
+  task = page.render({ canvasContext: ctx, viewport: vp });
+  try {
+    await task.promise;
+  } catch (e) {
+    if (e && e.name === "RenderingCancelledException") return;
+    throw e;
+  }
+  if (mine !== drawn) return;
   // the box is in points from the top left of the crop box; pdf.js wants PDF user space
   const [vx0, , , vy1] = page.view;
   const [x0, top, x1, bottom] = it.box;
