@@ -196,3 +196,14 @@ def test_cli_rejects_ambiguous_json(tmp_path: Path, capsys: pytest.CaptureFixtur
     assert "\\ud83d" in out.read_text()
     with pytest.raises(SystemExit):
         main(["extract", str(doc), "--pages", "3-"])
+
+
+def test_report_shows_the_cited_key_span() -> None:
+    text = "Single\n\nNotes:\n\nThe deduction is $15,000."
+    schema = {"fields": {"d": {"type": "integer", "unit": "USD", "keys": ["single"]}}}
+    cands = [{"field": "d", "value": "15000", "unit": "USD", "key": "single",
+              "evidence": ev("$15,000", text), "key_evidence": ev("Single", text)}]  # fmt: skip
+    html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
+    assert "key cited “Single”" in html
+    assert '<a href="#k0">show key</a>' in html
+    assert '<span class="anchor" id="k0"></span><mark class="key"' in html

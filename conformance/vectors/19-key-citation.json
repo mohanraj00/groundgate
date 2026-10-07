@@ -1,6 +1,6 @@
 {
  "name": "19-key-citation",
- "description": "A candidate on a keyed field may cite the span that names its key (`key_evidence`, same offsets as `evidence`). A passed citation puts the key at the value: it skips the label-line stop and the table-sentence limit, and records `KEY_CITED` when it removed `KEY_NOT_AT_VALUE`. The span must hold a mention of the key and start at or before the value, and no mention of another key may lie between the span and the value. A citation never removes another flag (spec 0.5).",
+ "description": "A candidate on a keyed field may cite the span that names its key (`key_evidence`, same offsets as `evidence`). A passed citation puts the key at the value: it skips the label-line stop and the table-sentence limit, and records `KEY_CITED` when it removed `KEY_NOT_AT_VALUE`. The span must hold a mention of the key and end at or before the value, and no mention of another key may lie between the span and the value. A citation never removes another flag (spec 0.5).",
  "document": "Heart Failure\n\nTreatment of HF:\n\nThe first dose is 1 mg daily.\n\nHypertension\n\nThe second dose is 2 mg daily.\n\nHypertension\n\nDosing:\n\nHypertension\n\nDosing:\n\nThe third dose is 3 mg daily.\n\nHypertension\n\nDosing:\n\nThe fourth dose is 4 mg daily.\n\nHypertension or heart failure\n\nDosing:\n\nThe fifth dose is 5 mg daily.\n\nHypertension\n\nDosing:\n\nThe sixth dose is at least 6 mg daily.\n\nDose by indication\nHypertension\n7 mg\nHeart failure\n8 mg",
  "schema": {
   "fields": {

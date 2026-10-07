@@ -37,6 +37,7 @@ class _Item:
     decision: Mapping[str, Any]
     candidate: Any
     span: tuple[int, int] | None  # code points
+    key_span: tuple[int, int] | None = None  # code points of the span cited for the key
 
 
 def _e(s: object) -> str:
@@ -76,14 +77,16 @@ def render(
     offsets = Offsets(text)
     by_sha = {digest("candidate", c): c for c in candidates}
     items = []
+
+    def char_span(obj: object) -> tuple[int, int] | None:
+        if not isinstance(obj, Mapping):
+            return None
+        s, e = offsets.to_char(obj["start"]), offsets.to_char(obj["end"])
+        return None if s is None or e is None else (s, e)
+
     for n, d in enumerate(receipt.get("decisions", [])):
-        ev = d.get("evidence")
-        span = None
-        if isinstance(ev, Mapping):
-            s, e = offsets.to_char(ev["start"]), offsets.to_char(ev["end"])
-            if s is not None and e is not None:
-                span = (s, e)
-        items.append(_Item(n, d, by_sha.get(d.get("candidate_sha256")), span))
+        span, key_span = char_span(d.get("evidence")), char_span(d.get("key_evidence"))
+        items.append(_Item(n, d, by_sha.get(d.get("candidate_sha256")), span, key_span))
 
     doc = receipt.get("document", {})
     heading = title or doc.get("id") or "Admission report"
@@ -187,12 +190,17 @@ def _card(item: _Item, layout: Layout | None, text: str) -> str:
         line = f"cited “{_e(_clip(cited))}”"
         if isinstance(quote, str) and quote != cited:
             line += f", quoted “{_e(_clip(quote))}”"
+        if item.key_span is not None:
+            named = text[item.key_span[0] : item.key_span[1]]
+            line += f"; key cited “{_e(_clip(named))}”"
         out.append(f'<p class="quote">{line}</p>')
         if layout is not None and isinstance(d.get("evidence"), Mapping):
             page = layout.page_at(d["evidence"]["start"])
             if page is not None:
                 where.append(f"page {page}")
         where.append(f'<a href="#d{item.n}">show in document</a>')
+        if item.key_span is not None:
+            where.append(f'<a href="#k{item.n}">show key</a>')
     else:
         if isinstance(quote, str):
             out.append(f'<p class="quote">quoted “{_e(_clip(quote))}”</p>')
@@ -217,11 +225,19 @@ def _clip(s: str, n: int = 120) -> str:
 
 def _document(text: str, items: list[_Item], layout: Layout | None) -> str:
     spans = [i for i in items if i.span is not None]
-    bounds = sorted({0, len(text)} | {p for i in spans for p in i.span or ()})
-    starts: dict[int, list[int]] = {}
+    keyed = [i for i in items if i.key_span is not None]
+    bounds = sorted(
+        {0, len(text)}
+        | {p for i in spans for p in i.span or ()}
+        | {p for i in keyed for p in i.key_span or ()}
+    )
+    starts: dict[int, list[str]] = {}
     for i in spans:
         assert i.span is not None
-        starts.setdefault(i.span[0], []).append(i.n)
+        starts.setdefault(i.span[0], []).append(f"d{i.n}")
+    for i in keyed:
+        assert i.key_span is not None
+        starts.setdefault(i.key_span[0], []).append(f"k{i.n}")
     page_numbers = [p.number for p in layout.pages] if layout else []  # none: unnumbered
     breaks = 0
 
@@ -240,10 +256,15 @@ def _document(text: str, items: list[_Item], layout: Layout | None) -> str:
     if first is not None:
         out.append(f'<span class="page first" data-page="page {_e(first)}"></span>')
     for a, b in pairwise(bounds):
-        out.extend(f'<span class="anchor" id="d{n}"></span>' for n in starts.get(a, []))
+        out.extend(f'<span class="anchor" id="{n}"></span>' for n in starts.get(a, []))
         covering = [i for i in spans if i.span and i.span[0] <= a and b <= i.span[1]]
         if not covering:
-            out.append(body(text[a:b]))
+            naming = [i for i in keyed if i.key_span and i.key_span[0] <= a and b <= i.key_span[1]]
+            if naming:
+                tip = "\n".join("key of " + _tooltip(i.decision) for i in naming)
+                out.append(f'<mark class="key" title="{_e(tip)}">{body(text[a:b])}</mark>')
+            else:
+                out.append(body(text[a:b]))
             continue
         worst = max(covering, key=lambda i: SEVERITY.get(_outcome(i), 0))
         tip = "\n".join(_tooltip(i.decision) for i in covering)
@@ -330,6 +351,7 @@ mark {{ color: inherit; border-radius: 2px; padding: 1px 0; }}
 mark.admitted {{ background: var(--ok-bg); box-shadow: inset 0 -2px var(--ok); }}
 mark.needs_verification {{ background: var(--warn-bg); box-shadow: inset 0 -2px var(--warn); }}
 mark.rejected {{ background: var(--bad-bg); box-shadow: inset 0 -2px var(--bad); }}
+mark.key {{ background: none; box-shadow: inset 0 -2px var(--focus); }}
 .anchor {{ scroll-margin-top: 40vh; }}
 .anchor:target + mark, .anchor:target + .anchor + mark,
 .anchor:target + .anchor + .anchor + mark {{ outline: 2px solid var(--focus);

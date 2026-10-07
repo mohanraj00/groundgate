@@ -1558,7 +1558,7 @@ vector(
     "A candidate on a keyed field may cite the span that names its key (`key_evidence`, same offsets "
     "as `evidence`). A passed citation puts the key at the value: it skips the label-line stop and "
     "the table-sentence limit, and records `KEY_CITED` when it removed `KEY_NOT_AT_VALUE`. The span "
-    "must hold a mention of the key and start at or before the value, and no mention of another key "
+    "must hold a mention of the key and end at or before the value, and no mention of another key "
     "may lie between the span and the value. A citation never removes another flag (spec 0.5).",
     "Heart Failure\n\nTreatment of HF:\n\nThe first dose is 1 mg daily.\n\n"
     "Hypertension\n\nThe second dose is 2 mg daily.\n\n"
@@ -1684,7 +1684,7 @@ vector(
     "19b-key-citation-fails",
     "A citation that fails a check adds `KEY_CITATION_INVALID`, even when the key holds without it, "
     "and the candidate goes to review. The checks: a valid span, a `text` that equals the span's "
-    "text, a mention of the key in the span, a span that starts at or before the value, and no "
+    "text, a mention of the key in the span, a span that ends at or before the value, and no "
     "mention of another key between the span and the value. A `key_evidence` that is not an "
     "object with integer `start` and `end` is `CANDIDATE_INVALID`, and it is ignored on a field "
     "without keys (spec 0.5).",
@@ -1694,7 +1694,8 @@ vector(
     "Hypertension\n\nThe fourth dose is 4 mg daily.\n\nHeart failure\n\n"
     "Hypertension\n\nHeart failure\n\nThe fifth dose is 5 mg daily.\n\n"
     "Hypertension\n\nDosing:\n\nThe sixth dose is 6 mg daily.\n\n"
-    "The seventh dose is 7 mg daily.",
+    "The seventh dose is 7 mg daily.\n\n"
+    "Hypertension\n\nThe eighth dose is 8 mg daily. Heart failure.",
     {
         "fields": {
             "first": KEYED_MG,
@@ -1704,6 +1705,7 @@ vector(
             "fifth": KEYED_MG,
             "sixth": KEYED_MG,
             "seventh": KEYED_MG,
+            "eighth": KEYED_MG,
             "plain": {"type": "number", "unit": "mg"},
         }
     },
@@ -1784,6 +1786,17 @@ vector(
             ("rejected", ["CANDIDATE_INVALID"]),
             key="hypertension",
             key_evidence="Hypertension",
+        ),
+        # a span that holds the value: the key named after the value does not count
+        c(
+            "f9",
+            "eighth",
+            "8",
+            "mg",
+            q("8 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
+            key="heart failure",
+            key_evidence=q("The eighth dose is 8 mg daily. Heart failure"),
         ),
         # a field without keys ignores a citation
         c(

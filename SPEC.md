@@ -385,7 +385,7 @@ offsets as `evidence`. The check runs after steps 1–11, with the value at the 
 1. The span is a valid span (§2.2), and its `text`, if present, equals the span's text after
    whitespace normalisation (§4.4).
 2. A key mention of the candidate's `key` lies wholly inside the span.
-3. The span starts at or before the value.
+3. The span ends at or before the value, so it never holds the value or text after it.
 4. No mention of another key of the field lies wholly between the end of the span and the value.
    A mention of the candidate's own key there, or of another key inside the span, does not count.
 
