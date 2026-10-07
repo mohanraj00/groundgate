@@ -19,3 +19,15 @@ def test_quickstart_prints_what_the_readme_shows() -> None:
         [sys.executable, "-c", code.group(1)], capture_output=True, text=True, check=True
     )
     assert run.stdout == shown.group(1)
+
+
+def test_guide_key_span_example_prints_what_the_guide_shows() -> None:
+    guide = README.parent / "docs" / "guide.md"
+    section = guide.read_text(encoding="utf-8").split("#### The key span", 1)[1]
+    code = re.search(r"```python\n(.*?)```", section, re.S)
+    shown = re.findall(r"```text\n(.*?)```", section, re.S)
+    assert code and len(shown) >= 2
+    run = subprocess.run(
+        [sys.executable, "-c", code.group(1)], capture_output=True, text=True, check=True
+    )
+    assert run.stdout == shown[1]

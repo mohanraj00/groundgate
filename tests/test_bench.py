@@ -878,3 +878,37 @@ def test_the_quote_count_names_how_a_quote_differs_from_its_span() -> None:
     assert quote_count.difference("costeffective 12 years", "cost-\neffective 12") == (
         "the quote adds text"
     )
+
+
+def test_key_span_prompt_differs_only_in_its_request(monkeypatch: pytest.MonkeyPatch) -> None:
+    pytest.importorskip("langextract")
+    import propose
+
+    gold = {
+        "kind": "fda",
+        "fields": {
+            "starting_dose": {
+                "schema": {"unit": "mg", "keys": ["Gout", "Psoriasis"]},
+                "description": "the starting dose",
+            }
+        },
+    }
+    plain_prompt, plain = propose.prompt_for(gold), propose.examples_for(gold)
+    monkeypatch.setattr(propose, "KEY_SPAN", True)
+    assert propose.prompt_for(gold) == plain_prompt + propose.KEY_SPAN_NOTE
+    spans = propose.examples_for(gold)
+    for a, b in zip(plain[0].extractions, spans[0].extractions, strict=True):
+        extra = dict(b.attributes or {})
+        key_text = extra.pop("key_text", None)
+        assert extra == (a.attributes or {})
+        if key_text is not None:  # the words occur in the example before the value
+            assert spans[0].text.index(key_text) < spans[0].text.index(a.extraction_text)
+    assert sum("key_text" in (x.attributes or {}) for x in spans[0].extractions) == 3
+    unkeyed = {"kind": "fda", "fields": {"starting_dose": {"schema": {"unit": "mg"},
+                                                           "description": "d"}}}  # fmt: skip
+    monkeypatch.setattr(propose, "KEY_SPAN", False)
+    before = propose.prompt_for(unkeyed)
+    monkeypatch.setattr(propose, "KEY_SPAN", True)
+    assert propose.prompt_for(unkeyed) == before
+    guide = (Path(__file__).parent.parent / "docs" / "guide.md").read_text(encoding="utf-8")
+    assert "```text\n" + propose.KEY_SPAN_NOTE.lstrip("\n") + "```" in guide

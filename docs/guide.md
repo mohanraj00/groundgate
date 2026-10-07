@@ -70,8 +70,18 @@ A candidate for `starting_dose` without a `key`, or with one not in the list, is
 `KEY_INVALID`. groundgate then reads which key the text puts at the value: the keys its sentence
 mentions, or else the nearest one mentioned before it, such as the heading "2.2 Heart Failure".
 When that is not the candidate's key, the fact is flagged `KEY_NOT_AT_VALUE`. Two candidates only
-conflict when they share a key. The receipt echoes the key. Rows of a flattened table share one
-sentence, so a key swapped inside a table is not caught.
+conflict when they share a key. The receipt echoes the key. A short label line such as "Notes:"
+between the heading and the value stops the heading's key, and in a table sentence only the
+value's own line counts. So a right key under a label line, or in a table with one cell on each
+line, goes to review.
+
+**Key citations** (spec 0.5). A candidate can also cite the words that name its key, such as a
+heading, a row or column label, or a bullet, as `key_evidence`. groundgate checks the citation: the
+span holds a mention of the key, it ends at or before the value, and no other key is mentioned
+between the span and the value. A citation that passes puts the key at the value past a label line
+or a table cell, and records `KEY_CITED` when it removed `KEY_NOT_AT_VALUE`. A citation that fails
+is flagged `KEY_CITATION_INVALID`. A citation never removes another flag. Without `key_evidence`,
+nothing changes.
 
 ## Candidates
 
@@ -86,6 +96,8 @@ sentence, so a key swapped inside a table is not caught.
   differs from the text at the span, the fact is flagged `NON_VERBATIM_EVIDENCE`.
 - `search_region` limits where re-anchoring may look. It defaults to the whole document.
 - `key` names the condition on a keyed field. On other fields it is ignored.
+- `key_evidence` is the byte span of the words that name the key, with optional `text`, as for
+  `evidence`. On other fields it is ignored.
 - Any other key (a proposer name, a chunk id) is kept, ignored by the checks, and covered by the
   candidate's hash.
 
@@ -159,8 +171,9 @@ Checks run in a fixed order and the first failure rejects:
 
 A fact that passes them all is checked for flags. Any flag makes it `needs_verification`:
 
-`NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `KEY_NOT_AT_VALUE`, `LOW_CONFIDENCE`,
-`CONFLICTING_CANDIDATES`, and `MODEL_DOUBT` from a recorded judgment.
+`NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `KEY_NOT_AT_VALUE`,
+`KEY_CITATION_INVALID`, `LOW_CONFIDENCE`, `CONFLICTING_CANDIDATES`, and `MODEL_DOUBT` from a
+recorded judgment. `EVIDENCE_REANCHORED`, `KEY_CITED` and `MODEL_CLEARED` only inform.
 
 `CONFLICTING_CANDIDATES` is set on every candidate for a single-valued field (and key) when two
 of them passed the checks with different values. groundgate never picks between them. That is also why
@@ -168,8 +181,8 @@ it helps to send several proposers' candidates through one `admit` call: disagre
 flag. It only helps when they disagree.
 
 A decision carries `candidate_id`, `candidate_sha256`, `field`, `key`, `outcome`, `codes`, the
-canonical `value`, the candidate's `unit`, and the `evidence` span the decision rests on (the re-anchored
-one, if it moved).
+canonical `value`, the candidate's `unit`, the `evidence` span the decision rests on (the re-anchored
+one, if it moved), and the `key_evidence` span the candidate cited for its key, or null.
 
 ## How values are read
 
@@ -238,7 +251,8 @@ as one space on both sides. Case counts.
 | `KEY_INVALID` | The candidate's `key` is not written exactly as one of the field's `keys`. | Send the key as the schema writes it. |
 | `QUALIFIED_VALUE` | The text says "up to" and the field is `eq`. | If the field is a limit, set its `comparator`. If not, a person checks the fact. |
 | `SCALE_WORD` | The value is sent as written, without its scale word. | Send the scaled value. |
-| `KEY_NOT_AT_VALUE` | The value is under a different condition in the text. | A person checks the fact. Inside a flattened table every key is at every value, so this flag cannot find a swap there. |
+| `KEY_NOT_AT_VALUE` | The value is under a different condition in the text, or a label line or a table cell stands between the key and the value. | Ask the extractor for the key span (see [LangExtract](#langextract)). Otherwise a person checks the fact. |
+| `KEY_CITATION_INVALID` | The cited key span does not name the key, comes after the value, or has another key between it and the value. | A person checks the fact. |
 | `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |
 | `NON_VERBATIM_EVIDENCE` | The extractor changed the quote. | A person compares the quote with the text at the span. |
 
@@ -274,11 +288,73 @@ LangExtract is never imported. Per extraction:
 - `field` is the `extraction_class`, renamed through `fields={"class": "field"}` if you pass it;
 - `value` is the `value` attribute (`value_attribute=` to change it), or the `extraction_text`;
 - `unit` is the `unit` attribute (`unit_attribute=`);
-- `evidence` is the `char_interval`, converted to bytes, quoting the `extraction_text`.
+- `evidence` is the `char_interval`, converted to bytes, quoting the `extraction_text`;
+- `key_evidence` comes from the `key_text` attribute (`key_text_attribute=`): the last place where
+  those words occur and end at or before the value. When they do not occur there, the span is
+  empty and the fact is flagged `KEY_CITATION_INVALID`.
 
 An extraction LangExtract could not align has no interval and is rejected `NO_EVIDENCE`.
 `to_candidates` returns the candidates without admitting them, so you can merge several models'
 output into one call.
+
+#### The key span
+
+A model cannot count characters, so ask it for the words, and the adapter finds them. Add this to
+the prompt for keyed fields, and give `key_text` in the examples:
+
+```text
+When words before the value name its key, such as a heading, a table row or column label, or a
+bullet, also give "key_text" in the attributes: those words copied verbatim from the text, the
+nearest ones before the value. Leave "key_text" out when no words before the value name its key.
+```
+
+In this made-up price list, the label line "All prices before tax:" stops the key of "North
+region". The first extraction gives `key_text`, the second does not:
+
+```python
+from groundgate.adapters.langextract import admit_document
+
+text = (
+    "Price list\n\nNorth region\n\nAll prices before tax:\n\nThe unit price is $40.\n\n"
+    "South region\n\nThe unit price is $35."
+)
+schema = {
+    "fields": {
+        "unit_price": {"type": "integer", "unit": "USD", "keys": ["north region", "south region"]}
+    }
+}
+
+
+def extraction(quote, key, key_text=None):  # what LangExtract returns for one value
+    attributes = {"value": quote[1:], "unit": "USD", "key": key}
+    if key_text:
+        attributes["key_text"] = key_text
+    start = text.index(quote)
+    return {
+        "extraction_class": "unit_price",
+        "extraction_text": quote,
+        "char_interval": {"start_pos": start, "end_pos": start + len(quote)},
+        "attributes": attributes,
+    }
+
+
+result = {
+    "text": text,
+    "extractions": [
+        extraction("$40", "north region", "North region"),
+        extraction("$40", "north region"),
+        extraction("$35", "south region", "South region"),
+    ],
+}
+for d in sorted(admit_document(result, schema).decisions, key=lambda d: d.candidate_id):
+    print(f"{d.outcome:<19} {d.key:<13} {d.value:<3} {' '.join(d.codes)}".rstrip())
+```
+
+```text
+admitted            north region  40  KEY_CITED
+needs_verification  north region  40  KEY_NOT_AT_VALUE
+admitted            south region  35
+```
 
 ### Report
 
