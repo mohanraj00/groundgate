@@ -4,9 +4,14 @@ Measure a judge's thresholds for groundgate on your own documents.
 
 A judge is a typed-decision model that answers a question about a flagged or admitted value. A
 threshold belongs to one model and one kind of document: the field doubt gave 0.3 on FDA labels
-(#106) and 0.2 on NTSB reports (#110). So groundgate ships no thresholds. This tool measures
-yours, as hybrid design §9 describes. It is a separate package, so the groundgate core never
+([#106](https://github.com/mohanraj00/groundgate/issues/106)) and 0.2 on NTSB reports
+([#110](https://github.com/mohanraj00/groundgate/issues/110)). So groundgate ships no thresholds. This tool measures
+yours, as [hybrid design](https://github.com/mohanraj00/groundgate/blob/main/docs/design/hybrid-decisions.md) §9 describes. It is a separate package, so the groundgate core never
 contains code that calls a model.
+
+```bash
+pip install groundgate-calibrate
+```
 
 ## Steps
 
@@ -15,7 +20,7 @@ groundgate-calibrate sample --work W --docs D --candidates C --schema S --questi
     --context "The text is from a 10-K filing."
 groundgate-calibrate split  --work W        # before any model run
 groundgate-calibrate label  --work W        # label in the browser, blind, before ask
-TYPESAFE_API_KEY=... groundgate-calibrate ask --work W --judge jev
+groundgate-calibrate ask    --work W --judge NAME   # NAME: an installed judge (see Judges)
 groundgate-calibrate report --work W        # REPORT.md, report.json
 ```
 
@@ -80,8 +85,7 @@ documents for the ceiling that you need before you start.
 
 A judge has an `id`, a `digest` that names one model version, and `ask(state, questions)`, which
 answers in the typed-decision format: `{"choice": ..., "confidence": ...}` for a choice question
-and `{"noul": ...}` for a noul question. Jev (`--judge jev`) is built in. A package adds a judge
-with an entry point:
+and `{"noul": ...}` for a noul question. A package adds a judge with an entry point:
 
 ```toml
 [project.entry-points."groundgate.judges"]
@@ -116,4 +120,4 @@ groundgate-calibrate judge --docs D --candidates C --schema S --policy policy.js
 
 `report` writes, for each ceiling with a threshold, the `judge` block of a policy (hybrid
 design §7) with the model and the threshold. Spec 0.4 reads it, with the judgments that `judge`
-writes (#116).
+writes ([#116](https://github.com/mohanraj00/groundgate/issues/116)).

@@ -467,22 +467,27 @@ def key_cited(
     text: str, mentions: list[tuple[int, int, str]], key: str, span: tuple[int, int], at: int
 ) -> bool:
     """Whether the span that a candidate cites for its key puts the key at the value ``at``
-    (SPEC §4.5): the span holds a mention of the key, ends at or before the value, and no
-    mention of another key lies between the end of the span and the value."""
+    (SPEC §4.5 checks 2-6): the span holds a mention of the key, holds no line break and ends
+    at or before the value, no number token follows the last mention of the key in it, no
+    mention of another key lies between its end and the value, and the value's own sentence or
+    table line names the key or no key."""
     s, e = span
-    if e > at or not any(s <= a and b <= e and k == key for a, b, k in mentions):
+    own = [b for a, b, k in mentions if s <= a and b <= e and k == key]
+    if not own or e > at or "\n" in text[s:e] or tokens(text, max(own), e):
         return False
-    return not any(e <= a and b <= at and k != key for a, b, k in mentions)
+    if any(e <= a and b <= at and k != key for a, b, k in mentions):
+        return False
+    named = _own_keys(text, mentions, at)
+    return not named or key in named
 
 
 # a table sentence (SPEC §4.5): 3 or more line breaks and mentions of 2 or more keys
 _TABLE_BREAKS, _TABLE_KEYS = 3, 2
 
 
-def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[str]:
-    """The keys a value at ``pos`` belongs to: those its sentence mentions, or in a table
-    sentence those its line mentions, else the nearest mention before it, unless a label line
-    stands between them (SPEC §4.5)."""
+def _own_keys(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[str] | None:
+    """The keys that the value's own text names: in a table sentence those of its line (maybe
+    none), else those of its sentence, or None when the sentence names no key (SPEC §4.5)."""
     s0, s1 = sentence(text, pos)
     inside = {k for a, b, k in mentions if s0 <= a and b <= s1}
     if len(inside) >= _TABLE_KEYS and text.count("\n", s0, s1) >= _TABLE_BREAKS:
@@ -492,8 +497,17 @@ def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[st
         l1 = text.find("\n", pos, s1)
         l1 = s1 if l1 < 0 else l1
         return {k for a, b, k in mentions if l0 <= a and b <= l1}
-    if inside:
-        return inside
+    return inside or None
+
+
+def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[str]:
+    """The keys a value at ``pos`` belongs to: those its sentence mentions, or in a table
+    sentence those its line mentions, else the nearest mention before it, unless a label line
+    stands between them (SPEC §4.5)."""
+    s0, _ = sentence(text, pos)
+    named = _own_keys(text, mentions, pos)
+    if named is not None:
+        return named
     before = [(b, k) for _, b, k in mentions if b <= pos]
     if not before:
         return set()

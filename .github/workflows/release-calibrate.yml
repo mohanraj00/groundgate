@@ -74,6 +74,6 @@ jobs:
             on' calibrate/CHANGELOG.md > notes.md
           test -s notes.md
           gh release create "$GITHUB_REF_NAME" dist/* --title "groundgate-calibrate ${GITHUB_REF_NAME#calibrate-v}" \
-            --notes-file notes.md
+            --notes-file notes.md --latest=false
         env:
           GH_TOKEN: ${{ github.token }}

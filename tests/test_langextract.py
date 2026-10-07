@@ -134,7 +134,7 @@ def test_key_text_missing_outside_or_after_the_value() -> None:
     assert "key_evidence" not in c
     (d,) = admit_document(keyed(key="single"), KEYED_SCHEMA).decisions
     assert (d.outcome, d.codes) == ("needs_verification", ("KEY_NOT_AT_VALUE",))
-    at = KEYED_TEXT.encode().index(b"$15,000")
+    at = KEYED_TEXT.encode().index(b"15,000")  # the value's number token, after the "$"
     for key_text in ("Joint filers", "Single filers"):  # not in the text, or only after the value
         (c,) = to_candidates(keyed(key="single", key_text=key_text))
         assert c["key_evidence"] == {"start": at, "end": at, "text": key_text}
@@ -149,3 +149,38 @@ def test_key_text_is_not_found_inside_a_longer_word() -> None:
     ext = x("p", "$40", text.index("$40"), "40", key="south", key_text="South")
     (c,) = to_candidates({"text": text, "extractions": [ext]})
     assert c["key_evidence"] == {"start": 0, "end": 5, "text": "South"}
+
+
+def test_key_text_inside_the_quote_and_overlapping_occurrences() -> None:
+    text = "Label:\n\nWages $40"
+    ext = x("p", "Wages $40", text.index("Wages"), "40", key="wages", key_text="Wages")
+    (c,) = to_candidates({"text": text, "extractions": [ext]})
+    assert c["key_evidence"] == {"start": 8, "end": 13, "text": "Wages"}
+    text = "xWages Wages Wages\n\nNotes:\n\nThe amount is $40."
+    ext = x("p", "$40", text.index("$40"), "40", key="wages", key_text="Wages Wages")
+    (c,) = to_candidates({"text": text, "extractions": [ext]})
+    assert c["key_evidence"] == {"start": 7, "end": 18, "text": "Wages Wages"}
+
+
+def test_key_text_before_a_later_occurrence_of_the_value() -> None:
+    # the first 40 has no $, so groundgate reads the later one; the key comes between them
+    text = "40 units\n\nWages\n\nNotes:\n\nPay $40."
+    ext = x("p", text, 0, "40", unit="USD", key="wages", key_text="Wages")
+    (c,) = to_candidates({"text": text, "extractions": [ext]})
+    start = text.index("Wages")
+    assert c["key_evidence"] == {"start": start, "end": start + 5, "text": "Wages"}
+
+
+def test_with_the_schema_key_text_goes_before_the_value_that_groundgate_reads() -> None:
+    # 40 without $ has key text before it, then another key, then fresh key text and $40
+    text = "Single\n\n40 units\n\nJoint\n\nSingle\n\nNotes:\n\nPay $40."
+    schema = {"fields": {"p": {"type": "integer", "unit": "USD", "keys": ["single", "joint"]}}}
+    ext = x("p", text, 0, "40", unit="USD", key="single", key_text="Single")
+    doc = {"text": text, "extractions": [ext]}
+    (c,) = to_candidates(doc)  # without the schema, the first 40 decides
+    assert c["key_evidence"]["start"] == 0
+    (c,) = to_candidates(doc, schema=schema)
+    start = text.rindex("Single")
+    assert c["key_evidence"] == {"start": start, "end": start + 6, "text": "Single"}
+    (d,) = admit_document(doc, schema).decisions
+    assert (d.outcome, d.codes) == ("admitted", ("KEY_CITED",))

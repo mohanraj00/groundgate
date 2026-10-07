@@ -1811,6 +1811,159 @@ vector(
 )
 
 vector(
+    "19c-key-citation-limits",
+    "A key citation also fails when the span holds a line break, when a number follows the last "
+    "mention of the candidate's key in the span, or when the value's sentence (or, in a table "
+    "sentence, its line) mentions keys and none of them is the candidate's. A recorded key "
+    "judgment that names another key adds `MODEL_DOUBT` to a cited key. `key_evidence: null` is "
+    "absent, and a `key_evidence` with a `text` that is not a string, or a `start` that is not an "
+    "integer, is `CANDIDATE_INVALID`, also on a field without keys. The text starts with a "
+    "character of two bytes, so code-point offsets would miss every span (spec 0.5).",
+    "Café menu\n\n"
+    "Hypertension\n\nHeart failure\n\nThe first dose is 1 mg daily.\n\n"
+    "Hypertension 2 mg, heart failure:\n\nNotes:\n\nThe second dose is 3 mg daily.\n\n"
+    "Heart failure\n\nNotes:\n\nThe third dose is 4 mg for hypertension.\n\n"
+    "Hypertension\ndosing\n\nNotes:\n\nThe fourth dose is 5 mg daily.\n\n"
+    "Hypertension\n\nNotes:\n\nThe fifth dose is 6 mg daily.\n\n"
+    "Hypertension\n\nNotes:\n\nThe sixth dose is 7 mg daily.",
+    {
+        "fields": {
+            "first": KEYED_MG,
+            "second": KEYED_MG,
+            "third": KEYED_MG,
+            "fourth": KEYED_MG,
+            "fifth": KEYED_MG,
+            "sixth": KEYED_MG,
+            "plain": {"type": "number", "unit": "mg"},
+        }
+    },
+    [
+        # a wide span that holds another key fails: it holds line breaks
+        c(
+            "m1",
+            "first",
+            "1",
+            "mg",
+            q("1 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
+            key="hypertension",
+            key_evidence=q("Hypertension\n\nHeart failure\n\nThe first dose is "),
+        ),
+        # a number after the key's mention in the span: the span holds another row
+        c(
+            "m2",
+            "second",
+            "3",
+            "mg",
+            q("3 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
+            key="hypertension",
+            key_evidence=q("Hypertension 2 mg, heart failure"),
+        ),
+        # the value's own sentence names another key
+        c(
+            "m3",
+            "third",
+            "4",
+            "mg",
+            q("4 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
+            key="heart failure",
+            key_evidence=q("Heart failure", n=2),
+        ),
+        # a span with a line break fails
+        c(
+            "m4",
+            "fourth",
+            "5",
+            "mg",
+            q("5 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
+            key="hypertension",
+            key_evidence=q("Hypertension\ndosing"),
+        ),
+        # a judge that names another key doubts a cited key
+        c(
+            "m5",
+            "fifth",
+            "6",
+            "mg",
+            q("6 mg"),
+            ("needs_verification", ["MODEL_DOUBT", "KEY_CITED"]),
+            key="hypertension",
+            key_evidence=q("Hypertension", n=4),
+        ),
+        # a judge that names the same key changes nothing
+        c(
+            "m6",
+            "sixth",
+            "7",
+            "mg",
+            q("7 mg"),
+            ("admitted", ["KEY_CITED"]),
+            key="hypertension",
+            key_evidence=q("Hypertension", n=5),
+        ),
+        # null is absent: the 0.4 decision
+        c(
+            "m7",
+            "sixth",
+            "7",
+            "mg",
+            q("7 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="hypertension",
+            key_evidence=None,
+        ),
+        # a text that is not a string
+        c(
+            "m8",
+            "sixth",
+            "7",
+            "mg",
+            q("7 mg"),
+            ("rejected", ["CANDIDATE_INVALID"]),
+            key="hypertension",
+            key_evidence=q("Hypertension", n=5, text=5),
+        ),
+        # a start that is not an integer
+        c(
+            "m9",
+            "sixth",
+            "7",
+            "mg",
+            q("7 mg"),
+            ("rejected", ["CANDIDATE_INVALID"]),
+            key="hypertension",
+            key_evidence={"start": True, "end": 5},
+        ),
+        # a null text inside the citation is not a string
+        c(
+            "m11",
+            "sixth",
+            "7",
+            "mg",
+            q("7 mg"),
+            ("rejected", ["CANDIDATE_INVALID"]),
+            key="hypertension",
+            key_evidence={"quote": "Hypertension", "n": 5, "text": None},
+        ),
+        # on a field without keys, a citation must still be well formed
+        c(
+            "m10",
+            "plain",
+            "7",
+            "mg",
+            q("7 mg"),
+            ("rejected", ["CANDIDATE_INVALID"]),
+            key_evidence={"start": 0},
+        ),
+    ],
+    policy={"judge": {**JEV, "clear": {"KEY_NOT_AT_VALUE": 0.9}}},
+    judgments=[j("m5", "key", 0.95, "heart failure"), j("m6", "key", 0.95, "hypertension")],
+)
+
+vector(
     "18-judgments-key",
     "A recorded key judgment clears KEY_NOT_AT_VALUE when it chooses the candidate's key with p at "
     "or above the policy's threshold, and adds MODEL_DOUBT when it chooses another key or none at "

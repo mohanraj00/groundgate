@@ -21,8 +21,9 @@ Mapping, per extraction:
   An extraction LangExtract could not align has no evidence and is rejected ``NO_EVIDENCE``;
 - ``key_evidence``: from the ``key_text`` attribute, when present: the words that name the key,
   such as a heading or a row label. The span is the last occurrence of ``key_text``, not inside a
-  longer word, that ends at or before the value's ``char_interval``. When there is none, the
-  span is empty, so groundgate flags ``KEY_CITATION_INVALID``.
+  longer word, that ends at or before the value: the number token in ``char_interval`` that
+  equals ``value``, or the interval's start. When there is none, the span is empty, so
+  groundgate flags ``KEY_CITATION_INVALID``.
 
 ``alignment_status`` and ``extraction_class`` are kept on the candidate for the report; the
 checks ignore them.
@@ -30,13 +31,15 @@ checks ignore them.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping
 from typing import Any
 
-from ..admit import admit
+from ..admit import admit, value_place
 from ..canonical import Offsets, is_nfc
 from ..model import PacketError, Policy, Receipt, Schema
-from ..text import quote_pattern
+from ..text import _NOT_ALNUM_AFTER, _NOT_ALNUM_BEFORE, parse_value, quote_pattern, scaled_value
+from ..text import tokens as number_tokens
 
 
 def _get(obj: Any, name: str) -> Any:
@@ -71,8 +74,12 @@ def to_candidates(
     unit_attribute: str = "unit",
     key_attribute: str = "key",
     key_text_attribute: str = "key_text",
+    schema: Schema | Mapping[str, Any] | None = None,
+    policy: Policy | Mapping[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
-    """One groundgate candidate per extraction in a LangExtract ``AnnotatedDocument``."""
+    """One groundgate candidate per extraction in a LangExtract ``AnnotatedDocument``. With the
+    ``schema`` (and ``policy``), a key citation is placed before the very token where groundgate
+    reads the value; ``admit_document`` passes them."""
     text = document_text(document)
     offsets = Offsets(text)
     out = []
@@ -103,20 +110,48 @@ def to_candidates(
             }
             key_text = attrs.get(key_text_attribute)
             if isinstance(key_text, str) and key_text.strip():
-                cand["key_evidence"] = _key_span(text, offsets, key_text, start)
+                place = None if schema is None else value_place(text, schema, cand, policy)
+                ats = (
+                    [place] if place is not None else _value_starts(text, start, end, cand["value"])
+                )
+                cand["key_evidence"] = _key_span(text, offsets, key_text, ats)
         out.append(cand)
     return out
 
 
-def _key_span(text: str, offsets: Offsets, key_text: str, at: int) -> dict[str, Any]:
-    """The last occurrence of ``key_text`` that ends at or before ``at`` and is not part of a
-    longer word, in UTF-8 bytes. With none, an empty span at ``at``: groundgate reads it as not
-    valid and flags the citation."""
-    s = e = at
-    for m in quote_pattern(key_text).finditer(text, 0, at):
-        a, b = m.start(), m.end()
-        if (a == 0 or not text[a - 1].isalnum()) and (b == len(text) or not text[b].isalnum()):
-            s, e = a, b
+def _value_starts(text: str, start: int, end: int, value: object) -> list[int]:
+    """Where groundgate may put a numeric value in the interval: each number token that equals
+    the value, as written or scaled, in order. groundgate takes the first one with the field's
+    unit, which the adapter does not know. With none, the interval's start, as for a string
+    field."""
+    want = parse_value(str(value))
+    if want is None:
+        return [start]
+    hits = [
+        t.start
+        for t in number_tokens(text, start, end)
+        if t.value is not None and want in (t.value, scaled_value(text, t))
+    ]
+    return hits or [start]
+
+
+def _key_span(text: str, offsets: Offsets, key_text: str, ats: list[int]) -> dict[str, Any]:
+    """The last occurrence of ``key_text`` that is not part of a longer word and ends at or
+    before the first place in ``ats`` that has one, in UTF-8 bytes. With none, an empty span at
+    the first place: groundgate reads it as not valid and flags the citation."""
+    whole = re.compile(_NOT_ALNUM_BEFORE + quote_pattern(key_text).pattern + _NOT_ALNUM_AFTER)
+    found: list[tuple[int, int]] = []
+    pos = 0
+    while (m := whole.search(text, pos)) is not None and m.end() <= ats[-1]:
+        found.append((m.start(), m.end()))
+        pos = m.start() + 1  # an occurrence may overlap the one before it
+    for at in ats:
+        before = [span for span in found if span[1] <= at]
+        if before:
+            s, e = before[-1]
+            break
+    else:
+        s = e = ats[0]
     return {"start": offsets.to_bytes(s), "end": offsets.to_bytes(e), "text": key_text}
 
 
@@ -142,7 +177,7 @@ def admit_document(
     return admit(
         document_text(document),
         schema,
-        to_candidates(document, **options),
+        to_candidates(document, schema=schema, policy=policy, **options),
         policy,
         document_id=document_id,
     )
