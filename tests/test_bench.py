@@ -912,3 +912,33 @@ def test_key_span_prompt_differs_only_in_its_request(monkeypatch: pytest.MonkeyP
     assert propose.prompt_for(unkeyed) == before
     guide = (Path(__file__).parent.parent / "docs" / "guide.md").read_text(encoding="utf-8")
     assert "```text\n" + propose.KEY_SPAN_NOTE.lstrip("\n") + "```" in guide
+
+
+def test_role_example_admits_every_value_under_spec_05() -> None:
+    """The made-up 10-K example of --roles (#141) shows parts that the core accepts: a prompt that
+    teaches parts groundgate then rejects would measure the prompt, not the rule."""
+    import propose
+
+    import groundgate as gg
+    from groundgate.adapters.langextract import to_candidates
+
+    ex = propose.ROLE_EXAMPLES["sec"][0]
+    exts = []
+    for x in ex.extractions:
+        i = ex.text.index(x.extraction_text)
+        end = i + len(x.extraction_text)
+        exts.append(
+            {
+                "extraction_class": x.extraction_class,
+                "extraction_text": x.extraction_text,
+                "char_interval": {"start_pos": i, "end_pos": end},
+                "alignment_status": "match_exact",
+                "attributes": x.attributes,
+            }
+        )
+    cands = to_candidates({"text": ex.text, "extractions": exts})
+    schema = json.loads((BENCH / "sec2" / "schema.json").read_text())
+    receipt = gg.admit(ex.text, schema, cands)
+    assert [d.outcome for d in receipt.decisions] == ["admitted"] * len(exts)
+    for name in ("sign_text", "scale_text", "unit_text", "field_text", "key_text"):
+        assert f'"{name}"' in propose.ROLES_NOTE  # the names that the adapter reads

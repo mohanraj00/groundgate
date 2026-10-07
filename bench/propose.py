@@ -49,6 +49,7 @@ from langextract.core import types as lx_types
 HERE = Path(__file__).parent
 SET = HERE  # the benchmark set: gold, docs and runs (--set)
 KEY_SPAN = False  # ask a keyed prompt for the key span (--key-span)
+ROLES = False  # ask for the words that each part of a value rests on (--roles, #141)
 HOME = str(Path.home())
 
 KIND = {
@@ -81,6 +82,19 @@ KEY_SPAN_NOTE = """
 When words before the value name its key, such as a heading, a table row or column label, or a
 bullet, also give "key_text" in the attributes: those words copied verbatim from the text, the
 nearest ones before the value. Leave "key_text" out when no words before the value name its key.
+"""
+ROLES_NOTE = """
+Give "value" as the fact is, with its sign and scale: a number in brackets, or a loss, is
+negative, and a table "in thousands" multiplies its numbers by 1000. When words other than the
+number make the value right, also give them in the attributes, each copied verbatim from the
+text:
+- "sign_text": the brackets around the number, or the loss word before it, for a negative value;
+- "scale_text": the words that scale the number, such as "(in thousands)";
+- "unit_text": the unit or $ sign of the number when it is not next to the number, such as the $
+  at the top of a table column;
+- "field_text": the words that name the field, such as a table row label;
+- "key_text": the words that name the key, such as a table column heading.
+Leave out each one that the value does not need.
 """
 
 EXAMPLES = {
@@ -245,6 +259,68 @@ SET2_EXAMPLES = {  # set 2 renames the FDA fields and adds keys and the Federal 
     ],
 }
 
+_IRS_KEYED_TEXT = (  # made up for the status set run (#131), before any status document was read
+    "Standard deduction for most people\n\nSingle or Married filing separately\n\n$15,000\n\n"
+    "Married filing jointly\n\n$30,000\n\nHead of household\n\n$22,500\n\n"
+    "If you are single and age 65 or older, add $2,000."
+)
+
+
+def _usd(quote: str, key: str) -> lx.data.Extraction:
+    attrs = {"value": quote.lstrip("$").replace(",", ""), "unit": "USD", "key": key}
+    return lx.data.Extraction("amount", quote, attributes=attrs)
+
+
+SET2_EXAMPLES["irs keyed"] = [
+    lx.data.ExampleData(
+        text=_IRS_KEYED_TEXT,
+        extractions=[
+            _usd("$15,000", "Single"),
+            _usd("$15,000", "Married filing separately"),
+            _usd("$30,000", "Married filing jointly"),
+            _usd("$22,500", "Head of household"),
+            _usd("$2,000", "Single"),
+        ],
+    )
+]
+
+# made up for the spec 0.5 measure (#141), before any document of bench/sec2 was read
+_SEC_ROLES_TEXT = (
+    "Net sales were $4.2 billion in fiscal 2025, up from $3.9 billion in fiscal 2024. We had a "
+    "net loss of $12 million in 2025.\n\n"
+    "(in thousands)\n\nYear Ended December 31,\n\n2025\n\n2024\n\n"
+    "Loss from operations\n\n$\n\n(18,915)\n\n$\n\n(27,548)\n\n"
+    "Cash and cash equivalents\n\n860\n\n745\n"
+)
+
+
+def _sec(field: str, quote: str, value: str, key: str, **roles: str) -> lx.data.Extraction:
+    attrs = {"value": value, "unit": "USD", "key": key, **roles}
+    return lx.data.Extraction(field, quote, attributes=attrs)
+
+
+_TABLE = {"scale_text": "(in thousands)", "unit_text": "$"}
+ROLE_EXAMPLES = {
+    "sec": [
+        lx.data.ExampleData(
+            text=_SEC_ROLES_TEXT,
+            extractions=[
+                _sec("revenue", "$4.2 billion", "4200000000", "2025"),
+                _sec("revenue", "$3.9 billion", "3900000000", "2024"),
+                _sec("net_income", "$12 million", "-12000000", "2025", sign_text="net loss"),
+                _sec("operating_income", "18,915", "-18915000", "2025", sign_text="(18,915)",
+                     field_text="Loss from operations", key_text="2025", **_TABLE),
+                _sec("operating_income", "27,548", "-27548000", "2024", sign_text="(27,548)",
+                     field_text="Loss from operations", key_text="2024", **_TABLE),
+                _sec("cash_and_equivalents", "860", "860000", "2025",
+                     field_text="Cash and cash equivalents", key_text="2025", **_TABLE),
+                _sec("cash_and_equivalents", "745", "745000", "2024",
+                     field_text="Cash and cash equivalents", key_text="2024", **_TABLE),
+            ],
+        )
+    ],
+}  # fmt: skip
+
 # the key span of each keyed example extraction, by example and extraction text (--key-span)
 KEY_TEXTS = {
     "fda keyed": {
@@ -252,7 +328,14 @@ KEY_TEXTS = {
         ("80 mg", "Gout"): "Gout",
         ("10 mg", "Psoriasis"): "Psoriasis",
     },
-    "sec": {("860", "2025"): "2025", ("745", "2024"): "2024"},  # the others name it after the value
+    "sec": {("860", "2025"): "2025", ("745", "2024"): "2024"},
+    "irs keyed": {
+        ("$15,000", "Single"): "Single or Married filing separately",
+        ("$15,000", "Married filing separately"): "Single or Married filing separately",
+        ("$30,000", "Married filing jointly"): "Married filing jointly",
+        ("$22,500", "Head of household"): "Head of household",
+        ("$2,000", "Single"): "single",
+    },  # the others name it after the value
 }
 
 
@@ -472,9 +555,10 @@ def field_line(name: str, spec: dict[str, Any]) -> str:
 def prompt_for(gold: dict[str, Any]) -> str:
     lines = [field_line(name, spec) for name, spec in gold["fields"].items()]
     prompt = PROMPT.format(kind=kind_text(gold), fields="\n".join(lines))
+    roles = ROLES_NOTE if ROLES else ""
     if not keyed(gold):
-        return prompt
-    return prompt + KEYS_NOTE + (KEY_SPAN_NOTE if KEY_SPAN else "")
+        return prompt + roles
+    return prompt + KEYS_NOTE + (KEY_SPAN_NOTE if KEY_SPAN else "") + roles
 
 
 def examples_for(gold: dict[str, Any]) -> list[lx.data.ExampleData]:
@@ -483,6 +567,12 @@ def examples_for(gold: dict[str, Any]) -> list[lx.data.ExampleData]:
         name = gold["kind"]
     elif gold["kind"] == "fda" and "starting_dose" in gold["fields"]:  # set 2's FDA field names
         name = "fda keyed" if keyed(gold) else "fda"
+    elif gold["kind"] == "irs" and keyed(gold):  # the status set (#131)
+        name = "irs keyed"
+    if ROLES and name in ROLE_EXAMPLES:
+        return ROLE_EXAMPLES[name]
+    if ROLES and name == "irs keyed":  # its parts are keys only
+        return with_key_text(name, SET2_EXAMPLES[name])
     if name is None:
         return EXAMPLES[gold["kind"]]
     if KEY_SPAN and keyed(gold):
@@ -505,13 +595,16 @@ def main() -> None:
     ap.add_argument("--label", help='name in the results, e.g. "GPT-6 Luna (Medium)"')
     ap.add_argument("--set", type=Path, default=HERE, help="benchmark set directory")
     ap.add_argument("--key-span", action="store_true", help='ask for "key_text" (#130)')
+    ap.add_argument("--roles", action="store_true", help="ask for the parts of a value (#141)")
     args = ap.parse_args()
-    global SET, KEY_SPAN
+    global SET, KEY_SPAN, ROLES
     SET = args.set.resolve()
-    KEY_SPAN = args.key_span
+    KEY_SPAN, ROLES = args.key_span, args.roles
     label = args.label or args.model
     if KEY_SPAN:  # a run of the other prompt never shares a cache or a name with this one
         label += " + key span"
+    if ROLES:
+        label += " + roles"
 
     out_dir = SET / "runs" / safe(label) / str(args.buffer)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -563,6 +656,7 @@ def main() -> None:
             "model_id": args.model,
             "effort": args.effort,
             **({"key_span": True} if args.key_span else {}),
+            **({"roles": True} if args.roles else {}),
             "langextract": importlib.metadata.version("langextract"),
             "max_char_buffer": args.buffer,
             "seconds": round(time.time() - t0),
