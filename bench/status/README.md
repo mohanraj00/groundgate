@@ -42,6 +42,10 @@ amounts in 18 publications.
 5 keys. It asks one question: which filing statuses does the amount belong to? The answer is one
 key, more than one when the amount holds for each of them, `0` when it belongs to none, or `?`
 when the person can't tell. An amount that holds whatever the filing status holds for each key.
+The publication's own text decides, not outside tax knowledge, because groundgate reads only the
+document. An amount that the text does not limit to some statuses holds for each of them, even
+when the law sets another amount for one status. Example: "taxpayers with MAGI more than $85,000"
+holds for all 5, although the law gives married filing jointly a higher threshold.
 `m` shows more of the text before the amount. IRS tables are hard to read as text, so
 `web.py` shows the same question in a browser, next to the PDF page with the amount boxed. Both
 write the same `labels.json`. The tool never shows which keys a spec puts at the
