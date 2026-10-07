@@ -169,3 +169,18 @@ def test_key_text_before_a_later_occurrence_of_the_value() -> None:
     (c,) = to_candidates({"text": text, "extractions": [ext]})
     start = text.index("Wages")
     assert c["key_evidence"] == {"start": start, "end": start + 5, "text": "Wages"}
+
+
+def test_with_the_schema_key_text_goes_before_the_value_that_groundgate_reads() -> None:
+    # 40 without $ has key text before it, then another key, then fresh key text and $40
+    text = "Single\n\n40 units\n\nJoint\n\nSingle\n\nNotes:\n\nPay $40."
+    schema = {"fields": {"p": {"type": "integer", "unit": "USD", "keys": ["single", "joint"]}}}
+    ext = x("p", text, 0, "40", unit="USD", key="single", key_text="Single")
+    doc = {"text": text, "extractions": [ext]}
+    (c,) = to_candidates(doc)  # without the schema, the first 40 decides
+    assert c["key_evidence"]["start"] == 0
+    (c,) = to_candidates(doc, schema=schema)
+    start = text.rindex("Single")
+    assert c["key_evidence"] == {"start": start, "end": start + 6, "text": "Single"}
+    (d,) = admit_document(doc, schema).decisions
+    assert (d.outcome, d.codes) == ("admitted", ("KEY_CITED",))

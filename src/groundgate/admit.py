@@ -340,6 +340,29 @@ def _judge(policy: Policy, p: _Passed, js: dict[str, _Judgment]) -> list[_Judgme
     return applied
 
 
+def value_place(
+    text: str,
+    schema: Schema | Mapping[str, Any],
+    candidate: Mapping[str, Any],
+    policy: Policy | Mapping[str, Any] | None = None,
+) -> int | None:
+    """The code point where the decision puts the candidate's value (SPEC §4.5): its supporting
+    token, or the start of the evidence for a string field, after re-anchoring. None when the
+    candidate does not pass steps 1-11. Adapters use it to place a key citation."""
+    if not isinstance(schema, Schema):
+        schema = Schema.from_dict(schema)
+    if not isinstance(policy, Policy):
+        policy = Policy() if policy is None else Policy.from_dict(policy)
+    table = frozenset(x for _, suffixes in schema.units.values() for x in suffixes)
+    ctx = _Ctx(text, Offsets(text), schema, policy, suffixes=table)
+    plain = {k: v for k, v in candidate.items() if k != "key_evidence"}
+    try:
+        p = _check(ctx, plain)
+    except _Reject:
+        return None
+    return p.token.start if p.token is not None else p.span[0]
+
+
 def admit(
     text: str,
     schema: Schema | Mapping[str, Any],

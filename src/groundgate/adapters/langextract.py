@@ -35,7 +35,7 @@ import re
 from collections.abc import Mapping
 from typing import Any
 
-from ..admit import admit
+from ..admit import admit, value_place
 from ..canonical import Offsets, is_nfc
 from ..model import PacketError, Policy, Receipt, Schema
 from ..text import _NOT_ALNUM_AFTER, _NOT_ALNUM_BEFORE, parse_value, quote_pattern, scaled_value
@@ -74,8 +74,12 @@ def to_candidates(
     unit_attribute: str = "unit",
     key_attribute: str = "key",
     key_text_attribute: str = "key_text",
+    schema: Schema | Mapping[str, Any] | None = None,
+    policy: Policy | Mapping[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
-    """One groundgate candidate per extraction in a LangExtract ``AnnotatedDocument``."""
+    """One groundgate candidate per extraction in a LangExtract ``AnnotatedDocument``. With the
+    ``schema`` (and ``policy``), a key citation is placed before the very token where groundgate
+    reads the value; ``admit_document`` passes them."""
     text = document_text(document)
     offsets = Offsets(text)
     out = []
@@ -106,9 +110,11 @@ def to_candidates(
             }
             key_text = attrs.get(key_text_attribute)
             if isinstance(key_text, str) and key_text.strip():
-                cand["key_evidence"] = _key_span(
-                    text, offsets, key_text, _value_starts(text, start, end, cand["value"])
+                place = None if schema is None else value_place(text, schema, cand, policy)
+                ats = (
+                    [place] if place is not None else _value_starts(text, start, end, cand["value"])
                 )
+                cand["key_evidence"] = _key_span(text, offsets, key_text, ats)
         out.append(cand)
     return out
 
@@ -171,7 +177,7 @@ def admit_document(
     return admit(
         document_text(document),
         schema,
-        to_candidates(document, **options),
+        to_candidates(document, schema=schema, policy=policy, **options),
         policy,
         document_id=document_id,
     )
