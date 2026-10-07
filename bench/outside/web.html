@@ -60,7 +60,7 @@
       <button class="opt" data-b="document">From the document (a computation, a sign, or a table scale)</button>
       <button class="opt" data-b="outside">From outside the document</button>
     </div>
-    <div class="q">If right: the source (a URL, or "the document")</div>
+    <div class="q">If from outside: the source (a URL)</div>
     <input type="text" id="source" placeholder="https://...">
     <div class="row">
       <button class="main" id="save">Save</button>
@@ -123,26 +123,31 @@ function paint() {
     b.classList.toggle("on", b.dataset.b === basis);
     b.disabled = verdict !== "right";
   });
-  $("source").disabled = verdict !== "right";
+  $("source").disabled = verdict !== "right" || basis !== "outside";
 }
 
 document.querySelectorAll("[data-v]").forEach((b) => b.onclick = () => {
   verdict = b.dataset.v; if (verdict !== "right") basis = null; paint();
 });
-document.querySelectorAll("[data-b]").forEach((b) => b.onclick = () => { basis = b.dataset.b; paint(); });
+document.querySelectorAll("[data-b]").forEach((b) => b.onclick = () => {
+  basis = b.dataset.b; paint(); if (basis === "document") save();
+});
 
 async function save() {
   const it = S.items[i];
   const body = { id: it.id, verdict };
   if (verdict === "right") {
-    body.basis = basis; body.source = $("source").value.trim();
-    if (!basis || !body.source) { $("err").textContent = "A right value needs its basis and a source."; return; }
+    body.basis = basis;
+    if (basis === "outside") body.source = $("source").value.trim();
+    if (!basis) { $("err").textContent = "A right value needs its basis."; return; }
+    if (basis === "outside" && !body.source) { $("err").textContent = "A value from outside needs a source."; return; }
   }
   if (!verdict) { $("err").textContent = "Pick right, wrong or not sure."; return; }
   const r = await fetch("/label", { method: "POST", headers: { "Content-Type": "application/json" },
                                     body: JSON.stringify(body) });
   if (!r.ok) { $("err").textContent = "Not saved: " + (await r.text()); return; }
-  S.labels[it.id] = { verdict, basis: body.basis || null, source: body.source || null };
+  const source = basis === "document" ? "the document" : body.source || null;
+  S.labels[it.id] = { verdict, basis: body.basis || null, source };
   next(true);
 }
 

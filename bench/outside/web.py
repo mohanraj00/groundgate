@@ -65,6 +65,8 @@ def valid(got: dict[str, Any], ids: set[str]) -> bool:
         return False
     if got["verdict"] != "right":
         return got.get("basis") is None and got.get("source") is None
+    if got.get("basis") == "document":  # the document is the source
+        return got.get("source") in (None, "", "the document")
     return got.get("basis") in BASES and isinstance(got.get("source"), str) and bool(got["source"])
 
 
@@ -112,7 +114,9 @@ def serve(port: int) -> None:
                 labels[got["id"]] = {
                     "verdict": got["verdict"],
                     "basis": got.get("basis"),
-                    "source": got.get("source"),
+                    "source": "the document"
+                    if got.get("basis") == "document"
+                    else got.get("source"),
                 }
                 tmp = path.with_suffix(".tmp")
                 tmp.write_text(json.dumps(dict(sorted(labels.items())), indent=1) + "\n")
