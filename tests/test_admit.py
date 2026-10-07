@@ -482,3 +482,19 @@ def test_a_repeated_unit_prefix_is_one_empty_cell() -> None:
 
     text = "Costs\n\n$\n\n\n\n$\n\n5,500"
     assert cells(text, 5, text.index("5,500"), ["$", "$"]) == [7]
+
+
+def test_an_early_reject_of_a_quoted_reference_item_names_its_source() -> None:
+    refs = [{"id": "r", "text": "The fee is $40."}]
+    cand = {
+        "field": "nope",
+        "value": 40,
+        "evidence": [{"source": "reference", "ref": "r", "text": "$40"}],
+    }
+    d = gg.admit(DOC, FEE_SCHEMA, [cand], references=refs).to_dict()["decisions"][0]
+    assert (d["codes"], d["source"], d["ref"], d["evidence"]) == (
+        ["FIELD_UNKNOWN"],
+        "reference",
+        "r",
+        None,
+    )

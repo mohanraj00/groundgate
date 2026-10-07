@@ -945,25 +945,28 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | _Reje
             source, ref, url = p.item.source, p.item.ref, p.item.url
         if isinstance(cand, Mapping):
             cited = _cited(ctx, cand.get("evidence"))
-            if cited is not None:  # the span says which text it is in
-                span, source, ref = cited
+            if cited is not None:  # the value item names the text of its span
+                span = cited[0]
+                if source is None:
+                    source, ref = cited[1], cited[2]
     return Decision(
         _json_id(cid), sha, field_name, "rejected", (p.code,), value, unit, span, key, source, ref,
         url,
     )  # fmt: skip
 
 
-def _cited(ctx: _Ctx, ev: object) -> tuple[tuple[int, int], str, str | None] | None:
-    """The value item's cited span when it is valid in its text, with the item's source and
-    ref, else None (SPEC §5)."""
+def _cited(ctx: _Ctx, ev: object) -> tuple[tuple[int, int] | None, str, str | None] | None:
+    """The value item's span when its offsets are valid in its text (else None), with the item's
+    source and ref; None when the evidence has no value item (SPEC §5)."""
     try:
         items = _items(ev, ctx.refs)
     except _Reject:
         return None
     for it in items:
-        if it.role == "value" and it.span is not None:
+        if it.role == "value":
             t = ctx.doc if it.source == "document" else ctx.refs[it.ref or ""]
-            return (it.span, it.source, it.ref) if _valid(t.offsets, it.span) else None
+            valid = it.span is not None and _valid(t.offsets, it.span) is not None
+            return (it.span if valid else None), it.source, it.ref
     return None
 
 
