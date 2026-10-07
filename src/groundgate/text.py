@@ -643,4 +643,7 @@ def host(url: str) -> str | None:
     rest = url.split("://", 1)[1]
     rest = re.split(r"[/\\?#]", rest, maxsplit=1)[0]
     rest = rest.rsplit("@", 1)[-1]
+    if rest.startswith("["):  # an IPv6 literal keeps its brackets and its colons
+        end = rest.find("]")
+        return (rest if end < 0 else rest[: end + 1]).lower()
     return rest.split(":", 1)[0].lower()

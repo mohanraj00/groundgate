@@ -458,3 +458,20 @@ def test_host_of_a_url() -> None:
     assert host("https://user@WWW.Example.org:8080/a?b#c") == "www.example.org"
     assert host("https://example.org?x=1") == "example.org"
     assert host("mailto:someone") is None
+
+
+def test_an_early_reject_of_a_reference_item_names_its_text() -> None:
+    refs = [{"id": "r", "text": "The fee is $40."}]
+    cand = {"field": "nope", "value": 40,
+            "evidence": [{"source": "reference", "ref": "r", "start": 11, "end": 14}]}  # fmt: skip
+    d = gg.admit(DOC, FEE_SCHEMA, [cand], references=refs).to_dict()["decisions"][0]
+    assert (d["codes"], d["source"], d["ref"], d["evidence"]) == (
+        ["FIELD_UNKNOWN"], "reference", "r", {"start": 11, "end": 14},
+    )  # fmt: skip
+
+
+def test_host_of_an_ipv6_url() -> None:
+    from groundgate.text import host
+
+    assert host("https://[2001:DB8::1]:443/p") == "[2001:db8::1]"
+    assert host("https://[2001:db8::1]/") != host("https://[2001:db8::2]/")

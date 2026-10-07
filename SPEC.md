@@ -112,7 +112,8 @@ supports (§3, the outside path). groundgate cannot check such evidence, so the 
 - `knowledge` is `admit`, `review` or `reject`.
 
 The **host** of a URL is the text after its first `://` up to the first `/`, `\`, `?` or `#`, after the
-last `@`, without a `:` and port, lower-cased. A URL without `://` has no host. Defaults fill in
+last `@`, without a `:` and port, lower-cased. A host that starts with `[` (an IPv6 literal)
+ends at its `]` and keeps its colons. A URL without `://` has no host. Defaults fill in
 each member that is absent; other keys or values are invalid.
 
 `judge` is null or names the one judge whose recorded judgments (§2.6) the decision reads, with
@@ -637,8 +638,9 @@ not provide a parseable one. `key` is the candidate's `key` when its field has `
 is a string, otherwise `null`.
 
 - `source` is the kind of the item that the decision rests on: the value item's on the checked
-  path from step 9 on, the deciding item's on the outside path, otherwise `null`. `ref` is the value item's `ref`
-  for a reference, and `url` the deciding item's URL for an external item, otherwise `null`.
+  path from step 9 on, the deciding item's on the outside path, and for a candidate rejected
+  before step 9, the value item's when `evidence` is not null; otherwise `null`. `ref` is the
+  value item's `ref` for a reference, and `url` the deciding item's URL for an external item, otherwise `null`.
 - `evidence` is the value span that the decision rests on: the re-anchored span when re-anchoring
   applied, the found occurrence for a quote, otherwise the cited span if it is valid, otherwise
   `null`. It is in the value item's text.

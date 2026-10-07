@@ -208,3 +208,23 @@ def test_a_table_value_is_admitted_with_its_cited_parts() -> None:
         (2, "admitted", ("VALUE_DERIVED", "KEY_CITED")),
         (3, "needs_verification", ("PART_MISSING", "KEY_NOT_AT_VALUE")),  # nothing cited
     ]
+
+
+def test_admit_document_passes_the_packet_members_to_admit() -> None:
+    from groundgate.adapters.langextract import admit_document
+
+    attrs = {
+        "value": "40",
+        "unit": "USD",
+        "source_url": "https://example.org/fees",
+        "source_quote": "The fee is $40.",
+        "source_retrieved": "2026-10-01",
+    }
+    ext = {"extraction_class": "fee", "extraction_text": "x", "char_interval": None}
+    doc = {"text": "The fee is $40.", "extractions": [{**ext, "attributes": attrs}]}
+    schema = {"fields": {"fee": {"type": "integer", "unit": "USD"}}}
+    policy = {"sources": {"external": {"allow": ["document-domain"]}}}
+    r = admit_document(doc, schema, policy, document_source="https://example.org/doc")
+    d = r.to_dict()
+    assert d["document"]["source"] == "https://example.org/doc"
+    assert d["decisions"][0]["codes"] == ["ADMITTED_BY_POLICY"]

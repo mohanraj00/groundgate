@@ -184,6 +184,20 @@
    ]
   },
   {
+   "id": "g12",
+   "field": "mfj",
+   "value": "165000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://[2001:db8::2]/p",
+     "retrieved": "2026-10-01",
+     "text": "The phase-out begins at $165,000 for joint filers."
+    }
+   ]
+  },
+  {
    "id": "g10",
    "field": "mfj_keyed",
    "value": "165000",
@@ -258,6 +272,12 @@
     ],
     "missing": [
      "key"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SOURCE_REJECTED"
     ]
    },
    {

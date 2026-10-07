@@ -2074,6 +2074,8 @@ vector(
           (REVIEW, ["KEY_NOT_AT_VALUE", "ADMITTED_BY_POLICY"], ["key"]), key="married filing jointly"),
         c("g11", "mfj", "165000", "USD", [ext(JOINT, "https://evil.example\\@www.irs.gov/p")],
           ("rejected", ["SOURCE_REJECTED"])),
+        c("g12", "mfj", "165000", "USD", [ext(JOINT, "https://[2001:db8::2]/p")],
+          ("rejected", ["SOURCE_REJECTED"])),
         c("g10", "mfj_keyed", "165000", "USD",
           [ext("For married filing jointly, the phase-out begins at $165,000.")],
           ("admitted", ["ADMITTED_BY_POLICY"]), key="married filing jointly"),

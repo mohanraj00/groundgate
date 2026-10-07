@@ -36,7 +36,7 @@ checks ignore them.
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 from ..admit import admit
@@ -167,9 +167,13 @@ def admit_document(
     policy: Policy | Mapping[str, Any] | None = None,
     *,
     document_id: str | None = None,
+    judgments: Sequence[object] | None = None,
+    references: Sequence[object] | None = None,
+    document_source: str | None = None,
     **options: Any,
 ) -> Receipt:
-    """Admit every extraction in a LangExtract document. ``options`` go to ``to_candidates``.
+    """Admit every extraction in a LangExtract document. ``options`` go to ``to_candidates``;
+    ``judgments``, ``references`` and ``document_source`` go to ``admit`` (SPEC §2).
 
     ``document_id`` defaults to the id the caller gave LangExtract. An id LangExtract generated
     itself is random, so it is left out to keep the receipt reproducible.
@@ -185,5 +189,8 @@ def admit_document(
         schema,
         to_candidates(document, **options),
         policy,
-        document_id=document_id,
+        document_id,
+        judgments,
+        references=references,
+        document_source=document_source,
     )
