@@ -463,6 +463,18 @@ def _label_line_in(text: str, start: int, end: int) -> bool:
     return False
 
 
+def key_cited(
+    text: str, mentions: list[tuple[int, int, str]], key: str, span: tuple[int, int], at: int
+) -> bool:
+    """Whether the span that a candidate cites for its key puts the key at the value ``at``
+    (SPEC §4.5): the span holds a mention of the key, ends at or before the value, and no
+    mention of another key lies between the end of the span and the value."""
+    s, e = span
+    if e > at or not any(s <= a and b <= e and k == key for a, b, k in mentions):
+        return False
+    return not any(e <= a and b <= at and k != key for a, b, k in mentions)
+
+
 # a table sentence (SPEC §4.5): 3 or more line breaks and mentions of 2 or more keys
 _TABLE_BREAKS, _TABLE_KEYS = 3, 2
 

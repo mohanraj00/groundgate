@@ -1554,6 +1554,263 @@ vector(
 
 # ---------------------------------------------------------------- recorded judgments
 vector(
+    "19-key-citation",
+    "A candidate on a keyed field may cite the span that names its key (`key_evidence`, same offsets "
+    "as `evidence`). A passed citation puts the key at the value: it skips the label-line stop and "
+    "the table-sentence limit, and records `KEY_CITED` when it removed `KEY_NOT_AT_VALUE`. The span "
+    "must hold a mention of the key and end at or before the value, and no mention of another key "
+    "may lie between the span and the value. A citation never removes another flag (spec 0.5).",
+    "Heart Failure\n\nTreatment of HF:\n\nThe first dose is 1 mg daily.\n\n"
+    "Hypertension\n\nThe second dose is 2 mg daily.\n\n"
+    "Hypertension\n\nDosing:\n\nHypertension\n\nDosing:\n\nThe third dose is 3 mg daily.\n\n"
+    "Hypertension\n\nDosing:\n\nThe fourth dose is 4 mg daily.\n\n"
+    "Hypertension or heart failure\n\nDosing:\n\nThe fifth dose is 5 mg daily.\n\n"
+    "Hypertension\n\nDosing:\n\nThe sixth dose is at least 6 mg daily.\n\n"
+    "Dose by indication\nHypertension\n7 mg\nHeart failure\n8 mg",
+    {
+        "fields": {
+            "first": KEYED_MG,
+            "second": KEYED_MG,
+            "third": KEYED_MG,
+            "fourth": KEYED_MG,
+            "fifth": KEYED_MG,
+            "sixth": KEYED_MG,
+            "seventh": KEYED_MG,
+            "eighth": KEYED_MG,
+            "eighth_wrong": KEYED_MG,
+        }
+    },
+    [
+        # a label line stops the key of the heading; the citation of the heading passes it
+        c(
+            "k1",
+            "first",
+            "1",
+            "mg",
+            q("1 mg"),
+            ("admitted", ["KEY_CITED"]),
+            key="heart failure",
+            key_evidence=q("Heart Failure"),
+        ),
+        # the key held without the citation: no code
+        c(
+            "k2",
+            "second",
+            "2",
+            "mg",
+            q("2 mg"),
+            key="hypertension",
+            key_evidence=q("Hypertension"),
+        ),
+        # a mention of the candidate's own key between the span and the value does not stop it
+        c(
+            "k3",
+            "third",
+            "3",
+            "mg",
+            q("3 mg"),
+            ("admitted", ["KEY_CITED"]),
+            key="hypertension",
+            key_evidence=q("Hypertension", n=2),
+        ),
+        # no citation: the 0.4 decision
+        c(
+            "k4",
+            "fourth",
+            "4",
+            "mg",
+            q("4 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE"]),
+            key="hypertension",
+        ),
+        # a span that names two keys holds both
+        c(
+            "k5",
+            "fifth",
+            "5",
+            "mg",
+            q("5 mg"),
+            ("admitted", ["KEY_CITED"]),
+            key="heart failure",
+            key_evidence=q("Hypertension or heart failure"),
+        ),
+        # a citation removes no other flag
+        c(
+            "k6",
+            "sixth",
+            "6",
+            "mg",
+            q("6 mg"),
+            ("needs_verification", ["QUALIFIED_VALUE", "KEY_CITED"]),
+            key="hypertension",
+            key_evidence=q("Hypertension", n=6),
+        ),
+        # a table with one cell on each line: the cited row label gives the key
+        c(
+            "k7",
+            "seventh",
+            "7",
+            "mg",
+            q("7 mg"),
+            ("admitted", ["KEY_CITED"]),
+            key="hypertension",
+            key_evidence=q("Hypertension", n=7),
+        ),
+        c(
+            "k8",
+            "eighth",
+            "8",
+            "mg",
+            q("8 mg"),
+            ("admitted", ["KEY_CITED"]),
+            key="heart failure",
+            key_evidence=q("Heart failure"),
+        ),
+        # "Heart failure" lies between the cited label and the value
+        c(
+            "k9",
+            "eighth_wrong",
+            "8",
+            "mg",
+            q("8 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
+            key="hypertension",
+            key_evidence=q("Hypertension", n=7),
+        ),
+    ],
+)
+
+vector(
+    "19b-key-citation-fails",
+    "A citation that fails a check adds `KEY_CITATION_INVALID`, even when the key holds without it, "
+    "and the candidate goes to review. The checks: a valid span, a `text` that equals the span's "
+    "text, a mention of the key in the span, a span that ends at or before the value, and no "
+    "mention of another key between the span and the value. A `key_evidence` that is not an "
+    "object with integer `start` and `end` is `CANDIDATE_INVALID`, and it is ignored on a field "
+    "without keys (spec 0.5).",
+    "Hypertension\n\nThe first dose is 1 mg daily.\n\n"
+    "Hypertension\n\nThe second dose is 2 mg daily.\n\n"
+    "Hypertension\n\nThe third dose is 3 mg daily.\n\n"
+    "Hypertension\n\nThe fourth dose is 4 mg daily.\n\nHeart failure\n\n"
+    "Hypertension\n\nHeart failure\n\nThe fifth dose is 5 mg daily.\n\n"
+    "Hypertension\n\nDosing:\n\nThe sixth dose is 6 mg daily.\n\n"
+    "The seventh dose is 7 mg daily.\n\n"
+    "Hypertension\n\nThe eighth dose is 8 mg daily. Heart failure.",
+    {
+        "fields": {
+            "first": KEYED_MG,
+            "second": KEYED_MG,
+            "third": KEYED_MG,
+            "fourth": KEYED_MG,
+            "fifth": KEYED_MG,
+            "sixth": KEYED_MG,
+            "seventh": KEYED_MG,
+            "eighth": KEYED_MG,
+            "plain": {"type": "number", "unit": "mg"},
+        }
+    },
+    [
+        # the span is not valid (start after end)
+        c(
+            "f1",
+            "first",
+            "1",
+            "mg",
+            q("1 mg"),
+            ("needs_verification", ["KEY_CITATION_INVALID"]),
+            key="hypertension",
+            key_evidence={"start": 10, "end": 2},
+        ),
+        # `text` differs from the span's text
+        c(
+            "f2",
+            "second",
+            "2",
+            "mg",
+            q("2 mg"),
+            ("needs_verification", ["KEY_CITATION_INVALID"]),
+            key="hypertension",
+            key_evidence=q("Hypertension", n=2, text="Hypertensive"),
+        ),
+        # the span names no key
+        c(
+            "f3",
+            "third",
+            "3",
+            "mg",
+            q("3 mg"),
+            ("needs_verification", ["KEY_CITATION_INVALID"]),
+            key="hypertension",
+            key_evidence=q("The third dose"),
+        ),
+        # the span starts after the value
+        c(
+            "f4",
+            "fourth",
+            "4",
+            "mg",
+            q("4 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
+            key="heart failure",
+            key_evidence=q("Heart failure"),
+        ),
+        # another key lies between the span and the value
+        c(
+            "f5",
+            "fifth",
+            "5",
+            "mg",
+            q("5 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
+            key="hypertension",
+            key_evidence=q("Hypertension", n=5),
+        ),
+        # a passed citation next to the failed ones
+        c(
+            "f6",
+            "sixth",
+            "6",
+            "mg",
+            q("6 mg"),
+            ("admitted", ["KEY_CITED"]),
+            key="hypertension",
+            key_evidence=q("Hypertension", n=6),
+        ),
+        # a citation that is not an object makes the candidate invalid
+        c(
+            "f7",
+            "seventh",
+            "7",
+            "mg",
+            q("7 mg"),
+            ("rejected", ["CANDIDATE_INVALID"]),
+            key="hypertension",
+            key_evidence="Hypertension",
+        ),
+        # a span that holds the value: the key named after the value does not count
+        c(
+            "f9",
+            "eighth",
+            "8",
+            "mg",
+            q("8 mg"),
+            ("needs_verification", ["KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID"]),
+            key="heart failure",
+            key_evidence=q("The eighth dose is 8 mg daily. Heart failure"),
+        ),
+        # a field without keys ignores a citation
+        c(
+            "f8",
+            "plain",
+            "6",
+            "mg",
+            q("6 mg"),
+            key_evidence=q("Hypertension"),
+        ),
+    ],
+)
+
+vector(
     "18-judgments-key",
     "A recorded key judgment clears KEY_NOT_AT_VALUE when it chooses the candidate's key with p at "
     "or above the policy's threshold, and adds MODEL_DOUBT when it chooses another key or none at "
@@ -1869,7 +2126,9 @@ def main() -> None:
             cand = item["candidate"]
             if isinstance(cand, dict):
                 cand = {
-                    k: resolve(doc, val) if k in ("evidence", "search_region") else val
+                    k: resolve(doc, val)
+                    if k in ("evidence", "search_region", "key_evidence")
+                    else val
                     for k, val in cand.items()
                 }
             cands.append(cand)

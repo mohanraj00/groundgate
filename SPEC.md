@@ -108,6 +108,7 @@ without judgments.
 | `unit` | no | Unit code the extractor claims. |
 | `key` | no | For a keyed field, the key the value belongs to. Ignored on a field without `keys`. |
 | `evidence` | no | Span the extractor cites, with the text it quoted (`text` optional). |
+| `key_evidence` | no | For a keyed field, the span that names the key (§4.5), with the text it quoted (`text` optional). Ignored on a field without `keys`. |
 | `search_region` | no | Span within which re-anchoring may look (§3 step 10). Default: the whole document. |
 | `confidence` | no | Number in [0, 1]. |
 | `id` | no | Caller's identifier, echoed in the decision. |
@@ -146,7 +147,7 @@ later check runs. `value` means the candidate's value parsed per its field type.
 
 | Step | Code | Rejects when |
 |---:|---|---|
-| 1 | `CANDIDATE_INVALID` | The candidate is not an object, `field` is not a string, `value` is missing or not a string/integer, `unit` or `key` is not a string, `confidence` is not a number in [0, 1], or `evidence`/`search_region` is present but not an object with integer `start` and `end`. |
+| 1 | `CANDIDATE_INVALID` | The candidate is not an object, `field` is not a string, `value` is missing or not a string/integer, `unit` or `key` is not a string, `confidence` is not a number in [0, 1], or `evidence`, `key_evidence` or `search_region` is present but not an object with integer `start` and `end`. |
 | 2 | `FIELD_UNKNOWN` | `field` is not in the schema. |
 | 3 | `NULL_STRING_LITERAL` | `value`, trimmed and lower-cased, is `null`, `none`, `nil` or `n/a`. |
 | 4 | `TYPE_INVALID` | `value` does not parse as the field type (§4.1). |
@@ -173,12 +174,15 @@ outcome `needs_verification`, no flag makes it `admitted`.
 | `NON_VERBATIM_EVIDENCE` | `evidence.text` is present and differs from the span's text after whitespace normalisation and joining of line-break hyphenation (§4.4). |
 | `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the document and its comparator differs from the field's `comparator`. |
 | `SCALE_WORD` | A scale word (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. |
-| `KEY_NOT_AT_VALUE` | The field has `keys`, and the candidate's `key` is not a key at the value (§4.5). |
+| `KEY_NOT_AT_VALUE` | The field has `keys`, and the candidate's `key` is not a key at the value (§4.5), and a passed key citation does not put it there. |
+| `KEY_CITATION_INVALID` | The field has `keys`, the candidate has `key_evidence`, and the citation fails a check of §4.5. |
 | `LOW_CONFIDENCE` | `policy.min_confidence` is set and `confidence` is below it. |
 | `CONFLICTING_CANDIDATES` | Another candidate for the same non-`multiple` field, and on a keyed field the same `key`, also passed steps 1–11 with a different canonical value. Set on every such candidate. |
 | `MODEL_DOUBT` | An applying judgment doubts the value (step 12). |
 
-`EVIDENCE_REANCHORED` is informational: it never changes the outcome.
+`EVIDENCE_REANCHORED` and `KEY_CITED` are informational: they never change the outcome. A key
+citation (§4.5) never removes a flag other than `KEY_NOT_AT_VALUE`, so it never admits a candidate
+that another check flags.
 
 **Recorded judgments (step 12).** After the flags, each applying judgment (§2.6) acts on its
 candidate. A judgment never overturns a rejection, and never admits a candidate that has another
@@ -374,6 +378,24 @@ end of the sentence), and no key when that line mentions none. So a table with o
 line keeps its row keys, and a table flattened to one cell on each line sends its keyed values to
 review. The nearest earlier mention does not apply inside a table sentence.
 
+A candidate on a keyed field may **cite the span that names its key**, `key_evidence`, in the same
+offsets as `evidence`. The check runs after steps 1–11, with the value at the place of the
+`KEY_NOT_AT_VALUE` check (after re-anchoring). The citation **passes** when all of these hold:
+
+1. The span is a valid span (§2.2), and its `text`, if present, equals the span's text after
+   whitespace normalisation (§4.4).
+2. A key mention of the candidate's `key` lies wholly inside the span.
+3. The span ends at or before the value, so it never holds the value or text after it.
+4. No mention of another key of the field lies wholly between the end of the span and the value.
+   A mention of the candidate's own key there, or of another key inside the span, does not count.
+
+When it passes, the candidate's key is a key at the value, so the label-line stop and the
+table-sentence limit do not apply. The decision records `KEY_CITED` when this removed
+`KEY_NOT_AT_VALUE`, and no code when the key held without the citation. When a check fails, the
+decision gets `KEY_CITATION_INVALID`, even if the key held without the citation, and the
+`KEY_NOT_AT_VALUE` check goes on as without a citation. Without `key_evidence`, the decision is
+the same as in spec 0.4. There is no limit on the distance between the span and the value.
+
 ## 5. Receipt
 
 ```json
@@ -382,7 +404,7 @@ review. The nearest earlier mention does not apply inside a table sentence.
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "c1", "candidate_sha256": "sha256:...", "field": "...",
                 "key": null, "outcome": "admitted", "codes": [], "value": "2000", "unit": "mg",
-                "evidence": {"start": 120, "end": 128}}],
+                "evidence": {"start": 120, "end": 128}, "key_evidence": null}],
  "coverage": [],
  "judgments": [],
  "summary": {"admitted": 1, "needs_verification": 0, "rejected": 0},
@@ -390,11 +412,13 @@ review. The nearest earlier mention does not apply inside a table sentence.
 ```
 
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
-code, or the flag codes in the order of the table in §3, followed by `EVIDENCE_REANCHORED` and
-then `MODEL_CLEARED` when they apply. `value` is the canonical value and `unit` the candidate's unit, each `null` when the candidate
+code, or the flag codes in the order of the table in §3, followed by `EVIDENCE_REANCHORED`,
+`KEY_CITED` and then `MODEL_CLEARED` when they apply. `value` is the canonical value and `unit` the candidate's unit, each `null` when the candidate
 does not provide a parseable one. `key` is the candidate's `key` when its field has `keys` and the
 key is a string, otherwise `null`. `evidence` is the span the decision rests on: the re-anchored span
-when re-anchoring applied, otherwise the cited span if it is valid, otherwise `null`. Coverage is
+when re-anchoring applied, otherwise the cited span if it is valid, otherwise `null`. `key_evidence`
+is the span cited for the key, when the candidate passed steps 1–11, its field has `keys` and the
+span is valid, whether or not the citation passed; otherwise `null`. Coverage is
 sorted by field name. `judgments` lists each judgment that applied, as `{"candidate_sha256",
 "question", "answer", "p"}` (`answer` only for `key`), sorted by `candidate_sha256`, then by input
 position of the candidate, then by question; the judge is in the policy. `receipt_sha256` is the digest of kind `receipt` over the receipt without

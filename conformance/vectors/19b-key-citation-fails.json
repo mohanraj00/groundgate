@@ -1,0 +1,295 @@
+{
+ "name": "19b-key-citation-fails",
+ "description": "A citation that fails a check adds `KEY_CITATION_INVALID`, even when the key holds without it, and the candidate goes to review. The checks: a valid span, a `text` that equals the span's text, a mention of the key in the span, a span that ends at or before the value, and no mention of another key between the span and the value. A `key_evidence` that is not an object with integer `start` and `end` is `CANDIDATE_INVALID`, and it is ignored on a field without keys (spec 0.5).",
+ "document": "Hypertension\n\nThe first dose is 1 mg daily.\n\nHypertension\n\nThe second dose is 2 mg daily.\n\nHypertension\n\nThe third dose is 3 mg daily.\n\nHypertension\n\nThe fourth dose is 4 mg daily.\n\nHeart failure\n\nHypertension\n\nHeart failure\n\nThe fifth dose is 5 mg daily.\n\nHypertension\n\nDosing:\n\nThe sixth dose is 6 mg daily.\n\nThe seventh dose is 7 mg daily.\n\nHypertension\n\nThe eighth dose is 8 mg daily. Heart failure.",
+ "schema": {
+  "fields": {
+   "first": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "second": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "third": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "fourth": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "fifth": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "sixth": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "seventh": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "eighth": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "plain": {
+    "type": "number",
+    "unit": "mg"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "f1",
+   "field": "first",
+   "value": "1",
+   "unit": "mg",
+   "evidence": {
+    "start": 32,
+    "end": 36,
+    "text": "1 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 10,
+    "end": 2
+   }
+  },
+  {
+   "id": "f2",
+   "field": "second",
+   "value": "2",
+   "unit": "mg",
+   "evidence": {
+    "start": 78,
+    "end": 82,
+    "text": "2 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 45,
+    "end": 57,
+    "text": "Hypertensive"
+   }
+  },
+  {
+   "id": "f3",
+   "field": "third",
+   "value": "3",
+   "unit": "mg",
+   "evidence": {
+    "start": 123,
+    "end": 127,
+    "text": "3 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 105,
+    "end": 119,
+    "text": "The third dose"
+   }
+  },
+  {
+   "id": "f4",
+   "field": "fourth",
+   "value": "4",
+   "unit": "mg",
+   "evidence": {
+    "start": 169,
+    "end": 173,
+    "text": "4 mg"
+   },
+   "key": "heart failure",
+   "key_evidence": {
+    "start": 182,
+    "end": 195,
+    "text": "Heart failure"
+   }
+  },
+  {
+   "id": "f5",
+   "field": "fifth",
+   "value": "5",
+   "unit": "mg",
+   "evidence": {
+    "start": 244,
+    "end": 248,
+    "text": "5 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 197,
+    "end": 209,
+    "text": "Hypertension"
+   }
+  },
+  {
+   "id": "f6",
+   "field": "sixth",
+   "value": "6",
+   "unit": "mg",
+   "evidence": {
+    "start": 298,
+    "end": 302,
+    "text": "6 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": {
+    "start": 257,
+    "end": 269,
+    "text": "Hypertension"
+   }
+  },
+  {
+   "id": "f7",
+   "field": "seventh",
+   "value": "7",
+   "unit": "mg",
+   "evidence": {
+    "start": 331,
+    "end": 335,
+    "text": "7 mg"
+   },
+   "key": "hypertension",
+   "key_evidence": "Hypertension"
+  },
+  {
+   "id": "f9",
+   "field": "eighth",
+   "value": "8",
+   "unit": "mg",
+   "evidence": {
+    "start": 377,
+    "end": 381,
+    "text": "8 mg"
+   },
+   "key": "heart failure",
+   "key_evidence": {
+    "start": 358,
+    "end": 402,
+    "text": "The eighth dose is 8 mg daily. Heart failure"
+   }
+  },
+  {
+   "id": "f8",
+   "field": "plain",
+   "value": "6",
+   "unit": "mg",
+   "evidence": {
+    "start": 298,
+    "end": 302,
+    "text": "6 mg"
+   },
+   "key_evidence": {
+    "start": 0,
+    "end": 12,
+    "text": "Hypertension"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

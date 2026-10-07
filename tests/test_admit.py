@@ -183,11 +183,12 @@ def test_flag_order_and_code_descriptions_are_pinned() -> None:
 
     assert FLAG_ORDER == (
         "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "KEY_NOT_AT_VALUE",
-        "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "MODEL_DOUBT",
+        "KEY_CITATION_INVALID", "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "MODEL_DOUBT",
     )  # fmt: skip
     assert tuple(codes.FLAG) == FLAG_ORDER
     assert len(codes.REJECT) == 11 and set(codes.INFO) == {
         "EVIDENCE_REANCHORED",
+        "KEY_CITED",
         "MODEL_CLEARED",
     }
     assert set(codes.COVERAGE) == {"REQUIRED_FIELD_MISSING"}
@@ -338,3 +339,67 @@ def test_applied_judgments_in_a_receipt_are_immutable() -> None:
     (j,) = gg.admit(DOC, SCHEMA, CANDS, DOUBT, judgments=js).judgments
     with pytest.raises(AttributeError):
         j.p = 0.1  # type: ignore[misc]
+
+
+KEYED_DOC = "Café Single\n\nNotes:\n\nThe deduction is $15,000."
+KEYED_SCHEMA: dict[str, Any] = {
+    "fields": {"d": {"type": "integer", "unit": "USD", "keys": ["single", "joint"]}}
+}
+
+
+def _keyed(key_evidence: Any) -> dict[str, Any]:
+    start = KEYED_DOC.encode().index(b"$15,000")
+    cand = {
+        "id": "k",
+        "field": "d",
+        "value": "15000",
+        "unit": "USD",
+        "key": "single",
+        "evidence": {"start": start, "end": start + 7},
+    }
+    if key_evidence is not None:
+        cand["key_evidence"] = key_evidence
+    return cand
+
+
+def test_key_citation_reports_its_byte_span_and_verifies() -> None:
+    start = KEYED_DOC.encode().index(b"Single")
+    cand = _keyed({"start": start, "end": start + 6, "text": "Single"})
+    r = gg.admit(KEYED_DOC, KEYED_SCHEMA, [cand])
+    d = r.to_dict()["decisions"][0]
+    assert (d["outcome"], d["codes"]) == ("admitted", ["KEY_CITED"])
+    assert d["key_evidence"] == {"start": start, "end": start + 6}
+    assert gg.verify(r.to_dict(), KEYED_DOC, KEYED_SCHEMA, [cand]).ok
+    # without the citation the label line stops the key, and key_evidence is null
+    d0 = gg.admit(KEYED_DOC, KEYED_SCHEMA, [_keyed(None)]).to_dict()["decisions"][0]
+    assert (d0["outcome"], d0["codes"], d0["key_evidence"]) == (
+        "needs_verification",
+        ["KEY_NOT_AT_VALUE"],
+        None,
+    )
+
+
+def test_failed_key_citation_is_not_cleared_by_a_judgment() -> None:
+    start = KEYED_DOC.encode().index(b"Notes")
+    cand = _keyed({"start": start, "end": start + 5})
+    judge = {"id": "j", "digest": "j-1"}
+    policy = {"judge": {**judge, "clear": {"KEY_NOT_AT_VALUE": 0.5}}}
+    js = [
+        {
+            "candidate_id": "k",
+            "question": "key",
+            "judge": judge,
+            "answer": "single",
+            "p": 0.99,
+        }
+    ]
+    d = gg.admit(KEYED_DOC, KEYED_SCHEMA, [cand], policy, None, js).to_dict()["decisions"][0]
+    assert (d["outcome"], d["codes"]) == (
+        "needs_verification",
+        ["KEY_CITATION_INVALID", "MODEL_CLEARED"],
+    )
+
+
+def test_a_key_citation_that_is_not_a_span_makes_the_candidate_invalid() -> None:
+    d = gg.admit(KEYED_DOC, KEYED_SCHEMA, [_keyed("Single")]).to_dict()["decisions"][0]
+    assert (d["outcome"], d["codes"]) == ("rejected", ["CANDIDATE_INVALID"])

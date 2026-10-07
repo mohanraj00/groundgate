@@ -226,6 +226,7 @@ class Decision:
     unit: str | None
     evidence: tuple[int, int] | None  # UTF-8 byte span
     key: str | None = None
+    key_evidence: tuple[int, int] | None = None  # UTF-8 byte span cited for the key
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -240,6 +241,9 @@ class Decision:
             "evidence": None
             if self.evidence is None
             else {"start": self.evidence[0], "end": self.evidence[1]},
+            "key_evidence": None
+            if self.key_evidence is None
+            else {"start": self.key_evidence[0], "end": self.key_evidence[1]},
         }
 
 

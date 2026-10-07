@@ -196,3 +196,44 @@ def test_cli_rejects_ambiguous_json(tmp_path: Path, capsys: pytest.CaptureFixtur
     assert "\\ud83d" in out.read_text()
     with pytest.raises(SystemExit):
         main(["extract", str(doc), "--pages", "3-"])
+
+
+def test_report_shows_the_cited_key_span() -> None:
+    text = "Single\n\nNotes:\n\nThe deduction is $15,000."
+    schema = {"fields": {"d": {"type": "integer", "unit": "USD", "keys": ["single"]}}}
+    cands = [{"field": "d", "value": "15000", "unit": "USD", "key": "single",
+              "evidence": ev("$15,000", text), "key_evidence": ev("Single", text)}]  # fmt: skip
+    html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
+    assert "key cited “Single”" in html
+    assert '<a href="#k0">show key</a>' in html
+    assert '<span class="anchor" id="k0"></span></span><mark class="key key-admitted"' in html
+    cands[0]["key_evidence"]["text"] = "single filers"
+    html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
+    assert "key cited “Single”, quoted “single filers”" in html
+
+
+def test_report_marks_a_key_span_inside_the_value_evidence() -> None:
+    text = "Single: the deduction is $15,000."
+    schema = {"fields": {"d": {"type": "integer", "unit": "USD", "keys": ["single"]}}}
+    cands = [{"field": "d", "value": "15000", "unit": "USD", "key": "single",
+              "evidence": ev(text, text), "key_evidence": ev("Single", text)}]  # fmt: skip
+    html = render(gg.admit(text, schema, cands).to_dict(), text, cands, schema=schema)
+    mark = r'<mark class="(admitted|needs_verification) key key-\1" title="[^"]*key of d'
+    assert re.search(mark, html)
+
+
+def test_report_keeps_every_outcome_on_a_shared_key_span() -> None:
+    text = "Single\n\nNotes:\n\nThe deduction is $15,000. The credit is $500."
+    schema = {
+        "fields": {
+            "d": {"type": "integer", "unit": "USD", "keys": ["single"]},
+            "c": {"type": "integer", "unit": "USD", "keys": ["single"]},
+        }
+    }
+    cands = [{"field": "d", "value": "15000", "unit": "USD", "key": "single",
+              "evidence": ev("$15,000", text), "key_evidence": ev("Single", text)},
+             {"field": "c", "value": "500", "unit": "USD", "key": "single", "confidence": 0.1,
+              "evidence": ev("$500", text), "key_evidence": ev("Single", text)}]  # fmt: skip
+    policy = {"min_confidence": 0.5}
+    html = render(gg.admit(text, schema, cands, policy).to_dict(), text, cands)
+    assert '<mark class="key key-admitted key-needs_verification"' in html

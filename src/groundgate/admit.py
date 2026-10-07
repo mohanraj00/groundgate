@@ -13,6 +13,7 @@ from .model import Decision, Field, Judgment, Outcome, PacketError, Policy, Rece
 from .text import (
     Token,
     canonical,
+    key_cited,
     key_mentions,
     keys_at,
     normalize_ws,
@@ -32,11 +33,13 @@ FLAG_ORDER = (  # SPEC §3 table order; it is part of every receipt hash
     "QUALIFIED_VALUE",
     "SCALE_WORD",
     "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID",
     "LOW_CONFIDENCE",
     "CONFLICTING_CANDIDATES",
     "MODEL_DOUBT",
 )
 REANCHORED = "EVIDENCE_REANCHORED"
+KEY_CITED = "KEY_CITED"
 CLEARED = "MODEL_CLEARED"
 QUESTIONS = ("key", "field_match")
 
@@ -98,6 +101,8 @@ class _Passed:
     flags: list[str]
     reanchored: bool
     cleared: bool = False  # a recorded judgment removed KEY_NOT_AT_VALUE (step 12)
+    key_span: tuple[int, int] | None = None  # the valid span cited for the key, code points
+    cited: bool = False  # the key citation removed KEY_NOT_AT_VALUE
 
 
 def _value_at(
@@ -148,6 +153,12 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
     if ev is not None:
         cited = _span(ev)
         if cited is None or not isinstance(ev.get("text", ""), str):
+            raise _Reject("CANDIDATE_INVALID")
+    key_ev = cand.get("key_evidence")
+    key_cite = None
+    if key_ev is not None:
+        key_cite = _span(key_ev)
+        if key_cite is None or not isinstance(key_ev.get("text", ""), str):
             raise _Reject("CANDIDATE_INVALID")
     region_span = None
     if region is not None:
@@ -217,15 +228,33 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
             flags.append("QUALIFIED_VALUE")
         if scale_word(ctx.text, token) and token.value == value:  # written, not scaled
             flags.append("SCALE_WORD")
+    key_span = None
+    key_used = False
     if f.keys is not None:
         at = token.start if token is not None else span[0]
-        if key not in keys_at(ctx.text, ctx.key_mentions(f), at):
+        mentions = ctx.key_mentions(f)
+        held = key in keys_at(ctx.text, mentions, at)
+        if key_cite is not None:
+            assert isinstance(key_ev, Mapping)
+            assert key is not None
+            key_span = _valid(ctx.offsets, key_cite)
+            ok = key_span is not None and key_cited(ctx.text, mentions, key, key_span, at)
+            shown = key_ev.get("text")
+            if ok and isinstance(shown, str):
+                assert key_span is not None
+                ok = normalize_ws(shown) == normalize_ws(ctx.text[key_span[0] : key_span[1]])
+            if ok:
+                key_used = not held
+                held = True
+            else:
+                flags.append("KEY_CITATION_INVALID")
+        if not held:
             flags.append("KEY_NOT_AT_VALUE")
     mc = ctx.policy.min_confidence
     if mc is not None and conf is not None and conf < mc:
         flags.append("LOW_CONFIDENCE")
     canon = value if isinstance(value, str) else canonical(value)
-    return _Passed(f, canon, unit, key, span, token, flags, reanchored)
+    return _Passed(f, canon, unit, key, span, token, flags, reanchored, False, key_span, key_used)
 
 
 @dataclass(frozen=True)
@@ -386,8 +415,18 @@ def admit(
 def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | str) -> Decision:
     if isinstance(p, _Passed):
         flags = [c for c in FLAG_ORDER if c in p.flags]
-        codes = [*flags, *([REANCHORED] if p.reanchored else []), *([CLEARED] if p.cleared else [])]
+        codes = [
+            *flags,
+            *([REANCHORED] if p.reanchored else []),
+            *([KEY_CITED] if p.cited else []),
+            *([CLEARED] if p.cleared else []),
+        ]
         byte_span = (ctx.offsets.to_bytes(p.span[0]), ctx.offsets.to_bytes(p.span[1]))
+        key_byte_span = (
+            None
+            if p.key_span is None
+            else (ctx.offsets.to_bytes(p.key_span[0]), ctx.offsets.to_bytes(p.key_span[1]))
+        )
         outcome: Outcome = "needs_verification" if flags else "admitted"
         return Decision(
             _json_id(cid),
@@ -399,6 +438,7 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | str) 
             p.unit,
             byte_span,
             p.key,
+            key_byte_span,
         )
     # rejected: report what is known about the candidate
     field_name: str | None = None
