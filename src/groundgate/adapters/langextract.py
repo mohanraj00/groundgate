@@ -106,34 +106,46 @@ def to_candidates(
             }
             key_text = attrs.get(key_text_attribute)
             if isinstance(key_text, str) and key_text.strip():
-                at = _value_start(text, start, end, cand["value"])
-                cand["key_evidence"] = _key_span(text, offsets, key_text, at)
+                cand["key_evidence"] = _key_span(
+                    text, offsets, key_text, _value_starts(text, start, end, cand["value"])
+                )
         out.append(cand)
     return out
 
 
-def _value_start(text: str, start: int, end: int, value: object) -> int:
-    """Where groundgate puts a numeric value in the interval: its first number token that equals
-    the value, as written or scaled. Else the interval's start, as for a string field."""
+def _value_starts(text: str, start: int, end: int, value: object) -> list[int]:
+    """Where groundgate may put a numeric value in the interval: each number token that equals
+    the value, as written or scaled, in order. groundgate takes the first one with the field's
+    unit, which the adapter does not know. With none, the interval's start, as for a string
+    field."""
     want = parse_value(str(value))
-    if want is not None:
-        for t in number_tokens(text, start, end):
-            if t.value is not None and want in (t.value, scaled_value(text, t)):
-                return t.start
-    return start
+    if want is None:
+        return [start]
+    hits = [
+        t.start
+        for t in number_tokens(text, start, end)
+        if t.value is not None and want in (t.value, scaled_value(text, t))
+    ]
+    return hits or [start]
 
 
-def _key_span(text: str, offsets: Offsets, key_text: str, at: int) -> dict[str, Any]:
-    """The last occurrence of ``key_text`` that ends at or before ``at`` and is not part of a
-    longer word, in UTF-8 bytes. With none, an empty span at ``at``: groundgate reads it as not
-    valid and flags the citation."""
-    s = e = at
+def _key_span(text: str, offsets: Offsets, key_text: str, ats: list[int]) -> dict[str, Any]:
+    """The last occurrence of ``key_text`` that is not part of a longer word and ends at or
+    before the first place in ``ats`` that has one, in UTF-8 bytes. With none, an empty span at
+    the first place: groundgate reads it as not valid and flags the citation."""
     whole = re.compile(_NOT_ALNUM_BEFORE + quote_pattern(key_text).pattern + _NOT_ALNUM_AFTER)
+    found: list[tuple[int, int]] = []
     pos = 0
-    # search the whole text, so the word check sees the character after a match at ``at``
-    while (m := whole.search(text, pos)) is not None and m.end() <= at:
-        s, e = m.start(), m.end()
-        pos = s + 1  # an occurrence may overlap the one before it
+    while (m := whole.search(text, pos)) is not None and m.end() <= ats[-1]:
+        found.append((m.start(), m.end()))
+        pos = m.start() + 1  # an occurrence may overlap the one before it
+    for at in ats:
+        before = [span for span in found if span[1] <= at]
+        if before:
+            s, e = before[-1]
+            break
+    else:
+        s = e = ats[0]
     return {"start": offsets.to_bytes(s), "end": offsets.to_bytes(e), "text": key_text}
 
 

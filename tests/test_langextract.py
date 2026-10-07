@@ -160,3 +160,12 @@ def test_key_text_inside_the_quote_and_overlapping_occurrences() -> None:
     ext = x("p", "$40", text.index("$40"), "40", key="wages", key_text="Wages Wages")
     (c,) = to_candidates({"text": text, "extractions": [ext]})
     assert c["key_evidence"] == {"start": 7, "end": 18, "text": "Wages Wages"}
+
+
+def test_key_text_before_a_later_occurrence_of_the_value() -> None:
+    # the first 40 has no $, so groundgate reads the later one; the key comes between them
+    text = "40 units\n\nWages\n\nNotes:\n\nPay $40."
+    ext = x("p", text, 0, "40", unit="USD", key="wages", key_text="Wages")
+    (c,) = to_candidates({"text": text, "extractions": [ext]})
+    start = text.index("Wages")
+    assert c["key_evidence"] == {"start": start, "end": start + 5, "text": "Wages"}
