@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import sys
+import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
@@ -83,6 +84,7 @@ def serve(port: int) -> None:
     srcs = sources()
     path = HERE / "labels.json"
     page = (HERE / "web.html").read_bytes()
+    lock = threading.Lock()
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *args: Any) -> None:
@@ -123,9 +125,12 @@ def serve(port: int) -> None:
             if not ok:
                 self.send(400, b"bad label", "text/plain")
                 return
-            labels = json.loads(path.read_text()) if path.exists() else {}
-            labels[got["id"]] = None if answer is None else sorted(answer, key=status.KEYS.index)
-            path.write_text(json.dumps(dict(sorted(labels.items())), indent=1) + "\n")
+            with lock:  # requests run in threads; one read-modify-write at a time
+                labels = json.loads(path.read_text()) if path.exists() else {}
+                labels[got["id"]] = (
+                    None if answer is None else sorted(answer, key=status.KEYS.index)
+                )
+                path.write_text(json.dumps(dict(sorted(labels.items())), indent=1) + "\n")
             self.send(200, b"{}", "application/json")
 
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)

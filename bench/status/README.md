@@ -67,7 +67,8 @@ What it found:
 - The key rules of spec 0.3 transfer to IRS publications for safety. A wrong key reaches 7
   amounts under spec 0.3, against 28 (2 + 26) under spec 0.2.
 - They cost right keys. Every right key and no wrong key reaches 18 amounts under spec 0.3,
-  against 29 under spec 0.2. Under spec 0.3, a right key goes to review on 42 amounts.
+  against 29 under spec 0.2. A right key goes to review on 49 amounts (42 + 7) under spec 0.3,
+  against 36 (10 + 26) under spec 0.2.
 - The label-line rule decides most of the amounts that change. IRS publications put many short
   lines between blank lines, such as bullets, form lines and table cells, and the rule reads
   them as label lines. It stops a wrong key and a right key alike.
