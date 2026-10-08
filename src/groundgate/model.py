@@ -373,3 +373,112 @@ def candidate_schema() -> dict[str, Any]:
     """The JSON Schema of one candidate (SPEC §2.5). Step 1 of SPEC §3 is the definition."""
     raw = resources.files(__package__).joinpath("candidate.schema.json").read_text("utf-8")
     return json.loads(raw)  # type: ignore[no-any-return]
+
+
+_ROLE_HELP = (
+    "What the quote supports. value: the number itself. sign: brackets or a loss word that make "
+    "it negative. scale: words such as 'in thousands'. unit: a unit or $ sign that is not next "
+    "to the number. field: words that name the field, such as a row label. key: words that name "
+    "the key, such as a column heading."
+)
+
+
+def _closed(props: dict[str, Any], description: str | None = None) -> dict[str, Any]:
+    """An object with every member required and no other members."""
+    out: dict[str, Any] = {
+        "type": "object",
+        "properties": props,
+        "required": list(props),
+        "additionalProperties": False,
+    }
+    if description:
+        out["description"] = description
+    return out
+
+
+def extractor_schema(
+    schema: Schema | dict[str, Any], reference_ids: list[str] | None = None
+) -> dict[str, Any]:
+    """A JSON Schema for an extractor's structured output: {"candidates": [...]} for one schema.
+
+    It uses only the JSON Schema subset of the strict structured-output modes, and every
+    candidate that it accepts passes step 1 of SPEC §3. Two step 1 rules stay outside it: two
+    items with the same role, and a blank text, url or retrieved.
+    """
+    s = schema if isinstance(schema, Schema) else Schema.from_dict(schema)
+    if reference_ids is not None and (
+        not reference_ids
+        or len(set(reference_ids)) != len(reference_ids)
+        or not all(isinstance(r, str) and r.strip() for r in reference_ids)
+    ):
+        raise PacketError("reference_ids must be a non-empty list of unique non-blank strings")
+    quote = {"type": "string", "description": "Copied verbatim from the text."}
+    role = {"enum": ["value", "sign", "scale", "unit", "field", "key"], "description": _ROLE_HELP}
+    kinds: dict[str, dict[str, Any]] = {
+        "document": _closed(
+            {"source": {"const": "document"}, "role": role, "text": quote},
+            "A quote from the document.",
+        )
+    }
+    if reference_ids:
+        kinds["reference"] = _closed(
+            {
+                "source": {"const": "reference"},
+                "ref": {"enum": list(reference_ids)},
+                "role": role,
+                "text": quote,
+            },
+            "A quote from a reference text that the app gave.",
+        )
+    kinds["external"] = _closed(
+        {
+            "source": {"const": "external"},
+            "url": {"type": "string"},
+            "retrieved": {"type": "string", "description": "The date that you read the page."},
+            "text": {"type": "string", "description": "Copied verbatim from the page."},
+        },
+        "A quote from a web page that states the value.",
+    )
+    kinds["knowledge"] = _closed(
+        {
+            "source": {"const": "knowledge"},
+            "text": {"type": "string", "description": "Your statement of the fact and its basis."},
+        },
+        "Your own knowledge, when no text states the value.",
+    )
+    # one evidence definition: strict modes count each anyOf against a limit per request
+    evidence = {"type": "array", "items": {"anyOf": [{"$ref": f"#/$defs/{k}"} for k in kinds]}}
+    cands = []
+    for f in s.fields.values():
+        if f.type == "string":
+            value = {"type": "string", "description": "The value as the text states it."}
+        else:
+            value = {
+                "type": "string",
+                "description": "The number with its sign and scale, without $, commas or a unit.",
+            }
+        names = f"Names in the document: {', '.join(f.aliases)}." if f.aliases else None
+        cands.append(
+            _closed(
+                {
+                    "field": {"const": f.name},
+                    "value": value,
+                    "unit": {"const": f.unit} if f.unit else {"type": "null"},
+                    "key": {"enum": list(f.keys)} if f.keys else {"type": "null"},
+                    "evidence": {"$ref": "#/$defs/evidence"},
+                },
+                names,
+            )
+        )
+    return {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        **_closed(
+            {
+                "candidates": {
+                    "type": "array",
+                    "items": cands[0] if len(cands) == 1 else {"anyOf": cands},
+                }
+            }
+        ),
+        "$defs": {**kinds, "evidence": evidence},
+    }

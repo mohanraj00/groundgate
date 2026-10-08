@@ -205,6 +205,12 @@ The core has no dependencies. `groundgate[pdf]` adds pdfminer.six for PDF text, 
 `groundgate[langextract]` installs LangExtract. [docs/guide.md](docs/guide.md) covers schemas,
 policies, candidates and the Python API.
 
+### With your own model
+
+`gg.extractor_schema(schema)` turns your schema into a JSON Schema for the model's structured
+output, so the model sends only your fields, units and keys, and quotes its evidence. The guide
+has [the instructions and an example](docs/guide.md#the-extractors-output).
+
 ### With LangExtract
 
 ```python

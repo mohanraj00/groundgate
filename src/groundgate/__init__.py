@@ -11,6 +11,7 @@ from .model import (
     Receipt,
     Schema,
     candidate_schema,
+    extractor_schema,
 )
 
 __version__ = "0.5.0"
@@ -28,6 +29,7 @@ __all__ = [
     "admit",
     "candidate_schema",
     "digest",
+    "extractor_schema",
     "jcs",
     "verify",
 ]

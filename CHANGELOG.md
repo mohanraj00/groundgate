@@ -3,6 +3,14 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## Unreleased
+
+- `gg.extractor_schema(schema)` and `groundgate schema`: a JSON Schema for a model's structured
+  output, built from your schema (#148). Each field has its own candidate shape, with its unit and
+  keys as constants, and items are quotes. It uses only the subset of JSON Schema that the strict
+  structured-output modes take. Every candidate that it accepts passes steps 1, 2, 6 and 7.
+- The guide has the instructions that go with it, and an example from a made-up 10-K table.
+
 ## 0.5.0 (2026-10-07)
 
 Spec 0.5. Receipts name `"groundgate": "0.5"` and every digest uses the `groundgate/0.5:` prefix, so
