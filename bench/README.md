@@ -185,8 +185,9 @@ right after the number and does not look further.
 - **"Cited the right place" is only as good as the gold evidence.** A label often states the
   same value in several places. A citation counts as right only when the checker listed that
   place, so this rate is a lower bound.
-- **Not every model I tried was available.** GPT-6 Luna is not offered to a ChatGPT account in
-  Codex, so GPT-5.6 Terra took its place.
+- **Not every model I tried was available.** At the time of these runs, GPT-6 Luna was not
+  offered to a ChatGPT account in Codex, so GPT-5.6 Terra took its place. It is offered now, and
+  the held-out 10-K set (`bench/sec3`, #170) uses `gpt-6-luna`.
 - **Small n.** 30 documents and seven models is enough to show where the failure classes are,
   not to rank models.
 

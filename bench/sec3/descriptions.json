@@ -1,0 +1,7 @@
+{
+ "revenue": "Total revenue or net sales for the fiscal year.",
+ "net_income": "Net income for the fiscal year.",
+ "operating_income": "Operating income (income from operations) for the fiscal year.",
+ "cash_and_equivalents": "Cash and cash equivalents at the end of the fiscal year.",
+ "total_debt": "Total debt at the end of the fiscal year."
+}
