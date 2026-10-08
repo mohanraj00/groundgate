@@ -235,11 +235,14 @@ RETRY = {
 }
 
 
-def in_table_row(d):
+def in_table_row(d, references=()):
     """A key item can pass only by the column rule, so only on a line with tabs."""
-    if d.source != "document":
+    if d.source == "document":
+        data = text.encode()
+    elif d.source == "reference":  # pass the references that you gave admit
+        data = next(r["text"] for r in references if r["id"] == d.ref).encode()
+    else:
         return False
-    data = text.encode()
     start = data.rfind(b"\n", 0, d.evidence[0]) + 1
     end = data.find(b"\n", d.evidence[0])
     return b"\t" in data[start : end if end >= 0 else len(data)]
