@@ -93,9 +93,10 @@ line, goes to review.
   candidate's hash.
 
 `gg.candidate_schema()` returns a JSON Schema for one candidate, the file
-[`candidate.schema.json`](../src/groundgate/candidate.schema.json) in the package. Give it to
-your extractor as its output format, so that it sends candidates that pass step 1. groundgate
-does not validate with it: step 1 is the definition. The schema does not check three things: a
+[`candidate.schema.json`](../src/groundgate/candidate.schema.json) in the package. It describes
+every candidate that step 1 accepts. For a model's structured output, use
+[`gg.extractor_schema`](#the-extractors-output) instead. groundgate does not validate with
+either schema: step 1 is the definition. The schema does not check three things: a
 `ref` that names no reference, two document or reference items with the same role, and an integer
 written with a fraction (`2.0`).
 
@@ -148,6 +149,86 @@ A reference is a source text that you pass to `admit` as `references`, such as a
 hold only the part that matters. A candidate with no value item takes the outside path: the
 policy's `sources` decide what happens to it (below). The receipt says which source a decision
 rests on.
+
+### The extractor's output
+
+`gg.extractor_schema(schema)` returns a JSON Schema for a model's structured output: an object
+with a `candidates` list. Give it to the model as its output format, then pass the list to
+`admit`. `groundgate schema schema.json` writes the same schema.
+
+```python
+output_format = gg.extractor_schema(schema)
+out = your_model(instructions, text, output_format)
+receipt = gg.admit(text, schema, out["candidates"])
+```
+
+With references, give their ids to the schema and the same references to `admit`:
+
+```python
+references = [{"id": "tax-table", "text": table_text, "source": "https://www.irs.gov/..."}]
+output_format = gg.extractor_schema(schema, [r["id"] for r in references])
+out = your_model(instructions, text, references, output_format)
+receipt = gg.admit(text, schema, out["candidates"], references=references)
+```
+
+- Each field of your schema has its own candidate shape. `field` is the field's name, `unit` its
+  unit code or `null`, and `key` one of its keys or `null`. So the model cannot send a field, a
+  unit or a key that the schema does not have.
+- An item has no offsets. A model cannot count UTF-8 bytes, so it quotes, and groundgate finds the
+  quote.
+- A reference item is in the schema only when you give the reference ids.
+- The schema uses only `type`, `properties`, `required`, `additionalProperties`, `items`, `const`,
+  `enum`, `anyOf`, `$defs`, `$ref` and `description`. Every member is required, and no object
+  takes other members. This is the subset that the strict structured-output modes take.
+- Two step 1 rules stay outside the schema: two items with the same role, and a blank `text`,
+  `url` or `retrieved`. Step 1 rejects such a candidate with `CANDIDATE_INVALID`.
+
+The schema gives the shape. These instructions tell the model what to put in it:
+
+```text
+Extract the fields from the text. Give "value" as the fact is, as a plain number without $,
+commas or a unit, with its sign and scale: a number in brackets, or a loss, is negative, and a
+table "in thousands" multiplies its numbers by 1000.
+
+Give the evidence as quotes, each copied verbatim from the text:
+- role "value": the number as written, such as "(12,040)";
+- role "sign": the brackets or the loss word that make the value negative, when the value quote
+  does not hold them;
+- role "scale": the words that scale the number, such as "(in thousands)";
+- role "unit": the unit or $ sign when it is not next to the number, such as the $ at the top of
+  a table column;
+- role "field": the words that name the field, such as a table row label;
+- role "key": the words that name the key, such as a table column heading.
+Leave out each role that the value does not need.
+
+If no text states a value, but you know it, give a "knowledge" item that states the value and
+its basis, or an "external" item with the URL of a page that states it, the date that you read
+the page, and a quote from it.
+```
+
+For example, for a field `operating_income` [USD] with keys `2025` and `2024` and the alias "Loss
+from operations", this table (with tabs between cells, as `groundgate extract` writes HTML tables):
+
+```text
+CONSOLIDATED STATEMENTS OF OPERATIONS
+(in thousands)
+
+	2025	2024
+Revenue	$ 412,300	$ 388,950
+Loss from operations	(12,040)	(9,775)
+```
+
+gives this candidate for 2025, and one like it for 2024. Both are admitted, with `VALUE_DERIVED`
+and `KEY_CITED`:
+
+```json
+{"field": "operating_income", "value": "-12040000", "unit": "USD", "key": "2025",
+ "evidence": [{"source": "document", "role": "value", "text": "(12,040)"},
+              {"source": "document", "role": "scale", "text": "(in thousands)"},
+              {"source": "document", "role": "unit", "text": "$"},
+              {"source": "document", "role": "field", "text": "Loss from operations"},
+              {"source": "document", "role": "key", "text": "2025"}]}
+```
 
 ## Policy
 
@@ -471,9 +552,12 @@ groundgate extract FILE [--pages 1-3,7] [-o doc.txt] [--layout layout.json]
 groundgate admit   DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--document-id ID] [-o receipt.json]
 groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J]
 groundgate report  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--layout L] [--title T] [-o report.html]
+groundgate schema  SCHEMA [--references R] [-o extractor.schema.json]
 ```
 
-`DOC` may be `-` for standard input. Exit codes: 0 success, 1 the receipt does not match its
+`admit`, `verify` and `report` also take `--references R` and `--document-source URL`. `schema`
+writes the extractor schema, with the ids of the references in `R` as its refs. `DOC` may be `-`
+for standard input. Exit codes: 0 success, 1 the receipt does not match its
 inputs, 2 invalid input.
 
 ## Receipts

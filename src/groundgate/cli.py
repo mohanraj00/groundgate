@@ -4,6 +4,7 @@
   groundgate admit    DOC SCHEMA CANDIDATES             > receipt.json
   groundgate verify   RECEIPT DOC SCHEMA CANDIDATES
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES -o report.html
+  groundgate schema   SCHEMA                            > extractor.schema.json
 
 DOC may be "-" to read the document from standard input. Exit codes: 0 success, 1 the receipt
 does not match its inputs, 2 invalid input.
@@ -18,7 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from .admit import admit, verify
-from .model import PacketError
+from .model import PacketError, extractor_schema
 
 
 def _unique(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -92,6 +93,11 @@ def _parser() -> argparse.ArgumentParser:
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
     x.add_argument("--pages", type=_pages, help="PDF pages to extract, e.g. 1-12,15")
 
+    s = sub.add_parser("schema", help="write the JSON Schema for an extractor's output")
+    s.add_argument("schema", help="schema JSON")
+    s.add_argument("--references", help="JSON array of references; their ids become refs")
+    s.add_argument("-o", "--output", help="write the JSON Schema here instead of stdout")
+
     def inputs(p: argparse.ArgumentParser) -> None:
         p.add_argument("document", help='UTF-8 NFC text file, or "-" for stdin')
         p.add_argument("schema", help="schema JSON")
@@ -124,6 +130,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "extract":
             return _extract(args)
+        if args.command == "schema":
+            return _schema(args)
         policy = _json(args.policy) if args.policy else None
         text = _text(args.document)
         schema, candidates = _json(args.schema), _json(args.candidates)
@@ -151,6 +159,17 @@ def main(argv: list[str] | None = None) -> int:
     except (PacketError, ValueError, OSError, ImportError) as e:  # JSON, UTF-8: ValueError
         print(f"groundgate: {e}", file=sys.stderr)
         return 2
+
+
+def _schema(args: argparse.Namespace) -> int:
+    ids = None
+    if args.references:
+        refs = _json(args.references)
+        if not isinstance(refs, list) or not all(isinstance(r, dict) for r in refs):
+            raise PacketError("references must be a list of objects")
+        ids = [r.get("id") for r in refs]
+    _write(_dumps(extractor_schema(_json(args.schema), ids)), args.output)
+    return 0
 
 
 def _extract(args: argparse.Namespace) -> int:
