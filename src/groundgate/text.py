@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import functools
 import re
 import unicodedata
 from dataclasses import dataclass
@@ -600,26 +601,30 @@ def gain_word(text: str, start: int, end: int) -> bool:
 
 
 def heading_scale(text: str, pos: int) -> bool:
-    """Whether a scale phrase on a heading line reaches the table row at ``pos`` (SPEC §4.1):
-    the row holds a tab, the rows above it up to the table's first row hold tabs, and the first
-    line above them that is not blank holds no tab and holds "in" and a scale word."""
-    start = text.rfind("\n", 0, pos) + 1
-    end = text.find("\n", pos)
-    line = text[start : len(text) if end < 0 else end]
-    if "\t" not in line:
-        return False
-    while start > 0:
-        end = start - 1
-        start = text.rfind("\n", 0, end) + 1
-        line = text[start:end]
+    """Whether a scale phrase on a heading line reaches the table row at ``pos`` (SPEC §4.1)."""
+    return text.rfind("\n", 0, pos) + 1 in _reached(text)
+
+
+@functools.lru_cache(maxsize=8)
+def _reached(text: str) -> frozenset[int]:
+    """The starts of the lines that a heading scale reaches, in one pass: a line with no tab that
+    holds "in" and a scale word, then any blank lines, then the lines with tabs up to the first
+    line with no tab."""
+    out = set()
+    state = None  # "heading" after a heading line, "table" in its rows
+    start = 0
+    for line in text.split("\n"):
         if "\t" in line:
-            continue
-        while not line.strip() and start > 0:  # blank lines between the heading and the table
-            end = start - 1
-            start = text.rfind("\n", 0, end) + 1
-            line = text[start:end]
-        return "\t" not in line and in_scale(line, 0, len(line))
-    return False
+            if state is not None:
+                out.add(start)
+                state = "table"
+        elif not line.strip():
+            if state == "table":
+                state = None
+        else:
+            state = "heading" if in_scale(line, 0, len(line)) else None
+        start += len(line) + 1
+    return frozenset(out)
 
 
 def in_scale(text: str, start: int, end: int) -> bool:

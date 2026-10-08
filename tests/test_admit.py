@@ -612,3 +612,21 @@ def test_an_early_reject_of_a_quoted_reference_item_names_its_source() -> None:
         "r",
         None,
     )
+
+
+def test_heading_scale_reads_a_long_table_once() -> None:
+    """Many copies of the value in a table under a heading scale stay linear (#206)."""
+    import time
+
+    rows = 8000
+    text = "(in thousands)\n\n" + "".join("Row\t0\t0\n" for _ in range(rows))
+    cand = {
+        "id": "c",
+        "field": "n",
+        "value": 0,
+        "evidence": [{"source": "document", "start": 0, "end": len(text.encode())}],
+    }
+    began = time.perf_counter()
+    r = gg.admit(text, {"fields": {"n": {"type": "integer"}}}, [cand])
+    assert time.perf_counter() - began < 5
+    assert r.decisions[0].missing == ("scale",)
