@@ -614,31 +614,36 @@ def test_an_early_reject_of_a_quoted_reference_item_names_its_source() -> None:
     )
 
 
-def test_heading_scale_reads_a_long_table_once() -> None:
-    """Many copies of the value in a table under a heading scale stay linear (#206)."""
+def _seconds(text: str, cand: dict[str, Any]) -> float:
+    """The best of two times to decide one candidate on an integer field."""
     import time
 
-    rows = 8000
-    text = "(in thousands)\n\n" + "".join("Row\t0\t0\n" for _ in range(rows))
-    cand = {
-        "id": "c",
-        "field": "n",
-        "value": 0,
-        "evidence": [{"source": "document", "start": 0, "end": len(text.encode())}],
-    }
-    began = time.perf_counter()
-    r = gg.admit(text, {"fields": {"n": {"type": "integer"}}}, [cand])
-    assert time.perf_counter() - began < 5
-    assert r.decisions[0].missing == ("scale",)
+    best = float("inf")
+    for _ in range(2):
+        began = time.perf_counter()
+        r = gg.admit(text, {"fields": {"n": {"type": "integer"}}}, [cand])
+        best = min(best, time.perf_counter() - began)
+        assert r.decisions[0].missing == ("scale",)
+    return best
+
+
+def test_heading_scale_reads_a_long_table_once() -> None:
+    """Many copies of the value in a table under a heading scale stay linear (#206): four
+    times the rows take less than eight times as long."""
+
+    def time_for(rows: int) -> float:
+        text = "(in thousands)\n\n" + "Row\t0\t0\n" * rows
+        span = {"source": "document", "start": 0, "end": len(text.encode())}
+        return _seconds(text, {"id": "c", "field": "n", "value": 0, "evidence": [span]})
+
+    assert time_for(8000) < 8 * time_for(2000)
 
 
 def test_heading_scale_reads_a_wide_row_once() -> None:
     """Many copies of the value on one wide row under a heading scale stay linear (#206)."""
-    import time
 
-    text = "(in thousands)\nRow\t" + "\t".join("0" for _ in range(200_000)) + "\n"
-    cand = {"id": "c", "field": "n", "value": 0, "evidence": [{"text": "0"}]}
-    began = time.perf_counter()
-    r = gg.admit(text, {"fields": {"n": {"type": "integer"}}}, [cand])
-    assert time.perf_counter() - began < 5
-    assert r.decisions[0].missing == ("scale",)
+    def time_for(cells: int) -> float:
+        text = "(in thousands)\nRow\t" + "\t".join("0" for _ in range(cells)) + "\n"
+        return _seconds(text, {"id": "c", "field": "n", "value": 0, "evidence": [{"text": "0"}]})
+
+    assert time_for(80_000) < 8 * time_for(20_000)
