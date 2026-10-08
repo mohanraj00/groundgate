@@ -554,8 +554,12 @@ all of these hold:
 
 1. The header ends before the field item starts.
 2. No key mention of the field lies between the end of the header and the start of the field item.
-3. No number token follows the field item on its own line with only spaces between them, such as
-   a footnote marker "(1)".
+3. No number token lies on the field item's line, after the field item and before the value, with
+   no tab between the end of the field item and the start of the token. This stops the rule at a
+   footnote marker, such as the `1` in "Sales (1)". It also stops the rule after the first column
+   when only spaces stand between the field item and the row's first number token. A tab after
+   the field item, as `groundgate extract` writes HTML tables, or cells on their own lines, keep
+   the rule.
 4. Between the end of the field item and the value, the **cells** are the number tokens, the lone
    dashes (`-`, `–` or `—` with whitespace or a line end on both sides in the text), and the
    **empty cells**: a prefix of the field's unit with whitespace or a line end on both sides, where
