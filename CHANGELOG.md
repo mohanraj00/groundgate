@@ -3,6 +3,25 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.5.2 (2026-10-08)
+
+Spec 0.5, unchanged: every decision and receipt is the same as in 0.5.1.
+
+- `groundgate schema check SCHEMA` (#168) prints each setting of a valid schema that makes a check
+  fail every time, or pass for the wrong key or field: a `unit` or `keys` with no `aliases`, a key
+  in an alias of its field, an alias on two fields or in a longer alias of another field, and a
+  `minimum` above the `maximum`. It exits 1 on a finding, 0 on none and 2 on an invalid schema, so
+  CI can run it. `admit` does not run it.
+- `groundgate admit --docs D --candidates C --schema S --out R` (#169) decides a folder of
+  documents. It writes each receipt and `summary.json`, with the outcomes and codes for each
+  document and in total, and prints the totals. In Python, a loop over `gg.admit` does the same.
+- A JSON integer outside [-(2^53-1), 2^53-1] in the candidates, references, judgments, policy or
+  document id is now a `PacketError` that names the path of the value (#143). Before, the digest
+  raised `ValueError` and no candidate got a decision.
+- Known gaps, for 0.7: such an integer as a schema bound (#192) or in a receipt that `verify` reads
+  (#194) still raises `ValueError`, and `schema check` does not yet find a unit code with no forms
+  (#190).
+
 ## 0.5.1 (2026-10-08)
 
 Spec 0.5, unchanged: every decision and receipt is the same as in 0.5.0.
