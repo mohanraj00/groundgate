@@ -116,7 +116,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SCALE_CITATION_INVALID",
      "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -133,7 +132,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SCALE_CITATION_INVALID",
      "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -141,38 +139,6 @@
    },
    {
     "id": "c2",
-    "field": "operating_income",
-    "key": "2025",
-    "value": "-423698000",
-    "evidence": [
-     12296,
-     12305
-    ],
-    "outcome": "needs_verification",
-    "codes": [
-     "SCALE_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
-    ]
-   },
-   {
-    "id": "c3",
-    "field": "operating_income",
-    "key": "2024",
-    "value": "-852789000",
-    "evidence": [
-     12308,
-     12317
-    ],
-    "outcome": "needs_verification",
-    "codes": [
-     "SCALE_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
-    ]
-   },
-   {
-    "id": "c4",
     "field": "net_income",
     "key": "2025",
     "value": "-702958000",
@@ -187,7 +153,7 @@
     ]
    },
    {
-    "id": "c5",
+    "id": "c3",
     "field": "net_income",
     "key": "2024",
     "value": "-1189410000",
@@ -199,6 +165,34 @@
     "codes": [
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "operating_income",
+    "key": "2025",
+    "value": "-423698000",
+    "evidence": [
+     6673,
+     6682
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "id": "c5",
+    "field": "operating_income",
+    "key": "2024",
+    "value": "-852789000",
+    "evidence": [
+     6683,
+     6692
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
     ]
    },
    {
@@ -276,7 +270,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -293,7 +286,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -308,136 +300,113 @@
     "id": "c0",
     "field": "revenue",
     "key": "2025",
-    "value": "164567000",
+    "value": "164567",
     "evidence": [
      16454,
      16461
     ],
     "outcome": "needs_verification",
     "codes": [
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
     ]
    },
    {
     "id": "c1",
     "field": "revenue",
     "key": "2024",
-    "value": "184191000",
+    "value": "184191",
     "evidence": [
      16463,
      16470
     ],
     "outcome": "needs_verification",
     "codes": [
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
     ]
    },
    {
     "id": "c2",
     "field": "net_income",
     "key": "2025",
-    "value": "41809000",
+    "value": "41809",
     "evidence": [
      17256,
      17262
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
+     "KEY_NOT_AT_VALUE"
     ]
    },
    {
     "id": "c3",
     "field": "net_income",
     "key": "2024",
-    "value": "61642000",
+    "value": "61642",
     "evidence": [
      17267,
      17273
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
+     "KEY_NOT_AT_VALUE"
     ]
    },
    {
     "id": "c4",
     "field": "operating_income",
     "key": "2025",
-    "value": "48407000",
+    "value": "48407",
     "evidence": [
      16808,
      16814
     ],
     "outcome": "needs_verification",
     "codes": [
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
     ]
    },
    {
     "id": "c5",
     "field": "operating_income",
     "key": "2024",
-    "value": "63610000",
+    "value": "63610",
     "evidence": [
      16816,
      16822
     ],
     "outcome": "needs_verification",
     "codes": [
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE"
     ]
    },
    {
     "id": "c6",
     "field": "cash_and_equivalents",
     "key": "2025",
-    "value": "8478000",
+    "value": "8478",
     "evidence": [
      24287,
      24292
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
+     "KEY_NOT_AT_VALUE"
     ]
    },
    {
     "id": "c7",
     "field": "cash_and_equivalents",
     "key": "2024",
-    "value": "1149000",
+    "value": "1149",
     "evidence": [
      24246,
      24251
-    ],
-    "outcome": "needs_verification",
-    "codes": [
-     "UNIT_CITATION_INVALID",
-     "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
-    ]
-   },
-   {
-    "id": "c8",
-    "field": "total_debt",
-    "key": "2025",
-    "value": "1200000",
-    "evidence": [
-     21798,
-     21810
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -461,7 +430,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SCALE_CITATION_INVALID",
      "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -478,7 +446,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SCALE_CITATION_INVALID",
      "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -491,13 +458,11 @@
     "value": "-573043700",
     "evidence": [
      42327,
-     42337
+     42339
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SIGN_CITATION_INVALID",
-     "SCALE_CITATION_INVALID",
-     "UNIT_CITATION_INVALID",
+     "PART_MISSING",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ]
@@ -509,7 +474,7 @@
     "value": "-186038900",
     "evidence": [
      42340,
-     42350
+     42352
     ],
     "outcome": "rejected",
     "codes": [
@@ -572,14 +537,10 @@
     "field": "net_income",
     "key": "2025",
     "value": "-3528000",
-    "evidence": [
-     20537,
-     20543
-    ],
-    "outcome": "admitted",
+    "evidence": null,
+    "outcome": "rejected",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "QUOTE_NOT_FOUND"
     ]
    },
    {
@@ -587,14 +548,10 @@
     "field": "net_income",
     "key": "2024",
     "value": "-3057000",
-    "evidence": [
-     20551,
-     20557
-    ],
-    "outcome": "admitted",
+    "evidence": null,
+    "outcome": "rejected",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "QUOTE_NOT_FOUND"
     ]
    },
    {
@@ -606,8 +563,9 @@
      20248,
      20254
     ],
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "SIGN_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -617,30 +575,21 @@
     "field": "operating_income",
     "key": "2024",
     "value": "-3628000",
-    "evidence": [
-     20259,
-     20265
-    ],
-    "outcome": "admitted",
+    "evidence": null,
+    "outcome": "rejected",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "QUOTE_NOT_FOUND"
     ]
    },
    {
     "id": "c6",
     "field": "cash_and_equivalents",
     "key": "2025",
-    "value": "3200000",
-    "evidence": [
-     29865,
-     29877
-    ],
-    "outcome": "needs_verification",
+    "value": null,
+    "evidence": null,
+    "outcome": "rejected",
     "codes": [
-     "QUALIFIED_VALUE",
-     "SCALE_CITATION_INVALID",
-     "FIELD_CITATION_INVALID"
+     "TYPE_INVALID"
     ]
    }
   ]
@@ -650,6 +599,20 @@
   "decisions": [
    {
     "id": "c0",
+    "field": "revenue",
+    "key": "2025",
+    "value": "0",
+    "evidence": [
+     5003,
+     5083
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "id": "c1",
     "field": "net_income",
     "key": "2025",
     "value": "-105609000",
@@ -666,7 +629,7 @@
     ]
    },
    {
-    "id": "c1",
+    "id": "c2",
     "field": "net_income",
     "key": "2024",
     "value": "-96940000",
@@ -683,7 +646,7 @@
     ]
    },
    {
-    "id": "c2",
+    "id": "c3",
     "field": "operating_income",
     "key": "2025",
     "value": "-102266000",
@@ -700,7 +663,7 @@
     ]
    },
    {
-    "id": "c3",
+    "id": "c4",
     "field": "operating_income",
     "key": "2024",
     "value": "-100902000",
@@ -714,6 +677,20 @@
      "SIGN_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c5",
+    "field": "cash_and_equivalents",
+    "key": "2025",
+    "value": "88300000",
+    "evidence": [
+     7566,
+     7579
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
     ]
    }
   ]
@@ -753,6 +730,38 @@
    },
    {
     "id": "c2",
+    "field": "operating_income",
+    "key": "2025",
+    "value": "-28027000",
+    "evidence": [
+     32746,
+     32753
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "operating_income",
+    "key": "2024",
+    "value": "-20414000",
+    "evidence": [
+     32758,
+     32765
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
     "field": "net_income",
     "key": "2025",
     "value": "7321000",
@@ -768,7 +777,7 @@
     ]
    },
    {
-    "id": "c3",
+    "id": "c5",
     "field": "net_income",
     "key": "2024",
     "value": "-53683000",
@@ -778,40 +787,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SIGN_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
-    ]
-   },
-   {
-    "id": "c4",
-    "field": "operating_income",
-    "key": "2025",
-    "value": "-28027000",
-    "evidence": [
-     32746,
-     32753
-    ],
-    "outcome": "needs_verification",
-    "codes": [
-     "PART_MISSING",
-     "SIGN_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
-    ]
-   },
-   {
-    "id": "c5",
-    "field": "operating_income",
-    "key": "2024",
-    "value": "-20414000",
-    "evidence": [
-     32758,
-     32765
-    ],
-    "outcome": "needs_verification",
-    "codes": [
-     "PART_MISSING",
      "SIGN_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -848,21 +823,6 @@
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ]
-   },
-   {
-    "id": "c8",
-    "field": "total_debt",
-    "key": "2025",
-    "value": "166300000",
-    "evidence": [
-     46271,
-     46285
-    ],
-    "outcome": "needs_verification",
-    "codes": [
-     "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE"
-    ]
    }
   ]
  },
@@ -880,7 +840,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
     ]
    },
@@ -895,7 +854,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
     ]
    },
@@ -910,6 +868,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
+     "PART_MISSING",
      "SIGN_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -926,6 +885,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
+     "PART_MISSING",
      "SIGN_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -938,40 +898,6 @@
   "decisions": [
    {
     "id": "c0",
-    "field": "net_income",
-    "key": "2025",
-    "value": "-9158734",
-    "evidence": [
-     2633,
-     2643
-    ],
-    "outcome": "needs_verification",
-    "codes": [
-     "SIGN_CITATION_INVALID",
-     "VALUE_DERIVED",
-     "KEY_CITED"
-    ]
-   },
-   {
-    "id": "c1",
-    "field": "net_income",
-    "key": "2024",
-    "value": "-5861335",
-    "evidence": [
-     2528,
-     2538
-    ],
-    "outcome": "needs_verification",
-    "codes": [
-     "SIGN_CITATION_INVALID",
-     "UNIT_CITATION_INVALID",
-     "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
-    ]
-   },
-   {
-    "id": "c2",
     "field": "operating_income",
     "key": "2025",
     "value": "-9716471",
@@ -982,13 +908,12 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
-     "SIGN_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
    },
    {
-    "id": "c3",
+    "id": "c1",
     "field": "operating_income",
     "key": "2024",
     "value": "-5932105",
@@ -999,9 +924,41 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
-     "SIGN_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "net_income",
+    "key": "2025",
+    "value": "-9158734",
+    "evidence": [
+     2633,
+     2643
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_income",
+    "key": "2024",
+    "value": "-5861335",
+    "evidence": [
+     2528,
+     2538
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
     ]
    },
    {
@@ -1015,7 +972,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
     ]
    },
@@ -1030,7 +986,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
     ]
    }
@@ -1076,11 +1031,11 @@
     "value": "-197139242",
     "evidence": [
      4929,
-     4941
+     4943
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SIGN_CITATION_INVALID",
+     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1092,27 +1047,58 @@
     "value": "-3346771",
     "evidence": [
      4946,
-     4956
+     4958
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SIGN_CITATION_INVALID",
+     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
    },
    {
     "id": "c4",
+    "field": "net_income",
+    "key": "2025",
+    "value": "-52228923",
+    "evidence": [
+     5370,
+     5383
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c5",
+    "field": "net_income",
+    "key": "2024",
+    "value": "-3617647",
+    "evidence": [
+     5387,
+     5399
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c6",
     "field": "cash_and_equivalents",
     "key": "2025",
     "value": "22600000",
     "evidence": [
-     15257,
-     15270
+     15258,
+     15262
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SCALE_CITATION_INVALID"
+     "SCALE_CITATION_INVALID",
+     "UNIT_CITATION_INVALID"
     ]
    }
   ]
@@ -1155,12 +1141,15 @@
     "key": "2025",
     "value": "-3623353",
     "evidence": [
-     16316,
-     16326
+     13185,
+     13195
     ],
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
-     "VALUE_DERIVED"
+     "PART_MISSING",
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED",
+     "KEY_CITED"
     ]
    },
    {
@@ -1169,12 +1158,12 @@
     "key": "2024",
     "value": "-3398939",
     "evidence": [
-     16384,
-     16394
+     13201,
+     13211
     ],
-    "outcome": "admitted",
+    "outcome": "rejected",
     "codes": [
-     "VALUE_DERIVED"
+     "UNIT_NOT_IN_EVIDENCE"
     ]
    },
    {
@@ -1184,11 +1173,12 @@
     "value": "-3374793",
     "evidence": [
      12828,
-     12840
+     12838
     ],
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
+     "SIGN_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1200,7 +1190,7 @@
     "value": "-3074561",
     "evidence": [
      12843,
-     12855
+     12853
     ],
     "outcome": "rejected",
     "codes": [
@@ -1213,11 +1203,12 @@
     "key": "2025",
     "value": "1790236",
     "evidence": [
-     18297,
+     18298,
      18307
     ],
     "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "FIELD_CITATION_INVALID"
     ]
    },
@@ -1245,7 +1236,7 @@
     "id": "c0",
     "field": "revenue",
     "key": "2025",
-    "value": "1003",
+    "value": "1003000000",
     "evidence": [
      14822,
      14829
@@ -1259,7 +1250,7 @@
     "id": "c1",
     "field": "revenue",
     "key": "2024",
-    "value": "886.3",
+    "value": "886300000",
     "evidence": [
      14831,
      14836
@@ -1273,56 +1264,63 @@
     "id": "c2",
     "field": "net_income",
     "key": "2025",
-    "value": "-96.9",
+    "value": "-96900000",
     "evidence": [
-     16654,
-     16660
+     16830,
+     16836
     ],
-    "outcome": "rejected",
+    "outcome": "needs_verification",
     "codes": [
-     "UNIT_NOT_IN_EVIDENCE"
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
     ]
    },
    {
     "id": "c3",
     "field": "net_income",
     "key": "2024",
-    "value": "30.2",
+    "value": "30200000",
     "evidence": [
      16839,
      16843
     ],
     "outcome": "needs_verification",
     "codes": [
-     "KEY_NOT_AT_VALUE"
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
     ]
    },
    {
     "id": "c4",
     "field": "operating_income",
     "key": "2025",
-    "value": "374.5",
+    "value": "374500000",
     "evidence": [
      15557,
      15562
     ],
     "outcome": "needs_verification",
     "codes": [
-     "KEY_NOT_AT_VALUE"
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
     ]
    },
    {
     "id": "c5",
     "field": "operating_income",
     "key": "2024",
-    "value": "345.9",
+    "value": "345900000",
     "evidence": [
      15566,
      15571
     ],
     "outcome": "needs_verification",
     "codes": [
-     "KEY_NOT_AT_VALUE"
+     "UNIT_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
     ]
    },
    {
@@ -1331,12 +1329,11 @@
     "key": "2025",
     "value": "336500000",
     "evidence": [
-     35499,
-     35504
+     35498,
+     35512
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SCALE_CITATION_INVALID",
      "FIELD_CITATION_INVALID"
     ]
    },
@@ -1346,12 +1343,11 @@
     "key": "2024",
     "value": "331600000",
     "evidence": [
-     35518,
-     35523
+     35517,
+     35531
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SCALE_CITATION_INVALID",
      "FIELD_CITATION_INVALID"
     ]
    },
@@ -1366,6 +1362,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ]
@@ -1381,6 +1378,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ]
@@ -1399,10 +1397,8 @@
      24962,
      24971
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "SCALE_CITATION_INVALID",
-     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1416,10 +1412,8 @@
      24975,
      24984
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "SCALE_CITATION_INVALID",
-     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1433,10 +1427,8 @@
      24988,
      24997
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "SCALE_CITATION_INVALID",
-     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1450,10 +1442,8 @@
      25438,
      25445
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "SCALE_CITATION_INVALID",
-     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1467,10 +1457,8 @@
      25449,
      25456
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "SCALE_CITATION_INVALID",
-     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1484,10 +1472,8 @@
      25460,
      25466
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "SCALE_CITATION_INVALID",
-     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1503,7 +1489,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SCALE_CITATION_INVALID",
+     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1519,7 +1505,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SCALE_CITATION_INVALID",
+     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1535,7 +1521,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SCALE_CITATION_INVALID",
+     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1546,12 +1532,12 @@
     "key": "2025",
     "value": "24500000",
     "evidence": [
-     54907,
-     54920
+     54908,
+     54912
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID"
+     "SCALE_CITATION_INVALID"
     ]
    },
    {
@@ -1560,12 +1546,12 @@
     "key": "2024",
     "value": "21900000",
     "evidence": [
-     54922,
-     54935
+     54923,
+     54927
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
+     "SCALE_CITATION_INVALID",
      "FIELD_CITATION_INVALID"
     ]
    },
@@ -1575,12 +1561,12 @@
     "key": "2023",
     "value": "12100000",
     "evidence": [
-     54941,
-     54954
+     54942,
+     54946
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
+     "SCALE_CITATION_INVALID",
      "FIELD_CITATION_INVALID"
     ]
    },
@@ -1590,12 +1576,12 @@
     "key": "2025",
     "value": "511000000",
     "evidence": [
-     62826,
-     62840
+     62827,
+     62832
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
+     "SCALE_CITATION_INVALID",
      "FIELD_CITATION_INVALID"
     ]
    },
@@ -1605,12 +1591,12 @@
     "key": "2024",
     "value": "357700000",
     "evidence": [
-     66753,
-     66767
+     66754,
+     66759
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
+     "SCALE_CITATION_INVALID",
      "FIELD_CITATION_INVALID"
     ]
    }
@@ -1631,8 +1617,9 @@
     "outcome": "needs_verification",
     "codes": [
      "UNIT_CITATION_INVALID",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
     ]
    },
    {
@@ -1646,9 +1633,9 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
     ]
    },
    {
@@ -1660,9 +1647,8 @@
      10481,
      10488
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1673,13 +1659,11 @@
     "key": "2025",
     "value": "-12072000",
     "evidence": [
-     26450,
-     26456
+     26449,
+     26457
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "SIGN_CITATION_INVALID",
-     "SCALE_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1690,13 +1674,12 @@
     "key": "2024",
     "value": "-31315000",
     "evidence": [
-     26461,
-     26467
+     26460,
+     26468
     ],
     "outcome": "needs_verification",
     "codes": [
-     "SIGN_CITATION_INVALID",
-     "SCALE_CITATION_INVALID",
+     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1710,8 +1693,9 @@
      26471,
      26479
     ],
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1756,6 +1740,7 @@
     "outcome": "needs_verification",
     "codes": [
      "QUALIFIED_VALUE",
+     "SCALE_CITATION_INVALID",
      "FIELD_CITATION_INVALID"
     ]
    }
@@ -1775,6 +1760,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
+     "SCALE_CITATION_INVALID",
      "UNIT_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
@@ -1791,6 +1777,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
+     "SCALE_CITATION_INVALID",
      "UNIT_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
@@ -1807,7 +1794,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
+     "SCALE_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1823,7 +1810,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
+     "SCALE_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1839,7 +1826,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
      "SCALE_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
@@ -1856,7 +1842,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
      "SCALE_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
@@ -1906,9 +1891,8 @@
     "outcome": "needs_verification",
     "codes": [
      "UNIT_CITATION_INVALID",
-     "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
+     "VALUE_DERIVED",
+     "KEY_CITED"
     ]
    },
    {
@@ -1923,9 +1907,8 @@
     "outcome": "needs_verification",
     "codes": [
      "UNIT_CITATION_INVALID",
-     "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
-     "VALUE_DERIVED"
+     "VALUE_DERIVED",
+     "KEY_CITED"
     ]
    }
   ]
@@ -1942,9 +1925,8 @@
      50796,
      50803
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1958,9 +1940,8 @@
      50805,
      50812
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1971,11 +1952,12 @@
     "key": "2025",
     "value": "253731000",
     "evidence": [
-     61826,
-     61833
+     51642,
+     51649
     ],
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "SCALE_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -1986,11 +1968,12 @@
     "key": "2024",
     "value": "203638000",
     "evidence": [
-     61837,
-     61844
+     51651,
+     51658
     ],
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "SCALE_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -2004,8 +1987,9 @@
      61848,
      61855
     ],
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -2019,9 +2003,8 @@
      51296,
      51303
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -2035,9 +2018,8 @@
      51305,
      51312
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
      "VALUE_DERIVED",
      "KEY_CITED"
     ]
@@ -2048,30 +2030,28 @@
     "key": "2025",
     "value": "60181000",
     "evidence": [
-     69328,
-     69334
+     30187,
+     30191
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "PART_MISSING",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_NOT_IN_EVIDENCE"
     ]
    },
    {
     "id": "c8",
     "field": "cash_and_equivalents",
     "key": "2024",
-    "value": "40713000",
+    "value": "40700000",
     "evidence": [
-     69337,
-     69343
+     30283,
+     30287
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "SCALE_CITATION_INVALID",
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID"
     ]
    },
    {
@@ -2085,6 +2065,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -2101,6 +2082,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
@@ -2145,46 +2127,49 @@
    },
    {
     "id": "c2",
-    "field": "net_income",
+    "field": "operating_income",
     "key": "2025",
-    "value": "-21460000",
-    "evidence": null,
-    "outcome": "rejected",
+    "value": "-10317000",
+    "evidence": [
+     4442,
+     4449
+    ],
+    "outcome": "needs_verification",
     "codes": [
-     "QUOTE_NOT_FOUND"
+     "SIGN_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
     ]
    },
    {
     "id": "c3",
-    "field": "net_income",
+    "field": "operating_income",
     "key": "2024",
     "value": "-7076000",
-    "evidence": null,
-    "outcome": "rejected",
+    "evidence": [
+     4456,
+     4462
+    ],
+    "outcome": "needs_verification",
     "codes": [
-     "QUOTE_NOT_FOUND"
+     "SIGN_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
     ]
    },
    {
     "id": "c4",
-    "field": "operating_income",
+    "field": "cash_and_equivalents",
     "key": "2025",
-    "value": "-10317000",
-    "evidence": null,
-    "outcome": "rejected",
+    "value": "740000",
+    "evidence": [
+     6368,
+     6372
+    ],
+    "outcome": "needs_verification",
     "codes": [
-     "QUOTE_NOT_FOUND"
-    ]
-   },
-   {
-    "id": "c5",
-    "field": "operating_income",
-    "key": "2024",
-    "value": "-7076000",
-    "evidence": null,
-    "outcome": "rejected",
-    "codes": [
-     "QUOTE_NOT_FOUND"
+     "SCALE_CITATION_INVALID",
+     "UNIT_CITATION_INVALID"
     ]
    }
   ]
@@ -2194,39 +2179,11 @@
   "decisions": [
    {
     "id": "c0",
-    "field": "revenue",
-    "key": "2025",
-    "value": "0",
-    "evidence": [
-     33335,
-     33442
-    ],
-    "outcome": "rejected",
-    "codes": [
-     "VALUE_NOT_IN_EVIDENCE"
-    ]
-   },
-   {
-    "id": "c1",
-    "field": "revenue",
-    "key": "2024",
-    "value": "0",
-    "evidence": [
-     33335,
-     33442
-    ],
-    "outcome": "rejected",
-    "codes": [
-     "VALUE_NOT_IN_EVIDENCE"
-    ]
-   },
-   {
-    "id": "c2",
     "field": "net_income",
     "key": "2025",
     "value": "-17800000",
     "evidence": [
-     33991,
+     33992,
      34004
     ],
     "outcome": "needs_verification",
@@ -2236,32 +2193,18 @@
     ]
    },
    {
-    "id": "c3",
+    "id": "c1",
     "field": "net_income",
     "key": "2024",
     "value": "-819000",
     "evidence": [
-     34598,
+     34599,
      34606
     ],
     "outcome": "needs_verification",
     "codes": [
      "QUALIFIED_VALUE",
      "VALUE_DERIVED"
-    ]
-   },
-   {
-    "id": "c4",
-    "field": "cash_and_equivalents",
-    "key": "2025",
-    "value": "0",
-    "evidence": [
-     27573,
-     27585
-    ],
-    "outcome": "rejected",
-    "codes": [
-     "VALUE_NOT_IN_EVIDENCE"
     ]
    }
   ]
@@ -2278,9 +2221,8 @@
      11078,
      11087
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "KEY_CITED"
     ]
    },
@@ -2295,7 +2237,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
     ]
    },

@@ -1,8 +1,20 @@
 {
+ "0256cb358c25fa1a": {
+  "verdict": "right"
+ },
  "0b5a2467cd907d81": {
   "verdict": "right"
  },
+ "1190b030beceeb4d": {
+  "verdict": "right"
+ },
  "1aedda023fcfde11": {
+  "verdict": "right"
+ },
+ "1b23abc20e4cff0c": {
+  "verdict": "right"
+ },
+ "1b67924c4dfc2571": {
   "verdict": "right"
  },
  "22ee6ec831582cea": {
@@ -11,10 +23,25 @@
  "28ef2d48b2519eb4": {
   "verdict": "right"
  },
+ "2997ecadc34a7dd6": {
+  "verdict": "right"
+ },
+ "2ac943f573742ad5": {
+  "verdict": "right"
+ },
+ "2f8eb7ebf94fd6c2": {
+  "verdict": "right"
+ },
  "32772520aa72960b": {
   "verdict": "right"
  },
  "34928456e5b9fe3b": {
+  "verdict": "right"
+ },
+ "37ec6d56fc184239": {
+  "verdict": "right"
+ },
+ "38ed7febbb426f5e": {
   "verdict": "right"
  },
  "410e344e9b7f7ce7": {
@@ -23,13 +50,34 @@
  "4730d8062bcd5bb7": {
   "verdict": "right"
  },
+ "47403c6cc7a4c5b8": {
+  "verdict": "right"
+ },
+ "474c03906fb730c1": {
+  "verdict": "right"
+ },
+ "47c79dec70d82d0c": {
+  "verdict": "right"
+ },
+ "559423c78dcaebbc": {
+  "verdict": "right"
+ },
  "58b81c2fd68e6577": {
   "verdict": "right"
  },
  "639fb7574bf44c6d": {
   "verdict": "right"
  },
+ "64f45ec0ba922c1b": {
+  "verdict": "right"
+ },
+ "6e8e14f38ed71f7c": {
+  "verdict": "right"
+ },
  "703f526120c92107": {
+  "verdict": "right"
+ },
+ "7293daa4b6313bad": {
   "verdict": "right"
  },
  "851a94ef18439e4c": {
@@ -53,7 +101,13 @@
  "adb002b85216486d": {
   "verdict": "right"
  },
+ "b0890b56f5ed2d35": {
+  "verdict": "right"
+ },
  "d10d9ae7f0540a73": {
+  "verdict": "right"
+ },
+ "d864bc3a1b19237c": {
   "verdict": "right"
  },
  "dce23c69d715e927": {
@@ -62,13 +116,28 @@
  "e2cfbfa2a1a7ebbb": {
   "verdict": "right"
  },
+ "e3e15bf4983c8946": {
+  "verdict": "right"
+ },
+ "e705cfd55c65e67c": {
+  "verdict": "right"
+ },
+ "ea336e72928e01a2": {
+  "verdict": "right"
+ },
  "ed7718f2b7f0300a": {
+  "verdict": "right"
+ },
+ "ee8ac7aab59ab5e0": {
   "verdict": "right"
  },
  "fae078cf5e071c65": {
   "verdict": "right"
  },
  "fd46ba2db2e778ce": {
+  "verdict": "right"
+ },
+ "fd95d02be83a1de0": {
   "verdict": "right"
  }
 }
