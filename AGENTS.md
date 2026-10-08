@@ -7,7 +7,7 @@ decision. This file covers how work is run.
 
 - Pick up work with `gh issue list` and `gh issue view N`. If there is no issue, open one first.
 - One branch per issue, named `N-short-slug`. The PR body says `Fixes #N`.
-- CI must be green before a PR is ready. The maintainer merges.
+- CI must be green before a PR is ready. The agent that opened the PR merges it (see Two agents).
 - Something out of scope turns up: open an issue for it instead of widening the PR.
 - Labels: `spec` changes a decision, `benchmark` touches `bench/`, plus the usual `bug`,
   `documentation` and `enhancement`. The next spec version gets its own milestone.
@@ -24,7 +24,11 @@ Claude Code and Codex both work on this repository. This file is the one copy of
 - Codex reviews Claude Code PRs, and Claude Code reviews Codex PRs. To ask for a review again,
   comment "@codex review" or "@claude review". Answer each finding on its comment: the fix and
   its commit, or why it does not apply.
-- Only the maintainer approves a merge or a tag.
+- An agent merges its own PR with squash when the required checks pass and the other agent's
+  review of the head commit has no open finding. The macOS jobs are not required.
+- One agent runs each milestone: it gives each issue to an agent, keeps the milestone's plan issue
+  current, and finishes what is left. The maintainer names the runner.
+- Only the maintainer tags a release.
 - `CLAUDE.local.md` holds local rules that are not in git. If it is there, read it before you
   start, and follow it. Never commit it or quote it.
 
