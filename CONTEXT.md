@@ -89,3 +89,13 @@ What groundgate returns for each candidate (the outcome, the codes, the parts an
 parts) and for each required field with no admitted or flagged candidate (a coverage finding). The
 app decides whether to send it back to the extractor.
 _Avoid_: critique, review notes
+
+**Feedback message**:
+The text for the extractor, built from the feedback of one candidate, that says which part to
+cite again. There is none when a new answer cannot change the decision.
+_Avoid_: retry prompt, critique
+
+**Feedback loop**:
+The app sends feedback messages to the extractor, then gives the new candidates to groundgate.
+groundgate gives the messages, and the app runs the loop.
+_Avoid_: retry loop, self-correction
