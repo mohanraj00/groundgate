@@ -2610,8 +2610,9 @@ vector(
 vector(
     "23-between-words",
     "'between' can stand up to six words before the first number of an 'and' range. "
-    "Each word holds only letters, and only whitespace separates them. The words stay in one "
-    "sentence with no intervening number. Spec 0.5 qualifiers stay set.",
+    "Each word holds only letters and combining marks, and only whitespace separates them. The "
+    "words stay in one sentence with no intervening number. Each 'between' of the sentence is "
+    "tried. Spec 0.5 qualifiers stay set.",
     "Members between the ages of 18 and 65 qualify.\n\n"
     "Members between the minimum and maximum permitted ages 18 and 65 qualify.\n\n"
     "Members between 18 and 65 qualify.\n\n"
@@ -2629,7 +2630,9 @@ vector(
     "Members between the adult-age limits 18 and 65 qualify.\n\n"
     "Members between the ages² of 18 and 65 qualify.\n\n"
     "Members between les âges de 18 and 65 qualify.\n\n"
-    "Members between                              18 and 65 qualify.",
+    "Members between                              18 and 65 qualify.\n\n"
+    "Members between x\u00b2 and between the ages 18 and 65 qualify.\n\n"
+    "Members between the q\u0303 ages of 18 and 65 qualify.",
     {
         "fields": {
             "age": {"type": "integer", "multiple": True},
@@ -2670,6 +2673,10 @@ vector(
         c("unicode-high", "age", 65, None, q("65", 17), (REVIEW, ["QUALIFIED_VALUE"])),
         c("spaces-low", "age", 18, None, q("18", 18), (REVIEW, ["QUALIFIED_VALUE"])),
         c("spaces-high", "age", 65, None, q("65", 18), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("nearer-low", "age", 18, None, q("18", 19), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("nearer-high", "age", 65, None, q("65", 19), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("mark-low", "age", 18, None, q("18", 20), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("mark-high", "age", 65, None, q("65", 20), (REVIEW, ["QUALIFIED_VALUE"])),
         c("range-low", "age_range", 18, None, q("18", 2), ADMIT),
         c("range-high", "age_range", 65, None, q("65", 2), ADMIT),
     ],

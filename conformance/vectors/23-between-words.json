@@ -1,7 +1,7 @@
 {
  "name": "23-between-words",
- "description": "'between' can stand up to six words before the first number of an 'and' range. Each word holds only letters, and only whitespace separates them. The words stay in one sentence with no intervening number. Spec 0.5 qualifiers stay set.",
- "document": "Members between the ages of 18 and 65 qualify.\n\nMembers between the minimum and maximum permitted ages 18 and 65 qualify.\n\nMembers between 18 and 65 qualify.\n\nMembers between the minimum and maximum permitted adult ages 18 and 65 qualify.\n\nMembers between 7 the ages of 18 and 65 qualify.\n\nChoose between the ages. Members aged 18 and 65 qualify.\n\nChoose between options. Members aged 18 and 65 qualify.\n\nMembers between $18 and $65 qualify.\n\nMembers BETWEEN\tthe\nages of 18 and 65 qualify.\n\nMembers between a b c d e f g 18 and 65 qualify.\n\nMembers between the ages; members aged 18 and 65 qualify.\n\nMembers between the\n\nages of 18 and 65 qualify.\n\nMembers between the ages•members aged 18 and 65 qualify.\n\nMembers between dr. ages 18 and 65 qualify.\n\nMembers between the adult-age limits 18 and 65 qualify.\n\nMembers between the ages² of 18 and 65 qualify.\n\nMembers between les âges de 18 and 65 qualify.\n\nMembers between                              18 and 65 qualify.",
+ "description": "'between' can stand up to six words before the first number of an 'and' range. Each word holds only letters and combining marks, and only whitespace separates them. The words stay in one sentence with no intervening number. Each 'between' of the sentence is tried. Spec 0.5 qualifiers stay set.",
+ "document": "Members between the ages of 18 and 65 qualify.\n\nMembers between the minimum and maximum permitted ages 18 and 65 qualify.\n\nMembers between 18 and 65 qualify.\n\nMembers between the minimum and maximum permitted adult ages 18 and 65 qualify.\n\nMembers between 7 the ages of 18 and 65 qualify.\n\nChoose between the ages. Members aged 18 and 65 qualify.\n\nChoose between options. Members aged 18 and 65 qualify.\n\nMembers between $18 and $65 qualify.\n\nMembers BETWEEN\tthe\nages of 18 and 65 qualify.\n\nMembers between a b c d e f g 18 and 65 qualify.\n\nMembers between the ages; members aged 18 and 65 qualify.\n\nMembers between the\n\nages of 18 and 65 qualify.\n\nMembers between the ages•members aged 18 and 65 qualify.\n\nMembers between dr. ages 18 and 65 qualify.\n\nMembers between the adult-age limits 18 and 65 qualify.\n\nMembers between the ages² of 18 and 65 qualify.\n\nMembers between les âges de 18 and 65 qualify.\n\nMembers between                              18 and 65 qualify.\n\nMembers between x² and between the ages 18 and 65 qualify.\n\nMembers between the q̃ ages of 18 and 65 qualify.",
  "schema": {
   "fields": {
    "age": {
@@ -348,6 +348,46 @@
    }
   },
   {
+   "id": "nearer-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 1016,
+    "end": 1018,
+    "text": "18"
+   }
+  },
+  {
+   "id": "nearer-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 1023,
+    "end": 1025,
+    "text": "65"
+   }
+  },
+  {
+   "id": "mark-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 1068,
+    "end": 1070,
+    "text": "18"
+   }
+  },
+  {
+   "id": "mark-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 1075,
+    "end": 1077,
+    "text": "65"
+   }
+  },
+  {
    "id": "range-low",
    "field": "age_range",
    "value": 18,
@@ -513,6 +553,30 @@
    {
     "outcome": "admitted",
     "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
    },
    {
     "outcome": "needs_verification",
