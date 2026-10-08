@@ -70,7 +70,7 @@ packages = ["src/groundgate"]
 [tool.hatch.build.targets.sdist]
 # the library, its spec and its conformance suite; the benchmark and examples stay in the repo
 include = ["/src", "/tests", "/conformance", "/SPEC.md", "/CHANGELOG.md", "/README.md", "/LICENSE"]
-exclude = ["/tests/test_bench.py"]
+exclude = ["/tests/test_bench.py", "/tests/test_docs.py"]  # docs/ is not in the sdist
 
 # PyPI renders the README without the repo around it, so relative links point at GitHub
 [tool.hatch.metadata.hooks.fancy-pypi-readme]

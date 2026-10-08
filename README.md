@@ -201,15 +201,16 @@ True
 ```
 
 The core has no dependencies. `groundgate[pdf]` adds pdfminer.six for PDF text, and
-`groundgate[langextract]` installs LangExtract. [docs/guide.md](docs/guide.md) covers schemas,
-policies, candidates and the Python API. An evidence item can also give UTF-8 byte offsets
+`groundgate[langextract]` installs LangExtract. [docs/](docs/README.md) has a guide to writing a
+schema, a how-to guide for each task, and [the reference](docs/guide.md). An evidence item can also give UTF-8 byte offsets
 (`start`, `end`), and it can cite the sign, scale, unit, field or key of the value (spec 0.5).
 
 ### With your own model
 
 `gg.extractor_schema(schema)` turns your schema into a JSON Schema for the model's structured
-output, so the model sends only your fields, units and keys, and quotes its evidence. The guide
-has [the instructions and an example](docs/guide.md#the-extractors-output).
+output, so the model sends only your fields, units and keys, and quotes its evidence.
+[docs/howto/own-model.md](docs/howto/own-model.md) goes from a document to a receipt, and
+[docs/howto/feedback.md](docs/howto/feedback.md) sends the reasons back to the model.
 
 ### With LangExtract
 

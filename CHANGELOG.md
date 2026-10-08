@@ -3,7 +3,7 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
-## 0.5.1 (2026-10-07)
+## 0.5.1 (2026-10-08)
 
 Spec 0.5, unchanged: every decision and receipt is the same as in 0.5.0.
 
@@ -12,6 +12,15 @@ Spec 0.5, unchanged: every decision and receipt is the same as in 0.5.0.
   keys as constants, and items are quotes. It uses only the subset of JSON Schema that the strict
   structured-output modes take. Every candidate that it accepts passes steps 1, 2, 6 and 7.
 - The guide has the instructions that go with it, and an example from a made-up 10-K table.
+- Docs (#156, #161): a guide to writing a schema (`docs/schema.md`), five how-to guides
+  (`docs/howto/`: your own model, feedback to the extractor, financial tables, outside sources, and
+  review and receipts), and a map of the docs (`docs/README.md`). `tests/test_docs.py` runs every
+  example on these pages.
+- SPEC text (#158): the SPEC now states what the code and the vectors decide in 9 places, and
+  makes 6 rules that could be read two ways exact, with no decision change. Vectors `20-spec-text` and `20b-spec-text-outside` reach each case, so there
+  are 47 vectors.
+- Known gap, for 0.6 (#162): in a table "(in thousands)", a value given unscaled with no scale
+  item is admitted.
 
 ## 0.5.0 (2026-10-07)
 

@@ -1,5 +1,7 @@
 # Guide
 
+This page is the reference. For a task, start with the [how-to guides](README.md).
+
 groundgate takes these inputs and returns a receipt:
 
 - a **document**: the text the facts came from;
@@ -40,6 +42,9 @@ drops text a reader can't see, and for PDFs records the page and box of every wo
 can show page numbers.
 
 ## Schema
+
+[schema.md](schema.md) explains how to write a schema, with examples. This section is the
+reference.
 
 ```json
 {"fields": {
@@ -144,7 +149,7 @@ before it, else the first one after it. A value quote that does not occur reject
 | `scale` | A value in thousands or millions. | "in thousands" or "in millions" before the value, with no other scale word between. |
 | `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The field item passes, the item holds a form of the field's unit before the value, and no unit form, not even the field's own, is next to the number. |
 | `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. |
-| `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). A dash or a `$` with no number counts as a cell. A footnote number after the row label stops the rule. When only spaces stand between the row label and its first number, the rule stops after the first column. A tab after the label, as `groundgate extract` writes HTML tables, keeps it. |
+| `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). A dash or a `$` with no number counts as a cell. A number after the field item on its line, such as a footnote marker, stops the rule. When only spaces stand between the row label and its first number, the rule stops after the first column. A tab after the label, as `groundgate extract` writes HTML tables, keeps it. |
 
 groundgate computes the value from the parts. The extractor does not state the steps. On a field
 with a unit, brackets that enclose the number make it negative with no item. When the value needs a sign, a scale or a
@@ -180,8 +185,13 @@ with a `candidates` list. Give it to the model as its output format, then pass t
 ```python
 output_format = gg.extractor_schema(schema)
 out = your_model(instructions, text, output_format)
-receipt = gg.admit(text, schema, out["candidates"])
+candidates = [{"id": f"c{i}", **c} for i, c in enumerate(out["candidates"])]
+receipt = gg.admit(text, schema, candidates)
 ```
+
+The schema has no `id`, because the model does not need one. Give each candidate an id before
+`admit`, so that each decision names its candidate. Decisions come back sorted by candidate hash,
+not in the order of the list.
 
 With references, give their ids to the schema and the same references to `admit`:
 
@@ -189,12 +199,13 @@ With references, give their ids to the schema and the same references to `admit`
 references = [{"id": "tax-table", "text": table_text, "source": "https://www.irs.gov/..."}]
 output_format = gg.extractor_schema(schema, [r["id"] for r in references])
 out = your_model(instructions, text, references, output_format)
-receipt = gg.admit(text, schema, out["candidates"], references=references)
+candidates = [{"id": f"c{i}", **c} for i, c in enumerate(out["candidates"])]
+receipt = gg.admit(text, schema, candidates, references=references)
 ```
 
 - Each field of your schema has its own candidate shape. `field` is the field's name, `unit` its
-  unit code or `null`, and `key` one of its keys on a keyed field, else `null`. So the model cannot send a field, a
-  unit or a key that the schema does not have.
+  unit code or `null`, and `key` one of its keys on a keyed field, else `null`. So the model
+  cannot send a field, a unit or a key that the schema does not have.
 - An item has no offsets. A model cannot count UTF-8 bytes, so it quotes, and groundgate finds the
   quote.
 - A reference item is in the schema only when you give the reference ids.
@@ -436,7 +447,7 @@ Rejections, in the order of the checks:
 | `CANDIDATE_INVALID` | A decimal is sent as a JSON float, such as `0.5`, or an evidence item is malformed. | Send the value as a string: `"0.5"`. Use `gg.extractor_schema` as the model's output format. |
 | `FIELD_UNKNOWN` | The field name is not in the schema. | Send the name as the schema writes it. |
 | `NULL_STRING_LITERAL` | The extractor sent `"null"`, `"none"`, `"nil"` or `"n/a"` for a value that is not there. | Leave the field out instead. |
-| `TYPE_INVALID` | The value does not parse as the field's type, such as `"7,000 USD"` or `"7.5"` for an integer. | Send the plain number, without commas or a unit. |
+| `TYPE_INVALID` | The value does not parse as the field's type, such as `"7,000 USD"`, `"seven"`, or `"7.5"` for an integer. | Send the number alone, with no unit or words. Commas are accepted. |
 | `RANGE_INVALID` | The value is outside the field's `minimum` or `maximum`. | Check the value, or the bounds. |
 | `UNIT_INVALID` | The candidate's `unit` is not the field's unit code. | Send the field's unit code. |
 | `KEY_INVALID` | The candidate's `key` is not written exactly as one of the field's `keys`. | Send the key as the schema writes it. |
