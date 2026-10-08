@@ -6,11 +6,11 @@
     groundgate-calibrate ask    --work W --judge jev
     groundgate-calibrate report --work W        # REPORT.md, report.json
     groundgate-calibrate judge  --docs D --candidates C --schema S --policy P \
-        --calibration W [W2] --out J            # recorded judgments for spec 0.4
+        --calibration W [W2] --out J            # recorded judgments (spec 0.4 and later)
 
 D holds <doc>.txt files, C holds <doc>.json files with each document's candidates in the
-spec 0.3 candidate format, and S is a spec 0.3 schema. W keeps everything that a later step
-needs, so a step never asks for an earlier input again.
+candidate format of the installed groundgate's spec, and S is a schema of that spec. W keeps
+everything that a later step needs, so a step never asks for an earlier input again.
 """
 
 from __future__ import annotations

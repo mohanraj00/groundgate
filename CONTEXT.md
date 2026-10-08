@@ -14,7 +14,8 @@ One extracted value for one field, with the evidence that the extractor gives fo
 _Avoid_: fact, extraction, claim
 
 **Judge**:
-An optional model whose answers the app records and gives to groundgate as input.
+An optional model or person whose answers the app records and gives to groundgate as recorded
+judgments. groundgate never calls a judge.
 _Avoid_: verifier, checker
 
 ## Evidence
@@ -44,7 +45,7 @@ _Avoid_: web evidence, citation
 
 **Role**:
 The part of a value that a document or reference item supports: the value as written, its sign,
-its scale, its key or its field.
+its scale, its unit, its key or its field.
 _Avoid_: type, kind (source kind is a different term)
 
 **Field alias**:
@@ -57,7 +58,8 @@ The text that an evidence item cites, given without a position. groundgate finds
 _Avoid_: snippet, excerpt
 
 **Document source**:
-The URL that the app gives for the document. An app can trust external sources on the same domain.
+The URL that the app gives for the document. An app can trust external sources on the same host
+with the `document-domain` allow-list entry.
 _Avoid_: origin, document URL
 
 **Trust level**:
@@ -66,11 +68,14 @@ source) or stated (the extractor's knowledge).
 _Avoid_: confidence, strength
 
 **Weak evidence**:
-Evidence that supports the value but has a missing part, or a part that groundgate cannot check.
-It gives the outcome `needs_verification`.
+Evidence that supports the value but has a missing part (`PART_MISSING`) or a role item that
+fails its check, or outside evidence that the policy sends to review (`EVIDENCE_QUOTED`,
+`EVIDENCE_STATED`). It gives the outcome `needs_verification`.
 
 **No evidence**:
-Evidence that does not support the value. It gives the outcome `rejected`.
+A candidate with no value item and no outside item (`NO_EVIDENCE`), or evidence that does not
+hold the value (`QUOTE_NOT_FOUND`, `VALUE_NOT_IN_EVIDENCE`, `UNIT_NOT_IN_EVIDENCE`). It gives the
+outcome `rejected`.
 _Avoid_: unsupported, hallucinated
 
 ## Decisions
@@ -80,6 +85,7 @@ The result of one decision: `admitted`, `needs_verification` or `rejected`.
 _Avoid_: verdict, status
 
 **Feedback**:
-The outcome, the codes and the missing parts that groundgate returns for each candidate and for
-each required field with no candidate.
+What groundgate returns for each candidate (the outcome, the codes, the parts and the missing
+parts) and for each required field with no admitted or flagged candidate (a coverage finding). The
+app decides whether to send it back to the extractor.
 _Avoid_: critique, review notes

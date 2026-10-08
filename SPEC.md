@@ -1,11 +1,12 @@
 # groundgate specification v0.5
 
-Status: released with groundgate 0.5.0. Version string: `groundgate/0.5`. Spec 0.4 was released
+Status: released with groundgate 0.5.0, unchanged in 0.5.1. Version string: `groundgate/0.5`. Spec 0.4 was released
 with groundgate 0.4.0 and is in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the `v0.2.0` tag, and spec 0.1 in the
 `v0.1.0` tag. Any change to how
 a candidate is decided is a new version with a new version string. An implementation conforms if
-it produces the decisions and coverage findings in every vector under `conformance/vectors/`,
-and the receipt hashes for vectors that pin them.
+it produces the outcome, codes and missing parts of every decision and the coverage findings in
+every vector under `conformance/vectors/`, and refuses every packet under `conformance/invalid/`
+with no receipt.
 
 ## 1. Purpose
 
@@ -102,7 +103,7 @@ normalisation and lower-casing.
 ```
 
 `sources` says what happens to a candidate that only evidence from outside the pinned texts
-supports (§3, the outside path). groundgate cannot check such evidence, so the app decides:
+supports (§3.2). groundgate cannot check such evidence, so the app decides:
 
 - `external.allow` is a list of non-blank strings. An external item whose URL matches an entry is
   admitted. `"*"` matches every URL. `"document-domain"` matches a URL whose host equals the host
@@ -148,7 +149,7 @@ without judgments.
 | `unit` | no | Unit code the extractor claims. |
 | `key` | no | For a keyed field, the key the value belongs to. Ignored on a field without `keys`. |
 | `evidence` | no | The evidence items the extractor gives, as a list. One item object counts as a list that holds it. |
-| `search_region` | no | Span within which re-anchoring may look (§3 step 10). Default: the whole document. |
+| `search_region` | no | Span of the document within which quotes are found and re-anchoring may look (§3.1, §4.6). Default: the whole document. |
 | `confidence` | no | Number in [0, 1]. |
 | `id` | no | Caller's identifier, echoed in the decision. |
 
@@ -184,6 +185,11 @@ An **evidence item** is one piece of support for the value. Its `source` says wh
 
 The **value item** is the document or reference item with role `value`. The other document and
 reference items are **role items**. External and knowledge items are **outside items**.
+
+`candidate.schema.json` in the package (`candidate_schema()` in the reference implementation) is
+a JSON Schema for one candidate. Step 1 is the definition: the schema does not check that a `ref`
+names a reference in the packet, that two document or reference items have different roles, or
+that an integer has no fraction (`2.0`).
 
 ### 2.6 Judgments
 
@@ -678,4 +684,5 @@ Semantic correctness (whether the sentence describes the field) by groundgate it
 `field_match` judgment can only add doubt, and a field item checks only the field's own aliases.
 Calling a model, fetching a URL, dates, arrays of records, arithmetic over several numbers, the
 subject of the document (groundgate assumes one subject per document), and PDF geometry (page and
-bounding box) as evidence. Adapters may convert richer evidence into spans.
+bounding box) as evidence. Adapters may convert richer evidence into spans. Number formats other
+than English and Indian grouping, and digits other than 0 to 9 (#60).

@@ -48,8 +48,9 @@ LangExtract on two pages of IRS Publication 590-A. LangExtract aligned all 48 ex
 `MATCH_EXACT`. groundgate then:
 
 - **rejected** Gemini's reading of a misprinted `$252,0000` as 2,520,000;
-- **flagged** two GPT-OSS facts that took a Roth IRA limit from the spousal-deduction sentence;
-  the numbers match, but the text says "more than" where the field says "at least";
+- **flagged** three GPT-OSS facts: two took a Roth IRA limit from the spousal-deduction
+  sentence, where the numbers match but the text says "more than" where the field says "at
+  least", and one is a right value next to an "or more" that the schema did not declare;
 - **listed** a required field both models missed;
 - **admitted** 44 facts, all with the right value.
 
@@ -134,8 +135,8 @@ open for the next version (#51, #52).
 
 This set shows the gap that matters most. Spec 0.2 admits a right value for 53.2% of gold facts,
 and the reviews bring it to 86.8% (4,873/5,614). Closing that gap without new escapes is the work
-of the next versions: the 0.4 key clear and a basis that the extractor states (#125) both aim at
-it.
+of the versions since: the 0.4 key clear and the 0.5 evidence list aim at it, and the next section
+measures 0.5.
 
 ### Spec 0.5 on new 10-K filings
 
@@ -176,10 +177,8 @@ schema = {
 
 
 def cite(field, value, quote):
-    """A candidate citing the first place `quote` appears, as UTF-8 byte offsets."""
-    start = text.encode().index(quote.encode())
-    span = {"start": start, "end": start + len(quote.encode()), "text": quote}
-    return {"field": field, "value": value, "unit": "USD", "evidence": span}
+    """A candidate whose evidence is a quote: groundgate finds it in the text."""
+    return {"field": field, "value": value, "unit": "USD", "evidence": [{"text": quote}]}
 
 
 candidates = [
@@ -196,14 +195,15 @@ print(gg.verify(receipt.to_dict(), text, schema, candidates).ok)
 
 ```text
 admitted            ira_limit       7000
-rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
 needs_verification  phaseout_start  79000  QUALIFIED_VALUE
+rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
 True
 ```
 
 The core has no dependencies. `groundgate[pdf]` adds pdfminer.six for PDF text, and
 `groundgate[langextract]` installs LangExtract. [docs/guide.md](docs/guide.md) covers schemas,
-policies, candidates and the Python API.
+policies, candidates and the Python API. An evidence item can also give UTF-8 byte offsets
+(`start`, `end`), and it can cite the sign, scale, unit, field or key of the value (spec 0.5).
 
 ### With your own model
 
@@ -222,7 +222,10 @@ receipt = admit_document(result, schema)
 ```
 
 Each extraction's `value` and `unit` attributes are checked at the place LangExtract aligned its
-`extraction_text`. An extraction LangExtract could not align is rejected `NO_EVIDENCE`.
+`extraction_text`. The attributes `sign_text`, `scale_text`, `unit_text`, `field_text` and
+`key_text` become role items, and `source_url` (with `source_quote` and `source_retrieved`) or
+`knowledge` becomes outside evidence. An extraction that LangExtract could not align, with no
+outside evidence, is rejected `NO_EVIDENCE`.
 
 ### From the command line
 
@@ -231,13 +234,15 @@ groundgate extract p590a.pdf --pages 1-2 -o doc.txt --layout layout.json
 groundgate admit   doc.txt schema.json candidates.json -o receipt.json
 groundgate verify  receipt.json doc.txt schema.json candidates.json
 groundgate report  receipt.json doc.txt schema.json candidates.json --layout layout.json -o report.html
+groundgate schema  schema.json -o extractor.schema.json
 ```
 
 `extract` turns a PDF, HTML, XML or text file into the NFC text everything else reads, and
 records the page and box of every word. Text a reader can't see (proof marks drawn off the page,
-hidden HTML) is dropped, and superscripts are marked so that 10⁹ reads `10^9`, never `109`. Pass
-`-` as the document to read it from a pipe. `report` refuses to render a receipt that doesn't
-re-derive from its inputs. [examples/irs-590a](examples/irs-590a) runs the whole pipeline on an
+hidden HTML) is dropped, and superscripts are marked so that 10⁹ reads `10^9`, never `109`.
+`admit`, `verify` and `report` read the document from a pipe when DOC is `-`, and also take
+`--references` and `--document-source`. `report` refuses to render a receipt that doesn't
+re-derive from its inputs. `schema` writes the extractor schema. [examples/irs-590a](examples/irs-590a) runs the whole pipeline on an
 IRS publication with cached model output, so it reproduces without an API key.
 
 ## What it checks
@@ -248,12 +253,12 @@ Checks run in a fixed order. The first failure rejects the fact.
 |---|---|
 | `CANDIDATE_INVALID` | the candidate is malformed |
 | `FIELD_UNKNOWN` | the field is not in the schema |
-| `NULL_STRING_LITERAL` | the value is `"null"`, `"none"`, `"n/a"` |
+| `NULL_STRING_LITERAL` | the value is `"null"`, `"none"`, `"nil"` or `"n/a"`, in any case |
 | `TYPE_INVALID` | the value does not parse as the field's type |
 | `RANGE_INVALID` | the value is outside the field's bounds |
 | `UNIT_INVALID` | the unit is not the field's unit |
 | `KEY_INVALID` | the field is keyed by condition, and the key is missing or not one of its keys |
-| `NO_EVIDENCE` | no evidence is cited |
+| `NO_EVIDENCE` | the evidence has no value item and no outside item |
 | `SPAN_INVALID` | the span is outside the document or splits a character |
 | `QUOTE_NOT_FOUND` | the quoted value text is not in the document, or in the reference it cites |
 | `VALUE_NOT_IN_EVIDENCE` | no number in the span equals the value, with the sign and scale the evidence gives |
@@ -269,20 +274,25 @@ A fact that passes every check can still be flagged for a person:
 | `SCALE_WORD` | "million", "lakh" and similar follow the value, and the value was given unscaled |
 | `PART_MISSING` | the value needs a sign, a scale or a unit that no evidence item supports |
 | `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID` | a cited part fails its check |
-| `KEY_NOT_AT_VALUE` | the text puts the value under another condition, such as another indication's heading |
+| `KEY_NOT_AT_VALUE` | the text puts no key, or another key, at the value, such as another indication's heading |
 | `KEY_CITATION_INVALID` | the cited key item does not name the key |
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | only an external quote, or the extractor's own knowledge, supports the value |
 | `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
 | `CONFLICTING_CANDIDATES` | another proposal for the same field and key has a different value |
+| `MODEL_DOUBT` | a recorded judgment of the policy's judge doubts the value |
 
 Number matching is collision-safe. The span `500 mg` inside `1,500 mg` never reads as 500, a span
 that stops at `29.` inside `29.97` never reads as 29, and a malformed number like the `$252,0000`
 printed in IRS Publication 590-A never equals 252,000 or 2,520,000. When a span misses the value
 but its quote occurs exactly once elsewhere with the right value and unit, groundgate moves the
-evidence there and records `EVIDENCE_REANCHORED`.
+evidence there and records `EVIDENCE_REANCHORED`. Other info codes say how a fact passed:
+`VALUE_DERIVED` (the evidence gave the sign or scale), `KEY_CITED` (a key item put the key at the
+value in a table), `ADMITTED_BY_POLICY` (the policy admits its outside evidence) and
+`MODEL_CLEARED` (a recorded judgment cleared `KEY_NOT_AT_VALUE`).
 
-The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 31 language-neutral
-vectors that pin every code, so another implementation can prove it agrees.
+The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 45 language-neutral
+vectors that pin every code, and 35 invalid packets that an implementation must refuse, so another
+implementation can prove it agrees.
 
 ## Receipts
 
@@ -291,7 +301,7 @@ vectors that pin every code, so another implementation can prove it agrees.
  "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:2fb2495b5dfb...", "source": null},
  "references": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
- "decisions": [{"candidate_id": "Gemini_3.6_Flash_Medium/0", "field": "ira_limit_2025",
+ "decisions": [{"candidate_id": "Gemini_3.6_Flash_Medium/0", "field": "ira_limit_2025", "key": null,
                 "outcome": "admitted", "codes": [], "value": "7000", "unit": "USD",
                 "source": "document", "ref": null, "url": null,
                 "evidence": {"start": 2317, "end": 2323}, "parts": [], "missing": [],
@@ -321,19 +331,20 @@ a changed document, schema, policy, candidate or outcome.
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
   are a design ([docs/design/locale-packs.md](docs/design/locale-packs.md), #60).
 - **No OCR.** Scanned PDFs need a text layer first (for example `ocrmypdf`).
-- **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right. Spec
-  0.4 reads a judge's answers only as recorded inputs, so a receipt still re-derives byte for
-  byte. This judge block is experimental: its one measure on real extractor output is the key
-  clear on 10-K filings (#120). `groundgate-calibrate` (#112) measures the thresholds on your own
-  documents.
+- **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right.
+  Since spec 0.4, it reads a judge's answers only as recorded inputs, so a receipt still re-derives
+  byte for byte. This judge block is experimental: its one measure on real extractor output is the key
+  clear on 10-K filings (#120). `groundgate-calibrate` (#112, in [calibrate/](calibrate), not
+  yet on PyPI) measures the thresholds on your own documents.
 
 ## Status
 
 Alpha. groundgate 0.5.1 implements spec v0.5. [CHANGELOG.md](CHANGELOG.md) lists what each
 version changes, with its measure. 0.5 makes the evidence a list of items (#141): a value can cite
-its sign, scale, unit, field and key, and outside sources, under the app's policy. 0.5.1 adds
-`gg.extractor_schema` (#148), a JSON Schema for a model's structured output. 0.4 added recorded judgments (#116), an experimental way for a
-judge's answers to clear a key flag or add doubt, with no model call in the decision. 0.3 brought
+its sign, scale, unit, field and key, and outside sources, under the app's policy, and
+`gg.candidate_schema()` (#147) gives the candidate's JSON Schema. 0.5.1 adds `gg.extractor_schema`
+and `groundgate schema` (#148), a JSON Schema for a model's structured output. 0.4 added recorded
+judgments (#116), an experimental way for a judge's answers to clear a key flag or add doubt, with no model call in the decision. 0.3 brought
 a wider change rule (#51), abbreviation dots that no longer end a sentence for qualifiers (#63,
 #77), Indian digit grouping (#59), ASCII digits (#94), and keys that stop at a label line (#52) or
 read a table by its lines (#87). A receipt names the spec

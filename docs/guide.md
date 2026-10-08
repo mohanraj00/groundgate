@@ -1,14 +1,22 @@
 # Guide
 
-groundgate takes four inputs and returns a receipt:
+groundgate takes these inputs and returns a receipt:
 
 - a **document**: the text the facts came from;
 - a **schema**: the fields you want, with their types and units;
-- **candidates**: the facts an extractor proposed, each citing a span of the document;
-- a **policy** (optional): a few knobs, with defaults.
+- **candidates**: the facts an extractor proposed, each with its evidence: quotes or spans in the
+  document or in a reference, or an outside source;
+- a **policy** (optional): a few knobs, with defaults;
+- **references**, a **document source** and **judgments** (optional): other source texts that you
+  trust, the document's URL, and a judge's recorded answers.
 
-Every candidate gets one decision: `admitted`, `needs_verification` or `rejected`, with reason
-codes. [SPEC.md](../SPEC.md) is the normative version of everything below; this page is the
+Every candidate gets one decision, with reason codes:
+
+| Outcome | What the app does |
+|---|---|
+| `admitted` | Store the fact. |
+| `needs_verification` | Send it to a person, with its evidence and codes. |
+| `rejected` | Do not store it. The codes say why. | [SPEC.md](../SPEC.md) is the normative version of everything below; this page is the
 working summary.
 
 ## Documents
@@ -25,8 +33,9 @@ text = unicodedata.normalize("NFC", text)
 
 To get text from a file, use `groundgate.extract.extract(path, pages=None)` or
 `groundgate extract` on the command line. It reads PDF (with `groundgate[pdf]`), HTML, XML and
-plain text, returns NFC text, drops text a reader can't see, and for PDFs records the page and
-box of every word so the report can show page numbers.
+plain text and returns an `Extracted` with `text` (NFC), `layout` (PDFs only) and `warnings`. It
+drops text a reader can't see, and for PDFs records the page and box of every word so the report
+can show page numbers.
 
 ## Schema
 
@@ -36,13 +45,13 @@ box of every word so the report can show page numbers.
    "tablet_strengths": {"type": "number", "unit": "mg", "multiple": true},
    "pediatric_min_age": {"type": "integer", "unit": "years", "minimum": "0"}
  },
- "units": {"inHg": {"suffix": ["inches Hg", "in. Hg"]}}}
+ "units": {"inHg": {"suffix": ["inches Hg", "inHg"]}}}
 ```
 
 | Key | Default | Meaning |
 |---|---|---|
 | `type` | `"number"` | `number`, `integer` or `string`. |
-| `unit` | `null` | The unit code the value must carry, in the candidate and in the text. |
+| `unit` | `null` | The unit code the value must carry: in the candidate, and next to the value in the text or in a `unit` item. |
 | `comparator` | `"eq"` | What the field means relative to the number: `eq`, `gt`, `ge`, `lt`, `le`, `approx`, `range`. A qualifier in the text that implies a different comparator flags `QUALIFIED_VALUE`. |
 | `minimum`, `maximum` | `null` | Bounds, as decimal strings or integers. Outside them is `RANGE_INVALID`. |
 | `required` | `false` | A required field with nothing admitted or flagged is listed in the receipt's `coverage`. |
@@ -56,8 +65,9 @@ The comparator is how a field says "up to" is fine. `max_daily_dose` above is `l
 **Units.** The built-in table covers `USD`, `EUR`, `GBP`, `INR`, `%`, `mg`, `mcg`, `g`, `kg`,
 `mL`, `L`, and `minutes` through `years`. A unit is found when a prefix (`$`) ends at the number,
 or a suffix (`mg`, `dollars`) starts within `unit_window` code points after it, in the same
-sentence. Only the first suffix of any known unit counts, so in "10 mcg (maximum 500 mg)" the 10
-is mcg, never mg. `units` in the schema adds codes or replaces built-in ones. A code with no surfaces
+sentence. The whole suffix must be in that sentence, so a suffix that holds `. ` (such as
+`in. Hg`) never matches. Only the first suffix of any known unit counts, so in "10 mcg (maximum
+500 mg)" the 10 is mcg, never mg. `units` in the schema adds codes or replaces built-in ones. A code with no surfaces
 matches everywhere, so the unit check becomes a no-op for it.
 
 **Keys.** A label gives a different starting dose per indication. Declare them on the field and
@@ -89,6 +99,8 @@ line, goes to review.
 - `search_region` limits where groundgate looks for a quote and where re-anchoring may look. It
   defaults to the whole document.
 - `key` names the condition on a keyed field. On other fields it is ignored.
+- `start` and `end` in an evidence item are UTF-8 byte offsets, end exclusive. For a Python
+  index `i`, the offset is `len(text[:i].encode())`.
 - Any other key (a proposer name, a chunk id) is kept, ignored by the checks, and covered by the
   candidate's hash.
 
@@ -116,16 +128,18 @@ The extractor cites each part as one item:
 ```
 
 An item from the document has a `role` and either a byte span (`start`, `end`, optional `text`)
-or only `text`. With only `text`, the item is a quote, and groundgate finds it: the occurrence at
-the value, else the nearest one before it. For the value item, groundgate takes the first
-occurrence that holds the value with its unit.
+or only `text`. With only `text`, the item is a quote, and groundgate finds it. For the value item,
+groundgate takes the first occurrence that holds the value with its unit, else the first
+occurrence. For a role item, it takes the occurrence that holds the value, else the last one
+before it, else the first one after it. A quote that does not occur rejects the fact with
+`QUOTE_NOT_FOUND`.
 
 | Role | What it supports | What groundgate checks |
 |---|---|---|
 | `value` (default) | The number as written. | The value is there, as in spec 0.4. |
-| `sign` | A negative value. | Brackets around the number, or a loss word ("loss", "deficit") at most 4 words before it in the same sentence, with no "no" or "not" before it and no number or gain word between. In a table, only brackets count. |
+| `sign` | A negative value. | Brackets around the number, or a loss word ("loss", "deficit") at most 4 words before it in the same sentence, with no "no", "not" or "without" directly before it, and no number, line break, tab or gain word ("income", "profit") between it and the number. |
 | `scale` | A value in thousands or millions. | "in thousands" or "in millions" before the value, with no other scale word between. |
-| `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The field item passes, the item holds a form of the field's unit, and no other unit is next to the number. |
+| `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The field item passes, the item holds a form of the field's unit before the value, and no unit form, not even the field's own, is next to the number. |
 | `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. |
 | `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). A dash or a `$` with no number counts as a cell. A footnote number after the row label stops the rule. When only spaces stand between the row label and its first number, the rule stops after the first column. A tab after the label, as `groundgate extract` writes HTML tables, keeps it. |
 
@@ -146,9 +160,13 @@ Some right values are not in the document. An item can come from three other sou
 | `knowledge` | the extractor | `text` (its statement) | no |
 
 A reference is a source text that you pass to `admit` as `references`, such as a tax table. It can
-hold only the part that matters. A candidate with no value item takes the outside path: the
-policy's `sources` decide what happens to it (below). The receipt says which source a decision
-rests on.
+hold only the part that matters. Each reference has a unique non-blank `id`, a non-empty NFC
+`text` and an optional `source` (its URL), and no other members. `search_region` does not apply
+to a reference.
+
+A candidate with no value item takes the outside path: the policy's `sources` decide what happens
+to it (below). A candidate with a value item takes the checked path, and its outside items change
+nothing and are not in the receipt. The receipt says which source a decision rests on.
 
 ### The extractor's output
 
@@ -172,12 +190,12 @@ receipt = gg.admit(text, schema, out["candidates"], references=references)
 ```
 
 - Each field of your schema has its own candidate shape. `field` is the field's name, `unit` its
-  unit code or `null`, and `key` one of its keys or `null`. So the model cannot send a field, a
+  unit code or `null`, and `key` one of its keys on a keyed field, else `null`. So the model cannot send a field, a
   unit or a key that the schema does not have.
 - An item has no offsets. A model cannot count UTF-8 bytes, so it quotes, and groundgate finds the
   quote.
 - A reference item is in the schema only when you give the reference ids.
-- The schema uses only `type`, `properties`, `required`, `additionalProperties`, `items`, `const`,
+- The schema uses only `$schema`, `type`, `properties`, `required`, `additionalProperties`, `items`, `const`,
   `enum`, `anyOf`, `$defs`, `$ref` and `description`. Every member is required, and no object
   takes other members. This is the subset that the strict structured-output modes take.
 - Two step 1 rules stay outside the schema: two items with the same role, and a blank `text`,
@@ -236,7 +254,7 @@ and `KEY_CITED`:
 |---|---|---|
 | `min_confidence` | `null` | Below this, a candidate is flagged `LOW_CONFIDENCE`. |
 | `unit_window` | `24` | How far after a number a unit suffix may start, in code points. |
-| `reanchor` | `true` | When the cited span misses the value but the quote occurs exactly once elsewhere with the right value and unit, move the evidence there (`EVIDENCE_REANCHORED`). |
+| `reanchor` | `true` | When the value item's span misses the value, and exactly one other occurrence of its `text` holds the value with its unit, move the evidence there (`EVIDENCE_REANCHORED`). Only an item with offsets and `text` re-anchors. |
 | `judge` | `null` | The one judge whose recorded judgments apply, and its thresholds. See [Recorded judgments](#recorded-judgments). |
 | `sources` | review | What happens to a value that only external or knowledge evidence supports. See below. |
 
@@ -289,14 +307,14 @@ receipt = gg.admit(text, schema, candidates, policy, judgments=judgments)
 
 - A `key` judgment on a candidate flagged `KEY_NOT_AT_VALUE` clears the flag when it chooses the
   candidate's key with `p` at or above `clear.KEY_NOT_AT_VALUE` (`MODEL_CLEARED`). Another key
-  or none at that `p` adds `MODEL_DOUBT`.
+  or none at that `p` adds `MODEL_DOUBT`, also to a decision with `KEY_CITED`.
 - A `field_match` judgment with `p` below `doubt.field_match` adds `MODEL_DOUBT`, so the value
   goes to review.
 - Only judgments of the policy's judge and model version apply. A judgment never overturns a
   rejection, and never admits a candidate that has another flag.
 
 The thresholds belong to one model and one kind of document. groundgate ships none: measure
-yours with `groundgate-calibrate` (#112).
+yours with `groundgate-calibrate` ([#112](https://github.com/mohanraj00/groundgate/issues/112)).
 
 ## Decisions
 
@@ -322,8 +340,31 @@ flag. It only helps when they disagree.
 A decision carries `candidate_id`, `candidate_sha256`, `field`, `key`, `outcome`, `codes`, the
 canonical `value`, the candidate's `unit`, the `source` it rests on (with `ref` or `url`), the
 value's `evidence` span (the re-anchored one, if it moved, or null on the outside path), the
-`parts` (each role item's span and whether it passed), and the `missing` parts. An app can send
-`missing` back to its extractor and ask for those parts, or ignore it.
+`parts` (each role item's span and whether it passed), and the `missing` parts. These are two
+decisions from the [table example](#the-key-span) below. The first cites its scale, row and
+column, and the second cites nothing but the value:
+
+```json
+{"candidate_id": 1, "field": "sales", "key": "south", "outcome": "admitted",
+ "codes": ["VALUE_DERIVED", "KEY_CITED"], "value": "35000", "unit": "USD",
+ "source": "document", "ref": null, "url": null, "evidence": {"start": 65, "end": 67},
+ "parts": [{"role": "scale", "start": 16, "end": 29, "passed": true},
+           {"role": "field", "start": 46, "end": 53, "passed": true},
+           {"role": "key", "start": 39, "end": 44, "passed": true}],
+ "missing": [], "candidate_sha256": "sha256:4e8d5970..."}
+{"candidate_id": 2, "field": "sales", "key": "south", "outcome": "needs_verification",
+ "codes": ["PART_MISSING", "KEY_NOT_AT_VALUE"], "value": "35000", "unit": "USD",
+ "source": "document", "ref": null, "url": null, "evidence": {"start": 65, "end": 67},
+ "parts": [], "missing": ["scale", "key"], "candidate_sha256": "sha256:9dd86267..."}
+```
+
+`missing` lists the parts in the order `sign`, `scale`, `unit`, `key`. It lists `key` when the
+fact has `KEY_NOT_AT_VALUE` and no key item, which adds no `PART_MISSING`. A judgment that clears
+the key flag leaves `key` in `missing`.
+
+**Feedback to the extractor.** `groundgate.codes.DESCRIPTIONS` maps each code to one sentence. An
+app can send a fact's codes, their sentences and `missing` back to its extractor, ask for the
+missing parts or better evidence, and decide again. Whether to do this is the app's choice.
 
 ## How values are read
 
@@ -383,22 +424,43 @@ as one space on both sides. Case counts.
 
 ## When a fact is rejected or flagged
 
+Rejections, in the order of the checks:
+
 | Code | Usual cause | What to do |
 |---|---|---|
-| `CANDIDATE_INVALID` | A decimal is sent as a JSON float, such as `0.5`. | Send it as a string: `"0.5"`. |
-| `SPAN_INVALID` or `VALUE_NOT_IN_EVIDENCE` | Character offsets are sent as byte offsets, and the text has a character outside ASCII before the span. | Convert the offsets (see [Candidates](#candidates)). Send `evidence.text` too, so that re-anchoring can find the quote. |
-| `VALUE_NOT_IN_EVIDENCE` | The text writes the number in a form that groundgate does not read (see above). | A person checks the fact. |
-| `UNIT_NOT_IN_EVIDENCE` | The unit is not in the table, starts after `unit_window`, is past a sentence end, or is a per-unit such as `mg/kg`. | Add the unit's surfaces in the schema's `units`, or give the field its own code, such as `mg/kg`. |
+| `CANDIDATE_INVALID` | A decimal is sent as a JSON float, such as `0.5`, or an evidence item is malformed. | Send the value as a string: `"0.5"`. Use `gg.extractor_schema` as the model's output format. |
+| `FIELD_UNKNOWN` | The field name is not in the schema. | Send the name as the schema writes it. |
+| `NULL_STRING_LITERAL` | The extractor sent `"null"`, `"none"`, `"nil"` or `"n/a"` for a value that is not there. | Leave the field out instead. |
+| `TYPE_INVALID` | The value does not parse as the field's type, such as `"7,000 USD"` or `"7.5"` for an integer. | Send the plain number, without commas or a unit. |
+| `RANGE_INVALID` | The value is outside the field's `minimum` or `maximum`. | Check the value, or the bounds. |
+| `UNIT_INVALID` | The candidate's `unit` is not the field's unit code. | Send the field's unit code. |
 | `KEY_INVALID` | The candidate's `key` is not written exactly as one of the field's `keys`. | Send the key as the schema writes it. |
+| `NO_EVIDENCE` | No value item and no outside item, such as a LangExtract extraction that did not align. | Ask for a quote of the value. |
+| `SPAN_INVALID` or `VALUE_NOT_IN_EVIDENCE` | Character offsets are sent as byte offsets, and the text has a character outside ASCII before the span. | Convert the offsets (see [Candidates](#candidates)), or send only the value item's `text`, and groundgate finds the quote. |
+| `QUOTE_NOT_FOUND` | The extractor changed the quote of the value, or cited the wrong reference. | Ask for the text copied exactly, from the text that it cites. |
+| `VALUE_NOT_IN_EVIDENCE` | The value is not in the cited text, or the text writes the number in a form that groundgate does not read (see above). | A person checks the fact. |
+| `UNIT_NOT_IN_EVIDENCE` | Another unit is next to the number, such as mcg for an mg field, or a per-unit such as mg/kg. | Check the field's unit. For a per-unit, give the field its own code, such as `mg/kg`. |
+| `SOURCE_REJECTED` | Only outside evidence supports the value, and the policy rejects it. | Ask for a quote from the document or a reference. |
+
+Flags send the fact to a person:
+
+| Code | Usual cause | What to do |
+|---|---|---|
+| `NON_VERBATIM_EVIDENCE` | The extractor changed the quote. | A person compares the quote with the text at the span. |
 | `QUALIFIED_VALUE` | The text says "up to" and the field is `eq`. | If the field is a limit, set its `comparator`. If not, a person checks the fact. |
 | `SCALE_WORD` | The value is sent as written, without its scale word. | Send the scaled value. |
+| `PART_MISSING` | The value needs a sign, a scale or a unit that no item supports. A unit is missing when no unit form is next to the number: the text writes a surface that is not in the table, or the suffix is past `unit_window` or a sentence end. `missing` names the part. | Ask the extractor for those items, or add the unit's surfaces in the schema's `units`. |
+| `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID` | The item does not hold its part at the value (see [Evidence items](#evidence-items)). A unit item also fails when the field item fails, or when a unit is already next to the number. | A person checks the fact. |
+| `FIELD_CITATION_INVALID` | The item holds none of the field's `aliases`, or it is not on the value's row or in its sentence. | Give the field `aliases` in the document's words. |
 | `KEY_NOT_AT_VALUE` | The value is under a different condition in the text, or a label line or a table cell stands between the key and the value. | In a table, ask the extractor for a `field` item and a `key` item, and give the field `aliases`. Otherwise a person checks the fact. |
 | `KEY_CITATION_INVALID` | The key item does not hold a mention of the key, or is not in the value's text. | A person checks the fact. |
-| `PART_MISSING` | The value needs a sign, a scale or a unit that no item supports. `missing` names it. | Ask the extractor for those items. |
-| `QUOTE_NOT_FOUND` | The extractor changed the quote of the value, or cited the wrong reference. | Ask for the text copied exactly, from the text that it cites. |
-| `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | Only outside evidence supports the value. | Check the source. If you trust it, add it to `sources`. |
+| `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | Only outside evidence supports the value. | Check the source. If you trust it, add the URL prefix to `sources.external.allow`, or set `sources.knowledge` to `admit`. |
+| `LOW_CONFIDENCE` | The extractor's `confidence` is below `min_confidence`. | A person checks the fact. |
 | `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |
-| `NON_VERBATIM_EVIDENCE` | The extractor changed the quote. | A person compares the quote with the text at the span. |
+| `MODEL_DOUBT` | A recorded judgment of the policy's judge doubts the value or its key. | A person checks the fact. |
+
+`REQUIRED_FIELD_MISSING` is a coverage finding, not a decision: no candidate of a required field
+was admitted or flagged.
 
 ## Python API
 
@@ -412,13 +474,16 @@ receipt = gg.admit(
     policy=None,
     document_id=None,
     judgments=None,
+    *,
     references=None,
     document_source=None,
 )
 receipt.decisions  # tuple of gg.Decision
 receipt.coverage  # tuple of (field, "REQUIRED_FIELD_MISSING")
+receipt.references  # tuple of (id, sha256, source)
 receipt.to_dict()  # the JSON receipt, including receipt_sha256
 
+receipt_dict = receipt.to_dict()  # or the stored JSON
 check = gg.verify(
     receipt_dict,
     text,
@@ -426,14 +491,18 @@ check = gg.verify(
     candidates,
     policy=None,
     judgments=None,
+    *,
     references=None,
     document_source=None,
 )
 check.ok, check.problems  # True, () when the receipt re-derives exactly
 ```
 
-`schema` and `policy` can be dicts or `gg.Schema` / `gg.Policy`. Invalid inputs raise
-`gg.PacketError`. `gg.digest(kind, obj)` and `gg.jcs(obj)` are the hashing primitives, if you
+`references` and `document_source` are keyword-only. `schema` and `policy` can be dicts or
+`gg.Schema` / `gg.Policy`. Invalid inputs raise `gg.PacketError`. In Python, `Decision.evidence`
+and `Part.span` are `(start, end)` tuples, and `to_dict()` writes them as `{"start", "end"}`.
+`gg.candidate_schema()` and `gg.extractor_schema(schema, reference_ids=None)` return the JSON
+Schemas of [Candidates](#candidates) and [The extractor's output](#the-extractors-output). `gg.digest(kind, obj)` and `gg.jcs(obj)` are the hashing primitives, if you
 need to compute a candidate's hash yourself.
 
 ### LangExtract
@@ -441,8 +510,20 @@ need to compute a candidate's hash yourself.
 ```python
 from groundgate.adapters.langextract import admit_document, to_candidates
 
-receipt = admit_document(result, schema)
+receipt = admit_document(
+    result,
+    schema,
+    policy=None,
+    document_id=None,
+    judgments=None,
+    references=None,
+    document_source=None,
+)
 ```
+
+Every argument after `policy` is keyword-only. Other keyword arguments (`fields=`,
+`value_attribute=` and the others below) go to `to_candidates`. `document_id` defaults to the
+id that you gave LangExtract, and each candidate's id is the index of its extraction.
 
 `result` is an `lx.data.AnnotatedDocument`, or a dict from the JSONL LangExtract writes.
 LangExtract is never imported. Per extraction:
@@ -542,8 +623,8 @@ from groundgate.report import render
 html = render(receipt_dict, text, candidates, schema=schema, policy=policy, judgments=judgments)
 ```
 
-With `schema` (and `policy` and `judgments`, if you used them), the page re-derives the receipt
-first and says whether it matched. `layout=` and `title=` are optional. The page is one self-contained HTML file with no scripts.
+With `schema` (and `policy`, `judgments`, `references` and `document_source`, if you used them),
+the page re-derives the receipt first and says whether it matched. `layout=` and `title=` are optional. The page is one self-contained HTML file with no scripts.
 
 ## Command line
 
@@ -562,11 +643,13 @@ inputs, 2 invalid input.
 
 ## Receipts
 
-A receipt holds the SHA-256 of the document, schema and policy, one decision per candidate, the
-coverage findings, a summary and its own hash. Hashes are over RFC 8785 canonical JSON with a
-`groundgate/<spec version>:<kind>` prefix, so a receipt made in one language verifies in another.
-`verify` recomputes everything from the inputs; any change to the document, schema, policy, a
-candidate or a decision shows up as a problem.
+A receipt holds the spec version, the document's id, SHA-256 and source, each reference's id,
+SHA-256 and source, the SHA-256 of the schema and policy, one decision per candidate, the coverage
+findings, the judgments that applied, a summary and its own hash. Hashes are over RFC 8785
+canonical JSON with a `groundgate/<spec version>:<kind>` prefix, so a receipt made in one language
+verifies in another. `verify` recomputes everything from the inputs. Any change to the document,
+its source, a reference, the schema, the policy, a judgment, a candidate or a decision shows up as
+a problem.
 
 **Versions.** A receipt names the spec version it was decided under, and `verify` accepts only the
 version it implements. A groundgate that implements spec 0.5 reports a 0.4 receipt as one problem

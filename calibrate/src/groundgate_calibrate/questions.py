@@ -1,5 +1,5 @@
-"""The two questions: the key clear and the field doubt. For each one: which decisions of spec 0.3
-become items, what a label is, the prompt for a judge, and how answers are scored."""
+"""The two questions: the key clear and the field doubt. For each one: which decisions with no
+judgment become items, what a label is, the prompt for a judge, and how answers are scored."""
 
 from __future__ import annotations
 

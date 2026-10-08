@@ -3,9 +3,9 @@
 Versions follow [SemVer](https://semver.org). groundgate-calibrate is released apart from
 groundgate, with tags `calibrate-v*`.
 
-## 0.1.0
+## 0.1.0 (unreleased)
 
-The first release. It measures a judge's thresholds for groundgate on your own documents, as hybrid
+The first version, not yet on PyPI ([#122](https://github.com/mohanraj00/groundgate/issues/122)). It measures a judge's thresholds for groundgate on your own documents, as hybrid
 design §9 describes.
 
 - `sample`, `split`, `label`, `ask`, `report`: from the candidates to a threshold, with blind
