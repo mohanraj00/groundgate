@@ -67,6 +67,24 @@ def test_invalid_packet(path: Path) -> None:
         )  # fmt: skip
 
 
+def test_description_changes_digest_only() -> None:
+    v = _load(ROOT / "vectors" / "21-field-description.json")
+    without = {
+        "fields": {
+            name: {key: value for key, value in field.items() if key != "description"}
+            for name, field in v["schema"]["fields"].items()
+        }
+    }
+    described = gg.admit(v["document"], v["schema"], v["candidates"]).to_dict()
+    baseline = gg.admit(v["document"], without, v["candidates"]).to_dict()
+    assert described["schema_sha256"] == gg.digest(
+        "schema", gg.Schema.from_dict(v["schema"]).to_dict()
+    )
+    for key in ("schema_sha256", "receipt_sha256"):
+        assert described.pop(key) != baseline.pop(key)
+    assert described == baseline
+
+
 def test_every_code_has_two_vectors() -> None:
     files: dict[str, set[str]] = defaultdict(set)
     for path in VECTORS:

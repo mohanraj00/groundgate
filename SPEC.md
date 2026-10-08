@@ -76,13 +76,17 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
   "required": false,
   "multiple": false,
   "keys": ["<key>"] | null,
-  "aliases": ["<words>"] | null
+  "aliases": ["<words>"] | null,
+  "description": "<text>"
 }},
  "units": {"<unit code>": {"prefix": ["<surface>"], "suffix": ["<surface>"]}}}
 ```
 
 Defaults: `type` `"number"`, `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false,
 `keys` null, `aliases` null.
+
+`description` is optional; when present, it must be a non-blank string, with no length limit.
+It has no effect on a decision, but is part of the schema digest.
 
 `keys` makes a field **keyed**: its values belong to one of several conditions, such as the
 indications of a drug, and each candidate names its condition. The keys are written in the

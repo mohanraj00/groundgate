@@ -64,6 +64,10 @@ def show(receipt):
 
 Each field has a `type`. The default is `number`.
 
+Each field can have a `description`: a non-blank string with no length limit. It has no effect
+on a decision, but changes the schema digest. `gg.extractor_schema` includes it in the description
+of that field's candidate shape, along with its aliases when present.
+
 | `type` | Accepts | Rejects |
 |---|---|---|
 | `number` | One decimal number: `"485"`, `"0.5"`, `"-12"`, `"7,000"`, or a JSON integer. | A JSON float such as `0.5`, a unit in the value (`"$485"`, `"485 USD"`), an exponent (`"1e3"`), a fraction (`"1/2"`). |
@@ -537,9 +541,10 @@ groundgate refuses an invalid schema. `admit` raises `gg.PacketError` and writes
 schema is invalid when:
 
 - it is not an object with a `fields` object, or it has keys other than `fields` and `units`;
-- a field is not an object, or it has keys other than the nine in this page;
+- a field is not an object, or it has keys other than the ten in this page;
 - `type` is not `number`, `integer` or `string`, or `comparator` is not one of the seven;
 - `unit` is not a string or null;
+- `description` is present but is not a non-blank string;
 - `minimum` or `maximum` is not a decimal string or an integer (a float or a boolean is invalid);
 - `required` or `multiple` is not a boolean;
 - `keys` or `aliases` is not null or a non-empty list of strings, or two entries are equal after

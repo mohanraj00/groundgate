@@ -2514,6 +2514,54 @@ vector(
 )  # fmt: skip
 
 
+# ---- spec 0.6 (#171)
+vector(
+    "21-field-description",
+    "Field descriptions change no decision: values still pass, fail or need verification "
+    "under the field's rules, even when its description says otherwise.",
+    "The fee is $485. The estimate is about $500. The label is Annual fee.",
+    {
+        "fields": {
+            "fee": {
+                "type": "integer",
+                "unit": "USD",
+                "description": "A fee in cents; only values above 1000 count.",
+            },
+            "estimate": {
+                "type": "integer",
+                "unit": "USD",
+                "description": "An approximate amount that needs no verification.",
+            },
+            "label": {"type": "string", "description": "The fee's label."},
+        }
+    },
+    [
+        c("d1", "fee", 485, "USD", q("$485"), ("admitted", [])),
+        c("d2", "fee", 486, "USD", q("$485"), ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("d3", "estimate", 500, "USD", q("$500"),
+          ("needs_verification", ["QUALIFIED_VALUE"])),
+        c("d4", "label", "Annual fee", None, q("Annual fee"), ("admitted", [])),
+    ],
+)  # fmt: skip
+
+INVALID.extend(
+    [
+        {
+            "name": f"schema-description-{name}",
+            "description": "A field description must be a non-blank string.",
+            "document": "The fee is $485.",
+            "schema": {"fields": {"fee": {**USD, "description": description}}},
+            "policy": None,
+        }
+        for name, description in [
+            ("empty", ""),
+            ("whitespace", " \t\n\u00a0"),
+            ("not-string", 485),
+        ]
+    ]
+)
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

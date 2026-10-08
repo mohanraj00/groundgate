@@ -166,6 +166,30 @@ def test_guide_example() -> None:
         assert (d.outcome, list(d.codes)) == ("admitted", ["VALUE_DERIVED", "KEY_CITED"])
 
 
+def test_field_descriptions_and_aliases() -> None:
+    description = " \nThe fee in dollars.\t "
+    schema = {
+        "fields": {
+            "plain": {},
+            "described": {"description": description},
+            "aliased": {"aliases": ["late fee", "filing fee"]},
+            "both": {"description": description, "aliases": ["late fee", "filing fee"]},
+        }
+    }
+    parsed = gg.Schema.from_dict(schema)
+    generated = gg.extractor_schema(parsed)
+    assert generated == gg.extractor_schema(schema)
+    shapes = generated["properties"]["candidates"]["items"]["anyOf"]
+    descriptions = {s["properties"]["field"]["const"]: s.get("description") for s in shapes}
+    names = "Names in the document: late fee, filing fee."
+    assert descriptions == {
+        "plain": None,
+        "described": description,
+        "aliased": names,
+        "both": description + "\n" + names,
+    }
+
+
 def test_edge_schemas() -> None:
     with pytest.raises(gg.PacketError):
         gg.extractor_schema({"fields": {}})
