@@ -31,7 +31,7 @@ Claude Code and Codex both work on this repository. This file is the one copy of
 - The agent that opened the PR decides if the PR needs a deeper security review:
   - If the review ends with `Security review: needed` or `Security review: not needed`, follow
     that line.
-  - A Codex code review gives only findings, so it has no such line. If the line is not there,
+  - A review whose format allows only findings has no such line. If the line is not there,
     apply the list in Review guidelines yourself. Never take a missing line as "not needed".
   - If the PR needs one, post a separate comment that holds only `@codex security review`. Post
     it once for each PR, and not when a security review of the PR is already asked or done. Read
