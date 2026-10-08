@@ -390,9 +390,9 @@ groundgate then reads which keys the text puts at the value:
 4. In a table sentence, only the value's own line counts. A table sentence holds 3 or more line
    breaks and mentions 2 or more keys of the field.
 
-If the candidate's key is not one of these keys, the fact is flagged `KEY_NOT_AT_VALUE`, and the
-decision lists `key` in `missing`. Two candidates conflict only when they share a key. The
-receipt echoes the key.
+If the candidate's key is not one of these keys, the fact is flagged `KEY_NOT_AT_VALUE`. If the
+candidate also has no key item, the decision lists `key` in `missing`. Two candidates conflict
+only when they share a key. The receipt echoes the key.
 
 ```python
 text = (
