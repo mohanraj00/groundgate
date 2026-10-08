@@ -795,6 +795,19 @@ def _references(raw: object) -> dict[str, tuple[_Text, str | None]]:
     return out
 
 
+def _check_integers(value: object, path: str) -> None:
+    """Reject integers without a canonical JSON form before any digest (SPEC §6)."""
+    if isinstance(value, int):
+        if not -(2**53 - 1) <= value <= 2**53 - 1:
+            raise PacketError(f"{path}: integer is outside [-(2^53-1), 2^53-1]")
+    elif isinstance(value, Mapping):
+        for key, member in value.items():
+            _check_integers(member, f"{path}.{key}")
+    elif isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+        for i, member in enumerate(value):
+            _check_integers(member, f"{path}[{i}]")
+
+
 def admit(
     text: str,
     schema: Schema | Mapping[str, Any],
@@ -811,7 +824,8 @@ def admit(
     ``text`` is the document in Unicode NFC. ``schema`` and ``policy`` are dicts or ``Schema`` and
     ``Policy`` objects; ``policy=None`` uses the defaults. ``candidates`` is a list of candidate
     dicts whose evidence is a list of evidence items (SPEC §2.5). A malformed candidate gets a
-    ``rejected`` decision, not an exception. ``document_id`` is copied into the receipt.
+    ``rejected`` decision unless it contains an integer outside the range in SPEC §6, which
+    makes the packet invalid. ``document_id`` is copied into the receipt.
     ``judgments`` are recorded answers of a judge (SPEC §2.6); the policy's ``judge`` block says
     which apply. ``references`` are other source texts that the app supplies, and
     ``document_source`` is the URL of the document (SPEC §2.1).
@@ -821,12 +835,17 @@ def admit(
     """
     if not isinstance(text, str) or not is_nfc(text):
         raise PacketError("document text must be a string in Unicode NFC")
+    if isinstance(candidates, (str, bytes)) or not isinstance(candidates, Sequence):
+        raise PacketError("candidates must be a list")
+    _check_integers(candidates, "candidates")
+    _check_integers(document_id, "document_id")
+    _check_integers(references, "references")
+    _check_integers(judgments, "judgments")
+    _check_integers(policy.to_dict() if isinstance(policy, Policy) else policy, "policy")
     if not isinstance(schema, Schema):
         schema = Schema.from_dict(schema)
     if not isinstance(policy, Policy):
         policy = Policy() if policy is None else Policy.from_dict(policy)
-    if isinstance(candidates, (str, bytes)) or not isinstance(candidates, Sequence):
-        raise PacketError("candidates must be a list")
     if document_source is not None and not (
         isinstance(document_source, str) and document_source.strip()
     ):
