@@ -599,6 +599,29 @@ def gain_word(text: str, start: int, end: int) -> bool:
     return bool(_GAIN.search(text, start, end))
 
 
+def heading_scale(text: str, pos: int) -> bool:
+    """Whether a scale phrase on a heading line reaches the table row at ``pos`` (SPEC §4.1):
+    the row holds a tab, the rows above it up to the table's first row hold tabs, and the first
+    line above them that is not blank holds no tab and holds "in" and a scale word."""
+    start = text.rfind("\n", 0, pos) + 1
+    end = text.find("\n", pos)
+    line = text[start : len(text) if end < 0 else end]
+    if "\t" not in line:
+        return False
+    while start > 0:
+        end = start - 1
+        start = text.rfind("\n", 0, end) + 1
+        line = text[start:end]
+        if "\t" in line:
+            continue
+        while not line.strip() and start > 0:  # blank lines between the heading and the table
+            end = start - 1
+            start = text.rfind("\n", 0, end) + 1
+            line = text[start:end]
+        return "\t" not in line and in_scale(line, 0, len(line))
+    return False
+
+
 def in_scale(text: str, start: int, end: int) -> bool:
     """Whether text[start:end] holds "in" and a scale word, such as "in thousands" (SPEC §4.6)."""
     return bool(_IN_SCALE.search(text, start, end))

@@ -30,6 +30,7 @@ from .text import (
     form_next,
     gain_word,
     header,
+    heading_scale,
     holds_form,
     host,
     in_scale,
@@ -307,16 +308,29 @@ def _value_at(
             words = None if at_span is None else own.text[at_span[0] : at_span[1]]
         scale = None if words is None else item_scale(words, 0, len(words))
     toks = [k for k in tokens(t.text, s, e) if k.value is not None]
+
+    def heading(k: Token, need: set[str]) -> set[str]:
+        """The parts missing at the token, with the scale of a heading over its table."""
+        if (
+            scale_item is None
+            and f.unit != "%"
+            and "scale" not in need
+            and scaled_value(t.text, k) is None
+            and heading_scale(t.text, k.start)
+        ):
+            return need | {"scale"}
+        return need
+
     hits: list[tuple[Token, set[str]]] = []
     for k in toks:
         vals, _ = _values(t, k, neg_item, scale, signs)
-        if value in vals:
-            hits.append((k, set()))
+        if value in vals and (lenient or not heading(k, set())):
+            hits.append((k, heading(k, set())))
     if not hits and lenient:
         for k in toks:
             need = _missing(t, k, value, neg_item, scale_item is not None, scale, signs)
             if need is not None:
-                hits = [(k, need)]
+                hits = [(k, heading(k, need))]
                 break
     if not hits:
         return None, "VALUE_NOT_IN_EVIDENCE"

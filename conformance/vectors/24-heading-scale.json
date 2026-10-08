@@ -1,0 +1,229 @@
+{
+ "name": "24-heading-scale",
+ "description": "A scale phrase on a heading line with no tab reaches the lines with tabs directly after it, after any blank lines, up to the first line that holds no tab. A value at a token there, with no scale item and no scale word after the number, equal to the number as written, misses its scale. A field with the unit % is not reached. A table after a blank line, a heading with no scale phrase, and a line with no tab are not reached (#162).",
+ "document": "CONSOLIDATED STATEMENTS OF OPERATIONS\n\n(in thousands)\n\n2025\t2024\nNet sales\t$ 84,210\t$ 79,605\nGross margin\t12 %\t11 %\nLoss from operations\t(3,415)\t(2,980)\nBacklog\t$1.2 million\t$1.0 million\n\nOther income\t500\t400\n\nHeadcount at year end was 1,250.\n\nSegment data\n\n2025\t2024\nUnits sold\t1,250\t1,100\n",
+ "schema": {
+  "fields": {
+   "net_sales": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true
+   },
+   "operating_income": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "loss from operations"
+    ]
+   },
+   "margin": {
+    "type": "number",
+    "unit": "%",
+    "multiple": true
+   },
+   "backlog": {
+    "type": "number",
+    "unit": "USD"
+   },
+   "other": {
+    "type": "number",
+    "multiple": true
+   },
+   "headcount": {
+    "type": "integer"
+   },
+   "units": {
+    "type": "integer",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "h1",
+   "field": "net_sales",
+   "value": "84210",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 75,
+     "end": 83,
+     "text": "$ 84,210"
+    }
+   ]
+  },
+  {
+   "id": "h2",
+   "field": "net_sales",
+   "value": "84210000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 75,
+     "end": 83,
+     "text": "$ 84,210"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    }
+   ]
+  },
+  {
+   "id": "h3",
+   "field": "net_sales",
+   "value": "84210000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 75,
+     "end": 83,
+     "text": "$ 84,210"
+    }
+   ]
+  },
+  {
+   "id": "h4",
+   "field": "operating_income",
+   "value": "-2980",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 145,
+     "end": 152,
+     "text": "(2,980)"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Loss from operations"
+    }
+   ]
+  },
+  {
+   "id": "h5",
+   "field": "margin",
+   "value": "12",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 106,
+     "end": 110,
+     "text": "12 %"
+    }
+   ]
+  },
+  {
+   "id": "h6",
+   "field": "headcount",
+   "value": "1250",
+   "evidence": [
+    {
+     "start": 236,
+     "end": 241,
+     "text": "1,250"
+    }
+   ]
+  },
+  {
+   "id": "h7",
+   "field": "units",
+   "value": "1250",
+   "evidence": [
+    {
+     "start": 279,
+     "end": 284,
+     "text": "1,250"
+    }
+   ]
+  },
+  {
+   "id": "h8",
+   "field": "other",
+   "value": "500",
+   "evidence": [
+    {
+     "start": 201,
+     "end": 204,
+     "text": "500"
+    }
+   ]
+  },
+  {
+   "id": "h9",
+   "field": "backlog",
+   "value": "1200000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 161,
+     "end": 173,
+     "text": "$1.2 million"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

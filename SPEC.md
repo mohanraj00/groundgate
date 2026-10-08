@@ -295,6 +295,9 @@ holds, and the decision lists the part in `missing`:
   token's value, with any sign applied, times 10^3, 10^5, 10^6, 10^7, 10^9 or 10^12.
 - `sign` and `scale`: neither item is there, and `value` equals the negative of the token's value
   times one of those powers of ten.
+- `scale`, from a heading: the candidate has no scale item, the token has no scaled value, the
+  field's unit is not `%`, a heading scale reaches the token (§4.1), and the value matches the
+  token without a scale. This is added to the parts above.
 
 At a token, the sign alone is tried first, then the scale alone, then both.
 
@@ -423,6 +426,12 @@ words, case-insensitively, after at most 2 whitespace code points. The scaled va
 times 10^3, 10^6, 10^9, 10^12, 10^5 or 10^7: "$1.25 billion" is 1250000000 and "4 lakh" is
 400000. Like a unit, the scale word is read from the document, so it counts even past the end of
 the span. A scale word with no number before it ("millions of") has no value.
+
+A **heading scale** is `in`, whitespace and a scale word (also with a final `s`) on a line that
+holds no tab, such as "(in thousands)". It reaches the lines after it that hold a tab: blank lines
+may stand between the heading and the first of them, and the first line after that holds no tab
+ends the table. So it reaches a token on such a line. A line with spaces between its cells, as
+from a PDF, holds no tab, so no heading scale reaches it (#152).
 
 Candidate values parse the same way after trimming, and must be a single token. `integer` fields
 additionally require an integral value. The **canonical value** is the decimal without grouping,
