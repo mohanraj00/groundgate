@@ -104,6 +104,7 @@ def test_packet_errors() -> None:
         ("search_region", "candidates[0].search_region.end"),
         ("metadata", "candidates[0].metadata[0].count"),
         ("malformed", "candidates[0][0]"),
+        ("document_id", "document_id"),
         ("reference", "references[0].source"),
         ("reference_nested", "references[0].extra[0].count"),
         ("judgment", "judgments[0].candidate_id"),
@@ -125,6 +126,7 @@ def test_unsafe_integers_are_packet_errors_before_any_digest(
         "search_region": {"candidates": [{**cand, "search_region": {"start": 0, "end": value}}]},
         "metadata": {"candidates": [{**cand, "metadata": [{"count": value}]}]},
         "malformed": {"candidates": [[value]]},
+        "document_id": {"document_id": value},
         "reference": {"references": [{"id": "r", "text": "7000", "source": value}]},
         "reference_nested": {
             "references": [{"id": "r", "text": "7000", "extra": [{"count": value}]}]

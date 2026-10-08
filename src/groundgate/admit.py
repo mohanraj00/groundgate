@@ -838,6 +838,7 @@ def admit(
     if isinstance(candidates, (str, bytes)) or not isinstance(candidates, Sequence):
         raise PacketError("candidates must be a list")
     _check_integers(candidates, "candidates")
+    _check_integers(document_id, "document_id")
     _check_integers(references, "references")
     _check_integers(judgments, "judgments")
     _check_integers(policy.to_dict() if isinstance(policy, Policy) else policy, "policy")
