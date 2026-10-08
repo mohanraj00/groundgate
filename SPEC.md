@@ -80,7 +80,7 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
  "units": {"<unit code>": {"prefix": ["<surface>"], "suffix": ["<surface>"]}}}
 ```
 
-Defaults: `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false,
+Defaults: `type` `"number"`, `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false,
 `keys` null, `aliases` null.
 
 `keys` makes a field **keyed**: its values belong to one of several conditions, such as the
@@ -100,7 +100,8 @@ filled in.
 The packet is invalid when the schema is not an object with a `fields` object, has keys other
 than `fields` and `units`, or a field is not an object, has other keys, has a `type` or
 `comparator` not listed above, a `unit` that is not a string or null, a bound that is not a
-decimal string or an integer, or a `required` or `multiple` that is not a boolean.
+decimal string or an integer that reads as a number (§4.1, so `"1,000"` is accepted), or a
+`required` or `multiple` that is not a boolean.
 
 ### 2.4 Policy
 
