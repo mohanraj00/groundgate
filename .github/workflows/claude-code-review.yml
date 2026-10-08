@@ -10,12 +10,19 @@ on:
 
 jobs:
   claude-review:
+    # A PR created with a label sends "opened" and then "labeled", so the label starts a review
+    # only on "labeled", and only on a branch that "opened" does not already review.
     if: |
       !github.event.pull_request.draft && (
         (github.event.action != 'labeled' && startsWith(github.event.pull_request.head.ref, 'codex/')) ||
-        (github.event.action == 'labeled' && github.event.label.name == 'review:claude') ||
-        (github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'review:claude'))
+        (github.event.action == 'labeled' && github.event.label.name == 'review:claude' &&
+          !startsWith(github.event.pull_request.head.ref, 'codex/')) ||
+        ((github.event.action == 'reopened' || github.event.action == 'ready_for_review') &&
+          contains(github.event.pull_request.labels.*.name, 'review:claude'))
       )
+    concurrency:
+      group: claude-review-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
       contents: read
