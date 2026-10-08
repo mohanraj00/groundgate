@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import random
+from importlib import import_module
 from pathlib import Path
 from typing import Any
 
@@ -90,6 +91,100 @@ def test_packet_errors() -> None:
         gg.admit(DOC, {"fields": {}, "units": {"X": {"prefix": [""]}}}, [])
     with pytest.raises(gg.PacketError):
         gg.admit(DOC, SCHEMA, [], {"unit_window": -1})
+
+
+@pytest.mark.parametrize("value", [2**53, -(2**53), 10**30, -(10**30)])
+@pytest.mark.parametrize(
+    ("case", "path"),
+    [
+        ("value", "candidates[0].value"),
+        ("id", "candidates[0].id"),
+        ("evidence", "candidates[0].evidence.start"),
+        ("evidence_list", "candidates[0].evidence[0].end"),
+        ("search_region", "candidates[0].search_region.end"),
+        ("metadata", "candidates[0].metadata[0].count"),
+        ("malformed", "candidates[0][0]"),
+        ("reference", "references[0].source"),
+        ("reference_nested", "references[0].extra[0].count"),
+        ("judgment", "judgments[0].candidate_id"),
+        ("judgment_nested", "judgments[0].judge.digest"),
+        ("policy", "policy.unit_window"),
+        ("policy_nested", "policy.judge.doubt.field_match"),
+        ("policy_object", "policy.unit_window"),
+    ],
+)
+def test_unsafe_integers_are_packet_errors_before_any_digest(
+    case: str, path: str, value: int, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    cand = {**CANDS[0]}
+    packets: dict[str, dict[str, Any]] = {
+        "value": {"candidates": [{**cand, "value": value}]},
+        "id": {"candidates": [{**cand, "id": value}]},
+        "evidence": {"candidates": [{**cand, "evidence": {"start": value, "end": 1}}]},
+        "evidence_list": {"candidates": [{**cand, "evidence": [{"start": 0, "end": value}]}]},
+        "search_region": {"candidates": [{**cand, "search_region": {"start": 0, "end": value}}]},
+        "metadata": {"candidates": [{**cand, "metadata": [{"count": value}]}]},
+        "malformed": {"candidates": [[value]]},
+        "reference": {"references": [{"id": "r", "text": "7000", "source": value}]},
+        "reference_nested": {
+            "references": [{"id": "r", "text": "7000", "extra": [{"count": value}]}]
+        },
+        "judgment": {
+            "judgments": [
+                {"candidate_id": value, "question": "field_match", "judge": JUDGE, "p": 1}
+            ]
+        },
+        "judgment_nested": {
+            "judgments": [
+                {
+                    "candidate_id": "a",
+                    "question": "field_match",
+                    "judge": {"id": "jev", "digest": value},
+                    "p": 1,
+                }
+            ]
+        },
+        "policy": {"policy": {"unit_window": value}},
+        "policy_nested": {"policy": {"judge": {**JUDGE, "doubt": {"field_match": value}}}},
+        "policy_object": {"policy": gg.Policy(unit_window=value)},
+    }
+
+    def unexpected_digest(kind: str, obj: object) -> str:
+        pytest.fail(f"{kind} was hashed before integer validation")
+
+    monkeypatch.setattr(import_module("groundgate.admit"), "digest", unexpected_digest)
+    with pytest.raises(gg.PacketError) as error:
+        gg.admit(DOC, SCHEMA, **{"candidates": CANDS, **packets[case]})
+    assert str(error.value) == f"{path}: integer is outside [-(2^53-1), 2^53-1]"
+
+
+@pytest.mark.parametrize("value", [-(2**53 - 1), 2**53 - 1])
+def test_safe_integer_boundaries_produce_verifiable_receipts(value: int) -> None:
+    text = str(value)
+    schema = {"fields": {"n": {"type": "integer"}}}
+    candidates = [
+        {
+            "id": value,
+            "field": "n",
+            "value": value,
+            "evidence": {"text": text},
+            "metadata": [value, True, False, 1e30],
+        }
+    ]
+    policy = {"unit_window": 2**53 - 1, "min_confidence": 0, "reanchor": True}
+    judgments = [{"candidate_id": value, "question": "field_match", "judge": JUDGE, "p": 1}]
+    receipt = gg.admit(text, schema, candidates, policy, judgments=judgments)
+    assert receipt.decisions[0].outcome == "admitted"
+    assert receipt.decisions[0].value == text
+    assert gg.verify(receipt.to_dict(), text, schema, candidates, policy, judgments).ok
+
+
+def test_large_integer_strings_are_admitted() -> None:
+    text = "12500000000000000"
+    candidates = [{"field": "n", "value": text, "evidence": {"text": text}}]
+    receipt = gg.admit(text, {"fields": {"n": {"type": "integer"}}}, candidates)
+    assert receipt.decisions[0].outcome == "admitted"
+    assert receipt.decisions[0].value == text
 
 
 def test_rejected_decision_reports_what_is_known() -> None:
