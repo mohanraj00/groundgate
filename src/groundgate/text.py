@@ -254,6 +254,7 @@ _RANGE_PREV = re.compile(rf"\s*{_UNIT_WORD}(?:through|thru|to|-|\u2013)\s*\S{{0,
 _AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
 _AND_PREV = re.compile(rf"\s*{_UNIT_WORD}and\s*\S{{0,4}}?", re.I)
 _BETWEEN_END = re.compile(r"\bbetween\s*\S{0,4}?$", re.I)
+_BETWEEN = re.compile(r"(?<![^\W_])between\s", re.I)
 _CHANGE = (
     "increase|increases|increased|increasing|decrease|decreases|decreased|decreasing|"
     "raise|raises|raised|raising|reduce|reduces|reduced|reducing|reduction|reductions|"
@@ -295,6 +296,7 @@ def qualifiers(text: str, tok: Token) -> set[str]:
     if (
         _RANGE_NEXT.match(rest)
         or (between_before and _AND_NEXT.match(rest))
+        or (_AND_NEXT.match(rest) and _between_words_before(text, tok.start))
         or (
             prev
             and _RANGE_PREV.fullmatch(before)
@@ -303,11 +305,32 @@ def qualifiers(text: str, tok: Token) -> set[str]:
         or (
             prev
             and _AND_PREV.fullmatch(before)
-            and _BETWEEN_END.search(text[max(s0, prev[-1].start - 20) : prev[-1].start].rstrip())
+            and (
+                _BETWEEN_END.search(text[max(s0, prev[-1].start - 20) : prev[-1].start].rstrip())
+                or _between_words_before(text, prev[-1].start)
+            )
         )
     ):
         found.add("range")
     return found
+
+
+def _between_words_before(text: str, start: int) -> bool:
+    """Whether a `between` of the sentence stands before the number at ``start`` with only
+    whitespace and at most six words between them (SPEC §4.2). A word is a run of letters and
+    combining marks that starts with a letter. Each `between` is tried."""
+    s0, _ = sentence(text, start)
+    for m in _BETWEEN.finditer(text, s0, start):
+        words = text[m.end() - 1 : start].split()
+        if len(words) <= 6 and text[start - 1].isspace() and all(map(_word, words)):
+            return True
+    return False
+
+
+def _word(w: str) -> bool:
+    return unicodedata.category(w[0]).startswith("L") and all(
+        unicodedata.category(ch)[0] in "LM" for ch in w
+    )
 
 
 def _before_qualifiers(text: str, s0: int, start: int, end: int) -> set[str]:

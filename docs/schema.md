@@ -260,6 +260,12 @@ the value, and not past the next number. If a qualifier applies and its comparat
 the field's, the fact is flagged `QUALIFIED_VALUE`. A negation inverts a qualifier, so "may not
 exceed $19,000" is `le`. SPEC §4.2 has the full lists.
 
+For an `and` range, `between` can stand up to six words before the first number. Each word
+holds only letters and combining marks, and only whitespace separates them, in one
+sentence. Both numbers then get
+the `range` qualifier. "between the ages of 18 and 65" is a range. "between the minimum and
+maximum permitted adult ages 18 and 65" has seven words, so it is not.
+
 Set the comparator when the field is a limit. A field for a maximum deduction is `le`, so "up to
 $2,500" admits. The same text on an `eq` field goes to review. That is right: on an `eq` field,
 "up to $2,500" does not state the value. A value with no qualifier admits on every comparator.
@@ -268,7 +274,7 @@ $2,500" admits. The same text on an `eq` field goes to review. That is right: on
 text = (
     "You can deduct up to $2,500 of interest. "
     "Patients must be at least 18 years old. "
-    "The study enrolled adults between 18 and 65 years. "
+    "The study enrolled adults between the ages of 18 and 65 years. "
     "The filing fee is $50."
 )
 schema = {
@@ -278,6 +284,7 @@ schema = {
         "min_age": {"type": "integer", "unit": "years", "comparator": "ge"},
         "enrolled_age_low": {"type": "integer", "unit": "years", "comparator": "range"},
         "enrolled_age_high": {"type": "integer", "unit": "years", "comparator": "range"},
+        "enrolled_age_eq": {"type": "integer", "unit": "years"},
         "max_filing_fee": {"type": "integer", "unit": "USD", "comparator": "le"},
     }
 }
@@ -288,6 +295,7 @@ candidates = [
     cite("q4", "enrolled_age_low", "18", "18 and 65", "years"),
     cite("q5", "enrolled_age_high", "65", "65 years", "years"),
     cite("q6", "max_filing_fee", "50", "$50", "USD"),
+    cite("q7", "enrolled_age_eq", "65", "65 years", "years"),
 ]
 show(gg.admit(text, schema, candidates))
 ```
@@ -299,6 +307,7 @@ q3  admitted            18
 q4  admitted            18
 q5  admitted            65
 q6  admitted            50
+q7  needs_verification  65            QUALIFIED_VALUE
 ```
 
 ## Lists and conflicts

@@ -1,6 +1,6 @@
 {
  "name": "20-spec-text",
- "description": "Rules that the SPEC text states since #158: a cited span that passes only with a missing part re-anchors; 'between' must stand directly before the first number for 'and'; a connector may have a $ before the next number; unit forms need a boundary, and a suffix lies wholly in the sentence; a mention inside a longer mention does not count; a string field takes no qualifier and rejects an integer or blank value; a carriage return is not a line break; a unit with empty lists is vacuous; an unchecked field item makes a unit item fail.",
+ "description": "Rules that the SPEC text states since #158: a cited span that passes only with a missing part re-anchors; 'between the ages of' makes 'and' a connector in spec 0.6; a connector may have a $ before the next number; unit forms need a boundary, and a suffix lies wholly in the sentence; a mention inside a longer mention does not count; a string field takes no qualifier and rejects an integer or blank value; a carriage return is not a line break; a unit with empty lists is vacuous; an unchecked field item makes a unit item fail.",
  "document": "A: 5 apples. B: 5 thousand pears.\n\nAges between 18 and 65 qualify. Members between the ages of 18 and 65 pay less.\n\nThe fee is $30 to $45. The score went 31 to US $ 46.\n\nThe award was MRs 500 and the dose was 5 grams. The tablet is 500mg.\n\nPressure 29 in. Hg was read.\n\nTotal revenue 500\n\nThe city is approximately Paris.\n\nfif-\r\nteen and fif-\nteen\n\nThe team scored 12.\n\nPrice list, all amounts in $:\n\nAdult\t40",
  "schema": {
   "fields": {
@@ -284,8 +284,10 @@
     ]
    },
    {
-    "outcome": "admitted",
-    "codes": []
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
    },
    {
     "outcome": "needs_verification",
