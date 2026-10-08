@@ -297,14 +297,13 @@ show(gg.admit(text, schema, [with_unit, without_unit]))
 ```
 
 ```text
-ns-2024  needs_verification  UNIT_CITATION_INVALID VALUE_DERIVED KEY_CITED
+ns-2024  admitted            VALUE_DERIVED KEY_CITED
 ns-2024b admitted            VALUE_DERIVED KEY_CITED
 ```
 
 A unit item is for a unit that is not next to the number, such as the `$` at the top of a
-column. When a unit form is already next to the number, the unit item fails its check. The text
-gives the unit, so the item is not necessary, and groundgate flags it. Tell the extractor to
-leave out the unit item when the value quote holds the unit, as `$ 79,605` does here.
+column. When the field's unit is already next to the number, as in `$ 79,605`, the unit item
+repeats it. The item is not necessary, but it passes, so both candidates are admitted.
 
 ## Checklist
 

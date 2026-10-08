@@ -26,7 +26,10 @@ from typing import Any
 
 HERE = Path(__file__).parent
 RUNS = ("claude-haiku-5-5", "gpt-6-luna")
-SPECS = ("0.5",)  # each 0.6 rule adds its spec here, decided alone
+# each 0.6 rule adds its spec here, decided alone
+SPECS = ("0.5", "0.6 #145 unit", "0.6 #145 scale")
+# decided once and kept: the scale part of #145 (a scale quote in any case) did not ship
+RECORDED = ("0.6 #145 scale",)
 VERDICTS = ("right", "wrong", "not sure")
 PORT = 8774
 
@@ -40,7 +43,7 @@ def _dump(path: Path, obj: Any) -> None:
 
 
 def _name(run: str, spec: str) -> Path:
-    return HERE / f"decisions-{run}-{spec.replace(' ', '-')}.json"
+    return HERE / f"decisions-{run}-{spec.replace(' ', '-').replace('#', '')}.json"
 
 
 def _schema() -> dict[str, Any]:
@@ -51,8 +54,8 @@ def _decide(spec: str, text: str, cands: list[Any]) -> list[Any]:
     """The decisions under one spec, by the groundgate that runs this script."""
     import groundgate as gg
 
-    if spec != "0.5":
-        raise SystemExit(f"no decision for spec {spec!r} yet")
+    if spec not in SPECS or spec in RECORDED:
+        raise SystemExit(f"no decision for spec {spec!r}")
     return list(gg.admit(text, _schema(), cands).decisions)
 
 
@@ -63,7 +66,7 @@ def decide() -> None:
     import groundgate as gg
     from groundgate.canonical import SPEC_VERSION
 
-    specs = [spec for spec in SPECS if spec.split()[0] == SPEC_VERSION]
+    specs = [spec for spec in SPECS if spec.split()[0] == SPEC_VERSION and spec not in RECORDED]
     if not specs:
         raise SystemExit(f"no spec here needs groundgate {SPEC_VERSION}: use the spec's wheel")
     for run in RUNS:

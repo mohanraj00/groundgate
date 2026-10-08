@@ -530,6 +530,11 @@ def _find(
     return (after[0], True) if after else (None, False)
 
 
+def _repeats(ctx: _Ctx, t: _Text, tok: Token, prefixes: list[str], suffixes: list[str]) -> bool:
+    """Whether the field's unit is at the token, so that a unit item repeats it (SPEC §4.6)."""
+    return unit_at(t.text, tok, prefixes, suffixes, ctx.policy.unit_window, ctx.suffixes)
+
+
 _CHECK_ORDER = ("field", "sign", "scale", "unit", "key")  # the unit check reads the field's
 
 
@@ -588,10 +593,15 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
             elif role == "unit":
                 ok = (
                     f.unit is not None
-                    and passed.get("field", False)
                     and holds_form(t.text, a, b, prefixes + suffixes)
-                    and b <= tok.start
-                    and not ctx.any_unit_at(t, tok)
+                    and (
+                        _repeats(ctx, t, tok, prefixes, suffixes)
+                        or (
+                            passed.get("field", False)
+                            and b <= tok.start
+                            and not ctx.any_unit_at(t, tok)
+                        )
+                    )
                 )
         passed[role] = ok
         byte_span = None if span is None else _bytes(t, span)

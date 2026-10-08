@@ -200,8 +200,8 @@ Send a feedback message only when a better citation can fix the decision. These 
 | `SCALE_WORD` | Send the scaled value, such as `1250000000` for "$1.25 billion". |
 | `NO_EVIDENCE` | Quote the value. |
 
-A unit item and a key item pass only with a passing field item, and a field item passes only on
-a field with `aliases` (see [the schema guide](../schema.md)). A key item puts its key at the value
+A key item, and a unit item for a unit that is not next to the number, pass only with a passing
+field item, and a field item passes only on a field with `aliases` (see [the schema guide](../schema.md)). A key item puts its key at the value
 only in a table, by the column rule. So if the field has no `aliases`, or the value is in prose,
 a missing unit or key is not worth a retry. A person checks the fact.
 

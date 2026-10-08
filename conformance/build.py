@@ -2561,6 +2561,50 @@ INVALID.extend(
     ]
 )
 
+# ---------------------------------------------------------------- spec 0.6 (#145)
+vector(
+    "22-redundant-unit",
+    "A unit item passes when the field's unit is at the token and the item holds a form of it: "
+    "the item repeats the unit, so it needs no field item and may follow the number. A form of "
+    "another unit still fails. A scale item still matches case: at its offsets, a text in "
+    "another case is not found, and its scale word still gives the part (#145).",
+    "Consolidated statements (in thousands, except ratios)\n\n"
+    "Revenue $ 46,016\n\n"
+    "Royalties 1,250 dollars\n\n"
+    "Margin 12 percent\n\n"
+    "Other items (in millions) $7.5\n",
+    {
+        "fields": {
+            "amount": {
+                "type": "number",
+                "unit": "USD",
+                "multiple": True,
+                "aliases": ["revenue", "royalties", "other items"],
+            },
+            "margin": {"type": "number", "unit": "%"},
+        }
+    },
+    [
+        c("d1", "amount", "46016000", "USD", [q("46,016"), THOUSANDS, DOLLAR],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("d2", "amount", "1250000", "USD",
+          [q("1,250"), THOUSANDS, {"role": "unit", "text": "dollars"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("d3", "margin", "12", "%", [q("12"), {"role": "unit", "text": "percent"}]),
+        c("d4", "amount", "7500000", "USD",
+          [q("7.5"), {"role": "scale", "text": "[in millions]"}, DOLLAR],
+          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("d5", "amount", "46016000", "USD",
+          [q("46,016"), q("(in thousands", text="(In Thousands", role="scale")],
+          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("d6", "amount", "46016000", "USD", [q("46,016"), THOUSANDS, row("REVENUE")],
+          (REVIEW, ["FIELD_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("d7", "amount", "46016000", "USD",
+          [q("46,016"), THOUSANDS, {"role": "unit", "text": "percent"}],
+          (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED"])),
+    ],
+)  # fmt: skip
+
 
 def main() -> None:
     out_dir = HERE / "vectors"

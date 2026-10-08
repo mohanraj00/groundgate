@@ -317,7 +317,10 @@ def _findings(schema: Schema) -> list[str]:
     for name, f in schema.fields.items():
         if f.aliases is None:
             if f.unit is not None:
-                out.append(f"field {name!r} has a unit and no aliases: a unit item never passes")
+                out.append(
+                    f"field {name!r} has a unit and no aliases: "
+                    "a unit item passes only for a unit next to the number"
+                )
             if f.keys is not None:
                 out.append(
                     f"field {name!r} has keys and no aliases: "
