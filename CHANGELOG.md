@@ -3,7 +3,9 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
-## Unreleased
+## 0.5.1 (2026-10-07)
+
+Spec 0.5, unchanged: every decision and receipt is the same as in 0.5.0.
 
 - `gg.extractor_schema(schema)` and `groundgate schema`: a JSON Schema for a model's structured
   output, built from your schema (#148). Each field has its own candidate shape, with its unit and
