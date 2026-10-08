@@ -1,7 +1,9 @@
 """Measure spec 0.6 on the held-out 10-K set (#170): the two runs of run.py, decided under spec 0.5
 and, as each 0.6 rule lands, under that rule alone. The plan is on #170 and #172.
 
-    uv run python bench/sec3/measure.py decide          # decisions-<run>-<spec>.json
+    uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.5.1 \
+        python bench/sec3/measure.py decide             # spec 0.5, on the released wheel
+    uv run python bench/sec3/measure.py decide          # each 0.6 rule
     uv run python bench/sec3/measure.py web             # blind labels, http://127.0.0.1:8774
     uv run python bench/sec3/measure.py results [--check]
 
@@ -46,8 +48,7 @@ def _schema() -> dict[str, Any]:
 
 
 def _decide(spec: str, text: str, cands: list[Any]) -> list[Any]:
-    """The decisions under one spec. Spec 0.5 is the groundgate that runs this script, before
-    any 0.6 rule."""
+    """The decisions under one spec, by the groundgate that runs this script."""
     import groundgate as gg
 
     if spec != "0.5":
@@ -56,12 +57,17 @@ def _decide(spec: str, text: str, cands: list[Any]) -> list[Any]:
 
 
 def decide() -> None:
-    """decisions-<run>-<spec>.json: for each document, each candidate's outcome and codes. A
-    document with no reply is listed with no candidates and counted in the results."""
+    """decisions-<run>-<spec>.json for each spec that the groundgate that runs this script
+    implements: for each document, each candidate's outcome and codes. A document with no reply
+    is listed with no candidates and counted in the results."""
     import groundgate as gg
+    from groundgate.canonical import SPEC_VERSION
 
+    specs = [spec for spec in SPECS if spec.split()[0] == SPEC_VERSION]
+    if not specs:
+        raise SystemExit(f"no spec here needs groundgate {SPEC_VERSION}: use the spec's wheel")
     for run in RUNS:
-        found: dict[str, dict[str, Any]] = {spec: {} for spec in SPECS}
+        found: dict[str, dict[str, Any]] = {spec: {} for spec in specs}
         for doc_path in sorted((HERE / "docs").glob("*.txt")):
             doc = doc_path.stem
             rec = _read(HERE / "runs" / run / f"{doc}.json")
@@ -69,7 +75,7 @@ def decide() -> None:
             reply = rec["reply"]
             cands = [] if reply is None else reply["candidates"]
             cands = [{"id": f"c{i}", **c} for i, c in enumerate(cands)]
-            for spec in SPECS:
+            for spec in specs:
                 by_sha = {d.candidate_sha256: d for d in _decide(spec, text, cands)}
                 rows = []
                 for c in cands:
@@ -86,9 +92,9 @@ def decide() -> None:
                         }
                     )
                 found[spec][doc] = {"reply": reply is not None, "decisions": rows}
-        for spec in SPECS:
+        for spec in specs:
             _dump(_name(run, spec), found[spec])
-    print(f"wrote decisions for {', '.join(RUNS)} under {', '.join(SPECS)}")
+    print(f"wrote decisions for {', '.join(RUNS)} under {', '.join(specs)}")
 
 
 def _decisions() -> dict[tuple[str, str], dict[str, Any]]:
