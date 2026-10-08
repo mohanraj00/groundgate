@@ -157,9 +157,18 @@ with a `candidates` list. Give it to the model as its output format, then pass t
 `admit`. `groundgate schema schema.json` writes the same schema.
 
 ```python
-output_format = gg.extractor_schema(schema)  # or gg.extractor_schema(schema, ["tax-table"])
+output_format = gg.extractor_schema(schema)
 out = your_model(instructions, text, output_format)
 receipt = gg.admit(text, schema, out["candidates"])
+```
+
+With references, give their ids to the schema and the same references to `admit`:
+
+```python
+references = [{"id": "tax-table", "text": table_text, "source": "https://www.irs.gov/..."}]
+output_format = gg.extractor_schema(schema, [r["id"] for r in references])
+out = your_model(instructions, text, references, output_format)
+receipt = gg.admit(text, schema, out["candidates"], references=references)
 ```
 
 - Each field of your schema has its own candidate shape. `field` is the field's name, `unit` its
