@@ -263,8 +263,10 @@ known     admitted            ADMITTED_BY_POLICY
           source=knowledge
 ```
 
-The policy applies to every field. If you trust the extractor for some fields only, send the
-other fields in a separate `admit` call with the default policy.
+The policy applies to every field. If you trust the extractor for some fields only, split the
+schema in two. Give each `admit` call a schema with only its fields, the candidates of those
+fields and its policy. Do not give both calls the full schema: each receipt then reports the
+required fields of the other call as `REQUIRED_FIELD_MISSING`.
 
 ### Several outside items
 

@@ -174,8 +174,9 @@ candidate of a required field is admitted or flagged, `coverage` lists the field
 
 ## 6. Act on each outcome
 
-Each decision has an `outcome`, its `codes` and the byte span of the value in `evidence`. Do one
-thing for each outcome:
+Each decision has an `outcome`, its `codes` and the byte span of the value in `evidence`. A
+decision on outside evidence has no span. Its `source`, `ref` and `url` name the source, and the
+candidate holds the quote or the statement. Do one thing for each outcome:
 
 1. If the outcome is `admitted`, store the fact.
 2. If the outcome is `needs_verification`, put the fact in a queue for a person. Give the person
@@ -188,6 +189,8 @@ by_id = {c["id"]: c for c in candidates}
 
 
 def cited(decision):
+    if decision.evidence is None:  # outside evidence has no span in the text
+        return f"{decision.source}: {decision.ref or decision.url or 'the extractor'}"
     start, end = decision.evidence
     return text.encode()[start:end].decode()
 
