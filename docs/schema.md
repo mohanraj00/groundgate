@@ -79,6 +79,11 @@ all `7000`.
 Send a decimal as a string. A JSON number with a fraction is a float, and a float cannot hold
 every decimal exactly. So step 1 rejects it with `CANDIDATE_INVALID`.
 
+Send a large integer as a string too. A JSON integer must be in [-(2^53-1), 2^53-1]
+([SPEC §6](../SPEC.md)). groundgate 0.5 does not reject a larger one with a code: it raises
+`ValueError` when it writes the receipt (#143). A string such as `"12500000000000000"` has no
+limit.
+
 `minimum` and `maximum` are bounds, each a decimal string or a JSON integer. Both are inclusive.
 A value outside them is rejected `RANGE_INVALID`, before groundgate reads the evidence. Use bounds
 for values that cannot be right, such as a negative age or a rate above 100 percent.

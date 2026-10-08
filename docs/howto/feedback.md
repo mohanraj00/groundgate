@@ -235,6 +235,16 @@ RETRY = {
 }
 
 
+def in_table_row(d):
+    """A key item can pass only by the column rule, so only on a line with tabs."""
+    if d.source != "document":
+        return False
+    data = text.encode()
+    start = data.rfind(b"\n", 0, d.evidence[0]) + 1
+    end = data.find(b"\n", d.evidence[0])
+    return b"\t" in data[start : end if end >= 0 else len(data)]
+
+
 def worth_a_retry(d):
     if d.outcome == "admitted":
         return False
@@ -243,7 +253,7 @@ def worth_a_retry(d):
     for code in d.codes:
         if code in INFO or code in RETRY:
             continue
-        if code == "KEY_NOT_AT_VALUE" and "key" in d.missing:
+        if code == "KEY_NOT_AT_VALUE" and "key" in d.missing and in_table_row(d):
             continue
         return False
     return True
