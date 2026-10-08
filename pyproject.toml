@@ -51,6 +51,7 @@ dev = [
   "rfc8785>=0.1.4",
   "pdfminer.six>=20231228",
   "groundgate-calibrate",
+  "jsonschema>=4.18",
 ]
 langextract = ["langextract>=1.0"]
 

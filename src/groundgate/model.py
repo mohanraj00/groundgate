@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 from decimal import Decimal
+from importlib import resources
 from typing import Any, Literal
 
 from .canonical import SPEC_VERSION
@@ -365,3 +367,9 @@ class Receipt:
 
     def to_dict(self) -> dict[str, Any]:
         return {**self.body(), "receipt_sha256": self.receipt_sha256}
+
+
+def candidate_schema() -> dict[str, Any]:
+    """The JSON Schema of one candidate (SPEC §2.5). Step 1 of SPEC §3 is the definition."""
+    raw = resources.files(__package__).joinpath("candidate.schema.json").read_text("utf-8")
+    return json.loads(raw)  # type: ignore[no-any-return]

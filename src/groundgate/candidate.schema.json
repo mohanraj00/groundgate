@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mohanraj00/groundgate/blob/main/src/groundgate/candidate.schema.json",
+  "title": "groundgate candidate, spec 0.5",
+  "description": "One extracted value with its evidence (SPEC.md section 2.5). Step 1 of SPEC.md section 3 is the definition. This schema does not check that a ref names a reference in the packet, that no two document or reference items have the same role, or that an integer has no fraction (2.0).",
+  "type": "object",
+  "required": ["field", "value"],
+  "properties": {
+    "id": {
+      "description": "The caller's identifier, echoed in the decision. A string or an integer."
+    },
+    "field": {
+      "description": "The schema field name.",
+      "type": "string"
+    },
+    "value": {
+      "description": "The value: a string, or a JSON integer. Write a number with a fraction as a decimal string.",
+      "type": ["string", "integer"]
+    },
+    "unit": {
+      "description": "The unit code that the extractor claims.",
+      "type": ["string", "null"]
+    },
+    "key": {
+      "description": "For a keyed field, the key that the value belongs to.",
+      "type": ["string", "null"]
+    },
+    "evidence": {
+      "description": "The evidence items. One item object counts as a list that holds it.",
+      "anyOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/item" },
+        { "type": "array", "items": { "$ref": "#/$defs/item" } }
+      ]
+    },
+    "search_region": {
+      "description": "The span in which re-anchoring can look. Default: the whole document.",
+      "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/span" }]
+    },
+    "confidence": {
+      "description": "The extractor's confidence, from 0 to 1.",
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "$defs": {
+    "span": {
+      "description": "UTF-8 byte offsets, end exclusive (SPEC.md section 2.2).",
+      "type": "object",
+      "required": ["start", "end"],
+      "properties": {
+        "start": { "type": "integer" },
+        "end": { "type": "integer" }
+      }
+    },
+    "text": {
+      "type": "string",
+      "pattern": "\\S"
+    },
+    "item": {
+      "description": "One piece of support for the value (SPEC.md sections 2.5 and 4.6).",
+      "type": "object",
+      "additionalProperties": { "not": { "type": "null" } },
+      "properties": {
+        "source": {
+          "description": "Where the text comes from. Default: document.",
+          "enum": ["document", "reference", "external", "knowledge"]
+        },
+        "text": {
+          "description": "The quoted text. For knowledge, the extractor's statement.",
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["source"],
+            "properties": { "source": { "const": "reference" } }
+          },
+          "then": {
+            "required": ["ref"],
+            "properties": {
+              "ref": { "description": "The id of a reference in the packet.", "type": "string" }
+            }
+          },
+          "else": { "not": { "required": ["ref"] } }
+        },
+        {
+          "if": {
+            "required": ["source"],
+            "properties": { "source": { "enum": ["external", "knowledge"] } }
+          },
+          "then": { "$ref": "#/$defs/outside" },
+          "else": { "$ref": "#/$defs/checked" }
+        },
+        {
+          "if": {
+            "required": ["source"],
+            "properties": { "source": { "const": "external" } }
+          },
+          "then": {
+            "required": ["url", "retrieved"],
+            "properties": {
+              "url": { "description": "The external page.", "$ref": "#/$defs/text" },
+              "retrieved": {
+                "description": "The date that the extractor read the page.",
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checked": {
+      "description": "A document or reference item: offsets, a quote, or both.",
+      "properties": {
+        "role": {
+          "description": "What the item supports. Default: value.",
+          "enum": ["value", "sign", "scale", "unit", "field", "key"]
+        },
+        "start": { "type": "integer" },
+        "end": { "type": "integer" }
+      },
+      "dependentRequired": { "start": ["end"], "end": ["start"] },
+      "not": {
+        "anyOf": [{ "required": ["url"] }, { "required": ["retrieved"] }]
+      },
+      "anyOf": [
+        { "required": ["start"] },
+        { "required": ["text"], "properties": { "text": { "$ref": "#/$defs/text" } } }
+      ]
+    },
+    "outside": {
+      "description": "An external or knowledge item: no role and no offsets.",
+      "required": ["text"],
+      "properties": { "text": { "$ref": "#/$defs/text" } },
+      "not": {
+        "anyOf": [{ "required": ["role"] }, { "required": ["start"] }, { "required": ["end"] }]
+      }
+    }
+  }
+}
