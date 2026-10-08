@@ -44,6 +44,7 @@ def test_batch_receipts_summary_and_totals(
     _json(tmp_path / "policy.json", {"min_confidence": 0.5})
     args += ["--policy", str(tmp_path / "policy.json")]
     (tmp_path / "docs" / "ignored.md").write_text("ignored", encoding="utf-8")
+    (tmp_path / "docs" / "ignored.TXT").write_text("ignored", encoding="utf-8")
     (tmp_path / "docs" / "nested").mkdir()
     (tmp_path / "docs" / "nested" / "ignored.txt").write_text(TEXT, encoding="utf-8")
     _json(tmp_path / "candidates" / "extra.json", [CANDIDATE])
@@ -157,6 +158,55 @@ def test_batch_counts_every_code_on_every_decision(
         "codes": {"ADMITTED_BY_POLICY": 3, "LOW_CONFIDENCE": 3},
     }
     assert "| ADMITTED_BY_POLICY | 3 |" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("folder", ["candidates", "judgments"])
+@pytest.mark.parametrize("alias", ["direct", "parent", "symlink"])
+def test_batch_rejects_output_folder_matching_input(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], folder: str, alias: str
+) -> None:
+    args = _batch(tmp_path, {"a": [CANDIDATE], "z": []})
+    if folder == "judgments":
+        (tmp_path / folder).mkdir()
+        for doc in ("a", "z"):
+            _json(tmp_path / folder / f"{doc}.json", [])
+        args += ["--judgments", str(tmp_path / folder)]
+    input_folder = tmp_path / folder
+    before = {path.name: path.read_bytes() for path in input_folder.iterdir()}
+    output_folder = input_folder
+    if alias == "parent":
+        output_folder = input_folder / ".." / folder
+    elif alias == "symlink":
+        output_folder = tmp_path / "out"
+        output_folder.symlink_to(input_folder, target_is_directory=True)
+    args[args.index("--out") + 1] = str(output_folder)
+
+    assert main(args) == 2
+    output = capsys.readouterr()
+    assert output.out == ""
+    assert f"--out must not be the same folder as --{folder}" in output.err
+    assert {path.name: path.read_bytes() for path in input_folder.iterdir()} == before
+
+
+@pytest.mark.parametrize(("first", "second"), [("a", "A"), ("ss", "ß")])
+def test_batch_rejects_document_names_equal_under_casefold(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], first: str, second: str
+) -> None:
+    args = _batch(tmp_path, {first: [], "z": []})
+    try:
+        with (tmp_path / "docs" / f"{second}.txt").open("x", encoding="utf-8") as document:
+            document.write(TEXT)
+    except FileExistsError:
+        pytest.skip("The filesystem cannot hold both document names")
+    _json(tmp_path / "candidates" / f"{second}.json", [])
+
+    assert main(args) == 2
+    output = capsys.readouterr()
+    assert output.out == ""
+    assert f"{first}.txt" in output.err
+    assert f"{second}.txt" in output.err
+    assert "document names are equal in any letter case" in output.err
+    assert not (tmp_path / "out").exists()
 
 
 @pytest.mark.parametrize("folder", ["candidates", "judgments"])

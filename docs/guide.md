@@ -657,9 +657,10 @@ for standard input. Exit codes: 0 success, 1 the receipt does not match its
 inputs, 2 invalid input.
 
 `groundgate admit --docs D --candidates C --schema S --out R` processes a folder of documents.
-`D` holds `<doc>.txt` files, and `C` holds matching `<doc>.json` arrays of candidates. Only `.txt` files
-directly in `D` are read, in filename order. A missing candidate file stops the run. `[]` means
-the document has no candidates. The document id in each receipt is `<doc>`.
+`D` holds `<doc>.txt` files, and `C` holds matching `<doc>.json` arrays of candidates. Only names
+that end in `.txt` (lower case) directly in `D` are read, in filename order. Two names equal in
+any letter case stop the run. A missing candidate file stops the run. `[]` means the document
+has no candidates. The document id in each receipt is `<doc>`.
 
 One `--policy` file and one `--references` file apply to the whole batch. With `--judgments J`,
 `J` is a folder of matching `<doc>.json` arrays, as `groundgate-calibrate judge` writes them. Each

@@ -193,9 +193,24 @@ def _batch_admit(args: argparse.Namespace) -> int:
     for folder in (args.docs, args.batch_candidates, args.judgments):
         if folder is not None and not Path(folder).is_dir():
             raise ValueError(f"{folder}: expected a folder")
+    resolved_output = Path(args.out).resolve()
+    for option, folder in (
+        ("--candidates", args.batch_candidates),
+        ("--judgments", args.judgments),
+    ):
+        if folder is not None and resolved_output == Path(folder).resolve():
+            raise ValueError(f"--out must not be the same folder as {option}: {resolved_output}")
     paths = sorted(path for path in Path(args.docs).glob("*.txt") if path.is_file())
     if not paths:
         raise ValueError(f"{args.docs}: no .txt documents")
+    names: dict[str, str] = {}
+    for path in paths:
+        name = path.stem.casefold()
+        if name in names:
+            raise ValueError(
+                f"{names[name]} and {path.name}: document names are equal in any letter case"
+            )
+        names[name] = path.name
     for path in paths:
         if path.stem.casefold() == "summary":
             raise ValueError(f"{path.name}: summary.json is reserved for the batch summary")
