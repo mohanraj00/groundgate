@@ -3,7 +3,8 @@ new 10-K set (bench/sec2) and the status set (bench/status). The plan is on #141
 
     uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.4.0 \
         python bench/evidence/measure.py decide04           # spec 0.4, on the released wheel
-    uv run python bench/evidence/measure.py decide          # spec 0.5, and one role removed
+    uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.5.1 \
+        python bench/evidence/measure.py decide             # spec 0.5, and one role removed
     uv run python bench/evidence/measure.py web             # blind labels, http://127.0.0.1:8770
     uv run python bench/evidence/measure.py results [--check]
 
@@ -84,9 +85,14 @@ def _decide(
 
 
 def decide(specs: tuple[str, ...], out: Path) -> None:
-    """decisions-<spec>.json: for each set and document, each candidate's outcome and codes."""
+    """decisions-<spec>.json: for each set and document, each candidate's outcome and codes. A
+    spec is decided only by a groundgate that implements it."""
     import groundgate as gg
+    from groundgate.canonical import SPEC_VERSION
 
+    for spec in specs:
+        if spec.split()[0] != SPEC_VERSION:
+            raise SystemExit(f"spec {spec} needs its wheel: this groundgate is {SPEC_VERSION}")
     found: dict[str, Any] = {spec: {} for spec in specs}
     for name in SETS:
         for spec in specs:

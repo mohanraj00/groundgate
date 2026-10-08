@@ -1,7 +1,8 @@
-# groundgate specification v0.5
+# groundgate specification v0.6 (draft)
 
-Status: released with groundgate 0.5.0, unchanged in 0.5.1 and 0.5.2. Version string: `groundgate/0.5`. Spec 0.4 was released
-with groundgate 0.4.0 and is in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the `v0.2.0` tag, and spec 0.1 in the
+Status: draft, not released. Version string: `groundgate/0.6`. Spec 0.5 was released with
+groundgate 0.5.0, unchanged in 0.5.1 and 0.5.2, and is in the `v0.5.0` tag. Spec 0.4 is in the
+`v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the `v0.2.0` tag, and spec 0.1 in the
 `v0.1.0` tag. Any change to how
 a candidate is decided is a new version with a new version string. An implementation conforms if
 it produces the outcome, codes and missing parts of every decision and the coverage findings in
@@ -646,7 +647,7 @@ and names another key adds `MODEL_DOUBT` to a decision with `KEY_CITED`.
 ## 5. Receipt
 
 ```json
-{"groundgate": "0.5",
+{"groundgate": "0.6",
  "document": {"id": null, "sha256": "sha256:...", "source": null},
  "references": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
@@ -698,10 +699,10 @@ strings escaped as ECMAScript `JSON.stringify` does, numbers serialised as ECMAS
 `Number.prototype.toString`. NaN and infinities are not permitted. Integers outside
 [-(2^53-1), 2^53-1] are not permitted (they are not exactly representable).
 
-`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.5:" + kind + "\0" + JCS(obj)))`, where
+`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.6:" + kind + "\0" + JCS(obj)))`, where
 the prefix is ASCII and `JCS(obj)` is UTF-8.
 
-## 7. Non-goals for v0.5
+## 7. Non-goals for v0.6
 
 Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
 `field_match` judgment can only add doubt, and a field item checks only the field's own aliases.

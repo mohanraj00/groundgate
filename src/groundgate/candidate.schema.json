@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/mohanraj00/groundgate/blob/main/src/groundgate/candidate.schema.json",
-  "title": "groundgate candidate, spec 0.5",
+  "title": "groundgate candidate, spec 0.6",
   "description": "One extracted value with its evidence (SPEC.md section 2.5). Step 1 of SPEC.md section 3 is the definition. This schema does not check that a ref names a reference in the packet, that no two document or reference items have the same role, or that an integer has no fraction (2.0).",
   "type": "object",
   "required": ["field", "value"],
