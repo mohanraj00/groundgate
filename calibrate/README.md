@@ -9,12 +9,12 @@ threshold belongs to one model and one kind of document: the field doubt gave 0.
 yours, as [hybrid design](https://github.com/mohanraj00/groundgate/blob/main/docs/design/hybrid-decisions.md) §9 describes. It is a separate package, so the groundgate core never
 contains code that calls a model.
 
-groundgate-calibrate is not on PyPI yet
-([#122](https://github.com/mohanraj00/groundgate/issues/122)). Install it from the repository:
-
 ```bash
-pip install "git+https://github.com/mohanraj00/groundgate#subdirectory=calibrate"
+pip install groundgate-calibrate
 ```
+
+[Measure a judge's thresholds](https://github.com/mohanraj00/groundgate/blob/main/docs/howto/calibrate.md) runs every step once, on made-up documents with a test
+judge. This page is the reference.
 
 ## Steps
 
@@ -23,7 +23,7 @@ groundgate-calibrate sample --work W --docs D --candidates C --schema S --questi
     --context "The text is from a 10-K filing."
 groundgate-calibrate split  --work W        # before any model run
 groundgate-calibrate label  --work W        # label in the browser, blind, before ask
-groundgate-calibrate ask    --work W --judge NAME   # NAME: an installed judge (see Judges)
+groundgate-calibrate ask    --work W --judge NAME   # NAME: a judge (see Judges)
 groundgate-calibrate report --work W        # REPORT.md, report.json
 ```
 
@@ -33,6 +33,12 @@ groundgate-calibrate report --work W        # REPORT.md, report.json
 - `S` is a schema of that spec.
 - `--descriptions` is an optional JSON file that maps each field name to a one-line meaning.
   The field question and the label tool show it.
+
+- `label` serves the label page at `http://localhost:8780`. `--port` changes the port. Each
+  click saves a label in `W/labels.json`: `true`, `false` or `null` (not sure) for the field
+  question, and the list of the field's keys (empty for none) for the key question.
+- `report --check` writes nothing. It fails when `REPORT.md` or `report.json` differs from what
+  `W` gives, so a CI job can check a committed report.
 
 If extraction lost the shape of your tables, put a `links.json` in `W` that maps each document
 name to its original, such as the source web page. The label tool then links to it.
@@ -86,16 +92,27 @@ documents for the ceiling that you need before you start.
 
 ## Judges
 
-A judge has an `id`, a `digest` that names one model version, and `ask(state, questions)`, which
-answers in the typed-decision format: `{"choice": ..., "confidence": ...}` for a choice question
-and `{"noul": ...}` for a noul question. A package adds a judge with an entry point:
+One judge is built in. `groundgate-calibrate ask --help` names it. It is a hosted model: it reads
+its API key from the environment, and it sends a window of each document out of the machine.
+
+A judge has an `id`, a `digest` that names one model version, and `ask(state, questions)`.
+`state` is the text around the value, with the value in brackets. `ask` answers each question in
+the typed-decision format:
+
+- The key question is a choice question. The answer is `{"choice": name, "confidence": p}`, where
+  `name` is one of the question's `criteria`.
+- The field question is a noul question. The answer is `{"noul": p}`, where `p` is the
+  probability that the statement is true.
+
+A package adds a judge with an entry point:
 
 ```toml
 [project.entry-points."groundgate.judges"]
-mine = "my_package:make_judge"   # a function with no arguments that returns the judge
+mine = "my_package:make_judge"   # called with no arguments, it returns the judge
 ```
 
-Then `--judge mine` uses it. A plug-in cannot take the name of another judge.
+Then `--judge mine` uses it. A plug-in cannot take the name of another judge, and the judge's
+`id` must equal its name.
 
 ## In production: recorded judgments
 
@@ -123,4 +140,12 @@ groundgate-calibrate judge --docs D --candidates C --schema S --policy policy.js
 
 `report` writes, for each ceiling with a threshold, the `judge` block of a policy (hybrid
 design §7) with the model and the threshold. Spec 0.4 and later read it, with the judgments that `judge`
-writes ([#116](https://github.com/mohanraj00/groundgate/issues/116)).
+writes ([#116](https://github.com/mohanraj00/groundgate/issues/116)). A block for the field
+question looks like this:
+
+```json
+{"judge": {"id": "mine", "digest": "mine-2026-10", "doubt": {"field_match": 0.3}}}
+```
+
+A block for the key question has `"clear": {"KEY_NOT_AT_VALUE": t}` in place of `doubt`. To use
+both thresholds, put both in one block.

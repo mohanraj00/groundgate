@@ -329,8 +329,8 @@ receipt = gg.admit(text, schema, candidates, policy, judgments=judgments)
 
 The thresholds belong to one model and one kind of document. groundgate ships none: measure
 yours with `groundgate-calibrate` ([#112](https://github.com/mohanraj00/groundgate/issues/112)), in
-[calibrate/](../calibrate). It is not on PyPI yet
-([#122](https://github.com/mohanraj00/groundgate/issues/122)), so install it from the repository.
+[calibrate/](../calibrate). [Measure a judge's thresholds](howto/calibrate.md) runs it from start
+to end.
 
 ## Decisions
 
