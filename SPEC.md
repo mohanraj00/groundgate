@@ -92,8 +92,15 @@ invalid.
 operating income field. A field item (§4.6) is checked against them. They follow the same rules as
 `keys`: null or a non-empty list of strings, none blank, no two equal after whitespace
 normalisation and lower-casing.
-`units` extends and overrides the built-in table (§4.3). `schema_sha256` is the digest of kind
-`schema` over the schema object **after** defaults are filled in.
+`units` extends and overrides the built-in table (§4.3). Each unit is an object with only
+`prefix` and `suffix`, each a list of non-empty strings; an absent list is empty.
+`schema_sha256` is the digest of kind `schema` over the schema object **after** defaults are
+filled in.
+
+The packet is invalid when the schema is not an object with a `fields` object, has keys other
+than `fields` and `units`, or a field is not an object, has other keys, has a `type` or
+`comparator` not listed above, a `unit` that is not a string or null, a bound that is not a
+decimal string or an integer, or a `required` or `multiple` that is not a boolean.
 
 ### 2.4 Policy
 
@@ -114,8 +121,12 @@ supports (§3.2). groundgate cannot check such evidence, so the app decides:
 
 The **host** of a URL is the text after its first `://` up to the first `/`, `\`, `?` or `#`, after the
 last `@`, without a `:` and port, lower-cased. A host that starts with `[` (an IPv6 literal)
-ends at its `]` and keeps its colons. A URL without `://` has no host. Defaults fill in
-each member that is absent; other keys or values are invalid.
+ends at its `]` and keeps its colons. A URL without `://` has no host, and a document source
+without `://` has no host either, so `"document-domain"` then matches nothing.
+
+`min_confidence` is null or a number in [0, 1], `unit_window` a non-negative integer, and
+`reanchor` a boolean. Defaults fill in each member of the policy and of `sources` that is absent;
+other keys or values make the packet invalid.
 
 `judge` is null or names the one judge whose recorded judgments (§2.6) the decision reads, with
 its thresholds:
@@ -225,7 +236,7 @@ later check runs. `value` means the candidate's value parsed per its field type.
 | 1 | `CANDIDATE_INVALID` | The candidate is malformed (below). |
 | 2 | `FIELD_UNKNOWN` | `field` is not in the schema. |
 | 3 | `NULL_STRING_LITERAL` | `value`, trimmed and lower-cased, is `null`, `none`, `nil` or `n/a`. |
-| 4 | `TYPE_INVALID` | `value` does not parse as the field type (§4.1). |
+| 4 | `TYPE_INVALID` | `value` does not parse as the field type (§4.1). For a `string` field: `value` is not a string, or is blank after whitespace normalisation (§4.4). |
 | 5 | `RANGE_INVALID` | `value` is below `minimum` or above `maximum`. |
 | 6 | `UNIT_INVALID` | The candidate's `unit` differs from the field's `unit` (both absent is a match). |
 | 7 | `KEY_INVALID` | The field has `keys`, and the candidate's `key` is absent or not exactly one of them. |
@@ -289,13 +300,14 @@ mg. With a unit item, the item then supplies the unit, and it is checked at the 
 Without one, the decision lists `unit` in `missing`. A missing part adds the flag
 `PART_MISSING`, so the outcome is at best `needs_verification`.
 
-**Re-anchoring (steps 10–11).** When step 10 or 11 fails, `policy.reanchor` is true, the value item
-has offsets and a non-blank `text`, the implementation finds every occurrence of `text` inside
+**Re-anchoring (steps 10–11).** When steps 10 and 11 do not pass at the cited span without a
+missing part, `policy.reanchor` is true, and the value item has offsets and a non-blank `text`, the implementation finds every occurrence of `text` inside
 `search_region`, or in the whole reference (whitespace runs in the quote match any whitespace run
 in the text). If **exactly one** occurrence other than the cited span passes steps 10 and 11
 without a missing part, that occurrence becomes the evidence, the decision records code
-`EVIDENCE_REANCHORED`, and checking continues. Otherwise the original failure stands, and a part
-can still be missing at the cited span.
+`EVIDENCE_REANCHORED`, and checking continues. Otherwise steps 10 and 11 run at the cited span,
+where a part can be missing. So a cited span that passes only with a missing part still moves to
+the one other occurrence that passes without one.
 
 The value is at its supporting number token, or at the start of the evidence span for a `string`
 field. The role items are then checked at the value (§4.6).
@@ -320,7 +332,7 @@ and `policy.sources` decides (§2.4).
 
 When the deciding item is external, the flags `QUALIFIED_VALUE`, `SCALE_WORD` and
 `KEY_NOT_AT_VALUE` read its text as the text. When it is knowledge, they do not apply.
-`NON_VERBATIM_EVIDENCE` and the role flags do not apply on the outside path.
+`NON_VERBATIM_EVIDENCE`, `VALUE_DERIVED` and the role flags do not apply on the outside path.
 
 ### 3.3 Flags
 
@@ -331,8 +343,8 @@ rejected by steps 1–11 or on the outside path.
 | Code | Flags when |
 |---|---|
 | `NON_VERBATIM_EVIDENCE` | The value item has offsets and a `text` that differs from the span's text after whitespace normalisation and joining of line-break hyphenation (§4.4). |
-| `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the text and its comparator differs from the field's `comparator`. |
-| `SCALE_WORD` | A scale word (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. |
+| `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the text and its comparator differs from the field's `comparator`. Not on a `string` field. |
+| `SCALE_WORD` | A scale word (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. Not on a `string` field. |
 | `PART_MISSING` | The decision lists a part in `missing` (§3.1). |
 | `SIGN_CITATION_INVALID` | The sign item fails its check (§4.6). |
 | `SCALE_CITATION_INVALID` | The scale item fails its check. |
@@ -439,7 +451,7 @@ words. `from` is deliberately absent: "from 7 to 8" is already a range through i
 | `lt` | less than, fewer than, below, under, < | |
 | `ge` | at least, minimum of, no less than, ≥ | or more, or greater, or older, or higher, or above |
 | `le` | up to, maximum of, at most, no more than, ≤ | or less, or fewer, or younger, or lower, or below |
-| `range` | between | the value is followed by `to`, `through`, `thru`, `-` or `–` and then another number token, or is preceded by such a connector and a number token; `and` counts as a connector only when `between` comes before the first number; one word of up to 12 characters with no digits (a unit or scale word) may stand between the first number and `to`, `through`, `thru` or `and`, so both ends of "30 mg to 45 mg" and "$1 million to $2 million" are a range |
+| `range` | between | the value is followed by `to`, `through`, `thru`, `-` or `–` and then another number token, or is preceded by such a connector and a number token; between a connector and the next number token stand only whitespace and at most 4 other characters, such as `$`; `and` counts as a connector only when `between`, whitespace and at most 4 other characters stand directly before the first number, so "between 18 and 65" is a range and "between the ages of 18 and 65" is not; one word of up to 12 characters with no digits (a unit or scale word) may stand between the first number and `to`, `through`, `thru` or `and`, so both ends of "30 mg to 45 mg" and "$1 million to $2 million" are a range |
 
 Where two qualifiers overlap in the text, only the longer one applies: "no more than" is `le`,
 not also `gt`, and "no less than" is `ge`, not also `lt`.
@@ -497,7 +509,12 @@ Built-in unit table (a schema's `units` extends or overrides it):
 
 A unit **is at** a number token when a prefix ends at the token start (whitespace between them
 allowed), or when the first suffix after the token end is one of the unit's suffixes, starts
-within `policy.unit_window` code points without crossing a sentence end, and is not a per-unit.
+within `policy.unit_window` code points, lies wholly inside the token's sentence, and is not a
+per-unit. A prefix that starts with a letter or digit does not count when a letter or digit
+stands directly before it. A suffix match that starts with an ASCII letter or digit does not count
+after another ASCII letter or digit of the text after the token, and one that ends with an ASCII
+letter or digit does not count before one. So `Rs` is not at the 500 in "MRs 500", `g` is not at
+the 5 in "5 grams", and `mg` is at the 500 in "500mg".
 The first suffix is the match of any suffix of any unit in the table, built-in or the schema's,
 that starts earliest, the longest one at a tie; a later match never counts. So `mg` is not at the
 10 in "10 mcg (maximum 500 mg)", because `mcg` comes first, and `hours` is not at the 2 in
@@ -508,13 +525,17 @@ optional number, and a body-size or volume unit: `kg`, `kilogram`, `lb`, `pound`
 case-insensitive, not followed by a letter). So `mg` is not at the 10 in "10 mg/kg (maximum 500
 mg)", nor at "1.6 mcg/kg/day", "75 mg/m2", "2 mg per kilogram" or "250 mg/5 mL". A time
 denominator keeps the unit: "200 mg/day" is mg. A weight-based dose needs its own unit code, such
-as `mg/kg` with the suffix `mg/kg`. A unit code not in the table and without prefixes or suffixes
-is at every token (the check is vacuous).
+as `mg/kg` with the suffix `mg/kg`. A unit code with no prefixes and no suffixes, because it is
+not in the table or because the schema gives it empty lists, is at every token (the check is
+vacuous).
 
 ### 4.4 Whitespace normalisation
 
 Collapse every whitespace run to one space and trim. For the verbatim comparison only, also delete
 `-` followed by a line break and optional whitespace (line-break hyphenation).
+
+A **line break** in this specification is U+000A. A carriage return (U+000D) is whitespace, not a
+line break.
 
 ### 4.5 Keys
 
@@ -600,11 +621,11 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 
 | Role | Passes when |
 |---|---|
-| `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. The item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
+| `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
 | `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands". It ends at or before the token, and no scale word, also with a final `s`, lies between its end and the token. |
-| `unit` | The candidate's field item passes, the item holds a prefix or suffix of the field's unit as a whole (§4.3), ends at or before the token, and no unit form is next to the token (§3.1). |
-| `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5), and the item ends at or before the token. Then either no letter (general category L) lies between the item's end and the token (the item is at the **row**), or the item is in the value's sentence with no number token between its end and the token. |
-| `key` | The item holds a key mention of the candidate's `key`. |
+| `unit` | The candidate's field item passes, the item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one), ends at or before the token, and no unit form is next to the token (§3.1). |
+| `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then either no letter (general category L) lies between the item's end and the token (the item is at the **row**), or the item is in the value's sentence with no number token between its end and the token. |
+| `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
 
 The scale and the sign of a token are its **parts**. A token is **negative** when the candidate
 has a sign item, or, on a field with a unit, when brackets enclose it in the text, as the sign
@@ -615,7 +636,8 @@ the first such word's factor. When the token is negative, each of these also has
 value). A failing sign or scale item still gives its part: the decision then has the item's
 flag.
 
-A field item without `aliases` is not checked: it changes nothing. A key item that passes puts its
+A field item without `aliases` is not checked: it adds no flag, and it does not pass, so a unit
+item of that candidate fails. A key item that passes puts its
 key at the value only by the column rule (§4.5). The decision records `KEY_CITED` when that removed
 `KEY_NOT_AT_VALUE`. A recorded `key` judgment that applies, at or above `clear.KEY_NOT_AT_VALUE`,
 and names another key adds `MODEL_DOUBT` to a decision with `KEY_CITED`.

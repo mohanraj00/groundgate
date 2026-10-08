@@ -1,0 +1,362 @@
+{
+ "name": "20-spec-text",
+ "description": "Rules that the SPEC text states since #158: a cited span that passes only with a missing part re-anchors; 'between' must stand directly before the first number for 'and'; a connector may have a $ before the next number; unit forms need a boundary, and a suffix lies wholly in the sentence; a mention inside a longer mention does not count; a string field takes no qualifier and rejects an integer or blank value; a carriage return is not a line break; a unit with empty lists is vacuous; an unchecked field item makes a unit item fail.",
+ "document": "A: 5 apples. B: 5 thousand pears.\n\nAges between 18 and 65 qualify. Members between the ages of 18 and 65 pay less.\n\nThe fee is $30 to $45.\n\nThe award was MRs 500 and the dose was 5 grams. The tablet is 500mg.\n\nPressure 29 in. Hg was read.\n\nTotal revenue 500\n\nThe city is approximately Paris.\n\nfif-\r\nteen and fif-\nteen\n\nThe team scored 12.\n\nPrice list, all amounts in $:\n\nAdult\t40",
+ "schema": {
+  "fields": {
+   "count": {
+    "type": "integer",
+    "multiple": true
+   },
+   "age": {
+    "type": "integer",
+    "multiple": true
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   },
+   "award": {
+    "type": "integer",
+    "unit": "INR"
+   },
+   "dose": {
+    "type": "integer",
+    "unit": "g"
+   },
+   "tablet": {
+    "type": "integer",
+    "unit": "mg"
+   },
+   "pressure": {
+    "type": "integer",
+    "unit": "inHg"
+   },
+   "revenue": {
+    "type": "integer",
+    "aliases": [
+     "revenue",
+     "total revenue"
+    ]
+   },
+   "city": {
+    "type": "string",
+    "multiple": true
+   },
+   "word": {
+    "type": "string",
+    "multiple": true
+   },
+   "points": {
+    "type": "integer",
+    "unit": "PTS"
+   },
+   "price": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  },
+  "units": {
+   "inHg": {
+    "suffix": [
+     "in. Hg"
+    ]
+   },
+   "PTS": {
+    "prefix": [],
+    "suffix": []
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "r1",
+   "field": "count",
+   "value": 5000,
+   "evidence": {
+    "start": 3,
+    "end": 4,
+    "text": "5"
+   },
+   "search_region": {
+    "start": 0,
+    "end": 33
+   }
+  },
+  {
+   "id": "g1",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 55,
+    "end": 57,
+    "text": "65"
+   }
+  },
+  {
+   "id": "g2",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 102,
+    "end": 104,
+    "text": "65"
+   }
+  },
+  {
+   "id": "f1",
+   "field": "fee",
+   "value": 30,
+   "unit": "USD",
+   "evidence": {
+    "start": 127,
+    "end": 130,
+    "text": "$30"
+   }
+  },
+  {
+   "id": "u1",
+   "field": "award",
+   "value": 500,
+   "unit": "INR",
+   "evidence": {
+    "start": 158,
+    "end": 161,
+    "text": "500"
+   }
+  },
+  {
+   "id": "u2",
+   "field": "dose",
+   "value": 5,
+   "unit": "g",
+   "evidence": {
+    "start": 179,
+    "end": 186,
+    "text": "5 grams"
+   }
+  },
+  {
+   "id": "u3",
+   "field": "tablet",
+   "value": 500,
+   "unit": "mg",
+   "evidence": {
+    "start": 202,
+    "end": 207,
+    "text": "500mg"
+   }
+  },
+  {
+   "id": "s1",
+   "field": "pressure",
+   "value": 29,
+   "unit": "inHg",
+   "evidence": {
+    "start": 219,
+    "end": 221,
+    "text": "29"
+   }
+  },
+  {
+   "id": "m1",
+   "field": "revenue",
+   "value": 500,
+   "evidence": [
+    {
+     "start": 254,
+     "end": 257,
+     "text": "500"
+    },
+    {
+     "role": "field",
+     "text": "revenue"
+    }
+   ]
+  },
+  {
+   "id": "c1",
+   "field": "city",
+   "value": "Paris",
+   "evidence": {
+    "start": 285,
+    "end": 290,
+    "text": "Paris"
+   }
+  },
+  {
+   "id": "c2",
+   "field": "city",
+   "value": 7,
+   "evidence": {
+    "start": 285,
+    "end": 290,
+    "text": "Paris"
+   }
+  },
+  {
+   "id": "c3",
+   "field": "city",
+   "value": "  ",
+   "evidence": {
+    "start": 285,
+    "end": 290,
+    "text": "Paris"
+   }
+  },
+  {
+   "id": "w1",
+   "field": "word",
+   "value": "fif- teen",
+   "evidence": {
+    "start": 293,
+    "end": 303,
+    "text": "fifteen"
+   }
+  },
+  {
+   "id": "w2",
+   "field": "word",
+   "value": "fif- teen",
+   "evidence": {
+    "start": 308,
+    "end": 317,
+    "text": "fifteen"
+   }
+  },
+  {
+   "id": "p1",
+   "field": "points",
+   "value": 12,
+   "unit": "PTS",
+   "evidence": {
+    "start": 335,
+    "end": 337,
+    "text": "12"
+   }
+  },
+  {
+   "id": "n1",
+   "field": "price",
+   "value": 40,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 377,
+     "end": 379,
+     "text": "40"
+    },
+    {
+     "role": "field",
+     "text": "Adult"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "EVIDENCE_REANCHORED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
