@@ -351,11 +351,12 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.5.1 implements spec v0.5. [CHANGELOG.md](CHANGELOG.md) lists what each
+Alpha. groundgate 0.5.2 implements spec v0.5. [CHANGELOG.md](CHANGELOG.md) lists what each
 version changes, with its measure. 0.5 makes the evidence a list of items (#141): a value can cite
 its sign, scale, unit, field and key, and outside sources, under the app's policy, and
 `gg.candidate_schema()` (#147) gives the candidate's JSON Schema. 0.5.1 adds `gg.extractor_schema`
-and `groundgate schema` (#148), a JSON Schema for a model's structured output. 0.4 added recorded
+and `groundgate schema` (#148), a JSON Schema for a model's structured output. 0.5.2 adds
+`groundgate schema check` (#168) and batch `admit` (#169). 0.4 added recorded
 judgments (#116), an experimental way for a judge's answers to clear a key flag or add doubt, with no model call in the decision. 0.3 brought
 a wider change rule (#51), abbreviation dots that no longer end a sentence for qualifiers (#63,
 #77), Indian digit grouping (#59), ASCII digits (#94), and keys that stop at a label line (#52) or
