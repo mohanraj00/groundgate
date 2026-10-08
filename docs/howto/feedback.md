@@ -274,7 +274,10 @@ scale that the scale item cites.
 Ask again once. Each round costs one model call, and a fixed limit stops a model that makes the
 same mistake again. After the last round, act on each outcome as usual:
 
-1. If a fact is admitted in any round, store it.
+1. If a fact is admitted in any round, store it. The exception: if two rounds admit different
+   values for the same field and key, and the field is not `multiple`, store neither value. Send
+   both to a person. Each `admit` call sees only its own candidates, so no receipt flags this
+   `CONFLICTING_CANDIDATES`.
 2. If a retried fact is still flagged, send it to a person.
 3. If a fact is rejected, drop it and log the codes.
 
