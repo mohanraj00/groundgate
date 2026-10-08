@@ -5,12 +5,14 @@ unchanged. This is the path that the docs recommend since 0.5.1.
     uv run python bench/sec3/run.py --provider claude-cli --model claude-haiku-5-5
     uv run python bench/sec3/run.py --provider codex --model gpt-6-luna
 
-Each run uses the CLI's default reasoning effort. The CLIs run as in bench/propose.py: in an empty
-directory, with no tools, settings, rules, MCP servers or saved session. A reply from another
-model, with a tool call or a denied tool call is discarded and asked again, up to 3 times.
-Replies go to runs/<model>/<id>.json, with the CLI version and the hashes of the prompt and the
-output schema. An existing file is skipped, so a stopped run resumes. The replies quote the
-filings, so runs/ stays out of git.
+Each run uses the CLI's default reasoning effort. The Claude CLI gets the schema without its
+"$schema" member, because its --json-schema check does not load draft 2020-12 (#197).
+
+The CLIs run as in bench/propose.py: in an empty directory, with no tools, settings, rules, MCP
+servers or saved session. A reply from another model, with a tool call or a denied tool call is
+discarded and asked again, up to 3 times. Replies go to runs/<model>/<id>.json, with the CLI
+version and the hashes of the prompt and the output schema. An existing file is skipped, so a
+stopped run resumes. The replies quote the filings, so runs/ stays out of git.
 """
 
 from __future__ import annotations
@@ -60,6 +62,8 @@ def sha(data: str) -> str:
 
 class Runner:
     def __init__(self, provider: str, model: str, schema: dict[str, Any]) -> None:
+        if provider == "claude-cli":  # its --json-schema check does not load draft 2020-12
+            schema = {k: v for k, v in schema.items() if k != "$schema"}
         self.provider, self.model, self.schema = provider, model, schema
         self.empty = tempfile.mkdtemp(prefix="groundgate-sec3-")
         self.schema_file = Path(self.empty) / "output.schema.json"
@@ -147,6 +151,7 @@ class Runner:
             "cli": self.version(),
             "prompt_sha256": sha(prompt),
             "output_schema_sha256": sha(json.dumps(self.schema, sort_keys=True)),
+            "output_schema_without": [] if "$schema" in self.schema else ["$schema"],
             "reply": reply,
             "discarded": discarded,
         }
