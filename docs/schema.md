@@ -261,7 +261,8 @@ the field's, the fact is flagged `QUALIFIED_VALUE`. A negation inverts a qualifi
 exceed $19,000" is `le`. SPEC §4.2 has the full lists.
 
 For an `and` range, `between` can stand up to six words before the first number. Each word
-holds only letters, and only whitespace separates them, in one sentence. Both numbers then get
+holds only letters and combining marks, and only whitespace separates them, in one
+sentence. Both numbers then get
 the `range` qualifier. "between the ages of 18 and 65" is a range. "between the minimum and
 maximum permitted adult ages 18 and 65" has seven words, so it is not.
 
