@@ -16,6 +16,7 @@ The decisions hold values and byte spans, not text, so they are in git. The docu
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import json
 import sys
@@ -27,9 +28,14 @@ from typing import Any
 HERE = Path(__file__).parent
 RUNS = ("claude-haiku-5-5", "gpt-6-luna")
 # each 0.6 rule adds its spec here, decided alone
-SPECS = ("0.5", "0.6 #145 unit", "0.6 #145 scale")
+SPECS = ("0.5", "0.6 #145 unit", "0.6 #145 scale", "0.6 #159")
 # decided once and kept: the scale part of #145 (a scale quote in any case) did not ship
 RECORDED = ("0.6 #145 scale",)
+# the function that turns each 0.6 rule off when it returns False
+OFF = {
+    "0.6 #145 unit": ("groundgate.admit", "_repeats"),
+    "0.6 #159": ("groundgate.text", "_between_words_before"),
+}
 VERDICTS = ("right", "wrong", "not sure")
 PORT = 8774
 
@@ -51,12 +57,20 @@ def _schema() -> dict[str, Any]:
 
 
 def _decide(spec: str, text: str, cands: list[Any]) -> list[Any]:
-    """The decisions under one spec, by the groundgate that runs this script."""
+    """The decisions under one spec, by the groundgate that runs this script. A 0.6 rule is
+    decided alone: the other rules of the draft are turned off (OFF)."""
+    from unittest import mock
+
     import groundgate as gg
 
     if spec not in SPECS or spec in RECORDED:
         raise SystemExit(f"no decision for spec {spec!r}")
-    return list(gg.admit(text, _schema(), cands).decisions)
+    with contextlib.ExitStack() as stack:
+        for other, (module, name) in OFF.items():
+            if other != spec:
+                off = mock.patch.object(sys.modules[module], name, lambda *a: False)
+                stack.enter_context(off)
+        return list(gg.admit(text, _schema(), cands).decisions)
 
 
 def decide() -> None:
