@@ -65,7 +65,7 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
 
 ### 2.3 Schema
 
-```json
+```text
 {"fields": {"<name>": {
   "type": "number" | "integer" | "string",
   "unit": "<unit code>" | null,

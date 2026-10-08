@@ -122,11 +122,11 @@ thousands", the `$` at the top of the column, the row "Loss from operations" and
 The extractor cites each part as one item:
 
 ```json
-"evidence": [{"text": "(105,198\n)"},
-             {"role": "scale", "text": "(in thousands"},
-             {"role": "unit", "text": "$"},
-             {"role": "field", "text": "Loss from operations"},
-             {"role": "key", "text": "2024"}]
+{"evidence": [{"text": "(105,198\n)"},
+              {"role": "scale", "text": "(in thousands"},
+              {"role": "unit", "text": "$"},
+              {"role": "field", "text": "Loss from operations"},
+              {"role": "key", "text": "2024"}]}
 ```
 
 An item from the document has a `role` and either a byte span (`start`, `end`, optional `text`)
@@ -348,17 +348,17 @@ decisions from the [table example](#the-key-span) below. The first cites its sca
 column, and the second cites nothing but the value:
 
 ```json
-{"candidate_id": 1, "field": "sales", "key": "south", "outcome": "admitted",
- "codes": ["VALUE_DERIVED", "KEY_CITED"], "value": "35000", "unit": "USD",
- "source": "document", "ref": null, "url": null, "evidence": {"start": 65, "end": 67},
- "parts": [{"role": "scale", "start": 16, "end": 29, "passed": true},
-           {"role": "field", "start": 46, "end": 53, "passed": true},
-           {"role": "key", "start": 39, "end": 44, "passed": true}],
- "missing": [], "candidate_sha256": "sha256:4e8d5970..."}
-{"candidate_id": 2, "field": "sales", "key": "south", "outcome": "needs_verification",
- "codes": ["PART_MISSING", "KEY_NOT_AT_VALUE"], "value": "35000", "unit": "USD",
- "source": "document", "ref": null, "url": null, "evidence": {"start": 65, "end": 67},
- "parts": [], "missing": ["scale", "key"], "candidate_sha256": "sha256:9dd86267..."}
+[{"candidate_id": 1, "field": "sales", "key": "south", "outcome": "admitted",
+  "codes": ["VALUE_DERIVED", "KEY_CITED"], "value": "35000", "unit": "USD",
+  "source": "document", "ref": null, "url": null, "evidence": {"start": 65, "end": 67},
+  "parts": [{"role": "scale", "start": 16, "end": 29, "passed": true},
+            {"role": "field", "start": 46, "end": 53, "passed": true},
+            {"role": "key", "start": 39, "end": 44, "passed": true}],
+  "missing": [], "candidate_sha256": "sha256:4e8d5970..."},
+ {"candidate_id": 2, "field": "sales", "key": "south", "outcome": "needs_verification",
+  "codes": ["PART_MISSING", "KEY_NOT_AT_VALUE"], "value": "35000", "unit": "USD",
+  "source": "document", "ref": null, "url": null, "evidence": {"start": 65, "end": 67},
+  "parts": [], "missing": ["scale", "key"], "candidate_sha256": "sha256:9dd86267..."}]
 ```
 
 `missing` lists the parts in the order `sign`, `scale`, `unit`, `key`. It lists `key` when the
