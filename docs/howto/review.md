@@ -140,8 +140,8 @@ print(stored["receipt_sha256"][:23])
 ```
 
 ```text
-0.5 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
-sha256:51710015b22c3de8
+0.6 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
+sha256:f81312051594e446
 ```
 
 A receipt holds digests of its inputs, not the inputs. To verify it later, you need the same
@@ -181,15 +181,13 @@ The digests in the output are cut to 16 digits:
 False
 coverage differs from the re-derived receipt
 summary differs from the re-derived receipt
-decision for candidate sha256:19825d4b06d24061... differs
-decision for candidate sha256:2f6ca877cb802b17... differs
-decision for candidate sha256:581fb509c670b30d... differs
+decision for candidate sha256:9a65d0655066e4eb... differs
 ```
 
 The changed rent is not in the text, so it is rejected. The required field `monthly_rent` then
 has no fact, so the coverage and the summary differ too. Decisions are sorted by the digest of
-their candidate. A changed candidate gets a new digest and can move other decisions, so three
-decisions differ.
+their candidate. A changed candidate gets a new digest and can move other decisions. Here it
+moves none, so one decision differs.
 
 `verify` does not say which input changed. It says which part of the receipt differs. To find
 the changed input, compare the digest of each stored input with the receipt. For a candidate,
@@ -210,15 +208,18 @@ print(check.problems)
 
 ```text
 False
-('receipt was decided under spec 0.4; this groundgate implements 0.5',)
+('receipt was decided under spec 0.4; this groundgate implements 0.6',)
 ```
 
-`verify` checks nothing more. So pin the groundgate version in the environment that keeps the
-receipts:
+`verify` checks nothing more. So pin the groundgate release that decided the receipts in the
+environment that keeps them. For spec 0.5, that is:
 
 ```bash
 pip install "groundgate==0.5.2"
 ```
+
+The output on this page comes from the spec 0.6 draft, which has no release yet. A draft receipt
+verifies only with the same source of groundgate.
 
 To verify an old receipt, install the release for its spec version in a separate environment.
 For spec 0.4, that is `groundgate==0.4.0`.

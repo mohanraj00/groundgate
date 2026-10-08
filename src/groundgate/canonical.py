@@ -8,7 +8,7 @@ import unicodedata
 from decimal import Decimal
 from typing import Any
 
-SPEC_VERSION = "0.5"
+SPEC_VERSION = "0.6"
 _SAFE_INT = 2**53 - 1
 _ESCAPES = {
     '"': '\\"',
