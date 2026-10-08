@@ -131,8 +131,9 @@ An item from the document has a `role` and either a byte span (`start`, `end`, o
 or only `text`. With only `text`, the item is a quote, and groundgate finds it. For the value item,
 groundgate takes the first occurrence that holds the value with its unit, else the first
 occurrence. For a role item, it takes the occurrence that holds the value, else the last one
-before it, else the first one after it. A quote that does not occur rejects the fact with
-`QUOTE_NOT_FOUND`.
+before it, else the first one after it. A value quote that does not occur rejects the fact with
+`QUOTE_NOT_FOUND`. A role quote that does not occur fails its check and flags the fact, such as
+`SCALE_CITATION_INVALID`.
 
 | Role | What it supports | What groundgate checks |
 |---|---|---|
@@ -474,7 +475,6 @@ receipt = gg.admit(
     policy=None,
     document_id=None,
     judgments=None,
-    *,
     references=None,
     document_source=None,
 )
@@ -491,7 +491,6 @@ check = gg.verify(
     candidates,
     policy=None,
     judgments=None,
-    *,
     references=None,
     document_source=None,
 )
@@ -648,8 +647,9 @@ SHA-256 and source, the SHA-256 of the schema and policy, one decision per candi
 findings, the judgments that applied, a summary and its own hash. Hashes are over RFC 8785
 canonical JSON with a `groundgate/<spec version>:<kind>` prefix, so a receipt made in one language
 verifies in another. `verify` recomputes everything from the inputs. Any change to the document,
-its source, a reference, the schema, the policy, a judgment, a candidate or a decision shows up as
-a problem.
+its source, a reference, the schema, the policy, a judgment that applied, a candidate or a
+decision shows up as a problem. A judgment that did not apply is not in the receipt, so a change
+to it changes nothing.
 
 **Versions.** A receipt names the spec version it was decided under, and `verify` accepts only the
 version it implements. A groundgate that implements spec 0.5 reports a 0.4 receipt as one problem
