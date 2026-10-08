@@ -2,6 +2,7 @@
 
   groundgate extract  FILE                              > doc.txt
   groundgate admit    DOC SCHEMA CANDIDATES             > receipt.json
+  groundgate admit    --docs D --candidates C --schema S --out R
   groundgate verify   RECEIPT DOC SCHEMA CANDIDATES
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES -o report.html
   groundgate schema   SCHEMA                            > extractor.schema.json
@@ -15,6 +16,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -98,19 +100,28 @@ def _parser() -> argparse.ArgumentParser:
     s.add_argument("--references", help="JSON array of references; their ids become refs")
     s.add_argument("-o", "--output", help="write the JSON Schema here instead of stdout")
 
-    def inputs(p: argparse.ArgumentParser) -> None:
-        p.add_argument("document", help='UTF-8 NFC text file, or "-" for stdin')
-        p.add_argument("schema", help="schema JSON")
-        p.add_argument("candidates", help="JSON array of candidates")
+    def inputs(p: argparse.ArgumentParser, *, batch: bool = False) -> None:
+        nargs = "?" if batch else None
+        p.add_argument("document", nargs=nargs, help='UTF-8 NFC text file, or "-" for stdin')
+        p.add_argument("schema", nargs=nargs, help="schema JSON")
+        p.add_argument("candidates", nargs=nargs, help="JSON array of candidates")
         p.add_argument("--policy", help="policy JSON")
-        p.add_argument("--judgments", help="JSON array of recorded judgments (SPEC §2.6)")
+        p.add_argument(
+            "--judgments",
+            help="JSON array of recorded judgments (SPEC §2.6)"
+            + ("; a folder in batch mode" if batch else ""),
+        )
         p.add_argument("--references", help="JSON array of references (SPEC §2.1)")
         p.add_argument("--document-source", help="the URL of the document (SPEC §2.1)")
 
     a = sub.add_parser("admit", help="decide candidates and write a receipt")
-    inputs(a)
+    inputs(a, batch=True)
     a.add_argument("--document-id")
     a.add_argument("-o", "--output", help="write the receipt here instead of stdout")
+    a.add_argument("--docs", help="folder of <doc>.txt files")
+    a.add_argument("--schema", dest="batch_schema", help="schema JSON for batch mode")
+    a.add_argument("--candidates", dest="batch_candidates", help="folder of <doc>.json files")
+    a.add_argument("--out", help="folder for batch receipts and summary.json")
 
     v = sub.add_parser("verify", help="re-derive a receipt from its inputs and compare")
     v.add_argument("receipt")
@@ -126,12 +137,17 @@ def _parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = _parser().parse_args(argv)
+    parser = _parser()
+    args = parser.parse_args(argv)
+    if args.command == "admit":
+        _admit_inputs(parser, args)
     try:
         if args.command == "extract":
             return _extract(args)
         if args.command == "schema":
             return _schema(args)
+        if args.command == "admit" and args.docs is not None:
+            return _batch_admit(args)
         policy = _json(args.policy) if args.policy else None
         text = _text(args.document)
         schema, candidates = _json(args.schema), _json(args.candidates)
@@ -159,6 +175,89 @@ def main(argv: list[str] | None = None) -> int:
     except (PacketError, ValueError, OSError, ImportError) as e:  # JSON, UTF-8: ValueError
         print(f"groundgate: {e}", file=sys.stderr)
         return 2
+
+
+def _admit_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
+    batch = (args.docs, args.batch_candidates, args.batch_schema, args.out)
+    single = (args.document, args.schema, args.candidates)
+    if any(value is not None for value in batch):
+        if not all(batch):
+            parser.error("batch admit requires --docs, --candidates, --schema and --out")
+        if any(value is not None for value in (*single, args.output, args.document_id)):
+            parser.error("batch admit cannot use positional inputs, --output or --document-id")
+    elif not all(value is not None for value in single):
+        parser.error("admit requires DOC SCHEMA CANDIDATES, or the batch options")
+
+
+def _batch_admit(args: argparse.Namespace) -> int:
+    for folder in (args.docs, args.batch_candidates, args.judgments):
+        if folder is not None and not Path(folder).is_dir():
+            raise ValueError(f"{folder}: expected a folder")
+    paths = sorted(path for path in Path(args.docs).glob("*.txt") if path.is_file())
+    if not paths:
+        raise ValueError(f"{args.docs}: no .txt documents")
+    for path in paths:
+        if path.stem.casefold() == "summary":
+            raise ValueError(f"{path.name}: summary.json is reserved for the batch summary")
+        candidates_path = Path(args.batch_candidates) / f"{path.stem}.json"
+        if not candidates_path.is_file():
+            raise ValueError(
+                f"{candidates_path} is not there; write [] for a document with no candidates"
+            )
+        if args.judgments:
+            judgments_path = Path(args.judgments) / f"{path.stem}.json"
+            if not judgments_path.is_file():
+                raise ValueError(
+                    f"{judgments_path} is not there; write [] for a document with no judgments"
+                )
+
+    schema = _json(args.batch_schema)
+    policy = _json(args.policy) if args.policy else None
+    references = _json(args.references) if args.references else None
+    receipts: dict[str, Any] = {}
+    documents: dict[str, Any] = {}
+    outcomes = Counter({"admitted": 0, "needs_verification": 0, "rejected": 0})
+    codes: Counter[str] = Counter()
+    for path in paths:
+        doc = path.stem
+        try:
+            candidates = _json(str(Path(args.batch_candidates) / f"{doc}.json"))
+            judgments = _json(str(Path(args.judgments) / f"{doc}.json")) if args.judgments else None
+            receipt = admit(
+                _text(str(path)),
+                schema,
+                candidates,
+                policy,
+                doc,
+                judgments,
+                references=references,
+                document_source=args.document_source,
+            )
+        except (PacketError, ValueError, OSError) as e:
+            raise ValueError(f"{path.name}: {e}") from e
+        doc_codes = Counter(code for decision in receipt.decisions for code in decision.codes)
+        doc_codes.update(code for _, code in receipt.coverage)
+        body = receipt.to_dict()
+        receipts[doc] = body
+        documents[doc] = {"outcomes": body["summary"], "codes": dict(sorted(doc_codes.items()))}
+        outcomes.update(body["summary"])
+        codes.update(doc_codes)
+
+    totals = {"outcomes": dict(outcomes), "codes": dict(sorted(codes.items()))}
+    output = Path(args.out)
+    output.mkdir(parents=True, exist_ok=True)
+    for doc, body in receipts.items():
+        _write(_dumps(body), str(output / f"{doc}.json"))
+    _write(_dumps({"documents": documents, "totals": totals}), str(output / "summary.json"))
+    print("| Outcome | Total |")
+    print("|---|---:|")
+    for outcome, count in outcomes.items():
+        print(f"| {outcome} | {count} |")
+    print("\n| Code | Total |")
+    print("|---|---:|")
+    for code, count in sorted(codes.items()):
+        print(f"| {code} | {count} |")
+    return 0
 
 
 def _schema(args: argparse.Namespace) -> int:

@@ -233,6 +233,7 @@ outside evidence, is rejected `NO_EVIDENCE`.
 ```bash
 groundgate extract p590a.pdf --pages 1-2 -o doc.txt --layout layout.json
 groundgate admit   doc.txt schema.json candidates.json -o receipt.json
+groundgate admit   --docs docs --candidates candidates --schema schema.json --out receipts
 groundgate verify  receipt.json doc.txt schema.json candidates.json
 groundgate report  receipt.json doc.txt schema.json candidates.json --layout layout.json -o report.html
 groundgate schema  schema.json -o extractor.schema.json
@@ -245,6 +246,12 @@ hidden HTML) is dropped, and superscripts are marked so that 10⁹ reads `10^9`,
 `--references` and `--document-source`. `report` refuses to render a receipt that doesn't
 re-derive from its inputs. `schema` writes the extractor schema. [examples/irs-590a](examples/irs-590a) runs the whole pipeline on an
 IRS publication with cached model output, so it reproduces without an API key.
+
+For a batch, `--docs` holds `<doc>.txt` files and `--candidates` holds matching `<doc>.json`
+candidate arrays. `--out` receives one receipt per document and `summary.json` with outcome and
+code counts per document and in total, and the CLI prints the totals. The
+[guide](docs/guide.md#command-line) describes missing and empty candidate files, shared policy
+and references, per-document judgments, and the batch options and summary format.
 
 ## What it checks
 

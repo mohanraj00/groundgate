@@ -645,6 +645,7 @@ the page re-derives the receipt first and says whether it matched. `layout=` and
 ```bash
 groundgate extract FILE [--pages 1-3,7] [-o doc.txt] [--layout layout.json]
 groundgate admit   DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--document-id ID] [-o receipt.json]
+groundgate admit   --docs D --candidates C --schema S --out R [--policy P] [--judgments J]
 groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J]
 groundgate report  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--layout L] [--title T] [-o report.html]
 groundgate schema  SCHEMA [--references R] [-o extractor.schema.json]
@@ -654,6 +655,27 @@ groundgate schema  SCHEMA [--references R] [-o extractor.schema.json]
 writes the extractor schema, with the ids of the references in `R` as its refs. `DOC` may be `-`
 for standard input. Exit codes: 0 success, 1 the receipt does not match its
 inputs, 2 invalid input.
+
+`groundgate admit --docs D --candidates C --schema S --out R` processes a folder of documents.
+`D` holds `<doc>.txt` files, and `C` holds matching `<doc>.json` arrays of candidates. Only `.txt` files
+directly in `D` are read, in filename order. A missing candidate file stops the run. `[]` means
+the document has no candidates. The document id in each receipt is `<doc>`.
+
+One `--policy` file and one `--references` file apply to the whole batch. With `--judgments J`,
+`J` is a folder of matching `<doc>.json` arrays, as `groundgate-calibrate judge` writes them. Each
+document needs its judgment file. `[]` means no judgments. `--document-source`, if given, applies
+to every document. Positional inputs, `--document-id` and `--output` cannot be used in batch mode.
+
+`R/<doc>.json` is the same receipt that one `admit` call produces with that document id.
+`R/summary.json` has a `documents` object keyed by `<doc>` and a `totals` object. Each document
+entry and `totals` have `outcomes` counts (`admitted`, `needs_verification`, `rejected`) and `codes`
+counts. Codes include every decision code, including information codes, and every coverage
+finding. An empty candidate list adds no outcomes, but can add coverage codes. The CLI prints the
+total outcome and code counts as tables. `summary.txt`, in any letter case, is reserved because
+its receipt could overwrite `summary.json`. An empty document folder is an error. Input errors
+stop the run before it writes any output.
+
+In Python, a loop over `gg.admit` does the same, and the API has no batch function.
 
 ## Receipts
 
