@@ -180,3 +180,15 @@ def test_many_fields_with_one_alias(tmp_path: Path, capsys: pytest.CaptureFixtur
     assert code == 1
     assert out.count("\n") == 1
     assert out.startswith("alias 'sales' is on fields 'f0', 'f1', 'f2'")
+
+
+def test_many_punctuation_aliases(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    marks = "!#$%&*+-/:;<=>?@^~|"
+    aliases = [a + b + c for a in marks for b in marks for c in marks if len({a, b, c}) == 3]
+    schema = {"fields": {f"f{n}": {"aliases": [alias]} for n, alias in enumerate(aliases)}}
+    assert len(aliases) > 5000
+    assert check(tmp_path, schema, capsys) == (0, "")
+    schema["fields"]["dash"] = {"aliases": ["-"]}
+    code, out = check(tmp_path, schema, capsys)
+    assert code == 1
+    assert out.count("\n") == sum("-" in alias for alias in aliases)

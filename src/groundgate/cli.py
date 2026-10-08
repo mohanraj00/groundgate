@@ -341,30 +341,31 @@ def _findings(schema: Schema) -> list[str]:
             out.append(
                 f"alias {alias!r} is on fields {listed}: a field item does not tell them apart"
             )
-    # An alias in a longer alias of another field. Each word of a whole-word match is a word of
-    # the longer alias, so an alias is compared only with the aliases that hold its rarest word.
-    # Equal aliases are already reported above.
+    # An alias in a longer alias of another field. One pass over all aliases finds each alias
+    # in each other alias, with letters folded as re.I matches them (Aho-Corasick). key_mentions
+    # then confirms each pair, so the work grows with the aliases and the findings.
     rank = {name: n for n, name in enumerate(schema.fields)}
-    every: dict[str, list[tuple[str, int, str]]] = {}  # normalized alias: (field, place, alias)
+    # folded alias: normalized alias: (field, place, alias). Equal normalized aliases are
+    # reported above, so a pair needs two of them.
+    groups: dict[str, dict[str, list[tuple[str, int, str]]]] = {}
     for other, g in schema.fields.items():
         for n, b in enumerate(g.aliases or ()):
-            every.setdefault(_norm(b), []).append((other, n, b))
-    index: dict[str, dict[str, list[tuple[str, int, str]]]] = {}
-    odd: dict[str, list[tuple[str, int, str]]] = {}  # compared with each alias
-    for norm, places in every.items():
-        words = _words(places[0][2])
-        for word in words or ():
-            index.setdefault(word, {})[norm] = places
-        if words is None:
-            odd[norm] = places
+            group = groups.setdefault(_folded(b)[0], {})
+            group.setdefault(_norm(b), []).append((other, n, b))
+    patterns = list(groups)
+    automaton = _automaton(patterns)
     pairs: set[tuple[str, str, int, str]] = set()
-    for name, f in schema.fields.items():
-        for a in f.aliases or ():
-            words = _words(a)
-            pool = every if not words else index[min(words, key=lambda w: len(index[w]))]
-            for norm, places in [*pool.items(), *odd.items()]:
-                if norm != _norm(a):
-                    pairs.update((name, other, n, b) for other, n, b in places if other != name)
+    for holders in groups.values():
+        for norm_b, places in holders.items():  # one spelling: the same word boundaries
+            for p in _found(patterns, automaton, places[0][2]):
+                for norm_a, named in groups[patterns[p]].items():
+                    if norm_a != norm_b:
+                        pairs.update(
+                            (name, other, n, b)
+                            for name, _, _ in named
+                            for other, n, b in places
+                            if other != name
+                        )
     for name, other, _, b in sorted(pairs, key=lambda p: (rank[p[0]], rank[p[1]], p[2])):
         aliases = schema.fields[name].aliases or ()
         for a in dict.fromkeys(a for _, _, a in key_mentions(b, aliases)):
@@ -380,14 +381,76 @@ def _norm(word: str) -> str:
     return normalize_ws(word).lower()
 
 
-def _words(text: str) -> set[str] | None:
-    """The words of the text, each letter folded as re.I matches it. None when the text holds
-    U+0345: it is not a word character, but re.I matches it with the letter iota."""
-    if "\u0345" in text:
-        return None
-    return set(re.findall(r"[^\W_]+", "".join(map(_fold, text))))
+def _folded(text: str) -> tuple[str, list[int]]:
+    """The text with each letter folded as re.I matches it and each run of whitespace as one
+    space, as key_mentions reads a key, and the place in the text of each character."""
+    out: list[str] = []
+    places: list[int] = []
+    for i, c in enumerate(text):
+        if _SPACE.match(c):
+            if out and out[-1] != " ":
+                out.append(" ")
+                places.append(i)
+            continue
+        out.append(_fold(c))
+        places.append(i)
+    if out and out[-1] == " ":
+        out.pop()
+        places.pop()
+    return "".join(out), places
 
 
+_Automaton = tuple[list[dict[str, int]], list[int], list[list[int]]]
+
+
+def _found(patterns: list[str], automaton: _Automaton, raw: str) -> set[int]:
+    """The patterns that occur in the folded raw text with no letter or digit of the raw text
+    next to them."""
+    goto, fail, ends = automaton
+    folded, places = _folded(raw)
+    found: set[int] = set()
+    state = 0
+    for j, c in enumerate(folded):
+        while state and c not in goto[state]:
+            state = fail[state]
+        state = goto[state].get(c, 0)
+        for p in ends[state]:
+            first, last = places[j - len(patterns[p]) + 1], places[j]
+            before = raw[first - 1] if first else " "
+            after = raw[last + 1] if last + 1 < len(raw) else " "
+            if not _WORD.match(before) and not _WORD.match(after):
+                found.add(p)
+    return found
+
+
+def _automaton(patterns: list[str]) -> _Automaton:
+    """The Aho-Corasick automaton of the patterns: goto, fail and the patterns that end at each
+    state."""
+    goto: list[dict[str, int]] = [{}]
+    ends: list[list[int]] = [[]]
+    for p, pattern in enumerate(patterns):
+        state = 0
+        for c in pattern:
+            if c not in goto[state]:
+                goto.append({})
+                ends.append([])
+                goto[state][c] = len(goto) - 1
+            state = goto[state][c]
+        ends[state].append(p)
+    fail = [0] * len(goto)
+    queue = list(goto[0].values())
+    for state in queue:
+        for c, child in goto[state].items():
+            queue.append(child)
+            back = fail[state]
+            while back and c not in goto[back]:
+                back = fail[back]
+            fail[child] = goto[back].get(c, 0)
+            ends[child] = ends[child] + ends[fail[child]]
+    return goto, fail, ends
+
+
+_SPACE, _WORD = re.compile(r"\s"), re.compile(r"[^\W_]")
 _ONE_LETTER = {"\ufb05": "\ufb06"}  # re.I matches the two "st" ligatures
 
 
