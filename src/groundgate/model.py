@@ -406,10 +406,12 @@ def extractor_schema(
     items with the same role, and a blank text, url or retrieved.
     """
     s = schema if isinstance(schema, Schema) else Schema.from_dict(schema)
+    if not s.fields:
+        raise PacketError("the schema has no fields, so an extractor can send no candidate")
     if reference_ids is not None and (
         not reference_ids
-        or len(set(reference_ids)) != len(reference_ids)
         or not all(isinstance(r, str) and r.strip() for r in reference_ids)
+        or len(set(reference_ids)) != len(reference_ids)
     ):
         raise PacketError("reference_ids must be a non-empty list of unique non-blank strings")
     quote = {"type": "string", "description": "Copied verbatim from the text."}
@@ -463,8 +465,8 @@ def extractor_schema(
                 {
                     "field": {"const": f.name},
                     "value": value,
-                    "unit": {"const": f.unit} if f.unit else {"type": "null"},
-                    "key": {"enum": list(f.keys)} if f.keys else {"type": "null"},
+                    "unit": {"type": "null"} if f.unit is None else {"const": f.unit},
+                    "key": {"type": "null"} if f.keys is None else {"enum": list(f.keys)},
                     "evidence": {"$ref": "#/$defs/evidence"},
                 },
                 names,

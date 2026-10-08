@@ -116,7 +116,7 @@ def test_reference_ids() -> None:
     assert "reference" not in gg.extractor_schema(schema)["$defs"]
     s = gg.extractor_schema(schema, ["tax-table"])
     assert s["$defs"]["reference"]["properties"]["ref"] == {"enum": ["tax-table"]}
-    for bad in ([], ["a", "a"], [" "]):
+    for bad in ([], ["a", "a"], [" "], [[]], [{}]):
         with pytest.raises(gg.PacketError):
             gg.extractor_schema(schema, bad)
 
@@ -164,3 +164,10 @@ def test_guide_example() -> None:
     assert _validator(gg.extractor_schema(schema)).is_valid(out)
     for d in gg.admit(doc, schema, out["candidates"]).decisions:
         assert (d.outcome, list(d.codes)) == ("admitted", ["VALUE_DERIVED", "KEY_CITED"])
+
+
+def test_edge_schemas() -> None:
+    with pytest.raises(gg.PacketError):
+        gg.extractor_schema({"fields": {}})
+    s = gg.extractor_schema({"fields": {"ratio": {"type": "number", "unit": ""}}})
+    assert s["properties"]["candidates"]["items"]["properties"]["unit"] == {"const": ""}
