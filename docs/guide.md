@@ -16,8 +16,10 @@ Every candidate gets one decision, with reason codes:
 |---|---|
 | `admitted` | Store the fact. |
 | `needs_verification` | Send it to a person, with its evidence and codes. |
-| `rejected` | Do not store it. The codes say why. | [SPEC.md](../SPEC.md) is the normative version of everything below; this page is the
-working summary.
+| `rejected` | Do not store it. The codes say why. |
+
+[SPEC.md](../SPEC.md) is the normative version of everything below; this page is the working
+summary.
 
 ## Documents
 
