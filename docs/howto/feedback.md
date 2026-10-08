@@ -155,7 +155,7 @@ Also repeat the candidate's value and quotes, so that the model sees what it sen
 by_id = {c["id"]: c for c in first}
 
 
-def feedback_for(d, candidate):
+def feedback_message(d, candidate):
     quotes = ", ".join(f'{e.get("role", "value")} "{e["text"]}"' for e in candidate["evidence"])
     lines = [f'Field "{d.field}": you gave the value "{candidate["value"]}" with {quotes}.']
     for code in d.codes:
@@ -173,7 +173,7 @@ def feedback_for(d, candidate):
 
 for d in sorted(receipt1.decisions, key=lambda d: d.candidate_id):
     if d.outcome != "admitted":
-        print(feedback_for(d, by_id[d.candidate_id]))
+        print(feedback_message(d, by_id[d.candidate_id]))
 ```
 
 ```text
@@ -188,7 +188,7 @@ Field "admin_costs": you gave the value "3510000" with value "$ 3,150", scale "(
 
 ## 3. Choose what to retry
 
-Send feedback only when a better citation can fix the decision. These codes are worth a retry:
+Send a feedback message only when a better citation can fix the decision. These codes are worth a retry:
 
 | Code | What the model can fix |
 |---|---|
@@ -272,11 +272,11 @@ print([d.candidate_id for d in retry])
 
 ## 4. Ask the model again
 
-Send the instructions, the text and the output format again, with the feedback for each retry.
+Send the instructions, the text and the output format again, with the feedback message of each retry.
 Then admit the new candidates:
 
 ```python
-feedback = "\n".join(feedback_for(d, by_id[d.candidate_id]) for d in retry)
+feedback = "\n".join(feedback_message(d, by_id[d.candidate_id]) for d in retry)
 out = your_model(instructions, text, output_format, feedback=feedback)
 second = [{"id": f"r{i}", **c} for i, c in enumerate(out["candidates"], 1)]
 receipt2 = gg.admit(text, schema, second)
