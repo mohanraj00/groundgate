@@ -47,6 +47,7 @@ class Field:
     multiple: bool = False
     keys: tuple[str, ...] | None = None
     aliases: tuple[str, ...] | None = None
+    description: str | None = None
     _raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
 
     @classmethod
@@ -63,6 +64,7 @@ class Field:
             "multiple",
             "keys",
             "aliases",
+            "description",
         }
         if unknown:
             raise PacketError(f"field {name!r} has unknown keys {sorted(unknown)}")
@@ -77,6 +79,11 @@ class Field:
             "keys": d.get("keys"),
             "aliases": d.get("aliases"),
         }
+        if "description" in d:
+            description = d["description"]
+            if not isinstance(description, str) or not description.strip():
+                raise PacketError(f"field {name!r} description must be a non-blank string")
+            raw["description"] = description
         if raw["type"] not in _TYPES:
             raise PacketError(f"field {name!r} has unknown type {raw['type']!r}")
         if raw["comparator"] not in _COMPARATORS:
@@ -112,6 +119,7 @@ class Field:
             multiple=raw["multiple"],
             keys=None if keys is None else tuple(keys),
             aliases=None if aliases is None else tuple(aliases),
+            description=raw.get("description"),
             _raw=raw,
         )
 
@@ -460,6 +468,7 @@ def extractor_schema(
                 "description": "The number with its sign and scale, without $, commas or a unit.",
             }
         names = f"Names in the document: {', '.join(f.aliases)}." if f.aliases else None
+        description = "\n".join(part for part in (f.description, names) if part is not None)
         cands.append(
             _closed(
                 {
@@ -469,7 +478,7 @@ def extractor_schema(
                     "key": {"type": "null"} if f.keys is None else {"enum": list(f.keys)},
                     "evidence": {"$ref": "#/$defs/evidence"},
                 },
-                names,
+                description or None,
             )
         )
     return {

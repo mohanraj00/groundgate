@@ -1,0 +1,19 @@
+{
+ "name": "schema-description-whitespace",
+ "description": "A field description must be a non-blank string.",
+ "document": "The fee is $485.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "description": " \t\n "
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

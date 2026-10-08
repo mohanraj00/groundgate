@@ -1,0 +1,94 @@
+{
+ "name": "21-field-description",
+ "description": "Field descriptions change no decision: values still pass, fail or need verification under the field's rules, even when its description says otherwise.",
+ "document": "The fee is $485. The estimate is about $500. The label is Annual fee.",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "description": "A fee in cents; only values above 1000 count."
+   },
+   "estimate": {
+    "type": "integer",
+    "unit": "USD",
+    "description": "An approximate amount that needs no verification."
+   },
+   "label": {
+    "type": "string",
+    "description": "The fee's label."
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "d1",
+   "field": "fee",
+   "value": 485,
+   "unit": "USD",
+   "evidence": {
+    "start": 11,
+    "end": 15,
+    "text": "$485"
+   }
+  },
+  {
+   "id": "d2",
+   "field": "fee",
+   "value": 486,
+   "unit": "USD",
+   "evidence": {
+    "start": 11,
+    "end": 15,
+    "text": "$485"
+   }
+  },
+  {
+   "id": "d3",
+   "field": "estimate",
+   "value": 500,
+   "unit": "USD",
+   "evidence": {
+    "start": 39,
+    "end": 43,
+    "text": "$500"
+   }
+  },
+  {
+   "id": "d4",
+   "field": "label",
+   "value": "Annual fee",
+   "evidence": {
+    "start": 58,
+    "end": 68,
+    "text": "Annual fee"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

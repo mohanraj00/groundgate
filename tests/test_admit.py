@@ -274,6 +274,23 @@ def test_schema_defaults_are_hashed() -> None:
     assert a.schema_sha256 == b.schema_sha256
 
 
+@pytest.mark.parametrize("description", [None, True, 485, 4.85, [], {}])
+def test_description_must_be_a_string(description: object) -> None:
+    with pytest.raises(gg.PacketError, match="description must be a non-blank string"):
+        gg.Schema.from_dict({"fields": {"fee": {"description": description}}})
+
+
+@pytest.mark.parametrize("description", [" \nFee  in dollars.\t ", "Fee details. " * 4096])
+def test_description_is_preserved(description: str) -> None:
+    schema = gg.Schema.from_dict({"fields": {"fee": {"description": description}}})
+    assert schema.fields["fee"].description == description
+    assert schema.to_dict()["fields"]["fee"]["description"] == description
+    assert gg.Schema.from_dict(schema.to_dict()) == schema
+    without = gg.Schema.from_dict({"fields": {"fee": {}}})
+    assert without.fields["fee"].description is None
+    assert "description" not in without.to_dict()["fields"]["fee"]
+
+
 def test_flag_order_and_code_descriptions_are_pinned() -> None:
     from groundgate import codes
     from groundgate.admit import FLAG_ORDER, INFO_ORDER
