@@ -34,7 +34,8 @@ def test_unit_without_aliases(tmp_path: Path, capsys: pytest.CaptureFixture[str]
     schema = {"fields": {"fee": {"unit": "USD"}}}
     assert check(tmp_path, schema, capsys) == (
         1,
-        "field 'fee' has a unit and no aliases: a unit item never passes\n",
+        "field 'fee' has a unit and no aliases: "
+        "a unit item passes only for a unit next to the number\n",
     )
 
 
@@ -42,7 +43,8 @@ def test_keys_without_aliases(tmp_path: Path, capsys: pytest.CaptureFixture[str]
     schema = {"fields": {"dose": {"unit": "mg", "keys": ["adults", "children"]}}}
     assert check(tmp_path, schema, capsys) == (
         1,
-        "field 'dose' has a unit and no aliases: a unit item never passes\n"
+        "field 'dose' has a unit and no aliases: "
+        "a unit item passes only for a unit next to the number\n"
         "field 'dose' has keys and no aliases: a key item never puts the key at the value\n",
     )
 

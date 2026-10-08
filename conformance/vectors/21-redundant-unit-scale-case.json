@@ -1,0 +1,215 @@
+{
+ "name": "21-redundant-unit-scale-case",
+ "description": "A unit item passes when the field's unit is at the token and the item holds a form of it: the item repeats the unit, so it needs no field item and may follow the number. A scale item is found case-insensitively, as a quote and at its offsets; brackets still match as written. Other role items still match case (#145).",
+ "document": "Consolidated statements (In Thousands, except ratios)\n\nRevenue $ 46,016\n\nRoyalties 1,250 dollars\n\nMargin 12 percent\n\nOther items (in millions) $7.5\n",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "revenue",
+     "royalties",
+     "other items"
+    ]
+   },
+   "margin": {
+    "type": "number",
+    "unit": "%"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "d1",
+   "field": "amount",
+   "value": "46016000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 65,
+     "end": 71,
+     "text": "46,016"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "d2",
+   "field": "amount",
+   "value": "1250000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 83,
+     "end": 88,
+     "text": "1,250"
+    },
+    {
+     "role": "scale",
+     "text": "(IN THOUSANDS"
+    },
+    {
+     "role": "unit",
+     "text": "dollars"
+    }
+   ]
+  },
+  {
+   "id": "d3",
+   "field": "margin",
+   "value": "12",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 105,
+     "end": 107,
+     "text": "12"
+    },
+    {
+     "role": "unit",
+     "text": "percent"
+    }
+   ]
+  },
+  {
+   "id": "d4",
+   "field": "amount",
+   "value": "7500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 144,
+     "end": 147,
+     "text": "7.5"
+    },
+    {
+     "role": "scale",
+     "text": "[In millions]"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "d5",
+   "field": "amount",
+   "value": "46016000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 65,
+     "end": 71,
+     "text": "46,016"
+    },
+    {
+     "role": "scale",
+     "start": 24,
+     "end": 37,
+     "text": "(in thousands"
+    }
+   ]
+  },
+  {
+   "id": "d6",
+   "field": "amount",
+   "value": "46016000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 65,
+     "end": 71,
+     "text": "46,016"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "field",
+     "text": "REVENUE"
+    }
+   ]
+  },
+  {
+   "id": "d7",
+   "field": "amount",
+   "value": "46016000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 65,
+     "end": 71,
+     "text": "46,016"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "unit",
+     "text": "percent"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

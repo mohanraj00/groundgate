@@ -608,7 +608,9 @@ between the two moves the value out of the rule.
 without offsets is a quote. Its **occurrences** are the matches of its `text` in its text, where
 each whitespace run in the quote matches any whitespace run.
 
-The quote is trimmed of whitespace at both ends first.
+The quote is trimmed of whitespace at both ends first. A scale item is found case-insensitively:
+its quote matches in any case, and its `text` is compared with the text at its offsets in any
+case. Brackets and other characters still match as written. Other items match case.
 
 - For the value item, the occurrences are those inside `search_region` (document only). The first
   occurrence where steps 10 and 11 pass without a missing part is the evidence. When there is no
@@ -629,7 +631,7 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 |---|---|
 | `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
 | `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands". It ends at or before the token, and no scale word, also with a final `s`, lies between its end and the token. |
-| `unit` | The candidate's field item passes, the item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one), ends at or before the token, and no unit form is next to the token (§3.1). |
+| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the candidate's field item passes, the item ends at or before the token, and no unit form is next to the token (§3.1). |
 | `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then either no letter (general category L) lies between the item's end and the token (the item is at the **row**), or the item is in the value's sentence with no number token between its end and the token. |
 | `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
 
@@ -643,7 +645,7 @@ value). A failing sign or scale item still gives its part: the decision then has
 flag.
 
 A field item without `aliases` is not checked: it adds no flag, and it does not pass, so a unit
-item of that candidate fails. A key item that passes puts its
+item of that candidate fails unless the field's unit is at the token. A key item that passes puts its
 key at the value only by the column rule (§4.5). The decision records `KEY_CITED` when that removed
 `KEY_NOT_AT_VALUE`. A recorded `key` judgment that applies, at or above `clear.KEY_NOT_AT_VALUE`,
 and names another key adds `MODEL_DOUBT` to a decision with `KEY_CITED`.

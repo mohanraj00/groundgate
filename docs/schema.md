@@ -464,6 +464,8 @@ Two other checks need a passing field item:
 - The column rule for keys (above).
 - A `unit` item. A unit item supports a unit that is not next to the number, such as the `$` at
   the top of a column. It passes only when it comes before the value and the field item passes.
+  A unit item that repeats the unit next to the number, such as the `$` of `$ 4,210`, passes with
+  no field item.
   It does not check that the unit applies to the value's row. A `$` on an earlier row passes too.
 
 ```python
@@ -586,8 +588,8 @@ unit 'inHg' surfaces must be non-empty strings
 A valid schema can still hold a setting that makes a check fail every time, or pass for the wrong
 key or field. `groundgate schema check SCHEMA` prints one line for each of these settings:
 
-- A field with a `unit` and no `aliases`. A unit item passes only with a passing field item, so
-  it never passes.
+- A field with a `unit` and no `aliases`. A unit item for a unit that is not next to the number
+  passes only with a passing field item, so it never passes.
 - A field with `keys` and no `aliases`. The column rule needs a passing field item, so a key item
   never puts the key at the value.
 - A key in an alias of the same field, such as the key `net` in the alias `net sales`. Each
@@ -632,8 +634,8 @@ with tempfile.TemporaryDirectory() as tmp:
 ```
 
 ```text
-field 'fee' has a unit and no aliases: a unit item never passes
-field 'dose' has a unit and no aliases: a unit item never passes
+field 'fee' has a unit and no aliases: a unit item passes only for a unit next to the number
+field 'dose' has a unit and no aliases: a unit item passes only for a unit next to the number
 field 'dose' has keys and no aliases: a key item never puts the key at the value
 field 'net_sales' has the key 'net' in an alias: each mention of the field puts that key at the value
 field 'rate' has a minimum above its maximum: no value is in range
