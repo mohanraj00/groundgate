@@ -1,7 +1,7 @@
 {
  "name": "20-spec-text",
  "description": "Rules that the SPEC text states since #158: a cited span that passes only with a missing part re-anchors; 'between' must stand directly before the first number for 'and'; a connector may have a $ before the next number; unit forms need a boundary, and a suffix lies wholly in the sentence; a mention inside a longer mention does not count; a string field takes no qualifier and rejects an integer or blank value; a carriage return is not a line break; a unit with empty lists is vacuous; an unchecked field item makes a unit item fail.",
- "document": "A: 5 apples. B: 5 thousand pears.\n\nAges between 18 and 65 qualify. Members between the ages of 18 and 65 pay less.\n\nThe fee is $30 to $45.\n\nThe award was MRs 500 and the dose was 5 grams. The tablet is 500mg.\n\nPressure 29 in. Hg was read.\n\nTotal revenue 500\n\nThe city is approximately Paris.\n\nfif-\r\nteen and fif-\nteen\n\nThe team scored 12.\n\nPrice list, all amounts in $:\n\nAdult\t40",
+ "document": "A: 5 apples. B: 5 thousand pears.\n\nAges between 18 and 65 qualify. Members between the ages of 18 and 65 pay less.\n\nThe fee is $30 to $45. The score went 31 to US $ 46.\n\nThe award was MRs 500 and the dose was 5 grams. The tablet is 500mg.\n\nPressure 29 in. Hg was read.\n\nTotal revenue 500\n\nThe city is approximately Paris.\n\nfif-\r\nteen and fif-\nteen\n\nThe team scored 12.\n\nPrice list, all amounts in $:\n\nAdult\t40",
  "schema": {
   "fields": {
    "count": {
@@ -117,13 +117,23 @@
    }
   },
   {
+   "id": "f2",
+   "field": "count",
+   "value": 31,
+   "evidence": {
+    "start": 154,
+    "end": 156,
+    "text": "31"
+   }
+  },
+  {
    "id": "u1",
    "field": "award",
    "value": 500,
    "unit": "INR",
    "evidence": {
-    "start": 158,
-    "end": 161,
+    "start": 188,
+    "end": 191,
     "text": "500"
    }
   },
@@ -133,8 +143,8 @@
    "value": 5,
    "unit": "g",
    "evidence": {
-    "start": 179,
-    "end": 186,
+    "start": 209,
+    "end": 216,
     "text": "5 grams"
    }
   },
@@ -144,8 +154,8 @@
    "value": 500,
    "unit": "mg",
    "evidence": {
-    "start": 202,
-    "end": 207,
+    "start": 232,
+    "end": 237,
     "text": "500mg"
    }
   },
@@ -155,8 +165,8 @@
    "value": 29,
    "unit": "inHg",
    "evidence": {
-    "start": 219,
-    "end": 221,
+    "start": 249,
+    "end": 251,
     "text": "29"
    }
   },
@@ -166,8 +176,8 @@
    "value": 500,
    "evidence": [
     {
-     "start": 254,
-     "end": 257,
+     "start": 284,
+     "end": 287,
      "text": "500"
     },
     {
@@ -181,8 +191,8 @@
    "field": "city",
    "value": "Paris",
    "evidence": {
-    "start": 285,
-    "end": 290,
+    "start": 315,
+    "end": 320,
     "text": "Paris"
    }
   },
@@ -191,8 +201,8 @@
    "field": "city",
    "value": 7,
    "evidence": {
-    "start": 285,
-    "end": 290,
+    "start": 315,
+    "end": 320,
     "text": "Paris"
    }
   },
@@ -201,8 +211,8 @@
    "field": "city",
    "value": "  ",
    "evidence": {
-    "start": 285,
-    "end": 290,
+    "start": 315,
+    "end": 320,
     "text": "Paris"
    }
   },
@@ -211,8 +221,8 @@
    "field": "word",
    "value": "fif- teen",
    "evidence": {
-    "start": 293,
-    "end": 303,
+    "start": 323,
+    "end": 333,
     "text": "fifteen"
    }
   },
@@ -221,8 +231,8 @@
    "field": "word",
    "value": "fif- teen",
    "evidence": {
-    "start": 308,
-    "end": 317,
+    "start": 338,
+    "end": 347,
     "text": "fifteen"
    }
   },
@@ -232,8 +242,8 @@
    "value": 12,
    "unit": "PTS",
    "evidence": {
-    "start": 335,
-    "end": 337,
+    "start": 365,
+    "end": 367,
     "text": "12"
    }
   },
@@ -244,8 +254,8 @@
    "unit": "USD",
    "evidence": [
     {
-     "start": 377,
-     "end": 379,
+     "start": 407,
+     "end": 409,
      "text": "40"
     },
     {
@@ -282,6 +292,10 @@
     "codes": [
      "QUALIFIED_VALUE"
     ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
    },
    {
     "outcome": "needs_verification",

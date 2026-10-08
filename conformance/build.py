@@ -2446,7 +2446,7 @@ vector(
     "unit with empty lists is vacuous; an unchecked field item makes a unit item fail.",
     SPEC_TEXT_FIRST + "\n\n"
     "Ages between 18 and 65 qualify. Members between the ages of 18 and 65 pay less.\n\n"
-    "The fee is $30 to $45.\n\n"
+    "The fee is $30 to $45. The score went 31 to US $ 46.\n\n"
     "The award was MRs 500 and the dose was 5 grams. The tablet is 500mg.\n\n"
     "Pressure 29 in. Hg was read.\n\n"
     "Total revenue 500\n\n"
@@ -2477,6 +2477,7 @@ vector(
         c("g1", "age", 65, None, q("65", 1), (REVIEW, ["QUALIFIED_VALUE"])),
         c("g2", "age", 65, None, q("65", 2)),
         c("f1", "fee", 30, "USD", q("$30"), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("f2", "count", 31, None, q("31")),
         c("u1", "award", 500, "INR", q("500", 1), (REVIEW, ["PART_MISSING"], ["unit"])),
         c("u2", "dose", 5, "g", q("5 grams"), (REVIEW, ["PART_MISSING"], ["unit"])),
         c("u3", "tablet", 500, "mg", q("500mg")),
