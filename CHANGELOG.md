@@ -3,6 +3,47 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.5.0 (2026-10-07)
+
+Spec 0.5. Receipts name `"groundgate": "0.5"` and every digest uses the `groundgate/0.5:` prefix, so
+all hashes differ from 0.4.0. One evidence object still works, as a list with one item. Every bench
+set that CI rescores in process gives the same numbers. One earlier vector changed: in
+`15-combined`, a value with no unit next to its number now goes to review with `PART_MISSING`,
+where 0.4 rejected it with `UNIT_NOT_IN_EVIDENCE`.
+
+- The evidence list (#141). `evidence` is a list of items, and each item names its source and its
+  role. [docs/adr/0001-admit-by-policy.md](docs/adr/0001-admit-by-policy.md) records the decision,
+  and [CONTEXT.md](CONTEXT.md) defines the terms.
+  - Sources: `document` (the default), `reference` (text that the app supplies, by `ref`),
+    `external` (a URL with the quote from it) and `knowledge` (the extractor's own statement).
+  - Roles: `value` (the default), `sign`, `scale`, `unit`, `field` and `key`. Each role has its
+    own check and its own reject code, such as `SCALE_CITATION_INVALID`.
+  - A quote without offsets is found in its text. `QUOTE_NOT_FOUND` rejects a quote that is not
+    there.
+  - A cited sign or scale derives the value from the number (`VALUE_DERIVED`): "(1,234)" with a
+    sign item is -1234, and "1,234" with "in thousands" is 1234000.
+  - A part that the value needs and no item supports adds `PART_MISSING`, and the decision lists
+    it in `missing`. The value goes to review, not to rejection.
+  - A key item can put the key at the value in a table column (`KEY_CITED`). A field item is
+    checked against the field's new `aliases`.
+- Outside evidence. When the value has no value item in the document or a reference, the new
+  `policy.sources` decides. An external URL on the allow-list, `"*"` or `"document-domain"`
+  admits with `ADMITTED_BY_POLICY`. Other external quotes and knowledge go to review
+  (`EVIDENCE_QUOTED`, `EVIDENCE_STATED`) or are rejected (`SOURCE_REJECTED`). The defaults are
+  review.
+- The receipt names the document source and the SHA-256 of each reference. Each decision lists
+  its source and its checked parts. `admit`, `verify` and the CLI take `references` and
+  `document_source`. The HTML report shows each part.
+- The LangExtract adapter maps the attributes `sign_text`, `scale_text`, `unit_text`,
+  `field_text` and `key_text` to role items, and `source_url` and `knowledge` to outside items.
+- 45 vectors and 35 invalid packets.
+- The measure (#144, `bench/evidence/results.json`). On 20 new 10-K filings, spec 0.5 admits 26
+  right values with 0 escapes, and spec 0.4 admits 23 with 1 escape. On the IRS filing-status
+  set, both admit 28 right values with 0 escapes. Without the unit check, spec 0.5 admits 33 on
+  the 10-K set. That rule and the case of scale quotes are open for 0.6 (#145).
+- Not in 0.5. Keyed claims (#129) gave way to the key role of the evidence list. The label-line
+  rule (#86) let a wrong key reach 2 more amounts on the status set, so it does not ship.
+
 ## 0.4.0 (2026-10-06)
 
 Spec 0.4. Receipts name `"groundgate": "0.4"` and every digest uses the `groundgate/0.4:` prefix, so all

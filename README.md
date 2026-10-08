@@ -137,6 +137,26 @@ and the reviews bring it to 86.8% (4,873/5,614). Closing that gap without new es
 of the next versions: the 0.4 key clear and a basis that the extractor states (#125) both aim at
 it.
 
+### Spec 0.5 on new 10-K filings
+
+Spec 0.5 lets the extractor cite each part of a value: the sign, the scale, the unit, the field
+and the key. I measured it on 20 10-K filings that the rules did not come from, and on the IRS
+filing-status set. One extractor (Claude Haiku 4.5) ran once per set, and every candidate was
+decided by spec 0.4 (the released 0.4.0 wheel) and by spec 0.5. A person labeled every admitted
+value blind.
+
+| Set | Decision | Right values admitted | Escapes |
+|---|---|---:|---:|
+| new 10-K set | spec 0.4 | 23 | 1 |
+| new 10-K set | spec 0.5 | 26 | 0 |
+| IRS filing status | spec 0.4 | 28 | 0 |
+| IRS filing status | spec 0.5 | 28 | 0 |
+
+Two rules still cost right values, and neither adds an escape: a unit item fails when the unit is
+already next to the number, and a scale quote must match the case of the text. Without the unit
+check, spec 0.5 admits 33 right values on the 10-K set. Both rules are open for 0.6 (#145).
+[bench/evidence/RESULTS.md](bench/evidence/RESULTS.md) has every number.
+
 ## Quickstart
 
 ```bash
@@ -289,7 +309,7 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec 0.4.
+- **No dates, arrays of records, or cross-document checks** in spec 0.5.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
@@ -303,8 +323,9 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.4.0 implements spec v0.4. [CHANGELOG.md](CHANGELOG.md) lists what each
-version changes, with its measure. 0.4 adds recorded judgments (#116), an experimental way for a
+Alpha. groundgate 0.5.0 implements spec v0.5. [CHANGELOG.md](CHANGELOG.md) lists what each
+version changes, with its measure. 0.5 makes the evidence a list of items (#141): a value can cite
+its sign, scale, unit, field and key, and outside sources, under the app's policy. 0.4 added recorded judgments (#116), an experimental way for a
 judge's answers to clear a key flag or add doubt, with no model call in the decision. 0.3 brought
 a wider change rule (#51), abbreviation dots that no longer end a sentence for qualifiers (#63,
 #77), Indian digit grouping (#59), ASCII digits (#94), and keys that stop at a label line (#52) or
