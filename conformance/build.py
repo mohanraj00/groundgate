@@ -2561,6 +2561,52 @@ INVALID.extend(
     ]
 )
 
+# ---------------------------------------------------------------- spec 0.6 (#145)
+vector(
+    "21-redundant-unit-scale-case",
+    "A unit item passes when the field's unit is at the token and the item holds a form of it: "
+    "the item repeats the unit, so it needs no field item and may follow the number. A scale "
+    "item is found case-insensitively, as a quote and at its offsets; brackets still match as "
+    "written. Other role items still match case (#145).",
+    "Consolidated statements (In Thousands, except ratios)\n\n"
+    "Revenue $ 46,016\n\n"
+    "Royalties 1,250 dollars\n\n"
+    "Margin 12 percent\n\n"
+    "Other items (in millions) $7.5\n",
+    {
+        "fields": {
+            "amount": {
+                "type": "number",
+                "unit": "USD",
+                "multiple": True,
+                "aliases": ["revenue", "royalties", "other items"],
+            },
+            "margin": {"type": "number", "unit": "%"},
+        }
+    },
+    [
+        c("d1", "amount", "46016000", "USD",
+          [q("46,016"), {"role": "scale", "text": "(in thousands"}, DOLLAR],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("d2", "amount", "1250000", "USD",
+          [q("1,250"), {"role": "scale", "text": "(IN THOUSANDS"}, {"role": "unit", "text": "dollars"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("d3", "margin", "12", "%", [q("12"), {"role": "unit", "text": "percent"}]),
+        c("d4", "amount", "7500000", "USD",
+          [q("7.5"), {"role": "scale", "text": "[In millions]"}, DOLLAR],
+          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("d5", "amount", "46016000", "USD",
+          [q("46,016"), q("(In Thousands", text="(in thousands", role="scale")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("d6", "amount", "46016000", "USD",
+          [q("46,016"), {"role": "scale", "text": "(in thousands"}, row("REVENUE")],
+          (REVIEW, ["FIELD_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("d7", "amount", "46016000", "USD",
+          [q("46,016"), {"role": "scale", "text": "(in thousands"}, {"role": "unit", "text": "percent"}],
+          (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED"])),
+    ],
+)  # fmt: skip
+
 
 def main() -> None:
     out_dir = HERE / "vectors"
