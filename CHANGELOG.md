@@ -36,6 +36,8 @@ where 0.4 rejected it with `UNIT_NOT_IN_EVIDENCE`.
   `document_source`. The HTML report shows each part.
 - The LangExtract adapter maps the attributes `sign_text`, `scale_text`, `unit_text`,
   `field_text` and `key_text` to role items, and `source_url` and `knowledge` to outside items.
+- `gg.candidate_schema()` and `candidate.schema.json`: a JSON Schema for one candidate, for an
+  extractor's output format (#147). Every candidate in the vectors that step 1 accepts passes it.
 - 45 vectors and 35 invalid packets.
 - The measure (#144, `bench/evidence/results.json`). On 20 new 10-K filings, spec 0.5 admits 26
   right values with 0 escapes, and spec 0.4 admits 23 with 1 escape. On the IRS filing-status

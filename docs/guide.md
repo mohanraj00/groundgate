@@ -92,6 +92,13 @@ line, goes to review.
 - Any other key (a proposer name, a chunk id) is kept, ignored by the checks, and covered by the
   candidate's hash.
 
+`gg.candidate_schema()` returns a JSON Schema for one candidate, the file
+[`candidate.schema.json`](../src/groundgate/candidate.schema.json) in the package. Give it to
+your extractor as its output format, so that it sends candidates that pass step 1. groundgate
+does not validate with it: step 1 is the definition. The schema does not check three things: a
+`ref` that names no reference, two document or reference items with the same role, and an integer
+written with a fraction (`2.0`).
+
 ### Evidence items
 
 Spec 0.5. A right value often needs more than one place in the text. In a 10-K table,

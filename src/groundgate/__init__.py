@@ -2,7 +2,16 @@
 
 from .admit import Verification, admit, verify
 from .canonical import digest, jcs
-from .model import Decision, Field, Judgment, PacketError, Policy, Receipt, Schema
+from .model import (
+    Decision,
+    Field,
+    Judgment,
+    PacketError,
+    Policy,
+    Receipt,
+    Schema,
+    candidate_schema,
+)
 
 __version__ = "0.5.0"
 
@@ -17,6 +26,7 @@ __all__ = [
     "Verification",
     "__version__",
     "admit",
+    "candidate_schema",
     "digest",
     "jcs",
     "verify",
