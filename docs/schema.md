@@ -578,15 +578,17 @@ unit 'inHg' surfaces must be non-empty strings
 ## Check a schema
 
 A valid schema can still hold a setting that makes a check fail every time, or pass for the wrong
-key or field. `groundgate schema check SCHEMA` prints one line for each such setting:
+key or field. `groundgate schema check SCHEMA` prints one line for each of these settings:
 
 - A field with a `unit` and no `aliases`. A unit item passes only with a passing field item, so
   it never passes.
 - A field with `keys` and no `aliases`. The column rule needs a passing field item, so a key item
   never puts the key at the value.
-- A key that is also an alias of the same field. Each mention of the field's name is then a
-  mention of that key, so the key is at each value that the name is at.
-- An alias on two fields. A field item that names one of them passes for the other too.
+- A key in an alias of the same field, such as the key `net` in the alias `net sales`. Each
+  mention of the field's name is then a mention of that key, so the key is at each value that the
+  name is at.
+- An alias on two fields, or an alias in a longer alias of another field, such as `sales` in
+  `net sales`. A field item that quotes the one field's name passes for the other field too.
 - A `minimum` above the `maximum` on a number or integer field. No value is in range, so each
   candidate is rejected `RANGE_INVALID`.
 
@@ -604,8 +606,9 @@ risky = {
     "fields": {
         "fee": {"type": "integer", "unit": "USD"},
         "dose": {"unit": "mg", "keys": ["adults", "children"]},
-        "net_sales": {"keys": ["2025", "product"], "aliases": ["net sales", "product"]},
+        "net_sales": {"keys": ["2025", "net"], "aliases": ["net sales"]},
         "cost": {"aliases": ["cost of sales", "Net Sales"]},
+        "gross": {"aliases": ["sales"]},
         "rate": {"minimum": "10", "maximum": "5"},
     }
 }
@@ -626,9 +629,12 @@ with tempfile.TemporaryDirectory() as tmp:
 field 'fee' has a unit and no aliases: a unit item never passes
 field 'dose' has a unit and no aliases: a unit item never passes
 field 'dose' has keys and no aliases: a key item never puts the key at the value
-field 'net_sales' has 'product' as a key and an alias: each mention of the field puts that key at the value
+field 'net_sales' has the key 'net' in an alias: each mention of the field puts that key at the value
 field 'rate' has a minimum above its maximum: no value is in range
 alias 'net sales' is on fields 'net_sales' and 'cost': a field item does not tell them apart
+alias 'sales' of field 'gross' is in alias 'net sales' of field 'net_sales': a field item for 'net_sales' passes for 'gross'
+alias 'sales' of field 'gross' is in alias 'cost of sales' of field 'cost': a field item for 'cost' passes for 'gross'
+alias 'sales' of field 'gross' is in alias 'Net Sales' of field 'cost': a field item for 'cost' passes for 'gross'
 risky: exit 1
 fixed: exit 0
 ```

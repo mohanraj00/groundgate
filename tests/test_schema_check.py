@@ -47,22 +47,30 @@ def test_keys_without_aliases(tmp_path: Path, capsys: pytest.CaptureFixture[str]
     )
 
 
-def test_key_that_is_an_alias(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+def test_key_in_an_alias(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     schema = {"fields": {"sales": {"keys": ["Product", "service"], "aliases": ["product"]}}}
     assert check(tmp_path, schema, capsys) == (
         1,
-        "field 'sales' has 'Product' as a key and an alias: "
+        "field 'sales' has the key 'Product' in an alias: "
         "each mention of the field puts that key at the value\n",
     )
-    other = {"fields": {"sales": {"keys": ["net  sales"], "aliases": ["Net Sales"]}}}
-    assert check(tmp_path, other, capsys)[0] == 1
+    inside = {"fields": {"sales": {"keys": ["net", "gross"], "aliases": ["Net Sales", "net"]}}}
+    assert check(tmp_path, inside, capsys) == (
+        1,
+        "field 'sales' has the key 'net' in an alias: "
+        "each mention of the field puts that key at the value\n",
+    )
+    spaced = {"fields": {"sales": {"keys": ["net  sales"], "aliases": ["Net Sales"]}}}
+    assert check(tmp_path, spaced, capsys)[0] == 1
+    across = {"fields": {"sales": {"keys": ["net sales", "netting"], "aliases": ["net", "sales"]}}}
+    assert check(tmp_path, across, capsys) == (0, "")
 
 
 def test_alias_on_two_fields(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     schema = {
         "fields": {
-            "net_sales": {"aliases": ["Sales", "net sales"]},
-            "cost": {"aliases": ["cost of sales"]},
+            "net_sales": {"aliases": ["Sales", "revenue"]},
+            "cost": {"aliases": ["costs"]},
             "gross": {"aliases": ["sales"]},
             "other": {"aliases": [" SALES "]},
         }
@@ -71,6 +79,23 @@ def test_alias_on_two_fields(tmp_path: Path, capsys: pytest.CaptureFixture[str])
         1,
         "alias 'Sales' is on fields 'net_sales', 'gross' and 'other': "
         "a field item does not tell them apart\n",
+    )
+
+
+def test_alias_in_another_fields_alias(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    schema = {
+        "fields": {
+            "gross": {"aliases": ["sales"]},
+            "net": {"aliases": ["net sales", "sales, net of returns"]},
+            "cost": {"aliases": ["cost of salesman"]},
+        }
+    }
+    assert check(tmp_path, schema, capsys) == (
+        1,
+        "alias 'sales' of field 'gross' is in alias 'net sales' of field 'net': "
+        "a field item for 'net' passes for 'gross'\n"
+        "alias 'sales' of field 'gross' is in alias 'sales, net of returns' of field 'net': "
+        "a field item for 'net' passes for 'gross'\n",
     )
 
 

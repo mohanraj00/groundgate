@@ -244,8 +244,8 @@ records the page and box of every word. Text a reader can't see (proof marks dra
 hidden HTML) is dropped, and superscripts are marked so that 10⁹ reads `10^9`, never `109`.
 `admit`, `verify` and `report` read the document from a pipe when DOC is `-`, and also take
 `--references` and `--document-source`. `report` refuses to render a receipt that doesn't
-re-derive from its inputs. `schema` writes the extractor schema, and `schema check` prints each
-setting that makes a check fail every time, or pass for the wrong key or field
+re-derive from its inputs. `schema` writes the extractor schema, and `schema check` prints the
+settings that make a check fail every time, or pass for the wrong key or field
 ([Check a schema](docs/schema.md#check-a-schema)).
 [examples/irs-590a](examples/irs-590a) runs the whole pipeline on an IRS publication with cached model output, so it reproduces without an API key.
 

@@ -21,7 +21,7 @@ from typing import Any
 
 from .admit import admit, verify
 from .model import PacketError, Schema, extractor_schema
-from .text import normalize_ws
+from .text import key_mentions, normalize_ws
 
 
 def _unique(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -133,7 +133,7 @@ def _parser() -> argparse.ArgumentParser:
 def _check_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="groundgate schema check",
-        description="Print each schema setting that makes a check fail every time. "
+        description="Print the schema settings that docs/schema.md lists under 'Check a schema'. "
         "Exit codes: 0 no finding, 1 a finding, 2 invalid schema.",
     )
     ap.add_argument("schema", help="schema JSON")
@@ -206,15 +206,14 @@ def _findings(schema: Schema) -> list[str]:
                     "a key item never puts the key at the value"
                 )
         else:
-            aliases = {normalize_ws(a).lower() for a in f.aliases}
-            for key in f.keys or ():
-                if normalize_ws(key).lower() in aliases:
-                    out.append(
-                        f"field {name!r} has {key!r} as a key and an alias: "
-                        "each mention of the field puts that key at the value"
-                    )
+            inside = (k for a in f.aliases for _, _, k in key_mentions(a, f.keys or ()))
+            for key in dict.fromkeys(inside):
+                out.append(
+                    f"field {name!r} has the key {key!r} in an alias: "
+                    "each mention of the field puts that key at the value"
+                )
             for alias in f.aliases:
-                owners.setdefault(normalize_ws(alias).lower(), (alias, []))[1].append(name)
+                owners.setdefault(_norm(alias), (alias, []))[1].append(name)
         low, high = f.minimum, f.maximum
         if f.type != "string" and low is not None and high is not None and low > high:
             out.append(f"field {name!r} has a minimum above its maximum: no value is in range")
@@ -224,7 +223,22 @@ def _findings(schema: Schema) -> list[str]:
             out.append(
                 f"alias {alias!r} is on fields {listed}: a field item does not tell them apart"
             )
+    for name, f in schema.fields.items():  # an alias in a longer alias of another field
+        for other, g in schema.fields.items():
+            if other == name or f.aliases is None or g.aliases is None:
+                continue
+            for b in g.aliases:
+                for a in dict.fromkeys(a for _, _, a in key_mentions(b, f.aliases)):
+                    if _norm(a) != _norm(b):
+                        out.append(
+                            f"alias {a!r} of field {name!r} is in alias {b!r} of field "
+                            f"{other!r}: a field item for {other!r} passes for {name!r}"
+                        )
     return out
+
+
+def _norm(word: str) -> str:
+    return normalize_ws(word).lower()
 
 
 def _check(args: argparse.Namespace) -> int:
