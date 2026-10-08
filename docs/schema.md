@@ -453,8 +453,8 @@ Two other checks need a passing field item:
 
 - The column rule for keys (above).
 - A `unit` item. A unit item supports a unit that is not next to the number, such as the `$` at
-  the top of a column. It passes only when the field item passes, so the item cannot borrow a unit
-  from another row.
+  the top of a column. It passes only when it comes before the value and the field item passes.
+  It does not check that the unit applies to the value's row. A `$` on an earlier row passes too.
 
 ```python
 text = "Segment results (all amounts in $)\n\nNet sales\t4,210\nCost of sales\t2,950"
