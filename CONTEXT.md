@@ -92,10 +92,10 @@ _Avoid_: critique, review notes
 
 **Feedback message**:
 The text for the extractor, built from the feedback of one candidate, that says which part to
-cite again. There is none when a new answer cannot change the decision.
+cite again. It is worth sending only when a new answer can change the decision.
 _Avoid_: retry prompt, critique
 
 **Feedback loop**:
-The app sends feedback messages to the extractor, then gives the new candidates to groundgate.
-groundgate gives the messages, and the app runs the loop.
+The app builds feedback messages, sends them to the extractor, and gives the new candidates to
+groundgate. groundgate never calls the extractor, so the app runs the loop.
 _Avoid_: retry loop, self-correction
