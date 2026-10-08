@@ -352,11 +352,8 @@ def _same(a: _Item, b: _Item) -> bool:
     return a.source == b.source and a.ref == b.ref
 
 
-def _occurrences(
-    t: _Text, quote: str, region: tuple[int, int], ignore_case: bool = False
-) -> list[tuple[int, int]]:
-    pattern = quote_pattern(quote, ignore_case)
-    return [(m.start(), m.end()) for m in pattern.finditer(t.text, *region)]
+def _occurrences(t: _Text, quote: str, region: tuple[int, int]) -> list[tuple[int, int]]:
+    return [(m.start(), m.end()) for m in quote_pattern(quote).finditer(t.text, *region)]
 
 
 def _check(ctx: _Ctx, cand: object) -> _Passed:
@@ -511,16 +508,15 @@ def _find(
 ) -> tuple[tuple[int, int] | None, bool]:
     """Where a role item is in the value's text (SPEC §4.6), or None, and whether it is found
     there: an item with offsets whose ``text`` differs from its span is at its span, but not
-    found. A scale item is matched case-insensitively."""
-    fold = item.role == "scale"
+    found."""
     if item.span is not None:
         span = _valid(t.offsets, item.span)
         if span is None:
             return None, False
         shown = item.text
-        return span, shown is None or verbatim_equal(shown, t.text[span[0] : span[1]], fold)
+        return span, shown is None or verbatim_equal(shown, t.text[span[0] : span[1]])
     assert item.text is not None
-    found = _occurrences(t, item.text, region, fold)
+    found = _occurrences(t, item.text, region)
     tok = at.token
     if tok is not None:
         for a, b in found:

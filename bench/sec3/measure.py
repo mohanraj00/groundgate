@@ -16,7 +16,6 @@ The decisions hold values and byte spans, not text, so they are in git. The docu
 from __future__ import annotations
 
 import argparse
-import contextlib
 import hashlib
 import json
 import sys
@@ -29,6 +28,8 @@ HERE = Path(__file__).parent
 RUNS = ("claude-haiku-5-5", "gpt-6-luna")
 # each 0.6 rule adds its spec here, decided alone
 SPECS = ("0.5", "0.6 #145 unit", "0.6 #145 scale")
+# decided once and kept: the scale part of #145 (a scale quote in any case) did not ship
+RECORDED = ("0.6 #145 scale",)
 VERDICTS = ("right", "wrong", "not sure")
 PORT = 8774
 
@@ -50,25 +51,12 @@ def _schema() -> dict[str, Any]:
 
 
 def _decide(spec: str, text: str, cands: list[Any]) -> list[Any]:
-    """The decisions under one spec, by the groundgate that runs this script. A 0.6 rule is
-    decided alone: the other rules of the draft are turned off."""
-    from unittest import mock
-
+    """The decisions under one spec, by the groundgate that runs this script."""
     import groundgate as gg
 
-    if spec not in SPECS:
-        raise SystemExit(f"no decision for spec {spec!r} yet")
-    core = sys.modules["groundgate.admit"]  # the module, not gg.admit
-    with contextlib.ExitStack() as stack:
-        if spec == "0.6 #145 scale":  # no unit item that repeats the unit passes
-            stack.enter_context(mock.patch.object(core, "_repeats", lambda *a: False))
-        if spec == "0.6 #145 unit":  # a scale item matches case
-            pattern, equal = core.quote_pattern, core.verbatim_equal
-            stack.enter_context(mock.patch.object(core, "quote_pattern", lambda q, *a: pattern(q)))
-            stack.enter_context(
-                mock.patch.object(core, "verbatim_equal", lambda x, y, *a: equal(x, y))
-            )
-        return list(gg.admit(text, _schema(), cands).decisions)
+    if spec not in SPECS or spec in RECORDED:
+        raise SystemExit(f"no decision for spec {spec!r}")
+    return list(gg.admit(text, _schema(), cands).decisions)
 
 
 def decide() -> None:
@@ -78,7 +66,7 @@ def decide() -> None:
     import groundgate as gg
     from groundgate.canonical import SPEC_VERSION
 
-    specs = [spec for spec in SPECS if spec.split()[0] == SPEC_VERSION]
+    specs = [spec for spec in SPECS if spec.split()[0] == SPEC_VERSION and spec not in RECORDED]
     if not specs:
         raise SystemExit(f"no spec here needs groundgate {SPEC_VERSION}: use the spec's wheel")
     for run in RUNS:

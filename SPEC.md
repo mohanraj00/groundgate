@@ -608,9 +608,7 @@ between the two moves the value out of the rule.
 without offsets is a quote. Its **occurrences** are the matches of its `text` in its text, where
 each whitespace run in the quote matches any whitespace run.
 
-The quote is trimmed of whitespace at both ends first. A scale item is found case-insensitively:
-its quote matches in any case, and its `text` is compared with the text at its offsets in any
-case. Brackets and other characters still match as written. Other items match case.
+The quote is trimmed of whitespace at both ends first.
 
 - For the value item, the occurrences are those inside `search_region` (document only). The first
   occurrence where steps 10 and 11 pass without a missing part is the evidence. When there is no

@@ -1,7 +1,7 @@
 {
- "name": "21-redundant-unit-scale-case",
- "description": "A unit item passes when the field's unit is at the token and the item holds a form of it: the item repeats the unit, so it needs no field item and may follow the number. A scale item is found case-insensitively, as a quote and at its offsets; brackets still match as written. Other role items still match case (#145).",
- "document": "Consolidated statements (In Thousands, except ratios)\n\nRevenue $ 46,016\n\nRoyalties 1,250 dollars\n\nMargin 12 percent\n\nOther items (in millions) $7.5\n",
+ "name": "22-redundant-unit",
+ "description": "A unit item passes when the field's unit is at the token and the item holds a form of it: the item repeats the unit, so it needs no field item and may follow the number. A form of another unit still fails. A scale item still matches case: at its offsets, a text in another case is not found, and its scale word still gives the part (#145).",
+ "document": "Consolidated statements (in thousands, except ratios)\n\nRevenue $ 46,016\n\nRoyalties 1,250 dollars\n\nMargin 12 percent\n\nOther items (in millions) $7.5\n",
  "schema": {
   "fields": {
    "amount": {
@@ -56,7 +56,7 @@
     },
     {
      "role": "scale",
-     "text": "(IN THOUSANDS"
+     "text": "(in thousands"
     },
     {
      "role": "unit",
@@ -94,7 +94,7 @@
     },
     {
      "role": "scale",
-     "text": "[In millions]"
+     "text": "[in millions]"
     },
     {
      "role": "unit",
@@ -117,7 +117,7 @@
      "role": "scale",
      "start": 24,
      "end": 37,
-     "text": "(in thousands"
+     "text": "(In Thousands"
     }
    ]
   },
@@ -190,8 +190,9 @@
     ]
    },
    {
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "SCALE_CITATION_INVALID",
      "VALUE_DERIVED"
     ]
    },

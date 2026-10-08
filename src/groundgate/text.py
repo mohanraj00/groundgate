@@ -163,17 +163,14 @@ def normalize_ws(text: str) -> str:
     return _WS.sub(" ", text).strip()
 
 
-def verbatim_equal(a: str, b: str, ignore_case: bool = False) -> bool:
-    a, b = normalize_ws(_HYPHEN_BREAK.sub("", a)), normalize_ws(_HYPHEN_BREAK.sub("", b))
-    if ignore_case:  # as the quote search compares a scale item (SPEC §4.6)
-        return re.fullmatch(re.escape(a), b, re.I) is not None
-    return a == b
+def verbatim_equal(a: str, b: str) -> bool:
+    return normalize_ws(_HYPHEN_BREAK.sub("", a)) == normalize_ws(_HYPHEN_BREAK.sub("", b))
 
 
-def quote_pattern(quote: str, ignore_case: bool = False) -> re.Pattern[str]:
+def quote_pattern(quote: str) -> re.Pattern[str]:
     """Regex for a quote where each whitespace run matches any whitespace run."""
     parts = normalize_ws(quote).split(" ")
-    return re.compile(r"\s+".join(re.escape(p) for p in parts), re.I if ignore_case else 0)
+    return re.compile(r"\s+".join(re.escape(p) for p in parts))
 
 
 def _ends_sentence(text: str, m: re.Match[str]) -> bool:
