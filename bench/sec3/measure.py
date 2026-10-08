@@ -16,6 +16,7 @@ The decisions hold values and byte spans, not text, so they are in git. The docu
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import json
 import sys
@@ -26,7 +27,8 @@ from typing import Any
 
 HERE = Path(__file__).parent
 RUNS = ("claude-haiku-5-5", "gpt-6-luna")
-SPECS = ("0.5",)  # each 0.6 rule adds its spec here, decided alone
+# each 0.6 rule adds its spec here, decided alone
+SPECS = ("0.5", "0.6 #145 unit", "0.6 #145 scale")
 VERDICTS = ("right", "wrong", "not sure")
 PORT = 8774
 
@@ -40,7 +42,7 @@ def _dump(path: Path, obj: Any) -> None:
 
 
 def _name(run: str, spec: str) -> Path:
-    return HERE / f"decisions-{run}-{spec.replace(' ', '-')}.json"
+    return HERE / f"decisions-{run}-{spec.replace(' ', '-').replace('#', '')}.json"
 
 
 def _schema() -> dict[str, Any]:
@@ -48,12 +50,25 @@ def _schema() -> dict[str, Any]:
 
 
 def _decide(spec: str, text: str, cands: list[Any]) -> list[Any]:
-    """The decisions under one spec, by the groundgate that runs this script."""
+    """The decisions under one spec, by the groundgate that runs this script. A 0.6 rule is
+    decided alone: the other rules of the draft are turned off."""
+    from unittest import mock
+
     import groundgate as gg
 
-    if spec != "0.5":
+    if spec not in SPECS:
         raise SystemExit(f"no decision for spec {spec!r} yet")
-    return list(gg.admit(text, _schema(), cands).decisions)
+    core = sys.modules["groundgate.admit"]  # the module, not gg.admit
+    with contextlib.ExitStack() as stack:
+        if spec == "0.6 #145 scale":  # no unit item that repeats the unit passes
+            stack.enter_context(mock.patch.object(core, "_repeats", lambda *a: False))
+        if spec == "0.6 #145 unit":  # a scale item matches case
+            pattern, equal = core.quote_pattern, core.verbatim_equal
+            stack.enter_context(mock.patch.object(core, "quote_pattern", lambda q, *a: pattern(q)))
+            stack.enter_context(
+                mock.patch.object(core, "verbatim_equal", lambda x, y, *a: equal(x, y))
+            )
+        return list(gg.admit(text, _schema(), cands).decisions)
 
 
 def decide() -> None:
