@@ -69,7 +69,7 @@ _Avoid_: confidence, strength
 
 **Weak evidence**:
 Evidence that supports the value but has a missing part (`PART_MISSING`) or a role item that
-fails its check, or outside evidence that the policy sends to review (`EVIDENCE_QUOTED`,
+fails its check (a field item on a field with no aliases is not checked), or outside evidence that the policy sends to review (`EVIDENCE_QUOTED`,
 `EVIDENCE_STATED`). It gives the outcome `needs_verification`.
 
 **No evidence**:
