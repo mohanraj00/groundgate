@@ -575,6 +575,67 @@ field 'dose' keys must be distinct, non-blank text
 unit 'inHg' surfaces must be non-empty strings
 ```
 
+## Check a schema
+
+A valid schema can still hold a setting that makes a check fail every time, or pass for the wrong
+key or field. `groundgate schema check SCHEMA` prints one line for each such setting:
+
+- A field with a `unit` and no `aliases`. A unit item passes only with a passing field item, so
+  it never passes.
+- A field with `keys` and no `aliases`. The column rule needs a passing field item, so a key item
+  never puts the key at the value.
+- A key that is also an alias of the same field. Each mention of the field's name is then a
+  mention of that key, so the key is at each value that the name is at.
+- An alias on two fields. A field item that names one of them passes for the other too.
+- A `minimum` above the `maximum` on a number or integer field. No value is in range, so each
+  candidate is rejected `RANGE_INVALID`.
+
+It exits 1 if it prints a line and 0 if not, so CI can run it. An invalid schema exits 2. `admit`
+does not run this check, and its output stays the receipt.
+
+```python
+import json
+import tempfile
+from pathlib import Path
+
+from groundgate.cli import main
+
+risky = {
+    "fields": {
+        "fee": {"type": "integer", "unit": "USD"},
+        "dose": {"unit": "mg", "keys": ["adults", "children"]},
+        "net_sales": {"keys": ["2025", "product"], "aliases": ["net sales", "product"]},
+        "cost": {"aliases": ["cost of sales", "Net Sales"]},
+        "rate": {"minimum": "10", "maximum": "5"},
+    }
+}
+fixed = {
+    "fields": {
+        "fee": {"type": "integer", "unit": "USD", "aliases": ["late fee"]},
+        "rate": {"minimum": "5", "maximum": "10"},
+    }
+}
+with tempfile.TemporaryDirectory() as tmp:
+    for name, schema in [("risky", risky), ("fixed", fixed)]:
+        path = Path(tmp) / f"{name}.json"
+        path.write_text(json.dumps(schema), encoding="utf-8")
+        print(f"{name}: exit {main(['schema', 'check', str(path)])}")
+```
+
+```text
+field 'fee' has a unit and no aliases: a unit item never passes
+field 'dose' has a unit and no aliases: a unit item never passes
+field 'dose' has keys and no aliases: a key item never puts the key at the value
+field 'net_sales' has 'product' as a key and an alias: each mention of the field puts that key at the value
+field 'rate' has a minimum above its maximum: no value is in range
+alias 'net sales' is on fields 'net_sales' and 'cost': a field item does not tell them apart
+risky: exit 1
+fixed: exit 0
+```
+
+The check does not repeat step 1. Blank and repeated keys or aliases of one field make the schema
+invalid (see above).
+
 ## Three schemas
 
 ### An IRS publication

@@ -5,9 +5,10 @@
   groundgate verify   RECEIPT DOC SCHEMA CANDIDATES
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES -o report.html
   groundgate schema   SCHEMA                            > extractor.schema.json
+  groundgate schema check SCHEMA
 
 DOC may be "-" to read the document from standard input. Exit codes: 0 success, 1 the receipt
-does not match its inputs, 2 invalid input.
+does not match its inputs (or schema check has a finding), 2 invalid input.
 """
 
 from __future__ import annotations
@@ -19,7 +20,8 @@ from pathlib import Path
 from typing import Any
 
 from .admit import admit, verify
-from .model import PacketError, extractor_schema
+from .model import PacketError, Schema, extractor_schema
+from .text import normalize_ws
 
 
 def _unique(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -93,7 +95,10 @@ def _parser() -> argparse.ArgumentParser:
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
     x.add_argument("--pages", type=_pages, help="PDF pages to extract, e.g. 1-12,15")
 
-    s = sub.add_parser("schema", help="write the JSON Schema for an extractor's output")
+    s = sub.add_parser(
+        "schema",
+        help="write the JSON Schema for an extractor's output (or: schema check SCHEMA)",
+    )
     s.add_argument("schema", help="schema JSON")
     s.add_argument("--references", help="JSON array of references; their ids become refs")
     s.add_argument("-o", "--output", help="write the JSON Schema here instead of stdout")
@@ -125,9 +130,23 @@ def _parser() -> argparse.ArgumentParser:
     return ap
 
 
+def _check_parser() -> argparse.ArgumentParser:
+    ap = argparse.ArgumentParser(
+        prog="groundgate schema check",
+        description="Print each schema setting that makes a check fail every time. "
+        "Exit codes: 0 no finding, 1 a finding, 2 invalid schema.",
+    )
+    ap.add_argument("schema", help="schema JSON")
+    return ap
+
+
 def main(argv: list[str] | None = None) -> int:
-    args = _parser().parse_args(argv)
+    argv = sys.argv[1:] if argv is None else list(argv)
+    check = argv[:2] == ["schema", "check"]
+    args = _check_parser().parse_args(argv[2:]) if check else _parser().parse_args(argv)
     try:
+        if check:
+            return _check(args)
         if args.command == "extract":
             return _extract(args)
         if args.command == "schema":
@@ -170,6 +189,49 @@ def _schema(args: argparse.Namespace) -> int:
         ids = [r.get("id") for r in refs]
     _write(_dumps(extractor_schema(_json(args.schema), ids)), args.output)
     return 0
+
+
+def _findings(schema: Schema) -> list[str]:
+    """The settings of a valid schema that make a check fail every time, or pass for the wrong
+    key or field. Step 1 already refuses blank and repeated keys and aliases of one field."""
+    out: list[str] = []
+    owners: dict[str, tuple[str, list[str]]] = {}  # normalized alias: (as written, fields)
+    for name, f in schema.fields.items():
+        if f.aliases is None:
+            if f.unit is not None:
+                out.append(f"field {name!r} has a unit and no aliases: a unit item never passes")
+            if f.keys is not None:
+                out.append(
+                    f"field {name!r} has keys and no aliases: "
+                    "a key item never puts the key at the value"
+                )
+        else:
+            aliases = {normalize_ws(a).lower() for a in f.aliases}
+            for key in f.keys or ():
+                if normalize_ws(key).lower() in aliases:
+                    out.append(
+                        f"field {name!r} has {key!r} as a key and an alias: "
+                        "each mention of the field puts that key at the value"
+                    )
+            for alias in f.aliases:
+                owners.setdefault(normalize_ws(alias).lower(), (alias, []))[1].append(name)
+        low, high = f.minimum, f.maximum
+        if f.type != "string" and low is not None and high is not None and low > high:
+            out.append(f"field {name!r} has a minimum above its maximum: no value is in range")
+    for alias, names in owners.values():
+        if len(names) > 1:
+            listed = ", ".join(map(repr, names[:-1])) + f" and {names[-1]!r}"
+            out.append(
+                f"alias {alias!r} is on fields {listed}: a field item does not tell them apart"
+            )
+    return out
+
+
+def _check(args: argparse.Namespace) -> int:
+    found = _findings(Schema.from_dict(_json(args.schema)))
+    for line in found:
+        print(line)
+    return 1 if found else 0
 
 
 def _extract(args: argparse.Namespace) -> int:

@@ -648,12 +648,15 @@ groundgate admit   DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--documen
 groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J]
 groundgate report  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--layout L] [--title T] [-o report.html]
 groundgate schema  SCHEMA [--references R] [-o extractor.schema.json]
+groundgate schema check SCHEMA
 ```
 
 `admit`, `verify` and `report` also take `--references R` and `--document-source URL`. `schema`
-writes the extractor schema, with the ids of the references in `R` as its refs. `DOC` may be `-`
-for standard input. Exit codes: 0 success, 1 the receipt does not match its
-inputs, 2 invalid input.
+writes the extractor schema, with the ids of the references in `R` as its refs. `schema check`
+prints each setting that makes a check fail every time, or pass for the wrong key or field
+([Check a schema](schema.md#check-a-schema)). `DOC` may be `-` for standard input. Exit codes:
+0 success, 1 the receipt does not match its inputs or `schema check` has a finding, 2 invalid
+input.
 
 ## Receipts
 
