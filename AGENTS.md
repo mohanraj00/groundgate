@@ -19,11 +19,20 @@ Claude Code and Codex both work on this repository. This file is the one copy of
 
 - Before you start an issue, add the label `agent:claude` or `agent:codex`. Do not take an issue
   that has the other label or an open PR.
-- Claude Code branches are `N-short-slug`. Codex branches are `codex/N-short-slug`. The Claude
-  review job finds Codex PRs by that prefix.
-- Codex reviews Claude Code PRs, and Claude Code reviews Codex PRs. To ask for a review again,
-  comment "@codex review" or "@claude review". Answer each finding on its comment: the fix and
-  its commit, or why it does not apply.
+- Claude Code branches are `N-short-slug`. Codex branches are `codex/N-short-slug`.
+- Codex reviews Claude Code PRs, and Claude Code reviews Codex PRs. No review runs by itself:
+  the agent that opened the PR asks for it in a separate comment that holds only this text.
+  - A Claude Code PR: `@codex review`
+  - A Codex PR: `@claude review this PR. Use the Review guidelines in CLAUDE.md.`
+
+  Ask again after each push that fixes a finding. Answer each finding on its comment: the fix and
+  its commit, or why it does not apply. Never write `@codex` or `@claude` in a PR body, an issue or
+  a commit message: each mention is a request.
+- The reviewer decides if the PR needs a deeper security review (see Review guidelines). Only
+  then, the agent that opened the PR posts a separate comment that holds only
+  `@codex security review`. Post it once for each PR, and not when a security review of the PR
+  is already asked or done. A fix after the security review gets a normal review. Ask for a
+  second security review only when a reviewer asks for one again, for a new reason.
 - An agent merges its own PR with squash when the required checks pass and the other agent's
   review of the head commit has no open finding. The macOS jobs are not required.
 - One agent runs each milestone: it gives each issue to an agent, keeps the milestone's plan issue
@@ -73,3 +82,9 @@ A review checks the PR against this file, its issue and [SPEC.md](SPEC.md). Repo
 
 Give each finding a file and a line, a concrete input that fails, and its effect. Do not report
 style that ruff accepts.
+
+Then decide if the PR needs a deeper security review. It does when it changes how groundgate
+reads untrusted input (documents, candidates, schemas, policies, references, judgments, URLs),
+the extract or report paths, a workflow under `.github/`, a release step, or a dependency. If it
+does, end the review with one line: `Security review needed:` and the reason. If it does not, say
+nothing about it. Do not ask for a security review that the PR already has.
