@@ -1,0 +1,71 @@
+{
+ "name": "20b-spec-text-outside",
+ "description": "On the outside path no VALUE_DERIVED is recorded, and a document source without :// has no host, so document-domain matches nothing (#158).",
+ "document": "The annual report is on the company site.",
+ "schema": {
+  "fields": {
+   "net_income": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   }
+  }
+ },
+ "policy": {
+  "sources": {
+   "external": {
+    "allow": [
+     "document-domain"
+    ]
+   }
+  }
+ },
+ "document_source": "www.irs.gov/annual",
+ "candidates": [
+  {
+   "id": "o1",
+   "field": "net_income",
+   "value": -5,
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/x",
+     "retrieved": "2026-10-01",
+     "text": "Net loss was ($5)."
+    }
+   ]
+  },
+  {
+   "id": "o2",
+   "field": "net_income",
+   "value": 7,
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/y",
+     "retrieved": "2026-10-01",
+     "text": "Net income was $7."
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "EVIDENCE_QUOTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "EVIDENCE_QUOTED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

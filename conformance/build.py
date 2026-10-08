@@ -2433,6 +2433,87 @@ INVALID.extend(
 )
 
 
+# ---------------------------------------------------------------- SPEC text (#158)
+SPEC_TEXT_FIRST = "A: 5 apples. B: 5 thousand pears."
+
+vector(
+    "20-spec-text",
+    "Rules that the SPEC text states since #158: a cited span that passes only with a missing part "
+    "re-anchors; 'between' must stand directly before the first number for 'and'; a connector "
+    "may have a $ before the next number; unit forms need a boundary, and a suffix lies wholly in "
+    "the sentence; a mention inside a longer mention does not count; a string field takes no "
+    "qualifier and rejects an integer or blank value; a carriage return is not a line break; a "
+    "unit with empty lists is vacuous; an unchecked field item makes a unit item fail.",
+    SPEC_TEXT_FIRST + "\n\n"
+    "Ages between 18 and 65 qualify. Members between the ages of 18 and 65 pay less.\n\n"
+    "The fee is $30 to $45. The score went 31 to US $ 46.\n\n"
+    "The award was MRs 500 and the dose was 5 grams. The tablet is 500mg.\n\n"
+    "Pressure 29 in. Hg was read.\n\n"
+    "Total revenue 500\n\n"
+    "The city is approximately Paris.\n\n"
+    "fif-\r\nteen and fif-\nteen\n\n"
+    "The team scored 12.\n\n"
+    "Price list, all amounts in $:\n\nAdult\t40",
+    {
+        "fields": {
+            "count": {"type": "integer", "multiple": True},
+            "age": {"type": "integer", "multiple": True},
+            "fee": {"type": "integer", "unit": "USD", "multiple": True},
+            "award": {"type": "integer", "unit": "INR"},
+            "dose": {"type": "integer", "unit": "g"},
+            "tablet": {"type": "integer", "unit": "mg"},
+            "pressure": {"type": "integer", "unit": "inHg"},
+            "revenue": {"type": "integer", "aliases": ["revenue", "total revenue"]},
+            "city": {"type": "string", "multiple": True},
+            "word": {"type": "string", "multiple": True},
+            "points": {"type": "integer", "unit": "PTS"},
+            "price": {"type": "integer", "unit": "USD"},
+        },
+        "units": {"inHg": {"suffix": ["in. Hg"]}, "PTS": {"prefix": [], "suffix": []}},
+    },
+    [
+        c("r1", "count", 5000, None, q("5"), (ADMIT[0], ["EVIDENCE_REANCHORED"]),
+          search_region={"start": 0, "end": len(SPEC_TEXT_FIRST.encode())}),
+        c("g1", "age", 65, None, q("65", 1), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("g2", "age", 65, None, q("65", 2)),
+        c("f1", "fee", 30, "USD", q("$30"), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("f2", "count", 31, None, q("31")),
+        c("u1", "award", 500, "INR", q("500", 1), (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("u2", "dose", 5, "g", q("5 grams"), (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("u3", "tablet", 500, "mg", q("500mg")),
+        c("s1", "pressure", 29, "inHg", q("29"), (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("m1", "revenue", 500, None, [q("500", 3), {"role": "field", "text": "revenue"}],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        c("c1", "city", "Paris", None, q("Paris")),
+        c("c2", "city", 7, None, q("Paris"), ("rejected", ["TYPE_INVALID"])),
+        c("c3", "city", "  ", None, q("Paris"), ("rejected", ["TYPE_INVALID"])),
+        c("w1", "word", "fif- teen", None, q("fif-\r\nteen", text="fifteen"),
+          (REVIEW, ["NON_VERBATIM_EVIDENCE"])),
+        c("w2", "word", "fif- teen", None, q("fif-\nteen", text="fifteen")),
+        c("p1", "points", 12, "PTS", q("12")),
+        c("n1", "price", 40, "USD",
+          [q("40"), {"role": "field", "text": "Adult"}, {"role": "unit", "text": "$"}],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "20b-spec-text-outside",
+    "On the outside path no VALUE_DERIVED is recorded, and a document source without :// has no "
+    "host, so document-domain matches nothing (#158).",
+    "The annual report is on the company site.",
+    {"fields": {"net_income": {"type": "integer", "unit": "USD", "multiple": True}}},
+    [
+        c("o1", "net_income", -5, "USD", [ext("Net loss was ($5).", "https://www.irs.gov/x")],
+          (REVIEW, ["EVIDENCE_QUOTED"])),
+        c("o2", "net_income", 7, "USD", [ext("Net income was $7.", "https://www.irs.gov/y")],
+          (REVIEW, ["EVIDENCE_QUOTED"])),
+    ],
+    policy={"sources": {"external": {"allow": ["document-domain"]}}},
+    document_source="www.irs.gov/annual",
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
