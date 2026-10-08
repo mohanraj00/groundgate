@@ -28,11 +28,16 @@ Claude Code and Codex both work on this repository. This file is the one copy of
   Ask again after each push that fixes a finding. Answer each finding on its comment: the fix and
   its commit, or why it does not apply. Never write `@codex` or `@claude` in a PR body, an issue or
   a commit message: each mention is a request.
-- The reviewer decides if the PR needs a deeper security review (see Review guidelines). Only
-  then, the agent that opened the PR posts a separate comment that holds only
-  `@codex security review`. Post it once for each PR, and not when a security review of the PR
-  is already asked or done. A fix after the security review gets a normal review. Ask for a
-  second security review only when a reviewer asks for one again, for a new reason.
+- The agent that opened the PR decides if the PR needs a deeper security review:
+  - If the review ends with `Security review: needed` or `Security review: not needed`, follow
+    that line.
+  - A Codex code review gives only findings, so it has no such line. If the line is not there,
+    apply the list in Review guidelines yourself. Never take a missing line as "not needed".
+  - If the PR needs one, post a separate comment that holds only `@codex security review`. Post
+    it once for each PR, and not when a security review of the PR is already asked or done. Read
+    the PR comments first.
+  - A fix after the security review gets a normal review. Ask for a second security review only
+    when a reviewer asks for one again, for a new reason.
 - An agent merges its own PR with squash when the required checks pass and the other agent's
   review of the head commit has no open finding. The macOS jobs are not required.
 - One agent runs each milestone: it gives each issue to an agent, keeps the milestone's plan issue
@@ -83,8 +88,11 @@ A review checks the PR against this file, its issue and [SPEC.md](SPEC.md). Repo
 Give each finding a file and a line, a concrete input that fails, and its effect. Do not report
 style that ruff accepts.
 
-Then decide if the PR needs a deeper security review. It does when it changes how groundgate
-reads untrusted input (documents, candidates, schemas, policies, references, judgments, URLs),
-the extract or report paths, a workflow under `.github/`, a release step, or a dependency. If it
-does, end the review with one line: `Security review needed:` and the reason. If it does not, say
-nothing about it. Do not ask for a security review that the PR already has.
+A PR needs a deeper security review when it changes how groundgate reads untrusted input
+(documents, candidates, schemas, policies, references, judgments, URLs), the extract or report
+paths, a workflow under `.github/`, a release step, or a dependency.
+
+If your review format lets you add text after the findings, end a code review with one line:
+`Security review: needed` and the reason, or `Security review: not needed`. Do not ask for the
+security review yourself: the agent that opened the PR asks. A security review does not end with
+this line.
