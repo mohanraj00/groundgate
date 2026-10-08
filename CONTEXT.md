@@ -91,8 +91,9 @@ app decides whether to send it back to the extractor.
 _Avoid_: critique, review notes
 
 **Feedback message**:
-The text for the extractor, built from the feedback of one candidate, that says which part to
-cite again. It is worth sending only when a new answer can change the decision.
+The text for the extractor, built from the feedback of one candidate, that says what to change:
+a part to cite, a quote to copy exactly, or the value to send, such as the scaled number. It is
+worth sending only when a new answer can change the decision.
 _Avoid_: retry prompt, critique
 
 **Feedback loop**:
