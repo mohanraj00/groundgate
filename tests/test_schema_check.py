@@ -142,3 +142,41 @@ def test_alias_in_alias_by_word_index(tmp_path: Path, capsys: pytest.CaptureFixt
         "alias '%' of field 'share' is in alias '% of sales' of field 'margin': "
         "a field item for 'margin' passes for 'share'\n",
     )
+
+
+def test_alias_in_alias_with_re_i_letters(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """The word index matches letters as re.I does, as key_mentions does."""
+    dotless, kelvin = "\N{LATIN SMALL LETTER DOTLESS I}", "\N{KELVIN SIGN}"
+    mark, iota = "\N{COMBINING GREEK YPOGEGRAMMENI}", "\N{GREEK SMALL LETTER IOTA}"
+    schema = {
+        "fields": {
+            "short": {"aliases": ["i", "kg"]},
+            "dotless": {"aliases": [f"{dotless} x"]},
+            "kelvin": {"aliases": [f"{kelvin}g total"]},
+            "mark": {"aliases": [f"a{mark}"]},
+            "iota": {"aliases": [f"a{iota} b"]},
+        }
+    }
+    found = [
+        ("i", "short", f"{dotless} x", "dotless"),
+        ("kg", "short", f"{kelvin}g total", "kelvin"),
+        (f"a{mark}", "mark", f"a{iota} b", "iota"),
+    ]
+    assert check(tmp_path, schema, capsys) == (
+        1,
+        "".join(
+            f"alias {a!r} of field {f!r} is in alias {b!r} of field {g!r}: "
+            f"a field item for {g!r} passes for {f!r}\n"
+            for a, f, b, g in found
+        ),
+    )
+
+
+def test_many_fields_with_one_alias(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    schema = {"fields": {f"f{n}": {"aliases": ["sales"]} for n in range(3000)}}
+    code, out = check(tmp_path, schema, capsys)
+    assert code == 1
+    assert out.count("\n") == 1
+    assert out.startswith("alias 'sales' is on fields 'f0', 'f1', 'f2'")

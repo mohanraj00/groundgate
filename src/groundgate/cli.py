@@ -15,10 +15,13 @@ does not match its inputs (or schema check has a finding), 2 invalid input.
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import re
 import sys
+import unicodedata
 from collections import Counter
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -339,21 +342,29 @@ def _findings(schema: Schema) -> list[str]:
                 f"alias {alias!r} is on fields {listed}: a field item does not tell them apart"
             )
     # An alias in a longer alias of another field. Each word of a whole-word match is a word of
-    # the longer alias, so only aliases that share the shorter alias's rarest word are compared.
+    # the longer alias, so an alias is compared only with the aliases that hold its rarest word.
+    # Equal aliases are already reported above.
     rank = {name: n for n, name in enumerate(schema.fields)}
-    every = [
-        (other, n, b) for other, g in schema.fields.items() for n, b in enumerate(g.aliases or ())
-    ]
-    index: dict[str, list[tuple[str, int, str]]] = {}
-    for other, n, b in every:
-        for word in _words(b):
-            index.setdefault(word, []).append((other, n, b))
+    every: dict[str, list[tuple[str, int, str]]] = {}  # normalized alias: (field, place, alias)
+    for other, g in schema.fields.items():
+        for n, b in enumerate(g.aliases or ()):
+            every.setdefault(_norm(b), []).append((other, n, b))
+    index: dict[str, dict[str, list[tuple[str, int, str]]]] = {}
+    odd: dict[str, list[tuple[str, int, str]]] = {}  # compared with each alias
+    for norm, places in every.items():
+        words = _words(places[0][2])
+        for word in words or ():
+            index.setdefault(word, {})[norm] = places
+        if words is None:
+            odd[norm] = places
     pairs: set[tuple[str, str, int, str]] = set()
     for name, f in schema.fields.items():
         for a in f.aliases or ():
             words = _words(a)
-            pool = index[min(words, key=lambda w: len(index[w]))] if words else every
-            pairs.update((name, other, n, b) for other, n, b in pool if other != name)
+            pool = every if not words else index[min(words, key=lambda w: len(index[w]))]
+            for norm, places in [*pool.items(), *odd.items()]:
+                if norm != _norm(a):
+                    pairs.update((name, other, n, b) for other, n, b in places if other != name)
     for name, other, _, b in sorted(pairs, key=lambda p: (rank[p[0]], rank[p[1]], p[2])):
         aliases = schema.fields[name].aliases or ()
         for a in dict.fromkeys(a for _, _, a in key_mentions(b, aliases)):
@@ -369,8 +380,35 @@ def _norm(word: str) -> str:
     return normalize_ws(word).lower()
 
 
-def _words(text: str) -> set[str]:
-    return set(re.findall(r"[^\W_]+", text.casefold()))
+def _words(text: str) -> set[str] | None:
+    """The words of the text, each letter folded as re.I matches it. None when the text holds
+    U+0345: it is not a word character, but re.I matches it with the letter iota."""
+    if "\u0345" in text:
+        return None
+    return set(re.findall(r"[^\W_]+", "".join(map(_fold, text))))
+
+
+_ONE_LETTER = {"\ufb05": "\ufb06"}  # re.I matches the two "st" ligatures
+
+
+@functools.lru_cache(maxsize=4096)
+def _fold(c: str) -> str:
+    """One letter for each set of letters that re.I matches with each other."""
+    seen, todo = {c}, [c]
+    while todo:
+        x = todo.pop()
+        for y in (x.lower(), x.upper(), x.casefold(), x.title(), unicodedata.normalize("NFC", x)):
+            d = y[:1]
+            if d not in seen and re.fullmatch(re.escape(x), d, re.I):
+                seen.add(d)
+                todo.append(d)
+    k = min(_single(str.lower, _single(str.upper, x)) for x in seen)
+    return _ONE_LETTER.get(k, k)
+
+
+def _single(case: Callable[[str], str], c: str) -> str:
+    out = case(c)
+    return out if len(out) == 1 else c
 
 
 def _check(args: argparse.Namespace) -> int:
