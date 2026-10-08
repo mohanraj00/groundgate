@@ -2,10 +2,10 @@
  "runs": {
   "claude-haiku-5-5": {
    "0.5": {
-    "right": 0,
+    "right": 17,
     "escapes": 0,
     "not sure": 0,
-    "unlabeled": 17,
+    "unlabeled": 0,
     "part missing": 47,
     "proposals": 137,
     "no reply": 0
@@ -13,10 +13,10 @@
   },
   "gpt-6-luna": {
    "0.5": {
-    "right": 0,
+    "right": 12,
     "escapes": 0,
     "not sure": 0,
-    "unlabeled": 12,
+    "unlabeled": 0,
     "part missing": 19,
     "proposals": 144,
     "no reply": 0
