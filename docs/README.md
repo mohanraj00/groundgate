@@ -15,7 +15,7 @@ page for your task.
 | Use references, web sources and the model's knowledge | [howto/outside-sources.md](howto/outside-sources.md) |
 | Review flagged facts, and keep and verify receipts | [howto/review.md](howto/review.md) |
 | Check LangExtract output | [guide.md#langextract](guide.md#langextract) |
-| Measure a judge's thresholds on your documents | [calibrate/README.md](../calibrate/README.md) |
+| Measure a judge's thresholds on your documents | [howto/calibrate.md](howto/calibrate.md) |
 
 ## Reference
 

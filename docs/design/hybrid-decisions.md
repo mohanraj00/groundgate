@@ -3,7 +3,7 @@
 Status: partly built, issue #66. The measurement that it depends on is #67. Spec 0.4 added
 recorded judgments: the policy's `judge` block with `clear.KEY_NOT_AT_VALUE` and
 `doubt.field_match`, `MODEL_CLEARED` and `MODEL_DOUBT`, all experimental. groundgate-calibrate
-(§9) is in `calibrate/`, not yet on PyPI (#122). The other modes, the audit sample, other clears
+(§9) is in `calibrate/`, and on PyPI from 0.1.0 (#122). The other modes, the audit sample, other clears
 and model-proposed locations are not built. The locale design (#60) is separate and works with or
 without this one.
 

@@ -335,8 +335,9 @@ a changed document, schema, policy, candidate or outcome.
 - **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right.
   Since spec 0.4, it reads a judge's answers only as recorded inputs, so a receipt still re-derives
   byte for byte. This judge block is experimental: its one measure on real extractor output is the key
-  clear on 10-K filings (#120). `groundgate-calibrate` (#112, in [calibrate/](calibrate), not
-  yet on PyPI) measures the thresholds on your own documents.
+  clear on 10-K filings (#120). `groundgate-calibrate` (#112, in [calibrate/](calibrate))
+  measures the thresholds on your own documents.
+  [How to measure a judge's thresholds](docs/howto/calibrate.md) runs it from start to end.
 
 ## Status
 
