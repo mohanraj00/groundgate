@@ -2439,7 +2439,7 @@ SPEC_TEXT_FIRST = "A: 5 apples. B: 5 thousand pears."
 vector(
     "20-spec-text",
     "Rules that the SPEC text states since #158: a cited span that passes only with a missing part "
-    "re-anchors; 'between' must stand directly before the first number for 'and'; a connector "
+    "re-anchors; 'between the ages of' makes 'and' a connector in spec 0.6; a connector "
     "may have a $ before the next number; unit forms need a boundary, and a suffix lies wholly in "
     "the sentence; a mention inside a longer mention does not count; a string field takes no "
     "qualifier and rejects an integer or blank value; a carriage return is not a line break; a "
@@ -2475,7 +2475,7 @@ vector(
         c("r1", "count", 5000, None, q("5"), (ADMIT[0], ["EVIDENCE_REANCHORED"]),
           search_region={"start": 0, "end": len(SPEC_TEXT_FIRST.encode())}),
         c("g1", "age", 65, None, q("65", 1), (REVIEW, ["QUALIFIED_VALUE"])),
-        c("g2", "age", 65, None, q("65", 2)),
+        c("g2", "age", 65, None, q("65", 2), (REVIEW, ["QUALIFIED_VALUE"])),
         c("f1", "fee", 30, "USD", q("$30"), (REVIEW, ["QUALIFIED_VALUE"])),
         c("f2", "count", 31, None, q("31")),
         c("u1", "award", 500, "INR", q("500", 1), (REVIEW, ["PART_MISSING"], ["unit"])),
@@ -2602,6 +2602,76 @@ vector(
         c("d7", "amount", "46016000", "USD",
           [q("46,016"), THOUSANDS, {"role": "unit", "text": "percent"}],
           (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED"])),
+    ],
+)  # fmt: skip
+
+
+# ---- spec 0.6 (#159)
+vector(
+    "23-between-words",
+    "'between' can stand up to six words before the first number of an 'and' range. "
+    "Each word holds only letters, and only whitespace separates them. The words stay in one "
+    "sentence with no intervening number. Spec 0.5 qualifiers stay set.",
+    "Members between the ages of 18 and 65 qualify.\n\n"
+    "Members between the minimum and maximum permitted ages 18 and 65 qualify.\n\n"
+    "Members between 18 and 65 qualify.\n\n"
+    "Members between the minimum and maximum permitted adult ages 18 and 65 qualify.\n\n"
+    "Members between 7 the ages of 18 and 65 qualify.\n\n"
+    "Choose between the ages. Members aged 18 and 65 qualify.\n\n"
+    "Choose between options. Members aged 18 and 65 qualify.\n\n"
+    "Members between $18 and $65 qualify.\n\n"
+    "Members BETWEEN\tthe\nages of 18 and 65 qualify.\n\n"
+    "Members between a b c d e f g 18 and 65 qualify.\n\n"
+    "Members between the ages; members aged 18 and 65 qualify.\n\n"
+    "Members between the\n\nages of 18 and 65 qualify.\n\n"
+    "Members between the ages•members aged 18 and 65 qualify.\n\n"
+    "Members between dr. ages 18 and 65 qualify.\n\n"
+    "Members between the adult-age limits 18 and 65 qualify.\n\n"
+    "Members between the ages² of 18 and 65 qualify.\n\n"
+    "Members between les âges de 18 and 65 qualify.\n\n"
+    "Members between                              18 and 65 qualify.",
+    {
+        "fields": {
+            "age": {"type": "integer", "multiple": True},
+            "age_range": {"type": "integer", "comparator": "range", "multiple": True},
+        }
+    },
+    [
+        c("words-low", "age", 18, None, q("18", 1), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("words-high", "age", 65, None, q("65", 1), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("limit-low", "age", 18, None, q("18", 2), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("limit-high", "age", 65, None, q("65", 2), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("plain-low", "age", 18, None, q("18", 3), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("plain-high", "age", 65, None, q("65", 3), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("over-limit-low", "age", 18, None, q("18", 4), ADMIT),
+        c("over-limit-high", "age", 65, None, q("65", 4), ADMIT),
+        c("number-low", "age", 18, None, q("18", 5), ADMIT),
+        c("number-high", "age", 65, None, q("65", 5), ADMIT),
+        c("sentence-low", "age", 18, None, q("18", 6), ADMIT),
+        c("sentence-high", "age", 65, None, q("65", 6), ADMIT),
+        c("earlier-low", "age", 18, None, q("18", 7), ADMIT),
+        c("earlier-high", "age", 65, None, q("65", 7), ADMIT),
+        c("prefix-low", "age", 18, None, q("18", 8), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("prefix-high", "age", 65, None, q("65", 8), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("whitespace-low", "age", 18, None, q("18", 9), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("whitespace-high", "age", 65, None, q("65", 9), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("old-flag-low", "age", 18, None, q("18", 10), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("old-flag-high", "age", 65, None, q("65", 10), ADMIT),
+        c("semicolon-high", "age", 65, None, q("65", 11), ADMIT),
+        c("blank-line-high", "age", 65, None, q("65", 12), ADMIT),
+        c("bullet-high", "age", 65, None, q("65", 13), ADMIT),
+        c("abbreviation-low", "age", 18, None, q("18", 14), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("abbreviation-high", "age", 65, None, q("65", 14), ADMIT),
+        c("hyphen-low", "age", 18, None, q("18", 15), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("hyphen-high", "age", 65, None, q("65", 15), ADMIT),
+        c("nonletter-low", "age", 18, None, q("18", 16), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("nonletter-high", "age", 65, None, q("65", 16), ADMIT),
+        c("unicode-low", "age", 18, None, q("18", 17), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("unicode-high", "age", 65, None, q("65", 17), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("spaces-low", "age", 18, None, q("18", 18), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("spaces-high", "age", 65, None, q("65", 18), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("range-low", "age_range", 18, None, q("18", 2), ADMIT),
+        c("range-high", "age_range", 65, None, q("65", 2), ADMIT),
     ],
 )  # fmt: skip
 

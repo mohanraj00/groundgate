@@ -254,6 +254,7 @@ _RANGE_PREV = re.compile(rf"\s*{_UNIT_WORD}(?:through|thru|to|-|\u2013)\s*\S{{0,
 _AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
 _AND_PREV = re.compile(rf"\s*{_UNIT_WORD}and\s*\S{{0,4}}?", re.I)
 _BETWEEN_END = re.compile(r"\bbetween\s*\S{0,4}?$", re.I)
+_BETWEEN_WORDS_END = re.compile(r"\bbetween(?:\s+[^\W\d_]+){0,6}\s+$", re.I)
 _CHANGE = (
     "increase|increases|increased|increasing|decrease|decreases|decreased|decreasing|"
     "raise|raises|raised|raising|reduce|reduces|reduced|reducing|reduction|reductions|"
@@ -295,6 +296,7 @@ def qualifiers(text: str, tok: Token) -> set[str]:
     if (
         _RANGE_NEXT.match(rest)
         or (between_before and _AND_NEXT.match(rest))
+        or (_AND_NEXT.match(rest) and _between_words_before(text, tok.start))
         or (
             prev
             and _RANGE_PREV.fullmatch(before)
@@ -303,11 +305,25 @@ def qualifiers(text: str, tok: Token) -> set[str]:
         or (
             prev
             and _AND_PREV.fullmatch(before)
-            and _BETWEEN_END.search(text[max(s0, prev[-1].start - 20) : prev[-1].start].rstrip())
+            and (
+                _BETWEEN_END.search(text[max(s0, prev[-1].start - 20) : prev[-1].start].rstrip())
+                or _between_words_before(text, prev[-1].start)
+            )
         )
     ):
         found.add("range")
     return found
+
+
+def _between_words_before(text: str, start: int) -> bool:
+    """'between' and up to six words of letters before the first number (SPEC §4.2).
+    Use the sentence rule for keys, without abbreviation joins. Letters and whitespace alone
+    leave no room for an intervening number token."""
+    s0, _ = sentence(text, start)
+    m = _BETWEEN_WORDS_END.search(text, s0, start)
+    return m is not None and all(
+        ch.isspace() or unicodedata.category(ch).startswith("L") for ch in m.group()
+    )
 
 
 def _before_qualifiers(text: str, s0: int, start: int, end: int) -> set[str]:

@@ -1,0 +1,552 @@
+{
+ "name": "23-between-words",
+ "description": "'between' can stand up to six words before the first number of an 'and' range. Each word holds only letters, and only whitespace separates them. The words stay in one sentence with no intervening number. Spec 0.5 qualifiers stay set.",
+ "document": "Members between the ages of 18 and 65 qualify.\n\nMembers between the minimum and maximum permitted ages 18 and 65 qualify.\n\nMembers between 18 and 65 qualify.\n\nMembers between the minimum and maximum permitted adult ages 18 and 65 qualify.\n\nMembers between 7 the ages of 18 and 65 qualify.\n\nChoose between the ages. Members aged 18 and 65 qualify.\n\nChoose between options. Members aged 18 and 65 qualify.\n\nMembers between $18 and $65 qualify.\n\nMembers BETWEEN\tthe\nages of 18 and 65 qualify.\n\nMembers between a b c d e f g 18 and 65 qualify.\n\nMembers between the ages; members aged 18 and 65 qualify.\n\nMembers between the\n\nages of 18 and 65 qualify.\n\nMembers between the ages•members aged 18 and 65 qualify.\n\nMembers between dr. ages 18 and 65 qualify.\n\nMembers between the adult-age limits 18 and 65 qualify.\n\nMembers between the ages² of 18 and 65 qualify.\n\nMembers between les âges de 18 and 65 qualify.\n\nMembers between                              18 and 65 qualify.",
+ "schema": {
+  "fields": {
+   "age": {
+    "type": "integer",
+    "multiple": true
+   },
+   "age_range": {
+    "type": "integer",
+    "comparator": "range",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "words-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 28,
+    "end": 30,
+    "text": "18"
+   }
+  },
+  {
+   "id": "words-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 35,
+    "end": 37,
+    "text": "65"
+   }
+  },
+  {
+   "id": "limit-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 103,
+    "end": 105,
+    "text": "18"
+   }
+  },
+  {
+   "id": "limit-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 110,
+    "end": 112,
+    "text": "65"
+   }
+  },
+  {
+   "id": "plain-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 139,
+    "end": 141,
+    "text": "18"
+   }
+  },
+  {
+   "id": "plain-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 146,
+    "end": 148,
+    "text": "65"
+   }
+  },
+  {
+   "id": "over-limit-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 220,
+    "end": 222,
+    "text": "18"
+   }
+  },
+  {
+   "id": "over-limit-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 227,
+    "end": 229,
+    "text": "65"
+   }
+  },
+  {
+   "id": "number-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 270,
+    "end": 272,
+    "text": "18"
+   }
+  },
+  {
+   "id": "number-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 277,
+    "end": 279,
+    "text": "65"
+   }
+  },
+  {
+   "id": "sentence-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 328,
+    "end": 330,
+    "text": "18"
+   }
+  },
+  {
+   "id": "sentence-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 335,
+    "end": 337,
+    "text": "65"
+   }
+  },
+  {
+   "id": "earlier-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 385,
+    "end": 387,
+    "text": "18"
+   }
+  },
+  {
+   "id": "earlier-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 392,
+    "end": 394,
+    "text": "65"
+   }
+  },
+  {
+   "id": "prefix-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 422,
+    "end": 424,
+    "text": "18"
+   }
+  },
+  {
+   "id": "prefix-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 430,
+    "end": 432,
+    "text": "65"
+   }
+  },
+  {
+   "id": "whitespace-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 471,
+    "end": 473,
+    "text": "18"
+   }
+  },
+  {
+   "id": "whitespace-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 478,
+    "end": 480,
+    "text": "65"
+   }
+  },
+  {
+   "id": "old-flag-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 521,
+    "end": 523,
+    "text": "18"
+   }
+  },
+  {
+   "id": "old-flag-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 528,
+    "end": 530,
+    "text": "65"
+   }
+  },
+  {
+   "id": "semicolon-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 587,
+    "end": 589,
+    "text": "65"
+   }
+  },
+  {
+   "id": "blank-line-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 636,
+    "end": 638,
+    "text": "65"
+   }
+  },
+  {
+   "id": "bullet-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 696,
+    "end": 698,
+    "text": "65"
+   }
+  },
+  {
+   "id": "abbreviation-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 734,
+    "end": 736,
+    "text": "18"
+   }
+  },
+  {
+   "id": "abbreviation-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 741,
+    "end": 743,
+    "text": "65"
+   }
+  },
+  {
+   "id": "hyphen-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 791,
+    "end": 793,
+    "text": "18"
+   }
+  },
+  {
+   "id": "hyphen-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 798,
+    "end": 800,
+    "text": "65"
+   }
+  },
+  {
+   "id": "nonletter-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 841,
+    "end": 843,
+    "text": "18"
+   }
+  },
+  {
+   "id": "nonletter-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 848,
+    "end": 850,
+    "text": "65"
+   }
+  },
+  {
+   "id": "unicode-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 890,
+    "end": 892,
+    "text": "18"
+   }
+  },
+  {
+   "id": "unicode-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 897,
+    "end": 899,
+    "text": "65"
+   }
+  },
+  {
+   "id": "spaces-low",
+   "field": "age",
+   "value": 18,
+   "evidence": {
+    "start": 955,
+    "end": 957,
+    "text": "18"
+   }
+  },
+  {
+   "id": "spaces-high",
+   "field": "age",
+   "value": 65,
+   "evidence": {
+    "start": 962,
+    "end": 964,
+    "text": "65"
+   }
+  },
+  {
+   "id": "range-low",
+   "field": "age_range",
+   "value": 18,
+   "evidence": {
+    "start": 103,
+    "end": 105,
+    "text": "18"
+   }
+  },
+  {
+   "id": "range-high",
+   "field": "age_range",
+   "value": 65,
+   "evidence": {
+    "start": 110,
+    "end": 112,
+    "text": "65"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
