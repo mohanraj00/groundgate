@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import bisect
 import dataclasses
 from collections import defaultdict
 from collections.abc import Mapping, Sequence
@@ -30,7 +31,7 @@ from .text import (
     form_next,
     gain_word,
     header,
-    heading_scale,
+    heading_rows,
     holds_form,
     host,
     in_scale,
@@ -123,11 +124,20 @@ class _Text:
     offsets: Offsets
     ref: str | None = None
     mentions: dict[tuple[str, ...], list[tuple[int, int, str]]] = field(default_factory=dict)
+    rows: list[tuple[int, int]] | None = None  # reached by a heading scale, read once
 
     def key_mentions(self, words: tuple[str, ...]) -> list[tuple[int, int, str]]:
         if words not in self.mentions:
             self.mentions[words] = key_mentions(self.text, words)
         return self.mentions[words]
+
+
+def heading_scale(t: _Text, pos: int) -> bool:
+    """Whether a heading scale reaches the token at ``pos`` (SPEC §4.1)."""
+    if t.rows is None:
+        t.rows = heading_rows(t.text)
+    i = bisect.bisect_right(t.rows, (pos, len(t.text) + 1)) - 1
+    return i >= 0 and t.rows[i][0] <= pos <= t.rows[i][1]
 
 
 @dataclass
@@ -316,7 +326,7 @@ def _value_at(
             and f.unit != "%"
             and "scale" not in need
             and scaled_value(t.text, k) is None
-            and heading_scale(t.text, k.start)
+            and heading_scale(t, k.start)
         ):
             return need | {"scale"}
         return need

@@ -236,7 +236,8 @@ oi-2024  needs_verification  PART_MISSING KEY_CITED  missing: scale
 The value is 1,000 times too small. "(in thousands)" is on a heading line with no tab, and the
 rows with tabs after it are its table, so the scale reaches `(2,980)`. The candidate cites no
 scale, so the scale is a missing part, and a person checks the value. The heading reaches only
-the rows directly after it: a blank line or a line with no tab ends the table. A table with
+the rows directly after it. Blank lines may stand between the heading and the first row. After
+that, a blank line or a line with no tab ends the table. A table with
 spaces instead of tabs gets no heading scale (#152). So tell the extractor to apply the scale and
 to cite it. If the field has a known size, set its `minimum` and `maximum` too.
 

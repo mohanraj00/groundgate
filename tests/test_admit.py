@@ -630,3 +630,15 @@ def test_heading_scale_reads_a_long_table_once() -> None:
     r = gg.admit(text, {"fields": {"n": {"type": "integer"}}}, [cand])
     assert time.perf_counter() - began < 5
     assert r.decisions[0].missing == ("scale",)
+
+
+def test_heading_scale_reads_a_wide_row_once() -> None:
+    """Many copies of the value on one wide row under a heading scale stay linear (#206)."""
+    import time
+
+    text = "(in thousands)\nRow\t" + "\t".join("0" for _ in range(200_000)) + "\n"
+    cand = {"id": "c", "field": "n", "value": 0, "evidence": [{"text": "0"}]}
+    began = time.perf_counter()
+    r = gg.admit(text, {"fields": {"n": {"type": "integer"}}}, [cand])
+    assert time.perf_counter() - began < 5
+    assert r.decisions[0].missing == ("scale",)

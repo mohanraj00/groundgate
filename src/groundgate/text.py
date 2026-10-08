@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import functools
 import re
 import unicodedata
 from dataclasses import dataclass
@@ -600,31 +599,29 @@ def gain_word(text: str, start: int, end: int) -> bool:
     return bool(_GAIN.search(text, start, end))
 
 
-def heading_scale(text: str, pos: int) -> bool:
-    """Whether a scale phrase on a heading line reaches the table row at ``pos`` (SPEC §4.1)."""
-    return text.rfind("\n", 0, pos) + 1 in _reached(text)
-
-
-@functools.lru_cache(maxsize=8)
-def _reached(text: str) -> frozenset[int]:
-    """The starts of the lines that a heading scale reaches, in one pass: a line with no tab that
-    holds "in" and a scale word, then any blank lines, then the lines with tabs up to the first
-    line with no tab."""
-    out = set()
+def heading_rows(text: str) -> list[tuple[int, int]]:
+    """The spans of the table rows that a heading scale reaches (SPEC §4.1), in order and
+    merged, in one pass: a line with no tab that holds "in" and a scale word, then any blank
+    lines, then the lines with tabs up to the first line with no tab."""
+    out: list[tuple[int, int]] = []
     state = None  # "heading" after a heading line, "table" in its rows
     start = 0
     for line in text.split("\n"):
+        end = start + len(line)
         if "\t" in line:
+            if state == "table":
+                out[-1] = (out[-1][0], end)
+            elif state == "heading":
+                out.append((start, end))
             if state is not None:
-                out.add(start)
                 state = "table"
         elif not line.strip():
             if state == "table":
                 state = None
         else:
             state = "heading" if in_scale(line, 0, len(line)) else None
-        start += len(line) + 1
-    return frozenset(out)
+        start = end + 1
+    return out
 
 
 def in_scale(text: str, start: int, end: int) -> bool:
