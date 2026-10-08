@@ -9,8 +9,11 @@ threshold belongs to one model and one kind of document: the field doubt gave 0.
 yours, as [hybrid design](https://github.com/mohanraj00/groundgate/blob/main/docs/design/hybrid-decisions.md) §9 describes. It is a separate package, so the groundgate core never
 contains code that calls a model.
 
+groundgate-calibrate is not on PyPI yet
+([#122](https://github.com/mohanraj00/groundgate/issues/122)). Install it from the repository:
+
 ```bash
-pip install groundgate-calibrate
+pip install "git+https://github.com/mohanraj00/groundgate#subdirectory=calibrate"
 ```
 
 ## Steps
@@ -26,8 +29,8 @@ groundgate-calibrate report --work W        # REPORT.md, report.json
 
 - `D` holds one `<doc>.txt` for each document.
 - `C` holds one `<doc>.json` for each document: a list of your extractor's candidates in the
-  spec 0.3 candidate format.
-- `S` is a spec 0.3 schema.
+  candidate format of the installed groundgate's spec (0.5 with groundgate 0.5.1).
+- `S` is a schema of that spec.
 - `--descriptions` is an optional JSON file that maps each field name to a one-line meaning.
   The field question and the label tool show it.
 
@@ -40,12 +43,12 @@ input again.
 
 ## Questions
 
-- **`key`: the key clear.** The items are the candidates that spec 0.3 flags
-  `KEY_NOT_AT_VALUE`. A judge chooses one of the field's keys, or none. A judge clears a flag
+- **`key`: the key clear.** The items are the candidates that groundgate flags
+  `KEY_NOT_AT_VALUE` with no judgment. A judge chooses one of the field's keys, or none. A judge clears a flag
   when it chooses the candidate's key with a confidence of t or more. The clear is right when
   the label holds that key, and an escape when it does not. The ceiling is on the escape rate
   among clears, and the tool takes the lowest threshold that keeps the bound below it.
-- **`field`: the field doubt.** The items are the candidates that spec 0.3 admits. A judge
+- **`field`: the field doubt.** The items are the candidates that groundgate admits with no judgment. A judge
   gives the probability that the text states the value as the field. A judge doubts a value
   when that probability is below t. A doubt catches a wrong value, and it sends a right one to
   review. The ceiling is on the share of right values doubted, and the tool takes the highest
@@ -63,7 +66,7 @@ documents for the ceiling that you need before you start.
 ## Rules that the tool keeps
 
 - **Blind labels.** The label tool shows the document, the marked value, the field and the
-  options. It never shows the candidate's key, spec 0.3's reading or a judge's answer.
+  options. It never shows the candidate's key, groundgate's reading or a judge's answer.
 - **Split first.** `split` is written once, by document, on sha256 of the document name. It
   refuses to run after a judge has answered, and `ask` refuses to run without it.
 - **Labels first.** `ask` refuses to run until every item has a label (not sure counts), and it
@@ -96,7 +99,7 @@ Then `--judge mine` uses it. A plug-in cannot take the name of another judge.
 
 ## In production: recorded judgments
 
-Spec 0.4 reads a judge's answers only as recorded inputs. `judge` writes them for your documents:
+Since spec 0.4, groundgate reads a judge's answers only as recorded inputs. `judge` writes them for your documents:
 
 ```bash
 groundgate-calibrate judge --docs D --candidates C --schema S --policy policy.json \
@@ -119,5 +122,5 @@ groundgate-calibrate judge --docs D --candidates C --schema S --policy policy.js
 ## The result
 
 `report` writes, for each ceiling with a threshold, the `judge` block of a policy (hybrid
-design §7) with the model and the threshold. Spec 0.4 reads it, with the judgments that `judge`
+design §7) with the model and the threshold. Spec 0.4 and later read it, with the judgments that `judge`
 writes ([#116](https://github.com/mohanraj00/groundgate/issues/116)).

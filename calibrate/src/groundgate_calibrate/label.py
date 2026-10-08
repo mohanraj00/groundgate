@@ -1,5 +1,5 @@
 """The browser label tool, standard library only. It shows each document with its items marked,
-and the question. It never shows spec 0.3's reading or a model answer: not the candidate's key,
+and the question. It never shows groundgate's reading or a model answer: not the candidate's key,
 and not an answer of a judge."""
 
 from __future__ import annotations

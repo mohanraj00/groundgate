@@ -78,6 +78,7 @@ CI runs `build.py` and fails if any output file changes.
 From scratch:
 
 ```bash
+cd examples/irs-590a   # needs groundgate[pdf,langextract]
 curl -LO https://www.irs.gov/pub/irs-pdf/p590a.pdf
 shasum -a 256 p590a.pdf   # ca0e42873cfd66d2d9bfd082125d381f8a0c2f3b0a441d7d65ab5ccc06a0e1c7
 groundgate extract p590a.pdf --pages 1-2 -o document.txt --layout layout.json

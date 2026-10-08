@@ -4,8 +4,11 @@ Each file in `vectors/` is a complete, language-agnostic test case:
 
 - `document`: NFC text;
 - `schema` and `policy`: inputs as in SPEC §2 (`policy` may be `null`);
-- `candidates`: the candidates exactly as proposed, with UTF-8 byte offsets;
-- `expected.decisions`: one `{outcome, codes}` per candidate, in input order;
+- `candidates`: the candidates exactly as proposed; an evidence item has UTF-8 byte offsets, or
+  only a quote;
+- `judgments`, `references` and `document_source` (optional): inputs as in SPEC §2.1 and §2.6;
+- `expected.decisions`: one `{outcome, codes}` per candidate, in input order, and `missing` where
+  a part is missing;
 - `expected.coverage`: the coverage findings.
 
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
