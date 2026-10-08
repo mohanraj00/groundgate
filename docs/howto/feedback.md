@@ -163,6 +163,8 @@ def feedback_for(d, candidate):
             lines.append(f"- {code}: {DESCRIPTIONS[code]}")
     for part in d.missing:
         lines.append(f'- Cite the {part} with a "{part}" item.')
+        if part in ("unit", "key"):
+            lines.append('- Also cite the words that name the field with a "field" item.')
     for p in d.parts:
         if not p.passed:
             lines.append(f'- The "{p.role}" item does not support the {p.role} at the value.')
@@ -190,13 +192,18 @@ Send feedback only when a better citation can fix the decision. These codes are 
 
 | Code | What the model can fix |
 |---|---|
-| `PART_MISSING` | Cite the part that `missing` names. |
+| `PART_MISSING` | Cite the part that `missing` names. A `unit` part also needs a passing `field` item. |
 | `QUOTE_NOT_FOUND` | Copy the quote exactly from the text. |
 | `NON_VERBATIM_EVIDENCE` | Copy the quote exactly from the text. |
-| `KEY_NOT_AT_VALUE`, with `key` in `missing` | Cite the key, such as a column heading, with a `key` item. |
+| `KEY_NOT_AT_VALUE`, with `key` in `missing` | In a table, cite the column heading with a `key` item and the row label with a `field` item. |
 | `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_CITATION_INVALID` | Cite the part at the value. If the retry fails again, a person checks the fact. |
 | `SCALE_WORD` | Send the scaled value, such as `1250000000` for "$1.25 billion". |
 | `NO_EVIDENCE` | Quote the value. |
+
+A unit item and a key item pass only with a passing field item, and a field item passes only on
+a field with `aliases` (see [the schema guide](../schema.md)). A key item puts its key at the value
+only in a table, by the column rule. So if the field has no `aliases`, or the value is in prose,
+a missing unit or key is not worth a retry. A person checks the fact.
 
 These codes are not worth a retry:
 
@@ -231,6 +238,8 @@ RETRY = {
 def worth_a_retry(d):
     if d.outcome == "admitted":
         return False
+    if {"unit", "key"} & set(d.missing) and not schema["fields"][d.field].get("aliases"):
+        return False  # a unit or key item needs a passing field item, and so the field's aliases
     for code in d.codes:
         if code in INFO or code in RETRY:
             continue

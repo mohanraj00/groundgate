@@ -179,7 +179,8 @@ evidence is from outside the document, `evidence` is not a span in the text. The
 and `url` name the source, and the candidate holds the quote or the statement. Do one thing for
 each outcome:
 
-1. If the outcome is `admitted`, store the fact.
+1. If the outcome is `admitted`, store the fact. A keyed field or a `multiple` field can have
+   several admitted facts, so the store keeps a list for each field and key.
 2. If the outcome is `needs_verification`, put the fact in a queue for a person. Give the person
    the codes and the evidence.
 3. If the outcome is `rejected`, do not store the fact. Log the codes.
@@ -199,7 +200,7 @@ def cited(decision):
 for d in sorted(receipt.decisions, key=lambda d: d.candidate_id):
     codes = " ".join(d.codes)
     if d.outcome == "admitted":
-        store[d.field] = (d.value, d.unit)
+        store.setdefault((d.field, d.key), []).append((d.value, d.unit))
         print(f"{d.candidate_id} store   {d.field} = {d.value} {d.unit}")
     elif d.outcome == "needs_verification":
         queue.append({"candidate": by_id[d.candidate_id], "codes": d.codes, "cited": cited(d)})
