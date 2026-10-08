@@ -123,3 +123,22 @@ def test_schema_command_still_writes_the_extractor_schema(
     (tmp_path / "s.json").write_text(json.dumps({"fields": {"fee": {}}}), encoding="utf-8")
     assert main(["schema", str(tmp_path / "s.json")]) == 0
     assert json.loads(capsys.readouterr().out)["type"] == "object"
+
+
+def test_alias_in_alias_by_word_index(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    schema = {
+        "fields": {
+            "net": {"aliases": ["(Net Sales)"]},
+            "sales": {"aliases": ["net sales"]},
+            "share": {"aliases": ["%"]},
+            "margin": {"aliases": ["% of sales"]},
+            "clean": {"aliases": [f"item {n} total" for n in range(1, 400)]},
+        }
+    }
+    assert check(tmp_path, schema, capsys) == (
+        1,
+        "alias 'net sales' of field 'sales' is in alias '(Net Sales)' of field 'net': "
+        "a field item for 'net' passes for 'sales'\n"
+        "alias '%' of field 'share' is in alias '% of sales' of field 'margin': "
+        "a field item for 'margin' passes for 'share'\n",
+    )

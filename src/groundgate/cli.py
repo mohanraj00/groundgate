@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -223,22 +224,39 @@ def _findings(schema: Schema) -> list[str]:
             out.append(
                 f"alias {alias!r} is on fields {listed}: a field item does not tell them apart"
             )
-    for name, f in schema.fields.items():  # an alias in a longer alias of another field
-        for other, g in schema.fields.items():
-            if other == name or f.aliases is None or g.aliases is None:
-                continue
-            for b in g.aliases:
-                for a in dict.fromkeys(a for _, _, a in key_mentions(b, f.aliases)):
-                    if _norm(a) != _norm(b):
-                        out.append(
-                            f"alias {a!r} of field {name!r} is in alias {b!r} of field "
-                            f"{other!r}: a field item for {other!r} passes for {name!r}"
-                        )
+    # An alias in a longer alias of another field. Each word of a whole-word match is a word of
+    # the longer alias, so only aliases that share the shorter alias's rarest word are compared.
+    rank = {name: n for n, name in enumerate(schema.fields)}
+    every = [
+        (other, n, b) for other, g in schema.fields.items() for n, b in enumerate(g.aliases or ())
+    ]
+    index: dict[str, list[tuple[str, int, str]]] = {}
+    for other, n, b in every:
+        for word in _words(b):
+            index.setdefault(word, []).append((other, n, b))
+    pairs: set[tuple[str, str, int, str]] = set()
+    for name, f in schema.fields.items():
+        for a in f.aliases or ():
+            words = _words(a)
+            pool = index[min(words, key=lambda w: len(index[w]))] if words else every
+            pairs.update((name, other, n, b) for other, n, b in pool if other != name)
+    for name, other, _, b in sorted(pairs, key=lambda p: (rank[p[0]], rank[p[1]], p[2])):
+        aliases = schema.fields[name].aliases or ()
+        for a in dict.fromkeys(a for _, _, a in key_mentions(b, aliases)):
+            if _norm(a) != _norm(b):
+                out.append(
+                    f"alias {a!r} of field {name!r} is in alias {b!r} of field "
+                    f"{other!r}: a field item for {other!r} passes for {name!r}"
+                )
     return out
 
 
 def _norm(word: str) -> str:
     return normalize_ws(word).lower()
+
+
+def _words(text: str) -> set[str]:
+    return set(re.findall(r"[^\W_]+", text.casefold()))
 
 
 def _check(args: argparse.Namespace) -> int:
