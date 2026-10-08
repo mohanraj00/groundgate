@@ -6,22 +6,28 @@
   groundgate verify   RECEIPT DOC SCHEMA CANDIDATES
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES -o report.html
   groundgate schema   SCHEMA                            > extractor.schema.json
+  groundgate schema check SCHEMA
 
 DOC may be "-" to read the document from standard input. Exit codes: 0 success, 1 the receipt
-does not match its inputs, 2 invalid input.
+does not match its inputs (or schema check has a finding), 2 invalid input.
 """
 
 from __future__ import annotations
 
 import argparse
+import functools
 import json
+import re
 import sys
+import unicodedata
 from collections import Counter
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
 from .admit import admit, verify
-from .model import PacketError, extractor_schema
+from .model import PacketError, Schema, extractor_schema
+from .text import key_mentions, normalize_ws
 
 
 def _unique(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -95,7 +101,10 @@ def _parser() -> argparse.ArgumentParser:
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
     x.add_argument("--pages", type=_pages, help="PDF pages to extract, e.g. 1-12,15")
 
-    s = sub.add_parser("schema", help="write the JSON Schema for an extractor's output")
+    s = sub.add_parser(
+        "schema",
+        help="write the JSON Schema for an extractor's output (or: schema check SCHEMA)",
+    )
     s.add_argument("schema", help="schema JSON")
     s.add_argument("--references", help="JSON array of references; their ids become refs")
     s.add_argument("-o", "--output", help="write the JSON Schema here instead of stdout")
@@ -136,12 +145,26 @@ def _parser() -> argparse.ArgumentParser:
     return ap
 
 
+def _check_parser() -> argparse.ArgumentParser:
+    ap = argparse.ArgumentParser(
+        prog="groundgate schema check",
+        description="Print the schema settings that docs/schema.md lists under 'Check a schema'. "
+        "Exit codes: 0 no finding, 1 a finding, 2 invalid schema.",
+    )
+    ap.add_argument("schema", help="schema JSON")
+    return ap
+
+
 def main(argv: list[str] | None = None) -> int:
-    parser = _parser()
-    args = parser.parse_args(argv)
-    if args.command == "admit":
+    argv = sys.argv[1:] if argv is None else list(argv)
+    check = argv[:2] == ["schema", "check"]
+    parser = _check_parser() if check else _parser()
+    args = parser.parse_args(argv[2:] if check else argv)
+    if not check and args.command == "admit":
         _admit_inputs(parser, args)
     try:
+        if check:
+            return _check(args)
         if args.command == "extract":
             return _extract(args)
         if args.command == "schema":
@@ -284,6 +307,178 @@ def _schema(args: argparse.Namespace) -> int:
         ids = [r.get("id") for r in refs]
     _write(_dumps(extractor_schema(_json(args.schema), ids)), args.output)
     return 0
+
+
+def _findings(schema: Schema) -> list[str]:
+    """The settings of a valid schema that make a check fail every time, or pass for the wrong
+    key or field. Step 1 already refuses blank and repeated keys and aliases of one field."""
+    out: list[str] = []
+    owners: dict[str, tuple[str, list[str]]] = {}  # normalized alias: (as written, fields)
+    for name, f in schema.fields.items():
+        if f.aliases is None:
+            if f.unit is not None:
+                out.append(f"field {name!r} has a unit and no aliases: a unit item never passes")
+            if f.keys is not None:
+                out.append(
+                    f"field {name!r} has keys and no aliases: "
+                    "a key item never puts the key at the value"
+                )
+        else:
+            inside = (k for a in f.aliases for _, _, k in key_mentions(a, f.keys or ()))
+            for key in dict.fromkeys(inside):
+                out.append(
+                    f"field {name!r} has the key {key!r} in an alias: "
+                    "each mention of the field puts that key at the value"
+                )
+            for alias in f.aliases:
+                owners.setdefault(_norm(alias), (alias, []))[1].append(name)
+        low, high = f.minimum, f.maximum
+        if f.type != "string" and low is not None and high is not None and low > high:
+            out.append(f"field {name!r} has a minimum above its maximum: no value is in range")
+    for alias, names in owners.values():
+        if len(names) > 1:
+            listed = ", ".join(map(repr, names[:-1])) + f" and {names[-1]!r}"
+            out.append(
+                f"alias {alias!r} is on fields {listed}: a field item does not tell them apart"
+            )
+    # An alias in a longer alias of another field. One pass over all aliases finds each alias
+    # in each other alias, with letters folded as re.I matches them (Aho-Corasick). key_mentions
+    # then confirms each pair, so the work grows with the aliases and the findings.
+    rank = {name: n for n, name in enumerate(schema.fields)}
+    # folded alias: normalized alias: (field, place, alias). Equal normalized aliases are
+    # reported above, so a pair needs two of them.
+    groups: dict[str, dict[str, list[tuple[str, int, str]]]] = {}
+    for other, g in schema.fields.items():
+        for n, b in enumerate(g.aliases or ()):
+            group = groups.setdefault(_folded(b)[0], {})
+            group.setdefault(_norm(b), []).append((other, n, b))
+    patterns = list(groups)
+    automaton = _automaton(patterns)
+    pairs: set[tuple[str, str, int, str]] = set()
+    for holders in groups.values():
+        for norm_b, places in holders.items():  # one spelling: the same word boundaries
+            for p in _found(patterns, automaton, places[0][2]):
+                for norm_a, named in groups[patterns[p]].items():
+                    if norm_a != norm_b:
+                        pairs.update(
+                            (name, other, n, b)
+                            for name, _, _ in named
+                            for other, n, b in places
+                            if other != name
+                        )
+    for name, other, _, b in sorted(pairs, key=lambda p: (rank[p[0]], rank[p[1]], p[2])):
+        aliases = schema.fields[name].aliases or ()
+        for a in dict.fromkeys(a for _, _, a in key_mentions(b, aliases)):
+            if _norm(a) != _norm(b):
+                out.append(
+                    f"alias {a!r} of field {name!r} is in alias {b!r} of field "
+                    f"{other!r}: a field item for {other!r} passes for {name!r}"
+                )
+    return out
+
+
+def _norm(word: str) -> str:
+    return normalize_ws(word).lower()
+
+
+def _folded(text: str) -> tuple[str, list[int]]:
+    """The text with each letter folded as re.I matches it and each run of whitespace as one
+    space, as key_mentions reads a key, and the place in the text of each character."""
+    out: list[str] = []
+    places: list[int] = []
+    for i, c in enumerate(text):
+        if _SPACE.match(c):
+            if out and out[-1] != " ":
+                out.append(" ")
+                places.append(i)
+            continue
+        out.append(_fold(c))
+        places.append(i)
+    if out and out[-1] == " ":
+        out.pop()
+        places.pop()
+    return "".join(out), places
+
+
+_Automaton = tuple[list[dict[str, int]], list[int], list[list[int]]]
+
+
+def _found(patterns: list[str], automaton: _Automaton, raw: str) -> set[int]:
+    """The patterns that occur in the folded raw text with no letter or digit of the raw text
+    next to them."""
+    goto, fail, ends = automaton
+    folded, places = _folded(raw)
+    found: set[int] = set()
+    state = 0
+    for j, c in enumerate(folded):
+        while state and c not in goto[state]:
+            state = fail[state]
+        state = goto[state].get(c, 0)
+        for p in ends[state]:
+            first, last = places[j - len(patterns[p]) + 1], places[j]
+            before = raw[first - 1] if first else " "
+            after = raw[last + 1] if last + 1 < len(raw) else " "
+            if not _WORD.match(before) and not _WORD.match(after):
+                found.add(p)
+    return found
+
+
+def _automaton(patterns: list[str]) -> _Automaton:
+    """The Aho-Corasick automaton of the patterns: goto, fail and the patterns that end at each
+    state."""
+    goto: list[dict[str, int]] = [{}]
+    ends: list[list[int]] = [[]]
+    for p, pattern in enumerate(patterns):
+        state = 0
+        for c in pattern:
+            if c not in goto[state]:
+                goto.append({})
+                ends.append([])
+                goto[state][c] = len(goto) - 1
+            state = goto[state][c]
+        ends[state].append(p)
+    fail = [0] * len(goto)
+    queue = list(goto[0].values())
+    for state in queue:
+        for c, child in goto[state].items():
+            queue.append(child)
+            back = fail[state]
+            while back and c not in goto[back]:
+                back = fail[back]
+            fail[child] = goto[back].get(c, 0)
+            ends[child] = ends[child] + ends[fail[child]]
+    return goto, fail, ends
+
+
+_SPACE, _WORD = re.compile(r"\s"), re.compile(r"[^\W_]")
+_ONE_LETTER = {"\ufb05": "\ufb06"}  # re.I matches the two "st" ligatures
+
+
+@functools.lru_cache(maxsize=4096)
+def _fold(c: str) -> str:
+    """One letter for each set of letters that re.I matches with each other."""
+    seen, todo = {c}, [c]
+    while todo:
+        x = todo.pop()
+        for y in (x.lower(), x.upper(), x.casefold(), x.title(), unicodedata.normalize("NFC", x)):
+            d = y[:1]
+            if d not in seen and re.fullmatch(re.escape(x), d, re.I):
+                seen.add(d)
+                todo.append(d)
+    k = min(_single(str.lower, _single(str.upper, x)) for x in seen)
+    return _ONE_LETTER.get(k, k)
+
+
+def _single(case: Callable[[str], str], c: str) -> str:
+    out = case(c)
+    return out if len(out) == 1 else c
+
+
+def _check(args: argparse.Namespace) -> int:
+    found = _findings(Schema.from_dict(_json(args.schema)))
+    for line in found:
+        print(line)
+    return 1 if found else 0
 
 
 def _extract(args: argparse.Namespace) -> int:

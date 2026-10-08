@@ -649,12 +649,15 @@ groundgate admit   --docs D --candidates C --schema S --out R [--policy P] [--ju
 groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J]
 groundgate report  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--layout L] [--title T] [-o report.html]
 groundgate schema  SCHEMA [--references R] [-o extractor.schema.json]
+groundgate schema check SCHEMA
 ```
 
 `admit`, `verify` and `report` also take `--references R` and `--document-source URL`. `schema`
-writes the extractor schema, with the ids of the references in `R` as its refs. `DOC` may be `-`
-for standard input. Exit codes: 0 success, 1 the receipt does not match its
-inputs, 2 invalid input.
+writes the extractor schema, with the ids of the references in `R` as its refs. `schema check`
+prints the settings that make a check fail every time, or pass for the wrong key or field
+([Check a schema](schema.md#check-a-schema)). `DOC` may be `-` for standard input. Exit codes:
+0 success, 1 the receipt does not match its inputs or `schema check` has a finding, 2 invalid
+input.
 
 `groundgate admit --docs D --candidates C --schema S --out R` processes a folder of documents.
 `D` holds `<doc>.txt` files, and `C` holds matching `<doc>.json` arrays of candidates. Only names

@@ -576,6 +576,73 @@ field 'dose' keys must be distinct, non-blank text
 unit 'inHg' surfaces must be non-empty strings
 ```
 
+## Check a schema
+
+A valid schema can still hold a setting that makes a check fail every time, or pass for the wrong
+key or field. `groundgate schema check SCHEMA` prints one line for each of these settings:
+
+- A field with a `unit` and no `aliases`. A unit item passes only with a passing field item, so
+  it never passes.
+- A field with `keys` and no `aliases`. The column rule needs a passing field item, so a key item
+  never puts the key at the value.
+- A key in an alias of the same field, such as the key `net` in the alias `net sales`. Each
+  mention of the field's name is then a mention of that key, so the key is at each value that the
+  name is at.
+- An alias on two fields, or an alias in a longer alias of another field, such as `sales` in
+  `net sales`. A field item that quotes the one field's name passes for the other field too.
+- A `minimum` above the `maximum` on a number or integer field. No value is in range, so each
+  candidate is rejected `RANGE_INVALID`.
+
+It exits 1 if it prints a line and 0 if not, so CI can run it. An invalid schema exits 2. `admit`
+does not run this check, and its output stays the receipt.
+
+```python
+import json
+import tempfile
+from pathlib import Path
+
+from groundgate.cli import main
+
+risky = {
+    "fields": {
+        "fee": {"type": "integer", "unit": "USD"},
+        "dose": {"unit": "mg", "keys": ["adults", "children"]},
+        "net_sales": {"keys": ["2025", "net"], "aliases": ["net sales"]},
+        "cost": {"aliases": ["cost of sales", "Net Sales"]},
+        "gross": {"aliases": ["sales"]},
+        "rate": {"minimum": "10", "maximum": "5"},
+    }
+}
+fixed = {
+    "fields": {
+        "fee": {"type": "integer", "unit": "USD", "aliases": ["late fee"]},
+        "rate": {"minimum": "5", "maximum": "10"},
+    }
+}
+with tempfile.TemporaryDirectory() as tmp:
+    for name, schema in [("risky", risky), ("fixed", fixed)]:
+        path = Path(tmp) / f"{name}.json"
+        path.write_text(json.dumps(schema), encoding="utf-8")
+        print(f"{name}: exit {main(['schema', 'check', str(path)])}")
+```
+
+```text
+field 'fee' has a unit and no aliases: a unit item never passes
+field 'dose' has a unit and no aliases: a unit item never passes
+field 'dose' has keys and no aliases: a key item never puts the key at the value
+field 'net_sales' has the key 'net' in an alias: each mention of the field puts that key at the value
+field 'rate' has a minimum above its maximum: no value is in range
+alias 'net sales' is on fields 'net_sales' and 'cost': a field item does not tell them apart
+alias 'sales' of field 'gross' is in alias 'net sales' of field 'net_sales': a field item for 'net_sales' passes for 'gross'
+alias 'sales' of field 'gross' is in alias 'cost of sales' of field 'cost': a field item for 'cost' passes for 'gross'
+alias 'sales' of field 'gross' is in alias 'Net Sales' of field 'cost': a field item for 'cost' passes for 'gross'
+risky: exit 1
+fixed: exit 0
+```
+
+The check does not repeat step 1. Blank and repeated keys or aliases of one field make the schema
+invalid (see above).
+
 ## Three schemas
 
 ### An IRS publication
