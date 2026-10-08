@@ -599,6 +599,31 @@ def gain_word(text: str, start: int, end: int) -> bool:
     return bool(_GAIN.search(text, start, end))
 
 
+def heading_rows(text: str) -> list[tuple[int, int]]:
+    """The spans of the table rows that a heading scale reaches (SPEC §4.1), in order and
+    merged, in one pass: a line with no tab that holds "in" and a scale word, then any blank
+    lines, then the lines with tabs up to the first line with no tab."""
+    out: list[tuple[int, int]] = []
+    state = None  # "heading" after a heading line, "table" in its rows
+    start = 0
+    for line in text.split("\n"):
+        end = start + len(line)
+        if "\t" in line:
+            if state == "table":
+                out[-1] = (out[-1][0], end)
+            elif state == "heading":
+                out.append((start, end))
+            if state is not None:
+                state = "table"
+        elif not line.strip():
+            if state == "table":
+                state = None
+        else:
+            state = "heading" if in_scale(line, 0, len(line)) else None
+        start = end + 1
+    return out
+
+
 def in_scale(text: str, start: int, end: int) -> bool:
     """Whether text[start:end] holds "in" and a scale word, such as "in thousands" (SPEC §4.6)."""
     return bool(_IN_SCALE.search(text, start, end))

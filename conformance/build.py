@@ -2683,6 +2683,60 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- spec 0.6 (#162)
+HEADING_TABLE = (
+    "CONSOLIDATED STATEMENTS OF OPERATIONS\n\n(in thousands)\n\n2025\t2024\n"
+    "Net sales\t$ 84,210\t$ 79,605\n"
+    "Gross margin\t12 %\t11 %\n"
+    "Loss from operations\t(3,415)\t(2,980)\n"
+    "Backlog\t$1.2 million\t$1.0 million\n\n"
+    "Other income\t500\t400\n\n"
+    "Headcount at year end was 1,250.\n\n"
+    "Segment data\n\n2025\t2024\nUnits sold\t1,250\t1,100\n"
+)
+vector(
+    "24-heading-scale",
+    "A scale phrase on a heading line with no tab reaches the lines with tabs directly after it, "
+    "after any blank lines, up to the first line that holds no tab. A value at a token there, "
+    "with no scale item and no scale word after the number, equal to the number as written, "
+    "misses its scale. A field with the unit % is not reached. A table after a blank line, a "
+    "heading with no scale phrase, and a line with no tab are not reached (#162).",
+    HEADING_TABLE,
+    {
+        "fields": {
+            "net_sales": {"type": "number", "unit": "USD", "multiple": True},
+            "operating_income": {
+                "type": "number",
+                "unit": "USD",
+                "multiple": True,
+                "aliases": ["loss from operations"],
+            },
+            "margin": {"type": "number", "unit": "%", "multiple": True},
+            "backlog": {"type": "number", "unit": "USD"},
+            "other": {"type": "number", "multiple": True},
+            "headcount": {"type": "integer"},
+            "units": {"type": "integer", "multiple": True},
+        }
+    },
+    [
+        c("h1", "net_sales", "84210", "USD", [q("$ 84,210")],
+          (REVIEW, ["PART_MISSING"], ["scale"])),
+        c("h2", "net_sales", "84210000", "USD", [q("$ 84,210"), THOUSANDS],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("h3", "net_sales", "84210000", "USD", [q("$ 84,210")],
+          (REVIEW, ["PART_MISSING"], ["scale"])),
+        c("h4", "operating_income", "-2980", "USD",
+          [q("(2,980)"), DOLLAR, row("Loss from operations")],
+          (REVIEW, ["PART_MISSING"], ["scale"])),
+        c("h5", "margin", "12", "%", [q("12 %")]),
+        c("h6", "headcount", "1250", None, [q("1,250")]),
+        c("h7", "units", "1250", None, [q("1,250", 2)]),
+        c("h8", "other", "500", None, [q("500")]),
+        c("h9", "backlog", "1200000", "USD", [q("$1.2 million")]),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

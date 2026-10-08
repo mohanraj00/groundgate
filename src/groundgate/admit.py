@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import bisect
 import dataclasses
 from collections import defaultdict
 from collections.abc import Mapping, Sequence
@@ -30,6 +31,7 @@ from .text import (
     form_next,
     gain_word,
     header,
+    heading_rows,
     holds_form,
     host,
     in_scale,
@@ -122,11 +124,20 @@ class _Text:
     offsets: Offsets
     ref: str | None = None
     mentions: dict[tuple[str, ...], list[tuple[int, int, str]]] = field(default_factory=dict)
+    rows: list[tuple[int, int]] | None = None  # reached by a heading scale, read once
 
     def key_mentions(self, words: tuple[str, ...]) -> list[tuple[int, int, str]]:
         if words not in self.mentions:
             self.mentions[words] = key_mentions(self.text, words)
         return self.mentions[words]
+
+
+def heading_scale(t: _Text, pos: int) -> bool:
+    """Whether a heading scale reaches the token at ``pos`` (SPEC §4.1)."""
+    if t.rows is None:
+        t.rows = heading_rows(t.text)
+    i = bisect.bisect_right(t.rows, (pos, len(t.text) + 1)) - 1
+    return i >= 0 and t.rows[i][0] <= pos <= t.rows[i][1]
 
 
 @dataclass
@@ -307,16 +318,29 @@ def _value_at(
             words = None if at_span is None else own.text[at_span[0] : at_span[1]]
         scale = None if words is None else item_scale(words, 0, len(words))
     toks = [k for k in tokens(t.text, s, e) if k.value is not None]
+
+    def heading(k: Token, need: set[str]) -> set[str]:
+        """The parts missing at the token, with the scale of a heading over its table."""
+        if (
+            scale_item is None
+            and f.unit != "%"
+            and "scale" not in need
+            and scaled_value(t.text, k) is None
+            and heading_scale(t, k.start)
+        ):
+            return need | {"scale"}
+        return need
+
     hits: list[tuple[Token, set[str]]] = []
     for k in toks:
         vals, _ = _values(t, k, neg_item, scale, signs)
-        if value in vals:
-            hits.append((k, set()))
+        if value in vals and (lenient or not heading(k, set())):
+            hits.append((k, heading(k, set())))
     if not hits and lenient:
         for k in toks:
             need = _missing(t, k, value, neg_item, scale_item is not None, scale, signs)
             if need is not None:
-                hits = [(k, need)]
+                hits = [(k, heading(k, need))]
                 break
     if not hits:
         return None, "VALUE_NOT_IN_EVIDENCE"

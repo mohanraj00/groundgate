@@ -230,14 +230,16 @@ show(gg.admit(text, schema, [unscaled]))
 ```
 
 ```text
-oi-2024  admitted            VALUE_DERIVED KEY_CITED
+oi-2024  needs_verification  PART_MISSING KEY_CITED  missing: scale
 ```
 
-Here `VALUE_DERIVED` is for the sign only: the brackets make `2,980` negative. The value is
-1,000 times too small, and groundgate admits it. groundgate flags a scale word only when it
-follows the number (`SCALE_WORD`). A scale in the table heading is a part that the extractor must
-cite. So tell the extractor to apply the scale and to cite it. If the field has a known size, set
-its `minimum` and `maximum` too.
+The value is 1,000 times too small. "(in thousands)" is on a heading line with no tab, and the
+rows with tabs after it are its table, so the scale reaches `(2,980)`. The candidate cites no
+scale, so the scale is a missing part, and a person checks the value. The heading reaches only
+the rows directly after it. Blank lines may stand between the heading and the first row. After
+that, a blank line or a line with no tab ends the table. A table with
+spaces instead of tabs gets no heading scale (#152). So tell the extractor to apply the scale and
+to cite it. If the field has a known size, set its `minimum` and `maximum` too.
 
 ### A row with spaces instead of tabs
 

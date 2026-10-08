@@ -28,13 +28,14 @@ from typing import Any
 HERE = Path(__file__).parent
 RUNS = ("claude-haiku-5-5", "gpt-6-luna")
 # each 0.6 rule adds its spec here, decided alone
-SPECS = ("0.5", "0.6 #145 unit", "0.6 #145 scale", "0.6 #159")
+SPECS = ("0.5", "0.6 #145 unit", "0.6 #145 scale", "0.6 #159", "0.6 #162")
 # decided once and kept: the scale part of #145 (a scale quote in any case) did not ship
 RECORDED = ("0.6 #145 scale",)
 # the function that turns each 0.6 rule off when it returns False
 OFF = {
     "0.6 #145 unit": ("groundgate.admit", "_repeats"),
     "0.6 #159": ("groundgate.text", "_between_words_before"),
+    "0.6 #162": ("groundgate.admit", "heading_scale"),
 }
 VERDICTS = ("right", "wrong", "not sure")
 PORT = 8774
