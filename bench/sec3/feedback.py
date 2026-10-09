@@ -3,16 +3,17 @@ the current groundgate (spec 0.6, all rules on). For each document with a decisi
 gg.feedback_message gives a message for, the same model gets the prompt of run.py once more,
 then the messages. Its new candidates are decided alone, as in docs/howto/feedback.md.
 
-    uv run python bench/sec3/feedback.py ask --provider claude-cli --model claude-haiku-5-5
-    uv run python bench/sec3/feedback.py ask --provider codex --model gpt-6-luna
+    uv run python bench/sec3/feedback.py ask --model claude-haiku-5-5
+    uv run python bench/sec3/feedback.py ask --model gpt-6-luna
     uv run python bench/sec3/feedback.py decide
     uv run python bench/sec3/feedback.py web            # blind labels, http://127.0.0.1:8775
     uv run python bench/sec3/feedback.py results [--check]
 
 The CLIs run as in run.py, with the same flags, isolation and default effort. The new replies
 go to runs/<model>-feedback/<id>.json, with the CLI version and the prompt hash. They quote the
-filings, so runs/ stays out of git. A reply is stale when its prompt hash or its output schema
-hash differs from those of the prompt and the schema now: decide stops on it, and ask asks again.
+filings, so runs/ stays out of git. A reply is stale when it comes from another provider or
+model, or when the hash of its harness, prompt or output schema differs from that of the text
+now: decide stops on it, and ask asks again.
 
 A fact is stored when a round admits it, except when the two rounds admit different values for
 one field and key that is not multiple: then neither value is stored (the how-to's rule). A
@@ -39,6 +40,7 @@ from groundgate.codes import INFO
 HERE = Path(__file__).parent
 OUT = HERE / "feedback"
 RUNS = measure.RUNS
+PROVIDERS = {"claude-haiku-5-5": "claude-cli", "gpt-6-luna": "codex"}  # as in the run.py runs
 PORT = 8775
 INTRO = (
     "\n\ngroundgate checked your first answer and did not admit the candidates below. Give a "
@@ -80,23 +82,29 @@ def _docs() -> list[Path]:
     return sorted((HERE / "docs").glob("*.txt"))
 
 
-def _stale(rec: dict[str, Any], prompt: str) -> str | None:
-    """Why a recorded reply does not answer this prompt and the current output schema."""
+def _stale(rec: dict[str, Any], model: str, prompt: str) -> str | None:
+    """Why a recorded reply is not the model's answer to this prompt, with the current harness
+    and output schema."""
     import groundgate as gg
 
+    provider = PROVIDERS[model]
+    if (rec["provider"], rec["model"]) != (provider, model):
+        return f"comes from {rec['provider']} {rec['model']}"
+    if rec.get("harness_sha256") != run.sha(run.harness(provider)):
+        return "had another harness"
     if rec["prompt_sha256"] != run.sha(prompt):
         return "answers other messages"
-    shown = run.output_schema(rec["provider"], gg.extractor_schema(measure._schema()))
+    shown = run.output_schema(provider, gg.extractor_schema(measure._schema()))
     if rec["output_schema_sha256"] != run.sha(json.dumps(shown, sort_keys=True)):
         return "answers another output schema"
     return None
 
 
-def ask(provider: str, model: str, workers: int) -> None:
+def ask(model: str, workers: int) -> None:
     import groundgate as gg
 
     schema = gg.extractor_schema(measure._schema())
-    runner = run.Runner(provider, model, schema)
+    runner = run.Runner(PROVIDERS[model], model, schema)
     folder = HERE / "runs" / f"{model}-feedback"
     folder.mkdir(parents=True, exist_ok=True)
     todo = []
@@ -104,7 +112,7 @@ def ask(provider: str, model: str, workers: int) -> None:
         text = doc.read_text(encoding="utf-8")
         prompt = _prompt(text, _first(model, doc.stem, text)[1])
         path = folder / f"{doc.stem}.json"
-        if prompt is None or (path.exists() and _stale(_read(path), prompt) is None):
+        if prompt is None or (path.exists() and _stale(_read(path), model, prompt) is None):
             continue
         todo.append((doc, prompt))  # a stale reply is asked again
     print(f"{len(todo)} documents to ask", flush=True)
@@ -155,7 +163,7 @@ def decide() -> None:
                 if not path.exists():
                     raise SystemExit(f"{path} is missing: run ask")
                 rec = _read(path)
-                stale = _stale(rec, prompt)
+                stale = _stale(rec, run_name, prompt)
                 if stale is not None:
                     raise SystemExit(f"{path} {stale}: run ask again")
                 cands = _candidates(rec, "r")
@@ -316,7 +324,6 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     sub = ap.add_subparsers(dest="command", required=True)
     a = sub.add_parser("ask")
-    a.add_argument("--provider", choices=["claude-cli", "codex"], required=True)
     a.add_argument("--model", choices=RUNS, required=True)
     a.add_argument("--workers", type=int, default=4)
     sub.add_parser("decide")
@@ -326,7 +333,7 @@ def main() -> None:
     r.add_argument("--check", action="store_true")
     args = ap.parse_args()
     if args.command == "ask":
-        ask(args.provider, args.model, args.workers)
+        ask(args.model, args.workers)
     elif args.command == "decide":
         decide()
     elif args.command == "web":

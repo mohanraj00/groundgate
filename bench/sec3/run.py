@@ -52,6 +52,11 @@ def instructions() -> str:
     return m.group(1).strip()
 
 
+def harness(provider: str) -> str:
+    """The text that the provider's CLI gets with every prompt: a system prompt or a prefix."""
+    return CLAUDE_SYSTEM if provider == "claude-cli" else CODEX_PREFIX
+
+
 def prompt_for(text: str) -> str:
     return f"{instructions()}\n\nThe text:\n\n{text}"
 
@@ -158,6 +163,7 @@ class Runner:
             "effort": "default",
             "cli": self.version(),
             "prompt_sha256": sha(prompt),
+            "harness_sha256": sha(harness(self.provider)),
             "output_schema_sha256": sha(json.dumps(self.schema, sort_keys=True)),
             "output_schema_without": [] if "$schema" in self.schema else ["$schema"],
             "reply": reply,
