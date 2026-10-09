@@ -6,6 +6,7 @@ import importlib.util
 import json
 import socket
 import sys
+import urllib.request
 from collections.abc import Iterator
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
@@ -744,6 +745,28 @@ def test_chat_goes_to_this_machine_with_no_proxy(
         "field": {"noul": 0.5}
     }
     assert len(chat_server.requests) == 1
+
+
+@pytest.mark.parametrize(
+    ("url", "proxied"), [("https://127.0.0.1:8443/v1", False), ("https://models.example/v1", True)]
+)
+def test_chat_uses_a_proxy_only_off_this_machine(
+    monkeypatch: pytest.MonkeyPatch, url: str, proxied: bool
+) -> None:
+    monkeypatch.setenv("GROUNDGATE_CHAT_URL", url)
+    monkeypatch.setenv("GROUNDGATE_CHAT_MODEL", "model-1")
+    monkeypatch.setenv("GROUNDGATE_CHAT_VERSION", "file-sha256")
+    monkeypatch.setenv("https_proxy", "http://127.0.0.1:9")
+    for name in ("no_proxy", "NO_PROXY"):
+        monkeypatch.delenv(name, raising=False)
+    jd = judges.load("chat")
+    proxies = [
+        h.proxies  # type: ignore[attr-defined]
+        for h in jd._opener.handlers  # type: ignore[attr-defined]
+        if isinstance(h, urllib.request.ProxyHandler)
+    ]
+    # an empty ProxyHandler opens nothing, so the opener holds no proxy at all
+    assert proxies == ([{"https": "http://127.0.0.1:9"}] if proxied else [])
 
 
 def test_chat_refuses_a_redirect(chat_server: ChatServer, monkeypatch: pytest.MonkeyPatch) -> None:

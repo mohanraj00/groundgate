@@ -105,16 +105,16 @@ class Chat:
         self._key = os.environ.get("GROUNDGATE_CHAT_KEY")
         # the text window and the key travel only over TLS, or to this machine with no proxy
         url = urllib.parse.urlsplit(self._url)
-        if url.scheme == "https":
-            self._opener = urllib.request.build_opener(_NoRedirect)
-        elif url.scheme == "http" and url.hostname in LOOPBACK:
-            no_proxy = urllib.request.ProxyHandler({})
-            self._opener = urllib.request.build_opener(no_proxy, _NoRedirect)
-        else:
+        here = url.hostname in LOOPBACK
+        if url.scheme != "https" and not (url.scheme == "http" and here):
             raise SystemExit(
                 "GROUNDGATE_CHAT_URL must be https, or http to this machine "
                 "(localhost, 127.0.0.1 or ::1)"
             )
+        handlers: list[urllib.request.BaseHandler] = [_NoRedirect()]
+        if here:
+            handlers.append(urllib.request.ProxyHandler({}))
+        self._opener = urllib.request.build_opener(*handlers)
 
     @staticmethod
     def _answer(question: dict[str, Any], content: str) -> dict[str, Any]:
