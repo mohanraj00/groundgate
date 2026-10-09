@@ -1,6 +1,6 @@
 """A held-out set for spec 0.7 (#229, planned on #164): the principal statements of 20 FY2025
-agency financial reports, as PDF text. The rules of #164 and #152 came from bench/sec3, the
-status set and the vectors, so they are measured here, on documents that no rule came from.
+agency financial reports, as PDF text. The rule of #164 came from bench/sec3, the
+status set and the vectors, so it is measured here, on documents that no rule came from.
 
     uv run python bench/afr/afr.py pick     # .cache/, sources.json, selection-log.json
     uv run python bench/afr/afr.py docs     # docs/, from the cache
