@@ -229,3 +229,13 @@ def test_span_items_without_quotes(as_list: bool) -> None:
         f"- PART_MISSING: {DESCRIPTIONS['PART_MISSING']}\n"
         '- Cite the scale with a "scale" item.'
     )
+
+
+def test_a_malformed_evidence_item_is_not_quoted() -> None:
+    candidate = {"field": "cost", "value": "40", "evidence": ["40", {"text": None}, {"text": "4"}]}
+    d = gg.admit("Costs: 40.", SCHEMA, [candidate]).decisions[0]
+    d = replace(d, outcome="rejected", codes=("QUOTE_NOT_FOUND",))
+    assert gg.feedback_message(d, candidate, SCHEMA) == (
+        'Field "cost": you gave the value "40" with value "4".\n'
+        f"- QUOTE_NOT_FOUND: {DESCRIPTIONS['QUOTE_NOT_FOUND']}"
+    )

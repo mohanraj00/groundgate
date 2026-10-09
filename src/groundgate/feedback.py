@@ -87,9 +87,13 @@ def feedback_message(
         return None
     evidence = candidate.get("evidence")
     items = [evidence] if isinstance(evidence, Mapping) else evidence or []
-    quotes = ", ".join(f'{e.get("role", "value")} "{e["text"]}"' for e in items if "text" in e)
+    quotes = ", ".join(
+        f'{e.get("role", "value")} "{e["text"]}"'
+        for e in items
+        if isinstance(e, Mapping) and isinstance(e.get("text"), str)
+    )
     lines = [
-        f'Field "{decision.field}": you gave the value "{candidate["value"]}" '
+        f'Field "{decision.field}": you gave the value "{candidate.get("value")}" '
         f"with {quotes or 'no quotes'}."
     ]
     for code in decision.codes:
