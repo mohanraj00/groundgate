@@ -5,8 +5,9 @@ unchanged. This is the path that the docs recommend since 0.5.1.
     uv run python bench/sec3/run.py --provider claude-cli --model claude-haiku-5-5
     uv run python bench/sec3/run.py --provider codex --model gpt-6-luna
 
-Each run uses the CLI's default reasoning effort. The Claude CLI gets the schema without its
-"$schema" member, because its --json-schema check does not load draft 2020-12 (#197).
+Each run uses the CLI's default reasoning effort. The Claude CLI got the schema without its
+"$schema" member, because its --json-schema check does not load draft 2020-12 (#197). Since
+#197, gg.extractor_schema has no "$schema" member, and the codex runs get it back as they had it.
 
 The CLIs run as in bench/propose.py: in an empty directory, with no tools, settings, rules, MCP
 servers or saved session. A reply from another model, with a tool call or a denied tool call is
@@ -66,9 +67,10 @@ def sha(data: str) -> str:
 
 
 def output_schema(provider: str, schema: dict[str, Any]) -> dict[str, Any]:
-    """The output schema that the provider's CLI gets."""
-    if provider == "claude-cli":  # its --json-schema check does not load draft 2020-12
-        schema = {k: v for k, v in schema.items() if k != "$schema"}
+    """The output schema that the provider's CLI got in the recorded runs. Since #197,
+    gg.extractor_schema has no "$schema" member. The codex runs got the schema with it."""
+    if provider == "codex":
+        return {"$schema": "https://json-schema.org/draft/2020-12/schema", **schema}
     return schema
 
 

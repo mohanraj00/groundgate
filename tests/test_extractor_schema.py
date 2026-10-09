@@ -15,8 +15,8 @@ VECTORS = sorted((Path(__file__).parent.parent / "conformance" / "vectors").glob
 
 # the subset of JSON Schema that the strict structured-output modes take
 KEYWORDS = {
-    "$schema", "type", "properties", "required", "additionalProperties", "items", "const", "enum",
-    "anyOf", "$defs", "$ref", "description",
+    "type", "properties", "required", "additionalProperties", "items", "const", "enum", "anyOf",
+    "$defs", "$ref", "description",
 }  # fmt: skip
 BEFORE_STEP_8 = {
     "CANDIDATE_INVALID", "FIELD_UNKNOWN", "NULL_STRING_LITERAL", "TYPE_INVALID", "RANGE_INVALID",
