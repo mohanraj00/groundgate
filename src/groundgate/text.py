@@ -707,7 +707,8 @@ class UnitPlaces:
         self.table: set[int] = set()  # starts of the table lines directly above the value's line
         self.caption: set[int] = set()  # starts of the lines that can hold a caption
         br = brackets_around(text, tok, prefixes)
-        self.bracket = -1 if br is None else len(text[: br[0]].rstrip())  # where a $ before it ends
+        # a prefix before the brackets ends between the whitespace before "(" and the "("
+        self.bracket = (-1, -1) if br is None else (len(text[: br[0]].rstrip()), br[0])
         self.n = -1
         self.rows: dict[int, list[tuple[int, int]]] = {}
         if "\t" not in text[va:vb]:
@@ -740,7 +741,8 @@ class UnitPlaces:
         """Whether the form at text[start:end] is at a unit place: the place of the form, not of
         the item that holds it."""
         text = self.text
-        if start >= self.line[0] or (prefix and end == self.bracket):
+        lo, paren = self.bracket
+        if start >= self.line[0] or (prefix and lo <= end <= paren):
             return True
         la, lb = _line(text, start)
         if end > lb:

@@ -2819,18 +2819,22 @@ vector(
     "25b-unit-place-cells",
     "A unit prefix that is also a number token is one cell, not two, when the unit places and "
     "the column rule count the cells of a row. A line of no-break spaces is not blank, so it "
-    "does not end the table (spec 0.7, #164).",
-    "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n\u00a0\nLow\t6\n",
+    "does not end the table. A prefix that ends in a space stands before the brackets around "
+    "the value (spec 0.7, #164).",
+    "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n\u00a0\nLow\t6\n\nNeg V \n(12)\n",
     {
         "fields": {
             "amount": {"type": "integer", "unit": "U", "aliases": ["amount"]},
             "low": {"type": "integer", "unit": "USD", "aliases": ["low"]},
+            "neg": {"type": "integer", "unit": "V", "aliases": ["neg"]},
         },
-        "units": {"U": {"prefix": ["2", "$"]}},
+        "units": {"U": {"prefix": ["2", "$"]}, "V": {"prefix": ["V "]}},
     },
     [
         c("q1", "amount", "3", "U", [q("3"), DOLLAR, row("Amount")]),
         c("q2", "low", "6", "USD", [q("6"), DOLLAR, row("Low")]),
+        c("q3", "neg", "-12", "V", [q("12"), q("V ", role="unit"), row("Neg")],
+          ("admitted", ["VALUE_DERIVED"])),
     ],
 )  # fmt: skip
 
