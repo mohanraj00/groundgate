@@ -71,6 +71,15 @@ def test_verify_detects_tampering() -> None:
     assert not gg.verify(r, DOC, SCHEMA, CANDS[:2]).ok
 
 
+def test_verify_refuses_a_receipt_integer_outside_the_safe_range() -> None:
+    r = gg.admit(DOC, SCHEMA, CANDS).to_dict()
+    with pytest.raises(gg.PacketError, match=r"^receipt\.x: integer is outside"):
+        gg.verify({**r, "x": 10**30}, DOC, SCHEMA, CANDS)
+    r["document"]["id"] = -(10**30)
+    with pytest.raises(gg.PacketError, match=r"^receipt\.document\.id: integer is outside"):
+        gg.verify(r, DOC, SCHEMA, CANDS)
+
+
 def test_verify_names_a_receipt_from_another_spec_version() -> None:
     r = gg.admit(DOC, SCHEMA, CANDS).to_dict()
     r["groundgate"] = "0.1"
@@ -217,6 +226,12 @@ def test_cli_admit_and_verify(tmp_path: Path, capsys: pytest.CaptureFixture[str]
 
     policy = _write(tmp_path, "policy.json", {"unit_window": 1})
     assert main(["verify", out, doc, schema, cands, "--policy", policy]) == 1
+
+    unsafe = tmp_path / "unsafe.json"
+    stored = json.loads(Path(out).read_text(encoding="utf-8"))
+    unsafe.write_text(json.dumps({**stored, "x": 10**30}), encoding="utf-8")
+    assert main(["verify", str(unsafe), doc, schema, cands]) == 2
+    assert "receipt.x: integer is outside" in capsys.readouterr().err
 
     assert main(["admit", doc, schema, cands]) == 0
     assert json.loads(capsys.readouterr().out)["summary"]["rejected"] == 1
