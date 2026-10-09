@@ -140,8 +140,8 @@ print(stored["receipt_sha256"][:23])
 ```
 
 ```text
-0.6 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
-sha256:f81312051594e446
+0.7 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
+sha256:8966af3a2922c5a0
 ```
 
 A receipt holds digests of its inputs, not the inputs. To verify it later, you need the same
@@ -181,7 +181,7 @@ The digests in the output are cut to 16 digits:
 False
 coverage differs from the re-derived receipt
 summary differs from the re-derived receipt
-decision for candidate sha256:9a65d0655066e4eb... differs
+decision for candidate sha256:380d9391f8c3bd55... differs
 ```
 
 The changed rent is not in the text, so it is rejected. The required field `monthly_rent` then
@@ -209,7 +209,7 @@ print(check.problems)
 
 ```text
 False
-('receipt was decided under spec 0.4; this groundgate implements 0.6',)
+('receipt was decided under spec 0.4; this groundgate implements 0.7',)
 ```
 
 `verify` checks nothing more. So pin the groundgate release that decided the receipts in the
