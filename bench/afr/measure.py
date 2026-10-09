@@ -281,13 +281,13 @@ def score() -> dict[str, Any]:
                 row = moved.setdefault(way, {"right": 0, "wrong": 0, "not sure": 0, "unlabeled": 0})
                 row[v or "unlabeled"] += 1
         res["changed"][run] = dict(sorted(moved.items()))
-        parts = {"with a unit item": 0, "passed under 0.6": 0, "passed under 0.7": 0, "changed": 0}
+        parts = {"unit checked": 0, "passed under 0.6": 0, "passed under 0.7": 0, "changed": 0}
         for doc, got in new.items():
             before = {r["id"]: r["unit"] for r in old[doc]["decisions"]}
             for r in got["decisions"]:
                 if r["unit"] is None and before[r["id"]] is None:
                     continue
-                parts["with a unit item"] += 1
+                parts["unit checked"] += 1
                 parts["passed under 0.6"] += before[r["id"]] is True
                 parts["passed under 0.7"] += r["unit"] is True
                 parts["changed"] += r["unit"] != before[r["id"]]
@@ -324,7 +324,7 @@ def render(res: dict[str, Any]) -> str:
         u = res["unit parts"][run]
         lines += [
             "",
-            f"Proposals with a unit item: {u['with a unit item']}. The unit item passed in "
+            f"Proposals whose unit item reached the unit check: {u['unit checked']}. It passed in "
             f"{u['passed under 0.6']} under spec 0.6 and in {u['passed under 0.7']} under the 0.7 "
             f"draft; it changed in {u['changed']}.",
             "",

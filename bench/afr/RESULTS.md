@@ -11,7 +11,7 @@ The principal statements of 20 FY2025 agency financial reports, which no rule ca
 | spec 0.6 | 4 | 0 | 0 | 0 | 100 | 0 |
 | spec 0.7 #164 | 4 | 0 | 0 | 0 | 100 | 0 |
 
-Proposals with a unit item: 1. The unit item passed in 0 under spec 0.6 and in 0 under the 0.7 draft; it changed in 0.
+Proposals whose unit item reached the unit check: 1. It passed in 0 under spec 0.6 and in 0 under the 0.7 draft; it changed in 0.
 
 Proposals whose outcome the 0.7 draft changes:
 
@@ -24,7 +24,7 @@ None.
 | spec 0.6 | 6 | 0 | 0 | 0 | 100 | 0 |
 | spec 0.7 #164 | 6 | 0 | 0 | 0 | 100 | 0 |
 
-Proposals with a unit item: 57. The unit item passed in 25 under spec 0.6 and in 25 under the 0.7 draft; it changed in 0.
+Proposals whose unit item reached the unit check: 57. It passed in 25 under spec 0.6 and in 25 under the 0.7 draft; it changed in 0.
 
 Proposals whose outcome the 0.7 draft changes:
 
