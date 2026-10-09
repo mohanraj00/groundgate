@@ -115,9 +115,9 @@ jobs:
           uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.4.0 \
             --with-requirements "$RUNNER_TEMP/bench-requirements.txt" \
             python bench/judges/quotes/count.py --check
-      - name: The 10-K calibration report and results match their recorded answers, on the 0.4.0 wheel
+      - name: The 10-K calibration report and results match their recorded answers, on the 0.4.0 wheel and calibrate 0.1.0
         run: |
-          run04="uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.4.0 --with ./calibrate"
+          run04="uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.4.0 --with groundgate-calibrate==0.1.0"
           $run04 groundgate-calibrate report --work bench/sec/work-field --check
           $run04 groundgate-calibrate report --work bench/sec/work-key --check
           $run04 python bench/sec/sec.py results --check
