@@ -1,0 +1,1532 @@
+{
+ "groundgate": "0.6.1",
+ "spec": "0.7",
+ "items": {
+  "irs-p1040:0": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": null,
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:1": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": null,
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:2": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": null,
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:3": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": null,
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:4": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": null,
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:5": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": null,
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:6": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": null,
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:7": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": null,
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:8": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": null,
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:9": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": null,
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:10": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly or Qualifying surviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:11": {
+   "key": "Qualifying surviving spouse",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly or Qualifying surviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:12": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly or Qualifying surviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:13": {
+   "key": "Qualifying surviving spouse",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly or Qualifying surviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:14": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly or Qualifying surviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:15": {
+   "key": "Qualifying surviving spouse",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly or Qualifying surviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:16": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly or Qualifying surviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:17": {
+   "key": "Qualifying surviving spouse",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly or Qualifying surviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:18": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly or Qualifying surviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:19": {
+   "key": "Qualifying surviving spouse",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "EVIDENCE_REANCHORED"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly or Qualifying surviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:20": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing separately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:21": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing separately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:22": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing separately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:23": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing separately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1040:24": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing separately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1167:0": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Single or\nMarried filing\nseparately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1167:1": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Single or\nMarried filing\nseparately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1167:2": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing\njointly or\nQualifying\nsurviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1167:3": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Head of\nhousehold",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1167:4": {
+   "key": "Qualifying surviving spouse",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing\njointly or\nQualifying\nsurviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:0": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Daily",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:1": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Weekly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:2": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Biweekly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:3": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Semimonthly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:4": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Monthly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:5": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Daily",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)",
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:6": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Weekly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)",
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:7": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Biweekly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)",
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:8": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Semimonthly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)",
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:9": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Monthly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)",
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:10": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Daily",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Head of Household",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:11": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Weekly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Head of Household",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:12": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Biweekly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Head of Household",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:13": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Semimonthly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Head of Household",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:14": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Monthly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Head of Household",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:15": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Daily",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Married Filing Separate Return",
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:16": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Weekly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Married Filing Separate Return",
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:17": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Biweekly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Married Filing Separate Return",
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:18": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Semimonthly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Married Filing Separate Return",
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p1494:19": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "NON_VERBATIM_EVIDENCE",
+    "PART_MISSING",
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [
+    "unit"
+   ],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Monthly",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Filing Status: Married Filing Separate Return",
+     "passed": false
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4012-a:0": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4012-a:1": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4012-a:2": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4012-a:3": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4012-a:4": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing jointly",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4012-a:5": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing separately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4012-a:6": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Head of household",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4012-a:7": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Head of household",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4012-a:8": {
+   "key": "Qualifying surviving spouse",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Qualifying Surviving Spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4012-a:9": {
+   "key": "Qualifying surviving spouse",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Qualifying Surviving Spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4054:0": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "QUALIFIED_VALUE",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "key"
+   ],
+   "parts": [],
+   "keys_at_value": []
+  },
+  "irs-p4054:1": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [
+    "key"
+   ],
+   "parts": [],
+   "keys_at_value": []
+  },
+  "irs-p4491:7": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "married taxpayers or Qualifying Surviving Spouse",
+     "passed": false
+    }
+   ],
+   "keys_at_value": [
+    "Qualifying surviving spouse"
+   ]
+  },
+  "irs-p4491:8": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE",
+    "KEY_CITATION_INVALID",
+    "EVIDENCE_REANCHORED"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "married taxpayers or Qualifying Surviving Spouse",
+     "passed": false
+    }
+   ],
+   "keys_at_value": [
+    "Qualifying surviving spouse"
+   ]
+  },
+  "irs-p4696:1": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "field",
+     "text": "65 or older enter",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4696:3": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "field",
+     "text": "one 65 or older enter",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Married filing jointly",
+     "passed": true
+    }
+   ],
+   "keys_at_value": [
+    "Qualifying surviving spouse"
+   ]
+  },
+  "irs-p4696:4": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "field",
+     "text": "both 65 or older enter",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Married filing jointly",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4696:5": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "field",
+     "text": "under 65 enter",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Head of household",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4696:6": {
+   "key": "Head of household",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "field",
+     "text": "65 or older enter",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Head of household",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4696:7": {
+   "key": "Qualifying surviving spouse",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "field",
+     "text": "under 65 enter",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Qualifying Surviving spouse with\ndependent child",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4696:8": {
+   "key": "Qualifying surviving spouse",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "field",
+     "text": "65 or older enter",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Qualifying Surviving spouse with\ndependent child",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4696:9": {
+   "key": "Married filing separately",
+   "outcome": "needs_verification",
+   "codes": [
+    "QUALIFIED_VALUE",
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing separately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p4801:0": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Single or\n\nMarried filing\nseparately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": [
+    "Married filing separately"
+   ]
+  },
+  "irs-p4801:2": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing\n\njointly or\nQualifying\nsurviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": [
+    "Qualifying surviving spouse"
+   ]
+  },
+  "irs-p4801:5": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Single or\n\nMarried filing\nseparately",
+     "passed": true
+    }
+   ],
+   "keys_at_value": [
+    "Married filing separately"
+   ]
+  },
+  "irs-p4801:7": {
+   "key": "Married filing jointly",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "key",
+     "text": "Married filing\n\njointly or\nQualifying\nsurviving spouse",
+     "passed": true
+    }
+   ],
+   "keys_at_value": [
+    "Qualifying surviving spouse"
+   ]
+  },
+  "irs-p5187:0": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "field",
+     "text": "Less than 200%",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Limitation Amount\nfor Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p5187:1": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "field",
+     "text": "At least 200%, but less than 300%",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Limitation Amount\nfor Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  },
+  "irs-p5187:2": {
+   "key": "Single",
+   "outcome": "needs_verification",
+   "codes": [
+    "KEY_NOT_AT_VALUE"
+   ],
+   "missing": [],
+   "parts": [
+    {
+     "role": "field",
+     "text": "At least 300%, but less than 400%",
+     "passed": false
+    },
+    {
+     "role": "key",
+     "text": "Limitation Amount\nfor Single",
+     "passed": true
+    }
+   ],
+   "keys_at_value": []
+  }
+ }
+}
