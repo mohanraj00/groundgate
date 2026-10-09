@@ -483,8 +483,8 @@ def extractor_schema(
                 description or None,
             )
         )
+    # no "$schema" member: the Claude CLI's --json-schema check does not load draft 2020-12 (#197)
     return {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
         **_closed(
             {
                 "candidates": {

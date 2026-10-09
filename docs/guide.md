@@ -209,9 +209,12 @@ receipt = gg.admit(text, schema, candidates, references=references)
 - An item has no offsets. A model cannot count UTF-8 bytes, so it quotes, and groundgate finds the
   quote.
 - A reference item is in the schema only when you give the reference ids.
-- The schema uses only `$schema`, `type`, `properties`, `required`, `additionalProperties`, `items`, `const`,
+- The schema uses only `type`, `properties`, `required`, `additionalProperties`, `items`, `const`,
   `enum`, `anyOf`, `$defs`, `$ref` and `description`. Every member is required, and no object
   takes other members. This is the subset that the strict structured-output modes take.
+- The schema has no `$schema` member, because the Claude CLI refuses a schema that names draft
+  2020-12. Each `$ref` is a JSON pointer into the schema, so a client that loads an older draft
+  reads it the same way.
 - Two step 1 rules stay outside the schema: two items with the same role, and a blank `text`,
   `url` or `retrieved`. Step 1 rejects such a candidate with `CANDIDATE_INVALID`.
 
