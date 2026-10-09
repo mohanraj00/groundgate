@@ -772,7 +772,7 @@ def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
             if nxt >= end or nxt in numbers or text[nxt] == "(":
                 continue
             empty.add(a)
-    return sorted(starts + list(empty))
+    return sorted(set(starts) | empty)  # a prefix that is also a number token is one cell
 
 
 def header(text: str, mentions: list[tuple[int, int, str]], at: int) -> list[tuple[int, int]]:

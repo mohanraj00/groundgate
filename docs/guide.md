@@ -138,7 +138,8 @@ An item from the document has a `role` and either a byte span (`start`, `end`, o
 or only `text`. With only `text`, the item is a quote, and groundgate finds it. For the value item,
 groundgate takes the first occurrence that holds the value with its unit, else the first
 occurrence. For a role item, it takes the occurrence that holds the value, else the last one
-before it, else the first one after it. A value quote that does not occur rejects the fact with
+before it, else the first one after it. A unit item first takes the last one before the value
+at a unit place, such as the `$` of the value's column (spec 0.7). A value quote that does not occur rejects the fact with
 `QUOTE_NOT_FOUND`. A role quote that does not occur fails its check and flags the fact, such as
 `SCALE_CITATION_INVALID`.
 

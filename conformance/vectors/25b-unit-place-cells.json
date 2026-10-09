@@ -1,0 +1,57 @@
+{
+ "name": "25b-unit-place-cells",
+ "description": "A unit prefix that is also a number token is one cell, not two, when the unit places and the column rule count the cells of a row (spec 0.7, #164).",
+ "document": "Head\t1\t$\t4\nAmount\t2\t?\t3\n",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "integer",
+    "unit": "U",
+    "aliases": [
+     "amount"
+    ]
+   }
+  },
+  "units": {
+   "U": {
+    "prefix": [
+     "2",
+     "$"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "q1",
+   "field": "amount",
+   "value": "3",
+   "unit": "U",
+   "evidence": [
+    {
+     "start": 22,
+     "end": 23,
+     "text": "3"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Amount"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

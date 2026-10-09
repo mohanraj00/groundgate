@@ -2815,6 +2815,19 @@ vector(
 )  # fmt: skip
 
 
+vector(
+    "25b-unit-place-cells",
+    "A unit prefix that is also a number token is one cell, not two, when the unit places and "
+    "the column rule count the cells of a row (spec 0.7, #164).",
+    "Head\t1\t$\t4\nAmount\t2\t?\t3\n",
+    {
+        "fields": {"amount": {"type": "integer", "unit": "U", "aliases": ["amount"]}},
+        "units": {"U": {"prefix": ["2", "$"]}},
+    },
+    [c("q1", "amount", "3", "U", [q("3"), DOLLAR, row("Amount")])],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
