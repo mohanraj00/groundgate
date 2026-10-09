@@ -2818,13 +2818,20 @@ vector(
 vector(
     "25b-unit-place-cells",
     "A unit prefix that is also a number token is one cell, not two, when the unit places and "
-    "the column rule count the cells of a row (spec 0.7, #164).",
-    "Head\t1\t$\t4\nAmount\t2\t?\t3\n",
+    "the column rule count the cells of a row. A line of no-break spaces is not blank, so it "
+    "does not end the table (spec 0.7, #164).",
+    "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n\u00a0\nLow\t6\n",
     {
-        "fields": {"amount": {"type": "integer", "unit": "U", "aliases": ["amount"]}},
+        "fields": {
+            "amount": {"type": "integer", "unit": "U", "aliases": ["amount"]},
+            "low": {"type": "integer", "unit": "USD", "aliases": ["low"]},
+        },
         "units": {"U": {"prefix": ["2", "$"]}},
     },
-    [c("q1", "amount", "3", "U", [q("3"), DOLLAR, row("Amount")])],
+    [
+        c("q1", "amount", "3", "U", [q("3"), DOLLAR, row("Amount")]),
+        c("q2", "low", "6", "USD", [q("6"), DOLLAR, row("Low")]),
+    ],
 )  # fmt: skip
 
 

@@ -668,10 +668,15 @@ def _line(text: str, pos: int) -> tuple[int, int]:
     return text.rfind("\n", 0, pos) + 1, len(text) if end < 0 else end
 
 
+def _blank(line: str) -> bool:
+    """A blank line holds only spaces, tabs or carriage returns (SPEC §4.2)."""
+    return not line.strip(" \t\r")
+
+
 def _table_line(text: str, start: int, end: int) -> bool:
     """A line of a table (SPEC §4.6, unit places): not blank, with a tab or no number token."""
     line = text[start:end]
-    return bool(line.strip()) and ("\t" in line or not tokens(text, start, end))
+    return not _blank(line) and ("\t" in line or not tokens(text, start, end))
 
 
 def _row_cells(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
@@ -718,7 +723,7 @@ class UnitPlaces:
         self.caption = {a for a in self.table if "\t" not in text[a : _line(text, a)[1]]}
         while pos > 0:  # blank lines, then the caption above the table
             a, b = _line(text, pos - 1)
-            if text[a:b].strip():
+            if not _blank(text[a:b]):
                 if "\t" not in text[a:b] and not tokens(text, a, b):
                     self.caption.add(a)
                 break

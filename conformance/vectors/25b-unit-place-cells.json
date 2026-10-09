@@ -1,7 +1,7 @@
 {
  "name": "25b-unit-place-cells",
- "description": "A unit prefix that is also a number token is one cell, not two, when the unit places and the column rule count the cells of a row (spec 0.7, #164).",
- "document": "Head\t1\t$\t4\nAmount\t2\t?\t3\n",
+ "description": "A unit prefix that is also a number token is one cell, not two, when the unit places and the column rule count the cells of a row. A line of no-break spaces is not blank, so it does not end the table (spec 0.7, #164).",
+ "document": "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n \nLow\t6\n",
  "schema": {
   "fields": {
    "amount": {
@@ -9,6 +9,13 @@
     "unit": "U",
     "aliases": [
      "amount"
+    ]
+   },
+   "low": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "low"
     ]
    }
   },
@@ -43,10 +50,35 @@
      "text": "Amount"
     }
    ]
+  },
+  {
+   "id": "q2",
+   "field": "low",
+   "value": "6",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 40,
+     "end": 41,
+     "text": "6"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Low"
+    }
+   ]
   }
  ],
  "expected": {
   "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
    {
     "outcome": "admitted",
     "codes": []
