@@ -10,11 +10,11 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 |---|---:|---:|---:|---:|---:|
 | sec | 0 | 11 | 2 | 0 | 0 |
 | sec/sec | 0 | 11 | 2 | 0 | 0 |
-| set2 | 1 | 14 | 17 | 0 | 0 |
+| set2 | 1 | 10 | 21 | 0 | 0 |
 | set2/fda | 0 | 6 | 8 | 0 | 0 |
 | set2/fr | 0 | 2 | 2 | 0 | 0 |
 | set2/irs | 1 | 1 | 6 | 0 | 0 |
-| set2/ntsb | 0 | 5 | 1 | 0 | 0 |
+| set2/ntsb | 0 | 1 | 5 | 0 | 0 |
 
 ## All 229 items
 
@@ -22,11 +22,11 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 |---|---:|---:|---:|---:|---:|
 | sec | 0 | 15 | 2 | 0 | 179 |
 | sec/sec | 0 | 15 | 2 | 0 | 179 |
-| set2 | 1 | 14 | 17 | 0 | 1 |
+| set2 | 1 | 10 | 21 | 0 | 1 |
 | set2/fda | 0 | 6 | 8 | 0 | 1 |
 | set2/fr | 0 | 2 | 2 | 0 | 0 |
 | set2/irs | 1 | 1 | 6 | 0 | 0 |
-| set2/ntsb | 0 | 5 | 1 | 0 | 0 |
+| set2/ntsb | 0 | 1 | 5 | 0 | 0 |
 
 ## Each right value and its source
 
@@ -38,8 +38,6 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 | `sec-0001193125-26-104547` | operating_income | 2024 | -105198000 USD | document | the document | no |
 | `irs-p515` | backup_withholding_rate |  | 24 % | outside | https://www.irs.gov/taxtopics/tc307 | yes |
 | `sec-0001193125-26-077343` | net_income | 2024 | 1114000000 USD | document | the document | yes |
-| `ntsb-192730` | airport_elevation |  | 915 ft | document | the document | yes |
-| `ntsb-192720` | airport_elevation |  | 1125 ft | document | the document | yes |
 | `fda-ciprofloxacin` | max_daily_dose | Acute Sinusitis | 1000 mg | document | the document | yes |
 | `sec-0001725160-26-000014` | net_income | 2025 | -137100000 USD | document | the document | yes |
 | `fda-ciprofloxacin` | max_daily_dose | Urinary Tract Infections | 1000 mg | document | the document | yes |
@@ -48,8 +46,6 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 | `sec-0001262039-26-000007` | revenue | 2025 | 6799600000 USD | document | the document | yes |
 | `sec-0001201792-26-000004` | operating_income | 2025 | 47935000 USD | document | the document | yes |
 | `sec-0001262039-26-000007` | revenue | 2023 | 5304800000 USD | document | the document | yes |
-| `ntsb-192723` | airport_elevation |  | 688 ft | document | the document | yes |
-| `ntsb-192722` | airport_elevation |  | 1188 ft | document | the document | yes |
 | `fr-2026-17901` | example_idc_ceiling_first |  | 3500000 USD | document | the document | yes |
 | `sec-0001683168-26-000412` | net_income | 2025 | -58018 USD | document | the document | yes |
 | `fr-2026-17901` | example_idc_orders_bound_first |  | 3500000 USD | document | the document | yes |

@@ -40,9 +40,9 @@
   "source": "the document"
  },
  "16725923853f7b3a": {
-  "verdict": "right",
-  "basis": "document",
-  "source": "the document"
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
  },
  "279b9e436487f9ea": {
   "verdict": "wrong",
@@ -50,9 +50,9 @@
   "source": null
  },
  "3083b000dc1a6b6a": {
-  "verdict": "right",
-  "basis": "document",
-  "source": "the document"
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
  },
  "4f0bcd218d3d73d9": {
   "verdict": "right",
@@ -110,14 +110,14 @@
   "source": null
  },
  "83cea6e9f443cc30": {
-  "verdict": "right",
-  "basis": "document",
-  "source": "the document"
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
  },
  "844c2b51aefec129": {
-  "verdict": "right",
-  "basis": "document",
-  "source": "the document"
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
  },
  "86af173fcf11a0ac": {
   "verdict": "right",
