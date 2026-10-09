@@ -1062,6 +1062,7 @@ def verify(
     """
     if not isinstance(receipt, Mapping):
         raise PacketError("receipt must be a JSON object")
+    _check_integers(receipt, "receipt")
     if (version := receipt.get("groundgate")) != SPEC_VERSION:
         problem = f"receipt was decided under spec {version}; this groundgate implements "
         return Verification(False, (problem + SPEC_VERSION,))
