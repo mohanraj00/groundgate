@@ -8,7 +8,7 @@ from decimal import Decimal
 from importlib import resources
 from typing import Any, Literal
 
-from .canonical import SPEC_VERSION
+from .canonical import _SAFE_INT, SPEC_VERSION
 from .text import builtin_units, normalize_ws, parse_value
 
 FieldType = Literal["number", "integer", "string"]
@@ -29,7 +29,7 @@ def _bound(name: str, raw: object) -> Decimal | None:
         return None
     if isinstance(raw, bool) or not isinstance(raw, (int, str)):
         raise PacketError(f"field bound {name} must be a decimal string or integer")
-    if isinstance(raw, int) and not -(2**53 - 1) <= raw <= 2**53 - 1:
+    if isinstance(raw, int) and abs(raw) > _SAFE_INT:
         raise PacketError(f"field bound {name}: integer is outside [-(2^53-1), 2^53-1]")
     value = parse_value(str(raw))
     if value is None:

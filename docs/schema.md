@@ -86,8 +86,8 @@ every decimal exactly. So step 1 rejects it with `CANDIDATE_INVALID`.
 Send a large integer as a string too. A JSON integer must be in [-(2^53-1), 2^53-1]
 ([SPEC §6](../SPEC.md)). An integer outside this range anywhere in a candidate makes the packet
 invalid. `PacketError` names the path of the value, before any digest is computed. The same check
-covers the document id, references, judgments and the policy. A string such as `"12500000000000000"`
-has no limit.
+covers the document id, references, judgments, the policy and a schema bound. A string such as
+`"12500000000000000"` has no limit.
 
 `minimum` and `maximum` are bounds, each a decimal string or a JSON integer. Both are inclusive.
 A value outside them is rejected `RANGE_INVALID`, before groundgate reads the evidence. Use bounds
