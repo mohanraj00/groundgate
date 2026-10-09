@@ -38,7 +38,6 @@ import tempfile
 from pathlib import Path
 
 import groundgate as gg
-from groundgate.codes import DESCRIPTIONS, INFO
 
 text = (
     "PLAN COSTS FOR 2026\n"
@@ -141,39 +140,22 @@ c4 admitted           members
 
 ## 2. Build a feedback message
 
-For each decision that is not admitted, build one message from these members:
+Call `gg.feedback_message` with the decision, the candidate and the schema. Pass the document
+text and, if used, the references that you gave `admit`. The function returns a message only
+when a new answer can fix the decision. It returns `None` for an admitted decision or a reason
+that needs a person. It raises `ValueError` if the candidate's digest does not match the decision.
 
-- `d.codes`: the reason codes. `DESCRIPTIONS` in `groundgate.codes` gives one sentence for each
-  code. Omit the codes in `INFO`, because they do not change the outcome.
-- `d.missing`: the parts that the value needs and that no item cites, in the order `sign`,
-  `scale`, `unit`, `key`.
-- `d.parts`: the role items that the evidence cited. Report each part with `passed` false.
-
-Also repeat the candidate's value and quotes, so that the model sees what it sent:
+The message repeats the field, value and quotes that the candidate sent. It describes each code
+outside `INFO`, names each missing part and reports each part that failed:
 
 ```python
 by_id = {c["id"]: c for c in first}
-
-
-def feedback_message(d, candidate):
-    quotes = ", ".join(f'{e.get("role", "value")} "{e["text"]}"' for e in candidate["evidence"])
-    lines = [f'Field "{d.field}": you gave the value "{candidate["value"]}" with {quotes}.']
-    for code in d.codes:
-        if code not in INFO:
-            lines.append(f"- {code}: {DESCRIPTIONS[code]}")
-    for part in d.missing:
-        lines.append(f'- Cite the {part} with a "{part}" item.')
-        if part in ("unit", "key"):
-            lines.append('- Also cite the words that name the field with a "field" item.')
-    for p in d.parts:
-        if not p.passed:
-            lines.append(f'- The "{p.role}" item does not support the {p.role} at the value.')
-    return "\n".join(lines)
-
-
+messages = {}
 for d in sorted(receipt1.decisions, key=lambda d: d.candidate_id):
-    if d.outcome != "admitted":
-        print(feedback_message(d, by_id[d.candidate_id]))
+    message = gg.feedback_message(d, by_id[d.candidate_id], schema, text=text)
+    if message is not None:
+        messages[d.candidate_id] = message
+        print(message)
 ```
 
 ```text
@@ -182,87 +164,48 @@ Field "claims_paid": you gave the value "48200000" with value "48,200".
 - Cite the scale with a "scale" item.
 Field "stop_loss_premiums": you gave the value "1240000" with value "$1,240", scale "(in thousands)".
 - QUOTE_NOT_FOUND: The quoted value text does not occur in the document or reference.
-Field "admin_costs": you gave the value "3510000" with value "$ 3,150", scale "(in thousands)".
-- VALUE_NOT_IN_EVIDENCE: The value cannot be read from the cited text.
 ```
 
 ## 3. Choose what to retry
 
-Send a feedback message only when a better citation can fix the decision. These codes are worth a retry:
+`gg.feedback_message` checks every code before it builds a message. These codes can give a message:
 
-| Code | What the model can fix |
+| Code | What the extractor can fix |
 |---|---|
-| `PART_MISSING` | Cite the part that `missing` names. A `unit` part also needs a passing `field` item. |
+| `PART_MISSING` | Cite the part that `missing` names. A missing `unit` or `key` also needs a passing `field` item. |
 | `QUOTE_NOT_FOUND` | Copy the quote exactly from the text. |
 | `NON_VERBATIM_EVIDENCE` | Copy the quote exactly from the text. |
-| `KEY_NOT_AT_VALUE`, with `key` in `missing` | In a table, cite the column heading with a `key` item and the row label with a `field` item. |
-| `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_CITATION_INVALID` | Cite the part at the value. If the retry fails again, a person checks the fact. |
+| `KEY_NOT_AT_VALUE`, with `key` in `missing` | On a line with a tab, cite the column heading with a `key` item and the row label with a `field` item. |
+| `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_CITATION_INVALID` | Cite the part at the value. If the retry fails again, a person checks the candidate. |
 | `SCALE_WORD` | Send the scaled value, such as `1250000000` for "$1.25 billion". |
 | `NO_EVIDENCE` | Quote the value. |
 
-A key item, and a unit item for a unit that is not next to the number, pass only with a passing
-field item, and a field item passes only on a field with `aliases` (see [the schema guide](../schema.md)). A key item puts its key at the value
-only in a table, by the column rule. So if the field has no `aliases`, or the value is in prose,
-a missing unit or key is not worth a retry. A person checks the fact.
+A missing unit or key needs a field item, and a field item needs `aliases` on the field
+(see [the schema guide](../schema.md)). Without aliases, the function returns `None`.
+For `KEY_NOT_AT_VALUE`, it also returns `None` unless `key` is missing and the value is on a
+line with a tab in the document or its named reference. Pass `text` for a document item and
+`references` for a reference item. Without the needed source text, it returns `None`.
 
-These codes are not worth a retry:
+Any other code outside `INFO` stops the retry:
 
-- `VALUE_NOT_IN_EVIDENCE` with a wrong value usually means that the model read the wrong number.
-  Drop the fact. A second answer from the same model is not better evidence.
-- `CONFLICTING_CANDIDATES` needs a person. Two models read different values, and groundgate never
-  picks.
+- `VALUE_NOT_IN_EVIDENCE` with a wrong value usually means that the extractor read the wrong
+  number. Drop the candidate. A second answer from the same extractor is not better evidence.
+- `CONFLICTING_CANDIDATES` needs a person. Two candidates have different values, and groundgate
+  never picks.
 - `QUALIFIED_VALUE` can mean that the schema comparator is wrong. If the field is a limit, set its
-  `comparator`, such as `le` for "up to". If not, a person checks the fact.
-- `KEY_NOT_AT_VALUE` with a key item: the text puts another key at the value. A person checks
-  the fact.
+  `comparator`, such as `le` for "up to". If not, a person checks the candidate.
+- `KEY_NOT_AT_VALUE` with a key item needs a person to check the key at the value.
 - `LOW_CONFIDENCE`, `MODEL_DOUBT`, `EVIDENCE_QUOTED` and `EVIDENCE_STATED` come from your policy or
-  your judge, not from the citation.
+  your judge, not from the quotes.
 
-A decision is worth a retry when each of its codes is on the first list:
+Retry the candidates whose decisions gave a message:
 
 ```python
-RETRY = {
-    "PART_MISSING",
-    "QUOTE_NOT_FOUND",
-    "NON_VERBATIM_EVIDENCE",
-    "SCALE_WORD",
-    "NO_EVIDENCE",
-    "SIGN_CITATION_INVALID",
-    "SCALE_CITATION_INVALID",
-    "UNIT_CITATION_INVALID",
-    "FIELD_CITATION_INVALID",
-    "KEY_CITATION_INVALID",
-}
-
-
-def in_table_row(d, references=()):
-    """A key item can pass only by the column rule, so only on a line with tabs."""
-    if d.source == "document":
-        data = text.encode()
-    elif d.source == "reference":  # pass the references that you gave admit
-        data = next(r["text"] for r in references if r["id"] == d.ref).encode()
-    else:
-        return False
-    start = data.rfind(b"\n", 0, d.evidence[0]) + 1
-    end = data.find(b"\n", d.evidence[0])
-    return b"\t" in data[start : end if end >= 0 else len(data)]
-
-
-def worth_a_retry(d):
-    if d.outcome == "admitted":
-        return False
-    if {"unit", "key"} & set(d.missing) and not schema["fields"][d.field].get("aliases"):
-        return False  # a unit or key item needs a passing field item, and so the field's aliases
-    for code in d.codes:
-        if code in INFO or code in RETRY:
-            continue
-        if code == "KEY_NOT_AT_VALUE" and "key" in d.missing and in_table_row(d):
-            continue
-        return False
-    return True
-
-
-retry = [d for d in sorted(receipt1.decisions, key=lambda d: d.candidate_id) if worth_a_retry(d)]
+retry = [
+    d
+    for d in sorted(receipt1.decisions, key=lambda d: d.candidate_id)
+    if d.candidate_id in messages
+]
 print([d.candidate_id for d in retry])
 ```
 
@@ -276,7 +219,7 @@ Send the instructions, the text and the output format again, with the feedback m
 Then admit the new candidates:
 
 ```python
-feedback = "\n".join(feedback_message(d, by_id[d.candidate_id]) for d in retry)
+feedback = "\n".join(messages[d.candidate_id] for d in retry)
 out = your_model(instructions, text, output_format, feedback=feedback)
 second = [{"id": f"r{i}", **c} for i, c in enumerate(out["candidates"], 1)]
 receipt2 = gg.admit(text, schema, second)
