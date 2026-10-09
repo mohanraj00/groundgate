@@ -3,6 +3,21 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.6.1 (2026-10-09)
+
+Spec 0.6, unchanged: receipts and digests are the same as in 0.6.0.
+
+- `gg.feedback_message(decision, candidate, schema, text=None, references=None)` (#173) returns the
+  text that tells the extractor what to change, or `None` when a new answer cannot change the
+  decision. It holds the checks of the feedback how-to, which now calls it, and the five cases that
+  the #163 review found.
+- One feedback round on the held-out 10-K set (`bench/sec3`, #209). Each decision with a message
+  goes back to the same model once, with the first prompt. `claude-haiku-5-5` goes from 15 to 35
+  right values and `gpt-6-luna` from 27 to 45, with 0 escapes in both runs. 50 and 49 messages
+  went to 12 and 15 documents. 78 and 66 decisions that were not admitted got no message, and 58
+  and 51 of them have `KEY_NOT_AT_VALUE`. In most of these, the extractor cited a key item and the
+  text puts another key at the value, so a person checks them.
+
 ## 0.6.0 (2026-10-08)
 
 Spec 0.6. Receipts name `"groundgate": "0.6"` and every digest uses the `groundgate/0.6:` prefix, so
