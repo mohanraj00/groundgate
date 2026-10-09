@@ -30,9 +30,11 @@ groundgate-calibrate report --work W        # REPORT.md, report.json
 - `D` holds one `<doc>.txt` for each document.
 - `C` holds one `<doc>.json` for each document: a list of your extractor's candidates in the
   candidate format of the installed groundgate's spec (0.6 with groundgate 0.6.1).
-- `S` is a schema of that spec.
-- `--descriptions` is an optional JSON file that maps each field name to a one-line meaning.
-  The field question and the label tool show it.
+- `S` is a schema of that spec. `sample` reads each field's `description` for the field
+  question and the label page. Without a description, the field question uses the field name.
+- `--descriptions` is an optional JSON file that maps field names to meanings. Each entry
+  replaces that field's schema description. Use it with spec 0.5 schemas, which have no
+  `description`. The tool needs groundgate 0.5 or later.
 
 - `label` serves the label page at `http://localhost:8780`. `--port` changes the port. Each
   click saves a label in `W/labels.json`: `true`, `false` or `null` (not sure) for the field
@@ -81,6 +83,7 @@ documents for the ceiling that you need before you start.
 - **Fixed prompts.** `split` also records a digest of every prompt. `ask` refuses to run when the
   documents, items or config changed after the split, and `report` refuses answers to other
   prompts. `ask` goes on after a stop only with the same judge, model and prompts.
+  The field prompt digest includes its description. A new description needs a new calibration.
 - **Fixed scoring.** `ask` also records a digest of the items and the split, and `report`
   refuses answers when either changed.
 - **One spec.** `sample` records the groundgate spec version. Every later step refuses to run

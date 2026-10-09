@@ -101,7 +101,15 @@ work = Path(tempfile.mkdtemp())
 docs, cands = work / "docs", work / "candidates"
 docs.mkdir()
 cands.mkdir()
-schema = {"fields": {"annual_premium": {"type": "integer", "unit": "USD"}}}
+schema = {
+    "fields": {
+        "annual_premium": {
+            "type": "integer",
+            "unit": "USD",
+            "description": "The total premium for one year of coverage.",
+        }
+    }
+}
 (work / "schema.json").write_text(json.dumps(schema))
 
 truth = {}
@@ -164,8 +172,12 @@ A ceiling is the most error that you accept. For the field doubt, the error is a
 the judge doubts. The tool picks a threshold on the calibration part, so that part needs enough
 right items. 60 documents are enough for a ceiling of 0.2 only.
 
-`--descriptions` is an optional JSON file that maps each field name to a one-line meaning. The
-field question and the label page show it in place of the field name.
+`sample` reads each field's `description` from the schema for the field question and the label
+page. Without a description, the field question uses the field name. `--descriptions` is an
+optional JSON file that maps field names to meanings. Each entry replaces that field's schema
+description. Use it with spec 0.5 schemas, which have no `description`. The tool needs groundgate
+0.5 or later. The field prompt digest includes its description, so a new description needs a
+new calibration.
 
 `split` puts each document in the calibration part or the test part, by sha256 of its name. Run
 it before any judge answers, because the split must not depend on the answers:

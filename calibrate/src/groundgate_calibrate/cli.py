@@ -95,7 +95,12 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
         "spec": SPEC_VERSION,
         "question": args.question,
         "context": args.context,
-        "descriptions": descriptions,
+        "descriptions": {
+            name: field["description"]
+            for name, field in schema["fields"].items()
+            if "description" in field
+        }
+        | descriptions,
         "schema": schema,
     }
     if not items:
@@ -386,7 +391,11 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--candidates", type=Path, required=True)
     p.add_argument("--schema", type=Path, required=True)
     p.add_argument("--question", choices=("key", "field"), required=True)
-    p.add_argument("--descriptions", type=Path, help="JSON: field name to a one-line meaning")
+    p.add_argument(
+        "--descriptions",
+        type=Path,
+        help="JSON: field name to a meaning; overrides schema descriptions",
+    )
     p.add_argument("--context", default="", help='for example "The text is from a 10-K filing."')
     p = sub.add_parser("label", help="label the items in the browser")
     p.add_argument("--port", type=int, default=8780)
