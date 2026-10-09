@@ -11,8 +11,8 @@ then the messages. Its new candidates are decided alone, as in docs/howto/feedba
 
 The CLIs run as in run.py, with the same flags, isolation and default effort. The new replies
 go to runs/<model>-feedback/<id>.json, with the CLI version and the prompt hash. They quote the
-filings, so runs/ stays out of git. decide checks each prompt hash against the prompt that it
-builds now, so a reply to other messages is not counted.
+filings, so runs/ stays out of git. A reply is stale when its prompt hash or its output schema
+hash differs from those of the prompt and the schema now: decide stops on it, and ask asks again.
 
 A fact is stored when a round admits it, except when the two rounds admit different values for
 one field and key that is not multiple: then neither value is stored (the how-to's rule). A
@@ -80,6 +80,18 @@ def _docs() -> list[Path]:
     return sorted((HERE / "docs").glob("*.txt"))
 
 
+def _stale(rec: dict[str, Any], prompt: str) -> str | None:
+    """Why a recorded reply does not answer this prompt and the current output schema."""
+    import groundgate as gg
+
+    if rec["prompt_sha256"] != run.sha(prompt):
+        return "answers other messages"
+    shown = run.output_schema(rec["provider"], gg.extractor_schema(measure._schema()))
+    if rec["output_schema_sha256"] != run.sha(json.dumps(shown, sort_keys=True)):
+        return "answers another output schema"
+    return None
+
+
 def ask(provider: str, model: str, workers: int) -> None:
     import groundgate as gg
 
@@ -89,12 +101,12 @@ def ask(provider: str, model: str, workers: int) -> None:
     folder.mkdir(parents=True, exist_ok=True)
     todo = []
     for doc in _docs():
-        if (folder / f"{doc.stem}.json").exists():
-            continue
         text = doc.read_text(encoding="utf-8")
         prompt = _prompt(text, _first(model, doc.stem, text)[1])
-        if prompt is not None:
-            todo.append((doc, prompt))
+        path = folder / f"{doc.stem}.json"
+        if prompt is None or (path.exists() and _stale(_read(path), prompt) is None):
+            continue
+        todo.append((doc, prompt))  # a stale reply is asked again
     print(f"{len(todo)} documents to ask", flush=True)
     with ThreadPoolExecutor(workers) as pool:
         jobs = [pool.submit(runner.one, d, folder / f"{d.stem}.json", p) for d, p in todo]
@@ -143,11 +155,9 @@ def decide() -> None:
                 if not path.exists():
                     raise SystemExit(f"{path} is missing: run ask")
                 rec = _read(path)
-                if rec["prompt_sha256"] != run.sha(prompt):
-                    raise SystemExit(f"{path} answers other messages: ask again")
-                shown = run.output_schema(rec["provider"], gg.extractor_schema(schema))
-                if rec["output_schema_sha256"] != run.sha(json.dumps(shown, sort_keys=True)):
-                    raise SystemExit(f"{path} answers another output schema: ask again")
+                stale = _stale(rec, prompt)
+                if stale is not None:
+                    raise SystemExit(f"{path} {stale}: run ask again")
                 cands = _candidates(rec, "r")
                 got.update(
                     asked=True,
