@@ -29,7 +29,7 @@ groundgate-calibrate report --work W        # REPORT.md, report.json
 
 - `D` holds one `<doc>.txt` for each document.
 - `C` holds one `<doc>.json` for each document: a list of your extractor's candidates in the
-  candidate format of the installed groundgate's spec (0.6 with groundgate 0.6.1).
+  candidate format of the installed groundgate's spec (0.7 with groundgate 0.7.0).
 - `S` is a schema of that spec. `sample` reads each field's `description` for the field
   question and the label page. Without a description, the field question uses the field name.
 - `--descriptions` is an optional JSON file that maps field names to meanings. Each entry

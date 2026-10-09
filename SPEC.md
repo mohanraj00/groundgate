@@ -1,6 +1,6 @@
-# groundgate specification v0.7 (draft)
+# groundgate specification v0.7
 
-Status: draft, not released. Version string: `groundgate/0.7`. Spec 0.6 was released with
+Status: released with groundgate 0.7.0. Version string: `groundgate/0.7`. Spec 0.6 was released with
 groundgate 0.6.0, unchanged in 0.6.1, and is in the `v0.6.0` tag. Spec 0.5 is in the `v0.5.0`
 tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the `v0.2.0` tag,
 and spec 0.1 in the `v0.1.0` tag. Any change to how

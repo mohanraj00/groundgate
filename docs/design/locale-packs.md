@@ -1,6 +1,6 @@
 # Locale packs: a design for reading numbers outside US English
 
-Status: draft for discussion, issue #60. No pack exists in 0.6.1. Since spec 0.3, the English
+Status: draft for discussion, issue #60. No pack exists in 0.7.0. Since spec 0.3, the English
 core reads a list of abbreviations (#63), Indian grouping (#59) and only the digits 0 to 9 (#94). This file says how groundgate reads
 numbers, number words and currency in any Latin-script language, and how that grows over time.
 
