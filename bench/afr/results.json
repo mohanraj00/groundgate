@@ -1,0 +1,58 @@
+{
+ "runs": {
+  "claude-haiku-5-5": {
+   "0.6": {
+    "right": 3,
+    "escapes": 1,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   },
+   "0.7 #164": {
+    "right": 3,
+    "escapes": 1,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   }
+  },
+  "gpt-6-luna": {
+   "0.6": {
+    "right": 6,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   },
+   "0.7 #164": {
+    "right": 6,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   }
+  }
+ },
+ "changed": {
+  "claude-haiku-5-5": {},
+  "gpt-6-luna": {}
+ },
+ "unit parts": {
+  "claude-haiku-5-5": {
+   "unit checked": 1,
+   "passed under 0.6": 0,
+   "passed under 0.7": 0,
+   "changed": 0
+  },
+  "gpt-6-luna": {
+   "unit checked": 57,
+   "passed under 0.6": 25,
+   "passed under 0.7": 25,
+   "changed": 0
+  }
+ }
+}

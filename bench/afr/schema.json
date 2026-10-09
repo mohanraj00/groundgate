@@ -1,0 +1,64 @@
+{
+ "fields": {
+  "total_assets": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024"
+   ],
+   "aliases": [
+    "total assets"
+   ]
+  },
+  "total_liabilities": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024"
+   ],
+   "aliases": [
+    "total liabilities"
+   ]
+  },
+  "total_net_position": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024"
+   ],
+   "aliases": [
+    "total net position"
+   ]
+  },
+  "net_cost_of_operations": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024"
+   ],
+   "aliases": [
+    "net cost of operations"
+   ]
+  },
+  "total_budgetary_resources": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024"
+   ],
+   "aliases": [
+    "total budgetary resources"
+   ]
+  }
+ }
+}

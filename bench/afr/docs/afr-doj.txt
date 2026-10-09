@@ -1,0 +1,457 @@
+U.S. Department of Justice
+Consolidated Balance Sheet
+As of September 30, 2025
+
+Dollars in Thousands
+
+ASSETS (Note 2)
+Intragovernmental Assets:
+
+Fund Balance with Treasury (Note 3)
+Investments, Net (Note 5)
+Accounts Receivable, Net (Note 6)
+Advances and Prepayments
+Other Assets (Note 10)
+Total Intragovernmental Assets
+
+Other than Intragovernmental Assets:
+
+Cash and Other Monetary Assets (Note 4)
+Accounts Receivable, Net (Note 6)
+Inventory and Related Property, Net:
+Forfeited Property, Net (Note 8)
+Other Inventory and Related Property, Net (Note 7)
+
+Property, Plant and Equipment, Net (Note 9)
+Advances and Prepayments
+Other Assets (Note 10)
+
+Total Other than Intragovernmental Assets
+Total Assets
+LIABILITIES (Note 11)
+Intragovernmental Liabilities:
+
+Accounts Payable
+Advances from Others and Deferred Revenue
+Other Liabilities:
+
+Custodial Liabilities (Note 22)
+Other (Note 16)
+
+Total Intragovernmental Liabilities
+Other than Intragovernmental Liabilities:
+
+Accounts Payable
+Federal Employee Salary, Leave and Benefits (Note 15)
+Post-Employment Benefits (Note 15)
+Environmental and Disposal Liabilities (Note 12)
+Advances from Others and Deferred Revenue
+Other Liabilities:
+
+Accrued Grant Liabilities
+Seized Cash and Monetary Instruments (Note 14)
+Radiation Exposure Compensation Act Liabilities (Note 26)
+September 11th Victim Compensation Fund Liabilities (Note 26)
+United States Victims of State Sponsored Terrorism Act Liabilities (Note 26)
+Lessee Lease Liability (Note 13)
+Other (Note 16)
+
+Total Other than Intragovernmental Liabilities
+Total Liabilities
+Commitments and Contingencies (Note 17)
+NET POSITION
+Unexpended Appropriations:
+
+Unexpended Appropriations - Funds from Dedicated Collections (Note 18)
+Unexpended Appropriations - Funds from other than Dedicated Collections
+
+Total Unexpended Appropriations
+Cumulative Results of Operations:
+
+2025
+
+$ 48,086,737
+6,247,872
+462,592
+260,217
+30,075
+$ 55,087,493
+
+$
+
+3,168,447
+9,635,342
+
+459,609
+122,035
+8,794,182
+642,285
+261
+$ 22,822,161
+$ 77,909,654
+
+$
+
+343,283
+195,853
+
+9,650,172
+549,112
+$ 10,738,420
+
+$
+
+2,347,925
+1,506,098
+1,742,439
+90,103
+1,382,810
+
+894,342
+4,607,543
+11,078
+3,772,393
+3,136,216
+425,001
+943,035
+$ 20,858,983
+$ 31,597,403
+
+$
+
+2,437,697
+31,754,358
+$ 34,192,055
+
+Cumulative Results of Operations - Funds from Dedicated Collections (Note 18)
+Cumulative Results of Operations - Funds from other than Dedicated Collections
+
+Total Cumulative Results of Operations
+Total Net Position
+Total Liabilities and Net Position
+
+9,028,436
+3,091,760
+$ 12,120,196
+$ 46,312,251
+$ 77,909,654
+
+The accompanying notes are an integral part of these financial statements.
+
+U.S. DEPARTMENT OF JUSTICE | AGENCY FINANCIAL REPORT | FY 2025
+
+38
+U.S. Department of Justice
+Consolidated Statement of Net Cost
+For the Fiscal Year Ended September 30, 2025
+
+Dollars in Thousands
+
+Major Program 1: Law Enforcement
+
+Gross Cost
+Less: Earned Revenues
+
+Subtotal Net Cost of Operations (Note 19)
+
+Major Program 2: Litigation and Compensation
+
+Gross Cost
+Less: Earned Revenues
+
+Subtotal Net Cost of Operations (Note 19)
+
+Major Program 3: Prisons and Detention
+
+Gross Cost
+Less: Earned Revenues
+
+Subtotal Net Cost of Operations (Note 19)
+
+Major Program 4: Grants
+
+Gross Cost
+Less: Earned Revenues
+
+Subtotal Net Cost of Operations (Note 19)
+
+Major Program 5: Executive Oversight and Enterprise
+Technology
+
+Gross Cost
+Less: Earned Revenues
+
+Subtotal Net Cost of Operations (Note 19)
+
+2025
+
+22,505,803
+1,499,203
+21,006,600
+
+7,910,025
+430,524
+7,479,501
+
+12,823,819
+949,784
+11,874,035
+
+6,085,213
+10,576
+6,074,637
+
+3,331,615
+537,247
+2,794,368
+
+$
+
+$
+
+$
+
+$
+
+$
+
+$
+
+$
+
+$
+
+$
+
+$
+
+Total Net Cost of Operations
+
+$
+
+49,229,141
+
+The accompanying notes are an integral part of these financial statements.
+
+U.S. DEPARTMENT OF JUSTICE | AGENCY FINANCIAL REPORT | FY 2025
+
+39
+U.S. Department of Justice
+Consolidated Statement of Changes in Net Position
+For the Fiscal Year Ended September 30, 2025
+
+Dollars in Thousands
+
+Unexpended Appropriations
+
+Beginning Balances
+
+2025
+
+Funds from
+Dedicated
+Collections
+(Note 18)
+
+Funds from
+other than
+Dedicated
+Collections Eliminations
+
+Total
+
+$ 3,057,176 $ 21,579,496 $
+
+— $ 24,636,672
+
+Appropriations Received
+Appropriations Transferred-In/Out
+Other Adjustments
+Appropriations Used
+
+—
+12,699
+—
+
+52,071,494
+338,534
+(673,621)
+(632,178) (41,561,545)
+
+—
+—
+—
+—
+
+52,071,494
+351,233
+(673,621)
+(42,193,723)
+
+Net Change in Unexpended Appropriations
+
+$
+
+(619,479) $ 10,174,862 $
+
+— $ 9,555,383
+
+Total Unexpended Appropriations
+
+$ 2,437,697 $ 31,754,358 $
+
+— $ 34,192,055
+
+Cumulative Results of Operations
+
+Beginning Balances
+
+$ 6,686,593 $ 3,571,491 $
+
+— $ 10,258,084
+
+Other Adjustments
+Appropriations Used
+Nonexchange Revenues
+Donations and Forfeitures of Cash and Cash
+Equivalents
+Transfers-In/Out Without Reimbursement
+Donations and Forfeitures of Property
+Imputed Financing (Note 20)
+Other
+
+Net Cost of Operations
+
+(250,000)
+632,178
+3,678,849
+
+(300,001)
+
+41,561,545
+1,106
+
+1,621,560
+(110,410)
+534,302
+100,007
+1,160
+
+54
+881,838
+—
+2,764,284
+
+(11,610)
+$ (3,865,803) $ (45,376,947) $
+
+—
+—
+—
+
+(550,001)
+42,193,723
+3,679,955
+
+—
+—
+—
+
+1,621,614
+771,428
+534,302
+2,850,682
+(10,450)
+13,609 $ (49,229,141)
+
+(13,609)
+
+—
+
+Net Change in Cumulative Results of Operations
+
+$ 2,341,843 $
+
+(479,731) $
+
+— $ 1,862,112
+
+Total Cumulative Results of Operations
+
+$ 9,028,436 $ 3,091,760 $
+
+— $ 12,120,196
+
+Net Position
+
+$ 11,466,133 $ 34,846,118 $
+
+— $ 46,312,251
+
+The accompanying notes are an integral part of these financial statements.
+
+U.S. DEPARTMENT OF JUSTICE | AGENCY FINANCIAL REPORT | FY 2025
+
+40
+U.S. Department of Justice
+Combined Statement of Budgetary Resources
+For the Fiscal Year Ended September 30, 2025
+
+Dollars in Thousands
+
+Budgetary Resources
+
+Unobligated Balance from Prior Year Budget Authority, Net (discretionary and
+mandatory) (Note 21)
+Appropriations (discretionary and mandatory)
+Spending Authority from Offsetting Collections (discretionary and mandatory)
+
+Total Budgetary Resources
+
+Status of Budgetary Resources
+
+New Obligations and Upward Adjustments (Total)
+Unobligated Balance, End of Year:
+
+Apportioned, Unexpired Accounts
+Exempt from Apportionment, Unexpired Accounts
+Unapportioned, Unexpired Accounts
+Unexpired Unobligated Balance, End of Year
+Expired Unobligated Balance, End of Year
+
+Unobligated Balance - End of Year (Total)
+
+Total Status of Budgetary Resources
+
+Outlays, Net
+
+Outlays, Net (Total) (discretionary and mandatory)
+Less: Distributed Offsetting Receipts
+Agency Outlays, Net (discretionary and mandatory)
+
+2025
+
+$ 17,081,492
+57,615,924
+5,489,484
+$ 80,186,900
+
+$ 52,142,689
+
+25,291,668
+370,633
+1,196,303
+26,858,604
+1,185,607
+28,044,211
+$ 80,186,900
+
+$ 48,025,615
+1,797,735
+$ 46,227,880
+
+The accompanying notes are an integral part of these financial statements.
+
+U.S. DEPARTMENT OF JUSTICE | AGENCY FINANCIAL REPORT | FY 2025
+
+41

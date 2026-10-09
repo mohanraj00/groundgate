@@ -1,0 +1,310 @@
+{
+ "sources": [
+  {
+   "id": "afr-usda",
+   "agency": "Agriculture",
+   "url": "https://www.usda.gov/sites/default/files/documents/fy2025-usda-afr.pdf",
+   "sha256": "15f1427e86326429b04916a0666e1e9b04af745d1da25006e06994677dcf8c94",
+   "select": {
+    "pages": [
+     59,
+     60,
+     61,
+     62
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-commerce",
+   "agency": "Commerce",
+   "url": "https://www.oig.doc.gov/wp-content/OIGPublications/OIG-26-007-A_Final-Report_DOC-FY-2025-AFR.pdf",
+   "sha256": "2140db5c4198bf6a72583e5fb8d2dd96e7776d953369c0bbdff88bf74123c9da",
+   "select": {
+    "pages": [
+     65,
+     66,
+     67,
+     68
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-dod",
+   "agency": "Defense",
+   "url": "https://comptroller.war.gov/Portals/45/Documents/afr/fy2025/DoD_FY25_Agency_Financial_Report.pdf",
+   "sha256": "b12f22b8a5778da861a23e355b4b4944bf138ecb3966ae165a97cede7fc40671",
+   "select": {
+    "pages": [
+     104,
+     105,
+     106,
+     107,
+     108
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-doe",
+   "agency": "Energy",
+   "url": "https://www.energy.gov/sites/default/files/2025-12/fy-2025-doe-agency-financial-report.pdf",
+   "sha256": "7cff2f60366a2229b31fc8813e7320a9f6c8b0b676e684512fa86dad6af3be45",
+   "select": {
+    "pages": [
+     27,
+     28,
+     29,
+     30
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-hhs",
+   "agency": "Health and Human Services",
+   "url": "https://www.hhs.gov/sites/default/files/fy-2025-hhs-agency-financial-report.pdf",
+   "sha256": "77e723771b803f770a219d78bf8dcf73b7225d5393990b280e1cce2932254fc8",
+   "select": {
+    "pages": [
+     74,
+     75,
+     76,
+     77
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-hud",
+   "agency": "Housing and Urban Development",
+   "url": "https://www.hud.gov/sites/dfiles/CFO/documents/afr2025.pdf",
+   "sha256": "bdd482f284355fcca1e527d9ed7b8b98f423cb1713bbfd4532704196d4b9a413",
+   "select": {
+    "pages": [
+     57,
+     58,
+     59,
+     60
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-doi",
+   "agency": "Interior",
+   "url": "https://www.doi.gov/sites/default/files/documents/2026-01/fy-2025-agency-financial-report-final-508c.pdf",
+   "sha256": "314011408593d7f4d34dd74bdffcf6e2d4a5bd85e80af0dd7ae5b7025786b16c",
+   "select": {
+    "pages": [
+     71,
+     72,
+     73,
+     74
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-doj",
+   "agency": "Justice",
+   "url": "https://www.justice.gov/media/1425501/dl?inline",
+   "sha256": "7658d7a09431dce1ead0573feacaee3792872835739c684769943ffe23141860",
+   "select": {
+    "pages": [
+     45,
+     46,
+     47,
+     48
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-dol",
+   "agency": "Labor",
+   "url": "https://www.dol.gov/sites/dolgov/files/OPA/reports/2025annualreport.pdf",
+   "sha256": "e59d3450aa056a0935b5c6006208801d88f255908cc7b5acdbd37907fcba46d4",
+   "select": {
+    "pages": [
+     39,
+     40,
+     41,
+     42
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-state",
+   "agency": "State",
+   "url": "https://www.state.gov/wp-content/uploads/2026/01/DOS-AFR-2025-508.pdf",
+   "sha256": "00e05b73def14c77bc4e5ef89cc3f3417137997f57626509b17fa1223f1aac3a",
+   "select": {
+    "pages": [
+     68,
+     69,
+     70,
+     71
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-dot",
+   "agency": "Transportation",
+   "url": "https://www.transportation.gov/sites/dot.gov/files/2026-01/FY2025DOTAFR_508c_0.pdf",
+   "sha256": "d52cf1b3b40ba70002c3a4824ad64c52071b7892bab15c50e9883de2d5389afe",
+   "select": {
+    "pages": [
+     48,
+     49,
+     50,
+     51
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-treasury",
+   "agency": "Treasury",
+   "url": "https://home.treasury.gov/system/files/266/Treasury-FY-2025-AFR.pdf",
+   "sha256": "ec6bebbb2bf64acef15b08c9c27d37f9c08481ae4a969d2686753f96c1a14ab2",
+   "select": {
+    "pages": [
+     58,
+     59,
+     60,
+     61,
+     62
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-va",
+   "agency": "Veterans Affairs",
+   "url": "https://department.va.gov/wp-content/uploads/2026/01/2025-Department-of-Veterans-Affairs-FY-2025-Agency-Financial-Report-AFR-Final.pdf",
+   "sha256": "48443341a9bde4da4e4e0b7c01f3869001e9525d45f23e828213ee391df5903e",
+   "select": {
+    "pages": [
+     30,
+     31,
+     32,
+     33,
+     34
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-epa",
+   "agency": "Environmental Protection Agency",
+   "url": "https://www.epa.gov/system/files/documents/2026-03/fy-2025-epa-afr-final-full.pdf",
+   "sha256": "48d799780f4dabfea7ef4f07529989e457226464b3ac7411e1adc0505c699b0e",
+   "select": {
+    "pages": [
+     30,
+     31,
+     32,
+     33,
+     34
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-nasa",
+   "agency": "National Aeronautics and Space Administration",
+   "url": "https://www.nasa.gov/wp-content/uploads/2023/11/fy25-afr-final-tagged.pdf",
+   "sha256": "d09e430236bc55aa70654be8f301ce2061038cfc8028a740839f1852d5dd733e",
+   "select": {
+    "pages": [
+     32,
+     33,
+     34,
+     35
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-gsa",
+   "agency": "General Services Administration",
+   "url": "https://www.gsa.gov/system/files/FY%202025%20GSA%20Agency%20Financial%20Report%20508%20compliant_0.pdf",
+   "sha256": "adbfaa091f7d3c18cdc7aa5a751ee9eec123c4cdea960bfb80972df1bcb77eb9",
+   "select": {
+    "pages": [
+     41,
+     42,
+     43,
+     44,
+     45
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-nsf",
+   "agency": "National Science Foundation",
+   "url": "https://nsf-gov-resources.nsf.gov/files/FY-2025-Agency-Financial-Report_0.pdf",
+   "sha256": "c1dc4529402866fc9f03adb8db09ec4782c0f3300c7cbd7e650d22190e48e1a2",
+   "select": {
+    "pages": [
+     39,
+     40,
+     41,
+     42,
+     43
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-nrc",
+   "agency": "Nuclear Regulatory Commission",
+   "url": "https://www.nrc.gov/docs/ML2535/ML25353A601.pdf",
+   "sha256": "ff0584b6a4a7608fee5dd4ce63db983c5b4d6274ad333afe233e114f7935f1e0",
+   "select": {
+    "pages": [
+     31,
+     32,
+     33,
+     34
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-opm",
+   "agency": "Office of Personnel Management",
+   "url": "https://www.opm.gov/about-us/reports-publications/agency-archive/2025-agency-financial-report.pdf",
+   "sha256": "318bf2bca05576ab0ae20c97bf465c79405d922da1015230f8f11c8e711c9d99",
+   "select": {
+    "pages": [
+     39,
+     40,
+     41,
+     42
+    ]
+   },
+   "kind": "afr"
+  },
+  {
+   "id": "afr-ssa",
+   "agency": "Social Security Administration",
+   "url": "https://www.ssa.gov/finance/2025/Full%20FY%202025%20AFR.pdf",
+   "sha256": "78b883cf2af8078f9299b6f6a4e06a958743833f954929582fd08c56ed5a2ce2",
+   "select": {
+    "pages": [
+     51,
+     52,
+     53,
+     54
+    ]
+   },
+   "kind": "afr"
+  }
+ ]
+}

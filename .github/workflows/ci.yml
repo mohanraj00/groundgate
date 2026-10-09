@@ -100,6 +100,8 @@ jobs:
         run: uv run python bench/sec3/feedback.py results --check
       - name: Outside-knowledge results match the recorded items and labels
         run: uv run python bench/outside/outside.py results --check
+      - name: Held-out report set results match the recorded decisions and labels
+        run: uv run python bench/afr/measure.py results --check
       - name: Status-set key calibration report matches its recorded answers, on the 0.6.1 wheel and calibrate 0.2.0
         run: |
           uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.6.1 \
