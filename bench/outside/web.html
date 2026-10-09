@@ -4,18 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Outside labels</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
   body { margin: 0; font: 15px/1.45 system-ui, sans-serif; color: #1d1d1f; background: #f4f4f2; }
   .wrap { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); height: 100vh; }
-  #view { overflow: auto; padding: 16px 20px; }
+  #view { overflow: auto; background: #8a8a8a; position: relative; }
+  #frame { width: 100%; height: 100%; border: 0; background: #fff; display: block; }
+  #sheet { position: relative; margin: 16px auto; width: max-content; box-shadow: 0 2px 8px #0005; }
+  #sheet canvas { display: block; background: #fff; }
+  #hit { position: absolute; border: 3px solid #e8590c; background: #ffd43b55; border-radius: 3px; }
+  #plain { padding: 16px 20px; background: #f4f4f2; min-height: 100%; box-sizing: border-box; }
+  #where { font-size: 13px; color: #444; }
   #side { overflow: auto; padding: 16px 20px; border-left: 1px solid #ccc; background: #fff; }
   h1 { font-size: 15px; margin: 0 0 4px; }
   .meta { color: #666; font-size: 13px; margin-bottom: 12px; }
   .q { font-weight: 600; margin: 14px 0 8px; }
   .value { font-size: 22px; font-weight: 600; }
   .field { font: 13px ui-monospace, monospace; }
-  #text { white-space: pre-wrap; font: 13px/1.4 ui-monospace, monospace; background: #fff;
-          border: 1px solid #ddd; padding: 10px; }
+  #text { white-space: pre-wrap; font: 13px/1.4 ui-monospace, monospace; background: #f6f6f4;
+          border: 1px solid #ddd; padding: 10px; max-height: 38vh; overflow: auto; }
   mark { background: #ffd43b; outline: 2px solid #e8590c; }
   .opts { display: grid; gap: 6px; }
   .opt { text-align: left; padding: 8px 10px; border: 1px solid #bbb; border-radius: 6px;
@@ -38,10 +45,10 @@
 <body>
 <div class="wrap">
   <div id="view">
-    <div class="q">The extractor's quote</div>
-    <div id="quote"></div>
-    <div class="q">The text around the cited span</div>
-    <div id="text"></div>
+    <iframe id="frame" sandbox="allow-same-origin" title="The original filing"></iframe>
+    <div id="sheet"><canvas id="canvas"></canvas><div id="hit"></div></div>
+    <div id="plain">This document is an FDA label in XML. The text on the right is its text.
+      The source link opens the label.</div>
   </div>
   <div id="side">
     <h1 id="title"></h1>
@@ -70,6 +77,11 @@
     </div>
     <div class="err" id="err"></div>
     <div class="now" id="now"></div>
+    <div class="now" id="where"></div>
+    <div class="q">The extractor's quote</div>
+    <div id="quote"></div>
+    <div class="q">The text that groundgate reads, around the cited span</div>
+    <div id="text"></div>
     <div class="help">
       The value is not anywhere in the document as written, so groundgate rejected it. Label it
       <b>right</b> only when it is true for this field and this document's subject (the drug, the
@@ -81,8 +93,143 @@
   </div>
 </div>
 <script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 let S, i = 0, verdict = null, basis = null;
 const $ = (id) => document.getElementById(id);
+const pdfs = {};
+let drawn = 0, task = null;  // the newest render wins; an older one stops or is dropped
+
+function mode(m) {
+  $("frame").style.display = m === "html" ? "block" : "none";
+  $("sheet").style.display = m === "pdf" ? "block" : "none";
+  $("plain").style.display = m === "none" ? "block" : "none";
+}
+
+// The text nodes of the filing that a reader sees, without the hidden XBRL header.
+function visible(doc) {
+  const out = [], seen = new Map(), walk = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+  const shown = (el) => {  // false inside an element that is not rendered, at any depth
+    if (!seen.has(el)) {
+      seen.set(el, el.checkVisibility ? el.checkVisibility() : el.getClientRects().length > 0);
+    }
+    return seen.get(el);
+  };
+  for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+    const el = n.parentElement;
+    if (!el || el.closest("ix\\:header, script, style") || !shown(el)) continue;
+    out.push(n);
+  }
+  return out;
+}
+
+// Box the nth match of the cited text in the filing, ignoring whitespace, as web.py counts it.
+function boxFiling(it) {
+  const doc = $("frame").contentDocument;
+  const want = (it.cited || it.quote || "").replace(/\s+/g, "");
+  doc.querySelectorAll(".gg-box").forEach((b) => b.remove());
+  if (!want) { $("where").textContent = "No cited text: the filing is shown from its start."; return; }
+  let flat = "";
+  const at = [];
+  for (const n of visible(doc)) {
+    const t = n.nodeValue;
+    for (let k = 0; k < t.length; k++) {
+      if (/\s/.test(t[k])) continue;
+      flat += t[k]; at.push([n, k]);
+    }
+  }
+  const hits = [];
+  for (let k = flat.indexOf(want); k >= 0; k = flat.indexOf(want, k + want.length)) hits.push(k);
+  if (!hits.length) {
+    $("where").textContent = it.cited ? "The cited text is not found in the filing."
+      : "The extractor's quote is not in the filing: the filing is shown from its start.";
+    return;
+  }
+  const n = it.original.nth < hits.length ? it.original.nth : 0;
+  const k = hits[n], [sn, so] = at[k], [en, eo] = at[k + want.length - 1];
+  const range = doc.createRange();
+  range.setStart(sn, so); range.setEnd(en, eo + 1);
+  const r = range.getBoundingClientRect(), win = doc.defaultView, pad = 4;
+  const box = doc.createElement("div");
+  box.className = "gg-box";
+  Object.assign(box.style, {
+    position: "absolute", border: "3px solid #e8590c", background: "#ffd43b55",
+    borderRadius: "3px", pointerEvents: "none", zIndex: 99999,
+    left: r.left + win.scrollX - pad + "px", top: r.top + win.scrollY - pad + "px",
+    width: r.width + 2 * pad + "px", height: r.height + 2 * pad + "px",
+  });
+  doc.body.append(box);
+  box.scrollIntoView({ block: "center", inline: "center" });
+  const tag = sn.parentElement && sn.parentElement.closest("ix\\:nonfraction");
+  $("where").textContent = `Match ${n + 1} of ${hits.length} in the filing.` +
+    (tag ? ` Inline XBRL tag: ${tag.getAttribute("name")}` + (tag.getAttribute("sign") === "-" ? " (negative)" : "") : "");
+}
+
+let shownDoc = null;
+function showFiling(it) {
+  mode("html");
+  const f = $("frame");
+  if (shownDoc === it.doc && f.contentDocument && f.contentDocument.readyState === "complete") {
+    boxFiling(it); return;
+  }
+  shownDoc = it.doc;
+  $("where").textContent = "Loading the filing...";
+  f.onload = () => { if (S.items[i] === it) boxFiling(it); };
+  f.src = "/original/" + it.doc;
+}
+
+async function showPdf(it) {
+  mode("pdf");
+  shownDoc = null;
+  const mine = ++drawn;
+  if (task) task.cancel();
+  if (!pdfs[it.doc]) pdfs[it.doc] = pdfjsLib.getDocument("/original/" + it.doc).promise;
+  const pdf = await pdfs[it.doc];
+  const page = await pdf.getPage(it.original.page);
+  if (mine !== drawn) return;
+  const width = $("view").clientWidth - 32;
+  const scale = 1.4 * Math.max(1, width / page.getViewport({ scale: 1 }).width);
+  const vp = page.getViewport({ scale });
+  const dpr = window.devicePixelRatio || 1;
+  const c = $("canvas");
+  c.width = vp.width * dpr; c.height = vp.height * dpr;
+  c.style.width = vp.width + "px"; c.style.height = vp.height + "px";
+  const ctx = c.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  task = page.render({ canvasContext: ctx, viewport: vp });
+  try { await task.promise; } catch (e) {
+    if (e && e.name === "RenderingCancelledException") return;
+    throw e;
+  }
+  if (mine !== drawn) return;
+  const hit = $("hit");
+  if (!it.original.box) {
+    hit.style.display = "none";
+    $("view").scrollTop = 0;
+    $("where").textContent = `PDF page ${it.original.page}. The quote is not in the document, so nothing is boxed.`;
+    return;
+  }
+  hit.style.display = "block";
+  // the box is in points from the top left of the crop box; pdf.js wants PDF user space
+  const [vx0, , , vy1] = page.view;
+  const [x0, top, x1, bottom] = it.original.box;
+  const r = vp.convertToViewportRectangle([vx0 + x0, vy1 - bottom, vx0 + x1, vy1 - top]);
+  const pad = 4;
+  hit.style.left = Math.min(r[0], r[2]) - pad + "px";
+  hit.style.top = Math.min(r[1], r[3]) - pad + "px";
+  hit.style.width = Math.abs(r[2] - r[0]) + 2 * pad + "px";
+  hit.style.height = Math.abs(r[3] - r[1]) + 2 * pad + "px";
+  hit.scrollIntoView({ block: "center", inline: "center" });
+  $("where").textContent = `PDF page ${it.original.page}.`;
+}
+
+function showOriginal(it) {
+  drawn++;  // a PDF render that is still running for another item is dropped
+  if (task) task.cancel();
+  $("where").textContent = "";
+  if (!it.original) { mode("none"); shownDoc = null; return; }
+  if (it.original.type === "html") showFiling(it); else showPdf(it);
+}
 
 function fmt(l) {
   if (!l) return "no label yet";
@@ -109,6 +256,7 @@ function show() {
   } else {
     t.textContent = "(the quote is not in the document, so there is no cited span)";
   }
+  showOriginal(it);
   verdict = l ? l.verdict : null; basis = l ? l.basis : null;
   $("source").value = l && l.source ? l.source : "";
   paint();
@@ -126,10 +274,10 @@ function paint() {
   $("source").disabled = verdict !== "right" || basis !== "outside";
 }
 
-document.querySelectorAll("[data-v]").forEach((b) => b.onclick = () => {
+document.querySelectorAll("[data-v]").forEach((b) => b.onclick = () => { b.blur();
   verdict = b.dataset.v; if (verdict !== "right") basis = null; paint();
 });
-document.querySelectorAll("[data-b]").forEach((b) => b.onclick = () => {
+document.querySelectorAll("[data-b]").forEach((b) => b.onclick = () => { b.blur();
   basis = b.dataset.b; paint(); if (basis === "document") save();
 });
 

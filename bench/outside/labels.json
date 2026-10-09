@@ -1,0 +1,32 @@
+{
+ "00b5991e2fe5d5ad": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "01d0cb35fdfcf7ec": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "0229a8ff2beec09e": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "032891c887d9c085": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "04a3fbbe8d82b573": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "06172523a0a41dfb": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ }
+}

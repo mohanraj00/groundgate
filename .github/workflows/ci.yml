@@ -98,6 +98,8 @@ jobs:
         run: uv run python bench/sec3/measure.py results --check
       - name: Feedback round on the held-out 10-K set matches its recorded decisions and labels
         run: uv run python bench/sec3/feedback.py results --check
+      - name: Outside-knowledge results match the recorded items and labels
+        run: uv run python bench/outside/outside.py results --check
       - name: Status-set key calibration report matches its recorded answers, on the 0.6.1 wheel and calibrate 0.2.0
         run: |
           uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.6.1 \

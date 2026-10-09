@@ -1,27 +1,108 @@
 {
  "items": 229,
+ "still": 45,
  "by": {
-  "sec": {
-   "unlabeled": 196
+  "still": {
+   "sec": {
+    "unlabeled": 12,
+    "wrong": 1
+   },
+   "sec/sec": {
+    "unlabeled": 12,
+    "wrong": 1
+   },
+   "set2": {
+    "unlabeled": 31,
+    "wrong": 1
+   },
+   "set2/fda": {
+    "unlabeled": 13,
+    "wrong": 1
+   },
+   "set2/fr": {
+    "unlabeled": 4
+   },
+   "set2/irs": {
+    "unlabeled": 8
+   },
+   "set2/ntsb": {
+    "unlabeled": 6
+   }
   },
-  "sec/sec": {
-   "unlabeled": 196
-  },
-  "set2": {
-   "unlabeled": 33
-  },
-  "set2/fda": {
-   "unlabeled": 15
-  },
-  "set2/fr": {
-   "unlabeled": 4
-  },
-  "set2/irs": {
-   "unlabeled": 8
-  },
-  "set2/ntsb": {
-   "unlabeled": 6
+  "all": {
+   "sec": {
+    "right, from the document": 4,
+    "unlabeled": 191,
+    "wrong": 1
+   },
+   "sec/sec": {
+    "right, from the document": 4,
+    "unlabeled": 191,
+    "wrong": 1
+   },
+   "set2": {
+    "unlabeled": 32,
+    "wrong": 1
+   },
+   "set2/fda": {
+    "unlabeled": 14,
+    "wrong": 1
+   },
+   "set2/fr": {
+    "unlabeled": 4
+   },
+   "set2/irs": {
+    "unlabeled": 8
+   },
+   "set2/ntsb": {
+    "unlabeled": 6
+   }
   }
  },
- "right": []
+ "right": [
+  {
+   "id": "01d0cb35fdfcf7ec",
+   "doc": "sec-0001079973-26-000129",
+   "field": "net_income",
+   "key": "2024",
+   "value": "-169000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": false
+  },
+  {
+   "id": "032891c887d9c085",
+   "doc": "sec-0001213900-26-024633",
+   "field": "net_income",
+   "key": "2024",
+   "value": "-71000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": false
+  },
+  {
+   "id": "04a3fbbe8d82b573",
+   "doc": "sec-0001628280-26-004357",
+   "field": "operating_income",
+   "key": "2025",
+   "value": "13474000000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": false
+  },
+  {
+   "id": "06172523a0a41dfb",
+   "doc": "sec-0001193125-26-104547",
+   "field": "operating_income",
+   "key": "2024",
+   "value": "-105198000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": false
+  }
+ ]
 }
