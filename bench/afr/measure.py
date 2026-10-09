@@ -81,6 +81,7 @@ def decide() -> None:
                         "evidence": None if d.evidence is None else list(d.evidence),
                         "outcome": d.outcome,
                         "codes": list(d.codes),
+                        "unit": next((x.passed for x in d.parts if x.role == "unit"), None),
                     }
                 )
             found[doc] = {"reply": reply is not None, "decisions": rows}
@@ -245,10 +246,11 @@ def serve(port: int) -> None:
 def score() -> dict[str, Any]:
     """For each run and spec: the right values admitted, the escapes (wrong values admitted),
     the admitted values labeled not sure or not yet labeled, the proposals and the documents with
-    no reply. For each run, the facts whose outcome the 0.7 draft changes, by label."""
+    no reply. For each run, the proposals whose outcome the 0.7 draft changes, by label, and
+    the unit parts that it changes: the #164 rule reads only the unit item."""
     given = labels()
     verdict = {"right": "right", "wrong": "escapes", "not sure": "not sure"}
-    res: dict[str, Any] = {"runs": {}, "changed": {}}
+    res: dict[str, Any] = {"runs": {}, "changed": {}, "unit parts": {}}
     found = _decisions()
     for (run, spec), docs in found.items():
         seen: set[str] = set()
@@ -279,6 +281,17 @@ def score() -> dict[str, Any]:
                 row = moved.setdefault(way, {"right": 0, "wrong": 0, "not sure": 0, "unlabeled": 0})
                 row[v or "unlabeled"] += 1
         res["changed"][run] = dict(sorted(moved.items()))
+        parts = {"with a unit item": 0, "passed under 0.6": 0, "passed under 0.7": 0, "changed": 0}
+        for doc, got in new.items():
+            before = {r["id"]: r["unit"] for r in old[doc]["decisions"]}
+            for r in got["decisions"]:
+                if r["unit"] is None and before[r["id"]] is None:
+                    continue
+                parts["with a unit item"] += 1
+                parts["passed under 0.6"] += before[r["id"]] is True
+                parts["passed under 0.7"] += r["unit"] is True
+                parts["changed"] += r["unit"] != before[r["id"]]
+        res["unit parts"][run] = parts
     return res
 
 
@@ -308,7 +321,16 @@ def render(res: dict[str, Any]) -> str:
                 f"| spec {spec} | {c['right']} | {c['escapes']} | {c['not sure']} | "
                 f"{c['unlabeled']} | {c['proposals']} | {c['no reply']} |"
             )
-        lines += ["", "Proposals whose outcome the 0.7 draft changes:", ""]
+        u = res["unit parts"][run]
+        lines += [
+            "",
+            f"Proposals with a unit item: {u['with a unit item']}. The unit item passed in "
+            f"{u['passed under 0.6']} under spec 0.6 and in {u['passed under 0.7']} under the 0.7 "
+            f"draft; it changed in {u['changed']}.",
+            "",
+            "Proposals whose outcome the 0.7 draft changes:",
+            "",
+        ]
         moved = res["changed"][run]
         if not moved:
             lines += ["None.", ""]

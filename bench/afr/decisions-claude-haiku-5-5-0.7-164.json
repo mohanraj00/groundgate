@@ -16,7 +16,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -33,7 +34,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -49,7 +51,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -64,7 +67,8 @@
     "codes": [
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -80,7 +84,8 @@
      "KEY_NOT_AT_VALUE",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -101,7 +106,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -118,7 +124,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -135,7 +142,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -151,7 +159,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -168,7 +177,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -190,7 +200,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -207,7 +218,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -224,7 +236,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -241,7 +254,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -258,7 +272,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -279,7 +294,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -295,7 +311,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -310,7 +327,8 @@
     "codes": [
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -324,7 +342,8 @@
     "outcome": "admitted",
     "codes": [
      "KEY_CITED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -339,7 +358,8 @@
     "codes": [
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -360,7 +380,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -376,7 +397,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -392,7 +414,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -407,7 +430,8 @@
     "codes": [
      "VALUE_DERIVED",
      "KEY_CITED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -422,7 +446,8 @@
     "codes": [
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -443,7 +468,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -460,7 +486,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -477,7 +504,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -492,7 +520,8 @@
     "codes": [
      "VALUE_DERIVED",
      "KEY_CITED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -508,7 +537,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -528,7 +558,8 @@
     "codes": [
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -543,7 +574,8 @@
     "codes": [
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -560,7 +592,8 @@
      "KEY_NOT_AT_VALUE",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -576,7 +609,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -592,7 +626,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -613,7 +648,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -629,7 +665,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -645,7 +682,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -660,7 +698,8 @@
     "codes": [
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -676,7 +715,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -696,7 +736,8 @@
     "codes": [
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -712,7 +753,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -728,7 +770,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -745,7 +788,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": false
    },
    {
     "id": "c4",
@@ -762,7 +806,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -782,7 +827,8 @@
     "codes": [
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -798,7 +844,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -814,7 +861,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -828,7 +876,8 @@
     "outcome": "needs_verification",
     "codes": [
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -844,7 +893,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -865,7 +915,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -881,7 +932,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -897,7 +949,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -913,7 +966,8 @@
      "PART_MISSING",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -930,7 +984,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -950,7 +1005,8 @@
     "codes": [
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -966,7 +1022,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -982,7 +1039,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -998,7 +1056,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -1014,7 +1073,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -1035,7 +1095,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -1051,7 +1112,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -1067,7 +1129,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -1082,7 +1145,8 @@
     "codes": [
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -1098,7 +1162,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -1119,7 +1184,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -1135,7 +1201,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -1150,7 +1217,8 @@
     "codes": [
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -1166,7 +1234,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -1182,7 +1251,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -1203,7 +1273,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -1219,7 +1290,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -1235,7 +1307,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -1251,7 +1324,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -1266,7 +1340,8 @@
     "codes": [
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -1287,7 +1362,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -1303,7 +1379,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -1319,7 +1396,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -1336,7 +1414,8 @@
      "KEY_NOT_AT_VALUE",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -1351,7 +1430,8 @@
     "codes": [
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -1373,7 +1453,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -1390,7 +1471,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -1406,7 +1488,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -1422,7 +1505,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -1439,7 +1523,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -1460,7 +1545,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -1476,7 +1562,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -1492,7 +1579,8 @@
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -1507,7 +1595,8 @@
     "codes": [
      "PART_MISSING",
      "FIELD_CITATION_INVALID"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -1524,7 +1613,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "KEY_CITATION_INVALID"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -1544,7 +1634,8 @@
     "codes": [
      "PART_MISSING",
      "FIELD_CITATION_INVALID"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -1559,7 +1650,8 @@
     "codes": [
      "PART_MISSING",
      "FIELD_CITATION_INVALID"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -1575,7 +1667,8 @@
      "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "KEY_CITATION_INVALID"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -1590,7 +1683,8 @@
     "codes": [
      "PART_MISSING",
      "KEY_CITED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -1605,7 +1699,8 @@
     "codes": [
      "PART_MISSING",
      "KEY_NOT_AT_VALUE"
-    ]
+    ],
+    "unit": null
    }
   ]
  },
@@ -1624,7 +1719,8 @@
     "outcome": "admitted",
     "codes": [
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c1",
@@ -1639,7 +1735,8 @@
     "codes": [
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c2",
@@ -1656,7 +1753,8 @@
      "SCALE_CITATION_INVALID",
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c3",
@@ -1671,7 +1769,8 @@
     "codes": [
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    },
    {
     "id": "c4",
@@ -1686,7 +1785,8 @@
     "codes": [
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
-    ]
+    ],
+    "unit": null
    }
   ]
  }

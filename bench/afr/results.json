@@ -40,5 +40,19 @@
  "changed": {
   "claude-haiku-5-5": {},
   "gpt-6-luna": {}
+ },
+ "unit parts": {
+  "claude-haiku-5-5": {
+   "with a unit item": 1,
+   "passed under 0.6": 0,
+   "passed under 0.7": 0,
+   "changed": 0
+  },
+  "gpt-6-luna": {
+   "with a unit item": 57,
+   "passed under 0.6": 25,
+   "passed under 0.7": 25,
+   "changed": 0
+  }
  }
 }
