@@ -82,8 +82,9 @@ judges.BUILT_IN["premium-rule"] = PremiumRule
 Two judges are built in. `jev` is hosted. `chat` sends the text window to a server that accepts
 chat requests. Set `GROUNDGATE_CHAT_URL` to its base URL, `GROUNDGATE_CHAT_MODEL` to the name it
 reports, and `GROUNDGATE_CHAT_VERSION` to your version string. `GROUNDGATE_CHAT_KEY` is optional.
-Then use `--judge chat` in step 6. With a server on your machine, the text stays there. With a
-hosted server, use only documents that you may send. The [Judges reference](../../calibrate/README.md#judges)
+Then use `--judge chat` in step 6. The URL must be `https`, or `http` to your machine. With a
+server on your machine, the text stays there. With a hosted server, use only documents that you
+may send. The [Judges reference](../../calibrate/README.md#judges)
 gives the settings and digest. Both judges use the same calibration steps as this test judge.
 
 ## 3. Write the inputs

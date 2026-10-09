@@ -100,7 +100,9 @@ It reads its API key from the environment and sends a window of each document ou
 
 `chat` uses a server that accepts chat requests. Set these environment variables:
 
-- `GROUNDGATE_CHAT_URL`: the base URL, such as `http://127.0.0.1:11434/v1`.
+- `GROUNDGATE_CHAT_URL`: the base URL, such as `http://127.0.0.1:11434/v1`. It must be `https`,
+  or `http` to this machine (`localhost`, `127.0.0.1` or `::1`). A request to this machine never
+  goes through a proxy.
 - `GROUNDGATE_CHAT_MODEL`: the model name, exactly as the server reports it in each response.
 - `GROUNDGATE_CHAT_VERSION`: your version string, such as the local model's file digest.
 - `GROUNDGATE_CHAT_KEY`: optional. When set, it goes in the `Authorization: Bearer` header.

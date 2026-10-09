@@ -13,6 +13,7 @@ from __future__ import annotations
 import http.client
 import json
 import os
+import urllib.parse
 import urllib.request
 from collections.abc import Callable
 from importlib.metadata import entry_points
@@ -53,6 +54,9 @@ class Jev:
         if res["model"] != self.digest:
             raise SystemExit(f"answered by {res['model']}, not {self.digest}")
         return dict(res["answers"])
+
+
+LOOPBACK = {"localhost", "127.0.0.1", "::1"}
 
 
 class _NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -99,7 +103,18 @@ class Chat:
         self._model = settings["GROUNDGATE_CHAT_MODEL"]
         self.digest = f"chat-1:{self._model}@{settings['GROUNDGATE_CHAT_VERSION']}"
         self._key = os.environ.get("GROUNDGATE_CHAT_KEY")
-        self._opener = urllib.request.build_opener(_NoRedirect)
+        # the text window and the key travel only over TLS, or to this machine with no proxy
+        url = urllib.parse.urlsplit(self._url)
+        if url.scheme == "https":
+            self._opener = urllib.request.build_opener(_NoRedirect)
+        elif url.scheme == "http" and url.hostname in LOOPBACK:
+            no_proxy = urllib.request.ProxyHandler({})
+            self._opener = urllib.request.build_opener(no_proxy, _NoRedirect)
+        else:
+            raise SystemExit(
+                "GROUNDGATE_CHAT_URL must be https, or http to this machine "
+                "(localhost, 127.0.0.1 or ::1)"
+            )
 
     @staticmethod
     def _answer(question: dict[str, Any], content: str) -> dict[str, Any]:

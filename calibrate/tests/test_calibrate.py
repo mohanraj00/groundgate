@@ -708,6 +708,44 @@ def test_chat_refuses_another_or_missing_reported_model(
     assert len(chat_server.requests) == 1
 
 
+@pytest.mark.parametrize(
+    ("url", "ok"),
+    [
+        ("https://models.example/v1", True),
+        ("http://localhost:11434/v1", True),
+        ("http://[::1]:8000/v1", True),
+        ("http://models.example/v1", False),
+        ("http://127.0.0.1.example/v1", False),
+        ("ftp://127.0.0.1/v1", False),
+    ],
+)
+def test_chat_needs_tls_off_this_machine(
+    monkeypatch: pytest.MonkeyPatch, url: str, ok: bool
+) -> None:
+    monkeypatch.setenv("GROUNDGATE_CHAT_URL", url)
+    monkeypatch.setenv("GROUNDGATE_CHAT_MODEL", "model-1")
+    monkeypatch.setenv("GROUNDGATE_CHAT_VERSION", "file-sha256")
+    if ok:
+        assert judges.load("chat").id == "chat"
+    else:
+        with pytest.raises(SystemExit, match="must be https"):
+            judges.load("chat")
+
+
+def test_chat_goes_to_this_machine_with_no_proxy(
+    chat_server: ChatServer, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    for name in ("no_proxy", "NO_PROXY"):
+        monkeypatch.delenv(name, raising=False)
+    for name in ("http_proxy", "HTTP_PROXY", "all_proxy", "ALL_PROXY"):
+        monkeypatch.setenv(name, "http://127.0.0.1:9")  # nothing listens there
+    chat_server.replies = [chat_reply('{"p": 0.5}')]
+    assert judges.load("chat").ask("[5,200]", {"field": {"type": "noul"}}) == {
+        "field": {"noul": 0.5}
+    }
+    assert len(chat_server.requests) == 1
+
+
 def test_chat_refuses_a_redirect(chat_server: ChatServer, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("GROUNDGATE_CHAT_KEY", "test-key")
     chat_server.replies = [("redirect", "/elsewhere")]
