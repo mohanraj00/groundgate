@@ -649,14 +649,111 @@ def holds_form(text: str, start: int, end: int, forms: list[str]) -> bool:
     return False
 
 
+def _form_spans(text: str, start: int, end: int, forms: list[str]) -> list[tuple[int, int]]:
+    """The spans of the unit forms as a whole in text[start:end], as holds_form finds them."""
+    out = []
+    for form in forms:
+        pat = re.escape(form)
+        if form[0].isalnum():
+            pat = _NOT_ALNUM_BEFORE + pat
+        if form[-1].isalnum():
+            pat += _NOT_ALNUM_AFTER
+        out += [(m.start(), m.end()) for m in re.compile(pat).finditer(text, start, end)]
+    return out
+
+
+def _line(text: str, pos: int) -> tuple[int, int]:
+    """The line that holds the position: from after the line break before it to the next one."""
+    end = text.find("\n", pos)
+    return text.rfind("\n", 0, pos) + 1, len(text) if end < 0 else end
+
+
+def _table_line(text: str, start: int, end: int) -> bool:
+    """A line of a table (SPEC §4.6, unit places): not blank, with a tab or no number token."""
+    line = text[start:end]
+    return bool(line.strip()) and ("\t" in line or not tokens(text, start, end))
+
+
+def _row_cells(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
+    """The cells of a line after its first tab, as (start, end)."""
+    tab = text.find("\t", start, end)
+    if tab < 0:
+        return []
+    ends = {t.start: t.end for t in tokens(text, tab + 1, end)}
+    out = []
+    for c in cells(text, tab + 1, end, prefixes):
+        e = ends.get(c, c)
+        while e < end and not text[e].isspace():
+            e += 1
+        out.append((c, ends.get(c, e)))
+    return out
+
+
+class UnitPlaces:
+    """The unit places of one value (SPEC §4.6): ``places(start, end)`` says whether a unit item
+    at text[start:end], which ends at or before the token, is on the value's line, in a caption
+    that reaches its table, or in its column. The table above the value is read once, so each
+    item costs only its own line."""
+
+    def __init__(self, text: str, tok: Token, prefixes: list[str], suffixes: list[str]) -> None:
+        self.text, self.tok, self.prefixes, self.suffixes = text, tok, prefixes, suffixes
+        self.line = _line(text, tok.start)
+        va, vb = self.line
+        self.table: set[int] = set()  # starts of the table lines directly above the value's line
+        self.caption: set[int] = set()  # starts of the lines that can hold a caption
+        br = brackets_around(text, tok, prefixes)
+        self.bracket = -1 if br is None else len(text[: br[0]].rstrip())  # where a $ before it ends
+        self.n = -1
+        if "\t" not in text[va:vb]:
+            return
+        mine = _row_cells(text, va, vb, prefixes)
+        self.n = next((i for i, (c, _) in enumerate(mine) if c == tok.start), -1)
+        pos = va
+        while pos > 0:
+            a, b = _line(text, pos - 1)
+            if not _table_line(text, a, b):
+                break
+            self.table.add(a)
+            pos = a
+        self.caption = {a for a in self.table if "\t" not in text[a : _line(text, a)[1]]}
+        while pos > 0:  # blank lines, then the caption above the table
+            a, b = _line(text, pos - 1)
+            if text[a:b].strip():
+                if "\t" not in text[a:b] and not tokens(text, a, b):
+                    self.caption.add(a)
+                break
+            pos = a
+
+    def __call__(self, start: int, end: int) -> bool:
+        text = self.text
+        if start >= self.line[0]:
+            return True
+        spans = _form_spans(text, start, end, self.prefixes)
+        if self.bracket >= 0 and any(b == self.bracket for _, b in spans):
+            return True
+        ia, ib = _line(text, start)
+        if ia in self.caption:
+            return True
+        if ia not in self.table or self.n < 0:
+            return False
+        row = _row_cells(text, ia, ib, self.prefixes)
+        if self.n >= len(row):
+            return False
+        c, ce = row[self.n]
+        if any(b <= c and not text[b:c].strip() for _, b in spans):
+            return True
+        spans = _form_spans(text, start, end, self.suffixes)
+        return any(a >= ce and not text[ce:a].strip() for a, _ in spans)
+
+
 def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
     """The starts of the table cells in text[start:end] (SPEC §4.5, the column rule): number
     tokens, lone dashes, and a unit prefix that stands alone with no number after it."""
     toks = tokens(text, start, end)
     starts = [t.start for t in toks]
-    starts += [
-        m.start() for m in _LONE_DASH.finditer(text) if start <= m.start() and m.end() <= end
-    ]
+    # one character past the end, so that the lookahead reads the text as it stands
+    dashes = _LONE_DASH.finditer(text, start, min(len(text), end + 1))
+    starts += [m.start() for m in dashes if m.end() <= end]
     numbers = {t.start for t in toks}
     empty: set[int] = set()  # a prefix listed twice is still one cell
     for p in prefixes:

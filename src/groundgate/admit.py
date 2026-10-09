@@ -5,7 +5,7 @@ from __future__ import annotations
 import bisect
 import dataclasses
 from collections import defaultdict
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Any
@@ -25,6 +25,7 @@ from .model import (
 )
 from .text import (
     Token,
+    UnitPlaces,
     brackets_around,
     canonical,
     cells,
@@ -528,11 +529,15 @@ def _checked(
 
 
 def _find(
-    t: _Text, item: _Item, at: _At, region: tuple[int, int]
+    t: _Text,
+    item: _Item,
+    at: _At,
+    region: tuple[int, int],
+    place: Callable[[int, int], bool] | None = None,
 ) -> tuple[tuple[int, int] | None, bool]:
     """Where a role item is in the value's text (SPEC §4.6), or None, and whether it is found
     there: an item with offsets whose ``text`` differs from its span is at its span, but not
-    found."""
+    found. A unit item quote prefers its last occurrence at a unit place (``place``)."""
     if item.span is not None:
         span = _valid(t.offsets, item.span)
         if span is None:
@@ -548,6 +553,9 @@ def _find(
                 return (a, b), True
     pos = tok.start if tok is not None else at.span[0]
     before = [(a, b) for a, b in found if b <= pos]
+    placed = [(a, b) for a, b in before if place is not None and place(a, b)]
+    if placed:
+        return placed[-1], True
     if before:
         return before[-1], True
     after = [(a, b) for a, b in found if a >= pos]
@@ -569,6 +577,9 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
     t, tok = at.t, at.token
     pos = tok.start if tok is not None else at.span[0]
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
+    places = None
+    if tok is not None and "unit" in roles:
+        places = UnitPlaces(t.text, tok, prefixes, suffixes)
     found: dict[str, tuple[int, int]] = {}
     passed: dict[str, bool] = {}
     row = False  # the field item is at the value's row
@@ -576,7 +587,8 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
         item = roles.get(role)
         if item is None:
             continue
-        span, located = _find(t, item, at, region) if _same(item, at.item) else (None, False)
+        place = places if role == "unit" else None
+        span, located = _find(t, item, at, region, place) if _same(item, at.item) else (None, False)
         ok = False
         if span is not None and located:
             found[role] = span
@@ -624,6 +636,8 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
                             passed.get("field", False)
                             and b <= tok.start
                             and not ctx.any_unit_at(t, tok)
+                            and places is not None
+                            and places(a, b)
                         )
                     )
                 )

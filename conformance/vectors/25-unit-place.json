@@ -1,0 +1,399 @@
+{
+ "name": "25-unit-place",
+ "description": "A unit item that the unit at the token does not repeat must be at a unit place of the value: on its line, in a caption line with no tab and no number that reaches the value's table, or in the value's column on an earlier line of its table, where each line between holds a tab or no number. A unit quote takes its last occurrence at a unit place. A blank line or a line with a number and no tab ends the table. A row of counts in the same column still takes the column's $ when its field item passes (spec 0.7, #164).",
+ "document": "Results of operations\n(amounts in dollars)\n\n\t2025\t2024\tChange\nRental revenue\t$\t527,534\t$\t425,749\t$\t101,785\nOther revenue\t2,060\t452\t1,608\nTotal revenues\t529,594\t426,201\t103,393\nOperating items:\nIncome from operations\t359,921\t278,193\t81,728\nStores\t1,200\t1,100\t100\n\nSegment data\t2025\t2024\nUnits\t57\t43\n\nRegion\t2025\t2024\nNorth\t$\t310\t$\t220\nAs restated in 2024\nSouth\t160\t110\n\nFees ($)\t75\t80\nInterest\t$\t(12)\t$\t(9)\n\nWages were 9 dollars an hour.\nCrew\t70\t60\n",
+ "schema": {
+  "fields": {
+   "revenue": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "rental revenue",
+     "other revenue",
+     "total revenues"
+    ]
+   },
+   "operating_income": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "income from operations"
+    ]
+   },
+   "store_sales": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "stores"
+    ]
+   },
+   "unit_sales": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "units"
+    ]
+   },
+   "region_sales": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "north",
+     "south"
+    ]
+   },
+   "interest": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "interest"
+    ]
+   },
+   "fees": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "fees"
+    ]
+   },
+   "crew_pay": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "crew"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "revenue",
+   "value": "426201",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 160,
+     "end": 167,
+     "text": "426,201"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Total revenues"
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "field": "operating_income",
+   "value": "278193",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 224,
+     "end": 231,
+     "text": "278,193"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Income from operations"
+    }
+   ]
+  },
+  {
+   "id": "p3",
+   "field": "store_sales",
+   "value": "1100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 252,
+     "end": 257,
+     "text": "1,100"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Stores"
+    }
+   ]
+  },
+  {
+   "id": "p4",
+   "field": "unit_sales",
+   "value": "43",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 295,
+     "end": 297,
+     "text": "43"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Units"
+    }
+   ]
+  },
+  {
+   "id": "p5",
+   "field": "revenue",
+   "value": "2060",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 121,
+     "end": 126,
+     "text": "2,060"
+    },
+    {
+     "role": "unit",
+     "start": 97,
+     "end": 98,
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Other revenue"
+    }
+   ]
+  },
+  {
+   "id": "p6",
+   "field": "revenue",
+   "value": "2060",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 121,
+     "end": 126,
+     "text": "2,060"
+    },
+    {
+     "role": "unit",
+     "start": 77,
+     "end": 78,
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Other revenue"
+    }
+   ]
+  },
+  {
+   "id": "p7",
+   "field": "revenue",
+   "value": "2060",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 121,
+     "end": 126,
+     "text": "2,060"
+    },
+    {
+     "role": "unit",
+     "text": "dollars"
+    },
+    {
+     "role": "field",
+     "text": "Other revenue"
+    }
+   ]
+  },
+  {
+   "id": "p8",
+   "field": "region_sales",
+   "value": "110",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 364,
+     "end": 367,
+     "text": "110"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "South"
+    }
+   ]
+  },
+  {
+   "id": "p9",
+   "field": "interest",
+   "value": "-9",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 402,
+     "end": 405,
+     "text": "(9)"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Interest"
+    }
+   ]
+  },
+  {
+   "id": "p10",
+   "field": "fees",
+   "value": "80",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 381,
+     "end": 383,
+     "text": "80"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Fees"
+    }
+   ]
+  },
+  {
+   "id": "p11",
+   "field": "crew_pay",
+   "value": "70",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 442,
+     "end": 444,
+     "text": "70"
+    },
+    {
+     "role": "unit",
+     "text": "dollars"
+    },
+    {
+     "role": "field",
+     "text": "Crew"
+    }
+   ]
+  },
+  {
+   "id": "p12",
+   "field": "revenue",
+   "value": "426201",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 160,
+     "end": 167,
+     "text": "426,201"
+    },
+    {
+     "role": "field",
+     "text": "Total revenues"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

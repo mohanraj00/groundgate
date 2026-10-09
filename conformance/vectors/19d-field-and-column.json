@@ -1,6 +1,6 @@
 {
  "name": "19d-field-and-column",
- "description": "A field item holds an alias of the field, at the value's row or in its sentence. The column rule puts a key item's key at a table value: the key is the n-th of its header, and the value is the n-th cell after the row label, where a lone dash is a cell. It records KEY_CITED. A field item on a field without aliases changes nothing (spec 0.5).",
+ "description": "A field item holds an alias of the field, at the value's row or in its sentence. The column rule puts a key item's key at a table value: the key is the n-th of its header, and the value is the n-th cell after the row label, where a lone dash is a cell. It records KEY_CITED. A field item on a field without aliases changes nothing (spec 0.5). A unit item on another line of a table with one cell on each line fails, but a $ before the brackets around the value is at a unit place (spec 0.7, #164).",
  "document": "Year Ended December 31,\n\n2025\n\n2024\n\nChange\n\nRevenue\n\n$\n\n46,016\n\n$\n\n434,433\n\nGain on sale\n\n—\n\n40,390\n\nLoss from operations\n\n$\n\n(140,102\n)\n\n$\n\n(105,198\n)\n\nThree Months Ended\n\n2025\n\n2024\n\nRevenue\n\n$\n\n9,100\n\n$\n\n8,800\n\nIn 2024, revenue was $434,433 and operating income was $12.",
  "schema": {
   "fields": {
@@ -472,14 +472,16 @@
     "missing": []
    },
    {
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "KEY_CITED"
     ]
    },
    {
     "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
     ]
    },

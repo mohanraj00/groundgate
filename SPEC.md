@@ -623,8 +623,9 @@ The quote is trimmed of whitespace at both ends first.
   occurrence where steps 10 and 11 pass without a missing part is the evidence. When there is no
   such occurrence, the evidence is the first occurrence, and steps 10 and 11 run there. When there
   is no occurrence, step 9a rejects.
-- For a role item, the occurrence is the one that holds the value's token; else the last one that
-  ends at or before the value; else the first one after the value.
+- For a role item, the occurrence is the one that holds the value's token; else, for a unit item,
+  the last one that ends at or before the value at a unit place of the value (below); else the
+  last one that ends at or before the value; else the first one after the value.
 
 An item's **text** is its `text`, or, when it has offsets and no `text`, the text at its span in
 its own source (the document or its reference).
@@ -638,7 +639,7 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 |---|---|
 | `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
 | `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands". It ends at or before the token, and no scale word, also with a final `s`, lies between its end and the token. |
-| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the candidate's field item passes, the item ends at or before the token, and no unit form is next to the token (§3.1). |
+| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the candidate's field item passes, the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). |
 | `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then either no letter (general category L) lies between the item's end and the token (the item is at the **row**), or the item is in the value's sentence with no number token between its end and the token. |
 | `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
 
@@ -650,6 +651,27 @@ holds a scale word (also with a final `s`), a token with no scaled value also ha
 the first such word's factor. When the token is negative, each of these also has its negative (minus its absolute
 value). A failing sign or scale item still gives its part: the decision then has the item's
 flag.
+
+**Unit places.** A unit item that the field's unit at the token does not repeat must be at a
+**unit place** of the value, one of these (#164):
+
+1. **Line**: no line break stands between the start of the item and the token. Or the item holds
+   a prefix of the unit that ends, with only whitespace between, at the `(` of brackets around the
+   value (as the sign check reads them).
+2. **Caption**: the item is on a line that holds no tab and no number token, and that line reaches
+   the value's line. After it, blank lines may stand, then lines that are not blank and each hold
+   a tab or no number token, up to the value's line, which holds a tab.
+3. **Column**: the item's line and the value's line hold a tab, and each line between them is not
+   blank and holds a tab or no number token. The **cells of a line** are the cells of the column
+   rule (§4.5, rule 4) after the first tab of the line. The item holds a prefix of the unit that
+   ends at the start of the n-th cell of its line, or a suffix of the unit that starts after the
+   end of the n-th cell, with only whitespace between them. The value's token is the n-th cell of
+   its line.
+
+So a `$` on the first row of a table applies to the same column in the rows below it, up to a
+blank line or a line with a number and no tab. It also applies to a row of counts in that column
+when the field item passes there. In a table with one cell on each line, a unit item on another
+line than the value fails.
 
 A field item without `aliases` is not checked: it adds no flag, and it does not pass, so a unit
 item of that candidate fails unless the field's unit is at the token. A key item that passes puts its

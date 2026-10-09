@@ -674,3 +674,34 @@ def test_heading_scale_reads_a_wide_row_once() -> None:
         return _seconds(text, {"id": "c", "field": "n", "value": 0, "evidence": [{"text": "0"}]})
 
     assert time_for(80_000) < 8 * time_for(20_000)
+
+
+def test_unit_places_read_a_long_table_once() -> None:
+    """A unit quote with many occurrences in a long table stays linear (#164): four times the
+    rows take less than eight times as long."""
+    import time
+
+    schema = {"fields": {"total": {"type": "integer", "unit": "USD", "aliases": ["total"]}}}
+
+    def time_for(rows: int) -> float:
+        text = "Row\t$\t1\t$\t2\n" * rows + "Total\t3\t7\n"
+        cand = {
+            "id": "c",
+            "field": "total",
+            "value": 7,
+            "unit": "USD",
+            "evidence": [
+                {"text": "7"},
+                {"role": "unit", "text": "$"},
+                {"role": "field", "text": "Total"},
+            ],
+        }
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            r = gg.admit(text, schema, [cand])
+            best = min(best, time.perf_counter() - began)
+            assert r.decisions[0].outcome == "admitted"
+        return best
+
+    assert time_for(4000) < 8 * time_for(1000)
