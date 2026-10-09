@@ -3,6 +3,39 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.6.0 (2026-10-08)
+
+Spec 0.6. Receipts name `"groundgate": "0.6"` and every digest uses the `groundgate/0.6:` prefix, so
+all hashes differ from 0.5.2. Each rule was measured alone on a held-out set (`bench/sec3`, #170,
+#201): 20 10-K filings that no rule came from, and two extractors, `claude-haiku-5-5` and
+`gpt-6-luna`, with `gg.extractor_schema(schema)` as their structured output. Under spec 0.5 they
+admit 15 and 17 right values with 0 escapes. Every bench set that CI rescores in process gives the
+same numbers.
+
+- A unit item that repeats the unit passes (#145). When the field's unit is next to the number, a
+  unit item that holds a form of it passes with no field item, even after the number. Alone, it
+  admits 15 and 27 right values, with 0 escapes. The other part of #145, a scale quote in any case,
+  admitted no more right values on either run, so it did not ship.
+- `between` with up to six words before an `and` range (#159). In "between the ages of 18 and 65",
+  65 now gets the `range` qualifier too. A word is a run of letters and combining marks. Alone, it
+  costs 0 right values. One earlier vector changed: in `20-spec-text`, that 65 now goes to review
+  with `QUALIFIED_VALUE`.
+- A heading scale over a table (#162). "(in thousands)" on a line with no tab reaches the rows with
+  tabs after it. A value there that is the number as written, with no scale item, goes to review
+  with `PART_MISSING` and `scale` in `missing`. A field with the unit `%`, a number with its own
+  scale word, and a table with spaces between its cells are not reached. Alone, it costs 0 right
+  values. The rows are read once for each text, so a long table or a wide row stays linear.
+- A field can have a `description` (#171): a non-blank string that changes no decision. It is part
+  of the schema digest, and `gg.extractor_schema` puts it in the field's candidate shape.
+- `groundgate schema check` now says that a unit item on a field with no `aliases` passes only for
+  a unit next to the number.
+- `bench/sec3`: the held-out set, the runs script and the measure, which decides each 0.6 rule
+  alone. Spec 0.5 is decided on the 0.5.1 wheel.
+- The conformance suite has 51 vectors and 38 invalid packets.
+- Known gaps, for 0.7: a unit item can still cite a unit from another row (#164). A table with
+  spaces between its cells gets no column rule and no heading scale (#152). The Claude CLI refuses
+  the `$schema` member of `gg.extractor_schema` (#197). From 0.5.2: #190, #192 and #194.
+
 ## 0.5.2 (2026-10-08)
 
 Spec 0.5, unchanged: every decision and receipt is the same as in 0.5.1.
