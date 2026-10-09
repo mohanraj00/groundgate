@@ -1,11 +1,11 @@
 {
  "items": 79,
- "answered": 0,
- "agree": 0,
+ "answered": 79,
+ "agree": 79,
  "follows_reading": 0,
  "against": 0,
  "key": {
-  "same": 0,
+  "same": 79,
   "review_right_blind_wrong": 0,
   "review_wrong_blind_right": 0,
   "not_sure": 0
