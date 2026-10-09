@@ -3,6 +3,39 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.7.0 (2026-10-09)
+
+Spec 0.7. Receipts name `"groundgate": "0.7"` and every digest uses the `groundgate/0.7:` prefix, so
+all hashes differ from 0.6.1.
+
+- A unit item must be at a unit place of the value (#164). A unit item that the unit at the number
+  does not repeat passed when it came anywhere before the value, also from another row or column.
+  Now it passes only on the value's line or before its brackets, in a caption line before the
+  table, or in the value's column on an earlier line of the same table. A unit quote takes its
+  last occurrence at a unit place. Vectors 25 and 25b pin the places. I measured the rule on a
+  held-out set (`bench/afr`, #229): the principal statements of 20 FY2025 agency financial
+  reports. Each extractor made 100 proposals, and the rule changes no outcome and no unit part.
+  Under spec 0.6 and 0.7 alike, `claude-haiku-5-5` admits 3 right values and 1 escape, and
+  `gpt-6-luna` admits 6 right values and 0 escapes.
+- `groundgate schema check` prints a line for a field whose unit has no forms (#190).
+- A schema integer bound outside ±(2^53-1) makes the schema invalid, with the field and the bound
+  in the message (#192). `verify` checks a receipt for such an integer first, and names its path
+  (#194).
+- `gg.extractor_schema` has no `$schema` member, because the Claude CLI refuses a schema that names
+  draft 2020-12 (#197).
+
+Two measures changed no code:
+
+- Outside knowledge (`bench/outside`, #132). Spec 0.6.1 still rejects 45 of the 229 items that were
+  fixed before spec 0.5. A person labeled them: 1 is right from outside knowledge, 21 are right from
+  the document, and 23 are wrong. A rule for outside evidence (#125) moved out of 0.7, and #232
+  looks at the 21 values that the document states.
+- Review answers against blind labels (`bench/status/review`, #176). On the 79 key items of the
+  status calibration, all 79 answers on the review page match the blind labels. The same person
+  gave both, so memory can explain the agreement. `groundgate-calibrate` still takes labels only
+  from its blind label page, and #234 repeats the measure on items that the reviewer has not
+  labeled.
+
 ## 0.6.1 (2026-10-09)
 
 Spec 0.6, unchanged: receipts and digests are the same as in 0.6.0.

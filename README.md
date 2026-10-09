@@ -177,6 +177,21 @@ The numbers are right values admitted. The unit rule admits 10 more right values
 scale rule admits none more, so it did not ship. #159 and #162 only add flags, and they cost no
 right value. [bench/sec3/RESULTS.md](bench/sec3/RESULTS.md) has every number.
 
+### Spec 0.7 on held-out agency reports
+
+The 0.7 unit rule (#164) came from the 10-K sets and the status set, so I measured it on the
+principal statements of 20 FY2025 agency financial reports (`bench/afr`). The same two
+extractors ran once each, and a person labeled every admitted value blind.
+
+| Decision | claude-haiku-5-5 | gpt-6-luna |
+|---|---|---|
+| spec 0.6 | 3 right, 1 escape | 6 right, 0 escapes |
+| spec 0.7 | 3 right, 1 escape | 6 right, 0 escapes |
+
+The numbers count admitted values. Each run made 100 proposals, and the rule changes the
+outcome of none of them. Most proposals fail on the field or the key citation before the unit
+matters. [bench/afr/RESULTS.md](bench/afr/RESULTS.md) has every number.
+
 ## Quickstart
 
 ```bash
@@ -355,7 +370,7 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec 0.6.
+- **No dates, arrays of records, or cross-document checks** in spec 0.7.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
@@ -370,8 +385,9 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.6.1 implements spec v0.6. [CHANGELOG.md](CHANGELOG.md) lists what each
-version changes, with its measure. 0.6 passes a unit item that repeats the unit (#145), reads
+Alpha. groundgate 0.7.0 implements spec v0.7. [CHANGELOG.md](CHANGELOG.md) lists what each
+version changes, with its measure. 0.7 passes a unit item that is away from the number only at a
+unit place of the value (#164). 0.6 passes a unit item that repeats the unit (#145), reads
 `between` with words before an `and` range (#159) and a scale heading over a table (#162), and
 adds a `description` to each field (#171). 0.6.1 adds `gg.feedback_message` (#173).
 0.5 makes the evidence a list of items (#141): a value can cite
