@@ -2754,7 +2754,8 @@ UNIT_PLACE = (
     "Region\t2025\t2024\nNorth\t$\t310\t$\t220\nAs restated in 2024\nSouth\t160\t110\n\n"
     "Fees ($)\t75\t80\n"
     "Interest\t$\t(12)\t$\t(9)\n\n"
-    "Wages were 9 dollars an hour.\nCrew\t70\t60\n"
+    "Wages were 9 dollars an hour.\nCrew\t70\t60\n\n"
+    "Caption\nHead\t$\tX\nAmount\t61\t67\n"
 )
 
 
@@ -2769,7 +2770,8 @@ vector(
     "in the value's column on an earlier line of its table, where each line between holds a tab "
     "or no number. A unit quote takes its last occurrence at a unit place. A blank line or a line "
     "with a number and no tab ends the table. A row of counts in the same column still takes the "
-    "column's $ when its field item passes (spec 0.7, #164).",
+    "column's $ when its field item passes. The place is that of the unit form, not of the item "
+    "that holds it (spec 0.7, #164).",
     UNIT_PLACE,
     {
         "fields": {
@@ -2781,6 +2783,7 @@ vector(
             "interest": usd("interest"),
             "fees": usd("fees"),
             "crew_pay": usd("crew"),
+            "amount": usd("amount"),
         }
     },
     [
@@ -2805,6 +2808,9 @@ vector(
           (REVIEW, ["UNIT_CITATION_INVALID"])),
         c("p12", "revenue", "426201", "USD", [q("426,201"), row("Total revenues")],
           (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("p13", "amount", "67", "USD",
+          [q("67"), q("Caption\nHead\t$", role="unit"), row("Amount")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
     ],
 )  # fmt: skip
 

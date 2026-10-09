@@ -1,7 +1,7 @@
 {
  "name": "25-unit-place",
- "description": "A unit item that the unit at the token does not repeat must be at a unit place of the value: on its line, in a caption line with no tab and no number that reaches the value's table, or in the value's column on an earlier line of its table, where each line between holds a tab or no number. A unit quote takes its last occurrence at a unit place. A blank line or a line with a number and no tab ends the table. A row of counts in the same column still takes the column's $ when its field item passes (spec 0.7, #164).",
- "document": "Results of operations\n(amounts in dollars)\n\n\t2025\t2024\tChange\nRental revenue\t$\t527,534\t$\t425,749\t$\t101,785\nOther revenue\t2,060\t452\t1,608\nTotal revenues\t529,594\t426,201\t103,393\nOperating items:\nIncome from operations\t359,921\t278,193\t81,728\nStores\t1,200\t1,100\t100\n\nSegment data\t2025\t2024\nUnits\t57\t43\n\nRegion\t2025\t2024\nNorth\t$\t310\t$\t220\nAs restated in 2024\nSouth\t160\t110\n\nFees ($)\t75\t80\nInterest\t$\t(12)\t$\t(9)\n\nWages were 9 dollars an hour.\nCrew\t70\t60\n",
+ "description": "A unit item that the unit at the token does not repeat must be at a unit place of the value: on its line, in a caption line with no tab and no number that reaches the value's table, or in the value's column on an earlier line of its table, where each line between holds a tab or no number. A unit quote takes its last occurrence at a unit place. A blank line or a line with a number and no tab ends the table. A row of counts in the same column still takes the column's $ when its field item passes. The place is that of the unit form, not of the item that holds it (spec 0.7, #164).",
+ "document": "Results of operations\n(amounts in dollars)\n\n\t2025\t2024\tChange\nRental revenue\t$\t527,534\t$\t425,749\t$\t101,785\nOther revenue\t2,060\t452\t1,608\nTotal revenues\t529,594\t426,201\t103,393\nOperating items:\nIncome from operations\t359,921\t278,193\t81,728\nStores\t1,200\t1,100\t100\n\nSegment data\t2025\t2024\nUnits\t57\t43\n\nRegion\t2025\t2024\nNorth\t$\t310\t$\t220\nAs restated in 2024\nSouth\t160\t110\n\nFees ($)\t75\t80\nInterest\t$\t(12)\t$\t(9)\n\nWages were 9 dollars an hour.\nCrew\t70\t60\n\nCaption\nHead\t$\tX\nAmount\t61\t67\n",
  "schema": {
   "fields": {
    "revenue": {
@@ -69,6 +69,14 @@
     "multiple": true,
     "aliases": [
      "crew"
+    ]
+   },
+   "amount": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "amount"
     ]
    }
   }
@@ -326,6 +334,29 @@
      "text": "Total revenues"
     }
    ]
+  },
+  {
+   "id": "p13",
+   "field": "amount",
+   "value": "67",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 476,
+     "end": 478,
+     "text": "67"
+    },
+    {
+     "role": "unit",
+     "start": 449,
+     "end": 463,
+     "text": "Caption\nHead\t$"
+    },
+    {
+     "role": "field",
+     "text": "Amount"
+    }
+   ]
   }
  ],
  "expected": {
@@ -391,6 +422,12 @@
     ],
     "missing": [
      "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
     ]
    }
   ],

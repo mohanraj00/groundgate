@@ -691,9 +691,9 @@ def _row_cells(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
 
 class UnitPlaces:
     """The unit places of one value (SPEC §4.6): ``places(start, end)`` says whether a unit item
-    at text[start:end], which ends at or before the token, is on the value's line, in a caption
-    that reaches its table, or in its column. The table above the value is read once, so each
-    item costs only its own line."""
+    at text[start:end], which ends at or before the token, holds a form of the unit on the
+    value's line, in a caption that reaches its table, or in its column. The table above the
+    value is read once, so each item costs only its own line."""
 
     def __init__(self, text: str, tok: Token, prefixes: list[str], suffixes: list[str]) -> None:
         self.text, self.tok, self.prefixes, self.suffixes = text, tok, prefixes, suffixes
@@ -725,25 +725,31 @@ class UnitPlaces:
             pos = a
 
     def __call__(self, start: int, end: int) -> bool:
+        """Whether the item at text[start:end] holds a form of the unit at a unit place."""
+        forms = [(a, b, True) for a, b in _form_spans(self.text, start, end, self.prefixes)]
+        forms += [(a, b, False) for a, b in _form_spans(self.text, start, end, self.suffixes)]
+        return any(self._at(a, b, prefix) for a, b, prefix in forms)
+
+    def _at(self, start: int, end: int, prefix: bool) -> bool:
+        """Whether the form at text[start:end] is at a unit place: the place of the form, not of
+        the item that holds it."""
         text = self.text
-        if start >= self.line[0]:
+        if start >= self.line[0] or (prefix and end == self.bracket):
             return True
-        spans = _form_spans(text, start, end, self.prefixes)
-        if self.bracket >= 0 and any(b == self.bracket for _, b in spans):
-            return True
-        ia, ib = _line(text, start)
-        if ia in self.caption:
-            return True
-        if ia not in self.table or self.n < 0:
+        la, lb = _line(text, start)
+        if end > lb:
             return False
-        row = _row_cells(text, ia, ib, self.prefixes)
+        if la in self.caption:
+            return True
+        if la not in self.table or self.n < 0:
+            return False
+        row = _row_cells(text, la, lb, self.prefixes)
         if self.n >= len(row):
             return False
         c, ce = row[self.n]
-        if any(b <= c and not text[b:c].strip() for _, b in spans):
-            return True
-        spans = _form_spans(text, start, end, self.suffixes)
-        return any(a >= ce and not text[ce:a].strip() for a, _ in spans)
+        if prefix:
+            return end <= c and not text[end:c].strip()
+        return start >= ce and not text[ce:start].strip()
 
 
 def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:

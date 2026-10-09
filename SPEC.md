@@ -652,21 +652,22 @@ the first such word's factor. When the token is negative, each of these also has
 value). A failing sign or scale item still gives its part: the decision then has the item's
 flag.
 
-**Unit places.** A unit item that the field's unit at the token does not repeat must be at a
-**unit place** of the value, one of these (#164):
+**Unit places.** A unit item that the field's unit at the token does not repeat must hold a form
+of the unit (as a whole) at a **unit place** of the value, one of these (#164):
 
-1. **Line**: no line break stands between the start of the item and the token. Or the item holds
-   a prefix of the unit that ends, with only whitespace between, at the `(` of brackets around the
-   value (as the sign check reads them).
-2. **Caption**: the item is on a line that holds no tab and no number token, and that line reaches
-   the value's line. After it, blank lines may stand, then lines that are not blank and each hold
-   a tab or no number token, up to the value's line, which holds a tab.
-3. **Column**: the item's line and the value's line hold a tab, and each line between them is not
+1. **Line**: the form is on the value's line. Or it is a prefix that ends, with only whitespace
+   between, at the `(` of brackets around the value (as the sign check reads them).
+2. **Caption**: the form is on a line that holds no tab and no number token, and that line
+   reaches the value's line. After it, blank lines may stand, then lines that are not blank and
+   each hold a tab or no number token, up to the value's line, which holds a tab.
+3. **Column**: the form's line and the value's line hold a tab, and each line between them is not
    blank and holds a tab or no number token. The **cells of a line** are the cells of the column
-   rule (§4.5, rule 4) after the first tab of the line. The item holds a prefix of the unit that
-   ends at the start of the n-th cell of its line, or a suffix of the unit that starts after the
-   end of the n-th cell, with only whitespace between them. The value's token is the n-th cell of
-   its line.
+   rule (§4.5, rule 4) after the first tab of the line. The form is a prefix that ends at the
+   start of the n-th cell of its line, or a suffix that starts after the end of the n-th cell,
+   with only whitespace between them. The value's token is the n-th cell of its line.
+
+The place is that of the form, not of the item: an item that starts on a caption and holds a `$`
+on a table line is at the place of that `$`.
 
 So a `$` on the first row of a table applies to the same column in the rows below it, up to a
 blank line or a line with a number and no tab. It also applies to a row of counts in that column
