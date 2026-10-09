@@ -95,8 +95,31 @@ documents for the ceiling that you need before you start.
 
 ## Judges
 
-One judge is built in. `groundgate-calibrate ask --help` names it. It is a hosted model: it reads
-its API key from the environment, and it sends a window of each document out of the machine.
+Two judges are built in. `groundgate-calibrate ask --help` names them. `jev` is a hosted judge.
+It reads its API key from the environment and sends a window of each document out of the machine.
+
+`chat` uses a server that accepts chat requests. Set these environment variables:
+
+- `GROUNDGATE_CHAT_URL`: the base URL, such as `http://127.0.0.1:11434/v1`. It must be `https`,
+  or `http` to this machine (`localhost`, `127.0.0.1` or `::1`). A request to this machine never
+  goes through a proxy.
+- `GROUNDGATE_CHAT_MODEL`: the model name, exactly as the server reports it in each response.
+- `GROUNDGATE_CHAT_VERSION`: your version string, such as the local model's file digest.
+- `GROUNDGATE_CHAT_KEY`: optional. When set, it goes in the `Authorization: Bearer` header.
+
+Run `groundgate-calibrate ask --work W --judge chat`. It sends the text window to
+`<url>/chat/completions`. With a server on your machine, the text stays there. With a hosted
+server, use only documents that you may send. The model states its probability in JSON:
+`confidence` for a choice question and `p` for a noul question. The calibration measures that
+number. The judge uses no log-probabilities.
+
+The digest is `chat-1:<model>@<version>`. `chat-1` names the prompt template and answer parsing.
+A change to either needs a new digest and calibration. `ask` and `judge` refuse a response that
+reports another model name. An invalid JSON answer, choice or probability gets up to 2 retries.
+After that, the judge stops and shows the reply. The request is the same each time, so a retry
+helps only when the server does not give the same answer to the same request. The judge refuses
+a redirect, so the key goes only to the URL that you set. If the server does not answer, the
+judge stops and names the URL.
 
 A judge has an `id`, a `digest` that names one model version, and `ask(state, questions)`.
 `state` is the text around the value, with the value in brackets. `ask` answers each question in

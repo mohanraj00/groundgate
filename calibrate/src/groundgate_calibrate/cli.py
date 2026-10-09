@@ -413,7 +413,9 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--port", type=int, default=8780)
     sub.add_parser("split", help="split the items, before any model run")
     p = sub.add_parser("ask", help="ask a judge every question")
-    p.add_argument("--judge", required=True, help="a judge name: jev, or an installed plug-in")
+    p.add_argument(
+        "--judge", required=True, help="a judge name: chat, jev, or an installed plug-in"
+    )
     p = sub.add_parser("report", help="write REPORT.md and report.json")
     p.add_argument("--check", action="store_true", help="fail if the written files differ")
     for s in sub.choices.values():
