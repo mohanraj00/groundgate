@@ -1,0 +1,548 @@
+Financial Statements
+
+Consolidated Balance Sheet
+As of September 30, 2025 ($ in millions)
+Item
+Assets
+Intragovernmental Assets
+
+Fund Balance with Treasury (Note 3)
+Investments, Net (Note 5)
+Accounts Receivable, Net (Note 6)
+Advances and Prepayments
+Other Assets (Note 11)
+
+Total Intragovernmental Assets
+Other than Intragovernmental Assets
+
+Cash and Other Monetary Assets (Note 4)
+Accounts Receivable, Net (Note 6)
+Loans Receivable, Net
+
+Commodity Loans, Net
+Loans Receivable, Net (Note 7)
+Subtotal
+
+Negative Liability for Loan Guarantees (Note 7)
+Inventory and Related Property, Net (Note 8)
+Property, Plant, and Equipment, Net (Note 9)
+Advances and Prepayments
+Investments, Net (Note 5)
+
+Total Other than Intragovernmental Assets
+Total Assets
+Stewardship Property, Plant, and Equipment (Note 10)
+Liabilities
+Intragovernmental Liabilities
+
+Debt (Note 13)
+Advances from Others and Deferred Revenue
+Other Liabilities (Note 17)
+
+Total Intragovernmental Liabilities
+Other than Intragovernmental Liabilities
+
+Accounts Payable
+Federal Employee Salary, Leave, and Benefits Payable (Note 14)
+Post-Employment Benefits Payable (Note 14)
+Environmental and Disposal Liabilities (Note 15)
+Benefits Due and Payable
+Insurance and Guarantee Program Liabilities (Note 16)
+Advances from Others and Deferred Revenue
+Other Liabilities (Notes 17, 18 & 19)
+
+Total Other than Intragovernmental Liabilities
+Total Liabilities
+Commitments and Contingencies (Note 19)
+Net Position
+
+Unexpended Appropriations
+
+Funds from Dedicated Collections (Note 20)
+Funds from Other Than Dedicated Collections
+Total Unexpended Appropriations (Consolidated)
+
+Cumulative Results of Operations
+
+Funds from Dedicated Collections (Note 20)
+Funds from Other Than Dedicated Collections
+Total Cumulative Results of Operations (Consolidated)
+
+Total Net Position
+Total Liabilities and Net Position
+
+FY 2025
+
+396,915
+417
+914
+130
+8
+398,384
+
+378
+3,625
+
+419
+136,738
+137,157
+391
+12
+5,636
+329
+3
+147,531
+545,915
+
+176,589
+29
+8,115
+184,733
+
+3,552
+1,196
+746
+262
+7,640
+16,524
+189
+10,971
+41,080
+225,813
+
+1,097
+235,493
+236,590
+
+5,061
+78,451
+83,512
+320,102
+545,915
+
+$
+
+$
+
+USDA | 2025 Agency Financial Report 55
+
+The accompanying notes are an integral part of these financial statements.
+Consolidated Statement of Net Cost
+
+For the Fiscal Year Ended September 30, 2025 ($ in millions)
+
+Item
+
+Farm Production and Conservation:
+
+Gross Costs
+Less: Earned Revenue
+Net Costs
+
+Food, Nutrition, and Consumer Services:
+
+Gross Costs
+Less: Earned Revenue
+Net Costs
+
+Food Safety:
+
+Gross Costs
+Less: Earned Revenue
+Net Costs
+
+Marketing and Regulatory Programs:
+
+Gross Costs
+Less: Earned Revenue
+Net Costs
+
+Natural Resources and Environment:
+
+Gross Costs
+Less: Earned Revenue
+Net Costs
+
+Rural Development:
+
+Gross Costs
+Less: Earned Revenue
+Net Costs
+
+Research, Education, and Economics:
+
+Gross Costs
+Less: Earned Revenue
+Net Costs
+
+Trade and Foreign Agricultural Affairs:
+
+Gross Costs
+Less: Earned Revenue
+Net Costs
+
+Staff Offices:
+
+Gross Costs
+Less: Earned Revenue
+Net Costs
+
+Total Gross Costs
+Less: Total Earned Revenue
+
+$
+
+FY 2025
+
+58,167
+6,764
+51,403
+
+147,398
+128
+147,270
+
+1,555
+255
+
+1,300
+
+6,137
+1,660
+4,477
+
+13,008
+932
+12,076
+
+9,478
+3,889
+5,589
+
+4,443
+114
+4,329
+
+869
+12
+857
+
+2,198
+270
+1,928
+
+243,253
+14,024
+
+Net Cost of Operations (Notes 21 & 25)
+
+$
+
+229,229
+
+The accompanying notes are an integral part of these financial statements.
+
+56 Section II | Financial Information
+Consolidated Statement of Changes in Net Position
+
+For the Fiscal Year Ended September 30, 2025 ($ in millions)
+
+Item
+
+Unexpended Appropriations
+
+Beginning Balances
+
+Appropriations Received
+
+Appropriations Transferred In (Out)
+
+Other Adjustments
+
+Appropriations Used
+
+Net Change in Unexpended Appropriations
+
+Total Unexpended Appropriations
+
+Cumulative Results of Operations
+
+Beginning Balances
+
+Other Adjustments
+
+Appropriations Used
+
+Non-exchange Revenue
+
+Donations and Forfeitures of Cash and Cash Equivalents
+
+Transfers In (Out) without Reimbursement
+
+Imputed Financing
+
+Other
+
+Net Cost of Operations
+
+Net Change in Cumulative Results of Operations
+
+Funds from
+Dedicated
+Collections
+(Consolidated
+Totals) (Note 20)
+
+Funds from Other
+Than Dedicated
+Collections
+(Consolidated
+Totals)
+
+Consolidated Total
+
+$
+
+954 $
+
+12
+
+285
+
+—
+
+(154)
+
+143
+
+1,097
+
+4,385
+
+—
+
+154
+
+259
+
+1
+
+1,066
+
+52
+
+(36)
+
+(820)
+
+676
+
+217,079 $
+
+238,523
+
+(69)
+
+(18,770)
+
+(201,270)
+
+18,414
+
+235,493
+
+48,999
+
+(1,048)
+
+201,270
+
+60,247
+
+4
+
+(1,742)
+
+1,881
+
+(2,751)
+
+(228,409)
+
+29,452
+
+218,033
+
+238,535
+
+216
+
+(18,770)
+
+(201,424)
+
+18,557
+
+236,590
+
+53,384
+
+(1,048)
+
+201,424
+
+60,506
+
+5
+
+(676)
+
+1,933
+
+(2,787)
+
+(229,229)
+
+30,128
+
+Total Cumulative Results of Operations
+
+5,061
+
+78,451
+
+83,512
+
+Net Position
+
+$
+
+6,158 $
+
+313,944 $
+
+320,102
+
+The accompanying notes are an integral part of these financial statements.
+
+USDA | 2025 Agency Financial Report 57
+Combined Statement of Budgetary Resources
+
+For the Fiscal Year Ended September 30, 2025 ($ in millions)
+
+Item
+
+FY 2025
+
+Non-Budgetary
+Credit Reform
+Financing
+Accounts
+
+Budgetary
+
+Unobligated Balance from Prior Year Budget Authority, Net (Discretionary and Mandatory)(Note 22)
+
+$
+
+195,920 $
+
+Appropriations (Discretionary and Mandatory)
+
+Borrowing Authority (Discretionary and Mandatory)
+
+Spending Authority from Offsetting Collections (Discretionary and Mandatory)
+
+Total Budgetary Resources
+
+255,813
+
+26,437
+
+12,070
+
+490,240
+
+5,200
+
+49
+
+26,967
+
+14,846
+
+47,062
+
+New Obligations and Upward Adjustments (Total)
+
+Unobligated Balance, End of Year
+
+Apportioned, Unexpired Accounts
+
+Exempt from Apportionment, Unexpired Accounts
+
+Unapportioned, Unexpired Accounts
+
+Unexpired, Unobligated Balance, End of Year
+
+Expired Unobligated Balance, End of Year
+
+Unobligated Balance, End of Year (Total)
+
+Total Budgetary Resources
+
+Outlays, Net (Total) (Discretionary and Mandatory)
+
+Distributed Offsetting Receipts (-)
+
+Agency Outlays, Net (Discretionary and Mandatory)
+
+Disbursements, Net (Total) (Mandatory)
+
+286,840
+
+33,263
+
+13,103
+
+—
+
+696
+
+13,799
+
+—
+
+13,799
+
+47,062
+
+59,539
+
+110
+
+11,745
+
+71,394
+
+132,006
+
+203,400
+
+490,240
+
+230,131
+
+(2,679)
+
+$
+
+227,452
+
+$
+
+5,904
+
+The accompanying notes are an integral part of these financial statements.
+
+58 Section II | Financial Information

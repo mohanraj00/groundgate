@@ -1,0 +1,503 @@
+Principal Financial Statements (Unaudited)
+
+United States Environmental Protection Agency
+Consolidated Balance Sheet
+As of September 30, 2025
+(Dollars in Thousands)
+
+ASSETS
+
+Intragovernmental Assets
+
+Fund Balance with Treasury (Note 2)
+Investments, Net (Note 3)
+Accounts Receivable, Net (Note 4)
+Advances and Prepayments
+Total Intragovernmental Assets
+Other than Intragovernmental Assets
+Accounts Receivable, Net (Note 4)
+Loans Receivable, Net (Note 6)
+Inventory and Related Property, Net (Note 5)
+Property, Plant, and Equipment, Net (Note 8)
+Advances and Prepayments
+
+Total Other than Intragovernmental Assets
+
+Total Assets
+Stewardship Property Plant and Equipment (Note 10)
+LIABILITIES
+
+Intragovernmental Liabilities
+Accounts Payable (Note 7)
+Debt (Note 9)
+Advances from Others and Deferred Revenue
+Other Liabilities
+
+Liability to the General Fund for Custodial Assets (Note 11)
+Other Liabilities (Note 12)
+
+Total Intragovernmental Liabilities
+Other than Intragovernmental Liabilities
+
+Accounts Payable (Note 7)
+Federal Employee Salary, Leave and Benefits Payable (Note 23)
+Pension and Post-Employment Benefits Payable (Note 23)
+Environmental and Disposal Liabilities (Note 17)
+Advances from Others and Deferred Revenue (Note 14)
+Other Liabilities (Note 12)
+
+Total Other than Intragovernmental Liabilities
+
+Total Liabilities
+Commitments and Contingencies (Note 15)
+NET POSITION
+
+Unexpended Appropriations
+
+Funds from Dedicated Collections (Note 16)
+Funds from Other than Dedicated Collections
+Total Unexpended Appropriations (Consolidated)
+Cumulative Results of Operations
+
+Funds from Dedicated Collections (Note 16)
+Funds from Other than Dedicated Collections
+
+Total Cumulative Results of Operations (Consolidated)
+
+Total Net Position
+Total Liabilities and Net Position
+
+The accompanying notes are an integral part of these financial statements.
+
+$
+
+$
+
+$
+
+$
+
+$
+
+$
+
+2025
+
+71,571,950
+12,992,493
+8,895
+2,050,088
+86,623,426
+
+341,401
+9,001,134
+736
+649,545
+526,629
+10,519,445
+97,142,871
+
+529
+9,720,511
+168,148
+
+69,641
+512,530
+10,471,359
+
+95,366
+244,690
+37,259
+44,553
+3,554,975
+1,080,268
+5,057,111
+15,528,470
+
+2
+71,505,665
+71,505,667
+
+10,572,457
+(463,723)
+10,108,734
+81,614,401
+97,142,871
+
+1.
+
+30
+
+30
+(Unaudited)
+
+United States Environmental Protection Agency
+Consolidated Statement of Net Cost
+For the Fiscal Year Ending September 30, 2025
+(Dollars in Thousands)
+
+COSTS
+
+Gross Costs
+Less: Earned Revenue
+
+NET COST OF OPERATIONS (Note 25)
+
+2025
+
+$
+
+38,039,108
+939,908
+
+$
+
+37,099,200
+
+The accompanying notes are an integral part of these financial statements.
+
+2.
+
+31
+
+31
+(Unaudited)
+
+United States Environmental Protection Agency
+Statement of Net Cost by Major Program
+For the Fiscal Year Ending September 30, 2025
+(Dollars in Thousands)
+
+Environmental
+Programs &
+Management
+
+Leaking
+Underground
+Storage Tanks
+
+Science &
+Technology Superfund
+
+State & Tribal
+Assistance
+Agreements
+
+Other
+
+Totals
+
+$
+
+$ 3,948,510
+-
+
+3,948,510
+
+94,349
+-
+94,349
+
+$ 822,817
+-
+822,817
+
+$ 2,251,849
+-
+2,251,849
+
+$ 29,545,514
+-
+29,545,514
+
+$ 1,798,452 $ 38,461,491
+(422,383)
+38,039,108
+
+(422,383)
+1,376,069
+
+124,340
+
+-
+
+-
+-
+-
+
+4,479
+-
+4,479
+
+303,170
+-
+303,170
+
+-
+-
+-
+
+930,302
+(422,383)
+507,919
+
+1,362,291
+(422,383)
+939,908
+
+Costs:
+Gross Costs
+WCF Elimination
+Total Costs
+
+Less:
+Earned Revenue
+WCF Elimination
+
+Total Earned Revenue
+
+124,340
+
+NET COST OF
+
+OPERATIONS
+
+$ 3,824,170 $
+
+94,349 $ 818,338 $ 1,948,679 $ 29,545,514
+
+$ 868,150 $ 37,099,200
+
+The accompanying notes are an integral part of these financial statements.
+
+3.
+
+32
+
+32
+(Unaudited)
+
+United States Environmental Protection Agency
+Consolidated Statement of Changes in Net Position
+For the Fiscal Year Ending September 30, 2025
+(Dollars in Thousands)
+
+UNEXPENDED APPROPRIATIONS
+Beginning Balance
+
+Appropriations Received
+Appropriations Transferred In/(Out)
+Other Adjustments
+Appropriations Used
+
+Net Change in Unexpended Appropriations
+
+Funds from
+Other Than
+Dedicated Consolidated
+Collections
+
+Totals
+
+Funds from
+Dedicated
+Collections
+(Note 16)
+
+$
+
+61
+
+$ 83,687,121 $ 83,687,182
+
+-
+-
+
+-
+
+(59)
+
+(59)
+
+24,975,673
+(40,000)
+(1,604,057)
+(35,513,072)
+(12,181,456)
+
+24,975,673
+(40,000)
+(1,604,116)
+(35,513,072)
+(12,181,515)
+
+Total Unexpended Appropriations
+
+$
+
+2
+
+$ 71,505,665 $ 71,505,667
+
+CUMULATIVE RESULTS OF OPERATIONS
+
+Beginning Balance
+
+Corrections of Errors (Note 28)
+
+Beginning Balance, as Adjusted
+
+Other Adjustments
+Appropriations Used
+Non-Exchange Revenue (Note 24)
+Transfers-In/(Out) Without Reimbursements
+Imputed Financing (Note 22)
+Other
+Net Cost of Operations
+
+Net Change in Cumulative Results of Operations
+
+$
+
+$ 10,079,989
+-
+10,079,989
+
+(576,861) $ 9,503,128
+(130,918)
+(130,918)
+9,372,210
+(707,779)
+
+-
+-
+2,344,289
+102,382
+60,863
+-
+(2,015,066)
+492,468
+
+(248,913)
+35,513,072
+-
+
+(180,839)
+299,529
+(54,659)
+(35,084,134)
+244,056
+
+(248,913)
+35,513,072
+2,344,289
+
+(78,457)
+360,392
+(54,659)
+(37,099,200)
+736,524
+
+Total Cumulative Results of Operations
+
+10,572,457
+
+(463,723)
+
+10,108,734
+
+Net Position
+
+$ 10,572,459
+
+$ 71,041,942 $ 81,614,401
+
+The accompanying notes are an integral part of these financial statements.
+
+4.
+
+33
+
+33
+(Unaudited)
+
+United States Environmental Protection Agency
+Combined Statement of Budgetary Resources
+For the Fiscal Year Ending September 30, 2025
+(Dollars in Thousands)
+
+2025
+
+Non-
+Budgetary
+Credit Reform
+Financing
+Account
+
+Budgetary
+
+BUDGETARY RESOURCES
+Unobligated Balance from Prior Year Budget
+
+Authority, Net (Discretionary and Mandatory) (Note 21)
+
+Appropriations (Discretionary and Mandatory)
+Borrowing Authority (Discretionary and Mandatory)
+Spending Authority from Offsetting Collections (Discretionary and Mandatory)
+Total Budgetary Resources
+
+STATUS OF BUDGETARY RESOURCES
+New Obligations and Upward Adjustments (Total)
+Unobligated Balance, End of Year:
+
+Apportioned, Unexpired Accounts
+Unapportioned, Unexpired Accounts
+Expired Unobligated Balance, End of Year
+Unobligated Balance, End of Year (Total): (Note 21)
+Total Budgetary Resources
+
+OUTLAYS, NET AND DISBURSEMENTS, NET
+Outlays, Net (Total) (Discretionary and Mandatory)
+Distributed Offsetting Receipts (-) (Note 21)
+Agency Outlays, Net (Discretionary and Mandatory)
+Disbursements, Net (Total) (Mandatory)
+
+$ 36,111,201 $
+27,619,886
+-
+
+719,306
+5,598
+74,817
+1,260,886
+$ 64,632,912 $ 2,060,607
+
+901,825
+
+$ 34,262,578 $ 2,060,607
+
+23,728,064
+13,158
+6,629,112
+30,370,334
+
+-
+-
+-
+-
+
+$ 64,632,912 $ 2,060,607
+
+$ 37,758,669
+(782,308)
+$ 36,976,361
+
+$ 2,855,314
+
+The accompanying notes are an integral part of these financial statements.
+
+5.
+
+34
+
+34

@@ -1,0 +1,228 @@
+[
+ {
+  "id": "afr-usda",
+  "agency": "Agriculture",
+  "pages": [
+   59,
+   60,
+   61,
+   62
+  ]
+ },
+ {
+  "id": "afr-commerce",
+  "agency": "Commerce",
+  "pages": [
+   65,
+   66,
+   67,
+   68
+  ]
+ },
+ {
+  "id": "afr-dod",
+  "agency": "Defense",
+  "pages": [
+   104,
+   105,
+   106,
+   107,
+   108
+  ]
+ },
+ {
+  "id": "afr-ed",
+  "agency": "Education",
+  "skip": "the balance sheet is on page 65; the other statements are in Other Information, pages 102 to 104"
+ },
+ {
+  "id": "afr-doe",
+  "agency": "Energy",
+  "pages": [
+   27,
+   28,
+   29,
+   30
+  ]
+ },
+ {
+  "id": "afr-hhs",
+  "agency": "Health and Human Services",
+  "pages": [
+   74,
+   75,
+   76,
+   77
+  ]
+ },
+ {
+  "id": "afr-dhs",
+  "agency": "Homeland Security",
+  "skip": "the principal statements have no statement of budgetary resources"
+ },
+ {
+  "id": "afr-hud",
+  "agency": "Housing and Urban Development",
+  "pages": [
+   57,
+   58,
+   59,
+   60
+  ]
+ },
+ {
+  "id": "afr-doi",
+  "agency": "Interior",
+  "pages": [
+   71,
+   72,
+   73,
+   74
+  ]
+ },
+ {
+  "id": "afr-doj",
+  "agency": "Justice",
+  "pages": [
+   45,
+   46,
+   47,
+   48
+  ]
+ },
+ {
+  "id": "afr-dol",
+  "agency": "Labor",
+  "pages": [
+   39,
+   40,
+   41,
+   42
+  ]
+ },
+ {
+  "id": "afr-state",
+  "agency": "State",
+  "pages": [
+   68,
+   69,
+   70,
+   71
+  ]
+ },
+ {
+  "id": "afr-dot",
+  "agency": "Transportation",
+  "pages": [
+   48,
+   49,
+   50,
+   51
+  ]
+ },
+ {
+  "id": "afr-treasury",
+  "agency": "Treasury",
+  "pages": [
+   58,
+   59,
+   60,
+   61,
+   62
+  ]
+ },
+ {
+  "id": "afr-va",
+  "agency": "Veterans Affairs",
+  "pages": [
+   30,
+   31,
+   32,
+   33,
+   34
+  ]
+ },
+ {
+  "id": "afr-epa",
+  "agency": "Environmental Protection Agency",
+  "pages": [
+   30,
+   31,
+   32,
+   33,
+   34
+  ]
+ },
+ {
+  "id": "afr-nasa",
+  "agency": "National Aeronautics and Space Administration",
+  "pages": [
+   32,
+   33,
+   34,
+   35
+  ]
+ },
+ {
+  "id": "afr-usaid",
+  "agency": "Agency for International Development",
+  "skip": "no FY2025 report on the agency's site"
+ },
+ {
+  "id": "afr-gsa",
+  "agency": "General Services Administration",
+  "pages": [
+   41,
+   42,
+   43,
+   44,
+   45
+  ]
+ },
+ {
+  "id": "afr-nsf",
+  "agency": "National Science Foundation",
+  "pages": [
+   39,
+   40,
+   41,
+   42,
+   43
+  ]
+ },
+ {
+  "id": "afr-nrc",
+  "agency": "Nuclear Regulatory Commission",
+  "pages": [
+   31,
+   32,
+   33,
+   34
+  ]
+ },
+ {
+  "id": "afr-opm",
+  "agency": "Office of Personnel Management",
+  "pages": [
+   39,
+   40,
+   41,
+   42
+  ]
+ },
+ {
+  "id": "afr-sba",
+  "agency": "Small Business Administration",
+  "skip": "the balance sheet is on page 68; the other statements are in Other Information, pages 93 to 95"
+ },
+ {
+  "id": "afr-ssa",
+  "agency": "Social Security Administration",
+  "pages": [
+   51,
+   52,
+   53,
+   54
+  ]
+ }
+]
