@@ -60,11 +60,17 @@ def _candidates(rec: dict[str, Any], prefix: str) -> list[dict[str, Any]]:
 
 
 def _first(run_name: str, doc: str, text: str) -> tuple[list[Any], list[str | None]]:
-    """The first round's decisions under the current groundgate, with the message of each."""
+    """The first round's decisions under the current groundgate, with the message of each. The
+    first reply must answer the prompt of run.py now, so that both rounds share one prompt."""
     import groundgate as gg
 
     schema = measure._schema()
-    cands = _candidates(_read(HERE / "runs" / run_name / f"{doc}.json"), "c")
+    path = HERE / "runs" / run_name / f"{doc}.json"
+    rec = _read(path)
+    stale = _stale(rec, run_name, run.prompt_for(text))
+    if stale is not None:
+        raise SystemExit(f"{path} {stale}: run run.py again")
+    cands = _candidates(rec, "c")
     by_id = {c["id"]: c for c in cands}
     decisions = sorted(
         gg.admit(text, schema, cands).decisions, key=lambda d: int(d.candidate_id[1:])
