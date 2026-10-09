@@ -1,7 +1,7 @@
 {
  "name": "25b-unit-place-cells",
- "description": "A unit prefix that is also a number token is one cell, not two, when the unit places and the column rule count the cells of a row. A line of no-break spaces is not blank, so it does not end the table. A prefix that ends in a space stands before the brackets around the value (spec 0.7, #164).",
- "document": "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n \nLow\t6\n\nNeg V \n(12)\n",
+ "description": "A unit prefix that is also a number token is one cell, not two, when the unit places and the column rule count the cells of a row. A line of no-break spaces is not blank, so it does not end the table. A prefix that ends in a space stands before the brackets around the value. An empty cell ends at the end of its prefix, also when the prefix holds a space (spec 0.7, #164).",
+ "document": "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n \nLow\t6\n\nNeg V \n(12)\n\nRows\tP Q\tZ\nItems\t7\n",
  "schema": {
   "fields": {
    "amount": {
@@ -24,6 +24,13 @@
     "aliases": [
      "neg"
     ]
+   },
+   "items": {
+    "type": "integer",
+    "unit": "W",
+    "aliases": [
+     "items"
+    ]
    }
   },
   "units": {
@@ -36,6 +43,14 @@
    "V": {
     "prefix": [
      "V "
+    ]
+   },
+   "W": {
+    "prefix": [
+     "P Q"
+    ],
+    "suffix": [
+     "Q"
     ]
    }
   }
@@ -106,6 +121,29 @@
      "text": "Neg"
     }
    ]
+  },
+  {
+   "id": "q4",
+   "field": "items",
+   "value": "7",
+   "unit": "W",
+   "evidence": [
+    {
+     "start": 73,
+     "end": 74,
+     "text": "7"
+    },
+    {
+     "role": "unit",
+     "start": 63,
+     "end": 64,
+     "text": "Q"
+    },
+    {
+     "role": "field",
+     "text": "Items"
+    }
+   ]
   }
  ],
  "expected": {
@@ -122,6 +160,12 @@
     "outcome": "admitted",
     "codes": [
      "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
     ]
    }
   ],

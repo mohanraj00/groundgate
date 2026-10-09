@@ -687,10 +687,11 @@ def _row_cells(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
     ends = {t.start: t.end for t in tokens(text, tab + 1, end)}
     out = []
     for c in cells(text, tab + 1, end, prefixes):
-        e = ends.get(c, c)
-        while e < end and not text[e].isspace():
-            e += 1
-        out.append((c, ends.get(c, e)))
+        if c in ends:  # a number token
+            out.append((c, ends[c]))
+            continue
+        at = [len(p) for p in prefixes if text.startswith(p, c, end)]
+        out.append((c, c + max(at) if at else c + 1))  # an empty cell, else a lone dash
     return out
 
 
