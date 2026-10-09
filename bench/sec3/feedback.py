@@ -69,7 +69,10 @@ def _first(run_name: str, doc: str, text: str) -> tuple[list[Any], list[str | No
     rec = _read(path)
     stale = _stale(rec, run_name, run.prompt_for(text))
     if stale is not None:
-        raise SystemExit(f"{path} {stale}: run run.py again")
+        raise SystemExit(
+            f"{path} {stale}. run.py skips a reply that exists: move runs/{run_name} away, "
+            f"then run run.py for {run_name} again"
+        )
     cands = _candidates(rec, "c")
     by_id = {c["id"]: c for c in cands}
     decisions = sorted(
