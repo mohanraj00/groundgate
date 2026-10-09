@@ -498,6 +498,11 @@ receipt.coverage  # tuple of (field, "REQUIRED_FIELD_MISSING")
 receipt.references  # tuple of (id, sha256, source)
 receipt.to_dict()  # the JSON receipt, including receipt_sha256
 
+decision = receipt.decisions[0]
+candidate = next(c for c in candidates if gg.digest("candidate", c) == decision.candidate_sha256)
+message = gg.feedback_message(decision, candidate, schema, text=text, references=None)
+# text for the extractor, or None when a new answer cannot fix the decision
+
 receipt_dict = receipt.to_dict()  # or the stored JSON
 check = gg.verify(
     receipt_dict,
@@ -518,6 +523,13 @@ and `Part.span` are `(start, end)` tuples, and `to_dict()` writes them as `{"sta
 `gg.candidate_schema()` and `gg.extractor_schema(schema, reference_ids=None)` return the JSON
 Schemas of [Candidates](#candidates) and [The extractor's output](#the-extractors-output). `gg.digest(kind, obj)` and `gg.jcs(obj)` are the hashing primitives, if you
 need to compute a candidate's hash yourself.
+
+`gg.feedback_message(decision, candidate, schema, text=None, references=None)` builds a message
+for the extractor from one decision. Pass the candidate that the decision decided, the same
+schema and, for a missing key, the document text or references that you gave `admit`.
+It returns `None` for an admitted decision or when a new answer cannot fix the reasons.
+It raises `ValueError` when the candidate's digest does not match the decision.
+See [Send reasons back to the extractor](howto/feedback.md) for a feedback loop.
 
 ### LangExtract
 

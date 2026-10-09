@@ -2,6 +2,7 @@
 
 from .admit import Verification, admit, verify
 from .canonical import digest, jcs
+from .feedback import feedback_message
 from .model import (
     Decision,
     Field,
@@ -30,6 +31,7 @@ __all__ = [
     "candidate_schema",
     "digest",
     "extractor_schema",
+    "feedback_message",
     "jcs",
     "verify",
 ]
