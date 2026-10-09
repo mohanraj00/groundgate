@@ -8,8 +8,8 @@ The principal statements of 20 FY2025 agency financial reports, which no rule ca
 
 | Decision | Right admitted | Escapes | Not sure | Not labeled | Proposals | No reply |
 |---|---:|---:|---:|---:|---:|---:|
-| spec 0.6 | 4 | 0 | 0 | 0 | 100 | 0 |
-| spec 0.7 #164 | 4 | 0 | 0 | 0 | 100 | 0 |
+| spec 0.6 | 3 | 1 | 0 | 0 | 100 | 0 |
+| spec 0.7 #164 | 3 | 1 | 0 | 0 | 100 | 0 |
 
 Proposals whose unit item reached the unit check: 1. It passed in 0 under spec 0.6 and in 0 under the 0.7 draft; it changed in 0.
 

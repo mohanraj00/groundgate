@@ -44,9 +44,11 @@
       <div><b>Field</b> <span id="field"></span></div>
       <div><b>Year</b> <span id="key"></span></div>
       <div><b>Value</b> <span class="value" id="value"></span></div>
+      <div><b>In thousands</b> <span id="thousands"></span></div>
       <div><b>In millions</b> <span id="millions"></span></div>
     </div>
-    <div class="q">Is this value right for the field and the year, in this report?</div>
+    <div class="q">Is this amount in US dollars the field's amount for the year, in this report?
+      Check the field, the year and the amount, with the scale of the statement.</div>
     <div class="row">
       <button class="right" id="right">Right <kbd>1</kbd></button>
       <button class="wrong" id="wrong">Wrong <kbd>2</kbd></button>
@@ -61,9 +63,9 @@
     <div class="q">The text that groundgate reads</div>
     <div id="text"></div>
     <div class="help">
-      The value is in US dollars. A statement that says "in millions" or "in thousands" gives
-      the value in that scale: compare the value in millions with the page. A value is right
-      only when it is the field's amount for that fiscal year in this report. Use
+      The value is in US dollars. A statement that says "in thousands" or "in millions" gives
+      its amounts in that scale: compare the line for that scale with the page. A value is
+      right only when the field, the year and the amount are all right. Use
       <b>Not sure</b> when you can't tell. Keys <kbd>+</kbd> and <kbd>-</kbd> zoom the page.
     </div>
   </div>
@@ -127,8 +129,10 @@ function show() {
   $("key").textContent = it.key === null ? "none" : it.key;
   const n = Number(it.value);
   $("value").textContent = Number.isFinite(n) ? n.toLocaleString("en-US") : it.value;
-  $("millions").textContent = Number.isFinite(n)
-    ? (n / 1e6).toLocaleString("en-US", { maximumFractionDigits: 3 }) : "";
+  const scaled = (d) => Number.isFinite(n)
+    ? (n / d).toLocaleString("en-US", { maximumFractionDigits: 3 }) : "";
+  $("thousands").textContent = scaled(1e3);
+  $("millions").textContent = scaled(1e6);
   const now = S.labels[it.id];
   $("now").textContent = "Saved: " + (now ? now.verdict : "no label yet");
   const t = $("text");
