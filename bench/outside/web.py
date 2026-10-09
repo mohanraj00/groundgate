@@ -42,6 +42,12 @@ def _pdf(src: dict[str, Any]) -> Path:
     return _pinned(outside.BENCH / "set2" / ".cache" / f"{src['id']}.pdf", src["sha256"])
 
 
+def _human(url: str) -> str:
+    """The web page of a DailyMed label, not its XML service, which a browser shows blank."""
+    m = re.fullmatch(r"https://dailymed\.nlm\.nih\.gov/dailymed/services/v2/spls/(.+)\.xml", url)
+    return f"https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid={m[1]}" if m else url
+
+
 def _nth(full: str, at: int, needle: str) -> int:
     """How many matches of needle come before code point at in full, ignoring whitespace. The
     page finds the same match in the filing's own text."""
@@ -68,8 +74,10 @@ def _original(
             cache[src["id"]] = (full, full.index(part))
         full, start = cache[src["id"]]
         return {"type": "html", "nth": _nth(full, start + a, text[a:b])}
-    if src["kind"] == "fda":
-        return None
+    if (
+        src["kind"] == "fda"
+    ):  # the label is XML: the page shows the whole text that groundgate reads
+        return {"type": "text", "full": text, "at": [a, b]}
     if src["id"] not in cache:
         got = extract(_pdf(src), pages=src.get("select", {}).get("pages"))
         if got.text != text:
@@ -119,14 +127,16 @@ def build(every: bool = False) -> list[dict[str, Any]]:
             original = _original(srcs[it["doc"]], text, a, b, cache)
         elif srcs[it["doc"]]["kind"] == "sec":
             original = {"type": "html", "nth": 0}  # the filing, with no cited text to box
-        elif srcs[it["doc"]]["kind"] != "fda":  # the first page of the text, with no box
+        elif srcs[it["doc"]]["kind"] == "fda":
+            original = {"type": "text", "full": text, "at": None}
+        else:  # the first page of the text, with no box
             pages = srcs[it["doc"]].get("select", {}).get("pages") or [1]
             original = {"type": "pdf", "page": pages[0], "box": None}
         cards[it["id"]] = {
             "id": it["id"],
             "kind": it["kind"],
             "doc": it["doc"],
-            "url": srcs[it["doc"]]["url"],
+            "url": _human(srcs[it["doc"]]["url"]),
             "field": it["field"],
             "description": descriptions.get((it["doc"], it["field"]), ""),
             "key": it["key"],
@@ -160,7 +170,7 @@ def serve(port: int, every: bool = False) -> None:
     files = {
         it["doc"]: (_filing if it["kind"] == "sec" else _pdf)(srcs[it["doc"]])
         for it in items
-        if it["original"] is not None
+        if it["original"] is not None and it["original"]["type"] != "text"
     }
     path = HERE / "labels.json"
     page = (HERE / "web.html").read_bytes()

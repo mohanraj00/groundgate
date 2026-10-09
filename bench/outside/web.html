@@ -13,7 +13,8 @@
   #sheet { position: relative; margin: 16px auto; width: max-content; box-shadow: 0 2px 8px #0005; }
   #sheet canvas { display: block; background: #fff; }
   #hit { position: absolute; border: 3px solid #e8590c; background: #ffd43b55; border-radius: 3px; }
-  #plain { padding: 16px 20px; background: #f4f4f2; min-height: 100%; box-sizing: border-box; }
+  #plain { padding: 16px 20px; background: #fff; min-height: 100%; box-sizing: border-box; }
+  #full { white-space: pre-wrap; font: 14px/1.5 ui-monospace, monospace; }
   #where { font-size: 13px; color: #444; }
   #side { overflow: auto; padding: 16px 20px; border-left: 1px solid #ccc; background: #fff; }
   h1 { font-size: 15px; margin: 0 0 4px; }
@@ -47,8 +48,8 @@
   <div id="view">
     <iframe id="frame" sandbox="allow-same-origin" title="The original filing"></iframe>
     <div id="sheet"><canvas id="canvas"></canvas><div id="hit"></div></div>
-    <div id="plain">This document is an FDA label in XML. The text on the right is its text.
-      The source link opens the label.</div>
+    <div id="plain"><div class="q">The label text that groundgate reads (the label itself is XML;
+      the source link opens its web page)</div><div id="full"></div></div>
   </div>
   <div id="side">
     <h1 id="title"></h1>
@@ -228,6 +229,21 @@ function showOriginal(it) {
   if (task) task.cancel();
   $("where").textContent = "";
   if (!it.original) { mode("none"); shownDoc = null; return; }
+  if (it.original.type === "text") {
+    mode("none"); shownDoc = null;
+    const f = $("full"), o = it.original;
+    f.textContent = "";
+    if (o.at) {
+      const m = document.createElement("mark"); m.textContent = o.full.slice(o.at[0], o.at[1]);
+      f.append(o.full.slice(0, o.at[0]), m, o.full.slice(o.at[1]));
+      m.scrollIntoView({ block: "center" });
+    } else {
+      f.textContent = o.full;
+      $("view").scrollTop = 0;
+      $("where").textContent = "The quote is not in the label, so nothing is marked. Use Find (Cmd+F) to search the text.";
+    }
+    return;
+  }
   if (it.original.type === "html") showFiling(it); else showPdf(it);
 }
 
