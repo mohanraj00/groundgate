@@ -3,7 +3,8 @@ and, as each 0.6 rule lands, under that rule alone. The plan is on #170 and #172
 
     uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.5.1 \
         python bench/sec3/measure.py decide             # spec 0.5, on the released wheel
-    uv run python bench/sec3/measure.py decide          # each 0.6 rule
+    uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.6.1 \
+        python bench/sec3/measure.py decide             # each 0.6 rule, on the released wheel
     uv run python bench/sec3/measure.py web             # blind labels, http://127.0.0.1:8774
     uv run python bench/sec3/measure.py results [--check]
 
