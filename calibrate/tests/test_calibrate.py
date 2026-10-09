@@ -525,11 +525,18 @@ def chat_server(monkeypatch: pytest.MonkeyPatch) -> Iterator[ChatServer]:
                 }
             )
             reply = fake.replies[min(len(fake.requests) - 1, len(fake.replies) - 1)]
-            if isinstance(reply, tuple):  # ("redirect", location)
+            if isinstance(reply, tuple) and reply[0] == "redirect":
                 self.send_response(302)
                 self.send_header("Location", reply[1])
                 self.send_header("Content-Length", "0")
                 self.end_headers()
+                return
+            if isinstance(reply, tuple):  # ("cut", body): the body is shorter than it says
+                self.send_response(200)
+                self.send_header("Content-Length", str(len(reply[1]) + 100))
+                self.end_headers()
+                self.wfile.write(reply[1])
+                self.close_connection = True
                 return
             body = reply if isinstance(reply, bytes) else json.dumps(reply).encode()
             self.send_response(200)
@@ -707,6 +714,12 @@ def test_chat_refuses_a_redirect(chat_server: ChatServer, monkeypatch: pytest.Mo
     with pytest.raises(SystemExit, match="no answer from"):
         judges.load("chat").ask("[5,200]", {"field": {"type": "noul"}})
     assert [r["path"] for r in chat_server.requests] == ["/v1/chat/completions"]
+
+
+def test_chat_stops_on_a_cut_off_response(chat_server: ChatServer) -> None:
+    chat_server.replies = [("cut", b'{"model": "model-1"')]
+    with pytest.raises(SystemExit, match="no answer from"):
+        judges.load("chat").ask("[5,200]", {"field": {"type": "noul"}})
 
 
 def test_chat_names_the_url_when_the_server_does_not_answer(

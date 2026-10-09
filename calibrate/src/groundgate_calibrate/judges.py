@@ -10,6 +10,7 @@ it, and its key comes from the environment only.
 
 from __future__ import annotations
 
+import http.client
 import json
 import os
 import urllib.request
@@ -139,7 +140,7 @@ class Chat:
                 try:
                     with self._opener.open(req, timeout=60) as r:
                         reply: str | bytes = r.read()
-                except OSError as e:  # refused, timed out, an HTTP error or a redirect
+                except (OSError, http.client.HTTPException) as e:  # also a cut-off body
                     raise SystemExit(f"chat: no answer from {self._url}: {e}") from e
                 try:
                     res = json.loads(reply)
