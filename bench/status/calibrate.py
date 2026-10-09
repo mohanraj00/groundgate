@@ -5,9 +5,9 @@ that spec 0.6 flags KEY_NOT_AT_VALUE in the roles run of bench/evidence.
     uv run groundgate-calibrate sample --work bench/status/calibrate/work --docs bench/status/docs \
         --candidates bench/status/calibrate/candidates --schema bench/status/calibrate/schema.json \
         --question key --context "The text is from an IRS publication."
-    uv run python bench/status/calibrate.py labels     # the labels of #128, and links.json
-    uv run groundgate-calibrate label --work bench/status/calibrate/work       # the other items
     uv run groundgate-calibrate split --work bench/status/calibrate/work
+    uv run python bench/status/calibrate.py labels     # the labels of #128, and links.json
+    uv run python bench/status/web.py --work bench/status/calibrate/work      # the other items
     GROUNDGATE_CHAT_URL=http://127.0.0.1:11434/v1 GROUNDGATE_CHAT_MODEL=qwen2.5:7b \
     GROUNDGATE_CHAT_VERSION=845dbda0ea48 \
         uv run groundgate-calibrate ask --work bench/status/calibrate/work --judge chat
@@ -15,8 +15,11 @@ that spec 0.6 flags KEY_NOT_AT_VALUE in the roles run of bench/evidence.
 
 An item that is an amount of the status set gets its label from labels.json, which a person gave
 blind (#128): the filing statuses that the amount belongs to, or None for not sure. That is the
-answer that the key question asks for. A person labels every other item on the page of
-groundgate-calibrate label, which is blind too.
+answer that the key question asks for. A person labels every other item on the PDF page of
+bench/status/web.py, which is blind too and never shows the split.
+
+I ran split after the labels. The split is sha256 of the document name, so the order does not
+change it: split.json is the same when split runs first.
 """
 
 from __future__ import annotations
