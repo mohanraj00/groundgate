@@ -370,10 +370,11 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.6.0 implements spec v0.6. [CHANGELOG.md](CHANGELOG.md) lists what each
+Alpha. groundgate 0.6.1 implements spec v0.6. [CHANGELOG.md](CHANGELOG.md) lists what each
 version changes, with its measure. 0.6 passes a unit item that repeats the unit (#145), reads
 `between` with words before an `and` range (#159) and a scale heading over a table (#162), and
-adds a `description` to each field (#171). 0.5 makes the evidence a list of items (#141): a value can cite
+adds a `description` to each field (#171). 0.6.1 adds `gg.feedback_message` (#173).
+0.5 makes the evidence a list of items (#141): a value can cite
 its sign, scale, unit, field and key, and outside sources, under the app's policy, and
 `gg.candidate_schema()` (#147) gives the candidate's JSON Schema. 0.5.1 adds `gg.extractor_schema`
 and `groundgate schema` (#148), a JSON Schema for a model's structured output. 0.5.2 adds
