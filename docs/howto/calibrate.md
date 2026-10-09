@@ -362,7 +362,7 @@ The receipt records the judgments and the policy, so `verify` needs both again.
 The `chat` judge sends each question to a server that accepts chat requests. With a model
 server on your machine, no text leaves it. I ran the key clear on the IRS filing-status set in
 `bench/status/calibrate`, with `qwen2.5:7b` in a local Ollama server. The items are the 79
-amounts in 9 IRS publications that spec 0.6 flags `KEY_NOT_AT_VALUE`. I labeled every item
+candidates in 9 IRS publications that spec 0.6 flags `KEY_NOT_AT_VALUE`. I labeled every item
 blind, before the model ran.
 
 Pull the model, and use its digest as the version:
