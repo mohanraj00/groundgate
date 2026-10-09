@@ -1,7 +1,7 @@
 {
  "name": "25b-unit-place-cells",
- "description": "A unit prefix that is also a number token is one cell, not two, when the unit places and the column rule count the cells of a row. A line of no-break spaces is not blank, so it does not end the table. A prefix that ends in a space stands before the brackets around the value. An empty cell ends at the end of its prefix, also when the prefix holds a space (spec 0.7, #164). Each occurrence of a form or a unit quote counts, also where two overlap. An empty cell ends where the longest prefix that makes it ends, not a longer prefix at the same start. When a number token and an empty cell start at the same place, the cell ends at the later end of the two.",
- "document": "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n \nLow\t6\n\nNeg V \n(12)\n\nRows\tP Q\tZ\nItems\t7\n\nBox\t$$$8\nCrate\t9\n\nTag\tP Q%\tZ\nThing\t11\n\nMark\t2% R\nCount\t13\n",
+ "description": "A unit prefix that is also a number token is one cell, not two, when the unit places and the column rule count the cells of a row. A line of no-break spaces is not blank, so it does not end the table. A prefix that ends in a space stands before the brackets around the value. An empty cell ends at the end of its prefix, also when the prefix holds a space (spec 0.7, #164). Each occurrence of a form or a unit quote counts, also where two overlap. An empty cell ends where the longest prefix that makes it ends, not a longer prefix at the same start. When a number token and an empty cell start at the same place, the cell ends at the later end of the two. Empty cells that overlap count each, as `a a` twice in `a a a`.",
+ "document": "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n \nLow\t6\n\nNeg V \n(12)\n\nRows\tP Q\tZ\nItems\t7\n\nBox\t$$$8\nCrate\t9\n\nTag\tP Q%\tZ\nThing\t11\n\nMark\t2% R\nCount\t13\n\nHdr\t1\t2\t$\t16\nSum\ta a a \t?\t17\n",
  "schema": {
   "fields": {
    "amount": {
@@ -52,6 +52,13 @@
     "aliases": [
      "count"
     ]
+   },
+   "sum": {
+    "type": "integer",
+    "unit": "Z",
+    "aliases": [
+     "sum"
+    ]
    }
   },
   "units": {
@@ -94,6 +101,12 @@
     ],
     "suffix": [
      "%"
+    ]
+   },
+   "Z": {
+    "prefix": [
+     "a a",
+     "$"
     ]
    }
   }
@@ -277,6 +290,27 @@
      "text": "Count"
     }
    ]
+  },
+  {
+   "id": "q9",
+   "field": "sum",
+   "value": "17",
+   "unit": "Z",
+   "evidence": [
+    {
+     "start": 161,
+     "end": 163,
+     "text": "17"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Sum"
+    }
+   ]
   }
  ],
  "expected": {
@@ -320,6 +354,10 @@
     "codes": [
      "UNIT_CITATION_INVALID"
     ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
    }
   ],
   "coverage": []

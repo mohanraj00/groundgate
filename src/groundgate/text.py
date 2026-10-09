@@ -760,7 +760,8 @@ class UnitPlaces:
 
 def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
     """The table cells in text[start:end] (SPEC §4.5, the column rule), as (start, end): number
-    tokens, lone dashes, and a unit prefix that stands alone with no number after it. One
+    tokens, lone dashes, and a unit prefix that stands alone with no number after it, also where
+    two occurrences of a prefix overlap. One
     position is one cell. An empty cell ends where the longest prefix that makes it ends, and a
     cell that is both a number token and an empty cell ends at the later end of the two."""
     toks = tokens(text, start, end)
@@ -772,8 +773,8 @@ def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
             spans.setdefault(m.start(), m.end())
     empty: dict[int, int] = {}
     for p in prefixes:
-        for m in re.finditer(re.escape(p), text[start:end]):
-            a, b = start + m.start(), start + m.end()
+        for m in re.finditer(f"(?=({re.escape(p)}))", text[start:end]):  # overlaps count
+            a, b = start + m.start(1), start + m.end(1)
             if (a > 0 and not text[a - 1].isspace()) or (b < len(text) and not text[b].isspace()):
                 continue
             rest = len(text[b:end]) - len(text[b:end].lstrip())

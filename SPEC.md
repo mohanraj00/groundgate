@@ -606,7 +606,8 @@ all of these hold:
    dashes (`-`, `–` or `—` with whitespace or a line end on both sides in the text), and the
    **empty cells**: a prefix of the field's unit with whitespace or a line end on both sides, where
    the next character after the whitespace is not the start of a number token or `(`, and comes
-   before the value. The value's token is the n-th cell from the field item.
+   before the value. Each occurrence counts, also where two overlap, as `a a` twice in `a a a`
+   (spec 0.7). The value's token is the n-th cell from the field item.
 
 So a cell that shows a dash for zero, or a `$` with no number, still counts, and a second header
 between the two moves the value out of the rule.
