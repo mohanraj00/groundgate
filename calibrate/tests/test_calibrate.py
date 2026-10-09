@@ -5,7 +5,10 @@ from __future__ import annotations
 import importlib.util
 import json
 import sys
+from collections.abc import Iterator
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
+from threading import Thread
 from typing import Any
 
 import pytest
@@ -494,3 +497,247 @@ def test_recorded_judgments_clear_the_flag_in_groundgate(
     r = gg.admit(TEXT, SCHEMA, cands, pol, judgments=js)
     (d0,) = [x for x in r.decisions if x.candidate_id == "c0"]
     assert (d0.outcome, d0.codes) == ("admitted", ("MODEL_CLEARED",))
+
+
+def chat_reply(content: str | None, model: str = "model-1") -> dict[str, Any]:
+    return {"model": model, "choices": [{"message": {"content": content}}]}
+
+
+class ChatServer:
+    def __init__(self) -> None:
+        self.requests: list[dict[str, Any]] = []
+        self.replies: list[Any] = [chat_reply('{"choice": "k1", "confidence": 0.97}')]
+
+
+@pytest.fixture
+def chat_server(monkeypatch: pytest.MonkeyPatch) -> Iterator[ChatServer]:
+    fake = ChatServer()
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self) -> None:
+            fake.requests.append(
+                {
+                    "path": self.path,
+                    "authorization": self.headers.get("Authorization"),
+                    "content_type": self.headers.get("Content-Type"),
+                    "body": json.loads(self.rfile.read(int(self.headers["Content-Length"]))),
+                }
+            )
+            reply = fake.replies[min(len(fake.requests) - 1, len(fake.replies) - 1)]
+            body = reply if isinstance(reply, bytes) else json.dumps(reply).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def log_message(self, *args: Any) -> None:
+            pass
+
+    with HTTPServer(("127.0.0.1", 0), Handler) as server:
+        monkeypatch.setenv("GROUNDGATE_CHAT_URL", f"http://127.0.0.1:{server.server_port}/v1/")
+        monkeypatch.setenv("GROUNDGATE_CHAT_MODEL", "model-1")
+        monkeypatch.setenv("GROUNDGATE_CHAT_VERSION", "file-sha256")
+        monkeypatch.delenv("GROUNDGATE_CHAT_KEY", raising=False)
+        monkeypatch.setenv("no_proxy", "127.0.0.1")
+        thread = Thread(target=server.serve_forever, kwargs={"poll_interval": 0.01}, daemon=True)
+        thread.start()
+        try:
+            yield fake
+        finally:
+            server.shutdown()
+            thread.join()
+
+
+@pytest.mark.parametrize(
+    "variable", ["GROUNDGATE_CHAT_URL", "GROUNDGATE_CHAT_MODEL", "GROUNDGATE_CHAT_VERSION"]
+)
+@pytest.mark.parametrize("value", [None, "", "   "])
+def test_chat_names_a_missing_setting(
+    monkeypatch: pytest.MonkeyPatch, variable: str, value: str | None
+) -> None:
+    for name in ("GROUNDGATE_CHAT_URL", "GROUNDGATE_CHAT_MODEL", "GROUNDGATE_CHAT_VERSION"):
+        monkeypatch.setenv(name, "set")
+    if value is None:
+        monkeypatch.delenv(variable)
+    else:
+        monkeypatch.setenv(variable, value)
+    with pytest.raises(SystemExit, match=variable):
+        judges.load("chat")
+
+
+@pytest.mark.parametrize("key", [None, "test-key"])
+def test_chat_sends_one_request_per_question(
+    chat_server: ChatServer, monkeypatch: pytest.MonkeyPatch, key: str | None
+) -> None:
+    if key is not None:
+        monkeypatch.setenv("GROUNDGATE_CHAT_KEY", key)
+    jd = judges.load("chat")
+    assert (jd.id, jd.digest) == ("chat", "chat-1:model-1@file-sha256")
+    questions = {
+        "key": {"type": "choice", "instructions": "Which key?", "criteria": {"k1": "2025"}},
+        "field": {"type": "noul", "instructions": "Is this revenue?"},
+    }
+    chat_server.replies = [
+        chat_reply('{"choice": "k1", "confidence": 1}'),
+        chat_reply('{"p": 0}'),
+    ]
+    assert jd.ask("Revenue: [5,200].", questions) == {
+        "key": {"choice": "k1", "confidence": 1},
+        "field": {"noul": 0},
+    }
+    assert len(chat_server.requests) == 2
+    texts = [
+        "Which key?\n\nText:\nRevenue: [5,200].\n\nOptions:\nk1: 2025\n\n"
+        'Return {"choice": name, "confidence": p}. name is the name of one option, such as '
+        '"k1", not its text. p is the probability that this option is right.',
+        "Is this revenue?\n\nText:\nRevenue: [5,200].\n\n"
+        'Return {"p": p}. p is the probability that the answer is yes.',
+    ]
+    for req, text in zip(chat_server.requests, texts, strict=True):
+        assert req["path"] == "/v1/chat/completions"
+        assert req["authorization"] == (f"Bearer {key}" if key else None)
+        assert req["content_type"] == "application/json"
+        assert req["body"] == {
+            "model": "model-1",
+            "temperature": 0,
+            "messages": [
+                {"role": "system", "content": judges.Chat.system},
+                {"role": "user", "content": text},
+            ],
+        }
+
+
+def test_chat_retries_an_invalid_answer_twice(chat_server: ChatServer) -> None:
+    chat_server.replies = [
+        chat_reply("not JSON"),
+        chat_reply('{"choice": "unknown", "confidence": 0.9}'),
+        chat_reply('{"choice": "none", "confidence": 0.75}'),
+    ]
+    question = {"type": "choice", "criteria": {"k1": "2025", "none": "none of these"}}
+    assert judges.load("chat").ask("[5,200]", {"key": question}) == {
+        "key": {"choice": "none", "confidence": 0.75}
+    }
+    assert len(chat_server.requests) == 3
+    assert chat_server.requests[0] == chat_server.requests[1] == chat_server.requests[2]
+
+
+@pytest.mark.parametrize("question_type", ["choice", "noul"])
+@pytest.mark.parametrize("p", [True, False, None, "0.9", -0.01, 1.01, float("nan"), float("inf")])
+def test_chat_stops_and_shows_an_invalid_probability(
+    chat_server: ChatServer, question_type: str, p: Any
+) -> None:
+    answer = {"choice": "k1", "confidence": p} if question_type == "choice" else {"p": p}
+    reply = json.dumps(answer)
+    chat_server.replies = [chat_reply(reply)]
+    with pytest.raises(SystemExit, match="invalid reply after 3 attempts") as exc:
+        judges.load("chat").ask(
+            "[5,200]", {"q": {"type": question_type, "criteria": {"k1": "2025"}}}
+        )
+    assert reply in str(exc.value)
+    assert len(chat_server.requests) == 3
+
+
+@pytest.mark.parametrize(
+    "reply",
+    [
+        "not JSON",
+        '```json\n{"p": 0.9}\n```',
+        "[]",
+        "null",
+        "{}",
+        '{"choice": "unknown", "confidence": 0.9}',
+        '{"choice": ["k1"], "confidence": 0.9}',
+        '{"choice": "2025", "confidence": 0.9}',
+    ],
+)
+def test_chat_stops_and_shows_an_invalid_answer(chat_server: ChatServer, reply: str) -> None:
+    chat_server.replies = [chat_reply(reply)]
+    with pytest.raises(SystemExit, match="invalid reply after 3 attempts") as exc:
+        judges.load("chat").ask("[5,200]", {"key": {"type": "choice", "criteria": {"k1": "2025"}}})
+    assert reply in str(exc.value)
+    assert len(chat_server.requests) == 3
+
+
+@pytest.mark.parametrize(
+    "reply",
+    [b"not JSON", b"\xff", [], {"model": "model-1", "choices": []}, chat_reply(None)],
+)
+def test_chat_retries_a_malformed_response(chat_server: ChatServer, reply: Any) -> None:
+    chat_server.replies = [reply, chat_reply('{"p": 0.25}')]
+    assert judges.load("chat").ask("[5,200]", {"field": {"type": "noul"}}) == {
+        "field": {"noul": 0.25}
+    }
+    assert len(chat_server.requests) == 2
+
+
+@pytest.mark.parametrize("model", ["model-2", None])
+def test_chat_refuses_another_or_missing_reported_model(
+    chat_server: ChatServer, model: str | None
+) -> None:
+    reply = chat_reply('{"p": 0.9}')
+    if model is None:
+        del reply["model"]
+    else:
+        reply["model"] = model
+    chat_server.replies = [reply]
+    with pytest.raises(SystemExit, match=r"answered by.*not 'model-1'"):
+        judges.load("chat").ask("[5,200]", {"field": {"type": "noul"}})
+    assert len(chat_server.requests) == 1
+
+
+@pytest.mark.parametrize("question", ["key", "field"])
+def test_chat_calibrates_and_writes_recorded_judgments(
+    tmp_path: Path, chat_server: ChatServer, monkeypatch: pytest.MonkeyPatch, question: str
+) -> None:
+    d, c, s = inputs(tmp_path, 2)
+    for path in c.glob("*.json"):
+        candidates = json.loads(path.read_text())
+        path.write_text(json.dumps([{**x, "id": f"c{i}"} for i, x in enumerate(candidates)]))
+    if question == "field":
+        chat_server.replies = [chat_reply('{"p": 0.125}')]
+    work = tmp_path / "work"
+    cli.main(["sample", "--work", str(work), "--docs", str(d), "--candidates", str(c),
+              "--schema", str(s), "--question", question])  # fmt: skip
+    cli.main(["split", "--work", str(work)])
+    items = json.loads((work / "items.json").read_text())
+    labels = {it["id"]: ["fiscal 2025"] if question == "key" else True for it in items}
+    (work / "labels.json").write_text(json.dumps(labels))
+    cli.main(["ask", "--work", str(work), "--judge", "chat"])
+    cli.main(["report", "--work", str(work)])
+    cli.main(["report", "--work", str(work), "--check"])
+    meta = json.loads((work / "answers-chat.json").read_text())["meta"]
+    assert (meta["judge"], meta["model"]) == ("chat", "chat-1:model-1@file-sha256")
+    policy = tmp_path / "policy.json"
+    policy.write_text(json.dumps(cli.policy(question, meta, 0.9 if question == "key" else 0.2)))
+    out = tmp_path / "judgments"
+    run = ["judge", "--docs", str(d), "--candidates", str(c), "--schema", str(s),
+           "--policy", str(policy), "--calibration", str(work), "--out", str(out)]  # fmt: skip
+    cli.main(run)
+    expected: dict[str, Any] = {
+        "candidate_id": "c0" if question == "key" else "c1",
+        "judge": {"id": "chat", "digest": "chat-1:model-1@file-sha256"},
+        "question": "key" if question == "key" else "field_match",
+        "p": 0.97 if question == "key" else 0.125,
+    }
+    if question == "key":
+        expected["answer"] = "fiscal 2025"
+    assert json.loads((out / "doc0.json").read_text()) == [expected]
+    # A new user version needs a new calibration, before any request is sent.
+    before = len(chat_server.requests)
+    monkeypatch.setenv("GROUNDGATE_CHAT_VERSION", "new-file-sha256")
+    with pytest.raises(SystemExit, match="the judge is chat-1:model-1@new-file-sha256"):
+        cli.main(run)
+    assert len(chat_server.requests) == before
+    monkeypatch.setenv("GROUNDGATE_CHAT_VERSION", "file-sha256")
+    # Both commands stop on a reported model change, without retrying it.
+    chat_server.requests.clear()
+    chat_server.replies = [chat_reply('{"p": 0.9}', model="model-2")]
+    (work / "answers-chat.json").unlink()
+    for command in (["ask", "--work", str(work), "--judge", "chat"], run):
+        with pytest.raises(SystemExit, match="answered by 'model-2'"):
+            cli.main(command)
+        assert len(chat_server.requests) == 1
+        chat_server.requests.clear()
+        # judge reads the calibration answers before calling the server.
+        (work / "answers-chat.json").write_text(json.dumps({"meta": meta}))

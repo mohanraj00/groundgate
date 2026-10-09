@@ -79,9 +79,12 @@ adds the judge in the process. Do this only in a test:
 judges.BUILT_IN["premium-rule"] = PremiumRule
 ```
 
-One judge is built in. `groundgate-calibrate ask --help` names it. It is a hosted model, so it
-sends a window of each document out of the machine, and it reads its API key from the
-environment. Use it only on documents that you may send.
+Two judges are built in. `jev` is hosted. `chat` sends the text window to a server that accepts
+chat requests. Set `GROUNDGATE_CHAT_URL` to its base URL, `GROUNDGATE_CHAT_MODEL` to the name it
+reports, and `GROUNDGATE_CHAT_VERSION` to your version string. `GROUNDGATE_CHAT_KEY` is optional.
+Then use `--judge chat` in step 6. With a server on your machine, the text stays there. With a
+hosted server, use only documents that you may send. The [Judges reference](../../calibrate/README.md#judges)
+gives the settings and digest. Both judges use the same calibration steps as this test judge.
 
 ## 3. Write the inputs
 
