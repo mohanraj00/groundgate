@@ -39,6 +39,20 @@ def test_unit_without_aliases(tmp_path: Path, capsys: pytest.CaptureFixture[str]
     )
 
 
+def test_unit_without_forms(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    schema = {
+        "fields": {"unknown": {"unit": "XYZ"}, "empty": {"unit": "empty"}},
+        "units": {"empty": {"prefix": [], "suffix": []}},
+    }
+    assert check(tmp_path, schema, capsys) == (
+        1,
+        "field 'unknown' has a unit with no forms: "
+        "a value is admitted with no unit check, and a unit item never passes\n"
+        "field 'empty' has a unit with no forms: "
+        "a value is admitted with no unit check, and a unit item never passes\n",
+    )
+
+
 def test_keys_without_aliases(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     schema = {"fields": {"dose": {"unit": "mg", "keys": ["adults", "children"]}}}
     assert check(tmp_path, schema, capsys) == (
