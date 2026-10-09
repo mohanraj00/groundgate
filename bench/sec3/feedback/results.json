@@ -1,0 +1,70 @@
+{
+ "runs": {
+  "claude-haiku-5-5": {
+   "first": {
+    "right": 15,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0
+   },
+   "after": {
+    "right": 35,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0
+   },
+   "messages": 50,
+   "no message": 78,
+   "asked": 12,
+   "no reply": 0,
+   "proposals": 50,
+   "no message codes": {
+    "KEY_NOT_AT_VALUE": 58,
+    "PART_MISSING": 24,
+    "KEY_CITATION_INVALID": 15,
+    "FIELD_CITATION_INVALID": 11,
+    "UNIT_NOT_IN_EVIDENCE": 10,
+    "EVIDENCE_STATED": 4,
+    "QUALIFIED_VALUE": 4,
+    "SCALE_CITATION_INVALID": 3,
+    "CANDIDATE_INVALID": 2
+   },
+   "cli": [
+    "2.1.294 (Claude Code)"
+   ]
+  },
+  "gpt-6-luna": {
+   "first": {
+    "right": 27,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0
+   },
+   "after": {
+    "right": 45,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0
+   },
+   "messages": 49,
+   "no message": 66,
+   "asked": 15,
+   "no reply": 0,
+   "proposals": 47,
+   "no message codes": {
+    "KEY_NOT_AT_VALUE": 51,
+    "FIELD_CITATION_INVALID": 13,
+    "UNIT_NOT_IN_EVIDENCE": 9,
+    "PART_MISSING": 8,
+    "SIGN_CITATION_INVALID": 7,
+    "QUALIFIED_VALUE": 3,
+    "VALUE_NOT_IN_EVIDENCE": 2,
+    "SCALE_CITATION_INVALID": 1,
+    "TYPE_INVALID": 1
+   },
+   "cli": [
+    "codex-cli 0.162.0"
+   ]
+  }
+ }
+}

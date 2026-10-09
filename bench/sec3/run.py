@@ -127,8 +127,10 @@ class Runner:
             return None, "no output"
         return (out, None) if isinstance(out, dict) else (None, "no output")
 
-    def one(self, doc: Path, out: Path) -> str:
-        prompt = prompt_for(doc.read_text(encoding="utf-8"))
+    def one(self, doc: Path, out: Path, prompt: str | None = None) -> str:
+        """Ask for one document. The prompt is that of prompt_for, unless one is given."""
+        if prompt is None:
+            prompt = prompt_for(doc.read_text(encoding="utf-8"))
         discarded: list[str] = []
         for attempt in range(3):
             ask = self.claude if self.provider == "claude-cli" else self.codex
