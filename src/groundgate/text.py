@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import bisect
 import re
 import unicodedata
 from dataclasses import dataclass
@@ -528,6 +529,7 @@ _ITEM_SCALE = re.compile(
     r"(?<![^\W_])(thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
 )
 _LONE_DASH = re.compile("(?<!\\S)[-\u2013\u2014](?!\\S)")
+_NOT_SPACE = re.compile(r"\S")
 _IN_SCALE = re.compile(
     r"(?<![^\W_])in\s+(?:thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
 )
@@ -649,27 +651,175 @@ def holds_form(text: str, start: int, end: int, forms: list[str]) -> bool:
     return False
 
 
-def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
-    """The starts of the table cells in text[start:end] (SPEC §4.5, the column rule): number
-    tokens, lone dashes, and a unit prefix that stands alone with no number after it."""
+def _form_spans(text: str, start: int, end: int, forms: list[str]) -> list[tuple[int, int]]:
+    """The spans of the unit forms as a whole in text[start:end], as holds_form finds them, also
+    the ones that overlap."""
+    out = []
+    for form in forms:
+        pat = re.escape(form)
+        if form[0].isalnum():
+            pat = _NOT_ALNUM_BEFORE + pat
+        if form[-1].isalnum():
+            pat += _NOT_ALNUM_AFTER
+        # a lookahead finds every start, also where two occurrences overlap, as in "$$$"
+        found = re.compile(f"(?=({pat}))").finditer(text, start, end)
+        out += [(m.start(1), m.end(1)) for m in found if m.end(1) <= end]
+    return out
+
+
+def _line(text: str, pos: int) -> tuple[int, int]:
+    """The line that holds the position: from after the line break before it to the next one."""
+    end = text.find("\n", pos)
+    return text.rfind("\n", 0, pos) + 1, len(text) if end < 0 else end
+
+
+def _blank(line: str) -> bool:
+    """A blank line holds only spaces, tabs or carriage returns (SPEC §4.2)."""
+    return not line.strip(" \t\r")
+
+
+def _table_line(text: str, start: int, end: int) -> bool:
+    """A line of a table (SPEC §4.6, unit places): not blank, with a tab or no number token."""
+    line = text[start:end]
+    return not _blank(line) and ("\t" in line or not tokens(text, start, end))
+
+
+def _row_cells(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
+    """The cells of a line after its first tab, as (start, end)."""
+    tab = text.find("\t", start, end)
+    if tab < 0:
+        return []
+    return cell_spans(text, tab + 1, end, prefixes)
+
+
+class UnitPlaces:
+    """The unit places of one value (SPEC §4.6): ``places(start, end)`` says whether a unit item
+    at text[start:end], which ends at or before the token, holds a form of the unit on the
+    value's line, in a caption that reaches its table, or in its column. The table above the
+    value is read once, so each item costs only its own line."""
+
+    def __init__(self, text: str, tok: Token, prefixes: list[str], suffixes: list[str]) -> None:
+        self.text, self.tok, self.prefixes, self.suffixes = text, tok, prefixes, suffixes
+        self.line = _line(text, tok.start)
+        va, vb = self.line
+        self.table: set[int] = set()  # starts of the table lines directly above the value's line
+        self.caption: set[int] = set()  # starts of the lines that can hold a caption
+        br = brackets_around(text, tok, prefixes)
+        # a prefix before the brackets ends between the whitespace before "(" and the "("
+        self.bracket = (-1, -1) if br is None else (len(text[: br[0]].rstrip()), br[0])
+        self.n = -1
+        self.rows: dict[int, list[tuple[int, int]]] = {}
+        self.ends: dict[int, int] = {}  # the end of each table and caption line, by its start
+        self.starts: list[int] = []
+        if "\t" not in text[va:vb]:
+            return
+        mine = _row_cells(text, va, vb, prefixes)
+        self.n = next((i for i, (c, _) in enumerate(mine) if c == tok.start), -1)
+        pos = va
+        while pos > 0:
+            a, b = _line(text, pos - 1)
+            if not _table_line(text, a, b):
+                break
+            self.table.add(a)
+            self.ends[a] = b
+            pos = a
+        self.caption = {a for a in self.table if "\t" not in text[a : self.ends[a]]}
+        while pos > 0:  # blank lines, then the caption above the table
+            a, b = _line(text, pos - 1)
+            if not _blank(text[a:b]):
+                if "\t" not in text[a:b] and not tokens(text, a, b):
+                    self.caption.add(a)
+                    self.ends[a] = b
+                break
+            pos = a
+        self.starts = sorted(self.ends)
+
+    def __call__(self, start: int, end: int) -> bool:
+        """Whether the item at text[start:end] holds a form of the unit at a unit place."""
+        forms = [(a, b, True) for a, b in _form_spans(self.text, start, end, self.prefixes)]
+        forms += [(a, b, False) for a, b in _form_spans(self.text, start, end, self.suffixes)]
+        return any(self._at(a, b, prefix) for a, b, prefix in forms)
+
+    def _at(self, start: int, end: int, prefix: bool) -> bool:
+        """Whether the form at text[start:end] is at a unit place: the place of the form, not of
+        the item that holds it."""
+        text = self.text
+        lo, paren = self.bracket
+        if start >= self.line[0] or (prefix and lo <= end <= paren):
+            return True
+        # the line of the form, from the lines read once above: none is a form on another line
+        i = bisect.bisect_right(self.starts, start) - 1
+        if i < 0:
+            return False
+        la = self.starts[i]
+        lb = self.ends[la]
+        if end > lb:
+            return False
+        if la in self.caption:
+            return True
+        if la not in self.table or self.n < 0:
+            return False
+        if la not in self.rows:  # each row is read once, also for many items on it
+            self.rows[la] = _row_cells(text, la, lb, self.prefixes)
+        row = self.rows[la]
+        if self.n >= len(row):
+            return False
+        c, ce = row[self.n]
+        if prefix:  # only whitespace between, found at the first character that is not one
+            return end <= c and _NOT_SPACE.search(text, end, c) is None
+        return start >= ce and _NOT_SPACE.search(text, ce, start) is None
+
+
+def _no_number_at(text: str, pos: int) -> bool:
+    """Whether the first character at or after pos that is not whitespace is neither the start
+    of a number token nor "(" (SPEC §4.5, rule 4). The text may end first."""
+    found = _NOT_SPACE.search(text, pos)
+    if found is None:
+        return True
+    at = found.start()
+    return text[at] != "(" and all(t.start != at for t in tokens(text, *_line(text, at)))
+
+
+def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
+    """The table cells in text[start:end] (SPEC §4.5, the column rule), as (start, end): number
+    tokens, lone dashes, and a unit prefix that stands alone with no number after it, also where
+    two occurrences of a prefix overlap. One position is one cell. An empty cell ends where the
+    longest prefix that makes it ends, and a cell that is both a number token and an empty cell
+    ends at the later end of the two."""
     toks = tokens(text, start, end)
-    starts = [t.start for t in toks]
-    starts += [
-        m.start() for m in _LONE_DASH.finditer(text) if start <= m.start() and m.end() <= end
-    ]
     numbers = {t.start for t in toks}
-    empty: set[int] = set()  # a prefix listed twice is still one cell
+    spans = {t.start: t.end for t in toks}
+    # one character past the end, so that the lookahead reads the text as it stands
+    for m in _LONE_DASH.finditer(text, start, min(len(text), end + 1)):
+        if m.end() <= end:
+            spans.setdefault(m.start(), m.end())
+    empty: dict[int, int] = {}
+    past: bool | None = None  # whether a cell can end at the end of the range, read once
     for p in prefixes:
-        for m in re.finditer(re.escape(p), text[start:end]):
-            a, b = start + m.start(), start + m.end()
+        nxt = -1  # the first non-space at or after the end of the last occurrence
+        for m in re.finditer(f"(?=({re.escape(p)}))", text[start:end]):  # overlaps count
+            a, b = start + m.start(1), start + m.end(1)
             if (a > 0 and not text[a - 1].isspace()) or (b < len(text) and not text[b].isspace()):
                 continue
-            rest = len(text[b:end]) - len(text[b:end].lstrip())
-            nxt = b + rest
-            if nxt >= end or nxt in numbers or text[nxt] == "(":
+            if b > nxt:  # the ends grow, so each run of whitespace is read once
+                found = _NOT_SPACE.search(text, b, end)
+                nxt = end if found is None else found.start()
+            if nxt >= end:  # the next character is past the range, such as on the next line
+                if past is None:
+                    past = _no_number_at(text, end)
+                if not past:
+                    continue
+            elif nxt in numbers or text[nxt] == "(":
                 continue
-            empty.add(a)
-    return sorted(starts + list(empty))
+            empty[a] = max(b, empty.get(a, b))
+    for a, b in empty.items():  # a prefix that is also a number token is one cell
+        spans[a] = max(b, spans.get(a, b))
+    return sorted(spans.items())
+
+
+def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
+    """The starts of the table cells in text[start:end] (SPEC §4.5, the column rule)."""
+    return [a for a, _ in cell_spans(text, start, end, prefixes)]
 
 
 def header(text: str, mentions: list[tuple[int, int, str]], at: int) -> list[tuple[int, int]]:

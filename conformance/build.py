@@ -1863,7 +1863,8 @@ vector(
     "A scale item multiplies a token that has no scaled value by its scale word, when no other "
     "scale word lies between it and the value. A unit item supplies the unit when no unit is at "
     "the token; another unit at the token still rejects. A missing scale or unit is a missing part "
-    "(spec 0.5). A unit item needs a passing field item.",
+    "(spec 0.5). A unit item needs a passing field item. In a table with one cell on each line, a "
+    "unit item on another line than the value is at no unit place, so it fails (spec 0.7, #164).",
     "Consolidated statements of operations\n(in thousands, except percentages)\n\n"
     "Revenue\n\n$\n\n46,016\n\n$\n\n434,433\n\n"
     "Gross margin\n\n12%\n\n"
@@ -1876,14 +1877,14 @@ vector(
     [
         c("r1", "amount", "46016000", "USD", [q("46,016"), THOUSANDS], ("admitted", ["VALUE_DERIVED"])),
         c("r2", "amount", "195334000", "USD", [q("195,334"), THOUSANDS, DOLLAR, row("Operating expenses")],
-          ("admitted", ["VALUE_DERIVED"])),
+          (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED"])),
         c("r3", "amount", "195334000", "USD", [q("195,334"), THOUSANDS],
           (REVIEW, ["PART_MISSING", "VALUE_DERIVED"], ["unit"])),
         c("r4", "amount", "1250000", "USD", [q("1,250"), THOUSANDS, DOLLAR, row("Interest income")],
-          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
+          (REVIEW, ["SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID", "VALUE_DERIVED"])),
         c("r5", "amount", "7500000", "USD",
           [q("7.5"), {"role": "scale", "text": "(in millions)"}, DOLLAR, row("Other items (in millions)")],
-          ("admitted", ["VALUE_DERIVED"])),
+          (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED"])),
         c("r6", "amount", "46016000", "USD", [q("46,016")], (REVIEW, ["PART_MISSING"], ["scale"])),
         c("r7", "amount", "12000", "USD", [q("12"), THOUSANDS, DOLLAR],
           ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
@@ -1892,7 +1893,7 @@ vector(
           ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
         c("r11", "amount", "-105198000", "USD",
           [q("105,198"), THOUSANDS, DOLLAR, row("Loss from operations")],
-          ("admitted", ["VALUE_DERIVED"])),
+          (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED"])),
         c("r12", "amount", "-105198000", "USD", [q("105,198")],
           (REVIEW, ["PART_MISSING"], ["scale", "unit"])),
         c("r13", "amount", "195334000", "USD",
@@ -1917,7 +1918,9 @@ vector(
     "A field item holds an alias of the field, at the value's row or in its sentence. The column "
     "rule puts a key item's key at a table value: the key is the n-th of its header, and the value "
     "is the n-th cell after the row label, where a lone dash is a cell. It records KEY_CITED. A "
-    "field item on a field without aliases changes nothing (spec 0.5).",
+    "field item on a field without aliases changes nothing (spec 0.5). A unit item on another "
+    "line of a table with one cell on each line fails, but a $ before the brackets around the "
+    "value is at a unit place (spec 0.7, #164).",
     "Year Ended December 31,\n\n2025\n\n2024\n\nChange\n\n"
     "Revenue\n\n$\n\n46,016\n\n$\n\n434,433\n\n"
     "Gain on sale\n\n—\n\n40,390\n\n"
@@ -1941,9 +1944,9 @@ vector(
         c("k3", "revenue", "434433", "USD", [q("434,433"), row("Revenue"), year("2025")],
           (REVIEW, ["KEY_NOT_AT_VALUE"], []), key="2025"),
         c("k4", "gain", "40390", "USD", [q("40,390"), row("Gain on sale"), year("2024"), DOLLAR],
-          ("admitted", ["KEY_CITED"]), key="2024"),
+          (REVIEW, ["UNIT_CITATION_INVALID", "KEY_CITED"]), key="2024"),
         c("k5", "gain", "40390", "USD", [q("40,390"), row("Gain on sale"), year("2025"), DOLLAR],
-          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+          (REVIEW, ["UNIT_CITATION_INVALID", "KEY_NOT_AT_VALUE"]), key="2025"),
         c("k6", "op_income", "-105198", "USD",
           [q("105,198"), row("Loss from operations"), year("2024"), DOLLAR],
           ("admitted", ["VALUE_DERIVED", "KEY_CITED"]), key="2024"),
@@ -2733,6 +2736,139 @@ vector(
         c("h7", "units", "1250", None, [q("1,250", 2)]),
         c("h8", "other", "500", None, [q("500")]),
         c("h9", "backlog", "1200000", "USD", [q("$1.2 million")]),
+    ],
+)  # fmt: skip
+
+
+# ---------------------------------------------------------------- spec 0.7 (#164)
+UNIT_PLACE = (
+    "Results of operations\n(amounts in dollars)\n\n"
+    "\t2025\t2024\tChange\n"
+    "Rental revenue\t$\t527,534\t$\t425,749\t$\t101,785\n"
+    "Other revenue\t2,060\t452\t1,608\n"
+    "Total revenues\t529,594\t426,201\t103,393\n"
+    "Operating items:\n"
+    "Income from operations\t359,921\t278,193\t81,728\n"
+    "Stores\t1,200\t1,100\t100\n\n"
+    "Segment data\t2025\t2024\nUnits\t57\t43\n\n"
+    "Region\t2025\t2024\nNorth\t$\t310\t$\t220\nAs restated in 2024\nSouth\t160\t110\n\n"
+    "Fees ($)\t75\t80\n"
+    "Interest\t$\t(12)\t$\t(9)\n\n"
+    "Wages were 9 dollars an hour.\nCrew\t70\t60\n\n"
+    "Caption\nHead\t$\tX\nAmount\t61\t67\n"
+)
+
+
+def usd(*aliases: str) -> dict[str, Any]:
+    return {"type": "integer", "unit": "USD", "multiple": True, "aliases": list(aliases)}
+
+
+vector(
+    "25-unit-place",
+    "A unit item that the unit at the token does not repeat must be at a unit place of the value: "
+    "on its line, in a caption line with no tab and no number that reaches the value's table, or "
+    "in the value's column on an earlier line of its table, where each line between holds a tab "
+    "or no number. A unit quote takes its last occurrence at a unit place. A blank line or a line "
+    "with a number and no tab ends the table. A row of counts in the same column still takes the "
+    "column's $ when its field item passes. The place is that of the unit form, not of the item "
+    "that holds it (spec 0.7, #164).",
+    UNIT_PLACE,
+    {
+        "fields": {
+            "revenue": usd("rental revenue", "other revenue", "total revenues"),
+            "operating_income": usd("income from operations"),
+            "store_sales": usd("stores"),
+            "unit_sales": usd("units"),
+            "region_sales": usd("north", "south"),
+            "interest": usd("interest"),
+            "fees": usd("fees"),
+            "crew_pay": usd("crew"),
+            "amount": usd("amount"),
+        }
+    },
+    [
+        c("p1", "revenue", "426201", "USD", [q("426,201"), DOLLAR, row("Total revenues")]),
+        c("p2", "operating_income", "278193", "USD",
+          [q("278,193"), DOLLAR, row("Income from operations")]),
+        c("p3", "store_sales", "1100", "USD", [q("1,100"), DOLLAR, row("Stores")]),
+        c("p4", "unit_sales", "43", "USD", [q("43"), DOLLAR, row("Units")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("p5", "revenue", "2060", "USD", [q("2,060"), q("$", 3, role="unit"), row("Other revenue")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("p6", "revenue", "2060", "USD", [q("2,060"), q("$", 1, role="unit"), row("Other revenue")]),
+        c("p7", "revenue", "2060", "USD",
+          [q("2,060"), {"role": "unit", "text": "dollars"}, row("Other revenue")]),
+        c("p8", "region_sales", "110", "USD", [q("110"), DOLLAR, row("South")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("p9", "interest", "-9", "USD", [q("(9)"), DOLLAR, row("Interest")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("p10", "fees", "80", "USD", [q("80"), DOLLAR, row("Fees")]),
+        c("p11", "crew_pay", "70", "USD",
+          [q("70"), {"role": "unit", "text": "dollars"}, row("Crew")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("p12", "revenue", "426201", "USD", [q("426,201"), row("Total revenues")],
+          (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("p13", "amount", "67", "USD",
+          [q("67"), q("Caption\nHead\t$", role="unit"), row("Amount")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "25b-unit-place-cells",
+    "A unit prefix that is also a number token is one cell, not two, when the unit places and "
+    "the column rule count the cells of a row. A line of no-break spaces is not blank, so it "
+    "does not end the table. A prefix that ends in a space stands before the brackets around "
+    "the value. An empty cell ends at the end of its prefix, also when the prefix holds a space "
+    "(spec 0.7, #164). Each occurrence of a form or a unit quote counts, also where two overlap. "
+    "An empty cell "
+    "ends where the longest prefix that makes it ends, not a longer prefix at the same start. "
+    "When a number token and an empty cell start at the same place, the cell ends at the later "
+    "end of the two. Empty cells that overlap count each, as `a a` twice in `a a a`. An empty "
+    "cell at the end of a line counts when the next character after the line end and the "
+    "whitespace is not the start of a number token or `(`.",
+    "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n\u00a0\nLow\t6\n\nNeg V \n(12)\n\n"
+    "Rows\tP Q\tZ\nItems\t7\n\nBox\t$$$8\nCrate\t9\n\nTag\tP Q%\tZ\nThing\t11\n\nMark\t2% R\nCount\t13\n\n"
+    "Hdr\t1\t2\t$\t16\nSum\ta a a \t?\t17\n\nCap\t1\t$ U\nTotal\t2\t9\t19\n",
+    {
+        "fields": {
+            "amount": {"type": "integer", "unit": "U", "aliases": ["amount"]},
+            "low": {"type": "integer", "unit": "USD", "aliases": ["low"]},
+            "neg": {"type": "integer", "unit": "V", "aliases": ["neg"]},
+            "items": {"type": "integer", "unit": "W", "aliases": ["items"]},
+            "crate": {"type": "integer", "unit": "D", "aliases": ["crate"]},
+            "thing": {"type": "integer", "unit": "X", "aliases": ["thing"]},
+            "count": {"type": "integer", "unit": "Y", "aliases": ["count"]},
+            "sum": {"type": "integer", "unit": "Z", "aliases": ["sum"]},
+            "total": {"type": "integer", "unit": "T", "aliases": ["total"]},
+        },
+        "units": {
+            "U": {"prefix": ["2", "$"]},
+            "V": {"prefix": ["V "]},
+            "W": {"prefix": ["P Q"], "suffix": ["Q"]},
+            "D": {"prefix": ["$$"]},
+            "X": {"prefix": ["P", "P Q"], "suffix": ["%"]},
+            "Y": {"prefix": ["2%"], "suffix": ["%"]},
+            "Z": {"prefix": ["a a", "$"]},
+            "T": {"prefix": ["$", "U"]},
+        },
+    },
+    [
+        c("q1", "amount", "3", "U", [q("3"), DOLLAR, row("Amount")]),
+        c("q2", "low", "6", "USD", [q("6"), DOLLAR, row("Low")]),
+        c("q3", "neg", "-12", "V", [q("12"), q("V ", role="unit"), row("Neg")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("q4", "items", "7", "W", [q("7"), q("Q", role="unit"), row("Items")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("q5", "crate", "9", "D", [q("9"), q("$$$", role="unit"), row("Crate")]),
+        c("q7", "crate", "9", "D", [q("9"), {"role": "unit", "text": "$$"}, row("Crate")]),
+        c("q6", "thing", "11", "X", [q("11"), q("%", role="unit"), row("Thing")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("q8", "count", "13", "Y", [q("13"), q("%", 2, role="unit"), row("Count")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("q9", "sum", "17", "Z", [q("17"), {"role": "unit", "text": "$"}, row("Sum")]),
+        c("q10", "total", "19", "T", [q("19"), {"role": "unit", "text": "$"}, row("Total")]),
     ],
 )  # fmt: skip
 

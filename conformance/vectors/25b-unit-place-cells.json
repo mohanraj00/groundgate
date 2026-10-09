@@ -1,0 +1,403 @@
+{
+ "name": "25b-unit-place-cells",
+ "description": "A unit prefix that is also a number token is one cell, not two, when the unit places and the column rule count the cells of a row. A line of no-break spaces is not blank, so it does not end the table. A prefix that ends in a space stands before the brackets around the value. An empty cell ends at the end of its prefix, also when the prefix holds a space (spec 0.7, #164). Each occurrence of a form or a unit quote counts, also where two overlap. An empty cell ends where the longest prefix that makes it ends, not a longer prefix at the same start. When a number token and an empty cell start at the same place, the cell ends at the later end of the two. Empty cells that overlap count each, as `a a` twice in `a a a`. An empty cell at the end of a line counts when the next character after the line end and the whitespace is not the start of a number token or `(`.",
+ "document": "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n \nLow\t6\n\nNeg V \n(12)\n\nRows\tP Q\tZ\nItems\t7\n\nBox\t$$$8\nCrate\t9\n\nTag\tP Q%\tZ\nThing\t11\n\nMark\t2% R\nCount\t13\n\nHdr\t1\t2\t$\t16\nSum\ta a a \t?\t17\n\nCap\t1\t$ U\nTotal\t2\t9\t19\n",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "integer",
+    "unit": "U",
+    "aliases": [
+     "amount"
+    ]
+   },
+   "low": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "low"
+    ]
+   },
+   "neg": {
+    "type": "integer",
+    "unit": "V",
+    "aliases": [
+     "neg"
+    ]
+   },
+   "items": {
+    "type": "integer",
+    "unit": "W",
+    "aliases": [
+     "items"
+    ]
+   },
+   "crate": {
+    "type": "integer",
+    "unit": "D",
+    "aliases": [
+     "crate"
+    ]
+   },
+   "thing": {
+    "type": "integer",
+    "unit": "X",
+    "aliases": [
+     "thing"
+    ]
+   },
+   "count": {
+    "type": "integer",
+    "unit": "Y",
+    "aliases": [
+     "count"
+    ]
+   },
+   "sum": {
+    "type": "integer",
+    "unit": "Z",
+    "aliases": [
+     "sum"
+    ]
+   },
+   "total": {
+    "type": "integer",
+    "unit": "T",
+    "aliases": [
+     "total"
+    ]
+   }
+  },
+  "units": {
+   "U": {
+    "prefix": [
+     "2",
+     "$"
+    ]
+   },
+   "V": {
+    "prefix": [
+     "V "
+    ]
+   },
+   "W": {
+    "prefix": [
+     "P Q"
+    ],
+    "suffix": [
+     "Q"
+    ]
+   },
+   "D": {
+    "prefix": [
+     "$$"
+    ]
+   },
+   "X": {
+    "prefix": [
+     "P",
+     "P Q"
+    ],
+    "suffix": [
+     "%"
+    ]
+   },
+   "Y": {
+    "prefix": [
+     "2%"
+    ],
+    "suffix": [
+     "%"
+    ]
+   },
+   "Z": {
+    "prefix": [
+     "a a",
+     "$"
+    ]
+   },
+   "T": {
+    "prefix": [
+     "$",
+     "U"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "q1",
+   "field": "amount",
+   "value": "3",
+   "unit": "U",
+   "evidence": [
+    {
+     "start": 22,
+     "end": 23,
+     "text": "3"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Amount"
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "field": "low",
+   "value": "6",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 40,
+     "end": 41,
+     "text": "6"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Low"
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "field": "neg",
+   "value": "-12",
+   "unit": "V",
+   "evidence": [
+    {
+     "start": 51,
+     "end": 53,
+     "text": "12"
+    },
+    {
+     "role": "unit",
+     "start": 47,
+     "end": 49,
+     "text": "V "
+    },
+    {
+     "role": "field",
+     "text": "Neg"
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "field": "items",
+   "value": "7",
+   "unit": "W",
+   "evidence": [
+    {
+     "start": 73,
+     "end": 74,
+     "text": "7"
+    },
+    {
+     "role": "unit",
+     "start": 63,
+     "end": 64,
+     "text": "Q"
+    },
+    {
+     "role": "field",
+     "text": "Items"
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "field": "crate",
+   "value": "9",
+   "unit": "D",
+   "evidence": [
+    {
+     "start": 91,
+     "end": 92,
+     "text": "9"
+    },
+    {
+     "role": "unit",
+     "start": 80,
+     "end": 83,
+     "text": "$$$"
+    },
+    {
+     "role": "field",
+     "text": "Crate"
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "field": "crate",
+   "value": "9",
+   "unit": "D",
+   "evidence": [
+    {
+     "start": 91,
+     "end": 92,
+     "text": "9"
+    },
+    {
+     "role": "unit",
+     "text": "$$"
+    },
+    {
+     "role": "field",
+     "text": "Crate"
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "field": "thing",
+   "value": "11",
+   "unit": "X",
+   "evidence": [
+    {
+     "start": 111,
+     "end": 113,
+     "text": "11"
+    },
+    {
+     "role": "unit",
+     "start": 101,
+     "end": 102,
+     "text": "%"
+    },
+    {
+     "role": "field",
+     "text": "Thing"
+    }
+   ]
+  },
+  {
+   "id": "q8",
+   "field": "count",
+   "value": "13",
+   "unit": "Y",
+   "evidence": [
+    {
+     "start": 131,
+     "end": 133,
+     "text": "13"
+    },
+    {
+     "role": "unit",
+     "start": 121,
+     "end": 122,
+     "text": "%"
+    },
+    {
+     "role": "field",
+     "text": "Count"
+    }
+   ]
+  },
+  {
+   "id": "q9",
+   "field": "sum",
+   "value": "17",
+   "unit": "Z",
+   "evidence": [
+    {
+     "start": 161,
+     "end": 163,
+     "text": "17"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Sum"
+    }
+   ]
+  },
+  {
+   "id": "q10",
+   "field": "total",
+   "value": "19",
+   "unit": "T",
+   "evidence": [
+    {
+     "start": 185,
+     "end": 187,
+     "text": "19"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Total"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

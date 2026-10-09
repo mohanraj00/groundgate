@@ -103,7 +103,7 @@ Ask for these items, each as a quote copied from the text:
 | `value` | The number as written, with its brackets. | `(3,415)` |
 | `sign` | The brackets or the loss word, when the value quote does not hold them. | not needed |
 | `scale` | The words that scale the number. | `(in thousands)` |
-| `unit` | The unit, when it is not next to the number. | `$`, from the "Net sales" row |
+| `unit` | The unit, when it is not next to the number: on the value's row, above the value in its column, or in the table's caption. | `$`, from the "Net sales" row |
 | `field` | The row label. | `Loss from operations` |
 | `key` | The column heading. | `2025` |
 
@@ -188,16 +188,17 @@ for part in decision.parts:
 
 ```text
 scale (39, 53) True '(in thousands)'
-unit (84, 85) True '$'
+unit (75, 76) True '$'
 field (154, 174) True 'Loss from operations'
 key (55, 59) True '2025'
 ```
 
 The spans are UTF-8 byte offsets into the text. This text is ASCII, so they are also Python
 indexes. A role quote resolves to the occurrence that holds the value, else to the last one
-before it. So the `$` here is the one before `79,605` on the "Net sales" row. The unit check does
-not read columns. It checks that a form of the unit comes before the value, and that no unit form
-is next to the number.
+before it. A unit quote first takes the last one before the value at a unit place (spec 0.7,
+#164): on the value's line, in a caption line before the table, or in the value's column of the
+same table. So the `$` here is the one before `84,210` on the "Net sales" row, the first row of
+the column of `(3,415)`. A `$` of another column, or of a row after a blank line, fails.
 
 ## What goes wrong, and why
 
@@ -253,16 +254,17 @@ show(gg.admit(spaced, schema, candidates))
 
 ```text
 Loss from operations   (3,415)   (2,980)
-oi-2024  needs_verification  KEY_NOT_AT_VALUE VALUE_DERIVED
-oi-2025  admitted            VALUE_DERIVED KEY_CITED
+oi-2024  needs_verification  UNIT_CITATION_INVALID KEY_NOT_AT_VALUE VALUE_DERIVED
+oi-2025  needs_verification  UNIT_CITATION_INVALID VALUE_DERIVED KEY_CITED
 ```
 
 With only spaces between the row label and its first number, groundgate cannot tell a cell from
-a number that belongs to the label. So the column rule stops after the first column. The 2025
-value is in the first column and is admitted. The 2024 value goes to review.
+a number that belongs to the label. So the column rule stops after the first column. The `$` is
+on another line, and a line with no tab has no column, so the unit item is at no unit place and
+fails. Both values go to review. The 2024 value also has no key at it.
 
-To keep the second column, extract the HTML source with `groundgate extract`, so the cells have
-tabs between them. If you only have the PDF, a person checks the values after the first column.
+To keep the columns, extract the HTML source with `groundgate extract`, so the cells have tabs
+between them. If you only have the PDF, a person checks the values.
 
 ### A footnote marker after the row label
 

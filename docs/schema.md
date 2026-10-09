@@ -472,10 +472,13 @@ Two other checks need a passing field item:
 
 - The column rule for keys (above).
 - A `unit` item. A unit item supports a unit that is not next to the number, such as the `$` at
-  the top of a column. It passes only when it comes before the value and the field item passes.
-  A unit item that repeats the unit next to the number, such as the `$` of `$ 4,210`, passes with
-  no field item.
-  It does not check that the unit applies to the value's row. A `$` on an earlier row passes too.
+  the top of a column. It passes only when it comes before the value, the field item passes, and
+  it is at a unit place of the value: on the value's line, in a caption line before the table
+  with no tab and no number, or in the value's column on an earlier line of the same table
+  (spec 0.7, #164). A unit item that repeats the unit next to the number, such as the `$` of
+  `$ 4,210`, passes with no field item.
+  In the value's column, a `$` on the first row also passes for a row of counts below it, when
+  the field item passes on that row.
 
 ```python
 text = "Segment results (all amounts in $)\n\nNet sales\t4,210\nCost of sales\t2,950"

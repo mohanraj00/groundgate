@@ -674,3 +674,100 @@ def test_heading_scale_reads_a_wide_row_once() -> None:
         return _seconds(text, {"id": "c", "field": "n", "value": 0, "evidence": [{"text": "0"}]})
 
     assert time_for(80_000) < 8 * time_for(20_000)
+
+
+def test_unit_places_read_a_long_table_once() -> None:
+    """A unit quote with many occurrences in a long table stays linear (#164): four times the
+    rows take less than eight times as long."""
+    import time
+
+    schema = {"fields": {"total": {"type": "integer", "unit": "USD", "aliases": ["total"]}}}
+
+    def time_for(rows: int) -> float:
+        text = "Row\t$\t1\t$\t2\n" * rows + "Total\t3\t7\n"
+        cand = {
+            "id": "c",
+            "field": "total",
+            "value": 7,
+            "unit": "USD",
+            "evidence": [
+                {"text": "7"},
+                {"role": "unit", "text": "$"},
+                {"role": "field", "text": "Total"},
+            ],
+        }
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            r = gg.admit(text, schema, [cand])
+            best = min(best, time.perf_counter() - began)
+            assert r.decisions[0].outcome == "admitted"
+        return best
+
+    assert time_for(4000) < 8 * time_for(1000)
+
+
+def test_unit_places_read_a_wide_row_once() -> None:
+    """A unit quote with many occurrences on one wide row stays linear (#164), also when none
+    is at a unit place, so each one is checked: four times the columns take less than eight
+    times as long."""
+    import time
+
+    schema = {"fields": {"amount": {"type": "integer", "unit": "USD", "aliases": ["amount"]}}}
+
+    def time_for(cols: int) -> float:
+        head = "Head" + "".join(f"\t$\t{n + 1}" for n in range(cols))
+        text = head + "\nAmount" + "\t7" * cols + "\t9\n"  # one column more than the head
+        cand = {
+            "id": "c",
+            "field": "amount",
+            "value": 9,
+            "unit": "USD",
+            "evidence": [
+                {"text": "9", "start": len(text.encode()) - 2, "end": len(text.encode()) - 1},
+                {"role": "unit", "text": "$"},
+                {"role": "field", "text": "Amount"},
+            ],
+        }
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            r = gg.admit(text, schema, [cand])
+            best = min(best, time.perf_counter() - began)
+            assert r.decisions[0].codes == ("UNIT_CITATION_INVALID",)
+        return best
+
+    assert time_for(1600) < 8 * time_for(400)
+
+
+def test_unit_places_find_lines_and_cells_once() -> None:
+    """A wide row of empty cells above the value stays linear (#164): the line of each unit form
+    and the whitespace after each empty cell are not read again for each form. Four times the
+    columns take less than six times as long."""
+    import time
+
+    schema = {"fields": {"amount": {"type": "integer", "unit": "USD", "aliases": ["amount"]}}}
+
+    def time_for(cols: int) -> float:
+        text = "Head\tX" + "\t$" * cols + "\nAmount\t9\n"  # no $ is in the value's column
+        at = text.index("\t9") + 1
+        cand = {
+            "id": "c",
+            "field": "amount",
+            "value": 9,
+            "unit": "USD",
+            "evidence": [
+                {"text": "9", "start": at, "end": at + 1},
+                {"role": "unit", "text": "$"},
+                {"role": "field", "text": "Amount"},
+            ],
+        }
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            r = gg.admit(text, schema, [cand])
+            best = min(best, time.perf_counter() - began)
+            assert r.decisions[0].codes == ("UNIT_CITATION_INVALID",)
+        return best
+
+    assert time_for(40000) < 6 * time_for(10000)

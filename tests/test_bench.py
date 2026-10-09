@@ -914,9 +914,11 @@ def test_key_span_prompt_differs_only_in_its_request(monkeypatch: pytest.MonkeyP
     assert "```text\n" + propose.KEY_SPAN_NOTE.lstrip("\n") + "```" in guide
 
 
-def test_role_example_admits_every_value_under_spec_05() -> None:
+def test_role_example_admits_every_value_but_the_unit_from_another_row() -> None:
     """The made-up 10-K example of --roles (#141) shows parts that the core accepts: a prompt that
-    teaches parts groundgate then rejects would measure the prompt, not the rule."""
+    teaches parts groundgate then rejects would measure the prompt, not the rule. The recorded
+    runs used this prompt, so it stays. Since spec 0.7 (#164), its two cash values cite the $ of
+    another row in a table with one cell on each line, and go to review."""
     pytest.importorskip("langextract")
     import propose
 
@@ -940,6 +942,11 @@ def test_role_example_admits_every_value_under_spec_05() -> None:
     cands = to_candidates({"text": ex.text, "extractions": exts})
     schema = json.loads((BENCH / "sec2" / "schema.json").read_text())
     receipt = gg.admit(ex.text, schema, cands)
-    assert [d.outcome for d in receipt.decisions] == ["admitted"] * len(exts)
+    flagged = {(d.field, d.key): d.codes for d in receipt.decisions if d.outcome != "admitted"}
+    assert flagged == {
+        ("cash_and_equivalents", "2025"): ("UNIT_CITATION_INVALID", "VALUE_DERIVED", "KEY_CITED"),
+        ("cash_and_equivalents", "2024"): ("UNIT_CITATION_INVALID", "VALUE_DERIVED", "KEY_CITED"),
+    }
+    assert len(receipt.decisions) == len(exts)
     for name in ("sign_text", "scale_text", "unit_text", "field_text", "key_text"):
         assert f'"{name}"' in propose.ROLES_NOTE  # the names that the adapter reads

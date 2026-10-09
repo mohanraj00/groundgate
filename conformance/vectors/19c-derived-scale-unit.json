@@ -1,6 +1,6 @@
 {
  "name": "19c-derived-scale-unit",
- "description": "A scale item multiplies a token that has no scaled value by its scale word, when no other scale word lies between it and the value. A unit item supplies the unit when no unit is at the token; another unit at the token still rejects. A missing scale or unit is a missing part (spec 0.5). A unit item needs a passing field item.",
+ "description": "A scale item multiplies a token that has no scaled value by its scale word, when no other scale word lies between it and the value. A unit item supplies the unit when no unit is at the token; another unit at the token still rejects. A missing scale or unit is a missing part (spec 0.5). A unit item needs a passing field item. In a table with one cell on each line, a unit item on another line than the value is at no unit place, so it fails (spec 0.7, #164).",
  "document": "Consolidated statements of operations\n(in thousands, except percentages)\n\nRevenue\n\n$\n\n46,016\n\n$\n\n434,433\n\nGross margin\n\n12%\n\nOperating expenses\n\n195,334\n\n203,625\n\nLoss from operations\n\n(105,198\n)\n\nOther items (in millions)\n\n7.5\n\nInterest income\n\n1,250\n\nDeferred revenue was $2.2 million at year end.",
  "schema": {
   "fields": {
@@ -265,8 +265,9 @@
     ]
    },
    {
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED"
     ]
    },
@@ -284,12 +285,14 @@
     "outcome": "needs_verification",
     "codes": [
      "SCALE_CITATION_INVALID",
+     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED"
     ]
    },
    {
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED"
     ]
    },
@@ -319,8 +322,9 @@
     ]
    },
    {
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED"
     ]
    },
