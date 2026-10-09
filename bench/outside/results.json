@@ -4,58 +4,70 @@
  "by": {
   "still": {
    "sec": {
-    "unlabeled": 12,
-    "wrong": 1
+    "right, from the document": 11,
+    "wrong": 2
    },
    "sec/sec": {
-    "unlabeled": 12,
-    "wrong": 1
+    "right, from the document": 11,
+    "wrong": 2
    },
    "set2": {
-    "unlabeled": 31,
-    "wrong": 1
+    "right, from the document": 10,
+    "right, from the outside": 1,
+    "wrong": 21
    },
    "set2/fda": {
-    "unlabeled": 13,
-    "wrong": 1
+    "right, from the document": 2,
+    "wrong": 12
    },
    "set2/fr": {
-    "unlabeled": 4
+    "right, from the document": 2,
+    "wrong": 2
    },
    "set2/irs": {
-    "unlabeled": 8
+    "right, from the document": 1,
+    "right, from the outside": 1,
+    "wrong": 6
    },
    "set2/ntsb": {
-    "unlabeled": 6
+    "right, from the document": 5,
+    "wrong": 1
    }
   },
   "all": {
    "sec": {
-    "right, from the document": 4,
-    "unlabeled": 191,
-    "wrong": 1
+    "right, from the document": 15,
+    "unlabeled": 179,
+    "wrong": 2
    },
    "sec/sec": {
-    "right, from the document": 4,
-    "unlabeled": 191,
-    "wrong": 1
+    "right, from the document": 15,
+    "unlabeled": 179,
+    "wrong": 2
    },
    "set2": {
-    "unlabeled": 32,
-    "wrong": 1
+    "right, from the document": 10,
+    "right, from the outside": 1,
+    "unlabeled": 1,
+    "wrong": 21
    },
    "set2/fda": {
-    "unlabeled": 14,
-    "wrong": 1
+    "right, from the document": 2,
+    "unlabeled": 1,
+    "wrong": 12
    },
    "set2/fr": {
-    "unlabeled": 4
+    "right, from the document": 2,
+    "wrong": 2
    },
    "set2/irs": {
-    "unlabeled": 8
+    "right, from the document": 1,
+    "right, from the outside": 1,
+    "wrong": 6
    },
    "set2/ntsb": {
-    "unlabeled": 6
+    "right, from the document": 5,
+    "wrong": 1
    }
   }
  },
@@ -103,6 +115,248 @@
    "basis": "document",
    "source": "the document",
    "still": false
+  },
+  {
+   "id": "0f0decfb7920150b",
+   "doc": "irs-p515",
+   "field": "backup_withholding_rate",
+   "key": null,
+   "value": "24",
+   "unit": "%",
+   "basis": "outside",
+   "source": "https://www.irs.gov/taxtopics/tc307",
+   "still": true
+  },
+  {
+   "id": "14b0869eb7658c68",
+   "doc": "sec-0001193125-26-077343",
+   "field": "net_income",
+   "key": "2024",
+   "value": "1114000000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "16725923853f7b3a",
+   "doc": "ntsb-192730",
+   "field": "airport_elevation",
+   "key": null,
+   "value": "915",
+   "unit": "ft",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "3083b000dc1a6b6a",
+   "doc": "ntsb-192720",
+   "field": "airport_elevation",
+   "key": null,
+   "value": "1125",
+   "unit": "ft",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "4f0bcd218d3d73d9",
+   "doc": "fda-ciprofloxacin",
+   "field": "max_daily_dose",
+   "key": "Acute Sinusitis",
+   "value": "1000",
+   "unit": "mg",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "5081647fc4c12aaf",
+   "doc": "sec-0001725160-26-000014",
+   "field": "net_income",
+   "key": "2025",
+   "value": "-137100000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "5ab1e162e917a102",
+   "doc": "fda-ciprofloxacin",
+   "field": "max_daily_dose",
+   "key": "Urinary Tract Infections",
+   "value": "1000",
+   "unit": "mg",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "62b671c342824a07",
+   "doc": "sec-0001717307-26-000012",
+   "field": "operating_income",
+   "key": "2025",
+   "value": "350113000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "68ba37da74c0313b",
+   "doc": "sec-0001262039-26-000007",
+   "field": "revenue",
+   "key": "2025",
+   "value": "6799600000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "6d2460c4b74a1af9",
+   "doc": "sec-0001201792-26-000004",
+   "field": "operating_income",
+   "key": "2025",
+   "value": "47935000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "73d575a619012e11",
+   "doc": "sec-0001262039-26-000007",
+   "field": "revenue",
+   "key": "2023",
+   "value": "5304800000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "83cea6e9f443cc30",
+   "doc": "ntsb-192723",
+   "field": "airport_elevation",
+   "key": null,
+   "value": "688",
+   "unit": "ft",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "844c2b51aefec129",
+   "doc": "ntsb-192722",
+   "field": "airport_elevation",
+   "key": null,
+   "value": "1188",
+   "unit": "ft",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "86af173fcf11a0ac",
+   "doc": "fr-2026-17901",
+   "field": "example_idc_ceiling_first",
+   "key": null,
+   "value": "3500000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "89da074fedec0636",
+   "doc": "sec-0001683168-26-000412",
+   "field": "net_income",
+   "key": "2025",
+   "value": "-58018",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "8b0181edcf2d4a06",
+   "doc": "fr-2026-17901",
+   "field": "example_idc_orders_bound_first",
+   "key": null,
+   "value": "3500000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "936a6abaaee9bdb5",
+   "doc": "sec-0001193125-26-051382",
+   "field": "net_income",
+   "key": "2024",
+   "value": "-69200000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "973c0f2f24678c43",
+   "doc": "ntsb-192724",
+   "field": "airport_elevation",
+   "key": null,
+   "value": "31",
+   "unit": "ft",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "acbe099cab4bdd6a",
+   "doc": "irs-p16",
+   "field": "income_tax_2021",
+   "key": null,
+   "value": "528805470000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "e68657ba4b259d70",
+   "doc": "sec-0001262039-26-000007",
+   "field": "revenue",
+   "key": "2024",
+   "value": "5955800000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "ebde6fffd305b2b6",
+   "doc": "sec-0001725160-26-000014",
+   "field": "revenue",
+   "key": "2025",
+   "value": "0",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "fe95807bfcb4a6f7",
+   "doc": "sec-0001193125-26-077343",
+   "field": "net_income",
+   "key": "2025",
+   "value": "-32154000000",
+   "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
   }
  ]
 }
