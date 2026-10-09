@@ -1,0 +1,247 @@
+{
+ "00b5991e2fe5d5ad": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "01d0cb35fdfcf7ec": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "0229a8ff2beec09e": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "032891c887d9c085": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "04a3fbbe8d82b573": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "06172523a0a41dfb": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "0f0decfb7920150b": {
+  "verdict": "right",
+  "basis": "outside",
+  "source": "https://www.irs.gov/taxtopics/tc307"
+ },
+ "14b0869eb7658c68": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "16725923853f7b3a": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "279b9e436487f9ea": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "3083b000dc1a6b6a": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "4f0bcd218d3d73d9": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "5081647fc4c12aaf": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "58f449ea3635aefd": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "5ab1e162e917a102": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "62b671c342824a07": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "63573fd8d923f81e": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "675ac2d54aadcf78": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "68ba37da74c0313b": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "6d2460c4b74a1af9": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "73d575a619012e11": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "777f8bfea9eddf81": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "83cea6e9f443cc30": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "844c2b51aefec129": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "86af173fcf11a0ac": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "879d18fa4be7e60f": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "89da074fedec0636": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "8b0181edcf2d4a06": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "8d70967fbd43f4c6": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "8f5618de9bc6a450": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "91871705dd99a7b9": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "936a6abaaee9bdb5": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "973c0f2f24678c43": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "aa12e6a3905acb6a": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "acbe099cab4bdd6a": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "af9010f88ad347e6": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "b453a9a167ba0061": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "c315fb30c8bcec1d": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "cb4a5a93a82e0ca2": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "e3a3dc95cbdda654": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "e68657ba4b259d70": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "ebde6fffd305b2b6": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "f2b81af145f44ab8": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "f553c13646a6183b": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "fc2ced02c90f845d": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "fe75a798c13d6f2a": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "fe95807bfcb4a6f7": {
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
+ },
+ "fedbed785531e0ef": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ },
+ "ffa4652ad3a548c9": {
+  "verdict": "wrong",
+  "basis": null,
+  "source": null
+ }
+}

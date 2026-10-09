@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outside labels</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+  body { margin: 0; font: 15px/1.45 system-ui, sans-serif; color: #1d1d1f; background: #f4f4f2; }
+  .wrap { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); height: 100vh; }
+  #view { overflow: auto; background: #8a8a8a; position: relative; }
+  #frame { width: 100%; height: 100%; border: 0; background: #fff; display: block; }
+  #sheet { position: relative; margin: 16px auto; width: max-content; box-shadow: 0 2px 8px #0005; }
+  #sheet canvas { display: block; background: #fff; }
+  #hit { position: absolute; border: 3px solid #e8590c; background: #ffd43b55; border-radius: 3px; }
+  #plain { padding: 16px 20px; background: #fff; min-height: 100%; box-sizing: border-box; }
+  #full { white-space: pre-wrap; font: 14px/1.5 ui-monospace, monospace; }
+  #where { font-size: 13px; color: #444; }
+  #side { overflow: auto; padding: 16px 20px; border-left: 1px solid #ccc; background: #fff; }
+  h1 { font-size: 15px; margin: 0 0 4px; }
+  .meta { color: #666; font-size: 13px; margin-bottom: 12px; }
+  .q { font-weight: 600; margin: 14px 0 8px; }
+  .value { font-size: 22px; font-weight: 600; }
+  .field { font: 13px ui-monospace, monospace; }
+  #text { white-space: pre-wrap; font: 13px/1.4 ui-monospace, monospace; background: #f6f6f4;
+          border: 1px solid #ddd; padding: 10px; max-height: 38vh; overflow: auto; }
+  mark { background: #ffd43b; outline: 2px solid #e8590c; }
+  .opts { display: grid; gap: 6px; }
+  .opt { text-align: left; padding: 8px 10px; border: 1px solid #bbb; border-radius: 6px;
+         background: #fff; font: inherit; cursor: pointer; }
+  .opt.on { background: #1c7ed6; border-color: #1c7ed6; color: #fff; }
+  .opt:disabled { opacity: .4; cursor: default; }
+  input[type=text] { width: 100%; box-sizing: border-box; padding: 7px; font: inherit;
+                     border: 1px solid #bbb; border-radius: 6px; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .row button { padding: 7px 12px; border: 1px solid #bbb; border-radius: 6px; background: #f1f1ef;
+                font: inherit; cursor: pointer; }
+  .row button.main { background: #2b8a3e; border-color: #2b8a3e; color: #fff; }
+  .now { margin-top: 10px; font-size: 13px; color: #444; }
+  .help { margin-top: 14px; font-size: 12px; color: #666; }
+  .err { color: #c92a2a; font-size: 13px; }
+  a { color: #1c7ed6; }
+  @media (max-width: 800px) { .wrap { display: block; height: auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="view">
+    <iframe id="frame" sandbox="allow-same-origin" title="The original filing"></iframe>
+    <div id="sheet"><canvas id="canvas"></canvas><div id="hit"></div></div>
+    <div id="plain"><div class="q">The label text that groundgate reads (the label itself is XML;
+      the source link opens its web page)</div><div id="full"></div></div>
+  </div>
+  <div id="side">
+    <h1 id="title"></h1>
+    <div class="meta" id="meta"></div>
+    <div class="field" id="field"></div>
+    <div class="meta" id="desc"></div>
+    <div class="value" id="value"></div>
+    <div class="q">Is this value true for the field and the document's subject?</div>
+    <div class="opts">
+      <button class="opt" data-v="right">Right</button>
+      <button class="opt" data-v="wrong">Wrong</button>
+      <button class="opt" data-v="not sure">Not sure</button>
+    </div>
+    <div class="q">If right: where does it come from?</div>
+    <div class="opts">
+      <button class="opt" data-b="document">From the document (a computation, a sign, or a table scale)</button>
+      <button class="opt" data-b="outside">From outside the document</button>
+    </div>
+    <div class="q">If from outside: the source (a URL)</div>
+    <input type="text" id="source" placeholder="https://...">
+    <div class="row">
+      <button class="main" id="save">Save</button>
+      <button id="back">Back</button>
+      <button id="next">Next</button>
+      <button id="todo">Next without a label</button>
+    </div>
+    <div class="err" id="err"></div>
+    <div class="now" id="now"></div>
+    <div class="now" id="where"></div>
+    <div class="q">The extractor's quote</div>
+    <div id="quote"></div>
+    <div class="q">The text that groundgate reads, around the cited span</div>
+    <div id="text"></div>
+    <div class="help">
+      The value is not anywhere in the document as written, so groundgate rejected it. Label it
+      <b>right</b> only when it is true for this field and this document's subject (the drug, the
+      company and fiscal year, the publication, the rule, the accident). Then say whether the
+      document's own numbers give it (for example a loss in brackets, a table "in thousands", or
+      two numbers added), or whether it needs knowledge from outside the document, and give the
+      source. <b>Not sure</b> when you can't tell.
+    </div>
+  </div>
+</div>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+let S, i = 0, verdict = null, basis = null;
+const $ = (id) => document.getElementById(id);
+const pdfs = {};
+let drawn = 0, task = null;  // the newest render wins; an older one stops or is dropped
+
+function mode(m) {
+  $("frame").style.display = m === "html" ? "block" : "none";
+  $("sheet").style.display = m === "pdf" ? "block" : "none";
+  $("plain").style.display = m === "none" ? "block" : "none";
+}
+
+// The text nodes of the filing that a reader sees, without the hidden XBRL header.
+function visible(doc) {
+  const out = [], seen = new Map(), walk = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+  const shown = (el) => {  // false inside an element that is not rendered, at any depth
+    if (!seen.has(el)) {
+      seen.set(el, el.checkVisibility ? el.checkVisibility() : el.getClientRects().length > 0);
+    }
+    return seen.get(el);
+  };
+  for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+    const el = n.parentElement;
+    if (!el || el.closest("ix\\:header, script, style") || !shown(el)) continue;
+    out.push(n);
+  }
+  return out;
+}
+
+// Box the nth match of the cited text in the filing, ignoring whitespace, as web.py counts it.
+function boxFiling(it) {
+  const doc = $("frame").contentDocument;
+  const want = (it.cited || it.quote || "").replace(/\s+/g, "");
+  doc.querySelectorAll(".gg-box").forEach((b) => b.remove());
+  if (!want) { $("where").textContent = "No cited text: the filing is shown from its start."; return; }
+  let flat = "";
+  const at = [];
+  for (const n of visible(doc)) {
+    const t = n.nodeValue;
+    for (let k = 0; k < t.length; k++) {
+      if (/\s/.test(t[k])) continue;
+      flat += t[k]; at.push([n, k]);
+    }
+  }
+  const hits = [];
+  for (let k = flat.indexOf(want); k >= 0; k = flat.indexOf(want, k + want.length)) hits.push(k);
+  if (!hits.length) {
+    $("where").textContent = it.cited ? "The cited text is not found in the filing."
+      : "The extractor's quote is not in the filing: the filing is shown from its start.";
+    return;
+  }
+  const n = it.original.nth < hits.length ? it.original.nth : 0;
+  const k = hits[n], [sn, so] = at[k], [en, eo] = at[k + want.length - 1];
+  const range = doc.createRange();
+  range.setStart(sn, so); range.setEnd(en, eo + 1);
+  const r = range.getBoundingClientRect(), win = doc.defaultView, pad = 4;
+  const box = doc.createElement("div");
+  box.className = "gg-box";
+  Object.assign(box.style, {
+    position: "absolute", border: "3px solid #e8590c", background: "#ffd43b55",
+    borderRadius: "3px", pointerEvents: "none", zIndex: 99999,
+    left: r.left + win.scrollX - pad + "px", top: r.top + win.scrollY - pad + "px",
+    width: r.width + 2 * pad + "px", height: r.height + 2 * pad + "px",
+  });
+  doc.body.append(box);
+  box.scrollIntoView({ block: "center", inline: "center" });
+  const tag = sn.parentElement && sn.parentElement.closest("ix\\:nonfraction");
+  $("where").textContent = `Match ${n + 1} of ${hits.length} in the filing.` +
+    (tag ? ` Inline XBRL tag: ${tag.getAttribute("name")}` + (tag.getAttribute("sign") === "-" ? " (negative)" : "") : "");
+}
+
+let shownDoc = null;
+function showFiling(it) {
+  mode("html");
+  const f = $("frame");
+  if (shownDoc === it.doc && f.contentDocument && f.contentDocument.readyState === "complete") {
+    boxFiling(it); return;
+  }
+  shownDoc = it.doc;
+  $("where").textContent = "Loading the filing...";
+  f.onload = () => { if (S.items[i] === it) boxFiling(it); };
+  f.src = "/original/" + it.doc;
+}
+
+async function showPdf(it) {
+  mode("pdf");
+  shownDoc = null;
+  const mine = ++drawn;
+  if (task) task.cancel();
+  if (!pdfs[it.doc]) pdfs[it.doc] = pdfjsLib.getDocument("/original/" + it.doc).promise;
+  const pdf = await pdfs[it.doc];
+  const page = await pdf.getPage(it.original.page);
+  if (mine !== drawn) return;
+  const width = $("view").clientWidth - 32;
+  const scale = 1.4 * Math.max(1, width / page.getViewport({ scale: 1 }).width);
+  const vp = page.getViewport({ scale });
+  const dpr = window.devicePixelRatio || 1;
+  const c = $("canvas");
+  c.width = vp.width * dpr; c.height = vp.height * dpr;
+  c.style.width = vp.width + "px"; c.style.height = vp.height + "px";
+  const ctx = c.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  task = page.render({ canvasContext: ctx, viewport: vp });
+  try { await task.promise; } catch (e) {
+    if (e && e.name === "RenderingCancelledException") return;
+    throw e;
+  }
+  if (mine !== drawn) return;
+  const hit = $("hit");
+  if (!it.original.box) {
+    hit.style.display = "none";
+    $("view").scrollTop = 0;
+    $("where").textContent = `PDF page ${it.original.page}. The quote is not in the document, so nothing is boxed.`;
+    return;
+  }
+  hit.style.display = "block";
+  // the box is in points from the top left of the crop box; pdf.js wants PDF user space
+  const [vx0, , , vy1] = page.view;
+  const [x0, top, x1, bottom] = it.original.box;
+  const r = vp.convertToViewportRectangle([vx0 + x0, vy1 - bottom, vx0 + x1, vy1 - top]);
+  const pad = 4;
+  hit.style.left = Math.min(r[0], r[2]) - pad + "px";
+  hit.style.top = Math.min(r[1], r[3]) - pad + "px";
+  hit.style.width = Math.abs(r[2] - r[0]) + 2 * pad + "px";
+  hit.style.height = Math.abs(r[3] - r[1]) + 2 * pad + "px";
+  hit.scrollIntoView({ block: "center", inline: "center" });
+  $("where").textContent = `PDF page ${it.original.page}.`;
+}
+
+function showOriginal(it) {
+  drawn++;  // a PDF render that is still running for another item is dropped
+  if (task) task.cancel();
+  $("where").textContent = "";
+  if (!it.original) { mode("none"); shownDoc = null; return; }
+  if (it.original.type === "text") {
+    mode("none"); shownDoc = null;
+    const f = $("full"), o = it.original;
+    f.textContent = "";
+    if (o.at) {
+      const m = document.createElement("mark"); m.textContent = o.full.slice(o.at[0], o.at[1]);
+      f.append(o.full.slice(0, o.at[0]), m, o.full.slice(o.at[1]));
+      m.scrollIntoView({ block: "center" });
+    } else {
+      f.textContent = o.full;
+      $("view").scrollTop = 0;
+      $("where").textContent = "The quote is not in the label, so nothing is marked. Use Find (Cmd+F) to search the text.";
+    }
+    return;
+  }
+  if (it.original.type === "html") showFiling(it); else showPdf(it);
+}
+
+function fmt(l) {
+  if (!l) return "no label yet";
+  return l.verdict + (l.basis ? ", " + l.basis : "") + (l.source ? " (" + l.source + ")" : "");
+}
+
+function show() {
+  const it = S.items[i], l = S.labels[it.id];
+  $("title").textContent = it.doc;
+  $("meta").innerHTML = "";
+  if (it.url) {
+    const a = document.createElement("a");
+    a.href = it.url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = "source document";
+    $("meta").append(it.kind + " · ", a);
+  }
+  $("field").textContent = it.field + (it.key ? "  for  " + it.key : "");
+  $("desc").textContent = it.description;
+  $("value").textContent = it.value + (it.unit ? " " + it.unit : "");
+  $("quote").textContent = it.quote || "(no quote)";
+  const t = $("text"); t.textContent = "";
+  if (it.cited) {
+    const m = document.createElement("mark"); m.textContent = it.cited;
+    t.append(it.before, m, it.after);
+  } else {
+    t.textContent = "(the quote is not in the document, so there is no cited span)";
+  }
+  showOriginal(it);
+  verdict = l ? l.verdict : null; basis = l ? l.basis : null;
+  $("source").value = l && l.source ? l.source : "";
+  paint();
+  const done = Object.keys(S.labels).length;
+  $("now").textContent = `Item ${i + 1} of ${S.items.length} · ${done} labeled · this one: ${fmt(l)}`;
+  $("err").textContent = "";
+}
+
+function paint() {
+  document.querySelectorAll("[data-v]").forEach((b) => b.classList.toggle("on", b.dataset.v === verdict));
+  document.querySelectorAll("[data-b]").forEach((b) => {
+    b.classList.toggle("on", b.dataset.b === basis);
+    b.disabled = verdict !== "right";
+  });
+  $("source").disabled = verdict !== "right" || basis !== "outside";
+}
+
+document.querySelectorAll("[data-v]").forEach((b) => b.onclick = () => { b.blur();
+  verdict = b.dataset.v; if (verdict !== "right") basis = null; paint();
+});
+document.querySelectorAll("[data-b]").forEach((b) => b.onclick = () => { b.blur();
+  basis = b.dataset.b; paint(); if (basis === "document") save();
+});
+
+async function save() {
+  const it = S.items[i];
+  const body = { id: it.id, verdict };
+  if (verdict === "right") {
+    body.basis = basis;
+    if (basis === "outside") body.source = $("source").value.trim();
+    if (!basis) { $("err").textContent = "A right value needs its basis."; return; }
+    if (basis === "outside" && !body.source) { $("err").textContent = "A value from outside needs a source."; return; }
+  }
+  if (!verdict) { $("err").textContent = "Pick right, wrong or not sure."; return; }
+  const r = await fetch("/label", { method: "POST", headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify(body) });
+  if (!r.ok) { $("err").textContent = "Not saved: " + (await r.text()); return; }
+  const source = basis === "document" ? "the document" : body.source || null;
+  S.labels[it.id] = { verdict, basis: body.basis || null, source };
+  next(true);
+}
+
+function next(todo) {
+  const n = S.items.length;
+  for (let k = 1; k <= n; k++) {
+    const j = (i + k) % n;
+    if (!todo || !S.labels[S.items[j].id]) { i = j; show(); return; }
+  }
+  show();
+}
+
+$("save").onclick = save;
+$("next").onclick = () => { i = (i + 1) % S.items.length; show(); };
+$("back").onclick = () => { i = (i - 1 + S.items.length) % S.items.length; show(); };
+$("todo").onclick = () => next(true);
+
+fetch("/state").then((r) => r.json()).then((s) => {
+  S = s;
+  const first = S.items.findIndex((it) => !S.labels[it.id]);
+  i = first < 0 ? 0 : first;
+  show();
+});
+</script>
+</body>
+</html>
