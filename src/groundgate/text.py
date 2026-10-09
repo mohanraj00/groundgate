@@ -687,15 +687,7 @@ def _row_cells(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
     tab = text.find("\t", start, end)
     if tab < 0:
         return []
-    ends = {t.start: t.end for t in tokens(text, tab + 1, end)}
-    out = []
-    for c in cells(text, tab + 1, end, prefixes):
-        if c in ends:  # a number token
-            out.append((c, ends[c]))
-            continue
-        at = [len(p) for p in prefixes if text.startswith(p, c, end)]
-        out.append((c, c + max(at) if at else c + 1))  # an empty cell, else a lone dash
-    return out
+    return cell_spans(text, tab + 1, end, prefixes)
 
 
 class UnitPlaces:
@@ -766,16 +758,18 @@ class UnitPlaces:
         return start >= ce and not text[ce:start].strip()
 
 
-def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
-    """The starts of the table cells in text[start:end] (SPEC §4.5, the column rule): number
-    tokens, lone dashes, and a unit prefix that stands alone with no number after it."""
+def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
+    """The table cells in text[start:end] (SPEC §4.5, the column rule), as (start, end): number
+    tokens, lone dashes, and a unit prefix that stands alone with no number after it. One
+    position is one cell. An empty cell ends where the longest prefix that makes it ends."""
     toks = tokens(text, start, end)
-    starts = [t.start for t in toks]
-    # one character past the end, so that the lookahead reads the text as it stands
-    dashes = _LONE_DASH.finditer(text, start, min(len(text), end + 1))
-    starts += [m.start() for m in dashes if m.end() <= end]
     numbers = {t.start for t in toks}
-    empty: set[int] = set()  # a prefix listed twice is still one cell
+    spans = {t.start: t.end for t in toks}
+    # one character past the end, so that the lookahead reads the text as it stands
+    for m in _LONE_DASH.finditer(text, start, min(len(text), end + 1)):
+        if m.end() <= end:
+            spans.setdefault(m.start(), m.end())
+    empty: dict[int, int] = {}
     for p in prefixes:
         for m in re.finditer(re.escape(p), text[start:end]):
             a, b = start + m.start(), start + m.end()
@@ -785,8 +779,15 @@ def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
             nxt = b + rest
             if nxt >= end or nxt in numbers or text[nxt] == "(":
                 continue
-            empty.add(a)
-    return sorted(set(starts) | empty)  # a prefix that is also a number token is one cell
+            empty[a] = max(b, empty.get(a, b))
+    for a, b in empty.items():
+        spans.setdefault(a, b)  # a prefix that is also a number token is one cell
+    return sorted(spans.items())
+
+
+def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
+    """The starts of the table cells in text[start:end] (SPEC §4.5, the column rule)."""
+    return [a for a, _ in cell_spans(text, start, end, prefixes)]
 
 
 def header(text: str, mentions: list[tuple[int, int, str]], at: int) -> list[tuple[int, int]]:
