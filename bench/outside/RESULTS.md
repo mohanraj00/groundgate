@@ -10,8 +10,8 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 |---|---:|---:|---:|---:|---:|
 | sec | 0 | 11 | 2 | 0 | 0 |
 | sec/sec | 0 | 11 | 2 | 0 | 0 |
-| set2 | 1 | 10 | 21 | 0 | 0 |
-| set2/fda | 0 | 2 | 12 | 0 | 0 |
+| set2 | 1 | 14 | 17 | 0 | 0 |
+| set2/fda | 0 | 6 | 8 | 0 | 0 |
 | set2/fr | 0 | 2 | 2 | 0 | 0 |
 | set2/irs | 1 | 1 | 6 | 0 | 0 |
 | set2/ntsb | 0 | 5 | 1 | 0 | 0 |
@@ -22,8 +22,8 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 |---|---:|---:|---:|---:|---:|
 | sec | 0 | 15 | 2 | 0 | 179 |
 | sec/sec | 0 | 15 | 2 | 0 | 179 |
-| set2 | 1 | 10 | 21 | 0 | 1 |
-| set2/fda | 0 | 2 | 12 | 0 | 1 |
+| set2 | 1 | 14 | 17 | 0 | 1 |
+| set2/fda | 0 | 6 | 8 | 0 | 1 |
 | set2/fr | 0 | 2 | 2 | 0 | 0 |
 | set2/irs | 1 | 1 | 6 | 0 | 0 |
 | set2/ntsb | 0 | 5 | 1 | 0 | 0 |
@@ -44,6 +44,7 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 | `sec-0001725160-26-000014` | net_income | 2025 | -137100000 USD | document | the document | yes |
 | `fda-ciprofloxacin` | max_daily_dose | Urinary Tract Infections | 1000 mg | document | the document | yes |
 | `sec-0001717307-26-000012` | operating_income | 2025 | 350113000 USD | document | the document | yes |
+| `fda-apixaban` | max_daily_dose | Treatment of Deep Vein Thrombosis | 20 mg | document | the document | yes |
 | `sec-0001262039-26-000007` | revenue | 2025 | 6799600000 USD | document | the document | yes |
 | `sec-0001201792-26-000004` | operating_income | 2025 | 47935000 USD | document | the document | yes |
 | `sec-0001262039-26-000007` | revenue | 2023 | 5304800000 USD | document | the document | yes |
@@ -55,6 +56,9 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 | `sec-0001193125-26-051382` | net_income | 2024 | -69200000 USD | document | the document | yes |
 | `ntsb-192724` | airport_elevation |  | 31 ft | document | the document | yes |
 | `irs-p16` | income_tax_2021 |  | 528805470000 USD | document | the document | yes |
+| `fda-rivaroxaban` | max_daily_dose | Reduction of Risk of Major Thrombotic Vascular Events in Patients with Peripheral Artery Disease (PAD), Including Patients after Lower Extremity Revascularization due to Symptomatic PAD | 5 mg | document | the document | yes |
 | `sec-0001262039-26-000007` | revenue | 2024 | 5955800000 USD | document | the document | yes |
 | `sec-0001725160-26-000014` | revenue | 2025 | 0 USD | document | the document | yes |
+| `fda-apixaban` | max_daily_dose | Treatment of Pulmonary Embolism | 20 mg | document | the document | yes |
+| `fda-rivaroxaban` | max_daily_dose | Reduction of Risk of Major Cardiovascular Events in Patients with Coronary Artery Disease (CAD) | 5 mg | document | the document | yes |
 | `sec-0001193125-26-077343` | net_income | 2025 | -32154000000 USD | document | the document | yes |

@@ -12,13 +12,13 @@
     "wrong": 2
    },
    "set2": {
-    "right, from the document": 10,
+    "right, from the document": 14,
     "right, from the outside": 1,
-    "wrong": 21
+    "wrong": 17
    },
    "set2/fda": {
-    "right, from the document": 2,
-    "wrong": 12
+    "right, from the document": 6,
+    "wrong": 8
    },
    "set2/fr": {
     "right, from the document": 2,
@@ -46,15 +46,15 @@
     "wrong": 2
    },
    "set2": {
-    "right, from the document": 10,
+    "right, from the document": 14,
     "right, from the outside": 1,
     "unlabeled": 1,
-    "wrong": 21
+    "wrong": 17
    },
    "set2/fda": {
-    "right, from the document": 2,
+    "right, from the document": 6,
     "unlabeled": 1,
-    "wrong": 12
+    "wrong": 8
    },
    "set2/fr": {
     "right, from the document": 2,
@@ -205,6 +205,17 @@
    "still": true
   },
   {
+   "id": "675ac2d54aadcf78",
+   "doc": "fda-apixaban",
+   "field": "max_daily_dose",
+   "key": "Treatment of Deep Vein Thrombosis",
+   "value": "20",
+   "unit": "mg",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
    "id": "68ba37da74c0313b",
    "doc": "sec-0001262039-26-000007",
    "field": "revenue",
@@ -326,6 +337,17 @@
    "still": true
   },
   {
+   "id": "c315fb30c8bcec1d",
+   "doc": "fda-rivaroxaban",
+   "field": "max_daily_dose",
+   "key": "Reduction of Risk of Major Thrombotic Vascular Events in Patients with Peripheral Artery Disease (PAD), Including Patients after Lower Extremity Revascularization due to Symptomatic PAD",
+   "value": "5",
+   "unit": "mg",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
    "id": "e68657ba4b259d70",
    "doc": "sec-0001262039-26-000007",
    "field": "revenue",
@@ -343,6 +365,28 @@
    "key": "2025",
    "value": "0",
    "unit": "USD",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "f553c13646a6183b",
+   "doc": "fda-apixaban",
+   "field": "max_daily_dose",
+   "key": "Treatment of Pulmonary Embolism",
+   "value": "20",
+   "unit": "mg",
+   "basis": "document",
+   "source": "the document",
+   "still": true
+  },
+  {
+   "id": "fc2ced02c90f845d",
+   "doc": "fda-rivaroxaban",
+   "field": "max_daily_dose",
+   "key": "Reduction of Risk of Major Cardiovascular Events in Patients with Coronary Artery Disease (CAD)",
+   "value": "5",
+   "unit": "mg",
    "basis": "document",
    "source": "the document",
    "still": true

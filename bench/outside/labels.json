@@ -85,9 +85,9 @@
   "source": null
  },
  "675ac2d54aadcf78": {
-  "verdict": "wrong",
-  "basis": null,
-  "source": null
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
  },
  "68ba37da74c0313b": {
   "verdict": "right",
@@ -185,9 +185,9 @@
   "source": null
  },
  "c315fb30c8bcec1d": {
-  "verdict": "wrong",
-  "basis": null,
-  "source": null
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
  },
  "cb4a5a93a82e0ca2": {
   "verdict": "wrong",
@@ -215,14 +215,14 @@
   "source": null
  },
  "f553c13646a6183b": {
-  "verdict": "wrong",
-  "basis": null,
-  "source": null
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
  },
  "fc2ced02c90f845d": {
-  "verdict": "wrong",
-  "basis": null,
-  "source": null
+  "verdict": "right",
+  "basis": "document",
+  "source": "the document"
  },
  "fe75a798c13d6f2a": {
   "verdict": "wrong",
