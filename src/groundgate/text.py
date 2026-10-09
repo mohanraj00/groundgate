@@ -761,7 +761,8 @@ class UnitPlaces:
 def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
     """The table cells in text[start:end] (SPEC §4.5, the column rule), as (start, end): number
     tokens, lone dashes, and a unit prefix that stands alone with no number after it. One
-    position is one cell. An empty cell ends where the longest prefix that makes it ends."""
+    position is one cell. An empty cell ends where the longest prefix that makes it ends, and a
+    cell that is both a number token and an empty cell ends at the later end of the two."""
     toks = tokens(text, start, end)
     numbers = {t.start for t in toks}
     spans = {t.start: t.end for t in toks}
@@ -780,8 +781,8 @@ def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
             if nxt >= end or nxt in numbers or text[nxt] == "(":
                 continue
             empty[a] = max(b, empty.get(a, b))
-    for a, b in empty.items():
-        spans.setdefault(a, b)  # a prefix that is also a number token is one cell
+    for a, b in empty.items():  # a prefix that is also a number token is one cell
+        spans[a] = max(b, spans.get(a, b))
     return sorted(spans.items())
 
 

@@ -2823,9 +2823,11 @@ vector(
     "the value. An empty cell ends at the end of its prefix, also when the prefix holds a space "
     "(spec 0.7, #164). Each occurrence of a form or a unit quote counts, also where two overlap. "
     "An empty cell "
-    "ends where the longest prefix that makes it ends, not a longer prefix at the same start.",
+    "ends where the longest prefix that makes it ends, not a longer prefix at the same start. "
+    "When a number token and an empty cell start at the same place, the cell ends at the later "
+    "end of the two.",
     "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n\u00a0\nLow\t6\n\nNeg V \n(12)\n\n"
-    "Rows\tP Q\tZ\nItems\t7\n\nBox\t$$$8\nCrate\t9\n\nTag\tP Q%\tZ\nThing\t11\n",
+    "Rows\tP Q\tZ\nItems\t7\n\nBox\t$$$8\nCrate\t9\n\nTag\tP Q%\tZ\nThing\t11\n\nMark\t2% R\nCount\t13\n",
     {
         "fields": {
             "amount": {"type": "integer", "unit": "U", "aliases": ["amount"]},
@@ -2834,6 +2836,7 @@ vector(
             "items": {"type": "integer", "unit": "W", "aliases": ["items"]},
             "crate": {"type": "integer", "unit": "D", "aliases": ["crate"]},
             "thing": {"type": "integer", "unit": "X", "aliases": ["thing"]},
+            "count": {"type": "integer", "unit": "Y", "aliases": ["count"]},
         },
         "units": {
             "U": {"prefix": ["2", "$"]},
@@ -2841,6 +2844,7 @@ vector(
             "W": {"prefix": ["P Q"], "suffix": ["Q"]},
             "D": {"prefix": ["$$"]},
             "X": {"prefix": ["P", "P Q"], "suffix": ["%"]},
+            "Y": {"prefix": ["2%"], "suffix": ["%"]},
         },
     },
     [
@@ -2853,6 +2857,8 @@ vector(
         c("q5", "crate", "9", "D", [q("9"), q("$$$", role="unit"), row("Crate")]),
         c("q7", "crate", "9", "D", [q("9"), {"role": "unit", "text": "$$"}, row("Crate")]),
         c("q6", "thing", "11", "X", [q("11"), q("%", role="unit"), row("Thing")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("q8", "count", "13", "Y", [q("13"), q("%", 2, role="unit"), row("Count")],
           (REVIEW, ["UNIT_CITATION_INVALID"])),
     ],
 )  # fmt: skip
