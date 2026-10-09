@@ -1,0 +1,163 @@
+{
+ "doc": "afr-gsa",
+ "provider": "claude-cli",
+ "model": "claude-haiku-5-5",
+ "effort": "default",
+ "cli": "2.1.295 (Claude Code)",
+ "prompt_sha256": "8d97de22e5b06ad8629206325f44567be706dcdfa035790a9c1edb26c3a88007",
+ "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
+ "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "total_assets",
+    "value": "86533000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "86,533"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Assets"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(Dollars in Millions)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "As of September 30, 2025"
+     }
+    ]
+   },
+   {
+    "field": "total_liabilities",
+    "value": "37944000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "37,944"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Liabilities (Note 11)"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(Dollars in Millions)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "As of September 30, 2025"
+     }
+    ]
+   },
+   {
+    "field": "total_net_position",
+    "value": "48589000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "48,589"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Net Position"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(Dollars in Millions)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "As of September 30, 2025"
+     }
+    ]
+   },
+   {
+    "field": "net_cost_of_operations",
+    "value": "-444000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "(444)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "GSA Consolidated Net Results"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(Dollars in Millions)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "For the Fiscal Year ended September 30, 2025"
+     }
+    ]
+   },
+   {
+    "field": "total_budgetary_resources",
+    "value": "55830000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "55,830"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Budgetary Resources"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(Dollars in Millions)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "For the Fiscal Year ended September 30, 2025"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

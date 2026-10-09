@@ -1,0 +1,44 @@
+{
+ "runs": {
+  "claude-haiku-5-5": {
+   "0.6": {
+    "right": 0,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 4,
+    "proposals": 100,
+    "no reply": 0
+   },
+   "0.7 #164": {
+    "right": 0,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 4,
+    "proposals": 100,
+    "no reply": 0
+   }
+  },
+  "gpt-6-luna": {
+   "0.6": {
+    "right": 0,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 6,
+    "proposals": 100,
+    "no reply": 0
+   },
+   "0.7 #164": {
+    "right": 0,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 6,
+    "proposals": 100,
+    "no reply": 0
+   }
+  }
+ },
+ "changed": {
+  "claude-haiku-5-5": {},
+  "gpt-6-luna": {}
+ }
+}

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Report labels</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+  body { margin: 0; font: 15px/1.45 system-ui, sans-serif; color: #1d1d1f; background: #f4f4f2; }
+  .wrap { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); height: 100vh; }
+  #view { overflow: auto; padding: 16px; background: #8a8a8a; }
+  #sheet { position: relative; margin: 0 auto; width: max-content; box-shadow: 0 2px 8px #0005; }
+  #sheet canvas { display: block; background: #fff; }
+  #hit { position: absolute; border: 3px solid #e8590c; background: #ffd43b55; border-radius: 3px; }
+  #side { overflow: auto; padding: 16px 20px; border-left: 1px solid #ccc; background: #fff; }
+  h1 { font-size: 15px; margin: 0 0 4px; }
+  .meta { color: #666; font-size: 13px; margin-bottom: 12px; }
+  .claim { border: 1px solid #ddd; border-radius: 6px; padding: 10px 12px; background: #f6f6f4; }
+  .claim div { margin: 2px 0; }
+  .claim b { display: inline-block; min-width: 90px; color: #555; font-weight: 600; }
+  .value { font: 600 17px ui-monospace, monospace; }
+  .q { font-weight: 600; margin: 14px 0 8px; }
+  #text { white-space: pre-wrap; font: 13px/1.4 ui-monospace, monospace; background: #f6f6f4;
+          border: 1px solid #ddd; padding: 10px; max-height: 34vh; overflow: auto; }
+  mark { background: #ffd43b; outline: 2px solid #e8590c; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .row button { padding: 7px 12px; border: 1px solid #bbb; border-radius: 6px; background: #f1f1ef;
+                font: inherit; cursor: pointer; }
+  .row button.right { background: #2b8a3e; border-color: #2b8a3e; color: #fff; }
+  .row button.wrong { background: #c92a2a; border-color: #c92a2a; color: #fff; }
+  .now { margin-top: 10px; font-size: 13px; color: #444; }
+  .help { margin-top: 14px; font-size: 12px; color: #666; }
+  kbd { font: 11px ui-monospace, monospace; border: 1px solid #bbb; border-radius: 3px; padding: 0 3px; }
+  a { color: #1c7ed6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="view"><div id="sheet"><canvas id="canvas"></canvas><div id="hit"></div></div></div>
+  <div id="side">
+    <h1 id="title"></h1>
+    <div class="meta" id="meta"></div>
+    <div class="claim">
+      <div><b>Field</b> <span id="field"></span></div>
+      <div><b>Year</b> <span id="key"></span></div>
+      <div><b>Value</b> <span class="value" id="value"></span></div>
+      <div><b>In millions</b> <span id="millions"></span></div>
+    </div>
+    <div class="q">Is this value right for the field and the year, in this report?</div>
+    <div class="row">
+      <button class="right" id="right">Right <kbd>1</kbd></button>
+      <button class="wrong" id="wrong">Wrong <kbd>2</kbd></button>
+      <button id="unsure">Not sure <kbd>?</kbd></button>
+    </div>
+    <div class="row">
+      <button id="back">Back <kbd>b</kbd></button>
+      <button id="next">Next <kbd>n</kbd></button>
+      <button id="todo">Next without a label</button>
+    </div>
+    <div class="now" id="now"></div>
+    <div class="q">The text that groundgate reads</div>
+    <div id="text"></div>
+    <div class="help">
+      The value is in US dollars. A statement that says "in millions" or "in thousands" gives
+      the value in that scale: compare the value in millions with the page. A value is right
+      only when it is the field's amount for that fiscal year in this report. Use
+      <b>Not sure</b> when you can't tell. Keys <kbd>+</kbd> and <kbd>-</kbd> zoom the page.
+    </div>
+  </div>
+</div>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+let S, i = 0, zoom = 1.6;
+const docs = {};
+const $ = (id) => document.getElementById(id);
+
+let drawn = 0, task = null;  // the newest render wins; an older one stops or is dropped
+
+async function render(it) {
+  const mine = ++drawn;
+  if (task) task.cancel();
+  if (!docs[it.doc]) docs[it.doc] = pdfjsLib.getDocument("/pdf/" + it.doc).promise;
+  const pdf = await docs[it.doc];
+  const page = await pdf.getPage(it.page);
+  if (mine !== drawn) return;
+  const width = $("view").clientWidth - 32;
+  const scale = zoom * Math.max(1, width / page.getViewport({ scale: 1 }).width);
+  const vp = page.getViewport({ scale });
+  const dpr = window.devicePixelRatio || 1;
+  const c = $("canvas");
+  c.width = vp.width * dpr; c.height = vp.height * dpr;
+  c.style.width = vp.width + "px"; c.style.height = vp.height + "px";
+  const ctx = c.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  task = page.render({ canvasContext: ctx, viewport: vp });
+  try {
+    await task.promise;
+  } catch (e) {
+    if (e && e.name === "RenderingCancelledException") return;
+    throw e;
+  }
+  if (mine !== drawn) return;
+  const hit = $("hit");
+  if (!it.box) { hit.style.display = "none"; return; }
+  hit.style.display = "";
+  // the box is in points from the top left of the crop box; pdf.js wants PDF user space
+  const [vx0, , , vy1] = page.view;
+  const [x0, top, x1, bottom] = it.box;
+  const r = vp.convertToViewportRectangle([vx0 + x0, vy1 - bottom, vx0 + x1, vy1 - top]);
+  const pad = 4;
+  hit.style.left = Math.min(r[0], r[2]) - pad + "px";
+  hit.style.top = Math.min(r[1], r[3]) - pad + "px";
+  hit.style.width = Math.abs(r[2] - r[0]) + 2 * pad + "px";
+  hit.style.height = Math.abs(r[3] - r[1]) + 2 * pad + "px";
+  hit.scrollIntoView({ block: "center", inline: "center" });
+}
+
+function show() {
+  const it = S.items[i];
+  const done = S.items.filter((x) => x.id in S.labels).length;
+  $("title").textContent = `Value ${i + 1} of ${S.items.length}`;
+  $("meta").innerHTML = `${it.doc}, PDF page ${it.page}. ${done} labeled. ` +
+    `<a href="/pdf/${it.doc}#page=${it.page}" target="_blank">Open the PDF</a>` +
+    (it.box ? "" : " The value has no place in the text, so nothing is boxed.");
+  $("field").textContent = it.description;
+  $("key").textContent = it.key === null ? "none" : it.key;
+  const n = Number(it.value);
+  $("value").textContent = Number.isFinite(n) ? n.toLocaleString("en-US") : it.value;
+  $("millions").textContent = Number.isFinite(n)
+    ? (n / 1e6).toLocaleString("en-US", { maximumFractionDigits: 3 }) : "";
+  const now = S.labels[it.id];
+  $("now").textContent = "Saved: " + (now ? now.verdict : "no label yet");
+  const t = $("text");
+  t.textContent = "";
+  t.append(it.before);
+  const m = document.createElement("mark");
+  m.textContent = it.mark;
+  t.append(m, it.after);
+  m.scrollIntoView({ block: "center" });
+  render(it);
+}
+
+let busy = false;  // one save at a time, so a double click cannot label the next value
+
+async function save(verdict) {
+  if (busy) return;
+  busy = true;
+  try {
+    const it = S.items[i];
+    const r = await fetch("/label", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: it.id, verdict }),
+    });
+    if (!r.ok) { alert("The label was not saved."); return; }
+    S.labels[it.id] = { verdict };
+    go(S.items.indexOf(it) + 1);  // from the saved value, whatever the page shows now
+  } finally {
+    busy = false;
+  }
+}
+
+function move(to) {
+  if (!busy) go(to);  // no moving while a save is open
+}
+
+function go(to) {
+  i = Math.max(0, Math.min(S.items.length - 1, to));
+  history.replaceState(null, "", "#" + (i + 1));
+  show();
+}
+
+function todo() {
+  const n = S.items.findIndex((x, k) => k > i && !(x.id in S.labels));
+  const m = n >= 0 ? n : S.items.findIndex((x) => !(x.id in S.labels));
+  if (m >= 0) move(m);
+}
+
+$("right").onclick = (e) => { e.target.blur(); save("right"); };
+$("wrong").onclick = (e) => { e.target.blur(); save("wrong"); };
+$("unsure").onclick = (e) => { e.target.blur(); save("not sure"); };
+$("back").onclick = (e) => { e.target.blur(); move(i - 1); };
+$("next").onclick = (e) => { e.target.blur(); move(i + 1); };
+$("todo").onclick = (e) => { e.target.blur(); todo(); };
+
+document.addEventListener("keydown", (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+  if (e.key === "1") save("right");
+  else if (e.key === "2") save("wrong");
+  else if (e.key === "?") save("not sure");
+  else if (e.key === "b" || e.key === "ArrowLeft") move(i - 1);
+  else if (e.key === "n" || e.key === "ArrowRight") move(i + 1);
+  else if (e.key === "+" || e.key === "=") { zoom = Math.min(4, zoom * 1.25); render(S.items[i]); }
+  else if (e.key === "-") { zoom = Math.max(0.5, zoom / 1.25); render(S.items[i]); }
+  else return;
+  e.preventDefault();
+});
+
+fetch("/state").then((r) => r.json()).then((s) => {
+  S = s;
+  // #12 opens value 12; otherwise the first value without a label
+  const asked = Number(location.hash.slice(1));
+  const n = S.items.findIndex((x) => !(x.id in S.labels));
+  i = asked >= 1 && asked <= S.items.length ? asked - 1 : n >= 0 ? n : 0;
+  show();
+});
+</script>
+</body>
+</html>

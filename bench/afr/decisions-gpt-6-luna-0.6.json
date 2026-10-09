@@ -1,0 +1,1688 @@
+{
+ "afr-commerce": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "135816393000",
+    "evidence": [
+     2447,
+     2458
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "7456000000",
+    "evidence": [
+     2597,
+     2606
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "128360393000",
+    "evidence": [
+     2671,
+     2682
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "17693617000",
+    "evidence": [
+     4418,
+     4428
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "97042733000",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   }
+  ]
+ },
+ "afr-dod": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "4651653200000",
+    "evidence": [
+     1550,
+     1561
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "4729078400000",
+    "evidence": [
+     1692,
+     1703
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "-77425200000",
+    "evidence": [
+     2514,
+     2524
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "1162655800000",
+    "evidence": [
+     3870,
+     3881
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "1896213800000",
+    "evidence": [
+     6668,
+     6679
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-doe": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "359778000",
+    "evidence": [
+     1878,
+     1885
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "713754000",
+    "evidence": [
+     1985,
+     1992
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "-353976000",
+    "evidence": [
+     2049,
+     2058
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "65725000",
+    "evidence": [
+     3265,
+     3271
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "231188000",
+    "evidence": [
+     6383,
+     6390
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ]
+ },
+ "afr-doi": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "172647395000",
+    "evidence": [
+     2444,
+     2455
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "19837110000",
+    "evidence": [
+     2672,
+     2682
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "152810285000",
+    "evidence": [
+     2750,
+     2761
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "30846975000",
+    "evidence": [
+     3950,
+     3960
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "93371567000",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   }
+  ]
+ },
+ "afr-doj": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "77909654000",
+    "evidence": [
+     2001,
+     2011
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "31597403000",
+    "evidence": [
+     2192,
+     2202
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "46312251000",
+    "evidence": [
+     2529,
+     2539
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "49229141000",
+    "evidence": [
+     3641,
+     3651
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "80186900000",
+    "evidence": [
+     6575,
+     6585
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-dol": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "132645133000",
+    "evidence": [
+     2101,
+     2112
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "158102598000",
+    "evidence": [
+     2256,
+     2267
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "-25457465000",
+    "evidence": [
+     2332,
+     2344
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "89593937000",
+    "evidence": [
+     3375,
+     3385
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "75786990000",
+    "evidence": [
+     6069,
+     6079
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-dot": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "331540544000",
+    "evidence": [
+     2031,
+     2042
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "49343519000",
+    "evidence": [
+     2182,
+     2192
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "282197025000",
+    "evidence": [
+     2266,
+     2277
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "130088330000",
+    "evidence": [
+     3193,
+     3204
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "323289772000",
+    "evidence": [
+     6147,
+     6158
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-epa": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "97142871000",
+    "evidence": [
+     1973,
+     1983
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "15528470000",
+    "evidence": [
+     2094,
+     2104
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "81614401000",
+    "evidence": [
+     2163,
+     2173
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "37099200000",
+    "evidence": [
+     2469,
+     2479
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "66693519000",
+    "evidence": [
+     6208,
+     6232
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ]
+ },
+ "afr-gsa": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "86533000000",
+    "evidence": [
+     2061,
+     2067
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "37944000000",
+    "evidence": [
+     2014,
+     2020
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "48589000000",
+    "evidence": [
+     3990,
+     3996
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "-444000000",
+    "evidence": [
+     2827,
+     2834
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "55830000000",
+    "evidence": [
+     4909,
+     4915
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-hhs": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "1154693000000",
+    "evidence": [
+     1924,
+     1933
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "234954000000",
+    "evidence": [
+     2041,
+     2048
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "919739000000",
+    "evidence": [
+     2103,
+     2110
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "1887206000000",
+    "evidence": [
+     3655,
+     3664
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "3129745000000",
+    "evidence": [
+     6592,
+     6601
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-hud": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "513315000",
+    "evidence": [
+     2377,
+     2384
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "171656000",
+    "evidence": [
+     2479,
+     2486
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "341659000",
+    "evidence": [
+     2535,
+     2542
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "67714000",
+    "evidence": [
+     3988,
+     3994
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "322554000",
+    "evidence": [
+     6770,
+     6777
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ]
+ },
+ "afr-nasa": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "39579000000",
+    "evidence": [
+     1234,
+     1240
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "7505000000",
+    "evidence": [
+     1302,
+     1307
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "32074000000",
+    "evidence": [
+     1326,
+     1332
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "23699000000",
+    "evidence": [
+     2426,
+     2434
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "41460000000",
+    "evidence": [
+     4394,
+     4402
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-nrc": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "450805000",
+    "evidence": [
+     1044,
+     1051
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "106395000",
+    "evidence": [
+     1101,
+     1108
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "344410000",
+    "evidence": [
+     1125,
+     1132
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "216953000",
+    "evidence": [
+     1834,
+     1841
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "1069846000",
+    "evidence": [
+     4182,
+     4191
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-nsf": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "18998375000",
+    "evidence": [
+     1139,
+     1149
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "745109000",
+    "evidence": [
+     1912,
+     1919
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "18253266000",
+    "evidence": [
+     2393,
+     2403
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "9927340000",
+    "evidence": [
+     3606,
+     3615
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "10738134000",
+    "evidence": [
+     5947,
+     5957
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-opm": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "1232313000000",
+    "evidence": [
+     1064,
+     1074
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "3216178000000",
+    "evidence": [
+     1126,
+     1136
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "-1983865000000",
+    "evidence": [
+     1362,
+     1374
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "-63149000000",
+    "evidence": [
+     2838,
+     2847
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "338563000000",
+    "evidence": [
+     4659,
+     4667
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-ssa": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "2655704000000",
+    "evidence": [
+     1387,
+     1396
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "182189000000",
+    "evidence": [
+     1457,
+     1464
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "2473515000000",
+    "evidence": [
+     1500,
+     1509
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "1655817000000",
+    "evidence": [
+     2563,
+     2572
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "1742137000000",
+    "evidence": [
+     5105,
+     5114
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-state": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "129637000000",
+    "evidence": [
+     1896,
+     1903
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "51206000000",
+    "evidence": [
+     1977,
+     1983
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "78431000000",
+    "evidence": [
+     2024,
+     2030
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "31425000000",
+    "evidence": [
+     3165,
+     3171
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "79817000000",
+    "evidence": [
+     6035,
+     6041
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-treasury": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "42057965000000",
+    "evidence": [
+     1413,
+     1423
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "41449164000000",
+    "evidence": [
+     2962,
+     2972
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "608801000000",
+    "evidence": [
+     3016,
+     3023
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "1199013000000",
+    "evidence": [
+     4170,
+     4179
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "1643311000000",
+    "evidence": [
+     7001,
+     7010
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-usda": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "545915000000",
+    "evidence": [
+     1947,
+     1954
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "225813000000",
+    "evidence": [
+     2033,
+     2040
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "320102000000",
+    "evidence": [
+     4693,
+     4700
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "229229000000",
+    "evidence": [
+     3280,
+     3287
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED",
+     "KEY_CITED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "490240000000",
+    "evidence": [
+     5336,
+     5343
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ },
+ "afr-va": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "167798000000",
+    "evidence": [
+     1569,
+     1576
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "7627557000000",
+    "evidence": [
+     1669,
+     1678
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "-7459759000000",
+    "evidence": [
+     2226,
+     2237
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "net_cost_of_operations",
+    "key": "2025",
+    "value": "529641000000",
+    "evidence": [
+     3389,
+     3396
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_budgetary_resources",
+    "key": "2025",
+    "value": "458783000000",
+    "evidence": [
+     6128,
+     6135
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ]
+ }
+}
