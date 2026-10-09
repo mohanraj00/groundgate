@@ -145,6 +145,9 @@ def decide() -> None:
                 rec = _read(path)
                 if rec["prompt_sha256"] != run.sha(prompt):
                     raise SystemExit(f"{path} answers other messages: ask again")
+                shown = run.output_schema(rec["provider"], gg.extractor_schema(schema))
+                if rec["output_schema_sha256"] != run.sha(json.dumps(shown, sort_keys=True)):
+                    raise SystemExit(f"{path} answers another output schema: ask again")
                 cands = _candidates(rec, "r")
                 got.update(
                     asked=True,

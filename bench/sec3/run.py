@@ -60,10 +60,16 @@ def sha(data: str) -> str:
     return hashlib.sha256(data.encode("utf-8")).hexdigest()
 
 
+def output_schema(provider: str, schema: dict[str, Any]) -> dict[str, Any]:
+    """The output schema that the provider's CLI gets."""
+    if provider == "claude-cli":  # its --json-schema check does not load draft 2020-12
+        schema = {k: v for k, v in schema.items() if k != "$schema"}
+    return schema
+
+
 class Runner:
     def __init__(self, provider: str, model: str, schema: dict[str, Any]) -> None:
-        if provider == "claude-cli":  # its --json-schema check does not load draft 2020-12
-            schema = {k: v for k, v in schema.items() if k != "$schema"}
+        schema = output_schema(provider, schema)
         self.provider, self.model, self.schema = provider, model, schema
         self.empty = tempfile.mkdtemp(prefix="groundgate-sec3-")
         self.schema_file = Path(self.empty) / "output.schema.json"
