@@ -114,7 +114,10 @@ number. The judge uses no log-probabilities.
 The digest is `chat-1:<model>@<version>`. `chat-1` names the prompt template and answer parsing.
 A change to either needs a new digest and calibration. `ask` and `judge` refuse a response that
 reports another model name. An invalid JSON answer, choice or probability gets up to 2 retries.
-After that, the judge stops and shows the reply.
+After that, the judge stops and shows the reply. The request is the same each time, so a retry
+helps only when the server does not give the same answer to the same request. The judge refuses
+a redirect, so the key goes only to the URL that you set. If the server does not answer, the
+judge stops and names the URL.
 
 A judge has an `id`, a `digest` that names one model version, and `ask(state, questions)`.
 `state` is the text around the value, with the value in brackets. `ask` answers each question in

@@ -54,6 +54,13 @@ class Jev:
         return dict(res["answers"])
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    """A redirect would carry the key to a host that the user did not set, so it fails."""
+
+    def redirect_request(self, *args: Any, **kwargs: Any) -> None:
+        return None
+
+
 class Chat:
     """A chat server. Its URL, model, version and optional key come from the environment."""
 
@@ -91,6 +98,7 @@ class Chat:
         self._model = settings["GROUNDGATE_CHAT_MODEL"]
         self.digest = f"chat-1:{self._model}@{settings['GROUNDGATE_CHAT_VERSION']}"
         self._key = os.environ.get("GROUNDGATE_CHAT_KEY")
+        self._opener = urllib.request.build_opener(_NoRedirect)
 
     @staticmethod
     def _answer(question: dict[str, Any], content: str) -> dict[str, Any]:
@@ -128,8 +136,11 @@ class Chat:
                 headers["Authorization"] = f"Bearer {self._key}"
             req = urllib.request.Request(self._url, data=body, headers=headers, method="POST")
             for attempt in range(3):
-                with urllib.request.urlopen(req, timeout=60) as r:
-                    reply: str | bytes = r.read()
+                try:
+                    with self._opener.open(req, timeout=60) as r:
+                        reply: str | bytes = r.read()
+                except OSError as e:  # refused, timed out, an HTTP error or a redirect
+                    raise SystemExit(f"chat: no answer from {self._url}: {e}") from e
                 try:
                     res = json.loads(reply)
                     if not isinstance(res, dict):

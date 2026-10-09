@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import socket
 import sys
 from collections.abc import Iterator
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -524,12 +525,26 @@ def chat_server(monkeypatch: pytest.MonkeyPatch) -> Iterator[ChatServer]:
                 }
             )
             reply = fake.replies[min(len(fake.requests) - 1, len(fake.replies) - 1)]
+            if isinstance(reply, tuple):  # ("redirect", location)
+                self.send_response(302)
+                self.send_header("Location", reply[1])
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+                return
             body = reply if isinstance(reply, bytes) else json.dumps(reply).encode()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             self.wfile.write(body)
+
+        def do_GET(self) -> None:  # a followed redirect arrives here
+            fake.requests.append(
+                {"path": self.path, "authorization": self.headers.get("Authorization")}
+            )
+            self.send_response(404)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
 
         def log_message(self, *args: Any) -> None:
             pass
@@ -684,6 +699,28 @@ def test_chat_refuses_another_or_missing_reported_model(
     with pytest.raises(SystemExit, match=r"answered by.*not 'model-1'"):
         judges.load("chat").ask("[5,200]", {"field": {"type": "noul"}})
     assert len(chat_server.requests) == 1
+
+
+def test_chat_refuses_a_redirect(chat_server: ChatServer, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("GROUNDGATE_CHAT_KEY", "test-key")
+    chat_server.replies = [("redirect", "/elsewhere")]
+    with pytest.raises(SystemExit, match="no answer from"):
+        judges.load("chat").ask("[5,200]", {"field": {"type": "noul"}})
+    assert [r["path"] for r in chat_server.requests] == ["/v1/chat/completions"]
+
+
+def test_chat_names_the_url_when_the_server_does_not_answer(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    with socket.socket() as s:  # a port that nothing listens on
+        s.bind(("127.0.0.1", 0))
+        port = s.getsockname()[1]
+    monkeypatch.setenv("GROUNDGATE_CHAT_URL", f"http://127.0.0.1:{port}/v1")
+    monkeypatch.setenv("GROUNDGATE_CHAT_MODEL", "model-1")
+    monkeypatch.setenv("GROUNDGATE_CHAT_VERSION", "file-sha256")
+    monkeypatch.setenv("no_proxy", "127.0.0.1")
+    with pytest.raises(SystemExit, match=f"no answer from http://127.0.0.1:{port}/v1"):
+        judges.load("chat").ask("[5,200]", {"field": {"type": "noul"}})
 
 
 @pytest.mark.parametrize("question", ["key", "field"])
