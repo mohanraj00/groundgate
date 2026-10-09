@@ -95,7 +95,12 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
         "spec": SPEC_VERSION,
         "question": args.question,
         "context": args.context,
-        "descriptions": descriptions,
+        "descriptions": {
+            name: field["description"]
+            for name, field in schema["fields"].items()
+            if "description" in field
+        }
+        | descriptions,
         "schema": schema,
     }
     if not items:
@@ -226,6 +231,7 @@ def judge_packets(args: argparse.Namespace) -> None:
         "field": block.get("doubt", {}).get("field_match") is not None,
     }
     cals: dict[str, dict[str, Any]] = {}
+    paths: dict[str, Path] = {}
     for path in args.calibration:
         w = Work(path)
         cfg = w.config  # refuses a calibration of another spec
@@ -239,12 +245,23 @@ def judge_packets(args: argparse.Namespace) -> None:
         if cfg["question"] in cals:
             raise SystemExit(f"two calibrations for the {cfg['question']} question; give one")
         cals[cfg["question"]] = cfg
+        paths[cfg["question"]] = path
     for question, on in wanted.items():
         if on and question not in cals:
             raise SystemExit(f"the policy has a {question} threshold; give its calibration")
     # groundgate reads the judge block itself; here only the other policy keys decide the items
     rest = {k: v for k, v in policy.items() if k != "judge"}
     schema = json.loads(args.schema.read_text(encoding="utf-8"))
+    if wanted["field"]:
+        # the field question states the description that was calibrated; a schema that gives the
+        # field another meaning needs its own calibration
+        then = cals["field"]["schema"]["fields"]
+        for name, field in schema.get("fields", {}).items():
+            if name in then and field.get("description") != then[name].get("description"):
+                raise SystemExit(
+                    f"the description of {name} differs from the one that {paths['field']} "
+                    "calibrated; calibrate again"
+                )
     args.out.mkdir(parents=True, exist_ok=True)
     for path in sorted(args.docs.glob("*.txt")):
         doc, text = path.stem, path.read_text(encoding="utf-8")
@@ -386,7 +403,11 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--candidates", type=Path, required=True)
     p.add_argument("--schema", type=Path, required=True)
     p.add_argument("--question", choices=("key", "field"), required=True)
-    p.add_argument("--descriptions", type=Path, help="JSON: field name to a one-line meaning")
+    p.add_argument(
+        "--descriptions",
+        type=Path,
+        help="JSON: field name to a meaning; overrides schema descriptions",
+    )
     p.add_argument("--context", default="", help='for example "The text is from a 10-K filing."')
     p = sub.add_parser("label", help="label the items in the browser")
     p.add_argument("--port", type=int, default=8780)

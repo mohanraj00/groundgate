@@ -11,7 +11,7 @@ license = "Apache-2.0"
 license-files = ["LICENSE"]
 authors = [{ name = "Mohan Raj" }]
 requires-python = ">=3.10"
-dependencies = ["groundgate>=0.4"]
+dependencies = ["groundgate>=0.5"]
 
 [project.urls]
 Homepage = "https://github.com/mohanraj00/groundgate/tree/main/calibrate"

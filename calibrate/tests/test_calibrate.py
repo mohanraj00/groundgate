@@ -122,6 +122,119 @@ def fake(answers: dict[str, dict[str, Any]]) -> Any:
     return lambda: Fake(answers)
 
 
+@pytest.mark.parametrize("question", ["field", "key"])
+@pytest.mark.parametrize("schema_description", [None, "Total revenue for the fiscal year."])
+@pytest.mark.parametrize("override", [None, "Revenue from sales, excluding other income."])
+def test_sample_uses_descriptions_in_prompts_and_labels(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    question: str,
+    schema_description: str | None,
+    override: str | None,
+) -> None:
+    if schema_description is not None and SPEC_VERSION < "0.6":
+        pytest.skip("schema descriptions are spec 0.6 (#171)")
+    d, c, s = inputs(tmp_path, 1)
+    schema = json.loads(s.read_text())
+    descriptions = {}
+    if schema_description is not None:
+        schema["fields"]["revenue"]["description"] = schema_description
+        schema["fields"]["cost"] = {"description": "The cost of sales."}
+        descriptions = {"revenue": schema_description, "cost": "The cost of sales."}
+    s.write_text(json.dumps(schema))
+    extra = []
+    if override is not None:
+        path = tmp_path / "descriptions.json"
+        path.write_text(json.dumps({"revenue": override}))
+        descriptions["revenue"] = override
+        extra = ["--descriptions", str(path)]
+    work = cli.Work(tmp_path / "work")
+    cli.main(["sample", "--work", str(work.path), "--docs", str(d), "--candidates", str(c),
+              "--schema", str(s), "--question", question, *extra])  # fmt: skip
+    assert work.config["descriptions"] == descriptions
+    assert work.config["schema"] == schema
+    ((_, _, questions),) = cli.prompts(work)
+    if question == "field":
+        assert questions["field"]["instructions"] == (
+            "The text marks one value in brackets. Does the text state it as this value? "
+            + descriptions.get("revenue", "revenue")
+        )
+    else:
+        assert questions["key"]["instructions"] == (
+            "The text marks one value in brackets. Which of these does it belong to?"
+        )
+
+    state: dict[str, Any] = {}
+
+    class Server:
+        def __init__(self, address: Any, handler: Any) -> None:
+            self.handler = handler
+
+        def serve_forever(self) -> None:
+            request = object.__new__(self.handler)
+            request.path = "/state"
+            request.send = lambda body: state.update(json.loads(body))
+            request.do_GET()
+
+    monkeypatch.setattr(label, "ThreadingHTTPServer", Server)
+    label.serve(work, 0)
+    assert state["items"][0]["description"] == descriptions.get("revenue", "")
+    assert "key" not in state["items"][0]
+
+
+@pytest.mark.skipif(SPEC_VERSION < "0.6", reason="schema descriptions are spec 0.6 (#171)")
+def test_a_changed_field_description_needs_a_new_calibration(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    d, c, s = inputs(tmp_path, 1)
+    schema = json.loads(s.read_text())
+    schema["fields"]["revenue"]["description"] = "Total revenue for the fiscal year."
+    s.write_text(json.dumps(schema))
+    work = cli.Work(tmp_path / "work")
+    run = ["--work", str(work.path)]
+    cli.main(["sample", *run, "--docs", str(d), "--candidates", str(c), "--schema", str(s),
+              "--question", "field"])  # fmt: skip
+    cli.main(["split", *run])
+    digest = cli.prompts_sha256(work)
+    cfg = work.config
+    changed = {**cfg, "descriptions": {"revenue": "Revenue from sales, excluding other income."}}
+    work.write("config.json", changed)
+    assert cli.prompts_sha256(work) != digest
+    with pytest.raises(SystemExit, match="changed after the split"):
+        cli.main(["ask", *run, "--judge", "fake"])
+
+    work.write("config.json", cfg)
+    work.write("labels.json", {it["id"]: True for it in work.read("items.json")})
+    monkeypatch.setitem(judges.BUILT_IN, "fake", fake({"field": {"noul": 0.9}}))
+    cli.main(["ask", *run, "--judge", "fake"])
+    assert work.read("answers-fake.json")["meta"]["prompts_sha256"] == digest
+    work.write("config.json", changed)
+    policy = tmp_path / "policy.json"
+    policy.write_text(json.dumps(cli.policy("field", {"judge": "fake", "model": "fake-1"}, 0.2)))
+    with pytest.raises(SystemExit, match="calibrate again"):
+        cli.main(["judge", "--docs", str(d), "--candidates", str(c), "--schema", str(s),
+                  "--policy", str(policy), "--calibration", str(work.path),
+                  "--out", str(tmp_path / "judgments")])  # fmt: skip
+
+    # the production schema must give the field the description that was calibrated
+    work.write("config.json", cfg)
+    cands = json.loads((c / "doc0.json").read_text())
+    (c / "doc0.json").write_text(json.dumps([{"id": f"c{i}", **x} for i, x in enumerate(cands)]))
+    other = tmp_path / "other-schema.json"
+    schema["fields"]["revenue"]["description"] = "Revenue from sales, excluding other income."
+    other.write_text(json.dumps(schema))
+    for path, ok in ((other, False), (s, True)):
+        judge = ["judge", "--docs", str(d), "--candidates", str(c), "--schema", str(path),
+                 "--policy", str(policy), "--calibration", str(work.path),
+                 "--out", str(tmp_path / "judgments")]  # fmt: skip
+        if ok:
+            cli.main(judge)
+        else:
+            with pytest.raises(SystemExit, match="description of revenue differs"):
+                cli.main(judge)
+    assert (tmp_path / "judgments" / "doc0.json").exists()
+
+
 def test_the_steps_from_sample_to_report(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     d, c, s = inputs(tmp_path, 4)
     work = tmp_path / "work"
