@@ -216,6 +216,24 @@ def test_a_changed_field_description_needs_a_new_calibration(
                   "--policy", str(policy), "--calibration", str(work.path),
                   "--out", str(tmp_path / "judgments")])  # fmt: skip
 
+    # the production schema must give the field the description that was calibrated
+    work.write("config.json", cfg)
+    cands = json.loads((c / "doc0.json").read_text())
+    (c / "doc0.json").write_text(json.dumps([{"id": f"c{i}", **x} for i, x in enumerate(cands)]))
+    other = tmp_path / "other-schema.json"
+    schema["fields"]["revenue"]["description"] = "Revenue from sales, excluding other income."
+    other.write_text(json.dumps(schema))
+    for path, ok in ((other, False), (s, True)):
+        judge = ["judge", "--docs", str(d), "--candidates", str(c), "--schema", str(path),
+                 "--policy", str(policy), "--calibration", str(work.path),
+                 "--out", str(tmp_path / "judgments")]  # fmt: skip
+        if ok:
+            cli.main(judge)
+        else:
+            with pytest.raises(SystemExit, match="description of revenue differs"):
+                cli.main(judge)
+    assert (tmp_path / "judgments" / "doc0.json").exists()
+
 
 def test_the_steps_from_sample_to_report(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     d, c, s = inputs(tmp_path, 4)

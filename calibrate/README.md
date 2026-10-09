@@ -130,6 +130,7 @@ groundgate-calibrate judge --docs D --candidates C --schema S --policy policy.js
   wrote it. The judge must be that version, and each calibration must be of that version.
 - Each question that the policy has a threshold for needs its calibration, and is asked as that
   calibration asked it: the same wording, context, descriptions and window.
+  `judge` refuses a schema that gives a field another description than the field calibration had.
 - A question is asked only where its answer can change the decision: the key question of each
   candidate flagged `KEY_NOT_AT_VALUE`, and the field question of each admitted candidate. With
   both thresholds, the field question also goes to each candidate whose only flag is
