@@ -1,0 +1,268 @@
+{
+ "irs-p1040:0": [
+  "Single"
+ ],
+ "irs-p1040:1": [
+  "Single"
+ ],
+ "irs-p1040:10": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1040:11": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1040:12": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1040:13": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1040:14": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1040:15": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1040:16": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1040:17": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1040:18": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1040:19": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1040:2": [
+  "Single"
+ ],
+ "irs-p1040:20": [
+  "Married filing separately"
+ ],
+ "irs-p1040:21": [
+  "Married filing separately"
+ ],
+ "irs-p1040:22": [
+  "Married filing separately"
+ ],
+ "irs-p1040:23": [
+  "Married filing separately"
+ ],
+ "irs-p1040:24": [
+  "Married filing separately"
+ ],
+ "irs-p1040:3": [
+  "Single"
+ ],
+ "irs-p1040:4": [
+  "Single"
+ ],
+ "irs-p1040:5": [
+  "Single"
+ ],
+ "irs-p1040:6": [
+  "Single"
+ ],
+ "irs-p1040:7": [
+  "Single"
+ ],
+ "irs-p1040:8": [
+  "Single"
+ ],
+ "irs-p1040:9": [
+  "Single"
+ ],
+ "irs-p1167:0": [
+  "Single",
+  "Married filing separately"
+ ],
+ "irs-p1167:1": [
+  "Single",
+  "Married filing separately"
+ ],
+ "irs-p1167:2": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1167:3": [
+  "Head of household"
+ ],
+ "irs-p1167:4": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1494:0": [
+  "Single"
+ ],
+ "irs-p1494:1": [
+  "Single"
+ ],
+ "irs-p1494:10": [
+  "Head of household"
+ ],
+ "irs-p1494:11": [
+  "Head of household"
+ ],
+ "irs-p1494:12": [
+  "Head of household"
+ ],
+ "irs-p1494:13": [
+  "Head of household"
+ ],
+ "irs-p1494:14": [
+  "Head of household"
+ ],
+ "irs-p1494:15": [
+  "Single"
+ ],
+ "irs-p1494:16": [
+  "Single"
+ ],
+ "irs-p1494:17": [
+  "Single"
+ ],
+ "irs-p1494:18": [
+  "Single"
+ ],
+ "irs-p1494:19": [
+  "Single"
+ ],
+ "irs-p1494:2": [
+  "Single"
+ ],
+ "irs-p1494:3": [
+  "Single"
+ ],
+ "irs-p1494:4": [
+  "Single"
+ ],
+ "irs-p1494:5": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1494:6": [
+  "Single"
+ ],
+ "irs-p1494:7": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p1494:8": [
+  "Single"
+ ],
+ "irs-p1494:9": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4012-a:0": [
+  "Single"
+ ],
+ "irs-p4012-a:1": [
+  "Single"
+ ],
+ "irs-p4012-a:2": [
+  "Married filing jointly"
+ ],
+ "irs-p4012-a:3": [
+  "Married filing jointly"
+ ],
+ "irs-p4012-a:4": [
+  "Married filing jointly"
+ ],
+ "irs-p4012-a:5": [
+  "Married filing separately"
+ ],
+ "irs-p4012-a:6": [
+  "Head of household"
+ ],
+ "irs-p4012-a:7": [
+  "Head of household"
+ ],
+ "irs-p4012-a:8": [
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4012-a:9": [
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4054:0": [
+  "Single",
+  "Head of household",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4054:1": [
+  "Single",
+  "Head of household",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4491:7": [
+  "Married filing jointly",
+  "Married filing separately",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4491:8": [
+  "Married filing jointly",
+  "Married filing separately",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4696:1": [
+  "Single"
+ ],
+ "irs-p4696:3": [
+  "Married filing jointly"
+ ],
+ "irs-p4696:4": [
+  "Married filing jointly"
+ ],
+ "irs-p4696:5": [
+  "Head of household"
+ ],
+ "irs-p4696:6": [
+  "Head of household"
+ ],
+ "irs-p4696:7": [
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4696:8": [
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4696:9": [
+  "Married filing separately"
+ ],
+ "irs-p4801:0": [
+  "Single",
+  "Married filing separately"
+ ],
+ "irs-p4801:2": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p4801:5": [
+  "Single",
+  "Married filing separately"
+ ],
+ "irs-p4801:7": [
+  "Married filing jointly",
+  "Qualifying surviving spouse"
+ ],
+ "irs-p5187:0": [
+  "Single"
+ ],
+ "irs-p5187:1": [
+  "Single"
+ ],
+ "irs-p5187:2": [
+  "Single"
+ ]
+}
