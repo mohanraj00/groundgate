@@ -2821,20 +2821,22 @@ vector(
     "the column rule count the cells of a row. A line of no-break spaces is not blank, so it "
     "does not end the table. A prefix that ends in a space stands before the brackets around "
     "the value. An empty cell ends at the end of its prefix, also when the prefix holds a space "
-    "(spec 0.7, #164).",
+    "(spec 0.7, #164). Each occurrence of a form counts, also where two overlap.",
     "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n\u00a0\nLow\t6\n\nNeg V \n(12)\n\n"
-    "Rows\tP Q\tZ\nItems\t7\n",
+    "Rows\tP Q\tZ\nItems\t7\n\nBox\t$$$8\nCrate\t9\n",
     {
         "fields": {
             "amount": {"type": "integer", "unit": "U", "aliases": ["amount"]},
             "low": {"type": "integer", "unit": "USD", "aliases": ["low"]},
             "neg": {"type": "integer", "unit": "V", "aliases": ["neg"]},
             "items": {"type": "integer", "unit": "W", "aliases": ["items"]},
+            "crate": {"type": "integer", "unit": "D", "aliases": ["crate"]},
         },
         "units": {
             "U": {"prefix": ["2", "$"]},
             "V": {"prefix": ["V "]},
             "W": {"prefix": ["P Q"], "suffix": ["Q"]},
+            "D": {"prefix": ["$$"]},
         },
     },
     [
@@ -2844,6 +2846,7 @@ vector(
           ("admitted", ["VALUE_DERIVED"])),
         c("q4", "items", "7", "W", [q("7"), q("Q", role="unit"), row("Items")],
           (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("q5", "crate", "9", "D", [q("9"), q("$$$", role="unit"), row("Crate")]),
     ],
 )  # fmt: skip
 

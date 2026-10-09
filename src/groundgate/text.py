@@ -650,7 +650,8 @@ def holds_form(text: str, start: int, end: int, forms: list[str]) -> bool:
 
 
 def _form_spans(text: str, start: int, end: int, forms: list[str]) -> list[tuple[int, int]]:
-    """The spans of the unit forms as a whole in text[start:end], as holds_form finds them."""
+    """The spans of the unit forms as a whole in text[start:end], as holds_form finds them, also
+    the ones that overlap."""
     out = []
     for form in forms:
         pat = re.escape(form)
@@ -658,7 +659,9 @@ def _form_spans(text: str, start: int, end: int, forms: list[str]) -> list[tuple
             pat = _NOT_ALNUM_BEFORE + pat
         if form[-1].isalnum():
             pat += _NOT_ALNUM_AFTER
-        out += [(m.start(), m.end()) for m in re.compile(pat).finditer(text, start, end)]
+        # a lookahead finds every start, also where two occurrences overlap, as in "$$$"
+        found = re.compile(f"(?=({pat}))").finditer(text, start, end)
+        out += [(m.start(1), m.end(1)) for m in found if m.end(1) <= end]
     return out
 
 
