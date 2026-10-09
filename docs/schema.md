@@ -599,6 +599,9 @@ key or field. `groundgate schema check SCHEMA` prints one line for each of these
 
 - A field with a `unit` and no `aliases`. A unit item for a unit that is not next to the number
   passes only with a passing field item, so it never passes.
+- A field whose `unit` has no forms: a code that is not built in and not in `units`, or a unit
+  whose `prefix` and `suffix` lists are both empty. The unit check passes at every number, so a
+  value is admitted with or without the unit, and a unit item never passes.
 - A field with `keys` and no `aliases`. The column rule needs a passing field item, so a key item
   never puts the key at the value.
 - A key in an alias of the same field, such as the key `net` in the alias `net sales`. Each
@@ -622,6 +625,7 @@ from groundgate.cli import main
 risky = {
     "fields": {
         "fee": {"type": "integer", "unit": "USD"},
+        "unknown": {"unit": "XYZ"},
         "dose": {"unit": "mg", "keys": ["adults", "children"]},
         "net_sales": {"keys": ["2025", "net"], "aliases": ["net sales"]},
         "cost": {"aliases": ["cost of sales", "Net Sales"]},
@@ -644,6 +648,7 @@ with tempfile.TemporaryDirectory() as tmp:
 
 ```text
 field 'fee' has a unit and no aliases: a unit item passes only for a unit next to the number
+field 'unknown' has a unit with no forms: a value is admitted with no unit check, and a unit item never passes
 field 'dose' has a unit and no aliases: a unit item passes only for a unit next to the number
 field 'dose' has keys and no aliases: a key item never puts the key at the value
 field 'net_sales' has the key 'net' in an alias: each mention of the field puts that key at the value

@@ -315,8 +315,14 @@ def _findings(schema: Schema) -> list[str]:
     out: list[str] = []
     owners: dict[str, tuple[str, list[str]]] = {}  # normalized alias: (as written, fields)
     for name, f in schema.fields.items():
+        formless = f.unit is not None and not any(schema.units.get(f.unit, ([], [])))
+        if formless:
+            out.append(
+                f"field {name!r} has a unit with no forms: "
+                "a value is admitted with no unit check, and a unit item never passes"
+            )
         if f.aliases is None:
-            if f.unit is not None:
+            if f.unit is not None and not formless:
                 out.append(
                     f"field {name!r} has a unit and no aliases: "
                     "a unit item passes only for a unit next to the number"
