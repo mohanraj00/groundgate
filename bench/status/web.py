@@ -136,7 +136,9 @@ def serve(port: int, work: Path | None = None) -> None:
             if not ok:
                 self.send(400, b"bad label", "text/plain")
                 return
-            if work is not None and any(work.glob("answers-*.json")):
+            if work is not None and (
+                any(work.glob("answers-*.json")) or any(work.glob(".answers-*.partial.json"))
+            ):
                 self.send(409, b"a judge has answered; labels are fixed", "text/plain")
                 return
             with lock:  # requests run in threads; one read-modify-write at a time

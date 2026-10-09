@@ -1,6 +1,8 @@
 {
  "context": "The text is from an IRS publication.",
- "descriptions": {},
+ "descriptions": {
+  "amount": "A dollar amount that the text states for one or more filing statuses."
+ },
  "question": "key",
  "schema": {
   "fields": {
