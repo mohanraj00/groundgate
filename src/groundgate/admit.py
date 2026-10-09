@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import bisect
 import dataclasses
+import re
 from collections import defaultdict
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
@@ -553,8 +554,11 @@ def _find(
                 return (a, b), True
     pos = tok.start if tok is not None else at.span[0]
     before = [(a, b) for a, b in found if b <= pos]
-    if place is not None:
-        placed = next(((a, b) for a, b in reversed(before) if place(a, b)), None)
+    if place is not None:  # a unit quote: also the occurrences that overlap, as in "$$$"
+        every = quote_pattern(item.text).pattern
+        seen = re.compile(f"(?=({every}))").finditer(t.text, *region)
+        near = sorted({(m.start(1), m.end(1)) for m in seen if m.end(1) <= pos})
+        placed = next(((a, b) for a, b in reversed(near) if place(a, b)), None)
         if placed is not None:
             return placed, True
     if before:

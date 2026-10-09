@@ -624,7 +624,8 @@ The quote is trimmed of whitespace at both ends first.
   such occurrence, the evidence is the first occurrence, and steps 10 and 11 run there. When there
   is no occurrence, step 9a rejects.
 - For a role item, the occurrence is the one that holds the value's token; else, for a unit item,
-  the last one that ends at or before the value at a unit place of the value (below); else the
+  the last one that ends at or before the value at a unit place of the value (below), where
+  occurrences that overlap count too, as `$$` twice in `$$$`; else the
   last one that ends at or before the value; else the first one after the value.
 
 An item's **text** is its `text`, or, when it has offsets and no `text`, the text at its span in
