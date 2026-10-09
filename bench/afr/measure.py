@@ -6,7 +6,8 @@ if this measure says so (#164).
         python bench/afr/measure.py decide              # spec 0.6, on the released wheel
     uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.7.0 \
         python bench/afr/measure.py decide              # spec 0.7, with the #164 rule
-    uv run python bench/afr/measure.py web              # blind labels, http://127.0.0.1:8777
+    uv run --isolated --no-project --no-sources --python 3.12 --with 'groundgate[pdf]==0.7.0' \
+        python bench/afr/measure.py web                 # blind labels, http://127.0.0.1:8777
     uv run python bench/afr/measure.py results [--check]
 
 A person labels every value that a decision admits, and every value whose outcome differs

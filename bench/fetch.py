@@ -3,6 +3,13 @@
     uv run python bench/fetch.py          # verify and regenerate the text
     uv run python bench/fetch.py --pin    # record hashes for sources that have none
 
+Since #230, groundgate writes a PDF table as rows with tabs, so its PDF text differs from the
+committed text. The 0.7.0 wheel writes the committed PDF text of every set, so run fetch.py for
+a set with PDF sources on it:
+
+    uv run --isolated --no-project --no-sources --python 3.12 --with 'groundgate[pdf]==0.7.0' \
+        python bench/fetch.py --set bench/status
+
 All sources are US government works in the public domain. The extracted text is committed, so
 the benchmark scores offline even after a publisher revises or removes a document. Raw
 downloads are cached in bench/.cache (not committed).

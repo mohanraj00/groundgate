@@ -3,6 +3,12 @@
     uv run python bench/pick.py --count   # how many documents each group finds; no text shown
     uv run python bench/pick.py           # write bench/set2/sources.json and selection-log.json
 
+Since #230, groundgate writes a PDF table as rows with tabs, so its PDF text differs from the
+committed text. Run it on the 0.7.0 wheel, which writes it:
+
+    uv run --isolated --no-project --no-sources --python 3.12 --with 'groundgate[pdf]==0.7.0' \
+        python bench/pick.py --count
+
 The rules only look at titles, section codes, page counts and pattern matches. Nothing here
 prints document text. Downloads are cached in bench/set2/.cache (not committed), so a rerun
 walks the same search results. fetch.py --set bench/set2 then verifies the pinned hashes and

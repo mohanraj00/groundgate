@@ -41,6 +41,13 @@ plain text and returns an `Extracted` with `text` (NFC), `layout` (PDFs only) an
 drops text a reader can't see, and for PDFs records the page and box of every word so the report
 can show page numbers.
 
+`extract` writes a table one row on each line, with a tab between two cells. For HTML, the
+cells are the table's `td` and `th` elements. A PDF has no cells, so `extract` finds them: a row
+is the text at the same height, and it is a table row when it has two or more parts side by side
+with a wide gap between them, and one part holds only numbers, such as `$ 1,234` or `(56)`.
+Rows next to it, such as column headings and headings in the label column, join the table. Other
+PDF text keeps its lines, and a line of prose that crosses the number columns ends the table.
+
 ## Schema
 
 [schema.md](schema.md) explains how to write a schema, with examples. This section is the

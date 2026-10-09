@@ -431,7 +431,7 @@ A **heading scale** is `in`, whitespace and a scale word (also with a final `s`)
 holds no tab, such as "(in thousands)". It reaches the lines after it that hold a tab: blank lines
 may stand between the heading and the first of them, and the first line after that holds no tab
 ends the table. So it reaches a token on such a line. A line with spaces between its cells, as
-from a PDF, holds no tab, so no heading scale reaches it (#152).
+from a plain-text table, holds no tab, so no heading scale reaches it (#152).
 
 Candidate values parse the same way after trimming, and must be a single token. `integer` fields
 additionally require an integral value. The **canonical value** is the decimal without grouping,
@@ -600,8 +600,8 @@ all of these hold:
    no tab between the end of the field item and the start of the token. This stops the rule at a
    footnote marker, such as the `1` in "Sales (1)". It also stops the rule after the first column
    when only spaces stand between the field item and the row's first number token. A tab after
-   the field item, as `groundgate extract` writes HTML tables, or cells on their own lines, keep
-   the rule.
+   the field item, as `groundgate extract` writes HTML and PDF tables, or cells on their own
+   lines, keep the rule.
 4. Between the end of the field item and the value, the **cells** are the number tokens, the lone
    dashes (`-`, `–` or `—` with whitespace or a line end on both sides in the text), and the
    **empty cells**: a prefix of the field's unit with whitespace or a line end on both sides, where

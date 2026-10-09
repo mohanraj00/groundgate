@@ -107,6 +107,107 @@ def test_a_pdf_decision_admits_against_extracted_text(pdf: Path) -> None:
     assert (d.outcome, d.codes) == ("admitted", ())
 
 
+TABLE_PAGE = [
+    (72, 720, "Statement of things"),
+    (72, 705, "(in thousands)"),
+    (300, 680, "2025"),
+    (400, 680, "2024"),
+    (72, 665, "Assets:"),
+    (72, 650, "Cash"),
+    (300, 650, "$ 1,234"),
+    (400, 650, "$ 1,100"),
+    (72, 635, "Total assets"),
+    (300, 635, "5,678"),
+    (400, 635, "4,321"),
+    (72, 600, "These notes are part of the statement."),
+]
+
+
+def test_pdf_table_rows_are_lines_with_tabs(tmp_path: Path) -> None:
+    """The column headings and the heading in the label column join the table (#230)."""
+    path = tmp_path / "table.pdf"
+    path.write_bytes(make_pdf([TABLE_PAGE]))
+    doc = extract(path)
+    assert doc.text == (
+        "Statement of things\n(in thousands)\n\n"
+        "2025\t2024\nAssets:\nCash\t$ 1,234\t$ 1,100\nTotal assets\t5,678\t4,321\n\n"
+        "These notes are part of the statement."
+    )
+    assert doc.text == extract(path).text
+    raw = doc.text.encode()
+    assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
+
+
+def test_pdf_prose_side_by_side_is_no_table(tmp_path: Path) -> None:
+    """Two columns of prose keep their lines: no part of a row holds only numbers."""
+    path = tmp_path / "prose.pdf"
+    page = [
+        (72, 700, "The fund holds 100 acres of land and"),
+        (320, 700, "more text in the right column"),
+        (72, 686, "other things that it reports here."),
+        (320, 686, "with 2,000 words in it."),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert extract(path).text == (
+        "The fund holds 100 acres of land and\nother things that it reports here.\n\n"
+        "more text in the right column\nwith 2,000 words in it."
+    )
+
+
+def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> None:
+    """A wide gap inside one text line of a table row is a cell break too."""
+    path = tmp_path / "split.pdf"
+    page = [
+        (72, 700, "Cash"),
+        (300, 700, "1,234"),
+        (400, 700, "1,100"),
+        (72, 686, "A line of prose that crosses the number columns of the table here."),
+        (72, 672, "Debt"),
+        (300, 672, "500"),
+        (400, 672, "400"),
+        (72, 650, "Total"),
+        (300, 650, "1,234          5,678"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert extract(path).text == (
+        "Cash\t1,234\t1,100\n\n"
+        "A line of prose that crosses the number columns of the table here.\n\n"
+        "Debt\t500\t400\nTotal\t1,234\t5,678"
+    )
+
+
+def test_a_key_item_admits_a_value_in_the_second_column_of_a_pdf_table(tmp_path: Path) -> None:
+    """With a tab after the row label, the column rule reads a PDF table as an HTML one."""
+    path = tmp_path / "table.pdf"
+    path.write_bytes(make_pdf([TABLE_PAGE]))
+    text = extract(path).text
+    schema = {
+        "fields": {
+            "total_assets": {
+                "type": "number",
+                "keys": ["2025", "2024"],
+                "aliases": ["total assets"],
+                "multiple": True,
+            }
+        }
+    }
+    cand = {
+        "field": "total_assets",
+        "value": "4321000",
+        "key": "2024",
+        "evidence": [
+            {"text": "4,321"},
+            {"role": "field", "text": "Total assets"},
+            {"role": "key", "text": "2024"},
+            {"role": "scale", "text": "(in thousands)"},
+        ],
+    }
+    (d,) = gg.admit(text, schema, [cand]).decisions
+    assert (d.outcome, d.codes) == ("admitted", ("VALUE_DERIVED", "KEY_CITED"))
+    (d,) = gg.admit(text.replace("\t", "   "), schema, [cand]).decisions
+    assert d.outcome == "needs_verification"
+
+
 def test_pdf_superscripts_never_fuse_with_the_number(tmp_path: Path) -> None:
     # "count 10" then a raised, smaller "9", then "/L": x per Helvetica advance widths
     x = 72 + 12 * (0.5 * 5 + 0.278 + 0.556 * 2)
