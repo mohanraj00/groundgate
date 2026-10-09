@@ -664,10 +664,12 @@ of the unit (as a whole) at a **unit place** of the value, one of these (#164):
    each hold a tab or no number token, up to the value's line, which holds a tab.
 3. **Column**: the form's line and the value's line hold a tab, and each line between them is not
    blank and holds a tab or no number token. The **cells of a line** are the cells of the column
-   rule (§4.5, rule 4) after the first tab of the line. The form is a prefix that ends at the
-   start of the n-th cell of its line, or a suffix that starts after the end of the n-th cell,
-   with only whitespace between them. The value's token is the n-th cell of its line. A cell
-   ends at the end of the longest number token, dash or empty cell that starts at its start.
+   rule (§4.5, rule 4) after the first tab of the line. For an empty cell at the end of the line,
+   the next character is the first one after the line end that is not whitespace. The form is a
+   prefix that ends at the start of the n-th cell of its line, or a suffix that starts after the
+   end of the n-th cell, with only whitespace between them. The value's token is the n-th cell
+   of its line. A cell ends at the end of the longest number token, dash or empty cell that
+   starts at its start.
 
 The place is that of the form, not of the item: an item that starts on a caption and holds a `$`
 on a table line is at the place of that `$`.

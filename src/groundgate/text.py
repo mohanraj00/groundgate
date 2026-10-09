@@ -770,6 +770,16 @@ class UnitPlaces:
         return start >= ce and _NOT_SPACE.search(text, ce, start) is None
 
 
+def _no_number_at(text: str, pos: int) -> bool:
+    """Whether the first character at or after pos that is not whitespace is neither the start
+    of a number token nor "(" (SPEC §4.5, rule 4). The text may end first."""
+    found = _NOT_SPACE.search(text, pos)
+    if found is None:
+        return True
+    at = found.start()
+    return text[at] != "(" and all(t.start != at for t in tokens(text, *_line(text, at)))
+
+
 def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
     """The table cells in text[start:end] (SPEC §4.5, the column rule), as (start, end): number
     tokens, lone dashes, and a unit prefix that stands alone with no number after it, also where
@@ -784,6 +794,7 @@ def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
         if m.end() <= end:
             spans.setdefault(m.start(), m.end())
     empty: dict[int, int] = {}
+    past: bool | None = None  # whether a cell can end at the end of the range, read once
     for p in prefixes:
         nxt = -1  # the first non-space at or after the end of the last occurrence
         for m in re.finditer(f"(?=({re.escape(p)}))", text[start:end]):  # overlaps count
@@ -793,7 +804,12 @@ def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
             if b > nxt:  # the ends grow, so each run of whitespace is read once
                 found = _NOT_SPACE.search(text, b, end)
                 nxt = end if found is None else found.start()
-            if nxt >= end or nxt in numbers or text[nxt] == "(":
+            if nxt >= end:  # the next character is past the range, such as on the next line
+                if past is None:
+                    past = _no_number_at(text, end)
+                if not past:
+                    continue
+            elif nxt in numbers or text[nxt] == "(":
                 continue
             empty[a] = max(b, empty.get(a, b))
     for a, b in empty.items():  # a prefix that is also a number token is one cell

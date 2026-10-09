@@ -2825,10 +2825,12 @@ vector(
     "An empty cell "
     "ends where the longest prefix that makes it ends, not a longer prefix at the same start. "
     "When a number token and an empty cell start at the same place, the cell ends at the later "
-    "end of the two. Empty cells that overlap count each, as `a a` twice in `a a a`.",
+    "end of the two. Empty cells that overlap count each, as `a a` twice in `a a a`. An empty "
+    "cell at the end of a line counts when the next character after the line end and the "
+    "whitespace is not the start of a number token or `(`.",
     "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n\u00a0\nLow\t6\n\nNeg V \n(12)\n\n"
     "Rows\tP Q\tZ\nItems\t7\n\nBox\t$$$8\nCrate\t9\n\nTag\tP Q%\tZ\nThing\t11\n\nMark\t2% R\nCount\t13\n\n"
-    "Hdr\t1\t2\t$\t16\nSum\ta a a \t?\t17\n",
+    "Hdr\t1\t2\t$\t16\nSum\ta a a \t?\t17\n\nCap\t1\t$ U\nTotal\t2\t9\t19\n",
     {
         "fields": {
             "amount": {"type": "integer", "unit": "U", "aliases": ["amount"]},
@@ -2839,6 +2841,7 @@ vector(
             "thing": {"type": "integer", "unit": "X", "aliases": ["thing"]},
             "count": {"type": "integer", "unit": "Y", "aliases": ["count"]},
             "sum": {"type": "integer", "unit": "Z", "aliases": ["sum"]},
+            "total": {"type": "integer", "unit": "T", "aliases": ["total"]},
         },
         "units": {
             "U": {"prefix": ["2", "$"]},
@@ -2848,6 +2851,7 @@ vector(
             "X": {"prefix": ["P", "P Q"], "suffix": ["%"]},
             "Y": {"prefix": ["2%"], "suffix": ["%"]},
             "Z": {"prefix": ["a a", "$"]},
+            "T": {"prefix": ["$", "U"]},
         },
     },
     [
@@ -2864,6 +2868,7 @@ vector(
         c("q8", "count", "13", "Y", [q("13"), q("%", 2, role="unit"), row("Count")],
           (REVIEW, ["UNIT_CITATION_INVALID"])),
         c("q9", "sum", "17", "Z", [q("17"), {"role": "unit", "text": "$"}, row("Sum")]),
+        c("q10", "total", "19", "T", [q("19"), {"role": "unit", "text": "$"}, row("Total")]),
     ],
 )  # fmt: skip
 
