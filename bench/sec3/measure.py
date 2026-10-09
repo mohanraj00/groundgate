@@ -154,10 +154,11 @@ def labels() -> dict[str, Any]:
 # ------------------------------------------------------------------------------------- labels
 
 
-def cards() -> list[dict[str, Any]]:
-    """One card per fact, in id order, with the field's description from the gold file."""
+def cards(found: dict[str, dict[str, Any]] | None = None) -> list[dict[str, Any]]:
+    """One card per fact (by default, those of facts()), in id order, with the field's
+    description from the gold file."""
     out = []
-    for fid, f in sorted(facts().items()):
+    for fid, f in sorted((facts() if found is None else found).items()):
         gold = _read(HERE / "gold" / f"{f['doc']}.json")
         text = (HERE / "docs" / f"{f['doc']}.txt").read_text(encoding="utf-8")
         a = b = None
@@ -181,8 +182,8 @@ def cards() -> list[dict[str, Any]]:
     return out
 
 
-def serve(port: int) -> None:
-    items = cards()
+def serve(port: int, items: list[dict[str, Any]] | None = None) -> None:
+    items = cards() if items is None else items
     ids = {it["id"] for it in items}
     path = HERE / "labels.json"
     page = (HERE.parent / "evidence" / "web.html").read_bytes()

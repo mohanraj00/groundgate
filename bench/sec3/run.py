@@ -52,6 +52,11 @@ def instructions() -> str:
     return m.group(1).strip()
 
 
+def harness(provider: str) -> str:
+    """The text that the provider's CLI gets with every prompt: a system prompt or a prefix."""
+    return CLAUDE_SYSTEM if provider == "claude-cli" else CODEX_PREFIX
+
+
 def prompt_for(text: str) -> str:
     return f"{instructions()}\n\nThe text:\n\n{text}"
 
@@ -60,10 +65,16 @@ def sha(data: str) -> str:
     return hashlib.sha256(data.encode("utf-8")).hexdigest()
 
 
+def output_schema(provider: str, schema: dict[str, Any]) -> dict[str, Any]:
+    """The output schema that the provider's CLI gets."""
+    if provider == "claude-cli":  # its --json-schema check does not load draft 2020-12
+        schema = {k: v for k, v in schema.items() if k != "$schema"}
+    return schema
+
+
 class Runner:
     def __init__(self, provider: str, model: str, schema: dict[str, Any]) -> None:
-        if provider == "claude-cli":  # its --json-schema check does not load draft 2020-12
-            schema = {k: v for k, v in schema.items() if k != "$schema"}
+        schema = output_schema(provider, schema)
         self.provider, self.model, self.schema = provider, model, schema
         self.empty = tempfile.mkdtemp(prefix="groundgate-sec3-")
         self.schema_file = Path(self.empty) / "output.schema.json"
@@ -127,8 +138,10 @@ class Runner:
             return None, "no output"
         return (out, None) if isinstance(out, dict) else (None, "no output")
 
-    def one(self, doc: Path, out: Path) -> str:
-        prompt = prompt_for(doc.read_text(encoding="utf-8"))
+    def one(self, doc: Path, out: Path, prompt: str | None = None) -> str:
+        """Ask for one document. The prompt is that of prompt_for, unless one is given."""
+        if prompt is None:
+            prompt = prompt_for(doc.read_text(encoding="utf-8"))
         discarded: list[str] = []
         for attempt in range(3):
             ask = self.claude if self.provider == "claude-cli" else self.codex
@@ -150,6 +163,7 @@ class Runner:
             "effort": "default",
             "cli": self.version(),
             "prompt_sha256": sha(prompt),
+            "harness_sha256": sha(harness(self.provider)),
             "output_schema_sha256": sha(json.dumps(self.schema, sort_keys=True)),
             "output_schema_without": [] if "$schema" in self.schema else ["$schema"],
             "reply": reply,
