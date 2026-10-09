@@ -4,7 +4,8 @@ if this measure says so (#164).
 
     uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.6.1 \
         python bench/afr/measure.py decide              # spec 0.6, on the released wheel
-    uv run python bench/afr/measure.py decide           # the 0.7 draft, with the #164 rule
+    uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.7.0 \
+        python bench/afr/measure.py decide              # spec 0.7, with the #164 rule
     uv run python bench/afr/measure.py web              # blind labels, http://127.0.0.1:8777
     uv run python bench/afr/measure.py results [--check]
 
