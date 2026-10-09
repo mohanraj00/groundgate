@@ -198,6 +198,18 @@ def test_large_integer_strings_are_admitted() -> None:
     assert receipt.decisions[0].value == text
 
 
+def test_integer_bound_outside_safe_range_is_invalid() -> None:
+    with pytest.raises(gg.PacketError) as error:
+        gg.Schema.from_dict({"fields": {"n": {"maximum": 10**30}}})
+    assert str(error.value) == "field bound n.maximum: integer is outside [-(2^53-1), 2^53-1]"
+    with pytest.raises(gg.PacketError, match=r"^field bound n\.minimum: integer is outside"):
+        gg.Schema.from_dict({"fields": {"n": {"minimum": -(2**53)}}})
+    with pytest.raises(gg.PacketError, match=r"^field bound n\.maximum: integer is outside"):
+        gg.Schema.from_dict({"fields": {"n": {"maximum": 2**53}}})
+    edges = {"minimum": -(2**53 - 1), "maximum": 2**53 - 1}
+    assert gg.admit(DOC, {"fields": {"n": edges}}, []).schema_sha256.startswith("sha256:")
+
+
 def test_rejected_decision_reports_what_is_known() -> None:
     d = next(x for x in gg.admit(DOC, SCHEMA, CANDS).decisions if x.candidate_id == "c")
     assert (d.outcome, d.codes, d.value, d.unit) == (
