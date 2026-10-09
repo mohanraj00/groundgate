@@ -98,6 +98,8 @@ jobs:
         run: uv run python bench/sec3/measure.py results --check
       - name: Feedback round on the held-out 10-K set matches its recorded decisions and labels
         run: uv run python bench/sec3/feedback.py results --check
+      - name: Status-set key calibration report matches its recorded answers
+        run: uv run groundgate-calibrate report --work bench/status/calibrate/work --check
       - name: Model triage report matches its recorded answers
         run: uv run python bench/patterns/triage.py report --check
       - name: Key-judge report matches its recorded answers

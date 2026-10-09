@@ -1,0 +1,84 @@
+For taxpayers with household income below 400 percent of the FPL, the amount of tax liability due to excess
+advance credit payments is limited as provided in the repayment limitation table (see below).
+
+Household Income Percentage of Federal Poverty Line
+
+Limitation Amount
+for Single
+
+Limitation Amount for
+All Other Filing Statuses
+
+Repayment Limitation Table
+
+Less than 200%
+
+At least 200%, but less than 300%
+
+At least 300%, but less than 400%
+
+400% or more
+
+$300
+
+$800
+
+$1,325
+
+No limit
+
+$600
+
+$1,600
+
+$2,650
+
+No limit
+
+Consult the instructions for Form 8962, Premium Tax Credit Credit, and Publication 974, Premium Tax Credit, for
+more information. For taxpayers eligible to use the Married Filing Separately filing status, the repayment limitation
+above applies to the spouses separately based on the household income reported on each return.
+
+Taxpayers who chose not to have advance credit payments made on their behalf during the tax year will get all of the
+benefit of their premium tax credit on their tax return. This will either increase their refund or lower the taxes owed.
+
+What about unusual situations?
+
+For situations listed below, consult the instructions for Form 8962, Premium Tax Credit Credit, and Publication 974,
+Premium Tax Credit.
+
+What if taxpayers have a shared policy purchased through the Marketplace?
+
+If a taxpayer, or another member of the taxpayer’s tax family, is enrolled in a policy with a person not in the
+taxpayer’s tax family (a shared policy), the taxpayer may have to allocate the items on Form 1095-A, Health
+Insurance Marketplace Statement (the enrollment premium, the premium for the applicable SLCSP, and the advance
+credit payments) with another taxpayer (a shared policy allocation). The following taxpayers may have to do a shared
+policy allocation:
+
+14
+
+● Taxpayers who got divorced or legally separated in during the tax year
+
+● A taxpayer who claims as a dependent an individual (the taxpayer’s child, for example) who was enrolled in a
+
+policy with an individual in another taxpayer family (the taxpayer’s former spouse, for example)
+
+● A taxpayer who is enrolled in a policy with an individual (the taxpayer’s child, for example) who is claimed as a
+
+dependent by another taxpayer (the taxpayer’s former spouse, for example).
+
+● A taxpayer filing a separate return from his or her spouse
+
+Taxpayers complete the shared policy allocation on Form 8962, Premium Tax Credit, Part 4.
+
+What if taxpayers get married during the year?
+
+If taxpayers got married during the tax year and one or both spouses received the benefit of advance credit
+payments for the year, the spouses may be eligible to use an alternative calculation to determine their excess
+advance credit payments. The alternative calculation will generally allocate half of the adjusted gross income on the
+return to each spouse and can be used to reduce excess advance credit payments, but not to increase net PTC.
+
+See the instructions for Form 8962, Premium Tax Credit, for eligibility. If eligible, taxpayers will complete Form 8962,
+Part 5, Alternative Calculation of Year of Marriage.
+
+AFFORDABALE CARE ACT: WHAT YOU AND YOUR FAMILY NEED TO KNOW

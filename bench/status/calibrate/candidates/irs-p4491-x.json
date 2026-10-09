@@ -1,0 +1,42 @@
+[
+ {
+  "id": 0,
+  "field": "amount",
+  "value": "20000",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 1160,
+    "end": 1167,
+    "text": "$20,000"
+   },
+   {
+    "role": "key",
+    "text": "Married Filing Separately"
+   }
+  ]
+ },
+ {
+  "id": 1,
+  "field": "amount",
+  "value": "150000",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 2353,
+    "end": 2361,
+    "text": "$150,000"
+   },
+   {
+    "role": "key",
+    "text": "Married Filing Jointly (MFJ)"
+   }
+  ]
+ }
+]

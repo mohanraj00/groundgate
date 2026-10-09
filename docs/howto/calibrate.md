@@ -357,6 +357,46 @@ groundgate admit DOC SCHEMA CANDIDATES --policy policy.json --judgments J/<doc>.
 
 The receipt records the judgments and the policy, so `verify` needs both again.
 
+## A local model as the judge
+
+The `chat` judge sends each question to a server that accepts chat requests. With a model
+server on your machine, no text leaves it. I ran the key clear on the IRS filing-status set in
+`bench/status/calibrate`, with `qwen2.5:7b` in a local Ollama server. The items are the 79
+candidates in 9 IRS publications that spec 0.6 flags `KEY_NOT_AT_VALUE`. I labeled every item
+blind, before the model ran.
+
+Pull the model, and use its digest as the version:
+
+```bash
+ollama pull qwen2.5:7b
+ollama list   # the ID column holds the digest
+```
+
+Then ask with these settings:
+
+```bash
+export GROUNDGATE_CHAT_URL=http://127.0.0.1:11434/v1
+export GROUNDGATE_CHAT_MODEL=qwen2.5:7b
+export GROUNDGATE_CHAT_VERSION=845dbda0ea48
+groundgate-calibrate ask --work bench/status/calibrate/work --judge chat
+groundgate-calibrate report --work bench/status/calibrate/work
+```
+
+The report gives no threshold at any ceiling:
+
+- The calibration part has 47 items. The label holds the candidate's key in 40 of them. The
+  model clears 12 of these 40, and it clears no wrong key, at each threshold from 0.5 to 0.99.
+- 12 right clears with no escape give an upper bound of 0.2209 on the escape rate. That is
+  above the highest ceiling, 0.2, so the tool takes no threshold.
+- The test part has 32 items, and the label holds the candidate's key in 27 of them. The model
+  clears 6 of these 27, and it clears no wrong key.
+- The model gives a confidence of 0.9 or more on every item, so a higher threshold clears the
+  same items.
+
+The model never cleared a wrong key, but it cleared too few right keys to show that with 95%
+confidence. More labeled items can give a threshold. A model that also gives low confidences
+can give a threshold that separates right keys from wrong ones.
+
 ## Before you use a threshold
 
 - **Measure on your documents.** A threshold from this page, or from another kind of document,

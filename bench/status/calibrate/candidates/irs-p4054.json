@@ -1,0 +1,110 @@
+[
+ {
+  "id": 0,
+  "field": "amount",
+  "value": "200000",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 3624,
+    "end": 3632,
+    "text": "$200,000"
+   }
+  ]
+ },
+ {
+  "id": 1,
+  "field": "amount",
+  "value": "168600",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 3634,
+    "end": 3642,
+    "text": "$168,600"
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "field": "amount",
+  "value": "200000",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 3773,
+    "end": 3781,
+    "text": "$200,000"
+   },
+   {
+    "role": "key",
+    "text": "if taxpayers file as Married Filing Jointly"
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "field": "amount",
+  "value": "168600",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 3783,
+    "end": 3791,
+    "text": "$168,600"
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "field": "amount",
+  "value": "250000",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 3919,
+    "end": 3927,
+    "text": "$250,000"
+   },
+   {
+    "role": "key",
+    "text": "if taxpayers file as Married Filing Jointly"
+   }
+  ]
+ },
+ {
+  "id": 5,
+  "field": "amount",
+  "value": "125000",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 4022,
+    "end": 4030,
+    "text": "$125,000"
+   },
+   {
+    "role": "key",
+    "text": "if taxpayer files as Married Filing Separately"
+   }
+  ]
+ }
+]

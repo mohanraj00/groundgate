@@ -3,6 +3,11 @@ the 5 filing statuses. It writes the same labels.json as ``status.py label``, an
 shows which keys a spec puts at an amount.
 
     uv run python bench/status/web.py              # then open http://127.0.0.1:8767
+    uv run python bench/status/web.py --work bench/status/calibrate/work
+
+With --work, it labels the items of a groundgate-calibrate work directory of this set (#175) and
+writes that directory's labels.json, in the same format. Like groundgate-calibrate label, it
+refuses a change once a judge has answered.
 """
 
 from __future__ import annotations
@@ -38,12 +43,12 @@ def pdf_of(src: dict[str, Any]) -> Path:
     return path
 
 
-def build() -> list[dict[str, Any]]:
-    """Each item with its text around it and its box on the PDF page."""
+def build(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Each item with its text around it and its box on the PDF page. An item has an id, a doc
+    and a span in code points; nothing else of it reaches the page."""
     from groundgate.extract import extract
 
     srcs = sources()
-    items = json.loads((HERE / "items.json").read_text())
     out: list[dict[str, Any]] = []
     docs: dict[str, Any] = {}
     for it in items:
@@ -79,10 +84,15 @@ def build() -> list[dict[str, Any]]:
     return out
 
 
-def serve(port: int) -> None:
-    items = build()
+def serve(port: int, work: Path | None = None) -> None:
+    if work is None:
+        items = build(json.loads((HERE / "items.json").read_text()))
+        path = HERE / "labels.json"
+    else:  # a calibrate item's mark is the number's span in code points
+        given = json.loads((work / "items.json").read_text())
+        items = build([{"id": it["id"], "doc": it["doc"], "span": it["mark"]} for it in given])
+        path = work / "labels.json"
     srcs = sources()
-    path = HERE / "labels.json"
     page = (HERE / "web.html").read_bytes()
     lock = threading.Lock()
 
@@ -126,6 +136,11 @@ def serve(port: int) -> None:
             if not ok:
                 self.send(400, b"bad label", "text/plain")
                 return
+            if work is not None and (
+                any(work.glob("answers-*.json")) or any(work.glob(".answers-*.partial.json"))
+            ):
+                self.send(409, b"a judge has answered; labels are fixed", "text/plain")
+                return
             with lock:  # requests run in threads; one read-modify-write at a time
                 labels = json.loads(path.read_text()) if path.exists() else {}
                 labels[got["id"]] = (
@@ -144,4 +159,6 @@ def serve(port: int) -> None:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=8767)
-    serve(ap.parse_args().port)
+    ap.add_argument("--work", type=Path, help="a groundgate-calibrate work directory of this set")
+    args = ap.parse_args()
+    serve(args.port, args.work)

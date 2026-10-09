@@ -1,0 +1,562 @@
+1. Tables for Figuring Amount Exempt from Levy on Wages, Salary, and Other Income (Forms 668-W(ACS) and 668-W(ICS))
+
+The tables below show the amount of an individual's income (take home pay) that is exempt from a notice of levy used to collect delinquent tax in 2026.
+
+2026
+
+Filing Status: Single
+
+Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)
+
+Pay
+
+Period
+
+Number of Dependents Claimed on Statement
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+More Than 5
+
+Pay
+
+Period
+
+Number of Dependents Claimed on Statement
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+More Than 5
+
+Daily
+
+61.92
+
+82.30
+
+102.68
+
+123.06
+
+143.44
+
+163.82
+
+61.92 plus 20.38 for
+each dependent
+
+Daily
+
+123.85
+
+144.23
+
+164.61
+
+184.99
+
+205.37
+
+225.75
+
+Weekly
+
+309.62
+
+411.54
+
+513.46
+
+615.38
+
+717.30
+
+819.22
+
+Biweekly
+
+619.23
+
+823.08
+
+1026.93
+
+1230.78
+
+1434.63
+
+1638.48
+
+Semimonthly
+
+670.83
+
+891.66
+
+1112.49
+
+1333.32
+
+1554.15
+
+1774.98
+
+Monthly
+
+1341.67
+
+1783.34
+
+2225.01
+
+2666.68
+
+3108.35
+
+3550.02
+
+309.62 plus 101.92 for
+each dependent
+
+619.23 plus 203.85 for
+each dependent
+
+670.83 plus 220.83 for
+each dependent
+
+1341.67 plus 441.67 for
+each dependent
+
+Weekly
+
+619.23
+
+721.15
+
+823.07
+
+924.99
+
+1026.91
+
+1128.83
+
+Biweekly
+
+1238.46
+
+1442.31
+
+1646.16
+
+1850.01
+
+2053.86
+
+2257.71
+
+Semimonthly
+
+1341.67
+
+1562.50
+
+1783.33
+
+2004.16
+
+2224.99
+
+2445.82
+
+Monthly
+
+2683.33
+
+3125.00
+
+3566.67
+
+4008.34
+
+4450.01
+
+4891.68
+
+123.85 plus 20.38 for
+each dependent
+
+619.23 plus 101.92 for
+each dependent
+1238.46 plus 203.85
+for each
+dependent
+1341.67 plus 220.83
+for each dependent
+
+2683.33 plus 441.67
+for each dependent
+
+Filing Status: Head of Household
+
+Filing Status: Married Filing Separate Return
+
+Pay
+
+Period
+
+Number of Dependents Claimed on Statement
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+More Than 5
+
+Pay
+
+Period
+
+Number of Dependents Claimed on Statement
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+More Than 5
+
+Daily
+
+92.88
+
+113.26
+
+133.64
+
+154.02
+
+174.40
+
+194.78
+
+92.88 plus 20.38 for
+each dependent
+
+Daily
+
+61.92
+
+82.30
+
+102.68
+
+123.06
+
+143.44
+
+163.82
+
+Weekly
+
+464.42
+
+566.34
+
+668.26
+
+770.18
+
+872.10
+
+974.02
+
+Biweekly
+
+928.85
+
+1132.70
+
+1336.55
+
+1540.40
+
+1744.25
+
+1948.10
+
+Semimonthly
+
+1006.25
+
+1227.08
+
+1447.91
+
+1668.74
+
+1889.57
+
+2110.40
+
+Monthly
+
+2012.50
+
+2454.17
+
+2895.84
+
+3337.51
+
+3779.18
+
+4220.85
+
+2. Table for Figuring Additional Exempt Amount for Taxpayers
+
+at Least 65 Years Old and/or Blind
+
+464.42 plus 101.92 for
+each dependent
+
+928.85 plus 203.85 for
+each dependent
+
+1006.25 plus 220.83 for
+each dependent
+
+2012.50 plus 441.67 for
+each dependent
+
+Weekly
+
+309.62
+
+411.54
+
+513.46
+
+615.38
+
+717.30
+
+819.22
+
+Biweekly
+
+619.23
+
+823.08
+
+1026.93
+
+1230.78
+
+1434.63
+
+1638.48
+
+Semimonthly
+
+670.83
+
+891.66
+
+1112.49
+
+1333.32
+
+1554.15
+
+1774.98
+
+Monthly
+
+1341.67
+
+1783.34
+
+2225.01
+
+2666.68
+
+3108.35
+
+3550.02
+
+These tables show the amount of take home pay that is exempt each pay period from a levy on wages,
+
+Examples
+
+Filing Status
+
+Single or Head of
+Household
+
+Any Other
+Filing Status
+
+*
+
+1
+
+2
+
+1
+
+2
+
+3
+
+4
+
+Daily
+
+7.88
+
+15.77
+
+6.35
+
+12.69
+
+19.04
+
+25.38
+
+Additional Exempt Amount
+
+salary, and other income.
+
+Weekly
+
+Biweekly
+
+Semi-monthly
+
+Monthly
+
+1. A single taxpayer who is paid weekly and claims three dependents has $615.38 exempt from levy.
+
+39.42
+
+78.85
+
+31.73
+
+63.46
+
+95.19
+
+126.92
+
+78.85
+
+157.69
+
+63.46
+
+126.92
+
+190.38
+
+253.85
+
+85.42
+
+170.83
+
+68.75
+
+137.50
+
+206.25
+
+275.00
+
+170.83
+
+341.67
+
+137.50
+
+275.00
+
+412.50
+
+550.00
+
+2. If the taxpayer in number 1 is over 65 and writes 1 in the ADDITIONAL STANDARD DEDUCTION
+
+space on Parts 3, 4, & 5 of the levy, $654.80 is exempt from this levy ($615.38 plus $39.42).
+
+3. A taxpayer who is married, files jointly, is paid bi-weekly, and claims two dependents has $1,646.16
+
+exempt from levy.
+
+4. if the taxpayer in number 3 is over 65 and has a spouse who is blind, this taxpayer should write
+
+2 in the ADDITIONAL STANDARD DEDUCTION space on Parts 3,4, and 5 of the levy. If so,
+
+* ADDITIONAL STANDARD DEDUCTION claimed on Parts 3,4, and 5 of levy.
+
+$1,773.08 is exempt from this levy ($1,646.16 plus $126.92).
+
+Publication 1494 (Rev. 12- 2025)
+
+www.irs.gov
+
+Catalog Number 11439T
+
+Department of Treasury -- Internal Revenue Service
+
+61.92 plus 20.38 for
+each dependent
+
+309.62 plus 101.92 for
+each dependent
+
+619.23 plus 203.85 for
+each dependent
+
+670.83 plus 220.83 for
+each dependent
+
+1341.67 plus 441.67
+for each dependent

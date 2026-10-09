@@ -1,0 +1,1424 @@
+[
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:0",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   12371,
+   12379
+  ],
+  "value": "5086"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:1",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   12371,
+   12379
+  ],
+  "value": "5086"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:2",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   12383,
+   12391
+  ],
+  "value": "7153"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:3",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   12383,
+   12391
+  ],
+  "value": "7153"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:4",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   12395,
+   12404
+  ],
+  "value": "22937"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:5",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   12395,
+   12404
+  ],
+  "value": "22937"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:6",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   12408,
+   12417
+  ],
+  "value": "30452.75"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:7",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   12408,
+   12417
+  ],
+  "value": "30452.75"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:8",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   12421,
+   12430
+  ],
+  "value": "42979.75"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:9",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   12421,
+   12430
+  ],
+  "value": "42979.75"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:10",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13180,
+   13189
+  ],
+  "value": "10172"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:11",
+  "key": "Qualifying surviving spouse",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13180,
+   13189
+  ],
+  "value": "10172"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:12",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13193,
+   13202
+  ],
+  "value": "14306"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:13",
+  "key": "Qualifying surviving spouse",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13193,
+   13202
+  ],
+  "value": "14306"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:14",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13206,
+   13215
+  ],
+  "value": "45874"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:15",
+  "key": "Qualifying surviving spouse",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13206,
+   13215
+  ],
+  "value": "45874"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:16",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13219,
+   13228
+  ],
+  "value": "60905.5"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:17",
+  "key": "Qualifying surviving spouse",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13219,
+   13228
+  ],
+  "value": "60905.5"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:18",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13232,
+   13241
+  ],
+  "value": "75937.5"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:19",
+  "key": "Qualifying surviving spouse",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13232,
+   13241
+  ],
+  "value": "75937.5"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:20",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13874,
+   13882
+  ],
+  "value": "5086"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:21",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13886,
+   13894
+  ],
+  "value": "7153"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:22",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13898,
+   13907
+  ],
+  "value": "22937"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:23",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13911,
+   13920
+  ],
+  "value": "30452.75"
+ },
+ {
+  "doc": "irs-p1040",
+  "field": "amount",
+  "id": "irs-p1040:24",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   13924,
+   13933
+  ],
+  "value": "37968.75"
+ },
+ {
+  "doc": "irs-p1167",
+  "field": "amount",
+  "id": "irs-p1167:0",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   2683,
+   2689
+  ],
+  "value": "12950"
+ },
+ {
+  "doc": "irs-p1167",
+  "field": "amount",
+  "id": "irs-p1167:1",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   2683,
+   2689
+  ],
+  "value": "12950"
+ },
+ {
+  "doc": "irs-p1167",
+  "field": "amount",
+  "id": "irs-p1167:2",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   2756,
+   2762
+  ],
+  "value": "25900"
+ },
+ {
+  "doc": "irs-p1167",
+  "field": "amount",
+  "id": "irs-p1167:3",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   2783,
+   2789
+  ],
+  "value": "19400"
+ },
+ {
+  "doc": "irs-p1167",
+  "field": "amount",
+  "id": "irs-p1167:4",
+  "key": "Qualifying surviving spouse",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   2756,
+   2762
+  ],
+  "value": "25900"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:0",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   552,
+   557
+  ],
+  "value": "61.92"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:1",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   698,
+   704
+  ],
+  "value": "309.62"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:2",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   756,
+   762
+  ],
+  "value": "619.23"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:3",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   821,
+   827
+  ],
+  "value": "670.83"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:4",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   882,
+   889
+  ],
+  "value": "1341.67"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:5",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   642,
+   648
+  ],
+  "value": "123.85"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:6",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   756,
+   762
+  ],
+  "value": "619.23"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:7",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   1161,
+   1168
+  ],
+  "value": "1238.46"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:8",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   882,
+   889
+  ],
+  "value": "1341.67"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:9",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   1291,
+   1298
+  ],
+  "value": "2683.33"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:10",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   1802,
+   1807
+  ],
+  "value": "92.88"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:11",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   1947,
+   1953
+  ],
+  "value": "464.42"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:12",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   2005,
+   2011
+  ],
+  "value": "928.85"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:13",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   2071,
+   2078
+  ],
+  "value": "1006.25"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:14",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   2134,
+   2141
+  ],
+  "value": "2012.5"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:15",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   552,
+   557
+  ],
+  "value": "61.92"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:16",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   698,
+   704
+  ],
+  "value": "309.62"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:17",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   756,
+   762
+  ],
+  "value": "619.23"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:18",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   821,
+   827
+  ],
+  "value": "670.83"
+ },
+ {
+  "doc": "irs-p1494",
+  "field": "amount",
+  "id": "irs-p1494:19",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   882,
+   889
+  ],
+  "value": "1341.67"
+ },
+ {
+  "doc": "irs-p4012-a",
+  "field": "amount",
+  "id": "irs-p4012-a:0",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   684,
+   690
+  ],
+  "value": "15750"
+ },
+ {
+  "doc": "irs-p4012-a",
+  "field": "amount",
+  "id": "irs-p4012-a:1",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   693,
+   699
+  ],
+  "value": "17750"
+ },
+ {
+  "doc": "irs-p4012-a",
+  "field": "amount",
+  "id": "irs-p4012-a:2",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   702,
+   708
+  ],
+  "value": "31500"
+ },
+ {
+  "doc": "irs-p4012-a",
+  "field": "amount",
+  "id": "irs-p4012-a:3",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   711,
+   717
+  ],
+  "value": "33100"
+ },
+ {
+  "doc": "irs-p4012-a",
+  "field": "amount",
+  "id": "irs-p4012-a:4",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   720,
+   726
+  ],
+  "value": "34700"
+ },
+ {
+  "doc": "irs-p4012-a",
+  "field": "amount",
+  "id": "irs-p4012-a:5",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   729,
+   730
+  ],
+  "value": "5"
+ },
+ {
+  "doc": "irs-p4012-a",
+  "field": "amount",
+  "id": "irs-p4012-a:6",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   733,
+   739
+  ],
+  "value": "23625"
+ },
+ {
+  "doc": "irs-p4012-a",
+  "field": "amount",
+  "id": "irs-p4012-a:7",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   742,
+   748
+  ],
+  "value": "25625"
+ },
+ {
+  "doc": "irs-p4012-a",
+  "field": "amount",
+  "id": "irs-p4012-a:8",
+  "key": "Qualifying surviving spouse",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   751,
+   757
+  ],
+  "value": "31500"
+ },
+ {
+  "doc": "irs-p4012-a",
+  "field": "amount",
+  "id": "irs-p4012-a:9",
+  "key": "Qualifying surviving spouse",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   760,
+   766
+  ],
+  "value": "33100"
+ },
+ {
+  "doc": "irs-p4054",
+  "field": "amount",
+  "id": "irs-p4054:0",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   3615,
+   3622
+  ],
+  "value": "200000"
+ },
+ {
+  "doc": "irs-p4054",
+  "field": "amount",
+  "id": "irs-p4054:1",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   3625,
+   3632
+  ],
+  "value": "168600"
+ },
+ {
+  "doc": "irs-p4491",
+  "field": "amount",
+  "id": "irs-p4491:7",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   2526,
+   2531
+  ],
+  "value": "1600"
+ },
+ {
+  "doc": "irs-p4491",
+  "field": "amount",
+  "id": "irs-p4491:8",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   2526,
+   2531
+  ],
+  "value": "1600"
+ },
+ {
+  "doc": "irs-p4696",
+  "field": "amount",
+  "id": "irs-p4696:1",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   340,
+   346
+  ],
+  "value": "17750"
+ },
+ {
+  "doc": "irs-p4696",
+  "field": "amount",
+  "id": "irs-p4696:3",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   493,
+   499
+  ],
+  "value": "33100"
+ },
+ {
+  "doc": "irs-p4696",
+  "field": "amount",
+  "id": "irs-p4696:4",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   525,
+   531
+  ],
+  "value": "34700"
+ },
+ {
+  "doc": "irs-p4696",
+  "field": "amount",
+  "id": "irs-p4696:5",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   549,
+   555
+  ],
+  "value": "23625"
+ },
+ {
+  "doc": "irs-p4696",
+  "field": "amount",
+  "id": "irs-p4696:6",
+  "key": "Head of household",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   576,
+   582
+  ],
+  "value": "25625"
+ },
+ {
+  "doc": "irs-p4696",
+  "field": "amount",
+  "id": "irs-p4696:7",
+  "key": "Qualifying surviving spouse",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   600,
+   606
+  ],
+  "value": "31500"
+ },
+ {
+  "doc": "irs-p4696",
+  "field": "amount",
+  "id": "irs-p4696:8",
+  "key": "Qualifying surviving spouse",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   627,
+   633
+  ],
+  "value": "33100"
+ },
+ {
+  "doc": "irs-p4696",
+  "field": "amount",
+  "id": "irs-p4696:9",
+  "key": "Married filing separately",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   1651,
+   1652
+  ],
+  "value": "5"
+ },
+ {
+  "doc": "irs-p4801",
+  "field": "amount",
+  "id": "irs-p4801:0",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   5486,
+   5492
+  ],
+  "value": "13850"
+ },
+ {
+  "doc": "irs-p4801",
+  "field": "amount",
+  "id": "irs-p4801:2",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   5553,
+   5559
+  ],
+  "value": "27700"
+ },
+ {
+  "doc": "irs-p4801",
+  "field": "amount",
+  "id": "irs-p4801:5",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   8154,
+   8160
+  ],
+  "value": "13850"
+ },
+ {
+  "doc": "irs-p4801",
+  "field": "amount",
+  "id": "irs-p4801:7",
+  "key": "Married filing jointly",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   8221,
+   8227
+  ],
+  "value": "27700"
+ },
+ {
+  "doc": "irs-p5187",
+  "field": "amount",
+  "id": "irs-p5187:0",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   464,
+   467
+  ],
+  "value": "300"
+ },
+ {
+  "doc": "irs-p5187",
+  "field": "amount",
+  "id": "irs-p5187:1",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   470,
+   473
+  ],
+  "value": "800"
+ },
+ {
+  "doc": "irs-p5187",
+  "field": "amount",
+  "id": "irs-p5187:2",
+  "key": "Single",
+  "keys": [
+   "Single",
+   "Married filing jointly",
+   "Married filing separately",
+   "Head of household",
+   "Qualifying surviving spouse"
+  ],
+  "mark": [
+   476,
+   481
+  ],
+  "value": "1325"
+ }
+]
