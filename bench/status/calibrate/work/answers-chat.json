@@ -1,0 +1,328 @@
+{
+ "answers": {
+  "irs-p1040:0": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1040:1": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1040:10": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:11": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:12": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:13": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:14": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:15": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:16": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:17": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:18": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:19": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:2": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1040:20": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "irs-p1040:21": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1040:22": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1040:23": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "irs-p1040:24": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "irs-p1040:3": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1040:4": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1040:5": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1040:6": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "irs-p1040:7": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "irs-p1040:8": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1040:9": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1167:0": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "irs-p1167:1": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "irs-p1167:2": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1167:3": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "irs-p1167:4": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1494:0": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1494:1": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1494:10": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1494:11": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "irs-p1494:12": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p1494:13": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "irs-p1494:14": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1494:15": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1494:16": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1494:17": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "irs-p1494:18": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1494:19": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1494:2": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "irs-p1494:3": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1494:4": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1494:5": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p1494:6": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "irs-p1494:7": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1494:8": {
+   "choice": "none",
+   "confidence": 1.0
+  },
+  "irs-p1494:9": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4012-a:0": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4012-a:1": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4012-a:2": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4012-a:3": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4012-a:4": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4012-a:5": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4012-a:6": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p4012-a:7": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p4012-a:8": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p4012-a:9": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "irs-p4054:0": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4054:1": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4491:7": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4491:8": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4696:1": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4696:3": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "irs-p4696:4": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "irs-p4696:5": {
+   "choice": "k4",
+   "confidence": 1.0
+  },
+  "irs-p4696:6": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "irs-p4696:7": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "irs-p4696:8": {
+   "choice": "k5",
+   "confidence": 1.0
+  },
+  "irs-p4696:9": {
+   "choice": "k3",
+   "confidence": 1.0
+  },
+  "irs-p4801:0": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4801:2": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4801:5": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p4801:7": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p5187:0": {
+   "choice": "k1",
+   "confidence": 1.0
+  },
+  "irs-p5187:1": {
+   "choice": "k2",
+   "confidence": 1.0
+  },
+  "irs-p5187:2": {
+   "choice": "k4",
+   "confidence": 1.0
+  }
+ },
+ "meta": {
+  "judge": "chat",
+  "labels_sha256": "2775f1180118d02fe2ab08fcdee20c7ae1f5f53b730969e591f7d401ce2c8842",
+  "model": "chat-1:qwen2.5:7b@845dbda0ea48",
+  "prompts_sha256": "f4897d5a129c956b75962cbf0d20ae523f3d385258307f4a09bc3e83f3a57cb7",
+  "run": "2026-10-09",
+  "scoring_sha256": "631ea620d6188f0d990793eb87e35e310fa9911fb1930178cd1e3154a3c4c952"
+ }
+}

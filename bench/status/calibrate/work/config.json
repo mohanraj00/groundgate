@@ -1,0 +1,23 @@
+{
+ "context": "The text is from an IRS publication.",
+ "descriptions": {},
+ "question": "key",
+ "schema": {
+  "fields": {
+   "amount": {
+    "description": "A dollar amount that the text states for one or more filing statuses.",
+    "keys": [
+     "Single",
+     "Married filing jointly",
+     "Married filing separately",
+     "Head of household",
+     "Qualifying surviving spouse"
+    ],
+    "multiple": true,
+    "type": "number",
+    "unit": "USD"
+   }
+  }
+ },
+ "spec": "0.6"
+}

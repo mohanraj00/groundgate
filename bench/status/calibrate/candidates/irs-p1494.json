@@ -1,0 +1,482 @@
+[
+ {
+  "id": 0,
+  "field": "amount",
+  "value": "61.92",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 552,
+    "end": 557,
+    "text": "$61.92"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Single"
+   },
+   {
+    "role": "field",
+    "text": "Daily"
+   }
+  ]
+ },
+ {
+  "id": 1,
+  "field": "amount",
+  "value": "309.62",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 698,
+    "end": 704,
+    "text": "$309.62"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Single"
+   },
+   {
+    "role": "field",
+    "text": "Weekly"
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "field": "amount",
+  "value": "619.23",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 756,
+    "end": 762,
+    "text": "$619.23"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Single"
+   },
+   {
+    "role": "field",
+    "text": "Biweekly"
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "field": "amount",
+  "value": "670.83",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 821,
+    "end": 827,
+    "text": "$670.83"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Single"
+   },
+   {
+    "role": "field",
+    "text": "Semimonthly"
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "field": "amount",
+  "value": "1341.67",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 882,
+    "end": 889,
+    "text": "$1341.67"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Single"
+   },
+   {
+    "role": "field",
+    "text": "Monthly"
+   }
+  ]
+ },
+ {
+  "id": 5,
+  "field": "amount",
+  "value": "123.85",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 642,
+    "end": 648,
+    "text": "$123.85"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)"
+   },
+   {
+    "role": "field",
+    "text": "Daily"
+   }
+  ]
+ },
+ {
+  "id": 6,
+  "field": "amount",
+  "value": "619.23",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 756,
+    "end": 762,
+    "text": "$619.23"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)"
+   },
+   {
+    "role": "field",
+    "text": "Weekly"
+   }
+  ]
+ },
+ {
+  "id": 7,
+  "field": "amount",
+  "value": "1238.46",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 1161,
+    "end": 1168,
+    "text": "$1238.46"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)"
+   },
+   {
+    "role": "field",
+    "text": "Biweekly"
+   }
+  ]
+ },
+ {
+  "id": 8,
+  "field": "amount",
+  "value": "1341.67",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 882,
+    "end": 889,
+    "text": "$1341.67"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)"
+   },
+   {
+    "role": "field",
+    "text": "Semimonthly"
+   }
+  ]
+ },
+ {
+  "id": 9,
+  "field": "amount",
+  "value": "2683.33",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 1291,
+    "end": 1298,
+    "text": "$2683.33"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Married Filing Joint Return (and Qualifying Widow(er)s)"
+   },
+   {
+    "role": "field",
+    "text": "Monthly"
+   }
+  ]
+ },
+ {
+  "id": 10,
+  "field": "amount",
+  "value": "92.88",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Head of household",
+  "evidence": [
+   {
+    "start": 1802,
+    "end": 1807,
+    "text": "$92.88"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Head of Household"
+   },
+   {
+    "role": "field",
+    "text": "Daily"
+   }
+  ]
+ },
+ {
+  "id": 11,
+  "field": "amount",
+  "value": "464.42",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Head of household",
+  "evidence": [
+   {
+    "start": 1947,
+    "end": 1953,
+    "text": "$464.42"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Head of Household"
+   },
+   {
+    "role": "field",
+    "text": "Weekly"
+   }
+  ]
+ },
+ {
+  "id": 12,
+  "field": "amount",
+  "value": "928.85",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Head of household",
+  "evidence": [
+   {
+    "start": 2005,
+    "end": 2011,
+    "text": "$928.85"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Head of Household"
+   },
+   {
+    "role": "field",
+    "text": "Biweekly"
+   }
+  ]
+ },
+ {
+  "id": 13,
+  "field": "amount",
+  "value": "1006.25",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Head of household",
+  "evidence": [
+   {
+    "start": 2071,
+    "end": 2078,
+    "text": "$1006.25"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Head of Household"
+   },
+   {
+    "role": "field",
+    "text": "Semimonthly"
+   }
+  ]
+ },
+ {
+  "id": 14,
+  "field": "amount",
+  "value": "2012.50",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Head of household",
+  "evidence": [
+   {
+    "start": 2134,
+    "end": 2141,
+    "text": "$2012.50"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Head of Household"
+   },
+   {
+    "role": "field",
+    "text": "Monthly"
+   }
+  ]
+ },
+ {
+  "id": 15,
+  "field": "amount",
+  "value": "61.92",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 552,
+    "end": 557,
+    "text": "$61.92"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Married Filing Separate Return"
+   },
+   {
+    "role": "field",
+    "text": "Daily"
+   }
+  ]
+ },
+ {
+  "id": 16,
+  "field": "amount",
+  "value": "309.62",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 698,
+    "end": 704,
+    "text": "$309.62"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Married Filing Separate Return"
+   },
+   {
+    "role": "field",
+    "text": "Weekly"
+   }
+  ]
+ },
+ {
+  "id": 17,
+  "field": "amount",
+  "value": "619.23",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 756,
+    "end": 762,
+    "text": "$619.23"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Married Filing Separate Return"
+   },
+   {
+    "role": "field",
+    "text": "Biweekly"
+   }
+  ]
+ },
+ {
+  "id": 18,
+  "field": "amount",
+  "value": "670.83",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 821,
+    "end": 827,
+    "text": "$670.83"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Married Filing Separate Return"
+   },
+   {
+    "role": "field",
+    "text": "Semimonthly"
+   }
+  ]
+ },
+ {
+  "id": 19,
+  "field": "amount",
+  "value": "1341.67",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 882,
+    "end": 889,
+    "text": "$1341.67"
+   },
+   {
+    "role": "key",
+    "text": "Filing Status: Married Filing Separate Return"
+   },
+   {
+    "role": "field",
+    "text": "Monthly"
+   }
+  ]
+ }
+]

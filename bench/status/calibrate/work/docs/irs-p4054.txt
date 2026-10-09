@@ -1,0 +1,77 @@
+Review of the 2025 Filing Season
+
+available to taxpayers with a 2024 adjusted gross income of $84,000 or less.^86 Taxpayers exceeding the income
+threshold can still file their return at no cost using Free File Fillable Forms available on IRS.gov.^87
+
+According to Free File’s program survey in 2024, 98 percent of users would recommend the program
+to others.^88 Though taxpayers filed approximately three million returns through Free File in FS 2025,
+the program is still underutilized and can serve more taxpayers.^89 The IRS must continue to work with
+stakeholders, prioritize enhanced outreach, and ensure the Free File Program is prominently advertised and
+easily accessible on IRS.gov to increase usage.
+
+Direct File
+
+During FS 2025 through April 20, 2025, taxpayers filed 296,531 accepted returns through Direct File, and
+on average, these taxpayers received refunds of $1,309.^90
+
+In FS 2025, Direct File was available in 25 states.^91 Direct File incorporated several new features to this
+year’s program, including One-Step Signature, Authenticated Live Chat, an Enriched State Application
+Programming Interface (API), and Data Import that contributed to high taxpayer satisfaction. Nearly 94
+percent of Direct File users surveyed rated the experience as excellent or above average.^92 Despite expanding
+the program to double the number of states and adding enhancements, overall usage remained flat when
+compared to last year, likely due to limited program awareness, restrictive eligibility criteria, and certain filing
+limitations, among other reasons.
+
+The IRS limited use of Direct File based on:
+
+• Income type reported on the return;^93
+• Wage amounts and filing status;^94 and
+• Credits claimed on the return.^95
+
+Additionally, taxpayers filing via Direct File could not itemize deductions and were only able to claim the
+standard deduction, student loan interest, educator expenses, and Health Savings Account contributions.^96
+
+86 See IRS, IRS Free File: Do Your Taxes for Free (May 5, 2025), https://www.irs.gov/filing/irs-free-file-do-your-taxes-for-free.
+87 See IRS, IRS Free File: Do Your Taxes for Free (May 5, 2025), https://www.irs.gov/filing/irs-free-file-do-your-taxes-for-free; IRS,
+
+Free File Fillable Forms (Jan. 29, 2025), https://www.irs.gov/e-file-providers/free-file-fillable-forms.
+
+88 Free File Alliance, https://freefilealliance.org/ (last visited June 3, 2025).
+89
+
+IRS response to TAS information request (May 15, 2025). This number includes users of English Free File and Free File Fillable
+Forms.
+IRS response to TAS information request (May 13, 2025).
+IRS, IRS Direct File: File Taxes for Free Directly With IRS (Mar. 17, 2025), https://www.irs.gov/filing/irs-direct-file-for-free.
+
+90
+91
+92 Enriched State API enables taxpayers to import information into their state tax forms, further streamlining the process of filing
+
+state returns. IRS, Direct File Filing Season 2025 Report 47 (May 13, 2025) (on file with TAS).
+
+93 Taxpayers using Direct File can only claim the following income types: income from an employer (Form W-2); unemployment
+compensation (Form 1099-G); Social Security benefits (Form SSA-1099); income from employer-sponsored pension and
+retirement account distributions (Form 1099-R); distributions for qualified medical expenses from Health Savings Accounts (Form
+1099-SA); interest income (Form 1099-INT); and Alaska Permanent Fund Dividend. IRS, IRS Direct File: File Taxes for Free Directly
+With IRS (Mar. 17, 2025), https://www.irs.gov/filing/irs-direct-file-for-free.
+
+94 Taxpayers are excluded from using Direct File if their wages are more than $200,000 ($168,600 if the taxpayer had more than
+
+one employer); if taxpayers file as Married Filing Jointly, and one spouse’s wages are more than $200,000 ($168,600 if a spouse
+had more than one employer); if taxpayers file as Married Filing Jointly, and both taxpayers wages total more than $250,000;
+or if taxpayer files as Married Filing Separately, and that taxpayer’s wages are more than $125,000. See IRS, Direct File, https://
+directfile.irs.gov/income (last visited June 3, 2025).
+
+95 When using Direct File, taxpayers can only claim the following credits: Child Tax Credit; Credit for Other Dependents; Child and
+
+Dependent Care Credit; Earned Income Tax Credit; Premium Tax Credit; Saver’s Credit (Retirement Savings Contributions Credit);
+or Credit for the Elderly or the Disabled. IRS, IRS Direct File: File Taxes for Free Directly With IRS (Mar. 17, 2025), https://www.irs.
+gov/filing/irs-direct-file-for-free.
+IRS, IRS Direct File: File Taxes for Free Directly With IRS (Mar. 17, 2025), https://www.irs.gov/filing/irs-direct-file-for-free.
+
+96
+
+Fiscal Year 2026 Objectives Report to Congress
+
+19

@@ -1,0 +1,74 @@
+[
+ {
+  "id": 0,
+  "field": "amount",
+  "value": "300",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 463,
+    "end": 467,
+    "text": "$300"
+   },
+   {
+    "role": "key",
+    "text": "Limitation Amount for Single"
+   },
+   {
+    "role": "field",
+    "text": "Less than 200%"
+   }
+  ]
+ },
+ {
+  "id": 1,
+  "field": "amount",
+  "value": "800",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 469,
+    "end": 473,
+    "text": "$800"
+   },
+   {
+    "role": "key",
+    "text": "Limitation Amount for Single"
+   },
+   {
+    "role": "field",
+    "text": "At least 200%, but less than 300%"
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "field": "amount",
+  "value": "1325",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 475,
+    "end": 481,
+    "text": "$1,325"
+   },
+   {
+    "role": "key",
+    "text": "Limitation Amount for Single"
+   },
+   {
+    "role": "field",
+    "text": "At least 300%, but less than 400%"
+   }
+  ]
+ }
+]

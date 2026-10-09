@@ -1,0 +1,502 @@
+[
+ {
+  "id": 0,
+  "field": "amount",
+  "value": "5086.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 12426,
+    "end": 12436,
+    "text": "$ 5,086.00"
+   },
+   {
+    "role": "key",
+    "text": "Single or Head of household"
+   }
+  ]
+ },
+ {
+  "id": 1,
+  "field": "amount",
+  "value": "5086.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Head of household",
+  "evidence": [
+   {
+    "start": 12426,
+    "end": 12436,
+    "text": "$ 5,086.00"
+   },
+   {
+    "role": "key",
+    "text": "Single or Head of household"
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "field": "amount",
+  "value": "7153.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 12438,
+    "end": 12448,
+    "text": "$ 7,153.00"
+   },
+   {
+    "role": "key",
+    "text": "Single or Head of household"
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "field": "amount",
+  "value": "7153.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Head of household",
+  "evidence": [
+   {
+    "start": 12438,
+    "end": 12448,
+    "text": "$ 7,153.00"
+   },
+   {
+    "role": "key",
+    "text": "Single or Head of household"
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "field": "amount",
+  "value": "22937.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 12450,
+    "end": 12461,
+    "text": "$ 22,937.00"
+   },
+   {
+    "role": "key",
+    "text": "Single or Head of household"
+   }
+  ]
+ },
+ {
+  "id": 5,
+  "field": "amount",
+  "value": "22937.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Head of household",
+  "evidence": [
+   {
+    "start": 12450,
+    "end": 12461,
+    "text": "$ 22,937.00"
+   },
+   {
+    "role": "key",
+    "text": "Single or Head of household"
+   }
+  ]
+ },
+ {
+  "id": 6,
+  "field": "amount",
+  "value": "30452.75",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 12463,
+    "end": 12474,
+    "text": "$ 30,452.75"
+   },
+   {
+    "role": "key",
+    "text": "Single or Head of household"
+   }
+  ]
+ },
+ {
+  "id": 7,
+  "field": "amount",
+  "value": "30452.75",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Head of household",
+  "evidence": [
+   {
+    "start": 12463,
+    "end": 12474,
+    "text": "$ 30,452.75"
+   },
+   {
+    "role": "key",
+    "text": "Single or Head of household"
+   }
+  ]
+ },
+ {
+  "id": 8,
+  "field": "amount",
+  "value": "42979.75",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 12476,
+    "end": 12487,
+    "text": "$ 42,979.75"
+   },
+   {
+    "role": "key",
+    "text": "Single or Head of household"
+   }
+  ]
+ },
+ {
+  "id": 9,
+  "field": "amount",
+  "value": "42979.75",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Head of household",
+  "evidence": [
+   {
+    "start": 12476,
+    "end": 12487,
+    "text": "$ 42,979.75"
+   },
+   {
+    "role": "key",
+    "text": "Single or Head of household"
+   }
+  ]
+ },
+ {
+  "id": 10,
+  "field": "amount",
+  "value": "10172.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 13244,
+    "end": 13255,
+    "text": "$ 10,172.00"
+   },
+   {
+    "role": "key",
+    "text": "Married filing jointly or Qualifying surviving spouse"
+   }
+  ]
+ },
+ {
+  "id": 11,
+  "field": "amount",
+  "value": "10172.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Qualifying surviving spouse",
+  "evidence": [
+   {
+    "start": 13244,
+    "end": 13255,
+    "text": "$ 10,172.00"
+   },
+   {
+    "role": "key",
+    "text": "Married filing jointly or Qualifying surviving spouse"
+   }
+  ]
+ },
+ {
+  "id": 12,
+  "field": "amount",
+  "value": "14306.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 13257,
+    "end": 13268,
+    "text": "$ 14,306.00"
+   },
+   {
+    "role": "key",
+    "text": "Married filing jointly or Qualifying surviving spouse"
+   }
+  ]
+ },
+ {
+  "id": 13,
+  "field": "amount",
+  "value": "14306.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Qualifying surviving spouse",
+  "evidence": [
+   {
+    "start": 13257,
+    "end": 13268,
+    "text": "$ 14,306.00"
+   },
+   {
+    "role": "key",
+    "text": "Married filing jointly or Qualifying surviving spouse"
+   }
+  ]
+ },
+ {
+  "id": 14,
+  "field": "amount",
+  "value": "45874.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 13270,
+    "end": 13281,
+    "text": "$ 45,874.00"
+   },
+   {
+    "role": "key",
+    "text": "Married filing jointly or Qualifying surviving spouse"
+   }
+  ]
+ },
+ {
+  "id": 15,
+  "field": "amount",
+  "value": "45874.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Qualifying surviving spouse",
+  "evidence": [
+   {
+    "start": 13270,
+    "end": 13281,
+    "text": "$ 45,874.00"
+   },
+   {
+    "role": "key",
+    "text": "Married filing jointly or Qualifying surviving spouse"
+   }
+  ]
+ },
+ {
+  "id": 16,
+  "field": "amount",
+  "value": "60905.50",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 13283,
+    "end": 13294,
+    "text": "$ 60,905.50"
+   },
+   {
+    "role": "key",
+    "text": "Married filing jointly or Qualifying surviving spouse"
+   }
+  ]
+ },
+ {
+  "id": 17,
+  "field": "amount",
+  "value": "60905.50",
+  "extraction_class": "amount",
+  "alignment_status": "match_fuzzy",
+  "unit": "USD",
+  "key": "Qualifying surviving spouse",
+  "evidence": [
+   {
+    "start": 13283,
+    "end": 13294,
+    "text": "$ 60,905.50"
+   },
+   {
+    "role": "key",
+    "text": "Married filing jointly or Qualifying surviving spouse"
+   }
+  ]
+ },
+ {
+  "id": 18,
+  "field": "amount",
+  "value": "75937.50",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 13296,
+    "end": 13307,
+    "text": "$ 75,937.50"
+   },
+   {
+    "role": "key",
+    "text": "Married filing jointly or Qualifying surviving spouse"
+   }
+  ]
+ },
+ {
+  "id": 19,
+  "field": "amount",
+  "value": "75937.50",
+  "extraction_class": "amount",
+  "alignment_status": "match_lesser",
+  "unit": "USD",
+  "key": "Qualifying surviving spouse",
+  "evidence": [
+   {
+    "start": 13309,
+    "end": 13310,
+    "text": "$ 75,937.50"
+   },
+   {
+    "role": "key",
+    "text": "Married filing jointly or Qualifying surviving spouse"
+   }
+  ]
+ },
+ {
+  "id": 20,
+  "field": "amount",
+  "value": "5086.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 13947,
+    "end": 13957,
+    "text": "$ 5,086.00"
+   },
+   {
+    "role": "key",
+    "text": "Married filing separately"
+   }
+  ]
+ },
+ {
+  "id": 21,
+  "field": "amount",
+  "value": "7153.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 13959,
+    "end": 13969,
+    "text": "$ 7,153.00"
+   },
+   {
+    "role": "key",
+    "text": "Married filing separately"
+   }
+  ]
+ },
+ {
+  "id": 22,
+  "field": "amount",
+  "value": "22937.00",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 13971,
+    "end": 13982,
+    "text": "$ 22,937.00"
+   },
+   {
+    "role": "key",
+    "text": "Married filing separately"
+   }
+  ]
+ },
+ {
+  "id": 23,
+  "field": "amount",
+  "value": "30452.75",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 13984,
+    "end": 13995,
+    "text": "$ 30,452.75"
+   },
+   {
+    "role": "key",
+    "text": "Married filing separately"
+   }
+  ]
+ },
+ {
+  "id": 24,
+  "field": "amount",
+  "value": "37968.75",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 13997,
+    "end": 14008,
+    "text": "$ 37,968.75"
+   },
+   {
+    "role": "key",
+    "text": "Married filing separately"
+   }
+  ]
+ }
+]

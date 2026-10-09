@@ -1,0 +1,62 @@
+[
+ {
+  "id": 0,
+  "field": "amount",
+  "value": "32200",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Qualifying surviving spouse",
+  "evidence": [
+   {
+    "start": 2150,
+    "end": 2157,
+    "text": "$32,200"
+   },
+   {
+    "role": "key",
+    "text": "Qualifying Surviving Spouse"
+   }
+  ]
+ },
+ {
+  "id": 1,
+  "field": "amount",
+  "value": "16100",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Single",
+  "evidence": [
+   {
+    "start": 2195,
+    "end": 2202,
+    "text": "$16,100"
+   },
+   {
+    "role": "key",
+    "text": "Single or Married Filing Separately"
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "field": "amount",
+  "value": "16100",
+  "extraction_class": "amount",
+  "alignment_status": "match_lesser",
+  "unit": "USD",
+  "key": "Married filing separately",
+  "evidence": [
+   {
+    "start": 2363,
+    "end": 2364,
+    "text": "$16,100"
+   },
+   {
+    "role": "key",
+    "text": "Single or Married Filing Separately"
+   }
+  ]
+ }
+]

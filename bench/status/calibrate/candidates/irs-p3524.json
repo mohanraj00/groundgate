@@ -1,0 +1,82 @@
+[
+ {
+  "id": 0,
+  "field": "amount",
+  "value": "26214",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 1796,
+    "end": 1803,
+    "text": "$26,214"
+   },
+   {
+    "role": "key",
+    "text": "if married filing jointly"
+   }
+  ]
+ },
+ {
+  "id": 1,
+  "field": "amount",
+  "value": "57554",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 1902,
+    "end": 1909,
+    "text": "$57,554"
+   },
+   {
+    "role": "key",
+    "text": "if married filing jointly"
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "field": "amount",
+  "value": "64430",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 2003,
+    "end": 2010,
+    "text": "$64,430"
+   },
+   {
+    "role": "key",
+    "text": "if married filing jointly"
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "field": "amount",
+  "value": "68675",
+  "extraction_class": "amount",
+  "alignment_status": "match_exact",
+  "unit": "USD",
+  "key": "Married filing jointly",
+  "evidence": [
+   {
+    "start": 2107,
+    "end": 2114,
+    "text": "$68,675"
+   },
+   {
+    "role": "key",
+    "text": "if married filing jointly"
+   }
+  ]
+ }
+]
