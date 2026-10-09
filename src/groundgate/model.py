@@ -29,6 +29,8 @@ def _bound(name: str, raw: object) -> Decimal | None:
         return None
     if isinstance(raw, bool) or not isinstance(raw, (int, str)):
         raise PacketError(f"field bound {name} must be a decimal string or integer")
+    if isinstance(raw, int) and not -(2**53 - 1) <= raw <= 2**53 - 1:
+        raise PacketError(f"field bound {name}: integer is outside [-(2^53-1), 2^53-1]")
     value = parse_value(str(raw))
     if value is None:
         raise PacketError(f"field bound {name}={raw!r} is not a decimal")

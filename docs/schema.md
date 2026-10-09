@@ -557,6 +557,7 @@ schema is invalid when:
 - `unit` is not a string or null;
 - `description` is present but is not a non-blank string;
 - `minimum` or `maximum` is not a decimal string or an integer (a float or a boolean is invalid);
+- an integer `minimum` or `maximum` is outside `[-(2^53-1), 2^53-1]`;
 - `required` or `multiple` is not a boolean;
 - `keys` or `aliases` is not null or a non-empty list of strings, or two entries are equal after
   whitespace normalisation and lower-casing, or an entry is blank;
@@ -570,6 +571,7 @@ bad_schemas = [
     {"fields": {"limit": {"type": "float"}}},
     {"fields": {"limit": {"comparator": "<="}}},
     {"fields": {"limit": {"maximum": 2500.5}}},
+    {"fields": {"limit": {"maximum": 10**30}}},
     {"fields": {"limit": {"min": "0"}}},
     {"fields": {"limit": {"required": "yes"}}},
     {"fields": {"dose": {"keys": ["Heart failure", "heart  failure"]}}},
@@ -586,6 +588,7 @@ for bad in bad_schemas:
 field 'limit' has unknown type 'float'
 field 'limit' has unknown comparator '<='
 field bound limit.maximum must be a decimal string or integer
+field bound limit.maximum: integer is outside [-(2^53-1), 2^53-1]
 field 'limit' has unknown keys ['min']
 field 'limit' required must be a boolean
 field 'dose' keys must be distinct, non-blank text
