@@ -705,3 +705,36 @@ def test_unit_places_read_a_long_table_once() -> None:
         return best
 
     assert time_for(4000) < 8 * time_for(1000)
+
+
+def test_unit_places_read_a_wide_row_once() -> None:
+    """A unit quote with many occurrences on one wide row stays linear (#164), also when none
+    is at a unit place, so each one is checked: four times the columns take less than eight
+    times as long."""
+    import time
+
+    schema = {"fields": {"amount": {"type": "integer", "unit": "USD", "aliases": ["amount"]}}}
+
+    def time_for(cols: int) -> float:
+        head = "Head" + "".join(f"\t$\t{n + 1}" for n in range(cols))
+        text = head + "\nAmount" + "\t7" * cols + "\t9\n"  # one column more than the head
+        cand = {
+            "id": "c",
+            "field": "amount",
+            "value": 9,
+            "unit": "USD",
+            "evidence": [
+                {"text": "9", "start": len(text.encode()) - 2, "end": len(text.encode()) - 1},
+                {"role": "unit", "text": "$"},
+                {"role": "field", "text": "Amount"},
+            ],
+        }
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            r = gg.admit(text, schema, [cand])
+            best = min(best, time.perf_counter() - began)
+            assert r.decisions[0].codes == ("UNIT_CITATION_INVALID",)
+        return best
+
+    assert time_for(1600) < 8 * time_for(400)

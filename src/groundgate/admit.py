@@ -553,9 +553,10 @@ def _find(
                 return (a, b), True
     pos = tok.start if tok is not None else at.span[0]
     before = [(a, b) for a, b in found if b <= pos]
-    placed = [(a, b) for a, b in before if place is not None and place(a, b)]
-    if placed:
-        return placed[-1], True
+    if place is not None:
+        placed = next(((a, b) for a, b in reversed(before) if place(a, b)), None)
+        if placed is not None:
+            return placed, True
     if before:
         return before[-1], True
     after = [(a, b) for a, b in found if a >= pos]

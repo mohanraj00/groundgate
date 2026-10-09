@@ -709,6 +709,7 @@ class UnitPlaces:
         br = brackets_around(text, tok, prefixes)
         self.bracket = -1 if br is None else len(text[: br[0]].rstrip())  # where a $ before it ends
         self.n = -1
+        self.rows: dict[int, list[tuple[int, int]]] = {}
         if "\t" not in text[va:vb]:
             return
         mine = _row_cells(text, va, vb, prefixes)
@@ -748,7 +749,9 @@ class UnitPlaces:
             return True
         if la not in self.table or self.n < 0:
             return False
-        row = _row_cells(text, la, lb, self.prefixes)
+        if la not in self.rows:  # each row is read once, also for many items on it
+            self.rows[la] = _row_cells(text, la, lb, self.prefixes)
+        row = self.rows[la]
         if self.n >= len(row):
             return False
         c, ce = row[self.n]
