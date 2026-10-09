@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import bisect
 import re
 import unicodedata
 from dataclasses import dataclass
@@ -528,6 +529,7 @@ _ITEM_SCALE = re.compile(
     r"(?<![^\W_])(thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
 )
 _LONE_DASH = re.compile("(?<!\\S)[-\u2013\u2014](?!\\S)")
+_NOT_SPACE = re.compile(r"\S")
 _IN_SCALE = re.compile(
     r"(?<![^\W_])in\s+(?:thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
 )
@@ -707,6 +709,8 @@ class UnitPlaces:
         self.bracket = (-1, -1) if br is None else (len(text[: br[0]].rstrip()), br[0])
         self.n = -1
         self.rows: dict[int, list[tuple[int, int]]] = {}
+        self.ends: dict[int, int] = {}  # the end of each table and caption line, by its start
+        self.starts: list[int] = []
         if "\t" not in text[va:vb]:
             return
         mine = _row_cells(text, va, vb, prefixes)
@@ -717,15 +721,18 @@ class UnitPlaces:
             if not _table_line(text, a, b):
                 break
             self.table.add(a)
+            self.ends[a] = b
             pos = a
-        self.caption = {a for a in self.table if "\t" not in text[a : _line(text, a)[1]]}
+        self.caption = {a for a in self.table if "\t" not in text[a : self.ends[a]]}
         while pos > 0:  # blank lines, then the caption above the table
             a, b = _line(text, pos - 1)
             if not _blank(text[a:b]):
                 if "\t" not in text[a:b] and not tokens(text, a, b):
                     self.caption.add(a)
+                    self.ends[a] = b
                 break
             pos = a
+        self.starts = sorted(self.ends)
 
     def __call__(self, start: int, end: int) -> bool:
         """Whether the item at text[start:end] holds a form of the unit at a unit place."""
@@ -740,7 +747,12 @@ class UnitPlaces:
         lo, paren = self.bracket
         if start >= self.line[0] or (prefix and lo <= end <= paren):
             return True
-        la, lb = _line(text, start)
+        # the line of the form, from the lines read once above: none is a form on another line
+        i = bisect.bisect_right(self.starts, start) - 1
+        if i < 0:
+            return False
+        la = self.starts[i]
+        lb = self.ends[la]
         if end > lb:
             return False
         if la in self.caption:
@@ -753,17 +765,17 @@ class UnitPlaces:
         if self.n >= len(row):
             return False
         c, ce = row[self.n]
-        if prefix:
-            return end <= c and not text[end:c].strip()
-        return start >= ce and not text[ce:start].strip()
+        if prefix:  # only whitespace between, found at the first character that is not one
+            return end <= c and _NOT_SPACE.search(text, end, c) is None
+        return start >= ce and _NOT_SPACE.search(text, ce, start) is None
 
 
 def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
     """The table cells in text[start:end] (SPEC §4.5, the column rule), as (start, end): number
     tokens, lone dashes, and a unit prefix that stands alone with no number after it, also where
-    two occurrences of a prefix overlap. One
-    position is one cell. An empty cell ends where the longest prefix that makes it ends, and a
-    cell that is both a number token and an empty cell ends at the later end of the two."""
+    two occurrences of a prefix overlap. One position is one cell. An empty cell ends where the
+    longest prefix that makes it ends, and a cell that is both a number token and an empty cell
+    ends at the later end of the two."""
     toks = tokens(text, start, end)
     numbers = {t.start for t in toks}
     spans = {t.start: t.end for t in toks}
@@ -773,12 +785,14 @@ def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
             spans.setdefault(m.start(), m.end())
     empty: dict[int, int] = {}
     for p in prefixes:
+        nxt = -1  # the first non-space at or after the end of the last occurrence
         for m in re.finditer(f"(?=({re.escape(p)}))", text[start:end]):  # overlaps count
             a, b = start + m.start(1), start + m.end(1)
             if (a > 0 and not text[a - 1].isspace()) or (b < len(text) and not text[b].isspace()):
                 continue
-            rest = len(text[b:end]) - len(text[b:end].lstrip())
-            nxt = b + rest
+            if b > nxt:  # the ends grow, so each run of whitespace is read once
+                found = _NOT_SPACE.search(text, b, end)
+                nxt = end if found is None else found.start()
             if nxt >= end or nxt in numbers or text[nxt] == "(":
                 continue
             empty[a] = max(b, empty.get(a, b))

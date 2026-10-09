@@ -738,3 +738,36 @@ def test_unit_places_read_a_wide_row_once() -> None:
         return best
 
     assert time_for(1600) < 8 * time_for(400)
+
+
+def test_unit_places_find_lines_and_cells_once() -> None:
+    """A wide row of empty cells above the value stays linear (#164): the line of each unit form
+    and the whitespace after each empty cell are not read again for each form. Four times the
+    columns take less than six times as long."""
+    import time
+
+    schema = {"fields": {"amount": {"type": "integer", "unit": "USD", "aliases": ["amount"]}}}
+
+    def time_for(cols: int) -> float:
+        text = "Head\tX" + "\t$" * cols + "\nAmount\t9\n"  # no $ is in the value's column
+        at = text.index("\t9") + 1
+        cand = {
+            "id": "c",
+            "field": "amount",
+            "value": 9,
+            "unit": "USD",
+            "evidence": [
+                {"text": "9", "start": at, "end": at + 1},
+                {"role": "unit", "text": "$"},
+                {"role": "field", "text": "Amount"},
+            ],
+        }
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            r = gg.admit(text, schema, [cand])
+            best = min(best, time.perf_counter() - began)
+            assert r.decisions[0].codes == ("UNIT_CITATION_INVALID",)
+        return best
+
+    assert time_for(40000) < 6 * time_for(10000)
