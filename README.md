@@ -155,8 +155,27 @@ value blind.
 
 Two rules still cost right values, and neither adds an escape: a unit item fails when the unit is
 already next to the number, and a scale quote must match the case of the text. Without the unit
-check, spec 0.5 admits 33 right values on the 10-K set. Both rules are open for 0.6 (#145).
+check, spec 0.5 admits 33 right values on the 10-K set. Spec 0.6 changes the unit rule (below).
 [bench/evidence/RESULTS.md](bench/evidence/RESULTS.md) has every number.
+
+### Spec 0.6 on a held-out 10-K set
+
+The 0.6 rules came from that 10-K set and the status set, so I measured them on 20 other 10-K
+filings (`bench/sec3`). Two extractors ran once each, with `gg.extractor_schema(schema)` as their
+structured output and the guide's instructions. Each rule was decided alone, and a person labeled
+every admitted value, and every value whose outcome changed, blind.
+
+| Decision | claude-haiku-5-5 | gpt-6-luna | Escapes |
+|---|---:|---:|---:|
+| spec 0.5 | 15 | 17 | 0 |
+| a unit item that repeats the unit passes (#145) | 15 | 27 | 0 |
+| a scale quote in any case (#145, not shipped) | 15 | 17 | 0 |
+| `between` with words before an `and` range (#159) | 15 | 17 | 0 |
+| a heading scale over a table (#162) | 15 | 17 | 0 |
+
+The numbers are right values admitted. The unit rule admits 10 more right values on one run. The
+scale rule admits none more, so it did not ship. #159 and #162 only add flags, and they cost no
+right value. [bench/sec3/RESULTS.md](bench/sec3/RESULTS.md) has every number.
 
 ## Quickstart
 
@@ -336,7 +355,7 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec 0.5.
+- **No dates, arrays of records, or cross-document checks** in spec 0.6.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
@@ -351,8 +370,10 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.5.2 implements spec v0.5. [CHANGELOG.md](CHANGELOG.md) lists what each
-version changes, with its measure. 0.5 makes the evidence a list of items (#141): a value can cite
+Alpha. groundgate 0.6.0 implements spec v0.6. [CHANGELOG.md](CHANGELOG.md) lists what each
+version changes, with its measure. 0.6 passes a unit item that repeats the unit (#145), reads
+`between` with words before an `and` range (#159) and a scale heading over a table (#162), and
+adds a `description` to each field (#171). 0.5 makes the evidence a list of items (#141): a value can cite
 its sign, scale, unit, field and key, and outside sources, under the app's policy, and
 `gg.candidate_schema()` (#147) gives the candidate's JSON Schema. 0.5.1 adds `gg.extractor_schema`
 and `groundgate schema` (#148), a JSON Schema for a model's structured output. 0.5.2 adds

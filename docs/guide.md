@@ -693,7 +693,7 @@ decision shows up as a problem. A judgment that did not apply is not in the rece
 to it changes nothing.
 
 **Versions.** A receipt names the spec version it was decided under, and `verify` accepts only the
-version it implements. A groundgate that implements spec 0.5 reports a 0.4 receipt as one problem
+version it implements. A groundgate that implements spec 0.6 reports a 0.5 receipt as one problem
 and checks nothing more. So pin the groundgate version where you keep receipts. To verify an old
 receipt, install the release for its spec version in a separate environment, for example
 `pip install groundgate==0.2.0` for spec 0.2.
