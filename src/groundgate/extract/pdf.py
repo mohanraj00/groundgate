@@ -295,20 +295,20 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     rows are rebuilt here: the text lines at the same height become one row, with a tab between
     two cells. Other text keeps pdfminer's boxes and lines.
 
-    A **table row** has two or more text lines side by side, with no overlap, and one of them is
-    a number cell. In a table row, a gap between two words of CELL_GAP times their height or more
-    also starts a cell. Two table rows are in one table when each row between them is a table
-    row, a heading row (lines side by side, each of HEADING_WORDS words or fewer), only number
-    cells, or ends before the first number cell of both, as a heading in the label column does.
-    A line of prose across the number columns ends the table. A table has two or more table
-    rows: one number beside text, such as a page number beside a running head or a number in one
-    of two columns of prose, is no table. A table also takes its column headings: the rows of two
-    or more lines side by side above it and just below it, where each line after the first has
-    COLUMN_HEADING_WORDS words or fewer. Above it, the walk goes past lines in the label column,
-    and stops at a line across the edge of its first number cell or at a row of lines side by
-    side that is no column heading, such as two columns of prose. A heading in the label column
-    above the first table row joins only when a column heading is above it. The table is written
-    where pdfminer gives the first of its lines, one row on each line.
+    A **table row** has two or more text lines side by side, with no overlap, and one of them is a
+    number cell. In a table row, a gap between two words of CELL_GAP times their height or more also
+    starts a cell. Two table rows are in one table when each row between them is a table row, a
+    heading row (lines side by side, each of HEADING_WORDS words or fewer), only number cells, or
+    ends before the first number cell of both, as a heading in the label column does. A line of
+    prose across the number columns ends the table. A table has two or more table rows: one number
+    beside text, such as a page number beside a running head or a number in one of two columns of
+    prose, is no table. A table also takes its column headings: the rows of two or more lines side
+    by side above it, where each line after the first has COLUMN_HEADING_WORDS words or fewer. No
+    row below a table joins it, so a table never takes the rows of the next. Above it, the walk goes
+    past lines in the label column, and stops at a line across the edge of its first number cell or
+    at a row of lines side by side that is no column heading, such as two columns of prose. A
+    heading in the label column above the first table row joins only when a column heading is above
+    it. The table is written where pdfminer gives the first of its lines, one row on each line.
     """
     Key = tuple[int, int]  # block, line
     span = {
@@ -378,8 +378,6 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
             ):
                 break
             above -= 1
-        while last + 1 < len(rows) and column_heading(rows[last + 1]):
-            last += 1
         tables.append([])
         for row in rows[first : last + 1]:
             lines = [blocks[bi][li] for bi, li in row]

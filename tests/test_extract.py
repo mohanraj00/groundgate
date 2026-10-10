@@ -207,6 +207,28 @@ def test_pdf_two_columns_of_prose_next_to_a_table_keep_their_lines(tmp_path: Pat
     assert text.count("\t") == 2
 
 
+def test_pdf_a_table_never_takes_the_rows_of_the_next(tmp_path: Path) -> None:
+    """Each row is written once: no row below a table joins it."""
+    path = tmp_path / "following.pdf"
+    page = [
+        (72, 700, "Cash"),
+        (300, 700, "1"),
+        (72, 686, "Land"),
+        (300, 686, "2"),
+        (72, 660, "one two three four five six", 7),
+        (320, 660, "seven eight nine ten eleven twelve", 7),
+        (72, 640, "Debt"),
+        (300, 640, "3"),
+        (72, 626, "Equity"),
+        (300, 626, "4"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    text = extract(path).text
+    assert text.startswith("Cash\t1\nLand\t2\n\n")
+    assert text.count("Debt") == 1
+    assert text.endswith("Debt\t3\nEquity\t4")
+
+
 def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> None:
     """A wide gap inside one text line of a table row is a cell break too."""
     path = tmp_path / "split.pdf"
