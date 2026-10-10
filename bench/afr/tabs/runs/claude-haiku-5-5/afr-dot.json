@@ -4,7 +4,7 @@
  "model": "claude-haiku-5-5",
  "effort": "default",
  "cli": "2.1.295 (Claude Code)",
- "prompt_sha256": "2fc722a1f103ed992acb5aec9240e5e86e125fbd97ffda66231f6f1bceb61891",
+ "prompt_sha256": "7f3eeec9d4ebb48fe42a9f798d6f85d72b4b67c11054a7129815dc32edbf3e99",
  "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -27,6 +27,11 @@
       "source": "document",
       "role": "field",
       "text": "Total Assets"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "BALANCE SHEET ITEMS\t2025"
      },
      {
       "source": "document",
@@ -53,6 +58,11 @@
      },
      {
       "source": "document",
+      "role": "key",
+      "text": "BALANCE SHEET ITEMS\t2025"
+     },
+     {
+      "source": "document",
       "role": "scale",
       "text": "Dollars in Thousands"
      }
@@ -76,6 +86,11 @@
      },
      {
       "source": "document",
+      "role": "key",
+      "text": "BALANCE SHEET ITEMS\t2025"
+     },
+     {
+      "source": "document",
       "role": "scale",
       "text": "Dollars in Thousands"
      }
@@ -96,6 +111,11 @@
       "source": "document",
       "role": "field",
       "text": "Net Cost of Operations"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "ITEMS\t2025"
      },
      {
       "source": "document",

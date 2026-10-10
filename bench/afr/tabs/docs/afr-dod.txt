@@ -1,7 +1,5 @@
 104	FINANCIAL SECTION	PRINCIPAL FINANCIAL STATEMENTS
-
 CONSOLIDATED BALANCE SHEET
-
 As of September 30, 2025	2025
 (Dollars in millions)	(Unaudited)
 Assets (Note 2)
@@ -61,9 +59,7 @@ The accompanying notes are an integral part of these statements.
 
 FY 2025 | AGENCY FINANCIAL REPORT
 106	FINANCIAL SECTION	PRINCIPAL FINANCIAL STATEMENTS
-
 CONSOLIDATED STATEMENT OF NET COST
-
 For Year Ended September 30, 2025	2025
 (Dollars in millions)	(Unaudited)
 Program Costs (Note 19)
@@ -157,9 +153,8 @@ The accompanying notes are an integral part of these statements.
 
 FY 2025 | AGENCY FINANCIAL REPORT
 108	FINANCIAL SECTION	PRINCIPAL FINANCIAL STATEMENTS
-
 COMBINED STATEMENT OF BUDGETARY RESOURCES
-
+2025
 For Year Ended September 30, 2025	(Unaudited)
 (Dollars in millions)	Non-Budgetary
 Budgetary	Credit Reform
@@ -189,8 +184,6 @@ Distributed Offsetting Receipts (-)	(189,666.1)	-
 Agency Outlays, Net (Discretionary and Mandatory)	$	956,843.7	$	-
 Disbursements, Net
 Disbursements, Net (Total) (Mandatory)	$	-	$	47.6
-
-2025
 
 The accompanying notes are an integral part of these statements.
 

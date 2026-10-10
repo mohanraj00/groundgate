@@ -8,8 +8,8 @@ The statement of net position and the statement of activities of 10 FY2025 state
 
 | Decision | Right admitted | Escapes | Not sure | Not labeled | Proposals | No reply |
 |---|---:|---:|---:|---:|---:|---:|
-| spec 0.7 | 6 | 0 | 0 | 0 | 39 | 0 |
-| spec 0.8 #242 | 6 | 0 | 0 | 0 | 39 | 0 |
+| spec 0.7 | 7 | 0 | 0 | 0 | 39 | 0 |
+| spec 0.8 #242 | 7 | 0 | 0 | 0 | 39 | 0 |
 
 Proposals whose scale item reached the role checks, passed or not: 39 under spec 0.7 and 39 under the 0.8 draft. The #242 rule can change only these.
 
@@ -18,9 +18,9 @@ Codes on the proposals that are not admitted (a proposal can have more than one)
 | Code | spec 0.7 | spec 0.8 #242 |
 |---|---:|---:|
 | `FIELD_CITATION_INVALID` | 8 | 8 |
-| `KEY_CITATION_INVALID` | 7 | 7 |
+| `KEY_CITATION_INVALID` | 4 | 4 |
 | `PART_MISSING` | 29 | 29 |
-| `VALUE_DERIVED` | 33 | 33 |
+| `VALUE_DERIVED` | 32 | 32 |
 
 Proposals whose outcome the 0.8 draft changes:
 
@@ -33,18 +33,17 @@ None.
 | spec 0.7 | 0 | 0 | 0 | 0 | 35 | 1 |
 | spec 0.8 #242 | 0 | 0 | 0 | 0 | 35 | 1 |
 
-Proposals whose scale item reached the role checks, passed or not: 30 under spec 0.7 and 30 under the 0.8 draft. The #242 rule can change only these.
+Proposals whose scale item reached the role checks, passed or not: 28 under spec 0.7 and 28 under the 0.8 draft. The #242 rule can change only these.
 
 Codes on the proposals that are not admitted (a proposal can have more than one):
 
 | Code | spec 0.7 | spec 0.8 #242 |
 |---|---:|---:|
-| `CANDIDATE_INVALID` | 5 | 5 |
-| `FIELD_CITATION_INVALID` | 4 | 4 |
-| `KEY_CITATION_INVALID` | 30 | 30 |
-| `PART_MISSING` | 12 | 12 |
-| `UNIT_CITATION_INVALID` | 1 | 1 |
-| `VALUE_DERIVED` | 30 | 30 |
+| `CANDIDATE_INVALID` | 7 | 7 |
+| `FIELD_CITATION_INVALID` | 6 | 6 |
+| `KEY_CITATION_INVALID` | 28 | 28 |
+| `PART_MISSING` | 16 | 16 |
+| `VALUE_DERIVED` | 28 | 28 |
 
 Proposals whose outcome the 0.8 draft changes:
 

@@ -4,7 +4,7 @@
  "model": "gpt-6-luna",
  "effort": "default",
  "cli": "codex-cli 0.162.0",
- "prompt_sha256": "5b6404ec0315aaad2e8f7494954829b4efa840bf8af36214931264d129036311",
+ "prompt_sha256": "1db7e89467196c889e6116c6b69e20933e2d06d17acb9661570259e50beffc39",
  "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -37,11 +37,6 @@
       "source": "document",
       "role": "key",
       "text": "2025"
-     },
-     {
-      "source": "document",
-      "role": "unit",
-      "text": "$"
      }
     ]
    },
@@ -70,11 +65,6 @@
       "source": "document",
       "role": "key",
       "text": "2025"
-     },
-     {
-      "source": "document",
-      "role": "unit",
-      "text": "$"
      }
     ]
    },
@@ -103,11 +93,6 @@
       "source": "document",
       "role": "key",
       "text": "2025"
-     },
-     {
-      "source": "document",
-      "role": "unit",
-      "text": "$"
      }
     ]
    },
@@ -136,11 +121,6 @@
       "source": "document",
       "role": "key",
       "text": "2025"
-     },
-     {
-      "source": "document",
-      "role": "unit",
-      "text": "$"
      }
     ]
    },
@@ -169,11 +149,6 @@
       "source": "document",
       "role": "key",
       "text": "2025"
-     },
-     {
-      "source": "document",
-      "role": "unit",
-      "text": "$"
      }
     ]
    }

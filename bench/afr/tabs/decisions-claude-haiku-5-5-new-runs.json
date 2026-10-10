@@ -72,8 +72,8 @@
     "key": "2025",
     "value": "91333810000",
     "evidence": [
-     6801,
-     6811
+     6803,
+     6813
     ],
     "outcome": "admitted",
     "codes": [
@@ -92,8 +92,8 @@
     "key": "2025",
     "value": "4651653200000",
     "evidence": [
-     2389,
-     2400
+     2387,
+     2398
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -108,8 +108,8 @@
     "key": "2025",
     "value": "4729078400000",
     "evidence": [
-     1637,
-     1648
+     1635,
+     1646
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -124,8 +124,8 @@
     "key": "2025",
     "value": "-77425200000",
     "evidence": [
-     2341,
-     2351
+     2339,
+     2349
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -140,8 +140,8 @@
     "key": "2025",
     "value": "1162655800000",
     "evidence": [
-     3562,
-     3573
+     3558,
+     3569
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -157,8 +157,8 @@
     "key": "2025",
     "value": "1896213800000",
     "evidence": [
-     6431,
-     6442
+     6430,
+     6441
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -403,8 +403,8 @@
     "key": "2025",
     "value": "80186900000",
     "evidence": [
-     5909,
-     5919
+     5910,
+     5920
     ],
     "outcome": "admitted",
     "codes": [
@@ -541,8 +541,8 @@
     "key": "2025",
     "value": "282197025000",
     "evidence": [
-     4827,
-     4838
+     4829,
+     4840
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -557,8 +557,8 @@
     "key": "2025",
     "value": "130088330000",
     "evidence": [
-     3120,
-     3131
+     3121,
+     3132
     ],
     "outcome": "admitted",
     "codes": [
@@ -572,8 +572,8 @@
     "key": "2025",
     "value": "323289772000",
     "evidence": [
-     5556,
-     5567
+     5559,
+     5570
     ],
     "outcome": "admitted",
     "codes": [
@@ -912,8 +912,8 @@
     "key": "2025",
     "value": "322554000000",
     "evidence": [
-     6034,
-     6041
+     6036,
+     6043
     ],
     "outcome": "admitted",
     "codes": [
@@ -1253,8 +1253,8 @@
     "key": "2025",
     "value": "338563000000",
     "evidence": [
-     4046,
-     4054
+     4048,
+     4056
     ],
     "outcome": "admitted",
     "codes": [
@@ -1281,7 +1281,7 @@
     "codes": [
      "VALUE_DERIVED"
     ],
-    "unit": true
+    "unit": null
    },
    {
     "id": "c1",
@@ -1296,7 +1296,7 @@
     "codes": [
      "VALUE_DERIVED"
     ],
-    "unit": true
+    "unit": null
    },
    {
     "id": "c2",
@@ -1311,7 +1311,7 @@
     "codes": [
      "VALUE_DERIVED"
     ],
-    "unit": true
+    "unit": null
    },
    {
     "id": "c3",
@@ -1328,7 +1328,7 @@
      "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ],
-    "unit": true
+    "unit": null
    },
    {
     "id": "c4",
@@ -1336,15 +1336,15 @@
     "key": "2025",
     "value": "1742137000000",
     "evidence": [
-     4457,
-     4466
+     4459,
+     4468
     ],
     "outcome": "admitted",
     "codes": [
      "VALUE_DERIVED",
      "KEY_CITED"
     ],
-    "unit": true
+    "unit": null
    }
   ]
  },
@@ -1390,8 +1390,8 @@
     "key": "2025",
     "value": "78431000000",
     "evidence": [
-     4596,
-     4602
+     4597,
+     4603
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -1408,17 +1408,15 @@
     "key": "2025",
     "value": "31425000000",
     "evidence": [
-     3004,
-     3010
+     3091,
+     3097
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
-     "FIELD_CITATION_INVALID",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
-    "unit": false
+    "unit": null
    },
    {
     "id": "c4",
@@ -1426,8 +1424,8 @@
     "key": "2025",
     "value": "79817000000",
     "evidence": [
-     5265,
-     5271
+     5266,
+     5272
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -1454,7 +1452,7 @@
     "codes": [
      "VALUE_DERIVED"
     ],
-    "unit": true
+    "unit": null
    },
    {
     "id": "c1",
@@ -1462,8 +1460,8 @@
     "key": "2025",
     "value": "41449164000000",
     "evidence": [
-     2444,
-     2454
+     2445,
+     2455
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -1478,8 +1476,8 @@
     "key": "2025",
     "value": "608801000000",
     "evidence": [
-     5630,
-     5637
+     5632,
+     5639
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -1494,15 +1492,15 @@
     "key": "2025",
     "value": "1199013000000",
     "evidence": [
-     4061,
-     4070
+     4062,
+     4071
     ],
     "outcome": "needs_verification",
     "codes": [
      "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
-    "unit": true
+    "unit": null
    },
    {
     "id": "c4",
@@ -1510,8 +1508,8 @@
     "key": "2025",
     "value": "1643311000000",
     "evidence": [
-     6366,
-     6375
+     6368,
+     6377
     ],
     "outcome": "admitted",
     "codes": [

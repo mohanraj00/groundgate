@@ -4,7 +4,7 @@
  "model": "gpt-6-luna",
  "effort": "default",
  "cli": "codex-cli 0.162.0",
- "prompt_sha256": "18e63f2ba8c79b904877ee1cce3bedef7562e91831a884205d364b95cc50db4e",
+ "prompt_sha256": "15977e62352163f4671a649c170131a40ee83f04d8216e0be5b400ad654d32ea",
  "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -25,6 +25,11 @@
      },
      {
       "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
       "role": "field",
       "text": "TOTAL ASSETS"
      },
@@ -32,11 +37,6 @@
       "source": "document",
       "role": "scale",
       "text": "(In Thousands)"
-     },
-     {
-      "source": "document",
-      "role": "unit",
-      "text": "$"
      },
      {
       "source": "document",
@@ -58,6 +58,11 @@
      },
      {
       "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
       "role": "field",
       "text": "TOTAL LIABILITIES"
      },
@@ -65,11 +70,6 @@
       "source": "document",
       "role": "scale",
       "text": "(In Thousands)"
-     },
-     {
-      "source": "document",
-      "role": "unit",
-      "text": "$"
      },
      {
       "source": "document",
@@ -91,6 +91,11 @@
      },
      {
       "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
       "role": "field",
       "text": "TOTAL NET POSITION"
      },
@@ -98,11 +103,6 @@
       "source": "document",
       "role": "scale",
       "text": "(In Thousands)"
-     },
-     {
-      "source": "document",
-      "role": "unit",
-      "text": "$"
      },
      {
       "source": "document",
@@ -124,6 +124,11 @@
      },
      {
       "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
       "role": "field",
       "text": "NET COST OF OPERATIONS"
      },
@@ -131,11 +136,6 @@
       "source": "document",
       "role": "scale",
       "text": "(In Thousands)"
-     },
-     {
-      "source": "document",
-      "role": "unit",
-      "text": "$"
      },
      {
       "source": "document",
@@ -182,11 +182,6 @@
      },
      {
       "source": "document",
-      "role": "unit",
-      "text": "$"
-     },
-     {
-      "source": "document",
       "role": "key",
       "text": "For the Year Ended September 30, 2025"
      }
@@ -194,7 +189,5 @@
    }
   ]
  },
- "discarded": [
-  "exit 1: "
- ]
+ "discarded": []
 }

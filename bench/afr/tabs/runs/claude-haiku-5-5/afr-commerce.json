@@ -4,7 +4,7 @@
  "model": "claude-haiku-5-5",
  "effort": "default",
  "cli": "2.1.295 (Claude Code)",
- "prompt_sha256": "18e63f2ba8c79b904877ee1cce3bedef7562e91831a884205d364b95cc50db4e",
+ "prompt_sha256": "15977e62352163f4671a649c170131a40ee83f04d8216e0be5b400ad654d32ea",
  "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -20,13 +20,13 @@
     "evidence": [
      {
       "source": "document",
-      "role": "value",
-      "text": "135,816,393"
+      "role": "field",
+      "text": "TOTAL ASSETS"
      },
      {
       "source": "document",
-      "role": "field",
-      "text": "TOTAL ASSETS"
+      "role": "value",
+      "text": "135,816,393"
      },
      {
       "source": "document",
@@ -48,13 +48,13 @@
     "evidence": [
      {
       "source": "document",
-      "role": "value",
-      "text": "7,456,000"
+      "role": "field",
+      "text": "TOTAL LIABILITIES"
      },
      {
       "source": "document",
-      "role": "field",
-      "text": "TOTAL LIABILITIES"
+      "role": "value",
+      "text": "7,456,000"
      },
      {
       "source": "document",
@@ -76,13 +76,13 @@
     "evidence": [
      {
       "source": "document",
-      "role": "value",
-      "text": "128,360,393"
+      "role": "field",
+      "text": "TOTAL NET POSITION"
      },
      {
       "source": "document",
-      "role": "field",
-      "text": "TOTAL NET POSITION"
+      "role": "value",
+      "text": "128,360,393"
      },
      {
       "source": "document",
@@ -104,13 +104,13 @@
     "evidence": [
      {
       "source": "document",
-      "role": "value",
-      "text": "17,693,617"
+      "role": "field",
+      "text": "NET COST OF OPERATIONS"
      },
      {
       "source": "document",
-      "role": "field",
-      "text": "NET COST OF OPERATIONS"
+      "role": "value",
+      "text": "17,693,617"
      },
      {
       "source": "document",
@@ -132,13 +132,13 @@
     "evidence": [
      {
       "source": "document",
-      "role": "value",
-      "text": "91,333,810"
+      "role": "field",
+      "text": "TOTAL BUDGETARY RESOURCES"
      },
      {
       "source": "document",
-      "role": "field",
-      "text": "TOTAL BUDGETARY RESOURCES"
+      "role": "value",
+      "text": "91,333,810"
      },
      {
       "source": "document",

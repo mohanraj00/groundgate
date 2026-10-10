@@ -16,13 +16,13 @@ Codes on the proposals that are not admitted (a proposal can have more than one)
 
 | Code | 0.7 text | replay | new runs |
 |---|---:|---:|---:|
-| `FIELD_CITATION_INVALID` | 82 | 12 | 18 |
+| `FIELD_CITATION_INVALID` | 82 | 12 | 17 |
 | `KEY_CITATION_INVALID` | 5 | 3 | 17 |
 | `KEY_CITED` | 1 | 2 | 3 |
 | `KEY_NOT_AT_VALUE` | 79 | 14 | 7 |
 | `PART_MISSING` | 39 | 11 | 15 |
 | `SCALE_CITATION_INVALID` | 1 | 3 | 2 |
-| `UNIT_CITATION_INVALID` | 1 | 1 | 3 |
+| `UNIT_CITATION_INVALID` | 1 | 1 | 2 |
 | `VALUE_DERIVED` | 77 | 34 | 45 |
 | `VALUE_NOT_IN_EVIDENCE` | 0 | 20 | 0 |
 
@@ -32,23 +32,22 @@ Codes on the proposals that are not admitted (a proposal can have more than one)
 |---|---:|---:|---:|---:|---:|---:|
 | 0.7 text | 6 | 0 | 0 | 0 | 100 | 0 |
 | replay | 50 | 0 | 1 | 0 | 100 | 0 |
-| new runs | 64 | 0 | 1 | 0 | 101 | 0 |
+| new runs | 57 | 0 | 1 | 0 | 100 | 0 |
 
 Codes on the proposals that are not admitted (a proposal can have more than one):
 
 | Code | 0.7 text | replay | new runs |
 |---|---:|---:|---:|
-| `CANDIDATE_INVALID` | 2 | 2 | 3 |
+| `CANDIDATE_INVALID` | 2 | 2 | 2 |
 | `FIELD_CITATION_INVALID` | 77 | 12 | 15 |
-| `KEY_CITATION_INVALID` | 1 | 1 | 1 |
+| `KEY_CITATION_INVALID` | 1 | 1 | 2 |
 | `KEY_CITED` | 0 | 3 | 3 |
-| `KEY_NOT_AT_VALUE` | 64 | 11 | 3 |
-| `PART_MISSING` | 12 | 7 | 12 |
-| `QUOTE_NOT_FOUND` | 0 | 0 | 1 |
+| `KEY_NOT_AT_VALUE` | 64 | 11 | 5 |
+| `PART_MISSING` | 12 | 7 | 14 |
 | `SIGN_CITATION_INVALID` | 0 | 0 | 1 |
-| `UNIT_CITATION_INVALID` | 32 | 12 | 2 |
-| `VALUE_DERIVED` | 81 | 36 | 28 |
-| `VALUE_NOT_IN_EVIDENCE` | 11 | 11 | 4 |
+| `UNIT_CITATION_INVALID` | 32 | 12 | 1 |
+| `VALUE_DERIVED` | 81 | 36 | 30 |
+| `VALUE_NOT_IN_EVIDENCE` | 11 | 11 | 10 |
 
 ## Escapes on the new text
 

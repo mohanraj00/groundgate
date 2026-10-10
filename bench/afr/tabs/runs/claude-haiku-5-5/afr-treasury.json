@@ -4,7 +4,7 @@
  "model": "claude-haiku-5-5",
  "effort": "default",
  "cli": "2.1.295 (Claude Code)",
- "prompt_sha256": "85d645e7ef972d56a14c1bb3eca5ea1d01f983fe644ce8a4ae4b89d0767e4c7d",
+ "prompt_sha256": "09f7d99bf10c6e7fb4ff3d7641823a03be8e44729d7ce8caaf9145747a31030d",
  "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -20,18 +20,13 @@
     "evidence": [
      {
       "source": "document",
-      "role": "value",
-      "text": "42,057,965"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Total Assets"
      },
      {
       "source": "document",
-      "role": "unit",
-      "text": "$"
+      "role": "value",
+      "text": "42,057,965"
      },
      {
       "source": "document",
@@ -53,13 +48,13 @@
     "evidence": [
      {
       "source": "document",
-      "role": "value",
-      "text": "41,449,164"
+      "role": "field",
+      "text": "Total Liabilities (Note 19)"
      },
      {
       "source": "document",
-      "role": "field",
-      "text": "Total Liabilities (Note 19)"
+      "role": "value",
+      "text": "41,449,164"
      },
      {
       "source": "document",
@@ -81,13 +76,13 @@
     "evidence": [
      {
       "source": "document",
-      "role": "value",
-      "text": "608,801"
+      "role": "field",
+      "text": "Total Net Position (Note 20)"
      },
      {
       "source": "document",
-      "role": "field",
-      "text": "Total Net Position (Note 20)"
+      "role": "value",
+      "text": "608,801"
      },
      {
       "source": "document",
@@ -109,18 +104,13 @@
     "evidence": [
      {
       "source": "document",
-      "role": "value",
-      "text": "1,199,013"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Total Net Cost of Treasury Operations and Non-Entity Costs"
      },
      {
       "source": "document",
-      "role": "unit",
-      "text": "$"
+      "role": "value",
+      "text": "1,199,013"
      },
      {
       "source": "document",
@@ -142,13 +132,13 @@
     "evidence": [
      {
       "source": "document",
-      "role": "value",
-      "text": "1,643,311"
+      "role": "field",
+      "text": "Total Budgetary Resources"
      },
      {
       "source": "document",
-      "role": "field",
-      "text": "Total Budgetary Resources"
+      "role": "value",
+      "text": "1,643,311"
      },
      {
       "source": "document",

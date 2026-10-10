@@ -4,7 +4,7 @@
  "model": "gpt-6-luna",
  "effort": "default",
  "cli": "codex-cli 0.162.0",
- "prompt_sha256": "caee61baaa32ad9d33a5f83923b4dd71d54d9d6b9aa96d5768568c4b63574801",
+ "prompt_sha256": "09a3a4162dfc74cfc81f7151ca6ef5d32bf59efd7dbb04c02881ecab82b3fbfa",
  "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -21,12 +21,17 @@
      {
       "source": "document",
       "role": "value",
-      "text": "1,232,313"
+      "text": "$1,232,313"
      },
      {
       "source": "document",
       "role": "scale",
       "text": "(In Millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
      },
      {
       "source": "document",
@@ -49,12 +54,17 @@
      {
       "source": "document",
       "role": "value",
-      "text": "3,216,178"
+      "text": "$3,216,178"
      },
      {
       "source": "document",
       "role": "scale",
       "text": "(In Millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
      },
      {
       "source": "document",
@@ -77,7 +87,7 @@
      {
       "source": "document",
       "role": "value",
-      "text": "(1,983,865)"
+      "text": "($1,983,865)"
      },
      {
       "source": "document",
@@ -133,12 +143,17 @@
      {
       "source": "document",
       "role": "value",
-      "text": "338,563"
+      "text": "$338,563"
      },
      {
       "source": "document",
       "role": "scale",
       "text": "(In Millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
      },
      {
       "source": "document",
@@ -154,7 +169,5 @@
    }
   ]
  },
- "discarded": [
-  "exit 1: "
- ]
+ "discarded": []
 }

@@ -43,10 +43,12 @@ can show page numbers.
 
 `extract` writes a table one row on each line, with a tab between two cells. For HTML, the
 cells are the table's `td` and `th` elements. A PDF has no cells, so `extract` finds them: a row
-is the text at the same height, and it is a table row when it has two or more parts side by side
-with a wide gap between them, and one part holds only numbers, such as `$ 1,234` or `(56)`.
-Rows next to it, such as column headings and headings in the label column, join the table. Other
-PDF text keeps its lines, and a line of prose that crosses the number columns ends the table.
+is the text at the same height, and it is a table row when it has two or more separate parts
+side by side, and one part holds only numbers, such as `$ 1,234` or `(56)`. A table has two or
+more table rows. Between them, short headings, numbers and headings in the label column join the
+table. Column headings directly above or below join it too, with a heading in the label column
+under them. Other PDF text keeps its lines, and a line of prose that crosses the number columns
+ends the table.
 
 ## Schema
 

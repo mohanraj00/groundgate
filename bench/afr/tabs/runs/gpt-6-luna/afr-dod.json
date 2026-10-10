@@ -4,7 +4,7 @@
  "model": "gpt-6-luna",
  "effort": "default",
  "cli": "codex-cli 0.162.0",
- "prompt_sha256": "ffa135fc30ab5bbb21403d072180b5c372380537ce4ed8582618504829c69fc4",
+ "prompt_sha256": "c7d5f3e60f20e5eb420917932e3cf26a41e7e60a4964864b6e0628f5bb303cd0",
  "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -25,6 +25,11 @@
      },
      {
       "source": "document",
+      "role": "scale",
+      "text": "(Dollars in millions)"
+     },
+     {
+      "source": "document",
       "role": "field",
       "text": "Total Assets"
      },
@@ -32,11 +37,6 @@
       "source": "document",
       "role": "key",
       "text": "2025"
-     },
-     {
-      "source": "document",
-      "role": "scale",
-      "text": "(Dollars in millions)"
      }
     ]
    },
@@ -53,6 +53,11 @@
      },
      {
       "source": "document",
+      "role": "scale",
+      "text": "(Dollars in millions)"
+     },
+     {
+      "source": "document",
       "role": "field",
       "text": "Total Liabilities"
      },
@@ -60,11 +65,6 @@
       "source": "document",
       "role": "key",
       "text": "2025"
-     },
-     {
-      "source": "document",
-      "role": "scale",
-      "text": "(Dollars in millions)"
      }
     ]
    },
@@ -81,6 +81,11 @@
      },
      {
       "source": "document",
+      "role": "scale",
+      "text": "(Dollars in millions)"
+     },
+     {
+      "source": "document",
       "role": "field",
       "text": "Total Net Position"
      },
@@ -88,11 +93,6 @@
       "source": "document",
       "role": "key",
       "text": "2025"
-     },
-     {
-      "source": "document",
-      "role": "scale",
-      "text": "(Dollars in millions)"
      }
     ]
    },
@@ -109,6 +109,11 @@
      },
      {
       "source": "document",
+      "role": "scale",
+      "text": "(Dollars in millions)"
+     },
+     {
+      "source": "document",
       "role": "field",
       "text": "Net Cost of Operations"
      },
@@ -116,11 +121,6 @@
       "source": "document",
       "role": "key",
       "text": "2025"
-     },
-     {
-      "source": "document",
-      "role": "scale",
-      "text": "(Dollars in millions)"
      }
     ]
    },
@@ -137,23 +137,18 @@
      },
      {
       "source": "document",
+      "role": "scale",
+      "text": "(Dollars in millions)"
+     },
+     {
+      "source": "document",
       "role": "field",
       "text": "Total Budgetary Resources"
      },
      {
       "source": "document",
       "role": "key",
-      "text": "2025"
-     },
-     {
-      "source": "document",
-      "role": "key",
       "text": "Budgetary"
-     },
-     {
-      "source": "document",
-      "role": "scale",
-      "text": "(Dollars in millions)"
      }
     ]
    }

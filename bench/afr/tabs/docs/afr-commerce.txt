@@ -113,7 +113,9 @@ FY 2025
 
 T h e a c c o m p a n y i n g n o t e s a r e a n i n t e g r a l p a r t o f t h e s e f i n a n c i a l s t a t e m e n t s .
 
-5 8	F Y	2 0 2 5	A G E N C Y	F I N A N C I A L	R E P O R T
+5 8
+
+F Y 2 0 2 5 A G E N C Y F I N A N C I A L R E P O R T
 
 P R I N C I P A L F I N A N C I A L S T A T E M E N T S
 United States Department of Commerce Consolidated Statement of Changes in Net Position
@@ -148,7 +150,9 @@ NET POSITION	$	8,042,310	$	120,318,083	$	–	$ 128,360,393
 
 T h e a c c o m p a n y i n g n o t e s a r e a n i n t e g r a l p a r t o f t h e s e f i n a n c i a l s t a t e m e n t s .
 
-F Y	2 0 2 5	A G E N C Y	F I N A N C I A L	R E P O R T	5 9
+F Y 2 0 2 5 A G E N C Y F I N A N C I A L R E P O R T
+
+5 9
 
 P R I N C I P A L F I N A N C I A L S T A T E M E N T S
 United States Department of Commerce Combined Statement of Budgetary Resources
@@ -181,6 +185,8 @@ Non-budgetary Credit
 
 T h e a c c o m p a n y i n g n o t e s a r e a n i n t e g r a l p a r t o f t h e s e f i n a n c i a l s t a t e m e n t s .
 
-6 0	F Y	2 0 2 5	A G E N C Y	F I N A N C I A L	R E P O R T
+6 0
+
+F Y 2 0 2 5 A G E N C Y F I N A N C I A L R E P O R T
 
 P R I N C I P A L F I N A N C I A L S T A T E M E N T S

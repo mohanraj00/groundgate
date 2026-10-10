@@ -4,7 +4,7 @@
  "model": "claude-haiku-5-5",
  "effort": "default",
  "cli": "2.1.295 (Claude Code)",
- "prompt_sha256": "d34f93209a6e6786438db87c801c079528ebad5ebb8fd7b7cae0f8c1bb72d016",
+ "prompt_sha256": "0f7e30e0b7e54192a0c060195d9a935045026c39cb186bf842033b2c788fe048",
  "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -30,13 +30,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "CONSOLIDATED BALANCE SHEET (dollars in millions)"
+      "role": "key",
+      "text": "As of September 30,"
      },
      {
       "source": "document",
-      "role": "key",
-      "text": "As of September 30,"
+      "role": "scale",
+      "text": "CONSOLIDATED BALANCE SHEET (dollars in millions)"
      }
     ]
    },
@@ -58,13 +58,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "CONSOLIDATED BALANCE SHEET (dollars in millions)"
+      "role": "key",
+      "text": "As of September 30,"
      },
      {
       "source": "document",
-      "role": "key",
-      "text": "As of September 30,"
+      "role": "scale",
+      "text": "CONSOLIDATED BALANCE SHEET (dollars in millions)"
      }
     ]
    },
@@ -86,13 +86,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "CONSOLIDATED BALANCE SHEET (dollars in millions)"
+      "role": "key",
+      "text": "As of September 30,"
      },
      {
       "source": "document",
-      "role": "key",
-      "text": "As of September 30,"
+      "role": "scale",
+      "text": "CONSOLIDATED BALANCE SHEET (dollars in millions)"
      }
     ]
    },
@@ -114,18 +114,13 @@
      },
      {
       "source": "document",
-      "role": "unit",
-      "text": "$"
+      "role": "key",
+      "text": "For the Year Ended September 30,"
      },
      {
       "source": "document",
       "role": "scale",
       "text": "CONSOLIDATED STATEMENT OF NET COST (Note 15) (dollars in millions)"
-     },
-     {
-      "source": "document",
-      "role": "key",
-      "text": "For the Year Ended September 30,"
      }
     ]
    },
@@ -147,13 +142,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "COMBINED STATEMENT OF BUDGETARY RESOURCES (Note 16) (dollars in millions)"
+      "role": "key",
+      "text": "For the Year Ended September 30,"
      },
      {
       "source": "document",
-      "role": "key",
-      "text": "For the Year Ended September 30,"
+      "role": "scale",
+      "text": "COMBINED STATEMENT OF BUDGETARY RESOURCES (Note 16) (dollars in millions)"
      }
     ]
    }

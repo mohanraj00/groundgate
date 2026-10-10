@@ -45,6 +45,7 @@ Line = list[tuple[str, Box]]  # the words of one pdfminer text line
 Row = list[Line]  # the cells of one output line, left to right
 
 CELL_GAP = 0.65  # a gap between two words this many times the word's height starts a new cell
+HEADING_WORDS = 4  # a row with no number joins a table when each of its parts is this short
 DASHES = frozenset("-\u2013\u2014\u2212")  # hyphen, en dash, em dash, minus
 NUMBER_CHARS = frozenset("0123456789,.$€£¥%()") | DASHES
 
@@ -293,14 +294,18 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     rows are rebuilt here: the text lines at the same height become one row, with a tab between
     two cells. Other text keeps pdfminer's boxes and lines.
 
-    A **table row** has two or more text lines side by side, and one of them is a number cell. In
-    a table row, a gap between two words of CELL_GAP times their height or more also starts a
-    cell. Two table rows are in one table when each row between them has two or more lines side
-    by side, is a number cell, or ends before the first number cell of both, as a heading in the
-    label column does. A line of prose across the number columns ends the table. A table also
-    takes the rows of two or more lines side by side above it, up to a line across the edge of
-    its first number cell, and those just below it, such as its column headings. The table is
-    written where pdfminer gives the first of its lines, one row on each line.
+    A **table row** has two or more text lines side by side, with no overlap, and one of them is
+    a number cell. In a table row, a gap between two words of CELL_GAP times their height or more
+    also starts a cell. Two table rows are in one table when each row between them is a table
+    row, a heading row (lines side by side, each of HEADING_WORDS words or fewer), only number
+    cells, or ends before the first number cell of both, as a heading in the label column does.
+    A line of prose across the number columns ends the table. A table has two or more table
+    rows: one number beside text, such as a page number beside a running head or a number in one
+    of two columns of prose, is no table. A table also takes the rows of two or more lines side
+    by side above it, up to a line across the edge of its first number cell, and those just below
+    it, such as its column headings. A heading in the label column above the first table row
+    joins only when such a row is above it. The table is written where pdfminer gives the first of
+    its lines, one row on each line.
     """
     Key = tuple[int, int]  # block, line
     span = {
@@ -326,6 +331,9 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     def table_row(row: list[Key]) -> bool:
         return side_by_side(row) and any(map(number, row))
 
+    def heading(row: list[Key]) -> bool:
+        return side_by_side(row) and all(len(blocks[bi][li]) <= HEADING_WORDS for bi, li in row)
+
     def first_number(row: list[Key]) -> float:
         return min(span[k].x0 for k in row if number(k))
 
@@ -337,12 +345,16 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
             prev = groups[-1][-1]
             edge = min(first_number(rows[prev]), first_number(row)) + 0.5
             if all(
-                side_by_side(rows[r]) or number(rows[r][0]) or span[rows[r][0]].x1 <= edge
+                table_row(rows[r])
+                or heading(rows[r])
+                or all(number(k) for k in rows[r])
+                or all(span[k].x1 <= edge for k in rows[r])
                 for r in range(prev + 1, i)
             ):
                 groups[-1].append(i)
                 continue
         groups.append([i])
+    groups = [group for group in groups if len(group) > 1]
     region: dict[Key, int] = {}
     tables: list[list[Row]] = []
     for n, group in enumerate(groups):

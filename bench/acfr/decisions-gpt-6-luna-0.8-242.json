@@ -13,6 +13,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
+     "PART_MISSING",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
@@ -29,6 +30,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
+     "PART_MISSING",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
@@ -40,11 +42,12 @@
     "key": null,
     "value": "19387041000",
     "evidence": [
-     10592,
-     10602
+     17356,
+     17366
     ],
     "outcome": "needs_verification",
     "codes": [
+     "FIELD_CITATION_INVALID",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
@@ -56,12 +59,12 @@
     "key": null,
     "value": "4802249000",
     "evidence": [
-     17113,
-     17122
+     17117,
+     17126
     ],
     "outcome": "needs_verification",
     "codes": [
-     "UNIT_CITATION_INVALID",
+     "PART_MISSING",
      "FIELD_CITATION_INVALID",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
@@ -78,48 +81,36 @@
     "field": "total_assets",
     "key": null,
     "value": "65868012000",
-    "evidence": [
-     1434,
-     1444
-    ],
-    "outcome": "needs_verification",
+    "evidence": null,
+    "outcome": "rejected",
     "codes": [
-     "KEY_CITATION_INVALID",
-     "VALUE_DERIVED"
+     "CANDIDATE_INVALID"
     ],
-    "scale": true
+    "scale": null
    },
    {
     "id": "c1",
     "field": "total_liabilities",
     "key": null,
     "value": "36452116000",
-    "evidence": [
-     2961,
-     2971
-    ],
-    "outcome": "needs_verification",
+    "evidence": null,
+    "outcome": "rejected",
     "codes": [
-     "KEY_CITATION_INVALID",
-     "VALUE_DERIVED"
+     "CANDIDATE_INVALID"
     ],
-    "scale": true
+    "scale": null
    },
    {
     "id": "c2",
     "field": "total_net_position",
     "key": null,
     "value": "30007406000",
-    "evidence": [
-     3731,
-     3741
-    ],
-    "outcome": "needs_verification",
+    "evidence": null,
+    "outcome": "rejected",
     "codes": [
-     "KEY_CITATION_INVALID",
-     "VALUE_DERIVED"
+     "CANDIDATE_INVALID"
     ],
-    "scale": true
+    "scale": null
    }
   ]
  },
@@ -434,8 +425,8 @@
     "key": null,
     "value": "22451268000",
     "evidence": [
-     5635,
-     5645
+     5637,
+     5647
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -450,12 +441,18 @@
     "field": "change_in_net_position",
     "key": null,
     "value": "14916000",
-    "evidence": null,
-    "outcome": "rejected",
-    "codes": [
-     "CANDIDATE_INVALID"
+    "evidence": [
+     5460,
+     5466
     ],
-    "scale": null
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
    }
   ]
  },

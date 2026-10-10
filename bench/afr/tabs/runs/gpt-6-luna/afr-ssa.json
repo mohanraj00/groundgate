@@ -4,7 +4,7 @@
  "model": "gpt-6-luna",
  "effort": "default",
  "cli": "codex-cli 0.162.0",
- "prompt_sha256": "66e054314ddae6cae59c43bd9c1bd9e7ae3a4bb3ecf95a765cb9f882cc829ca9",
+ "prompt_sha256": "da57a7081ff1cd09158953bd4c06e59f57a731f474488a34efccb30795fee0d0",
  "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -129,13 +129,8 @@
      },
      {
       "source": "document",
-      "role": "unit",
-      "text": "$"
-     },
-     {
-      "source": "document",
       "role": "field",
-      "text": "Total Net Cost"
+      "text": "Net Cost of Operations"
      },
      {
       "source": "document",

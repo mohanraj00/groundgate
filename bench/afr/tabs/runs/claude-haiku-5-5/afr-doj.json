@@ -4,7 +4,7 @@
  "model": "claude-haiku-5-5",
  "effort": "default",
  "cli": "2.1.295 (Claude Code)",
- "prompt_sha256": "5b6404ec0315aaad2e8f7494954829b4efa840bf8af36214931264d129036311",
+ "prompt_sha256": "1db7e89467196c889e6116c6b69e20933e2d06d17acb9661570259e50beffc39",
  "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [

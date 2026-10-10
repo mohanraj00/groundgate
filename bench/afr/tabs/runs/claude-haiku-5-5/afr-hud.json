@@ -4,7 +4,7 @@
  "model": "claude-haiku-5-5",
  "effort": "default",
  "cli": "2.1.295 (Claude Code)",
- "prompt_sha256": "11a6c5965f5b7310a36ab47980ff589638445897bcd8bab5fa825afaa156fa3e",
+ "prompt_sha256": "6d1e0169ac9f5aaea4b2f1900f84dc6616dcbc9bc55f4629c29b38cc6af0b2f4",
  "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -20,23 +20,23 @@
     "evidence": [
      {
       "source": "document",
-      "role": "field",
-      "text": "Total Assets"
-     },
-     {
-      "source": "document",
       "role": "value",
       "text": "513,315"
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(dollars in millions)"
+      "role": "field",
+      "text": "Total Assets"
      },
      {
       "source": "document",
       "role": "key",
       "text": "As of September 30, 2025"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(dollars in millions)"
      }
     ]
    },
@@ -48,23 +48,23 @@
     "evidence": [
      {
       "source": "document",
-      "role": "field",
-      "text": "Total Liabilities"
-     },
-     {
-      "source": "document",
       "role": "value",
       "text": "171,656"
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(dollars in millions)"
+      "role": "field",
+      "text": "Total Liabilities"
      },
      {
       "source": "document",
       "role": "key",
       "text": "As of September 30, 2025"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(dollars in millions)"
      }
     ]
    },
@@ -76,23 +76,23 @@
     "evidence": [
      {
       "source": "document",
-      "role": "field",
-      "text": "Total Net Position"
-     },
-     {
-      "source": "document",
       "role": "value",
       "text": "341,659"
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(dollars in millions)"
+      "role": "field",
+      "text": "Total Net Position"
      },
      {
       "source": "document",
       "role": "key",
       "text": "As of September 30, 2025"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(dollars in millions)"
      }
     ]
    },
@@ -104,23 +104,23 @@
     "evidence": [
      {
       "source": "document",
-      "role": "field",
-      "text": "Net Cost of Operations (Note 26)"
-     },
-     {
-      "source": "document",
       "role": "value",
       "text": "67,714"
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(dollars in millions)"
+      "role": "field",
+      "text": "Net Cost of Operations (Note 26)"
      },
      {
       "source": "document",
       "role": "key",
       "text": "FY 2025"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(dollars in millions)"
      }
     ]
    },
@@ -132,23 +132,23 @@
     "evidence": [
      {
       "source": "document",
-      "role": "field",
-      "text": "Total Budgetary Resources"
-     },
-     {
-      "source": "document",
       "role": "value",
       "text": "322,554"
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(dollars in millions)"
+      "role": "field",
+      "text": "Total Budgetary Resources"
      },
      {
       "source": "document",
       "role": "key",
       "text": "FY 2025"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(dollars in millions)"
      }
     ]
    }

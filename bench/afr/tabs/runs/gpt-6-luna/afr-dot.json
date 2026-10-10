@@ -4,7 +4,7 @@
  "model": "gpt-6-luna",
  "effort": "default",
  "cli": "codex-cli 0.162.0",
- "prompt_sha256": "2fc722a1f103ed992acb5aec9240e5e86e125fbd97ffda66231f6f1bceb61891",
+ "prompt_sha256": "7f3eeec9d4ebb48fe42a9f798d6f85d72b4b67c11054a7129815dc32edbf3e99",
  "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -25,11 +25,6 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "Dollars in Thousands"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Total Assets"
      },
@@ -37,6 +32,11 @@
       "source": "document",
       "role": "key",
       "text": "2025"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
      }
     ]
    },
@@ -53,11 +53,6 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "Dollars in Thousands"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Total Liabilities"
      },
@@ -65,6 +60,11 @@
       "source": "document",
       "role": "key",
       "text": "2025"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
      }
     ]
    },
@@ -81,11 +81,6 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "Dollars in Thousands"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Total Net Position"
      },
@@ -93,6 +88,11 @@
       "source": "document",
       "role": "key",
       "text": "2025"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
      }
     ]
    },
@@ -109,11 +109,6 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "Dollars in Thousands"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Net Cost of Operations"
      },
@@ -121,6 +116,11 @@
       "source": "document",
       "role": "key",
       "text": "2025"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
      }
     ]
    },
@@ -137,11 +137,6 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "Dollars in Thousands"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Total Budgetary Resources"
      },
@@ -149,38 +144,17 @@
       "source": "document",
       "role": "key",
       "text": "2025 BUDGETARY"
-     }
-    ]
-   },
-   {
-    "field": "total_budgetary_resources",
-    "value": "8056878000",
-    "unit": "USD",
-    "key": "2025",
-    "evidence": [
-     {
-      "source": "document",
-      "role": "value",
-      "text": "8,056,878"
      },
      {
       "source": "document",
       "role": "scale",
       "text": "Dollars in Thousands"
-     },
-     {
-      "source": "document",
-      "role": "field",
-      "text": "Total Budgetary Resources"
-     },
-     {
-      "source": "document",
-      "role": "key",
-      "text": "2025 NON-BUDGETARY CREDIT REFORM FINANCING ACCOUNTS"
      }
     ]
    }
   ]
  },
- "discarded": []
+ "discarded": [
+  "exit 1: "
+ ]
 }

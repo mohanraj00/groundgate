@@ -154,13 +154,48 @@ def test_pdf_prose_side_by_side_is_no_table(tmp_path: Path) -> None:
     )
 
 
+def test_pdf_one_number_beside_prose_is_no_table(tmp_path: Path) -> None:
+    """A table has two or more table rows: one number in a column of prose stays in its column."""
+    path = tmp_path / "one.pdf"
+    page = [
+        (72, 700, "The plan covers a minor child"),
+        (320, 700, "Adult members pay"),
+        (72, 686, "Minor"),
+        (320, 686, "500"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert extract(path).text == "The plan covers a minor child\nMinor\n\nAdult members pay\n500"
+
+
+def test_pdf_numbers_in_two_columns_of_prose_are_no_table(tmp_path: Path) -> None:
+    """A row of long prose between two number rows keeps them in two tables of one row, so in
+    no table."""
+    path = tmp_path / "two.pdf"
+    page = [
+        (72, 700, "Minor"),
+        (320, 700, "500"),
+        (72, 686, "and the rest of the text goes on here"),
+        (320, 686, "and more text about the plan here"),
+        (72, 672, "Senior"),
+        (320, 672, "300"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert extract(path).text == (
+        "Minor\nand the rest of the text goes on here\nSenior\n\n"
+        "500\nand more text about the plan here\n300"
+    )
+
+
 def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> None:
     """A wide gap inside one text line of a table row is a cell break too."""
     path = tmp_path / "split.pdf"
     page = [
-        (72, 700, "Cash"),
-        (300, 700, "1,234"),
-        (400, 700, "1,100"),
+        (72, 714, "Cash"),
+        (300, 714, "1,234"),
+        (400, 714, "1,100"),
+        (72, 700, "Land"),
+        (300, 700, "200"),
+        (400, 700, "100"),
         (72, 686, "A line of prose that crosses the number columns of the table here."),
         (72, 672, "Debt"),
         (300, 672, "500"),
@@ -170,7 +205,7 @@ def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> N
     ]
     path.write_bytes(make_pdf([page]))
     assert extract(path).text == (
-        "Cash\t1,234\t1,100\n\n"
+        "Cash\t1,234\t1,100\nLand\t200\t100\n\n"
         "A line of prose that crosses the number columns of the table here.\n\n"
         "Debt\t500\t400\nTotal\t1,234\t5,678"
     )

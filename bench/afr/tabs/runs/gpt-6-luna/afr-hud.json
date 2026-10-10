@@ -4,7 +4,7 @@
  "model": "gpt-6-luna",
  "effort": "default",
  "cli": "codex-cli 0.162.0",
- "prompt_sha256": "11a6c5965f5b7310a36ab47980ff589638445897bcd8bab5fa825afaa156fa3e",
+ "prompt_sha256": "6d1e0169ac9f5aaea4b2f1900f84dc6616dcbc9bc55f4629c29b38cc6af0b2f4",
  "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -25,18 +25,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(dollars in millions)"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Total Assets"
      },
      {
       "source": "document",
-      "role": "unit",
-      "text": "$"
+      "role": "scale",
+      "text": "(dollars in millions)"
      },
      {
       "source": "document",
@@ -58,18 +53,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(dollars in millions)"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Total Liabilities"
      },
      {
       "source": "document",
-      "role": "unit",
-      "text": "$"
+      "role": "scale",
+      "text": "(dollars in millions)"
      },
      {
       "source": "document",
@@ -91,18 +81,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(dollars in millions)"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Total Net Position"
      },
      {
       "source": "document",
-      "role": "unit",
-      "text": "$"
+      "role": "scale",
+      "text": "(dollars in millions)"
      },
      {
       "source": "document",
@@ -124,23 +109,18 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(dollars in millions)"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Net Cost of Operations (Note 26)"
      },
      {
       "source": "document",
-      "role": "unit",
-      "text": "$"
+      "role": "scale",
+      "text": "(dollars in millions)"
      },
      {
       "source": "document",
       "role": "key",
-      "text": "FY 2025"
+      "text": "For the Fiscal Year Ended September 30, 2025"
      }
     ]
    },
@@ -157,27 +137,24 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(dollars in millions)"
-     },
-     {
-      "source": "document",
       "role": "field",
       "text": "Total Budgetary Resources"
      },
      {
       "source": "document",
-      "role": "unit",
-      "text": "$"
+      "role": "scale",
+      "text": "(dollars in millions)"
      },
      {
       "source": "document",
       "role": "key",
-      "text": "FY 2025"
+      "text": "Budgetary"
      }
     ]
    }
   ]
  },
- "discarded": []
+ "discarded": [
+  "exit 1: "
+ ]
 }

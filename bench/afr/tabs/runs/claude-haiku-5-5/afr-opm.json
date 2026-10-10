@@ -4,7 +4,7 @@
  "model": "claude-haiku-5-5",
  "effort": "default",
  "cli": "2.1.295 (Claude Code)",
- "prompt_sha256": "caee61baaa32ad9d33a5f83923b4dd71d54d9d6b9aa96d5768568c4b63574801",
+ "prompt_sha256": "09a3a4162dfc74cfc81f7151ca6ef5d32bf59efd7dbb04c02881ecab82b3fbfa",
  "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
@@ -30,13 +30,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(In Millions)"
+      "role": "key",
+      "text": "As of September 30, 2025"
      },
      {
       "source": "document",
-      "role": "key",
-      "text": "As of September 30, 2025"
+      "role": "scale",
+      "text": "(In Millions)"
      }
     ]
    },
@@ -58,13 +58,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(In Millions)"
+      "role": "key",
+      "text": "As of September 30, 2025"
      },
      {
       "source": "document",
-      "role": "key",
-      "text": "As of September 30, 2025"
+      "role": "scale",
+      "text": "(In Millions)"
      }
     ]
    },
@@ -86,13 +86,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(In Millions)"
+      "role": "key",
+      "text": "As of September 30, 2025"
      },
      {
       "source": "document",
-      "role": "key",
-      "text": "As of September 30, 2025"
+      "role": "scale",
+      "text": "(In Millions)"
      }
     ]
    },
@@ -114,13 +114,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(In Millions)"
+      "role": "key",
+      "text": "For the Fiscal Year Ended September 30, 2025"
      },
      {
       "source": "document",
-      "role": "key",
-      "text": "For the Fiscal Year Ended September 30, 2025"
+      "role": "scale",
+      "text": "(In Millions)"
      }
     ]
    },
@@ -142,13 +142,13 @@
      },
      {
       "source": "document",
-      "role": "scale",
-      "text": "(In Millions)"
+      "role": "key",
+      "text": "For the Fiscal Year Ended September 30, 2025"
      },
      {
       "source": "document",
-      "role": "key",
-      "text": "For the Fiscal Year Ended September 30, 2025"
+      "role": "scale",
+      "text": "(In Millions)"
      }
     ]
    }
