@@ -1,0 +1,159 @@
+Consolidated Financial Statements
+
+U.S. OFFICE OF PERSONNEL MANAGEMENT
+CONSOLIDATED BALANCE SHEET
+As of September 30, 2025
+(In Millions)
+
+ASSETS
+
+Intragovernmental Assets
+
+Fund Balance with Treasury [Note 2]	$5,251
+Investments, Net [Note 3]	1,220,741
+Accounts Receivable, Net [Note 4]	2,684
+Advance and Prepayments	6
+Other Assets [Note 1.L]	-
+Total Intragovernmental Assets	1,228,682
+With the Public Assets
+Accounts Receivable, Net [Note 4]	2,394
+Other Assets [Note 1.L]	1,237
+Total With the Public Assets	3,631
+TOTAL ASSETS	$1,232,313
+LIABILITIES
+Intragovernmental Liabilities
+Accounts Payable	$7
+Advances from Others and Deferred Revenue	85
+Other Liabilities [Notes 7 & 8]	275
+Total Intragovernmental Liabilities	367
+With the Public Liabilities
+Accounts Payable	8
+Federal Employee Salary, Leave and Benefits Payable [Note 5]	593
+Pensions, Other Post-Employment Benefits Payable [Note 6]	3,213,020
+Advances from Others and Deferred Revenue	-
+Other Liabilities [Notes 7 & 8]	2,190
+Total With the Public Liabilities	3,215,811
+TOTAL LIABILITIES	$3,216,178
+Commitments and Contingencies [Note 9]
+NET POSITION
+Unexpended Appropriations-Funds from Other than Dedicated Collections	$334
+Cumulative Results of Operations-Funds from Other than Dedicated
+(1,984,199)
+Collections
+TOTAL NET POSITION	($1,983,865)
+TOTAL LIABILITIES AND NET POSITION	$1,232,313
+The accompanying notes are an integral part of the financial statements.
+OPM Fiscal Year 2025 Agency Financial Report	39
+
+FY
+2025
+U.S. OFFICE OF PERSONNEL MANAGEMENT
+CONSOLIDATED STATEMENT OF NET COST
+For the Fiscal Year Ended September 30, 2025
+(In Millions)
+
+Gross Costs	$26,594
+Less: Earned Revenue	(6,364)
+Provide	Net Cost	20,230
+CSRS Benefits	(Gain)/Loss on Pension, ORB, or OPEB
+Assumption Changes [Note 6]	(49,027)
+Net Cost of Operations	($28,797)
+Gross Costs	$132,799
+Less: Earned Revenue	(93,616)
+Provide	Net Cost	39,183
+FERS Benefits	(Gain)/Loss on Pension, ORB, or OPEB
+Assumption Changes [Note 6]	(99,141)
+Net Cost of Operations	($59,958)
+Gross Costs	$109,938
+Less: Earned Revenue	(52,546)
+Provide	Net Cost	57,392
+Health Benefits	(Gain)/Loss on Pension, ORB, or OPEB
+Assumption Changes [Note 6]	(32,368)
+Net Cost of Operations	$25,024
+Gross Costs	$6,618
+Less: Earned Revenue	(6,726)
+Provide	Net Cost	(108)
+Life Insurance	(Gain)/Loss on Pension, ORB, or OPEB
+Benefits	Assumption Changes [Note 6]	90
+Net Cost of Operations	($18)
+Gross Costs	$958
+Less: Earned Revenue	(358)
+Other
+Programs	Net Cost of Operations	$600
+Gross Costs	$276,907
+Less: Earned Revenue	(159,610)
+Total	Net Cost	117,297
+Net Cost	(Gain)/Loss on Pension, ORB, or OPEB
+of Operations	Assumption Changes [Note 6]	(180,446)
+Net Cost of Operations	($63,149)
+
+The accompanying notes are an integral part of the financial statements.
+
+FY
+2025
+
+40	OPM Fiscal Year 2025 Agency Financial Report
+U.S. OFFICE OF PERSONNEL MANAGEMENT
+CONSOLIDATED STATEMENT OF CHANGES IN NET POSITION
+For the Fiscal Year Ended September 30, 2025
+(In Millions)
+
+UNEXPENDED APPROPRIATIONS
+
+Beginning Balance	$369
+Financing Sources:
+Appropriations Received	67,941
+Appropriations Transferred	(1)
+Other Adjustments	704
+Appropriations Used	(68,679)
+Total Budgetary Financing Sources	(35)
+Total Unexpended Appropriations - Ending Balance	$334
+CUMULATIVE RESULTS OF OPERATIONS
+Beginning Balances	($2,116,076)
+Financing Sources:
+Appropriations Used	68,679
+Transfer-In/Out Without Reimbursement	2
+Other Financing Sources	47
+Total Financing Sources	68,728
+Net Cost of Operations	(63,149)
+Net Change	131,877
+Cumulative Results of Operations - Ending Balance	($1,984,199)
+NET POSITION	($1,983,865)
+
+FY
+2025
+
+The accompanying notes are an integral part of the financial statements.
+
+OPM Fiscal Year 2025 Agency Financial Report	41
+U.S. OFFICE OF PERSONNEL MANAGEMENT
+COMBINED STATEMENT OF BUDGETARY RESOURCES
+For the Fiscal Year Ended September 30, 2025
+(In Millions)
+
+BUDGETARY RESOURCES
+
+Unobligated Balance, from Prior Year Budget Authority, Net	$74,219
+Appropriations	183,741
+Spending Authority from Offsetting Collections	80,603
+Total Budgetary Resources	$338,563
+STATUS OF BUDGETARY RESOURCES
+New Obligations and Upward Adjustments [Note 11]	$261,559
+Unobligated Balance, End of Year:
+Apportioned, Unexpired Accounts	1,105
+Exempt from Apportionment, Unexpired Accounts	-
+Unapportioned, Unexpired Accounts	75,618
+Expired, Unobligated Balance, End of Year	281
+Total Unobligated Balance, End of Year	77,004
+Total Budgetary Resources	$338,563
+OUTLAYS, NET
+Outlays, Net	$180,490
+Less: Distributed Offsetting Receipts	(52,251)
+Agency Outlays, Net	$128,239
+
+The accompanying notes are an integral part of the financial statements.
+
+FY
+2025
+
+42	OPM Fiscal Year 2025 Agency Financial Report

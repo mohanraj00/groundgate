@@ -1,0 +1,160 @@
+FINANCIAL SECTION
+
+Consolidated Balance Sheet as of
+September 30, 2025
+(Dollars in Millions)
+
+Assets	2025
+Intragovernmental Assets:
+Fund Balance with Treasury (Notes 3 and 4)	$	6,045
+Investments (Note 5)	2,632,335
+Accounts Receivable, Net (Note 6)	968
+Advances and Prepayments	59
+Other Assets (Note 8)	113
+Total Intragovernmental Assets	2,639,520
+Assets with the Public:
+Accounts Receivable, Net (Notes 3 and 6)	11,012
+Property, Plant, and Equipment, Net (Note 7)	5,172
+Total Assets with the Public	16,184
+Total Assets	$	2,655,704
+Liabilities (Note 9)
+Intragovernmental Liabilities:
+Accounts Payable	$	5,845
+Other Liabilities	5,221
+Total Intragovernmental Liabilities	11,066
+Liabilities with the Public:
+Accounts Payable	386
+Federal Employee Salary, Leave, and Benefits Payable	547
+Post-Employment Benefits Payable	243
+Benefits Due and Payable	169,618
+Advances from Others and Deferred Revenue	290
+Other Liabilities	39
+Total Liabilities with the Public	171,123
+Total Liabilities	$	182,189
+Commitments and Contingencies (Note 9)
+Net Position
+Unexpended Appropriations - Funds from other than Dedicated Collections	$	612
+Cumulative Results of Operations - Funds from Dedicated Collections (Note 10)	2,468,387
+Cumulative Results of Operations - Funds from other than Dedicated Collections	4,516
+Total Cumulative Results of Operations	2,472,903
+Total Net Position	$	2,473,515
+Total Liabilities and Net Position	$	2,655,704
+The accompanying notes are an integral part of these financial statements.
+SSA’s FY 2025 Agency Financial Report	49
+FINANCIAL SECTION
+
+Consolidated Statement of Net Cost for the Year Ended
+September 30, 2025
+(Dollars in Millions)
+
+OASI Program
+
+Benefit Payment Expense	$	1,423,041
+Operating Expenses (Note 11)	4,408
+Total Cost of OASI Program	1,427,449
+Less: Exchange Revenues (Note 12)	(23)
+Net Cost of OASI Program	$	1,427,426
+DI Program
+Benefit Payment Expense	$	156,332
+Operating Expenses (Note 11)	3,168
+Total Cost of DI Program	159,500
+Less: Exchange Revenues (Note 12)	(44)
+Net Cost of DI Program	$	159,456
+SSI Program
+Benefit Payment Expense	$	60,268
+Operating Expenses (Note 11)	5,153
+Total Cost of SSI Program	65,421
+Less: Exchange Revenues (Note 12)	(283)
+Net Cost of SSI Program	$	65,138
+Other
+Operating Expenses (Note 11)	$	3,820
+Less: Exchange Revenues (Note 12)	(23)
+Net Cost of Other Program	$	3,797
+Total Net Cost
+Benefit Payment Expense	$	1,639,641
+Operating Expenses (Note 11)	16,549
+Total Cost	1,656,190
+Less: Exchange Revenues (Note 12)	(373)
+Total Net Cost	$	1,655,817
+
+2025
+
+The accompanying notes are an integral part of these financial statements.
+
+50	SSA’s FY 2025 Agency Financial Report
+FINANCIAL SECTION
+
+Consolidated Statement of Changes in Net Position for the Year Ended
+September 30, 2025
+(Dollars in Millions)
+
+Funds from	other than
+Dedicated	Dedicated
+Collections	Collections	Total
+Unexpended Appropriations:
+Beginning Balances	$	0	$	1,865	$	1,865
+Appropriations Received	59,748	68,872	128,620
+Other Adjustments	0	(1,305)	(1,305)
+Appropriations Used	(59,748)	(68,820)	(128,568)
+Net Change in Unexpended Appropriations	0	(1,253)	(1,253)
+Total Unexpended Appropriations - Ending	0	612	612
+Cumulative Results of Operations:
+Beginning Balances	$	2,624,095	$	4,333	$	2,628,428
+Adjustments
+Changes in Accounting Principles	0	126	126
+Beginning Balance, as Adjusted	$	2,624,095	$	4,459	$	2,628,554
+Appropriations Used	59,748	68,820	128,568
+Non-Exchange Revenue
+Tax Revenues (Note 13)	1,308,139	0	1,308,139
+Interest Revenues	69,307	0	69,307
+Other	37	0	37
+Total Non-Exchange Revenue	1,377,483	0	1,377,483
+Transfers-In/Out - Without Reimbursement	(12,737)	9,767	(2,970)
+Imputed Financing Sources (Note 14)	0	1,034	1,034
+Other	0	(3,949)	(3,949)
+Net Cost of Operations	1,580,202	75,615	1,655,817
+Net Change in Cumulative Results of Operations	(155,708)	57	(155,651)
+Cumulative Results of Operations - Ending	$	2,468,387	$	4,516	$	2,472,903
+Net Position	$	2,468,387	$	5,128	$	2,473,515
+
+2025
+
+Funds from
+
+The accompanying notes are an integral part of these financial statements.
+
+SSA’s FY 2025 Agency Financial Report	51
+FINANCIAL SECTION
+
+Combined Statement of Budgetary Resources for the Year Ended
+September 30, 2025
+(Dollars in Millions)
+
+Budgetary Resources (Note 15)
+
+Unobligated balance from prior year budget authority, net	$	3,336
+Appropriations (discretionary and mandatory)	1,720,904
+Spending authority from offsetting collections (discretionary and mandatory)	17,897
+Total Budgetary Resources	$	1,742,137
+Status of Budgetary Resources
+New obligations and upward adjustments
+Direct	$	1,736,883
+Reimbursable	3,516
+New obligations and upward adjustments (total)	1,740,399
+Unobligated balance, End of Year
+Apportioned, unexpired accounts	1,199
+Unapportioned, unexpired accounts	7
+Unexpired unobligated balance, end of year	1,206
+Expired unobligated balance, end of year	532
+Unobligated balance, end of year (total)	1,738
+Total Budgetary Resources	$	1,742,137
+Outlays, Net
+Outlays, net (discretionary and mandatory)	$	1,710,421
+Distributed offsetting receipts	(63,906)
+Agency Outlays, Net (Discretionary and Mandatory)	$	1,646,515
+
+2025
+
+The accompanying notes are an integral part of these financial statements.
+
+52	SSA’s FY 2025 Agency Financial Report

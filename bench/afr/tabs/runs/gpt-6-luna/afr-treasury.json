@@ -1,0 +1,185 @@
+{
+ "doc": "afr-treasury",
+ "provider": "codex",
+ "model": "gpt-6-luna",
+ "effort": "default",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "85d645e7ef972d56a14c1bb3eca5ea1d01f983fe644ce8a4ae4b89d0767e4c7d",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "total_assets",
+    "value": "42057965000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "42,057,965"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(in millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Assets"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "total_liabilities",
+    "value": "41449164000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "41,449,164"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(in millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Liabilities (Note 19)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "total_net_position",
+    "value": "608801000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "608,801"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(in millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Net Position (Note 20)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "net_cost_of_operations",
+    "value": "1199013000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "1,199,013"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(in millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Net Cost of Treasury Operations and Non-Entity Costs"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "total_budgetary_resources",
+    "value": "1643311000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "1,643,311"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(in millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Budgetary Resources"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": [
+  "exit 1: "
+ ]
+}

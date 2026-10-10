@@ -1,0 +1,163 @@
+{
+ "doc": "afr-state",
+ "provider": "claude-cli",
+ "model": "claude-haiku-5-5",
+ "effort": "default",
+ "cli": "2.1.295 (Claude Code)",
+ "prompt_sha256": "d34f93209a6e6786438db87c801c079528ebad5ebb8fd7b7cae0f8c1bb72d016",
+ "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
+ "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "total_assets",
+    "value": "129637000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "129,637"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Assets"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "CONSOLIDATED BALANCE SHEET (dollars in millions)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "As of September 30,"
+     }
+    ]
+   },
+   {
+    "field": "total_liabilities",
+    "value": "51206000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "51,206"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Liabilities"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "CONSOLIDATED BALANCE SHEET (dollars in millions)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "As of September 30,"
+     }
+    ]
+   },
+   {
+    "field": "total_net_position",
+    "value": "78431000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "78,431"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Net Position"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "CONSOLIDATED BALANCE SHEET (dollars in millions)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "As of September 30,"
+     }
+    ]
+   },
+   {
+    "field": "net_cost_of_operations",
+    "value": "31425000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "31,425"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Net Cost of Operations"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "CONSOLIDATED STATEMENT OF NET COST (Note 15) (dollars in millions)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "For the Year Ended September 30,"
+     }
+    ]
+   },
+   {
+    "field": "total_budgetary_resources",
+    "value": "79817000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "79,817"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Budgetary Resources"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "COMBINED STATEMENT OF BUDGETARY RESOURCES (Note 16) (dollars in millions)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "For the Year Ended September 30,"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

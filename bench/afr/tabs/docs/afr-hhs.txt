@@ -1,0 +1,174 @@
+Principal Financial Statements
+U.S. Department of Health and Human Services
+Consolidated Balance Sheet
+As of September 30, 2025
+(in Millions)
+
+2025
+
+Assets (Note 2)
+
+Intragovernmental Assets:
+
+Fund Balance with Treasury (Note 3)	$	659,351
+Investments, Net (Note 4)	414,323
+Accounts Receivable, Net (Note 5)	763
+Advances and Prepayments (Note 8)	1,966
+Total Intragovernmental Assets	1,076,403
+Other than Intragovernmental Assets:
+Accounts Receivable, Net (Note 5)	49,212
+Inventory and Related Property, Net (Note 6)	19,183
+Property, Plant and Equipment, Net (Note 7)	9,391
+Advances and Prepayments (Note 8)	118
+Other Assets:
+Loans Receivable, Net	377
+Other	9
+Total Other than Intragovernmental Assets	78,290
+Total Assets	$	1,154,693
+Stewardship Land (Note 20)
+Liabilities (Note 9)
+Intragovernmental Liabilities:
+Accounts Payable	$	1,099
+Debt	452
+Advances from Others and Deferred Revenue	500
+Other Liabilities (Note 13)	1,720
+Total Intragovernmental Liabilities	3,771
+Other than Intragovernmental Liabilities:
+Accounts Payable	1,443
+Entitlement Benefits Due and Payable (Note 10)	163,952
+Federal Employee Salary, Leave and Benefits Payable (Note 11)	1,374
+Pensions and Post-Employment Benefits Payable (Note 11)	22,567
+Environmental and Disposal Liabilities	229
+Advances from Others and Deferred Revenue	4,365
+Other Liabilities:
+Accrued Liabilities (Note 12)	18,042
+Contingencies and Commitments (Note 14)	17,785
+Other Liabilities (Note 13)	1,426
+Total Other than Intragovernmental Liabilities	231,183
+Total Liabilities	234,954
+Net Position
+Unexpended Appropriations – Funds from Dedicated Collections (Note 19)	236,903
+Unexpended Appropriations – Funds from Other Than Dedicated Collections	297,983
+Total Unexpended Appropriations	534,886
+Cumulative Results of Operations – Funds from Dedicated Collections (Note 19)	373,853
+Cumulative Results of Operations – Funds from Other Than Dedicated Collections	11,000
+Total Cumulative Results of Operations	384,853
+Total Net Position	919,739
+Total Liabilities and Net Position	$	1,154,693
+
+The accompanying “Notes to the Principal Financial Statements” are an integral part of these statements.
+
+Fiscal Accountability for a Healthy America | 68
+Principal Financial Statements
+
+U.S. Department of Health and Human Services
+Consolidated Statement of Net Cost
+For the Years Ended September 30, 2025
+
+(in Millions)
+
+Responsibility Segments
+
+Centers for Medicare & Medicaid Services (CMS)
+
+Gross Cost	$	1,867,923
+Earned Revenue	(176,901)
+CMS Net Cost of Operations	1,691,022
+Other Segments:
+Administration for Children and Families (ACF)	76,120
+Administration for Community Living (ACL)	3,057
+Agency for Healthcare Research and Quality (AHRQ)	351
+Administration for Strategic Preparedness and Response (ASPR)	1,073
+Centers for Disease Control and Prevention (CDC)	17,900
+Food and Drug Administration (FDA)	6,945
+Health Resources and Services Administration (HRSA)	14,912
+Indian Health Service (IHS)	10,924
+National Institutes of Health (NIH)	48,930
+Office of the Secretary (OS)	12,544
+Program Support Center (PSC)	2,837
+Substance Abuse and Mental Health Services Administration (SAMHSA)	8,316
+Other Segments Gross Cost of Operations before Actuarial Gains and Losses	203,909
+Actuarial (Gains) and Losses Commissioned Corps Retirement and Medical
+Plan Assumption Changes (Note 11)	496
+Other Segments Gross Cost of Operations after Actuarial Gains and Losses	204,405
+Earned Revenue	(8,221)
+Other Segments Net Cost of Operations	196,184
+Net Cost of Operations (Note 21)	$	1,887,206
+
+2025
+
+The accompanying “Notes to the Principal Financial Statements” are an integral part of these statements.
+
+Fiscal Accountability for a Healthy America | 69
+Collections	Consolidated
+(Note 19)	All Other Funds	Eliminations	Total
+Unexpended Appropriations
+Beginning Balance	$	263,916	$	319,995	$	-	$	583,911
+Appropriations Received	657,934	932,858	-	1,590,792
+Appropriations Transferred in/out	-	(1,472)	-	(1,472)
+Other Adjustments	(75,243)	(66,743)	-	(141,986)
+Appropriations Used	(609,704)	(886,655)	-	(1,496,359)
+Net Change in Unexpended Appropriations	(27,013)	(22,012)	-	(49,025)
+Total Unexpended Appropriations	$	236,903	$	297,983	$	-	$	534,886
+Cumulative Results of Operations
+Beginning Balance	$	348,049	$	10,738	$	-	$	358,787
+Appropriations Used	609,704	886,655	-	1,496,359
+Nonexchange Revenue:
+Nonexchange Revenue – Tax Revenue	400,622	-	-	400,622
+Nonexchange Revenue – Investment Revenue	12,521	1,056	-	13,577
+Nonexchange Revenue – Other	3,224	131	-	3,355
+Donations and Forfeitures of Cash and Cash Equivalents	43	-	-	43
+Transfers in/out without Reimbursement	(5,824)	4,265	-	(1,559)
+Donations and Forfeitures of Property	-	11	-	11
+Imputed Financing	1,318	1,618	(440)	2,496
+Other	15	(1,647)	-	(1,632)
+Net Cost of Operations	995,819	891,827	(440)	1,887,206
+Net Change in Cumulative Results of Operations	25,804	262	-	26,066
+Total Cumulative Results of Operations	$	373,853	$	11,000	$	-	$	384,853
+Net Position	$	610,756	$	308,983	$	-	$	919,739
+
+Principal Financial Statements
+
+U.S. Department of Health and Human Services
+Consolidated Statement of Changes in Net Position
+For the Year Ended September 30, 2025
+
+(in Millions)
+
+Funds from
+Dedicated
+
+The accompanying “Notes to the Principal Financial Statements” are an integral part of these statements.
+
+Fiscal Accountability for a Healthy America | 70
+Principal Financial Statements
+
+U.S. Department of Health and Human Services
+Combined Statement of Budgetary Resources
+For the Years Ended September 30, 2025
+
+(in Millions)
+
+Unobligated Balance from Prior Year Budget Authority, Net (Discretionary and Mandatory) (Note 15)	$	387,756
+Appropriations (Discretionary and Mandatory)	2,695,918
+Spending Authority from Offsetting Collections (Discretionary and Mandatory)	46,071
+Total Budgetary Resources	$	3,129,745
+New Obligations and Upward Adjustments	$	2,794,363
+Unobligated Balance, End of Year
+Apportioned, Unexpired Accounts	67,232
+Exempt from Apportionment, Unexpired Accounts	1,234
+Unapportioned, Unexpired Accounts	18,397
+Unexpired Unobligated Balance, End of Year	86,863
+Expired Unobligated Balance, End of Year	248,519
+Unobligated Balance, End of Year	335,382
+Total Budgetary Resources	$	3,129,745
+Outlays, Net (Discretionary and Mandatory)	$	2,671,374
+Distributed Offsetting Receipts	(786,930)
+Agency Outlays, Net (Discretionary and Mandatory) (Note 21)	$	1,884,444
+Disbursements, Net	$	(134)
+
+2025
+
+The accompanying “Notes to the Principal Financial Statements” are an integral part of these statements.
+
+Fiscal Accountability for a Healthy America | 71

@@ -1,0 +1,170 @@
+66 of 176	FINANCIAL SECTION | PRINCIPAL FINANCIAL STATEMENTS
+CONSOLIDATED BALANCE SHEET (dollars in millions)
+As of September 30,	Notes	2025
+ASSETS
+Intragovernmental Assets:
+Fund Balance with Treasury	3	$	69,571
+Investments, Net	4	22,896
+Accounts Receivable, Net	5	91
+Advances and Prepayments	7	1,346
+Other Assets	8	226
+Total Intragovernmental Assets	94,130
+Other than Intragovernmental Assets:
+Accounts Receivable, Net	5	128
+General Property and Equipment, Net	6	34,879
+Advances and Prepayments	7	461
+Other Assets
+Lease Receivable	8, 12	23
+Cash and Other Monetary Assets	8	2
+Inventory and Related Property, Net	8	11
+Loans Receivable, Net	8	3
+Total Other than Intragovernmental Assets	35,507
+Total Assets	$	129,637
+Stewardship Property and Equipment – Heritage Assets	6
+LIABILITIES
+Intragovernmental Liabilities:
+Accounts Payable	$	200
+Advances from Others and Deferred Revenue	865
+Other Liabilities	9	134
+Total Intragovernmental Liabilities	1,199
+Other than Intragovernmental Liabilities:
+Accounts Payable
+International Organizations Liability	11	348
+Other Accounts Payable	2,236
+Federal Employee Salary, Leave, and Benefits Payable	10	1,004
+Pension and Post-Employment Benefits Payable	10	37,868
+Advances from Others and Deferred Revenue	64
+Other Liabilities
+International Organizations Liability	9, 11	4,664
+Lease Liability	9, 12	2,878
+Environmental and Disposal Liability	9	50
+Other	9	895
+Total Other than Intragovernmental Liabilities	50,007
+Total Liabilities	51,206
+Contingencies and Commitments	13
+NET POSITION
+Unexpended Appropriations
+Funds from Dedicated Collections	14	—
+Funds from Other than Dedicated Collections	48,348
+Total Unexpended Appropriations	48,348
+Cumulative Results of Operations
+Funds from Dedicated Collections	14	6,637
+Funds from Other than Dedicated Collections	23,446
+Total Cumulative Results of Operations	30,083
+Total Net Position	78,431
+Total Liabilities and Net Position	$	129,637
+
+The accompanying notes are an integral part of these statements.
+
+U.S. DEPARTMENT OF STATE 2025 AGENCY FINANCIAL REPORT
+PRINCIPAL FINANCIAL STATEMENTS | FINANCIAL SECTION	67 of 176
+CONSOLIDATED STATEMENT OF NET COST (Note 15) (dollars in millions)
+For the Year Ended September 30,	2025
+Peace and Security
+Gross Costs	$	2,353
+Earned Revenue	(50)
+Net Program Costs	2,303
+Economic Support
+Gross Costs	181
+Earned Revenue	—
+Net Program Costs	181
+Global Health Programs
+Gross Costs	7,684
+Earned Revenue	—
+Net Program Costs	7,684
+Humanitarian Assistance
+Gross Costs	4,037
+Earned Revenue	(10)
+Net Program Costs	4,027
+Administration of Foreign Affairs
+Gross Costs	24,376
+Earned Revenue	(10,373)
+Net Program Costs	14,003
+International Organizations and Commissions
+Gross Costs	2,549
+Earned Revenue	(14)
+Net Program Costs	2,535
+Related Programs and Special Trust Funds
+Gross Costs	508
+Earned Revenue	—
+Net Program Costs	508
+Net Program Costs Before Assumption Changes	31,241
+Actuarial Loss on Pension Assumption Changes (Notes 1 and 10)	184
+Net Program Costs Including Assumption Changes	31,425
+Total Gross Costs	41,872
+Total Earned Revenue	(10,447)
+Net Cost of Operations	$	31,425
+
+The accompanying notes are an integral part of these statements.
+
+2025 AGENCY FINANCIAL REPORT U.S. DEPARTMENT OF STATE
+68 of 176
+
+CONSOLIDATED STATEMENT OF CHANGES IN NET POSITION (dollars in millions)
+
+For the Year Ended September 30,	2025
+
+Funds from	Other than
+Dedicated	Dedicated
+Collections	Collections	Intra-
+(Consolidated	(Consolidated	Departmental	Consolidated
+Totals)	Totals)	Eliminations	Total
+Unexpended Appropriations
+Beginning Balances	$	—	$	48,281	$	—	$	48,281
+Appropriations Received	—	33,641	—	33,641
+Appropriations Transferred In(Out)	—	17	—	17
+Other Adjustments	—	(2,875)	—	(2,875)
+Appropriations Used	—	(30,716)	—	(30,716)
+Net Change in Unexpended Appropriations	—	67	—	67
+Total Unexpended Appropriations: Ending	$	—	$	48,348	$	—	$	48,348
+Cumulative Results of Operations
+Beginning Balances	$	5,726	$	25,126	$	—	$	30,852
+Adjustments	—	—	—	—
+Beginning Balances, as Adjusted	5,726	25,126	—	30,852
+Other Adjustments	—	(9)	—	(9)
+Appropriations Used	—	30,716	—	30,716
+Non-Exchange Revenue	—	1	—	1
+Donations and Forfeitures of
+Cash and Cash Equivalents	20	—	—	20
+Transfers In(Out) Without Reimbursement	50	(287)	—	(237)
+Imputed Financing	144	340	(65)	419
+Non-Entity Collections	—	(254)	—	(254)
+Net Cost of Operations	697	(32,187)	65	(31,425)
+Net Change in Cumulative Results of Operations	911	(1,680)	—	(769)
+Total Cumulative Results of Operations: Ending	6,637	23,446	—	30,083
+Net Position	$	6,637	$	71,794	$	—	$	78,431
+
+Funds from
+
+The accompanying notes are an integral part of these statements.
+
+U.S. DEPARTMENT OF STATE 2025 AGENCY FINANCIAL REPORT
+
+FINANCIAL SECTION | PRINCIPAL FINANCIAL STATEMENTS
+PRINCIPAL FINANCIAL STATEMENTS | FINANCIAL SECTION	69 of 176
+COMBINED STATEMENT OF BUDGETARY RESOURCES (Note 16) (dollars in millions)
+For the Year Ended September 30,	2025
+Budgetary Resources:
+Unobligated Balance from Prior Year Budget Authority, Net	$	32,748
+Appropriations (Discretionary and Mandatory)	38,252
+Borrowing Authority (Discretionary and Mandatory)	3
+Spending Authority from Offsetting Collections (Discretionary and Mandatory)	8,814
+Total Budgetary Resources	$	79,817
+Status of Budgetary Resources:
+New Obligations and Upward Adjustments (Total)	$	44,598
+Unobligated Balance, End of Year:
+Apportioned, Unexpired Accounts	31,064
+Exempt from Apportionment, Unexpired Accounts	1,310
+Unapportioned, Unexpired Accounts	1,918
+Unexpired Unobligated Balance, End of Year	34,292
+Expired Unobligated Balance, End of Year	927
+Unobligated Balance, End of Year (Total)	35,219
+Total Budgetary Resources	$	79,817
+Outlays, Net:
+Outlays, Net (Total) (Discretionary and Mandatory)	$	36,481
+Distributed Offsetting Receipts (-)	(6,705)
+Agency Outlays, Net (Discretionary and Mandatory)	$	29,776
+
+The accompanying notes are an integral part of these statements.
+
+2025 AGENCY FINANCIAL REPORT U.S. DEPARTMENT OF STATE

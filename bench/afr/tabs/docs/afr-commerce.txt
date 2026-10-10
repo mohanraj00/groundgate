@@ -1,0 +1,186 @@
+United States Department of Commerce Consolidated Balance Sheet
+As of September 30, 2025 (In Thousands)
+
+ASSETS (Note 10)
+
+Intragovernmental:
+
+Fund Balance with Treasury (Notes 2 and 19)	$	101,345,998
+Accounts Receivable (Note 3)	173,717
+Advances and Prepayments	223,538
+Other Assets – Funds Held by a Third Party for Investment	2,850,659
+Total Intragovernmental	104,593,912
+Other than Intragovernmental:
+Cash and Other Monetary Assets (Note 4)	16,180
+Accounts Receivable, Net (Notes 3 and 20)	187,923
+Loans Receivable, Net (Note 5)	564,405
+Inventory and Related Property, Net (Note 6)	166,847
+General Property, Plant, and Equipment, Net (Note 7)	14,806,337
+Advances and Prepayments	606,082
+Investments (Note 8)	9,235,218
+Other Assets
+Cost Contribution to Buildout/Continuing Enhancement of Nationwide Public Safety Broadband Network
+(Note 22 – NTIA's Network Construction Fund and First Responder Network Authority Fund)	5,614,034
+Other (Note 9)	25,455
+Total Other than Intragovernmental	31,222,481
+TOTAL ASSETS	$ 135,816,393
+Stewardship Property, Plant, and Equipment – Heritage Assets (Note 24)
+LIABILITIES (Note 16)
+Intragovernmental:
+Accounts Payable	$	82,563
+Debt (Note 11)	780,564
+Advances from Others and Deferred Revenue	327,083
+Other Liabilities
+Custodial Payable to Treasury (Note 20)	181,500
+Other (Note 12)	167,852
+Total Intragovernmental	1,539,562
+Other than Intragovernmental:
+Accounts Payable	554,941
+Federal Employee Salary, Leave, and Benefits Payable (Note 13)	822,464
+Pensions and Other Post-employment Benefits Payable (Note 13)	1,348,798
+Environmental and Disposal Liabilities (Note 14)	223,198
+Advances from Others and Deferred Revenue	1,866,282
+Other Liabilities
+Accrued Grant Liabilities	910,384
+Liability for Non-fiduciary Deposit Funds, Undeposited Collections, and Clearing Accounts	(61,721)
+Other (Note 12)	252,092
+Total Other than Intragovernmental	5,916,438
+TOTAL LIABILITIES	$	7,456,000
+Commitments and Contingencies (Note 17)
+NET POSITION
+Unexpended Appropriations – Funds from Dedicated Collections (Note 22)	$	–
+Unexpended Appropriations – Funds from Other than Dedicated Collections	97,790,807
+Total Unexpended Appropriations (Consolidated)	97,790,807
+Cumulative Results of Operations – Funds from Dedicated Collections (Note 22)	8,042,310
+Cumulative Results of Operations – Funds from Other than Dedicated Collections	22,527,276
+Total Cumulative Results of Operations (Consolidated)	30,569,586
+TOTAL NET POSITION	$ 128,360,393
+TOTAL LIABILITIES AND NET POSITION	$ 135,816,393
+T h e a c c o m p a n y i n g n o t e s a r e a n i n t e g r a l p a r t o f t h e s e f i n a n c i a l s t a t e m e n t s .
+F Y	2 0 2 5	A G E N C Y	F I N A N C I A L	R E P O R T	5 7
+
+FY 2025
+
+P R I N C I P A L F I N A N C I A L S T A T E M E N T S
+United States Department of Commerce Consolidated Statement of Net Cost
+For the Year Ended September 30, 2025 (Note 18) (In Thousands)
+
+National Oceanic and Atmospheric Administration
+
+Gross Costs	$	8,486,382
+Less: Earned Revenue	(259,516)
+Net Cost of Operations	8,226,866
+National Institute of Standards and Technology
+Gross Costs	7,991,789
+Less: Earned Revenue	(183,076)
+Net Program Costs	7,808,713
+Less: Unrealized (Gain) or Loss on Other than Intragovernmental Investments (Note 8)	(3,526,532)
+Net Cost of Operations	4,282,181
+Under Secretary for Economic Affairs
+Gross Costs	1,992,564
+Less: Earned Revenue	(333,286)
+Net Cost of Operations	1,659,278
+Economic Development Administration
+Gross Costs	1,248,822
+Less: Earned Revenue	(4,481)
+Net Cost of Operations	1,244,341
+National Telecommunications and Information Administration
+Gross Costs	1,509,135
+Less: Earned Revenue	(597,343)
+Net Cost of Operations	911,792
+International Trade Administration
+Gross Costs	632,340
+Less: Earned Revenue	(19,967)
+Net Cost of Operations	612,373
+Departmental Management
+Gross Costs	286,062
+Less: Earned Revenue	(23,506)
+Net Cost of Operations	262,556
+U.S. Patent and Trademark Office
+Gross Costs	4,618,874
+Less: Earned Revenue	(4,422,801)
+Net Cost of Operations	196,073
+Others
+Gross Costs	300,239
+Less: Earned Revenue	(2,082)
+Net Cost of Operations	298,157
+Total Gross Departmental Costs	27,066,207
+Less: Total Earned Revenue	(5,846,058)
+Less: Unrealized (Gain) or Loss on Other than Intragovernmental Investments (Note 8)	(3,526,532)
+NET COST OF OPERATIONS	$	17,693,617
+
+FY 2025
+
+T h e a c c o m p a n y i n g n o t e s a r e a n i n t e g r a l p a r t o f t h e s e f i n a n c i a l s t a t e m e n t s .
+
+5 8	F Y	2 0 2 5	A G E N C Y	F I N A N C I A L	R E P O R T
+
+P R I N C I P A L F I N A N C I A L S T A T E M E N T S
+United States Department of Commerce Consolidated Statement of Changes in Net Position
+For the Year Ended September 30, 2025 (In Thousands)
+
+Funds from Dedicated	Funds from Other
+Collections	than Dedicated
+(Consolidated Totals)	Collections	Consolidated
+(Note 22)	(Consolidated Totals)	Eliminations	Total
+Unexpended Appropriations:
+Beginning Balance	$	–	$	114,088,352	$	–	$	114,088,352
+Appropriations Received	–	20,112,915	–	20,112,915
+Appropriations Transferred In/Out	–	21,114	–	21,114
+Other Adjustments	–	(10,860,231)	–	(10,860,231)
+Appropriations Used	–	(25,571,343)	–	(25,571,343)
+Net Change in Unexpended Appropriations	–	(16,297,545)	–	(16,297,545)
+Unexpended Appropriations: Ending	–	97,790,807	–	97,790,807
+Cumulative Results of Operations:
+Beginning Balance	16,719,429	13,577,081	–	30,296,510
+Other Adjustments	(8,811,749)	–	–	(8,811,749)
+Appropriations Used	–	25,571,343	25,571,343
+Non-exchange Revenue	48,077	10,621	–	58,698
+Donations and Forfeitures of Cash and Cash Equivalents	–	328	–	328
+Transfers In/Out Without Reimbursement	71,700	348,774	–	420,474
+Donations and Forfeitures of Property	–	273	–	273
+Imputed Financing	231,864	508,423	–	740,287
+Other	(26)	(12,935)	–	(12,961)
+Net Cost of Operations	(216,985)	(17,476,632)	–	(17,693,617)
+Net Change in Cumulative Results of Operations	(8,677,119)	8,950,195	–	273,076
+Cumulative Results of Operations: Ending	8,042,310	22,527,276	–	30,569,586
+NET POSITION	$	8,042,310	$	120,318,083	$	–	$ 128,360,393
+
+T h e a c c o m p a n y i n g n o t e s a r e a n i n t e g r a l p a r t o f t h e s e f i n a n c i a l s t a t e m e n t s .
+
+F Y	2 0 2 5	A G E N C Y	F I N A N C I A L	R E P O R T	5 9
+
+P R I N C I P A L F I N A N C I A L S T A T E M E N T S
+United States Department of Commerce Combined Statement of Budgetary Resources
+For the Year Ended September 30, 2025 (Note 19) (In Thousands)
+
+Budgetary	Reform Financing Accounts
+BUDGETARY RESOURCES:
+Unobligated Balance From Prior Year Budget Authority, Net	$	74,455,929	$	265
+Appropriations	9,699,253	–
+Borrowing Authority	220,000	5,690,893
+Spending Authority From Offsetting Collections	6,958,628	17,765
+TOTAL BUDGETARY RESOURCES	$	91,333,810	$ 5,708,923
+STATUS OF BUDGETARY RESOURCES:
+New Obligations and Upward Adjustments	$	68,411,876	$ 5,708,826
+Unobligated Balance, End of Year
+Apportioned, Unexpired Accounts	21,072,142	–
+Exempt From Apportionment, Unexpired Accounts	686	–
+Unapportioned, Unexpired Accounts	1,201,696	97
+Unobligated Balance, End of Year, Unexpired Accounts	22,274,524	97
+Unobligated Balance, End of Year, Expired Accounts	647,410	–
+Total Unobligated Balance, End of Year	22,921,934	97
+TOTAL STATUS OF BUDGETARY RESOURCES	$	91,333,810	$ 5,708,923
+OUTLAYS, NET, AND DISBURSEMENTS, NET:
+Outlays, Net	$	29,706,701
+Distributed Offsetting Receipts	5,121
+AGENCY OUTLAYS, NET	$	29,711,822
+DISBURSEMENTS, NET	$	109,548
+
+Non-budgetary Credit
+
+T h e a c c o m p a n y i n g n o t e s a r e a n i n t e g r a l p a r t o f t h e s e f i n a n c i a l s t a t e m e n t s .
+
+6 0	F Y	2 0 2 5	A G E N C Y	F I N A N C I A L	R E P O R T
+
+P R I N C I P A L F I N A N C I A L S T A T E M E N T S

@@ -1,0 +1,169 @@
+Principal Statements
+U.S. Department of Energy Consolidated Balance Sheet
+As of September 30, 2025 (Dollars in Millions)
+ASSETS: (NOTE 2)
+
+FINANCIAL RESULTS - Financial Statements and Notes
+
+Intragovernmental Assets:
+
+Fund Balance with Treasury (Note 3)	$	138,147
+Investments, Net (Note 4)	52,455
+Accounts Receivable, Net (Note 5)	647
+Advances and Prepayments	129
+Total Intragovernmental Assets	$	191,378
+Other than Intragovernmental Assets:
+Accounts Receivable, Net (Note 5)	3,617
+Loans Receivable, Net (Note 6)	29,243
+Inventory, Net (Note 7)	51,841
+Property, Plant, and Equipment, Net (Note 8)	68,789
+Advances and Prepayments	1,748
+Other Assets (Notes 9 and 10)	13,162
+Total Other than Intragovernmental Assets	$	168,400
+Total Assets	$	359,778
+LIABILITIES: (NOTE 11)
+Intragovernmental Liabilities:
+Accounts Payable	$	88
+Debt (Note 12)	36,008
+Advances from Others and Deferred Revenue (Note 16)	1,634
+Other Liabilities (Note 15)	5,323
+Total Intragovernmental Liabilities	$	43,053
+Other than Intragovernmental Liabilities:
+Accounts Payable	$	6,639
+Federal Employee Salary, Leave, and Benefits Payable (Note 13)	2,400
+Post Employment Benefits Payable	91
+Environmental and Disposal Liabilities (Note 14)	538,604
+Loan Guarantee Liabilities (Note 6)	71
+Advances from Others and Deferred Revenue (Note 16)	57,981
+Other Liabilities:
+Contingencies and Commitments (Note 19)	38,857
+Other Liabilities (Notes 15, 17, 18)	26,058
+Total Other than Intragovernmental Liabilities	$	670,701
+Total Liabilities	$	713,754
+NET POSITION: (NOTE 26)
+Unexpended Appropriations
+Funds from Dedicated Collections (Note 20)	$	874
+Funds from Other than Dedicated Collections	106,445
+Total Unexpended Appropriations (Consolidated)	$	107,319
+Cumulative Results of Operations
+Funds from Dedicated Collections (Note 20)	$	(19,839)
+Funds from Other than Dedicated Collections	(441,456)
+Total Cumulative Results of Operations (Consolidated)	$	(461,295)
+Total Net Position	$	(353,976)
+Total Liabilities And Net Position	$	359,778
+
+The accompanying notes are an integral part of these statements.
+
+U.S. Department of Energy Agency Financial Report Fiscal Year 2025 | 27
+FINANCIAL RESULTS - Financial Statements and Notes
+
+U.S. Department of Energy Consolidated Statement of Net Cost
+For the Year Ended September 30, 2025 (Dollars in Millions)
+MAJOR PROGRAMS: (NOTE 21)
+
+Nuclear Security and NNSA
+
+Program Cost	$	11,849
+Less: Earned Revenues	(11)
+Net Cost of Nuclear Security and NNSA	$	11,838
+Science
+Program Cost	$	23,900
+Less: Earned Revenues	(189)
+Net Cost of Science	$	23,711
+Energy
+Program Cost	$	14,742
+Less: Earned Revenues	(6,699)
+Net Cost of Energy	$	8,043
+Net Cost of Major Programs	$	43,592
+OTHER PROGRAMS: (NOTE 21)
+Reimbursable Programs
+Program Cost	$	6,787
+Less: Earned Revenues	(6,730)
+Net Cost of Reimbursable Programs	$	57
+Other Programs
+Program Cost	$	3,831
+Less: Earned Revenues	(559)
+Net Cost of Other Programs	$	3,272
+Costs Applied to Reduction of Legacy Environmental Liabilities (Notes 14 and 21)	$	(7,365)
+Costs Not Assigned to Programs (Note 22)	$	26,169
+Net Cost Of Operations	$	65,725
+
+The accompanying notes are an integral part of these statements.
+
+28 | U.S. Department of Energy Agency Financial Report Fiscal Year 2025
+U.S. Department of Energy Consolidated Statement of Changes in Net Position
+For the Year Ended September 30, 2025 (Dollars in Millions)
+
+FINANCIAL RESULTS - Financial Statements and Notes
+
+FUNDS FROM
+
+DEDICATED	ALL OTHER
+ELIMINATIONS	CONSOLIDATED
+COLLECTIONS	FUNDS
+(Note 20)
+UNEXPENDED APPROPRIATIONS: (NOTE 28)
+Beginning Balances	$	36	$	107,123	$	—	$	107,159
+Appropriations Received	862	65,630	—	66,492
+Appropriations Transferred - In/Out	—	78	—	78
+Other Adjustments	(1)	(13,471)	—	(13,472)
+Appropriations Used	(23)	(52,915)	—	(52,938)
+Net Change in Unexpended Appropriations	$	838	$	(678)	$	—	$	160
+Total Unexpended Appropriations	$	874	$	106,445	$	—	$	107,319
+CUMULATIVE RESULTS OF OPERATIONS: (NOTE 28)
+Beginning Balances	$	(18,685)	$	(456,669)	$	—	$	(475,354)
+Other Adjustments	$	—	$	4	$	—	$	4
+Appropriations Used	23	52,915	—	52,938
+Non-Exchange Revenue	—	1	—	1
+Donations and Forfeitures of Cash	—	18	—	18
+Transfers - In/Out Without Reimbursement	(503)	46	—	(457)
+Donations and Forfeitures of Property	26	—	—	26
+Imputed Financing (Notes 23 and 26)	28	27,677	—	27,705
+Other	78	(529)	—	(451)
+Net Cost of Operations	$	(806)	$	(64,919)	$	—	$	(65,725)
+Net Change in Cumulative Results of Operations	$	(1,154)	$	15,213	$	—	$	14,059
+Total Cumulative Results of Operations	$	(19,839)	$	(441,456)	$	—	$	(461,295)
+Net Position	$	(18,965)	$	(335,011)	$	—	$	(353,976)
+
+The accompanying notes are an integral part of these statements.
+
+U.S. Department of Energy Agency Financial Report Fiscal Year 2025 | 29
+FINANCIAL RESULTS - Financial Statements and Notes
+
+U.S. Department of Energy Combined Statement of Budgetary Resources
+For the Year Ended September 30, 2025 (Dollars in Millions)
+
+NON-
+BUDGETARY
+CREDIT REFORM
+FINANCING
+
+BUDGETARY	ACCOUNT	TOTAL
+BUDGETARY RESOURCES:
+Unobligated Balance from Prior Year Budget Authority, Net (Discretionary
+and Mandatory) (Note 24)	$	74,649	$	1,419	$	76,068
+Appropriations (Discretionary and Mandatory) (Note 24)	53,297	—	53,297
+Borrowing Authority (Discretionary and Mandatory)	1,740	84,021	85,761
+Contract Authority (Discretionary and Mandatory)	1,142	1,142
+Spending Authority from Offsetting Collections (Discretionary and
+Mandatory)	13,056	1,864	14,920
+Total Budgetary Resources	$	143,884	$	87,304	$	231,188
+STATUS OF BUDGETARY RESOURCES:
+New Obligations and Upward Adjustments (Total)	$	99,035	$	79,820	$	178,855
+Unobligated Balance, End of Year:
+Apportioned, Unexpired Accounts	$	43,701	$	759	$	44,460
+Exempt from Apportionment, Unexpired Accounts	20	—	20
+Unapportioned, Unexpired Accounts	988	6,725	7,713
+Unexpired, Unobligated Balance, End of Year	$	44,709	$	7,484	$	52,193
+Expired, Unobligated Balance, End of Year (Note 24)	140	140
+Unobligated Balance, End of Year (Total)	$	44,849	$	7,484	$	52,333
+Total Status Of Budgetary Resources	$	143,884	$	87,304	$	231,188
+OUTLAYS, NET
+Outlays, Net (Total) (Discretionary and Mandatory) (Note 26)	$	55,345	$	55,345
+Distributed Offsetting Receipts (-) (Note 26)	(3,054)	(3,054)
+Agency Outlays, Net (Discretionary And Mandatory) (Note 26)	$	52,291	$	52,291
+Disbursements, Net (Total) (Mandatory)	$	11,953	$	11,953
+
+The accompanying notes are an integral part of these statements.
+
+30 | U.S. Department of Energy Agency Financial Report Fiscal Year 2025

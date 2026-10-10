@@ -6,6 +6,7 @@ gg.extractor_schema(schema) as it is, with no "$schema" member (#197).
     uv run python bench/afr/run.py --provider codex --model gpt-6-luna
 
 Replies go to runs/<model>/<id>.json. An existing file is skipped, so a stopped run resumes.
+With --tabs, the runs read tabs/docs, the text since #230, and go to tabs/runs/<model>/ (#230).
 """
 
 from __future__ import annotations
@@ -38,13 +39,15 @@ def main() -> None:
     ap.add_argument("--provider", choices=["claude-cli", "codex"], required=True)
     ap.add_argument("--model", required=True)
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--tabs", action="store_true", help="read tabs/docs, write tabs/runs (#230)")
     args = ap.parse_args()
     schema = gg.extractor_schema(json.loads((HERE / "schema.json").read_text()))
     runner = Runner(args.provider, args.model, schema)
-    folder = HERE / "runs" / args.model
+    root = HERE / "tabs" if args.tabs else HERE
+    folder = root / "runs" / args.model
     folder.mkdir(parents=True, exist_ok=True)
     todo = [
-        d for d in sorted((HERE / "docs").glob("*.txt")) if not (folder / f"{d.stem}.json").exists()
+        d for d in sorted((root / "docs").glob("*.txt")) if not (folder / f"{d.stem}.json").exists()
     ]
     with ThreadPoolExecutor(args.workers) as pool:
         for line in pool.map(lambda d: runner.one(d, folder / f"{d.stem}.json"), todo):

@@ -1,0 +1,123 @@
+Chapter 2 ñ Financial Statements and Auditors' Report
+
+Financial Statements
+Consolidated Balance Sheet (In Thousands)
+
+As of September 30,	2025
+Assets
+Intragovernmental Assets:
+Fund Balance with Treasury (Note 2)	$	356,340
+Accounts Receivable, Net (Note 3)	3,930
+Advances and Prepayments	2,401
+Total Intragovernmental Assets	362,671
+Other than Intragovernmental Assets:
+Accounts Receivable, Net (Note 3)	56,404
+Property, Plant, and Equipment, Net (Note 4)	31,660
+Advances and Prepayments	70
+Total Other than Intragovernmental Assets	88,134
+Total Assets	$	450,805
+Liabilities
+Intragovernmental Liabilities:
+Accounts Payable	$	6,072
+Other Liabilities (Note 5)	4,592
+Total Intragovernmental Liabilities	10,664
+Other than Intragovernmental Liabilities:
+Accounts Payable	20,193
+Federal Employee Salary, Leave and Benefits Payable (Note 6)	62,179
+Other Liabilities (Note 5)	13,359
+Total Other than Intragovernmental Liabilities	95,731
+Total liabilities	106,395
+Net Position
+Unexpended Appropriations	296,610
+Cumulative Results of Operations	47,800
+Total Net Position	344,410
+Total Liabilities and Net Position	$	450,805
+
+The accompanying notes to the financial statements are an integral part of these statements.
+
+FY 2025 Agency Financial Report « https://www.nrc.gov « Protecting People and the Environment
+
+23
+Chapter 2 ñ Financial Statements and Auditors' Report
+
+Consolidated Statement of Net Cost (In Thousands)
+
+For the year ended September 30,	2025
+Nuclear Reactor Safety
+Gross Costs	$	808,434
+Less: Earned Revenue (Note 10)	(714,021)
+Net Cost of Nuclear Reactor Safety (Note 9)	94,413
+Nuclear Materials and Waste Safety
+Gross Costs	228,081
+Less: Earned Revenue (Note 10)	(105,541)
+Net Cost of Nuclear Materials and Waste Safety (Note 9)	122,540
+Net Cost of Operations	$	216,953
+
+The accompanying notes to the financial statements are an integral part of these statements.
+
+FY 2025 Agency Financial Report « https://www.nrc.gov « Protecting People and the Environment
+
+24
+Chapter 2 ñ Financial Statements and Auditors' Report
+
+Consolidated Statement of Changes in Net Position (In Thousands)
+
+For the year ended September 30,	2025
+Unexpended Appropriations
+Beginning Balance	$	329,107
+Adjustments	—
+Beginning Balance, as Adjusted	329,107
+Appropriations Received	131,550
+Other Adjustments	(268)
+Appropriations Used (Note 11)	(163,779)
+Net Change in Unexpended Appropriations	(32,497)
+Total Unexpended Appropriations, Ending Balance	296,610
+Cumulative Results of Operations
+Beginning Balance	$	41,897
+Change in Accounting Principles (Note 1A)	—
+Beginning Balance, as Adjusted	41,897
+Appropriations Used (Note 11)	163,779
+Non-Exchange Revenue (Note 11)	(18)
+Transfers-In/(Out) without Reimbursement	(300)
+Imputed Financing (Note 11)	59,377
+Other	18
+Net Cost of Operations	(216,953)
+Net Change in Cumulative Results of Operations	5,903
+Total Cumulative Results of Operations	$	47,800
+Net Position	$	344,410
+
+The accompanying notes to the financial statements are an integral part of these statements.
+
+FY 2025 Agency Financial Report « https://www.nrc.gov « Protecting People and the Environment
+
+25
+Chapter 2 ñ Financial Statements and Auditors' Report
+
+Combined Statement of Budgetary Resources (In Thousands)
+
+For the year ended September 30,	2025
+Budgetary Resources
+Unobligated Balance from Prior-Year Budget Authority, Net (Discretionary and Mandatory)	$	122,234
+Appropriations (Discretionary and Mandatory)	944,087
+Spending Authority from Offsetting Collections (Discretionary and Mandatory)	3,525
+Total Budgetary Resources	$ 1,069,846
+Status of Budgetary Resources
+New Obligations and Upward Adjustments (Total)	$	988,090
+Unobligated Balance, End of Year
+Apportioned, Unexpired Accounts	75,066
+Exempt from Apportionment, Unexpired Accounts	208
+Unapportioned, Unexpired Accounts	3,014
+Unexpired Unobligated Balance, End of Year	78,288
+Expired Unobligated Balance, End of Year	3,468
+Unobligated Balance, End of Year (Total)	81,756
+Total Status Budgetary Resources	$ 1,069,846
+Outlays, Net, and Disbursements, Net
+Outlays, Net (Total) (Discretionary and Mandatory)	983,358
+Distributed Offsetting Receipts (-)	(812,537)
+Agency Outlays, Net	$	170,821
+
+The accompanying notes to the financial statements are an integral part of these statements.
+
+FY 2025 Agency Financial Report « https://www.nrc.gov « Protecting People and the Environment
+
+26
