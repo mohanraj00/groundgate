@@ -11,7 +11,7 @@
    },
    "replay": {
     "right": 46,
-    "escapes": 8,
+    "escapes": 0,
     "not sure": 0,
     "unlabeled": 0,
     "proposals": 100,
@@ -57,12 +57,12 @@
   "claude-haiku-5-5": {
    "FIELD_CITATION_INVALID": {
     "0.7 text": 82,
-    "replay": 17,
+    "replay": 12,
     "new runs": 18
    },
    "KEY_CITATION_INVALID": {
     "0.7 text": 5,
-    "replay": 5,
+    "replay": 3,
     "new runs": 17
    },
    "KEY_CITED": {
@@ -72,12 +72,12 @@
    },
    "KEY_NOT_AT_VALUE": {
     "0.7 text": 79,
-    "replay": 16,
+    "replay": 14,
     "new runs": 7
    },
    "PART_MISSING": {
     "0.7 text": 39,
-    "replay": 16,
+    "replay": 11,
     "new runs": 15
    },
    "SCALE_CITATION_INVALID": {
@@ -94,6 +94,11 @@
     "0.7 text": 77,
     "replay": 34,
     "new runs": 45
+   },
+   "VALUE_NOT_IN_EVIDENCE": {
+    "0.7 text": 0,
+    "replay": 20,
+    "new runs": 0
    }
   },
   "gpt-6-luna": {
@@ -154,80 +159,7 @@
    }
   }
  },
- "escapes": [
-  {
-   "run": "claude-haiku-5-5",
-   "read": "replay",
-   "doc": "afr-doi",
-   "field": "total_assets",
-   "key": "2025",
-   "value": "172647395",
-   "scale item": true
-  },
-  {
-   "run": "claude-haiku-5-5",
-   "read": "replay",
-   "doc": "afr-doi",
-   "field": "total_liabilities",
-   "key": "2025",
-   "value": "19837110",
-   "scale item": true
-  },
-  {
-   "run": "claude-haiku-5-5",
-   "read": "replay",
-   "doc": "afr-doi",
-   "field": "total_net_position",
-   "key": "2025",
-   "value": "152810285",
-   "scale item": true
-  },
-  {
-   "run": "claude-haiku-5-5",
-   "read": "replay",
-   "doc": "afr-doi",
-   "field": "net_cost_of_operations",
-   "key": "2025",
-   "value": "30846975",
-   "scale item": true
-  },
-  {
-   "run": "claude-haiku-5-5",
-   "read": "replay",
-   "doc": "afr-doi",
-   "field": "total_budgetary_resources",
-   "key": "2025",
-   "value": "93287003",
-   "scale item": true
-  },
-  {
-   "run": "claude-haiku-5-5",
-   "read": "replay",
-   "doc": "afr-hhs",
-   "field": "net_cost_of_operations",
-   "key": "2025",
-   "value": "1887206",
-   "scale item": true
-  },
-  {
-   "run": "claude-haiku-5-5",
-   "read": "replay",
-   "doc": "afr-hhs",
-   "field": "total_budgetary_resources",
-   "key": "2025",
-   "value": "3129745",
-   "scale item": true
-  },
-  {
-   "run": "claude-haiku-5-5",
-   "read": "replay",
-   "doc": "afr-treasury",
-   "field": "total_assets",
-   "key": "2025",
-   "value": "42057965",
-   "scale item": true
-  }
- ],
+ "escapes": [],
  "label rows": {
   "0.7 text": {
    "a tab": 0,

@@ -9,21 +9,22 @@ The principal statements of the 20 FY2025 agency financial reports of `bench/afr
 | Text and replies | Right admitted | Escapes | Not sure | Not labeled | Proposals | No reply |
 |---|---:|---:|---:|---:|---:|---:|
 | 0.7 text | 3 | 1 | 0 | 0 | 100 | 0 |
-| replay | 46 | 8 | 0 | 0 | 100 | 0 |
+| replay | 46 | 0 | 0 | 0 | 100 | 0 |
 | new runs | 54 | 0 | 1 | 0 | 100 | 0 |
 
 Codes on the proposals that are not admitted (a proposal can have more than one):
 
 | Code | 0.7 text | replay | new runs |
 |---|---:|---:|---:|
-| `FIELD_CITATION_INVALID` | 82 | 17 | 18 |
-| `KEY_CITATION_INVALID` | 5 | 5 | 17 |
+| `FIELD_CITATION_INVALID` | 82 | 12 | 18 |
+| `KEY_CITATION_INVALID` | 5 | 3 | 17 |
 | `KEY_CITED` | 1 | 2 | 3 |
-| `KEY_NOT_AT_VALUE` | 79 | 16 | 7 |
-| `PART_MISSING` | 39 | 16 | 15 |
+| `KEY_NOT_AT_VALUE` | 79 | 14 | 7 |
+| `PART_MISSING` | 39 | 11 | 15 |
 | `SCALE_CITATION_INVALID` | 1 | 3 | 2 |
 | `UNIT_CITATION_INVALID` | 1 | 1 | 3 |
 | `VALUE_DERIVED` | 77 | 34 | 45 |
+| `VALUE_NOT_IN_EVIDENCE` | 0 | 20 | 0 |
 
 ## gpt-6-luna
 
@@ -51,18 +52,9 @@ Codes on the proposals that are not admitted (a proposal can have more than one)
 
 ## Escapes on the new text
 
-Each wrong value that a decision on the new text admits. With a scale item, the value can match the number as written or the number times the scale (SPEC 4.6), so a value with no scale gets through.
+Each wrong value that a decision on the new text admits. Under spec 0.7, a value with a scale item could match the number as written, so a value with no scale got through. The 0.8 draft has the #242 rule, which takes that match away.
 
-| Run | Replies | Document | Field | Key | Value | Scale item |
-|---|---|---|---|---|---:|---|
-| claude-haiku-5-5 | replay | afr-doi | total_assets | 2025 | 172647395 | yes |
-| claude-haiku-5-5 | replay | afr-doi | total_liabilities | 2025 | 19837110 | yes |
-| claude-haiku-5-5 | replay | afr-doi | total_net_position | 2025 | 152810285 | yes |
-| claude-haiku-5-5 | replay | afr-doi | net_cost_of_operations | 2025 | 30846975 | yes |
-| claude-haiku-5-5 | replay | afr-doi | total_budgetary_resources | 2025 | 93287003 | yes |
-| claude-haiku-5-5 | replay | afr-hhs | net_cost_of_operations | 2025 | 1887206 | yes |
-| claude-haiku-5-5 | replay | afr-hhs | total_budgetary_resources | 2025 | 3129745 | yes |
-| claude-haiku-5-5 | replay | afr-treasury | total_assets | 2025 | 42057965 | yes |
+None.
 
 ## Row labels and their first number (#152)
 

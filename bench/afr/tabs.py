@@ -11,10 +11,11 @@ The plan is on #230. No rule of #230 came from these reports.
     uv run python bench/afr/tabs.py results [--check]
 
 The replay decides the replies of #229, which the models wrote from the 0.7 text, against the
-new text. The new runs read the new text. decide runs on the 0.8 draft, which has no rule that a
-decision on this set can see. The page shows each admitted value that has no label yet, as
-measure.py web shows its values, and writes bench/afr/labels.json. Labels are keyed by fact, so
-the labels of #229 stay valid.
+new text. The new runs read the new text. decide runs on the 0.8 draft. Its only rule that a
+decision on this set can see is #242: with a scale item, the number as written does not match.
+The 0.7 text is decided under spec 0.7, as measure.py decides it. The page shows each admitted
+value that has no label yet, as measure.py web shows its values, and writes bench/afr/labels.json.
+Labels are keyed by fact, so the labels of #229 stay valid.
 """
 
 from __future__ import annotations
@@ -193,18 +194,23 @@ def render(res: dict[str, Any]) -> str:
         "",
         "## Escapes on the new text",
         "",
-        "Each wrong value that a decision on the new text admits. With a scale item, the value "
-        "can match the number as written or the number times the scale (SPEC 4.6), so a value "
-        "with no scale gets through.",
+        "Each wrong value that a decision on the new text admits. Under spec 0.7, a value with a "
+        "scale item could match the number as written, so a value with no scale got through. The "
+        "0.8 draft has the #242 rule, which takes that match away.",
         "",
-        "| Run | Replies | Document | Field | Key | Value | Scale item |",
-        "|---|---|---|---|---|---:|---|",
     ]
-    out += [
-        f"| {e['run']} | {e['read']} | {e['doc']} | {e['field']} | {e['key']} | {e['value']} | "
-        f"{'yes' if e['scale item'] else 'no'} |"
-        for e in res["escapes"]
-    ]
+    if not res["escapes"]:
+        out.append("None.")
+    else:
+        out += [
+            "| Run | Replies | Document | Field | Key | Value | Scale item |",
+            "|---|---|---|---|---|---:|---|",
+        ]
+        out += [
+            f"| {e['run']} | {e['read']} | {e['doc']} | {e['field']} | {e['key']} | {e['value']} | "
+            f"{'yes' if e['scale item'] else 'no'} |"
+            for e in res["escapes"]
+        ]
     rows = res["label rows"]
     out += [
         "",

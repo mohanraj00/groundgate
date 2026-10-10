@@ -265,8 +265,10 @@
      853,
      864
     ],
-    "outcome": "admitted",
-    "codes": [],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
     "unit": null
    },
    {
@@ -278,8 +280,10 @@
      2046,
      2056
     ],
-    "outcome": "admitted",
-    "codes": [],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
     "unit": null
    },
    {
@@ -291,8 +295,10 @@
      2602,
      2613
     ],
-    "outcome": "admitted",
-    "codes": [],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
     "unit": null
    },
    {
@@ -304,8 +310,10 @@
      3870,
      3880
     ],
-    "outcome": "admitted",
-    "codes": [],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
     "unit": null
    },
    {
@@ -317,8 +325,10 @@
      6534,
      6544
     ],
-    "outcome": "admitted",
-    "codes": [],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
     "unit": null
    }
   ]
@@ -756,9 +766,9 @@
      722,
      731
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "KEY_NOT_AT_VALUE"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -771,10 +781,9 @@
      1519,
      1526
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "PART_MISSING",
-     "KEY_NOT_AT_VALUE"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -784,12 +793,12 @@
     "key": "2025",
     "value": "919739",
     "evidence": [
-     4988,
-     4995
+     1985,
+     1992
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "FIELD_CITATION_INVALID"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -802,9 +811,9 @@
      3520,
      3529
     ],
-    "outcome": "admitted",
+    "outcome": "rejected",
     "codes": [
-     "KEY_CITED"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -817,9 +826,9 @@
      5809,
      5818
     ],
-    "outcome": "admitted",
+    "outcome": "rejected",
     "codes": [
-     "KEY_CITED"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    }
@@ -1424,8 +1433,10 @@
      1275,
      1285
     ],
-    "outcome": "admitted",
-    "codes": [],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
     "unit": null
    },
    {
@@ -1437,9 +1448,9 @@
      2444,
      2454
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "PART_MISSING"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -1449,12 +1460,12 @@
     "key": "2025",
     "value": "608801",
     "evidence": [
-     5630,
-     5637
+     2882,
+     2889
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "FIELD_CITATION_INVALID"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -1467,9 +1478,9 @@
      4061,
      4070
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "FIELD_CITATION_INVALID"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -1482,9 +1493,9 @@
      6366,
      6375
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "KEY_CITATION_INVALID"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    }
@@ -1499,12 +1510,12 @@
     "key": "2025",
     "value": "545915",
     "evidence": [
-     2075,
-     2082
+     837,
+     844
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "FIELD_CITATION_INVALID"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -1517,9 +1528,9 @@
      1574,
      1581
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "PART_MISSING"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -1529,13 +1540,12 @@
     "key": "2025",
     "value": "320102",
     "evidence": [
-     4551,
-     4558
+     2030,
+     2037
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "FIELD_CITATION_INVALID",
-     "KEY_CITATION_INVALID"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -1548,9 +1558,9 @@
      3221,
      3228
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "PART_MISSING"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    },
@@ -1563,9 +1573,9 @@
      5203,
      5210
     ],
-    "outcome": "needs_verification",
+    "outcome": "rejected",
     "codes": [
-     "PART_MISSING"
+     "VALUE_NOT_IN_EVIDENCE"
     ],
     "unit": null
    }
