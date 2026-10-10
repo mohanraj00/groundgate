@@ -229,6 +229,19 @@ def test_pdf_a_table_never_takes_the_rows_of_the_next(tmp_path: Path) -> None:
     assert text.endswith("Debt\t3\nEquity\t4")
 
 
+def test_pdf_number_cells_take_the_signs_of_the_builtin_units() -> None:
+    """A cell such as "₹ 1,234" holds only numbers, so its row can be a table row."""
+    from groundgate.extract.layout import Box
+    from groundgate.extract.pdf import NUMBER_CHARS, _number_cell
+    from groundgate.text import builtin_units
+
+    signs = {p for prefixes, _ in builtin_units().values() for p in prefixes if len(p) == 1}
+    assert signs <= NUMBER_CHARS
+    box = Box(1, 0, 0, 1, 1)
+    assert _number_cell([("₹", box), ("1,234", box)])
+    assert not _number_cell([("Rs", box), ("1,234", box)])
+
+
 def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> None:
     """A wide gap inside one text line of a table row is a cell break too."""
     path = tmp_path / "split.pdf"

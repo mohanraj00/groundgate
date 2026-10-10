@@ -48,7 +48,7 @@ CELL_GAP = 0.65  # a gap between two words this many times the word's height sta
 HEADING_WORDS = 4  # a row with no number joins a table when each of its parts is this short
 COLUMN_HEADING_WORDS = 8  # a column heading above a table, such as a spanning heading
 DASHES = frozenset("-\u2013\u2014\u2212")  # hyphen, en dash, em dash, minus
-NUMBER_CHARS = frozenset("0123456789,.$€£¥%()") | DASHES
+NUMBER_CHARS = frozenset("0123456789,.$€£¥₹%()") | DASHES  # with the signs of the built-in units
 
 
 class _Builder:
