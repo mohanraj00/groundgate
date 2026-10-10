@@ -1,0 +1,14 @@
+[
+ {"id": "acfr-az", "state": "Arizona", "url": null},
+ {"id": "acfr-ar", "state": "Arkansas", "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2025-Arkansas-ACFR.pdf"},
+ {"id": "acfr-ca", "state": "California", "url": "https://www.sco.ca.gov/Files-ARD/ACFR/acfr25web.pdf"},
+ {"id": "acfr-co", "state": "Colorado", "url": "https://osc.colorado.gov/sites/osc/files/documents/FY2025%20ACFR_ADA_1.30.26.pdf"},
+ {"id": "acfr-ct", "state": "Connecticut", "url": "https://osc.ct.gov/wp-content/uploads/2026/03/State-of-Connecticut-ACFR-2-27-26_Final.pdf"},
+ {"id": "acfr-de", "state": "Delaware", "url": "https://accountingfiles.delaware.gov/docs/2025acfr.pdf"},
+ {"id": "acfr-fl", "state": "Florida", "url": "https://myfloridacfo.com/docs-sf/default-source/transparency-docs/cafr/state-of-fl-acfr-2025.pdf"},
+ {"id": "acfr-ga", "state": "Georgia", "url": "https://sao.georgia.gov/document/document/2025-acfr-21325-securedpdf/download"},
+ {"id": "acfr-hi", "state": "Hawaii", "url": "https://ags.hawaii.gov/wp-content/uploads/2026/02/acfr2025.pdf"},
+ {"id": "acfr-id", "state": "Idaho", "url": "https://www.sco.idaho.gov/CAFRDocuments/2025%20Annual%20Comprehensive%20Financial%20Report.pdf"},
+ {"id": "acfr-il", "state": "Illinois", "url": "https://illinoiscomptroller.gov/__media/sites/comptroller/assets/File/CAFR/ACFR%20Final%202025%20-%20Bookmarked.pdf"},
+ {"id": "acfr-in", "state": "Indiana", "url": "https://secure.in.gov/comptroller/files/Fiscal-2025-Annual-Comprehensive-Financial-Report.pdf"}
+]

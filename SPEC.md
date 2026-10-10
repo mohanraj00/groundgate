@@ -279,7 +279,7 @@ The value item's **text** is the document, or its reference. The checks read tha
 |---:|---|---|
 | 9 | `SPAN_INVALID` | The value item's span, or `search_region`, is not a valid span (§2.2). |
 | 9a | `QUOTE_NOT_FOUND` | The value item is a quote, and it does not occur in the text (§4.6). |
-| 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value`, by its value, its scaled value or a derived value (§4.6), and no part is missing (below). For `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text. |
+| 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value` by one of its derived values (§4.6), and no part is missing (below). For `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text. |
 | 11 | `UNIT_NOT_IN_EVIDENCE` | The field has a unit, and no matching number token in the span has that unit at its location (§4.3). |
 
 `search_region` limits the search for a quote and for re-anchoring in the document. It does not
@@ -649,10 +649,10 @@ The scale and the sign of a token are its **parts**. A token is **negative** whe
 has a sign item, or, on a field with a unit, when brackets enclose it in the text, as the sign
 check reads them. The token's **derived values**
 are its value, and its scaled value if it has one. When the candidate has a scale item whose text
-holds a scale word (also with a final `s`), a token with no scaled value also has its value times
-the first such word's factor. When the token is negative, each of these also has its negative (minus its absolute
-value). A failing sign or scale item still gives its part: the decision then has the item's
-flag.
+holds a scale word (also with a final `s`), a token with no scaled value has only its value times
+the first such word's factor: the number as written is not a derived value (#242). When the token
+is negative, each of these also has its negative (minus its absolute value). A failing sign or
+scale item still gives its part: the decision then has the item's flag.
 
 **Unit places.** A unit item that the field's unit at the token does not repeat must hold a form
 of the unit (as a whole) at a **unit place** of the value, one of these (#164):

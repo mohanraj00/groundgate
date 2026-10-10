@@ -1,0 +1,681 @@
+{
+ "acfr-ca": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": null,
+    "value": "477140493000",
+    "evidence": [
+     4114,
+     4125
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": null,
+    "value": "471554611000",
+    "evidence": [
+     8059,
+     8070
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": null,
+    "value": "19387041000",
+    "evidence": [
+     17352,
+     17362
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": null,
+    "value": "4802249000",
+    "evidence": [
+     17113,
+     17122
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   }
+  ]
+ },
+ "acfr-co": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": null,
+    "value": "65868012000",
+    "evidence": [
+     1434,
+     1444
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": null,
+    "value": "36452116000",
+    "evidence": [
+     2961,
+     2971
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": null,
+    "value": "30007406000",
+    "evidence": [
+     3731,
+     3741
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   }
+  ]
+ },
+ "acfr-ct": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": null,
+    "value": "47199194000",
+    "evidence": [
+     1239,
+     1249
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": null,
+    "value": "91244863000",
+    "evidence": [
+     2733,
+     2743
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": null,
+    "value": "-38190342000",
+    "evidence": [
+     4098,
+     4110
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": null,
+    "value": "1495825000",
+    "evidence": [
+     7409,
+     7418
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   }
+  ]
+ },
+ "acfr-de": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": null,
+    "value": "20772468000",
+    "evidence": [
+     1135,
+     1145
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": null,
+    "value": "17170702000",
+    "evidence": [
+     1799,
+     1809
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": null,
+    "value": "3456984000",
+    "evidence": [
+     2409,
+     2418
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": null,
+    "value": "592867000",
+    "evidence": [
+     5067,
+     5074
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   }
+  ]
+ },
+ "acfr-fl": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": null,
+    "value": "228578333000",
+    "evidence": [
+     1096,
+     1107
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": null,
+    "value": "71668384000",
+    "evidence": [
+     1693,
+     1703
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": null,
+    "value": "156851715000",
+    "evidence": [
+     2703,
+     2714
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": null,
+    "value": "5870178000",
+    "evidence": [
+     6008,
+     6017
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   }
+  ]
+ },
+ "acfr-ga": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": null,
+    "value": "102496982000",
+    "evidence": [
+     1350,
+     1361
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": null,
+    "value": "39466919000",
+    "evidence": [
+     2630,
+     2640
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": null,
+    "value": "62113950000",
+    "evidence": [
+     3686,
+     3696
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": null,
+    "value": "4073617000",
+    "evidence": [
+     7380,
+     7389
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   }
+  ]
+ },
+ "acfr-hi": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": null,
+    "value": "34922024000",
+    "evidence": [
+     1837,
+     1847
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": null,
+    "value": "28613364000",
+    "evidence": [
+     4385,
+     4395
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": null,
+    "value": "5536994000",
+    "evidence": [
+     5045,
+     5054
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": null,
+    "value": "2980860000",
+    "evidence": [
+     8368,
+     8377
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   }
+  ]
+ },
+ "acfr-id": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": null,
+    "value": "28888594000",
+    "evidence": [
+     1050,
+     1060
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": null,
+    "value": "6327271000",
+    "evidence": [
+     1855,
+     1864
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": null,
+    "value": "22451268000",
+    "evidence": [
+     5635,
+     5645
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": null,
+    "value": "14916000",
+    "evidence": [
+     5458,
+     5464
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   }
+  ]
+ },
+ "acfr-il": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": null,
+    "value": "93099025000",
+    "evidence": [
+     1624,
+     1634
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": null,
+    "value": "232922714000",
+    "evidence": [
+     3125,
+     3136
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": null,
+    "value": "-142040063000",
+    "evidence": [
+     4772,
+     4785
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": null,
+    "value": "11110689000",
+    "evidence": [
+     8146,
+     8156
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   }
+  ]
+ },
+ "acfr-in": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": null,
+    "value": "47306135000",
+    "evidence": [
+     1336,
+     1346
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": null,
+    "value": "15757691000",
+    "evidence": [
+     2377,
+     2387
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": null,
+    "value": "33526395000",
+    "evidence": [
+     3993,
+     4003
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": null,
+    "value": "1957534000",
+    "evidence": [
+     6812,
+     6821
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
+   }
+  ]
+ }
+}

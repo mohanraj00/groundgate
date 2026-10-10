@@ -1,0 +1,105 @@
+[
+ {
+  "id": "acfr-az",
+  "state": "Arizona",
+  "skip": "the saved PDF is the budget-basis Annual Financial Report of December 2025, with no government-wide statements; I found no FY2025 ACFR"
+ },
+ {
+  "id": "acfr-ar",
+  "state": "Arkansas",
+  "skip": "the PDF has no text layer"
+ },
+ {
+  "id": "acfr-ca",
+  "state": "California",
+  "pages": [
+   52,
+   53,
+   54,
+   55,
+   56,
+   57
+  ]
+ },
+ {
+  "id": "acfr-co",
+  "state": "Colorado",
+  "pages": [
+   42,
+   43
+  ]
+ },
+ {
+  "id": "acfr-ct",
+  "state": "Connecticut",
+  "pages": [
+   38,
+   39,
+   40
+  ]
+ },
+ {
+  "id": "acfr-de",
+  "state": "Delaware",
+  "pages": [
+   41,
+   42
+  ]
+ },
+ {
+  "id": "acfr-fl",
+  "state": "Florida",
+  "pages": [
+   28,
+   29
+  ]
+ },
+ {
+  "id": "acfr-ga",
+  "state": "Georgia",
+  "pages": [
+   52,
+   53,
+   54,
+   55
+  ]
+ },
+ {
+  "id": "acfr-hi",
+  "state": "Hawaii",
+  "pages": [
+   37,
+   38,
+   39
+  ]
+ },
+ {
+  "id": "acfr-id",
+  "state": "Idaho",
+  "pages": [
+   30,
+   31,
+   32,
+   33
+  ]
+ },
+ {
+  "id": "acfr-il",
+  "state": "Illinois",
+  "pages": [
+   42,
+   43,
+   44,
+   45
+  ]
+ },
+ {
+  "id": "acfr-in",
+  "state": "Indiana",
+  "pages": [
+   43,
+   44,
+   45
+  ]
+ }
+]
