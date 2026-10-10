@@ -1,0 +1,147 @@
+{
+ "sources": [
+  {
+   "id": "acfr-ca",
+   "state": "California",
+   "url": "https://www.sco.ca.gov/Files-ARD/ACFR/acfr25web.pdf",
+   "sha256": "9a55cb5b55cb03d353ce8d56934d0c5ce78468839ea81b1d69920658963eb6bd",
+   "select": {
+    "pages": [
+     52,
+     53,
+     54,
+     55,
+     56,
+     57
+    ]
+   },
+   "kind": "acfr"
+  },
+  {
+   "id": "acfr-co",
+   "state": "Colorado",
+   "url": "https://osc.colorado.gov/sites/osc/files/documents/FY2025%20ACFR_ADA_1.30.26.pdf",
+   "sha256": "46639bb205d22e0c0612e4f323e68c368d019d53b7aa6f6aa1abf3292549397f",
+   "select": {
+    "pages": [
+     42,
+     43
+    ]
+   },
+   "kind": "acfr"
+  },
+  {
+   "id": "acfr-ct",
+   "state": "Connecticut",
+   "url": "https://osc.ct.gov/wp-content/uploads/2026/03/State-of-Connecticut-ACFR-2-27-26_Final.pdf",
+   "sha256": "600d4983358329d9be3c81d1e93edd768edb05b990e6bd82261a4fee452ad1ce",
+   "select": {
+    "pages": [
+     38,
+     39,
+     40
+    ]
+   },
+   "kind": "acfr"
+  },
+  {
+   "id": "acfr-de",
+   "state": "Delaware",
+   "url": "https://accountingfiles.delaware.gov/docs/2025acfr.pdf",
+   "sha256": "5aca03aff01c813d5582e7e5f537e161d5e3ccefca1126d0964ec0a2e084d41b",
+   "select": {
+    "pages": [
+     41,
+     42
+    ]
+   },
+   "kind": "acfr"
+  },
+  {
+   "id": "acfr-fl",
+   "state": "Florida",
+   "url": "https://myfloridacfo.com/docs-sf/default-source/transparency-docs/cafr/state-of-fl-acfr-2025.pdf",
+   "sha256": "51d86fe41663827d2464ea9a7317132d0556115e5c6a17ac65db9b364e691c21",
+   "select": {
+    "pages": [
+     28,
+     29
+    ]
+   },
+   "kind": "acfr"
+  },
+  {
+   "id": "acfr-ga",
+   "state": "Georgia",
+   "url": "https://sao.georgia.gov/document/document/2025-acfr-21325-securedpdf/download",
+   "sha256": "7cc2e4918845e03d45227f19d408428e4dd9d1c9b93586222a0633abcdabab65",
+   "select": {
+    "pages": [
+     52,
+     53,
+     54,
+     55
+    ]
+   },
+   "kind": "acfr"
+  },
+  {
+   "id": "acfr-hi",
+   "state": "Hawaii",
+   "url": "https://ags.hawaii.gov/wp-content/uploads/2026/02/acfr2025.pdf",
+   "sha256": "617800b2a5092a577ea02d136531e461f557950e38ba6de18b83f1ea3b3fe503",
+   "select": {
+    "pages": [
+     37,
+     38,
+     39
+    ]
+   },
+   "kind": "acfr"
+  },
+  {
+   "id": "acfr-id",
+   "state": "Idaho",
+   "url": "https://www.sco.idaho.gov/CAFRDocuments/2025%20Annual%20Comprehensive%20Financial%20Report.pdf",
+   "sha256": "570fcef56a2f8b37cc1380bd5ed71e92bf4d3c93223065e886f60e27770bc0c4",
+   "select": {
+    "pages": [
+     30,
+     31,
+     32,
+     33
+    ]
+   },
+   "kind": "acfr"
+  },
+  {
+   "id": "acfr-il",
+   "state": "Illinois",
+   "url": "https://illinoiscomptroller.gov/__media/sites/comptroller/assets/File/CAFR/ACFR%20Final%202025%20-%20Bookmarked.pdf",
+   "sha256": "a6dcd897e2524593f532b3e48a7bb10a77318f76649805f2dfa61dd79f3b2bba",
+   "select": {
+    "pages": [
+     42,
+     43,
+     44,
+     45
+    ]
+   },
+   "kind": "acfr"
+  },
+  {
+   "id": "acfr-in",
+   "state": "Indiana",
+   "url": "https://secure.in.gov/comptroller/files/Fiscal-2025-Annual-Comprehensive-Financial-Report.pdf",
+   "sha256": "77f9a14e830c9ed605e353c3f6cfe13957526481742b7797eb44e4e9d6160b2e",
+   "select": {
+    "pages": [
+     43,
+     44,
+     45
+    ]
+   },
+   "kind": "acfr"
+  }
+ ]
+}

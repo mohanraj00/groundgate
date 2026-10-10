@@ -2873,6 +2873,42 @@ vector(
 )  # fmt: skip
 
 
+vector(
+    "26-scale-item-scales",
+    "A scale item says that the value is scaled. When the candidate has a scale item whose text "
+    "holds a scale word, a token with no scaled value matches only its value times the scale, and "
+    "its negative. The number as written does not match, also when the item fails its check. A "
+    "token with its own scale word keeps its values (spec 0.8, #242).",
+    "Statement of position\n(in thousands)\n\n"
+    "Total assets\t$\t1,250\t$\t1,100\nNet loss\t$\t(75)\t$\t(60)\n\n"
+    "Cash was $2.2 million at year end.\n\nAmounts are in thousands.",
+    {
+        "fields": {
+            "assets": usd("total assets"),
+            "net_loss": usd("net loss"),
+            "cash": usd("cash"),
+        }
+    },
+    [
+        c("s1", "assets", "1250000", "USD", [q("1,250"), THOUSANDS, row("Total assets")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("s2", "assets", "1250", "USD", [q("1,250"), THOUSANDS, row("Total assets")],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("s3", "assets", "1250", "USD",
+          [q("1,250"), q("in thousands", 2, role="scale"), row("Total assets")],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("s4", "assets", "1250000", "USD",
+          [q("1,250"), q("in thousands", 2, role="scale"), row("Total assets")],
+          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("s5", "net_loss", "-75000", "USD", [q("75"), THOUSANDS, DOLLAR, row("Net loss")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("s6", "net_loss", "-75", "USD", [q("75"), THOUSANDS, DOLLAR, row("Net loss")],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("s7", "cash", "2200000", "USD", [q("$2.2 million"), THOUSANDS]),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

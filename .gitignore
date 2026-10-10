@@ -34,3 +34,5 @@ bench/sec2/cands/
 bench/sec3/docs/
 bench/sec3/runs/
 bench/sec3/cands/
+bench/acfr/docs
+bench/acfr/runs

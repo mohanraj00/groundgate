@@ -335,7 +335,7 @@ evidence there and records `EVIDENCE_REANCHORED`. Other info codes say how a fac
 value in a table), `ADMITTED_BY_POLICY` (the policy admits its outside evidence) and
 `MODEL_CLEARED` (a recorded judgment cleared `KEY_NOT_AT_VALUE`).
 
-The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 53 language-neutral
+The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 54 language-neutral
 vectors that pin every code, and 38 invalid packets that an implementation must refuse, so another
 implementation can prove it agrees.
 

@@ -1,0 +1,237 @@
+{
+ "name": "26-scale-item-scales",
+ "description": "A scale item says that the value is scaled. When the candidate has a scale item whose text holds a scale word, a token with no scaled value matches only its value times the scale, and its negative. The number as written does not match, also when the item fails its check. A token with its own scale word keeps its values (spec 0.8, #242).",
+ "document": "Statement of position\n(in thousands)\n\nTotal assets\t$\t1,250\t$\t1,100\nNet loss\t$\t(75)\t$\t(60)\n\nCash was $2.2 million at year end.\n\nAmounts are in thousands.",
+ "schema": {
+  "fields": {
+   "assets": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "total assets"
+    ]
+   },
+   "net_loss": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "net loss"
+    ]
+   },
+   "cash": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "cash"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "assets",
+   "value": "1250000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 58,
+     "text": "1,250"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "field": "assets",
+   "value": "1250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 58,
+     "text": "1,250"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "field": "assets",
+   "value": "1250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 58,
+     "text": "1,250"
+    },
+    {
+     "role": "scale",
+     "start": 139,
+     "end": 151,
+     "text": "in thousands"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "field": "assets",
+   "value": "1250000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 58,
+     "text": "1,250"
+    },
+    {
+     "role": "scale",
+     "start": 139,
+     "end": 151,
+     "text": "in thousands"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "field": "net_loss",
+   "value": "-75000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 79,
+     "end": 81,
+     "text": "75"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Net loss"
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "field": "net_loss",
+   "value": "-75",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 79,
+     "end": 81,
+     "text": "75"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Net loss"
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "field": "cash",
+   "value": "2200000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 100,
+     "end": 112,
+     "text": "$2.2 million"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

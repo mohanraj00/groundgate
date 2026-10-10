@@ -254,9 +254,12 @@ def _values(
     is None on a field without a unit, where brackets alone do not make a sign."""
     assert tok.value is not None
     sv = scaled_value(t.text, tok)
-    out = {tok.value} if sv is None else {tok.value, sv}
-    if sv is None and scale is not None:
-        out.add(tok.value.scaleb(scale))
+    if sv is not None:
+        out = {tok.value, sv}
+    elif scale is not None:  # a scale item scales the number as written (#242)
+        out = {tok.value.scaleb(scale)}
+    else:
+        out = {tok.value}
     neg = neg_item or (prefixes is not None and brackets_around(t.text, tok, prefixes) is not None)
     if neg:
         out |= {-abs(v) for v in out}
