@@ -11,7 +11,7 @@ The statement of net position and the statement of activities of 10 FY2025 state
 | spec 0.7 | 6 | 0 | 0 | 0 | 39 | 0 |
 | spec 0.8 #242 | 6 | 0 | 0 | 0 | 39 | 0 |
 
-Proposals with a scale item that passes: 39 under spec 0.7 and 39 under the 0.8 draft.
+Proposals whose scale item reached the role checks, passed or not: 39 under spec 0.7 and 39 under the 0.8 draft. The #242 rule can change only these.
 
 Codes on the proposals that are not admitted (a proposal can have more than one):
 
@@ -33,7 +33,7 @@ None.
 | spec 0.7 | 0 | 0 | 0 | 0 | 35 | 1 |
 | spec 0.8 #242 | 0 | 0 | 0 | 0 | 35 | 1 |
 
-Proposals with a scale item that passes: 30 under spec 0.7 and 30 under the 0.8 draft.
+Proposals whose scale item reached the role checks, passed or not: 30 under spec 0.7 and 30 under the 0.8 draft. The #242 rule can change only these.
 
 Codes on the proposals that are not admitted (a proposal can have more than one):
 

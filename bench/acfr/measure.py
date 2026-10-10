@@ -250,7 +250,8 @@ def score() -> dict[str, Any]:
     """For each run and spec: the right values admitted, the escapes (wrong values admitted),
     the admitted values labeled not sure or not yet labeled, the proposals and the documents with
     no reply. For each run, the proposals whose outcome the 0.8 draft changes, by label, and the
-    proposals with a scale item that passes: the #242 rule reads only those."""
+    proposals whose scale item reached the role checks, passed or not: the #242 rule can change
+    only those (vector 26 s4 has a scale item that fails)."""
     given = labels()
     verdict = {"right": "right", "wrong": "escapes", "not sure": "not sure"}
     res: dict[str, Any] = {"runs": {}, "changed": {}, "scale items": {}, "codes": {}}
@@ -286,7 +287,9 @@ def score() -> dict[str, Any]:
         res["changed"][run] = dict(sorted(moved.items()))
         res["scale items"][run] = {
             spec: sum(
-                r["scale"] is True for got in found[run, spec].values() for r in got["decisions"]
+                r["scale"] is not None
+                for got in found[run, spec].values()
+                for r in got["decisions"]
             )
             for spec in SPECS
         }
@@ -335,8 +338,9 @@ def render(res: dict[str, Any]) -> str:
         s = res["scale items"][run]
         lines += [
             "",
-            f"Proposals with a scale item that passes: {s[SPECS[0]]} under spec 0.7 and "
-            f"{s[SPECS[1]]} under the 0.8 draft.",
+            f"Proposals whose scale item reached the role checks, passed or not: {s[SPECS[0]]} "
+            f"under spec 0.7 and {s[SPECS[1]]} under the 0.8 draft. The #242 rule can change only "
+            "these.",
             "",
             "Codes on the proposals that are not admitted (a proposal can have more than one):",
             "",
