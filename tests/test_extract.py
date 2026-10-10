@@ -186,6 +186,27 @@ def test_pdf_numbers_in_two_columns_of_prose_are_no_table(tmp_path: Path) -> Non
     )
 
 
+def test_pdf_two_columns_of_prose_next_to_a_table_keep_their_lines(tmp_path: Path) -> None:
+    """Above or below a table, a row joins only as a column heading: a long part right of the
+    label column, such as a line of prose, stops the walk."""
+    path = tmp_path / "next.pdf"
+    page = [
+        (72, 760, "The left column of prose has a long line here and", 7),
+        (320, 760, "the right column of prose has a long line too and", 7),
+        (72, 730, "Notes"),
+        (72, 700, "Cash"),
+        (300, 700, "1"),
+        (72, 686, "Land"),
+        (300, 686, "2"),
+        (72, 660, "Below the table the left column goes on with prose", 7),
+        (320, 660, "and the right column goes on with more of its prose", 7),
+    ]
+    path.write_bytes(make_pdf([page]))
+    text = extract(path).text
+    assert "Cash\t1\nLand\t2" in text
+    assert text.count("\t") == 2
+
+
 def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> None:
     """A wide gap inside one text line of a table row is a cell break too."""
     path = tmp_path / "split.pdf"

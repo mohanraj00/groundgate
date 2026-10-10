@@ -46,6 +46,7 @@ Row = list[Line]  # the cells of one output line, left to right
 
 CELL_GAP = 0.65  # a gap between two words this many times the word's height starts a new cell
 HEADING_WORDS = 4  # a row with no number joins a table when each of its parts is this short
+COLUMN_HEADING_WORDS = 8  # a column heading above or below a table, such as a spanning heading
 DASHES = frozenset("-\u2013\u2014\u2212")  # hyphen, en dash, em dash, minus
 NUMBER_CHARS = frozenset("0123456789,.$€£¥%()") | DASHES
 
@@ -301,11 +302,13 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     cells, or ends before the first number cell of both, as a heading in the label column does.
     A line of prose across the number columns ends the table. A table has two or more table
     rows: one number beside text, such as a page number beside a running head or a number in one
-    of two columns of prose, is no table. A table also takes the rows of two or more lines side
-    by side above it, up to a line across the edge of its first number cell, and those just below
-    it, such as its column headings. A heading in the label column above the first table row
-    joins only when such a row is above it. The table is written where pdfminer gives the first of
-    its lines, one row on each line.
+    of two columns of prose, is no table. A table also takes its column headings: the rows of two
+    or more lines side by side above it and just below it, where each line after the first has
+    COLUMN_HEADING_WORDS words or fewer. Above it, the walk goes past lines in the label column,
+    and stops at a line across the edge of its first number cell or at a row of lines side by
+    side that is no column heading, such as two columns of prose. A heading in the label column
+    above the first table row joins only when a column heading is above it. The table is written
+    where pdfminer gives the first of its lines, one row on each line.
     """
     Key = tuple[int, int]  # block, line
     span = {
@@ -333,6 +336,11 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
 
     def heading(row: list[Key]) -> bool:
         return side_by_side(row) and all(len(blocks[bi][li]) <= HEADING_WORDS for bi, li in row)
+
+    def column_heading(row: list[Key]) -> bool:  # the first part may be a long title or label
+        return side_by_side(row) and all(
+            len(blocks[bi][li]) <= COLUMN_HEADING_WORDS for bi, li in row[1:]
+        )
 
     def first_number(row: list[Key]) -> float:
         return min(span[k].x0 for k in row if number(k))
@@ -362,12 +370,15 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
         edge = first_number(rows[first]) + 0.5
         above = first - 1
         while above >= 0 and rows[above][0] not in region:
-            if side_by_side(rows[above]):
+            if column_heading(rows[above]):
                 first = above
-            elif span[rows[above][0]].x0 < edge < span[rows[above][0]].x1:
+            elif (
+                side_by_side(rows[above])
+                or span[rows[above][0]].x0 < edge < span[rows[above][0]].x1
+            ):
                 break
             above -= 1
-        while last + 1 < len(rows) and side_by_side(rows[last + 1]):
+        while last + 1 < len(rows) and column_heading(rows[last + 1]):
             last += 1
         tables.append([])
         for row in rows[first : last + 1]:

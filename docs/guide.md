@@ -47,8 +47,8 @@ is the text at the same height, and it is a table row when it has two or more se
 side by side, and one part holds only numbers, such as `$ 1,234` or `(56)`. A table has two or
 more table rows. Between them, short headings, numbers and headings in the label column join the
 table. Column headings directly above or below join it too, with a heading in the label column
-under them. Other PDF text keeps its lines, and a line of prose that crosses the number columns
-ends the table.
+under them. Other PDF text keeps its lines: a line of prose that crosses the number columns ends
+the table, and two columns of prose next to a table stay two columns.
 
 ## Schema
 
