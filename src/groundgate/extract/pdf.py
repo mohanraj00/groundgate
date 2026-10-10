@@ -287,7 +287,7 @@ def _cells(line: Line) -> list[Line]:
 def _number_cell(line: Line) -> bool:
     """A text line of only numbers, currency signs, brackets and dashes, such as "$ (1,234)"."""
     chars = set("".join(t for t, _ in line))
-    return chars <= NUMBER_CHARS and (any(c.isdigit() for c in chars) or chars <= DASHES)
+    return chars <= NUMBER_CHARS and any(c.isdigit() or c in DASHES for c in chars)
 
 
 def _tables(blocks: list[list[Line]]) -> list[list[Row]]:

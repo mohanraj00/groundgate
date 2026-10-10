@@ -1360,9 +1360,8 @@
      707,
      714
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1379,7 +1378,6 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
-     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1390,14 +1388,13 @@
     "key": "2025",
     "value": "78431000000",
     "evidence": [
-     4597,
-     4603
+     4606,
+     4612
     ],
     "outcome": "needs_verification",
     "codes": [
      "SCALE_CITATION_INVALID",
      "FIELD_CITATION_INVALID",
-     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1411,9 +1408,8 @@
      3091,
      3097
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1424,12 +1420,11 @@
     "key": "2025",
     "value": "79817000000",
     "evidence": [
-     5266,
-     5272
+     5263,
+     5269
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null

@@ -10,20 +10,20 @@ The principal statements of the 20 FY2025 agency financial reports of `bench/afr
 |---|---:|---:|---:|---:|---:|---:|
 | 0.7 text | 3 | 1 | 0 | 0 | 100 | 0 |
 | replay | 46 | 0 | 0 | 0 | 100 | 0 |
-| new runs | 54 | 0 | 1 | 0 | 100 | 0 |
+| new runs | 57 | 0 | 1 | 0 | 100 | 0 |
 
 Codes on the proposals that are not admitted (a proposal can have more than one):
 
 | Code | 0.7 text | replay | new runs |
 |---|---:|---:|---:|
 | `FIELD_CITATION_INVALID` | 82 | 12 | 17 |
-| `KEY_CITATION_INVALID` | 5 | 3 | 17 |
+| `KEY_CITATION_INVALID` | 5 | 3 | 12 |
 | `KEY_CITED` | 1 | 2 | 3 |
 | `KEY_NOT_AT_VALUE` | 79 | 14 | 7 |
 | `PART_MISSING` | 39 | 11 | 15 |
 | `SCALE_CITATION_INVALID` | 1 | 3 | 2 |
 | `UNIT_CITATION_INVALID` | 1 | 1 | 2 |
-| `VALUE_DERIVED` | 77 | 34 | 45 |
+| `VALUE_DERIVED` | 77 | 34 | 42 |
 | `VALUE_NOT_IN_EVIDENCE` | 0 | 20 | 0 |
 
 ## gpt-6-luna

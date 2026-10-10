@@ -18,7 +18,7 @@
     "no reply": 0
    },
    "new runs": {
-    "right": 54,
+    "right": 57,
     "escapes": 0,
     "not sure": 1,
     "unlabeled": 0,
@@ -99,7 +99,7 @@
    "KEY_CITATION_INVALID": {
     "0.7 text": 5,
     "replay": 3,
-    "new runs": 17
+    "new runs": 12
    },
    "KEY_CITED": {
     "0.7 text": 1,
@@ -129,7 +129,7 @@
    "VALUE_DERIVED": {
     "0.7 text": 77,
     "replay": 34,
-    "new runs": 45
+    "new runs": 42
    },
    "VALUE_NOT_IN_EVIDENCE": {
     "0.7 text": 0,

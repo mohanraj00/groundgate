@@ -4,7 +4,7 @@
  "model": "claude-sonnet-5-5",
  "effort": "high",
  "cli": "2.1.295 (Claude Code)",
- "prompt_sha256": "0f7e30e0b7e54192a0c060195d9a935045026c39cb186bf842033b2c788fe048",
+ "prompt_sha256": "da3d2068f478c3111946a6c6939c285b63891464b38ee106149565933d3c991a",
  "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
  "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
  "output_schema_without": [
