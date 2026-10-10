@@ -114,6 +114,10 @@ def missing_there(
 
 def causes() -> None:
     import groundgate as gg
+    from groundgate.canonical import SPEC_VERSION
+
+    if SPEC_VERSION != "0.8":
+        raise SystemExit(f"these causes are decided with the 0.8 draft, not {SPEC_VERSION}")
 
     schema = measure._read(HERE / "schema.json")
     out = []
