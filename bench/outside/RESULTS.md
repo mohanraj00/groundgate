@@ -58,3 +58,18 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 | `fda-apixaban` | max_daily_dose | Treatment of Pulmonary Embolism | 20 mg | document | the document | yes |
 | `fda-rivaroxaban` | max_daily_dose | Reduction of Risk of Major Cardiovascular Events in Patients with Coronary Artery Disease (CAD) | 5 mg | document | the document | yes |
 | `sec-0001193125-26-077343` | net_income | 2025 | -32154000000 USD | document | the document | yes |
+
+## What the 21 right values that the document states miss (#232)
+
+The cause of each right value that the document states and spec 0.6.1 still rejects, from `causes.json`, which I wrote by hand from the document, the run's quote and its span. A value can miss more than one part. For 5 of them, another proposal of the same value already goes to review.
+
+| Missing | Values |
+|---|---:|
+| span | 11 |
+| computation | 6 |
+| scale | 6 |
+| sign | 4 |
+| other number | 2 |
+| other scale | 2 |
+| dash as zero | 1 |
+| token | 1 |

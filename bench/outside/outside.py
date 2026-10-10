@@ -175,6 +175,9 @@ def score() -> dict[str, Any]:
                             "key": it["key"], "value": it["value"], "unit": it["unit"],
                             "basis": lab["basis"], "source": lab["source"],
                             "still": it["id"] in now})  # fmt: skip
+    causes = _read(HERE / "causes.json")
+    stated = [r for r in sources if r["basis"] == "document" and r["still"]]
+    parts: Counter[str] = Counter(p for r in stated for p in causes[r["id"]]["missing"])
     return {
         "items": len(its),
         "still": len(now),
@@ -183,6 +186,12 @@ def score() -> dict[str, Any]:
             for scope, groups in by.items()
         },
         "right": sources,
+        "stated": {
+            "items": len(stated),
+            "another proposal in review": sum(causes[r["id"]]["review"] for r in stated),
+            "missing": dict(sorted(parts.items(), key=lambda kv: (-kv[1], kv[0]))),
+            "each": [{"id": r["id"], **causes[r["id"]]} for r in stated],
+        },
     }
 
 
@@ -217,6 +226,15 @@ def render(res: dict[str, Any]) -> str:
             f"| `{r['doc']}` | {r['field']} | {r['key'] or ''} | {r['value']}{unit} | "
             f"{r['basis']} | {r['source']} | {'yes' if r['still'] else 'no'} |"
         )
+    st = res["stated"]
+    md += ["", f"## What the {st['items']} right values that the document states miss (#232)", "",
+           "The cause of each right value that the document states and spec 0.6.1 still rejects, "
+           "from `causes.json`, which I wrote by hand from the document, the run's quote and its "
+           "span. A value can miss more than one part. For "
+           f"{st['another proposal in review']} of them, another proposal of the same value "
+           "already goes to review.", "",
+           "| Missing | Values |", "|---|---:|"]  # fmt: skip
+    md += [f"| {part} | {n} |" for part, n in st["missing"].items()]
     return "\n".join(md) + "\n"
 
 

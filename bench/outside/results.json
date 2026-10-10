@@ -358,5 +358,201 @@
    "source": "the document",
    "still": true
   }
- ]
+ ],
+ "stated": {
+  "items": 21,
+  "another proposal in review": 5,
+  "missing": {
+   "span": 11,
+   "computation": 6,
+   "scale": 6,
+   "sign": 4,
+   "other number": 2,
+   "other scale": 2,
+   "dash as zero": 1,
+   "token": 1
+  },
+  "each": [
+   {
+    "id": "14b0869eb7658c68",
+    "missing": [
+     "span",
+     "other scale"
+    ],
+    "review": false,
+    "note": "The quote adds a $ and the word million, so it does not occur. Each place in the filing that holds the number is a table in thousands, and the value is the number times a million."
+   },
+   {
+    "id": "4f0bcd218d3d73d9",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives a dose every 12 hours. The value is twice that dose."
+   },
+   {
+    "id": "5081647fc4c12aaf",
+    "missing": [
+     "span",
+     "sign"
+    ],
+    "review": true,
+    "note": "LangExtract aligned the quote to one byte, a hyphen in other text. The quote adds a minus sign, so it does not occur."
+   },
+   {
+    "id": "5ab1e162e917a102",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives a dose every 12 hours. The value is twice that dose."
+   },
+   {
+    "id": "62b671c342824a07",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": false,
+    "note": "LangExtract aligned the quote to one byte, the $ of another cell. The quote has no tab after the $, so it does not occur. The table is in thousands."
+   },
+   {
+    "id": "675ac2d54aadcf78",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives a dose twice daily. The value is twice that dose."
+   },
+   {
+    "id": "68ba37da74c0313b",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": true,
+    "note": "LangExtract aligned the quote to one byte, the $ of another cell. The quote adds the word million, so it does not occur. The table is in millions."
+   },
+   {
+    "id": "6d2460c4b74a1af9",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": false,
+    "note": "LangExtract aligned the quote to one byte, the $ of another cell. The quote has no tab after the $, so it does not occur. The table is in thousands."
+   },
+   {
+    "id": "73d575a619012e11",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": true,
+    "note": "The quote adds a $ and the word million, so it does not occur. The table is in millions."
+   },
+   {
+    "id": "86af173fcf11a0ac",
+    "missing": [
+     "other number"
+    ],
+    "review": false,
+    "note": "The document and the PDF say $35 million. The value is 3500000."
+   },
+   {
+    "id": "89da074fedec0636",
+    "missing": [
+     "span",
+     "sign"
+    ],
+    "review": false,
+    "note": "LangExtract aligned the quote to one byte, a hyphen in other text. The quote adds a minus sign, so it does not occur. The text gives the amount after the words net loss."
+   },
+   {
+    "id": "8b0181edcf2d4a06",
+    "missing": [
+     "other number"
+    ],
+    "review": false,
+    "note": "The document and the PDF say $35 million. The value is 3500000."
+   },
+   {
+    "id": "936a6abaaee9bdb5",
+    "missing": [
+     "span",
+     "sign"
+    ],
+    "review": true,
+    "note": "LangExtract aligned the quote to one byte, a hyphen in other text. The quote adds a minus sign, so it does not occur."
+   },
+   {
+    "id": "973c0f2f24678c43",
+    "missing": [
+     "token"
+    ],
+    "review": false,
+    "note": "The span holds the number, but a comma with no space comes before it, so it is no number token."
+   },
+   {
+    "id": "acbe099cab4bdd6a",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": false,
+    "note": "The quote is the scaled number, so it does not occur. The table is in thousands of dollars, and the PDF text gives it column by column."
+   },
+   {
+    "id": "c315fb30c8bcec1d",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives 2.5 mg twice daily. The span is the end of 2.5 mg, so it holds no token 5."
+   },
+   {
+    "id": "e68657ba4b259d70",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": true,
+    "note": "The quote adds a $ and the word million, so it does not occur. The table is in millions."
+   },
+   {
+    "id": "ebde6fffd305b2b6",
+    "missing": [
+     "dash as zero"
+    ],
+    "review": false,
+    "note": "The table cell is a $ and a dash. The value is 0."
+   },
+   {
+    "id": "f553c13646a6183b",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives a dose twice daily. The value is twice that dose."
+   },
+   {
+    "id": "fc2ced02c90f845d",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives 2.5 mg twice daily. The span is the end of 2.5 mg, so it holds no token 5."
+   },
+   {
+    "id": "fe95807bfcb4a6f7",
+    "missing": [
+     "span",
+     "other scale",
+     "sign"
+    ],
+    "review": false,
+    "note": "The quote adds a $ and the word million, so it does not occur. Each place in the filing that holds the number is a table in thousands, and the value is the number times a million."
+   }
+  ]
+ }
 }
