@@ -1,0 +1,194 @@
+{
+ "doc": "afr-dot",
+ "provider": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "44865c73d8245d781bf2b94f702642dd331f20e71784ceb5811de3473a327c37",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "total_assets",
+    "value": "331540544000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "$ 331,540,544"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Assets"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "total_liabilities",
+    "value": "49343519000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "$ 49,343,519"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Liabilities"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "total_net_position",
+    "value": "282197025000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "282,197,025"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Net Position"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "net_cost_of_operations",
+    "value": "130088330000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "$ 130,088,330"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Net Cost of Operations"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "total_budgetary_resources",
+    "value": "323289772000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "$ 323,289,772"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Budgetary Resources"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025 BUDGETARY"
+     }
+    ]
+   },
+   {
+    "field": "total_budgetary_resources",
+    "value": "8056878000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "$ 8,056,878"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Budgetary Resources"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025 NON-BUDGETARY\nCREDIT REFORM\nFINANCING ACCOUNTS"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": [
+  "exit 1: ",
+  "exit 1: ses\n2026-10-10T19:32:39.953635Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: HTTP error: 503 Service Unavailable, url: wss://chatgpt.com/backend-api/codex/responses\n"
+ ]
+}

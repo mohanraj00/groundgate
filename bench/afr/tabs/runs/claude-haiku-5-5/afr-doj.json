@@ -1,0 +1,158 @@
+{
+ "doc": "afr-doj",
+ "provider": "claude-cli",
+ "model": "claude-haiku-5-5",
+ "effort": "default",
+ "cli": "2.1.295 (Claude Code)",
+ "prompt_sha256": "1db7e89467196c889e6116c6b69e20933e2d06d17acb9661570259e50beffc39",
+ "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
+ "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "total_assets",
+    "value": "77909654000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "77,909,654"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Assets"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "total_liabilities",
+    "value": "31597403000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "31,597,403"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Liabilities"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "total_net_position",
+    "value": "46312251000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "46,312,251"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Net Position"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "net_cost_of_operations",
+    "value": "49229141000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "49,229,141"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Net Cost of Operations"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   },
+   {
+    "field": "total_budgetary_resources",
+    "value": "80186900000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "80,186,900"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Budgetary Resources"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "Dollars in Thousands"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2025"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

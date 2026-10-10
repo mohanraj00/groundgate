@@ -5,6 +5,13 @@ shows which keys a spec puts at an amount.
     uv run python bench/status/web.py              # then open http://127.0.0.1:8767
     uv run python bench/status/web.py --work bench/status/calibrate/work
 
+Since #230, groundgate writes a PDF table as rows with tabs, so its PDF text differs from the
+committed text. The page checks the text against the pinned PDFs, so run it on the 0.7.0 wheel,
+which writes it:
+
+    uv run --isolated --no-project --no-sources --python 3.12 --with 'groundgate[pdf]==0.7.0' \
+        python bench/status/web.py
+
 With --work, it labels the items of a groundgate-calibrate work directory of this set (#175) and
 writes that directory's labels.json, in the same format. Like groundgate-calibrate label, it
 refuses a change once a judge has answered.

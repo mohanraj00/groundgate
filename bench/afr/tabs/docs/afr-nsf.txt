@@ -1,0 +1,176 @@
+Financial Statements (September 30, 2025)
+
+U.S. National Science Foundation Balance Sheet
+As of September 30, 2025 (Amounts in Thousands)
+
+Assets	2025
+Intragovernmental Assets
+Fund Balance With Treasury (Note 2)	$	18,401,384
+Accounts Receivable, Net
+Assets for Custodial and Non-Entity Liabilities -	9,555
+Other Than the General Fund of the US Government (Note 7)
+Accounts Receivable, Net	23,293
+Total Accounts Receivable, Net	32,848
+Advances and Prepayments	61,605
+Total Intragovernmental Assets	18,495,837
+Other Than Intragovernmental Assets
+Accounts Receivable, Net	1,483
+Property, Plant, and Equipment, Net (Note 3)	501,055
+Total Other Than Intragovernmental Assets	502,538
+Total Assets	$	18,998,375
+Liabilities
+Intragovernmental Liabilities
+Accounts Payable
+Accounts Payable	$	21,889
+Total Accounts Payable	21,889
+Advances from Others and Deferred Revenue	214
+Other Liabilities
+Other Liabilities (Without Reciprocals)	3,168
+Liability to the General Fund of US Government -	1,347
+for Custodial and Other Non-Entity Assets
+Other Current Liabilities - Benefit Contributions Payable	1,904
+Total Other Liabilities	6,419
+Total Intragovernmental Liabilities	28,522
+
+Financials - 15
+
+U.S. NATIONAL SCIENCE FOUNDATION I FY25 AGENCY FINANCIAL REPORT
+Financial Statements (September 30, 2025)
+
+U.S. National Science Foundation Balance Sheet
+As of September 30, 2025 (Amounts in Thousands) - Continued
+
+Other Than Intragovernmental Liabilities
+
+Accounts Payable	98,225
+Federal Employee Salary, Leave, and Benefits Payable	42,200
+Other Post-Employment Liabilities	5,922
+Environmental and Disposal Liabilities (Note 6)	13,655
+Other Liabilities
+Accrued Grant Liabilities	517,349
+Liability for Non-Fiduciary Deposit Fund (Note 2)	39,236
+Total Other Liabilities	556,585
+Total Other Than Intragovernmental Liabilities	716,587
+Total Liabilities	$	745,109
+Net Position
+Unexpended Appropriations
+Unexpended Appropriations - Funds from Other Than Dedicated Collections	$	17,004,622
+Total Unexpended Appropriations (Consolidated)	17,004,622
+Cumulative Results of Operations
+Cumulative Results of Operations - Funds from Dedicated Collections (Note 7)	711,369
+Cumulative Results of Operations - Funds from Other Than Dedicated Collections	537,275
+Total Cumulative Results of Operations (Consolidated)	1,248,644
+Total Net Position	$	18,253,266
+Total Liabilities and Net Position	$	18,998,375
+
+The accompanying notes are an integral part of these statements.
+
+Financials - 16
+
+U.S. NATIONAL SCIENCE FOUNDATION I FY25 AGENCY FINANCIAL REPORT
+Financial Statements (September 30, 2025)
+
+U.S. National Science Foundation Statement of Net Cost
+For the Fiscal Year Ended September 30, 2025 (Amounts in Thousands)
+
+Program Costs
+
+Research and Related Activities
+
+Gross Costs	$	8,184,517
+Less: Earned Revenue	(77,978)
+Net Research and Related Activities	$	8,106,539
+STEM Education
+Gross Costs	$	1,318,551
+Less: Earned Revenue	(9,995)
+Net STEM Education	$	1,308,556
+Major Research Equipment and Facilities Construction
+Gross Costs	$	319,771
+Less: Earned Revenue	-
+Net Major Research Equipment and Facilities Construction	$	319,771
+CHIPS for America Workforce and Education
+Gross Costs	$	9,026
+Less: Earned Revenue	-
+Net CHIPS for America Workforce and Education	$	9,026
+Donations and Dedicated Collections
+Gross Costs	$	183,448
+Less: Earned Revenue	-
+Net Donations and Dedicated Collections	$	183,448
+Net Cost of Operations (Note 11)	$	9,927,340
+
+2025
+(Note 12)
+
+The accompanying notes are an integral part of these statements.
+
+Financials - 17
+
+U.S. NATIONAL SCIENCE FOUNDATION I FY25 AGENCY FINANCIAL REPORT
+Financial Statements (September 30, 2025)
+
+U.S. National Science Foundation Statement of Changes in Net Position
+For the Fiscal Year Ended September 30, 2025 (Amounts in Thousands)
+
+2025
+
+Funds from	Funds from Other
+Dedicated	Than Dedicated
+Collections	Collections
+(Consolidated	(Consolidated	Consolidated
+Totals)	Totals)	Total
+(Notes 7 & 12)	(Note 12)	(Note 12)
+Unexpended Appropriations
+Beginning Balances	$	-	$	17,943,822	$	17,943,822
+Appropriations Received	-	8,876,000	8,876,000
+Appropriations Transferred In / (Out)	-	9,694	9,694
+Other Adjustments (Canceled Authority)	-	(106,250)	(106,250)
+Appropriations Used	-	(9,718,644)	(9,718,644)
+Net Change in Unexpended Appropriations	-	(939,200)	(939,200)
+Total Unexpended Appropriations, Ending	$	-	$	17,004,622	$	17,004,622
+Cumulative Results of Operations
+Beginning Balances	$	703,123	$	526,066	$	1,229,189
+Appropriations Used	-	9,718,644	9,718,644
+Non-Exchange Revenue	-	55	55
+Donations (Note 11)	-	26,268	26,268
+Transfers In / (Out) Without Reimbursement	167,635	(301)	167,334
+Imputed Financing (Note 11)	-	34,935	34,935
+Other	-	(441)	(441)
+Net Cost of Operations (Note 11)	(159,389)	(9,767,951)	(9,927,340)
+Net Change in Cumulative Results of Operations	8,246	11,209	19,455
+Total Cumulative Results of Operations, Ending	$	711,369	$	537,275	$	1,248,644
+Net Position	$	711,369	$	17,541,897	$	18,253,266
+
+The accompanying notes are an integral part of these statements.
+
+Financials - 18
+
+U.S. NATIONAL SCIENCE FOUNDATION I FY25 AGENCY FINANCIAL REPORT
+Financial Statements (September 30, 2025)
+
+U.S. National Science Foundation Statement of Budgetary Resources
+For the Fiscal Year Ended September 30, 2025 (Amounts in Thousands)
+
+Budgetary Resources	2025
+Unobligated Balance from Prior Year Budget Authority, Net	$	1,566,875
+Appropriations	9,079,098
+Spending Authority from Offsetting Collections	92,161
+Total Budgetary Resources	$	10,738,134
+Status of Budgetary Resources
+New Obligations and Upward Adjustments	$	9,885,079
+Unobligated Balance, End of Year
+Apportioned, Unexpired	152,298
+Unapportioned, Unexpired	207,667
+Unobligated Balance, Unexpired, End of Year	359,965
+Unobligated Balance, Expired, End of Year	493,090
+Unobligated Balance, End of Year	853,055
+Total Status of Budgetary Resources	$	10,738,134
+Net Outlays (Note 11)
+Net Outlays	$	9,970,004
+Distributed Offsetting Receipts	(31,125)
+Net Agency Outlays	$	9,938,879
+
+The accompanying notes are an integral part of these statements.
+
+Financials - 19
+
+U.S. NATIONAL SCIENCE FOUNDATION I FY25 AGENCY FINANCIAL REPORT

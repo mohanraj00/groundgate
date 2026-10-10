@@ -6,6 +6,12 @@ status set and the vectors, so it is measured here, on documents that no rule ca
     uv run python bench/afr/afr.py docs     # docs/, from the cache
     uv run python bench/afr/afr.py fields   # schema.json, descriptions.json
 
+Since #230, groundgate writes a PDF table as rows with tabs, so its PDF text differs from the
+committed text. Run pick and docs on the 0.7.0 wheel, which writes it:
+
+    uv run --isolated --no-project --no-sources --python 3.12 --with 'groundgate[pdf]==0.7.0' \
+        python bench/afr/afr.py docs
+
 agencies.json lists the CFO Act agencies in the order of 31 U.S.C. 901(b), each with the URL of
 its FY2025 report on its own site, or null when it has none. pick takes them in that order. It
 downloads each report into .cache, takes the pages of pages.json, and stops at 20 reports. A site

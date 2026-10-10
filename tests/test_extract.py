@@ -107,6 +107,216 @@ def test_a_pdf_decision_admits_against_extracted_text(pdf: Path) -> None:
     assert (d.outcome, d.codes) == ("admitted", ())
 
 
+TABLE_PAGE = [
+    (72, 720, "Statement of things"),
+    (72, 705, "(in thousands)"),
+    (300, 680, "2025"),
+    (400, 680, "2024"),
+    (72, 665, "Assets:"),
+    (72, 650, "Cash"),
+    (300, 650, "$ 1,234"),
+    (400, 650, "$ 1,100"),
+    (72, 635, "Total assets"),
+    (300, 635, "5,678"),
+    (400, 635, "4,321"),
+    (72, 600, "These notes are part of the statement."),
+]
+
+
+def test_pdf_table_rows_are_lines_with_tabs(tmp_path: Path) -> None:
+    """The column headings and the heading in the label column join the table (#230)."""
+    path = tmp_path / "table.pdf"
+    path.write_bytes(make_pdf([TABLE_PAGE]))
+    doc = extract(path)
+    assert doc.text == (
+        "Statement of things\n(in thousands)\n\n"
+        "2025\t2024\nAssets:\nCash\t$ 1,234\t$ 1,100\nTotal assets\t5,678\t4,321\n\n"
+        "These notes are part of the statement."
+    )
+    assert doc.text == extract(path).text
+    raw = doc.text.encode()
+    assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
+
+
+def test_pdf_prose_side_by_side_is_no_table(tmp_path: Path) -> None:
+    """Two columns of prose keep their lines: no part of a row holds only numbers."""
+    path = tmp_path / "prose.pdf"
+    page = [
+        (72, 700, "The fund holds 100 acres of land and"),
+        (320, 700, "more text in the right column"),
+        (72, 686, "other things that it reports here."),
+        (320, 686, "with 2,000 words in it."),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert extract(path).text == (
+        "The fund holds 100 acres of land and\nother things that it reports here.\n\n"
+        "more text in the right column\nwith 2,000 words in it."
+    )
+
+
+def test_pdf_one_number_beside_prose_is_no_table(tmp_path: Path) -> None:
+    """A table has two or more table rows: one number in a column of prose stays in its column."""
+    path = tmp_path / "one.pdf"
+    page = [
+        (72, 700, "The plan covers a minor child"),
+        (320, 700, "Adult members pay"),
+        (72, 686, "Minor"),
+        (320, 686, "500"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert extract(path).text == "The plan covers a minor child\nMinor\n\nAdult members pay\n500"
+
+
+def test_pdf_numbers_in_two_columns_of_prose_are_no_table(tmp_path: Path) -> None:
+    """A row of long prose between two number rows keeps them in two tables of one row, so in
+    no table."""
+    path = tmp_path / "two.pdf"
+    page = [
+        (72, 700, "Minor"),
+        (320, 700, "500"),
+        (72, 686, "and the rest of the text goes on here"),
+        (320, 686, "and more text about the plan here"),
+        (72, 672, "Senior"),
+        (320, 672, "300"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert extract(path).text == (
+        "Minor\nand the rest of the text goes on here\nSenior\n\n"
+        "500\nand more text about the plan here\n300"
+    )
+
+
+def test_pdf_two_columns_of_prose_next_to_a_table_keep_their_lines(tmp_path: Path) -> None:
+    """Above or below a table, a row joins only as a column heading: a long part right of the
+    label column, such as a line of prose, stops the walk."""
+    path = tmp_path / "next.pdf"
+    page = [
+        (72, 760, "The left column of prose has a long line here and", 7),
+        (320, 760, "the right column of prose has a long line too and", 7),
+        (72, 730, "Notes"),
+        (72, 700, "Cash"),
+        (300, 700, "1"),
+        (72, 686, "Land"),
+        (300, 686, "2"),
+        (72, 660, "Below the table the left column goes on with prose", 7),
+        (320, 660, "and the right column goes on with more of its prose", 7),
+    ]
+    path.write_bytes(make_pdf([page]))
+    text = extract(path).text
+    assert "Cash\t1\nLand\t2" in text
+    assert text.count("\t") == 2
+
+
+def test_pdf_a_table_never_takes_the_rows_of_the_next(tmp_path: Path) -> None:
+    """Each row is written once: no row below a table joins it."""
+    path = tmp_path / "following.pdf"
+    page = [
+        (72, 700, "Cash"),
+        (300, 700, "1"),
+        (72, 686, "Land"),
+        (300, 686, "2"),
+        (72, 660, "one two three four five six", 7),
+        (320, 660, "seven eight nine ten eleven twelve", 7),
+        (72, 640, "Debt"),
+        (300, 640, "3"),
+        (72, 626, "Equity"),
+        (300, 626, "4"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    text = extract(path).text
+    assert text.startswith("Cash\t1\nLand\t2\n\n")
+    assert text.count("Debt") == 1
+    assert text.endswith("Debt\t3\nEquity\t4")
+
+
+def test_pdf_number_cells_take_the_signs_of_the_builtin_units() -> None:
+    """A cell such as "₹ 1,234" holds only numbers, so its row can be a table row."""
+    from groundgate.extract.layout import Box
+    from groundgate.extract.pdf import NUMBER_CHARS, _number_cell
+    from groundgate.text import builtin_units
+
+    signs = {p for prefixes, _ in builtin_units().values() for p in prefixes if len(p) == 1}
+    assert signs <= NUMBER_CHARS
+    box = Box(1, 0, 0, 1, 1)
+    assert _number_cell([("₹", box), ("1,234", box)])
+    assert not _number_cell([("Rs", box), ("1,234", box)])
+    assert _number_cell([("$", box), ("\u2014", box)])  # a dollar sign and a dash: no amount
+    assert not _number_cell([("$", box)])
+
+
+def test_pdf_a_number_row_in_a_table_is_cut_into_cells(tmp_path: Path) -> None:
+    """A row of only numbers between two table rows gets tabs too, also as one text line."""
+    path = tmp_path / "numbers.pdf"
+    page = [
+        (72, 700, "Cash"),
+        (300, 700, "1"),
+        (400, 700, "2"),
+        (300, 686, "3                              4"),
+        (72, 672, "Debt"),
+        (300, 672, "5"),
+        (400, 672, "6"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert extract(path).text == "Cash\t1\t2\n3\t4\nDebt\t5\t6"
+
+
+def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> None:
+    """A wide gap inside one text line of a table row is a cell break too."""
+    path = tmp_path / "split.pdf"
+    page = [
+        (72, 714, "Cash"),
+        (300, 714, "1,234"),
+        (400, 714, "1,100"),
+        (72, 700, "Land"),
+        (300, 700, "200"),
+        (400, 700, "100"),
+        (72, 686, "A line of prose that crosses the number columns of the table here."),
+        (72, 672, "Debt"),
+        (300, 672, "500"),
+        (400, 672, "400"),
+        (72, 650, "Total"),
+        (300, 650, "1,234          5,678"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert extract(path).text == (
+        "Cash\t1,234\t1,100\nLand\t200\t100\n\n"
+        "A line of prose that crosses the number columns of the table here.\n\n"
+        "Debt\t500\t400\nTotal\t1,234\t5,678"
+    )
+
+
+def test_a_key_item_admits_a_value_in_the_second_column_of_a_pdf_table(tmp_path: Path) -> None:
+    """With a tab after the row label, the column rule reads a PDF table as an HTML one."""
+    path = tmp_path / "table.pdf"
+    path.write_bytes(make_pdf([TABLE_PAGE]))
+    text = extract(path).text
+    schema = {
+        "fields": {
+            "total_assets": {
+                "type": "number",
+                "keys": ["2025", "2024"],
+                "aliases": ["total assets"],
+                "multiple": True,
+            }
+        }
+    }
+    cand = {
+        "field": "total_assets",
+        "value": "4321000",
+        "key": "2024",
+        "evidence": [
+            {"text": "4,321"},
+            {"role": "field", "text": "Total assets"},
+            {"role": "key", "text": "2024"},
+            {"role": "scale", "text": "(in thousands)"},
+        ],
+    }
+    (d,) = gg.admit(text, schema, [cand]).decisions
+    assert (d.outcome, d.codes) == ("admitted", ("VALUE_DERIVED", "KEY_CITED"))
+    (d,) = gg.admit(text.replace("\t", "   "), schema, [cand]).decisions
+    assert d.outcome == "needs_verification"
+
+
 def test_pdf_superscripts_never_fuse_with_the_number(tmp_path: Path) -> None:
     # "count 10" then a raised, smaller "9", then "/L": x per Helvetica advance widths
     x = 72 + 12 * (0.5 * 5 + 0.278 + 0.556 * 2)

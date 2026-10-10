@@ -1,0 +1,196 @@
+FY 2025 AGENCY FINANCIAL REPORT | FINANCIAL SECTION
+
+Consolidated Balance Sheet
+
+As of September 30, 2025
+
+(in millions)	2025
+ASSETS
+Intra-Governmental
+Fund Balance (Note 2)	$	504,700
+Loans Receivable:
+Loans and Interest Receivable (Note 3)	2,204,079
+Advances to Trust Funds (Note 3)	24,291
+Other Assets:
+Due From the General Fund (Note 4)	37,664,208
+Other (Note 15)	2,068
+Total Intra-Governmental	40,399,346
+Other Than Intra-Governmental
+Cash and Other Monetary Assets:
+Cash, Foreign Currency, and Other Monetary Assets (Note 5)	1,062,592
+Gold and Silver Reserves (Note 6)	11,062
+Reserve Position in the International Monetary Fund (Note 7)	30,368
+Accounts Receivable, Net:
+Taxes, Interest, and Other Receivables, Net (Note 8)	93,899
+Loans Receivable, Net:
+Loans and Interest Receivable, Net (Note 9)	10,811
+Credit Program Receivables, Net (Note 9)	8,190
+Advances and Prepayments (Note 10)	38,979
+Investments in Government Sponsored Enterprises (GSEs) (Note 11)	374,460
+Other Investments:
+Investments in Multilateral Development Banks (Note 12)	9,510
+Investment in Special Purpose Vehicle (Note 13)	2,645
+Other, Net (Note 13)	6,745
+Property, Plant, and Equipment, Net (Note 14)	5,349
+Other Assets (Note 15)	4,009
+Total Other Than Intra-Governmental	1,658,619
+Total Assets	$	42,057,965
+
+Stewardship Property, Plant, and Equipment (Note 14)
+
+The accompanying notes are an integral part of these financial statements.
+
+56
+
+DEPARTMENT OF THE TREASURY
+FINANCIAL SECTION | FY 2025 AGENCY FINANCIAL REPORT
+
+Consolidated Balance Sheet
+
+As of September 30, 2025
+
+(in millions)	2025
+LIABILITIES
+Intra-Governmental
+Federal Debt and Interest Payable:
+Federal Debt and Interest Payable (Notes 4 and 16)	$	7,309,752
+Other Federal Debt and Interest Payable (Note 17)	4,117
+Other Liabilities:
+Due To the General Fund (Note 4)	3,609,962
+Other (Note 19)	1,699
+Total Intra-Governmental	10,925,530
+Other Than Intra-Governmental
+Federal Debt and Interest Payable (Notes 4 and 16)	30,311,830
+Accounts Payable:
+Refunds Payable (Note 4)	4,244
+Other Payables	2,096
+Other Liabilities:
+Special Drawing Right Certificates Issued to the Federal Reserve (Note 5)	15,200
+Allocation of Special Drawing Rights (Note 5)	157,472
+Gold Certificates Issued to the Federal Reserve Banks (Note 6)	11,037
+D.C. Federal Pension and Judicial Retirement Actuarial Liability (Note 18)	8,214
+Other (Note 19)	13,541
+Total Other Than Intra-Governmental	30,523,634
+Total Liabilities (Note 19)	41,449,164
+Commitments and Contingencies (Note 27)
+NET POSITION
+Unexpended Appropriations
+Funds from Dedicated Collections (Note 24)	200
+Funds from Other than Dedicated Collections	519,209
+Total Unexpended Appropriations	519,409
+Cumulative Results of Operations
+Funds from Dedicated Collections (Note 24)	58,657
+Funds from Other than Dedicated Collections	30,735
+Total Cumulative Results of Operations	89,392
+Total Net Position (Note 20)	608,801
+Total Liabilities and Net Position	$	42,057,965
+The accompanying notes are an integral part of these financial statements.
+DEPARTMENT OF THE TREASURY	57
+FY 2025 AGENCY FINANCIAL REPORT | FINANCIAL SECTION
+
+Consolidated Statement of Net Cost
+For the Fiscal Year Ended September 30, 2025
+
+(in millions)	2025
+COST OF TREASURY OPERATIONS:
+Economic Program
+Gross Cost	$	112,072
+Less Earned Revenue	(28,337)
+Net Program Cost	83,735
+Financial Program
+Gross Cost	30,166
+Less Earned Revenue	(15,336)
+Net Program Cost	14,830
+Security Program
+Gross Cost	616
+Less Earned Revenue	(11)
+Net Program Cost	605
+Total Program Gross Costs	142,854
+Total Program Earned Revenues	(43,684)
+Total Net Cost of Treasury Operations (Note 21)	99,170
+NON-ENTITY COSTS:
+Federal Debt Interest	1,217,588
+Restoration of Foregone Federal Debt Interest (Note 16)	5,048
+Less Interest Revenue from Loans	(57,922)
+Federal Debt Interest Costs, Net	1,164,714
+Other Federal Costs, Net (Note 21)	18,715
+GSEs Non-Entity Revenue, Net (Note 11)	(68,660)
+Federal Debt Buyback Gain (Note 16)	(13,573)
+Other, Net	(1,353)
+Total Net Non-Entity Costs	1,099,843
+Total Net Cost of Treasury Operations and Non-Entity Costs	$	1,199,013
+
+The accompanying notes are an integral part of these financial statements.
+
+58
+
+DEPARTMENT OF THE TREASURY
+FINANCIAL SECTION | FY 2025 AGENCY FINANCIAL REPORT
+
+Consolidated Statement of Changes in Net Position
+For the Fiscal Year Ended September 30, 2025
+
+Consolidated	Consolidated
+Funds from	Funds from Other
+Dedicated	than Dedicated	2025
+(in millions)	Collections	Collections	Eliminations	Total
+UNEXPENDED APPROPRIATIONS (Notes 20 and 24)
+Beginning Balance	$	200	$	637,911	$	-	$	638,111
+Appropriations Received	-	1,245,183	-	1,245,183
+Appropriations Transferred In	-	90	-	90
+Other Adjustments	-	(36,476)	-	(36,476)
+Appropriations Used	-	(1,327,499)	-	(1,327,499)
+Net Change in Unexpended Appropriations	-	(118,702)	-	(118,702)
+Total Unexpended Appropriations	200	519,209	-	519,409
+CUMULATIVE RESULTS OF OPERATIONS (Notes 20 and 24)
+Beginning Balance	53,316	29,575	-	82,891
+Appropriations Used	-	1,327,499	-	1,327,499
+Non-Exchange Revenue	1,865	-	(409)	1,456
+Donations and Forfeitures of Cash/Equivalent	1,375	-	-	1,375
+Transfers In/(Out) Without Reimbursement	(1,494)	1,726	-	232
+Donation/Forfeiture of Property	993	-	-	993
+Accrued Interest and Discount on Debt	-	22,866	-	22,866
+Imputed Financing Sources (Note 21)	166	1,642	-	1,808
+Transfers to the General Fund and Other	1,117	(151,832)	-	(150,715)
+Net Cost of Treasury Operations and Non-Entity Costs	1,319	(1,200,741)	409	(1,199,013)
+Net Change in Cumulative Results of Operations	5,341	1,160	-	6,501
+Total Cumulative Results of Operations	58,657	30,735	-	89,392
+Net Position	$	58,857	$	549,944	$	-	$	608,801
+The accompanying notes are an integral part of these financial statements.
+DEPARTMENT OF THE TREASURY	59
+FY 2025 AGENCY FINANCIAL REPORT | FINANCIAL SECTION
+
+Combined Statement of Budgetary Resources
+For the Fiscal Year Ended September 30, 2025
+
+Non-Budgetary	2025
+(in millions)	Budgetary	Financing	Total
+BUDGETARY RESOURCES
+Unobligated balance from prior year budget authority, net
+(discretionary and mandatory) (Note 22)	$	379,980	$	361	$	380,341
+Appropriations (discretionary and mandatory) (Note 20)	1,244,529	-	1,244,529
+Borrowing authority (discretionary and mandatory)	-	228	228
+Spending authority from offsetting collections
+(discretionary and mandatory)	17,887	326	18,213
+Total Budgetary Resources	$	1,642,396	$	915	$	1,643,311
+STATUS OF BUDGETARY RESOURCES
+New obligations and upward adjustments	$	1,290,413	$	718	$	1,291,131
+Unobligated balance, end of year:
+Apportioned, unexpired accounts	290,533	130	290,663
+Exempt from apportionment, unexpired accounts	2,032	-	2,032
+Unapportioned, unexpired accounts	57,979	67	58,046
+Unexpired unobligated balance, end of year	350,544	197	350,741
+Expired unobligated balance, end of year	1,439	-	1,439
+Unobligated balance, end of year	351,983	197	352,180
+Total Status of Budgetary Resources	$	1,642,396	$	915	$	1,643,311
+OUTLAYS, NET, AND DISBURSEMENTS, NET
+Outlays, net (discretionary and mandatory)	$	1,269,810	$	-	$	1,269,810
+Distributed offsetting receipts	(79,044)	-	(79,044)
+Agency Outlays, Net (Discretionary and Mandatory)	$	1,190,766	$	-	$	1,190,766
+Disbursements, net (mandatory)	$	2,762	$	2,762
+
+The accompanying notes are an integral part of these financial statements.
+
+60
+
+DEPARTMENT OF THE TREASURY

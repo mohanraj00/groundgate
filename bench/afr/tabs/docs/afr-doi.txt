@@ -1,0 +1,188 @@
+P R I N C I P A L F I N A N C I A L S T A T E M E N T S
+
+Department of the Interior
+Consolidated Balance Sheet
+as of September 30, 2025
+
+(dollars in thousands)	F Y 2025
+ASSETS (Note 8)
+Intragovernmental:
+Fund Balance with Treasury (Note 2)	$	102,309,135
+Investments, Net (Note 3)	32,227,175
+Accounts Receivable, Net (Note 4):
+Accounts Receivable, Net	239,320
+Transfers Receivable, Net	1,764,432
+Advances and Prepayments	188,120
+Total Intragovernmental	$	136,728,182
+With the Public:
+Cash and Other Monetary Assets	$	160
+Accounts Receivable, Net (Note 4)	5,780,215
+Loans Receivable, Net (Note 5)	30,578
+Inventory and Related Property, Net (Note 6)	24,742
+General and right-to-use PP&E, Net (Note 7)	29,089,482
+Advances and Prepayments	593,386
+Other Assets: (Note 8)
+Lease Receivable	355,541
+Other	45,109
+Total With the Public	$	35,919,213
+TOTAL ASSETS	$	172,647,395
+Stewardship Property, Plant, and Equipment (Note 9)
+LIABILITIES (Note 14)
+Intragovernmental:
+Accounts Payable:
+Accounts Payable	$	69,290
+Transfers Payable	1,676,339
+Debt (Note 10)	26,928
+Advances from Others and Deferred Revenue	2,150,295
+Other Liabilities: (Note 14)
+Liability to the General Fund of the U.S. Government for Custodial and Other Non-entity Assets (Note 11)	3,617,172
+Judgment Fund Payable	1,283,868
+Benefit Contributions Payable	157,617
+Other	165,120
+Total Intragovernmental	$	9,146,629
+With the Public:
+Accounts Payable	$	1,759,145
+Federal Employee Salary, Leave, and Benefits Payable (Note 12)	741,763
+Pension and Post-Employment Benefits Payable (Note 12)	1,079,193
+Environmental and Disposal Liabilities (Note 13)	1,741,878
+Benefits Due and Payable	3,334
+Loan Guarantee Liabilities (Note 5)	38,835
+Advances from Others and Deferred Revenue	1,166,463
+Other Liabilities: (Note 14)
+Accrued Grant Liabilities	1,209,831
+Deposit Fund Liability	262,378
+Contingent Liabilities (Note 13)	365,054
+Payments due to States	1,726,229
+Unearned Lessor Revenue	361,900
+Unfunded Lessee Lease Liability	118,481
+Other	115,997
+Total With the Public	$	10,690,481
+TOTAL LIABILITIES	$	19,837,110
+Commitments and Contingencies (Notes 13 and 15)
+NET POSITION (Note 16)
+Unexpended Appropriations – Funds from Dedicated Collections	$	20,747,747
+Unexpended Appropriations – Funds from Other Than Dedicated Collections	27,899,324
+Total Unexpended Appropriations (Consolidated)	48,647,071
+Cumulative Results of Operations - Funds from Dedicated Collections	95,636,143
+Cumulative Results of Operations - Funds From Other Than Dedicated Collections	8,527,071
+Total Cumulative Results of Operations (Consolidated)	104,163,214
+TOTAL NET POSITION	$	152,810,285
+TOTAL LIABILITIES AND NET POSITION	$	172,647,395
+
+The accompanying notes are an integral part of these financial statements.
+
+D O I A G E N C Y F I N A N C I A L R E P O R T F Y 2 0 2 5 | 6 5
+Department of the Interior
+Consolidated Statement of Net Cost
+for the fiscal year ended September 30, 2025
+
+(dollars in thousands)	F Y 2025
+Promote Well-Being for Tribes, American Indians, Alaska Natives, Native Hawaiians, and Insular Communities
+Gross Costs	$	5,485,074
+Less: Earned Revenue	367,149
+Net Program Cost	5,117,925
+Conserve, Protect, Manage, and Restore Natural and Cultural Resources in the Face of Multiple Stressors
+Gross Costs	9,746,403
+Less: Earned Revenue	1,065,953
+Net Program Cost	8,680,450
+Balance the Use of Resources While Supporting Communities and the Economy
+Gross Costs	9,326,031
+Less: Earned Revenue	1,062,555
+Net Program Cost	8,263,476
+Serve and Honor the Public Trust
+Gross Costs	6,722,376
+Less: Earned Revenue	814,865
+Net Program Cost	5,907,511
+Reimbursable Activity and Other
+Gross Costs Not Assigned to Programs	6,563,723
+Less: Earned Revenue Not Attributable to Programs	3,686,110
+Net Costs Not Assigned to Programs	2,877,613
+TOTAL
+Gross Costs	37,843,607
+Less: Earned Revenue	6,996,632
+Net Cost of Operations (Notes 17 and 19)	$	30,846,975
+
+The accompanying notes are an integral part of these financial statements.
+
+6 6 | S E C T I O N 2 : F I N A N C I A L I N F O R M A T I O N
+
+P R I N C I P A L F I N A N C I A L S T A T E M E N T S
+Department of the Interior
+Consolidated Statement of Changes in Net Position
+for the fiscal year ended September 30, 2025
+
+FY 2025
+
+Funds From	Funds From
+Dedicated	Other Than
+Collections	Dedicated	Consolidated
+Eliminations
+(Consolidated	Collections	Total
+Totals)	(Consolidated
+(dollars in thousands)	(Note 16)	Totals)
+Unexpended Appropriations
+Beginning Balance	$	20,378,587	$	25,510,260	$	-	$	45,888,847
+Appropriations Received	3,158,121	23,244,421	-	26,402,542
+Appropriations Transferred In/(Out)	66,574	(338,246)	-	(271,672)
+Other Adjustments	-	(819,681)	-	(819,681)
+Appropriations – Used	(2,855,535)	(19,697,430)	-	(22,552,965)
+Net Change in Unexpended Appropriations	369,160	2,389,064	-	2,758,224
+Total Unexpended Appropriations - Ending	$	20,747,747	$	27,899,324	$	-	$	48,647,071
+Cumulative Results of Operations
+Beginning Balance	$	92,096,814	$	7,855,393	$	-	$	99,952,207
+Appropriations – Used	2,855,535	19,697,430	-	22,552,965
+Royalty, Rents, and Lease Sales Retained	8,417,239	(17)	-	8,417,222
+Non-Exchange Revenue	1,956,154	960,952	-	2,917,106
+Donations and Forfeitures of Cash and Cash Equivalents	75,404	-	-	75,404
+Transfers In/(Out) Without Reimbursement	460,322	265,905	-	726,227
+Donations and Forfeitures of Property	49,051	20,487	-	69,538
+Imputed Financing	92,084	1,078,815	(14)	1,170,885
+Other Financing Sources/(Uses)	(5,649)	(865,716)	-	(871,365)
+Net Cost of Operations	(10,360,811)	(20,486,178)	14	(30,846,975)
+Net Change in Cumulative Results of Operations	3,539,329	671,678	-	4,211,007
+Cumulative Results of Operations - Ending	95,636,143	8,527,071	-	104,163,214
+Total Net Position	$ 116,383,890	$ 36,426,395	$	-	$ 152,810,285
+
+The accompanying notes are an integral part of these financial statements.
+
+D O I A G E N C Y F I N A N C I A L R E P O R T F Y 2 0 2 5 | 6 7
+
+P R I N C I P A L F I N A N C I A L S T A T E M E N T S
+Department of the Interior
+Combined Statement of Budgetary Resources
+for the fiscal year ended September 30, 2025
+
+Budgetary Accounts
+
+Non-Budgetary
+Credit Program
+Financing Accounts
+
+FY 2025	FY 2025
+(dollars in thousands)
+Budgetary Resources:
+Unobligated Balance from Prior Year Budget Authority, Net (Discretionary and Mandatory) (Note 18)	$	48,901,933	$	66,301
+Appropriations (Discretionary and Mandatory)	36,721,638	-
+Borrowing Authority (Discretionary and Mandatory)	-	179
+Spending Authority from Offsetting Collections (Discretionary and Mandatory)	7,663,432	18,084
+Total Budgetary Resources	$	93,287,003	$	84,564
+Status of Budgetary Resources:
+New Obligations and Upward Adjustments	$	42,674,576	$	23,867
+Unobligated Balance, End of Year:
+Apportioned, Unexpired Accounts	49,786,439	60,697
+Unapportioned, Unexpired Accounts	455,617	-
+Unexpired, Unobligated Balance, End of Year	50,242,056	60,697
+Expired, Unobligated Balance, End of Year	370,371	-
+Unobligated Balance, End of Year	50,612,427	60,697
+Total Budgetary Resources	$	93,287,003	$	84,564
+Outlays, Net and Disbursements, Net:
+Outlays, Net (Total) (Discretionary and Mandatory)	33,624,509	-
+Distributed Offsetting Receipts (-)	(11,580,767)	-
+Agency Outlays, Net (Discretionary and Mandatory)	$	22,043,742	$	-
+Disbursements, Net (Mandatory)	$	-	$	11,009
+
+The accompanying notes are an integral part of these financial statements.
+
+6 8 | S E C T I O N 2 : F I N A N C I A L I N F O R M A T I O N
+
+P R I N C I P A L F I N A N C I A L S T A T E M E N T S

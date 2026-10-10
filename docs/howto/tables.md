@@ -57,9 +57,10 @@ Operating expenses\t25,695\t24,471
 Loss from operations\t(3,415)\t(2,980)
 ```
 
-If your text comes from a PDF, the cells are often on one line with spaces between them, or on
-lines of their own. Read [A row with spaces instead of tabs](#a-row-with-spaces-instead-of-tabs)
-before you use it.
+`groundgate extract` writes this form from an HTML table, and from a PDF table that draws its
+cells apart (see the [guide](../guide.md)). Text from another tool often has spaces between the
+cells, or each cell on a line of its own. Read
+[A row with spaces instead of tabs](#a-row-with-spaces-instead-of-tabs) before you use it.
 
 ## 2. Write the field
 
@@ -244,7 +245,8 @@ to cite it. If the field has a known size, set its `minimum` and `maximum` too.
 
 ### A row with spaces instead of tabs
 
-A PDF or a plain-text table often has spaces between the cells. Here the tabs become three spaces:
+Text from another PDF tool, or a plain-text table, often has spaces between the cells. Here the
+tabs become three spaces:
 
 ```python
 spaced = text.replace("\t", "   ")
@@ -263,8 +265,8 @@ a number that belongs to the label. So the column rule stops after the first col
 on another line, and a line with no tab has no column, so the unit item is at no unit place and
 fails. Both values go to review. The 2024 value also has no key at it.
 
-To keep the columns, extract the HTML source with `groundgate extract`, so the cells have tabs
-between them. If you only have the PDF, a person checks the values.
+To keep the columns, extract the file with `groundgate extract`, so the cells have tabs between
+them. If the text still has spaces between the cells, a person checks the values.
 
 ### A footnote marker after the row label
 

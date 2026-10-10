@@ -5,6 +5,13 @@ label is XML, so its item shows only the text and a link. The page never shows w
 proposed the value, a spec, a decision or a code. Labels go to labels.json.
 
     uv run --group langextract python bench/outside/outside.py web   # http://127.0.0.1:8768
+
+Since #230, groundgate writes a PDF table as rows with tabs, so its PDF text differs from the
+committed text. A PDF item checks the text against the pinned PDF, so run the page on the 0.7.0
+wheel, which writes it:
+
+    uv run --isolated --no-project --no-sources --python 3.12 --with 'groundgate[pdf]==0.7.0' \
+        python bench/outside/outside.py web
 """
 
 from __future__ import annotations

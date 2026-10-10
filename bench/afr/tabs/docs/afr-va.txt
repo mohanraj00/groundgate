@@ -1,0 +1,175 @@
+FINANCIAL SECTION
+FINANCIAL STATEMENTS
+
+CONSOLIDATED BALANCE SHEET (dollars in millions)
+
+As of September 30,	2025
+Assets
+Intragovernmental Assets
+Fund Balance with Treasury (Note 3)	$ 101,092
+Investments, Net (Note 5)	6,085
+Accounts Receivable, Net (Note 6)	81
+Advances and Prepayments	2,103
+Total Intragovernmental Assets	109,361
+Other Than Intragovernmental Assets
+Cash (Note 4)	2
+Accounts Receivable, Net (Note 6)	5,284
+Loans Receivable, Net (Note 7)	10,602
+Inventory and Related Property (Note 8)	179
+Property, Plant, and Equipment, Net (Note 9)	42,335
+Advances and Prepayments	35
+Total Other Than Intragovernmental Assets	58,437
+Total Assets	$ 167,798
+Heritage Assets (Note 10)
+Liabilities
+Intragovernmental Liabilities
+Accounts Payable	$ 154
+Debt (Note 11)	9,051
+Advances From Others and Deferred Revenue	73
+Other Liabilities (Note 15)	2,783
+Total Intragovernmental Liabilities	12,061
+Other Than Intragovernmental Liabilities
+Accounts Payable	21,421
+Federal Employee, Salary, Leave, and Benefits Payable (Note 13)	5,399
+Veterans Benefits and Actuarial Federal Employees Compensation Act (FECA)
+Liability (Note 13 and 17)
+Veterans Benefits and Actuarial FECA Liability (Note 13)	7,570,083
+Life Insurance Benefits (Note 17)	2,894
+Environmental and Disposal Liabilities (Note 14)	993
+Loan Guarantee Liabilities (Note 7)	10,450
+Advances From Others and Deferred Revenue	17
+Other Liabilities (Note 15)	4,239
+Total Other Than Intragovernmental Liabilities	7,615,496
+Total Liabilities	$ 7,627,557
+
+FINANCIAL STATEMENTS
+
+Commitments and Contingencies (Note 18)
+
+(Continued on next page)
+
+27 Department of Veterans Affairs - FY 2025 Agency Financial Report
+CONSOLIDATED BALANCE SHEET (dollars in millions)
+
+As of September 30,	2025
+Net Position
+Unexpended Appropriations
+Funds From Dedicated Collections (Note 19)	$ 17
+Funds From Other Than Dedicated Collections	60,448
+Total Unexpended Appropriations	60,465
+Cumulative Results of Operations
+Funds From Dedicated Collections (Note 19)	6,603
+Funds From Other Than Dedicated Collections	(7,526,827)
+Total Cumulative Results of Operations	(7,520,224)
+Total Net Position	$ (7,459,759)
+Total Liabilities and Net Position	$ 167,798
+
+FINANCIAL SECTION
+FINANCIAL STATEMENTS
+
+The accompanying notes are an integral part of these Consolidated Financial Statements.
+
+Department of Veterans Affairs – FY 2025 Agency Financial Report 28
+FINANCIAL SECTION
+FINANCIAL STATEMENTS
+
+CONSOLIDATED STATEMENT OF NET COST (dollars in millions)
+
+For the Period Ended September 30,	2025
+Net Program Costs By Administration (Note 21)
+Veterans Health Administration
+Gross Cost	$ 165,548
+Less Earned Revenue	(5,344)
+Net Program Cost	160,204
+Veterans Benefits Administration
+Gross Cost
+Program Costs	226,077
+Veterans Benefits Actuarial Cost, Excluding
+Assumption Changes (Note 13)	184,613
+Less Earned Revenue	(1,116)
+Net Program Cost	409,574
+National Cemetery Administration
+Gross Cost	642
+Less Earned Revenue	(1)
+Net Program Cost	641
+Indirect Administrative Program Costs
+Gross Cost	4,117
+Less Earned Revenue	(740)
+Net Program Cost	3,377
+Net Program Costs by Administration Before (Gain)/Loss from Veterans Benefits
+Assumption Changes	573,796
+(Gain)/Loss from Assumption Changes (Note 13)	(44,155)
+Net Cost of Operations	$ 529,641
+
+The accompanying notes are an integral part of these Consolidated Financial Statements.
+
+29 Department of Veterans Affairs - FY 2025 Agency Financial Report
+FINANCIAL SECTION
+FINANCIAL STATEMENTS
+
+CONSOLIDATED STATEMENT OF CHANGES IN	Funds from
+NET POSITION	Dedicated
+(dollars in millions)	Collections	All Other	Consolidated
+For the Period Ended September 30, 2025	(Note 19)	Funds	Total
+Unexpended Appropriations
+Beginning Balance	$ 16	$ 51,250	$ 51,266
+Appropriations Received	-	396,714	396,714
+Appropriations Transferred In/Out	-	177	177
+Other Adjustments	1	(1,710)	(1,709)
+Appropriations Used	-	(385,983)	(385,983)
+Net Change in Unexpended Appropriations	1	9,198	9,199
+Total Unexpended Appropriations	$ 17	$ 60,448	$ 60,465
+Cumulative Results of Operations
+Beginning Balance	$ 5,843	$ (7,391,510)	$ (7,385,667)
+Prior Period Adjustment (Note 23)	-	3,828	3,828
+Beginning Balance as Adjusted	5,843	(7,387,682)	(7,381,839)
+Appropriations Used	-	385,983	385,983
+Nonexchange Revenue	-	23	23
+Donations and Forfeitures of Cash and Cash
+Equivalents	20	-	20
+Transfers In/(Out) Without Reimbursement	(4,533)	4,687	154
+Donations and Forfeitures of Property	62	-	62
+Imputed Financing	-	6,964	6,964
+Other	360	(2,310)	(1,950)
+Net Cost of Operations (Note 21)	4,851	(534,492)	(529,641)
+Net Change in Cumulative Results of Operations	760	(139,145)	(138,385)
+Total Cumulative Results of Operations	6,603	(7,526,827)	(7,520,224)
+Net Position	$ 6,620	$ (7,466,379)	$ (7,459,759)
+
+The accompanying notes are an integral part of these Consolidated Financial Statements.
+
+Department of Veterans Affairs – FY 2025 Agency Financial Report 30
+FINANCIAL SECTION
+FINANCIAL STATEMENTS
+
+COMBINED STATEMENT OF BUDGETARY RESOURCES	Credit Reform
+(dollars in millions)	Financing
+For the Period Ended September 30, 2025	Budgetary	Account
+Budgetary Resources (Discretionary and Mandatory)
+Unobligated Balance from Prior Year Budget Authority, Net
+(Discretionary and Mandatory) (Note 22)	$ 42,282	$ 8,414
+Appropriations (Discretionary and Mandatory)	401,235	72
+Borrowing Authority (Discretionary and Mandatory)	-	8,735
+Spending Authority from Offsetting Collections
+(Discretionary and Mandatory)	15,266	17,895
+Total Budgetary Resources	$ 458,783	$ 35,116
+Status of Budgetary Resources
+New Obligations and Upward Adjustments (Total)	$ 412,401	$ 27,624
+Unobligated Balance, End of Year:
+Apportioned, Unexpired Accounts	42,006	-
+Unapportioned, Unexpired Accounts	101	7,492
+Unexpired Unobligated Balance, End of Year	42,107	7,492
+Expired Unobligated Balance, End of Year	4,275	-
+Unobligated Balance, End of Year (Total)	46,382	7,492
+Total Budgetary Resources	$ 458,783	$ 35,116
+Outlays, Net, and Disbursements, Net
+Outlays, Net (Total) (Discretionary and Mandatory)	$ 386,349
+Distributed Offsetting Receipts (-)	(9,750)
+Agency Outlays, Net (Discretionary and Mandatory)	$ 376,599
+Disbursements, Net (Total) (Mandatory)	$ 9,477
+
+Non-Budgetary
+
+The accompanying notes are an integral part of these financial statements.
+
+31 Department of Veterans Affairs - FY 2025 Agency Financial Report

@@ -75,9 +75,12 @@ def output_schema(provider: str, schema: dict[str, Any]) -> dict[str, Any]:
 
 
 class Runner:
-    def __init__(self, provider: str, model: str, schema: dict[str, Any]) -> None:
+    def __init__(
+        self, provider: str, model: str, schema: dict[str, Any], effort: str = "default"
+    ) -> None:
         schema = output_schema(provider, schema)
         self.provider, self.model, self.schema = provider, model, schema
+        self.effort = effort  # "default" adds no flag, as in the recorded runs
         self.empty = tempfile.mkdtemp(prefix="groundgate-sec3-")
         self.schema_file = Path(self.empty) / "output.schema.json"
         self.schema_file.write_text(json.dumps(schema), encoding="utf-8")
@@ -94,6 +97,8 @@ class Runner:
             "--system-prompt", CLAUDE_SYSTEM, "--output-format", "json",
             "--json-schema", json.dumps(self.schema),
         ]  # fmt: skip
+        if self.effort != "default":
+            cmd += ["--effort", self.effort]
         proc = subprocess.run(
             cmd, input=prompt, capture_output=True, text=True, timeout=900, cwd=self.empty
         )
@@ -117,6 +122,8 @@ class Runner:
             "--ignore-rules", "--skip-git-repo-check", "-s", "read-only", "-C", self.empty,
             "-c", "project_doc_max_bytes=0", "--output-schema", str(self.schema_file), "-",
         ]  # fmt: skip
+        if self.effort != "default":
+            cmd[-1:-1] = ["-c", f'model_reasoning_effort="{self.effort}"']
         proc = subprocess.run(
             cmd, input=CODEX_PREFIX + prompt, capture_output=True, text=True, timeout=900
         )
@@ -162,7 +169,7 @@ class Runner:
             "doc": doc.stem,
             "provider": self.provider,
             "model": self.model,
-            "effort": "default",
+            "effort": self.effort,
             "cli": self.version(),
             "prompt_sha256": sha(prompt),
             "harness_sha256": sha(harness(self.provider)),

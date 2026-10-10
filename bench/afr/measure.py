@@ -6,7 +6,8 @@ if this measure says so (#164).
         python bench/afr/measure.py decide              # spec 0.6, on the released wheel
     uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.7.0 \
         python bench/afr/measure.py decide              # spec 0.7, with the #164 rule
-    uv run python bench/afr/measure.py web              # blind labels, http://127.0.0.1:8777
+    uv run --isolated --no-project --no-sources --python 3.12 --with 'groundgate[pdf]==0.7.0' \
+        python bench/afr/measure.py web                 # blind labels, http://127.0.0.1:8777
     uv run python bench/afr/measure.py results [--check]
 
 A person labels every value that a decision admits, and every value whose outcome differs
@@ -53,41 +54,47 @@ def decide() -> None:
     """decisions-<run>-<spec>.json for the spec of the groundgate that runs this script: for each
     document, each candidate's outcome and codes. A document with no reply is listed with no
     candidates and counted in the results."""
-    import groundgate as gg
     from groundgate.canonical import SPEC_VERSION
 
     specs = [spec for spec in SPECS if spec.split()[0] == SPEC_VERSION]
     if not specs:
         raise SystemExit(f"no spec here needs groundgate {SPEC_VERSION}: use the spec's wheel")
     (spec,) = specs
-    schema = _read(HERE / "schema.json")
     for run in RUNS:
-        found: dict[str, Any] = {}
-        for doc_path in sorted((HERE / "docs").glob("*.txt")):
-            doc = doc_path.stem
-            reply = _read(HERE / "runs" / run / f"{doc}.json")["reply"]
-            cands = [] if reply is None else reply["candidates"]
-            cands = [{"id": f"c{i}", **c} for i, c in enumerate(cands)]
-            text = doc_path.read_text(encoding="utf-8")
-            by_sha = {d.candidate_sha256: d for d in gg.admit(text, schema, cands).decisions}
-            rows = []
-            for c in cands:
-                d = by_sha[gg.digest("candidate", c)]
-                rows.append(
-                    {
-                        "id": c["id"],
-                        "field": d.field,
-                        "key": d.key,
-                        "value": d.value,
-                        "evidence": None if d.evidence is None else list(d.evidence),
-                        "outcome": d.outcome,
-                        "codes": list(d.codes),
-                        "unit": next((x.passed for x in d.parts if x.role == "unit"), None),
-                    }
-                )
-            found[doc] = {"reply": reply is not None, "decisions": rows}
-        _dump(_name(run, spec), found)
+        _dump(_name(run, spec), decide_docs(HERE / "docs", HERE / "runs" / run))
     print(f"wrote decisions for {', '.join(RUNS)} under spec {spec}")
+
+
+def decide_docs(docs: Path, replies: Path) -> dict[str, Any]:
+    """For each document in ``docs``, the decisions of its reply in ``replies``."""
+    import groundgate as gg
+
+    schema = _read(HERE / "schema.json")
+    found: dict[str, Any] = {}
+    for doc_path in sorted(docs.glob("*.txt")):
+        doc = doc_path.stem
+        reply = _read(replies / f"{doc}.json")["reply"]
+        cands = [] if reply is None else reply["candidates"]
+        cands = [{"id": f"c{i}", **c} for i, c in enumerate(cands)]
+        text = doc_path.read_text(encoding="utf-8")
+        by_sha = {d.candidate_sha256: d for d in gg.admit(text, schema, cands).decisions}
+        rows = []
+        for c in cands:
+            d = by_sha[gg.digest("candidate", c)]
+            rows.append(
+                {
+                    "id": c["id"],
+                    "field": d.field,
+                    "key": d.key,
+                    "value": d.value,
+                    "evidence": None if d.evidence is None else list(d.evidence),
+                    "outcome": d.outcome,
+                    "codes": list(d.codes),
+                    "unit": next((x.passed for x in d.parts if x.role == "unit"), None),
+                }
+            )
+        found[doc] = {"reply": reply is not None, "decisions": rows}
+    return found
 
 
 def _decisions() -> dict[tuple[str, str], dict[str, Any]]:
@@ -137,21 +144,24 @@ def _pdf(src: dict[str, Any]) -> Path:
     return path
 
 
-def cards() -> list[dict[str, Any]]:
+def cards(
+    found: dict[str, dict[str, Any]] | None = None, docs: Path = HERE / "docs"
+) -> list[dict[str, Any]]:
     """One card per fact, in id order: the field's description, the year, the value, the text
-    around the evidence and its box on the PDF page. A fact with no evidence has no box."""
+    around the evidence and its box on the PDF page. A fact with no evidence has no box. The
+    facts are those of facts() unless ``found`` gives others, with the text in ``docs``."""
     from groundgate.extract import extract
 
     srcs = {s["id"]: s for s in _read(HERE / "sources.json")["sources"]}
     described = _read(HERE / "descriptions.json")
     got: dict[str, Any] = {}
     out = []
-    for fid, f in sorted(facts().items()):
+    for fid, f in sorted((facts() if found is None else found).items()):
         doc = f["doc"]
         if doc not in got:
             got[doc] = extract(_pdf(srcs[doc]), pages=srcs[doc]["select"]["pages"])
-            if got[doc].text != (HERE / "docs" / f"{doc}.txt").read_text(encoding="utf-8"):
-                raise SystemExit(f"{doc}: docs/{doc}.txt is not the text of the pinned PDF")
+            if got[doc].text != (docs / f"{doc}.txt").read_text(encoding="utf-8"):
+                raise SystemExit(f"{doc}: {docs.name}/{doc}.txt is not the text of the pinned PDF")
         text, layout = got[doc].text, got[doc].layout
         card: dict[str, Any] = {
             "id": fid,
@@ -187,8 +197,10 @@ def cards() -> list[dict[str, Any]]:
     return out
 
 
-def serve(port: int) -> None:
-    items = cards()
+def serve(port: int, items: list[dict[str, Any]] | None = None) -> None:
+    """The label page for the cards of cards(), or for ``items``. It shows and takes the labels
+    of its own items only."""
+    items = cards() if items is None else items
     ids = {it["id"] for it in items}
     srcs = {s["id"]: s for s in _read(HERE / "sources.json")["sources"]}
     path = HERE / "labels.json"
@@ -211,7 +223,10 @@ def serve(port: int) -> None:
                 self.send(200, page, "text/html; charset=utf-8")
             elif self.path == "/state":
                 with lock:
-                    body = {"items": items, "labels": labels()}
+                    body = {
+                        "items": items,
+                        "labels": {k: v for k, v in labels().items() if k in ids},
+                    }
                 self.send(200, json.dumps(body).encode(), "application/json")
             elif self.path.startswith("/pdf/") and self.path[5:] in srcs:
                 self.send(200, _pdf(srcs[self.path[5:]]).read_bytes(), "application/pdf")
@@ -250,25 +265,10 @@ def score() -> dict[str, Any]:
     no reply. For each run, the proposals whose outcome the 0.7 draft changes, by label, and
     the unit parts that it changes: the #164 rule reads only the unit item."""
     given = labels()
-    verdict = {"right": "right", "wrong": "escapes", "not sure": "not sure"}
     res: dict[str, Any] = {"runs": {}, "changed": {}, "unit parts": {}}
     found = _decisions()
     for (run, spec), docs in found.items():
-        seen: set[str] = set()
-        count = {"right": 0, "escapes": 0, "not sure": 0, "unlabeled": 0}
-        for doc, got in docs.items():
-            for r in got["decisions"]:
-                if r["value"] is None or r["outcome"] != "admitted":
-                    continue
-                fid = item_id(doc, r["field"], r["key"], r["value"])
-                if fid in seen:
-                    continue
-                seen.add(fid)
-                v = given.get(fid, {}).get("verdict")
-                count[verdict[v] if v else "unlabeled"] += 1
-        count["proposals"] = sum(len(got["decisions"]) for got in docs.values())
-        count["no reply"] = sum(not got["reply"] for got in docs.values())
-        res["runs"].setdefault(run, {})[spec] = count
+        res["runs"].setdefault(run, {})[spec] = count(docs, given)
     for run in RUNS:
         old, new = found[run, SPECS[0]], found[run, SPECS[1]]
         moved: dict[str, dict[str, int]] = {}
@@ -294,6 +294,28 @@ def score() -> dict[str, Any]:
                 parts["changed"] += r["unit"] != before[r["id"]]
         res["unit parts"][run] = parts
     return res
+
+
+def count(docs: dict[str, Any], given: dict[str, Any]) -> dict[str, int]:
+    """The right values admitted, the escapes (wrong values admitted), the admitted values
+    labeled not sure or not yet labeled, each fact once, the proposals and the documents with no
+    reply."""
+    verdict = {"right": "right", "wrong": "escapes", "not sure": "not sure"}
+    seen: set[str] = set()
+    out = {"right": 0, "escapes": 0, "not sure": 0, "unlabeled": 0}
+    for doc, got in docs.items():
+        for r in got["decisions"]:
+            if r["value"] is None or r["outcome"] != "admitted":
+                continue
+            fid = item_id(doc, r["field"], r["key"], r["value"])
+            if fid in seen:
+                continue
+            seen.add(fid)
+            v = given.get(fid, {}).get("verdict")
+            out[verdict[v] if v else "unlabeled"] += 1
+    out["proposals"] = sum(len(got["decisions"]) for got in docs.values())
+    out["no reply"] = sum(not got["reply"] for got in docs.values())
+    return out
 
 
 def render(res: dict[str, Any]) -> str:

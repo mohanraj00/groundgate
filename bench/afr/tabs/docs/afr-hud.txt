@@ -1,0 +1,214 @@
+FINANCIAL INFORMATION (UNAUDITED)
+
+U.S. Department of Housing and Urban Development
+Consolidated Balance Sheet
+As of September 30, 2025
+(dollars in millions)
+
+Assets (Note 2)
+
+Intragovernmental Assets
+
+Fund Balance with Treasury (Note 3)	$	140,767
+Investments, Net (Note 5)	214,477
+Accounts Receivable, Net (Note 6)	1
+Advances and Prepayments (Note 11)	59
+Total Intragovernmental Assets	355,304
+Other than Intragovernmental Assets
+Cash and Other Monetary Assets (Note 4)	$	182
+Accounts Receivable, Net (Note 6)	1,611
+Loans Receivable, Net
+Loans Receivable, Net (Note 7)	84,986
+Negative Loan Guarantees (Note 7)	52,972
+Other Non-credit Reform Loans (Note 8)	16,641
+Property, Plant, and Equipment, Net (Note 9)	146
+Advances and Prepayments (Notes 10 and 11)
+PIH Advances and Prepayments (Note 10)	1,134
+Advances and Prepayments (Note 11)	339
+Total Other than Intragovernmental Assets	$	158,011
+Total Assets	$	513,315
+Liabilities (Note 12)
+Intragovernmental Liabilities
+Accounts Payable	$	104
+Federal Debt and Interest Payable (Note 13A)
+Debt (Note 13B)
+Loans Payable - Borrowings	147,492
+Interest Payable - Borrowings	8
+Advances from Others and Deferred Revenue	2
+Other Liabilities (Notes 14 and 16)
+Other Liabilities (Without reciprocals) (Notes 14 and 16)	4
+Liability to the General Fund of the U.S. Government for Custodial and Other Non-entity Assets (Note 16)	1,225
+Benefit Program Contributions Payable (Notes 14 and 16)	20
+Other Liabilities - Reimbursable Activities (Note 16)	15
+Total Intragovernmental Liabilities	148,870
+Other than Intragovernmental Liabilities
+Accounts Payable	$	1,745
+Federal Employee Salary, Leave & Benefits Payable (Note 14)	152
+Post Employment Benefits Payable (Note 14)	49
+Insurance and Guarantee Program Liabilities (Note 15)	1,556
+Advances from Others and Deferred Revenue	940
+Other Liabilities (Notes 16 and 18)
+Accrued Grant Liabilities (Note 16)	4,676
+HMBS Obligations, at Fair Value (Note 16)	13,313
+Other Liabilities (Note 16)	355
+Total Other than Intragovernmental Liabilities	22,786
+Total Liabilities	$	171,656
+Contingencies (Note 18)
+Net Position
+Unexpended Appropriations
+Funds from Other than Dedicated Collections	113,467
+Total Unexpended Appropriations (Consolidated)	113,467
+Cumulative Results of Operations
+Funds from Dedicated Collections (Note 19)	37,123
+Funds from Other than Dedicated Collections	191,069
+Total Cumulative Results of Operations (Consolidated)	228,192
+Total Net Position	$	341,659
+Total Liabilities and Net Position	$	513,315
+The accompanying notes are an integral part of these financial statements.
+HUD FY 2025 AGENCY FINANCIAL REPORT	51
+
+FY 2025
+FINANCIAL INFORMATION (UNAUDITED)
+
+U.S. Department of Housing and Urban Development
+Consolidated Statement of Net Cost
+For the Fiscal Year Ended September 30, 2025
+(dollars in millions)
+
+FY 2025
+
+Gross Program Cost (Note 20)
+
+Federal Housing Administration (FHA)
+
+Gross Cost	$	(8,734)
+Less Earned Revenue	(7,699)
+Net Program Cost	(16,433)
+Government National Mortgage Association (Ginnie Mae)
+Gross Cost	$	2,426
+Less Earned Revenue	(4,714)
+Net Program Cost	(2,288)
+Section 8 Rental Assistance
+Gross Cost	$	55,710
+Less Earned Revenue	-
+Net Program Cost	55,710
+Public and Indian Housing Loans and Grants (PIH)
+Gross Cost	$	10,818
+Less Earned Revenue	-
+Net Program Cost	10,818
+Homeless Assistance Grants (HAG)
+Gross Cost	$	3,547
+Less Earned Revenue	-
+Net Program Cost	3,547
+Housing for the Elderly and Disabled (HED)
+Gross Cost	$	1,265
+Less Earned Revenue	(21)
+Net Program Cost	1,244
+Community Development Block Grants (CDBG)
+Gross Cost	$	10,435
+Less Earned Revenue	-
+Net Program Cost	10,435
+HOME
+Gross Cost	$	1,953
+Less Earned Revenue	-
+Net Program Cost	1,953
+All Other
+Gross Cost	$	2,474
+Less Earned Revenue	(65)
+Net Program Cost	2,409
+Costs not Assigned to Programs	319
+Consolidated
+Gross Cost	$	80,213
+Less Earned Revenue	(12,499)
+Net Cost of Operations (Note 26)	$	67,714
+
+The accompanying notes are an integral part of these financial statements.
+
+52
+
+HUD FY 2025 AGENCY FINANCIAL REPORT
+FINANCIAL INFORMATION (UNAUDITED)
+
+U.S. Department of Housing and Urban Development
+Consolidated Statement of Changes in Net Position
+For the Fiscal Year Ended September 30, 2025
+(dollars in millions)
+
+FY 2025
+
+Funds from	Funds from
+Dedicated	Other than
+Collections	Dedicated	Consolidated
+Eliminations
+(Consolidated	Collections	Total
+Totals)	(Consolidated
+(Note 19)	Totals)
+Unexpended Appropriations
+Beginning Balance	$	-	$	111,566	$	-	$	111,566
+Beginning Balance, as Adjusted	$	-	$	111,566	$	-	$	111,566
+Appropriations Received	$	-	$	89,453	$	-	$	89,453
+Appropriations Transferred In / Out	-	6	-	6
+Other Adjustments	-	(390)	-	(390)
+Appropriations Used	-	(87,168)	-	(87,168)
+Net Change in Unexpended Appropriations	$	-	$	1,901	$	-	$	1,901
+Total Unexpended Appropriations	$	-	$	113,467	$	-	$	113,467
+Cumulative Results of Operations
+Beginning Balance	$	34,832	$	174,928	$	-	$	209,760
+Adjustments
+Beginning Balance, as Adjusted	$	34,832	$	174,928	$	-	$	209,760
+Appropriations Used	$	-	$	87,168	$	-	$	87,168
+Non-exchange Revenue (Note 27)	2	4	-	6
+Imputed Financing	5	162	-	167
+Other	(4)	(1,191)	-	(1,195)
+Net Cost of Operations (Note 26)	2,288	(70,002)	-	(67,714)
+Net Change in Cumulative Results of Operations	$	2,291	$	16,141	$	-	$	18,432
+Total Cumulative Results of Operations	$	37,123	$	191,069	$	-	$	228,192
+Net Position	$	37,123	$	304,536	$	-	$	341,659
+
+The accompanying notes are an integral part of these financial statements.
+
+HUD FY 2025 AGENCY FINANCIAL REPORT
+
+53
+FINANCIAL INFORMATION (UNAUDITED)
+
+U.S. Department of Housing and Urban Development
+Combined Statement of Budgetary Resources
+For the Fiscal Year Ended September 30, 2025
+(dollars in millions)
+
+FY 2025
+
+Unobligated Balance from Prior Year Budget Authority, Net
+
+$	196,592	$	21,085
+(Discretionary and Mandatory) (Note 22)
+Appropriations (Discretionary and Mandatory)	89,498	-
+Borrowing Authority (Discretionary and Mandatory)	-	22,638
+Spending Authority from Offsetting Collections (Discretionary and
+36,464	27,491
+Mandatory)
+Total Budgetary Resources	$	322,554	$	71,214
+New Obligations and Upward Adjustments (Total)	$	90,532	$	56,490
+Unobligated Balance, End of Year
+Apportioned, Unexpired Accounts	15,234	4,473
+Unapportioned, Unexpired Accounts	215,926	10,251
+Unexpired Unobligated Balance, End of Year	231,160	14,724
+Expired Unobligated Balance, End of Year	862	-
+Unobligated Balance, End of Year (Total)	232,022	14,724
+Total Budgetary Resources	$	322,554	$	71,214
+Outlays, Net (Total) (Discretionary and Mandatory)	$	52,677	$	-
+Distributed Offsetting Receipts (-)	(2,144)	-
+Agency Outlays, Net (Discretionary and Mandatory) (Note 26)	$	50,533	$	-
+Disbursements, Net (Total) (Mandatory)	$	-	$	23,648
+
+Budgetary
+
+Non-Budgetary Credit
+Reform Financing Account
+
+The accompanying notes are an integral part of these financial statements.
+
+54
+
+HUD FY 2025 AGENCY FINANCIAL REPORT

@@ -18,7 +18,7 @@ Codes on the proposals that are not admitted (a proposal can have more than one)
 | Code | spec 0.7 | spec 0.8 #242 |
 |---|---:|---:|
 | `FIELD_CITATION_INVALID` | 8 | 8 |
-| `KEY_CITATION_INVALID` | 7 | 7 |
+| `KEY_CITATION_INVALID` | 11 | 11 |
 | `PART_MISSING` | 29 | 29 |
 | `VALUE_DERIVED` | 33 | 33 |
 
@@ -33,18 +33,17 @@ None.
 | spec 0.7 | 0 | 0 | 0 | 0 | 35 | 1 |
 | spec 0.8 #242 | 0 | 0 | 0 | 0 | 35 | 1 |
 
-Proposals whose scale item reached the role checks, passed or not: 30 under spec 0.7 and 30 under the 0.8 draft. The #242 rule can change only these.
+Proposals whose scale item reached the role checks, passed or not: 35 under spec 0.7 and 35 under the 0.8 draft. The #242 rule can change only these.
 
 Codes on the proposals that are not admitted (a proposal can have more than one):
 
 | Code | spec 0.7 | spec 0.8 #242 |
 |---|---:|---:|
-| `CANDIDATE_INVALID` | 5 | 5 |
-| `FIELD_CITATION_INVALID` | 4 | 4 |
-| `KEY_CITATION_INVALID` | 30 | 30 |
-| `PART_MISSING` | 12 | 12 |
-| `UNIT_CITATION_INVALID` | 1 | 1 |
-| `VALUE_DERIVED` | 30 | 30 |
+| `FIELD_CITATION_INVALID` | 5 | 5 |
+| `KEY_CITATION_INVALID` | 35 | 35 |
+| `PART_MISSING` | 15 | 15 |
+| `UNIT_CITATION_INVALID` | 2 | 2 |
+| `VALUE_DERIVED` | 35 | 35 |
 
 Proposals whose outcome the 0.8 draft changes:
 

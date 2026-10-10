@@ -1,0 +1,19 @@
+{
+ "doc": "afr-hud",
+ "provider": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "6d1e0169ac9f5aaea4b2f1900f84dc6616dcbc9bc55f4629c29b38cc6af0b2f4",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": null,
+ "discarded": [
+  "exit 1: ",
+  "exit 1: ",
+  "exit 1: "
+ ]
+}

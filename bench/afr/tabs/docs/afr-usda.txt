@@ -1,0 +1,175 @@
+Financial Statements
+
+Consolidated Balance Sheet
+As of September 30, 2025 ($ in millions)
+
+Item	FY 2025
+Assets
+Intragovernmental Assets
+Fund Balance with Treasury (Note 3)	$	396,915
+Investments, Net (Note 5)	417
+Accounts Receivable, Net (Note 6)	914
+Advances and Prepayments	130
+Other Assets (Note 11)	8
+Total Intragovernmental Assets	398,384
+Other than Intragovernmental Assets
+Cash and Other Monetary Assets (Note 4)	378
+Accounts Receivable, Net (Note 6)	3,625
+Loans Receivable, Net
+Commodity Loans, Net	419
+Loans Receivable, Net (Note 7)	136,738
+Subtotal	137,157
+Negative Liability for Loan Guarantees (Note 7)	391
+Inventory and Related Property, Net (Note 8)	12
+Property, Plant, and Equipment, Net (Note 9)	5,636
+Advances and Prepayments	329
+Investments, Net (Note 5)	3
+Total Other than Intragovernmental Assets	147,531
+Total Assets	545,915
+Stewardship Property, Plant, and Equipment (Note 10)
+Liabilities
+Intragovernmental Liabilities
+Debt (Note 13)	176,589
+Advances from Others and Deferred Revenue	29
+Other Liabilities (Note 17)	8,115
+Total Intragovernmental Liabilities	184,733
+Other than Intragovernmental Liabilities
+Accounts Payable	3,552
+Federal Employee Salary, Leave, and Benefits Payable (Note 14)	1,196
+Post-Employment Benefits Payable (Note 14)	746
+Environmental and Disposal Liabilities (Note 15)	262
+Benefits Due and Payable	7,640
+Insurance and Guarantee Program Liabilities (Note 16)	16,524
+Advances from Others and Deferred Revenue	189
+Other Liabilities (Notes 17, 18 & 19)	10,971
+Total Other than Intragovernmental Liabilities	41,080
+Total Liabilities	225,813
+Commitments and Contingencies (Note 19)
+Net Position
+Unexpended Appropriations
+Funds from Dedicated Collections (Note 20)	1,097
+Funds from Other Than Dedicated Collections	235,493
+Total Unexpended Appropriations (Consolidated)	236,590
+Cumulative Results of Operations
+Funds from Dedicated Collections (Note 20)	5,061
+Funds from Other Than Dedicated Collections	78,451
+Total Cumulative Results of Operations (Consolidated)	83,512
+Total Net Position	320,102
+Total Liabilities and Net Position	$	545,915
+
+USDA | 2025 Agency Financial Report 55
+
+The accompanying notes are an integral part of these financial statements.
+Consolidated Statement of Net Cost
+
+For the Fiscal Year Ended September 30, 2025 ($ in millions)
+
+Item	FY 2025
+Farm Production and Conservation:
+Gross Costs	$	58,167
+Less: Earned Revenue	6,764
+Net Costs	51,403
+Food, Nutrition, and Consumer Services:
+Gross Costs	147,398
+Less: Earned Revenue	128
+Net Costs	147,270
+Food Safety:
+Gross Costs	1,555
+Less: Earned Revenue	255
+Net Costs	1,300
+Marketing and Regulatory Programs:
+Gross Costs	6,137
+Less: Earned Revenue	1,660
+Net Costs	4,477
+Natural Resources and Environment:
+Gross Costs	13,008
+Less: Earned Revenue	932
+Net Costs	12,076
+Rural Development:
+Gross Costs	9,478
+Less: Earned Revenue	3,889
+Net Costs	5,589
+Research, Education, and Economics:
+Gross Costs	4,443
+Less: Earned Revenue	114
+Net Costs	4,329
+Trade and Foreign Agricultural Affairs:
+Gross Costs	869
+Less: Earned Revenue	12
+Net Costs	857
+Staff Offices:
+Gross Costs	2,198
+Less: Earned Revenue	270
+Net Costs	1,928
+Total Gross Costs	243,253
+Less: Total Earned Revenue	14,024
+Net Cost of Operations (Notes 21 & 25)	$	229,229
+
+The accompanying notes are an integral part of these financial statements.
+
+56 Section II | Financial Information
+Consolidated Statement of Changes in Net Position
+
+For the Fiscal Year Ended September 30, 2025 ($ in millions)
+
+Item	Funds from	Funds from Other
+Dedicated	Than Dedicated
+Collections	Collections
+(Consolidated	(Consolidated
+Totals) (Note 20)	Totals)	Consolidated Total
+Unexpended Appropriations
+Beginning Balances	$	954	$	217,079	$	218,033
+Appropriations Received	12	238,523	238,535
+Appropriations Transferred In (Out)	285	(69)	216
+Other Adjustments	—	(18,770)	(18,770)
+Appropriations Used	(154)	(201,270)	(201,424)
+Net Change in Unexpended Appropriations	143	18,414	18,557
+Total Unexpended Appropriations	1,097	235,493	236,590
+Cumulative Results of Operations
+Beginning Balances	4,385	48,999	53,384
+Other Adjustments	—	(1,048)	(1,048)
+Appropriations Used	154	201,270	201,424
+Non-exchange Revenue	259	60,247	60,506
+Donations and Forfeitures of Cash and Cash Equivalents	1	4	5
+Transfers In (Out) without Reimbursement	1,066	(1,742)	(676)
+Imputed Financing	52	1,881	1,933
+Other	(36)	(2,751)	(2,787)
+Net Cost of Operations	(820)	(228,409)	(229,229)
+Net Change in Cumulative Results of Operations	676	29,452	30,128
+Total Cumulative Results of Operations	5,061	78,451	83,512
+Net Position	$	6,158	$	313,944	$	320,102
+
+The accompanying notes are an integral part of these financial statements.
+
+USDA | 2025 Agency Financial Report 57
+Combined Statement of Budgetary Resources
+
+For the Fiscal Year Ended September 30, 2025 ($ in millions)
+
+Item	FY 2025
+Non-Budgetary
+Credit Reform
+Financing
+Budgetary	Accounts
+Unobligated Balance from Prior Year Budget Authority, Net (Discretionary and Mandatory)(Note 22)	$	195,920	$	5,200
+Appropriations (Discretionary and Mandatory)	255,813	49
+Borrowing Authority (Discretionary and Mandatory)	26,437	26,967
+Spending Authority from Offsetting Collections (Discretionary and Mandatory)	12,070	14,846
+Total Budgetary Resources	490,240	47,062
+New Obligations and Upward Adjustments (Total)	286,840	33,263
+Unobligated Balance, End of Year
+Apportioned, Unexpired Accounts	59,539	13,103
+Exempt from Apportionment, Unexpired Accounts	110	—
+Unapportioned, Unexpired Accounts	11,745	696
+Unexpired, Unobligated Balance, End of Year	71,394	13,799
+Expired Unobligated Balance, End of Year	132,006	—
+Unobligated Balance, End of Year (Total)	203,400	13,799
+Total Budgetary Resources	490,240	47,062
+Outlays, Net (Total) (Discretionary and Mandatory)	230,131
+Distributed Offsetting Receipts (-)	(2,679)
+Agency Outlays, Net (Discretionary and Mandatory)	$	227,452
+Disbursements, Net (Total) (Mandatory)	$	5,904
+
+The accompanying notes are an integral part of these financial statements.
+
+58 Section II | Financial Information

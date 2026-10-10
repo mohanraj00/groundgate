@@ -1,0 +1,166 @@
+U. S . DEPARTMENT OF TRANSPORTATION | CONSOLIDATED BALANCE SHEET
+
+FINANCIAL REPORT / PRINCIPAL FINANCIAL STATEMENTS
+
+As of September 30, 2025	Dollars in Thousands
+BALANCE SHEET ITEMS	2025
+Assets
+Intragovernmental
+Fund Balance with Treasury (Note 2)	$ 193,870,942
+Investments, Net (Note 3)	90,342,456
+Accounts Receivable, Net (Note 4)	70,417
+Advances and Prepayments (Note 5)	60,246
+Other Assets (Note 10)	322,822
+Total Intragovernmental	284,666,883
+Other than Intragovernmental
+Accounts Receivable, Net (Note 4)	331,886
+Loans Receivable, Net (Note 6)	28,243,334
+Inventory and Related Property, Net (Note 7)	1,286,864
+Property, Plant and Equipment, Net (Note 8)	15,480,048
+Advances and Prepayments (Note 5)	1,206,719
+Other Assets (Note 10)	324,810
+Total Other than Intragovernmental	46,873,661
+Total Assets	$ 331,540,544
+Stewardship Property, Plant and Equipment (Note 9)
+Liabilities (Note 11)
+Intragovernmental
+Accounts Payable	$ 34,683
+Debt (Note 12)	28,731,018
+Advances From Others and Deferred Revenue	1,309,696
+Other Liabilities (Note 16)	1,074,051
+Total Intragovernmental	31,149,448
+Other than Intragovernmental
+Accounts Payable	759,613
+Federal Employee Salary, Leave, and Benefits Payable (Note 13)	1,079,442
+Post-employment Benefits Payable (Note 13)	636,724
+Environmental and Disposal Liabilities (Note 14 and Note 18)	953,393
+Loan Guarantee Liabilities (Note 6)	148,109
+Advances From Others and Deferred Revenue	332,450
+Other Liabilities
+Accrued Grant Liabilities (Note 15)	13,614,131
+Other (Note 16)	670,209
+Total Other than Intragovernmental	18,194,071
+Total Liabilities	$ 49,343,519
+Commitments and Contingencies (Note 18)
+Net Position
+Unexpended Appropriations - Funds From Dedicated Collections (Consolidated) (Note 19)	$ 1,101,224
+Unexpended Appropriations - Funds from Other than Dedicated Collections (Consolidated)	179,151,227
+Total Unexpended Appropriations (Consolidated)	180,252,451
+Cumulative Results of Operations - Funds From Dedicated Collections (Consolidated) (Note 19)	89,507,415
+Cumulative Results of Operations - Funds from Other than Dedicated Collections (Consolidated)	12,437,159
+Total Cumulative Results of Operations (Consolidated)	101,944,574
+Total Net Position	282,197,025
+Total Liabilities and Net Position	$ 331,540,544
+
+The accompanying notes are an integral part of these financial statements.
+
+47
+
+Agency Financial Report | Fiscal Year 2025
+FINANCIAL REPORT / PRINCIPAL FINANCIAL STATEMENTS
+
+U. S . DEPARTMENT OF TRANSPORTATION | CONSOLIDATED STATEMENT OF NET COST
+
+For the Year Ended September 30, 2025	Dollars in Thousands
+ITEMS	2025
+Program Costs
+SURFACE TRANSPORTATION
+Gross Costs	$ 103,898,650
+Less: Earned Revenue	1,364,707
+Net Program Costs	102,533,943
+AIR TRANSPORTATION
+Gross Costs	26,433,361
+Less: Earned Revenue	829,894
+Net Program Costs	25,603,467
+MARITIME TRANSPORTATION
+Gross Costs	1,488,585
+Less: Earned Revenue	768,868
+Net Program Costs	719,717
+CROSS-CUTTING PROGRAMS
+Gross Costs	804,704
+Less: Earned Revenue	189,353
+Net Program Costs	615,351
+Costs Not Assigned to Programs	620,233
+Less: Earned Revenues Not Attributed to Programs	4,381
+Net Cost of Operations	$ 130,088,330
+
+The accompanying notes are an integral part of these financial statements.
+
+48
+
+Agency Financial Report | Fiscal Year 2025
+FINANCIAL REPORT / PRINCIPAL FINANCIAL STATEMENTS
+
+U. S . DEPARTMENT OF TRANSPORTATION | CONSOLIDATED STATEMENT OF CHANGES IN NET POSITION
+
+For the Year Ended September 30, 2025	Dollars in Thousands
+2025 FUNDS	2025 FUNDS
+FROM DEDICATED	FROM OTHER
+CONSOLIDATED
+NET POSITION ITEMS	COLLECTIONS	THAN DEDICATED
+TOTAL
+(CONSOLIDATED)	COLLECTIONS
+(NOTE 19)	(CONSOLIDATED)
+UNEXPENDED APPROPRIATIONS
+Beginning Balance	$ 920,067	$ 151,633,065	$ 152,553,132
+Appropriations Received (Note 1W)	1,389,633	65,742,033	67,131,666
+Appropriations Transferred-in/(out)	-	(1,785)	(1,785)
+Other Adjustments	(18,487)	(4,593,923)	(4,612,410)
+Appropriations Used	(1,189,989)	(33,628,163)	(34,818,152)
+Net Change in Unexpended Appropriations	181,157	27,518,162	27,699,319
+Total Unexpended Appropriations	1,101,224	179,151,227	180,252,451
+CUMULATIVE RESULTS OF OPERATIONS
+Beginning Balance	112,633,261	12,284,265	124,917,526
+Other adjustments	(43,476)	(50,062)	(93,538)
+Appropriations Used	1,189,989	33,628,163	34,818,152
+Non-exchange Revenue (Note 20)	71,394,460	10,255	71,404,715
+Donations/Forfeitures of Cash/Cash Equivalents	779	-	779
+Transfers-in/(out) Without Reimbursement	(1,111,039)	974,154	(136,885)
+Donations and Forfeitures of Property	-	15,472	15,472
+Imputed Financing	1,307,196	127,142	1,434,338
+Other	(194,079)	(133,576)	(327,655)
+Net Cost of Operations	95,669,676	34,418,654	130,088,330
+Net Change in Cumulative Results of Operations	(23,125,846)	152,894	(22,972,952)
+Total Cumulative Results of Operations	89,507,415	12,437,159	101,944,574
+Net Position	$ 90,608,639	$ 191,588,386	$ 282,197,025
+
+The accompanying notes are an integral part of these financial statements.
+
+49
+
+Agency Financial Report | Fiscal Year 2025
+FINANCIAL REPORT / PRINCIPAL FINANCIAL STATEMENTS
+
+U. S . DEPARTMENT OF TRANSPORTATION | COMBINED STATEMENT OF BUDGETARY RESOURCES
+
+For the Year Ended September 30, 2025	Dollars in Thousands
+2025 NON-BUDGETARY
+BUDGETARY RESOURCE ITEMS	2025 BUDGETARY	CREDIT REFORM
+FINANCING ACCOUNTS
+Budgetary Resources (Note 21)
+Unobligated Balance From Prior Year Budget Authority, Net	$ 145,776,319	$ 147,790
+Appropriations (Note 1W)	79,577,982	266
+Borrowing Authority	-	7,101,524
+Contract Authority	82,235,842	-
+Spending Authority From Offsetting Collections	15,699,629	807,298
+Total Budgetary Resources	$ 323,289,772	$ 8,056,878
+Status of Budgetary Resources
+New Obligations and Upward Adjustments	$ 169,538,770	$ 7,882,600
+Unobligated Balance, End of Year
+Apportioned, Unexpired Accounts	123,349,601	12,548
+Unapportioned, Unexpired Accounts	29,804,879	161,730
+Unexpired Unobligated Balance, End of Year	153,154,480	174,278
+Expired Unobligated Balance, End of Year	596,522	-
+Unobligated Balance, End of Year	153,751,002	174,278
+Total Budgetary Resources	$ 323,289,772	$ 8,056,878
+Outlays, Net, and Disbursements, Net
+Outlays, Net	$128,806,173
+Distributed Offsetting Receipts	(1,255,334)
+Agency Outlays, Net	$ 127,550,839
+Disbursements, Net	$ 6,113,332
+
+The accompanying notes are an integral part of these financial statements.
+
+50
+
+Agency Financial Report | Fiscal Year 2025

@@ -1,14 +1,206 @@
 {
+ "03483c49f09960f2": {
+  "verdict": "wrong"
+ },
+ "06ae18c11defd15e": {
+  "verdict": "right"
+ },
+ "08bb21da8023d3f7": {
+  "verdict": "right"
+ },
+ "096690d2e170af88": {
+  "verdict": "right"
+ },
+ "0b9d931d3c985b09": {
+  "verdict": "right"
+ },
+ "16b63231eab20b73": {
+  "verdict": "right"
+ },
+ "17426bbcffcb308d": {
+  "verdict": "right"
+ },
+ "1f104db326e7c74b": {
+  "verdict": "right"
+ },
+ "202914c423f67ff4": {
+  "verdict": "right"
+ },
+ "20e6d67c1b08a2f5": {
+  "verdict": "right"
+ },
+ "29928baab3cfdc30": {
+  "verdict": "right"
+ },
+ "29aae7b8d51b2565": {
+  "verdict": "not sure"
+ },
+ "2c63c92e6b9c8253": {
+  "verdict": "right"
+ },
+ "2f26a2bf4c0cf6cb": {
+  "verdict": "right"
+ },
+ "30849c063493daf8": {
+  "verdict": "right"
+ },
+ "3537f9e5c38cfb27": {
+  "verdict": "right"
+ },
+ "40dfb452d527db69": {
+  "verdict": "right"
+ },
+ "44af94f2c355ff09": {
+  "verdict": "right"
+ },
+ "4a895771fa4d707f": {
+  "verdict": "right"
+ },
+ "4dd2b4c3b610f4f7": {
+  "verdict": "right"
+ },
+ "50629b5a1c173cfe": {
+  "verdict": "right"
+ },
+ "540736769e78eebb": {
+  "verdict": "right"
+ },
+ "5552da27f5fda81f": {
+  "verdict": "right"
+ },
+ "5859a2701708fc61": {
+  "verdict": "wrong"
+ },
+ "652e6c2e6586871a": {
+  "verdict": "right"
+ },
+ "671f59efacd8179a": {
+  "verdict": "right"
+ },
+ "693adce8fec606f9": {
+  "verdict": "right"
+ },
+ "6ad5b5760463e66a": {
+  "verdict": "right"
+ },
+ "6d3187058cad33ab": {
+  "verdict": "right"
+ },
+ "6d3bd0250787c182": {
+  "verdict": "right"
+ },
+ "6d5aa79f4ef86abe": {
+  "verdict": "right"
+ },
+ "701ca4647049350c": {
+  "verdict": "right"
+ },
+ "704f326a55b9eba1": {
+  "verdict": "right"
+ },
+ "7113bdd7a33789ce": {
+  "verdict": "right"
+ },
  "7f911ed58699350a": {
+  "verdict": "right"
+ },
+ "86ff1d2ff7fdbc7b": {
+  "verdict": "right"
+ },
+ "880adc6f3ede4f83": {
+  "verdict": "right"
+ },
+ "8bc246b9c90a0df3": {
+  "verdict": "right"
+ },
+ "8d30353bcd4dccef": {
+  "verdict": "right"
+ },
+ "9a56c994f260b89a": {
+  "verdict": "right"
+ },
+ "9c76874aea51d2fa": {
+  "verdict": "right"
+ },
+ "9d9db05cd987f893": {
+  "verdict": "wrong"
+ },
+ "a0d8631d28ee1946": {
+  "verdict": "right"
+ },
+ "a21c3cc89cafb632": {
+  "verdict": "right"
+ },
+ "a2a408d26a4baf11": {
+  "verdict": "right"
+ },
+ "a54d617817c4c062": {
+  "verdict": "right"
+ },
+ "a782123b523699c1": {
   "verdict": "right"
  },
  "a7b36ef218a6711c": {
   "verdict": "right"
  },
+ "a9f5bc84372dd69c": {
+  "verdict": "right"
+ },
+ "ae914f57c9140151": {
+  "verdict": "wrong"
+ },
+ "b0eb824cba0b0f7c": {
+  "verdict": "right"
+ },
+ "b38c78559f24cc4f": {
+  "verdict": "right"
+ },
  "b3947964e7525995": {
   "verdict": "right"
  },
+ "b48ed952f414b4d7": {
+  "verdict": "right"
+ },
+ "b61a5614d513bdad": {
+  "verdict": "right"
+ },
  "b97cc42c84adad8c": {
+  "verdict": "right"
+ },
+ "bb81eca49859dbba": {
+  "verdict": "right"
+ },
+ "bef0ca3b59d0b41d": {
+  "verdict": "right"
+ },
+ "bf37b9c8b9f472b0": {
+  "verdict": "right"
+ },
+ "c08108562e283037": {
+  "verdict": "wrong"
+ },
+ "c0cd11ae7516fc34": {
+  "verdict": "right"
+ },
+ "c2c807e7b8b6c07d": {
+  "verdict": "right"
+ },
+ "c421ca192f4523ce": {
+  "verdict": "right"
+ },
+ "c4dd761f25df6199": {
+  "verdict": "right"
+ },
+ "c56f11bc3ae806c2": {
+  "verdict": "right"
+ },
+ "c5f329fb9bf24d76": {
+  "verdict": "right"
+ },
+ "c6b6b073010f3b7c": {
+  "verdict": "right"
+ },
+ "c8736a6506856a40": {
   "verdict": "right"
  },
  "cadf2d6d26ef843b": {
@@ -17,10 +209,70 @@
  "cc9fa83b2387ffdb": {
   "verdict": "right"
  },
+ "cca133602bd002d4": {
+  "verdict": "wrong"
+ },
+ "d011b2ca70043015": {
+  "verdict": "right"
+ },
+ "d03a08ce150cd8bd": {
+  "verdict": "right"
+ },
+ "d4c275b34b2a7d55": {
+  "verdict": "right"
+ },
+ "d624523dffd9ad86": {
+  "verdict": "right"
+ },
+ "d639953fa69a001e": {
+  "verdict": "wrong"
+ },
+ "d81361bb95174818": {
+  "verdict": "right"
+ },
+ "ddce6ff6b86852c3": {
+  "verdict": "right"
+ },
+ "de33b53d0cc3a035": {
+  "verdict": "right"
+ },
+ "de5ceff6a15f8625": {
+  "verdict": "right"
+ },
+ "e04eb2ac1eb39723": {
+  "verdict": "right"
+ },
+ "e1d778172314f533": {
+  "verdict": "right"
+ },
+ "e5c1726d15719bdf": {
+  "verdict": "right"
+ },
+ "e6308b23855e25b7": {
+  "verdict": "right"
+ },
  "e944984167a2dc3e": {
+  "verdict": "right"
+ },
+ "eae0dee6111efb99": {
   "verdict": "right"
  },
  "eb55cc7334f560e2": {
   "verdict": "wrong"
+ },
+ "eeddb3cfd8048051": {
+  "verdict": "right"
+ },
+ "f1ef56cedc1de021": {
+  "verdict": "right"
+ },
+ "f21cde22c8520194": {
+  "verdict": "right"
+ },
+ "f6aeffa5ade8c692": {
+  "verdict": "right"
+ },
+ "f90d5e6289acaf56": {
+  "verdict": "right"
  }
 }

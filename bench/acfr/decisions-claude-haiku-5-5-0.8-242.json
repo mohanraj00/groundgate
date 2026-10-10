@@ -40,8 +40,8 @@
     "key": null,
     "value": "19387041000",
     "evidence": [
-     17352,
-     17362
+     17356,
+     17366
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -56,8 +56,8 @@
     "key": null,
     "value": "4802249000",
     "evidence": [
-     17113,
-     17122
+     17117,
+     17126
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -78,8 +78,8 @@
     "key": null,
     "value": "65868012000",
     "evidence": [
-     1434,
-     1444
+     1451,
+     1461
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -95,8 +95,8 @@
     "key": null,
     "value": "36452116000",
     "evidence": [
-     2961,
-     2971
+     2978,
+     2988
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -112,8 +112,8 @@
     "key": null,
     "value": "30007406000",
     "evidence": [
-     3731,
-     3741
+     3748,
+     3758
     ],
     "outcome": "needs_verification",
     "codes": [
@@ -485,6 +485,7 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -501,6 +502,7 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -511,12 +513,13 @@
     "key": null,
     "value": "22451268000",
     "evidence": [
-     5635,
-     5645
+     5637,
+     5647
     ],
     "outcome": "needs_verification",
     "codes": [
      "FIELD_CITATION_INVALID",
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -527,13 +530,14 @@
     "key": null,
     "value": "14916000",
     "evidence": [
-     5458,
-     5464
+     5460,
+     5466
     ],
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -595,10 +599,10 @@
     "id": "c3",
     "field": "change_in_net_position",
     "key": null,
-    "value": "11110689000",
+    "value": "-153150752000",
     "evidence": [
-     8146,
-     8156
+     8276,
+     8289
     ],
     "outcome": "needs_verification",
     "codes": [

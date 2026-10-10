@@ -1,0 +1,264 @@
+{
+ "runs": {
+  "claude-haiku-5-5": {
+   "0.7 text": {
+    "right": 3,
+    "escapes": 1,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   },
+   "replay": {
+    "right": 46,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   },
+   "new runs": {
+    "right": 57,
+    "escapes": 0,
+    "not sure": 1,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   }
+  },
+  "gpt-6-luna": {
+   "0.7 text": {
+    "right": 6,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   },
+   "replay": {
+    "right": 50,
+    "escapes": 0,
+    "not sure": 1,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   },
+   "new runs": {
+    "right": 57,
+    "escapes": 0,
+    "not sure": 1,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   }
+  },
+  "claude-sonnet-5-5-high": {
+   "0.7 text": {
+    "right": 6,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   },
+   "new runs": {
+    "right": 66,
+    "escapes": 0,
+    "not sure": 1,
+    "unlabeled": 0,
+    "proposals": 100,
+    "no reply": 0
+   }
+  },
+  "gpt-6.1-sol-high": {
+   "0.7 text": {
+    "right": 6,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 106,
+    "no reply": 0
+   },
+   "new runs": {
+    "right": 64,
+    "escapes": 0,
+    "not sure": 1,
+    "unlabeled": 0,
+    "proposals": 90,
+    "no reply": 3
+   }
+  }
+ },
+ "codes": {
+  "claude-haiku-5-5": {
+   "FIELD_CITATION_INVALID": {
+    "0.7 text": 82,
+    "replay": 12,
+    "new runs": 17
+   },
+   "KEY_CITATION_INVALID": {
+    "0.7 text": 5,
+    "replay": 3,
+    "new runs": 12
+   },
+   "KEY_CITED": {
+    "0.7 text": 1,
+    "replay": 2,
+    "new runs": 3
+   },
+   "KEY_NOT_AT_VALUE": {
+    "0.7 text": 79,
+    "replay": 14,
+    "new runs": 7
+   },
+   "PART_MISSING": {
+    "0.7 text": 39,
+    "replay": 11,
+    "new runs": 15
+   },
+   "SCALE_CITATION_INVALID": {
+    "0.7 text": 1,
+    "replay": 3,
+    "new runs": 2
+   },
+   "UNIT_CITATION_INVALID": {
+    "0.7 text": 1,
+    "replay": 1,
+    "new runs": 2
+   },
+   "VALUE_DERIVED": {
+    "0.7 text": 77,
+    "replay": 34,
+    "new runs": 42
+   },
+   "VALUE_NOT_IN_EVIDENCE": {
+    "0.7 text": 0,
+    "replay": 20,
+    "new runs": 0
+   }
+  },
+  "gpt-6-luna": {
+   "CANDIDATE_INVALID": {
+    "0.7 text": 2,
+    "replay": 2,
+    "new runs": 2
+   },
+   "FIELD_CITATION_INVALID": {
+    "0.7 text": 77,
+    "replay": 12,
+    "new runs": 15
+   },
+   "KEY_CITATION_INVALID": {
+    "0.7 text": 1,
+    "replay": 1,
+    "new runs": 2
+   },
+   "KEY_CITED": {
+    "0.7 text": 0,
+    "replay": 3,
+    "new runs": 3
+   },
+   "KEY_NOT_AT_VALUE": {
+    "0.7 text": 64,
+    "replay": 11,
+    "new runs": 5
+   },
+   "PART_MISSING": {
+    "0.7 text": 12,
+    "replay": 7,
+    "new runs": 14
+   },
+   "SIGN_CITATION_INVALID": {
+    "0.7 text": 0,
+    "replay": 0,
+    "new runs": 1
+   },
+   "UNIT_CITATION_INVALID": {
+    "0.7 text": 32,
+    "replay": 12,
+    "new runs": 1
+   },
+   "VALUE_DERIVED": {
+    "0.7 text": 81,
+    "replay": 36,
+    "new runs": 30
+   },
+   "VALUE_NOT_IN_EVIDENCE": {
+    "0.7 text": 11,
+    "replay": 11,
+    "new runs": 10
+   }
+  },
+  "claude-sonnet-5-5-high": {
+   "FIELD_CITATION_INVALID": {
+    "0.7 text": 88,
+    "new runs": 15
+   },
+   "KEY_CITED": {
+    "0.7 text": 0,
+    "new runs": 4
+   },
+   "KEY_NOT_AT_VALUE": {
+    "0.7 text": 77,
+    "new runs": 5
+   },
+   "PART_MISSING": {
+    "0.7 text": 39,
+    "new runs": 16
+   },
+   "SCALE_CITATION_INVALID": {
+    "0.7 text": 0,
+    "new runs": 1
+   },
+   "UNIT_CITATION_INVALID": {
+    "0.7 text": 0,
+    "new runs": 1
+   },
+   "VALUE_DERIVED": {
+    "0.7 text": 94,
+    "new runs": 33
+   }
+  },
+  "gpt-6.1-sol-high": {
+   "CANDIDATE_INVALID": {
+    "0.7 text": 13,
+    "new runs": 7
+   },
+   "FIELD_CITATION_INVALID": {
+    "0.7 text": 83,
+    "new runs": 5
+   },
+   "KEY_CITED": {
+    "0.7 text": 0,
+    "new runs": 3
+   },
+   "KEY_NOT_AT_VALUE": {
+    "0.7 text": 68,
+    "new runs": 2
+   },
+   "PART_MISSING": {
+    "0.7 text": 1,
+    "new runs": 1
+   },
+   "UNIT_CITATION_INVALID": {
+    "0.7 text": 46,
+    "new runs": 15
+   },
+   "VALUE_DERIVED": {
+    "0.7 text": 87,
+    "new runs": 18
+   }
+  }
+ },
+ "escapes": [],
+ "label rows": {
+  "0.7 text": {
+   "a tab": 0,
+   "only spaces": 0
+  },
+  "new text": {
+   "a tab": 1136,
+   "only spaces": 0
+  }
+ }
+}

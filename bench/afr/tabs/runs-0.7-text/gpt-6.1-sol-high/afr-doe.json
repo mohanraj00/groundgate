@@ -1,0 +1,183 @@
+{
+ "doc": "afr-doe",
+ "provider": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "1944a754ef98892927e4d8bc5a3114295daf22230b6ed9081d5b44a1c2a6fd8a",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "total_assets",
+    "value": "359778000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "359,778"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(Dollars in Millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Assets"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "As of September 30, 2025"
+     }
+    ]
+   },
+   {
+    "field": "total_liabilities",
+    "value": "713754000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "713,754"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(Dollars in Millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Liabilities"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "As of September 30, 2025"
+     }
+    ]
+   },
+   {
+    "field": "total_net_position",
+    "value": "-353976000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "(353,976)"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(Dollars in Millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Net Position"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "As of September 30, 2025"
+     }
+    ]
+   },
+   {
+    "field": "net_cost_of_operations",
+    "value": "65725000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "65,725"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(Dollars in Millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Net Cost Of Operations"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "For the Year Ended September 30, 2025"
+     }
+    ]
+   },
+   {
+    "field": "total_budgetary_resources",
+    "value": "231188000000",
+    "unit": "USD",
+    "key": "2025",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "231,188"
+     },
+     {
+      "source": "document",
+      "role": "scale",
+      "text": "(Dollars in Millions)"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "$"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Total Budgetary Resources"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "For the Year Ended September 30, 2025"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

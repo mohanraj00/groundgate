@@ -6,6 +6,10 @@ marks, slugs, off-page junk) are dropped, and the count is reported as a warning
 Superscripts and subscripts are marked with ``^`` and ``_`` so they never fuse with the number
 before them: a raised 9 after 10 reads ``10^9``, not ``109``.
 
+A table is written one row on each line, with a tab between two cells, as the HTML path writes
+table cells (#230). pdfminer gives each column of a table as its own text box, so ``_tables``
+rebuilds the rows from the height of the text lines. Prose keeps pdfminer's lines.
+
 The same PDF always gives the same text. pdfminer breaks a tie between two equally distant text
 boxes by ``id()``, a memory address, so the reading order could change from run to run (#30).
 While groundgate reads a PDF, pdfminer's layout code gets a stable ``id()`` instead.
@@ -21,7 +25,7 @@ from collections.abc import Iterable, Iterator
 from pathlib import Path
 from typing import Any, BinaryIO
 
-from .layout import Box, Page, Word
+from .layout import Box, Page, Word, _same_line
 
 LIGATURES = str.maketrans(
     {"ﬀ": "ff", "ﬁ": "fi", "ﬂ": "fl", "ﬃ": "ffi", "ﬄ": "ffl",
@@ -31,11 +35,20 @@ LIGATURES = str.maketrans(
 PAGE_BREAK = "\n\f"
 BLOCK_BREAK = "\n\n"
 LINE_BREAK = "\n"
+CELL_BREAK = "\t"
 SCRIPT_SIZE = 0.85  # a glyph this much smaller than its neighbour, and shifted, is a script
 SCRIPT_SHIFT = 0.2  # baseline shift, as a fraction of the neighbour's size
 
 Rect = tuple[float, float, float, float]
 Result = tuple[str, list[Page], list[Word], list[str]]
+Line = list[tuple[str, Box]]  # the words of one pdfminer text line
+Row = list[Line]  # the cells of one output line, left to right
+
+CELL_GAP = 0.65  # a gap between two words this many times the word's height starts a new cell
+HEADING_WORDS = 4  # a row with no number joins a table when each of its parts is this short
+COLUMN_HEADING_WORDS = 8  # a column heading above a table, such as a spanning heading
+DASHES = frozenset("-\u2013\u2014\u2212")  # hyphen, en dash, em dash, minus
+NUMBER_CHARS = frozenset("0123456789,.$€£¥₹%()") | DASHES  # with the signs of the built-in units
 
 
 class _Builder:
@@ -227,17 +240,20 @@ def _read_pages(fp: BinaryIO, wanted: list[int] | None) -> Result:
                     lines.append(line_words)
             if lines:
                 blocks.append(lines)
-        for bi, lines in enumerate(blocks):
+        for bi, rows in enumerate(_tables(blocks)):
             if bi:
                 out.add(BLOCK_BREAK)
-            for li, line_words in enumerate(lines):
-                if li:
+            for ri, cells in enumerate(rows):
+                if ri:
                     out.add(LINE_BREAK)
-                for wi, (t, box) in enumerate(line_words):
-                    if wi:
-                        out.add(" ")
-                    ws, we = out.add(t)
-                    words.append(Word(ws, we, box))
+                for ci, cell in enumerate(cells):
+                    if ci:
+                        out.add(CELL_BREAK)
+                    for wi, (t, box) in enumerate(cell):
+                        if wi:
+                            out.add(" ")
+                        ws, we = out.add(t)
+                        words.append(Word(ws, we, box))
         page_list.append(Page(number, round(vx1 - vx0, 2), round(vy1 - vy0, 2), start, out.size))
         if hidden:
             warnings.append(f"page {number}: dropped {hidden} words drawn outside the visible page")
@@ -250,3 +266,144 @@ def _read_pages(fp: BinaryIO, wanted: list[int] | None) -> Result:
     elif wanted is not None and len(page_list) < len(wanted):
         warnings.append(f"the PDF has fewer pages than requested ({len(page_list)} extracted)")
     return out.text(), page_list, words, warnings
+
+
+def _span(line: Line) -> Box:
+    boxes = [b for _, b in line]
+    return Box(boxes[0].page, min(b.x0 for b in boxes), min(b.top for b in boxes),
+               max(b.x1 for b in boxes), max(b.bottom for b in boxes))  # fmt: skip
+
+
+def _cells(line: Line) -> list[Line]:
+    """A text line cut where the gap between two words is CELL_GAP times the height or more."""
+    cells = [[line[0]]]
+    for (_, a), word in itertools.pairwise(line):
+        if word[1].x0 - a.x1 >= CELL_GAP * (a.bottom - a.top):
+            cells.append([])
+        cells[-1].append(word)
+    return cells
+
+
+def _number_cell(line: Line) -> bool:
+    """A text line of only numbers, currency signs, brackets and dashes, such as "$ (1,234)"."""
+    chars = set("".join(t for t, _ in line))
+    return chars <= NUMBER_CHARS and any(c.isdigit() or c in DASHES for c in chars)
+
+
+def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
+    """The page's output blocks. pdfminer gives a table as one text box for each column, so its
+    rows are rebuilt here: the text lines at the same height become one row, with a tab between
+    two cells. Other text keeps pdfminer's boxes and lines.
+
+    A **table row** has two or more text lines side by side, with no overlap, and one of them is a
+    number cell. In a table row, and in a row of only number cells in a table, a gap between two
+    words of CELL_GAP times their height or more also starts a cell. Two table rows are in one table
+    when each row between them is a table row, a heading row (lines side by side, each of
+    HEADING_WORDS words or fewer), only number cells, or ends before the first number cell of both,
+    as a heading in the label column does. A line of prose across the number columns ends the table.
+    A table has two or more table rows: one number beside text, such as a page number beside a
+    running head or a number in one of two columns of prose, is no table. A table also takes its
+    column headings: the rows of two or more lines side by side above it, where each line after the
+    first has COLUMN_HEADING_WORDS words or fewer. No row below a table joins it, so a table never
+    takes the rows of the next. Above it, the walk goes past lines in the label column, and stops at
+    a line across the edge of its first number cell or at a row of lines side by side that is no
+    column heading, such as two columns of prose. It does not look at the space between rows, so a
+    short running head far above a table, with only lines in the label column between, joins the
+    table as a column heading (#246). A heading in the label column above the first table row joins
+    only when a column heading is above it. The table is written where pdfminer gives the first of
+    its lines, one row on each line. A row has only the cells that hold text: a blank cell gets no
+    empty cell, so the cells after it move one column left (#247).
+    """
+    Key = tuple[int, int]  # block, line
+    span = {
+        (bi, li): _span(line) for bi, block in enumerate(blocks) for li, line in enumerate(block)
+    }
+    rows: list[list[Key]] = []
+    for key in sorted(span, key=lambda k: (span[k].top, span[k].x0)):
+        if rows and _same_line(span[rows[-1][0]], span[key]):
+            rows[-1].append(key)
+        else:
+            rows.append([key])
+    for row in rows:
+        row.sort(key=lambda k: span[k].x0)
+
+    def number(key: Key) -> bool:
+        return _number_cell(blocks[key[0]][key[1]])
+
+    def side_by_side(row: list[Key]) -> bool:
+        return len(row) > 1 and all(
+            span[a].x1 <= span[b].x0 + 0.5 for a, b in itertools.pairwise(row)
+        )
+
+    def table_row(row: list[Key]) -> bool:
+        return side_by_side(row) and any(map(number, row))
+
+    def heading(row: list[Key]) -> bool:
+        return side_by_side(row) and all(len(blocks[bi][li]) <= HEADING_WORDS for bi, li in row)
+
+    def column_heading(row: list[Key]) -> bool:  # the first part may be a long title or label
+        return side_by_side(row) and all(
+            len(blocks[bi][li]) <= COLUMN_HEADING_WORDS for bi, li in row[1:]
+        )
+
+    def first_number(row: list[Key]) -> float:
+        return min(span[k].x0 for k in row if number(k))
+
+    groups: list[list[int]] = []
+    for i, row in enumerate(rows):
+        if not table_row(row):
+            continue
+        if groups:
+            prev = groups[-1][-1]
+            edge = min(first_number(rows[prev]), first_number(row)) + 0.5
+            if all(
+                table_row(rows[r])
+                or heading(rows[r])
+                or all(number(k) for k in rows[r])
+                or all(span[k].x1 <= edge for k in rows[r])
+                for r in range(prev + 1, i)
+            ):
+                groups[-1].append(i)
+                continue
+        groups.append([i])
+    groups = [group for group in groups if len(group) > 1]
+    region: dict[Key, int] = {}
+    tables: list[list[Row]] = []
+    for n, group in enumerate(groups):
+        first, last = group[0], group[-1]
+        edge = first_number(rows[first]) + 0.5
+        above = first - 1
+        while above >= 0 and rows[above][0] not in region:
+            if column_heading(rows[above]):
+                first = above
+            elif (
+                side_by_side(rows[above])
+                or span[rows[above][0]].x0 < edge < span[rows[above][0]].x1
+            ):
+                break
+            above -= 1
+        tables.append([])
+        for row in rows[first : last + 1]:
+            lines = [blocks[bi][li] for bi, li in row]
+            if table_row(row) or all(map(number, row)):
+                lines = [cell for line in lines for cell in _cells(line)]
+            tables[n].append(lines)
+            region.update((key, n) for key in row)
+    out: list[list[Row]] = []
+    done: set[int] = set()
+    for bi, block in enumerate(blocks):
+        prose: list[Row] = []
+        for li, line in enumerate(block):
+            table = region.get((bi, li))
+            if table is None:
+                prose.append([line])
+                continue
+            if prose:
+                out.append(prose)
+                prose = []
+            if table not in done:
+                done.add(table)
+                out.append(tables[table])
+        if prose:
+            out.append(prose)
+    return out

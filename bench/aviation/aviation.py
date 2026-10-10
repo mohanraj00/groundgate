@@ -8,6 +8,12 @@ set-2 fields that the text states as that number.
     uv run python bench/aviation/aviation.py items          # write items.json from docs/
     uv run python bench/aviation/aviation.py web            # label at http://127.0.0.1:8772
 
+Since #230, groundgate writes a PDF table as rows with tabs, so its PDF text differs from the
+committed text. Run pick, fetch.py, items and web on the 0.7.0 wheel, which writes it:
+
+    uv run --isolated --no-project --no-sources --python 3.12 --with 'groundgate[pdf]==0.7.0' \
+        python bench/aviation/aviation.py items
+
 The pick is the set-2 NTSB rule (bench/pick.py) from the first report id after set 2. It looks
 only at the first words and the page count, and prints no text. The label tool never shows what
 spec 0.3 or a model reads.

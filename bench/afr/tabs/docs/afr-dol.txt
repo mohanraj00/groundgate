@@ -1,0 +1,172 @@
+Annual Financial Statements
+PRINCIPAL FINANCIAL STATEMENTS
+
+CONSOLIDATED BALANCE SHEET
+As of September 30, 2025
+(Dollars in Thousands)
+
+Assets (Note 7)
+
+Intragovernmental
+
+Fund Ba l a nce wi th Tre a s ury (Note s 1-C a nd 2)	$	18,750,277
+Inve s tme nts , Ne t (Note s 1-D a nd 3)	90,093,631
+Accounts Re ce i va bl e , Ne t (Note s 1-E a nd 4)	5,571,939
+Adva nce s a nd Pre pa yme nts (Note s 1-G a nd 6)	16,070
+Total Intragovernmental	114,431,917
+With the Public
+Accounts Re ce i va bl e , Ne t (Note s 1-E a nd 4)	7,370,033
+Prope rty, Pl a nt, a nd Equi pme nt, Ne t (Note s 1-F a nd 5)	1,154,286
+Adva nce s a nd Pre pa yme nts (Note s 1-G a nd 6)	9,688,897
+Total With the Public	18,213,216
+$	132,645,133
+Total Assets
+Liabilities (Notes 1-I and 12)
+Intragovernmental
+Accounts Pa ya bl e	$	388,908
+De bt (Note s 1-J a nd 8)	28,174,978
+Adva nce s From Othe rs a nd De fe rre d Re ve nue (Note 1-K)	2,273,866
+Othe r Li a bi l i ti e s (Note s 1-N.1 a nd 9)	228,913
+Total Intragovernmental	31,066,665
+With the Public
+Accounts Pa ya bl e	225,006
+Fe de ra l Empl oye e Sa l a ry, Le a ve , a nd Be ne fi ts Pa ya bl e (Note 1-L.1)	234,576
+Pos t-Empl oyme nt Be ne fi ts Pa ya bl e (Note s 1-L.2 a nd 11)	8,211,510
+Envi ronme nta l a nd Di s pos a l Li a bi l i ti e s	27,927
+Be ne fi ts Due a nd Pa ya bl e (Note s 1-M a nd 10)	9,817,859
+Adva nce s from Othe rs a nd De fe rre d Re ve nue (Note 1-K)	100
+Othe r Li a bi l i ti e s (Note 1-N.2)
+Ene rgy Empl oye e s Occupa ti ona l I l l ne s s Compe ns a ti on Be ne fi ts	107,262,947
+Accrue d Gra nt Li a bi l i ti e s	1,163,555
+Othe r (Note 9)	92,453
+Total With the Public	127,035,933
+Total Liabilities	158,102,598
+Conti nge nci e s (Note 13)
+Net Position (Note 1-R)
+Une xpe nde d Appropri a ti ons - Funds From Othe r Tha n De di ca te d Col l e cti ons	11,220,409
+Total Unexpended Appropriations	11,220,409
+Cumul a ti ve Re s ul ts of Ope ra ti ons - Funds From De di ca te d Col l e cti ons (Note 21)	67,887,595
+Cumul a ti ve Re s ul ts of Ope ra ti ons - Funds From Othe r Tha n De di ca te d Col l e cti ons	(104,565,469)
+Total Cumulative Results of Operations	(36,677,874)
+Total Net Position	(25,457,465)
+Total Liabilities and Net Position	$	132,645,133
+
+The accompanying notes are an integral part of these financial statements.
+
+FY 2025 Agency Financial Report 39
+
+2025
+Financial Section
+PRINCIPAL FINANCIAL STATEMENTS
+
+CONSOLIDATED STATEMENT OF NET COST
+For the Year Ended September 30, 2025
+(Dollars in Thousands)
+
+Net Cost of Operations (Notes 1-S and 15)
+
+CROSSCUTTING PROGRAMS
+
+Income Maintenance
+
+Gros s Cos ts	$	83,274,141
+Les s : Ea rned Revenue	(3,654,914)
+Net Progra m Cos ts	79,619,227
+Employment and Training
+Gros s Cos ts	7,025,877
+Les s : Ea rned Revenue	(25,670)
+Net Progra m Cos ts	7,000,207
+Labor, Employment, and Pension Standards
+Gros s Cos ts	966,436
+Les s : Ea rned Revenue	(16,377)
+Net Progra m Cos ts	950,059
+Worker Safety and Health
+Gros s Cos ts	1,174,046
+Les s : Ea rned Revenue	(4,918)
+Net Progra m Cos ts	1,169,128
+Statistics
+Gros s Cos ts	766,178
+Les s : Ea rned Revenue	(36,914)
+Net Progra m Cos ts	729,264
+Costs Not Assigned to Programs
+Gros s Cos ts Not As s i gned to Progra ms	158,606
+Les s : Ea rned Revenue Not Attri buta bl e to Progra ms	(32,554)
+Net Cos ts Not As s i gned to Progra ms	126,052
+Net Cost of Operations	$	89,593,937
+
+2025
+
+The accompanying notes are an integral part of these financial statements.
+
+40 United States Department of Labor
+CONSOLIDATED STATEMENT OF CHANGES IN NET POSITION
+For the Year Ended September 30, 2025
+(Dollars in Thousands)
+
+Annual Financial Statements
+PRINCIPAL FINANCIAL STATEMENTS
+
+Dedicated	Funds From Other
+Collections	than Dedicated
+(Note 21)	Collections	Total
+Unexpended Appropriations (Note 1-T):
+Beginning Balance	$	-	$	13,846,853	$	13,846,853
+Appropriations Received (Note 18-F)	$	-	$	13,668,451	$	13,668,451
+Appropriations Transferred In/Out	-	7,301	7,301
+Other Adjustments	-	(6,647,818)	(6,647,818)
+Appropriations Used	-	(9,654,378)	(9,654,378)
+Net Change in Unexpended Appropriations	$	-	$	(2,626,444)	$	(2,626,444)
+Total Unexpended Appropriations	$	-	11,220,409	$	11,220,409
+Cumulative Results of Operations (Notes 1-S and 1-U):
+Beginning Balance	$	60,174,626	$	(75,186,599)	$	(15,011,973)
+Appropriations Used	-	9,654,378	9,654,378
+Non-Exchange Revenue (Note 16)	57,961,015	1	57,961,016
+Transfers In/Out without Reimbursement (Note 17)	(8,648,294)	8,927,168	278,874
+Imputed Financing	5,145	248,068	253,213
+Other	-	(219,445)	(219,445)
+Net Cost of Operations	(41,604,897)	(47,989,040)	(89,593,937)
+Net Change in Cumulative Results of Operations	$	7,712,969	$	(29,378,870)	$	(21,665,901)
+Total Cumulative Results of Operations	$	67,887,595	$	(104,565,469)	$	(36,677,874)
+Net Position	$	67,887,595	$	(93,345,060)	$	(25,457,465)
+
+Funds From
+
+2025
+
+The accompanying notes are an integral part of these financial statements.
+
+FY 2025 Agency Financial Report 41
+Financial Section
+PRINCIPAL FINANCIAL STATEMENTS
+
+COMBINED STATEMENT OF BUDGETARY RESOURCES
+For the Year Ended September 30, 2025
+(Dollars in Thousands)
+
+Budgetary Resources (Note 18)
+
+Unobligated Balance from Prior Year Budget Authority, Net (Discretionary and Mandatory)	$	5,370,167
+Appropriations (Discretionary and Mandatory)	59,937,569
+Borrowing Authority (Discretionary and Mandatory)	243,312
+Spending Authority from Offsetting Collections (Discretionary and Mandatory)	10,235,942
+Total Budgetary Resources	$	75,786,990
+Status Of Budgetary Resources
+New Obligations and Upward Adjustments (Total)	$	70,483,026
+Unobligated Balance, End of Year
+Apportioned, Unexpired Accounts	3,049,087
+Exempt from Apportionment, Unexpired Accounts	7,198
+Unapportioned, Unexpired Accounts	164,963
+Unexpired Unobligated Balance, End of Year	3,221,248
+Expired Unobligated Balance, End of Year	2,082,716
+Unobligated Balance, End of Year (Total)	5,303,964
+Total Budgetary Resources	$	75,786,990
+Outlays, Net
+Outlays, Net (Total) (Discretionary and Mandatory)	$	55,396,685
+Distributed Offsetting Receipts (-)	(1,190,658)
+Agency Outlays, Net (Discretionary and Mandatory)	$	54,206,027
+
+2025
+
+The accompanying notes are an integral part of these financial statements.
+
+42 United States Department of Labor
