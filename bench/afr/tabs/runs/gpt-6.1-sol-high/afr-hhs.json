@@ -1,0 +1,19 @@
+{
+ "doc": "afr-hhs",
+ "provider": "codex",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "102878292aabde76d8d4c826effd098a7910c15761478dcdb86f0f24c5a3cdf6",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "35b23261ea4a82ddd169193e1b3bef5c4d9cef53d59154c32062906ec170373c",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": null,
+ "discarded": [
+  "exit 1: ",
+  "exit 1: ",
+  "exit 1: "
+ ]
+}

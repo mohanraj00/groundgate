@@ -77,6 +77,12 @@
  "671f59efacd8179a": {
   "verdict": "right"
  },
+ "693adce8fec606f9": {
+  "verdict": "right"
+ },
+ "6ad5b5760463e66a": {
+  "verdict": "right"
+ },
  "6d3187058cad33ab": {
   "verdict": "right"
  },
@@ -87,6 +93,9 @@
   "verdict": "right"
  },
  "701ca4647049350c": {
+  "verdict": "right"
+ },
+ "704f326a55b9eba1": {
   "verdict": "right"
  },
  "7113bdd7a33789ce": {
@@ -224,6 +233,9 @@
  "ddce6ff6b86852c3": {
   "verdict": "right"
  },
+ "de33b53d0cc3a035": {
+  "verdict": "right"
+ },
  "de5ceff6a15f8625": {
   "verdict": "right"
  },
@@ -247,6 +259,9 @@
  },
  "eb55cc7334f560e2": {
   "verdict": "wrong"
+ },
+ "eeddb3cfd8048051": {
+  "verdict": "right"
  },
  "f1ef56cedc1de021": {
   "verdict": "right"

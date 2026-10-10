@@ -84,6 +84,7 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -100,6 +101,7 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -113,8 +115,9 @@
      3748,
      3758
     ],
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -482,6 +485,7 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -498,6 +502,7 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -514,6 +519,7 @@
     "outcome": "needs_verification",
     "codes": [
      "FIELD_CITATION_INVALID",
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -531,6 +537,7 @@
     "codes": [
      "PART_MISSING",
      "FIELD_CITATION_INVALID",
+     "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "scale": true
@@ -592,10 +599,10 @@
     "id": "c3",
     "field": "change_in_net_position",
     "key": null,
-    "value": "11110689000",
+    "value": "-153150752000",
     "evidence": [
-     8146,
-     8156
+     8276,
+     8289
     ],
     "outcome": "needs_verification",
     "codes": [

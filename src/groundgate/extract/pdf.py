@@ -46,7 +46,7 @@ Row = list[Line]  # the cells of one output line, left to right
 
 CELL_GAP = 0.65  # a gap between two words this many times the word's height starts a new cell
 HEADING_WORDS = 4  # a row with no number joins a table when each of its parts is this short
-COLUMN_HEADING_WORDS = 8  # a column heading above or below a table, such as a spanning heading
+COLUMN_HEADING_WORDS = 8  # a column heading above a table, such as a spanning heading
 DASHES = frozenset("-\u2013\u2014\u2212")  # hyphen, en dash, em dash, minus
 NUMBER_CHARS = frozenset("0123456789,.$€£¥%()") | DASHES
 
@@ -306,9 +306,11 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     by side above it, where each line after the first has COLUMN_HEADING_WORDS words or fewer. No
     row below a table joins it, so a table never takes the rows of the next. Above it, the walk goes
     past lines in the label column, and stops at a line across the edge of its first number cell or
-    at a row of lines side by side that is no column heading, such as two columns of prose. A
-    heading in the label column above the first table row joins only when a column heading is above
-    it. The table is written where pdfminer gives the first of its lines, one row on each line.
+    at a row of lines side by side that is no column heading, such as two columns of prose. It does
+    not look at the space between rows, so a short running head far above a table, with only lines
+    in the label column between, joins the table as a column heading (#246). A heading in the label
+    column above the first table row joins only when a column heading is above it. The table is
+    written where pdfminer gives the first of its lines, one row on each line.
     """
     Key = tuple[int, int]  # block, line
     span = {

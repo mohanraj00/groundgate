@@ -6,6 +6,10 @@ The plan is on #230. No rule of #230 came from these reports.
     uv run python bench/afr/tabs.py docs              # tabs/docs/, from the pinned PDFs
     uv run python bench/afr/run.py --tabs --provider claude-cli --model claude-haiku-5-5
     uv run python bench/afr/run.py --tabs --provider codex --model gpt-6-luna
+    uv run python bench/afr/run.py --tabs [--old-text] --provider claude-cli \
+        --model claude-sonnet-5-5 --effort high
+    uv run python bench/afr/run.py --tabs [--old-text] --provider codex --model gpt-6.1-sol \
+        --effort high
     uv run python bench/afr/tabs.py decide            # the replay and the new runs
     uv run python bench/afr/tabs.py web               # blind labels, http://127.0.0.1:8778
     uv run python bench/afr/tabs.py results [--check]
@@ -13,7 +17,9 @@ The plan is on #230. No rule of #230 came from these reports.
 The replay decides the replies of #229, which the models wrote from the 0.7 text, against the
 new text. The new runs read the new text. decide runs on the 0.8 draft. Its only rule that a
 decision on this set can see is #242: with a scale item, the number as written does not match.
-The 0.7 text is decided under spec 0.7, as measure.py decides it. The page shows each admitted
+The 0.7 text is decided under spec 0.7, as measure.py decides it. Two more runs, with stronger
+models at high effort, have no run of #229: they read both texts, and both are decided under the
+0.8 draft, so only the text differs. The page shows each admitted
 value that has no label yet, as measure.py web shows its values, and writes bench/afr/labels.json.
 Labels are keyed by fact, so the labels of #229 stay valid.
 """
@@ -36,11 +42,22 @@ import measure  # noqa: E402  (bench/afr/measure.py)
 # a row label, then the first number with a comma group, as "Total assets  $ 1,234"
 LABEL_ROW = re.compile(r"[^\W\d_][^\n\d]*?(\s+)\$?\s?\(?\d{1,3}(?:,\d{3})+")
 READS = ("replay", "new runs")  # the replies of #229, and the runs on the new text
+HIGH = ("claude-sonnet-5-5-high", "gpt-6.1-sol-high")  # stronger models, high effort
+HIGH_READS = ("0.7 text", "new runs")  # their runs on the 0.7 text and on the new text
+PAIRS = [(run, read) for run in measure.RUNS for read in READS] + [
+    (run, read) for run in HIGH for read in HIGH_READS
+]
 PORT = 8778
 
 
 def _replies(run: str, read: str) -> Path:
+    if read == "0.7 text":
+        return TABS / "runs-0.7-text" / run
     return (HERE if read == "replay" else TABS) / "runs" / run
+
+
+def _docs(read: str) -> Path:
+    return HERE / "docs" if read == "0.7 text" else TABS / "docs"
 
 
 def _name(run: str, read: str) -> Path:
@@ -65,14 +82,13 @@ def decide() -> None:
 
     if SPEC_VERSION != "0.8":
         raise SystemExit(f"this measure decides with the 0.8 draft, not {SPEC_VERSION}")
-    for run in measure.RUNS:
-        for read in READS:
-            measure._dump(_name(run, read), measure.decide_docs(TABS / "docs", _replies(run, read)))
-    print(f"wrote decisions for {', '.join(measure.RUNS)}: {', '.join(READS)}")
+    for run, read in PAIRS:
+        measure._dump(_name(run, read), measure.decide_docs(_docs(read), _replies(run, read)))
+    print(f"wrote decisions for {len(PAIRS)} runs and texts")
 
 
 def _found() -> dict[tuple[str, str], dict[str, Any]]:
-    return {(run, read): measure._read(_name(run, read)) for run in measure.RUNS for read in READS}
+    return {(run, read): measure._read(_name(run, read)) for run, read in PAIRS}
 
 
 def facts() -> dict[str, dict[str, Any]]:
@@ -92,13 +108,18 @@ def facts() -> dict[str, dict[str, Any]]:
 
 
 def score() -> dict[str, Any]:
-    """For each run: the counts of measure.count on the 0.7 text (spec 0.7 with #164), on the
-    replay and on the new runs, and the codes on the proposals that are not admitted."""
+    """For each run: the counts of measure.count on the 0.7 text (for the runs of #229, spec 0.7
+    with #164), on the replay and on the new runs, and the codes on the proposals that are not
+    admitted."""
     given = measure.labels()
-    old = {run: measure._read(measure._name(run, measure.SPECS[1])) for run in measure.RUNS}
+    found = _found()
     res: dict[str, Any] = {"runs": {}, "codes": {}}
-    for run in measure.RUNS:
-        reads = {"0.7 text": old[run]} | {read: _found()[run, read] for read in READS}
+    for run in (*measure.RUNS, *HIGH):
+        if run in measure.RUNS:
+            old = measure._read(measure._name(run, measure.SPECS[1]))
+            reads = {"0.7 text": old} | {read: found[run, read] for read in READS}
+        else:
+            reads = {read: found[run, read] for read in HIGH_READS}
         res["runs"][run] = {name: measure.count(docs, given) for name, docs in reads.items()}
         codes: dict[str, collections.Counter[str]] = {}
         for name, docs in reads.items():
@@ -124,6 +145,8 @@ def escapes(given: dict[str, Any]) -> list[dict[str, Any]]:
     candidate passes each item it has."""
     out = []
     for (run, read), docs in _found().items():
+        if read == "0.7 text":
+            continue
         for doc, got in docs.items():
             reply = measure._read(_replies(run, read) / f"{doc}.json")["reply"]
             for r in got["decisions"]:
@@ -163,8 +186,12 @@ def render(res: dict[str, Any]) -> str:
         "comes out column by column. The new text (`tabs/docs`) has a table as rows with tabs. The "
         "replay decides the replies of `bench/afr/runs` against the new text. The new runs read "
         "the new text, with the same prompt, CLI flags and default effort (`bench/afr/run.py "
-        "--tabs`). A value counts once per document, field, key and value. An escape is a wrong "
-        "value that a decision admits.",
+        "--tabs`). The 0.7 text rows of these two runs are decided under spec 0.7, and the "
+        "replay and the new runs under the 0.8 draft, with the #242 rule. `claude-sonnet-5-5-high` "
+        "and `gpt-6.1-sol-high` are stronger models at high effort, with the same prompt and "
+        "flags. They have no run of #229, so they read both texts, and both are decided under "
+        "the 0.8 draft. A value counts once per document, field, key and value. An escape is a "
+        "wrong value that a decision admits.",
     ]
     for run, rows in res["runs"].items():
         out += [

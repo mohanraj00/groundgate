@@ -13,7 +13,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
@@ -30,7 +29,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
@@ -42,12 +40,11 @@
     "key": null,
     "value": "19387041000",
     "evidence": [
-     17356,
-     17366
+     10593,
+     10603
     ],
     "outcome": "needs_verification",
     "codes": [
-     "FIELD_CITATION_INVALID",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
@@ -64,7 +61,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
      "FIELD_CITATION_INVALID",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
@@ -81,36 +78,50 @@
     "field": "total_assets",
     "key": null,
     "value": "65868012000",
-    "evidence": null,
-    "outcome": "rejected",
-    "codes": [
-     "CANDIDATE_INVALID"
+    "evidence": [
+     1451,
+     1461
     ],
-    "scale": null
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
    },
    {
     "id": "c1",
     "field": "total_liabilities",
     "key": null,
     "value": "36452116000",
-    "evidence": null,
-    "outcome": "rejected",
-    "codes": [
-     "CANDIDATE_INVALID"
+    "evidence": [
+     2978,
+     2988
     ],
-    "scale": null
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
    },
    {
     "id": "c2",
     "field": "total_net_position",
     "key": null,
     "value": "30007406000",
-    "evidence": null,
-    "outcome": "rejected",
-    "codes": [
-     "CANDIDATE_INVALID"
+    "evidence": [
+     3748,
+     3758
     ],
-    "scale": null
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
    }
   ]
  },
@@ -268,48 +279,68 @@
     "field": "total_assets",
     "key": null,
     "value": "102496982000",
-    "evidence": null,
-    "outcome": "rejected",
-    "codes": [
-     "CANDIDATE_INVALID"
+    "evidence": [
+     1350,
+     1361
     ],
-    "scale": null
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
    },
    {
     "id": "c1",
     "field": "total_liabilities",
     "key": null,
     "value": "39466919000",
-    "evidence": null,
-    "outcome": "rejected",
-    "codes": [
-     "CANDIDATE_INVALID"
+    "evidence": [
+     2630,
+     2640
     ],
-    "scale": null
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
    },
    {
     "id": "c2",
     "field": "total_net_position",
     "key": null,
     "value": "62113950000",
-    "evidence": null,
-    "outcome": "rejected",
-    "codes": [
-     "CANDIDATE_INVALID"
+    "evidence": [
+     3686,
+     3696
     ],
-    "scale": null
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
    },
    {
     "id": "c3",
     "field": "change_in_net_position",
     "key": null,
     "value": "4073617000",
-    "evidence": null,
-    "outcome": "rejected",
-    "codes": [
-     "CANDIDATE_INVALID"
+    "evidence": [
+     7380,
+     7389
     ],
-    "scale": null
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "scale": true
    }
   ]
  },
@@ -396,7 +427,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
@@ -413,7 +443,6 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
@@ -425,12 +454,11 @@
     "key": null,
     "value": "22451268000",
     "evidence": [
-     5637,
-     5647
+     2537,
+     2547
     ],
     "outcome": "needs_verification",
     "codes": [
-     "FIELD_CITATION_INVALID",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
@@ -447,7 +475,7 @@
     ],
     "outcome": "needs_verification",
     "codes": [
-     "PART_MISSING",
+     "UNIT_CITATION_INVALID",
      "FIELD_CITATION_INVALID",
      "KEY_CITATION_INVALID",
      "VALUE_DERIVED"
