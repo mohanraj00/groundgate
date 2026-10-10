@@ -244,6 +244,22 @@ def test_pdf_number_cells_take_the_signs_of_the_builtin_units() -> None:
     assert not _number_cell([("$", box)])
 
 
+def test_pdf_a_number_row_in_a_table_is_cut_into_cells(tmp_path: Path) -> None:
+    """A row of only numbers between two table rows gets tabs too, also as one text line."""
+    path = tmp_path / "numbers.pdf"
+    page = [
+        (72, 700, "Cash"),
+        (300, 700, "1"),
+        (400, 700, "2"),
+        (300, 686, "3                              4"),
+        (72, 672, "Debt"),
+        (300, 672, "5"),
+        (400, 672, "6"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert extract(path).text == "Cash\t1\t2\n3\t4\nDebt\t5\t6"
+
+
 def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> None:
     """A wide gap inside one text line of a table row is a cell break too."""
     path = tmp_path / "split.pdf"
