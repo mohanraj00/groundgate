@@ -49,7 +49,8 @@ Between them, short headings, numbers and headings in the label column join the 
 headings above join it too, with a heading in the label column under them. Other PDF text keeps its
 lines: a line of prose that crosses the number columns ends the table, and two columns of prose next
 to a table stay two columns. A short running head far above a table can still join it as a column
-heading (#246).
+heading (#246). A blank cell in a PDF table gets no empty cell, so the numbers after it move one
+column left (#247).
 
 ## Schema
 

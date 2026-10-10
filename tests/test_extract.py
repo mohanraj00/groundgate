@@ -240,7 +240,7 @@ def test_pdf_number_cells_take_the_signs_of_the_builtin_units() -> None:
     box = Box(1, 0, 0, 1, 1)
     assert _number_cell([("₹", box), ("1,234", box)])
     assert not _number_cell([("Rs", box), ("1,234", box)])
-    assert _number_cell([("$", box), ("\u2014", box)])  # "$ —": nothing in a currency column
+    assert _number_cell([("$", box), ("\u2014", box)])  # a dollar sign and a dash: no amount
     assert not _number_cell([("$", box)])
 
 

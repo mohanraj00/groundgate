@@ -310,7 +310,9 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     not look at the space between rows, so a short running head far above a table, with only lines
     in the label column between, joins the table as a column heading (#246). A heading in the label
     column above the first table row joins only when a column heading is above it. The table is
-    written where pdfminer gives the first of its lines, one row on each line.
+    written where pdfminer gives the first of its lines, one row on each line. A row has only the
+    cells that hold text: a blank cell gets no empty cell, so the cells after it move one column
+    left (#247).
     """
     Key = tuple[int, int]  # block, line
     span = {
