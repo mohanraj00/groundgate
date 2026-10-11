@@ -1,0 +1,59 @@
+{
+ "doc": "strings-dasatinib",
+ "provider": "codex",
+ "model": "gpt-6-luna",
+ "effort": "default",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "95c1a316efcfa048290c7717cf80fd8ee864766940421f9a314ed0b874444b6e",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "Chronic phase CML in adults: 100 mg once daily. Accelerated phase CML, myeloid or lymphoid blast phase CML, or Ph+ ALL in adults: 140 mg once daily.",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "Chronic phase CML in adults: 100 mg once daily. (2)\nAccelerated phase CML, myeloid or lymphoid blast phase CML, or Ph+ ALL in adults: 140 mg once daily. (2)"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "2 DOSAGE AND ADMINISTRATION"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "starting dose based on body weight",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "Chronic phase CML and ALL in pediatrics: starting dose based on body weight. (2)"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "2 DOSAGE AND ADMINISTRATION"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Body Weight (kg)b\nDaily Dose (mg)\n10 to less than 20\n40 mg\n20 to less than 30\n60 mg\n30 to less than 45\n70 mg\nat least 45\n100 mg"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

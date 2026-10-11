@@ -1,0 +1,50 @@
+2 DOSAGE AND ADMINISTRATION
+
+Efavirenz should be taken orally once daily on an empty stomach, preferably at bedtime. (2)
+Recommended adult dose: 600 mg. (2.2)
+With voriconazole, increase voriconazole maintenance dose to 400 mg every 12 hours and decrease efavirenz dose to 300 mg once daily using the capsule formulation. (2.2)
+With rifampin, increase efavirenz dose to 800 mg once daily for patients weighing 50 kg or more. (2.2)
+Pediatric dosing is based on weight. (2.3)
+
+2.1 Hepatic Function
+
+Monitor hepatic function prior to and during treatment with efavirenz tablets [see Warnings and Precautions (5.9)].
+
+Efavirenz tablets are not recommended in patients with moderate or severe hepatic impairment (Child Pugh B or C) [see Warnings and Precautions (5.9) and Use in Specific Populations (8.6)].
+
+2.2 Adults
+
+The recommended dosage of efavirenz is 600 mg orally, once daily, in combination with a protease inhibitor and/or nucleoside analogue reverse transcriptase inhibitors (NRTIs). It is recommended that efavirenz be taken on an empty stomach, preferably at bedtime. The increased efavirenz concentrations observed following administration of efavirenz with food may lead to an increase in frequency of adverse reactions [see Clinical Pharmacology (12.3) ]. Dosing at bedtime may improve the tolerability of nervous system symptoms [see Warnings and Precautions (5.6), Adverse Reactions (6.1), and Patient Counseling Information (17)]. Efavirenz tablets should be swallowed intact with liquid.
+
+Concomitant Antiretroviral Therapy
+
+Efavirenz must be given in combination with other antiretroviral medications [see Indications and Usage (1), Warnings and Precautions (5.3), Drug Interactions (7.1), and Clinical Pharmacology (12.3) ].
+
+Dosage Adjustment
+
+If efavirenz is coadministered with voriconazole, the voriconazole maintenance dose should be increased to 400 mg every 12 hours and the efavirenz dose should be decreased to 300 mg once daily using the capsule formulation. Efavirenz tablets must not be broken [see Drug Interactions (7.1, Table 5) and Clinical Pharmacology (12.3, Tables 7 and 8)].
+
+If efavirenz is coadministered with rifampin to patients weighing 50 kg or more, an increase in the dose of efavirenz to 800 mg once daily is recommended [see Drug Interactions (7.1, Table 5) and Clinical Pharmacology (12.3, Table 8)].
+
+2.3 Pediatric Patients
+
+It is recommended that efavirenz be taken on an empty stomach, preferably at bedtime. Table 1 describes the recommended dose of efavirenz for pediatric patients weighing at least 40 kg [see Clinical Pharmacology (12.3) ]. The recommended dosage of efavirenz for pediatric patients weighing 40 kg or greater is 600 mg once daily.
+
+Table 1: Efavirenz Dosing in Pediatric Patients
+
+^b Tablets must not be crushed.
+
+Patient Body Weight
+Efavirenz Daily Dose
+Number of Tablets^b and Strength to Administer
+at least 40 kg
+600 mg
+one 600 mg tablet
+
+3 DOSAGE FORMS AND STRENGTHS
+
+Tablets: 600 mg (3)
+
+Tablets
+
+600-mg tablets are yellow coloured, capsule-shaped, biconvex, film coated tablets debossed with '301' on one side and 'CL' on other side.

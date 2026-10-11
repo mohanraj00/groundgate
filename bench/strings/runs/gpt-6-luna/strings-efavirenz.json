@@ -1,0 +1,74 @@
+{
+ "doc": "strings-efavirenz",
+ "provider": "codex",
+ "model": "gpt-6-luna",
+ "effort": "default",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "7fe287b8e647fed4d6cbd339b23753902baaa3eeae4bb17e18036fde6a921a43",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "600 mg orally, once daily",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "600 mg"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "mg"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "recommended dosage of efavirenz"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Adults"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "600 mg once daily",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "600 mg"
+     },
+     {
+      "source": "document",
+      "role": "unit",
+      "text": "mg"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "recommended dosage of efavirenz"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "pediatric patients weighing 40 kg or greater"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

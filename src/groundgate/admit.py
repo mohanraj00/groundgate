@@ -354,8 +354,7 @@ def _value_at(
         assert isinstance(value, str)
         if normalize_ws(value) not in normalize_ws(t.text[s:e]):
             return None, "VALUE_NOT_IN_EVIDENCE"
-        first = quote_pattern(value).search(t.text, s, e)
-        return _At(item, t, span, None, start=s if first is None else first.start()), None
+        return _At(item, t, span, None, start=_string_start(t, value, span)), None
     assert isinstance(value, Decimal)
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
     signs = prefixes if f.unit is not None else None  # brackets make a sign only with a unit
@@ -416,6 +415,13 @@ def _value_at(
                 a.derived = not need and value not in {k.value, scaled_value(t.text, k)}
                 return a, None
     return None, "UNIT_NOT_IN_EVIDENCE"
+
+
+def _string_start(t: _Text, value: str, span: tuple[int, int]) -> int:
+    """Where a string value is: its first occurrence in the span, where whitespace runs match any
+    whitespace run, else the start of the span (#140)."""
+    first = quote_pattern(value).search(t.text, *span)
+    return span[0] if first is None else first.start()
 
 
 def _unscaled(tok: Token, value: Decimal | str) -> bool:

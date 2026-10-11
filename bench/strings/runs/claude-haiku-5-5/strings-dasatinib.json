@@ -1,0 +1,44 @@
+{
+ "doc": "strings-dasatinib",
+ "provider": "claude-cli",
+ "model": "claude-haiku-5-5",
+ "effort": "default",
+ "cli": "2.1.296 (Claude Code)",
+ "prompt_sha256": "95c1a316efcfa048290c7717cf80fd8ee864766940421f9a314ed0b874444b6e",
+ "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "100 mg once daily",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "Chronic phase CML in adults: 100 mg once daily."
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "starting dose based on body weight",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "Chronic phase CML and ALL in pediatrics: starting dose based on body weight."
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

@@ -1,0 +1,10 @@
+{
+ "fields": {
+  "recommended_dosage": {
+   "type": "string",
+   "description": "The recommended dosage for the key's population, as the label words it.",
+   "keys": ["adults", "pediatric patients"],
+   "multiple": true
+  }
+ }
+}

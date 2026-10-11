@@ -1,0 +1,54 @@
+{
+ "doc": "strings-amphetamine",
+ "provider": "claude-cli",
+ "model": "claude-haiku-5-5",
+ "effort": "default",
+ "cli": "2.1.296 (Claude Code)",
+ "prompt_sha256": "a6b987a187fc717f81e129bc5c947742963acb499a40191b18fbc8383e03913a",
+ "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "12.5 mg once daily in the morning.",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "12.5 mg once daily in the morning."
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Adults:"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "Starting dose is 6.3 mg once daily in the morning. Maximum dose is 18.8 mg once daily for patients 6 to 12 years, and 12.5 mg once daily for patients 13 to 17 years.",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "Starting dose is 6.3 mg once daily in the morning. Maximum dose is 18.8 mg once daily for patients 6 to 12 years, and 12.5 mg once daily for patients 13 to 17 years."
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Pediatric patients (ages 6 to 17 years):"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

@@ -1,0 +1,110 @@
+{
+ "doc": "strings-entecavir",
+ "provider": "codex",
+ "model": "gpt-6-luna",
+ "effort": "default",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "2acd588ec22ff05f6368c262f237ae97edcaacf181a2fc78f301c317901e54c2",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "0.5 mg once daily.",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "0.5 mg once daily."
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "The recommended dose of entecavir tablets for chronic hepatitis B virus infection in nucleoside- inhibitor-treatment-naïve adults and adolescents 16 years of age and older is"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Recommended Dosage in Adults"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "1 mg once daily.",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "1 mg once daily."
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "The recommended dose of entecavir tablets in adults and adolescents (at least 16 years of age) with a history of hepatitis B viremia while receiving lamivudine or known lamivudine or telbivudine resistance substitutions rtM204I/V with or without rtL180M, rtL80I/V, or rtV173L is"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Recommended Dosage in Adults"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "1 mg once daily.",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "1 mg once daily."
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "The recommended dose of entecavir tablets for chronic hepatitis B virus infection in adults with decompensated liver disease is"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Recommended Dosage in Adults"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "dosing is based on weight.",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "dosing is based on weight."
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Nucleoside-inhibitor-treatment-naïve and lamivudine-experienced pediatric patients at least 2 years of age and weighing at least 10 kg:"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Recommended Dosage in Pediatric Patients"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

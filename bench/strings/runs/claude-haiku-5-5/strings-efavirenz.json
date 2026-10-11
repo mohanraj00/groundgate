@@ -1,0 +1,49 @@
+{
+ "doc": "strings-efavirenz",
+ "provider": "claude-cli",
+ "model": "claude-haiku-5-5",
+ "effort": "default",
+ "cli": "2.1.296 (Claude Code)",
+ "prompt_sha256": "7fe287b8e647fed4d6cbd339b23753902baaa3eeae4bb17e18036fde6a921a43",
+ "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "600 mg orally, once daily",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "The recommended dosage of efavirenz is 600 mg orally, once daily"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "2.2 Adults"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "600 mg once daily",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "The recommended dosage of efavirenz for pediatric patients weighing 40 kg or greater is 600 mg once daily."
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}
