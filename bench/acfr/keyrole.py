@@ -1,14 +1,22 @@
-"""The runs of #256 on bench/acfr: the extractor schema without the role "key" on fields with no
-keys, against the runs of #242, whose schema offered it. Every field of bench/acfr has no keys.
+"""The runs of #256: the extractor schema without the role "key" on fields with no keys, against
+the schema of #242, which offered it on every field. Every field of bench/acfr has no keys.
 
-    uv run python bench/acfr/run.py ... --name <model>-256     # the new runs (run.py)
-    uv run python bench/acfr/keyrole.py decide                 # keyrole/decisions.json
-    uv run python bench/acfr/keyrole.py web                    # blind labels, http://127.0.0.1:8779
-    uv run python bench/acfr/keyrole.py results [--check]      # keyrole/results.json, RESULTS.md
+    uv run python bench/acfr/run.py ...                     # the runs (run.py)
+    uv run python bench/acfr/keyrole.py decide              # keyrole/decisions.json
+    uv run python bench/acfr/keyrole.py web                 # blind labels, http://127.0.0.1:8780
+    uv run python bench/acfr/keyrole.py results [--check]   # keyrole/results.json, RESULTS.md
 
-decide decides both pairs of runs again in process under the groundgate that runs it. web labels
-each value of a new run that has no label in bench/acfr/labels.json yet, with the page of
-measure.py, so a fact has one label.
+Two sets, each with a pair of runs for each model:
+
+- bench/acfr, the documents of the diagnosis (#244): the runs of #242 and new runs with the
+  schema of #256.
+- bench/acfr2, documents that #256 did not come from: the 10 texts of bench/acfr2 with the schema
+  of bench/acfr, once with the schema of #242 and once with the schema of #256. bench/acfr2 has
+  the same four fields with the fiscal year as the key, so a value here is the fact of
+  bench/acfr2 with the key 2025, and it has that label in bench/acfr2/labels.json.
+
+decide decides every run again in process under the groundgate that runs it. web labels each
+value of a bench/acfr2 run that has no label yet, with the page of bench/acfr2/measure.py.
 """
 
 from __future__ import annotations
@@ -16,6 +24,7 @@ from __future__ import annotations
 import argparse
 import collections
 import hashlib
+import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -27,21 +36,66 @@ sys.path.insert(0, str(HERE))
 import causes  # noqa: E402  (bench/acfr/causes.py)
 import measure  # noqa: E402  (bench/acfr/measure.py)
 
-PAIRS = tuple((run, f"{run}-256") for run in measure.RUNS)
+ACFR2 = HERE.parent / "acfr2"
+SETS = {
+    "bench/acfr": (HERE / "docs", tuple((run, f"{run}-256") for run in measure.RUNS)),
+    "bench/acfr2": (
+        ACFR2 / "docs",
+        tuple((f"{run}-acfr2-242", f"{run}-acfr2-256") for run in measure.RUNS),
+    ),
+}
+YEAR = "2025"  # the key of bench/acfr2 for the fiscal year of bench/acfr
+
+
+def _measure2() -> Any:
+    """bench/acfr2/measure.py, under another name than bench/acfr/measure.py."""
+    spec = importlib.util.spec_from_file_location("acfr2_measure", ACFR2 / "measure.py")
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _fact(name: str, doc: str, d: Any) -> str | None:
+    """The label id of a decision's value in its set."""
+    if d.value is None:
+        return None
+    if name == "bench/acfr":
+        return measure.item_id(doc, d.field, d.key, d.value)  # type: ignore[no-any-return]
+    return _measure2().item_id(doc, d.field, YEAR, d.value)  # type: ignore[no-any-return]
+
+
+def _labels(name: str) -> dict[str, Any]:
+    return measure.labels() if name == "bench/acfr" else _measure2().labels()  # type: ignore[no-any-return]
+
+
+def schema_242(schema: dict[str, Any]) -> dict[str, Any]:
+    """The output schema of #242 for a schema with no keys: the role "key" on every field."""
+    import groundgate as gg
+
+    out = gg.extractor_schema(schema)
+    if (
+        "evidence_no_key" in out["$defs"]
+        or "key" in out["$defs"]["document"]["properties"]["role"]["enum"]
+    ):
+        raise SystemExit("schema_242 is for a schema whose fields have no keys")
+    role = out["$defs"]["document"]["properties"]["role"]
+    role["enum"].append("key")
+    role["description"] += gg.model._KEY_HELP
+    return out
 
 
 def facts() -> dict[str, dict[str, Any]]:
-    """Each value of a proposal of a new run that has no label yet, once."""
-    given = measure.labels()
+    """Each value of a bench/acfr2 run that has no label yet, once, as a fact of bench/acfr2."""
+    docs, pairs = SETS["bench/acfr2"]
+    given = _labels("bench/acfr2")
     out: dict[str, dict[str, Any]] = {}
-    for _, doc, _, _, d in causes._proposals(tuple(new for _, new in PAIRS)):
-        if d.value is None:
-            continue
-        fid = measure.item_id(doc, d.field, d.key, d.value)
-        if fid in given or (fid in out and out[fid]["evidence"] is not None):
+    for _, doc, _, _, d in causes._proposals(tuple(r for pair in pairs for r in pair), docs):
+        fid = _fact("bench/acfr2", doc, d)
+        if fid is None or fid in given or (fid in out and out[fid]["evidence"] is not None):
             continue
         evidence = None if d.evidence is None else list(d.evidence)
-        out[fid] = {"field": d.field, "key": d.key, "value": d.value, "evidence": evidence}
+        out[fid] = {"field": d.field, "key": YEAR, "value": d.value, "evidence": evidence}
         out[fid]["doc"] = doc
     return out
 
@@ -60,73 +114,79 @@ def decide() -> None:
     from groundgate.canonical import SPEC_VERSION
 
     schema = measure._read(HERE / "schema.json")
-    out: dict[str, Any] = {"spec": SPEC_VERSION, "schemas": {}, "runs": {}}
-    for label, keyed in (("with key", True), ("without key", False)):
-        s = gg.extractor_schema(schema)
-        if keyed:  # the schema of #242: the role "key" on every field
-            s["$defs"]["document"]["properties"]["role"]["enum"].append("key")
-            s["$defs"]["document"]["properties"]["role"]["description"] += gg.model._KEY_HELP
+    out: dict[str, Any] = {"spec": SPEC_VERSION, "schemas": {}, "sets": {}}
+    for label, s in (
+        ("with key", schema_242(schema)),
+        ("without key", gg.extractor_schema(schema)),
+    ):
         out["schemas"][label] = hashlib.sha256(json.dumps(s, sort_keys=True).encode()).hexdigest()
-    for run in (run for pair in PAIRS for run in pair):
-        replies = sorted((HERE / "runs" / run).glob("*.json"))
-        rows = []
-        for _, doc, _, c, d in causes._proposals((run,)):
-            fact = None if d.value is None else measure.item_id(doc, d.field, d.key, d.value)
-            rows.append(
-                {
-                    "doc": doc,
-                    "id": c["id"],
-                    "fact": fact,
-                    "key item": any(e.get("role") == "key" for e in c["evidence"]),
-                    "outcome": d.outcome,
-                    "codes": sorted(set(d.codes) | {f"missing {m}" for m in d.missing}),
-                }
-            )
-        out["runs"][run] = {
-            "output schema": _schema_sha(run),
-            "no reply": sum(measure._read(path)["reply"] is None for path in replies),
-            "proposals": rows,
-        }
+    for name, (docs, pairs) in SETS.items():
+        runs = out["sets"].setdefault(name, {})
+        for run in (run for pair in pairs for run in pair):
+            replies = sorted((HERE / "runs" / run).glob("*.json"))
+            if len(replies) != len(list(docs.glob("*.txt"))):
+                raise SystemExit(f"{run}: {len(replies)} replies; run run.py first")
+            rows = []
+            for _, doc, _, c, d in causes._proposals((run,), docs):
+                rows.append(
+                    {
+                        "doc": doc,
+                        "id": c["id"],
+                        "fact": _fact(name, doc, d),
+                        "key item": any(e.get("role") == "key" for e in c["evidence"]),
+                        "outcome": d.outcome,
+                        "codes": sorted(set(d.codes) | {f"missing {m}" for m in d.missing}),
+                    }
+                )
+            runs[run] = {
+                "output schema": _schema_sha(run),
+                "no reply": sum(measure._read(path)["reply"] is None for path in replies),
+                "proposals": rows,
+            }
     OUT.mkdir(exist_ok=True)
     measure._dump(OUT / "decisions.json", out)
-    print(f"wrote the decisions of {len(out['runs'])} runs under spec {SPEC_VERSION}")
-
-
-def score() -> dict[str, Any]:
-    given = measure.labels()
-    found = measure._read(OUT / "decisions.json")
-    res: dict[str, Any] = {"spec": found["spec"], "schemas": found["schemas"], "runs": {}}
-    res["codes"] = {}
-    for run, got in found["runs"].items():
-        count: collections.Counter[str] = collections.Counter(dict.fromkeys(COLUMNS, 0))
-        count["no reply"] = got["no reply"]
-        admitted = set()
-        codes: collections.Counter[str] = collections.Counter()
-        for r in got["proposals"]:
-            count["proposals"] += 1
-            count["with a key item"] += r["key item"]
-            if r["outcome"] == "admitted":
-                count["admitted"] += 1
-                admitted.add(r["fact"])
-            else:
-                count["not admitted"] += 1
-                codes.update(r["codes"])
-                count["not admitted, right"] += given.get(r["fact"], {}).get("verdict") == "right"
-        verdicts = collections.Counter(
-            given.get(f, {}).get("verdict", "unlabeled") for f in admitted
-        )
-        count["right admitted"] = verdicts["right"]
-        count["escapes"] = verdicts["wrong"]
-        count["admitted, not sure or unlabeled"] = verdicts["not sure"] + verdicts["unlabeled"]
-        res["runs"][run] = {"output schema": got["output schema"], **dict(sorted(count.items()))}
-        res["codes"][run] = dict(sorted(codes.items()))
-    return res
+    print(f"wrote the decisions of {len(SETS)} sets under spec {SPEC_VERSION}")
 
 
 COLUMNS = (
     "proposals", "with a key item", "admitted", "right admitted", "escapes",
     "admitted, not sure or unlabeled", "not admitted", "not admitted, right", "no reply",
 )  # fmt: skip
+
+
+def score() -> dict[str, Any]:
+    found = measure._read(OUT / "decisions.json")
+    res: dict[str, Any] = {"spec": found["spec"], "schemas": found["schemas"], "sets": {}}
+    for name, runs in found["sets"].items():
+        given = _labels(name)
+        mine: dict[str, Any] = {"runs": {}, "codes": {}}
+        for run, got in runs.items():
+            count: collections.Counter[str] = collections.Counter(dict.fromkeys(COLUMNS, 0))
+            count["no reply"] = got["no reply"]
+            admitted = set()
+            codes: collections.Counter[str] = collections.Counter()
+            for r in got["proposals"]:
+                count["proposals"] += 1
+                count["with a key item"] += r["key item"]
+                if r["outcome"] == "admitted":
+                    count["admitted"] += 1
+                    admitted.add(r["fact"])
+                else:
+                    count["not admitted"] += 1
+                    codes.update(r["codes"])
+                    count["not admitted, right"] += (
+                        given.get(r["fact"], {}).get("verdict") == "right"
+                    )
+            verdicts = collections.Counter(
+                given.get(f, {}).get("verdict", "unlabeled") for f in admitted
+            )
+            count["right admitted"] = verdicts["right"]
+            count["escapes"] = verdicts["wrong"]
+            count["admitted, not sure or unlabeled"] = verdicts["not sure"] + verdicts["unlabeled"]
+            mine["runs"][run] = {"output schema": got["output schema"], **dict(count)}
+            mine["codes"][run] = dict(sorted(codes.items()))
+        res["sets"][name] = mine
+    return res
 
 
 def render(res: dict[str, Any]) -> str:
@@ -136,31 +196,44 @@ def render(res: dict[str, Any]) -> str:
         "",
         "Generated by `bench/acfr/keyrole.py results` from `results.json`. Do not edit.",
         "",
-        "Each pair is one model on bench/acfr: the runs of #242, whose output schema offered the "
-        "role `key` on every field, and the runs of #256 with `gg.extractor_schema` as it is now, "
-        "which offers it only on a field with keys. bench/acfr has no field with keys. Every "
-        f"run is decided again under spec {res['spec']}. A value counts once per document, "
-        "field, key and value. An escape is a wrong value that a decision admits.",
-        "",
-        "| Run | Output schema | " + " | ".join(c.capitalize() for c in COLUMNS) + " |",
-        "|---|---|" + "---:|" * len(COLUMNS),
+        "Each pair is one model with the schema of bench/acfr, whose fields have no keys: once "
+        "with the output schema of #242, which offered the role `key` on every field, and once "
+        "with `gg.extractor_schema` as it is now, which offers it only on a field with keys. "
+        "The hash of each run's output schema is in its records. Every run is decided again "
+        f"under spec {res['spec']}. A value counts once per document, field, key and value. An "
+        "escape is a wrong value that a decision admits.",
     ]
-    for run, c in res["runs"].items():
-        schema = ", ".join(names.get(s, "other") for s in c["output schema"])
-        out.append(f"| {run} | {schema} | " + " | ".join(str(c[k]) for k in COLUMNS) + " |")
-    runs = list(res["codes"])
-    out += [
-        "",
-        "Codes and missing parts on the proposals that are not admitted (a proposal can have "
-        "more than one). `CANDIDATE_INVALID` here is two items with the same role: the run "
-        "quotes the column, such as Total, as a second field item.",
-        "",
-        "| Code | " + " | ".join(runs) + " |",
-        "|---|" + "---:|" * len(runs),
-    ]
-    for code in sorted({c for run in runs for c in res["codes"][run]}):
-        cells = [str(res["codes"][run].get(code, 0)) for run in runs]
-        out.append(f"| `{code}` | " + " | ".join(cells) + " |")
+    about = {
+        "bench/acfr": "The documents of the diagnosis (#244). The runs with the role key are the "
+        "runs of #242.",
+        "bench/acfr2": "The 10 documents of bench/acfr2, which #256 did not come from. A value "
+        "has the label of the bench/acfr2 fact with the key 2025.",
+    }
+    for name, mine in res["sets"].items():
+        out += [
+            "",
+            f"## {name}",
+            "",
+            about[name],
+            "",
+            "| Run | Output schema | " + " | ".join(c.capitalize() for c in COLUMNS) + " |",
+            "|---|---|" + "---:|" * len(COLUMNS),
+        ]
+        for run, c in mine["runs"].items():
+            schema = ", ".join(names.get(s, "other") for s in c["output schema"])
+            out.append(f"| {run} | {schema} | " + " | ".join(str(c[k]) for k in COLUMNS) + " |")
+        runs = list(mine["codes"])
+        out += [
+            "",
+            "Codes and missing parts on the proposals that are not admitted (a proposal can have "
+            "more than one).",
+            "",
+            "| Code | " + " | ".join(runs) + " |",
+            "|---|" + "---:|" * len(runs),
+        ]
+        for code in sorted({c for run in runs for c in mine["codes"][run]}):
+            cells = [str(mine["codes"][run].get(code, 0)) for run in runs]
+            out.append(f"| `{code}` | " + " | ".join(cells) + " |")
     return "\n".join(out)
 
 
@@ -190,8 +263,9 @@ def main() -> None:
     if args.cmd == "decide":
         decide()
     elif args.cmd == "web":
-        measure.facts = facts  # the page of measure.py, with the values that have no label
-        measure.serve(measure.PORT)
+        m2 = _measure2()
+        m2.facts = facts  # the page of bench/acfr2/measure.py, with the values that have no label
+        m2.serve(m2.PORT)
     else:
         results(args.check)
 
