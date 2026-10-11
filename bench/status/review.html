@@ -107,10 +107,9 @@ async function render(it) {
     throw e;
   }
   if (mine !== drawn) return;
-  // the box is in points from the top left of the crop box; pdf.js wants PDF user space
-  const [vx0, , , vy1] = page.view;
-  const [x0, top, x1, bottom] = it.box;
-  const r = vp.convertToViewportRectangle([vx0 + x0, vy1 - bottom, vx0 + x1, vy1 - top]);
+  // the box is in points from the top left of the crop box as the page shows it: pdfminer
+  // turns a page with /Rotate as pdf.js does, so the box only needs the viewport's scale
+  const r = it.box.map((v) => v * vp.scale);
   const pad = 4, hit = $("hit");
   hit.style.left = Math.min(r[0], r[2]) - pad + "px";
   hit.style.top = Math.min(r[1], r[3]) - pad + "px";
