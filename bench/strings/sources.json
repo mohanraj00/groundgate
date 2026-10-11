@@ -1,0 +1,134 @@
+{
+ "sources": [
+  {
+   "id": "strings-abacavir",
+   "kind": "fda",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/f7633480-25aa-4326-bec9-82835b486a20.xml",
+   "sha256": "30758115f69278b0f19dab85912fc1454b0ebebfd8d432522255bc3a7be0d1cd",
+   "select": {
+    "sections": [
+     "34068-7",
+     "43678-2"
+    ]
+   },
+   "source": "ABACAVIR SULFATE TABLET, FILM COATED [SAFECOR HEALTH, LLC]"
+  },
+  {
+   "id": "strings-amphetamine",
+   "kind": "fda",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/48d0f55c-f847-4d26-b2ed-94b5a2770228.xml",
+   "sha256": "da6f5629bb5e7faa232751572d59c60e396002edb91adabab7d3ab6736184794",
+   "select": {
+    "sections": [
+     "34068-7",
+     "43678-2"
+    ]
+   },
+   "source": "AMPHETAMINE EXTENDED-RELEASE TABLET, ORALLY DISINTEGRATING [NEOS THERAPEUTICS, LP]"
+  },
+  {
+   "id": "strings-atazanavir",
+   "kind": "fda",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/7fbea274-d6b5-4faa-bbf0-05fefab42114.xml",
+   "sha256": "2bf6d8daf726f208ddc7acb8e06c0a66771fc2200051c2bb8e01881b718dd20e",
+   "select": {
+    "sections": [
+     "34068-7",
+     "43678-2"
+    ]
+   },
+   "source": "ATAZANAVIR SULFATE (ATAZANAVIR) CAPSULE [AUROBINDO PHARMA LIMITED]"
+  },
+  {
+   "id": "strings-balsalazide",
+   "kind": "fda",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/f12ffa32-d14b-e9d9-e957-2ef08b64e8b4.xml",
+   "sha256": "770d0a9bd1c87f0ca667cd5093184e4c421ca44cb0c1cd721b3a92d70aa48002",
+   "select": {
+    "sections": [
+     "34068-7",
+     "43678-2"
+    ]
+   },
+   "source": "BALSALAZIDE DISODIUM CAPSULE [APOTEX CORP.]"
+  },
+  {
+   "id": "strings-cefixime",
+   "kind": "fda",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/a5128554-118a-4d8e-8425-c0000037c59d.xml",
+   "sha256": "2b610ecdfba2a94f8752d829cf983ecc4a14a8b23ae3db38da364adcc3a0dc69",
+   "select": {
+    "sections": [
+     "34068-7",
+     "43678-2"
+    ]
+   },
+   "source": "CEFIXIME CAPSULE [REMEDYREPACK INC.]"
+  },
+  {
+   "id": "strings-darunavir",
+   "kind": "fda",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/632293b0-d220-444e-8a5b-2ee8c225b66d.xml",
+   "sha256": "ca57d9689e821c78af040078dcc71686cc9ba1a5fead7ab502b2333f4bb44f03",
+   "select": {
+    "sections": [
+     "34068-7",
+     "43678-2"
+    ]
+   },
+   "source": "DARUNAVIR TABLET [AMERICAN HEALTH PACKAGING]"
+  },
+  {
+   "id": "strings-dasatinib",
+   "kind": "fda",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/bffb38c3-f556-492f-a9db-aa417ec0a856.xml",
+   "sha256": "0c08a8ccf72aefff0ac0490e6655e6441b8a609d7a5d978ca028a3fe2d690469",
+   "select": {
+    "sections": [
+     "34068-7",
+     "43678-2"
+    ]
+   },
+   "source": "DASATINIB TABLET [NOVADOZ PHARMACEUTICALS LLC]"
+  },
+  {
+   "id": "strings-efavirenz",
+   "kind": "fda",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/92603fa5-7a2c-4bfb-9a70-aadb4fba952c.xml",
+   "sha256": "02b2657e95aa2ba0bbf3cc02488374906dfeec3326c6c8e3313838cb61c9872d",
+   "select": {
+    "sections": [
+     "34068-7",
+     "43678-2"
+    ]
+   },
+   "source": "EFAVIRENZ TABLET, FILM COATED [CIPLA USA INC.]"
+  },
+  {
+   "id": "strings-emtricitabine",
+   "kind": "fda",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/a229c922-58eb-4795-9219-6cebb1779e35.xml",
+   "sha256": "becfb8170d42efa7cabf4eb7f9fe752c8f8ec2330bf62b7e33f5bb509aa93f31",
+   "select": {
+    "sections": [
+     "34068-7",
+     "43678-2"
+    ]
+   },
+   "source": "EMTRICITABINE CAPSULE [CIPLA USA INC.]"
+  },
+  {
+   "id": "strings-entecavir",
+   "kind": "fda",
+   "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/d59e9ea4-09ea-47bd-af2f-39f7a2e2aceb.xml",
+   "sha256": "01e437a41d116feff8760e1ff481c1e6dc6511972e3eaf6ddde1e075fe8d1b5c",
+   "select": {
+    "sections": [
+     "34068-7",
+     "43678-2"
+    ]
+   },
+   "source": "ENTECAVIR TABLET, FILM COATED [CIPLA USA INC.]"
+  }
+ ]
+}

@@ -322,8 +322,9 @@ the one other occurrence that passes without one. At the cited span, a unit form
 can make the unit present (step 11); at another occurrence it does not, as in the choice of a
 quote occurrence (§4.6, #249).
 
-The value is at its supporting number token, or at the start of the evidence span for a `string`
-field. The role items are then checked at the value (§4.6).
+The value is at its supporting number token. For a `string` field, it is at the first occurrence
+of the value in the evidence span, where a whitespace run in the value matches any whitespace run
+in the text (#140). The role items are then checked at the value (§4.6).
 
 ### 3.2 The outside path
 
@@ -563,8 +564,9 @@ case-insensitively, with each whitespace run in the key matching any whitespace 
 preceded or followed by a letter or digit. Where two mentions overlap and one contains the
 other, only the longer counts. A mention is in a sentence (§4.2) when it lies wholly inside it.
 
-The value is at its supporting number token (§3 steps 10–11), or at the start of the evidence
-span for a `string` field. The **keys at the value** are the keys mentioned in the value's
+The value is at its supporting number token (§3 steps 10–11), or, for a `string` field, at its
+first occurrence in the evidence span (§3.1). On the outside path, the evidence span is the deciding
+item's whole text. The **keys at the value** are the keys mentioned in the value's
 sentence, except in a table sentence (below). When the sentence mentions none, they are the key
 of the nearest mention that ends at or before the value's start, or no key when there is no such
 mention or when a label line lies wholly between the end of that mention and the start of the
@@ -636,7 +638,8 @@ The quote is trimmed of whitespace at both ends first.
   unit present (step 11): an occurrence with the unit next to the value comes first. When there
   is no such occurrence, the evidence is the first of those, and steps 10 and 11 run there. When
   there is no occurrence, step 9a rejects.
-- For a role item, the occurrence is the one that holds the value's token; else, for a unit item,
+- For a role item, the occurrence is the one that holds the value's token, or, for a `string`
+  field, the value's first occurrence in the evidence span; else, for a unit item,
   the last one that ends at or before the value at a unit place of the value (below), where
   occurrences that overlap count too, as `$$` twice in `$$$`; else the
   last one that ends at or before the value; else the first one after the value.

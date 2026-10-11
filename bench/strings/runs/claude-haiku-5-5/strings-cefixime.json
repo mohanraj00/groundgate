@@ -1,0 +1,54 @@
+{
+ "doc": "strings-cefixime",
+ "provider": "claude-cli",
+ "model": "claude-haiku-5-5",
+ "effort": "default",
+ "cli": "2.1.296 (Claude Code)",
+ "prompt_sha256": "deaa998ea978c37a002383b8936d39282c1fe12133f6133850b26a8871e89981",
+ "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "400 mg daily",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "400 mg daily"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Adults"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "8 mg/kg/day",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "8 mg/kg/day"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Pediatric patients (6 months and older)"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

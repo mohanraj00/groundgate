@@ -1,0 +1,74 @@
+{
+ "doc": "strings-darunavir",
+ "provider": "codex",
+ "model": "gpt-6-luna",
+ "effort": "default",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "af16b933d48f95f7c9520913e5659b8eceaeadc4619179dac26b2b794da5bb73",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "Treatment-naïve adult patients: 800 mg (one 800 mg tablet) taken with ritonavir 100 mg once daily and with food. Treatment-experienced adult patients with no darunavir resistance associated substitutions: 800 mg (one 800 mg tablet) taken with ritonavir 100 mg once daily and with food. Treatment-experienced adult patients with at least one darunavir resistance associated substitution: 600 mg (one 600 mg tablet) taken with ritonavir 100 mg twice daily and with food. During pregnancy: darunavir 600 mg taken with ritonavir 100 mg twice daily with food.",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "field",
+      "text": "2.3 Recommended Dosage in Adult Patients"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "The recommended oral dose of darunavir is 800 mg (one 800 mg tablet or 8 mL of the oral suspension) taken with ritonavir 100 mg (one 100 mg tablet or capsule or 1.25 mL of a 80 mg per mL ritonavir oral solution) once daily and with food."
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Treatment-Naïve Adult Patients"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "Baseline genotypic testing is recommended for dose selection. However, when genotypic testing is not feasible, darunavir 600 mg taken with ritonavir 100 mg twice daily is recommended."
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "2.4 Recommended Dosage During Pregnancy"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "The recommended dosage in pregnant patients is darunavir 600 mg taken with ritonavir 100 mg twice daily with food."
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "The recommended dose of darunavir/ritonavir for pediatric patients (3 to less than 18 years of age and weighing at least 10 kg is based on body weight (see Tables 2, 3, 4, and 5) and should not exceed the recommended adult dose. Darunavir tablets should be taken with ritonavir and with food.",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "field",
+      "text": "2.5 Recommended Dosage in Pediatric Patients (age 3 to less than 18 years)"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "The recommended dose of darunavir/ritonavir for pediatric patients (3 to less than 18 years of age and weighing at least 10 kg is based on body weight (see Tables 2, 3, 4, and 5) and should not exceed the recommended adult dose. Darunavir tablets should be taken with ritonavir and with food."
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

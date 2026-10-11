@@ -1,0 +1,121 @@
+2 DOSAGE AND ADMINISTRATION
+
+Nucleoside-inhibitor-treatment-naïve with compensated liver disease (greater than or equal to 16 years old): 0.5 mg once daily. (2.2)
+Nucleoside-inhibitor-treatment-naïve and lamivudine-experienced pediatric patients at least 2 years of age and weighing at least 10 kg: dosing is based on weight. (2.3)
+Lamivudine-refractory or known lamivudine or telbivudine resistance substitutions (greater than or equal to 16 years old): 1 mg once daily. (2.2)
+Decompensated liver disease (adults): 1 mg once daily. (2.2)
+Renal impairment: Dosage adjustment is recommended if creatinine clearance is less than 50 mL/min. (2.4)
+Entecavir tablets should be administered on an empty stomach. (2.1)
+
+2.1 Timing of Administration
+
+Entecavir tablets should be administered on an empty stomach (at least 2 hours after a meal and 2 hours before the next meal).
+
+2.2 Recommended Dosage in Adults
+
+Compensated Liver Disease
+
+The recommended dose of entecavir tablets for chronic hepatitis B virus infection in nucleoside- inhibitor-treatment-naïve adults and adolescents 16 years of age and older is 0.5 mg once daily.
+
+The recommended dose of entecavir tablets in adults and adolescents (at least 16 years of age) with a history of hepatitis B viremia while receiving lamivudine or known lamivudine or telbivudine resistance substitutions rtM204I/V with or without rtL180M, rtL80I/V, or rtV173L is 1 mg once daily.
+
+Decompensated Liver Disease
+
+The recommended dose of entecavir tablets for chronic hepatitis B virus infection in adults with decompensated liver disease is 1 mg once daily.
+
+2.3 Recommended Dosage in Pediatric Patients
+
+Table 1 describes the recommended dose of entecavir tablets for pediatric patients 2 years of age or older and weighing at least 10 kg. The oral solution should be used for patients with body weight up to 30 kg.
+
+a Children with body weight greater than 30 kg should receive 10 mL (0.5 mg) of oral solution or one 0.5 mg tablet once daily.
+
+b Children with body weight greater than 30 kg should receive 20 mL (1 mg) of oral solution or one 1 mg tablet once daily.
+
+Table 1: Dosing Schedule for Pediatric Patients
+Recommended Once-Daily Dose of Oral Solution (mL)
+Body Weight (kg)
+Treatment-Naïve
+Patients^a
+Lamivudine-Experienced
+Patients^b
+10 to 11
+3
+6
+greater than 11 to 14
+4
+8
+greater than 14 to 17
+5
+10
+greater than 17 to 20
+6
+12
+greater than 20 to 23
+7
+14
+greater than 23 to 26
+8
+16
+greater than 26 to 30
+9
+18
+greater than 30
+10
+20
+
+2.4 Renal Impairment
+
+In adult subjects with renal impairment, the apparent oral clearance of entecavir decreased as creatinine clearance decreased [see Clinical Pharmacology (12.3) ]. Dosage adjustment is recommended for patients with creatinine clearance less than 50 mL/min, including patients on hemodialysis or continuous ambulatory peritoneal dialysis (CAPD), as shown in Table 2. The once-daily dosing regimens are preferred.
+
+Table 2: Recommended Dosage of Entecavir Tablets in Adult Patients with Renal Impairment
+
+^a For doses less than 0.5 mg, entecavir oral solution is recommended.
+
+^b If administered on a hemodialysis day, administer entecavir tablet after the hemodialysis session.
+
+Creatinine Clearance
+(mL/min)
+Usual Dose (0.5mg)
+Lamivudine-Refractory or Decompensated Liver Disease (1mg)
+50 or greater
+0.5mg once daily
+1mg once daily
+30 to less than 50
+0.25 mg once daily^a
+OR
+0.5mg every 48 hours
+0.5mg once daily
+OR
+1mg every 48 hours
+10 to less than 30
+0.15 mg once daily^a
+OR
+0.5mg every 72 hours
+0.3 mg once daily^a
+OR
+1mg every 72 hours
+Less than 10
+Hemodialysis ^a or CAPD
+0.05 mg once daily^a
+OR
+0.5mg every 7 days
+0.1 mg once daily^a
+OR
+1mg every 7 days
+
+Although there are insufficient data to recommend a specific dose adjustment of entecavir tablets in pediatric patients with renal impairment, a reduction in the dose or an increase in the dosing interval similar to adjustments for adults should be considered.
+
+2.5 Hepatic Impairment
+
+No dosage adjustment is necessary for patients with hepatic impairment.
+
+2.6 Duration of Therapy
+
+The optimal duration of treatment with entecavir tablets for patients with chronic hepatitis B virus infection and the relationship between treatment and long-term outcomes such as cirrhosis and hepatocellular carcinoma are unknown.
+
+3 DOSAGE FORMS AND STRENGTHS
+
+Tablets: 0.5 mg and 1 mg (3, 16)
+
+Entecavir 0.5 mg film-coated tablets, USP are White to off-white, triangular shaped biconvex, film coated tablet debossed with 'CL' on one side and '426' on the other side.
+Entecavir 1 mg film-coated tablets, USP are Pink coloured, triangular shaped biconvex, film coated tablet debossed with 'CL' on one side and '425' on the other side.

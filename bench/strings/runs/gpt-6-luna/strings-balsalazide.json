@@ -1,0 +1,59 @@
+{
+ "doc": "strings-balsalazide",
+ "provider": "codex",
+ "model": "gpt-6-luna",
+ "effort": "default",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "3399e86f22dac49ec1bc008615cbec0e38b535339f5f44e7106eecd6b6cc83ec",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "2.25 g (three 750 mg capsules) three times daily for up to 8 weeks. Some patients in the adult clinical trials required treatment for up to 12 weeks.",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "field",
+      "text": "The recommended dosage in adults is"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "2.25 g (three 750 mg capsules) three times daily for up to 8 weeks. Some patients in the adult clinical trials required treatment for up to 12 weeks."
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "either:\n\n2.25 g (three 750 mg capsules) three times daily for up to 8 weeks;\n\nOR:\n\n750 mg (one capsule) three times daily for up to 8 weeks.",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "field",
+      "text": "The recommended dosage in pediatric patients 5 years to 17 years of age is either:"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "2.25 g (three 750 mg capsules) three times daily for up to 8 weeks;"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "750 mg (one capsule) three times daily for up to 8 weeks."
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

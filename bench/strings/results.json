@@ -1,0 +1,90 @@
+{
+ "runs": {
+  "claude-haiku-5-5": {
+   "0.8": {
+    "right": 14,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 23,
+    "no reply": 0
+   },
+   "0.8 #140": {
+    "right": 14,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 23,
+    "no reply": 0
+   }
+  },
+  "gpt-6-luna": {
+   "0.8": {
+    "right": 10,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 22,
+    "no reply": 0
+   },
+   "0.8 #140": {
+    "right": 10,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 22,
+    "no reply": 0
+   }
+  }
+ },
+ "cases": {
+  "claude-haiku-5-5": 6,
+  "gpt-6-luna": 1
+ },
+ "changed": {
+  "claude-haiku-5-5": {
+   "0.8 #140": {}
+  },
+  "gpt-6-luna": {
+   "0.8 #140": {}
+  }
+ },
+ "codes": {
+  "claude-haiku-5-5": {
+   "KEY_CITATION_INVALID": {
+    "0.8": 2,
+    "0.8 #140": 2
+   },
+   "KEY_NOT_AT_VALUE": {
+    "0.8": 6,
+    "0.8 #140": 6
+   },
+   "VALUE_NOT_IN_EVIDENCE": {
+    "0.8": 2,
+    "0.8 #140": 2
+   },
+   "missing key": {
+    "0.8": 4,
+    "0.8 #140": 4
+   }
+  },
+  "gpt-6-luna": {
+   "CANDIDATE_INVALID": {
+    "0.8": 4,
+    "0.8 #140": 4
+   },
+   "KEY_CITATION_INVALID": {
+    "0.8": 2,
+    "0.8 #140": 2
+   },
+   "KEY_NOT_AT_VALUE": {
+    "0.8": 5,
+    "0.8 #140": 5
+   },
+   "VALUE_NOT_IN_EVIDENCE": {
+    "0.8": 3,
+    "0.8 #140": 3
+   }
+  }
+ }
+}

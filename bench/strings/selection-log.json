@@ -1,0 +1,2539 @@
+[
+ {
+  "name": "0.9 % Sodium Chloride",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Aa 4.25 % No.1/D5W/Lytes No.39",
+  "skip": "combination"
+ },
+ {
+  "name": "Aa 4.25 % No.1/Dextrose 5 %",
+  "skip": "combination"
+ },
+ {
+  "name": "Aa 4.25% No.1/D10w/Lytes No.39",
+  "skip": "combination"
+ },
+ {
+  "name": "Aa 5 % No.6/D15w/Lytes No.23",
+  "skip": "combination"
+ },
+ {
+  "name": "Aa 5 % No.6/D20w/Lytes No.23",
+  "skip": "combination"
+ },
+ {
+  "name": "Aa 5 % No.6/Dextrose 15 %",
+  "skip": "combination"
+ },
+ {
+  "name": "Abacavir Sulfate",
+  "setid": "f7633480-25aa-4326-bec9-82835b486a20",
+  "taken": true
+ },
+ {
+  "name": "Abacavir Sulfate/Lamivudine",
+  "skip": "combination"
+ },
+ {
+  "name": "Abacavir/Dolutegravir/Lamivudi",
+  "skip": "combination"
+ },
+ {
+  "name": "Abacavir/Lamivudine/Zidovudine",
+  "skip": "combination"
+ },
+ {
+  "name": "Abaloparatide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Abatacept",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Abatacept/Maltose",
+  "skip": "combination"
+ },
+ {
+  "name": "Abemaciclib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Abiraterone Acet,Submicronized",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Abiraterone Acetate",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Abobotulinumtoxina",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Abrocitinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acalabrutinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acalabrutinib Maleate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Acamprosate Calcium",
+  "setid": "94ef2a5c-cc2f-4e7f-b159-b2d38188d5b8",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Acarbose",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acebutolol HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acetaminophen",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acetaminophen With Codeine",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Acetaminophen/Caff/Dihydrocod",
+  "skip": "combination"
+ },
+ {
+  "name": "Acetazolamide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acetic Acid",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acetohydroxamic Acid",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acetylcysteine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acitretin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Aclidinium Brom/Formoterol Fum",
+  "skip": "combination"
+ },
+ {
+  "name": "Aclidinium Bromide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acoramidis HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acyclovir",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Acyclovir Sodium",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Acyclovir/Hydrocortisone",
+  "skip": "combination"
+ },
+ {
+  "name": "Adagrasib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adalimumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adalimumab-Aacf",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adalimumab-Aaty",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adalimumab-Adaz",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adalimumab-Adbm",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adalimumab-Aqvh",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adalimumab-Atto",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adalimumab-Bwwd",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adalimumab-Fkjp",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adalimumab-Ryvk",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adamts13, Recombinant-Krhn",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adapalene",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Adapalene/Benzoyl Peroxide",
+  "skip": "combination"
+ },
+ {
+  "name": "Adapalene/Benzoyl/Clindamycin",
+  "skip": "combination"
+ },
+ {
+  "name": "Adefovir Dipivoxil",
+  "setid": "08e07fae-3191-b6a3-c894-d3a8cc53923f",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Ado-Trastuzumab Emtansine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Afatinib Dimaleate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Aflibercept",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Agalsidase Beta",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Albendazole",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Albumin Human",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Albuterol Sulfate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Albuterol Sulfate/Budesonide",
+  "skip": "combination"
+ },
+ {
+  "name": "Alclometasone Dipropionate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Alcohol Antiseptic Pads",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Alectinib HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Alendronate Sodium",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Alendronate Sodium/Vitamin D3",
+  "skip": "combination"
+ },
+ {
+  "name": "Alfuzosin HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Alglucosidase Alfa",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Alirocumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Aliskiren Hemifumarate",
+  "setid": "41c0e5e0-eb26-4d9e-bcd2-d0f2cc8fc6db",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Alitretinoin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Allopurinol",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Almotriptan Malate",
+  "setid": "c41a4579-9db0-402b-81b1-0adf5b3978c3",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Alogliptin Benz/Metformin HCl",
+  "skip": "combination"
+ },
+ {
+  "name": "Alogliptin Benz/Pioglitazone",
+  "skip": "combination"
+ },
+ {
+  "name": "Alogliptin Benzoate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Alosetron HCl",
+  "setid": "d62b2c5a-1693-4e67-96d5-197e1fdc8694",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Alpelisib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Alpha-1-Proteinase Inhibitor",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Alprazolam",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Amantadine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ambrisentan",
+  "setid": "291a782a-77e1-8a8e-e1c8-2626f305c2b7",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Amcinonide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Amifampridine Phosphate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Amikacin Liposomal/Neb.Accessr",
+  "skip": "combination"
+ },
+ {
+  "name": "Amikacin Sulfate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Amiloride HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Amiloride/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "name": "Amino Ac 8 %/D14w/Electrolytes",
+  "skip": "combination"
+ },
+ {
+  "name": "Amino Acid 8 % In D14w",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Aminocaproic Acid",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Aminolevulinic Acid HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Amiodarone HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Amitriptyline HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Amitriptyline/Chlordiazepoxide",
+  "skip": "combination"
+ },
+ {
+  "name": "Amivantamab-Vmjw",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Amlodipine Benzoate",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Amlodipine Bes/Olmesartan Med",
+  "skip": "combination"
+ },
+ {
+  "name": "Amlodipine Besylate",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Amlodipine Besylate/Benazepril",
+  "skip": "combination"
+ },
+ {
+  "name": "Amlodipine Besylate/Valsartan",
+  "skip": "combination"
+ },
+ {
+  "name": "Amlodipine/Atorvastatin",
+  "skip": "combination"
+ },
+ {
+  "name": "Amlodipine/Valsartan/HCThiazid",
+  "skip": "combination"
+ },
+ {
+  "name": "Ammonium Lactate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Amoxapine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Amoxicillin",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Amoxicillin/Potassium Clav",
+  "skip": "combination"
+ },
+ {
+  "name": "Amphetamine",
+  "setid": "48d0f55c-f847-4d26-b2ed-94b5a2770228",
+  "taken": true
+ },
+ {
+  "name": "Amphetamine Sulfate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Amphotericin B",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Amphotericin B Liposome",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Ampicillin Sod/Sulbactam Sod",
+  "skip": "combination"
+ },
+ {
+  "name": "Ampicillin Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ampicillin Trihydrate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Anagrelide HCl",
+  "setid": "614b45a3-7f2e-4348-9e20-ecf8dc440314",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Anakinra",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Anastrozole",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Anidulafungin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Anifrolumab-Fnia",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Apalutamide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Apixaban",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Apomorphine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Apraclonidine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Apremilast",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Aprepitant",
+  "setid": "d72e0e10-4557-41b0-b65d-d395468cad19",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Arformoterol Tartrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Arimoclomol Citrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Aripiprazole",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Aripiprazole Lauroxil",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Aripiprazole Lauroxil,Submicr.",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Armodafinil",
+  "setid": "4128759d-ed7c-4130-b24c-a0541f2b9e7f",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Artemether/Lumefantrine",
+  "skip": "combination"
+ },
+ {
+  "name": "Asciminib Hydrochloride",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Asenapine",
+  "setid": "f5cd9abb-40e3-4cb5-a1b2-40cdba8a1c7e",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Asenapine Maleate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Asfotase Alfa",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Aspirin/Dipyridamole",
+  "skip": "combination"
+ },
+ {
+  "name": "Atazanavir Sulfate",
+  "setid": "7fbea274-d6b5-4faa-bbf0-05fefab42114",
+  "taken": true
+ },
+ {
+  "name": "Atazanavir Sulfate/Cobicistat",
+  "skip": "combination"
+ },
+ {
+  "name": "Atenolol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Atenolol/Chlorthalidone",
+  "skip": "combination"
+ },
+ {
+  "name": "Atezolizumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Atogepant",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Atomoxetine HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Atorvastatin Calcium",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Atovaquone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Atovaquone/Proguanil HCl",
+  "skip": "combination"
+ },
+ {
+  "name": "Atropine Sulfate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Atropine Sulfate/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Auranofin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Avacincaptad PEGol Sodium/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Avacopan",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Avalglucosidase Alfa-Ngpt",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Avapritinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Avatrombopag Maleate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Avelumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Axitinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Azacitidine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Azathioprine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Azathioprine Sodium",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Azelaic Acid",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Azelastine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Azelastine/Fluticasone",
+  "skip": "combination"
+ },
+ {
+  "name": "Azilsartan Med/Chlorthalidone",
+  "skip": "combination"
+ },
+ {
+  "name": "Azilsartan Medoxomil",
+  "setid": "b1c8de43-3b26-408f-8c7e-6c7d76348199",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Azithromycin",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Aztreonam",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Aztreonam Lysine",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "B Complex W-C No.20/Folic Acid",
+  "skip": "combination"
+ },
+ {
+  "name": "Bacitracin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bacitracin/Polymyxin B Sulfate",
+  "skip": "combination"
+ },
+ {
+  "name": "Baclofen",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Balanced Salt Irrig Soln No.2",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Baloxavir Marboxil",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Balsalazide Disodium",
+  "setid": "f12ffa32-d14b-e9d9-e957-2ef08b64e8b4",
+  "taken": true
+ },
+ {
+  "name": "Baricitinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "BCG Live",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "BCG Vaccine, Live/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Becaplermin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Beclomethasone Dipropionate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bedaquiline Fumarate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Belatacept",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Belimumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Belumosudil Mesylate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Belzutifan",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bempedoic Acid",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bempedoic Acid/Ezetimibe",
+  "skip": "combination"
+ },
+ {
+  "name": "Benazepril HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Benazepril/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "name": "Bendamustine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Benralizumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Benzonatate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Benzoyl Peroxide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Benztropine Mesylate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bepotastine Besilate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Beremagene Geperpavec-Svdt",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Berotralstat Hydrochloride",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Besifloxacin HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Betaine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Betamethasone Acetate,Sod Phos",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Betamethasone Dipropionate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Betamethasone Valerate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Betamethasone/Propylene Glyc",
+  "skip": "combination"
+ },
+ {
+  "name": "Betaxolol HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bethanechol Chloride",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bevacizumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bevacizumab-Adcd",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bevacizumab-Awwb",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bevacizumab-Bvzr",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bevacizumab-Maly",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bexarotene",
+  "setid": "2d1eb4bd-51f9-4c9b-9fb1-0be5e30a3dc5",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Bezlotoxumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bicalutamide",
+  "setid": "26e30155-a50b-df14-e063-6394a90a9be4",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Bictegrav/Emtricit/Tenofov Ala",
+  "skip": "combination"
+ },
+ {
+  "name": "Bimatoprost",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bimekizumab-Bkzx",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Binimetinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Birch Bark Extract",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bismuth/Metronid/Tetracycline",
+  "skip": "combination"
+ },
+ {
+  "name": "Bisoprolol Fumarate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bisoprolol/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "name": "Bleomycin Sulfate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Blinatumomab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Blood-Glucose Sensor",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bolus Insulin Pump, 200 Unit",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bortezomib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bosentan",
+  "setid": "39b2a85f-4322-42d4-b420-1b1d52569143",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Bosutinib",
+  "setid": "cb7a8d1d-07c0-462d-960f-214d44705e76",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Brentuximab Vedotin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Brexpiprazole",
+  "setid": "993b584c-7fe6-4551-899f-39146c8508ac",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Brigatinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Brimonidine Tartrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Brimonidine Tartrate/Timolol",
+  "skip": "combination"
+ },
+ {
+  "name": "Brinzolamide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Brinzolamide/Brimonidine Tart",
+  "skip": "combination"
+ },
+ {
+  "name": "Brivaracetam",
+  "setid": "bf372f42-cfc9-4fcf-8226-3936ba8833d7",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Brodalumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Brolucizumab-Dbll",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bromfenac Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bromocriptine Mesylate",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Brompheniramine/Pseudoephed/DM",
+  "skip": "combination"
+ },
+ {
+  "name": "Budesonide",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Budesonide/Formoterol Fumarate",
+  "skip": "combination"
+ },
+ {
+  "name": "Budesonide/Glycopyr/Formoterol",
+  "skip": "combination"
+ },
+ {
+  "name": "Bumetanide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bupivacaine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Bupivacaine HCl/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Buprenorphine",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Buprenorphine HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Buprenorphine HCl/Naloxone HCl",
+  "skip": "combination"
+ },
+ {
+  "name": "Bupropion HBr",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Bupropion HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Burosumab-Twza",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Buspirone HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Busulfan",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Butalb/Acetaminophen/Caffeine",
+  "skip": "combination"
+ },
+ {
+  "name": "Butalbit/Acetamin/Caff/Codeine",
+  "skip": "combination"
+ },
+ {
+  "name": "Butalbital/Acetaminophen",
+  "skip": "combination"
+ },
+ {
+  "name": "Butalbital/Aspirin/Caffeine",
+  "skip": "combination"
+ },
+ {
+  "name": "Butoconazole Nitrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Butorphanol Tartrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "C1 Esterase Inhibitor",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "C1 Esterase Inhibitor, Recomb",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Cabazitaxel",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cabergoline",
+  "setid": "8562f94f-a59a-4893-aefc-ea6547b01e92",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Cabotegravir",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cabotegravir/Rilpivirine",
+  "skip": "combination"
+ },
+ {
+  "name": "Cabozantinib S-Malate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Calcifediol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Calcipotriene",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Calcipotriene/Betamethasone",
+  "skip": "combination"
+ },
+ {
+  "name": "Calcitonin,Salmon,Synthetic",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Calcitriol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Calcium Acetate",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Calcium Gluconate",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Canagliflozin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Canagliflozin/Metformin HCl",
+  "skip": "combination"
+ },
+ {
+  "name": "Canakinumab/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Candesartan Cilexetil",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Candesartan/Hydrochlorothiazid",
+  "skip": "combination"
+ },
+ {
+  "name": "Cannabidiol (Cbd)",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cantharidin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Capecitabine",
+  "setid": "0b59e98c-5b34-4b93-90f6-20526f4d4f88",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Capivasertib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Caplacizumab-Yhdp",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Capmatinib Hydrochloride",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Capsaicin/Skin Cleanser",
+  "skip": "combination"
+ },
+ {
+  "name": "Captopril",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Captopril/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "name": "Carbamazepine",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Carbidopa",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Carbidopa/Levodopa",
+  "skip": "combination"
+ },
+ {
+  "name": "Carbidopa/Levodopa/Entacapone",
+  "skip": "combination"
+ },
+ {
+  "name": "Carbinoxamine Maleate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Carboplatin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Carfilzomib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Carglumic Acid",
+  "setid": "591f95ca-3d99-4fb6-a402-e5a383a746d0",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Cariprazine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Carisoprodol",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Carteolol HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Carvedilol",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Carvedilol Phosphate",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Casimersen",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Caspofungin Acetate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cefaclor",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cefadroxil",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cefazolin Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cefazolin Sodium/Dextrose,Iso",
+  "skip": "combination"
+ },
+ {
+  "name": "Cefdinir",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cefepime HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cefepime HCl In Dextrose 5 %",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Cefepime In Iso-Osm Dextrose",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Cefiderocol Sulfate Tosylate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cefixime",
+  "setid": "a5128554-118a-4d8e-8425-c0000037c59d",
+  "taken": true
+ },
+ {
+  "name": "Cefoxitin Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cefoxitin Sodium/Dextrose,Iso",
+  "skip": "combination"
+ },
+ {
+  "name": "Cefpodoxime Proxetil",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cefprozil",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ceftaroline Fosamil Acetate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ceftazidime",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ceftazidime/Avibactam",
+  "skip": "combination"
+ },
+ {
+  "name": "Ceftolozane/Tazobactam",
+  "skip": "combination"
+ },
+ {
+  "name": "Ceftriaxone In Is-Osm Dextrose",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ceftriaxone Sodium",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Cefuroxime Axetil",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Cefuroxime Sodium",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Celecoxib",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Cemiplimab-Rwlc",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cenegermin-Bkbj",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cenobamate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cephalexin",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Ceritinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Certolizumab PEGol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cetirizine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cetuximab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cevimeline HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Chenodiol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Chikungunya Vaccine, Live/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Chlorambucil",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Chlordiazepoxide HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Chlordiazepoxide/Clidinium Br",
+  "skip": "combination"
+ },
+ {
+  "name": "Chlorhexidine Gluconate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Chloroquine Phosphate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Chlorothiazide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Chlorpromazine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Chlorthalidone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Chlorzoxazone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cholera Vaccine, Live",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cholestyramine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cholestyramine (With Sugar)",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Cholic Acid",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Chorionic Gonadotropin, Human",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ciclesonide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ciclopirox",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ciclopirox Olamine",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Ciclopirox/Urea/Camph/Men/Euc",
+  "skip": "combination"
+ },
+ {
+  "name": "Cidofovir",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cilostazol",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Cimetidine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cinacalcet HCl",
+  "setid": "28262843-b0a8-4ca7-8b92-41b7f0e896b4",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Cipaglucosidase Alfa-Atga",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ciprofloxacin",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Ciprofloxacin HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Ciprofloxacin HCl/Dexameth",
+  "skip": "combination"
+ },
+ {
+  "name": "Ciprofloxacin HCl/Fluocinolone",
+  "skip": "combination"
+ },
+ {
+  "name": "Ciprofloxacin In 5 % Dextrose",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Ciprofloxacin/Hydrocortisone",
+  "skip": "combination"
+ },
+ {
+  "name": "Cisplatin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Citalopram Hydrobromide",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Citric Ac/Gluconolact/Mag Carb",
+  "skip": "combination"
+ },
+ {
+  "name": "Citric Acid/Sodium Citrate",
+  "skip": "combination"
+ },
+ {
+  "name": "Cladribine",
+  "setid": "e0b363cb-db83-44d6-89d0-1f7176be7459",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Clarithromycin",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Clascoterone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clemastine Fumarate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clindamycin HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clindamycin In 0.9 % Sod Chlor",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Clindamycin Palmitate HCl",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Clindamycin Phos/Benzoyl Perox",
+  "skip": "combination"
+ },
+ {
+  "name": "Clindamycin Phosphate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Clindamycin Phosphate/D5W",
+  "skip": "combination"
+ },
+ {
+  "name": "Clindamycin/Tretinoin",
+  "skip": "combination"
+ },
+ {
+  "name": "Clobazam",
+  "setid": "6783eaa8-e236-4957-aaa9-b42bf8e709a7",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Clobetasol Propionate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clobetasol Propionate/Emoll",
+  "skip": "combination"
+ },
+ {
+  "name": "Clocortolone Pivalate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clomiphene Citrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clomipramine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clonazepam",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clonidine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clonidine HCl",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Clopidogrel Bisulfate",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Clorazepate Dipotassium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clotrimazole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Clotrimazole/Betamethasone Dip",
+  "skip": "combination"
+ },
+ {
+  "name": "Clozapine",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Cobicistat",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cobimetinib Fumarate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Codeine Phosphate/Guaifenesin",
+  "skip": "combination"
+ },
+ {
+  "name": "Codeine Sulfate",
+  "setid": "5819bdf7-300e-45b8-8f3a-447b53656293",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Codeine/Butalbital/Asa/Caffein",
+  "skip": "combination"
+ },
+ {
+  "name": "Colchicine",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Colesevelam HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Colestipol HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Colistin (Colistimethate Na)",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Collagenase Clostridium Hist.",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Corticotropin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Crisaborole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Crizanlizumab-Tmca",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Crizotinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Crofelemer",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cromolyn Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Crotamiton",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cyanocobalamin (Vitamin B-12)",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cyclobenzaprine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cyclopentolate HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cyclopentolate/Phenylephrine",
+  "skip": "combination"
+ },
+ {
+  "name": "Cyclophosphamide",
+  "setid": "7d6447e3-22c9-48d9-87c0-d0b576d7ea9e",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Cyclosporine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cyclosporine, Modified",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "CyproHEPtadine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cysteamine Bitartrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cysteamine HCl",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Cytarabine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Cytarabine/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Cytomegalovirus Immune Globuln",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dabigatran Etexilate Mesylate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dabrafenib Mesylate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dacarbazine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dacomitinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dalbavancin HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dalfampridine",
+  "setid": "1134ac0f-59c1-a20b-e063-6294a90affcc",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Dalteparin Sodium,Porcine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Danazol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Danicopan",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dantrolene Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dapaglifloz Propaned/Metformin",
+  "skip": "combination"
+ },
+ {
+  "name": "Dapagliflozin Propanediol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dapagliflozin/Saxagliptin HCl",
+  "skip": "combination"
+ },
+ {
+  "name": "Daprodustat",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dapsone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Daptomycin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Daptomycin In 0.9 % Sod Chlor",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Daratumumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Daratumumab-Hyaluronidase-Fihj",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Darbepoetin Alfa In Polysorbat",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Daridorexant HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Darifenacin Hydrobromide",
+  "setid": "6e8470d1-c3e6-4644-b70a-aa47ddf79676",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Darolutamide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Darunavir",
+  "setid": "632293b0-d220-444e-8a5b-2ee8c225b66d",
+  "taken": true
+ },
+ {
+  "name": "Darunavir/Cob/Emtri/Tenof Alaf",
+  "skip": "combination"
+ },
+ {
+  "name": "Darunavir/Cobicistat",
+  "skip": "combination"
+ },
+ {
+  "name": "Dasatinib",
+  "setid": "bffb38c3-f556-492f-a9db-aa417ec0a856",
+  "taken": true
+ },
+ {
+  "name": "Dasiglucagon HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Decitabine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Decitabine/Cedazuridine",
+  "skip": "combination"
+ },
+ {
+  "name": "Deferasirox",
+  "setid": "e9054806-2721-4736-9aef-81ffb8db75d1",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Deferiprone",
+  "setid": "58dd1370-5042-833f-e063-6394a90a0777",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Deferoxamine Mesylate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Deflazacort",
+  "setid": "00df3169-b8e3-4584-823b-91b71807d1a6",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Degarelix Acetate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Delafloxacin Meglumine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Demeclocycline HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Denosumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Desipramine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Desloratadine",
+  "setid": "21174c0f-9204-4c75-b6e6-2f9ada5b535d",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Desloratadine/Pseudoephedrine",
+  "skip": "combination"
+ },
+ {
+  "name": "Desmopressin (Nonrefrigerated)",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Desmopressin Acetate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Desog-E.Estradiol/E.Estradiol",
+  "skip": "combination"
+ },
+ {
+  "name": "Desogestrel-Ethinyl Estradiol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Desonide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Desoximetasone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Desvenlafaxine",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Desvenlafaxine Succinate",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Deucravacitinib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Deutetrabenazine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dexamethasone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dexamethasone Sodium Phosp/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Dexamethasone Sodium Phosphate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Dexchlorpheniramine Maleate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dexlansoprazole",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Dexmedetomidine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dexmethylphenidate HCl",
+  "setid": "71f56227-d87a-4bc0-a879-c1993c6ccba6",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Dextroamphetamine",
+  "setid": "30e515c3-a18f-499a-87c4-be8d64cfdbc6",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Dextroamphetamine Sulfate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Dextroamphetamine/Amphetamine",
+  "skip": "combination"
+ },
+ {
+  "name": "Dextromethorphan HBr/Bupropion",
+  "skip": "combination"
+ },
+ {
+  "name": "Dextromethorphan HBr/Quinidine",
+  "skip": "combination"
+ },
+ {
+  "name": "Dextrose 10 % And 0.45 % NaCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dextrose 10 % In Water",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Dextrose 5 % And 0.9 % NaCl",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Dextrose 5 % In Water",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Dextrose 5 %-0.2 % Sod Chlorid",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Dextrose 5 %-0.45 % Sod Chlord",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Dextrose 5%-Lactated Ringers",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Dextrose 50 % In Water",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Dextrose 70 % In Water",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Diabetic Supplies,Miscell",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Diazepam",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Diazoxide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dichlorphenamide",
+  "setid": "64bf0c71-2113-47dc-8ce5-7fe535e558dc",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Diclofenac Epolamine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Diclofenac Potassium",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Diclofenac Sodium",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Diclofenac Sodium/Misoprostol",
+  "skip": "combination"
+ },
+ {
+  "name": "Dicloxacillin Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dicyclomine HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Difenoxin HCl/Atropine Sulfate",
+  "skip": "combination"
+ },
+ {
+  "name": "Diflorasone Diacet/Emollient",
+  "skip": "combination"
+ },
+ {
+  "name": "Diflorasone Diacetate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Diflunisal",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Difluprednate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Digoxin",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Dihydroergotamine Mesylate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Diltiazem HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Dimenhydrinate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dimethyl Fumarate",
+  "setid": "5361d5c6-c3eb-88e6-e063-6294a90ac08c",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Dimethyl Sulfoxide",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Diph,Pertus(Acel),Tet,Polio/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Diph,Pertuss(Acell),Tet Ped/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Diph,Pertuss(Acell),Tet Vac/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Diphenhydramine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Diphenoxylate HCl/Atropine",
+  "skip": "combination"
+ },
+ {
+  "name": "Dipht,Pert(A),Tet-Polio/Hib/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Diphth,Pertuss(Acell),Tet Vac",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dipyridamole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Diroximel Fumarate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Disopyramide Phosphate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Disulfiram",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Divalproex Sodium",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Dobutamine HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dobutamine HCl In Dextrose 5 %",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Docetaxel",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dofetilide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dolutegravir Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dolutegravir Sodium/Lamivudine",
+  "skip": "combination"
+ },
+ {
+  "name": "Dolutegravir/Rilpivirine",
+  "skip": "combination"
+ },
+ {
+  "name": "Donanemab-Azbt",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Donepezil HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Doravirine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Doravirine/Lamivu/Tenofov Diso",
+  "skip": "combination"
+ },
+ {
+  "name": "Dornase Alfa",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dorzolamide HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dorzolamide HCl/Timolol Maleat",
+  "skip": "combination"
+ },
+ {
+  "name": "Dorzolamide/Timolol/PF",
+  "skip": "combination"
+ },
+ {
+  "name": "Dostarlimab-Gxly",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Doxazosin Mesylate",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Doxepin HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Doxercalciferol",
+  "setid": "943a3f95-842c-455f-9050-3d1c3971c6f8",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Doxorubicin HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Doxorubicin HCl PEG-Liposomal",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Doxycycline Hyclate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Doxycycline Monohydrate",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Doxylamine Succinate/Vit B6",
+  "skip": "combination"
+ },
+ {
+  "name": "Dronabinol",
+  "setid": "fd8c5d57-0173-4f62-8ff0-d8147986a976",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Dronedarone HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Droperidol",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Drospir/Eth Estra/Levomefol Ca",
+  "skip": "combination"
+ },
+ {
+  "name": "Drospirenone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Drospirenone/Estetrol",
+  "skip": "combination"
+ },
+ {
+  "name": "Drospirenone/Estradiol",
+  "skip": "combination"
+ },
+ {
+  "name": "Droxidopa",
+  "setid": "381ffe44-d5d8-4380-a3cd-6d6a5e9ef55d",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Dulaglutide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Duloxetine HCl",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Dupilumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Durvalumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Dutasteride",
+  "skip": "a bench set holds it"
+ },
+ {
+  "name": "Dutasteride/Tamsulosin HCl",
+  "skip": "combination"
+ },
+ {
+  "name": "Duvelisib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ecallantide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Echothiophate Iodide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Econazole Nitrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Eculizumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Edaravone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Edoxaban Tosylate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Efavirenz",
+  "setid": "92603fa5-7a2c-4bfb-9a70-aadb4fba952c",
+  "taken": true
+ },
+ {
+  "name": "Efavirenz/Emtricit/Tenofovr Df",
+  "skip": "combination"
+ },
+ {
+  "name": "Efavirenz/Lamivu/Tenofov Disop",
+  "skip": "combination"
+ },
+ {
+  "name": "Efgartigimod Alfa-Fcab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Efgartigimod-Hyaluronidas-Qvfc",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Efinaconazole",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Eflapegrastim-Xnst",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Elacestrant HCl",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Elafibranor",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Elagolix Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Elagolix/Estradiol/Norethindrn",
+  "skip": "combination"
+ },
+ {
+  "name": "Elapegademase-Lvlr",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Elbasvir/Grazoprevir",
+  "skip": "combination"
+ },
+ {
+  "name": "Electrolyte-A Solution",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Eletriptan Hydrobromide",
+  "setid": "49686c51-bbd9-45f0-92b1-8ffa81612e35",
+  "skip": "section 2 has no adult and pediatric subsections"
+ },
+ {
+  "name": "Elexacaftor/Tezacaftor/IVacaft",
+  "skip": "combination"
+ },
+ {
+  "name": "Eliglustat Tartrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Elosulfase Alfa",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Elotuzumab",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Elranatamab-Bcmm",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Eltrombopag Choline",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Eltrombopag Olamine",
+  "skip": "same first word taken"
+ },
+ {
+  "name": "Eluxadoline",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Elviteg/Cob/Emtri/Tenof Alafen",
+  "skip": "combination"
+ },
+ {
+  "name": "Elviteg/Cob/Emtri/Tenofo Disop",
+  "skip": "combination"
+ },
+ {
+  "name": "Empaglifloz/Linaglip/Metformin",
+  "skip": "combination"
+ },
+ {
+  "name": "Empagliflozin",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Empagliflozin/Linagliptin",
+  "skip": "combination"
+ },
+ {
+  "name": "Empagliflozin/Metformin HCl",
+  "skip": "combination"
+ },
+ {
+  "name": "Emtricita/Rilpivirine/Tenof Df",
+  "skip": "combination"
+ },
+ {
+  "name": "Emtricitab/Rilpiviri/Tenof Ala",
+  "skip": "combination"
+ },
+ {
+  "name": "Emtricitabine",
+  "setid": "a229c922-58eb-4795-9219-6cebb1779e35",
+  "taken": true
+ },
+ {
+  "name": "Emtricitabine/Tenofov Alafenam",
+  "skip": "combination"
+ },
+ {
+  "name": "Emtricitabine/Tenofovir (Tdf)",
+  "skip": "combination"
+ },
+ {
+  "name": "Enalapril Maleate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Enalapril/Hydrochlorothiazide",
+  "skip": "combination"
+ },
+ {
+  "name": "Enalaprilat Dihydrate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Enasidenib Mesylate",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Encorafenib",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Enfortumab Vedotin-Ejfv",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Enfuvirtide",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Enoxaparin Sodium",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Ensifentrine",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Entacapone",
+  "skip": "no single-ingredient tablet or capsule label with sections 1, 2 and 3"
+ },
+ {
+  "name": "Entecavir",
+  "setid": "d59e9ea4-09ea-47bd-af2f-39f7a2e2aceb",
+  "taken": true
+ }
+]

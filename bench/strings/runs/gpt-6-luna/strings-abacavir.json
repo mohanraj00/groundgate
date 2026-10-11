@@ -1,0 +1,67 @@
+{
+ "doc": "strings-abacavir",
+ "provider": "codex",
+ "model": "gpt-6-luna",
+ "effort": "default",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "408fc3b0fd93c82852cbb1f62eeff8d4b7b2c72d94d62247a7ac47c33d481436",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "600 mg daily, administered orally as either 300 mg twice daily or 600 mg once daily",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "field",
+      "text": "The recommended dosage of abacavir tablets for adults is"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "adults"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "600 mg daily, administered orally as either 300 mg twice daily or 600 mg once daily"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "8 mg per kg orally twice daily or 16 mg per kg orally once daily (up to a maximum of 600 mg daily)",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "field",
+      "text": "The recommended dosage of abacavir oral solution in HIV-1–infected pediatric patients aged 3 months and older is"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "pediatric patients aged 3 months and older"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "8 mg per kg orally twice daily or 16 mg per kg orally once daily (up to a maximum of 600 mg daily)"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": [
+  "exit 1: ",
+  "exit 1: "
+ ]
+}

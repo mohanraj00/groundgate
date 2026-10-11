@@ -217,6 +217,15 @@ class _At:
     token: Token | None
     missing: set[str] = field(default_factory=set)
     derived: bool = False
+    start: int | None = None  # a string value's first occurrence in the span (#140)
+    end: int | None = None  # the end of that occurrence
+
+    @property
+    def pos(self) -> int:
+        """Where the value is: its token, or a string value's first occurrence in the span."""
+        if self.token is not None:
+            return self.token.start
+        return self.span[0] if self.start is None else self.start
 
 
 @dataclass
@@ -346,7 +355,8 @@ def _value_at(
         assert isinstance(value, str)
         if normalize_ws(value) not in normalize_ws(t.text[s:e]):
             return None, "VALUE_NOT_IN_EVIDENCE"
-        return _At(item, t, span, None), None
+        start, end = _string_place(t, value, span)
+        return _At(item, t, span, None, start=start, end=end), None
     assert isinstance(value, Decimal)
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
     signs = prefixes if f.unit is not None else None  # brackets make a sign only with a unit
@@ -407,6 +417,13 @@ def _value_at(
                 a.derived = not need and value not in {k.value, scaled_value(t.text, k)}
                 return a, None
     return None, "UNIT_NOT_IN_EVIDENCE"
+
+
+def _string_place(t: _Text, value: str, span: tuple[int, int]) -> tuple[int, int | None]:
+    """Where a string value is: its first occurrence in the span, where whitespace runs match any
+    whitespace run, else the start of the span with no end (#140)."""
+    first = quote_pattern(value).search(t.text, *span)
+    return (span[0], None) if first is None else (first.start(), first.end())
 
 
 def _unscaled(tok: Token, value: Decimal | str) -> bool:
@@ -620,11 +637,12 @@ def _find(
     assert item.text is not None
     found, starts, ends = _indexed(t, item.text, region)
     tok = at.token
-    if tok is not None:
-        i = bisect.bisect_right(starts, tok.start) - 1  # the only one that can hold the token
-        if i >= 0 and tok.end <= ends[i]:
+    held = (tok.start, tok.end) if tok is not None else (at.start, at.end)
+    if held[0] is not None and held[1] is not None:
+        i = bisect.bisect_right(starts, held[0]) - 1  # the only one that can hold the value
+        if i >= 0 and held[1] <= ends[i]:
             return found[i], True
-    pos = tok.start if tok is not None else at.span[0]
+    pos = at.pos
     if place is not None:  # a unit quote: also the occurrences that overlap, as in "$$$"
         every = quote_pattern(item.text).pattern
         seen = re.compile(f"(?=({every}))").finditer(t.text, *region)
@@ -688,7 +706,7 @@ def _field_passes(
     span, located = _find(t, item, at, region)
     if span is None or not located:
         return False
-    return _field_ok(t, f, span, at.token.start if at.token is not None else at.span[0])[0]
+    return _field_ok(t, f, span, at.pos)[0]
 
 
 def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, int]) -> None:
@@ -696,7 +714,7 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
     at, f = p.at, p.field
     assert at is not None
     t, tok = at.t, at.token
-    pos = tok.start if tok is not None else at.span[0]
+    pos = at.pos
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
     places = None
     if tok is not None and "unit" in roles:
@@ -849,12 +867,14 @@ def _outside(
             p.flags.append("QUALIFIED_VALUE")
         if scale_word(at.t.text, tok) and _unscaled(tok, value):
             p.flags.append("SCALE_WORD")
-    if at is not None and f.keys is not None:
-        pos = tok.start if tok is not None else 0
-        if key not in keys_at(at.t.text, at.t.key_mentions(f.keys), pos):
-            p.flags.append("KEY_NOT_AT_VALUE")
-            if not key_item:
-                p.missing.add("key")
+    if (
+        at is not None
+        and f.keys is not None
+        and key not in keys_at(at.t.text, at.t.key_mentions(f.keys), at.pos)
+    ):
+        p.flags.append("KEY_NOT_AT_VALUE")
+        if not key_item:
+            p.missing.add("key")
     if act == "review":
         p.flags.append("EVIDENCE_QUOTED" if item.source == "external" else "EVIDENCE_STATED")
     else:

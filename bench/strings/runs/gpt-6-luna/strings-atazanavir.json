@@ -1,0 +1,124 @@
+{
+ "doc": "strings-atazanavir",
+ "provider": "codex",
+ "model": "gpt-6-luna",
+ "effort": "default",
+ "cli": "codex-cli 0.162.0",
+ "prompt_sha256": "3e7936a71e66d0d26c3a0d519b427c68cfe86038d2c072bd5a752e8dd757ee2b",
+ "harness_sha256": "735367fc98a3d60b2be90f18f26392ee2bb42df9c96a977ab62ecf8b4fe4e9fc",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "Treatment-naive adults: Atazanavir capsules 300 mg with ritonavir 100 mg once daily with food or atazanavir capsules 400 mg once daily with food. Treatment-experienced adults: Atazanavir capsules 300 mg with ritonavir 100 mg once daily with food.",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "Atazanavir capsules 300 mg with ritonavir 100 mg once daily with food or atazanavir capsules 400 mg once daily with food."
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Treatment-naive adults:"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "Atazanavir capsules 300 mg with ritonavir 100 mg once daily with food."
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Treatment-experienced adults:"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Adults"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "The recommended daily dosage of atazanavir capsules and ritonavir in pediatric patients (6 years of age to less than 18 years of age) is based on body weight (see Table 2). Less than 15 kg: Capsules not recommended. At least 15 kg to less than 35 kg: 200 mg and 100 mg. At least 35 kg: 300 mg and 100 mg. At least 40 kg: 400 mg and N/A.",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "The recommended daily dosage of atazanavir capsules and ritonavir in pediatric patients (6 years of age to less than 18 years of age) is based on body weight (see Table 2)."
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "Less than 15 kg"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "Capsules not recommended"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "At least 15 kg to less than 35 kg"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "200 mg"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "100 mg"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "At least 35 kg"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "300 mg"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "100 mg"
+     },
+     {
+      "source": "document",
+      "role": "field",
+      "text": "At least 40 kg"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "400 mg"
+     },
+     {
+      "source": "document",
+      "role": "value",
+      "text": "N/A"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Pediatric patients"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

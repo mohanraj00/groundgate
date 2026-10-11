@@ -453,7 +453,9 @@ qualifier window when a lowercase letter, a digit or a currency sign comes next.
 50,000" is qualified. The unit search and the key scope still stop at that dot.
 
 **Strings.** A `string` field matches when its value is in the span text. Whitespace runs count
-as one space on both sides. Case counts.
+as one space on both sides. Case counts. The value is where it first occurs in the span, so a key
+is read there, not at the start of the span: a quote of two sentences puts the value in the
+sentence that holds it (spec 0.8).
 
 ## When a fact is rejected or flagged
 

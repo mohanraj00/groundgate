@@ -1,0 +1,352 @@
+{
+ "strings-abacavir": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "600 mg daily, administered orally as either 300 mg twice daily or 600 mg once daily",
+    "evidence": [
+     736,
+     819
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "recommended_dosage",
+    "key": "pediatric patients",
+    "value": "8 mg per kg orally twice daily or 16 mg per kg orally once daily (up to a maximum of 600 mg daily)",
+    "evidence": [
+     1033,
+     1131
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "missing": []
+   }
+  ]
+ },
+ "strings-amphetamine": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "recommended_dosage",
+    "key": "pediatric patients",
+    "value": "The recommended starting dosage is 6.3 mg once daily in the morning. Increase in increments of 3.1 mg or 6.3 mg at weekly intervals. The maximum recommended dose is 18.8 mg daily for patients 6 to 12 years, and 12.5 mg daily for patients 13 to 17 years",
+    "evidence": [
+     2500,
+     2752
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "The recommended dose is amphetamine extended-release orally disintegrating tablets 12.5 mg daily.",
+    "evidence": [
+     2860,
+     2957
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "missing": []
+   }
+  ]
+ },
+ "strings-atazanavir": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "Treatment-naive adults: Atazanavir capsules 300 mg with ritonavir 100 mg once daily with food or atazanavir capsules 400 mg once daily with food. Treatment-experienced adults: Atazanavir capsules 300 mg with ritonavir 100 mg once daily with food.",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "recommended_dosage",
+    "key": "pediatric patients",
+    "value": "The recommended daily dosage of atazanavir capsules and ritonavir in pediatric patients (6 years of age to less than 18 years of age) is based on body weight (see Table 2). Less than 15 kg: Capsules not recommended. At least 15 kg to less than 35 kg: 200 mg and 100 mg. At least 35 kg: 300 mg and 100 mg. At least 40 kg: 400 mg and N/A.",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "missing": []
+   }
+  ]
+ },
+ "strings-balsalazide": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "2.25 g (three 750 mg capsules) three times daily for up to 8 weeks. Some patients in the adult clinical trials required treatment for up to 12 weeks.",
+    "evidence": [
+     2375,
+     2524
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "recommended_dosage",
+    "key": "pediatric patients",
+    "value": "either: 2.25 g (three 750 mg capsules) three times daily for up to 8 weeks; OR: 750 mg (one capsule) three times daily for up to 8 weeks.",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "missing": []
+   }
+  ]
+ },
+ "strings-cefixime": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "400 mg daily",
+    "evidence": [
+     37,
+     49
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "recommended_dosage",
+    "key": "pediatric patients",
+    "value": "8 mg/kg/day",
+    "evidence": [
+     98,
+     109
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "missing": []
+   }
+  ]
+ },
+ "strings-darunavir": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "Treatment-naïve adult patients: 800 mg (one 800 mg tablet) taken with ritonavir 100 mg once daily and with food. Treatment-experienced adult patients with no darunavir resistance associated substitutions: 800 mg (one 800 mg tablet) taken with ritonavir 100 mg once daily and with food. Treatment-experienced adult patients with at least one darunavir resistance associated substitution: 600 mg (one 600 mg tablet) taken with ritonavir 100 mg twice daily and with food. During pregnancy: darunavir 600 mg taken with ritonavir 100 mg twice daily with food.",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "recommended_dosage",
+    "key": "pediatric patients",
+    "value": "The recommended dose of darunavir/ritonavir for pediatric patients (3 to less than 18 years of age and weighing at least 10 kg is based on body weight (see Tables 2, 3, 4, and 5) and should not exceed the recommended adult dose. Darunavir tablets should be taken with ritonavir and with food.",
+    "evidence": [
+     5570,
+     5862
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "missing": []
+   }
+  ]
+ },
+ "strings-dasatinib": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "Chronic phase CML in adults: 100 mg once daily. Accelerated phase CML, myeloid or lymphoid blast phase CML, or Ph+ ALL in adults: 140 mg once daily.",
+    "evidence": [
+     29,
+     185
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "recommended_dosage",
+    "key": "pediatric patients",
+    "value": "starting dose based on body weight",
+    "evidence": [
+     186,
+     266
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "missing": []
+   }
+  ]
+ },
+ "strings-efavirenz": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "600 mg orally, once daily",
+    "evidence": [
+     145,
+     151
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "recommended_dosage",
+    "key": "pediatric patients",
+    "value": "600 mg once daily",
+    "evidence": [
+     145,
+     151
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "missing": []
+   }
+  ]
+ },
+ "strings-emtricitabine": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "One 200 mg capsule administered once daily orally.",
+    "evidence": [
+     255,
+     305
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "recommended_dosage",
+    "key": "pediatric patients",
+    "value": "For pediatric patients weighing more than 33 kg who can swallow an intact capsule, one 200 mg capsule administered once daily orally.",
+    "evidence": [
+     1487,
+     1620
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "missing": []
+   }
+  ]
+ },
+ "strings-entecavir": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "0.5 mg once daily.",
+    "evidence": [
+     139,
+     157
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "1 mg once daily.",
+    "evidence": [
+     457,
+     473
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c2",
+    "field": "recommended_dosage",
+    "key": "adults",
+    "value": "1 mg once daily.",
+    "evidence": [
+     457,
+     473
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c3",
+    "field": "recommended_dosage",
+    "key": "pediatric patients",
+    "value": "dosing is based on weight.",
+    "evidence": [
+     301,
+     327
+    ],
+    "outcome": "admitted",
+    "codes": [],
+    "missing": []
+   }
+  ]
+ }
+}

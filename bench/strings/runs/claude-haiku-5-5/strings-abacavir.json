@@ -1,0 +1,54 @@
+{
+ "doc": "strings-abacavir",
+ "provider": "claude-cli",
+ "model": "claude-haiku-5-5",
+ "effort": "default",
+ "cli": "2.1.296 (Claude Code)",
+ "prompt_sha256": "408fc3b0fd93c82852cbb1f62eeff8d4b7b2c72d94d62247a7ac47c33d481436",
+ "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "600 mg daily, administered orally as either 300 mg twice daily or 600 mg once daily",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "600 mg daily, administered orally as either 300 mg twice daily or 600 mg once daily"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Recommended Dosage for Adult Patients"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "8 mg per kg orally twice daily or 16 mg per kg orally once daily (up to a maximum of 600 mg daily)",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "8 mg per kg orally twice daily or 16 mg per kg orally once daily (up to a maximum of 600 mg daily)"
+     },
+     {
+      "source": "document",
+      "role": "key",
+      "text": "Recommended Dosage for Pediatric Patients"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}

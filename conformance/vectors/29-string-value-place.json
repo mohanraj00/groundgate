@@ -1,0 +1,214 @@
+{
+ "name": "29-string-value-place",
+ "description": "A string value is at its first occurrence in its evidence span, where whitespace runs match any whitespace run, and not at the start of the span: key scope reads the text there. When the span does not hold the value, step 10 rejects as before. A role quote that holds the value's occurrence is found there, and on the outside path the key check also reads the value's first occurrence in the quote (spec 0.8, #140).",
+ "document": "Dosage\n\nHeart failure: take 5 mg daily. Hypertension: take with food.\n\nAngina: take at bedtime. Hypertension: take at bedtime.",
+ "schema": {
+  "fields": {
+   "instruction": {
+    "type": "string",
+    "keys": [
+     "heart failure",
+     "hypertension",
+     "angina"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "instruction",
+   "value": "take with food",
+   "evidence": {
+    "start": 8,
+    "end": 69,
+    "text": "Heart failure: take 5 mg daily. Hypertension: take with food."
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "p2",
+   "field": "instruction",
+   "value": "take with food",
+   "evidence": {
+    "start": 8,
+    "end": 69,
+    "text": "Heart failure: take 5 mg daily. Hypertension: take with food."
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "p3",
+   "field": "instruction",
+   "value": "take 5 mg daily",
+   "evidence": {
+    "start": 8,
+    "end": 69,
+    "text": "Heart failure: take 5 mg daily. Hypertension: take with food."
+   },
+   "key": "heart failure"
+  },
+  {
+   "id": "p4",
+   "field": "instruction",
+   "value": "take at bedtime",
+   "evidence": {
+    "start": 40,
+    "end": 126,
+    "text": "Hypertension: take with food.\n\nAngina: take at bedtime. Hypertension: take at bedtime."
+   },
+   "key": "angina"
+  },
+  {
+   "id": "p5",
+   "field": "instruction",
+   "value": "take at bedtime",
+   "evidence": {
+    "start": 40,
+    "end": 126,
+    "text": "Hypertension: take with food.\n\nAngina: take at bedtime. Hypertension: take at bedtime."
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "p6",
+   "field": "instruction",
+   "value": "take twice daily",
+   "evidence": {
+    "start": 8,
+    "end": 69,
+    "text": "Heart failure: take 5 mg daily. Hypertension: take with food."
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "p7",
+   "field": "instruction",
+   "value": "take with food",
+   "evidence": [
+    {
+     "start": 40,
+     "end": 69,
+     "text": "Hypertension: take with food."
+    },
+    {
+     "role": "key",
+     "text": "Hypertension: take with food."
+    }
+   ],
+   "key": "hypertension"
+  },
+  {
+   "id": "p8",
+   "field": "instruction",
+   "value": "take with food",
+   "evidence": [
+    {
+     "start": 8,
+     "end": 69,
+     "text": "Heart failure: take 5 mg daily. Hypertension: take with food."
+    },
+    {
+     "role": "key",
+     "text": "Heart failure: take 5 mg daily. Hypertension: take with food."
+    }
+   ],
+   "key": "hypertension"
+  },
+  {
+   "id": "p9",
+   "field": "instruction",
+   "value": "take with food",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "Heart failure: take 5 mg daily. Hypertension: take with food."
+    }
+   ],
+   "key": "hypertension"
+  },
+  {
+   "id": "p10",
+   "field": "instruction",
+   "value": "take with food",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "Heart failure: take 5 mg daily. Hypertension: take with food."
+    }
+   ],
+   "key": "heart failure"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "EVIDENCE_QUOTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "EVIDENCE_QUOTED"
+    ],
+    "missing": [
+     "key"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

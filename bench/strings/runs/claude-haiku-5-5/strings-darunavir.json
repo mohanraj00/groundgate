@@ -1,0 +1,57 @@
+{
+ "doc": "strings-darunavir",
+ "provider": "claude-cli",
+ "model": "claude-haiku-5-5",
+ "effort": "default",
+ "cli": "2.1.296 (Claude Code)",
+ "prompt_sha256": "af16b933d48f95f7c9520913e5659b8eceaeadc4619179dac26b2b794da5bb73",
+ "harness_sha256": "c99829a97fd9b87f6e5489c6fa5d86d84fc4407269c3d7f8cd3cb1054ef8f3c9",
+ "output_schema_sha256": "66cd11c670cf2d7f86030bf4d2a3f1769d295c5335882cda5489a42cb03bac37",
+ "output_schema_without": [
+  "$schema"
+ ],
+ "reply": {
+  "candidates": [
+   {
+    "field": "recommended_dosage",
+    "value": "800 mg (one 800 mg tablet) taken with ritonavir 100 mg once daily and with food",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "800 mg (one 800 mg tablet) taken with ritonavir 100 mg once daily and with food"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "600 mg (one 600 mg tablet) taken with ritonavir 100 mg twice daily and with food",
+    "unit": null,
+    "key": "adults",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "600 mg (one 600 mg tablet) taken with ritonavir 100 mg twice daily and with food"
+     }
+    ]
+   },
+   {
+    "field": "recommended_dosage",
+    "value": "dosage of darunavir and ritonavir is based on body weight and should not exceed the adult dose",
+    "unit": null,
+    "key": "pediatric patients",
+    "evidence": [
+     {
+      "source": "document",
+      "role": "value",
+      "text": "dosage of darunavir and ritonavir is based on body weight and should not exceed the adult dose"
+     }
+    ]
+   }
+  ]
+ },
+ "discarded": []
+}
