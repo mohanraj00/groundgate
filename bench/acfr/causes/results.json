@@ -1,0 +1,91 @@
+{
+ "runs": {
+  "claude-haiku-5-5": {
+   "proposals": 39,
+   "admitted": 20,
+   "right admitted": 20,
+   "escapes": 0,
+   "admitted not sure or unlabeled": 0,
+   "not admitted": 19,
+   "not admitted, right": 19
+  },
+  "gpt-6-luna": {
+   "proposals": 35,
+   "admitted": 0,
+   "right admitted": 0,
+   "escapes": 0,
+   "admitted not sure or unlabeled": 0,
+   "not admitted": 35,
+   "not admitted, right": 35
+  }
+ },
+ "causes": {
+  "field item, another line": {
+   "claude-haiku-5-5": {
+    "only cause": 0,
+    "proposals": 4,
+    "right": 4
+   },
+   "gpt-6-luna": {
+    "only cause": 0,
+    "proposals": 4,
+    "right": 4
+   }
+  },
+  "field item, no alias": {
+   "claude-haiku-5-5": {
+    "only cause": 0,
+    "proposals": 2,
+    "right": 2
+   },
+   "gpt-6-luna": {
+    "only cause": 0,
+    "proposals": 1,
+    "right": 1
+   }
+  },
+  "key item, field has no keys": {
+   "claude-haiku-5-5": {
+    "only cause": 9,
+    "proposals": 11,
+    "right": 11
+   },
+   "gpt-6-luna": {
+    "only cause": 26,
+    "proposals": 35,
+    "right": 35
+   }
+  },
+  "unit item fails": {
+   "gpt-6-luna": {
+    "only cause": 0,
+    "proposals": 2,
+    "right": 2
+   }
+  },
+  "unit missing, a unit form above the value": {
+   "claude-haiku-5-5": {
+    "only cause": 2,
+    "proposals": 8,
+    "right": 8
+   },
+   "gpt-6-luna": {
+    "only cause": 0,
+    "proposals": 5,
+    "right": 5
+   }
+  },
+  "unit missing, a unit form only below the value": {
+   "claude-haiku-5-5": {
+    "only cause": 2,
+    "proposals": 2,
+    "right": 2
+   },
+   "gpt-6-luna": {
+    "only cause": 0,
+    "proposals": 2,
+    "right": 2
+   }
+  }
+ }
+}
