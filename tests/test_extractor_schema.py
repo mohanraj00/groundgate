@@ -195,3 +195,37 @@ def test_edge_schemas() -> None:
         gg.extractor_schema({"fields": {}})
     s = gg.extractor_schema({"fields": {"ratio": {"type": "number", "unit": ""}}})
     assert s["properties"]["candidates"]["items"]["properties"]["unit"] == {"const": ""}
+
+
+def test_key_role_only_on_fields_with_keys() -> None:
+    """A field with no keys gets no role "key" (#256). A schema with keys only is as before."""
+    keyed = {"rate": {"type": "number", "keys": ["2024", "2025"]}}
+    plain = {"fee": {"type": "number", "unit": "USD"}}
+
+    def roles(s: dict[str, Any], name: str) -> list[str]:
+        return s["$defs"][name]["properties"]["role"]["enum"]  # type: ignore[no-any-return]
+
+    one = gg.extractor_schema({"fields": keyed})
+    assert roles(one, "document") == ["value", "sign", "scale", "unit", "field", "key"]
+    assert one["$defs"]["document"]["properties"]["role"]["description"].endswith(
+        "key: words that name the key, such as a column heading."
+    )
+    assert set(one["$defs"]) == {"document", "external", "knowledge", "evidence"}
+    two = gg.extractor_schema({"fields": plain}, ["t"])
+    assert (
+        roles(two, "document")
+        == roles(two, "reference")
+        == ["value", "sign", "scale", "unit", "field"]
+    )
+    assert "key" not in two["$defs"]["document"]["properties"]["role"]["description"]
+    both = gg.extractor_schema({"fields": {**keyed, **plain}}, ["t"])
+    assert roles(both, "document")[-1] == roles(both, "reference")[-1] == "key"
+    assert "key" not in roles(both, "document_no_key") + roles(both, "reference_no_key")
+    check = _validator(both)
+    for field, key, unit in (("rate", "2025", None), ("fee", None, "USD")):
+        cand = {"field": field, "value": "1", "unit": unit, "key": key}
+        for source in ({"source": "document"}, {"source": "reference", "ref": "t"}):
+            ok = {**cand, "evidence": [{**source, "role": "field", "text": "x"}]}
+            assert check.is_valid({"candidates": [ok]})
+            with_key = {**cand, "evidence": [{**source, "role": "key", "text": "x"}]}
+            assert check.is_valid({"candidates": [with_key]}) == (field == "rate")

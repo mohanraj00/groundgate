@@ -207,6 +207,8 @@ The schema has no `id`, because the model does not need one. Give each candidate
 `admit`, so that each decision names its candidate. Decisions come back sorted by candidate hash,
 not in the order of the list.
 
+A field with no keys gets no evidence role `key`, because a key item on that field always fails.
+
 With references, give their ids to the schema and the same references to `admit`:
 
 ```python

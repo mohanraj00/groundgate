@@ -106,6 +106,8 @@ jobs:
         run: uv run python bench/acfr/measure.py results --check
       - name: Causes of the proposals that bench/acfr does not admit (#244) match the recorded causes and labels
         run: uv run python bench/acfr/causes.py results --check
+      - name: Runs of bench/acfr without the role key on fields with no keys (#256) match the recorded decisions and labels
+        run: uv run python bench/acfr/keyrole.py results --check
       - name: Second state ACFR set (#249) results match the recorded decisions and labels
         run: uv run python bench/acfr2/measure.py results --check
       - name: Held-out report set with PDF table rows (#230) matches its recorded decisions and labels

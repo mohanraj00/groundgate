@@ -6,6 +6,11 @@ gg.extractor_schema(schema) as it is, with no "$schema" member (#197).
     uv run python bench/acfr/run.py --provider codex --model gpt-6-luna
 
 Replies go to runs/<model>/<id>.json. An existing file is skipped, so a stopped run resumes.
+The runs of #256 give the schema without the role "key" on fields with no keys, to another folder:
+
+    uv run python bench/acfr/run.py --provider claude-cli --model claude-haiku-5-5 \
+        --name claude-haiku-5-5-256
+    uv run python bench/acfr/run.py --provider codex --model gpt-6-luna --name gpt-6-luna-256
 """
 
 from __future__ import annotations
@@ -38,10 +43,11 @@ def main() -> None:
     ap.add_argument("--provider", choices=["claude-cli", "codex"], required=True)
     ap.add_argument("--model", required=True)
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--name", help="the folder of the replies under runs/; the model by default")
     args = ap.parse_args()
     schema = gg.extractor_schema(json.loads((HERE / "schema.json").read_text()))
     runner = Runner(args.provider, args.model, schema)
-    folder = HERE / "runs" / args.model
+    folder = HERE / "runs" / (args.name or args.model)
     folder.mkdir(parents=True, exist_ok=True)
     todo = [
         d for d in sorted((HERE / "docs").glob("*.txt")) if not (folder / f"{d.stem}.json").exists()

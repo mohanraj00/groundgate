@@ -83,13 +83,15 @@ def unit_cause(text: str, pos: int, unit: str) -> str:
     return "unit missing, no unit form on the page"
 
 
-def _proposals() -> list[tuple[str, str, str, dict[str, Any], Any]]:
+def _proposals(
+    runs: tuple[str, ...] = measure.RUNS,
+) -> list[tuple[str, str, str, dict[str, Any], Any]]:
     """Each proposal of each run, with its decision under the groundgate that runs this."""
     import groundgate as gg
 
     schema = measure._read(HERE / "schema.json")
     out = []
-    for run in measure.RUNS:
+    for run in runs:
         for doc_path in sorted((HERE / "docs").glob("*.txt")):
             doc = doc_path.stem
             reply = measure._read(HERE / "runs" / run / f"{doc}.json")["reply"]
