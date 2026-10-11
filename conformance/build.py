@@ -2966,6 +2966,52 @@ vector(
     ],
 )  # fmt: skip
 
+TITLE_KEY = (
+    "Balance sheet\nAs of September 30, 2025\n\nReport of the year\n\n"
+    "Assets:\nCash\t$\t1,200\nTotal assets\t$\t1,500\n\n"
+    "Statement of cost\nFor the year ended September 30, 2025\n\nReport of the year\n\n"
+    "Program\t$\t300\t$\t280\nNet cost\t$\t900\t$\t850\n\n"
+    "Changes in net position\nFor the year ended September 30, 2025\n\nReport of the year\n\n"
+    "Notes to the statements\n\fEnding net position\t$\t1,100\n\n"
+    "Revenue summary\nFor the year ended September 30, 2025\n\nReport of the year\n\n"
+    "Revenue was $700 for the year."
+)
+
+
+def keyed_usd(*aliases: str) -> dict[str, Any]:
+    return {"type": "integer", "unit": "USD", "keys": ["2025", "2024"], "multiple": True,
+            "aliases": list(aliases)}  # fmt: skip
+
+
+vector(
+    "28-title-key",
+    "When no key is at the value (4.5), the key of the nearest earlier mention reaches it also "
+    "across a label line, when no page break stands between them, the value's line holds a tab "
+    "before the value, and each line after the mention, up to the value's line, holds at most "
+    "one number token after its first tab: a table with one number column under a title such "
+    "as \"As of September 30, 2025\" (spec 0.8, #250).",
+    TITLE_KEY,
+    {
+        "fields": {
+            "assets": keyed_usd("total assets"),
+            "cost": keyed_usd("net cost"),
+            "net": keyed_usd("net position"),
+            "revenue": keyed_usd("revenue"),
+        }
+    },
+    [
+        c("t1", "assets", "1500", "USD", [q("1,500"), row("Total assets")], key="2025"),
+        c("t2", "assets", "1500", "USD", [q("1,500"), row("Total assets")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2024"),
+        c("t3", "cost", "900", "USD", [q("900"), row("Net cost")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2025"),
+        c("t4", "net", "1100", "USD", [q("1,100"), row("Ending net position")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2025"),
+        c("t5", "revenue", "700", "USD", [q("$700"), row("Revenue")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2025"),
+    ],
+)  # fmt: skip
+
 
 def main() -> None:
     out_dir = HERE / "vectors"

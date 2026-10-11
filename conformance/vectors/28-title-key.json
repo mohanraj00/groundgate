@@ -1,0 +1,195 @@
+{
+ "name": "28-title-key",
+ "description": "When no key is at the value (4.5), the key of the nearest earlier mention reaches it also across a label line, when no page break stands between them, the value's line holds a tab before the value, and each line after the mention, up to the value's line, holds at most one number token after its first tab: a table with one number column under a title such as \"As of September 30, 2025\" (spec 0.8, #250).",
+ "document": "Balance sheet\nAs of September 30, 2025\n\nReport of the year\n\nAssets:\nCash\t$\t1,200\nTotal assets\t$\t1,500\n\nStatement of cost\nFor the year ended September 30, 2025\n\nReport of the year\n\nProgram\t$\t300\t$\t280\nNet cost\t$\t900\t$\t850\n\nChanges in net position\nFor the year ended September 30, 2025\n\nReport of the year\n\nNotes to the statements\n\fEnding net position\t$\t1,100\n\nRevenue summary\nFor the year ended September 30, 2025\n\nReport of the year\n\nRevenue was $700 for the year.",
+ "schema": {
+  "fields": {
+   "assets": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024"
+    ],
+    "multiple": true,
+    "aliases": [
+     "total assets"
+    ]
+   },
+   "cost": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024"
+    ],
+    "multiple": true,
+    "aliases": [
+     "net cost"
+    ]
+   },
+   "net": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024"
+    ],
+    "multiple": true,
+    "aliases": [
+     "net position"
+    ]
+   },
+   "revenue": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024"
+    ],
+    "multiple": true,
+    "aliases": [
+     "revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "t1",
+   "field": "assets",
+   "value": "1500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 96,
+     "end": 101,
+     "text": "1,500"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "t2",
+   "field": "assets",
+   "value": "1500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 96,
+     "end": 101,
+     "text": "1,500"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "t3",
+   "field": "cost",
+   "value": "900",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 211,
+     "end": 214,
+     "text": "900"
+    },
+    {
+     "role": "field",
+     "text": "Net cost"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "t4",
+   "field": "net",
+   "value": "1100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 352,
+     "end": 357,
+     "text": "1,100"
+    },
+    {
+     "role": "field",
+     "text": "Ending net position"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "t5",
+   "field": "revenue",
+   "value": "700",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 446,
+     "end": 450,
+     "text": "$700"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    }
+   ],
+   "key": "2025"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
