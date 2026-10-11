@@ -192,6 +192,28 @@ The numbers count admitted values. Each run made 100 proposals, and the rule cha
 outcome of none of them. Most proposals fail on the field or the key citation before the unit
 matters. [bench/afr/RESULTS.md](bench/afr/RESULTS.md) has every number.
 
+### Spec 0.8 on held-out state and agency reports
+
+0.8 is about yield. I measured each change on documents that it did not come from: the 20 agency
+reports of `bench/afr` for the PDF table rows of #230, 10 FY2025 state ACFRs (`bench/acfr`) for
+#242, 10 more (`bench/acfr2`) for #249, #250 and #256, and 10 drug labels (`bench/strings`) for
+#140. A person labeled every admitted value blind. #242, #250 and #140 change no decision on their
+sets, so the table leaves them out.
+
+| Change | Set | claude-haiku-5-5 | gpt-6-luna |
+|---|---|---|---|
+| PDF table rows as lines with tabs (#230) | `bench/afr` | 3 to 57 right, 1 to 0 escapes | 6 to 57 right, 0 escapes |
+| The value where the field item passes, a column unit (#249) | `bench/acfr2` | 5 to 7 right, 0 escapes | 2 to 2 right, 0 escapes |
+| No role `key` on a field with no keys (#256) | `bench/acfr2` | 10 to 23 right, 0 escapes | 0 to 9 right, 0 escapes |
+
+The numbers count admitted values. The #230 rows compare the 0.7 text under spec 0.7 with new
+runs on the new text under the 0.8 draft with the #242 rule; #263 decides them again under the
+released 0.8. The #256 rows ask a schema with no keys on its fields, so they do not compare with
+the #249 row. [bench/afr/tabs/RESULTS.md](bench/afr/tabs/RESULTS.md),
+[bench/acfr/RESULTS.md](bench/acfr/RESULTS.md), [bench/acfr2/RESULTS.md](bench/acfr2/RESULTS.md),
+[bench/strings/RESULTS.md](bench/strings/RESULTS.md) and
+[bench/acfr/keyrole/RESULTS.md](bench/acfr/keyrole/RESULTS.md) have every number.
+
 ## Quickstart
 
 ```bash
@@ -370,7 +392,7 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec 0.7.
+- **No dates, arrays of records, or cross-document checks** in spec 0.8.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
@@ -385,8 +407,11 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.7.0 implements spec v0.7. [CHANGELOG.md](CHANGELOG.md) lists what each
-version changes, with its measure. 0.7 passes a unit item that is away from the number only at a
+Alpha. groundgate 0.8.0 implements spec v0.8. [CHANGELOG.md](CHANGELOG.md) lists what each
+version changes, with its measure. 0.8 writes PDF table rows as lines with tabs (#230), scales a
+value by its scale item (#242), takes the value's occurrence where the field item passes (#249),
+lets a title key reach a table with one number column (#250), puts a string value at its first
+occurrence in its span (#140), and offers the role `key` only on a field with keys (#256). 0.7 passes a unit item that is away from the number only at a
 unit place of the value (#164). 0.6 passes a unit item that repeats the unit (#145), reads
 `between` with words before an `and` range (#159) and a scale heading over a table (#162), and
 adds a `description` to each field (#171). 0.6.1 adds `gg.feedback_message` (#173).
