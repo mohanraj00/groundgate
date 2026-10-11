@@ -18,6 +18,7 @@ from groundgate.text import (
     parse_value,
     qualifiers,
     sentence,
+    sentence_index,
     tokens,
     verbatim_equal,
 )
@@ -167,3 +168,5 @@ def test_sentence_agrees_with_a_scan(text: str, data: st.DataObject) -> None:
     left = max((m.end() for m in end.finditer(text, 0, pos)), default=0)
     right = next((m.start() for m in end.finditer(text, pos)), len(text))
     assert sentence(text, pos) == (left, right)
+    with sentence_index():
+        assert sentence(text, pos) == (left, right)

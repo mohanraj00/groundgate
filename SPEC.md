@@ -318,7 +318,9 @@ in the text). If **exactly one** occurrence other than the cited span passes ste
 without a missing part, that occurrence becomes the evidence, the decision records code
 `EVIDENCE_REANCHORED`, and checking continues. Otherwise steps 10 and 11 run at the cited span,
 where a part can be missing. So a cited span that passes only with a missing part still moves to
-the one other occurrence that passes without one.
+the one other occurrence that passes without one. At the cited span, a unit form at a unit place
+can make the unit present (step 11); at another occurrence it does not, as in the choice of a
+quote occurrence (§4.6, #249).
 
 The value is at its supporting number token, or at the start of the evidence span for a `string`
 field. The role items are then checked at the value (§4.6).

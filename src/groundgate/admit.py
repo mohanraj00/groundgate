@@ -50,6 +50,7 @@ from .text import (
     scale_word,
     scaled_value,
     sentence,
+    sentence_index,
     tokens,
     unit_at,
     verbatim_equal,
@@ -1034,12 +1035,13 @@ def admit(
     )
 
     results: list[tuple[str, int, object, _Passed | _Reject]] = []
-    for i, cand in enumerate(candidates):
-        try:
-            outcome: _Passed | _Reject = _check(ctx, cand)
-        except _Reject as r:
-            outcome = r
-        results.append((digest("candidate", cand), i, cand, outcome))
+    with sentence_index():  # the texts leave the index when the candidates are checked
+        for i, cand in enumerate(candidates):
+            try:
+                outcome: _Passed | _Reject = _check(ctx, cand)
+            except _Reject as r:
+                outcome = r
+            results.append((digest("candidate", cand), i, cand, outcome))
 
     by_key: dict[tuple[str, str | None], set[tuple[str, str | None]]] = defaultdict(set)
     for *_, p in results:

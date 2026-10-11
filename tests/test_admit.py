@@ -740,6 +740,26 @@ def test_unit_places_read_a_wide_row_once() -> None:
     assert time_for(1600) < 8 * time_for(400)
 
 
+def test_reanchor_needs_the_unit_next_to_the_value() -> None:
+    """A unit form at a unit place makes the unit present at the cited span, not at another
+    occurrence (#249): the span stays, with the unit missing."""
+    text = "Other 160.\n\nRegion\t2025\nNorth\t$\nSouth\t160\n"
+    schema = {"fields": {"region": {"type": "integer", "unit": "USD", "aliases": ["south"]}}}
+    cand = {
+        "id": "c",
+        "field": "region",
+        "value": 160,
+        "unit": "USD",
+        "evidence": [
+            {"source": "document", "start": 6, "end": 9, "text": "160"},
+            {"role": "field", "text": "South"},
+        ],
+    }
+    d = gg.admit(text, schema, [cand]).decisions[0]
+    assert "EVIDENCE_REANCHORED" not in d.codes
+    assert d.missing == ("unit",)
+
+
 @pytest.mark.parametrize(
     "layout",
     [

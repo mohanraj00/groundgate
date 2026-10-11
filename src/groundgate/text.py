@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import bisect
-import functools
+import contextlib
 import re
 import unicodedata
 from collections.abc import Iterator
+from contextvars import ContextVar
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 
@@ -207,13 +208,35 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
     return not (ch.islower() or "0" <= ch <= "9" or ch in _CONTINUES)
 
 
-@functools.lru_cache(maxsize=4)
-def _sentence_ends(text: str) -> tuple[list[int], list[int]]:
-    """The starts and the ends of the sentence ends in a text, in order, read once. The pattern
-    looks at nothing outside a match, so a match is the same match in any part of the text that
-    holds it."""
-    found = [m.span() for m in _SENTENCE_END.finditer(text)]
-    return [a for a, _ in found], [b for _, b in found]
+# the sentence ends of each text, read once while an index is open (``sentence_index``), and
+# kept only while it is open
+_SENTENCES: ContextVar[dict[int, tuple[str, list[int], list[int]]] | None] = ContextVar(
+    "sentences", default=None
+)
+
+
+@contextlib.contextmanager
+def sentence_index() -> Iterator[None]:
+    """Read the sentence ends of each text once, until the block ends."""
+    token = _SENTENCES.set({})
+    try:
+        yield
+    finally:
+        _SENTENCES.reset(token)
+
+
+def _sentence_ends(text: str) -> tuple[list[int], list[int]] | None:
+    """The starts and the ends of the sentence ends in a text, in order, or None when no index
+    is open. The pattern looks at nothing outside a match, so a match is the same match in any
+    part of the text that holds it."""
+    index = _SENTENCES.get()
+    if index is None:
+        return None
+    held = index.get(id(text))
+    if held is None or held[0] is not text:
+        found = [m.span() for m in _SENTENCE_END.finditer(text)]
+        held = index[id(text)] = (text, [a for a, _ in found], [b for _, b in found])
+    return held[1], held[2]
 
 
 def sentence(text: str, pos: int, qualifiers: bool = False) -> tuple[int, int]:
@@ -221,12 +244,13 @@ def sentence(text: str, pos: int, qualifiers: bool = False) -> tuple[int, int]:
     on past an abbreviation dot: there a join can only add a flag, while key scope and the unit
     search must never reach into the next sentence."""
     left = 0
-    if qualifiers:
+    index = None if qualifiers else _sentence_ends(text)
+    if index is None:
         for m in _SENTENCE_END.finditer(text, 0, pos):
-            if _ends_sentence(text, m):
+            if not qualifiers or _ends_sentence(text, m):
                 left = m.end()
     else:
-        starts, ends = _sentence_ends(text)
+        starts, ends = index
         i = bisect.bisect_right(ends, pos)
         left = ends[i - 1] if i else 0
         if i == len(ends) or starts[i] >= pos:  # no sentence end holds pos: the next one ends it
