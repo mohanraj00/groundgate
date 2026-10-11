@@ -405,7 +405,11 @@ groundgate then reads which keys the text puts at the value:
    as "2.2 Heart Failure" reaches every value under it, until the text mentions another key.
 3. A label line stops that reach. A label line has 12 words or less, no `.` or `;` before a space
    or a line end, and a blank line after it. A blank line or the start of the text comes before
-   it. "Dosing notes" and "Adults" are label lines. A value under one has no key.
+   it. "Dosing notes" and "Adults" are label lines. A value under one has no key, with one
+   exception (spec 0.8): the key still reaches a value in a table with one number column, when
+   no page break comes between them, the value's line holds a tab before the value, and each line
+   after the mention holds at most one number after its first tab. So "As of September 30, 2025",
+   then "Assets:", then "Cash\t100" puts 2025 at 100.
 4. In a table sentence, only the value's own line counts. A table sentence holds 3 or more line
    breaks and mentions 2 or more keys of the field.
 
