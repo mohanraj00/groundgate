@@ -195,8 +195,10 @@ matters. [bench/afr/RESULTS.md](bench/afr/RESULTS.md) has every number.
 ### Spec 0.8 on held-out state and agency reports
 
 0.8 is about yield. I measured each change on documents that it did not come from: the 20 agency
-reports of `bench/afr` for the PDF table rows of #230, and 10 FY2025 state ACFRs (`bench/acfr2`)
-for the rest. A person labeled every admitted value blind.
+reports of `bench/afr` for the PDF table rows of #230, 10 FY2025 state ACFRs (`bench/acfr`) for
+#242, 10 more (`bench/acfr2`) for #249, #250 and #256, and 10 drug labels (`bench/strings`) for
+#140. A person labeled every admitted value blind. #242, #250 and #140 change no decision on their
+sets, so the table leaves them out.
 
 | Change | Set | claude-haiku-5-5 | gpt-6-luna |
 |---|---|---|---|
@@ -208,7 +210,8 @@ The numbers count admitted values. The #230 rows compare the 0.7 text under spec
 runs on the new text under the 0.8 draft with the #242 rule; #263 decides them again under the
 released 0.8. The #256 rows ask a schema with no keys on its fields, so they do not compare with
 the #249 row. [bench/afr/tabs/RESULTS.md](bench/afr/tabs/RESULTS.md),
-[bench/acfr2/RESULTS.md](bench/acfr2/RESULTS.md) and
+[bench/acfr/RESULTS.md](bench/acfr/RESULTS.md), [bench/acfr2/RESULTS.md](bench/acfr2/RESULTS.md),
+[bench/strings/RESULTS.md](bench/strings/RESULTS.md) and
 [bench/acfr/keyrole/RESULTS.md](bench/acfr/keyrole/RESULTS.md) have every number.
 
 ## Quickstart
