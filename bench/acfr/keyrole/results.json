@@ -1,0 +1,190 @@
+{
+ "spec": "0.8",
+ "schemas": {
+  "with key": "fd545a445ee8ce86f9b55157f1daf4021361df2ec3f69ce2e2e3a00f410d9b93",
+  "without key": "3915158838a991693262f44ac317094d7375b31c50b50801d2581a5c66ada410"
+ },
+ "sets": {
+  "bench/acfr": {
+   "runs": {
+    "claude-haiku-5-5": {
+     "output schema": [
+      "fd545a445ee8ce86f9b55157f1daf4021361df2ec3f69ce2e2e3a00f410d9b93"
+     ],
+     "proposals": 39,
+     "with a key item": 11,
+     "admitted": 20,
+     "right admitted": 20,
+     "escapes": 0,
+     "admitted, not sure or unlabeled": 0,
+     "not admitted": 19,
+     "not admitted, right": 19,
+     "no reply": 0
+    },
+    "claude-haiku-5-5-256": {
+     "output schema": [
+      "3915158838a991693262f44ac317094d7375b31c50b50801d2581a5c66ada410"
+     ],
+     "proposals": 39,
+     "with a key item": 0,
+     "admitted": 29,
+     "right admitted": 29,
+     "escapes": 0,
+     "admitted, not sure or unlabeled": 0,
+     "not admitted": 10,
+     "not admitted, right": 10,
+     "no reply": 0
+    },
+    "gpt-6-luna": {
+     "output schema": [
+      "fd545a445ee8ce86f9b55157f1daf4021361df2ec3f69ce2e2e3a00f410d9b93"
+     ],
+     "proposals": 35,
+     "with a key item": 35,
+     "admitted": 0,
+     "right admitted": 0,
+     "escapes": 0,
+     "admitted, not sure or unlabeled": 0,
+     "not admitted": 35,
+     "not admitted, right": 35,
+     "no reply": 1
+    },
+    "gpt-6-luna-256": {
+     "output schema": [
+      "3915158838a991693262f44ac317094d7375b31c50b50801d2581a5c66ada410"
+     ],
+     "proposals": 39,
+     "with a key item": 0,
+     "admitted": 12,
+     "right admitted": 12,
+     "escapes": 0,
+     "admitted, not sure or unlabeled": 0,
+     "not admitted": 27,
+     "not admitted, right": 27,
+     "no reply": 0
+    }
+   },
+   "codes": {
+    "claude-haiku-5-5": {
+     "FIELD_CITATION_INVALID": 6,
+     "KEY_CITATION_INVALID": 11,
+     "PART_MISSING": 10,
+     "VALUE_DERIVED": 19,
+     "missing unit": 10
+    },
+    "claude-haiku-5-5-256": {
+     "FIELD_CITATION_INVALID": 6,
+     "PART_MISSING": 10,
+     "VALUE_DERIVED": 10,
+     "missing unit": 10
+    },
+    "gpt-6-luna": {
+     "FIELD_CITATION_INVALID": 5,
+     "KEY_CITATION_INVALID": 35,
+     "PART_MISSING": 7,
+     "UNIT_CITATION_INVALID": 2,
+     "VALUE_DERIVED": 35,
+     "missing unit": 7
+    },
+    "gpt-6-luna-256": {
+     "CANDIDATE_INVALID": 24,
+     "FIELD_CITATION_INVALID": 1,
+     "PART_MISSING": 3,
+     "VALUE_DERIVED": 3,
+     "missing unit": 3
+    }
+   }
+  },
+  "bench/acfr2": {
+   "runs": {
+    "claude-haiku-5-5-acfr2-242": {
+     "output schema": [
+      "fd545a445ee8ce86f9b55157f1daf4021361df2ec3f69ce2e2e3a00f410d9b93"
+     ],
+     "proposals": 40,
+     "with a key item": 20,
+     "admitted": 10,
+     "right admitted": 10,
+     "escapes": 0,
+     "admitted, not sure or unlabeled": 0,
+     "not admitted": 30,
+     "not admitted, right": 30,
+     "no reply": 0
+    },
+    "claude-haiku-5-5-acfr2-256": {
+     "output schema": [
+      "3915158838a991693262f44ac317094d7375b31c50b50801d2581a5c66ada410"
+     ],
+     "proposals": 40,
+     "with a key item": 0,
+     "admitted": 23,
+     "right admitted": 23,
+     "escapes": 0,
+     "admitted, not sure or unlabeled": 0,
+     "not admitted": 17,
+     "not admitted, right": 17,
+     "no reply": 0
+    },
+    "gpt-6-luna-acfr2-242": {
+     "output schema": [
+      "fd545a445ee8ce86f9b55157f1daf4021361df2ec3f69ce2e2e3a00f410d9b93"
+     ],
+     "proposals": 40,
+     "with a key item": 40,
+     "admitted": 0,
+     "right admitted": 0,
+     "escapes": 0,
+     "admitted, not sure or unlabeled": 0,
+     "not admitted": 40,
+     "not admitted, right": 37,
+     "no reply": 0
+    },
+    "gpt-6-luna-acfr2-256": {
+     "output schema": [
+      "3915158838a991693262f44ac317094d7375b31c50b50801d2581a5c66ada410"
+     ],
+     "proposals": 40,
+     "with a key item": 0,
+     "admitted": 9,
+     "right admitted": 9,
+     "escapes": 0,
+     "admitted, not sure or unlabeled": 0,
+     "not admitted": 31,
+     "not admitted, right": 31,
+     "no reply": 0
+    }
+   },
+   "codes": {
+    "claude-haiku-5-5-acfr2-242": {
+     "FIELD_CITATION_INVALID": 5,
+     "KEY_CITATION_INVALID": 20,
+     "PART_MISSING": 17,
+     "VALUE_DERIVED": 30,
+     "missing unit": 17
+    },
+    "claude-haiku-5-5-acfr2-256": {
+     "FIELD_CITATION_INVALID": 5,
+     "PART_MISSING": 17,
+     "VALUE_DERIVED": 17,
+     "missing unit": 17
+    },
+    "gpt-6-luna-acfr2-242": {
+     "CANDIDATE_INVALID": 4,
+     "FIELD_CITATION_INVALID": 4,
+     "KEY_CITATION_INVALID": 36,
+     "PART_MISSING": 10,
+     "UNIT_CITATION_INVALID": 5,
+     "VALUE_DERIVED": 36,
+     "missing unit": 10
+    },
+    "gpt-6-luna-acfr2-256": {
+     "CANDIDATE_INVALID": 28,
+     "FIELD_CITATION_INVALID": 2,
+     "SIGN_CITATION_INVALID": 1,
+     "UNIT_CITATION_INVALID": 3,
+     "VALUE_DERIVED": 3
+    }
+   }
+  }
+ }
+}

@@ -1,5 +1,14 @@
 {
+ "000fc5ed539d8844": {
+  "verdict": "right"
+ },
+ "06134555356ac688": {
+  "verdict": "right"
+ },
  "07271d44b052cd7a": {
+  "verdict": "right"
+ },
+ "0996f50b51c94dfc": {
   "verdict": "right"
  },
  "0be2c15749bb55e2": {
@@ -8,16 +17,118 @@
  "0feafe74f634cb91": {
   "verdict": "right"
  },
+ "1637e2762301363c": {
+  "verdict": "right"
+ },
+ "1ab2578042f3fbff": {
+  "verdict": "right"
+ },
+ "224090566165d76c": {
+  "verdict": "right"
+ },
+ "30e80c44eac8e717": {
+  "verdict": "right"
+ },
+ "338465c37afdf4ce": {
+  "verdict": "right"
+ },
+ "33de5dc691ca8ea6": {
+  "verdict": "right"
+ },
+ "35d16878f251d0db": {
+  "verdict": "right"
+ },
+ "3b79502a45cedf3d": {
+  "verdict": "wrong"
+ },
+ "3d2aaec84e15c39d": {
+  "verdict": "right"
+ },
+ "498ed78be98cff44": {
+  "verdict": "right"
+ },
+ "4ca01e6254cf6d66": {
+  "verdict": "right"
+ },
+ "639ec8df8b8374b1": {
+  "verdict": "right"
+ },
+ "6723ffead2691e82": {
+  "verdict": "right"
+ },
+ "6d7282866a09db75": {
+  "verdict": "right"
+ },
  "6f2c293ca56fc46c": {
+  "verdict": "right"
+ },
+ "72d6194396569638": {
+  "verdict": "right"
+ },
+ "74ba06ee20005e16": {
   "verdict": "right"
  },
  "79912dd548ec4d95": {
   "verdict": "right"
  },
+ "7d6ea2dbbbff5f97": {
+  "verdict": "right"
+ },
+ "8444176cb0dc5f23": {
+  "verdict": "right"
+ },
+ "88d85cf742e56e95": {
+  "verdict": "right"
+ },
+ "8ca2509b4f57afa9": {
+  "verdict": "wrong"
+ },
+ "8cc0f8fcc6c227b6": {
+  "verdict": "right"
+ },
+ "90c3317f21576a52": {
+  "verdict": "right"
+ },
+ "952bf433ad4d37dd": {
+  "verdict": "right"
+ },
+ "972516c1959a4558": {
+  "verdict": "right"
+ },
+ "9c458e0991e82c3c": {
+  "verdict": "right"
+ },
+ "aadf5248a3bc337a": {
+  "verdict": "right"
+ },
+ "b5dc8d964a38bb0d": {
+  "verdict": "right"
+ },
  "b9f7c5c9823ec057": {
   "verdict": "right"
  },
+ "bbdf0234bf2bb014": {
+  "verdict": "right"
+ },
+ "cf15ef6a2907f696": {
+  "verdict": "right"
+ },
  "d11fc880cf6c8401": {
+  "verdict": "right"
+ },
+ "d4ab84802c4fb75f": {
+  "verdict": "wrong"
+ },
+ "db8643c7f4e8f700": {
+  "verdict": "wrong"
+ },
+ "dca77346fddbb8ac": {
+  "verdict": "right"
+ },
+ "ed0df4895c4ce0cb": {
+  "verdict": "right"
+ },
+ "f7536bccb1deaf2a": {
   "verdict": "right"
  }
 }

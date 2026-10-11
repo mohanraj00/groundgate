@@ -1,0 +1,3492 @@
+{
+ "spec": "0.8",
+ "schemas": {
+  "with key": "fd545a445ee8ce86f9b55157f1daf4021361df2ec3f69ce2e2e3a00f410d9b93",
+  "without key": "3915158838a991693262f44ac317094d7375b31c50b50801d2581a5c66ada410"
+ },
+ "sets": {
+  "bench/acfr": {
+   "claude-haiku-5-5": {
+    "output schema": [
+     "fd545a445ee8ce86f9b55157f1daf4021361df2ec3f69ce2e2e3a00f410d9b93"
+    ],
+    "no reply": 0,
+    "proposals": [
+     {
+      "doc": "acfr-ca",
+      "id": "c0",
+      "fact": "df49c07cb9308b96",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c1",
+      "fact": "4033eaa9ebb2e728",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c2",
+      "fact": "5f41a90ef1c3b77a",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c3",
+      "fact": "e99ced84fb0bafae",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c0",
+      "fact": "d458ed3823c669ca",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c1",
+      "fact": "57ea88b9fa8443fc",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c2",
+      "fact": "83c851b348d4add5",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c0",
+      "fact": "37d7df4a4a8f3977",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c1",
+      "fact": "3ce223f07b9a4f23",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c2",
+      "fact": "23795e5f895d1e33",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c3",
+      "fact": "ff42bf7c2eec9aed",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c0",
+      "fact": "44179611a6a74375",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c1",
+      "fact": "440c437e28602e13",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c2",
+      "fact": "bc285a008dc1f6fa",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c3",
+      "fact": "9160487f20a67f8d",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c0",
+      "fact": "c0be9aa3dd5a4028",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c1",
+      "fact": "10f074250909ff1d",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c2",
+      "fact": "592885e255b050a2",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c3",
+      "fact": "7f81e4e29ed8af06",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c0",
+      "fact": "fb8b1c9887624177",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c1",
+      "fact": "82b08a4a280bce53",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c2",
+      "fact": "ece51561f22ffac2",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c3",
+      "fact": "6110820edf8ad4c8",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c0",
+      "fact": "3bf197a6dada433d",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c1",
+      "fact": "c15d6e3241a767a5",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c2",
+      "fact": "cf5c6032e7f0b901",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c3",
+      "fact": "6b95378b16418e41",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c0",
+      "fact": "e02aa60f597a63aa",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c1",
+      "fact": "2609324c06222f4e",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c2",
+      "fact": "e4ef5e25e806e523",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c3",
+      "fact": "aa17a2b70921c5cd",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c0",
+      "fact": "1c39e4f53c1f7bf5",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c1",
+      "fact": "2fa44292109c78b2",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c2",
+      "fact": "3e256877077d7328",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c3",
+      "fact": "f7374da33eca6691",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c0",
+      "fact": "8888398dff38d7e7",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c1",
+      "fact": "e07b07e9055f2ae0",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c2",
+      "fact": "22e936c32ae1c454",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c3",
+      "fact": "058b9fda48ea9fe4",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     }
+    ]
+   },
+   "claude-haiku-5-5-256": {
+    "output schema": [
+     "3915158838a991693262f44ac317094d7375b31c50b50801d2581a5c66ada410"
+    ],
+    "no reply": 0,
+    "proposals": [
+     {
+      "doc": "acfr-ca",
+      "id": "c0",
+      "fact": "df49c07cb9308b96",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c1",
+      "fact": "4033eaa9ebb2e728",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c2",
+      "fact": "5f41a90ef1c3b77a",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c3",
+      "fact": "e99ced84fb0bafae",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c0",
+      "fact": "d458ed3823c669ca",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c1",
+      "fact": "57ea88b9fa8443fc",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c2",
+      "fact": "83c851b348d4add5",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c0",
+      "fact": "37d7df4a4a8f3977",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c1",
+      "fact": "3ce223f07b9a4f23",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c2",
+      "fact": "23795e5f895d1e33",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c3",
+      "fact": "ff42bf7c2eec9aed",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c0",
+      "fact": "44179611a6a74375",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c1",
+      "fact": "440c437e28602e13",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c2",
+      "fact": "bc285a008dc1f6fa",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c3",
+      "fact": "9160487f20a67f8d",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c0",
+      "fact": "c0be9aa3dd5a4028",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c1",
+      "fact": "10f074250909ff1d",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c2",
+      "fact": "592885e255b050a2",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c3",
+      "fact": "7f81e4e29ed8af06",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c0",
+      "fact": "fb8b1c9887624177",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c1",
+      "fact": "82b08a4a280bce53",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c2",
+      "fact": "ece51561f22ffac2",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c3",
+      "fact": "6110820edf8ad4c8",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c0",
+      "fact": "3bf197a6dada433d",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c1",
+      "fact": "c15d6e3241a767a5",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c2",
+      "fact": "cf5c6032e7f0b901",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c3",
+      "fact": "6b95378b16418e41",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c0",
+      "fact": "e02aa60f597a63aa",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c1",
+      "fact": "2609324c06222f4e",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c2",
+      "fact": "e4ef5e25e806e523",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c3",
+      "fact": "aa17a2b70921c5cd",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c0",
+      "fact": "1c39e4f53c1f7bf5",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c1",
+      "fact": "2fa44292109c78b2",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c2",
+      "fact": "3e256877077d7328",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c3",
+      "fact": "192c50ad1aa6b1b0",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c0",
+      "fact": "8888398dff38d7e7",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c1",
+      "fact": "e07b07e9055f2ae0",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c2",
+      "fact": "22e936c32ae1c454",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c3",
+      "fact": "058b9fda48ea9fe4",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     }
+    ]
+   },
+   "gpt-6-luna": {
+    "output schema": [
+     "fd545a445ee8ce86f9b55157f1daf4021361df2ec3f69ce2e2e3a00f410d9b93"
+    ],
+    "no reply": 1,
+    "proposals": [
+     {
+      "doc": "acfr-ca",
+      "id": "c0",
+      "fact": "df49c07cb9308b96",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c1",
+      "fact": "4033eaa9ebb2e728",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c2",
+      "fact": "5f41a90ef1c3b77a",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c3",
+      "fact": "e99ced84fb0bafae",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "UNIT_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c0",
+      "fact": "d458ed3823c669ca",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c1",
+      "fact": "57ea88b9fa8443fc",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c2",
+      "fact": "83c851b348d4add5",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c0",
+      "fact": "37d7df4a4a8f3977",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c1",
+      "fact": "3ce223f07b9a4f23",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c2",
+      "fact": "23795e5f895d1e33",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c3",
+      "fact": "ff42bf7c2eec9aed",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c0",
+      "fact": "c0be9aa3dd5a4028",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c1",
+      "fact": "10f074250909ff1d",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c2",
+      "fact": "592885e255b050a2",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c3",
+      "fact": "7f81e4e29ed8af06",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c0",
+      "fact": "fb8b1c9887624177",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c1",
+      "fact": "82b08a4a280bce53",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c2",
+      "fact": "ece51561f22ffac2",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c3",
+      "fact": "6110820edf8ad4c8",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c0",
+      "fact": "3bf197a6dada433d",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c1",
+      "fact": "c15d6e3241a767a5",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c2",
+      "fact": "cf5c6032e7f0b901",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c3",
+      "fact": "6b95378b16418e41",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c0",
+      "fact": "e02aa60f597a63aa",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c1",
+      "fact": "2609324c06222f4e",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c2",
+      "fact": "e4ef5e25e806e523",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c3",
+      "fact": "aa17a2b70921c5cd",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "UNIT_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c0",
+      "fact": "1c39e4f53c1f7bf5",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c1",
+      "fact": "2fa44292109c78b2",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c2",
+      "fact": "3e256877077d7328",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c3",
+      "fact": "192c50ad1aa6b1b0",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c0",
+      "fact": "8888398dff38d7e7",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c1",
+      "fact": "e07b07e9055f2ae0",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c2",
+      "fact": "22e936c32ae1c454",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c3",
+      "fact": "058b9fda48ea9fe4",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     }
+    ]
+   },
+   "gpt-6-luna-256": {
+    "output schema": [
+     "3915158838a991693262f44ac317094d7375b31c50b50801d2581a5c66ada410"
+    ],
+    "no reply": 0,
+    "proposals": [
+     {
+      "doc": "acfr-ca",
+      "id": "c0",
+      "fact": "df49c07cb9308b96",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c1",
+      "fact": "4033eaa9ebb2e728",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c2",
+      "fact": "5f41a90ef1c3b77a",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-ca",
+      "id": "c3",
+      "fact": "e99ced84fb0bafae",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c0",
+      "fact": "d458ed3823c669ca",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c1",
+      "fact": "57ea88b9fa8443fc",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-co",
+      "id": "c2",
+      "fact": "83c851b348d4add5",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c0",
+      "fact": "37d7df4a4a8f3977",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c1",
+      "fact": "3ce223f07b9a4f23",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c2",
+      "fact": "23795e5f895d1e33",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-ct",
+      "id": "c3",
+      "fact": "ff42bf7c2eec9aed",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c0",
+      "fact": "44179611a6a74375",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c1",
+      "fact": "440c437e28602e13",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c2",
+      "fact": "bc285a008dc1f6fa",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-de",
+      "id": "c3",
+      "fact": "9160487f20a67f8d",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c0",
+      "fact": "c0be9aa3dd5a4028",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c1",
+      "fact": "10f074250909ff1d",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c2",
+      "fact": "592885e255b050a2",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-fl",
+      "id": "c3",
+      "fact": "7f81e4e29ed8af06",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c0",
+      "fact": "fb8b1c9887624177",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c1",
+      "fact": "82b08a4a280bce53",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c2",
+      "fact": "ece51561f22ffac2",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-ga",
+      "id": "c3",
+      "fact": "6110820edf8ad4c8",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c0",
+      "fact": "3bf197a6dada433d",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c1",
+      "fact": "c15d6e3241a767a5",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c2",
+      "fact": "cf5c6032e7f0b901",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-hi",
+      "id": "c3",
+      "fact": "6b95378b16418e41",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c0",
+      "fact": "e02aa60f597a63aa",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c1",
+      "fact": "2609324c06222f4e",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c2",
+      "fact": "e4ef5e25e806e523",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-id",
+      "id": "c3",
+      "fact": "aa17a2b70921c5cd",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c0",
+      "fact": "1c39e4f53c1f7bf5",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c1",
+      "fact": "2fa44292109c78b2",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c2",
+      "fact": "3e256877077d7328",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-il",
+      "id": "c3",
+      "fact": "192c50ad1aa6b1b0",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c0",
+      "fact": "8888398dff38d7e7",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c1",
+      "fact": "e07b07e9055f2ae0",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c2",
+      "fact": "22e936c32ae1c454",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr-in",
+      "id": "c3",
+      "fact": "058b9fda48ea9fe4",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     }
+    ]
+   }
+  },
+  "bench/acfr2": {
+   "claude-haiku-5-5-acfr2-242": {
+    "output schema": [
+     "fd545a445ee8ce86f9b55157f1daf4021361df2ec3f69ce2e2e3a00f410d9b93"
+    ],
+    "no reply": 0,
+    "proposals": [
+     {
+      "doc": "acfr2-ia",
+      "id": "c0",
+      "fact": "b9f7c5c9823ec057",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c1",
+      "fact": "dca77346fddbb8ac",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c2",
+      "fact": "07271d44b052cd7a",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c3",
+      "fact": "7d6ea2dbbbff5f97",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c0",
+      "fact": "aadf5248a3bc337a",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c1",
+      "fact": "6d7282866a09db75",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c2",
+      "fact": "06134555356ac688",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c3",
+      "fact": "498ed78be98cff44",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c0",
+      "fact": "cf15ef6a2907f696",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c1",
+      "fact": "1637e2762301363c",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c2",
+      "fact": "0be2c15749bb55e2",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c3",
+      "fact": "74ba06ee20005e16",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c0",
+      "fact": "000fc5ed539d8844",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c1",
+      "fact": "338465c37afdf4ce",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c2",
+      "fact": "972516c1959a4558",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c3",
+      "fact": "952bf433ad4d37dd",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c0",
+      "fact": "b5dc8d964a38bb0d",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c1",
+      "fact": "30e80c44eac8e717",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c2",
+      "fact": "ed0df4895c4ce0cb",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c3",
+      "fact": "88d85cf742e56e95",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c0",
+      "fact": "3d2aaec84e15c39d",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c1",
+      "fact": "8cc0f8fcc6c227b6",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c2",
+      "fact": "6723ffead2691e82",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c3",
+      "fact": "f7536bccb1deaf2a",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c0",
+      "fact": "6f2c293ca56fc46c",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c1",
+      "fact": "8444176cb0dc5f23",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c2",
+      "fact": "72d6194396569638",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c3",
+      "fact": "33de5dc691ca8ea6",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c0",
+      "fact": "90c3317f21576a52",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c1",
+      "fact": "224090566165d76c",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c2",
+      "fact": "bbdf0234bf2bb014",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c3",
+      "fact": "4ca01e6254cf6d66",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c0",
+      "fact": "0feafe74f634cb91",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c1",
+      "fact": "79912dd548ec4d95",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c2",
+      "fact": "d11fc880cf6c8401",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c3",
+      "fact": "0996f50b51c94dfc",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c0",
+      "fact": "639ec8df8b8374b1",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c1",
+      "fact": "9c458e0991e82c3c",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c2",
+      "fact": "1ab2578042f3fbff",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c3",
+      "fact": "35d16878f251d0db",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     }
+    ]
+   },
+   "claude-haiku-5-5-acfr2-256": {
+    "output schema": [
+     "3915158838a991693262f44ac317094d7375b31c50b50801d2581a5c66ada410"
+    ],
+    "no reply": 0,
+    "proposals": [
+     {
+      "doc": "acfr2-ia",
+      "id": "c0",
+      "fact": "b9f7c5c9823ec057",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c1",
+      "fact": "dca77346fddbb8ac",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c2",
+      "fact": "07271d44b052cd7a",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c3",
+      "fact": "7d6ea2dbbbff5f97",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c0",
+      "fact": "aadf5248a3bc337a",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c1",
+      "fact": "6d7282866a09db75",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c2",
+      "fact": "06134555356ac688",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c3",
+      "fact": "498ed78be98cff44",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c0",
+      "fact": "cf15ef6a2907f696",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c1",
+      "fact": "1637e2762301363c",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c2",
+      "fact": "0be2c15749bb55e2",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c3",
+      "fact": "74ba06ee20005e16",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c0",
+      "fact": "000fc5ed539d8844",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c1",
+      "fact": "338465c37afdf4ce",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c2",
+      "fact": "972516c1959a4558",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c3",
+      "fact": "952bf433ad4d37dd",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c0",
+      "fact": "b5dc8d964a38bb0d",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c1",
+      "fact": "30e80c44eac8e717",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c2",
+      "fact": "ed0df4895c4ce0cb",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c3",
+      "fact": "88d85cf742e56e95",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c0",
+      "fact": "3d2aaec84e15c39d",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c1",
+      "fact": "8cc0f8fcc6c227b6",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c2",
+      "fact": "6723ffead2691e82",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c3",
+      "fact": "f7536bccb1deaf2a",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c0",
+      "fact": "6f2c293ca56fc46c",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c1",
+      "fact": "8444176cb0dc5f23",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c2",
+      "fact": "72d6194396569638",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c3",
+      "fact": "33de5dc691ca8ea6",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c0",
+      "fact": "90c3317f21576a52",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c1",
+      "fact": "224090566165d76c",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c2",
+      "fact": "bbdf0234bf2bb014",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c3",
+      "fact": "4ca01e6254cf6d66",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c0",
+      "fact": "0feafe74f634cb91",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c1",
+      "fact": "79912dd548ec4d95",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c2",
+      "fact": "d11fc880cf6c8401",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c3",
+      "fact": "0996f50b51c94dfc",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c0",
+      "fact": "639ec8df8b8374b1",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c1",
+      "fact": "9c458e0991e82c3c",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c2",
+      "fact": "1ab2578042f3fbff",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c3",
+      "fact": "35d16878f251d0db",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     }
+    ]
+   },
+   "gpt-6-luna-acfr2-242": {
+    "output schema": [
+     "fd545a445ee8ce86f9b55157f1daf4021361df2ec3f69ce2e2e3a00f410d9b93"
+    ],
+    "no reply": 0,
+    "proposals": [
+     {
+      "doc": "acfr2-ia",
+      "id": "c0",
+      "fact": "b9f7c5c9823ec057",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c1",
+      "fact": "dca77346fddbb8ac",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c2",
+      "fact": "07271d44b052cd7a",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c3",
+      "fact": "7d6ea2dbbbff5f97",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c0",
+      "fact": "aadf5248a3bc337a",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c1",
+      "fact": "6d7282866a09db75",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c2",
+      "fact": "06134555356ac688",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c3",
+      "fact": "498ed78be98cff44",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c0",
+      "fact": "d4ab84802c4fb75f",
+      "key item": true,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c1",
+      "fact": "3b79502a45cedf3d",
+      "key item": true,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c2",
+      "fact": "db8643c7f4e8f700",
+      "key item": true,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c3",
+      "fact": "74ba06ee20005e16",
+      "key item": true,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c0",
+      "fact": "000fc5ed539d8844",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c1",
+      "fact": "338465c37afdf4ce",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c2",
+      "fact": "972516c1959a4558",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c3",
+      "fact": "952bf433ad4d37dd",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c0",
+      "fact": "b5dc8d964a38bb0d",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c1",
+      "fact": "30e80c44eac8e717",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c2",
+      "fact": "ed0df4895c4ce0cb",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c3",
+      "fact": "88d85cf742e56e95",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c0",
+      "fact": "3d2aaec84e15c39d",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c1",
+      "fact": "8cc0f8fcc6c227b6",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c2",
+      "fact": "6723ffead2691e82",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c3",
+      "fact": "f7536bccb1deaf2a",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c0",
+      "fact": "6f2c293ca56fc46c",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c1",
+      "fact": "8444176cb0dc5f23",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c2",
+      "fact": "72d6194396569638",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c3",
+      "fact": "33de5dc691ca8ea6",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c0",
+      "fact": "90c3317f21576a52",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c1",
+      "fact": "224090566165d76c",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c2",
+      "fact": "bbdf0234bf2bb014",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c3",
+      "fact": "4ca01e6254cf6d66",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "PART_MISSING",
+       "VALUE_DERIVED",
+       "missing unit"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c0",
+      "fact": "0feafe74f634cb91",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c1",
+      "fact": "79912dd548ec4d95",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c2",
+      "fact": "d11fc880cf6c8401",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c3",
+      "fact": "0996f50b51c94dfc",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "UNIT_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c0",
+      "fact": "639ec8df8b8374b1",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "UNIT_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c1",
+      "fact": "9c458e0991e82c3c",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "UNIT_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c2",
+      "fact": "1ab2578042f3fbff",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "KEY_CITATION_INVALID",
+       "UNIT_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c3",
+      "fact": "35d16878f251d0db",
+      "key item": true,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "KEY_CITATION_INVALID",
+       "UNIT_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     }
+    ]
+   },
+   "gpt-6-luna-acfr2-256": {
+    "output schema": [
+     "3915158838a991693262f44ac317094d7375b31c50b50801d2581a5c66ada410"
+    ],
+    "no reply": 0,
+    "proposals": [
+     {
+      "doc": "acfr2-ia",
+      "id": "c0",
+      "fact": "b9f7c5c9823ec057",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c1",
+      "fact": "dca77346fddbb8ac",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c2",
+      "fact": "07271d44b052cd7a",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ia",
+      "id": "c3",
+      "fact": "7d6ea2dbbbff5f97",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c0",
+      "fact": "aadf5248a3bc337a",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c1",
+      "fact": "6d7282866a09db75",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c2",
+      "fact": "06134555356ac688",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-ks",
+      "id": "c3",
+      "fact": "498ed78be98cff44",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c0",
+      "fact": "cf15ef6a2907f696",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c1",
+      "fact": "1637e2762301363c",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c2",
+      "fact": "0be2c15749bb55e2",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ky",
+      "id": "c3",
+      "fact": "74ba06ee20005e16",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c0",
+      "fact": "000fc5ed539d8844",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c1",
+      "fact": "338465c37afdf4ce",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c2",
+      "fact": "972516c1959a4558",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-la",
+      "id": "c3",
+      "fact": "952bf433ad4d37dd",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c0",
+      "fact": "b5dc8d964a38bb0d",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c1",
+      "fact": "30e80c44eac8e717",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c2",
+      "fact": "ed0df4895c4ce0cb",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-ma",
+      "id": "c3",
+      "fact": "88d85cf742e56e95",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c0",
+      "fact": "3d2aaec84e15c39d",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c1",
+      "fact": "8cc0f8fcc6c227b6",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c2",
+      "fact": "6723ffead2691e82",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-md",
+      "id": "c3",
+      "fact": "f7536bccb1deaf2a",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "SIGN_CITATION_INVALID",
+       "UNIT_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c0",
+      "fact": "6f2c293ca56fc46c",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c1",
+      "fact": "8444176cb0dc5f23",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c2",
+      "fact": "72d6194396569638",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-me",
+      "id": "c3",
+      "fact": "33de5dc691ca8ea6",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c0",
+      "fact": "90c3317f21576a52",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "UNIT_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c1",
+      "fact": "224090566165d76c",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c2",
+      "fact": "bbdf0234bf2bb014",
+      "key item": false,
+      "outcome": "admitted",
+      "codes": [
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mi",
+      "id": "c3",
+      "fact": "4ca01e6254cf6d66",
+      "key item": false,
+      "outcome": "needs_verification",
+      "codes": [
+       "FIELD_CITATION_INVALID",
+       "UNIT_CITATION_INVALID",
+       "VALUE_DERIVED"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c0",
+      "fact": "0feafe74f634cb91",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c1",
+      "fact": "79912dd548ec4d95",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c2",
+      "fact": "d11fc880cf6c8401",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-mn",
+      "id": "c3",
+      "fact": "0996f50b51c94dfc",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c0",
+      "fact": "639ec8df8b8374b1",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c1",
+      "fact": "9c458e0991e82c3c",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c2",
+      "fact": "1ab2578042f3fbff",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     },
+     {
+      "doc": "acfr2-mo",
+      "id": "c3",
+      "fact": "35d16878f251d0db",
+      "key item": false,
+      "outcome": "rejected",
+      "codes": [
+       "CANDIDATE_INVALID"
+      ]
+     }
+    ]
+   }
+  }
+ }
+}

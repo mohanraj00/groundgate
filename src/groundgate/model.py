@@ -388,9 +388,9 @@ def candidate_schema() -> dict[str, Any]:
 _ROLE_HELP = (
     "What the quote supports. value: the number itself. sign: brackets or a loss word that make "
     "it negative. scale: words such as 'in thousands'. unit: a unit or $ sign that is not next "
-    "to the number. field: words that name the field, such as a row label. key: words that name "
-    "the key, such as a column heading."
+    "to the number. field: words that name the field, such as a row label."
 )
+_KEY_HELP = " key: words that name the key, such as a column heading."
 
 
 def _closed(props: dict[str, Any], description: str | None = None) -> dict[str, Any]:
@@ -413,7 +413,8 @@ def extractor_schema(
 
     It uses only the JSON Schema subset of the strict structured-output modes, and every
     candidate that it accepts passes step 1 of SPEC §3. Two step 1 rules stay outside it: two
-    items with the same role, and a blank text, url or retrieved.
+    items with the same role, and a blank text, url or retrieved. A field with no keys gets no
+    role "key", because a key item on it always fails (SPEC §4.6).
     """
     s = schema if isinstance(schema, Schema) else Schema.from_dict(schema)
     if not s.fields:
@@ -425,23 +426,31 @@ def extractor_schema(
     ):
         raise PacketError("reference_ids must be a non-empty list of unique non-blank strings")
     quote = {"type": "string", "description": "Copied verbatim from the text."}
-    role = {"enum": ["value", "sign", "scale", "unit", "field", "key"], "description": _ROLE_HELP}
-    kinds: dict[str, dict[str, Any]] = {
-        "document": _closed(
+    # a field with no keys gets no role "key": a key item on it always fails (SPEC 4.6, #256).
+    # When the schema has both kinds of field, the evidence of a field with no keys is a second
+    # definition, with the suffix "_no_key".
+    keyed = sorted({f.keys is not None for f in s.fields.values()}, reverse=True)
+    suffix = {k: "" if k == keyed[0] else "_no_key" for k in keyed}
+    kinds: dict[str, dict[str, Any]] = {}
+    for k in keyed:
+        role = {
+            "enum": ["value", "sign", "scale", "unit", "field", *(["key"] if k else [])],
+            "description": _ROLE_HELP + (_KEY_HELP if k else ""),
+        }
+        kinds["document" + suffix[k]] = _closed(
             {"source": {"const": "document"}, "role": role, "text": quote},
             "A quote from the document.",
         )
-    }
-    if reference_ids:
-        kinds["reference"] = _closed(
-            {
-                "source": {"const": "reference"},
-                "ref": {"enum": list(reference_ids)},
-                "role": role,
-                "text": quote,
-            },
-            "A quote from a reference text that the app gave.",
-        )
+        if reference_ids:
+            kinds["reference" + suffix[k]] = _closed(
+                {
+                    "source": {"const": "reference"},
+                    "ref": {"enum": list(reference_ids)},
+                    "role": role,
+                    "text": quote,
+                },
+                "A quote from a reference text that the app gave.",
+            )
     kinds["external"] = _closed(
         {
             "source": {"const": "external"},
@@ -458,8 +467,22 @@ def extractor_schema(
         },
         "Your own knowledge, when no text states the value.",
     )
-    # one evidence definition: strict modes count each anyOf against a limit per request
-    evidence = {"type": "array", "items": {"anyOf": [{"$ref": f"#/$defs/{k}"} for k in kinds]}}
+    # one evidence definition for each kind of field: strict modes count each anyOf against a
+    # limit per request
+    shared = ("external", "knowledge")
+    evidence = {
+        "evidence" + suffix[k]: {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {"$ref": f"#/$defs/{n}"}
+                    for n in kinds
+                    if n in shared or n in ("document" + suffix[k], "reference" + suffix[k])
+                ]
+            },
+        }
+        for k in keyed
+    }
     cands = []
     for f in s.fields.values():
         if f.type == "string":
@@ -478,7 +501,7 @@ def extractor_schema(
                     "value": value,
                     "unit": {"type": "null"} if f.unit is None else {"const": f.unit},
                     "key": {"type": "null"} if f.keys is None else {"enum": list(f.keys)},
-                    "evidence": {"$ref": "#/$defs/evidence"},
+                    "evidence": {"$ref": f"#/$defs/evidence{suffix[f.keys is not None]}"},
                 },
                 description or None,
             )
@@ -493,5 +516,5 @@ def extractor_schema(
                 }
             }
         ),
-        "$defs": {**kinds, "evidence": evidence},
+        "$defs": {**kinds, **evidence},
     }
