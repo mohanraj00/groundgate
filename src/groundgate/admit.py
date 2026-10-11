@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import bisect
 import dataclasses
+import itertools
 import re
 from collections import defaultdict
 from collections.abc import Callable, Mapping, Sequence
@@ -30,6 +31,7 @@ from .text import (
     brackets_around,
     canonical,
     cells,
+    first_token_end,
     form_next,
     gain_word,
     header,
@@ -127,11 +129,44 @@ class _Text:
     ref: str | None = None
     mentions: dict[tuple[str, ...], list[tuple[int, int, str]]] = field(default_factory=dict)
     rows: list[tuple[int, int]] | None = None  # reached by a heading scale, read once
+    # read once for the many occurrences of one quote (#249)
+    quotes: dict[tuple[str, int, int], tuple[list[tuple[int, int]], list[int], list[int]]] = field(
+        default_factory=dict
+    )
+    spans: dict[tuple[str, ...], list[tuple[int, int]]] = field(default_factory=dict)
+    letters: dict[int, int] = field(default_factory=dict)  # the first letter at or after each place
+    numbers: dict[int, int | None] = field(default_factory=dict)  # the first token end, likewise
 
     def key_mentions(self, words: tuple[str, ...]) -> list[tuple[int, int, str]]:
         if words not in self.mentions:
             self.mentions[words] = key_mentions(self.text, words)
         return self.mentions[words]
+
+    def named(self, words: tuple[str, ...], a: int, b: int) -> bool:
+        """Whether a key mention of ``words`` lies within text[a:b]."""
+        if words not in self.spans:
+            self.spans[words] = sorted((x, y) for x, y, _ in self.key_mentions(words))
+        found = self.spans[words]
+        i = bisect.bisect_left(found, (a, -1))
+        return any(
+            y <= b
+            for _, y in itertools.takewhile(lambda m: m[0] < b, itertools.islice(found, i, None))
+        )
+
+    def letter_after(self, pos: int) -> int:
+        """The first letter at or after ``pos``, or the end of the text."""
+        if pos not in self.letters:
+            text = self.text
+            self.letters[pos] = next(
+                (i for i in range(pos, len(text)) if text[i].isalpha()), len(text)
+            )
+        return self.letters[pos]
+
+    def token_after(self, pos: int) -> int | None:
+        """The end of the first number token at or after ``pos``, or None."""
+        if pos not in self.numbers:
+            self.numbers[pos] = first_token_end(self.text, pos)
+        return self.numbers[pos]
 
 
 def heading_scale(t: _Text, pos: int) -> bool:
@@ -382,7 +417,19 @@ def _same(a: _Item, b: _Item) -> bool:
 
 
 def _occurrences(t: _Text, quote: str, region: tuple[int, int]) -> list[tuple[int, int]]:
-    return [(m.start(), m.end()) for m in quote_pattern(quote).finditer(t.text, *region)]
+    return _indexed(t, quote, region)[0]
+
+
+def _indexed(
+    t: _Text, quote: str, region: tuple[int, int]
+) -> tuple[list[tuple[int, int]], list[int], list[int]]:
+    """The occurrences of a quote, with their starts and their ends, each in order: the matches
+    do not overlap. Read once for each quote."""
+    k = (quote, *region)
+    if k not in t.quotes:
+        found = [(m.start(), m.end()) for m in quote_pattern(quote).finditer(t.text, *region)]
+        t.quotes[k] = (found, [a for a, _ in found], [b for _, b in found])
+    return t.quotes[k]
 
 
 def _check(ctx: _Ctx, cand: object) -> _Passed:
@@ -481,29 +528,41 @@ def _checked(
         found = _occurrences(t, vitem.text, region)
         if not found:
             raise _Reject("QUOTE_NOT_FOUND", item=vitem)
-        if "field" in roles and f.aliases is not None:
-            named = []
-            for occ in found:
+        by_field = "field" in roles and f.aliases is not None
+        at: _At | None = None
+        first: _At | None = None  # the first occurrence where steps 10-11 pass
+        named: tuple[int, int] | None = None  # the first occurrence where the field item passes
+        for occ in found:  # one pass: it stops where both pass, as the first of the first kind
+            strict, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=False)
+            if by_field:
                 here, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=True)
                 if here is not None and _field_passes(t, f, here, roles, region):
-                    named.append(occ)
-            found = named or found
-        at: _At | None = None
-        for occ in found:
-            at, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=False)
-            if at is not None:
+                    named = named or occ
+                    if strict is not None:
+                        at = strict
+                        break
+            elif strict is not None:
+                at = strict
                 break
+            first = first or strict
+        if at is None and named is None:
+            at = first
         if at is None:
-            at, failure = _value_at(ctx, vitem, t, f, value, found[0], roles, lenient=True)
+            occ = named or found[0]
+            at, failure = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=True)
             if at is None:
                 assert failure is not None
-                raise _Reject(failure, _At(vitem, t, found[0], None))
+                raise _Reject(failure, _At(vitem, t, occ, None))
     else:
         span = _valid(t.offsets, vitem.span)
         if span is None:
             raise _Reject("SPAN_INVALID", item=vitem)
         # 10-11. value and unit at the evidence, with re-anchoring
         at, failure = _value_at(ctx, vitem, t, f, value, span, roles, lenient=False)
+        if at is None:  # the unit at a unit place where the field item passes (#249)
+            near, _ = _value_at(ctx, vitem, t, f, value, span, roles, lenient=True)
+            if near is not None and _unit_relief(ctx, t, f, near, roles, region):
+                at = near
         if at is None:
             quote = vitem.text
             if ctx.policy.reanchor and quote is not None and normalize_ws(quote):
@@ -557,14 +616,13 @@ def _find(
         shown = item.text
         return span, shown is None or verbatim_equal(shown, t.text[span[0] : span[1]])
     assert item.text is not None
-    found = _occurrences(t, item.text, region)
+    found, starts, ends = _indexed(t, item.text, region)
     tok = at.token
     if tok is not None:
-        for a, b in found:
-            if a <= tok.start and tok.end <= b:
-                return (a, b), True
+        i = bisect.bisect_right(starts, tok.start) - 1  # the only one that can hold the token
+        if i >= 0 and tok.end <= ends[i]:
+            return found[i], True
     pos = tok.start if tok is not None else at.span[0]
-    before = [(a, b) for a, b in found if b <= pos]
     if place is not None:  # a unit quote: also the occurrences that overlap, as in "$$$"
         every = quote_pattern(item.text).pattern
         seen = re.compile(f"(?=({every}))").finditer(t.text, *region)
@@ -572,10 +630,11 @@ def _find(
         placed = next(((a, b) for a, b in reversed(near) if place(a, b)), None)
         if placed is not None:
             return placed, True
-    if before:
-        return before[-1], True
-    after = [(a, b) for a, b in found if a >= pos]
-    return (after[0], True) if after else (None, False)
+    i = bisect.bisect_right(ends, pos)
+    if i:
+        return found[i - 1], True
+    i = bisect.bisect_left(starts, pos)
+    return (found[i], True) if i < len(found) else (None, False)
 
 
 def _repeats(ctx: _Ctx, t: _Text, tok: Token, prefixes: list[str], suffixes: list[str]) -> bool:
@@ -590,18 +649,31 @@ def _field_ok(t: _Text, f: Field, span: tuple[int, int], pos: int) -> tuple[bool
     """Whether a field item at ``span`` passes for a value at ``pos``, and whether it is at the
     value's row (SPEC §4.6)."""
     a, b = span
-    if f.aliases is None or b > pos:
+    if f.aliases is None or b > pos or not t.named(f.aliases, a, b):
         return False, False
-    named = any(a <= x and y <= b for x, y, _ in t.key_mentions(f.aliases))
-    s0, _ = sentence(t.text, pos)
-    row = named and not any(ch.isalpha() for ch in t.text[b:pos])
-    in_sentence = a >= s0 and not tokens(t.text, b, pos)
-    return named and (row or in_sentence), row
+    if t.letter_after(b) >= pos:
+        return True, True  # at the value's row
+    end = t.token_after(b)  # no number token between the item and the value
+    return a >= sentence(t.text, pos)[0] and (end is None or end > pos), False
 
 
 def _unit_at_place(places: UnitPlaces, tok: Token) -> bool:
     """Whether a form of the unit is at a unit place of the value, before it (#249)."""
     return places(min(places.starts, default=places.line[0]), tok.start)
+
+
+def _unit_relief(
+    ctx: _Ctx, t: _Text, f: Field, at: _At, roles: dict[str, _Item], region: tuple[int, int]
+) -> bool:
+    """Whether the unit is the only missing part at this place of the value, and is not missing
+    there: the field item passes and a form of the unit is at a unit place (#249)."""
+    tok = at.token
+    if at.missing != {"unit"} or tok is None or f.unit is None:
+        return False
+    if not _field_passes(t, f, at, roles, region):
+        return False
+    prefixes, suffixes = ctx.schema.units.get(f.unit, ([], []))
+    return _unit_at_place(UnitPlaces(t.text, tok, prefixes, suffixes), tok)
 
 
 def _field_passes(

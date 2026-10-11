@@ -626,9 +626,10 @@ The quote is trimmed of whitespace at both ends first.
   candidate has a field item and the field has `aliases`, only the occurrences where the field
   item passes count, if there is one, with the token that steps 10 and 11 find there when a part
   may be missing (#249); otherwise all of them count. Of those, the first where steps 10 and 11
-  pass without a missing part is the evidence. When there is no such occurrence, the evidence is
-  the first of those, and steps 10 and 11 run there. When there is no occurrence, step 9a
-  rejects.
+  pass without a missing part is the evidence. Here a unit form at a unit place does not make the
+  unit present (step 11): an occurrence with the unit next to the value comes first. When there
+  is no such occurrence, the evidence is the first of those, and steps 10 and 11 run there. When
+  there is no occurrence, step 9a rejects.
 - For a role item, the occurrence is the one that holds the value's token; else, for a unit item,
   the last one that ends at or before the value at a unit place of the value (below), where
   occurrences that overlap count too, as `$$` twice in `$$$`; else the

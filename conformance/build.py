@@ -2918,7 +2918,8 @@ OCCURRENCE = (
     "Other liabilities\t50\nTotal liabilities\t400\nNet position\t1,100\n"
     "Total liabilities and net position\t$\t1,500\n\n"
     "Statement of changes in net position\n(in thousands)\n\n\t2025\n"
-    "Ending balance\t$\t1,100"
+    "Ending balance\t$\t1,100\n\n"
+    "South sales were $160 in the year."
 )
 
 
@@ -2930,11 +2931,13 @@ def at(text: str) -> dict[str, Any]:
 vector(
     "27-occurrence-at-field-and-column-unit",
     "A value quote takes the first occurrence where the field item passes; among those, or when "
-    "none passes, the first where steps 10 and 11 pass with no missing part, as before (#249). "
+    "none passes, the first where steps 10 and 11 pass with no missing part, as before, with the "
+    "unit next to the value (#249). "
     "When the field item passes, a form of the field's unit at a unit place of the value, as for "
     "a unit item (4.6), means that the unit is not a missing part: in the value's column on an "
     "earlier line of its table, or in a caption line that reaches its table. A unit form on a "
-    "later line is at no unit place (spec 0.8, #249).",
+    "later line is at no unit place, and a cited span where the unit is so not missing does not move "
+    "to another occurrence (spec 0.8, #249).",
     OCCURRENCE,
     {
         "fields": {
@@ -2959,6 +2962,7 @@ vector(
         c("o7", "region", "160", "USD", [at("160"), row("South")]),
         c("o8", "region", "110", "USD", [at("110"), row("South")], (REVIEW, ["PART_MISSING"], ["unit"])),
         c("o9", "fee", "75", "USD", [at("75"), row("Fee")]),
+        c("o10", "region", "160", "USD", [q("160"), row("South")]),
     ],
 )  # fmt: skip
 
