@@ -1,0 +1,2185 @@
+[
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-commerce",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "d81361bb95174818",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-commerce",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "3537f9e5c38cfb27",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-commerce",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "2c63c92e6b9c8253",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-commerce",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "b3947964e7525995",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-commerce",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "9c76874aea51d2fa",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dod",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "540736769e78eebb",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dod",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "dd5b267c7bd5ff2c",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dod",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "e1dd8ca67d1f12b5",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dod",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "17426bbcffcb308d",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dod",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "3944fcb278a8c654",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doe",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "652e6c2e6586871a",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doe",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "a54d617817c4c062",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doe",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "0b9d931d3c985b09",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doe",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c6b6b073010f3b7c",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doe",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "c8736a6506856a40",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doj",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "c0cd11ae7516fc34",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doj",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "a9f5bc84372dd69c",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doj",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "5552da27f5fda81f",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doj",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "7113bdd7a33789ce",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dol",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "48c2cfb9447fa773",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dol",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "5b1bfe249b70c223",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dol",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "0a3f20a556a84ef6",
+  "field cause": "no alias",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dol",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "ddce6ff6b86852c3",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dot",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "c2c807e7b8b6c07d",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dot",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "40dfb452d527db69",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dot",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "880adc6f3ede4f83",
+  "field cause": "no alias",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dot",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "b61a5614d513bdad",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dot",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "6d3bd0250787c182",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-epa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "29928baab3cfdc30",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-epa",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "30849c063493daf8",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-epa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "8bc246b9c90a0df3",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-epa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "b0eb824cba0b0f7c",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-epa",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "b48ed952f414b4d7",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-gsa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "56be6217ddaca8a6",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-gsa",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "3ebece735729e46b",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-gsa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "29276fcab2d87837",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-gsa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "bc637baa0a22fd29",
+  "field cause": "no alias",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-gsa",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "cc58ccb64ac41b20",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-hud",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "4dd2b4c3b610f4f7",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-hud",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "096690d2e170af88",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-hud",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "6d3187058cad33ab",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-hud",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "a0d8631d28ee1946",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-hud",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "de5ceff6a15f8625",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nasa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "202914c423f67ff4",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nasa",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "4a895771fa4d707f",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nasa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "bf37b9c8b9f472b0",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nasa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "7ed5f8b3b3307d1b",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nasa",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "1f104db326e7c74b",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nrc",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "9a56c994f260b89a",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nrc",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "e6308b23855e25b7",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nrc",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "d4c275b34b2a7d55",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nrc",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c56f11bc3ae806c2",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nrc",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "a782123b523699c1",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nsf",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "f90d5e6289acaf56",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nsf",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "29aae7b8d51b2565",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nsf",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "7f911ed58699350a",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nsf",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "8d30353bcd4dccef",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nsf",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "44af94f2c355ff09",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-opm",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "f6aeffa5ade8c692",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-opm",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "671f59efacd8179a",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-opm",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "701ca4647049350c",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-opm",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "b38c78559f24cc4f",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-opm",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "a2a408d26a4baf11",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-ssa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "bb81eca49859dbba",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-ssa",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "06ae18c11defd15e",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-ssa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "08bb21da8023d3f7",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-ssa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c8507b4f8471a551",
+  "field cause": "after the value",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-ssa",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "bef0ca3b59d0b41d",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-state",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "eae0dee6111efb99",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-state",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "d624523dffd9ad86",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-state",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "20e6d67c1b08a2f5",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-state",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c4dd761f25df6199",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-state",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "a21c3cc89cafb632",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-va",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "16b63231eab20b73",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-va",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "4066b3d38e29a312",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-va",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c5f329fb9bf24d76",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-va",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "704f326a55b9eba1",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-commerce",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "d81361bb95174818",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-commerce",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "3537f9e5c38cfb27",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-commerce",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "2c63c92e6b9c8253",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dod",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "540736769e78eebb",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dod",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "dd5b267c7bd5ff2c",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dod",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "e1dd8ca67d1f12b5",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dod",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "17426bbcffcb308d",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dod",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "3944fcb278a8c654",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-doi",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "d03a08ce150cd8bd",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-doi",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "50629b5a1c173cfe",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-doi",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "d011b2ca70043015",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-doj",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "c0cd11ae7516fc34",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-doj",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "a9f5bc84372dd69c",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-doj",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "5552da27f5fda81f",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-doj",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "7113bdd7a33789ce",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dol",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "48c2cfb9447fa773",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dol",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "5b1bfe249b70c223",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dol",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "0a3f20a556a84ef6",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dol",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "ddce6ff6b86852c3",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dot",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "c2c807e7b8b6c07d",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dot",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "40dfb452d527db69",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dot",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "880adc6f3ede4f83",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dot",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "b61a5614d513bdad",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dot",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "6d3bd0250787c182",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-epa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "29928baab3cfdc30",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-epa",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "30849c063493daf8",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-epa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "8bc246b9c90a0df3",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-epa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "b0eb824cba0b0f7c",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-gsa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "56be6217ddaca8a6",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-gsa",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "3ebece735729e46b",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-gsa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "29276fcab2d87837",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-gsa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "bc637baa0a22fd29",
+  "field cause": "no alias",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-gsa",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "cc58ccb64ac41b20",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-hhs",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "f21cde22c8520194",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-hhs",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "e04eb2ac1eb39723",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-hhs",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "6d5aa79f4ef86abe",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-hhs",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "e5c1726d15719bdf",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-hhs",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "f1ef56cedc1de021",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nasa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "202914c423f67ff4",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nasa",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "4a895771fa4d707f",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nasa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "bf37b9c8b9f472b0",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nasa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "7ed5f8b3b3307d1b",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nasa",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "1f104db326e7c74b",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nrc",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "9a56c994f260b89a",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nrc",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "e6308b23855e25b7",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nrc",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "d4c275b34b2a7d55",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nrc",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c56f11bc3ae806c2",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nrc",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "a782123b523699c1",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nsf",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "f90d5e6289acaf56",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nsf",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "29aae7b8d51b2565",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nsf",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "8d30353bcd4dccef",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nsf",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "44af94f2c355ff09",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-opm",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "f6aeffa5ade8c692",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-opm",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "671f59efacd8179a",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-opm",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "701ca4647049350c",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-opm",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "b38c78559f24cc4f",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-opm",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "a2a408d26a4baf11",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-ssa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "bb81eca49859dbba",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-ssa",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "06ae18c11defd15e",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-ssa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "08bb21da8023d3f7",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-ssa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c8507b4f8471a551",
+  "field cause": "after the value",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-ssa",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "bef0ca3b59d0b41d",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-state",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "eae0dee6111efb99",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-state",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "d624523dffd9ad86",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-state",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "20e6d67c1b08a2f5",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-state",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c4dd761f25df6199",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-state",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "a21c3cc89cafb632",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-treasury",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "e1d778172314f533",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-treasury",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "86ff1d2ff7fdbc7b",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-treasury",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "9ac4485cbff97580",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-treasury",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "d777a4784a3f0b2e",
+  "field cause": "no alias"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-treasury",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "c421ca192f4523ce",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-usda",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "eeddb3cfd8048051",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-usda",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "4408b4c280b6554f",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-usda",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "f913e2bc27aa9e4b",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-usda",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "8b94a6a31a9c912c",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-va",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "cadf2d6d26ef843b",
+  "field cause": "another line"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-va",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "16b63231eab20b73",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-va",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "4066b3d38e29a312",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-va",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c5f329fb9bf24d76",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "0.7 text",
+  "run": "gpt-6-luna",
+  "doc": "afr-va",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "704f326a55b9eba1",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dod",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "540736769e78eebb",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dod",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "17426bbcffcb308d",
+  "field cause": "another occurrence",
+  "missing at the field row": []
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doe",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "652e6c2e6586871a",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doe",
+  "id": "c1",
+  "field": "total_liabilities",
+  "fact": "a54d617817c4c062",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doe",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "0b9d931d3c985b09",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-doe",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c6b6b073010f3b7c",
+  "key cause": "no heading reaches the value, no key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dol",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "48c2cfb9447fa773",
+  "field cause": "after the value",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-dot",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "880adc6f3ede4f83",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-epa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "8bc246b9c90a0df3",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-gsa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "56be6217ddaca8a6",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-gsa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "29276fcab2d87837",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-gsa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "bc637baa0a22fd29",
+  "field cause": "no alias"
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-hhs",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "6d5aa79f4ef86abe",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nasa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "7ed5f8b3b3307d1b",
+  "field cause": "no alias",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-nrc",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "d4c275b34b2a7d55",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-ssa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c8507b4f8471a551",
+  "field cause": "no alias",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-state",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "20e6d67c1b08a2f5",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-treasury",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "9ac4485cbff97580",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-treasury",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "d777a4784a3f0b2e",
+  "field cause": "no alias"
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-usda",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "eeddb3cfd8048051",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-haiku-5-5",
+  "doc": "afr-usda",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "f913e2bc27aa9e4b",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dod",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "540736769e78eebb",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dol",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "48c2cfb9447fa773",
+  "field cause": "after the value",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-dot",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "880adc6f3ede4f83",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-epa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "8bc246b9c90a0df3",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-gsa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "56be6217ddaca8a6",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-gsa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "29276fcab2d87837",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-gsa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "bc637baa0a22fd29",
+  "field cause": "no alias"
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-hhs",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "6d5aa79f4ef86abe",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-hud",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "a0d8631d28ee1946",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-hud",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "de5ceff6a15f8625",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nasa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "7ed5f8b3b3307d1b",
+  "field cause": "no alias",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-nrc",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "d4c275b34b2a7d55",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-ssa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c8507b4f8471a551",
+  "field cause": "after the value",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-state",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "20e6d67c1b08a2f5",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-state",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c4dd761f25df6199",
+  "field cause": "another occurrence",
+  "missing at the field row": []
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-usda",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "eeddb3cfd8048051",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6-luna",
+  "doc": "afr-usda",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "f913e2bc27aa9e4b",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-dod",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "540736769e78eebb",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-dol",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "48c2cfb9447fa773",
+  "field cause": "after the value",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-epa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "8bc246b9c90a0df3",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-gsa",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "56be6217ddaca8a6",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-gsa",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "29276fcab2d87837",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-gsa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "bc637baa0a22fd29",
+  "field cause": "no alias"
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-hhs",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "6d5aa79f4ef86abe",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-hud",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "a0d8631d28ee1946",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-hud",
+  "id": "c4",
+  "field": "total_budgetary_resources",
+  "fact": "de5ceff6a15f8625",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-nasa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "7ed5f8b3b3307d1b",
+  "field cause": "another line",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-nrc",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "d4c275b34b2a7d55",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-ssa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c8507b4f8471a551",
+  "field cause": "after the value",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-state",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "20e6d67c1b08a2f5",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-treasury",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "9ac4485cbff97580",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-treasury",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "d777a4784a3f0b2e",
+  "field cause": "no alias"
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-usda",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "eeddb3cfd8048051",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "claude-sonnet-5-5-high",
+  "doc": "afr-usda",
+  "id": "c2",
+  "field": "total_net_position",
+  "fact": "f913e2bc27aa9e4b",
+  "field cause": "another occurrence",
+  "missing at the field row": [
+   "unit"
+  ]
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6.1-sol-high",
+  "doc": "afr-dod",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "17426bbcffcb308d",
+  "field cause": "another occurrence",
+  "missing at the field row": []
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6.1-sol-high",
+  "doc": "afr-dol",
+  "id": "c0",
+  "field": "total_assets",
+  "fact": "48c2cfb9447fa773",
+  "field cause": "after the value",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6.1-sol-high",
+  "doc": "afr-ssa",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c8507b4f8471a551",
+  "field cause": "after the value",
+  "key cause": "no heading reaches the value, with key item"
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6.1-sol-high",
+  "doc": "afr-state",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "c4dd761f25df6199",
+  "field cause": "another occurrence",
+  "missing at the field row": []
+ },
+ {
+  "text": "new text",
+  "run": "gpt-6.1-sol-high",
+  "doc": "afr-treasury",
+  "id": "c3",
+  "field": "net_cost_of_operations",
+  "fact": "d777a4784a3f0b2e",
+  "field cause": "no alias"
+ }
+]

@@ -1,0 +1,129 @@
+{
+ "field cause": {
+  "after the value": {
+   "0.7 text, claude-haiku-5-5": {
+    "proposals": 1,
+    "right": 0
+   },
+   "0.7 text, gpt-6-luna": {
+    "proposals": 1,
+    "right": 0
+   },
+   "new text, claude-haiku-5-5": {
+    "proposals": 1,
+    "right": 0
+   },
+   "new text, claude-sonnet-5-5-high": {
+    "proposals": 2,
+    "right": 0
+   },
+   "new text, gpt-6-luna": {
+    "proposals": 2,
+    "right": 0
+   },
+   "new text, gpt-6.1-sol-high": {
+    "proposals": 2,
+    "right": 0
+   }
+  },
+  "another line": {
+   "0.7 text, claude-haiku-5-5": {
+    "proposals": 62,
+    "right": 51
+   },
+   "0.7 text, gpt-6-luna": {
+    "proposals": 74,
+    "right": 58
+   },
+   "new text, claude-sonnet-5-5-high": {
+    "proposals": 1,
+    "right": 0
+   }
+  },
+  "another occurrence": {
+   "new text, claude-haiku-5-5": {
+    "missing unit": 11,
+    "proposals": 12,
+    "right": 8
+   },
+   "new text, claude-sonnet-5-5-high": {
+    "missing unit": 10,
+    "proposals": 10,
+    "right": 6
+   },
+   "new text, gpt-6-luna": {
+    "missing unit": 10,
+    "proposals": 11,
+    "right": 8
+   },
+   "new text, gpt-6.1-sol-high": {
+    "proposals": 2,
+    "right": 2
+   }
+  },
+  "no alias": {
+   "0.7 text, claude-haiku-5-5": {
+    "proposals": 3,
+    "right": 1
+   },
+   "0.7 text, gpt-6-luna": {
+    "proposals": 2,
+    "right": 0
+   },
+   "new text, claude-haiku-5-5": {
+    "proposals": 4,
+    "right": 0
+   },
+   "new text, claude-sonnet-5-5-high": {
+    "proposals": 2,
+    "right": 0
+   },
+   "new text, gpt-6-luna": {
+    "proposals": 2,
+    "right": 0
+   },
+   "new text, gpt-6.1-sol-high": {
+    "proposals": 1,
+    "right": 0
+   }
+  }
+ },
+ "key cause": {
+  "no heading reaches the value, no key item": {
+   "0.7 text, claude-haiku-5-5": {
+    "proposals": 13,
+    "right": 11
+   },
+   "new text, claude-haiku-5-5": {
+    "proposals": 4,
+    "right": 4
+   }
+  },
+  "no heading reaches the value, with key item": {
+   "0.7 text, claude-haiku-5-5": {
+    "proposals": 51,
+    "right": 40
+   },
+   "0.7 text, gpt-6-luna": {
+    "proposals": 64,
+    "right": 48
+   },
+   "new text, claude-haiku-5-5": {
+    "proposals": 3,
+    "right": 0
+   },
+   "new text, claude-sonnet-5-5-high": {
+    "proposals": 5,
+    "right": 2
+   },
+   "new text, gpt-6-luna": {
+    "proposals": 5,
+    "right": 2
+   },
+   "new text, gpt-6.1-sol-high": {
+    "proposals": 2,
+    "right": 0
+   }
+  }
+ }
+}
