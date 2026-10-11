@@ -3,6 +3,62 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.8.0 (2026-10-11)
+
+Spec 0.8. Receipts name `"groundgate": "0.8"` and every digest uses the `groundgate/0.8:` prefix, so
+all hashes differ from 0.7.0. 0.8 is about yield: more right values admitted, with no more escapes.
+I measured each change on documents that it did not come from.
+
+- The PDF extract writes a table as rows, with a tab between two cells, as the HTML path writes
+  table cells (#230). Before, pdfminer gave each column of a table as its own text box, and the
+  extract wrote the table column by column. I measured it on the 20 agency financial reports of
+  `bench/afr` (`bench/afr/tabs`). With new runs on the new text, `claude-haiku-5-5` admits 57
+  right values and 0 escapes (3 and 1 on the 0.7 text), and `gpt-6-luna` 57 and 0 (6 and 0). Two
+  stronger models at high effort admit 66 (`claude-sonnet-5-5`) and 64 (`gpt-6.1-sol`) right
+  values with 0 escapes. These decisions use the 0.8 draft with the #242 rule only, and #263
+  decides them again under the released 0.8. Two limits stay: a running head far above a table
+  can join it as a column heading (#246), and a blank cell gets no empty cell, so the numbers
+  after it move one column left (#247).
+- A scale item that passes scales the value (#242). With a scale item that holds a scale word, a
+  token with no scale word of its own matches only its value times the factor, and its negative.
+  The number as written is no longer a derived value. The rule came from the escapes of the Haiku
+  replay on the #230 text. Vector 26 pins it. On the new set `bench/acfr` (10 state ACFRs), it
+  changes none of the 74 proposals.
+- A value quote takes the first occurrence where the field item passes, and a form of the field's
+  unit at a unit place of the value counts as the unit when the field item passes (#249). Both
+  rules come from the diagnosis of #239. Vector 27 pins them. On the new set `bench/acfr2` (10
+  more state ACFRs), `claude-haiku-5-5` goes from 5 to 7 right values admitted and `gpt-6-luna`
+  stays at 2, with 0 escapes.
+- A key in the title line reaches a table with one number column, across a label line (#250). No
+  page break stands between them, and the value's line holds a tab before the value. Vector 28
+  pins it. On `bench/acfr2` it changes no decision.
+- A string value is at its first occurrence in its evidence span, not at the start of the span
+  (#140). With a quote of two sentences, key scope read the first one. Vector 29 pins it. On the
+  new set `bench/strings` (10 drug labels), 7 proposals have the case and the rule changes no
+  decision: `claude-haiku-5-5` admits 14 right values and `gpt-6-luna` 10, with 0 escapes.
+- `gg.extractor_schema` offers the evidence role `key` only on a field that has keys (#256). A key
+  item on a field with no keys always fails. No decision changes, and a schema whose fields all
+  have keys gives the same output as before. On `bench/acfr`, `claude-haiku-5-5` goes from 20 to
+  29 right values admitted and `gpt-6-luna` from 0 to 12. On the documents of `bench/acfr2`,
+  which #256 did not come from, they go from 10 to 23 and from 0 to 9. All four runs have 0
+  escapes.
+
+Five diagnoses changed no code:
+
+- The cause of each field and key failure on `bench/afr` (`bench/afr/causes`, #239). It led to
+  #249 and #250.
+- The right values that the document states (#232). A second blind look changed 4 of the 21
+  labels to wrong, so 17 values remain. No rule comes from them in 0.8, because they come from the
+  v0.1 set and set 2.
+- Why most `bench/acfr` proposals are not admitted (`bench/acfr/causes`, #244). The main cause is a
+  key item on a field with no keys: 11 Haiku and 35 Luna proposals. It led to #256.
+- Which rows the PDF extract puts in a table (`bench/pdfrows`, #246 and #247): 282 rows of 10 more
+  state ACFRs, labeled blind. 19 of the 74 short rows have a blank cell before a number. 7 of the
+  100 rows above a table are running heads, all in the top 0.027 of the page. A rule from either
+  needs a new set.
+- Cells with spaces in the column rule (#152). On the #230 text, no row label has only spaces
+  before its number cells, so #152 is closed.
+
 ## 0.7.0 (2026-10-09)
 
 Spec 0.7. Receipts name `"groundgate": "0.7"` and every digest uses the `groundgate/0.7:` prefix, so
