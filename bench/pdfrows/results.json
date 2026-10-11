@@ -1,0 +1,89 @@
+{
+ "rows": {
+  "above": 100,
+  "join": 108,
+  "short": 74
+ },
+ "labeled": {
+  "above": 100,
+  "join": 108,
+  "short": 74
+ },
+ "above": {
+  "column heading": {
+   "rows": 89,
+   "gap": "-0.06 to 4.82",
+   "top": "0.08 to 0.23",
+   "height": "0.87 to 1.14",
+   "repeat": 25
+  },
+  "caption": {
+   "rows": 4,
+   "gap": "0.18 to 0.52",
+   "top": "0.07 to 0.092",
+   "height": "0.86 to 1.29",
+   "repeat": 1
+  },
+  "running head or page number": {
+   "rows": 7,
+   "gap": "0.42 to 10.05",
+   "top": "0.021 to 0.027",
+   "height": "1.11 to 1.57",
+   "repeat": 7
+  },
+  "other": {
+   "rows": 0,
+   "gap": "",
+   "top": "",
+   "height": "",
+   "repeat": 0
+  },
+  "not labeled": {
+   "rows": 0,
+   "gap": "",
+   "top": "",
+   "height": "",
+   "repeat": 0
+  }
+ },
+ "join": {
+  "same table": {
+   "rows": 107,
+   "gap": "1.22 to 5.27"
+  },
+  "not the same table": {
+   "rows": 1,
+   "gap": "1.57 to 1.57"
+  },
+  "not sure": {
+   "rows": 0,
+   "gap": ""
+  },
+  "not labeled": {
+   "rows": 0,
+   "gap": ""
+  }
+ },
+ "short": {
+  "in its columns": {
+   "rows": 54,
+   "short in its table": 3,
+   "fits": 54
+  },
+  "a blank cell before a number": {
+   "rows": 19,
+   "short in its table": 19,
+   "fits": 19
+  },
+  "not part of this table": {
+   "rows": 1,
+   "short in its table": 1,
+   "fits": 0
+  },
+  "not labeled": {
+   "rows": 0,
+   "short in its table": 0,
+   "fits": 0
+  }
+ }
+}

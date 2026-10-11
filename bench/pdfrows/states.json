@@ -1,0 +1,15 @@
+[
+ {"id": "pdfrows-mt", "state": "Montana", "url": "https://doa.mt.gov/_docs/sfsd/sab/Montana-ACFR-2025-sig-on-file1.pdf"},
+ {"id": "pdfrows-ne", "state": "Nebraska", "url": "https://das.nebraska.gov/accounting/docs/NE_DAS_Accounting-Annual_Reports_Annual_Comprehensive_Financial_Report_ACFR_2025.pdf"},
+ {"id": "pdfrows-nv", "state": "Nevada", "url": null},
+ {"id": "pdfrows-nh", "state": "New Hampshire", "url": "https://www.das.nh.gov/accounting/FY%2025/FY_2025_Annual_Comprehensive_Financial_Report.pdf"},
+ {"id": "pdfrows-nj", "state": "New Jersey", "url": "https://nj.gov/treasury/omb/publications/25fr/NJFY2025Complete.pdf"},
+ {"id": "pdfrows-nm", "state": "New Mexico", "url": "https://www.nmdfa.state.nm.us/wp-content/uploads/2026/04/FINAL-341-A-State-of-New-Mexico-FY-2025-FS-1.pdf"},
+ {"id": "pdfrows-ny", "state": "New York", "url": "https://www.osc.ny.gov/files/reports/finance/pdf/annual-comprehensive-financial-report-2025.pdf"},
+ {"id": "pdfrows-nc", "state": "North Carolina", "url": "https://ncosc.gov/sites/default/files/2025-12/2025_North_Carolina_Annual_Comprehensive_Financial_Report.pdf"},
+ {"id": "pdfrows-nd", "state": "North Dakota", "url": "https://www.omb.nd.gov/sites/www/files/documents/financial-transparency/cafr/2025-acfr.pdf"},
+ {"id": "pdfrows-oh", "state": "Ohio", "url": "https://archives.obm.ohio.gov/Files//State_Accounting/Financial_Reporting/Comprehensive_Annual_Financial_Report/2025/Basic%20Financial%20Statements.pdf"},
+ {"id": "pdfrows-ok", "state": "Oklahoma", "url": null},
+ {"id": "pdfrows-or", "state": "Oregon", "url": "https://www.oregon.gov/das/Financial/Acctng/Documents/2025.ACFR.pdf"},
+ {"id": "pdfrows-pa", "state": "Pennsylvania", "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/budget/documents/publications-and-reports/annualfinancialreport/june-30-2025%20acfr.pdf"}
+]

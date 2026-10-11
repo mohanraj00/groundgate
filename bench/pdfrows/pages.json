@@ -1,0 +1,15 @@
+{
+ "pdfrows-mt": [36, 39],
+ "pdfrows-ne": [35, 37],
+ "pdfrows-nv": "the newest ACFR on the state's site (controller.nv.gov) is for FY2024",
+ "pdfrows-nh": "the state's site refuses the download (HTTP 403)",
+ "pdfrows-nj": [44, 47],
+ "pdfrows-nm": [37, 39],
+ "pdfrows-ny": [40, 41],
+ "pdfrows-nc": [54, 57],
+ "pdfrows-nd": [39, 42],
+ "pdfrows-oh": [2, 5],
+ "pdfrows-ok": "the newest ACFR on the state's site (oklahoma.gov/omes) is for FY2024",
+ "pdfrows-or": [41, 44],
+ "pdfrows-pa": [52, 54]
+}

@@ -114,6 +114,8 @@ jobs:
         run: uv run python bench/afr/tabs.py results --check
       - name: Causes of the field and key failures on the report set (#239) match the recorded causes and labels
         run: uv run python bench/afr/causes.py results --check
+      - name: PDF table rows (#246, #247) match the recorded rows and labels
+        run: uv run python bench/pdfrows/pdfrows.py results --check
       - name: String set (#140) results match the recorded decisions and labels
         run: uv run python bench/strings/measure.py results --check
       - name: Status-set key calibration report matches its recorded answers, on the 0.6.1 wheel and calibrate 0.2.0

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Table row labels</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+  body { margin: 0; font: 15px/1.45 system-ui, sans-serif; color: #1d1d1f; background: #f4f4f2; }
+  .wrap { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); height: 100vh; }
+  #view { overflow: auto; padding: 16px; background: #8a8a8a; }
+  #sheet { position: relative; margin: 0 auto; width: max-content; box-shadow: 0 2px 8px #0005; }
+  #sheet canvas { display: block; background: #fff; }
+  .hit { position: absolute; border: 3px solid #e8590c; background: #ffd43b55; border-radius: 3px; }
+  #side { overflow: auto; padding: 16px 20px; border-left: 1px solid #ccc; background: #fff; }
+  h1 { font-size: 15px; margin: 0 0 4px; }
+  .meta { color: #666; font-size: 13px; margin-bottom: 12px; }
+  .q { font-weight: 600; margin: 14px 0 8px; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .row button { padding: 7px 12px; border: 1px solid #bbb; border-radius: 6px; background: #f1f1ef;
+                font: inherit; cursor: pointer; }
+  .now { margin-top: 10px; font-size: 13px; color: #444; }
+  .help { margin-top: 14px; font-size: 12px; color: #666; }
+  kbd { font: 11px ui-monospace, monospace; border: 1px solid #bbb; border-radius: 3px; padding: 0 3px; }
+  a { color: #1c7ed6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="view"><div id="sheet"><canvas id="canvas"></canvas></div></div>
+  <div id="side">
+    <h1 id="title"></h1>
+    <div class="meta" id="meta"></div>
+    <div class="q" id="question"></div>
+    <div class="row" id="answers"></div>
+    <div class="row">
+      <button id="back">Back <kbd>b</kbd></button>
+      <button id="next">Next <kbd>n</kbd></button>
+      <button id="todo">Next without a label</button>
+    </div>
+    <div class="now" id="now"></div>
+    <div class="help" id="help"></div>
+  </div>
+</div>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+let S, i = 0, zoom = 1.6;
+const docs = {};
+const $ = (id) => document.getElementById(id);
+const QUESTION = {
+  above: "What is the boxed row: a column heading of the table below it, a caption of that " +
+    "table (a title, date or unit line), a running head or page number, or other?",
+  join: "Do the two boxed rows belong to the same table?",
+  short: "Does each number of the boxed row stand in its own column of the table?",
+};
+const HELP = {
+  above: "A column heading names the columns of the table, such as Governmental Activities or " +
+    "Total. A caption belongs to the table but names no column, such as the statement's title, " +
+    "its date or \"(in thousands)\". A running head or page number repeats on each page and " +
+    "belongs to the report, not the table.",
+  join: "Answer no when one of the rows belongs to another table, a footer or a header.",
+  short: "Answer \"a blank cell before a number\" when a column to the left of a number of " +
+    "this row is empty on this row. Answer \"not part of this table\" when the row is a footer, " +
+    "a page number or a row of another table.",
+};
+
+let drawn = 0, task = null;  // the newest render wins; an older one stops or is dropped
+
+async function render(it) {
+  const mine = ++drawn;
+  if (task) task.cancel();
+  if (!docs[it.doc]) docs[it.doc] = pdfjsLib.getDocument("/pdf/" + it.doc).promise;
+  const pdf = await docs[it.doc];
+  const page = await pdf.getPage(it.page);
+  if (mine !== drawn) return;
+  const width = $("view").clientWidth - 32;
+  const scale = zoom * Math.max(1, width / page.getViewport({ scale: 1 }).width);
+  const vp = page.getViewport({ scale });
+  const dpr = window.devicePixelRatio || 1;
+  const c = $("canvas");
+  c.width = vp.width * dpr; c.height = vp.height * dpr;
+  c.style.width = vp.width + "px"; c.style.height = vp.height + "px";
+  const ctx = c.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  task = page.render({ canvasContext: ctx, viewport: vp });
+  try {
+    await task.promise;
+  } catch (e) {
+    if (e && e.name === "RenderingCancelledException") return;
+    throw e;
+  }
+  if (mine !== drawn) return;
+  document.querySelectorAll(".hit").forEach((x) => x.remove());
+  // each box is in points from the top left of the crop box as the page shows it: pdfminer
+  // turns a page with /Rotate as pdf.js does, so the box only needs the viewport's scale
+  let first = null;
+  for (const [x0, top, x1, bottom] of it.boxes) {
+    const r = [x0, top, x1, bottom].map((v) => v * vp.scale);
+    const pad = 4;
+    const hit = document.createElement("div");
+    hit.className = "hit";
+    hit.style.left = Math.min(r[0], r[2]) - pad + "px";
+    hit.style.top = Math.min(r[1], r[3]) - pad + "px";
+    hit.style.width = Math.abs(r[2] - r[0]) + 2 * pad + "px";
+    hit.style.height = Math.abs(r[3] - r[1]) + 2 * pad + "px";
+    $("sheet").append(hit);
+    first = first || hit;
+  }
+  if (first) first.scrollIntoView({ block: "center", inline: "center" });
+}
+
+function show() {
+  const it = S.items[i];
+  const done = S.items.filter((x) => x.id in S.labels).length;
+  $("title").textContent = `Row ${i + 1} of ${S.items.length}`;
+  $("meta").innerHTML = `${it.doc}, PDF page ${it.page}. ${done} labeled. ` +
+    `<a href="/pdf/${it.doc}#page=${it.page}" target="_blank">Open the PDF</a>`;
+  $("question").textContent = QUESTION[it.kind];
+  $("help").textContent = HELP[it.kind] + " Keys + and - zoom the page.";
+  const row = $("answers");
+  row.textContent = "";
+  S.answers[it.kind].forEach((a, k) => {
+    const b = document.createElement("button");
+    b.innerHTML = `${a} <kbd>${k + 1}</kbd>`;
+    b.onclick = (e) => { e.currentTarget.blur(); save(a); };
+    row.append(b);
+  });
+  const now = S.labels[it.id];
+  $("now").textContent = "Saved: " + (now ? now.answer : "no label yet");
+  render(it);
+}
+
+let busy = false;  // one save at a time, so a double click cannot label the next row
+
+async function save(answer) {
+  if (busy) return;
+  busy = true;
+  try {
+    const it = S.items[i];
+    const r = await fetch("/label", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: it.id, answer }),
+    });
+    if (!r.ok) { alert("The label was not saved."); return; }
+    S.labels[it.id] = { answer };
+    go(S.items.indexOf(it) + 1);  // from the saved row, whatever the page shows now
+  } finally {
+    busy = false;
+  }
+}
+
+function move(to) {
+  if (!busy) go(to);  // no moving while a save is open
+}
+
+function go(to) {
+  i = Math.max(0, Math.min(S.items.length - 1, to));
+  history.replaceState(null, "", "#" + (i + 1));
+  show();
+}
+
+function todo() {
+  const n = S.items.findIndex((x, k) => k > i && !(x.id in S.labels));
+  const m = n >= 0 ? n : S.items.findIndex((x) => !(x.id in S.labels));
+  if (m >= 0) move(m);
+}
+
+$("back").onclick = (e) => { e.target.blur(); move(i - 1); };
+$("next").onclick = (e) => { e.target.blur(); move(i + 1); };
+$("todo").onclick = (e) => { e.target.blur(); todo(); };
+
+document.addEventListener("keydown", (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+  const k = Number(e.key);
+  const answers = S.answers[S.items[i].kind];
+  if (k >= 1 && k <= answers.length) save(answers[k - 1]);
+  else if (e.key === "b" || e.key === "ArrowLeft") move(i - 1);
+  else if (e.key === "n" || e.key === "ArrowRight") move(i + 1);
+  else if (e.key === "+" || e.key === "=") { zoom = Math.min(4, zoom * 1.25); render(S.items[i]); }
+  else if (e.key === "-") { zoom = Math.max(0.5, zoom / 1.25); render(S.items[i]); }
+  else return;
+  e.preventDefault();
+});
+
+fetch("/state").then((r) => r.json()).then((s) => {
+  S = s;
+  // #12 opens row 12; otherwise the first row without a label
+  const asked = Number(location.hash.slice(1));
+  const n = S.items.findIndex((x) => !(x.id in S.labels));
+  i = asked >= 1 && asked <= S.items.length ? asked - 1 : n >= 0 ? n : 0;
+  show();
+});
+</script>
+</body>
+</html>
