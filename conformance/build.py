@@ -3013,6 +3013,34 @@ vector(
 )  # fmt: skip
 
 
+STRING_PLACE = (
+    "Dosage\n\nHeart failure: take 5 mg daily. Hypertension: take with food.\n\n"
+    "Angina: take at bedtime. Hypertension: take at bedtime."
+)
+TWO = "Heart failure: take 5 mg daily. Hypertension: take with food."
+CROSS = "Hypertension: take with food.\n\nAngina: take at bedtime. Hypertension: take at bedtime."
+
+vector(
+    "29-string-value-place",
+    "A string value is at its first occurrence in its evidence span, where whitespace runs match "
+    "any whitespace run, and not at the start of the span: key scope reads the text there. When "
+    "the span does not hold the value, step 10 rejects as before (spec 0.8, #140).",
+    STRING_PLACE,
+    {"fields": {"instruction": {"type": "string", "keys": ["heart failure", "hypertension", "angina"], "multiple": True}}},
+    [
+        c("p1", "instruction", "take with food", None, q(TWO), key="hypertension"),
+        c("p2", "instruction", "take with food", None, q(TWO),
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="heart failure"),
+        c("p3", "instruction", "take 5 mg daily", None, q(TWO), key="heart failure"),
+        c("p4", "instruction", "take at bedtime", None, q(CROSS), key="angina"),
+        c("p5", "instruction", "take at bedtime", None, q(CROSS),
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="hypertension"),
+        c("p6", "instruction", "take twice daily", None, q(TWO),
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"]), key="hypertension"),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

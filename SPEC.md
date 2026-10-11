@@ -322,8 +322,9 @@ the one other occurrence that passes without one. At the cited span, a unit form
 can make the unit present (step 11); at another occurrence it does not, as in the choice of a
 quote occurrence (§4.6, #249).
 
-The value is at its supporting number token, or at the start of the evidence span for a `string`
-field. The role items are then checked at the value (§4.6).
+The value is at its supporting number token. For a `string` field, it is at the first occurrence
+of the value in the evidence span, where a whitespace run in the value matches any whitespace run
+in the text (#140). The role items are then checked at the value (§4.6).
 
 ### 3.2 The outside path
 

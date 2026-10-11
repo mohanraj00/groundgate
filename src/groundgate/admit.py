@@ -217,6 +217,14 @@ class _At:
     token: Token | None
     missing: set[str] = field(default_factory=set)
     derived: bool = False
+    start: int | None = None  # a string value's first occurrence in the span (#140)
+
+    @property
+    def pos(self) -> int:
+        """Where the value is: its token, or a string value's first occurrence in the span."""
+        if self.token is not None:
+            return self.token.start
+        return self.span[0] if self.start is None else self.start
 
 
 @dataclass
@@ -346,7 +354,8 @@ def _value_at(
         assert isinstance(value, str)
         if normalize_ws(value) not in normalize_ws(t.text[s:e]):
             return None, "VALUE_NOT_IN_EVIDENCE"
-        return _At(item, t, span, None), None
+        first = quote_pattern(value).search(t.text, s, e)
+        return _At(item, t, span, None, start=s if first is None else first.start()), None
     assert isinstance(value, Decimal)
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
     signs = prefixes if f.unit is not None else None  # brackets make a sign only with a unit
@@ -624,7 +633,7 @@ def _find(
         i = bisect.bisect_right(starts, tok.start) - 1  # the only one that can hold the token
         if i >= 0 and tok.end <= ends[i]:
             return found[i], True
-    pos = tok.start if tok is not None else at.span[0]
+    pos = at.pos
     if place is not None:  # a unit quote: also the occurrences that overlap, as in "$$$"
         every = quote_pattern(item.text).pattern
         seen = re.compile(f"(?=({every}))").finditer(t.text, *region)
@@ -688,7 +697,7 @@ def _field_passes(
     span, located = _find(t, item, at, region)
     if span is None or not located:
         return False
-    return _field_ok(t, f, span, at.token.start if at.token is not None else at.span[0])[0]
+    return _field_ok(t, f, span, at.pos)[0]
 
 
 def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, int]) -> None:
@@ -696,7 +705,7 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
     at, f = p.at, p.field
     assert at is not None
     t, tok = at.t, at.token
-    pos = tok.start if tok is not None else at.span[0]
+    pos = at.pos
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
     places = None
     if tok is not None and "unit" in roles:
