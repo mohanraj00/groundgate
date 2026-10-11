@@ -9,12 +9,15 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 from groundgate.text import (
+    _SENTENCE_END,
     _label_line_in,
     canonical,
+    first_token_end,
     key_mentions,
     keys_at,
     parse_value,
     qualifiers,
+    sentence,
     tokens,
     verbatim_equal,
 )
@@ -138,3 +141,29 @@ def test_a_long_line_of_spaces_takes_linear_time() -> None:
     t0 = time.perf_counter()
     assert keys_at(text, mentions, text.index("5 mg")) == {"Hypertension"}
     assert time.perf_counter() - t0 < 1
+
+
+_PIECES = st.lists(
+    st.sampled_from(["1", "0", ",", ".", "-", "\u2212", "a", " ", "\n", "\t", ";", "\u2022"]),
+    max_size=30,
+).map("".join)
+
+
+@given(_PIECES, st.data())
+def test_first_token_end_agrees_with_tokens(text: str, data: st.DataObject) -> None:
+    """``tokens(text, start, end)`` is empty exactly when the first token from ``start`` is
+    missing or ends after ``end`` (#249)."""
+    start = data.draw(st.integers(0, len(text)))
+    end = data.draw(st.integers(start, len(text)))
+    first = first_token_end(text, start)
+    assert bool(tokens(text, start, end)) == (first is not None and first <= end)
+
+
+@given(_PIECES, st.data())
+def test_sentence_agrees_with_a_scan(text: str, data: st.DataObject) -> None:
+    """The sentence ends read once give the same sentence as a scan from each place (#249)."""
+    pos = data.draw(st.integers(0, len(text)))
+    end = _SENTENCE_END
+    left = max((m.end() for m in end.finditer(text, 0, pos)), default=0)
+    right = next((m.start() for m in end.finditer(text, pos)), len(text))
+    assert sentence(text, pos) == (left, right)

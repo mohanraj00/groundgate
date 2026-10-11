@@ -148,7 +148,8 @@ The extractor cites each part as one item:
 An item from the document has a `role` and either a byte span (`start`, `end`, optional `text`)
 or only `text`. With only `text`, the item is a quote, and groundgate finds it. For the value item,
 groundgate takes the first occurrence that holds the value with its unit, else the first
-occurrence. For a role item, it takes the occurrence that holds the value, else the last one
+occurrence. With a field item, only the occurrences where the field item passes count, if there
+is one, so a number that a table repeats is read on the field's own row (spec 0.8). For a role item, it takes the occurrence that holds the value, else the last one
 before it, else the first one after it. A unit item first takes the last one before the value
 at a unit place, such as the `$` of the value's column (spec 0.7). A value quote that does not occur rejects the fact with
 `QUOTE_NOT_FOUND`. A role quote that does not occur fails its check and flags the fact, such as
@@ -159,7 +160,7 @@ at a unit place, such as the `$` of the value's column (spec 0.7). A value quote
 | `value` (default) | The number as written. | The value is there, as in spec 0.4. |
 | `sign` | A negative value. | Brackets around the number, or a loss word ("loss", "deficit") at most 4 words before it in the same sentence, with no "no", "not" or "without" directly before it, and no number, line break, tab or gain word ("income", "profit") between it and the number. |
 | `scale` | A value in thousands or millions. | "in thousands" or "in millions" before the value, with no other scale word between. With a scale item whose text holds a scale word, the value of a number with no scale word of its own must be the number times that scale: the number as written does not match (spec 0.8). A number such as "$2.2 million" keeps its own scale. |
-| `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The item holds a form of the field's unit. Either that unit is next to the number, so the item repeats it, or the field item passes, the item is before the value, no unit form is next to the number, and the item is on the value's line, in a caption line before the table, or in the value's column of the same table (spec 0.7). |
+| `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The item holds a form of the field's unit. Either that unit is next to the number, so the item repeats it, or the field item passes, the item is before the value, no unit form is next to the number, and the item is on the value's line, in a caption line before the table, or in the value's column of the same table (spec 0.7). When the field item passes, a unit form at such a place also means that the unit is not missing, with no unit item (spec 0.8). |
 | `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. |
 | `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). A dash or a `$` with no number counts as a cell. A number after the field item on its line, such as a footnote marker, stops the rule. When only spaces stand between the row label and its first number, the rule stops after the first column. A tab after the label, as `groundgate extract` writes HTML tables, keeps it. |
 

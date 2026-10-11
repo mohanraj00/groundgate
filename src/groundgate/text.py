@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import bisect
+import functools
 import re
 import unicodedata
+from collections.abc import Iterator
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 
@@ -121,8 +123,17 @@ def _other_digits_follow(text: str, i: int) -> bool:
 
 def tokens(text: str, start: int = 0, end: int | None = None) -> list[Token]:
     """Number tokens whose characters lie within text[start:end] (SPEC §4.1)."""
-    end = len(text) if end is None else end
-    out = []
+    return list(_tokens(text, start, len(text) if end is None else end))
+
+
+def first_token_end(text: str, start: int) -> int | None:
+    """The end of the first number token at or after ``start``, or None. ``tokens(text, start,
+    end)`` is empty exactly when this is None or after ``end``: a token found before ``end`` is
+    the same token when the text reads on."""
+    return next((t.end for t in _tokens(text, start, len(text))), None)
+
+
+def _tokens(text: str, start: int, end: int) -> Iterator[Token]:
     for m in _TOKEN.finditer(text, start, end):
         s, tok = m.start(), m.group()
         if tok[0] in "-\u2212" and s > 0 and _letter_or_number(text[s - 1]):
@@ -137,8 +148,7 @@ def tokens(text: str, start: int = 0, end: int | None = None) -> list[Token]:
         whole = _TOKEN.match(text, s)
         if whole and s + len(whole.group().removesuffix(",")) > end:
             continue  # the number runs past the region: never read a prefix of it
-        out.append(Token(s, e, _to_decimal(tok)))
-    return out
+        yield Token(s, e, _to_decimal(tok))
 
 
 def parse_value(raw: str) -> Decimal | None:
@@ -197,14 +207,30 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
     return not (ch.islower() or "0" <= ch <= "9" or ch in _CONTINUES)
 
 
+@functools.lru_cache(maxsize=4)
+def _sentence_ends(text: str) -> tuple[list[int], list[int]]:
+    """The starts and the ends of the sentence ends in a text, in order, read once. The pattern
+    looks at nothing outside a match, so a match is the same match in any part of the text that
+    holds it."""
+    found = [m.span() for m in _SENTENCE_END.finditer(text)]
+    return [a for a, _ in found], [b for _, b in found]
+
+
 def sentence(text: str, pos: int, qualifiers: bool = False) -> tuple[int, int]:
     """The sentence around ``pos`` (SPEC §4.2). Only the qualifier window (``qualifiers``) reads
     on past an abbreviation dot: there a join can only add a flag, while key scope and the unit
     search must never reach into the next sentence."""
     left = 0
-    for m in _SENTENCE_END.finditer(text, 0, pos):
-        if not qualifiers or _ends_sentence(text, m):
-            left = m.end()
+    if qualifiers:
+        for m in _SENTENCE_END.finditer(text, 0, pos):
+            if _ends_sentence(text, m):
+                left = m.end()
+    else:
+        starts, ends = _sentence_ends(text)
+        i = bisect.bisect_right(ends, pos)
+        left = ends[i - 1] if i else 0
+        if i == len(ends) or starts[i] >= pos:  # no sentence end holds pos: the next one ends it
+            return left, starts[i] if i < len(starts) else len(text)
     right = len(text)
     for m in _SENTENCE_END.finditer(text, pos):
         if not qualifiers or _ends_sentence(text, m):

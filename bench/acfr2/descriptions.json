@@ -1,0 +1,6 @@
+{
+ "total_assets": "Total assets of the primary government (its Total column) at the fiscal year end.",
+ "total_liabilities": "Total liabilities of the primary government (its Total column) at the fiscal year end.",
+ "total_net_position": "Total net position of the primary government (its Total column) at the fiscal year end.",
+ "change_in_net_position": "Change in net position of the primary government (its Total column) for the year."
+}

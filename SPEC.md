@@ -306,8 +306,10 @@ prefix of a unit in the table (§4.3) ends at the token's start (whitespace betw
 and no suffix of one starts within `policy.unit_window` code points after the token without
 crossing a sentence end. A per-unit counts as a form here, so "75 mg/m2" still rejects a value in
 mg. With a unit item, the item then supplies the unit, and it is checked at the value (§4.6).
-Without one, the decision lists `unit` in `missing`. A missing part adds the flag
-`PART_MISSING`, so the outcome is at best `needs_verification`.
+Without one, the decision lists `unit` in `missing`, unless the candidate's field item passes and
+a form of the field's unit is at a unit place of the value (§4.6), as a unit item there would
+be: then the unit is not missing (#249). A missing part adds the flag `PART_MISSING`, so the
+outcome is at best `needs_verification`.
 
 **Re-anchoring (steps 10–11).** When steps 10 and 11 do not pass at the cited span without a
 missing part, `policy.reanchor` is true, and the value item has offsets and a non-blank `text`, the implementation finds every occurrence of `text` inside
@@ -620,10 +622,14 @@ each whitespace run in the quote matches any whitespace run.
 
 The quote is trimmed of whitespace at both ends first.
 
-- For the value item, the occurrences are those inside `search_region` (document only). The first
-  occurrence where steps 10 and 11 pass without a missing part is the evidence. When there is no
-  such occurrence, the evidence is the first occurrence, and steps 10 and 11 run there. When there
-  is no occurrence, step 9a rejects.
+- For the value item, the occurrences are those inside `search_region` (document only). When the
+  candidate has a field item and the field has `aliases`, only the occurrences where the field
+  item passes count, if there is one, with the token that steps 10 and 11 find there when a part
+  may be missing (#249); otherwise all of them count. Of those, the first where steps 10 and 11
+  pass without a missing part is the evidence. Here a unit form at a unit place does not make the
+  unit present (step 11): an occurrence with the unit next to the value comes first. When there
+  is no such occurrence, the evidence is the first of those, and steps 10 and 11 run there. When
+  there is no occurrence, step 9a rejects.
 - For a role item, the occurrence is the one that holds the value's token; else, for a unit item,
   the last one that ends at or before the value at a unit place of the value (below), where
   occurrences that overlap count too, as `$$` twice in `$$$`; else the
