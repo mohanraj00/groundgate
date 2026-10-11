@@ -1,0 +1,273 @@
+{
+ "name": "27-occurrence-at-field-and-column-unit",
+ "description": "A value quote takes the first occurrence where the field item passes; among those, or when none passes, the first where steps 10 and 11 pass with no missing part, as before (#249). When the field item passes, a form of the field's unit at a unit place of the value, as for a unit item (4.6), means that the unit is not a missing part: in the value's column on an earlier line of its table, or in a caption line that reaches its table. A unit form on a later line is at no unit place (spec 0.8, #249).",
+ "document": "Rebate\t40\nTotal rebates\t$\t45\n\nDues\t70\nTotal paid\t$\t70\n\nSegment sales\nRegion\t2025\t2024\nNorth\t$\t310\t220\nSouth\t160\t110\n\nAmounts in dollars\nFee\t75\nCharge\t85\n\nStatement of net position\n(in thousands)\n\n\t2025\nCash\t$\t1,200\nReceivables\t300\nTotal assets\t1,500\nPayables\t$\t350\nOther liabilities\t50\nTotal liabilities\t400\nNet position\t1,100\nTotal liabilities and net position\t$\t1,500\n\nStatement of changes in net position\n(in thousands)\n\n\t2025\nEnding balance\t$\t1,100",
+ "schema": {
+  "fields": {
+   "assets": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "total assets"
+    ]
+   },
+   "net": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "net position"
+    ]
+   },
+   "region": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "north",
+     "south"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "fee"
+    ]
+   },
+   "rebate": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "rebate"
+    ]
+   },
+   "dues": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "dues"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "o1",
+   "field": "assets",
+   "value": "1500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "1,500"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    }
+   ]
+  },
+  {
+   "id": "o2",
+   "field": "assets",
+   "value": "1500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "1,500"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    }
+   ]
+  },
+  {
+   "id": "o3",
+   "field": "assets",
+   "value": "1100000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "1,100"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    }
+   ]
+  },
+  {
+   "id": "o4",
+   "field": "net",
+   "value": "1100000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "1,100"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "field",
+     "text": "Net position"
+    }
+   ]
+  },
+  {
+   "id": "o5",
+   "field": "dues",
+   "value": "70",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "70"
+    },
+    {
+     "role": "field",
+     "text": "Dues"
+    }
+   ]
+  },
+  {
+   "id": "o6",
+   "field": "rebate",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "40"
+    },
+    {
+     "role": "field",
+     "text": "Rebate"
+    }
+   ]
+  },
+  {
+   "id": "o7",
+   "field": "region",
+   "value": "160",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "160"
+    },
+    {
+     "role": "field",
+     "text": "South"
+    }
+   ]
+  },
+  {
+   "id": "o8",
+   "field": "region",
+   "value": "110",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "110"
+    },
+    {
+     "role": "field",
+     "text": "South"
+    }
+   ]
+  },
+  {
+   "id": "o9",
+   "field": "fee",
+   "value": "75",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "75"
+    },
+    {
+     "role": "field",
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,104 @@
+[
+ {
+  "id": "acfr2-ia",
+  "state": "Iowa",
+  "pages": [
+   38,
+   39,
+   40,
+   41
+  ]
+ },
+ {
+  "id": "acfr2-ks",
+  "state": "Kansas",
+  "pages": [
+   35,
+   36,
+   37
+  ]
+ },
+ {
+  "id": "acfr2-ky",
+  "state": "Kentucky",
+  "pages": [
+   36,
+   37,
+   38
+  ]
+ },
+ {
+  "id": "acfr2-la",
+  "state": "Louisiana",
+  "pages": [
+   50,
+   51,
+   52
+  ]
+ },
+ {
+  "id": "acfr2-me",
+  "state": "Maine",
+  "pages": [
+   48,
+   49,
+   50,
+   51
+  ]
+ },
+ {
+  "id": "acfr2-md",
+  "state": "Maryland",
+  "pages": [
+   60,
+   61,
+   62,
+   63,
+   64
+  ]
+ },
+ {
+  "id": "acfr2-ma",
+  "state": "Massachusetts",
+  "pages": [
+   48,
+   49,
+   50,
+   51
+  ]
+ },
+ {
+  "id": "acfr2-mi",
+  "state": "Michigan",
+  "pages": [
+   35,
+   36,
+   37,
+   38
+  ]
+ },
+ {
+  "id": "acfr2-mn",
+  "state": "Minnesota",
+  "pages": [
+   50,
+   51,
+   52,
+   53
+  ]
+ },
+ {
+  "id": "acfr2-ms",
+  "state": "Mississippi",
+  "skip": "the newest ACFR on the state's site (dfa.ms.gov) is for FY2024"
+ },
+ {
+  "id": "acfr2-mo",
+  "state": "Missouri",
+  "pages": [
+   34,
+   35,
+   36
+  ]
+ }
+]

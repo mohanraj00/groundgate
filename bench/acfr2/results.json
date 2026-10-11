@@ -1,0 +1,129 @@
+{
+ "runs": {
+  "claude-haiku-5-5": {
+   "0.8": {
+    "right": 5,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 47,
+    "no reply": 0
+   },
+   "0.8 #249": {
+    "right": 7,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 47,
+    "no reply": 0
+   }
+  },
+  "gpt-6-luna": {
+   "0.8": {
+    "right": 2,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 37,
+    "no reply": 1
+   },
+   "0.8 #249": {
+    "right": 2,
+    "escapes": 0,
+    "not sure": 0,
+    "unlabeled": 0,
+    "proposals": 37,
+    "no reply": 1
+   }
+  }
+ },
+ "changed": {
+  "claude-haiku-5-5": {
+   "0.8 #249": {
+    "needs_verification to admitted": {
+     "right": 2,
+     "wrong": 0,
+     "not sure": 0,
+     "unlabeled": 0
+    }
+   }
+  },
+  "gpt-6-luna": {
+   "0.8 #249": {}
+  }
+ },
+ "codes": {
+  "claude-haiku-5-5": {
+   "CANDIDATE_INVALID": {
+    "0.8": 5,
+    "0.8 #249": 5
+   },
+   "FIELD_CITATION_INVALID": {
+    "0.8": 9,
+    "0.8 #249": 9
+   },
+   "KEY_CITATION_INVALID": {
+    "0.8": 4,
+    "0.8 #249": 4
+   },
+   "KEY_NOT_AT_VALUE": {
+    "0.8": 23,
+    "0.8 #249": 23
+   },
+   "PART_MISSING": {
+    "0.8": 25,
+    "0.8 #249": 19
+   },
+   "VALUE_DERIVED": {
+    "0.8": 32,
+    "0.8 #249": 30
+   },
+   "VALUE_NOT_IN_EVIDENCE": {
+    "0.8": 5,
+    "0.8 #249": 5
+   },
+   "missing key": {
+    "0.8": 6,
+    "0.8 #249": 6
+   },
+   "missing unit": {
+    "0.8": 25,
+    "0.8 #249": 19
+   }
+  },
+  "gpt-6-luna": {
+   "CANDIDATE_INVALID": {
+    "0.8": 4,
+    "0.8 #249": 4
+   },
+   "FIELD_CITATION_INVALID": {
+    "0.8": 5,
+    "0.8 #249": 5
+   },
+   "KEY_CITATION_INVALID": {
+    "0.8": 29,
+    "0.8 #249": 29
+   },
+   "KEY_NOT_AT_VALUE": {
+    "0.8": 21,
+    "0.8 #249": 21
+   },
+   "PART_MISSING": {
+    "0.8": 17,
+    "0.8 #249": 11
+   },
+   "UNIT_CITATION_INVALID": {
+    "0.8": 4,
+    "0.8 #249": 4
+   },
+   "VALUE_DERIVED": {
+    "0.8": 31,
+    "0.8 #249": 31
+   },
+   "missing unit": {
+    "0.8": 17,
+    "0.8 #249": 11
+   }
+  }
+ }
+}

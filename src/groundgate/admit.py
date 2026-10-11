@@ -475,11 +475,19 @@ def _checked(
     flags: list[str] = []
     info: set[str] = set()
     if vitem.span is None:
-        # 9a. a quote: the first occurrence where steps 10-11 pass, else the first occurrence
+        # 9a. a quote: of the occurrences where the field item passes, or else of all of them
+        # (#249), the first where steps 10-11 pass, else the first one
         assert vitem.text is not None
         found = _occurrences(t, vitem.text, region)
         if not found:
             raise _Reject("QUOTE_NOT_FOUND", item=vitem)
+        if "field" in roles and f.aliases is not None:
+            named = []
+            for occ in found:
+                here, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=True)
+                if here is not None and _field_passes(t, f, here, roles, region):
+                    named.append(occ)
+            found = named or found
         at: _At | None = None
         for occ in found:
             at, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=False)
@@ -578,6 +586,37 @@ def _repeats(ctx: _Ctx, t: _Text, tok: Token, prefixes: list[str], suffixes: lis
 _CHECK_ORDER = ("field", "sign", "scale", "unit", "key")  # the unit check reads the field's
 
 
+def _field_ok(t: _Text, f: Field, span: tuple[int, int], pos: int) -> tuple[bool, bool]:
+    """Whether a field item at ``span`` passes for a value at ``pos``, and whether it is at the
+    value's row (SPEC §4.6)."""
+    a, b = span
+    if f.aliases is None or b > pos:
+        return False, False
+    named = any(a <= x and y <= b for x, y, _ in t.key_mentions(f.aliases))
+    s0, _ = sentence(t.text, pos)
+    row = named and not any(ch.isalpha() for ch in t.text[b:pos])
+    in_sentence = a >= s0 and not tokens(t.text, b, pos)
+    return named and (row or in_sentence), row
+
+
+def _unit_at_place(places: UnitPlaces, tok: Token) -> bool:
+    """Whether a form of the unit is at a unit place of the value, before it (#249)."""
+    return places(min(places.starts, default=places.line[0]), tok.start)
+
+
+def _field_passes(
+    t: _Text, f: Field, at: _At, roles: dict[str, _Item], region: tuple[int, int]
+) -> bool:
+    """Whether the field item passes at this place of the value (#249)."""
+    item = roles.get("field")
+    if item is None or f.aliases is None or not _same(item, at.item):
+        return False
+    span, located = _find(t, item, at, region)
+    if span is None or not located:
+        return False
+    return _field_ok(t, f, span, at.token.start if at.token is not None else at.span[0])[0]
+
+
 def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, int]) -> None:
     """Check each role item at the value, then place the key (SPEC §4.5, §4.6)."""
     at, f = p.at, p.field
@@ -606,12 +645,7 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
                     a <= x and y <= b and k == p.key for x, y, k in t.key_mentions(f.keys or ())
                 )
             elif role == "field":
-                if f.aliases is not None and b <= pos:
-                    named = any(a <= x and y <= b for x, y, _ in t.key_mentions(f.aliases))
-                    s0, _ = sentence(t.text, pos)
-                    row = named and not any(ch.isalpha() for ch in t.text[b:pos])
-                    in_sentence = a >= s0 and not tokens(t.text, b, pos)
-                    ok = named and (row or in_sentence)
+                ok, row = _field_ok(t, f, span, pos)
             elif tok is None:
                 ok = False  # a sign, scale or unit item on a string field
             elif role == "sign":
@@ -656,6 +690,14 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
             continue  # not checked: changes nothing
         if not ok:
             p.flags.append(f"{role.upper()}_CITATION_INVALID")
+    if "unit" in p.missing and passed.get("field") and tok is not None and f.unit is not None:
+        # a form of the unit at a unit place of the value, as for a unit item (#249)
+        if places is None:
+            places = UnitPlaces(t.text, tok, prefixes, suffixes)
+        if _unit_at_place(places, tok):
+            p.missing.discard("unit")
+            if not p.missing:
+                p.flags.remove("PART_MISSING")
     if f.keys is None:
         return
     mentions = t.key_mentions(f.keys)

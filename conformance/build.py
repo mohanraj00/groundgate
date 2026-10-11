@@ -2771,7 +2771,8 @@ vector(
     "or no number. A unit quote takes its last occurrence at a unit place. A blank line or a line "
     "with a number and no tab ends the table. A row of counts in the same column still takes the "
     "column's $ when its field item passes. The place is that of the unit form, not of the item "
-    "that holds it (spec 0.7, #164).",
+    "that holds it (spec 0.7, #164). With a passing field item, a form at a unit place also "
+    "means that the unit is not a missing part, also with no unit item (spec 0.8, #249).",
     UNIT_PLACE,
     {
         "fields": {
@@ -2806,8 +2807,7 @@ vector(
         c("p11", "crew_pay", "70", "USD",
           [q("70"), {"role": "unit", "text": "dollars"}, row("Crew")],
           (REVIEW, ["UNIT_CITATION_INVALID"])),
-        c("p12", "revenue", "426201", "USD", [q("426,201"), row("Total revenues")],
-          (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("p12", "revenue", "426201", "USD", [q("426,201"), row("Total revenues")]),
         c("p13", "amount", "67", "USD",
           [q("67"), q("Caption\nHead\t$", role="unit"), row("Amount")],
           (REVIEW, ["UNIT_CITATION_INVALID"])),
@@ -2905,6 +2905,60 @@ vector(
         c("s6", "net_loss", "-75", "USD", [q("75"), THOUSANDS, DOLLAR, row("Net loss")],
           ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
         c("s7", "cash", "2200000", "USD", [q("$2.2 million"), THOUSANDS]),
+    ],
+)  # fmt: skip
+
+OCCURRENCE = (
+    "Rebate\t40\nTotal rebates\t$\t45\n\n"
+    "Dues\t70\nTotal paid\t$\t70\n\n"
+    "Segment sales\nRegion\t2025\t2024\nNorth\t$\t310\t220\nSouth\t160\t110\n\n"
+    "Amounts in dollars\nFee\t75\nCharge\t85\n\n"
+    "Statement of net position\n(in thousands)\n\n\t2025\n"
+    "Cash\t$\t1,200\nReceivables\t300\nTotal assets\t1,500\nPayables\t$\t350\n"
+    "Other liabilities\t50\nTotal liabilities\t400\nNet position\t1,100\n"
+    "Total liabilities and net position\t$\t1,500\n\n"
+    "Statement of changes in net position\n(in thousands)\n\n\t2025\n"
+    "Ending balance\t$\t1,100"
+)
+
+
+def at(text: str) -> dict[str, Any]:
+    """A value item as a quote with no offsets, so that its occurrences are searched (4.6)."""
+    return {"text": text}
+
+
+vector(
+    "27-occurrence-at-field-and-column-unit",
+    "A value quote takes the first occurrence where the field item passes; among those, or when "
+    "none passes, the first where steps 10 and 11 pass with no missing part, as before (#249). "
+    "When the field item passes, a form of the field's unit at a unit place of the value, as for "
+    "a unit item (4.6), means that the unit is not a missing part: in the value's column on an "
+    "earlier line of its table, or in a caption line that reaches its table. A unit form on a "
+    "later line is at no unit place (spec 0.8, #249).",
+    OCCURRENCE,
+    {
+        "fields": {
+            "assets": usd("total assets"),
+            "net": usd("net position"),
+            "region": usd("north", "south"),
+            "fee": usd("fee"),
+            "rebate": usd("rebate"),
+            "dues": usd("dues"),
+        }
+    },
+    [
+        c("o1", "assets", "1500000", "USD", [at("1,500"), THOUSANDS, row("Total assets")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("o2", "assets", "1500000", "USD", [at("1,500"), THOUSANDS], ("admitted", ["VALUE_DERIVED"])),
+        c("o3", "assets", "1100000", "USD", [at("1,100"), THOUSANDS, row("Total assets")],
+          (REVIEW, ["FIELD_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("o4", "net", "1100000", "USD", [at("1,100"), THOUSANDS, row("Net position")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("o5", "dues", "70", "USD", [at("70"), row("Dues")], (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("o6", "rebate", "40", "USD", [at("40"), row("Rebate")], (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("o7", "region", "160", "USD", [at("160"), row("South")]),
+        c("o8", "region", "110", "USD", [at("110"), row("South")], (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("o9", "fee", "75", "USD", [at("75"), row("Fee")]),
     ],
 )  # fmt: skip
 
