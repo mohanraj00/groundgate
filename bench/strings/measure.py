@@ -32,7 +32,7 @@ RUNS = ("claude-haiku-5-5", "gpt-6-luna")
 SPECS = ("0.8", "0.8 #140")
 # the functions that turn each rule off, with what replaces each one
 OFF: dict[str, tuple[tuple[str, str, Any], ...]] = {
-    "0.8 #140": (("groundgate.admit", "_string_start", lambda t, value, span: span[0]),),
+    "0.8 #140": (("groundgate.admit", "_string_place", lambda t, value, span: (span[0], None)),),
 }
 VERDICTS = ("right", "wrong", "not sure")
 BEFORE, AFTER = 500, 200  # code points of text around the value

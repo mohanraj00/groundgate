@@ -3024,7 +3024,9 @@ vector(
     "29-string-value-place",
     "A string value is at its first occurrence in its evidence span, where whitespace runs match "
     "any whitespace run, and not at the start of the span: key scope reads the text there. When "
-    "the span does not hold the value, step 10 rejects as before (spec 0.8, #140).",
+    "the span does not hold the value, step 10 rejects as before. A role quote that holds the "
+    "value's occurrence is found there, and on the outside path the key check also reads the "
+    "value's first occurrence in the quote (spec 0.8, #140).",
     STRING_PLACE,
     {"fields": {"instruction": {"type": "string", "keys": ["heart failure", "hypertension", "angina"], "multiple": True}}},
     [
@@ -3037,6 +3039,15 @@ vector(
           (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="hypertension"),
         c("p6", "instruction", "take twice daily", None, q(TWO),
           ("rejected", ["VALUE_NOT_IN_EVIDENCE"]), key="hypertension"),
+        c("p7", "instruction", "take with food", None,
+          [q("Hypertension: take with food."), {"role": "key", "text": "Hypertension: take with food."}],
+          key="hypertension"),
+        c("p8", "instruction", "take with food", None, [q(TWO), {"role": "key", "text": TWO}],
+          key="hypertension"),
+        c("p9", "instruction", "take with food", None, [ext(TWO)], (REVIEW, ["EVIDENCE_QUOTED"]),
+          key="hypertension"),
+        c("p10", "instruction", "take with food", None, [ext(TWO)],
+          (REVIEW, ["KEY_NOT_AT_VALUE", "EVIDENCE_QUOTED"], ["key"]), key="heart failure"),
     ],
 )  # fmt: skip
 
