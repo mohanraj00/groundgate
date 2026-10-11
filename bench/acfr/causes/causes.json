@@ -1,0 +1,798 @@
+[
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ca",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "admitted",
+  "fact": "df49c07cb9308b96",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ca",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "admitted",
+  "fact": "4033eaa9ebb2e728",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ca",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "admitted",
+  "fact": "5f41a90ef1c3b77a",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ca",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "e99ced84fb0bafae",
+  "causes": [
+   "field item, another line",
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-co",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "d458ed3823c669ca",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-co",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "57ea88b9fa8443fc",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-co",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "83c851b348d4add5",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ct",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "admitted",
+  "fact": "37d7df4a4a8f3977",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ct",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "admitted",
+  "fact": "3ce223f07b9a4f23",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ct",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "admitted",
+  "fact": "23795e5f895d1e33",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ct",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "ff42bf7c2eec9aed",
+  "causes": [
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-de",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "admitted",
+  "fact": "44179611a6a74375",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-de",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "admitted",
+  "fact": "440c437e28602e13",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-de",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "admitted",
+  "fact": "bc285a008dc1f6fa",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-de",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "9160487f20a67f8d",
+  "causes": [
+   "field item, no alias",
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-fl",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "c0be9aa3dd5a4028",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-fl",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "10f074250909ff1d",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-fl",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "592885e255b050a2",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-fl",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "7f81e4e29ed8af06",
+  "causes": [
+   "key item, field has no keys",
+   "field item, no alias",
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ga",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "admitted",
+  "fact": "fb8b1c9887624177",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ga",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "82b08a4a280bce53",
+  "causes": [
+   "unit missing, a unit form only below the value"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ga",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "admitted",
+  "fact": "ece51561f22ffac2",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-ga",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "6110820edf8ad4c8",
+  "causes": [
+   "field item, another line",
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-hi",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "admitted",
+  "fact": "3bf197a6dada433d",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-hi",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "admitted",
+  "fact": "c15d6e3241a767a5",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-hi",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "admitted",
+  "fact": "cf5c6032e7f0b901",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-hi",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "admitted",
+  "fact": "6b95378b16418e41",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-id",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "e02aa60f597a63aa",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-id",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "2609324c06222f4e",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-id",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "e4ef5e25e806e523",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-id",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "aa17a2b70921c5cd",
+  "causes": [
+   "key item, field has no keys",
+   "field item, another line",
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-il",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "admitted",
+  "fact": "1c39e4f53c1f7bf5",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-il",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "2fa44292109c78b2",
+  "causes": [
+   "unit missing, a unit form only below the value"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-il",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "admitted",
+  "fact": "3e256877077d7328",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-il",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "f7374da33eca6691",
+  "causes": [
+   "field item, another line",
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-in",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "admitted",
+  "fact": "8888398dff38d7e7",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-in",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "admitted",
+  "fact": "e07b07e9055f2ae0",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-in",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "admitted",
+  "fact": "22e936c32ae1c454",
+  "causes": []
+ },
+ {
+  "run": "claude-haiku-5-5",
+  "doc": "acfr-in",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "058b9fda48ea9fe4",
+  "causes": [
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ca",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "df49c07cb9308b96",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ca",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "4033eaa9ebb2e728",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ca",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "5f41a90ef1c3b77a",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ca",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "e99ced84fb0bafae",
+  "causes": [
+   "key item, field has no keys",
+   "field item, another line",
+   "unit item fails"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-co",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "d458ed3823c669ca",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-co",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "57ea88b9fa8443fc",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-co",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "83c851b348d4add5",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ct",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "37d7df4a4a8f3977",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ct",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "3ce223f07b9a4f23",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ct",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "23795e5f895d1e33",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ct",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "ff42bf7c2eec9aed",
+  "causes": [
+   "key item, field has no keys",
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-fl",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "c0be9aa3dd5a4028",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-fl",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "10f074250909ff1d",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-fl",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "592885e255b050a2",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-fl",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "7f81e4e29ed8af06",
+  "causes": [
+   "key item, field has no keys",
+   "field item, no alias",
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ga",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "fb8b1c9887624177",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ga",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "82b08a4a280bce53",
+  "causes": [
+   "key item, field has no keys",
+   "unit missing, a unit form only below the value"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ga",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "ece51561f22ffac2",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-ga",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "6110820edf8ad4c8",
+  "causes": [
+   "key item, field has no keys",
+   "field item, another line",
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-hi",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "3bf197a6dada433d",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-hi",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "c15d6e3241a767a5",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-hi",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "cf5c6032e7f0b901",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-hi",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "6b95378b16418e41",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-id",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "e02aa60f597a63aa",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-id",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "2609324c06222f4e",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-id",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "e4ef5e25e806e523",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-id",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "aa17a2b70921c5cd",
+  "causes": [
+   "key item, field has no keys",
+   "field item, another line",
+   "unit item fails"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-il",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "1c39e4f53c1f7bf5",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-il",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "2fa44292109c78b2",
+  "causes": [
+   "key item, field has no keys",
+   "unit missing, a unit form only below the value"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-il",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "3e256877077d7328",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-il",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "192c50ad1aa6b1b0",
+  "causes": [
+   "key item, field has no keys",
+   "field item, another line",
+   "unit missing, a unit form above the value"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-in",
+  "id": "c0",
+  "field": "total_assets",
+  "outcome": "needs_verification",
+  "fact": "8888398dff38d7e7",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-in",
+  "id": "c1",
+  "field": "total_liabilities",
+  "outcome": "needs_verification",
+  "fact": "e07b07e9055f2ae0",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-in",
+  "id": "c2",
+  "field": "total_net_position",
+  "outcome": "needs_verification",
+  "fact": "22e936c32ae1c454",
+  "causes": [
+   "key item, field has no keys"
+  ]
+ },
+ {
+  "run": "gpt-6-luna",
+  "doc": "acfr-in",
+  "id": "c3",
+  "field": "change_in_net_position",
+  "outcome": "needs_verification",
+  "fact": "058b9fda48ea9fe4",
+  "causes": [
+   "key item, field has no keys",
+   "unit missing, a unit form above the value"
+  ]
+ }
+]
