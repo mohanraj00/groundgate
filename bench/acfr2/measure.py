@@ -1,6 +1,7 @@
-"""Measure the rules of #249 on the held-out set bench/acfr2: the two runs of run.py, decided
-under the 0.8 draft with the rules of #249 turned off and turned on. A rule ships only if this
-measure says so. The plan is on #249, made before anyone read the set.
+"""Measure the rules of #249 and #250 on the held-out set bench/acfr2: the two runs of run.py,
+decided under the 0.8 draft with the rules turned off, then turned on one issue at a time. A rule
+ships only if this measure says so. The plans are on #249 and #250, made before anyone read the
+set.
 
     uv run python bench/acfr2/measure.py decide          # each spec of SPECS, in process
     uv run python bench/acfr2/measure.py web             # blind labels, http://127.0.0.1:8780
@@ -10,8 +11,9 @@ A person labels every value that a decision admits, and every value whose outcom
 between the specs. The page shows the PDF page with the value boxed, the text around it, the
 field and the value, but never a run, a spec, an outcome or a code.
 
-Each spec turns off the rules of the other specs (OFF), as bench/sec3/measure.py does. "0.8" is
-the draft with every rule here turned off. A later rule adds its spec and its functions to OFF.
+Each spec turns off the rules of the specs after it (OFF), so a spec adds its rules to those of
+the specs before it. "0.8" is the draft with every rule here turned off. A later rule adds its
+spec and its functions to OFF.
 """
 
 from __future__ import annotations
@@ -19,6 +21,7 @@ from __future__ import annotations
 import argparse
 import collections
 import hashlib
+import itertools
 import json
 import sys
 import threading
@@ -28,10 +31,11 @@ from typing import Any
 
 HERE = Path(__file__).parent
 RUNS = ("claude-haiku-5-5", "gpt-6-luna")
-SPECS = ("0.8", "0.8 #249")
+SPECS = ("0.8", "0.8 #249", "0.8 #250")
 # the functions that turn each rule off when they return False
 OFF = {
     "0.8 #249": (("groundgate.admit", "_field_passes"), ("groundgate.admit", "_unit_at_place")),
+    "0.8 #250": (("groundgate.text", "_one_column"),),
 }
 VERDICTS = ("right", "wrong", "not sure")
 BEFORE, AFTER = 500, 200  # code points of text around the value
@@ -72,8 +76,8 @@ def decide() -> None:
                 cands = [{"id": f"c{i}", **c} for i, c in enumerate(cands)]
                 text = doc_path.read_text(encoding="utf-8")
                 with contextlib.ExitStack() as stack:
-                    for other, names in OFF.items():
-                        for module, name in names if other != spec else ():
+                    for later in SPECS[SPECS.index(spec) + 1 :]:
+                        for module, name in OFF.get(later, ()):
                             off = mock.patch.object(sys.modules[module], name, lambda *a: False)
                             stack.enter_context(off)
                     got = gg.admit(text, schema, cands).decisions
@@ -110,11 +114,11 @@ def item_id(doc: str, field: str, key: str | None, value: str) -> str:
 
 def facts() -> dict[str, dict[str, Any]]:
     """Each value to label, once per fact: every value that a decision admits, and every value
-    whose outcome under a rule differs from its outcome under the draft with every rule off."""
+    whose outcome under a spec differs from its outcome under the spec before it."""
     out: dict[str, dict[str, Any]] = {}
     found = _decisions()
-    for (run, _), docs in found.items():
-        other = found[run, SPECS[0]]
+    for (run, spec), docs in found.items():
+        other = found[run, SPECS[max(0, SPECS.index(spec) - 1)]]
         for doc, got in docs.items():
             before = {r["id"]: r["outcome"] for r in other[doc]["decisions"]}
             for r in got["decisions"]:
@@ -255,7 +259,8 @@ def serve(port: int) -> None:
 def score() -> dict[str, Any]:
     """For each run and spec: the right values admitted, the escapes (wrong values admitted),
     the admitted values labeled not sure or not yet labeled, the proposals and the documents with
-    no reply. For each run and rule, the proposals whose outcome the rule changes, by label. For
+    no reply. For each run and spec, the proposals whose outcome it changes from the spec before
+    it, by label. For
     each run and spec, the codes and the missing parts of the proposals that are not admitted."""
     given = labels()
     verdict = {"right": "right", "wrong": "escapes", "not sure": "not sure"}
@@ -278,8 +283,8 @@ def score() -> dict[str, Any]:
         count["no reply"] = sum(not got["reply"] for got in docs.values())
         res["runs"].setdefault(run, {})[spec] = count
     for run in RUNS:
-        base = found[run, SPECS[0]]
-        for spec in SPECS[1:]:
+        for prev, spec in itertools.pairwise(SPECS):
+            base = found[run, prev]
             moved: dict[str, dict[str, int]] = {}
             for doc, got in found[run, spec].items():
                 before = {r["id"]: r["outcome"] for r in base[doc]["decisions"]}
@@ -311,7 +316,7 @@ def score() -> dict[str, Any]:
 
 def render(res: dict[str, Any]) -> str:
     lines = [
-        "# The rules of #249 on the held-out set bench/acfr2",
+        "# The rules of #249 and #250 on the held-out set bench/acfr2",
         "",
         "Generated by `bench/acfr2/measure.py results` from `results.json`. Do not edit.",
         "",
@@ -320,8 +325,8 @@ def render(res: dict[str, Any]) -> str:
         "text of #230. Each run gives the model `gg.extractor_schema(schema)` as its structured "
         "output and the guide's instructions, with the CLI's default reasoning effort "
         "(`bench/acfr2/run.py`). Spec 0.8 is the draft with every rule here turned off; each "
-        "rule is decided alone. A value counts once per document, field, key and value. An "
-        "escape is a wrong value that a decision admits.",
+        "spec adds its rules to those of the spec before it. A value counts once per document, "
+        "field, key and value. An escape is a wrong value that a decision admits.",
         "",
     ]
     for run, rows in res["runs"].items():
@@ -347,13 +352,13 @@ def render(res: dict[str, Any]) -> str:
         ]
         for code, by in res["codes"][run].items():
             lines.append(f"| `{code}` | " + " | ".join(str(by[s]) for s in SPECS) + " |")
-        for spec, moved in res["changed"][run].items():
+        for prev, (spec, moved) in zip(SPECS, res["changed"][run].items(), strict=False):
             lines += ["", f"Proposals whose outcome {spec.split()[-1]} changes:", ""]
             if not moved:
                 lines += ["None."]
                 continue
             lines += [
-                "| From 0.8 to " + spec + " | Right | Wrong | Not sure | Not labeled |",
+                f"| From {prev} to {spec} | Right | Wrong | Not sure | Not labeled |",
                 "|---|---:|---:|---:|---:|",
             ]
             for way, c in moved.items():
