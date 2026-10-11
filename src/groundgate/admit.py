@@ -120,6 +120,9 @@ def _valid(offsets: Offsets, span: tuple[int, int]) -> tuple[int, int] | None:
     return None if cs is None or ce is None else (cs, ce)
 
 
+_Index = tuple[list[tuple[int, int]], list[int], list[int]]
+
+
 @dataclass
 class _Text:
     """A text that evidence items point into: the document, a reference, or an external quote."""
@@ -129,10 +132,9 @@ class _Text:
     ref: str | None = None
     mentions: dict[tuple[str, ...], list[tuple[int, int, str]]] = field(default_factory=dict)
     rows: list[tuple[int, int]] | None = None  # reached by a heading scale, read once
-    # read once for the many occurrences of one quote (#249)
-    quotes: dict[tuple[str, int, int], tuple[list[tuple[int, int]], list[int], list[int]]] = field(
-        default_factory=dict
-    )
+    # the last quote read, for the many occurrences of one value (#249): one slot, so that its
+    # memory stays that of one quote
+    quote: tuple[tuple[str, int, int], _Index] | None = None
     spans: dict[tuple[str, ...], list[tuple[int, int]]] = field(default_factory=dict)
     letters: dict[int, int] = field(default_factory=dict)  # the first letter at or after each place
     numbers: dict[int, int | None] = field(default_factory=dict)  # the first token end, likewise
@@ -417,19 +419,18 @@ def _same(a: _Item, b: _Item) -> bool:
 
 
 def _occurrences(t: _Text, quote: str, region: tuple[int, int]) -> list[tuple[int, int]]:
-    return _indexed(t, quote, region)[0]
+    return [(m.start(), m.end()) for m in quote_pattern(quote).finditer(t.text, *region)]
 
 
-def _indexed(
-    t: _Text, quote: str, region: tuple[int, int]
-) -> tuple[list[tuple[int, int]], list[int], list[int]]:
+def _indexed(t: _Text, quote: str, region: tuple[int, int]) -> _Index:
     """The occurrences of a quote, with their starts and their ends, each in order: the matches
-    do not overlap. Read once for each quote."""
-    k = (quote, *region)
-    if k not in t.quotes:
-        found = [(m.start(), m.end()) for m in quote_pattern(quote).finditer(t.text, *region)]
-        t.quotes[k] = (found, [a for a, _ in found], [b for _, b in found])
-    return t.quotes[k]
+    do not overlap. Quotes that match alike share the slot."""
+    pattern = quote_pattern(quote)
+    k = (pattern.pattern, *region)
+    if t.quote is None or t.quote[0] != k:
+        found = [(m.start(), m.end()) for m in pattern.finditer(t.text, *region)]
+        t.quote = (k, (found, [a for a, _ in found], [b for _, b in found]))
+    return t.quote[1]
 
 
 def _check(ctx: _Ctx, cand: object) -> _Passed:
