@@ -138,9 +138,12 @@ def _union(boxes: list[Any]) -> list[float]:
     ]
 
 
-def _pages(pdf_path: Path, pages: list[int]) -> tuple[list[dict[str, Any]], dict[int, float]]:
-    """For each page: its blocks and the tables of the extract, and each page's height. The
-    extract runs as groundgate runs it; this only records what _plan gives."""
+def _pages(
+    pdf_path: Path, pages: list[int] | None
+) -> tuple[list[dict[str, Any]], dict[int, float]]:
+    """For each page (all of them when pages is None): its blocks and the tables of the extract,
+    and each page's height. The extract runs as groundgate runs it; this only records what _plan
+    gives."""
     from groundgate.extract import extract, pdf
 
     seen: list[dict[str, Any]] = []
@@ -167,7 +170,8 @@ def rows_of(doc: str, pdf_path: Path, pages: list[int]) -> list[dict[str, Any]]:
     seen, heights = _pages(pdf_path, pages)
     out: list[dict[str, Any]] = []
     tops: dict[str, list[tuple[int, float]]] = collections.defaultdict(list)
-    for pg in seen:  # the text and top of every row, for the repeat feature
+    # the text and top of every row on every page of the report, for the repeat feature
+    for pg in _pages(pdf_path, None)[0]:
         for row in pg["rows"]:
             words = [w for bi, li in row for w in pg["blocks"][bi][li]]
             text = " ".join(t for t, _ in words)
