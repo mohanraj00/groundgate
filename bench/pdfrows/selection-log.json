@@ -1,0 +1,112 @@
+[
+ {
+  "id": "pdfrows-mt",
+  "state": "Montana",
+  "pages": [
+   36,
+   37,
+   38,
+   39
+  ]
+ },
+ {
+  "id": "pdfrows-ne",
+  "state": "Nebraska",
+  "pages": [
+   35,
+   36,
+   37
+  ]
+ },
+ {
+  "id": "pdfrows-nv",
+  "state": "Nevada",
+  "skip": "the newest ACFR on the state's site (controller.nv.gov) is for FY2024"
+ },
+ {
+  "id": "pdfrows-nh",
+  "state": "New Hampshire",
+  "skip": "the state's site refuses the download (HTTP 403)"
+ },
+ {
+  "id": "pdfrows-nj",
+  "state": "New Jersey",
+  "pages": [
+   44,
+   45,
+   46,
+   47
+  ]
+ },
+ {
+  "id": "pdfrows-nm",
+  "state": "New Mexico",
+  "pages": [
+   37,
+   38,
+   39
+  ]
+ },
+ {
+  "id": "pdfrows-ny",
+  "state": "New York",
+  "pages": [
+   40,
+   41
+  ]
+ },
+ {
+  "id": "pdfrows-nc",
+  "state": "North Carolina",
+  "pages": [
+   54,
+   55,
+   56,
+   57
+  ]
+ },
+ {
+  "id": "pdfrows-nd",
+  "state": "North Dakota",
+  "pages": [
+   39,
+   40,
+   41,
+   42
+  ]
+ },
+ {
+  "id": "pdfrows-oh",
+  "state": "Ohio",
+  "pages": [
+   2,
+   3,
+   4,
+   5
+  ]
+ },
+ {
+  "id": "pdfrows-ok",
+  "state": "Oklahoma",
+  "skip": "the newest ACFR on the state's site (oklahoma.gov/omes) is for FY2024"
+ },
+ {
+  "id": "pdfrows-or",
+  "state": "Oregon",
+  "pages": [
+   41,
+   42,
+   43,
+   44
+  ]
+ },
+ {
+  "id": "pdfrows-pa",
+  "state": "Pennsylvania",
+  "pages": [
+   52,
+   53,
+   54
+  ]
+ }
+]

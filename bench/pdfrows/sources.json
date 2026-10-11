@@ -1,0 +1,149 @@
+{
+ "sources": [
+  {
+   "id": "pdfrows-mt",
+   "state": "Montana",
+   "url": "https://doa.mt.gov/_docs/sfsd/sab/Montana-ACFR-2025-sig-on-file1.pdf",
+   "sha256": "942d02d713ef7bfebe61e6b22d4a9f8d30f57b576d358bde9f4e0f68e9b99ffb",
+   "select": {
+    "pages": [
+     36,
+     37,
+     38,
+     39
+    ]
+   },
+   "kind": "pdfrows"
+  },
+  {
+   "id": "pdfrows-ne",
+   "state": "Nebraska",
+   "url": "https://das.nebraska.gov/accounting/docs/NE_DAS_Accounting-Annual_Reports_Annual_Comprehensive_Financial_Report_ACFR_2025.pdf",
+   "sha256": "26c3ee7dd1ae611e89bd55f9c1342835aa7ba04bc9f387aa747c86b5e12955c4",
+   "select": {
+    "pages": [
+     35,
+     36,
+     37
+    ]
+   },
+   "kind": "pdfrows"
+  },
+  {
+   "id": "pdfrows-nj",
+   "state": "New Jersey",
+   "url": "https://nj.gov/treasury/omb/publications/25fr/NJFY2025Complete.pdf",
+   "sha256": "b9baa5fae87c7f0cb3bab85964706eac7c9e6010426961dc5349e8035517648d",
+   "select": {
+    "pages": [
+     44,
+     45,
+     46,
+     47
+    ]
+   },
+   "kind": "pdfrows"
+  },
+  {
+   "id": "pdfrows-nm",
+   "state": "New Mexico",
+   "url": "https://www.nmdfa.state.nm.us/wp-content/uploads/2026/04/FINAL-341-A-State-of-New-Mexico-FY-2025-FS-1.pdf",
+   "sha256": "bedb7aac3a7a9cd9eab1e0e00feee6336cfcba54f8ce2b83ca1665e46001a397",
+   "select": {
+    "pages": [
+     37,
+     38,
+     39
+    ]
+   },
+   "kind": "pdfrows"
+  },
+  {
+   "id": "pdfrows-ny",
+   "state": "New York",
+   "url": "https://www.osc.ny.gov/files/reports/finance/pdf/annual-comprehensive-financial-report-2025.pdf",
+   "sha256": "ea19d8075f1cbdff22f49bc042991cea29c1d398cdd6e22c6878891eaa0c5377",
+   "select": {
+    "pages": [
+     40,
+     41
+    ]
+   },
+   "kind": "pdfrows"
+  },
+  {
+   "id": "pdfrows-nc",
+   "state": "North Carolina",
+   "url": "https://ncosc.gov/sites/default/files/2025-12/2025_North_Carolina_Annual_Comprehensive_Financial_Report.pdf",
+   "sha256": "91c3c29b1d53b1228d49490cebcde76cc1f731d5213e719a4ac252032b21bb34",
+   "select": {
+    "pages": [
+     54,
+     55,
+     56,
+     57
+    ]
+   },
+   "kind": "pdfrows"
+  },
+  {
+   "id": "pdfrows-nd",
+   "state": "North Dakota",
+   "url": "https://www.omb.nd.gov/sites/www/files/documents/financial-transparency/cafr/2025-acfr.pdf",
+   "sha256": "3c3275fb03b8fcf657bb79b86ccc7e2cce900d4dd6817b9dc21a2991948c052b",
+   "select": {
+    "pages": [
+     39,
+     40,
+     41,
+     42
+    ]
+   },
+   "kind": "pdfrows"
+  },
+  {
+   "id": "pdfrows-oh",
+   "state": "Ohio",
+   "url": "https://archives.obm.ohio.gov/Files//State_Accounting/Financial_Reporting/Comprehensive_Annual_Financial_Report/2025/Basic%20Financial%20Statements.pdf",
+   "sha256": "dbbeb7a499bb879f9d40547498a2938a94db5bf7ff45fd1bbecb9c857f38aeeb",
+   "select": {
+    "pages": [
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   "kind": "pdfrows"
+  },
+  {
+   "id": "pdfrows-or",
+   "state": "Oregon",
+   "url": "https://www.oregon.gov/das/Financial/Acctng/Documents/2025.ACFR.pdf",
+   "sha256": "92e97f4290e0684f10fa54e30f5f4854ec6ce3529f7143de38f15c3b7ab853a6",
+   "select": {
+    "pages": [
+     41,
+     42,
+     43,
+     44
+    ]
+   },
+   "kind": "pdfrows"
+  },
+  {
+   "id": "pdfrows-pa",
+   "state": "Pennsylvania",
+   "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/budget/documents/publications-and-reports/annualfinancialreport/june-30-2025%20acfr.pdf",
+   "sha256": "cb08a90c5397cc5f4f4ab4e297ab2130c96aeea0cf87bb0749e34fc11439587e",
+   "select": {
+    "pages": [
+     52,
+     53,
+     54
+    ]
+   },
+   "kind": "pdfrows"
+  }
+ ]
+}
