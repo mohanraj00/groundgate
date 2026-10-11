@@ -190,7 +190,7 @@ def serve(port: int, every: bool = False, relabel: bool = False) -> None:
         if it["original"] is not None and it["original"]["type"] != "text"
     }
     path = HERE / ("relabels.json" if relabel else "labels.json")
-    read = outside.relabels if relabel else outside.labels
+    read = outside.relabels if relabel else outside.first_labels  # never the merged view
     page = (HERE / "web.html").read_bytes()
     lock = threading.Lock()
 
