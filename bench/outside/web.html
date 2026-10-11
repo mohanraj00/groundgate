@@ -57,7 +57,7 @@
     <div class="field" id="field"></div>
     <div class="meta" id="desc"></div>
     <div class="value" id="value"></div>
-    <div class="q">Is this value true for the field and the document's subject?</div>
+    <div class="q" id="question">Is this value true for the field and the document's subject?</div>
     <div class="opts">
       <button class="opt" data-v="right">Right</button>
       <button class="opt" data-v="wrong">Wrong</button>
@@ -331,6 +331,7 @@ $("todo").onclick = () => next(true);
 
 fetch("/state").then((r) => r.json()).then((s) => {
   S = s;
+  if (S.question) $("question").textContent = S.question;
   const first = S.items.findIndex((it) => !S.labels[it.id]);
   i = first < 0 ? 0 : first;
   show();

@@ -107,11 +107,19 @@ def sources() -> dict[str, dict[str, Any]]:
     return out
 
 
-def build(every: bool = False) -> list[dict[str, Any]]:
+RELABEL_QUESTION = (
+    "Is this value true for the field and the document's subject? Check the number and its scale "
+    "(thousands, millions) against the document: both must match."
+)
+
+
+def build(every: bool = False, only: set[str] | None = None) -> list[dict[str, Any]]:
     """One card per item that spec 0.6.1 still rejects (with every, per item), from its first
     proposal. The cited span comes from the decision of the groundgate that runs this page."""
     fixed = {it["id"] for it in outside._read(HERE / "items.json")}
     want = fixed if every else outside.still_ids()
+    if only is not None:
+        want &= only
     srcs = sources()
     descriptions: dict[tuple[str, str], str] = {}
     for set_dir, _ in outside.SETS.values():
@@ -170,8 +178,10 @@ def valid(got: dict[str, Any], ids: set[str]) -> bool:
     return got.get("basis") in BASES and isinstance(got.get("source"), str) and bool(got["source"])
 
 
-def serve(port: int, every: bool = False) -> None:
-    items = build(every)
+def serve(port: int, every: bool = False, relabel: bool = False) -> None:
+    """The label page. With relabel, only the doubtful items, with no first label shown and the
+    question that names the number and its scale; the labels go to relabels.json."""
+    items = build(every, outside.doubtful() if relabel else None)
     ids = {it["id"] for it in items}
     srcs = sources()
     files = {
@@ -179,7 +189,8 @@ def serve(port: int, every: bool = False) -> None:
         for it in items
         if it["original"] is not None and it["original"]["type"] != "text"
     }
-    path = HERE / "labels.json"
+    path = HERE / ("relabels.json" if relabel else "labels.json")
+    read = outside.relabels if relabel else outside.labels
     page = (HERE / "web.html").read_bytes()
     lock = threading.Lock()
 
@@ -203,8 +214,10 @@ def serve(port: int, every: bool = False) -> None:
                 self.send(200, page, "text/html; charset=utf-8")
             elif self.path == "/state":
                 with lock:
-                    labels = outside.labels()
-                body = {"items": items, "labels": labels}
+                    labels = read()
+                body: dict[str, Any] = {"items": items, "labels": labels}
+                if relabel:
+                    body["question"] = RELABEL_QUESTION
                 self.send(200, json.dumps(body).encode(), "application/json")
             elif self.path.startswith("/original/") and self.path[10:] in files:
                 path = files[self.path[10:]]
@@ -224,7 +237,7 @@ def serve(port: int, every: bool = False) -> None:
                 self.send(400, b"bad label", "text/plain")
                 return
             with lock:  # requests run in threads; one read-modify-write at a time
-                labels = outside.labels()
+                labels = read()
                 labels[got["id"]] = {
                     "verdict": got["verdict"],
                     "basis": got.get("basis"),

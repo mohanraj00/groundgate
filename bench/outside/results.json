@@ -1,28 +1,49 @@
 {
  "items": 229,
  "still": 45,
+ "relabeled": [
+  {
+   "id": "14b0869eb7658c68",
+   "first": "right",
+   "second": "wrong"
+  },
+  {
+   "id": "86af173fcf11a0ac",
+   "first": "right",
+   "second": "wrong"
+  },
+  {
+   "id": "8b0181edcf2d4a06",
+   "first": "right",
+   "second": "wrong"
+  },
+  {
+   "id": "fe95807bfcb4a6f7",
+   "first": "right",
+   "second": "wrong"
+  }
+ ],
  "by": {
   "still": {
    "sec": {
-    "right, from the document": 11,
-    "wrong": 2
+    "right, from the document": 9,
+    "wrong": 4
    },
    "sec/sec": {
-    "right, from the document": 11,
-    "wrong": 2
+    "right, from the document": 9,
+    "wrong": 4
    },
    "set2": {
-    "right, from the document": 10,
+    "right, from the document": 8,
     "right, from the outside": 1,
-    "wrong": 21
+    "wrong": 23
    },
    "set2/fda": {
     "right, from the document": 6,
     "wrong": 8
    },
    "set2/fr": {
-    "right, from the document": 2,
-    "wrong": 2
+    "wrong": 4
    },
    "set2/irs": {
     "right, from the document": 1,
@@ -36,20 +57,20 @@
   },
   "all": {
    "sec": {
-    "right, from the document": 15,
+    "right, from the document": 13,
     "unlabeled": 179,
-    "wrong": 2
+    "wrong": 4
    },
    "sec/sec": {
-    "right, from the document": 15,
+    "right, from the document": 13,
     "unlabeled": 179,
-    "wrong": 2
+    "wrong": 4
    },
    "set2": {
-    "right, from the document": 10,
+    "right, from the document": 8,
     "right, from the outside": 1,
     "unlabeled": 1,
-    "wrong": 21
+    "wrong": 23
    },
    "set2/fda": {
     "right, from the document": 6,
@@ -57,8 +78,7 @@
     "wrong": 8
    },
    "set2/fr": {
-    "right, from the document": 2,
-    "wrong": 2
+    "wrong": 4
    },
    "set2/irs": {
     "right, from the document": 1,
@@ -125,17 +145,6 @@
    "unit": "%",
    "basis": "outside",
    "source": "https://www.irs.gov/taxtopics/tc307",
-   "still": true
-  },
-  {
-   "id": "14b0869eb7658c68",
-   "doc": "sec-0001193125-26-077343",
-   "field": "net_income",
-   "key": "2024",
-   "value": "1114000000",
-   "unit": "USD",
-   "basis": "document",
-   "source": "the document",
    "still": true
   },
   {
@@ -227,33 +236,11 @@
    "still": true
   },
   {
-   "id": "86af173fcf11a0ac",
-   "doc": "fr-2026-17901",
-   "field": "example_idc_ceiling_first",
-   "key": null,
-   "value": "3500000",
-   "unit": "USD",
-   "basis": "document",
-   "source": "the document",
-   "still": true
-  },
-  {
    "id": "89da074fedec0636",
    "doc": "sec-0001683168-26-000412",
    "field": "net_income",
    "key": "2025",
    "value": "-58018",
-   "unit": "USD",
-   "basis": "document",
-   "source": "the document",
-   "still": true
-  },
-  {
-   "id": "8b0181edcf2d4a06",
-   "doc": "fr-2026-17901",
-   "field": "example_idc_orders_bound_first",
-   "key": null,
-   "value": "3500000",
    "unit": "USD",
    "basis": "document",
    "source": "the document",
@@ -346,42 +333,20 @@
    "basis": "document",
    "source": "the document",
    "still": true
-  },
-  {
-   "id": "fe95807bfcb4a6f7",
-   "doc": "sec-0001193125-26-077343",
-   "field": "net_income",
-   "key": "2025",
-   "value": "-32154000000",
-   "unit": "USD",
-   "basis": "document",
-   "source": "the document",
-   "still": true
   }
  ],
  "stated": {
-  "items": 21,
+  "items": 17,
   "another proposal in review": 5,
   "missing": {
-   "span": 11,
+   "span": 9,
    "computation": 6,
    "scale": 6,
-   "sign": 4,
-   "other number": 2,
-   "other scale": 2,
+   "sign": 3,
    "dash as zero": 1,
    "token": 1
   },
   "each": [
-   {
-    "id": "14b0869eb7658c68",
-    "missing": [
-     "span",
-     "other scale"
-    ],
-    "review": false,
-    "note": "The quote adds a $ and the word million, so it does not occur. Each place in the filing that holds the number is a table in thousands, and the value is the number times a million."
-   },
    {
     "id": "4f0bcd218d3d73d9",
     "missing": [
@@ -452,14 +417,6 @@
     "note": "The quote adds a $ and the word million, so it does not occur. The table is in millions."
    },
    {
-    "id": "86af173fcf11a0ac",
-    "missing": [
-     "other number"
-    ],
-    "review": false,
-    "note": "The document and the PDF say $35 million. The value is 3500000."
-   },
-   {
     "id": "89da074fedec0636",
     "missing": [
      "span",
@@ -467,14 +424,6 @@
     ],
     "review": false,
     "note": "LangExtract aligned the quote to one byte, a hyphen in other text. The quote adds a minus sign, so it does not occur. The text gives the amount after the words net loss."
-   },
-   {
-    "id": "8b0181edcf2d4a06",
-    "missing": [
-     "other number"
-    ],
-    "review": false,
-    "note": "The document and the PDF say $35 million. The value is 3500000."
    },
    {
     "id": "936a6abaaee9bdb5",
@@ -542,16 +491,6 @@
     ],
     "review": false,
     "note": "The label gives 2.5 mg twice daily. The span is the end of 2.5 mg, so it holds no token 5."
-   },
-   {
-    "id": "fe95807bfcb4a6f7",
-    "missing": [
-     "span",
-     "other scale",
-     "sign"
-    ],
-    "review": false,
-    "note": "The quote adds a $ and the word million, so it does not occur. Each place in the filing that holds the number is a table in thousands, and the value is the number times a million."
    }
   ]
  }

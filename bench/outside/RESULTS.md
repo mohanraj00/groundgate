@@ -8,11 +8,11 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 
 | Set / kind | Right, from outside | Right, from the document | Wrong | Not sure | Unlabeled |
 |---|---:|---:|---:|---:|---:|
-| sec | 0 | 11 | 2 | 0 | 0 |
-| sec/sec | 0 | 11 | 2 | 0 | 0 |
-| set2 | 1 | 10 | 21 | 0 | 0 |
+| sec | 0 | 9 | 4 | 0 | 0 |
+| sec/sec | 0 | 9 | 4 | 0 | 0 |
+| set2 | 1 | 8 | 23 | 0 | 0 |
 | set2/fda | 0 | 6 | 8 | 0 | 0 |
-| set2/fr | 0 | 2 | 2 | 0 | 0 |
+| set2/fr | 0 | 0 | 4 | 0 | 0 |
 | set2/irs | 1 | 1 | 6 | 0 | 0 |
 | set2/ntsb | 0 | 1 | 5 | 0 | 0 |
 
@@ -20,11 +20,11 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 
 | Set / kind | Right, from outside | Right, from the document | Wrong | Not sure | Unlabeled |
 |---|---:|---:|---:|---:|---:|
-| sec | 0 | 15 | 2 | 0 | 179 |
-| sec/sec | 0 | 15 | 2 | 0 | 179 |
-| set2 | 1 | 10 | 21 | 0 | 1 |
+| sec | 0 | 13 | 4 | 0 | 179 |
+| sec/sec | 0 | 13 | 4 | 0 | 179 |
+| set2 | 1 | 8 | 23 | 0 | 1 |
 | set2/fda | 0 | 6 | 8 | 0 | 1 |
-| set2/fr | 0 | 2 | 2 | 0 | 0 |
+| set2/fr | 0 | 0 | 4 | 0 | 0 |
 | set2/irs | 1 | 1 | 6 | 0 | 0 |
 | set2/ntsb | 0 | 1 | 5 | 0 | 0 |
 
@@ -37,7 +37,6 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 | `sec-0001628280-26-004357` | operating_income | 2025 | 13474000000 USD | document | the document | no |
 | `sec-0001193125-26-104547` | operating_income | 2024 | -105198000 USD | document | the document | no |
 | `irs-p515` | backup_withholding_rate |  | 24 % | outside | https://www.irs.gov/taxtopics/tc307 | yes |
-| `sec-0001193125-26-077343` | net_income | 2024 | 1114000000 USD | document | the document | yes |
 | `fda-ciprofloxacin` | max_daily_dose | Acute Sinusitis | 1000 mg | document | the document | yes |
 | `sec-0001725160-26-000014` | net_income | 2025 | -137100000 USD | document | the document | yes |
 | `fda-ciprofloxacin` | max_daily_dose | Urinary Tract Infections | 1000 mg | document | the document | yes |
@@ -46,9 +45,7 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 | `sec-0001262039-26-000007` | revenue | 2025 | 6799600000 USD | document | the document | yes |
 | `sec-0001201792-26-000004` | operating_income | 2025 | 47935000 USD | document | the document | yes |
 | `sec-0001262039-26-000007` | revenue | 2023 | 5304800000 USD | document | the document | yes |
-| `fr-2026-17901` | example_idc_ceiling_first |  | 3500000 USD | document | the document | yes |
 | `sec-0001683168-26-000412` | net_income | 2025 | -58018 USD | document | the document | yes |
-| `fr-2026-17901` | example_idc_orders_bound_first |  | 3500000 USD | document | the document | yes |
 | `sec-0001193125-26-051382` | net_income | 2024 | -69200000 USD | document | the document | yes |
 | `ntsb-192724` | airport_elevation |  | 31 ft | document | the document | yes |
 | `irs-p16` | income_tax_2021 |  | 528805470000 USD | document | the document | yes |
@@ -57,19 +54,18 @@ Items: 229, fixed with a groundgate before spec 0.5. Spec 0.6.1 still rejects 45
 | `sec-0001725160-26-000014` | revenue | 2025 | 0 USD | document | the document | yes |
 | `fda-apixaban` | max_daily_dose | Treatment of Pulmonary Embolism | 20 mg | document | the document | yes |
 | `fda-rivaroxaban` | max_daily_dose | Reduction of Risk of Major Cardiovascular Events in Patients with Coronary Artery Disease (CAD) | 5 mg | document | the document | yes |
-| `sec-0001193125-26-077343` | net_income | 2025 | -32154000000 USD | document | the document | yes |
 
-## What the 21 right values that the document states miss (#232)
+## What the 17 right values that the document states miss (#232)
 
 The cause of each right value that the document states and spec 0.6.1 still rejects, from `causes.json`, which I wrote by hand from the document, the run's quote and its span. A value can miss more than one part. For 5 of them, another proposal of the same value already goes to review.
 
 | Missing | Values |
 |---|---:|
-| span | 11 |
+| span | 9 |
 | computation | 6 |
 | scale | 6 |
-| sign | 4 |
-| other number | 2 |
-| other scale | 2 |
+| sign | 3 |
 | dash as zero | 1 |
 | token | 1 |
+
+A person looked again, blind, at the 4 values labeled right from the document whose cause in `causes.json` was another number or another scale than the document gives, with a question that names the number and its scale (`relabels.json`). 4 labels changed: `14b0869eb7658c68` from right to wrong, `86af173fcf11a0ac` from right to wrong, `8b0181edcf2d4a06` from right to wrong, `fe95807bfcb4a6f7` from right to wrong. The tables above count the second label.
