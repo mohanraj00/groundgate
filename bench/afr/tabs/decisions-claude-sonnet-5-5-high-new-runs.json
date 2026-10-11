@@ -13,8 +13,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -29,8 +28,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -45,8 +43,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -61,8 +58,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -92,12 +88,11 @@
     "key": "2025",
     "value": "4651653200000",
     "evidence": [
-     2387,
-     2398
+     843,
+     854
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -181,8 +176,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -197,8 +191,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -211,11 +204,9 @@
      1939,
      1948
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -230,8 +221,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -427,7 +417,6 @@
     "outcome": "needs_verification",
     "codes": [
      "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -444,8 +433,7 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -461,8 +449,7 @@
     "outcome": "needs_verification",
     "codes": [
      "PART_MISSING",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -477,8 +464,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -493,8 +479,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    }
@@ -595,8 +580,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -611,8 +595,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -622,12 +605,11 @@
     "key": "2025",
     "value": "81614401000",
     "evidence": [
-     4860,
-     4870
+     2018,
+     2028
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -643,8 +625,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -674,12 +655,11 @@
     "key": "2025",
     "value": "86533000000",
     "evidence": [
-     1975,
-     1981
+     606,
+     612
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -706,12 +686,12 @@
     "key": "2025",
     "value": "48589000000",
     "evidence": [
-     3873,
-     3879
+     1932,
+     1938
     ],
     "outcome": "needs_verification",
     "codes": [
-     "FIELD_CITATION_INVALID",
+     "PART_MISSING",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -742,9 +722,8 @@
      4304,
      4310
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -765,8 +744,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -779,11 +757,9 @@
      1519,
      1526
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -793,12 +769,11 @@
     "key": "2025",
     "value": "919739000000",
     "evidence": [
-     4988,
-     4995
+     1985,
+     1992
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -814,8 +789,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -830,8 +804,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    }
@@ -851,8 +824,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -867,8 +839,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -883,8 +854,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -897,9 +867,8 @@
      3884,
      3890
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -936,8 +905,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -952,8 +920,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -968,8 +935,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -985,7 +951,6 @@
     "outcome": "needs_verification",
     "codes": [
      "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1001,8 +966,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    }
@@ -1035,9 +999,8 @@
      948,
      955
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1048,13 +1011,11 @@
     "key": "2025",
     "value": "344410000",
     "evidence": [
-     2910,
-     2917
+     1062,
+     1069
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "SCALE_CITATION_INVALID",
-     "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1120,8 +1081,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -1136,8 +1096,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -1152,8 +1111,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -1188,8 +1146,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -1204,8 +1161,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -1220,8 +1176,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -1251,8 +1206,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    }
@@ -1312,13 +1266,11 @@
     "key": "2025",
     "value": "1655817000000",
     "evidence": [
-     2503,
-     2512
+     3734,
+     3743
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1334,8 +1286,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    }
@@ -1368,9 +1319,8 @@
      1467,
      1473
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1381,12 +1331,11 @@
     "key": "2025",
     "value": "78431000000",
     "evidence": [
-     4606,
-     4612
+     1867,
+     1873
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1450,9 +1399,8 @@
      2445,
      2455
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1463,12 +1411,12 @@
     "key": "2025",
     "value": "608801000000",
     "evidence": [
-     5632,
-     5639
+     2883,
+     2890
     ],
     "outcome": "needs_verification",
     "codes": [
-     "FIELD_CITATION_INVALID",
+     "PART_MISSING",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1515,12 +1463,11 @@
     "key": "2025",
     "value": "545915000000",
     "evidence": [
-     2075,
-     2082
+     837,
+     844
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1547,12 +1494,12 @@
     "key": "2025",
     "value": "320102000000",
     "evidence": [
-     4551,
-     4558
+     2030,
+     2037
     ],
     "outcome": "needs_verification",
     "codes": [
-     "FIELD_CITATION_INVALID",
+     "PART_MISSING",
      "VALUE_DERIVED"
     ],
     "unit": null
@@ -1581,9 +1528,8 @@
      5203,
      5210
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
      "VALUE_DERIVED"
     ],
     "unit": null

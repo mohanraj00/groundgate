@@ -8,14 +8,14 @@ Each proposal with `FIELD_CITATION_INVALID` or `KEY_NOT_AT_VALUE`, decided again
 
 | Cause | 0.7 text, claude-haiku-5-5 | 0.7 text, gpt-6-luna | new text, claude-haiku-5-5 | new text, gpt-6-luna | new text, claude-sonnet-5-5-high | new text, gpt-6.1-sol-high |
 |---|---:|---:|---:|---:|---:|---:|
-| after the value | 1 (0) | 1 (0) | 1 (0) | 2 (0) | 2 (0) | 2 (0) |
-| another line | 62 (51) | 74 (58) | 0 | 0 | 1 (0) | 0 |
-| another occurrence | 0 | 0 | 12 (8) | 11 (8) | 10 (6) | 2 (2) |
-| no alias | 3 (1) | 2 (0) | 4 (0) | 2 (0) | 2 (0) | 1 (0) |
+| after the value | 1 (1) | 1 (1) | 1 (0) | 2 (1) | 2 (1) | 2 (1) |
+| another line | 62 (54) | 74 (62) | 0 | 0 | 1 (1) | 0 |
+| another occurrence | 0 | 0 | 12 (9) | 11 (9) | 10 (7) | 2 (2) |
+| no alias | 3 (1) | 2 (0) | 4 (2) | 2 (1) | 2 (0) | 1 (0) |
 
 ## `KEY_NOT_AT_VALUE`
 
 | Cause | 0.7 text, claude-haiku-5-5 | 0.7 text, gpt-6-luna | new text, claude-haiku-5-5 | new text, gpt-6-luna | new text, claude-sonnet-5-5-high | new text, gpt-6.1-sol-high |
 |---|---:|---:|---:|---:|---:|---:|
-| no heading reaches the value, no key item | 13 (11) | 0 | 4 (4) | 0 | 0 | 0 |
-| no heading reaches the value, with key item | 51 (40) | 64 (48) | 3 (0) | 5 (2) | 5 (2) | 2 (0) |
+| no heading reaches the value, no key item | 13 (12) | 0 | 4 (4) | 0 | 0 | 0 |
+| no heading reaches the value, with key item | 51 (43) | 64 (53) | 3 (2) | 5 (4) | 5 (4) | 2 (1) |

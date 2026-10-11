@@ -13,8 +13,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -29,8 +28,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -45,8 +43,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -61,8 +58,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -139,16 +135,14 @@
     "key": "2025",
     "value": "1162655800000",
     "evidence": [
-     3558,
-     3569
+     3681,
+     3692
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "UNIT_CITATION_INVALID",
-     "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
-    "unit": false
+    "unit": true
    },
    {
     "id": "c4",
@@ -182,8 +176,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -198,8 +191,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -214,8 +206,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -230,8 +221,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -448,7 +438,6 @@
     "outcome": "needs_verification",
     "codes": [
      "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ],
     "unit": true
@@ -465,8 +454,7 @@
     "outcome": "needs_verification",
     "codes": [
      "UNIT_CITATION_INVALID",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": false
    },
@@ -482,8 +470,7 @@
     "outcome": "needs_verification",
     "codes": [
      "UNIT_CITATION_INVALID",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": false
    },
@@ -498,8 +485,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -514,8 +500,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    }
@@ -616,8 +601,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -632,8 +616,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -649,8 +632,7 @@
     "outcome": "needs_verification",
     "codes": [
      "UNIT_CITATION_INVALID",
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": false
    },
@@ -665,8 +647,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -799,8 +780,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -815,8 +795,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -831,8 +810,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -859,8 +837,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -875,8 +852,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    }
@@ -1006,8 +982,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -1022,8 +997,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -1038,8 +1012,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    },
@@ -1074,8 +1047,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -1090,8 +1062,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -1106,8 +1077,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    },
@@ -1137,8 +1107,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": null
    }
@@ -1198,14 +1167,12 @@
     "key": "2025",
     "value": "1655817000000",
     "evidence": [
-     2503,
-     2512
+     3734,
+     3743
     ],
     "outcome": "needs_verification",
     "codes": [
      "UNIT_CITATION_INVALID",
-     "FIELD_CITATION_INVALID",
-     "KEY_NOT_AT_VALUE",
      "VALUE_DERIVED"
     ],
     "unit": false
@@ -1221,8 +1188,7 @@
     ],
     "outcome": "admitted",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "VALUE_DERIVED"
     ],
     "unit": true
    }
@@ -1282,16 +1248,14 @@
     "key": "2025",
     "value": "31425000000",
     "evidence": [
-     3004,
-     3010
+     3091,
+     3097
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "UNIT_CITATION_INVALID",
-     "FIELD_CITATION_INVALID",
      "VALUE_DERIVED"
     ],
-    "unit": false
+    "unit": true
    },
    {
     "id": "c4",
@@ -1438,9 +1402,8 @@
      2118,
      2129
     ],
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "PART_MISSING",
      "VALUE_DERIVED"
     ],
     "unit": null

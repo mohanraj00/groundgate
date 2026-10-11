@@ -15,11 +15,11 @@ The plan is on #230. No rule of #230 came from these reports.
     uv run python bench/afr/tabs.py results [--check]
 
 The replay decides the replies of #229, which the models wrote from the 0.7 text, against the
-new text. The new runs read the new text. decide runs on the 0.8 draft. Its only rule that a
-decision on this set can see is #242: with a scale item, the number as written does not match.
+new text. The new runs read the new text. decide runs on spec 0.8, with the rules #242, #249,
+#250 and #140 (#263). The rules #249 and #250 came from this set, so it does not measure them.
 The 0.7 text is decided under spec 0.7, as measure.py decides it. Two more runs, with stronger
-models at high effort, have no run of #229: they read both texts, and both are decided under the
-0.8 draft, so only the text differs. The page shows each admitted
+models at high effort, have no run of #229: they read both texts, and both are decided under
+spec 0.8, so only the text differs. The page shows each admitted
 value that has no label yet, as measure.py web shows its values, and writes bench/afr/labels.json.
 Labels are keyed by fact, so the labels of #229 stay valid.
 """
@@ -81,7 +81,7 @@ def decide() -> None:
     from groundgate.canonical import SPEC_VERSION
 
     if SPEC_VERSION != "0.8":
-        raise SystemExit(f"this measure decides with the 0.8 draft, not {SPEC_VERSION}")
+        raise SystemExit(f"this measure decides with spec 0.8, not {SPEC_VERSION}")
     for run, read in PAIRS:
         measure._dump(_name(run, read), measure.decide_docs(_docs(read), _replies(run, read)))
     print(f"wrote decisions for {len(PAIRS)} runs and texts")
@@ -187,11 +187,12 @@ def render(res: dict[str, Any]) -> str:
         "replay decides the replies of `bench/afr/runs` against the new text. The new runs read "
         "the new text, with the same prompt, CLI flags and default effort (`bench/afr/run.py "
         "--tabs`). The 0.7 text rows of these two runs are decided under spec 0.7, and the "
-        "replay and the new runs under the 0.8 draft, with the #242 rule. `claude-sonnet-5-5-high` "
-        "and `gpt-6.1-sol-high` are stronger models at high effort, with the same prompt and "
-        "flags. They have no run of #229, so they read both texts, and both are decided under "
-        "the 0.8 draft. A value counts once per document, field, key and value. An escape is a "
-        "wrong value that a decision admits.",
+        "replay and the new runs under spec 0.8, with the rules #242, #249, #250 and #140. "
+        "The rules #249 and #250 came from this set, so these numbers do not measure them "
+        "(#263). `claude-sonnet-5-5-high` and `gpt-6.1-sol-high` are stronger models at high "
+        "effort, with the same prompt and flags. They have no run of #229, so they read both "
+        "texts, and both are decided under spec 0.8. A value counts once per document, field, "
+        "key and value. An escape is a wrong value that a decision admits.",
     ]
     for run, rows in res["runs"].items():
         out += [
@@ -223,7 +224,7 @@ def render(res: dict[str, Any]) -> str:
         "",
         "Each wrong value that a decision on the new text admits. Under spec 0.7, a value with a "
         "scale item could match the number as written, so a value with no scale got through. The "
-        "0.8 draft has the #242 rule, which takes that match away.",
+        "#242 rule of spec 0.8 takes that match away.",
         "",
     ]
     if not res["escapes"]:
