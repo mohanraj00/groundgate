@@ -1,0 +1,56 @@
+{
+ "fields": {
+  "total_assets": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024"
+   ],
+   "aliases": [
+    "total assets"
+   ],
+   "description": "Total assets of the primary government (its Total column) at the fiscal year end."
+  },
+  "total_liabilities": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024"
+   ],
+   "aliases": [
+    "total liabilities"
+   ],
+   "description": "Total liabilities of the primary government (its Total column) at the fiscal year end."
+  },
+  "total_net_position": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024"
+   ],
+   "aliases": [
+    "total net position"
+   ],
+   "description": "Total net position of the primary government (its Total column) at the fiscal year end."
+  },
+  "change_in_net_position": {
+   "type": "number",
+   "unit": "USD",
+   "multiple": true,
+   "keys": [
+    "2025",
+    "2024"
+   ],
+   "aliases": [
+    "change in net position"
+   ],
+   "description": "Change in net position of the primary government (its Total column) for the year."
+  }
+ }
+}

@@ -740,6 +740,62 @@ def test_unit_places_read_a_wide_row_once() -> None:
     assert time_for(1600) < 8 * time_for(400)
 
 
+def test_reanchor_needs_the_unit_next_to_the_value() -> None:
+    """A unit form at a unit place makes the unit present at the cited span, not at another
+    occurrence (#249): the span stays, with the unit missing."""
+    text = "Other 160.\n\nRegion\t2025\nNorth\t$\nSouth\t160\n"
+    schema = {"fields": {"region": {"type": "integer", "unit": "USD", "aliases": ["south"]}}}
+    cand = {
+        "id": "c",
+        "field": "region",
+        "value": 160,
+        "unit": "USD",
+        "evidence": [
+            {"source": "document", "start": 6, "end": 9, "text": "160"},
+            {"role": "field", "text": "South"},
+        ],
+    }
+    d = gg.admit(text, schema, [cand]).decisions[0]
+    assert "EVIDENCE_REANCHORED" not in d.codes
+    assert d.missing == ("unit",)
+
+
+@pytest.mark.parametrize(
+    "layout",
+    [
+        "Revenue\t{}",  # the field item passes at each copy, on its row
+        "Revenue was {}",  # it passes only at the first copy, in its sentence
+        "Revenue\n\n{}",  # it passes at no copy
+    ],
+)
+def test_field_occurrences_stay_linear(layout: str) -> None:
+    """Many copies of a value quote with a field item stay linear (#249): the occurrences of
+    the field item, the sentence ends and the next letter and number are read once, also when
+    no copy has the unit. Four times the copies take less than eight times as long."""
+    import time
+
+    schema = {"fields": {"revenue": {"type": "integer", "unit": "USD", "aliases": ["revenue"]}}}
+    cand = {
+        "id": "c",
+        "field": "revenue",
+        "value": 160,
+        "unit": "USD",
+        "evidence": [{"text": "160"}, {"role": "field", "text": "Revenue"}],
+    }
+
+    def time_for(copies: int) -> float:
+        text = layout.format(" ".join(["160"] * copies))
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            r = gg.admit(text, schema, [cand])
+            best = min(best, time.perf_counter() - began)
+            assert r.decisions[0].missing == ("unit",)
+        return best
+
+    assert time_for(2000) < 8 * time_for(500)
+
+
 def test_unit_places_find_lines_and_cells_once() -> None:
     """A wide row of empty cells above the value stays linear (#164): the line of each unit form
     and the whitespace after each empty cell are not read again for each form. Four times the

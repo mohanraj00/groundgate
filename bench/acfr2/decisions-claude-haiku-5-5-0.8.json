@@ -1,0 +1,860 @@
+{
+ "acfr2-ia": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "44708842000",
+    "evidence": [
+     1464,
+     1474
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "9689042000",
+    "evidence": [
+     3498,
+     3507
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "34463252000",
+    "evidence": [
+     4848,
+     4858
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": "2025",
+    "value": "1795572000",
+    "evidence": [
+     7679,
+     7688
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_net_position",
+    "key": "2024",
+    "value": "32723433000",
+    "evidence": [
+     7741,
+     7751
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit",
+     "key"
+    ]
+   }
+  ]
+ },
+ "acfr2-ks": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "31069617",
+    "evidence": [
+     1276,
+     1286
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "10573159",
+    "evidence": [
+     2171,
+     2181
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "21029806",
+    "evidence": [
+     2888,
+     2898
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": "2025",
+    "value": "794781",
+    "evidence": [
+     6007,
+     6014
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "missing": []
+   }
+  ]
+ },
+ "acfr2-ky": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "47729103000",
+    "evidence": [
+     1528,
+     1538
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "40547567000",
+    "evidence": [
+     2092,
+     2102
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "8958613000",
+    "evidence": [
+     2579,
+     2588
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": "2025",
+    "value": "204051000",
+    "evidence": [
+     6432,
+     6439
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit",
+     "key"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_net_position",
+    "key": "2024",
+    "value": "8754562000",
+    "evidence": [
+     6544,
+     6553
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit",
+     "key"
+    ]
+   }
+  ]
+ },
+ "acfr2-la": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "61257821000",
+    "evidence": [
+     1311,
+     1321
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "40371683000",
+    "evidence": [
+     3514,
+     3524
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "20952361000",
+    "evidence": [
+     6222,
+     6232
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": "2025",
+    "value": "2624532000",
+    "evidence": [
+     9293,
+     9302
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   }
+  ]
+ },
+ "acfr2-ma": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "61186631000",
+    "evidence": [
+     4565,
+     4575
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "121805788000",
+    "evidence": [
+     10754,
+     10765
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "-61150716000",
+    "evidence": [
+     13961,
+     13973
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": "2025",
+    "value": "-912545000",
+    "evidence": [
+     19748,
+     19757
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_net_position",
+    "key": "2024",
+    "value": "-60238171000",
+    "evidence": [
+     20137,
+     20149
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit",
+     "key"
+    ]
+   }
+  ]
+ },
+ "acfr2-md": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "74075699000",
+    "evidence": [
+     2054,
+     2064
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "65761859000",
+    "evidence": [
+     3216,
+     3226
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "11487678000",
+    "evidence": [
+     3950,
+     3960
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": "2025",
+    "value": "-852405000",
+    "evidence": [
+     10934,
+     10943
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_net_position",
+    "key": "2024",
+    "value": "12340083000",
+    "evidence": [
+     11053,
+     11063
+    ],
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "missing": []
+   }
+  ]
+ },
+ "acfr2-me": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "12504753000",
+    "evidence": [
+     2276,
+     2286
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "7663920000",
+    "evidence": [
+     4510,
+     4519
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "4389898000",
+    "evidence": [
+     5182,
+     5191
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": "2025",
+    "value": "732499000",
+    "evidence": [
+     8561,
+     8568
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   }
+  ]
+ },
+ "acfr2-mi": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "73225603000",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "32358259000",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "38181792000",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": "2025",
+    "value": "2848187000",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c4",
+    "field": "total_net_position",
+    "key": "2024",
+    "value": "35747511000",
+    "evidence": null,
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "missing": []
+   }
+  ]
+ },
+ "acfr2-mn": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "68569565000",
+    "evidence": [
+     3887,
+     3897
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "24139291000",
+    "evidence": [
+     8475,
+     8485
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "43592888000",
+    "evidence": [
+     11589,
+     11599
+    ],
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": "2025",
+    "value": "-102937000",
+    "evidence": [
+     18230,
+     18239
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit",
+     "key"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_net_position",
+    "key": "2024",
+    "value": "43695825000",
+    "evidence": [
+     18395,
+     18405
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "key"
+    ]
+   }
+  ]
+ },
+ "acfr2-mo": {
+  "reply": true,
+  "decisions": [
+   {
+    "id": "c0",
+    "field": "total_assets",
+    "key": "2025",
+    "value": "66469524000",
+    "evidence": [
+     1031,
+     1041
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c1",
+    "field": "total_liabilities",
+    "key": "2025",
+    "value": "21578922000",
+    "evidence": [
+     1574,
+     1584
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c2",
+    "field": "total_net_position",
+    "key": "2025",
+    "value": "45981534000",
+    "evidence": [
+     2226,
+     2236
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "id": "c3",
+    "field": "change_in_net_position",
+    "key": "2025",
+    "value": "1891940000",
+    "evidence": [
+     5255,
+     5264
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "id": "c4",
+    "field": "total_net_position",
+    "key": "2024",
+    "value": "44089594000",
+    "evidence": [
+     5373,
+     5383
+    ],
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,151 @@
+{
+ "sources": [
+  {
+   "id": "acfr2-ia",
+   "state": "Iowa",
+   "url": "https://www.legis.iowa.gov/docs/publications/DF/1594671.pdf",
+   "sha256": "f6417de0c5a3a263b72edb32f529801862a6e222e1edfd4ef2afe8eb78b87dc3",
+   "select": {
+    "pages": [
+     38,
+     39,
+     40,
+     41
+    ]
+   },
+   "kind": "acfr2"
+  },
+  {
+   "id": "acfr2-ks",
+   "state": "Kansas",
+   "url": "https://admin.ks.gov/browse/files/d2d39a0deef8464faaba21b8f4e69a24/download",
+   "sha256": "841bd03a8d0815074d020039981e07d41b33c33a5b0ce6f984238502b1fffdfd",
+   "select": {
+    "pages": [
+     35,
+     36,
+     37
+    ]
+   },
+   "kind": "acfr2"
+  },
+  {
+   "id": "acfr2-ky",
+   "state": "Kentucky",
+   "url": "https://finance.ky.gov/office-of-the-controller/office-of-statewide-accounting-services/financial-reporting-branch/ACFR/2025%20Commonwealth%20of%20Kentucky%20Annual%20Comprehensive%20Financial%20Report.pdf",
+   "sha256": "e77b20b3d06f7dcbe845b542ce4822d6d08b6122c2807c58beb9788182d69e4d",
+   "select": {
+    "pages": [
+     36,
+     37,
+     38
+    ]
+   },
+   "kind": "acfr2"
+  },
+  {
+   "id": "acfr2-la",
+   "state": "Louisiana",
+   "url": "https://www.doa.louisiana.gov/media/lqvhnfhs/fy25-acfr-final.pdf",
+   "sha256": "9f7ed825b7ee53f65d508606af5550b065e2c09b47afaaf5b4d1fcf196436fa5",
+   "select": {
+    "pages": [
+     50,
+     51,
+     52
+    ]
+   },
+   "kind": "acfr2"
+  },
+  {
+   "id": "acfr2-me",
+   "state": "Maine",
+   "url": "https://www.maine.gov/osc/sites/maine.gov.osc/files/inline-files/acfr2025.pdf",
+   "sha256": "d5c8c62d78e08132d292b8e57331789fe9731c096a440ee65dd3a4b95d3bf47c",
+   "select": {
+    "pages": [
+     48,
+     49,
+     50,
+     51
+    ]
+   },
+   "kind": "acfr2"
+  },
+  {
+   "id": "acfr2-md",
+   "state": "Maryland",
+   "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/md/reports/financial/2025-acfr-accessible.pdf",
+   "sha256": "c37bef0363713452427dff36152e49c77051316acbd1da499f99b6dbc9cd59e0",
+   "select": {
+    "pages": [
+     60,
+     61,
+     62,
+     63,
+     64
+    ]
+   },
+   "kind": "acfr2"
+  },
+  {
+   "id": "acfr2-ma",
+   "state": "Massachusetts",
+   "url": "https://www.macomptroller.org/wp-content/uploads/acfr_fy-2025.pdf",
+   "sha256": "bd2a14c78fe4a7a373af39f079b90bfc06bb6a6a8b6f4978e3ba5fea7a6e6909",
+   "select": {
+    "pages": [
+     48,
+     49,
+     50,
+     51
+    ]
+   },
+   "kind": "acfr2"
+  },
+  {
+   "id": "acfr2-mi",
+   "state": "Michigan",
+   "url": "https://audgen.michigan.gov/wp-content/uploads/2026/04/FY2025-ACFR-V2.pdf",
+   "sha256": "c3e4477b5a081c9a4b6c87378bf5b768085f1763083bf6dfca46a60c4906ba38",
+   "select": {
+    "pages": [
+     35,
+     36,
+     37,
+     38
+    ]
+   },
+   "kind": "acfr2"
+  },
+  {
+   "id": "acfr2-mn",
+   "state": "Minnesota",
+   "url": "https://www.leg.mn.gov/docs/2025/mandated/251926/2025%20ACFR.pdf",
+   "sha256": "b34446860d5c6a57634773fdae8da1d378a749ddc09e4edc59a6b3d23b5259a2",
+   "select": {
+    "pages": [
+     50,
+     51,
+     52,
+     53
+    ]
+   },
+   "kind": "acfr2"
+  },
+  {
+   "id": "acfr2-mo",
+   "state": "Missouri",
+   "url": "https://acct.oa.mo.gov/sites/g/files/zuston241/files/2026-02/2025%20ACFR%20Final.pdf",
+   "sha256": "d4b4dbe0fe677cf2fe98cc4c72a1189eba9378136a71a8d0d1f37ec1c4b6e3e6",
+   "select": {
+    "pages": [
+     34,
+     35,
+     36
+    ]
+   },
+   "kind": "acfr2"
+  }
+ ]
+}
