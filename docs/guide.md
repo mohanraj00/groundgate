@@ -102,7 +102,8 @@ When that is not the candidate's key, the fact is flagged `KEY_NOT_AT_VALUE`. Tw
 conflict when they share a key. The receipt echoes the key. A short label line such as "Notes:"
 between the heading and the value stops the heading's key, and in a table sentence only the
 value's own line counts. So a right key under a label line, or in a table with one cell on each
-line, goes to review.
+line, goes to review. A table with one number column under a title such as "As of September 30,
+2025" keeps the title's key across a label line, on the same page (spec 0.8).
 
 ## Candidates
 

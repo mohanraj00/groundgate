@@ -568,7 +568,11 @@ span for a `string` field. The **keys at the value** are the keys mentioned in t
 sentence, except in a table sentence (below). When the sentence mentions none, they are the key
 of the nearest mention that ends at or before the value's start, or no key when there is no such
 mention or when a label line lies wholly between the end of that mention and the start of the
-value's sentence. The candidate's `key` must be one of them.
+value's sentence. A label line does not stop that key when no page break (`\f`) stands between
+the mention and the value, the value's line holds a tab before the value, and each line after
+the mention's line, up to and including the value's line, holds at most one number token after
+its first tab: a table with one number column under a title such as "As of September 30, 2025"
+(#250). The candidate's `key` must be one of them.
 
 A **label line** is a line with a blank line (§4.2) or the start of the text before it and a
 blank line after it. It holds at most 12 words (runs of non-whitespace) and no `.` or `;`

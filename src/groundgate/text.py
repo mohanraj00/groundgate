@@ -559,7 +559,7 @@ def _own_keys(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[
 def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[str]:
     """The keys a value at ``pos`` belongs to: those its sentence mentions, or in a table
     sentence those its line mentions, else the nearest mention before it, unless a label line
-    stands between them (SPEC §4.5)."""
+    stands between them and the value is not in a one-column table under it (SPEC §4.5)."""
     s0, _ = sentence(text, pos)
     named = _own_keys(text, mentions, pos)
     if named is not None:
@@ -568,7 +568,30 @@ def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[st
     if not before:
         return set()
     end, key = max(before)
-    return set() if _label_line_in(text, end, s0) else {key}
+    if _label_line_in(text, end, s0) and not _one_column(text, end, pos):
+        return set()
+    return {key}
+
+
+def _one_column(text: str, end: int, pos: int) -> bool:
+    """Whether a key mention that ends at ``end`` reaches a value at ``pos`` across a label line:
+    no page break between them, a tab before the value on its line, and at most one number token
+    after the first tab of each line after the mention's line, as in a table with one number
+    column under a title (SPEC §4.5, #250)."""
+    if "\f" in text[end:pos]:
+        return False
+    line = text.rfind("\n", 0, pos) + 1
+    if "\t" not in text[line:pos]:
+        return False
+    a = text.find("\n", end) + 1
+    while 0 < a <= line:
+        b = text.find("\n", a)
+        b = len(text) if b < 0 else b
+        tab = text.find("\t", a, b)
+        if tab >= 0 and len(tokens(text, tab, b)) > 1:
+            return False
+        a = b + 1
+    return True
 
 
 # -------------------------------------------------------------- evidence items
