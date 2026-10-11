@@ -33,10 +33,10 @@ The 10 documents of bench/acfr2, which #256 did not come from. A value has the l
 
 | Run | Output schema | Proposals | With a key item | Admitted | Right admitted | Escapes | Admitted, not sure or unlabeled | Not admitted | Not admitted, right | No reply |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| claude-haiku-5-5-acfr2-242 | with key | 40 | 20 | 10 | 1 | 0 | 9 | 30 | 6 | 0 |
-| claude-haiku-5-5-acfr2-256 | without key | 40 | 0 | 23 | 7 | 0 | 16 | 17 | 0 | 0 |
-| gpt-6-luna-acfr2-242 | with key | 40 | 40 | 0 | 0 | 0 | 0 | 40 | 6 | 0 |
-| gpt-6-luna-acfr2-256 | without key | 40 | 0 | 9 | 0 | 0 | 9 | 31 | 7 | 0 |
+| claude-haiku-5-5-acfr2-242 | with key | 40 | 20 | 10 | 10 | 0 | 0 | 30 | 30 | 0 |
+| claude-haiku-5-5-acfr2-256 | without key | 40 | 0 | 23 | 23 | 0 | 0 | 17 | 17 | 0 |
+| gpt-6-luna-acfr2-242 | with key | 40 | 40 | 0 | 0 | 0 | 0 | 40 | 37 | 0 |
+| gpt-6-luna-acfr2-256 | without key | 40 | 0 | 9 | 9 | 0 | 0 | 31 | 31 | 0 |
 
 Codes and missing parts on the proposals that are not admitted (a proposal can have more than one).
 

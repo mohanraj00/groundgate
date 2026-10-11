@@ -104,11 +104,11 @@
      "proposals": 40,
      "with a key item": 20,
      "admitted": 10,
-     "right admitted": 1,
+     "right admitted": 10,
      "escapes": 0,
-     "admitted, not sure or unlabeled": 9,
+     "admitted, not sure or unlabeled": 0,
      "not admitted": 30,
-     "not admitted, right": 6,
+     "not admitted, right": 30,
      "no reply": 0
     },
     "claude-haiku-5-5-acfr2-256": {
@@ -118,11 +118,11 @@
      "proposals": 40,
      "with a key item": 0,
      "admitted": 23,
-     "right admitted": 7,
+     "right admitted": 23,
      "escapes": 0,
-     "admitted, not sure or unlabeled": 16,
+     "admitted, not sure or unlabeled": 0,
      "not admitted": 17,
-     "not admitted, right": 0,
+     "not admitted, right": 17,
      "no reply": 0
     },
     "gpt-6-luna-acfr2-242": {
@@ -136,7 +136,7 @@
      "escapes": 0,
      "admitted, not sure or unlabeled": 0,
      "not admitted": 40,
-     "not admitted, right": 6,
+     "not admitted, right": 37,
      "no reply": 0
     },
     "gpt-6-luna-acfr2-256": {
@@ -146,11 +146,11 @@
      "proposals": 40,
      "with a key item": 0,
      "admitted": 9,
-     "right admitted": 0,
+     "right admitted": 9,
      "escapes": 0,
-     "admitted, not sure or unlabeled": 9,
+     "admitted, not sure or unlabeled": 0,
      "not admitted": 31,
-     "not admitted, right": 7,
+     "not admitted, right": 31,
      "no reply": 0
     }
    },
