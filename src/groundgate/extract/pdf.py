@@ -43,6 +43,7 @@ Rect = tuple[float, float, float, float]
 Result = tuple[str, list[Page], list[Word], list[str]]
 Line = list[tuple[str, Box]]  # the words of one pdfminer text line
 Row = list[Line]  # the cells of one output line, left to right
+Key = tuple[int, int]  # a text line: its block and its line in the block
 
 CELL_GAP = 0.65  # a gap between two words this many times the word's height starts a new cell
 HEADING_WORDS = 4  # a row with no number joins a table when each of its parts is this short
@@ -314,7 +315,51 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     its lines, one row on each line. A row has only the cells that hold text: a blank cell gets no
     empty cell, so the cells after it move one column left (#247).
     """
-    Key = tuple[int, int]  # block, line
+    rows, span, plan = _plan(blocks)
+
+    def number(key: Key) -> bool:
+        return _number_cell(blocks[key[0]][key[1]])
+
+    region: dict[Key, int] = {}
+    tables: list[list[Row]] = []
+    for n, (first, group) in enumerate(plan):
+        tables.append([])
+        for row in rows[first : group[-1] + 1]:
+            lines = [blocks[bi][li] for bi, li in row]
+            if (_side_by_side(row, span) and any(map(number, row))) or all(map(number, row)):
+                lines = [cell for line in lines for cell in _cells(line)]
+            tables[n].append(lines)
+            region.update((key, n) for key in row)
+    out: list[list[Row]] = []
+    done: set[int] = set()
+    for bi, block in enumerate(blocks):
+        prose: list[Row] = []
+        for li, line in enumerate(block):
+            table = region.get((bi, li))
+            if table is None:
+                prose.append([line])
+                continue
+            if prose:
+                out.append(prose)
+                prose = []
+            if table not in done:
+                done.add(table)
+                out.append(tables[table])
+        if prose:
+            out.append(prose)
+    return out
+
+
+def _side_by_side(row: list[Key], span: dict[Key, Box]) -> bool:
+    return len(row) > 1 and all(span[a].x1 <= span[b].x0 + 0.5 for a, b in itertools.pairwise(row))
+
+
+def _plan(
+    blocks: list[list[Line]],
+) -> tuple[list[list[Key]], dict[Key, Box], list[tuple[int, list[int]]]]:
+    """The tables of _tables: the page's rows of text lines, left to right, the span of each line,
+    and for each table the row where it starts (its first column heading, if any) and its table
+    rows."""
     span = {
         (bi, li): _span(line) for bi, block in enumerate(blocks) for li, line in enumerate(block)
     }
@@ -331,9 +376,7 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
         return _number_cell(blocks[key[0]][key[1]])
 
     def side_by_side(row: list[Key]) -> bool:
-        return len(row) > 1 and all(
-            span[a].x1 <= span[b].x0 + 0.5 for a, b in itertools.pairwise(row)
-        )
+        return _side_by_side(row, span)
 
     def table_row(row: list[Key]) -> bool:
         return side_by_side(row) and any(map(number, row))
@@ -367,13 +410,13 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                 continue
         groups.append([i])
     groups = [group for group in groups if len(group) > 1]
-    region: dict[Key, int] = {}
-    tables: list[list[Row]] = []
-    for n, group in enumerate(groups):
+    taken: set[int] = set()
+    plan: list[tuple[int, list[int]]] = []
+    for group in groups:
         first, last = group[0], group[-1]
         edge = first_number(rows[first]) + 0.5
         above = first - 1
-        while above >= 0 and rows[above][0] not in region:
+        while above >= 0 and above not in taken:
             if column_heading(rows[above]):
                 first = above
             elif (
@@ -382,28 +425,6 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
             ):
                 break
             above -= 1
-        tables.append([])
-        for row in rows[first : last + 1]:
-            lines = [blocks[bi][li] for bi, li in row]
-            if table_row(row) or all(map(number, row)):
-                lines = [cell for line in lines for cell in _cells(line)]
-            tables[n].append(lines)
-            region.update((key, n) for key in row)
-    out: list[list[Row]] = []
-    done: set[int] = set()
-    for bi, block in enumerate(blocks):
-        prose: list[Row] = []
-        for li, line in enumerate(block):
-            table = region.get((bi, li))
-            if table is None:
-                prose.append([line])
-                continue
-            if prose:
-                out.append(prose)
-                prose = []
-            if table not in done:
-                done.add(table)
-                out.append(tables[table])
-        if prose:
-            out.append(prose)
-    return out
+        taken.update(range(first, last + 1))
+        plan.append((first, group))
+    return rows, span, plan
