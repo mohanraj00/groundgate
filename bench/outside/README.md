@@ -11,6 +11,7 @@ uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.4
 uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.6.1 \
     --with-requirements /tmp/lx.txt python bench/outside/outside.py still   # still.json
 uv run --group langextract python bench/outside/outside.py web     # label at 127.0.0.1:8768
+uv run --group langextract python bench/outside/outside.py web --relabel  # relabels.json
 uv run python bench/outside/outside.py results                     # results.json, RESULTS.md
 uv run python bench/outside/outside.py results --check             # fail if they differ
 ```
@@ -57,5 +58,15 @@ The plan on #132 has right, wrong and not sure. The basis was added before any l
 most 10-K items are signs and table scales, not outside knowledge. Only "right, from outside"
 answers the question of #125.
 
-[RESULTS.md](RESULTS.md) has the counts by set and by kind, and each right value with its
-source.
+## A second look (#232)
+
+`causes.json` gives, for each right value from the document that spec 0.6.1 still rejects, the
+parts that are missing. I wrote it by hand from the document, the run's quote and its span. When
+its cause for a value is another number or another scale than the document gives, `web --relabel`
+shows that value again, blind: it shows no first label, and it asks to check the number and its
+scale. These labels go to `relabels.json`. The results count a second label in place of the first
+one, and name each label that changed. The normal page reads and writes only `labels.json`.
+
+[RESULTS.md](RESULTS.md) has the counts by set and by kind, each right value with its source, and
+the missing parts of the right values from the document. It comes from `items.json`,
+`still.json`, `labels.json`, `relabels.json` and `causes.json`.

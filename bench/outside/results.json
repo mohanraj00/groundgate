@@ -1,28 +1,49 @@
 {
  "items": 229,
  "still": 45,
+ "relabeled": [
+  {
+   "id": "14b0869eb7658c68",
+   "first": "right",
+   "second": "wrong"
+  },
+  {
+   "id": "86af173fcf11a0ac",
+   "first": "right",
+   "second": "wrong"
+  },
+  {
+   "id": "8b0181edcf2d4a06",
+   "first": "right",
+   "second": "wrong"
+  },
+  {
+   "id": "fe95807bfcb4a6f7",
+   "first": "right",
+   "second": "wrong"
+  }
+ ],
  "by": {
   "still": {
    "sec": {
-    "right, from the document": 11,
-    "wrong": 2
+    "right, from the document": 9,
+    "wrong": 4
    },
    "sec/sec": {
-    "right, from the document": 11,
-    "wrong": 2
+    "right, from the document": 9,
+    "wrong": 4
    },
    "set2": {
-    "right, from the document": 10,
+    "right, from the document": 8,
     "right, from the outside": 1,
-    "wrong": 21
+    "wrong": 23
    },
    "set2/fda": {
     "right, from the document": 6,
     "wrong": 8
    },
    "set2/fr": {
-    "right, from the document": 2,
-    "wrong": 2
+    "wrong": 4
    },
    "set2/irs": {
     "right, from the document": 1,
@@ -36,20 +57,20 @@
   },
   "all": {
    "sec": {
-    "right, from the document": 15,
+    "right, from the document": 13,
     "unlabeled": 179,
-    "wrong": 2
+    "wrong": 4
    },
    "sec/sec": {
-    "right, from the document": 15,
+    "right, from the document": 13,
     "unlabeled": 179,
-    "wrong": 2
+    "wrong": 4
    },
    "set2": {
-    "right, from the document": 10,
+    "right, from the document": 8,
     "right, from the outside": 1,
     "unlabeled": 1,
-    "wrong": 21
+    "wrong": 23
    },
    "set2/fda": {
     "right, from the document": 6,
@@ -57,8 +78,7 @@
     "wrong": 8
    },
    "set2/fr": {
-    "right, from the document": 2,
-    "wrong": 2
+    "wrong": 4
    },
    "set2/irs": {
     "right, from the document": 1,
@@ -125,17 +145,6 @@
    "unit": "%",
    "basis": "outside",
    "source": "https://www.irs.gov/taxtopics/tc307",
-   "still": true
-  },
-  {
-   "id": "14b0869eb7658c68",
-   "doc": "sec-0001193125-26-077343",
-   "field": "net_income",
-   "key": "2024",
-   "value": "1114000000",
-   "unit": "USD",
-   "basis": "document",
-   "source": "the document",
    "still": true
   },
   {
@@ -227,33 +236,11 @@
    "still": true
   },
   {
-   "id": "86af173fcf11a0ac",
-   "doc": "fr-2026-17901",
-   "field": "example_idc_ceiling_first",
-   "key": null,
-   "value": "3500000",
-   "unit": "USD",
-   "basis": "document",
-   "source": "the document",
-   "still": true
-  },
-  {
    "id": "89da074fedec0636",
    "doc": "sec-0001683168-26-000412",
    "field": "net_income",
    "key": "2025",
    "value": "-58018",
-   "unit": "USD",
-   "basis": "document",
-   "source": "the document",
-   "still": true
-  },
-  {
-   "id": "8b0181edcf2d4a06",
-   "doc": "fr-2026-17901",
-   "field": "example_idc_orders_bound_first",
-   "key": null,
-   "value": "3500000",
    "unit": "USD",
    "basis": "document",
    "source": "the document",
@@ -346,17 +333,165 @@
    "basis": "document",
    "source": "the document",
    "still": true
-  },
-  {
-   "id": "fe95807bfcb4a6f7",
-   "doc": "sec-0001193125-26-077343",
-   "field": "net_income",
-   "key": "2025",
-   "value": "-32154000000",
-   "unit": "USD",
-   "basis": "document",
-   "source": "the document",
-   "still": true
   }
- ]
+ ],
+ "stated": {
+  "items": 17,
+  "another proposal in review": 5,
+  "missing": {
+   "span": 9,
+   "computation": 6,
+   "scale": 6,
+   "sign": 3,
+   "dash as zero": 1,
+   "token": 1
+  },
+  "each": [
+   {
+    "id": "4f0bcd218d3d73d9",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives a dose every 12 hours. The value is twice that dose."
+   },
+   {
+    "id": "5081647fc4c12aaf",
+    "missing": [
+     "span",
+     "sign"
+    ],
+    "review": true,
+    "note": "LangExtract aligned the quote to one byte, a hyphen in other text. The quote adds a minus sign, so it does not occur."
+   },
+   {
+    "id": "5ab1e162e917a102",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives a dose every 12 hours. The value is twice that dose."
+   },
+   {
+    "id": "62b671c342824a07",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": false,
+    "note": "LangExtract aligned the quote to one byte, the $ of another cell. The quote has no tab after the $, so it does not occur. The table is in thousands."
+   },
+   {
+    "id": "675ac2d54aadcf78",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives a dose twice daily. The value is twice that dose."
+   },
+   {
+    "id": "68ba37da74c0313b",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": true,
+    "note": "LangExtract aligned the quote to one byte, the $ of another cell. The quote adds the word million, so it does not occur. The table is in millions."
+   },
+   {
+    "id": "6d2460c4b74a1af9",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": false,
+    "note": "LangExtract aligned the quote to one byte, the $ of another cell. The quote has no tab after the $, so it does not occur. The table is in thousands."
+   },
+   {
+    "id": "73d575a619012e11",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": true,
+    "note": "The quote adds a $ and the word million, so it does not occur. The table is in millions."
+   },
+   {
+    "id": "89da074fedec0636",
+    "missing": [
+     "span",
+     "sign"
+    ],
+    "review": false,
+    "note": "LangExtract aligned the quote to one byte, a hyphen in other text. The quote adds a minus sign, so it does not occur. The text gives the amount after the words net loss."
+   },
+   {
+    "id": "936a6abaaee9bdb5",
+    "missing": [
+     "span",
+     "sign"
+    ],
+    "review": true,
+    "note": "LangExtract aligned the quote to one byte, a hyphen in other text. The quote adds a minus sign, so it does not occur."
+   },
+   {
+    "id": "973c0f2f24678c43",
+    "missing": [
+     "token"
+    ],
+    "review": false,
+    "note": "The span holds the number, but a comma with no space comes before it, so it is no number token."
+   },
+   {
+    "id": "acbe099cab4bdd6a",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": false,
+    "note": "The quote is the scaled number, so it does not occur. The table is in thousands of dollars, and the PDF text gives it column by column."
+   },
+   {
+    "id": "c315fb30c8bcec1d",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives 2.5 mg twice daily. The span is the end of 2.5 mg, so it holds no token 5."
+   },
+   {
+    "id": "e68657ba4b259d70",
+    "missing": [
+     "span",
+     "scale"
+    ],
+    "review": true,
+    "note": "The quote adds a $ and the word million, so it does not occur. The table is in millions."
+   },
+   {
+    "id": "ebde6fffd305b2b6",
+    "missing": [
+     "dash as zero"
+    ],
+    "review": false,
+    "note": "The table cell is a $ and a dash. The value is 0."
+   },
+   {
+    "id": "f553c13646a6183b",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives a dose twice daily. The value is twice that dose."
+   },
+   {
+    "id": "fc2ced02c90f845d",
+    "missing": [
+     "computation"
+    ],
+    "review": false,
+    "note": "The label gives 2.5 mg twice daily. The span is the end of 2.5 mg, so it holds no token 5."
+   }
+  ]
+ }
 }
