@@ -202,13 +202,13 @@ sets, so the table leaves them out.
 
 | Change | Set | claude-haiku-5-5 | gpt-6-luna |
 |---|---|---|---|
-| PDF table rows as lines with tabs (#230) | `bench/afr` | 3 to 57 right, 1 to 0 escapes | 6 to 57 right, 0 escapes |
+| PDF table rows as lines with tabs (#230) | `bench/afr` | 3 to 73 right, 1 to 0 escapes | 6 to 74 right, 0 escapes |
 | The value where the field item passes, a column unit (#249) | `bench/acfr2` | 5 to 7 right, 0 escapes | 2 to 2 right, 0 escapes |
 | No role `key` on a field with no keys (#256) | `bench/acfr2` | 10 to 23 right, 0 escapes | 0 to 9 right, 0 escapes |
 
 The numbers count admitted values. The #230 rows compare the 0.7 text under spec 0.7 with new
-runs on the new text under the 0.8 draft with the #242 rule; #263 decides them again under the
-released 0.8. The #256 rows ask a schema with no keys on its fields, so they do not compare with
+runs on the new text under 0.8. #249 and #250 came from `bench/afr`, so the #230 rows include
+their effect on that set (#263). The #256 rows ask a schema with no keys on its fields, so they do not compare with
 the #249 row. [bench/afr/tabs/RESULTS.md](bench/afr/tabs/RESULTS.md),
 [bench/acfr/RESULTS.md](bench/acfr/RESULTS.md), [bench/acfr2/RESULTS.md](bench/acfr2/RESULTS.md),
 [bench/strings/RESULTS.md](bench/strings/RESULTS.md) and

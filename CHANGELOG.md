@@ -12,11 +12,11 @@ I measured each change on documents that it did not come from.
 - The PDF extract writes a table as rows, with a tab between two cells, as the HTML path writes
   table cells (#230). Before, pdfminer gave each column of a table as its own text box, and the
   extract wrote the table column by column. I measured it on the 20 agency financial reports of
-  `bench/afr` (`bench/afr/tabs`). With new runs on the new text, `claude-haiku-5-5` admits 57
-  right values and 0 escapes (3 and 1 on the 0.7 text), and `gpt-6-luna` 57 and 0 (6 and 0). Two
-  stronger models at high effort admit 66 (`claude-sonnet-5-5`) and 64 (`gpt-6.1-sol`) right
-  values with 0 escapes. These decisions use the 0.8 draft with the #242 rule only, and #263
-  decides them again under the released 0.8. Two limits stay: a running head far above a table
+  `bench/afr` (`bench/afr/tabs`). With new runs on the new text under 0.8, `claude-haiku-5-5`
+  admits 73 right values and 0 escapes (3 and 1 on the 0.7 text under 0.7), and `gpt-6-luna` 74
+  and 0 (6 and 0). Two stronger models at high effort admit 82 (`claude-sonnet-5-5`) and 67
+  (`gpt-6.1-sol`) right values with 0 escapes. The rules #249 and #250 came from this set, so
+  these numbers include their effect on the documents they came from (#263). Two limits stay: a running head far above a table
   can join it as a column heading (#246), and a blank cell gets no empty cell, so the numbers
   after it move one column left (#247).
 - A scale item that passes scales the value (#242). With a scale item that holds a scale word, a
