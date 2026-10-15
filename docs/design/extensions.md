@@ -8,12 +8,14 @@ to kinds of documents.
 
 ## 1. The problem
 
-Every benchmark set is a digital document in English from a U.S. government source or a U.S.
-public company: drug labels, IRS publications and accident reports in the v0.1 set and set 2, and
-annual financial reports of companies, agencies and cities in the 0.8 sets. A rule written from
-one of these and measured on a different one is held out by document, not by kind. So no
-published number says how groundgate does on an invoice, a bank statement, a product datasheet, a
-document from a different country, a scan or a folder of mixed documents.
+The sets that measure extraction of fields are digital documents in English from U.S. government
+sources or U.S. public companies: drug labels, IRS publications, accident reports and Federal
+Register documents in the v0.1 set and set 2, and annual financial reports of companies, agencies
+and cities in the 0.8 sets. One small set from outside the U.S. exists: `bench/india` reads 101
+number tokens from SEBI circulars, and it measures one number rule, not fields. A rule written
+from one of these documents and measured on a different one is held out by document, not by kind.
+So no published number says how groundgate extracts fields from an invoice, a bank statement, a
+product datasheet, a report from a different country, a scan or a folder of mixed documents.
 
 I see three layers of knowledge in groundgate today, and they are not equally at risk:
 
@@ -244,16 +246,26 @@ that are wrong. It is the number that an app needs before it trusts a value with
 to it: the share of right values sent to review (the manual work that the core causes), and the
 misses (the work of the runner).
 
-- **Unit.** One final admitted value for each document and requested field, after the repair
-  rounds.
+- **Unit.** One final admitted value for each document, requested field and key, after the repair
+  rounds. A field with `multiple` true counts each distinct value that the label gives. A keyed
+  field such as a dose for adults and a dose for children counts one value for each key.
 - **Wrong.** The number, scale, unit, sign, key or condition does not match the blind label, or the
   document does not state the field.
 - **Not an escape.** A wrong value sent to review is a catch. A field with no value is a miss.
 - **Excluded.** An item that the label marks as unclear in the document. The report gives the count.
 - **For each field, each kind and each pack.** A total can hide one field that fails.
-- **The bound.** A 95% upper bound from a resample by document, not by value. Errors in one
-  document come together, so values in one document are not separate trials. The report gives the
-  number of documents and of kinds next to each bound.
+- **The bound.** A one-sided 95% upper bound that stays above zero when no error occurs. Errors in
+  one document come together, so values in one document are not separate trials. A resample by
+  document alone is not sufficient: with 0 errors, every resample has 0 errors, and the bound is
+  0%. The report gives two bounds:
+  - the exact binomial bound (Clopper-Pearson) on the admitted values, with the number of values
+    divided by a design effect for clusters by document. The design effect is never less than 1.
+    If the set has too few errors to estimate it, the report uses a stated default;
+  - the exact binomial bound on documents: the share of documents with at least one wrong admitted
+    value. This bound does not depend on the design effect.
+
+  The report gives the number of documents and of kinds next to each bound. A status of
+  `measured` (section 8) uses the larger of the two bounds.
 
 **The set.** A set of several kinds of documents unlike the current sets, labeled blind. Part of it
 is sealed: it is used only for a release measure, never for rule work. If we tune on it, it becomes
