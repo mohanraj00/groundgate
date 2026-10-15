@@ -8,21 +8,23 @@ to kinds of documents.
 
 ## 1. The problem
 
-Every benchmark set since 0.1 is a financial filing: annual reports of companies, agencies and
-cities. A rule written from one filing and measured on a different filing is held out by
-document, not by kind. So every published number says how groundgate does on filings. None says
-how it does on an invoice, a bank statement, a lab report, a scan or a folder of mixed documents.
+Every benchmark set is a digital document in English from a U.S. government source or a U.S.
+public company: drug labels, IRS publications and accident reports in the v0.1 set and set 2, and
+annual financial reports of companies, agencies and cities in the 0.8 sets. A rule written from
+one of these and measured on a different one is held out by document, not by kind. So no
+published number says how groundgate does on an invoice, a bank statement, a product datasheet, a
+document from a different country, a scan or a folder of mixed documents.
 
 I see three layers of knowledge in groundgate today, and they are not equally at risk:
 
-| Layer | Examples | Tuned to filings? |
+| Layer | Examples | Tuned to the sets? |
 |---|---|---|
 | Safety checks | the value is at the location; scale, unit and sign agree; a qualifier sends the value to review | No. They are true for every document. |
-| Reading heuristics | scale phrases such as "in thousands", label lines, table rows, how a key mention is found | Probably. They came from filings. |
+| Reading heuristics | scale phrases such as "in thousands", label lines, table rows, how a key mention is found | Probably. They came from the sets. |
 | Extraction | how a PDF table becomes rows with tabs | Yes. It came from the layouts in the sets. |
 
-Some knowledge already comes from the app. The schema carries `aliases` and `keys` (SPEC §2.2),
-the units table, and the policy carries a `judge` (§2.3). So the core is partly ready for this
+Some knowledge already comes from the app. The schema carries `aliases` and `keys` (SPEC §2.3),
+the units table, and the policy carries a `judge` (§2.4). So the core is partly ready for this
 design. The rest of the knowledge is in code.
 
 A strict gate on an unfamiliar document fails mostly toward review, not toward an escape. If it
@@ -91,7 +93,7 @@ says so for every value that it helped to admit.
 | Vocabulary pack | Core | data | digest | No. The locale design (#60) is the first one. |
 | Kind pack | Core and runner | data | digest | Partly: `aliases`, `keys` and `units` in the schema. |
 | Check | Core | data | digest | No. #273 is the first derived value. |
-| Judge | before the core | code | recorded judgments with the judge's id and digest | Yes, experimental: the `judge` block (SPEC §2.3, §2.6). |
+| Judge | before the core | code | recorded judgments with the judge's id and digest | Yes, experimental: the `judge` block (SPEC §2.4, §2.6). |
 | Reader | before the core | code | the document text and its digest | PDF and markup extract. |
 | Strategy | Runner | code | not in the receipt; in the runner's log | No. The runner is 0.9. |
 
@@ -231,8 +233,8 @@ When this design is built, the core holds only:
   packet with no pack decides as it does now;
 - the receipt, the digests and `verify`.
 
-The first test of this design is a move. I take the knowledge about filings out of the code and
-into a first kind pack, "financial filings". If every vector and every bench outcome stays the
+The first test of this design is a move. I take the knowledge that came from the current sets out of the
+code and into the first kind packs, for example "financial reports". If every vector and every bench outcome stays the
 same with the pack, the core is general. Each one that changes shows a rule that was tuned.
 
 ## 10. How I measure
@@ -253,9 +255,9 @@ misses (the work of the runner).
   document come together, so values in one document are not separate trials. The report gives the
   number of documents and of kinds next to each bound.
 
-**The set.** A set of several kinds of documents that are not filings, labeled blind. Part of it
+**The set.** A set of several kinds of documents unlike the current sets, labeled blind. Part of it
 is sealed: it is used only for a release measure, never for rule work. If we tune on it, it becomes
-the next set of filings.
+one more set that the rules were tuned on.
 
 **The catch rate** (the share of wrong proposals that groundgate stops) stays a tool for
 diagnosis and for the changed-value test. It is not a promise to users, because it depends on how
@@ -275,7 +277,7 @@ Readers, strategies and the router stay experimental after 1.0.
 
 | Version | Content |
 |---|---|
-| 0.9 | as planned in #274. The set of #269 includes two or three kinds that are not filings. |
+| 0.9 | as planned in #274. The set of #269 includes two or three kinds unlike the current sets. |
 | 0.10 | the pack format, versioned and hashed into the receipt; the move of section 9; relation checks (5.3) |
 | 0.11 | the tools of section 7: label kit, measure, operating point, audit sample, review answers to labels |
 | 0.12 | readers: OCR with confidence as evidence, Office files (#7); the router |
