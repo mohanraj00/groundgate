@@ -249,17 +249,23 @@ same with the pack, the core is general. Each one that changes shows a rule that
 **The main number is the admitted error rate**: of the values that groundgate admitted, the share
 that are wrong. It is the number that an app needs before it trusts a value with no check. Next
 to it: the share of right values sent to review (the manual work that the core causes), and the
-misses (the work of the runner).
+silent misses (the work of the runner).
 
 - **Unit.** One final admitted value, after the repair rounds, for each document, requested field
   and key. A keyed field such as a dose for adults and a dose for children has one unit for each
   key. A field with `multiple` true has one unit for each distinct value that groundgate admitted.
   So every admitted value is in the rate, also a wrong one that the label does not give.
-- **Misses.** A labeled value with no matching admitted value is a miss. Misses are counted
-  separately and are never in the admitted error rate.
-- **Wrong.** The number, scale, unit, sign, key or condition does not match the blind label, or the
-  document does not state the field.
-- **Not an escape.** A wrong value sent to review is a catch. A field with no value is a miss.
+- **Misses.** A labeled value with no matching admitted value has one of two causes, and the
+  report counts them separately. If a right proposal for it went to review, it is a right value
+  sent to review: the core's work. If no right proposal was admitted or sent to review, it is a
+  silent miss: the runner's work. The miss rate of #269 is the sum of the two parts, so the report
+  gives each part next to the sum. Misses are never in the admitted error rate.
+- **Wrong.** The admitted value is not the field's value in the blind label, or the document does
+  not state the field. For a number, the value is compared after its scale, with its unit and
+  sign, and a right number under a wrong key or condition is wrong. For a string, the value is
+  compared after whitespace normalisation and lower-casing (SPEC §4.4), so "Premium" for a label
+  of "Basic" is wrong.
+- **Not an escape.** A wrong value sent to review is a catch. A field with no value is a silent miss or a review, not an escape.
 - **Excluded.** An item that the label marks as unclear in the document. The report gives the count.
 - **For each field, each kind and each route.** A route is one pack, check or judge question that
   can change an outcome to admitted, on one kind of document, one field and one code. A total can
