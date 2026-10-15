@@ -214,15 +214,22 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
 _SENTENCES: ContextVar[dict[int, tuple[str, list[int], list[int]]] | None] = ContextVar(
     "sentences", default=None
 )
+# Mention lists belong to _Text and remain fixed for one admission. Hold their identities and
+# classifications only while the same admission context is open.
+_MIXED_HEADERS: ContextVar[
+    dict[tuple[int, int], tuple[str, list[tuple[int, int, str]], set[int]]] | None
+] = ContextVar("mixed_headers", default=None)
 
 
 @contextlib.contextmanager
 def sentence_index() -> Iterator[None]:
-    """Read the sentence ends of each text once, until the block ends."""
+    """Read sentence ends and mixed header blocks once, until the block ends."""
     token = _SENTENCES.set({})
+    headers = _MIXED_HEADERS.set({})
     try:
         yield
     finally:
+        _MIXED_HEADERS.reset(headers)
         _SENTENCES.reset(token)
 
 
@@ -546,10 +553,10 @@ _KEY_BREAK = re.compile(r"\n[ \t\r]*\n[ \t\r]*\n")
 def _separate_header(text: str, mentions: list[tuple[int, int, str]], start: int, pos: int) -> bool:
     """Recognize a separate header line, key-only stream or mixed tabbed header block."""
     last = text.rfind("\n", 0, pos) + 1
-    mentions = sorted(mentions)
-    before = [(a, b, k) for a, b, k in mentions if start <= a < b <= last]
-    if before and _header_key(text, mentions, before[-1][0]):
+    before = max(((a, b, k) for a, b, k in mentions if start <= a < b <= last), default=None)
+    if before and _header_key(text, mentions, before[0]):
         return True  # separate key-only lines also form a header in a short table
+    mentions = sorted(mentions)
     i = 0
     while i < len(mentions) and mentions[i][0] < start:
         i += 1
@@ -612,66 +619,85 @@ def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[st
     return {key}
 
 
-def _mixed_header_lines(text: str, mentions: list[tuple[int, int, str]], at: int) -> bool:
-    """Recognize mixed tabbed key lines even when a trailing non-key slot splits the run."""
+def _mixed_header_blocks(text: str, mentions: list[tuple[int, int, str]]) -> set[int]:
+    """Classify every connected header block once; return its qualifying key-line starts."""
     ordered = sorted(mentions)
-    starts = [a for a, _, _ in ordered]
+    i = 0
+    mixed: set[int] = set()
+    block_lines: list[int] = []
+    block_keys: set[str] = set()
+    block_tabbed = False
+    blanks = 0
 
-    def line_info(left: int, right: int) -> tuple[set[str], bool] | None:
+    def finish() -> None:
+        nonlocal block_tabbed
+        if len(block_lines) >= 2 and len(block_keys) >= _TABLE_KEYS and block_tabbed:
+            mixed.update(block_lines)
+        block_lines.clear()
+        block_keys.clear()
+        block_tabbed = False
+
+    left = 0
+    while left <= len(text):
+        right = text.find("\n", left)
+        right = len(text) if right < 0 else right
+        while i < len(ordered) and ordered[i][0] < left:
+            i += 1
+        first = i
+        while i < len(ordered) and ordered[i][0] < right:
+            i += 1
+        spans = [(a, b, k) for a, b, k in ordered[first:i] if b <= right]
         if not text[left:right].strip(" \t\r"):
-            return set(), False
-        spans = [
-            (a, b, k)
-            for a, b, k in ordered[
-                bisect.bisect_left(starts, left) : bisect.bisect_left(starts, right)
-            ]
-            if b <= right
-        ]
-        if not spans:
-            return None
-        tabbed = "\t" in text[left:right]
-        cursor = left
-        for a, b, _ in spans:
-            if not tabbed and text[cursor:a].strip():
-                return None
-            cursor = max(cursor, b)
-        if not tabbed and text[cursor:right].strip():
-            return None
-        # A data value ends the header block, even when its row also names a key.
-        i = 0
-        for token in tokens(text, left, right):
-            while i < len(spans) and spans[i][1] <= token.start:
-                i += 1
-            if i == len(spans) or not (spans[i][0] <= token.start < token.end <= spans[i][1]):
-                return None
-        return {k for _, _, k in spans}, tabbed
-
-    left, right = _line(text, at)
-    info = line_info(left, right)
-    if info is None or not info[0]:
-        return False
-    keys, tabbed = info
-    lines = 1
-    for direction in (-1, 1):
-        a, b = left, right
-        blanks = 0
-        while a > 0 if direction < 0 else b < len(text):
-            a, b = _line(text, a - 1 if direction < 0 else b + 1)
-            info = line_info(a, b)
-            if info is None:
-                break
-            if not info[0]:
-                blanks += 1
-                if blanks >= 2:
-                    break
-                continue
+            blanks += 1
+            if blanks >= 2:
+                finish()
+        else:
             blanks = 0
-            lines += 1
-            keys.update(info[0])
-            tabbed = tabbed or info[1]
-            if lines >= 2 and len(keys) >= _TABLE_KEYS and tabbed:
-                return True
-    return False
+            tabbed = "\t" in text[left:right]
+            clean = bool(spans)
+            cursor = left
+            for a, b, _ in spans:
+                if not tabbed and text[cursor:a].strip():
+                    clean = False
+                cursor = max(cursor, b)
+            if not tabbed and text[cursor:right].strip():
+                clean = False
+            # A data value ends the header block, even when its row also names a key.
+            j = 0
+            if clean:
+                for token in tokens(text, left, right):
+                    while j < len(spans) and spans[j][1] <= token.start:
+                        j += 1
+                    if j == len(spans) or not (
+                        spans[j][0] <= token.start < token.end <= spans[j][1]
+                    ):
+                        clean = False
+                        break
+            if clean:
+                block_lines.append(left)
+                block_keys.update(k for _, _, k in spans)
+                block_tabbed = block_tabbed or tabbed
+            else:
+                finish()
+        if right == len(text):
+            break
+        left = right + 1
+    finish()
+    return mixed
+
+
+def _mixed_header_lines(text: str, mentions: list[tuple[int, int, str]], at: int) -> bool:
+    """Read mixed-header classification once per text/key set in the admission context."""
+    index = _MIXED_HEADERS.get()
+    if index is None:
+        mixed = _mixed_header_blocks(text, mentions)
+    else:
+        key = id(text), id(mentions)
+        held = index.get(key)
+        if held is None or held[0] is not text or held[1] is not mentions:
+            held = index[key] = (text, mentions, _mixed_header_blocks(text, mentions))
+        mixed = held[2]
+    return _line(text, at)[0] in mixed
 
 
 def _header_key(text: str, mentions: list[tuple[int, int, str]], at: int) -> bool:

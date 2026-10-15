@@ -9,8 +9,10 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 from groundgate.text import (
+    _MIXED_HEADERS,
     _SENTENCE_END,
     _label_line_in,
+    _mixed_header_lines,
     canonical,
     first_token_end,
     key_mentions,
@@ -142,6 +144,45 @@ def test_a_long_line_of_spaces_takes_linear_time() -> None:
     t0 = time.perf_counter()
     assert keys_at(text, mentions, text.index("5 mg")) == {"Hypertension"}
     assert time.perf_counter() - t0 < 1
+
+
+def test_repeated_key_lines_scale_with_many_values() -> None:
+    """Four times the header lines and value lookups must not cost quadratic work."""
+
+    def time_for(lines: int, values: int) -> float:
+        text = "2024\n" * lines + "Cash $100\n" * values
+        # Build source offsets directly; key matching is outside this regression's scope.
+        mentions = [(i * 5, i * 5 + 4, "2024") for i in range(lines)]
+        best = float("inf")
+        for _ in range(2):
+            started = time.perf_counter()
+            with sentence_index():
+                for i in range(values):
+                    # Different header occurrences prevent a per-position memo from hiding scans.
+                    assert not _mixed_header_lines(text, mentions, mentions[-1 - i][0])
+            best = min(best, time.perf_counter() - started)
+        return best
+
+    small = time_for(1000, 32)
+    large = time_for(4000, 128)
+    assert large < 8 * small, (small, large)
+
+
+def test_mixed_header_index_keeps_key_sets_separate_and_expires() -> None:
+    text = "Year\t2025\tChange\n2024\nCash\t$100"
+    both = [(5, 9, "2025"), (17, 21, "2024")]
+    one = both[1:]
+    assert _MIXED_HEADERS.get() is None
+    with sentence_index():
+        assert _mixed_header_lines(text, both, 17)
+        assert not _mixed_header_lines(text, one, 17)
+        outer = _MIXED_HEADERS.get()
+        assert outer is not None and len(outer) == 2
+        with sentence_index():
+            assert _MIXED_HEADERS.get() == {}
+            assert _mixed_header_lines(text, both, 17)
+        assert _MIXED_HEADERS.get() is outer
+    assert _MIXED_HEADERS.get() is None
 
 
 def test_two_blank_lines_break_a_prose_heading() -> None:
