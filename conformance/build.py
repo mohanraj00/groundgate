@@ -3396,6 +3396,138 @@ vector(
 )  # fmt: skip
 
 
+vector(
+    "50-empty-middle-header-slot",
+    "A blank slot between known header keys cannot be compressed out of their ordinals. "
+    "The header stays unusable even when a data value is physically aligned to its later key "
+    "(spec 0.9, #278 security review).",
+    "2025\t\t2024\nCash\t\t$100\n\n"
+    "2025\t\t2024\nCash\t\t\t$200\n\n"
+    "Year\t2025\t \r\t2024\nCash\t\t$300",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("h1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h2", "cash", "200", "USD", [q("$200"), row("Cash"), year("2024", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h3", "cash", "300", "USD", [q("$300"), row("Cash"), year("2024", 3)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "51-header-tab-boundaries",
+    "Adjacent keys in a tabbed header need exactly one tab between them. Keys merged into "
+    "one data slot cannot supply two column ordinals. A trailing non-key column remains "
+    "supported after the known keys (spec 0.9, #278 security review).",
+    "Year\t2025 2024\nCash\t$400\t$500\n\n"
+    "Year\t2025\t2024\tChange\nCash\t\t$900\t$5",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("h4", "cash", "500", "USD", [q("$500"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h5", "cash", "900", "USD", [q("$900"), row("Cash"), year("2024", 2)],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "52-cross-line-tab-header",
+    "A header run mixing tabs and line breaks has ambiguous ordinals and cannot supply a "
+    "column key. It cannot bypass the column check through short-sentence keys. The existing "
+    "separate-line header and cell stream with no tabs remains supported "
+    "(spec 0.9, #278 security review).",
+    "2025\n\t\t2024\nCash\t\t$600\n\n"
+    "2025\t\n2024\nCash\t\t$700\n\n"
+    "2025\t2024\n2023\nCash\t\t$800\n\n"
+    "2025\n2024\nCash\n$1,000\n$1,100",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("h6", "cash", "600", "USD", [q("$600"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h7", "cash", "700", "USD", [q("$700"), row("Cash"), year("2024", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h8", "cash", "800", "USD", [q("$800"), row("Cash"), year("2024", 3)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h9", "cash", "1100", "USD", [q("$1,100"), row("Cash"), year("2024", 4)],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "53-short-separate-key-header",
+    "A short header on separate key-only lines does not supply both keys to a no-tab row "
+    "(spec 0.9, #278 security review).",
+    "2025\n2024\nCash $100",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("h10", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("h11", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "54-labeled-mixed-header",
+    "Optional labels and trailing non-key slots do not turn a mixed tab/separate-line key "
+    "header into prose. Such a header must reach the conservative column refusal "
+    "(spec 0.9, #278 security review).",
+    "Year\t2025\n2024\nCash\t\t$100\n\n"
+    "Year\t2025\n\t2024\nCash\t\t$200\n\n"
+    "Year\t2025\n2024\tChange\nCash\t\t$300\n\n"
+    "Year\t2025\n\t2024\tChange\nCash\t\t$400",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("m1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("m2", "cash", "200", "USD", [q("$200"), row("Cash"), year("2024", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("m3", "cash", "300", "USD", [q("$300"), row("Cash"), year("2024", 3)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("m4", "cash", "400", "USD", [q("$400"), row("Cash"), year("2024", 4)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "55-mixed-header-direct-key",
+    "A direct key on the value's own line still applies beneath an ambiguous mixed header. "
+    "A single-key heading retains its existing scope (spec 0.9, #278 security review).",
+    "Year\t2025\n\t2024\nCash for 2024\t$500\n\n"
+    "Year\t2024\nCash $600",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("m5", "cash", "500", "USD", [q("$500"), row("Cash for 2024"), year("2024", 2)],
+          ("admitted", []), key="2024"),
+        c("m6", "cash", "600", "USD", [q("$600")], key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "56-interrupted-mixed-header",
+    "A trailing non-key slot on an earlier key line cannot hide a mixed tabbed header. One "
+    "blank line between its key lines does not restore a prose heading or a compressed "
+    "column ordinal (spec 0.9, #278 security review).",
+    "Year\t2025\tChange\n2024\nCash\t\t$100\n\n"
+    "Year\t2025\tChange\n2024\nCash\t$200\n\n"
+    "Year\t2025\tChange\n\n2024\tChange\nCash\t\t$300\n\n"
+    "Data for 2025.\n\nFor 2024\nCash $400",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("i1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("i2", "cash", "200", "USD", [q("$200"), row("Cash"), year("2024", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("i3", "cash", "300", "USD", [q("$300"), row("Cash"), year("2024", 3)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("i4", "cash", "400", "USD", [q("$400")], key="2024"),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
