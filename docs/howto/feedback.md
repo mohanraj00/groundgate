@@ -82,10 +82,20 @@ record attempts, not an active candidate inventory. An admission-history limit e
 retained, dropped and reverted ids. Read `result.candidates` with its receipt for active values.
 If a run stops before a field has a valid disposition, its history contains
 `incomplete_no_disposition`. This does not say whether a client was attempted or prove absence;
-read the call and protocol-failure entries for that detail. `prompt_limit` means a generated
-repair prompt exceeded its character budget; `call_limit` means the total call budget ended.
-A targeted not-found reply records both `model_not_found` and `targeted_not_found`: the first
-records the model response, and the second records completion of that phase.
+read the call and protocol-failure entries for that detail. Field histories do not include
+phase names. Call and limit events carry `phase`; use those events to identify the stopped work.
+The phase-specific stops are:
+
+| Phase | Stop and field state |
+|---|---|
+| Initial | An oversized initial chunk plan or prompt raises `RunInputError` before the first call. An aborted reply with no valid field disposition leads to `incomplete_no_disposition`. |
+| Targeted | Exhausted `max_calls` records `unsearched` for each skipped field and a `call_limit` event. If no selected region fits the prompt budget, the field and event record `search_limit`. |
+| Repair | An oversized prompt records `prompt_limit`; exhausted `max_calls` records `call_limit`. A completed run with an eligible candidate left after its repair rounds records `repair_limit`. |
+
+`proposed` and `model_not_found` can appear in the initial or targeted phase. A targeted
+not-found reply records both `model_not_found` and `targeted_not_found`: the first records the
+model response, and the second records completion of that phase. `admission_history_limit`
+can stop admission in any phase, with the last accepted packet retained.
 
 The initial response must account for every requested field in `candidates` or `not_found`,
 never both. For example, an empty response for the requested field is:
@@ -99,10 +109,15 @@ field name, aliases and description. One targeted call gets only the selected re
 asks for that field. Title and alias matches take priority over individual description words.
 The search uses at most the first 64 distinct queries in that priority order and records
 `omitted_queries`. It retains at most 1024 match records; omitted counts and truncation stay in
-the record. Each retained query still scans every supplied source to count its hits. Casefolds
-are cached once per source across fields; expansion maps and byte offsets use compact arrays.
-A rejected candidate does not trigger that pass. Search terms, retained regions, truncation and not-found replies stay in the record. No match is the result of that
-search, not proof of absence. Set `RunPolicy(targeted=False)` for a run without this pass.
+the record. Each retained query still scans every supplied source to count all its hits,
+including omitted matches. The caller must bound the number of requested fields, the number
+and size of references, and document length before calling the runner. Search may scan up to
+`missing fields * 64 * total source characters`, plus query matching and schema-processing
+work. `max_calls` limits client calls, not this CPU work. Casefolds are cached once per source
+across fields; expansion maps and byte offsets use compact arrays.
+A rejected candidate does not trigger that pass. Search terms, retained regions, truncation
+and not-found replies stay in the record. No match is the result of that search, not proof
+of absence. Set `RunPolicy(targeted=False)` for a run without this pass.
 
 ## 3. Keep repairs bounded
 
