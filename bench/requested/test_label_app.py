@@ -505,3 +505,113 @@ def test_state_reports_optional_text_only_for_confined_existing_sources(
         store.source("hold", "txt")
     (store.sources / "dev.txt").unlink()
     assert availability() == {"dev": False, "hold": False}
+
+
+@pytest.mark.parametrize("mode", ["argument", "environment", "argument_overrides_environment"])
+def test_cli_accepts_explicit_local_root(
+    store: LabelStore, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, mode: str
+) -> None:
+    from requested import label_app
+
+    command = ["label_app.py", "--set", str(store.directory), "--source-dir", str(store.sources)]
+    monkeypatch.delenv("GROUNDGATE_LOCAL_WORK", raising=False)
+    if mode == "environment":
+        monkeypatch.setenv("GROUNDGATE_LOCAL_WORK", str(tmp_path))
+    else:
+        command += ["--local-root", str(tmp_path)]
+        if mode == "argument_overrides_environment":
+            monkeypatch.setenv("GROUNDGATE_LOCAL_WORK", str(tmp_path / "wrong-root"))
+    closed = []
+
+    class StubServer:
+        def __init__(self, selected_store: LabelStore, port: int) -> None:
+            assert selected_store.sources.is_relative_to(tmp_path)
+            assert selected_store.work_directory.is_relative_to(tmp_path)
+            self.server_port = port
+
+        def serve_forever(self) -> None:
+            raise KeyboardInterrupt
+
+        def server_close(self) -> None:
+            closed.append(True)
+
+    monkeypatch.setattr(label_app, "LabelServer", StubServer)
+    monkeypatch.setattr(sys, "argv", command)
+    label_app.main()
+    assert closed == [True]
+
+
+def test_cli_requires_local_root_instead_of_assuming_a_home_path(
+    store: LabelStore, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    from requested import label_app
+
+    monkeypatch.delenv("GROUNDGATE_LOCAL_WORK", raising=False)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["label_app.py", "--set", str(store.directory), "--source-dir", str(store.sources)],
+    )
+    with pytest.raises(SystemExit) as error:
+        label_app.main()
+    assert error.value.code == 2
+    assert "--local-root or GROUNDGATE_LOCAL_WORK is required" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("outside", ["source", "work", "source_symlink"])
+def test_cli_refuses_paths_outside_the_selected_root(
+    store: LabelStore,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+    outside: str,
+) -> None:
+    from requested import label_app
+
+    root = tmp_path / "allowed" if outside != "work" else tmp_path
+    root.mkdir(exist_ok=True)
+    source = store.sources
+    extra = []
+    if outside == "source_symlink":
+        source = root / "source-link"
+        source.symlink_to(store.sources, target_is_directory=True)
+    if outside == "work":
+        extra = ["--work-dir", str(tmp_path.parent / "outside-scratch")]
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "label_app.py",
+            "--set",
+            str(store.directory),
+            "--source-dir",
+            str(source),
+            "--local-root",
+            str(root),
+            *extra,
+        ],
+    )
+    with pytest.raises(SystemExit) as error:
+        label_app.main()
+    assert error.value.code == 2
+    assert "must be inside the local work directory" in capsys.readouterr().err
+
+
+def test_optional_local_text_is_explicitly_unpinned_until_digest_supplied(
+    server: LabelServer,
+) -> None:
+    raw = b"Local source text."
+    path = server.store.sources / "dev.txt"
+    path.write_bytes(raw)
+    state = server.store.state()
+    assert state["documents"][0]["source_text_available"] is True
+    assert state["documents"][0]["source_text_hash_pinned"] is False
+    assert request(server, "GET", "/text/dev") == (200, raw)
+    server.store.documents["dev"]["text_sha256"] = "sha256:" + hashlib.sha256(raw).hexdigest()
+    assert server.store.state()["documents"][0]["source_text_hash_pinned"] is True
+    assert request(server, "GET", "/text/dev") == (200, raw)
+    path.write_bytes(b"Swapped local text.")
+    status, error = request(server, "GET", "/text/dev")
+    assert status == 400
+    assert b"hash does not match" in error
+    assert b"Swapped local text" not in error

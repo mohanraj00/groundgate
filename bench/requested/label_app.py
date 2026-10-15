@@ -1,7 +1,7 @@
 """Blind labels from original local PDFs. Never opens or displays model output.
 
-Run after approved sources and manifest exist:
-    uv run python bench/requested/label_app.py --source-dir /absolute/LocalWork/sources
+Run after approved sources and manifest exist. Supply --local-root or
+GROUNDGATE_LOCAL_WORK, and keep source files and scratch files inside that directory.
 """
 
 from __future__ import annotations
@@ -27,7 +27,6 @@ from urllib.parse import urlsplit
 sys.path.insert(0, str(Path(__file__).parents[1]))
 from requested.metrics import measure, signature
 
-LOCAL_WORK = Path.home() / "Library/Application Support/Codex/LocalWork"
 MAX_BODY = 262144
 ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,79}\Z")
 
@@ -79,8 +78,6 @@ class LabelStore:
         self.lock = threading.Lock()
         self.preview_lock = threading.Lock()
         self.renderer = shutil.which("pdftoppm")
-        if self.renderer is None and os.access("/opt/homebrew/bin/pdftoppm", os.X_OK):
-            self.renderer = "/opt/homebrew/bin/pdftoppm"
 
     def schema(self, ident: str) -> dict[str, Any]:
         document = self.documents[ident]
@@ -316,6 +313,17 @@ class LabelStore:
                 os.replace(image, cache)
             return cache.read_bytes()
 
+    def read_source_text(self, ident: str) -> bytes:
+        """Read optional local text, verifying its raw file digest when one was pinned."""
+        raw = self.source(ident, "txt").read_bytes()
+        expected = self.documents[ident].get("text_sha256")
+        if expected is not None:
+            if not isinstance(expected, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", expected):
+                raise ValueError("local source text needs a valid text_sha256")
+            if not hmac.compare_digest("sha256:" + hashlib.sha256(raw).hexdigest(), expected):
+                raise ValueError("local source text hash does not match the manifest")
+        return raw
+
     def source_text_available(self, ident: str) -> bool:
         """Report only a manifest document's existing, confined optional text path."""
         try:
@@ -332,6 +340,7 @@ class LabelStore:
                     doc,
                     schema=self.schema(ident),
                     source_text_available=self.source_text_available(ident),
+                    source_text_hash_pinned=doc.get("text_sha256") is not None,
                 )
                 for ident, doc in self.documents.items()
             ],
@@ -401,18 +410,9 @@ class LabelHandler(BaseHTTPRequestHandler):
                 if kind == "pdf":
                     self.reply(200, self.server.store.verified_pdf(ident), "application/pdf")
                     return
-                source = self.server.store.source(ident, "txt")
-                self.send_response(200)
-                self.send_header(
-                    "Content-Type",
-                    "application/pdf" if kind == "pdf" else "text/plain; charset=utf-8",
+                self.reply(
+                    200, self.server.store.read_source_text(ident), "text/plain; charset=utf-8"
                 )
-                self.send_header("Content-Length", str(source.stat().st_size))
-                self.send_header("Cache-Control", "no-store")
-                self.send_header("X-Content-Type-Options", "nosniff")
-                self.end_headers()
-                with source.open("rb") as fp:
-                    shutil.copyfileobj(fp, self.wfile)
             else:
                 self.error(404, "unknown route")
         except (ValueError, OSError, KeyError, TypeError) as exc:
@@ -467,14 +467,25 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--set", type=Path, default=Path(__file__).parent)
     parser.add_argument("--source-dir", type=Path, required=True)
-    parser.add_argument("--work-dir", type=Path, help="LocalWork scratch for atomic label writes")
+    parser.add_argument("--work-dir", type=Path, help="Scratch inside the local work directory")
+    parser.add_argument(
+        "--local-root",
+        type=Path,
+        default=os.environ.get("GROUNDGATE_LOCAL_WORK") or None,
+        help="Local work directory (or set GROUNDGATE_LOCAL_WORK)",
+    )
     parser.add_argument("--port", type=int, default=8784)
     args = parser.parse_args()
-    if not args.source_dir.resolve().is_relative_to(LOCAL_WORK.resolve()):
-        parser.error("source-dir must be inside the local Codex LocalWork directory")
+    if args.local_root is None:
+        parser.error("--local-root or GROUNDGATE_LOCAL_WORK is required")
+    local_root = args.local_root.resolve()
+    if not local_root.is_dir():
+        parser.error("the local work directory must exist")
+    if not args.source_dir.resolve().is_relative_to(local_root):
+        parser.error("source-dir must be inside the local work directory")
     work_directory = args.work_dir or args.source_dir.resolve().parent / "label-work"
-    if not work_directory.resolve().is_relative_to(LOCAL_WORK.resolve()):
-        parser.error("work-dir must be inside the local Codex LocalWork directory")
+    if not work_directory.resolve().is_relative_to(local_root):
+        parser.error("work-dir must be inside the local work directory")
     try:
         store = LabelStore(args.set, args.source_dir, work_directory)
         server = LabelServer(store, args.port)

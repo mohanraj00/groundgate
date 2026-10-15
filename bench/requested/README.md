@@ -111,14 +111,17 @@ The last two commands require the sealed corpus and cached runs; they refuse the
 I use the original, unchanged PDFs in the approved local source directory:
 
 ```bash
-uv run python bench/requested/label_app.py --set bench/requested --source-dir /absolute/local/work/downloads
+uv run python bench/requested/label_app.py --set bench/requested --local-root /absolute/local/work --source-dir /absolute/local/work/downloads
 ```
 
-The server binds only to `127.0.0.1:8784`. It displays the original source beside the fixed field
+I supply the local storage root with `--local-root` or `GROUNDGATE_LOCAL_WORK`. Source and
+scratch paths must stay inside that root. The server binds only to `127.0.0.1:8784`. It displays the original source beside the fixed field
 scope, unit and manual label controls. If `pdftoppm` is installed, it renders one page at a time
 to a PNG cache in local work storage. Each page request checks the original PDF hash. Page
 previews have page and size limits. Without the optional renderer, the page embeds the PDF and
-provides a link to open the original. The renderer adds no Python or core dependency. It never opens cached model replies. Present values need an
+provides a link to open the original. The renderer is discovered on the server PATH and adds no Python or core dependency. An optional
+source-text link states when its text has no pinned hash; when the manifest provides
+`text_sha256`, the server checks that raw-file hash before display. It never opens cached model replies. Present values need an
 original PDF page; unclear fields need a reason; absences need a second blind check. The server
 checks each PDF against its manifest hash before display and before sealing. A changed or missing
 source cannot be used to seal labels. Evidence pages cannot exceed the recorded PDF page count.
@@ -131,3 +134,5 @@ separate from source text and filenames. Restart the server after changing the m
 
 The regular pytest run collects the requested-field scoring and label-server tests, so CI checks
 both. The CLI refuses unsealed pilot labels; it does not turn drafts into a reported measure.
+
+The held-out comparison and companion key/layout diagnostics are planned in [MEASURE.md](MEASURE.md).
