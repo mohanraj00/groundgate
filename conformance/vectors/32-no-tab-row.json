@@ -1,0 +1,150 @@
+{
+ "name": "32-no-tab-row",
+ "description": "A field and value on the same line need a tab between them for the column rule. A short header made only of keys and whitespace does not supply both keys to the next line. Long tables have the same protection (spec 0.9, #278).",
+ "document": "2025\t2024\nCash $100\n\n2025 2024\nCash $200\n\n2025\t2024\nCash $300\nOther\t$20\t$30\nLast\t$40\t$50",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "n1",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 15,
+     "end": 19,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 0,
+     "end": 4,
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "n2",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 15,
+     "end": 19,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 5,
+     "end": 9,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "n3",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 36,
+     "end": 40,
+     "text": "$200"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 21,
+     "end": 25,
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "n4",
+   "field": "cash",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 57,
+     "end": 61,
+     "text": "$300"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 42,
+     "end": 46,
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

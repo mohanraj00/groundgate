@@ -1,0 +1,80 @@
+{
+ "name": "35-empty-tab-unit-wrong-column",
+ "description": "An empty tab slot keeps a value out of the preceding unit column. An implicit unit stays missing, and an explicit item from that other column fails (spec 0.9, #278).",
+ "document": "Top\t$10\t20\nCash\t\t100\nOther\t30\t40",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "u1",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 17,
+     "end": 20,
+     "text": "100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "u2",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 17,
+     "end": 20,
+     "text": "100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "unit",
+     "start": 4,
+     "end": 5,
+     "text": "$"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "name": "42-empty-unit-source-slot",
+ "description": "A unit form cannot anchor to an empty tab slot in its own row. A bare currency prefix in an earlier slot must not supply a later blank column (spec 0.9, #278).",
+ "document": "Top\t$\t \r\nCash\t\t100",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "z1",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 15,
+     "end": 18,
+     "text": "100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "z2",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 15,
+     "end": 18,
+     "text": "100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "unit",
+     "start": 4,
+     "end": 5,
+     "text": "$"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

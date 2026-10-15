@@ -1,0 +1,108 @@
+{
+ "name": "34-separate-line-cells",
+ "description": "The column rule still supports one cell on each line. A key on the value's own line still applies, including beside an ambiguous tab slot (spec 0.9, #278).",
+ "document": "2025\n2024\nCash\n$100\n$200\n\n2025\t2024\nCash for 2024\t$300 $400",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 20,
+     "end": 24,
+     "text": "$200"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 0,
+     "end": 4,
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "s2",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 20,
+     "end": 24,
+     "text": "$200"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 5,
+     "end": 9,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "s3",
+   "field": "cash",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 50,
+     "end": 54,
+     "text": "$300"
+    }
+   ],
+   "key": "2024"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

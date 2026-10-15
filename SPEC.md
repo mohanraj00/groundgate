@@ -1,8 +1,6 @@
 # groundgate specification v0.9 (draft)
 
-Status: draft, not released. The target version string is `groundgate/0.9`. This draft adds no
-rule. The rules below, receipts and digest prefix still use `groundgate/0.8` until a diagnosis is
-approved and the rule, vectors and version change are ready together. Spec 0.8 was released with
+Status: draft, not released. Version string: `groundgate/0.9`. Spec 0.8 was released with
 groundgate 0.8.0 and is in the `v0.8.0` tag. Spec 0.7 was released with
 groundgate 0.7.0, and is in the `v0.7.0` tag. Spec 0.6 is in the `v0.6.0` tag, spec 0.5 in the
 `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the
@@ -593,34 +591,69 @@ comes. A sentence that mentions
 two conditions puts its values at both.
 
 Rows of a flattened table with no sentence end between them are one sentence. A **table
-sentence** is a sentence that holds 3 or more line breaks and mentions 2 or more keys of the
-field. In a table sentence, the keys at a value are the keys mentioned on the value's own line
+sentence** is a sentence that mentions 2 or more keys of the field and either holds 3 or more
+line breaks or has a separate header line before the value. That line must mention at least 2
+distinct keys, and either hold a tab or be made only of key mentions and whitespace. This also
+covers short tables with one data row. In a table sentence, the keys at a value are the keys mentioned on the value's own line
 (from the line break before it, or the start of the sentence, to the line break after it, or the
 end of the sentence), and no key when that line mentions none. So a table with one row on each
 line keeps its row keys, and a table flattened to one cell on each line sends its keyed values to
 review. The nearest earlier mention does not apply inside a table sentence.
 
+Two adjacent blank lines are a **key break** (spec 0.9): three line breaks with only spaces,
+tabs or carriage returns between them. A key break stops an earlier key mention from reaching
+a value by the nearest-mention rule, and stops the column rule from using an earlier header.
+A key on the value's own line still applies. A reader can isolate an unaligned numeric-only row
+with two blank lines on both sides. One blank line between separate cells keeps the column rule.
+
+A nearest mention on a tabbed line with at least two distinct keys does not act as a prose
+heading. Neither does a mention in a header made only of keys and whitespace. Here that header
+is a run of key mentions with only whitespace and no key break between them, and only whitespace
+on the first line before the run and on the last line after it. A value below such a header
+needs the column rule, even after one blank line ends the header's sentence.
+
 A key item (§4.6) can put the key at the value in a table. This is the **column rule**. It
 applies when the keys at the value are none, the candidate has a passing field item at the row
 (§4.6), and a passing key item. Let the **header** be the longest run of key mentions of the field
-that holds the key item's mention, where only whitespace stands between two mentions of the run.
+that holds the key item's mention, where only whitespace and no key break stands between two
+mentions of the run.
 The key item's mention is the n-th of the header. The column rule puts the key at the value when
 all of these hold:
 
-1. The header ends before the field item starts.
-2. No key mention of the field lies between the end of the header and the start of the field item.
+1. The header ends before the field item starts. If its first key lies on a line with tabs,
+   it starts in that line's first data slot. The slot before the first tab is a data slot when
+   it holds exactly one key mention and whitespace, and otherwise is the row label. A first
+   slot that holds a key plus other text, or several keys, is ambiguous and stops the rule.
+   Only spaces and carriage returns may stand before the key in that first data slot. A leading
+   unknown or empty header slot therefore stops the column rule instead of shifting the known keys.
+2. No key mention of the field lies between the end of the header and the start of the field item,
+   and no key break lies between the end of the header and the value.
 3. No number token lies on the field item's line, after the field item and before the value, with
    no tab between the end of the field item and the start of the token. This stops the rule at a
    footnote marker, such as the `1` in "Sales (1)". It also stops the rule after the first column
    when only spaces stand between the field item and the row's first number token. A tab after
    the field item, as `groundgate extract` writes HTML and PDF tables, or cells on their own
    lines, keep the rule.
-4. Between the end of the field item and the value, the **cells** are the number tokens, the lone
-   dashes (`-`, `–` or `—` with whitespace or a line end on both sides in the text), and the
-   **empty cells**: a prefix of the field's unit with whitespace or a line end on both sides, where
-   the next character after the whitespace is not the start of a number token or `(`, and comes
-   before the value. Each occurrence counts, also where two overlap, as `a a` twice in `a a a`
-   (spec 0.7). The value's token is the n-th cell from the field item.
+4. When the field item and value are on the same line, a tab stands between the item's end
+   and the value. A row kept as plain text cannot take a column key, including its first number.
+   A field followed by cells on separate lines keeps the column rule.
+5. Between the end of the field item and the value, the **cells** are the number tokens, the lone
+   dashes (`-`, `–` or `—` with whitespace or a line end on both sides in the text), the
+   **empty unit cells**, and the **empty tab slots** below. An empty unit cell is a prefix of the
+   field's unit with whitespace or a line end on both sides, where the next character after the
+   whitespace is not the start of a number token or `(`, and comes before the value. Each
+   occurrence counts, also where two overlap, as `a a` twice in `a a a` (spec 0.7). An empty tab
+   slot is the text after a tab and before the next tab or line end on that same line, when it
+   holds only spaces and carriage returns, or nothing. It counts once, also at the end of a line.
+   The text before the first tab is the row label, even when it is empty. A prefix-only slot
+   immediately before a number keeps the existing numeric cell count. The value's token is the
+   n-th cell from the field item.
+6. Each tabbed line crossed from the field item through the value must be unambiguous. Read its
+   slots after the first tab. Each slot must hold exactly one cell, or hold only a prefix of the
+   field's unit that is not itself a cell. More than one cell in a slot, a cell that crosses a
+   tab, or a nonempty slot with no cell or unit prefix makes the line ambiguous. An ambiguous
+   line cannot supply a column key, including at its first number. An item on the value's own
+   line that names its key still applies by the ordinary key rule.
 
 So a cell that shows a dash for zero, or a `$` with no number, still counts, and a second header
 between the two moves the value out of the rule.
@@ -680,14 +713,16 @@ of the unit (as a whole) at a **unit place** of the value, one of these (#164):
 2. **Caption**: the form is on a line that holds no tab and no number token, and that line
    reaches the value's line. After it, blank lines may stand, then lines that are not blank and
    each hold a tab or no number token, up to the value's line, which holds a tab.
-3. **Column**: the form's line and the value's line hold a tab, and each line between them is not
-   blank and holds a tab or no number token. The **cells of a line** are the cells of the column
-   rule (§4.5, rule 4) after the first tab of the line. For an empty cell at the end of the line,
+3. **Column**: the form's line and the value's line hold a tab, neither line is ambiguous under
+   the column rule (§4.5, rule 6), and each line between them is not blank and holds a tab or no
+   number token. The **cells of a line** are the cells of the column rule (§4.5, rule 5) after
+   the first tab of the line. For an empty cell at the end of the line,
    the next character is the first one after the line end that is not whitespace. The form is a
    prefix that ends at the start of the n-th cell of its line, or a suffix that starts after the
    end of the n-th cell, with only whitespace between them. The value's token is the n-th cell
    of its line. A cell ends at the end of the longest number token, dash or empty cell that
-   starts at its start.
+   starts at its start. An empty tab slot cannot be a unit form's source cell: a unit in an
+   earlier slot does not supply that blank column.
 
 The place is that of the form, not of the item: an item that starts on a caption and holds a `$`
 on a table line is at the place of that `$`.
@@ -706,7 +741,7 @@ and names another key adds `MODEL_DOUBT` to a decision with `KEY_CITED`.
 ## 5. Receipt
 
 ```json
-{"groundgate": "0.8",
+{"groundgate": "0.9",
  "document": {"id": null, "sha256": "sha256:...", "source": null},
  "references": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
@@ -758,10 +793,10 @@ strings escaped as ECMAScript `JSON.stringify` does, numbers serialised as ECMAS
 `Number.prototype.toString`. NaN and infinities are not permitted. Integers outside
 [-(2^53-1), 2^53-1] are not permitted (they are not exactly representable).
 
-`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.8:" + kind + "\0" + JCS(obj)))`, where
+`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.9:" + kind + "\0" + JCS(obj)))`, where
 the prefix is ASCII and `JCS(obj)` is UTF-8.
 
-## 7. Non-goals for v0.8
+## 7. Non-goals for v0.9
 
 Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
 `field_match` judgment can only add doubt, and a field item checks only the field's own aliases.

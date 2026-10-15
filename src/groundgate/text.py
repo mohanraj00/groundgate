@@ -537,8 +537,38 @@ def _label_line_in(text: str, start: int, end: int) -> bool:
     return False
 
 
-# a table sentence (SPEC §4.5): 3 or more line breaks and mentions of 2 or more keys
+# A table sentence has several keys and enough lines, or a separate key-only header.
 _TABLE_BREAKS, _TABLE_KEYS = 3, 2
+_KEY_BREAK = re.compile(r"\n[ \t\r]*\n[ \t\r]*\n")
+
+
+def _separate_header(text: str, mentions: list[tuple[int, int, str]], start: int, pos: int) -> bool:
+    """A separate line with several keys and tabs, or keys alone, is a table header."""
+    last = text.rfind("\n", 0, pos) + 1
+    mentions = sorted(mentions)
+    i = 0
+    while i < len(mentions) and mentions[i][0] < start:
+        i += 1
+    left = start
+    while left < last:
+        right = text.find("\n", left, last)
+        right = last if right < 0 else right
+        cursor = left
+        keys: set[str] = set()
+        clean = True
+        while i < len(mentions) and mentions[i][0] < right:
+            a, b, k = mentions[i]
+            if b > right or text[cursor:a].strip():
+                clean = False
+            cursor = b
+            keys.add(k)
+            i += 1
+        if len(keys) >= _TABLE_KEYS and (
+            "\t" in text[left:right] or (clean and not text[cursor:right].strip())
+        ):
+            return True
+        left = right + 1
+    return False
 
 
 def _own_keys(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[str] | None:
@@ -546,7 +576,9 @@ def _own_keys(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[
     none), else those of its sentence, or None when the sentence names no key (SPEC §4.5)."""
     s0, s1 = sentence(text, pos)
     inside = {k for a, b, k in mentions if s0 <= a and b <= s1}
-    if len(inside) >= _TABLE_KEYS and text.count("\n", s0, s1) >= _TABLE_BREAKS:
+    if len(inside) >= _TABLE_KEYS and (
+        text.count("\n", s0, s1) >= _TABLE_BREAKS or _separate_header(text, mentions, s0, pos)
+    ):
         # a table sentence: only the value's own line decides
         nl = text.rfind("\n", s0, pos)
         l0 = nl + 1 if nl >= 0 else s0
@@ -568,9 +600,33 @@ def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[st
     if not before:
         return set()
     end, key = max(before)
+    at = next(a for a, b, k in mentions if b == end and k == key)
+    if key_break(text, end, pos) or _header_key(text, mentions, at):
+        return set()
     if _label_line_in(text, end, s0) and not _one_column(text, end, pos):
         return set()
     return {key}
+
+
+def _header_key(text: str, mentions: list[tuple[int, int, str]], at: int) -> bool:
+    """A nearest key in a whitespace-only header cannot act as a prose heading."""
+    la, lb = _line(text, at)
+    if "\t" in text[la:lb] and len({k for a, b, k in mentions if la <= a < b <= lb}) >= _TABLE_KEYS:
+        return True
+    run = header(text, mentions, at)
+    starts = {a for a, _ in run}
+    if len({k for a, _, k in mentions if a in starts}) < _TABLE_KEYS:
+        return False
+    a, b = run[0][0], run[-1][1]
+    left = text.rfind("\n", 0, a) + 1
+    right = text.find("\n", b)
+    right = len(text) if right < 0 else right
+    return not text[left:a].strip() and not text[b:right].strip()
+
+
+def key_break(text: str, start: int, end: int) -> bool:
+    """Two adjacent blank lines isolate a block from earlier keys and column evidence."""
+    return _KEY_BREAK.search(text, start, end) is not None
 
 
 def _one_column(text: str, end: int, pos: int) -> bool:
@@ -603,6 +659,7 @@ _ITEM_SCALE = re.compile(
 )
 _LONE_DASH = re.compile("(?<!\\S)[-\u2013\u2014](?!\\S)")
 _NOT_SPACE = re.compile(r"\S")
+_EMPTY_TAB = re.compile(r"(?<=\t)[ \r]*(?=\t|\n|\Z)")
 _IN_SCALE = re.compile(
     r"(?<![^\W_])in\s+(?:thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
 )
@@ -762,7 +819,27 @@ def _row_cells(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
     tab = text.find("\t", start, end)
     if tab < 0:
         return []
-    return cell_spans(text, tab + 1, end, prefixes)
+    spans = cell_spans(text, tab + 1, end, prefixes)
+    # One tab slot can hold a number cell, a dash, an empty slot, or a lone unit prefix.
+    # Prefix-only slots immediately before a number retain the existing numeric columns.
+    cursor = 0
+    left = tab + 1
+    while left <= end:
+        right = text.find("\t", left, end)
+        right = end if right < 0 else right
+        count = 0
+        while cursor < len(spans) and spans[cursor][0] <= right:
+            if spans[cursor][1] > right:
+                return []
+            count += 1
+            cursor += 1
+        body = text[left:right].strip(" \r")
+        if count > 1 or (count == 0 and body and body not in prefixes):
+            return []
+        if right == end:
+            return spans
+        left = right + 1
+    return spans
 
 
 class UnitPlaces:
@@ -838,6 +915,8 @@ class UnitPlaces:
         if self.n >= len(row):
             return False
         c, ce = row[self.n]
+        if not text[c:ce].strip(" \r"):  # a blank source slot has no unit to repeat
+            return False
         if prefix:  # only whitespace between, found at the first character that is not one
             return end <= c and _NOT_SPACE.search(text, end, c) is None
         return start >= ce and _NOT_SPACE.search(text, ce, start) is None
@@ -845,7 +924,7 @@ class UnitPlaces:
 
 def _no_number_at(text: str, pos: int) -> bool:
     """Whether the first character at or after pos that is not whitespace is neither the start
-    of a number token nor "(" (SPEC §4.5, rule 4). The text may end first."""
+    of a number token nor "(" (SPEC §4.5, rule 5). The text may end first."""
     found = _NOT_SPACE.search(text, pos)
     if found is None:
         return True
@@ -856,7 +935,8 @@ def _no_number_at(text: str, pos: int) -> bool:
 def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
     """The table cells in text[start:end] (SPEC §4.5, the column rule), as (start, end): number
     tokens, lone dashes, and a unit prefix that stands alone with no number after it, also where
-    two occurrences of a prefix overlap. One position is one cell. An empty cell ends where the
+    two occurrences of a prefix overlap; blank tab slots count too. One position is one cell.
+    An empty unit cell ends where the
     longest prefix that makes it ends, and a cell that is both a number token and an empty cell
     ends at the later end of the two."""
     toks = tokens(text, start, end)
@@ -887,23 +967,67 @@ def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
             empty[a] = max(b, empty.get(a, b))
     for a, b in empty.items():  # a prefix that is also a number token is one cell
         spans[a] = max(b, spans.get(a, b))
+    for match in _EMPTY_TAB.finditer(text, start, end):
+        a, b = match.span()
+        # A bounded regex sees end as end-of-text. The real next character must also end
+        # the slot; a range that stops at a number must not invent an empty cell there.
+        if b == len(text) or text[b] in "\t\n":
+            spans.setdefault(a, b)
     return sorted(spans.items())
 
 
-def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
-    """The starts of the table cells in text[start:end] (SPEC §4.5, the column rule)."""
+def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int] | None:
+    """Cell starts, or None if a crossed tab row has ambiguous slots (SPEC §4.5)."""
+    la = text.rfind("\n", 0, start) + 1
+    while la <= end:
+        lb = text.find("\n", la)
+        lb = len(text) if lb < 0 else lb
+        if "\t" in text[la:lb] and not _row_cells(text, la, lb, prefixes):
+            return None
+        if lb >= end:
+            break
+        la = lb + 1
     return [a for a, _ in cell_spans(text, start, end, prefixes)]
 
 
+def header_column(
+    text: str, mentions: list[tuple[int, int, str]], run: list[tuple[int, int]]
+) -> bool:
+    """A tabbed header run must start in its first data slot, after an optional row label."""
+    first = run[0][0]
+    la, lb = _line(text, first)
+    tab = text.find("\t", la, lb)
+    if tab < 0:
+        return True  # the existing stream with one header cell per line
+    first_keys = [(a, b) for a, b, _ in mentions if la <= a < b <= tab]
+    begins_with_key = (
+        len(first_keys) == 1
+        and not text[la : first_keys[0][0]].strip()
+        and not text[first_keys[0][1] : tab].strip()
+    )
+    if first_keys and not begins_with_key:
+        return False  # a decorated or merged key slot is not a disposable row label
+    start = la if begins_with_key else tab + 1
+    return first >= start and not text[start:first].strip(" \r")
+
+
 def header(text: str, mentions: list[tuple[int, int, str]], at: int) -> list[tuple[int, int]]:
-    """The run of key mentions that holds the mention starting at ``at``, where only whitespace
-    stands between two mentions of the run (SPEC §4.5)."""
+    """The run holding the mention at ``at``: only whitespace and no key break between mentions
+    (SPEC §4.5)."""
     spans = sorted((a, b) for a, b, _ in mentions)
     i = next(n for n, (a, _) in enumerate(spans) if a == at)
     lo = hi = i
-    while lo > 0 and not text[spans[lo - 1][1] : spans[lo][0]].strip():
+    while (
+        lo > 0
+        and not text[spans[lo - 1][1] : spans[lo][0]].strip()
+        and not key_break(text, spans[lo - 1][1], spans[lo][0])
+    ):
         lo -= 1
-    while hi + 1 < len(spans) and not text[spans[hi][1] : spans[hi + 1][0]].strip():
+    while (
+        hi + 1 < len(spans)
+        and not text[spans[hi][1] : spans[hi + 1][0]].strip()
+        and not key_break(text, spans[hi][1], spans[hi + 1][0])
+    ):
         hi += 1
     return spans[lo : hi + 1]
 

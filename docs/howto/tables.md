@@ -257,13 +257,13 @@ show(gg.admit(spaced, schema, candidates))
 ```text
 Loss from operations   (3,415)   (2,980)
 oi-2024  needs_verification  UNIT_CITATION_INVALID KEY_NOT_AT_VALUE VALUE_DERIVED
-oi-2025  needs_verification  UNIT_CITATION_INVALID VALUE_DERIVED KEY_CITED
+oi-2025  needs_verification  UNIT_CITATION_INVALID KEY_NOT_AT_VALUE VALUE_DERIVED
 ```
 
 With only spaces between the row label and its first number, groundgate cannot tell a cell from
-a number that belongs to the label. So the column rule stops after the first column. The `$` is
-on another line, and a line with no tab has no column, so the unit item is at no unit place and
-fails. Both values go to review. The 2024 value also has no key at it.
+a number that belongs to the label. So the column rule stops for the whole row, including its
+first number (spec 0.9). The `$` is on another line, and a line with no tab has no column, so the
+unit item is at no unit place and fails. Both values go to review with no key at them.
 
 To keep the columns, extract the file with `groundgate extract`, so the cells have tabs between
 them. If the text still has spaces between the cells, a person checks the values.

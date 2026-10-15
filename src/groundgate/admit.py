@@ -35,11 +35,13 @@ from .text import (
     form_next,
     gain_word,
     header,
+    header_column,
     heading_rows,
     holds_form,
     host,
     in_scale,
     item_scale,
+    key_break,
     key_mentions,
     keys_at,
     loss_sign,
@@ -804,11 +806,17 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
         line_end = t.text.find("\n", fb, pos)
         line_end = pos if line_end < 0 else line_end
         note = any("\t" not in t.text[fb : k.start] for k in tokens(t.text, fb, line_end))
+        prior = cells(t.text, fb, pos, prefixes)
+        same_line = "\n" not in t.text[fb:pos]
         if (
             run[-1][1] <= fa
+            and header_column(t.text, mentions, run)
+            and not key_break(t.text, run[-1][1], pos)
             and not any(run[-1][1] <= x and y <= fa for x, y, _ in mentions)
             and not note  # a number after the row label on its line, such as a footnote "(1)"
-            and len(cells(t.text, fb, pos, prefixes)) == n - 1
+            and (not same_line or "\t" in t.text[fb:pos])
+            and prior is not None
+            and len(prior) == n - 1
         ):
             ok_key = p.cited = True
     if not ok_key:
