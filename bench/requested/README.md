@@ -1,12 +1,13 @@
 # Requested fields: proposed set for 0.9
 
 Status: kinds and field lists approved by the maintainer in chat on 2026-10-15 and recorded on
-#269. No source documents are downloaded. No labels or model output exist. I submit a manifest with
-one source URL, byte size and permission decision for each document before downloading it.
+#269. Approved development pilots are cached in local work storage. `manifest.json` records their
+source URLs, byte sizes, hashes and notices; `labels.json` contains blank draft fields. Source
+selection is still open. No model output exists. Every additional download needs approval.
 
 ## Proposed kinds and fixed requests
 
-I propose these three kinds. The first two are unlike the current field sets. The last kind is
+The maintainer approved these three kinds. The first two are unlike the current field sets. The last kind is
 the one financial kind that the issue permits, and gives totals and parts for later relation
 checks. No relation check is built in 0.9.
 
@@ -35,8 +36,8 @@ public URL by itself is not a redistribution license.
 
 After kind approval, I list exact URLs and response sizes, or a stated byte cap when a source does
 not give a size. I ask for approval of each download. I keep source PDFs, browser files and
-intermediate text in the workspace's local work folder outside synced folders. Final labels, request,
-manifest and reproducible reports belong in this set. No new-set model output is read until the
+intermediate text in the workspace's local work folder outside synced folders. Final labels,
+request, manifest and reproducible reports belong in this set. No new-set model output is read until the
 maintainer seals all labels.
 
 I reject duplicate source/text hashes and split near-duplicate revisions together. Selection uses
@@ -92,8 +93,8 @@ Each `runs/<name>.json` has `labels_sha256` and `manifest_sha256`, each prefixed
 computed over the exact file bytes, plus a `documents` list. Each run document has `id`, final
 core `decisions` and an explicit `not_found` list of `{field, key}`. The cache contains final
 decisions only; the baseline/runner logs keep all earlier calls and receipts. A missing run
-document is no candidate, not an absence hit. No label/manifest/result file is committed at this
-stage because there is no downloaded, labeled corpus or real measure.
+document is no candidate, not an absence hit. The pilot manifest and blank labels are draft inputs. No result file is committed before an
+actual sealed-label measure exists.
 
 I check the scoring mode with synthetic values:
 
@@ -104,3 +105,29 @@ uv run python bench/score.py --requested --set bench/requested --split heldout -
 ```
 
 The last two commands require the sealed corpus and cached runs; they refuse the present draft.
+
+## Blind label page
+
+I use the original, unchanged PDFs in the approved local source directory:
+
+```bash
+uv run python bench/requested/label_app.py --set bench/requested --source-dir /absolute/local/work/downloads
+```
+
+The server binds only to `127.0.0.1:8784`. It displays the original source beside the fixed field
+scope, unit and manual label controls. If `pdftoppm` is installed, it renders one page at a time
+to a PNG cache in local work storage. Each page request checks the original PDF hash. Page
+previews have page and size limits. Without the optional renderer, the page embeds the PDF and
+provides a link to open the original. The renderer adds no Python or core dependency. It never opens cached model replies. Present values need an
+original PDF page; unclear fields need a reason; absences need a second blind check. The server
+checks each PDF against its manifest hash before display and before sealing. A changed or missing
+source cannot be used to seal labels. Evidence pages cannot exceed the recorded PDF page count.
+
+Draft labels can be saved while source selection is open. After the complete source list and
+request are frozen, the maintainer can seal all labels. The server refuses edits after a seal or
+when cached run JSON exists. Each save is atomic and uses a local work directory for its temporary
+file. CSRF tokens, exact host/origin checks and document-ID routes keep the local write interface
+separate from source text and filenames. Restart the server after changing the manifest.
+
+The regular pytest run collects the requested-field scoring and label-server tests, so CI checks
+both. The CLI refuses unsealed pilot labels; it does not turn drafts into a reported measure.

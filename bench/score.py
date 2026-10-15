@@ -960,7 +960,10 @@ def main() -> None:
         from requested.metrics import score_set
 
         directory = args.set.resolve()
-        results = score_set(directory, args.split)
+        try:
+            results = score_set(directory, args.split)
+        except (OSError, ValueError, KeyError) as exc:
+            ap.error(f"requested-field scoring needs sealed labels and a valid set: {exc}")
         outputs = {
             "results.json": json.dumps(results, indent=1, sort_keys=True) + "\n",
             "RESULTS.md": render_requested(results),

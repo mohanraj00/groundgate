@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blind requested-field labels</title>
+<style>
+body { font: 16px system-ui, sans-serif; margin: 1rem; color: #16202a; background: #fafafa; }
+header, nav { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+h1 { font-size: 1.4rem; }
+main { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+#source { position: sticky; top: .5rem; align-self: start; min-width: 0; }
+#source-controls { display: flex; gap: .5rem; align-items: end; flex-wrap: wrap; }
+#source-controls label { flex: 1 1 6rem; }
+#source-viewer { height: 70vh; min-height: 250px; overflow: auto; resize: vertical; border: 1px solid #777; background: white; }
+iframe { width: 100%; height: 100%; border: 0; background: white; }
+#preview { width: 100%; max-width: none; display: block; }
+#preview[hidden], iframe[hidden], #page-controls[hidden] { display: none; }
+fieldset { margin: 1rem 0; padding: 1rem; background: white; border: 1px solid #777; }
+legend { font-weight: bold; }
+label { display: block; margin-top: .6rem; }
+input:not([type=checkbox]), select, textarea { box-sizing: border-box; width: 100%; padding: .45rem; font: inherit; }
+textarea { min-height: 4rem; }
+button { padding: .6rem 1rem; font: inherit; cursor: pointer; }
+button:disabled { cursor: default; }
+#message { min-height: 1.5rem; font-weight: bold; }
+.help { font-size: .9rem; }
+@media (max-width: 850px) { main { grid-template-columns: 1fr; } #source { position: static; } #source-viewer { height: 55vh; } }
+</style>
+</head>
+<body>
+<header><h1>Blind requested-field labels</h1><p>Read the original PDF. Enter only what it states.</p></header>
+<nav aria-label="Label controls">
+<label for="document">Document <select id="document"></select></label>
+<button id="save" type="button">Save draft</button>
+<button id="seal" type="button">Seal all labels</button>
+<a id="text" target="_blank" rel="noopener" hidden>Open optional source text</a>
+</nav>
+<p id="message" role="status" aria-live="polite"></p>
+<p class="help">No model output is loaded. An absent label needs a second blind check. An unclear label needs a reason. Sealing covers every document in both splits and stops edits.</p>
+<main><section id="source" aria-label="Original source">
+<a id="original" target="_blank" rel="noopener">Open original PDF in a new tab</a>
+<div id="source-controls">
+<div id="page-controls"><button id="previous-page" type="button" aria-label="Previous original PDF page">Previous</button>
+<label for="source-page">PDF page <input id="source-page" type="number" min="1" step="1" value="1"></label>
+<button id="next-page" type="button" aria-label="Next original PDF page">Next</button></div>
+<label for="source-height">Viewer height <input id="source-height" type="range" min="30" max="90" step="5" value="70" aria-controls="source-viewer"></label>
+<label for="source-zoom">Page zoom <input id="source-zoom" type="range" min="50" max="200" step="10" value="100" aria-controls="preview"></label>
+</div>
+<p id="source-status" role="status" aria-live="polite"></p>
+<div id="source-viewer" tabindex="0" aria-label="Scrollable original page view">
+<img id="preview" alt="Original PDF page" hidden><iframe id="pdf" title="Original PDF"></iframe></div></section>
+<section><h2 id="heading">Requested fields</h2><form id="fields"></form></section></main>
+<dialog id="confirm">
+<form method="dialog"><h2>Seal every label?</h2><p>Finish every requested field in every document first. Sealed labels cannot be edited here.</p>
+<button value="cancel">Keep editing</button><button id="confirm-seal" value="seal">Seal all labels</button></form>
+</dialog>
+<script>
+'use strict';
+let state, selected, dirty = false, viewedDocument, sourcePage = 1;
+const node = id => document.getElementById(id);
+const message = text => { node('message').textContent = text; };
+function element(tag, text) { const result = document.createElement(tag); if (text !== undefined) result.textContent = text; return result; }
+function control(box, label, tag, value, attrs = {}) {
+  const id = `field-${box.dataset.index}-${box.children.length}`;
+  const title = element('label', label); title.htmlFor = id;
+  const input = element(tag); input.id = id;
+  for (const [key, item] of Object.entries(attrs)) input.setAttribute(key, item);
+  if (value !== null && value !== undefined) input.value = value;
+  box.append(title, input); return input;
+}
+function showSource() {
+  const doc = state.documents.find(item => item.id === selected);
+  const preview = Boolean(state.preview_available && Number.isInteger(doc.source_pages));
+  node('page-controls').hidden = !preview;
+  node('source-zoom').disabled = !preview;
+  node('pdf').hidden = preview; node('preview').hidden = !preview;
+  if (preview) {
+    sourcePage = Math.max(1, Math.min(doc.source_pages, sourcePage));
+    node('source-page').value = sourcePage; node('source-page').max = doc.source_pages;
+    node('previous-page').disabled = sourcePage === 1;
+    node('next-page').disabled = sourcePage === doc.source_pages;
+    node('source-status').textContent = `Loading original PDF page ${sourcePage} of ${doc.source_pages}...`;
+    node('preview').alt = `Original PDF page ${sourcePage} of ${doc.source_pages}`;
+    node('preview').src = `/page/${encodeURIComponent(doc.id)}/${sourcePage}`;
+    node('pdf').removeAttribute('src');
+  } else {
+    node('source-status').textContent = 'Page previews are unavailable. If the embedded PDF is blank, open the original PDF in a new tab.';
+    node('pdf').src = `/pdf/${encodeURIComponent(doc.id)}#page=${sourcePage}`;
+    node('preview').removeAttribute('src');
+  }
+}
+
+function render() {
+  const doc = state.documents.find(item => item.id === selected);
+  const labels = state.labels.documents.find(item => item.id === selected);
+  node('heading').textContent = `${doc.id}: ${doc.kind}, ${doc.split}`;
+  if (viewedDocument !== doc.id) { sourcePage = 1; viewedDocument = doc.id; }
+  node('original').href = `/pdf/${encodeURIComponent(doc.id)}`;
+  showSource();
+  node('text').hidden = doc.source_text_available !== true;
+  if (doc.source_text_available) node('text').href = `/text/${encodeURIComponent(doc.id)}`;
+  else node('text').removeAttribute('href');
+  node('fields').replaceChildren();
+  labels.fields.forEach((slot, index) => {
+    const spec = doc.schema.fields[slot.field];
+    const box = element('fieldset'); box.dataset.index = index;
+    box.append(element('legend', `${slot.field}${slot.key === null ? '' : ` / ${slot.key}`}`));
+    if (spec.description) box.append(element('p', spec.description));
+    if (spec.aliases && spec.aliases.length) box.append(element('p', `Aliases: ${spec.aliases.join(', ')}`));
+    const status = control(box, 'Decision', 'select', null, {'data-member': 'status'});
+    for (const [value, title] of [['unlabeled', 'Not labeled'], ['present', 'Present'], ['absent', 'Absent'], ['unclear', 'Unclear']]) {
+      const option = element('option', title); option.value = value; status.append(option);
+    }
+    status.value = slot.status;
+    const values = (slot.values || []).map(item => item.value).join('\n');
+    control(box, spec.multiple ? 'Values: one per line' : 'Value', 'textarea', values, {'data-member': 'values'});
+    control(box, 'Requested unit', 'input', spec.unit || '(none)', {readonly: '', 'aria-readonly': 'true'});
+    control(box, 'Original PDF page (required for present)', 'input', slot.page, {type: 'number', min: '1', step: '1', 'data-member': 'page'});
+    control(box, 'Evidence or condition note', 'textarea', slot.note || '', {maxlength: '4000', 'data-member': 'note'});
+    control(box, 'Reason if unclear', 'textarea', slot.reason || '', {maxlength: '4000', 'data-member': 'reason'});
+    const checkLabel = element('label');
+    const check = element('input'); check.type = 'checkbox'; check.dataset.member = 'second_check'; check.checked = slot.second_check === true;
+    checkLabel.append(check, document.createTextNode(' I completed a second blind check of this absence.')); box.append(checkLabel);
+    box.disabled = Boolean(state.blocked); node('fields').append(box);
+  });
+  node('save').disabled = Boolean(state.blocked); node('seal').disabled = Boolean(state.blocked) || !state.can_seal;
+  dirty = false; message(state.blocked || (state.can_seal ? 'Draft labels. Save each document before sealing.' : 'Source selection is still open. You can save draft labels; sealing is not available yet.'));
+}
+async function load() {
+  const response = await fetch('/api/state'); const result = await response.json();
+  if (!response.ok) throw Error(result.error || 'Cannot load labels');
+  state = result; node('document').replaceChildren();
+  for (const doc of state.documents) { const option = element('option', `${doc.id} (${doc.split})`); option.value = doc.id; node('document').append(option); }
+  if (!state.documents.some(doc => doc.id === selected)) selected = state.documents[0].id;
+  node('document').value = selected; render();
+}
+async function post(path, payload) {
+  const response = await fetch(path, {method: 'POST', headers: {'Content-Type': 'application/json', 'X-Label-Token': state.token}, body: JSON.stringify(payload)});
+  const result = await response.json(); if (!response.ok) throw Error(result.error || 'Request failed');
+}
+node('source-page').addEventListener('change', event => {
+  const page = Number(event.target.value);
+  if (!Number.isInteger(page)) return;
+  sourcePage = page; showSource();
+});
+node('previous-page').addEventListener('click', () => { sourcePage -= 1; showSource(); });
+node('next-page').addEventListener('click', () => { sourcePage += 1; showSource(); });
+node('source-height').addEventListener('input', event => { node('source-viewer').style.height = `${event.target.value}vh`; });
+node('source-zoom').addEventListener('input', event => { node('preview').style.width = `${event.target.value}%`; });
+node('preview').addEventListener('load', () => { node('source-status').textContent = node('preview').alt; });
+node('preview').addEventListener('error', () => {
+  if (!node('preview').getAttribute('src')) return;
+  node('source-status').textContent = 'Page preview failed. Open the original PDF in a new tab.';
+  node('preview').hidden = true; node('pdf').hidden = false;
+  node('pdf').src = node('original').href + `#page=${sourcePage}`;
+});
+node('fields').addEventListener('input', () => { dirty = true; });
+node('fields').addEventListener('submit', event => event.preventDefault());
+node('document').addEventListener('change', event => {
+  if (dirty && !window.confirm('Discard unsaved changes to this document?')) { event.target.value = selected; return; }
+  selected = event.target.value; render();
+});
+node('save').addEventListener('click', async () => {
+  try {
+    const doc = state.documents.find(item => item.id === selected);
+    const original = state.labels.documents.find(item => item.id === selected);
+    const fields = [...node('fields').children].map((box, index) => {
+      const slot = original.fields[index], spec = doc.schema.fields[slot.field];
+      const get = member => box.querySelector(`[data-member="${member}"]`);
+      const status = get('status').value, page = get('page').value;
+      const values = status === 'present' ? get('values').value.split('\n').filter(value => value.trim()).map(value => ({value, unit: spec.unit || null})) : [];
+      return {field: slot.field, key: slot.key || null, status, values, page: page ? Number(page) : null,
+        note: get('note').value, reason: get('reason').value, second_check: get('second_check').checked};
+    });
+    await post('/api/save', {id: selected, fields}); await load(); message('Draft saved.');
+  } catch (error) { message(error.message); }
+});
+node('seal').addEventListener('click', () => {
+  if (dirty) { message('Save this document before sealing.'); return; } node('confirm').showModal();
+});
+node('confirm').addEventListener('close', async () => {
+  if (node('confirm').returnValue !== 'seal') return;
+  try { await post('/api/seal', {}); await load(); message('All labels sealed.'); } catch (error) { message(error.message); }
+});
+window.addEventListener('beforeunload', event => { if (dirty) { event.preventDefault(); event.returnValue = ''; } });
+load().catch(error => message(error.message));
+</script>
+</body>
+</html>

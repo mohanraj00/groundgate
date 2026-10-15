@@ -1,0 +1,92 @@
+{
+ "documents": [
+  {
+   "fields": [
+    {
+     "field": "revenue",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "cost_of_sales",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "gross_profit",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "total_assets",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "total_liabilities",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "total_equity",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    }
+   ],
+   "id": "annual-001"
+  },
+  {
+   "fields": [
+    {
+     "field": "supply_voltage_min",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "supply_voltage_max",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "supply_current_typ",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "operating_temperature_min",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "operating_temperature_max",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    }
+   ],
+   "id": "component-001"
+  }
+ ],
+ "status": "draft"
+}
