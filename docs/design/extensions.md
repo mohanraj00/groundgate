@@ -95,8 +95,8 @@ says so for every value that it helped to admit.
 | Vocabulary pack | Core | data | digest | No. The locale design (#60) is the first one. |
 | Kind pack | Core and runner | data | digest | Partly: `aliases`, `keys` and `units` in the schema. |
 | Check | Core | data | digest | No. #273 is the first derived value. |
-| Judge | before the core | code | recorded judgments with the judge's id and digest | Yes, experimental: the `judge` block (SPEC §2.4, §2.6). |
-| Reader | before the core | code | the document text and its digest | PDF and markup extract. |
+| Judge | before the core | code | each judgment that applied (candidate digest, question, answer, probability); the judge's id and version are in the policy, through `policy_sha256` | Yes, experimental: the `judge` block (SPEC §2.4, §2.6). |
+| Reader | before the core | code | the document's digest only; `verify` needs the text again | PDF and markup extract. |
 | Strategy | Runner | code | not in the receipt; in the runner's log | No. The runner is 0.9. |
 
 ### 5.1 Vocabulary pack
@@ -256,16 +256,21 @@ misses (the work of the runner).
   document does not state the field.
 - **Not an escape.** A wrong value sent to review is a catch. A field with no value is a miss.
 - **Excluded.** An item that the label marks as unclear in the document. The report gives the count.
-- **For each field, each kind and each pack.** A total can hide one field that fails.
+- **For each field, each kind and each route.** A route is a pack, a check or a judge question
+  that can change an outcome to admitted. A total can hide one field or one route that fails: 10,000
+  right admits from the core and 5 admits from a judge clear with 2 errors give 2 in 10,005, but
+  the judge route alone is 2 in 5. A route gets the status `measured` only from its own bound.
 - **The bound.** A one-sided 95% upper bound that stays above zero when no error occurs. Errors in
   one document come together, so values in one document are not separate trials. A resample by
   document alone is not sufficient: with 0 errors, every resample has 0 errors, and the bound is
   0%. The report gives two bounds:
   - a bound on the admitted values that allows for clusters by document. Divide the number of
-    values and the number of errors by a design effect of at least 1. Round the trials down and
-    the errors up to whole numbers, then take the Clopper-Pearson upper bound. Both roundings make
-    the bound larger, so it is approximate and conservative. If the set has too few errors to
-    estimate the design effect, the report uses a stated default;
+    values and the number of errors by a design effect of at least 1. The effective trials are the
+    quotient for the values, rounded down. The effective errors are the quotient for the errors,
+    rounded up, and never more than the effective trials. Then take the Clopper-Pearson upper
+    bound. These rules make the bound larger, so it is approximate and conservative. If the
+    effective trials are 0, the report gives no bound, and the slice cannot become `measured`. If
+    the set has too few errors to estimate the design effect, the report uses a stated default;
   - the exact Clopper-Pearson upper bound on documents: the share of documents with at least one
     wrong admitted value. It needs no design effect.
 
