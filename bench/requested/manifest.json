@@ -1,0 +1,208 @@
+{
+ "documents": [
+  {
+   "approved_max_bytes": 2097152,
+   "download_approved": "2026-10-15",
+   "id": "annual-001",
+   "kind": "annual",
+   "license": "OGL-UK-3.0",
+   "license_notice_page": 4,
+   "license_other_notices": "Third-party notices retained in the original. No source text or PDF is proposed for public redistribution.",
+   "source": "https://assets.publishing.service.gov.uk/media/68778cca2bad77c3dae4dc61/OS_Annual_Report_2024_2025_WEB.pdf",
+   "source_bytes": 1538140,
+   "source_pages": 148,
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_sha256": "sha256:9651a99f3cd27426037bdbe5d56e35185c68ded698a423dc89c378797abe3e15",
+   "split": "development"
+  },
+  {
+   "approved_max_bytes": 8388608,
+   "download_approved": "2026-10-15",
+   "id": "component-001",
+   "kind": "component",
+   "license": "CC-BY-ND-4.0",
+   "license_notice_page": 2,
+   "license_other_notices": "Third-party notices retained in original. Component has a separate resource-use notice; no source text or PDF is proposed for public redistribution.",
+   "source": "https://pip-assets.raspberrypi.com/categories/814-rp2040/documents/RP-008371-DS-1-rp2040-datasheet.pdf",
+   "source_bytes": 5301205,
+   "source_pages": 642,
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_sha256": "sha256:be56fbb75ba0ae9e26558a73c93ac3e75c2ad4e6878d3b6703de2a76d886ea8c",
+   "split": "development"
+  }
+ ],
+ "format": "requested-fields/1",
+ "schemas": {
+  "annual": {
+   "fields": {
+    "cost_of_sales": {
+     "aliases": [
+      "Cost of sales"
+     ],
+     "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+     "type": "number",
+     "unit": "GBP"
+    },
+    "gross_profit": {
+     "aliases": [
+      "Gross profit"
+     ],
+     "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+     "type": "number",
+     "unit": "GBP"
+    },
+    "revenue": {
+     "aliases": [
+      "Revenue",
+      "Turnover"
+     ],
+     "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+     "type": "number",
+     "unit": "GBP"
+    },
+    "total_assets": {
+     "aliases": [
+      "Total assets"
+     ],
+     "description": "Latest consolidated full-year closing total assets.",
+     "type": "number",
+     "unit": "GBP"
+    },
+    "total_equity": {
+     "aliases": [
+      "Total equity"
+     ],
+     "description": "Latest consolidated full-year closing total equity, preserving sign.",
+     "type": "number",
+     "unit": "GBP"
+    },
+    "total_liabilities": {
+     "aliases": [
+      "Total liabilities"
+     ],
+     "description": "Latest consolidated full-year closing total liabilities.",
+     "type": "number",
+     "unit": "GBP"
+    }
+   }
+  },
+  "component": {
+   "fields": {
+    "operating_temperature_max": {
+     "aliases": [
+      "Operating temperature",
+      "Ambient temperature"
+     ],
+     "description": "Upper operating temperature limit, not storage temperature.",
+     "type": "number",
+     "unit": "C"
+    },
+    "operating_temperature_min": {
+     "aliases": [
+      "Operating temperature",
+      "Ambient temperature"
+     ],
+     "description": "Lower operating temperature limit, not storage temperature.",
+     "type": "number",
+     "unit": "C"
+    },
+    "supply_current_typ": {
+     "aliases": [
+      "Supply current",
+      "Typical current"
+     ],
+     "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+     "type": "number",
+     "unit": "mA"
+    },
+    "supply_voltage_max": {
+     "aliases": [
+      "Recommended operating conditions",
+      "Supply voltage"
+     ],
+     "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+     "type": "number",
+     "unit": "V"
+    },
+    "supply_voltage_min": {
+     "aliases": [
+      "Recommended operating conditions",
+      "Supply voltage"
+     ],
+     "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+     "type": "number",
+     "unit": "V"
+    }
+   },
+   "units": {
+    "C": {
+     "suffix": [
+      "\u00b0C",
+      "Celsius"
+     ]
+    },
+    "V": {
+     "suffix": [
+      "V",
+      "volts"
+     ]
+    },
+    "mA": {
+     "suffix": [
+      "mA",
+      "milliamps"
+     ]
+    }
+   }
+  },
+  "sbc": {
+   "fields": {
+    "deductible_family": {
+     "aliases": [
+      "Overall deductible",
+      "Deductible"
+     ],
+     "description": "In-network family deductible in the plan coverage year.",
+     "type": "number",
+     "unit": "USD"
+    },
+    "deductible_individual": {
+     "aliases": [
+      "Overall deductible",
+      "Deductible"
+     ],
+     "description": "In-network deductible for one person in the plan coverage year.",
+     "type": "number",
+     "unit": "USD"
+    },
+    "out_of_pocket_family": {
+     "aliases": [
+      "Out-of-pocket limit"
+     ],
+     "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+     "type": "number",
+     "unit": "USD"
+    },
+    "out_of_pocket_individual": {
+     "aliases": [
+      "Out-of-pocket limit"
+     ],
+     "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+     "type": "number",
+     "unit": "USD"
+    },
+    "specialist_copay": {
+     "aliases": [
+      "Specialist visit"
+     ],
+     "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+     "type": "number",
+     "unit": "USD"
+    }
+   }
+  }
+ },
+ "selection_complete": false,
+ "selection_note": "Approved development pilots only. Held-out source selection and every further download are pending. No model output exists.",
+ "status": "draft"
+}
