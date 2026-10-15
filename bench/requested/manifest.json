@@ -28,7 +28,84 @@
    "source_pages": 642,
    "source_retention": "original PDF in local work storage; not committed",
    "source_sha256": "sha256:be56fbb75ba0ae9e26558a73c93ac3e75c2ad4e6878d3b6703de2a76d886ea8c",
-   "split": "development"
+   "split": "development",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "label_scope_note": "The thermal table states chip case temperature TC. The fixed operating-temperature request is not ambient-only. Supply rail and software mode are not specified; unresolved power fields stay unclear."
   },
   {
    "approved_max_bytes": 1048576,
@@ -94,7 +171,7 @@
      "aliases": [
       "Total liabilities"
      ],
-     "description": "Latest consolidated full-year closing total liabilities.",
+     "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
      "type": "number",
      "unit": "GBP"
     }
@@ -109,7 +186,8 @@
      ],
      "description": "Upper operating temperature limit, not storage temperature.",
      "type": "number",
-     "unit": "C"
+     "unit": "C",
+     "comparator": "le"
     },
     "operating_temperature_min": {
      "aliases": [
@@ -118,7 +196,8 @@
      ],
      "description": "Lower operating temperature limit, not storage temperature.",
      "type": "number",
-     "unit": "C"
+     "unit": "C",
+     "comparator": "ge"
     },
     "supply_current_typ": {
      "aliases": [
@@ -127,7 +206,8 @@
      ],
      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
      "type": "number",
-     "unit": "mA"
+     "unit": "mA",
+     "comparator": "eq"
     },
     "supply_voltage_max": {
      "aliases": [
@@ -136,7 +216,8 @@
      ],
      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
      "type": "number",
-     "unit": "V"
+     "unit": "V",
+     "comparator": "le"
     },
     "supply_voltage_min": {
      "aliases": [
@@ -145,7 +226,8 @@
      ],
      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
      "type": "number",
-     "unit": "V"
+     "unit": "V",
+     "comparator": "ge"
     }
    },
    "units": {
@@ -178,7 +260,8 @@
      ],
      "description": "In-network family deductible in the plan coverage year.",
      "type": "number",
-     "unit": "USD"
+     "unit": "USD",
+     "comparator": "eq"
     },
     "deductible_individual": {
      "aliases": [
@@ -187,7 +270,8 @@
      ],
      "description": "In-network deductible for one person in the plan coverage year.",
      "type": "number",
-     "unit": "USD"
+     "unit": "USD",
+     "comparator": "eq"
     },
     "out_of_pocket_family": {
      "aliases": [
@@ -195,7 +279,8 @@
      ],
      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
      "type": "number",
-     "unit": "USD"
+     "unit": "USD",
+     "comparator": "le"
     },
     "out_of_pocket_individual": {
      "aliases": [
@@ -203,7 +288,8 @@
      ],
      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
      "type": "number",
-     "unit": "USD"
+     "unit": "USD",
+     "comparator": "le"
     },
     "specialist_copay": {
      "aliases": [
@@ -211,12 +297,14 @@
      ],
      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
      "type": "number",
-     "unit": "USD"
+     "unit": "USD",
+     "comparator": "eq"
     }
    }
   }
  },
  "selection_complete": false,
  "selection_note": "Approved development pilots only. Held-out source selection and every further download are pending. No model output exists.",
- "status": "draft"
+ "status": "draft",
+ "label_method": "Draft source-only agent annotations from original PDFs, checked against original page renders. Independent second checks cover absence and disputed fields. No benchmark model call has run."
 }

@@ -1,132 +1,240 @@
 {
- "documents": [
-  {
-   "fields": [
+  "documents": [
     {
-     "field": "revenue",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "194597000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 91,
+          "note": "Consolidated group 2024-25. Printed 194,597 in GBP thousands; scale 1000. Stated row, latest consolidated year.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "34896000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 91,
+          "note": "Consolidated group 2024-25. Printed (34,896) in GBP thousands; scale 1000. Positive cost magnitude as requested; no expense subtotal substituted.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "159701000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 91,
+          "note": "Consolidated group 2024-25. Printed 159,701 in GBP thousands; scale 1000. Stated row, latest consolidated year.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "211234000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 92,
+          "note": "Consolidated group 2024-25. Printed 211,234 in GBP thousands; scale 1000. Stated row, latest consolidated year.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-67676000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 93,
+          "note": "Consolidated group 2024-25. Printed (67,676) in GBP thousands; scale 1000. Preserve the printed bracket sign. Original page checked independently; no subtotal calculated.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "143558000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 96,
+          "note": "Consolidated group 2024-25. Printed 143,558 in GBP thousands; scale 1000. Explicit closing total, corroborated on PDF page 93; no total calculated.",
+          "reason": "",
+          "second_check": false
+        }
+      ],
+      "id": "annual-001"
     },
     {
-     "field": "cost_of_sales",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
+      "fields": [
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "85",
+              "unit": "C"
+            }
+          ],
+          "page": 616,
+          "note": "Chip case temperature TC, Table 624. Not ambient-air, storage or external-component limits. Original table independently checked.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 616,
+          "note": "Chip case temperature TC, Table 624. Not ambient-air, storage or external-component limits. Original table independently checked.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 624,
+          "note": "Scope checked before any benchmark model output. No rail, mode, subtotal or absolute-maximum substitute chosen.",
+          "reason": "Typical current depends on supply rail and software mode. The request selects neither, so no unique typical current is stated for that request.",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 623,
+          "note": "Scope checked before any benchmark model output. No rail, mode, subtotal or absolute-maximum substitute chosen.",
+          "reason": "The request names no supply rail. Digital IO, core, regulator input, USB and ADC supplies have different operating limits.",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 623,
+          "note": "Scope checked before any benchmark model output. No rail, mode, subtotal or absolute-maximum substitute chosen.",
+          "reason": "The request names no supply rail. Digital IO, core, regulator input, USB and ADC supplies have different operating limits.",
+          "second_check": false
+        }
+      ],
+      "id": "component-001"
     },
     {
-     "field": "gross_profit",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "total_assets",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "total_liabilities",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "total_equity",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
+      "id": "sbc-001",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "250",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Overall medical deductible for one person, calendar year 2026; the separate prescription deductible is not this field.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "750",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Overall family medical deductible, calendar year 2026; do not add the separate prescription deductible.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "2000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Medical out-of-pocket limit for one person. Prescription coverage has its own limit with the same printed amount; do not add limits.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "4000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Medical family out-of-pocket limit. Prescription coverage has its own limit with the same printed amount; do not add limits.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 3,
+          "note": "The in-network specialist row states 15% coinsurance, not a USD copay. Original PDF page 8 corroborates it. A separate source-only reviewer checked the full PDF before any benchmark model call.",
+          "reason": "",
+          "second_check": true
+        }
+      ]
     }
-   ],
-   "id": "annual-001"
-  },
-  {
-   "fields": [
-    {
-     "field": "supply_voltage_min",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "supply_voltage_max",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "supply_current_typ",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "operating_temperature_min",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "operating_temperature_max",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    }
-   ],
-   "id": "component-001"
-  },
-  {
-   "id": "sbc-001",
-   "fields": [
-    {
-     "field": "deductible_family",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "deductible_individual",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "out_of_pocket_family",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "out_of_pocket_individual",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    },
-    {
-     "field": "specialist_copay",
-     "key": null,
-     "note": "",
-     "status": "unlabeled",
-     "values": []
-    }
-   ]
-  }
- ],
- "status": "draft"
+  ],
+  "status": "draft"
 }

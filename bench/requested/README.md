@@ -2,7 +2,7 @@
 
 Status: kinds and field lists approved by the maintainer in chat on 2026-10-15 and recorded on
 #269. Approved development pilots are cached in local work storage. `manifest.json` records their
-source URLs, byte sizes, hashes and notices; `labels.json` contains blank draft fields. Source
+source URLs, byte sizes, hashes and notices; `labels.json` contains source-based draft labels. Source
 selection is still open. No model output exists. Every additional download needs approval.
 
 ## Proposed kinds and fixed requests
@@ -15,12 +15,13 @@ checks. No relation check is built in 0.9.
 |---|---|---|
 | Electronic component datasheets | recommended supply voltage minimum and maximum (V); typical supply current (mA); operating temperature minimum and maximum (C) | one device or ordering variant named by the document; recommended operation, not absolute maximum ratings; typical current at the document's stated reference condition |
 | Health plan Summary of Benefits and Coverage | in-network deductible for one person and for a family (USD); in-network out-of-pocket limit for one person and for a family (USD); in-network specialist visit copay (USD) | one plan and coverage year; a numeric copay only, not a coinsurance percentage; a condition that prevents one value is unclear |
-| Annual reports from outside the U.S. in English | revenue; cost of sales; gross profit; total assets; total liabilities; total equity | latest full fiscal year, consolidated group, original reporting currency; amounts after printed scale; report the positive amount of a cost, preserve the printed sign of profit/equity |
+| Annual reports from outside the U.S. in English | revenue; cost of sales; gross profit; total assets; total liabilities; total equity | latest full fiscal year, consolidated group, original reporting currency; amounts after printed scale; report the positive amount of a cost; preserve the other printed signs |
 
 The financial fields use the document's reporting currency as the schema unit. The request stays
 fixed. A schema records that currency before labeling, and no conversion is performed. The
 component fields use schema unit surfaces for V, mA and C. Their endpoint fields carry the
-appropriate comparison meaning. A range with no unique endpoint reading is unclear.
+appropriate comparison meaning: `ge` for minimum and `le` for maximum. The out-of-pocket
+limit fields also use `le`; other requests use `eq`. A range with no unique endpoint reading is unclear.
 
 I propose one development part and one held-out part per kind, with at least 20 held-out documents
 per kind as #269 requests. Development and held-out documents have disjoint publishers or product
@@ -93,7 +94,7 @@ Each `runs/<name>.json` has `labels_sha256` and `manifest_sha256`, each prefixed
 computed over the exact file bytes, plus a `documents` list. Each run document has `id`, final
 core `decisions` and an explicit `not_found` list of `{field, key}`. The cache contains final
 decisions only; the baseline/runner logs keep all earlier calls and receipts. A missing run
-document is no candidate, not an absence hit. The pilot manifest and blank labels are draft inputs. No result file is committed before an
+document is no candidate, not an absence hit. The pilot manifest and labels are draft inputs. No result file is committed before an
 actual sealed-label measure exists.
 
 I check the scoring mode with synthetic values:
@@ -136,3 +137,8 @@ The regular pytest run collects the requested-field scoring and label-server tes
 both. The CLI refuses unsealed pilot labels; it does not turn drafts into a reported measure.
 
 The held-out comparison and companion key/layout diagnostics are planned in [MEASURE.md](MEASURE.md).
+
+The development drafts use source-only agent annotations, checked against original PDF page
+renders. Independent source checks cover absences and disputed fields. Component case-temperature
+limits retain that condition; fields with no selected rail or mode stay unclear. These drafts
+are not sealed and cannot be scored. No benchmark model call has run.
