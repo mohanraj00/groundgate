@@ -591,10 +591,20 @@ comes. A sentence that mentions
 two conditions puts its values at both.
 
 Rows of a flattened table with no sentence end between them are one sentence. A **table
-sentence** is a sentence that mentions 2 or more keys of the field and either holds 3 or more
-line breaks or has a separate header line before the value. That line must mention at least 2
-distinct keys, and either hold a tab or be made only of key mentions and whitespace. This also
-covers short tables with one data row. In a table sentence, the keys at a value are the keys mentioned on the value's own line
+sentence** is a sentence that mentions 2 or more keys of the field and holds 3 or more
+line breaks, or a sentence with a key mention in a separate header before the value.
+A separate header line must mention at least 2 distinct keys, and either hold a tab or be made
+only of key mentions and whitespace. A run of
+separate key-only lines also counts as a header. So does a run of at least two distinct keys
+with only whitespace and no key break between them, if any line touched by the run holds a tab.
+An optional label before the run or a non-key slot after it does not make that run prose.
+A **mixed header block** also counts: at least two key-bearing physical lines that together
+mention at least two distinct keys, with a tab on at least one of those lines. At most one blank
+line may separate successive key-bearing lines. A line without tabs must contain only key
+mentions and whitespace. A tabbed line may have a label or non-key text, but a number token
+outside its key mentions ends the block. This recognizes a trailing non-key slot even when it
+interrupts the whitespace-only run between keys. This covers short tables with one data row.
+In a table sentence, the keys at a value are the keys mentioned on the value's own line
 (from the line break before it, or the start of the sentence, to the line break after it, or the
 end of the sentence), and no key when that line mentions none. So a table with one row on each
 line keeps its row keys, and a table flattened to one cell on each line sends its keyed values to
@@ -609,8 +619,10 @@ with two blank lines on both sides. One blank line between separate cells keeps 
 A nearest mention on a tabbed line with at least two distinct keys does not act as a prose
 heading. Neither does a mention in a header made only of keys and whitespace. Here that header
 is a run of key mentions with only whitespace and no key break between them, and only whitespace
-on the first line before the run and on the last line after it. A value below such a header
-needs the column rule, even after one blank line ends the header's sentence.
+on the first line before the run and on the last line after it. A run touching a tabbed line
+is also a header when it has a label before its first key or non-key text after its last key.
+A mention in a mixed header block cannot act as a prose heading either. A value below such a
+header needs the column rule, even after one blank line ends the header's sentence.
 
 A key item (§4.6) can put the key at the value in a table. This is the **column rule**. It
 applies when the keys at the value are none, the candidate has a passing field item at the row
@@ -626,6 +638,11 @@ all of these hold:
    slot that holds a key plus other text, or several keys, is ambiguous and stops the rule.
    Only spaces and carriage returns may stand before the key in that first data slot. A leading
    unknown or empty header slot therefore stops the column rule instead of shifting the known keys.
+   If any line of the header run holds a tab, all its key mentions must lie on one physical line,
+   with exactly one tab between each adjacent pair. An empty slot between keys, several keys in
+   one slot, or a mix of tabbed and separate-line header cells stops the rule. A mixed header
+   block stops the rule even when non-key text splits its key mentions into separate runs.
+   A non-key column after a one-line run does not change the known keys' ordinals.
 2. No key mention of the field lies between the end of the header and the start of the field item,
    and no key break lies between the end of the header and the value.
 3. No number token lies on the field item's line, after the field item and before the value, with

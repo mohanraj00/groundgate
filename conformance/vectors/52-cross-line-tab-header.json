@@ -1,0 +1,150 @@
+{
+ "name": "52-cross-line-tab-header",
+ "description": "A header run mixing tabs and line breaks has ambiguous ordinals and cannot supply a column key. It cannot bypass the column check through short-sentence keys. The existing separate-line header and cell stream with no tabs remains supported (spec 0.9, #278 security review).",
+ "document": "2025\n\t\t2024\nCash\t\t$600\n\n2025\t\n2024\nCash\t\t$700\n\n2025\t2024\n2023\nCash\t\t$800\n\n2025\n2024\nCash\n$1,000\n$1,100",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "h6",
+   "field": "cash",
+   "value": "600",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 18,
+     "end": 22,
+     "text": "$600"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 7,
+     "end": 11,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "h7",
+   "field": "cash",
+   "value": "700",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 41,
+     "end": 45,
+     "text": "$700"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 30,
+     "end": 34,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "h8",
+   "field": "cash",
+   "value": "800",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 72,
+     "text": "$800"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 52,
+     "end": 56,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "h9",
+   "field": "cash",
+   "value": "1100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 96,
+     "end": 102,
+     "text": "$1,100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 79,
+     "end": 83,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

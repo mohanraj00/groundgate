@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import bisect
 import contextlib
+import itertools
 import re
 import unicodedata
 from collections.abc import Iterator
@@ -537,15 +538,18 @@ def _label_line_in(text: str, start: int, end: int) -> bool:
     return False
 
 
-# A table sentence has several keys and enough lines, or a separate key-only header.
+# A table sentence has several keys and enough lines, or a separate recognized header.
 _TABLE_BREAKS, _TABLE_KEYS = 3, 2
 _KEY_BREAK = re.compile(r"\n[ \t\r]*\n[ \t\r]*\n")
 
 
 def _separate_header(text: str, mentions: list[tuple[int, int, str]], start: int, pos: int) -> bool:
-    """A separate line with several keys and tabs, or keys alone, is a table header."""
+    """Recognize a separate header line, key-only stream or mixed tabbed header block."""
     last = text.rfind("\n", 0, pos) + 1
     mentions = sorted(mentions)
+    before = [(a, b, k) for a, b, k in mentions if start <= a < b <= last]
+    if before and _header_key(text, mentions, before[-1][0]):
+        return True  # separate key-only lines also form a header in a short table
     i = 0
     while i < len(mentions) and mentions[i][0] < start:
         i += 1
@@ -576,8 +580,8 @@ def _own_keys(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[
     none), else those of its sentence, or None when the sentence names no key (SPEC §4.5)."""
     s0, s1 = sentence(text, pos)
     inside = {k for a, b, k in mentions if s0 <= a and b <= s1}
-    if len(inside) >= _TABLE_KEYS and (
-        text.count("\n", s0, s1) >= _TABLE_BREAKS or _separate_header(text, mentions, s0, pos)
+    if (len(inside) >= _TABLE_KEYS and text.count("\n", s0, s1) >= _TABLE_BREAKS) or (
+        inside and _separate_header(text, mentions, s0, pos)
     ):
         # a table sentence: only the value's own line decides
         nl = text.rfind("\n", s0, pos)
@@ -608,8 +612,72 @@ def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[st
     return {key}
 
 
+def _mixed_header_lines(text: str, mentions: list[tuple[int, int, str]], at: int) -> bool:
+    """Recognize mixed tabbed key lines even when a trailing non-key slot splits the run."""
+    ordered = sorted(mentions)
+    starts = [a for a, _, _ in ordered]
+
+    def line_info(left: int, right: int) -> tuple[set[str], bool] | None:
+        if not text[left:right].strip(" \t\r"):
+            return set(), False
+        spans = [
+            (a, b, k)
+            for a, b, k in ordered[
+                bisect.bisect_left(starts, left) : bisect.bisect_left(starts, right)
+            ]
+            if b <= right
+        ]
+        if not spans:
+            return None
+        tabbed = "\t" in text[left:right]
+        cursor = left
+        for a, b, _ in spans:
+            if not tabbed and text[cursor:a].strip():
+                return None
+            cursor = max(cursor, b)
+        if not tabbed and text[cursor:right].strip():
+            return None
+        # A data value ends the header block, even when its row also names a key.
+        i = 0
+        for token in tokens(text, left, right):
+            while i < len(spans) and spans[i][1] <= token.start:
+                i += 1
+            if i == len(spans) or not (spans[i][0] <= token.start < token.end <= spans[i][1]):
+                return None
+        return {k for _, _, k in spans}, tabbed
+
+    left, right = _line(text, at)
+    info = line_info(left, right)
+    if info is None or not info[0]:
+        return False
+    keys, tabbed = info
+    lines = 1
+    for direction in (-1, 1):
+        a, b = left, right
+        blanks = 0
+        while a > 0 if direction < 0 else b < len(text):
+            a, b = _line(text, a - 1 if direction < 0 else b + 1)
+            info = line_info(a, b)
+            if info is None:
+                break
+            if not info[0]:
+                blanks += 1
+                if blanks >= 2:
+                    break
+                continue
+            blanks = 0
+            lines += 1
+            keys.update(info[0])
+            tabbed = tabbed or info[1]
+            if lines >= 2 and len(keys) >= _TABLE_KEYS and tabbed:
+                return True
+    return False
+
+
 def _header_key(text: str, mentions: list[tuple[int, int, str]], at: int) -> bool:
-    """A nearest key in a whitespace-only header cannot act as a prose heading."""
+    """A key in a tabbed or whitespace-only header cannot act as a prose heading."""
+    if _mixed_header_lines(text, mentions, at):
+        return True
     la, lb = _line(text, at)
     if "\t" in text[la:lb] and len({k for a, b, k in mentions if la <= a < b <= lb}) >= _TABLE_KEYS:
         return True
@@ -621,7 +689,7 @@ def _header_key(text: str, mentions: list[tuple[int, int, str]], at: int) -> boo
     left = text.rfind("\n", 0, a) + 1
     right = text.find("\n", b)
     right = len(text) if right < 0 else right
-    return not text[left:a].strip() and not text[b:right].strip()
+    return "\t" in text[left:right] or (not text[left:a].strip() and not text[b:right].strip())
 
 
 def key_break(text: str, start: int, end: int) -> bool:
@@ -993,12 +1061,19 @@ def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int] | N
 def header_column(
     text: str, mentions: list[tuple[int, int, str]], run: list[tuple[int, int]]
 ) -> bool:
-    """A tabbed header run must start in its first data slot, after an optional row label."""
+    """A tabbed header has one key per consecutive slot, on one physical line."""
     first = run[0][0]
+    if _mixed_header_lines(text, mentions, first):
+        return False
     la, lb = _line(text, first)
+    last_end = _line(text, run[-1][1] - 1)[1]
+    if "\t" not in text[la:last_end]:
+        return True  # the existing stream with no tabbed header cells
+    if run[-1][1] > lb:
+        return False  # mixed line and tab boundaries do not define one ordinal sequence
+    if any(text[left[1] : right[0]].count("\t") != 1 for left, right in itertools.pairwise(run)):
+        return False  # neither skipped slots nor merged key slots may be compressed
     tab = text.find("\t", la, lb)
-    if tab < 0:
-        return True  # the existing stream with one header cell per line
     first_keys = [(a, b) for a, b, _ in mentions if la <= a < b <= tab]
     begins_with_key = (
         len(first_keys) == 1

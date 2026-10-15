@@ -1,0 +1,90 @@
+{
+ "name": "51-header-tab-boundaries",
+ "description": "Adjacent keys in a tabbed header need exactly one tab between them. Keys merged into one data slot cannot supply two column ordinals. A trailing non-key column remains supported after the known keys (spec 0.9, #278 security review).",
+ "document": "Year\t2025 2024\nCash\t$400\t$500\n\nYear\t2025\t2024\tChange\nCash\t\t$900\t$5",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "h4",
+   "field": "cash",
+   "value": "500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 29,
+     "text": "$500"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 10,
+     "end": 14,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "h5",
+   "field": "cash",
+   "value": "900",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 59,
+     "end": 63,
+     "text": "$900"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 41,
+     "end": 45,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
