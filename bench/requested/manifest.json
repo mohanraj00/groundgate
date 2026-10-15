@@ -952,6 +952,245 @@
    },
    "label_scope_note": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit.",
    "named_source": "Latest consolidated group annual report"
+  },
+  {
+   "id": "component-h07",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://docs.particle.io/assets/pdfs/datasheets/p2-datasheet.pdf",
+   "source_sha256": "sha256:0c051a936a99b84a7c3fc472ea8e203fadbd09f1d0e14945eb5ab1254fffbe32",
+   "source_bytes": 1030087,
+   "source_pages": 57,
+   "approved_max_bytes": 4194304,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "particle-connected-module-documentation",
+   "technical_family": "particle-p2-photon2-wifi-module-family",
+   "license": "CC-BY-SA-3.0 documentation grant with attribution and applicable ShareAlike conditions",
+   "license_other_notices": "Exact publication notices and third-party exceptions are recorded in source_checks.json. No PDF, image or source text redistribution is proposed.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
+   "named_source": "P2"
+  },
+  {
+   "id": "annual-h10",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a58984631fb6daf314137b6/NDA_Annual_Report_and_Accounts_2025-26.pdf",
+   "source_sha256": "sha256:b020333b3e77b138ead86cb11213231d404e0b8fcf6664782305a5203962908c",
+   "source_bytes": 9645977,
+   "source_pages": 215,
+   "approved_max_bytes": 12582912,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "nda-group-annual-family",
+   "technical_family": "nda-group-annual-family",
+   "license": "OGL-UK-3.0 subject to PDF-local and third-party exceptions",
+   "license_other_notices": "Exact publication notices and third-party exceptions are recorded in source_checks.json. No PDF, image or source text redistribution is proposed.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "label_scope_note": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit.",
+   "named_source": "Nuclear Decommissioning Authority group"
+  },
+  {
+   "id": "annual-h11",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a3d467433bc5beefd3c4b2b/The_Crown_Estate_Integrated_Annual_Report_and_Accounts_2025_to_2026.pdf",
+   "source_sha256": "sha256:93b03cda0de48053e9a4d5f10f5613076ebe05ea4d7076027ce142775c8831fe",
+   "source_bytes": 7859490,
+   "source_pages": 160,
+   "approved_max_bytes": 10485760,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "crown-estate-group-annual-family",
+   "technical_family": "crown-estate-group-annual-family",
+   "license": "OGL-UK-3.0 subject to PDF-local and third-party exceptions",
+   "license_other_notices": "Exact publication notices and third-party exceptions are recorded in source_checks.json. No PDF, image or source text redistribution is proposed.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "label_scope_note": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit.",
+   "named_source": "The Crown Estate group"
   }
  ],
  "format": "requested-fields/1",
@@ -1136,7 +1375,7 @@
   }
  },
  "selection_complete": false,
- "selection_note": "Approved development pilots and inspected held-out candidates have source-based draft labels. Final eligibility and membership remain open. The first three inspected component candidates in source_checks.json are on hold and are not manifest members. Related source families stay grouped. No benchmark model output exists.",
+ "selection_note": "Approved development pilots and inspected held-out candidates have source-based draft labels. Final eligibility and membership remain open. Sources on hold in source_checks.json are excluded from the label-page manifest. Related source families stay grouped. No benchmark model output exists.",
  "status": "draft",
  "label_method": "Draft source-only agent annotations from original PDFs, checked against original page renders. Independent second checks cover absence and disputed fields. No benchmark model call has run."
 }
