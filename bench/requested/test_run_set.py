@@ -649,3 +649,215 @@ def test_final_artifact_tampering_cannot_replace_replayed_projection(tmp_path, a
         session.run("baseline", client)
     assert client.prompts == []
     assert json.loads(path.read_bytes())["synthetic_tamper"] is True
+
+
+@pytest.mark.parametrize("arm", ["baseline", "runner"])
+@pytest.mark.parametrize(
+    "context",
+    [
+        {"subject": "Synthetic device Alpha", "scope": "Main supply at reference condition"},
+        {"scope": "Consolidated group year ended 2031-03-31", "subject": "Synthetic group Beta"},
+    ],
+)
+def test_request_context_reaches_effective_schema_prompts_receipts_and_replay(
+    tmp_path, arm, context
+):
+    if arm == "runner" and importlib.util.find_spec("groundgate.run") is None:
+        pytest.skip("runner integration pending")
+    fields = {
+        "amount": {
+            "type": "number",
+            "description": "Preserve this field description.",
+            "aliases": ["Amount", "Measured amount"],
+            "multiple": True,
+        },
+        "missing": {"type": "number"},
+        "unclear": {"type": "number"},
+    }
+
+    def change(manifest, labels, config):
+        manifest["documents"][0].update(
+            request_context=context,
+            named_source="secret-named-source",
+            label_scope_note="secret-label-scope",
+        )
+
+    session, paths = fixture(tmp_path, fields=fields, settings={"targeted": False}, mutate=change)
+    original = copy.deepcopy(session.manifest)
+    expected = harness.gg.Schema.from_dict({"fields": fields}).to_dict()
+    for spec in expected["fields"].values():
+        original_description = spec.get("description")
+        suffix = "Request context: " + harness.encoded(context).decode()
+        spec["description"] = (
+            original_description + "\n\n" + suffix if original_description else suffix
+        )
+    effective = session.schema(session.documents["doc"])
+    assert effective == expected
+    assert session.manifest == original
+    # Schema callers cannot mutate the manifest/template by modifying the returned result.
+    effective["fields"]["amount"]["description"] = "caller edit"
+    assert session.schema(session.documents["doc"]) == expected
+    reply = (
+        envelope(candidate())
+        if arm == "baseline"
+        else runner_envelope(candidate(), missing=("missing", "unclear"))
+    )
+    client = Client(reply)
+    result = session.run(arm, client)
+    assert client.prompts
+    for prompt in client.prompts:
+        assert json.loads(prompt.rsplit("\n", 1)[-1])["schema"] == expected
+        for secret in (
+            "secret-named-source",
+            "secret-label-scope",
+            "987654321",
+            "secret-gold-annotation",
+            "secret-absence-annotation",
+            "secret-unclear-annotation",
+            '"status":"present"',
+            '"status":"absent"',
+            '"status":"unclear"',
+        ):
+            assert secret not in prompt
+    saved = json.loads(local(session, "result.json").read_bytes())
+    expected_sha = harness.digest(harness.encoded(expected))
+    assert saved["schema_sha256"] == expected_sha
+    receipts = (
+        [round_["receipt"] for round_ in saved["rounds"]]
+        if arm == "baseline"
+        else [saved["receipt"]]
+    )
+    receipt_sha = harness.gg.admit("Amount 5.", expected, [], session.policy).schema_sha256
+    assert receipts and all(r["schema_sha256"] == receipt_sha for r in receipts)
+    assert session.manifest == original
+    assert harness._json(paths["manifest"].read_bytes()) == original
+    assert session.run(arm) == result
+    no_repeat = Client()
+    assert session.run(arm, no_repeat) == result and no_repeat.prompts == []
+
+
+@pytest.mark.parametrize(
+    "context",
+    [
+        None,
+        [],
+        "not an object",
+        {},
+        {"subject": "device"},
+        {"scope": "year"},
+        {"subject": "device", "scope": "year", "note": "secret"},
+        {"subject": "", "scope": "year"},
+        {"subject": "device", "scope": " \n"},
+        {"subject": 12, "scope": "year"},
+        {"subject": "device", "scope": False},
+        {"subject": [], "scope": "year"},
+        {"subject": "device", "scope": {}},
+        {"subject": "s" * 4097, "scope": "year"},
+        {"subject": "device", "scope": "s" * 4097},
+    ],
+)
+def test_invalid_request_context_refuses_before_client_and_cache(tmp_path, context):
+    def change(manifest, labels, config):
+        manifest["documents"][0]["request_context"] = context
+
+    client = Client()
+    with pytest.raises(harness.CacheError, match="request_context"):
+        session, _ = fixture(tmp_path, mutate=change)
+        session.run("baseline", client)
+    assert client.prompts == []
+    assert not (tmp_path / "cache").exists()
+
+
+@pytest.mark.parametrize("member", ["subject", "scope"])
+def test_request_context_accepts_exact_character_bound_without_mutating_template(tmp_path, member):
+    context = {"subject": "device", "scope": "year"}
+    context[member] = "é" * 4096
+
+    def change(manifest, labels, config):
+        manifest["documents"][0]["request_context"] = context
+
+    session, _ = fixture(tmp_path, mutate=change)
+    assert (
+        context[member]
+        in session.schema(session.documents["doc"])["fields"]["amount"]["description"]
+    )
+    assert "description" not in session.manifest["schemas"]["kind"]["fields"]["amount"]
+
+
+@pytest.mark.parametrize("target", ["file", "manifest", "document"])
+def test_frozen_request_context_mutation_refuses_before_reservation(tmp_path, target):
+    def change(manifest, labels, config):
+        manifest["documents"][0]["request_context"] = {
+            "subject": "device Alpha",
+            "scope": "year2031",
+        }
+
+    session, paths = fixture(tmp_path, mutate=change)
+    if target == "file":
+        manifest = harness._json(paths["manifest"].read_bytes())
+        manifest["documents"][0]["request_context"]["subject"] = "device Beta"
+        paths["manifest"].write_bytes(harness.encoded(manifest))
+    elif target == "manifest":
+        session.manifest["documents"][0]["request_context"]["subject"] = "device Beta"
+    else:
+        session.documents["doc"]["request_context"]["scope"] = "year2032"
+    client = Client(envelope(candidate()))
+    with pytest.raises(harness.CacheError, match="changed"):
+        session.run("baseline", client)
+    assert client.prompts == []
+    assert not session.cache.exists()
+
+
+@pytest.mark.parametrize("arm", ["baseline", "runner"])
+def test_legacy_documents_do_not_read_label_notes_or_named_source_as_context(tmp_path, arm):
+    if arm == "runner" and importlib.util.find_spec("groundgate.run") is None:
+        pytest.skip("runner integration pending")
+
+    def change(manifest, labels, config):
+        manifest["documents"][0].update(
+            named_source="secret-device-from-annotation",
+            label_scope_note="secret-scope-from-annotation",
+        )
+
+    session, _ = fixture(tmp_path, mutate=change)
+    expected = harness.gg.Schema.from_dict({"fields": {"amount": {"type": "number"}}}).to_dict()
+    assert session.schema(session.documents["doc"]) == expected
+    client = Client(envelope(candidate()) if arm == "baseline" else runner_envelope(candidate()))
+    result = session.run(arm, client)
+    assert all(json.loads(p.rsplit("\n", 1)[-1])["schema"] == expected for p in client.prompts)
+    assert all("secret-" not in p for p in client.prompts)
+    assert session.run(arm) == result
+
+
+@pytest.mark.parametrize("count,description_size,context_size", [(200, 0, 1024), (32, 2000, 64)])
+def test_request_context_expansion_refuses_before_schema_admission_or_cache(
+    tmp_path, monkeypatch, count, description_size, context_size
+):
+    fields = {
+        f"field{i}": {"type": "number"}
+        | ({"description": "d" * description_size} if description_size else {})
+        for i in range(count)
+    }
+
+    def change(manifest, labels, config):
+        manifest["documents"][0]["request_context"] = {
+            "subject": "s" * context_size,
+            "scope": "c" * context_size,
+        }
+
+    original_admit = harness.gg.admit
+
+    def no_amplified_admission(text, schema, *args, **kwargs):
+        if any(
+            "Request context:" in spec.get("description", "") for spec in schema["fields"].values()
+        ):
+            pytest.fail("expanded descriptions reached schema admission before the size guard")
+        return original_admit(text, schema, *args, **kwargs)
+
+    monkeypatch.setattr(harness.gg, "admit", no_amplified_admission)
+    client = Client()
+    with pytest.raises(harness.CacheError, match=r"request_context.*budget"):
+        session, _ = fixture(tmp_path, fields=fields, mutate=change)
+        session.run("baseline", client)
+    assert client.prompts == []
+    assert not (tmp_path / "cache").exists()

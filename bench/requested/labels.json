@@ -1319,6 +1319,181 @@
           "second_check": false
         }
       ]
+    },
+    {
+      "id": "component-h08",
+      "fields": [
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-20",
+              "unit": "C"
+            }
+          ],
+          "page": 21,
+          "note": "Recommended Operating Conditions: Operating Temperature, Min -20 C. Generic module rating applies to selected M524; no operating-temperature mode split is stated in this table.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "70",
+              "unit": "C"
+            }
+          ],
+          "page": 21,
+          "note": "Recommended Operating Conditions: Operating Temperature, Max +70 C. This is an operating rating, not a storage or component-only limit.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 21,
+          "note": "Selected POWER CONSUMPTION (M524) table has Typ values for many operating/sleep modes, including 26.6 mA radio disabled, 66.1 mA BLE advertising and 164 mA cellular transmitting. Measurements at 3.6 V via battery input; footnote distinguishes Typ overall consumption from transient peaks. M404 table starting at foot of page 21/continuing page 22 is excluded.",
+          "reason": "No single requested reference operating mode is selected; voltage reference alone does not select a current row.",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 5,
+          "note": "Page 5 has separate VCC (cellular) and 3V3 (MCU/logic) supplies. VCC recommended 3.6-4.2 V; a non-battery regulator recommendation is 3.7-4.2 V, while 3V3 is nominal 3.3 V with drop/ripple requirements, not a stated endpoint pair. The page 21 current test says 3.6 V via battery input, but does not turn the unqualified module supply request into a single explicit rail/regulator case. Do not derive 3V3 endpoints or choose VCC by position.",
+          "reason": "Supply rail and battery versus regulator condition are not uniquely determined by the fixed request.",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 5,
+          "note": "Page 5 has separate VCC (cellular) and 3V3 (MCU/logic) supplies. VCC recommended 3.6-4.2 V; a non-battery regulator recommendation is 3.7-4.2 V, while 3V3 is nominal 3.3 V with drop/ripple requirements, not a stated endpoint pair. The page 21 current test says 3.6 V via battery input, but does not turn the unqualified module supply request into a single explicit rail/regulator case. Do not derive 3V3 endpoints or choose VCC by position.",
+          "reason": "Supply rail and condition are not uniquely determined; no aggregate or nominal-derived endpoint is justified.",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "component-h09",
+      "fields": [
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 38,
+          "note": "Page 38 Recommended Operating Conditions states Normal operating temperature -20 to +65 C and Extended operating temperature -40 to +85 C. Footnote 1: fully functional and meets 3GPP specifications. Footnote 2: fully functional but RF performance may be affected outside the normal range. Both are operating, not storage; the fixed request does not say whether normal RF conformance or extended functional operation is intended. The normal/extended condition choice remains unresolved. Antenna temperatures on pages 10-13 are not module ratings.",
+          "reason": "Normal and extended ranges carry different RF-performance conditions; neither is silently chosen.",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 38,
+          "note": "Page 38 Recommended Operating Conditions states Normal operating temperature -20 to +65 C and Extended operating temperature -40 to +85 C. Footnote 1: fully functional and meets 3GPP specifications. Footnote 2: fully functional but RF performance may be affected outside the normal range. Both are operating, not storage; the fixed request does not say whether normal RF conformance or extended functional operation is intended. The normal/extended condition choice remains unresolved. Antenna temperatures on pages 10-13 are not module ratings.",
+          "reason": "Normal and extended ranges carry different RF-performance conditions; neither is silently chosen.",
+          "second_check": false
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 39,
+          "note": "Page 39 explicitly says the values are from B404/B402 and actual B404X R510 cellular operating current may vary but should be similar. It then lists multiple active and sleep modes. Those source-model values are not treated as exact interchangeable B404X ratings.",
+          "reason": "The selected B404X has unresolved model applicability and operating-mode choice; approximate similarity is insufficient for one exact typical current.",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 38,
+          "note": "Pages 8/9 and the recommended table on page 38 state distinct VCC 3.6-4.2 V, 3V3 3.0-3.6 V and VUSB 4.35-5.5 V inputs. Page 9 recommends separate VCC/3V3 regulators. The fixed unqualified supply field does not select a rail; absolute maximum rows above the recommended table are excluded.",
+          "reason": "Multiple independent supply rails have different minimums; request does not select one.",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 38,
+          "note": "Pages 8/9 and the recommended table on page 38 state distinct VCC 3.6-4.2 V, 3V3 3.0-3.6 V and VUSB 4.35-5.5 V inputs. Page 9 recommends separate VCC/3V3 regulators. The fixed unqualified supply field does not select a rail; absolute maximum rows above the recommended table are excluded.",
+          "reason": "Multiple independent supply rails have different maximums; request does not select one.",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "component-h10",
+      "fields": [
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 20,
+          "note": "Page 20 Recommended Operating Conditions states Normal operating temperature -20 to +75 C and Extended operating temperature -40 to +85 C. Footnote 1: fully functional and meets 3GPP specifications. Footnote 2: module fully functional but RF performance may be affected outside normal range. The unqualified fixed request does not select normal RF conformance versus extended functional operation. Storage/stress ratings on page 19 are not used.",
+          "reason": "Normal and extended ranges have different performance conditions; fixed request does not resolve which qualified limit is intended.",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 20,
+          "note": "Page 20 Recommended Operating Conditions states Normal operating temperature -20 to +75 C and Extended operating temperature -40 to +85 C. Footnote 1: fully functional and meets 3GPP specifications. Footnote 2: module fully functional but RF performance may be affected outside normal range. The unqualified fixed request does not select normal RF conformance versus extended functional operation. Storage/stress ratings on page 19 are not used.",
+          "reason": "Normal and extended ranges have different performance conditions; fixed request does not resolve which qualified limit is intended.",
+          "second_check": false
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 21,
+          "note": "POWER CONSUMPTION (T404/T402), applicable shared table for named T404, gives many Typ values by active/sleep mode, with 3.6 V battery test reference. Page 8 broad typical consumption around 180 mA at 5 VDC is not a named T404 operating mode and differs in supply condition. T524/T523 table page 22 and subcomponent current tables are excluded.",
+          "reason": "Named variant resolves table family but not operating mode/reference case; cannot select one Typ value among the applicable conditions.",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 20,
+          "note": "Pages 7/8 and recommended table page 20 describe alternate VIN, USB and LiPo supply inputs. VIN 3.9-17 V; USB 4.35-5.5 V; LiPo table 3.6-4.3 V, whereas external DC on the LiPo pin in page 7 prose says 3.6-4.4 V. The page 21 battery current-test reference does not explicitly resolve the generic voltage request across these alternate inputs; the battery upper endpoint also conflicts between prose/table. 3V3 is an output, not a supply input. No unstated endpoint is computed.",
+          "reason": "Generic request does not uniquely select a supply input and condition.",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 20,
+          "note": "Pages 7/8 and recommended table page 20 describe alternate VIN, USB and LiPo supply inputs. VIN 3.9-17 V; USB 4.35-5.5 V; LiPo table 3.6-4.3 V, whereas external DC on the LiPo pin in page 7 prose says 3.6-4.4 V. The page 21 battery current-test reference does not explicitly resolve the generic voltage request across these alternate inputs; the battery upper endpoint also conflicts between prose/table. 3V3 is an output, not a supply input. No unstated endpoint is computed.",
+          "reason": "Input rail is unresolved and LiPo upper endpoint additionally differs between source prose and recommended table.",
+          "second_check": false
+        }
+      ]
     }
   ],
   "status": "draft"

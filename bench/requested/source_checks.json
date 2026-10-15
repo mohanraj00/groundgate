@@ -1162,6 +1162,172 @@
       "license": "OGL-UK-3.0 subject to PDF-local and third-party exceptions",
       "license_notice_page": 4,
       "source_retention": "original PDF in local work storage; not committed"
+    },
+    {
+      "id": "component-h08",
+      "source": "https://docs.particle.io/assets/pdfs/datasheets/msom-datasheet.pdf",
+      "catalog_source": "https://docs.particle.io/reference/datasheets/m-series/msom-datasheet/",
+      "approved_max_bytes": 2097152,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 1035444,
+      "source_sha256": "sha256:ee3846f0a2e8b2f38d658ccc3284cfcf510ba84374a1653d8652a3caff36a58b",
+      "source_pages": 45,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "particle-connected-module-documentation",
+      "technical_family": "particle-m-som-m404-m524-family",
+      "identity": {
+        "named_device": "M524",
+        "title": "M-SoM datasheet",
+        "physical_pages": [
+          3,
+          4,
+          43,
+          45
+        ],
+        "note": "Page 3 says this datasheet covers M404 and M524; selected M524 uses EG91-EX. Page 4 identifies M.2 production SoM with MCU, cellular modem, flash and radio interfaces, not a development board. Page 43 selected M524MEA/M524MTY are packaging SKUs. Page 45 latest revision 023 dated 2026-09-29. Cover illustration is not used to substitute M404 ratings."
+      },
+      "variant_selection_basis": "First listed power-condition variant in catalog headings before PDF download; M404 is not selected.",
+      "text_layer": {
+        "english_digital_text": true,
+        "note": "Main document is digital English text; Canadian regulatory sections also include French. Image schematics/drawings are present and are not mistaken for source text absence.",
+        "physical_pages": 45
+      },
+      "license": "CC-BY-SA-3.0 first-party documentation grant; attribution and applicable ShareAlike conditions retained",
+      "license_source": "https://github.com/particle-iot/docs/blob/master/LICENSE.txt",
+      "license_provenance": "Exact first-party repository PDF artifacts and source/generator paths are recorded in the catalog provenance. No deployed-byte versus repository-revision attestation is claimed.",
+      "pdf_local_notices": {
+        "document_reuse_notice_found": false,
+        "observation": "No copyright/CC/reproduction/redistribution/permission notice found by two complete-PDF text representations and original rendered identity/rating/low-text/certification pages checked. No affirmative document-use grant is printed in these PDFs. Licence-exempt or licensed-transmitter words concern radio operation, not document licensing. This is an observation, not permission inferred from silence.",
+        "hardware_notice_pages": {
+          "handling": [
+            29
+          ],
+          "fcc": [
+            31,
+            32,
+            33
+          ],
+          "ised": [
+            34,
+            35,
+            36
+          ],
+          "ce_uk": [
+            37
+          ],
+          "certificate_links": [
+            38
+          ]
+        },
+        "coverage_limit": "Complete PDF text searches and targeted original-page visual checks, not a claim that every small schematic label on every page was read."
+      },
+      "third_party_exclusion": "No linked third-party certification/test reports are downloaded or included by assumption. No PDF, source text or rendered pages are published."
+    },
+    {
+      "id": "component-h09",
+      "source": "https://docs.particle.io/assets/pdfs/datasheets/b404x-datasheet.pdf",
+      "catalog_source": "https://docs.particle.io/reference/datasheets/b-series/b404x-datasheet/",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 1558811,
+      "source_sha256": "sha256:e3f672ee985f18c87a2c9771a0948e4cd6dd47787ffe83da4b288979290231e8",
+      "source_pages": 57,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "particle-connected-module-documentation",
+      "technical_family": "particle-b-series-cellular-som-family",
+      "identity": {
+        "named_device": "B404X",
+        "title": "B-Series B404X datasheet",
+        "physical_pages": [
+          5,
+          6,
+          56,
+          57
+        ],
+        "note": "Page 6 describes an M.2 System-on-a-Module designed for integration into a host circuit board, with selected B404X SARA-R510S-01B modem. Page 5 explicitly warns illustration is B404 with similar exterior dimensions, not B404X values. Page 56 B404XMEA/B404XMTY are selected-device packaging SKUs. Latest page 57 revision 039, 2025-09-03."
+      },
+      "variant_selection_basis": "Exact ordering variant named by the source catalog before PDF download.",
+      "text_layer": {
+        "english_digital_text": true,
+        "note": "Main document is digital English text; Canadian regulatory sections also include French. Image schematics/drawings are present and are not mistaken for source text absence.",
+        "physical_pages": 57
+      },
+      "license": "CC-BY-SA-3.0 first-party documentation grant; attribution and applicable ShareAlike conditions retained",
+      "license_source": "https://github.com/particle-iot/docs/blob/master/LICENSE.txt",
+      "license_provenance": "Exact first-party repository PDF artifacts and source/generator paths are recorded in the catalog provenance. No deployed-byte versus repository-revision attestation is claimed.",
+      "pdf_local_notices": {
+        "document_reuse_notice_found": false,
+        "observation": "No copyright/CC/reproduction/redistribution/permission notice found by two complete-PDF text representations and original rendered identity/rating/low-text/certification pages checked. No affirmative document-use grant is printed in these PDFs. Licence-exempt or licensed-transmitter words concern radio operation, not document licensing. This is an observation, not permission inferred from silence.",
+        "hardware_notice_pages": {
+          "handling": [
+            47,
+            50
+          ],
+          "fcc_ised": [
+            52,
+            53
+          ],
+          "certificate_links": [
+            54
+          ]
+        },
+        "coverage_limit": "Complete PDF text searches and targeted original-page visual checks, not a claim that every small schematic label on every page was read."
+      },
+      "third_party_exclusion": "No linked third-party certification/test reports are downloaded or included by assumption. No PDF, source text or rendered pages are published."
+    },
+    {
+      "id": "component-h10",
+      "source": "https://docs.particle.io/assets/pdfs/datasheets/tracker-som-datasheet.pdf",
+      "catalog_source": "https://docs.particle.io/reference/datasheets/tracker/tracker-som-datasheet/",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 1797246,
+      "source_sha256": "sha256:eee94026e2566656a0038f4adfbd89bcbf30985ad2d084d520bbce521a2159ca",
+      "source_pages": 49,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "particle-connected-module-documentation",
+      "technical_family": "particle-tracker-som-family",
+      "identity": {
+        "named_device": "T404",
+        "title": "Tracker SoM datasheet",
+        "physical_pages": [
+          3,
+          4,
+          5,
+          46,
+          49
+        ],
+        "note": "Pages 4/5 explicitly describe a castellated System-on-a-Module for reflow onto a custom baseboard; evaluation/carrier-board availability does not make the named object a board. Selected T404 has BG96-MC modem. Page 46 distinguishes T404 packaging SKUs from other variants. Latest page 49 revision 030, 2024-05-20."
+      },
+      "variant_selection_basis": "First listed variant in the catalog T404/T402 power heading before PDF download; other Tracker variants are not selected.",
+      "text_layer": {
+        "english_digital_text": true,
+        "note": "Main document is digital English text; Canadian regulatory sections also include French. Image schematics/drawings are present and are not mistaken for source text absence.",
+        "physical_pages": 49
+      },
+      "license": "CC-BY-SA-3.0 first-party documentation grant; attribution and applicable ShareAlike conditions retained",
+      "license_source": "https://github.com/particle-iot/docs/blob/master/LICENSE.txt",
+      "license_provenance": "Exact first-party repository PDF artifacts and source/generator paths are recorded in the catalog provenance. No deployed-byte versus repository-revision attestation is claimed.",
+      "pdf_local_notices": {
+        "document_reuse_notice_found": false,
+        "observation": "No copyright/CC/reproduction/redistribution/permission notice found by two complete-PDF text representations and original rendered identity/rating/low-text/certification pages checked. No affirmative document-use grant is printed in these PDFs. Licence-exempt or licensed-transmitter words concern radio operation, not document licensing. This is an observation, not permission inferred from silence.",
+        "hardware_notice_pages": {
+          "assembly_handling": [
+            39,
+            47
+          ],
+          "certification_radio": [
+            40,
+            41,
+            42
+          ]
+        },
+        "coverage_limit": "Complete PDF text searches and targeted original-page visual checks, not a claim that every small schematic label on every page was read."
+      },
+      "third_party_exclusion": "No linked third-party certification/test reports are downloaded or included by assumption. No PDF, source text or rendered pages are published."
     }
   ]
 }

@@ -28,6 +28,7 @@ _VERSION = "requested-run/1"
 _MAX_FILE = 128 * 1024 * 1024
 _MAX_TEXT = 16 * 1024 * 1024
 _MAX_REPLY = 8 * 1024 * 1024
+_MAX_REQUEST_CONTEXT = 4096
 _ID = re.compile(r"[a-z][a-z0-9_-]{0,79}\Z")
 _ROLES = {"value", "sign", "scale", "unit", "field", "key"}
 # Verbatim instruction string from the released own-model guide. The wrapper, bounded chunk
@@ -522,6 +523,8 @@ class FrozenSet:
             schema = self.schema(doc)
             gg.admit(self.texts[ident], schema, [], self.policy)
             self.documents[ident] = copy.deepcopy(doc)
+        self._manifest_state_sha256 = digest(encoded(self.manifest))
+        self._documents_state_sha256 = digest(encoded(self.documents))
         # Commit, reader and transport labels are caller declarations. Actual imported code,
         # configuration and source/text bytes are independently pinned and checked here.
         self.header = {
@@ -541,6 +544,12 @@ class FrozenSet:
         self.binding = digest(encoded(self.header))
 
     def schema(self, doc: Json) -> Json:
+        """Return a fresh schema with only explicit pre-label request context appended.
+
+        Each context member is bounded to 4096 Unicode characters. Combined serialized
+        description content must fit max_prompt_chars before context is repeated. Canonical
+        JSON distinguishes subject and scope without reading label or source-note members.
+        """
         template = self.manifest["schemas"][doc["kind"]]
         schema = doc.get("schema", template)
         if set(schema["fields"]) != set(template["fields"]) or any(
@@ -549,9 +558,51 @@ class FrozenSet:
             for name, field in schema["fields"].items()
         ):
             raise CacheError("document schema changes fixed requests or types")
-        return gg.Schema.from_dict(schema).to_dict()
+        effective = gg.Schema.from_dict(schema).to_dict()
+        if "request_context" in doc:
+            context = doc["request_context"]
+            if (
+                not isinstance(context, dict)
+                or set(context) != {"subject", "scope"}
+                or any(
+                    not isinstance(value, str)
+                    or not value.strip()
+                    or len(value) > _MAX_REQUEST_CONTEXT
+                    for value in context.values()
+                )
+            ):
+                raise CacheError(
+                    "request_context requires only nonblank subject and scope strings "
+                    "of at most 4096 characters each"
+                )
+            suffix = "Request context: " + encoded(context).decode()
+            # Count JSON string content before allocating a copy of the suffix per field.
+            # The cheap length check also avoids serializing a huge existing description.
+            remaining = self.settings["max_prompt_chars"]
+            suffix_chars = len(gg.jcs(suffix)) - 2
+            for field in effective["fields"].values():
+                description = field.get("description")
+                separator_chars = 4 if description is not None else 0  # Two escaped newlines.
+                if len(description or "") + separator_chars + suffix_chars > remaining:
+                    raise CacheError("request_context descriptions exceed frozen prompt budget")
+                remaining -= suffix_chars + separator_chars
+                if description is not None:
+                    remaining -= len(gg.jcs(description)) - 2
+                if remaining < 0:
+                    raise CacheError("request_context descriptions exceed frozen prompt budget")
+            for field in effective["fields"].values():
+                description = field.get("description")
+                field["description"] = (
+                    description + "\n\n" + suffix if description is not None else suffix
+                )
+        return effective
 
     def check_inputs(self) -> None:
+        if (
+            digest(encoded(self.manifest)) != self._manifest_state_sha256
+            or digest(encoded(self.documents)) != self._documents_state_sha256
+        ):
+            raise CacheError("frozen manifest or document metadata changed in memory")
         if any(digest(_read(path)) != sha for path, sha in self.paths.items()):
             raise CacheError("frozen source, text, label, manifest or configuration changed")
         if source_code_digest() != self.code_sha256:

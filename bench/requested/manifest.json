@@ -13,7 +13,11 @@
    "source_pages": 148,
    "source_retention": "original PDF in local work storage; not committed",
    "source_sha256": "sha256:9651a99f3cd27426037bdbe5d56e35185c68ded698a423dc89c378797abe3e15",
-   "split": "development"
+   "split": "development",
+   "request_context": {
+    "subject": "The consolidated group in this source",
+    "scope": "Latest full fiscal year, consolidated group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+   }
   },
   {
    "approved_max_bytes": 8388608,
@@ -105,7 +109,11 @@
      }
     }
    },
-   "label_scope_note": "The thermal table states chip case temperature TC. The fixed operating-temperature request is not ambient-only. Supply rail and software mode are not specified; unresolved power fields stay unclear."
+   "label_scope_note": "The thermal table states chip case temperature TC. The fixed operating-temperature request is not ambient-only. Supply rail and software mode are not specified; unresolved power fields stay unclear.",
+   "request_context": {
+    "subject": "RP2040",
+    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+   }
   },
   {
    "approved_max_bytes": 1048576,
@@ -119,7 +127,11 @@
    "source_pages": 10,
    "source_retention": "original PDF in local work storage; not committed",
    "source_sha256": "sha256:a149efc66db135e06bad1cd74f0be030960ec6f80032fb6d654e7b4281ac753b",
-   "split": "development"
+   "split": "development",
+   "request_context": {
+    "subject": "UMP Classic non-Medicare plan, 2026",
+    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   }
   },
   {
    "approved_max_bytes": 1048576,
@@ -186,7 +198,11 @@
    "source_pages": 6,
    "source_retention": "original PDF in local work storage; not committed",
    "source_sha256": "sha256:44ebea795990acfda6c10f1c4deecc52714fe19d7b44e313636c9d905d9d21e5",
-   "split": "heldout"
+   "split": "heldout",
+   "request_context": {
+    "subject": "The named plan in this source",
+    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   }
   },
   {
    "approved_max_bytes": 1048576,
@@ -253,7 +269,11 @@
    "source_pages": 7,
    "source_retention": "original PDF in local work storage; not committed",
    "source_sha256": "sha256:d031ee5dc19cba3897f95ada7dc6d6fd73c89facb0e0c2a7f06fca7be1d8b2cb",
-   "split": "heldout"
+   "split": "heldout",
+   "request_context": {
+    "subject": "The named plan in this source",
+    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   }
   },
   {
    "approved_max_bytes": 8388608,
@@ -322,7 +342,11 @@
    "source_pages": 285,
    "source_retention": "original PDF in local work storage; not committed",
    "source_sha256": "sha256:dcdc67ff84977e2beeb6b7a8113b6862fae1880838c613eceac42ba4b605d9d7",
-   "split": "heldout"
+   "split": "heldout",
+   "request_context": {
+    "subject": "The consolidated group in this source",
+    "scope": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+   }
   },
   {
    "approved_max_bytes": 25165824,
@@ -391,7 +415,11 @@
    "source_pages": 474,
    "source_retention": "original PDF in local work storage; not committed",
    "source_sha256": "sha256:eab508829aacb9c2d78a9d0ee8e9e1f6266b474bdd726c4f23ddf6fc3e6c1f40",
-   "split": "heldout"
+   "split": "heldout",
+   "request_context": {
+    "subject": "The consolidated group in this source",
+    "scope": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+   }
   },
   {
    "id": "component-h04",
@@ -485,7 +513,11 @@
     }
    },
    "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
-   "named_source": "SCD30"
+   "named_source": "SCD30",
+   "request_context": {
+    "subject": "SCD30",
+    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+   }
   },
   {
    "id": "component-h05",
@@ -579,7 +611,11 @@
     }
    },
    "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
-   "named_source": "SHT31-DIS-B"
+   "named_source": "SHT31-DIS-B",
+   "request_context": {
+    "subject": "SHT31-DIS-B",
+    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+   }
   },
   {
    "id": "component-h06",
@@ -673,7 +709,11 @@
     }
    },
    "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
-   "named_source": "SDP31"
+   "named_source": "SDP31",
+   "request_context": {
+    "subject": "SDP31",
+    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+   }
   },
   {
    "id": "sbc-h04",
@@ -742,7 +782,11 @@
     }
    },
    "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
-   "named_source": "MIT BCBS PPO+ 2026"
+   "named_source": "MIT BCBS PPO+ 2026",
+   "request_context": {
+    "subject": "MIT BCBS PPO+ 2026",
+    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   }
   },
   {
    "id": "sbc-h05",
@@ -811,7 +855,11 @@
     }
    },
    "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
-   "named_source": "MIT BCBS HDHP 2026"
+   "named_source": "MIT BCBS HDHP 2026",
+   "request_context": {
+    "subject": "MIT BCBS HDHP 2026",
+    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   }
   },
   {
    "id": "sbc-h06",
@@ -880,7 +928,11 @@
     }
    },
    "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
-   "named_source": "Duke Select 2026"
+   "named_source": "Duke Select 2026",
+   "request_context": {
+    "subject": "Duke Select 2026",
+    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   }
   },
   {
    "id": "annual-h04",
@@ -951,7 +1003,11 @@
     }
    },
    "label_scope_note": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit.",
-   "named_source": "Latest consolidated group annual report"
+   "named_source": "Latest consolidated group annual report",
+   "request_context": {
+    "subject": "The consolidated group in this source",
+    "scope": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+   }
   },
   {
    "id": "component-h07",
@@ -1046,7 +1102,11 @@
     }
    },
    "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
-   "named_source": "P2"
+   "named_source": "P2",
+   "request_context": {
+    "subject": "P2",
+    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+   }
   },
   {
    "id": "annual-h10",
@@ -1118,7 +1178,11 @@
     }
    },
    "label_scope_note": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit.",
-   "named_source": "Nuclear Decommissioning Authority group"
+   "named_source": "Nuclear Decommissioning Authority group",
+   "request_context": {
+    "subject": "Nuclear Decommissioning Authority group",
+    "scope": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+   }
   },
   {
    "id": "annual-h11",
@@ -1190,7 +1254,311 @@
     }
    },
    "label_scope_note": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit.",
-   "named_source": "The Crown Estate group"
+   "named_source": "The Crown Estate group",
+   "request_context": {
+    "subject": "The Crown Estate group",
+    "scope": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+   }
+  },
+  {
+   "id": "component-h08",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://docs.particle.io/assets/pdfs/datasheets/msom-datasheet.pdf",
+   "source_sha256": "sha256:ee3846f0a2e8b2f38d658ccc3284cfcf510ba84374a1653d8652a3caff36a58b",
+   "source_bytes": 1035444,
+   "source_pages": 45,
+   "approved_max_bytes": 2097152,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "particle-connected-module-documentation",
+   "technical_family": "particle-m-som-m404-m524-family",
+   "license": "CC-BY-SA-3.0 first-party documentation grant; attribution and applicable ShareAlike conditions retained",
+   "license_other_notices": "Documentation grant and PDF-local notices are recorded separately in source_checks.json. No third-party certificate reuse grant is inferred. No PDF, image or source text redistribution is proposed.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
+   "named_source": "M524",
+   "variant_selection_basis": "First listed power-condition variant in catalog headings before PDF download; M404 is not selected.",
+   "request_context": {
+    "subject": "M524",
+    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+   }
+  },
+  {
+   "id": "component-h09",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://docs.particle.io/assets/pdfs/datasheets/b404x-datasheet.pdf",
+   "source_sha256": "sha256:e3f672ee985f18c87a2c9771a0948e4cd6dd47787ffe83da4b288979290231e8",
+   "source_bytes": 1558811,
+   "source_pages": 57,
+   "approved_max_bytes": 4194304,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "particle-connected-module-documentation",
+   "technical_family": "particle-b-series-cellular-som-family",
+   "license": "CC-BY-SA-3.0 first-party documentation grant; attribution and applicable ShareAlike conditions retained",
+   "license_other_notices": "Documentation grant and PDF-local notices are recorded separately in source_checks.json. No third-party certificate reuse grant is inferred. No PDF, image or source text redistribution is proposed.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
+   "named_source": "B404X",
+   "variant_selection_basis": "Exact ordering variant named by the source catalog before PDF download.",
+   "request_context": {
+    "subject": "B404X",
+    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+   }
+  },
+  {
+   "id": "component-h10",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://docs.particle.io/assets/pdfs/datasheets/tracker-som-datasheet.pdf",
+   "source_sha256": "sha256:eee94026e2566656a0038f4adfbd89bcbf30985ad2d084d520bbce521a2159ca",
+   "source_bytes": 1797246,
+   "source_pages": 49,
+   "approved_max_bytes": 4194304,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "particle-connected-module-documentation",
+   "technical_family": "particle-tracker-som-family",
+   "license": "CC-BY-SA-3.0 first-party documentation grant; attribution and applicable ShareAlike conditions retained",
+   "license_other_notices": "Documentation grant and PDF-local notices are recorded separately in source_checks.json. No third-party certificate reuse grant is inferred. No PDF, image or source text redistribution is proposed.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
+   "named_source": "T404",
+   "variant_selection_basis": "First listed variant in the catalog T404/T402 power heading before PDF download; other Tracker variants are not selected.",
+   "request_context": {
+    "subject": "T404",
+    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+   }
   }
  ],
  "format": "requested-fields/1",

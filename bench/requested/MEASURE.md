@@ -20,6 +20,12 @@ and the new runner on the held-out split with the same request, policy and model
 runner and reader commits are fixed before those runs. I keep the prompts, raw replies, source
 text hashes, candidates and receipts. I never use held-out output to tune a rule or prompt.
 
+The manifest records predeclared selected subjects and scopes as explicit request context. Both
+arms receive that same context in field descriptions in the effective schema. Raw field names,
+types, aliases, units and multiplicity stay fixed. Labels and annotation notes never supply
+prompt context. The cache records the effective schema digest and refuses frozen metadata
+changes. This is part of the declared shared-request adapter, alongside shared chunks.
+
 I rescore each final run with `bench/score.py --requested --set bench/requested` and render its
 `results.json` with `bench/report.py`. I report distinct admitted error rate, value and document
 upper bounds, right-value reviews, silent misses, miss rate and escapes for every field and kind.
