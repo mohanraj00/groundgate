@@ -234,7 +234,9 @@ def test_http_body_limits_unknown_ids_and_no_arbitrary_files(server: LabelServer
     auth = {"Content-Type": "application/json", "X-Label-Token": server.token}
     body = json.dumps({"id": "../../escape", "fields": []}).encode()
     assert request(server, "POST", "/api/save", body, **auth)[0] == 400
-    assert request(server, "POST", "/api/save", b"x" * (MAX_BODY + 1), **auth)[0] == 413
+    # Reject the declared size before upload, without racing a large send against server close.
+    oversized = auth | {"Content-Length": str(MAX_BODY + 1)}
+    assert request(server, "POST", "/api/save", **oversized)[0] == 413
     assert request(server, "POST", "/api/save", b'{"id":NaN}', **auth)[0] == 400
     assert request(server, "GET", "/pdf/../manifest")[0] == 400
     assert request(server, "GET", "/labels.json")[0] == 404

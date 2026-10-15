@@ -1,0 +1,788 @@
+"""Frozen requested-set orchestration with a caller-supplied transport.
+
+This module never selects a provider or reads labels for extraction. Callers must supply
+explicit frozen-file digests and an external local source/cache directory. Complete local
+caches contain source quotes. Only the returned scoring projection is suitable for export.
+"""
+
+from __future__ import annotations
+
+import copy
+import hashlib
+import json
+import os
+import re
+import tempfile
+import unicodedata
+from collections import defaultdict
+from collections.abc import Callable
+from pathlib import Path
+from typing import Any
+
+import groundgate as gg
+
+from .metrics import measure
+
+Json = dict[str, Any]
+_VERSION = "requested-run/1"
+_MAX_FILE = 128 * 1024 * 1024
+_MAX_TEXT = 16 * 1024 * 1024
+_MAX_REPLY = 8 * 1024 * 1024
+_ID = re.compile(r"[a-z][a-z0-9_-]{0,79}\Z")
+_ROLES = {"value", "sign", "scale", "unit", "field", "key"}
+# Verbatim instruction string from the released own-model guide. The wrapper, bounded chunk
+# search_region and current core are declared adaptations, not the entire released pipeline.
+BASELINE_INSTRUCTIONS = """\
+Extract the fields from the text. Give "value" as the fact is, as a plain number without $,
+commas or a unit, with its sign and scale: a number in brackets, or a loss, is negative, and a
+table "in thousands" multiplies its numbers by 1000.
+
+Give the evidence as quotes, each copied verbatim from the text:
+- role "value": the number as written, such as "(12,040)";
+- role "sign": the brackets or the loss word that make the value negative, when the value quote
+  does not hold them;
+- role "scale": the words that scale the number, such as "(in thousands)";
+- role "unit": the unit or $ sign when it is not next to the number;
+- role "field": the words that name the field, such as a table row label;
+- role "key": the words that name the key, such as a table column heading.
+Leave out each role that the value does not need.
+
+If no text states a value, but you know it, give a "knowledge" item that states the value and
+its basis, or an "external" item with the URL of a page that states it, the date that you read
+the page, and a quote from it.
+"""
+
+
+class CacheError(ValueError):
+    """A frozen input or immutable cache no longer matches its expected bytes."""
+
+
+class CachedTransportError(RuntimeError):
+    """A recorded transport failure; the original exception text is never retained."""
+
+
+def digest(raw: bytes) -> str:
+    return "sha256:" + hashlib.sha256(raw).hexdigest()
+
+
+def encoded(value: Any) -> bytes:
+    return gg.jcs(value).encode("utf-8")
+
+
+def _json(raw: bytes) -> Json:
+    def pairs(items: list[tuple[str, Any]]) -> Json:
+        result: Json = {}
+        for key, value in items:
+            if key in result:
+                raise CacheError("duplicate JSON member")
+            result[key] = value
+        return result
+
+    def constant(value: str) -> Any:
+        raise CacheError("non-finite JSON number")
+
+    value = json.loads(raw, object_pairs_hook=pairs, parse_constant=constant)
+    if not isinstance(value, dict):
+        raise CacheError("expected a JSON object")
+    encoded(value)  # Reject unsafe numbers and invalid Unicode before any call.
+    return value
+
+
+def _read(path: Path, cap: int = _MAX_FILE) -> bytes:
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > cap:
+        raise CacheError("missing, linked or oversized input: " + path.name)
+    with path.open("rb") as stream:
+        raw = stream.read(cap + 1)
+    if len(raw) > cap:
+        raise CacheError("input grew beyond its size limit")
+    return raw
+
+
+def source_code_digest() -> str:
+    """Hash the actual imported package code/data and this harness, including dirty edits."""
+    root = Path(gg.__file__).parent
+    files = {
+        str(path.relative_to(root)): digest(_read(path))
+        for path in sorted(root.rglob("*"))
+        if path.suffix in {".py", ".json"}
+    }
+    files["requested/run_set.py"] = digest(_read(Path(__file__)))
+    files["requested/metrics.py"] = digest(_read(Path(__file__).with_name("metrics.py")))
+    return digest(encoded(files))
+
+
+def _validate_blind_labels(manifest: Json, labels: Json) -> None:
+    """Validate the entire pinned seal, then let the caller discard its parsed gold labels."""
+    try:
+        documents = manifest["documents"]
+        # measure validates document membership, every requested field/key, values, units and
+        # schema compatibility before filtering a split. Validate each populated split as well.
+        for split in {doc["split"] for doc in documents}:
+            measure(manifest, labels, {"documents": []}, split)
+        by_id = {doc["id"]: doc for doc in documents}
+        for gold in labels["documents"]:
+            document = by_id[gold["id"]]
+            page_count = document.get("source_pages")
+            if page_count is not None and (type(page_count) is not int or page_count < 1):
+                raise ValueError("invalid source page count")
+            for slot in gold["fields"]:
+                page = slot.get("page")
+                if page is not None and (
+                    type(page) is not int
+                    or page < 1
+                    or (page_count is not None and page > page_count)
+                ):
+                    raise ValueError("invalid label evidence page")
+                if slot["status"] == "present" and page is None:
+                    raise ValueError("present labels need an original PDF page")
+                if slot["status"] == "unclear" and (
+                    not isinstance(slot.get("reason"), str) or not slot["reason"].strip()
+                ):
+                    raise ValueError("unclear labels need a reason")
+                if slot["status"] == "absent" and slot.get("second_check") is not True:
+                    raise ValueError("absent labels need a second blind check")
+    except (ValueError, KeyError, TypeError, AttributeError) as exc:
+        raise CacheError(
+            "blind labels must completely and validly cover the frozen manifest"
+        ) from exc
+
+
+def _unlinked(path: Path) -> Path:
+    if any(parent.is_symlink() for parent in (path, *path.parents)):
+        raise CacheError("symlink paths are not supported")
+    return path.resolve()
+
+
+def _external(path: Path, repository: Path) -> Path:
+    path = _unlinked(path.absolute())
+    if path == repository or repository in path.parents:
+        raise CacheError("source and cache storage must stay outside the repository")
+    return path
+
+
+def _publish(path: Path, value: Json) -> None:
+    """Publish complete bytes atomically without replacing an existing name."""
+    raw = encoded(value)
+    _unlinked(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(prefix=".publish-", dir=path.parent)
+    try:
+        with os.fdopen(fd, "wb") as stream:
+            stream.write(raw)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.link(temporary, path)
+    finally:
+        Path(temporary).unlink(missing_ok=True)
+
+
+def _same_or_publish(path: Path, value: Json, replay_only: bool = False) -> None:
+    _unlinked(path)
+    if path.exists():
+        if _read(path) != encoded(value):
+            raise CacheError("immutable cache differs: " + path.name)
+    elif replay_only:
+        raise CacheError("missing replay artifact: " + path.name)
+    else:
+        _publish(path, value)
+
+
+def _settings(raw: Any) -> Json:
+    if not isinstance(raw, dict) or set(raw) != {
+        "chunk_chars",
+        "overlap_chars",
+        "max_repair_rounds",
+        "targeted",
+        "search_context_chars",
+        "max_target_regions",
+        "max_calls",
+        "max_prompt_chars",
+        "max_reply_bytes",
+        "max_candidates_per_reply",
+        "max_total_candidates",
+        "max_admission_bytes",
+    }:
+        raise CacheError("freeze every runner setting explicitly")
+    for name, value in raw.items():
+        if name == "targeted":
+            if type(value) is not bool:
+                raise CacheError("targeted must be boolean")
+        elif type(value) is not int or value < (
+            0 if name in {"overlap_chars", "max_repair_rounds"} else 1
+        ):
+            raise CacheError("invalid runner setting")
+    if raw["overlap_chars"] >= raw["chunk_chars"]:
+        raise CacheError("overlap must be smaller than chunk size")
+    caps = {
+        "chunk_chars": _MAX_TEXT,
+        "max_repair_rounds": 16,
+        "search_context_chars": _MAX_TEXT,
+        "max_target_regions": 64,
+        "max_calls": 256,
+        "max_prompt_chars": 1024 * 1024,
+        "max_reply_bytes": 4 * 1024 * 1024,
+        "max_candidates_per_reply": 1024,
+        "max_total_candidates": 4096,
+        "max_admission_bytes": 32 * 1024 * 1024,
+    }
+    if any(raw[name] > cap for name, cap in caps.items()):
+        raise CacheError("runner setting exceeds harness processing cap")
+    return copy.deepcopy(raw)
+
+
+def chunks(text: str, settings: Json) -> list[tuple[int, int]]:
+    """The fixed shared initial chunk algorithm, including newline break and terminal stop."""
+    result = []
+    start = 0
+    while start < len(text):
+        end = min(len(text), start + settings["chunk_chars"])
+        if end < len(text):
+            newline = text.rfind("\n", start + (end - start) // 2, end)
+            if newline >= 0:
+                end = newline + 1
+        result.append((start, end))
+        if len(result) > settings["max_calls"]:
+            raise CacheError("initial chunks exceed the frozen call budget")
+        if end == len(text):
+            break
+        start = max(start + 1, end - settings["overlap_chars"])
+    return result
+
+
+class _Calls:
+    def __init__(
+        self, owner: FrozenSet, folder: Path, binding: str, client: Callable[[str], str] | None
+    ):
+        self.owner, self.folder, self.binding, self.client = owner, folder, binding, client
+        self.count = 0
+        self.missing = False
+        self.failure: CacheError | None = None
+
+    def __call__(self, prompt: str) -> str:
+        try:
+            return self._invoke(prompt)
+        except CacheError as exc:
+            self.failure = exc
+            raise
+
+    def _invoke(self, prompt: str) -> str:
+        _unlinked(self.folder)
+        self.owner.check_inputs()
+        self.count += 1
+        if self.count > self.owner.settings["max_calls"]:
+            raise CacheError("call budget exceeded")
+        if len(prompt) > self.owner.settings["max_prompt_chars"]:
+            raise CacheError("prompt budget exceeded")
+        path = self.folder / f"{self.count:04}.json"
+        pending = self.folder / f"{self.count:04}.pending.json"
+        request = {
+            "binding_sha256": self.binding,
+            "sequence": self.count,
+            "prompt": prompt,
+            "prompt_sha256": digest(prompt.encode()),
+        }
+        if path.exists():
+            entry = _json(_read(path))
+            checksum = entry.pop("entry_sha256", None)
+            if checksum != digest(encoded(entry)) or any(
+                entry.get(k) != v for k, v in request.items()
+            ):
+                raise CacheError("cached call differs")
+            _same_or_publish(pending, request, replay_only=True)
+        else:
+            if self.client is None:
+                self.missing = True
+                raise CacheError("missing replay call")
+            if pending.exists():
+                raise CacheError("unresolved call reservation; automatic retry refused")
+            _publish(pending, request)
+            entry = dict(request)
+            try:
+                reply = self.client(prompt)
+            except Exception as exc:
+                entry |= {"status": "transport_error", "exception_type": type(exc).__name__}
+            else:
+                if not isinstance(reply, str):
+                    entry |= {"status": "reply_type"}
+                else:
+                    try:
+                        raw = reply.encode("utf-8")
+                    except UnicodeError:
+                        entry |= {"status": "reply_encoding"}
+                    else:
+                        entry |= {"reply_sha256": digest(raw), "reply_bytes": len(raw)}
+                        if len(raw) > _MAX_REPLY:
+                            entry |= {"status": "transport_reply_limit"}
+                        else:
+                            entry |= {"status": "ok", "reply": reply}
+            entry["entry_sha256"] = digest(encoded(entry))
+            _publish(path, entry)
+        if entry["status"] != "ok":
+            raise CachedTransportError(entry["status"])
+        reply = entry["reply"]
+        if not isinstance(reply, str) or digest(reply.encode()) != entry["reply_sha256"]:
+            raise CacheError("cached reply differs")
+        if len(reply.encode()) != entry["reply_bytes"] or entry["reply_bytes"] > _MAX_REPLY:
+            raise CacheError("cached reply length differs")
+        return reply
+
+    def finish(self) -> None:
+        if self.failure is not None:
+            raise self.failure
+        if self.missing:
+            raise CacheError("replay requires every recorded call")
+        if self.folder.exists():
+            completed = sorted(
+                p.name for p in self.folder.glob("*.json") if ".pending." not in p.name
+            )
+            if completed != [f"{i:04}.json" for i in range(1, self.count + 1)]:
+                raise CacheError("extra or missing cached calls")
+
+
+def _baseline_reply(raw: str, schema: Json, limit: int) -> list[Json]:
+    reply = _json(raw.encode())
+    if set(reply) != {"candidates"} or not isinstance(reply["candidates"], list):
+        raise CacheError("baseline expects only a candidates envelope")
+    if len(reply["candidates"]) > limit:
+        raise CacheError("too many candidates")
+    for candidate in reply["candidates"]:
+        if not isinstance(candidate, dict) or set(candidate) != {
+            "field",
+            "value",
+            "unit",
+            "key",
+            "evidence",
+        }:
+            raise CacheError("invalid baseline candidate members")
+        field = candidate["field"]
+        if (
+            not isinstance(field, str)
+            or field not in schema["fields"]
+            or not isinstance(candidate["value"], str)
+        ):
+            raise CacheError("invalid baseline field or value")
+        if any(
+            candidate[k] is not None and not isinstance(candidate[k], str) for k in ("unit", "key")
+        ):
+            raise CacheError("invalid baseline key or unit")
+        if not isinstance(candidate["evidence"], list):
+            raise CacheError("invalid evidence list")
+        for item in candidate["evidence"]:
+            if not isinstance(item, dict):
+                raise CacheError("invalid evidence item")
+            source = item.get("source")
+            keys = {
+                "document": {"source", "role", "text"},
+                "knowledge": {"source", "text"},
+                "external": {"source", "url", "retrieved", "text"},
+            }
+            if not isinstance(source, str) or source not in keys or set(item) != keys[source]:
+                raise CacheError("invalid evidence members")
+            if any(not isinstance(v, str) for v in item.values()):
+                raise CacheError("evidence members must be strings")
+            if source == "document" and item["role"] not in _ROLES:
+                raise CacheError("invalid evidence role")
+    return reply["candidates"]
+
+
+def _projection(decision: Json) -> Json:
+    return {
+        k: decision[k]
+        for k in ("candidate_id", "field", "key", "value", "unit", "outcome", "codes")
+    }
+
+
+def storage_outcomes(rounds: list[Json], schema: Json) -> list[Json]:
+    """Released app storage, applied to independently admitted rounds and chunks."""
+    decisions = [d for round_ in rounds for d in round_["receipt"]["decisions"]]
+    admitted: dict[tuple[Any, Any], set[tuple[Any, Any]]] = defaultdict(set)
+    for d in decisions:
+        if d["outcome"] == "admitted":
+            admitted[d["field"], d["key"]].add((d["value"], d["unit"]))
+    result = []
+    for d in decisions:
+        out = _projection(d) | {"origin": "application_storage", "core_outcome": d["outcome"]}
+        sigs = admitted[d["field"], d["key"]]
+        if (
+            d["outcome"] == "admitted"
+            and not schema["fields"][d["field"]].get("multiple", False)
+            and len(sigs) > 1
+        ):
+            out |= {
+                "outcome": "needs_verification",
+                "application_reason": "conflicting_round_admits",
+            }
+        result.append(out)
+    return result
+
+
+class FrozenSet:
+    """A file-bound run session. Construct only after the complete set has been frozen."""
+
+    def __init__(
+        self,
+        directory: Path,
+        sources: Path,
+        cache: Path,
+        configuration: Path,
+        *,
+        manifest_sha256: str,
+        labels_sha256: str,
+        configuration_sha256: str,
+    ):
+        self.directory = _unlinked(directory.absolute())
+        repository = Path(__file__).resolve().parents[2]
+        self.sources = _external(sources, repository)
+        self.cache = _external(cache, repository)
+        self.paths = {
+            self.directory / "manifest.json": manifest_sha256,
+            self.directory / "labels.json": labels_sha256,
+            _unlinked(configuration.absolute()): configuration_sha256,
+        }
+        raw = {path: _read(path) for path in self.paths}
+        if any(digest(raw[path]) != sha for path, sha in self.paths.items()):
+            raise CacheError("frozen file digest differs")
+        self.manifest = _json(raw[self.directory / "manifest.json"])
+        if (
+            self.manifest.get("status") != "frozen"
+            or self.manifest.get("selection_complete") is not True
+        ):
+            raise CacheError("complete manifest must be frozen")
+        # Validate the full seal before any client/cache work, without retaining parsed gold.
+        _validate_blind_labels(self.manifest, _json(raw[self.directory / "labels.json"]))
+        self.config = _json(raw[_unlinked(configuration.absolute())])
+        if set(self.config) != {
+            "model_id",
+            "transport",
+            "policy",
+            "run_policy",
+            "code_sha256",
+            "source_commit",
+            "reader",
+            "baseline_guide_commit",
+        }:
+            raise CacheError("unknown or missing frozen configuration member")
+        for name in ("model_id", "source_commit", "baseline_guide_commit"):
+            if not isinstance(self.config[name], str) or not self.config[name].strip():
+                raise CacheError("missing provenance: " + name)
+        for name, keys in (
+            ("transport", {"id", "version", "effort"}),
+            ("reader", {"id", "commit", "code_sha256"}),
+        ):
+            value = self.config[name]
+            if (
+                not isinstance(value, dict)
+                or set(value) != keys
+                or any(not isinstance(v, str) or not v.strip() for v in value.values())
+            ):
+                raise CacheError("incomplete provenance: " + name)
+        self.settings = _settings(self.config["run_policy"])
+        self.policy = gg.Policy.from_dict(self.config["policy"]).to_dict()
+        if self.policy["sources"] != gg.Policy.from_dict({}).to_dict()["sources"]:
+            raise CacheError("freeze default external and knowledge review policy")
+        self.code_sha256 = source_code_digest()
+        if self.code_sha256 != self.config["code_sha256"]:
+            raise CacheError("source code digest differs")
+        documents = self.manifest.get("documents")
+        if not isinstance(documents, list) or not documents:
+            raise CacheError("manifest has no documents")
+        self.documents: dict[str, Json] = {}
+        self.texts: dict[str, str] = {}
+        total = 0
+        for doc in documents:
+            ident = doc.get("id")
+            if not isinstance(ident, str) or not _ID.fullmatch(ident) or ident in self.documents:
+                raise CacheError("unsafe or duplicate document id")
+            if doc.get("split") not in {"development", "heldout"}:
+                raise CacheError("unknown split")
+            for suffix, member, cap in (
+                (".pdf", "source_sha256", _MAX_FILE),
+                (".txt", "text_sha256", _MAX_TEXT),
+            ):
+                path = _unlinked(self.sources / (ident + suffix))
+                body = _read(path, cap)
+                if digest(body) != doc.get(member):
+                    raise CacheError("source or reader text digest differs: " + ident)
+                self.paths[path] = doc[member]
+                if suffix == ".pdf":
+                    if (
+                        len(body) != doc.get("source_bytes")
+                        or type(doc.get("approved_max_bytes")) is not int
+                        or len(body) > doc["approved_max_bytes"]
+                    ):
+                        raise CacheError("source size differs or exceeds approval")
+                else:
+                    text = body.decode("utf-8")
+                    if unicodedata.normalize("NFC", text) != text:
+                        raise CacheError("reader text must already be NFC")
+                    total += len(body)
+                    if total > _MAX_FILE:
+                        raise CacheError("set text exceeds processing limit")
+                    self.texts[ident] = text
+            schema = self.schema(doc)
+            gg.admit(self.texts[ident], schema, [], self.policy)
+            self.documents[ident] = copy.deepcopy(doc)
+        # Commit, reader and transport labels are caller declarations. Actual imported code,
+        # configuration and source/text bytes are independently pinned and checked here.
+        self.header = {
+            "harness": _VERSION,
+            "manifest_sha256": manifest_sha256,
+            "labels_sha256": labels_sha256,
+            "configuration_sha256": configuration_sha256,
+            "configuration": self.config,
+            "code_sha256": self.code_sha256,
+            "baseline_instructions_sha256": digest(BASELINE_INSTRUCTIONS.encode()),
+            "baseline_adapter": (
+                "released feedback loop; same current core; shared chunks; "
+                "chunk search_region; separate application storage"
+            ),
+            "transport_reply_retention_limit": _MAX_REPLY,
+        }
+        self.binding = digest(encoded(self.header))
+
+    def schema(self, doc: Json) -> Json:
+        template = self.manifest["schemas"][doc["kind"]]
+        schema = doc.get("schema", template)
+        if set(schema["fields"]) != set(template["fields"]) or any(
+            field.get("type", "number") != template["fields"][name].get("type", "number")
+            or field.get("multiple", False) != template["fields"][name].get("multiple", False)
+            for name, field in schema["fields"].items()
+        ):
+            raise CacheError("document schema changes fixed requests or types")
+        return gg.Schema.from_dict(schema).to_dict()
+
+    def check_inputs(self) -> None:
+        if any(digest(_read(path)) != sha for path, sha in self.paths.items()):
+            raise CacheError("frozen source, text, label, manifest or configuration changed")
+        if source_code_digest() != self.code_sha256:
+            raise CacheError("source code changed")
+
+    def _prompt(self, text: str, schema: Json, start: int, end: int, feedback: str | None) -> str:
+        body = {
+            "instructions": BASELINE_INSTRUCTIONS,
+            "schema": schema,
+            "text": text[start:end],
+            "output_format": gg.extractor_schema(schema),
+            "chunk": {"start": len(text[:start].encode()), "end": len(text[:end].encode())},
+        }
+        if feedback is not None:
+            body["feedback"] = feedback
+        return encoded(body).decode()
+
+    def _baseline(self, ident: str, calls: _Calls) -> Json:
+        text, doc = self.texts[ident], self.documents[ident]
+        schema = self.schema(doc)
+        plan = chunks(text, self.settings)
+        for start, end in plan:
+            if (
+                len(self._prompt(text, schema, start, end, None))
+                > self.settings["max_prompt_chars"]
+            ):
+                raise CacheError("baseline initial prompt exceeds frozen budget")
+        rounds: list[Json] = []
+        complete, stop = True, None
+        count, history = 0, 0
+        for chunk, (start, end) in enumerate(plan, 1):
+            feedback = None
+            for retry in (False, True):
+                prompt = self._prompt(text, schema, start, end, feedback)
+                if (
+                    len(prompt) > self.settings["max_prompt_chars"]
+                    or calls.count >= self.settings["max_calls"]
+                ):
+                    complete, stop = (
+                        False,
+                        "prompt_limit"
+                        if len(prompt) > self.settings["max_prompt_chars"]
+                        else "call_limit",
+                    )
+                    break
+                try:
+                    raw = calls(prompt)
+                except CachedTransportError:
+                    complete, stop = False, "transport_error"
+                    break
+                try:
+                    if len(raw.encode()) > self.settings["max_reply_bytes"]:
+                        raise CacheError("baseline reply parsing limit")
+                    proposed = _baseline_reply(
+                        raw, schema, self.settings["max_candidates_per_reply"]
+                    )
+                except (ValueError, TypeError, RecursionError, UnicodeError):
+                    complete, stop = False, "invalid_reply"
+                    break
+                if count + len(proposed) > self.settings["max_total_candidates"]:
+                    complete, stop = False, "candidate_limit"
+                    break
+                packet = []
+                for i, candidate in enumerate(proposed, 1):
+                    item = copy.deepcopy(candidate) | {
+                        "id": f"chunk{chunk}-{'retry' if retry else 'initial'}-{i}"
+                    }
+                    if any(e["source"] == "document" for e in item["evidence"]):
+                        item["search_region"] = {
+                            "start": len(text[:start].encode()),
+                            "end": len(text[:end].encode()),
+                        }
+                    packet.append(item)
+                receipt = gg.admit(
+                    text,
+                    schema,
+                    packet,
+                    self.policy,
+                    document_id=ident,
+                    document_source=doc["source"],
+                )
+                record = {
+                    "chunk": chunk,
+                    "retry": retry,
+                    "candidates": packet,
+                    "receipt": receipt.to_dict(),
+                }
+                history += len(encoded(record))
+                if history > self.settings["max_admission_bytes"]:
+                    complete, stop = False, "admission_history_limit"
+                    break
+                if not gg.verify(
+                    receipt.to_dict(),
+                    text,
+                    schema,
+                    packet,
+                    self.policy,
+                    document_source=doc["source"],
+                ).ok:
+                    raise CacheError("baseline receipt did not verify")
+                rounds.append(record)
+                count += len(packet)
+                if retry:
+                    break
+                by_id = {c["id"]: c for c in packet}
+                messages = [
+                    gg.feedback_message(d, by_id[d.candidate_id], schema, text=text)
+                    for d in sorted(receipt.decisions, key=lambda d: d.candidate_id)
+                ]
+                eligible = [m for m in messages if m is not None]
+                if not eligible:
+                    break
+                feedback = "\n".join(eligible)
+            if not complete:
+                break
+        outcomes = storage_outcomes(rounds, schema)
+        return {
+            "rounds": rounds,
+            "application_outcomes": outcomes,
+            "complete": complete,
+            "stop": stop,
+            "output": {"id": ident, "decisions": outcomes, "not_found": []},
+        }
+
+    def run(
+        self, arm: str, client: Callable[[str], str] | None = None, *, split: str = "heldout"
+    ) -> Json:
+        """Run one arm, or replay it with client=None. Never overwrite cache artifacts."""
+        if arm not in {"baseline", "runner"} or split not in {"development", "heldout"}:
+            raise CacheError("unknown arm or split")
+        runner_api = None
+        if arm == "runner":
+            try:
+                from groundgate.run import RunPolicy, replay, run
+            except ImportError as exc:
+                raise CacheError("runner execution requires the integrated runner API") from exc
+            runner_api = (RunPolicy, replay, run)
+        self.check_inputs()
+        folder = self.cache / self.binding.removeprefix("sha256:") / arm / split
+        _unlinked(folder)
+        _same_or_publish(
+            folder / "header.json", self.header | {"arm": arm, "split": split}, client is None
+        )
+        outputs = []
+        for ident, doc in sorted(self.documents.items()):
+            if doc["split"] != split:
+                continue
+            calls = _Calls(
+                self,
+                folder / ident / "calls",
+                digest(
+                    encoded({"run": self.binding, "arm": arm, "split": split, "document": ident})
+                ),
+                client,
+            )
+            if arm == "baseline":
+                local = self._baseline(ident, calls)
+            else:
+                assert runner_api is not None
+                settings_type, replay_runner, run_runner = runner_api
+                result = run_runner(
+                    self.texts[ident],
+                    self.schema(doc),
+                    client=calls,
+                    model_id=self.config["model_id"],
+                    policy=self.policy,
+                    run_policy=settings_type(**self.settings),
+                    document_id=ident,
+                    document_source=doc["source"],
+                )
+                if not replay_runner(
+                    result.record,
+                    result.artifacts,
+                    self.texts[ident],
+                    self.schema(doc),
+                    self.policy,
+                ).ok:
+                    raise CacheError("runner record did not replay")
+                decisions = [
+                    _projection(d.to_dict()) | {"origin": "core_receipt"}
+                    for d in result.receipt.decisions
+                ]
+                represented = {c["field"] for c in result.candidates}
+                searches = {
+                    e["field"]: e for e in result.record["entries"] if e["kind"] == "search"
+                }
+                missing = []
+                for field, states in result.record["final"]["fields"].items():
+                    spec = self.schema(doc)["fields"][field]
+                    searched = searches.get(field, {})
+                    completed = (
+                        "empty_source" in states
+                        or "targeted_not_found" in states
+                        or "search_no_match" in states
+                        or (not self.settings["targeted"] and "model_not_found" in states)
+                    )
+                    if (
+                        result.complete
+                        and field not in represented
+                        and completed
+                        and searched.get("status") != "search_truncated"
+                        and not spec.get("keys")
+                    ):
+                        missing.append({"field": field, "key": None})
+                local = {
+                    "record": result.record,
+                    "artifacts": result.artifacts,
+                    "candidates": result.candidates,
+                    "receipt": result.receipt.to_dict(),
+                    "complete": result.complete,
+                    "output": {"id": ident, "decisions": decisions, "not_found": missing},
+                }
+            calls.finish()
+            self.check_inputs()
+            local |= {
+                "binding_sha256": self.binding,
+                "source_sha256": doc["source_sha256"],
+                "text_sha256": doc["text_sha256"],
+                "schema_sha256": digest(encoded(self.schema(doc))),
+                "policy_sha256": digest(encoded(self.policy)),
+            }
+            _same_or_publish(folder / ident / "result.json", local, client is None)
+            outputs.append(local["output"] | {"complete": local["complete"]})
+        public = {
+            "manifest_sha256": self.header["manifest_sha256"],
+            "labels_sha256": self.header["labels_sha256"],
+            "binding_sha256": self.binding,
+            "arm": arm,
+            "split": split,
+            "documents": outputs,
+            "provenance": self.header,
+        }
+        _same_or_publish(folder / "projection.json", public, client is None)
+        return public
