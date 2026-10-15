@@ -38,8 +38,7 @@ public URL by itself is not a redistribution license.
 After kind approval, I list exact URLs and response sizes, or a stated byte cap when a source does
 not give a size. I ask for approval of each download. I keep source PDFs, browser files and
 intermediate text in the workspace's local work folder outside synced folders. Final labels,
-request, manifest and reproducible reports belong in this set. No new-set model output is read until the
-maintainer seals all labels.
+request, manifest and reproducible reports belong in this set. No new-set model output is read until all blind labels in both splits are complete and sealed.
 
 I reject duplicate source/text hashes and split near-duplicate revisions together. Selection uses
 publisher metadata and layout eligibility, not model success. I record rejected sources and the
@@ -75,7 +74,9 @@ version and repair limits, on the development part. I run the held-out baseline 
 the same request, policy and model identity after labels are sealed. I keep all calls and receipts.
 A cache records the label-file and manifest digests, so the scorer refuses output from a different
 label seal, request or split. A document schema may supply its currency and aliases, while keeping
-the fixed kind field names, types and multiplicity.
+the fixed kind field names, types and multiplicity. Each document schema is a full snapshot.
+Later edits to a kind template do not update existing document snapshots; I review them together
+before the manifest freeze.
 A changed label after model output requires the maintainer's approval and is reported. Held-out
 output is used for the planned measure and never for tuning. A release-only sealed set for 1.0
 is outside this milestone.
@@ -92,10 +93,13 @@ reason in the labeling record. Scoring refuses incomplete labels in either split
 
 Each `runs/<name>.json` has `labels_sha256` and `manifest_sha256`, each prefixed `sha256:` and
 computed over the exact file bytes, plus a `documents` list. Each run document has `id`, final
-core `decisions` and an explicit `not_found` list of `{field, key}`. The cache contains final
-decisions only; the baseline/runner logs keep all earlier calls and receipts. A missing run
-document is no candidate, not an absence hit. The pilot manifest and labels are draft inputs. No result file is committed before an
-actual sealed-label measure exists.
+`decisions` and an explicit `not_found` list of `{field, key}`. Runner decisions come from its
+final core receipt. Baseline decisions are application storage outcomes: they keep independently
+admitted rounds, but withhold different admitted values for a single-value field. Those entries
+retain `core_outcome` and an `application_reason`; original core receipts remain unchanged.
+The scoring projection omits quotes and raw replies; the external cache keeps all calls and
+receipts. A missing run document is no candidate, not an absence hit. The pilot manifest and
+labels are draft inputs. No result file is committed before an actual sealed-label measure exists.
 
 I check the scoring mode with synthetic values:
 
@@ -128,7 +132,7 @@ checks each PDF against its manifest hash before display and before sealing. A c
 source cannot be used to seal labels. Evidence pages cannot exceed the recorded PDF page count.
 
 Draft labels can be saved while source selection is open. After the complete source list and
-request are frozen, the maintainer can seal all labels. The server refuses edits after a seal or
+request are frozen, I can seal all labels after the complete source checks. The server refuses edits after a seal or
 when cached run JSON exists. Each save is atomic and uses a local work directory for its temporary
 file. CSRF tokens, exact host/origin checks and document-ID routes keep the local write interface
 separate from source text and filenames. Restart the server after changing the manifest.
@@ -142,3 +146,43 @@ The development drafts use source-only agent annotations, checked against origin
 renders. Independent source checks cover absences and disputed fields. Component case-temperature
 limits retain that condition; fields with no selected rail or mode stay unclear. These drafts
 are not sealed and cannot be scored. No benchmark model call has run.
+
+## Frozen run harness
+
+`run_set.py` takes a caller-supplied synchronous client. It has no provider client or model CLI.
+I construct `FrozenSet` with the set directory, external source and cache directories, an explicit
+configuration file, and the SHA-256 digests of the manifest, labels and configuration bytes.
+The harness requires a frozen, complete manifest and sealed, complete labels before a call.
+It verifies every source PDF and reader text against their frozen hashes. Reader text must be
+NFC. Sources are named `<id>.pdf` and `<id>.txt` in the external source directory.
+
+The configuration fixes `model_id`, transport identity/version/effort, policy, every runner
+setting, source commit, reader identity/commit/code digest and baseline guide commit. The harness
+also hashes the imported package and its own code. Commit, reader and transport names are caller
+declarations; the actual code and input bytes are checked independently before each call.
+
+`session.run("baseline", client, split="heldout")` runs the released feedback-loop algorithm
+with the same current core as the runner. Its instruction string is copied exactly from the
+released own-model guide, including external and knowledge evidence with the default review
+policy. Both arms use the same fixed initial chunks. Baseline admission uses the whole document
+and a chunk-bounded `search_region`. It permits one batched feedback retry for each chunk.
+It does not infer an explicit absence from an omitted candidate. This is an adapted baseline,
+not a replay of the entire released reader and decision pipeline.
+
+`session.run("runner", client, split="heldout")` needs the integrated `groundgate.run` API.
+Without that API it stops before any call. Explicit runner absence needs a complete, untruncated
+search with no active candidate. A field-level absence never creates a key-level absence.
+`session.run(arm, split="heldout")` replays the immutable call cache without a client.
+
+Each call reserves an exclusive cache entry before transport, then stores the prompt and reply
+before admission. A process stop with an unresolved reservation needs inspection; it is never
+retried automatically. Completed calls can resume without repeated transport. A changed frozen
+input or code snapshot stops reuse. The local transport reply retention limit is 8 MiB; larger
+replies record a size-limit failure and digest rather than their body. The client must bound its
+own download and memory use before returning a reply. Both arms also apply the frozen parsing,
+call, prompt, candidate and admission-history budgets. Incomplete documents remain marked in the
+projection. A smaller harness limit is reported rather than silently treated as an absence.
+
+I check the harness with synthetic sources and fixed replies. No test reads the corpus labels or
+source PDFs. The runner integration checks skip until the Runner lane is available; I run them
+against that lane before integration. No real client runs before the full corpus seal.
