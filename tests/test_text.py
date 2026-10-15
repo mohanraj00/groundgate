@@ -140,7 +140,7 @@ def test_a_long_line_of_spaces_takes_linear_time() -> None:
     mentions = key_mentions("Hypertension", ("Hypertension",))
     text = "Hypertension\n\n" + " " * 200_000 + "\nThe dose is 5 mg."
     t0 = time.perf_counter()
-    assert keys_at(text, mentions, text.index("5 mg")) == {"Hypertension"}
+    assert keys_at(text, mentions, text.index("5 mg")) == set()
     assert time.perf_counter() - t0 < 1
 
 

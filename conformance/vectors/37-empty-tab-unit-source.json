@@ -1,0 +1,98 @@
+{
+ "name": "37-empty-tab-unit-source",
+ "description": "Empty slots in the unit's row count too. A lone currency prefix is a cell. A final blank slot is distinct from a lone prefix. A prefix alone does not end before its own cell's start, so it cannot itself supply a column unit. A blank slot cannot borrow the prior unit (spec 0.9, #278).",
+ "document": "Top\t\t$20\nCash\t10\t100\n\nTop\t10\t$\nCash\t\t200\n\nTop\t$30\t\nCash\t\t300",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "u5",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 17,
+     "end": 20,
+     "text": "100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "u6",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 37,
+     "end": 40,
+     "text": "200"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "u7",
+   "field": "cash",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 57,
+     "end": 60,
+     "text": "300"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

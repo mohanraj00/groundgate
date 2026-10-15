@@ -250,9 +250,9 @@ print(gg.verify(receipt.to_dict(), text, schema, candidates).ok)
 ```
 
 ```text
-admitted            ira_limit       7000
 needs_verification  phaseout_start  79000  QUALIFIED_VALUE
 rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
+admitted            ira_limit       7000
 True
 ```
 
