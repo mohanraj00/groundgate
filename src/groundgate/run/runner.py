@@ -6,12 +6,14 @@ import copy
 import hashlib
 import json
 import re
+from array import array
+from bisect import bisect_left, bisect_right
 from collections.abc import Callable, Iterator, Mapping, Sequence
 from dataclasses import asdict, dataclass, replace
 from typing import Any, cast
 
 from ..admit import Verification, admit
-from ..canonical import SPEC_VERSION, Offsets, jcs
+from ..canonical import SPEC_VERSION, jcs
 from ..codes import INFO
 from ..feedback import feedback_message
 from ..model import Decision, PacketError, Policy, Receipt, Schema, extractor_schema
@@ -120,21 +122,66 @@ def _queries(name: str, field: Json) -> list[str]:
     return list(unique.values())
 
 
-def _matches(text: str, query: str) -> Iterator[tuple[int, int]]:
-    # A casefold may expand one character. Map folded boundaries back to original text.
-    folded = []
-    boundaries = {0: 0}
-    length = 0
-    for i, char in enumerate(text):
-        piece = char.casefold()
-        folded.append(piece)
-        length += len(piece)
-        boundaries[length] = i + 1
+class _ByteOffsets:
+    """Forward UTF-8 offsets, with compact entries only for multibyte characters."""
+
+    def __init__(self, text: str) -> None:
+        self.positions: array[int] = array("Q")
+        self.extras: array[int] = array("Q")
+        extra = 0
+        if not text.isascii():
+            for index, char in enumerate(text):
+                if not char.isascii():
+                    extra += len(char.encode("utf-8")) - 1
+                    self.positions.append(index)
+                    self.extras.append(extra)
+
+    def to_bytes(self, offset: int) -> int:
+        count = bisect_left(self.positions, offset)
+        return offset + (self.extras[count - 1] if count else 0)
+
+
+@dataclass(frozen=True)
+class _Folded:
+    text: str
+    source_positions: array[int] | None = None
+    folded_ends: array[int] | None = None
+
+    @classmethod
+    def build(cls, source: str) -> _Folded:
+        text = source.casefold()
+        # Unicode casefold has no empty replacements. Equal length preserves every boundary.
+        # ASCII and other length-preserving folds need no per-character map at all.
+        if len(text) == len(source):
+            return cls(text)
+        positions: array[int] = array("Q")
+        ends: array[int] = array("Q")
+        extra = 0
+        for index, char in enumerate(source):
+            width = len(char.casefold())
+            if width > 1:
+                extra += width - 1
+                positions.append(index)
+                ends.append(index + 1 + extra)
+        return cls(text, positions, ends)
+
+    def boundary(self, offset: int) -> int | None:
+        if self.folded_ends is None or self.source_positions is None:
+            return offset
+        count = bisect_right(self.folded_ends, offset)
+        shift = self.folded_ends[count - 1] - self.source_positions[count - 1] - 1 if count else 0
+        if count < len(self.folded_ends) and offset > self.source_positions[count] + shift:
+            return None  # Inside an expansion, not at an original character boundary.
+        return offset - shift
+
+
+def _matches(source: _Folded, query: str) -> Iterator[tuple[int, int]]:
     pattern = r"(?<![^\W_])" + r"\s+".join(map(re.escape, query.casefold().split()))
     pattern += r"(?![^\W_])"
-    for match in re.finditer(pattern, "".join(folded)):
-        if match.start() in boundaries and match.end() in boundaries:
-            yield boundaries[match.start()], boundaries[match.end()]
+    for match in re.finditer(pattern, source.text):
+        start, end = source.boundary(match.start()), source.boundary(match.end())
+        if start is not None and end is not None:
+            yield start, end
 
 
 def _strict_json(raw: str) -> Json:
@@ -231,7 +278,7 @@ class _Engine:
         self.document_id, self.document_source = document_id, document_source
         self.references = references
         self.sources = {"document": text, **{f"reference:{r['id']}": r["text"] for r in references}}
-        self.offsets = {name: Offsets(body) for name, body in self.sources.items()}
+        self.offsets = {name: _ByteOffsets(body) for name, body in self.sources.items()}
         self.record: Json = {
             "header": {
                 "runner": _VERSION,
@@ -260,6 +307,8 @@ class _Engine:
         self.admission_bytes = 0
         self.admission_exhausted = False
         self.last_candidates: list[Json] = []
+        self.last_raw: dict[str, Json] = {}
+        self.folded_sources: dict[str, _Folded] = {}
         self.calls = 0
         self.complete = True
         self.states: dict[str, list[str]] = {name: [] for name in schema.fields}
@@ -409,7 +458,16 @@ class _Engine:
             if self.admission_bytes + size > self.admission_byte_limit:
                 self.complete = False
                 self.admission_exhausted = True
-                self.tips = {c["id"]: c for c in self.last_candidates}
+                previous = {c["id"]: c for c in self.last_candidates}
+                dropped = [c["id"] for c in candidates if c["id"] not in previous]
+                reverted = [
+                    c["id"] for c in candidates if c["id"] in previous and c != previous[c["id"]]
+                ]
+                self.tips = previous
+                self.raw = {cid: self.last_raw[cid] for cid in previous}
+                self.contexts = {cid: self.contexts[cid] for cid in previous}
+                self.targeted.intersection_update(previous)
+                self.terminal.intersection_update(previous)
                 for name in {c["field"] for c in candidates}:
                     self.states[name].append("admission_history_limit")
                 self.event(
@@ -417,12 +475,15 @@ class _Engine:
                     phase=phase,
                     status="admission_history_limit",
                     retained_candidate_ids=list(self.tips),
+                    dropped_candidate_ids=dropped,
+                    reverted_candidate_ids=reverted,
                 )
                 return False
             self.event(kind="admission", phase=phase, **copy.deepcopy(body))
             self.admission_bytes += size
         self.receipt = receipt
         self.last_candidates = candidates
+        self.last_raw = dict(self.raw)
         decisions = {d.candidate_id: d for d in self.receipt.decisions}
         for cid in self.tips:
             d = decisions[cid]
@@ -503,7 +564,9 @@ class _Engine:
         # Stream all hits, but retain only a fixed-size pool before allocating windows.
         for rank, query in enumerate(queries):
             for source, text in self.sources.items():
-                for start, end in _matches(text, query):
+                if source not in self.folded_sources:
+                    self.folded_sources[source] = _Folded.build(text)
+                for start, end in _matches(self.folded_sources[source], query):
                     if len(matches) >= _SEARCH_MATCH_LIMIT:
                         omitted_matches += 1
                         continue
@@ -931,7 +994,7 @@ def replay(
         planned = _chunks(
             text, replace(settings, max_calls=min(settings.max_calls, evidence_bound))
         )
-        offsets = Offsets(text)
+        offsets = _ByteOffsets(text)
         expected = [
             {"source": "document", "start": offsets.to_bytes(a), "end": offsets.to_bytes(b)}
             for a, b in planned

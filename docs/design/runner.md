@@ -90,8 +90,11 @@ pair. When the next pair cannot fit, the runner retains the last recorded packet
 and stops incomplete. It rolls back both new values and same-value evidence replacements from
 that unrecorded admission, so returned candidates and receipt describe the same last packet.
 Final admission records a receipt digest instead of another full copy.
-This byte limit covers admission history; call artifacts and search records have their own
-call, reply, prompt and match limits. It is not a byte cap on the entire returned result.
+
+This byte limit covers admission history. Call count limits the number of artifacts and
+`max_prompt_chars` limits generated prompts. `max_reply_bytes` limits parsing, not retention:
+an oversized raw reply is kept for replay. Search match records have the cap in section 6.
+These controls are not a byte cap on the entire returned result.
 
 ## 3. Chunks and prompts from the schema
 
@@ -101,8 +104,8 @@ most `chunk_chars` characters. If that window reaches the document end, it emits
 through the document end and stops. It creates no suffix chunk after that point. Otherwise,
 it ends at the last line end in the final half of the window, or at the window boundary when
 there is no such line end. The next start is the prior chunk end minus the allowed overlap,
-clamped to move forward at least one character relative to the previous start. An empty document has no text chunks. Every
-chunk records its start and end as global UTF-8 byte offsets. The document is never normalised
+clamped to move forward at least one character relative to the previous start. An empty
+document has no text chunks. Every chunk records its start and end as global UTF-8 byte offsets. The document is never normalised
 again after offsets are made.
 
 Each initial prompt asks for every field in the schema. The instructions include the field
@@ -111,9 +114,9 @@ resolved schema, the response shape, the chunk's source id and global range, the
 and the app's reference texts with their ids and digests. References are pinned context in
 each prompt; they are not downloaded or shortened silently. Initial prompt sizes are validated
 one prompt at a time before any client call, then each prompt is recreated when called. The
-runner never retains an initial prompt list in addition to the returned call artifacts. If this context cannot fit the
-prompt budget, the runner refuses it before the first call. Large reference chunking is later
-work. An empty document with references gets one initial prompt for those references; with no
+runner never retains an initial prompt list in addition to the returned call artifacts. If
+this context cannot fit the prompt budget, the runner refuses it before the first call.
+Large reference chunking is later work. An empty document with references gets one initial prompt for those references; with no
 references it records an empty-source search for each field without a model call.
 
 The response shape derives from `extractor_schema(schema, reference_ids)`, with these runner
@@ -252,13 +255,21 @@ query and searched source is recorded. Match records are bounded as below.
 The script searches the full document and each supplied reference. Query order defines match
 priority: title, aliases, title words, then description words. Within one query, document hits
 come first, then references by id, then byte position. It streams matches and retains at most
-1024 in that order. It counts later matches in `omitted_matches` without allocating records or
-windows for them. A retained match selects `search_context_chars` characters on either side,
+1024 match records in that order. It counts later matches in `omitted_matches` without
+allocating records or windows for them. A retained match selects `search_context_chars` characters on either side,
 clamped to its source. It merges overlapping regions in the same source and gives each merged
 region its best query rank. It selects at most `max_target_regions` by rank, then source and
 byte start. `omitted_regions` counts discarded regions from that bounded pool; it does not
 estimate regions from omitted matches. Either cap records `search_truncated`. The selected
 regions are sent in document, reference-id and byte-start order for stable quote anchoring.
+
+The record cap does not cap search work. Each query scans the supplied sources to count all
+hits. The runner builds and caches a casefold once per source across all fields and queries.
+Length-preserving folds use identity boundaries; expansions use compact array breakpoints.
+Runner byte offsets also use compact multibyte deltas, not a per-character reverse dictionary.
+Search memory grows with the supplied texts and cached folds; search CPU grows with source
+length and query count. No model-call budget is claimed to bound those scans.
+
 The reply may quote any one retained region but may not combine two regions into a new quote.
 For document evidence the runner chooses the first retained region that holds the whole value
 quote and sets it as `search_region`. The core then resolves that quote under SPEC §4.6.
@@ -305,21 +316,27 @@ from a reply.
 A structural reply error ends the run incomplete, with its prompt digest, raw reply digest,
 error category and completed receipts. It is not retried. A structurally valid candidate that
 fails a core content check gets the normal rejected decision and follows the repair table.
-A reply over the byte limit is hashed and recorded but never JSON-parsed. Artifact storage is
-owned by the app; the runner creates no paths from model text.
+A reply over `max_reply_bytes` is hashed and recorded but never JSON-parsed. Its entire raw
+string remains in the returned artifacts so replay can reproduce the size failure. Thus a
+client can return an artifact larger than that setting. The limit does not bound transport or
+reply-retention memory; the app client owns any transport cap before returning. Artifact
+storage is owned by the app; the runner creates no paths from model text.
 
 Invalid caller inputs raise `PacketError` or a runner input error before the first call,
 without a core receipt. A client exception is recorded as `client_error`; the runner stops
 incomplete and retains completed work. It records a fixed error category and the exception
 type, not an arbitrary exception string that may contain a secret. A runtime core packet
 error or unexpected internal failure raises `RunnerError` with its `record` set to the partial
-run record. It is
-never converted to a not-found result or an admitted candidate. A call timeout belongs to the
+run record. It is never converted to a not-found result or an admitted candidate. A call timeout belongs to the
 client; the synchronous interface cannot force an uncooperative client to return.
 
 The final result distinguishes ordinary no candidate, final review, final rejection, repair
 limit, protocol failure and incomplete run. The last three do not claim that the field is
-absent. No final field status overrides the outcome in a core receipt.
+absent. Field states are a history of attempted work, not an active candidate inventory.
+`proposed` can precede a resource rollback. A limit entry lists retained and dropped candidate
+ids and ids whose evidence version was reverted. Rollback restores the last accepted raw
+candidates as well as their admission packet. The returned candidate list and core receipt
+are the active inventory. No history state overrides a core outcome.
 
 ## 8. The run record and replay
 
@@ -351,7 +368,8 @@ authorize a plan larger than those saved entries. The recorded chunk plan also b
 of an initial pass interrupted before every planned call ran. It validates each saved chunk
 and compares the regenerated source and byte ranges before constructing prompts. Replay
 allocation ceilings for candidates and admission history are further bounded by the actual
-canonical record and artifact byte counts, even when the header declares larger budgets. It checks not-found and search-only entries too. Missing artifacts, changed
+canonical record and artifact byte counts, even when the header declares larger budgets.
+It checks not-found and search-only entries too. Missing artifacts, changed
 settings, unknown runner versions or a different core version fail replay. A client-error
 entry can verify the record of the attempted call, not reproduce the external failure.
 Replaying recorded replies is deterministic; a fresh model run need not produce those replies.

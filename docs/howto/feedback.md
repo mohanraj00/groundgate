@@ -77,7 +77,9 @@ An admission in an earlier round is not a final admission.
 or exhausted total call budget returns an incomplete result with completed receipts. A
 rejected candidate, a failed repair or a repair-round limit retains its core outcome. These
 states do not prove that a field is absent. The record's entries give the failure or stop
-reason; `record["final"]["fields"]` lists the field's search and repair states.
+reason; `record["final"]["fields"]` lists the field's search and repair history. These states
+record attempts, not an active candidate inventory. An admission-history limit entry lists
+retained, dropped and reverted ids. Read `result.candidates` with its receipt for active values.
 
 The initial response must account for every requested field in `candidates` or `not_found`,
 never both. For example, an empty response for the requested field is:
@@ -90,8 +92,9 @@ For a field with no first-pass candidate, the runner searches the supplied texts
 field name, aliases and description. One targeted call gets only the selected regions and
 asks for that field. Title and alias matches take priority over individual description words.
 The search retains at most 1024 match records; omitted counts and truncation stay in the record.
-A rejected candidate does not trigger that pass. Search terms, retained
-regions, truncation and not-found replies stay in the record. No match is the result of that
+This caps recorded matches, not the work of scanning every source for each query. Casefolds
+are cached once per source across fields; expansion maps and byte offsets use compact arrays.
+A rejected candidate does not trigger that pass. Search terms, retained regions, truncation and not-found replies stay in the record. No match is the result of that
 search, not proof of absence. Set `RunPolicy(targeted=False)` for a run without this pass.
 
 ## 3. Keep repairs bounded
@@ -102,7 +105,8 @@ payloads may use at most half that byte budget. These limits stop the run incomp
 retaining its last recorded packet and receipt. Proposals from an admission that could not be
 recorded are not active in the returned candidate list. This applies to new values and evidence
 repairs alike; the final field states name the admission-history limit. Raw prompts and replies
-have separate limits. Duplicate proposals
+are separate from the admission-history byte budget. The reply-size setting limits parsing
+only; it does not limit the size of retained raw reply artifacts. Duplicate proposals
 share a repair budget. The runner fixes citation codes only. It keeps field, unit, key and
 source fixed. It refuses changes to unrelated evidence roles. A no-op or repair not-found
 reply ends that proposal's loop and keeps its last candidate.
@@ -120,8 +124,11 @@ become recorded incomplete results without copying their exception messages.
 ## 4. Save and replay
 
 Save the run record, artifacts, exact text, schema, policy and references together. Artifacts
-contain complete prompts and replies, including source text. The runner returns them in memory
-and does not choose file paths. The app chooses storage.
+contain complete prompts and replies, including source text. This includes an oversized reply
+that exceeded `max_reply_bytes`: the runner retains that raw body for replay even though it
+does not parse it. The setting is a parsing limit, not a transport or artifact-size limit. The
+client owns any transport cap before returning. The runner returns artifacts in memory and
+does not choose file paths. The app chooses storage.
 
 ```python
 stored_record = json.loads(json.dumps(result.record))
