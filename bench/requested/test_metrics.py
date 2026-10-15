@@ -215,3 +215,14 @@ def test_cache_binds_manifest_and_label_seals_and_cli_reproduces(tmp_path: Path)
     (tmp_path / "manifest.json").write_text(json.dumps(m))
     with pytest.raises(ValueError, match="manifest"):
         score_set(tmp_path, "heldout")
+
+
+@pytest.mark.parametrize("bad_key", ["", "  ", 7, [], {}])
+def test_malformed_admitted_key_is_an_escape(bad_key: Any) -> None:
+    m, labels, run = data()
+    m["schemas"]["kind"]["fields"]["name"]["keys"] = ["Adult"]
+    labels["documents"][0]["fields"][1]["key"] = "Adult"
+    run["documents"][0]["decisions"] = [decision("name", "A B", key=bad_key)]
+    out = measure(m, labels, run, "heldout")["total"]
+    assert out["escapes"] == out["admitted"] == 1
+    assert out["hits"] == 0
