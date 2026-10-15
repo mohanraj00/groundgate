@@ -1,6 +1,9 @@
-# groundgate specification v0.8
+# groundgate specification v0.9 (draft)
 
-Status: released with groundgate 0.8.0. Version string: `groundgate/0.8`. Spec 0.7 was released with
+Status: draft, not released. The target version string is `groundgate/0.9`. This draft adds no
+rule. The rules below, receipts and digest prefix still use `groundgate/0.8` until a diagnosis is
+approved and the rule, vectors and version change are ready together. Spec 0.8 was released with
+groundgate 0.8.0 and is in the `v0.8.0` tag. Spec 0.7 was released with
 groundgate 0.7.0, and is in the `v0.7.0` tag. Spec 0.6 is in the `v0.6.0` tag, spec 0.5 in the
 `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the
 `v0.2.0` tag, and spec 0.1 in the `v0.1.0` tag. Any change to how
