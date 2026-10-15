@@ -257,8 +257,8 @@ Query truncation records `search_truncated`. Match records are bounded as below.
 
 The script searches the full document and each supplied reference. Query order defines match
 priority: title, aliases, title words, then description words. Within one query, document hits
-come first, then references by id, then byte position. It streams matches and retains at most
-1024 match records in that order. It counts later matches in `omitted_matches` without
+come first, then references by id, then byte position. It visits each match and retains at
+most 1024 match records in that order. It counts later matches in `omitted_matches` without
 allocating records or windows for them. A retained match selects `search_context_chars` characters on either side,
 clamped to its source. It merges overlapping regions in the same source and gives each merged
 region its best query rank. It selects at most `max_target_regions` by rank, then source and
@@ -267,13 +267,19 @@ estimate regions from omitted matches. Either cap records `search_truncated`. Th
 regions are sent in document, reference-id and byte-start order for stable quote anchoring.
 
 The match-record cap does not cap the number of hits scanned. Each of at most 64 retained
-queries per missing field scans the supplied sources to count all hits. The runner builds and caches a casefold once per source across all fields and queries.
-Length-preserving folds use identity boundaries; expansions use compact array breakpoints.
-Runner byte offsets also use compact multibyte deltas, not a per-character reverse dictionary.
-Search memory grows with the supplied texts, schema query deduplication and cached folds.
-Search CPU grows with source length, field count and up to 64 retained queries per field.
-Counting omitted queries still reads the schema terms. No model-call budget is claimed to
-bound those scans.
+queries per missing field scans every supplied source to count all hits, including omitted
+matches. The runner builds and caches a casefold once per source across all fields and
+queries. Length-preserving folds use identity boundaries; expansions use compact array
+breakpoints. Runner byte offsets also use compact multibyte deltas, not a per-character
+reverse dictionary. Search memory grows with the supplied texts, schema query deduplication
+and cached folds.
+
+The caller must bound the number of requested fields, number and size of references, and
+document length before calling the runner. Source scans can cover up to
+`missing fields * 64 * total source characters`; query matching and schema processing add
+work. Counting omitted queries still reads all schema terms. The runner does not enforce a
+total scanned-character or CPU budget. `max_calls` limits client calls and does not bound
+these scans, including searches that make no client call.
 
 The reply may quote any one retained region but may not combine two regions into a new quote.
 For document evidence the runner chooses the first retained region that holds the whole value
@@ -347,7 +353,11 @@ history. It makes no claim about whether the client attempted that field or whet
 value is absent; call and protocol-failure entries describe the attempted work. A prompt
 character-budget stop records `prompt_limit`, separately from a total `call_limit`, in both
 the limit event and affected field history. Targeted call exhaustion keeps the field state
-`unsearched` with the limit event's `call_limit` status. A targeted not-found response records
+`unsearched` with the limit event's `call_limit` status. Field histories omit phase names;
+call and limit events carry `phase`. In normal execution, oversized initial prompts refuse
+before the first call, targeted region-size exhaustion records `search_limit`, and an
+oversized repair prompt records `prompt_limit`. Exhausted repair calls record `call_limit`;
+completed repair rounds can leave `repair_limit`. A targeted not-found response records
 `model_not_found` followed by `targeted_not_found`, preserving response and phase history.
 
 ## 8. The run record and replay
