@@ -918,6 +918,250 @@
         "limited_permission": "Site terms permit personal noncommercial copies/downloads with attribution and copyright notices retained; other uses are not permitted. No open reuse grant inferred."
       },
       "permission_note": "Limited site-download permission is not expanded by PDF availability. Final benchmark permission/membership remains open. No PDF, source text or image redistribution is proposed."
+    },
+    {
+      "id": "component-h07",
+      "source": "https://docs.particle.io/assets/pdfs/datasheets/p2-datasheet.pdf",
+      "catalog_source": "https://docs.particle.io/reference/datasheets/wi-fi/p2-datasheet/",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 1030087,
+      "source_sha256": "sha256:0c051a936a99b84a7c3fc472ea8e203fadbd09f1d0e14945eb5ab1254fffbe32",
+      "source_pages": 57,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "particle-connected-module-documentation",
+      "technical_family": "particle-p2-photon2-wifi-module-family",
+      "identity": {
+        "named_device": "P2",
+        "component_kind": "Self-contained SMD Wi-Fi microcontroller module; not a development board",
+        "physical_page": 6
+      },
+      "text_layer": {
+        "language": "English main document; French regulatory translation also present",
+        "pages": 57,
+        "nonempty_text_pages": 57,
+        "ocr_used": false
+      },
+      "license": "CC-BY-SA-3.0 documentation grant with attribution and applicable ShareAlike conditions",
+      "license_source": "https://github.com/particle-iot/docs/blob/master/LICENSE.txt",
+      "license_provenance": {
+        "conclusion": "Affirmative first-party repository provenance connects the exact named PDF artifact and its source/generator output path to the documentation grant. This is stronger than a license applying only to an HTML page. It does not cryptographically prove that the deployed bytes equal a specific repository revision.",
+        "source_and_generation_chain": [
+          {
+            "url": "https://github.com/particle-iot/docs/tree/master/src/content/reference/datasheets/wi-fi",
+            "observed": "Directory HTML lists p2-datasheet.md. The technical Markdown body was not opened."
+          },
+          {
+            "url": "https://github.com/particle-iot/docs/tree/master/src/assets/pdfs/datasheets",
+            "observed": "Directory HTML lists p2-datasheet.pdf at src/assets/pdfs/datasheets/p2-datasheet.pdf. No PDF blob/preview or body was opened."
+          },
+          {
+            "url": "https://github.com/particle-iot/docs/blob/master/scripts/metalsmith.js",
+            "plaintext_url": "https://raw.githubusercontent.com/particle-iot/docs/refs/heads/master/scripts/metalsmith.js",
+            "observed": "pdfGenerationOptions patterns include reference/datasheets/**/*.md; distribDir is ../src/assets/pdfs/datasheets and distribAssetPrefix is assets/pdfs/datasheets. It invokes preRender and postRender around Handlebars rendering."
+          },
+          {
+            "url": "https://github.com/particle-iot/docs/blob/master/scripts/pdf-generation.js",
+            "plaintext_url": "https://raw.githubusercontent.com/particle-iot/docs/refs/heads/master/scripts/pdf-generation.js",
+            "observed": "Generator uses the source originalKey basename without .md, appends .pdf, joins it to distribDir, and places the same basename under distribAssetPrefix. SITE_BASE_URL is https://docs.particle.io. It reuses fully rendered Markdown from the website pipeline."
+          },
+          {
+            "url": "https://docs.particle.io/reference/datasheets/wi-fi/p2-datasheet/",
+            "observed": "Previously captured first-party Download PDF link is the exact approved docs.particle.io/assets/pdfs/datasheets/p2-datasheet.pdf URL."
+          }
+        ],
+        "limitations": [
+          "No PDF body was requested or opened in this verification, including no GitHub binary preview.",
+          "No deployed-PDF-to-repository SHA or immutable-commit comparison was performed. Current master evidence establishes intended source/output provenance, not deployed build attestation.",
+          "PDF-specific notices and third-party inclusions can qualify a general grant. Parent reports its approved original P2 inspection found no contrary grant/restriction; this task did not inspect that PDF."
+        ]
+      },
+      "notices": {
+        "inspection": "All original text and relevant operating, identity and regulatory pages checked; a separate reviewer read all57pages and performed full-source searches.",
+        "pdf_local_document_reuse_restriction_found": false,
+        "scope": "Hardware and regulatory restrictions concern device use. Third-party certification links are not included in the documentation grant by assumption.",
+        "public_redistribution": "No source PDF, text, rendered page or third-party report published."
+      }
+    },
+    {
+      "id": "annual-h09",
+      "source": "https://assets.publishing.service.gov.uk/media/6a54ecd3a4890e65cce64de4/Annual_report__and_accounts_2026.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/national-highways-annual-report-and-accounts-2026",
+      "approved_max_bytes": 20971520,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 16344182,
+      "source_sha256": "sha256:5134d24e614374ed6dd77e17d9b2531f3998c1f6931b34343a15bd186fb13ab3",
+      "source_pages": 228,
+      "download_status": "complete",
+      "selection_status": "on_hold",
+      "source_family_group": "national-highways-annual-family",
+      "identity": {
+        "entity": "National Highways Limited",
+        "title": "Annual report and accounts 2026",
+        "latest_full_fiscal_year": "2025-04-01 to2026-03-31",
+        "physical_pages": [
+          3,
+          153,
+          166
+        ]
+      },
+      "reporting_currency": {
+        "code": "GBP",
+        "printed_scale": 1000,
+        "physical_pages": [
+          167,
+          168
+        ]
+      },
+      "consolidated_scope": {
+        "established": false,
+        "status": "on hold; excluded from label-page manifest because consolidated group scope is not established",
+        "note": "The report and audited statements identify National Highways Limited as the company. Physical page146/printed141 states its financial statements are consolidated into the superior Department for Transport group accounts. That does not establish a consolidated National Highways group set. Full-document searches for subsidiary, consolidation, parent undertaking and group-account wording found no explicit no-subsidiaries statement or other conclusive establishment of a National Highways consolidated group. This is source eligibility, not a performance rejection; no values are labeled and no superior-group figures are substituted."
+      },
+      "text_layer": {
+        "pages": 228,
+        "nonempty_text_pages": 227,
+        "zero_text_pages": [
+          2
+        ]
+      },
+      "zero_text_page_qualification": "All listed zero-text pages were rendered and visually confirmed blank.",
+      "notices": [
+        {
+          "physical_page": 4,
+          "note": "Crown copyright2026; publication expressly licensed under OGLv3 except where otherwise stated, with permission required for identified third-party copyright."
+        },
+        {
+          "physical_page": 35,
+          "printed_page": 30,
+          "note": "Mapping carries Crown copyright and database rights2026, OS AC0000827444."
+        },
+        {
+          "physical_page": 227,
+          "note": "Information reuse grant under OGL excludes logos. Mapping data is separately restricted to responding to or interacting with the providing organisation; copying, sublicensing, distributing or selling mapping data to third parties is prohibited by this notice."
+        }
+      ],
+      "reuse_note": "The document itself supplies the described OGL grant, subject to stated and licence exceptions; this record does not infer permission from catalog terms alone. No source PDF, full text, logos, maps or third-party images will be publicly redistributed. This is source inspection, not a legal determination.",
+      "license": "OGL-UK-3.0 subject to PDF-local and third-party exceptions",
+      "license_notice_page": 4,
+      "source_retention": "original PDF in local work storage; not committed"
+    },
+    {
+      "id": "annual-h10",
+      "source": "https://assets.publishing.service.gov.uk/media/6a58984631fb6daf314137b6/NDA_Annual_Report_and_Accounts_2025-26.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/nuclear-decommissioning-authority-annual-report-and-accounts-2025-to-2026",
+      "approved_max_bytes": 12582912,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 9645977,
+      "source_sha256": "sha256:b020333b3e77b138ead86cb11213231d404e0b8fcf6664782305a5203962908c",
+      "source_pages": 215,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "nda-group-annual-family",
+      "identity": {
+        "entity": "Nuclear Decommissioning Authority group",
+        "title": "Annual Report and Accounts2025/26",
+        "latest_full_fiscal_year": "2025-04-01 to2026-03-31",
+        "physical_pages": [
+          3,
+          128,
+          143,
+          148
+        ]
+      },
+      "reporting_currency": {
+        "code": "GBP",
+        "printed_scale": 1000000,
+        "physical_pages": [
+          147,
+          148
+        ]
+      },
+      "consolidated_scope": {
+        "established": true,
+        "status": "full consolidated group FY scope established; parent retains membership decision",
+        "note": "Group and Authority columns are both present. Physical/printedp148 basis of consolidation explicitly incorporates NDA and subsidiary undertakings to31March. Use Group2026, not Authority or restated2025. Physical/printedp147 says poundssterling nearestmillion. Physicalp143 is also printedp143."
+      },
+      "text_layer": {
+        "pages": 215,
+        "nonempty_text_pages": 214,
+        "zero_text_pages": [
+          2
+        ]
+      },
+      "zero_text_page_qualification": "All listed zero-text pages were rendered and visually confirmed blank.",
+      "notices": [
+        {
+          "physical_page": 4,
+          "note": "Nuclear Decommissioning Authority copyright2026; publication expressly licensed under OGLv3 except where otherwise stated. Identified third-party copyright requires permission from respective holders. This is an affirmative publication-level grant with exceptions, not an unrestricted claim over all materials."
+        }
+      ],
+      "reuse_note": "The document itself supplies the described OGL grant, subject to stated and licence exceptions; this record does not infer permission from catalog terms alone. No source PDF, full text, logos, maps or third-party images will be publicly redistributed. This is source inspection, not a legal determination.",
+      "license": "OGL-UK-3.0 subject to PDF-local and third-party exceptions",
+      "license_notice_page": 4,
+      "source_retention": "original PDF in local work storage; not committed"
+    },
+    {
+      "id": "annual-h11",
+      "source": "https://assets.publishing.service.gov.uk/media/6a3d467433bc5beefd3c4b2b/The_Crown_Estate_Integrated_Annual_Report_and_Accounts_2025_to_2026.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/the-crown-estate-annual-report-and-accounts-2025-to-2026--2",
+      "approved_max_bytes": 10485760,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 7859490,
+      "source_sha256": "sha256:93b03cda0de48053e9a4d5f10f5613076ebe05ea4d7076027ce142775c8831fe",
+      "source_pages": 160,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "crown-estate-group-annual-family",
+      "identity": {
+        "entity": "The Crown Estate group",
+        "title": "Annual Report and Accounts2025/26",
+        "latest_full_fiscal_year": "2025-04-01 to2026-03-31",
+        "physical_pages": [
+          3,
+          113,
+          123,
+          129
+        ]
+      },
+      "reporting_currency": {
+        "code": "GBP",
+        "printed_scale": 1000000,
+        "physical_pages": [
+          128
+        ]
+      },
+      "consolidated_scope": {
+        "established": true,
+        "status": "full consolidated group FY scope established; parent retains membership decision",
+        "note": "Physicalp129/printed123 explicitly includes CrownEstate and all subsidiaries for yearended31March2026. Primary statements distinguish Group from Parent. Physicalp128/printed122 says sterling nearestmillion. Financial-review proportionally consolidated alternative performance measures are distinct from the primary Group statements; physicalp23/printed17 andp151/printed145 explain the basis."
+      },
+      "text_layer": {
+        "pages": 160,
+        "nonempty_text_pages": 157,
+        "zero_text_pages": [
+          2,
+          5,
+          159
+        ]
+      },
+      "zero_text_page_qualification": "All listed zero-text pages were rendered and visually confirmed blank.",
+      "notices": [
+        {
+          "physical_page": 4,
+          "note": "Crown copyright2026; publication expressly licensed under OGLv3 except where otherwise stated. Identified third-party copyright requires permission from respective holders."
+        },
+        {
+          "physical_page": 158,
+          "printed_page": 152,
+          "note": "Image credits identify several third-party photographers and other contributors, including an all-rights-reserved credit for an image. Other images are stated to be CrownEstate copyright unless otherwise stated. These image-specific notices are exceptions to handle separately, not a blanket prohibition on financial statement information."
+        }
+      ],
+      "reuse_note": "The document itself supplies the described OGL grant, subject to stated and licence exceptions; this record does not infer permission from catalog terms alone. No source PDF, full text, logos, maps or third-party images will be publicly redistributed. This is source inspection, not a legal determination.",
+      "license": "OGL-UK-3.0 subject to PDF-local and third-party exceptions",
+      "license_notice_page": 4,
+      "source_retention": "original PDF in local work storage; not committed"
     }
   ]
 }

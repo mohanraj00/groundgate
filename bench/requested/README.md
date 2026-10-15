@@ -225,3 +225,15 @@ Unselected current modes, stress-only temperature interpretations and unselected
 provider tiers also stay unclear. No field request or rule is changed to resolve these cases.
 These provisional labels stay unsealed; they do not permit a model run or establish a measured
 result. The earlier draft labels are preserved.
+
+A later module and annual-report batch records affirmative documentation or publication grants
+with their conditions and third-party exceptions. Exact source/generator paths support the module
+documentation grant; they do not attest that deployed bytes equal a repository revision. The
+original PDF bytes remain pinned by SHA-256. One company-only annual source stays on hold because
+its own consolidated group scope is not established. No superior department figures are used.
+
+The added absence labels have independent full-document source checks. Nominal supply voltage,
+drop and ripple requirements do not state numeric supply endpoints. A gross-profit figure on an
+explicitly different proportional reporting basis does not answer the fixed consolidated Group
+request. Those scope distinctions were reconciled before any benchmark client output. No endpoint,
+combined liabilities or profit was computed. The earlier fourteen draft labels remain unchanged.

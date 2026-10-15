@@ -1089,6 +1089,236 @@
           "reason": ""
         }
       ]
+    },
+    {
+      "id": "component-h07",
+      "fields": [
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-20",
+              "unit": "C"
+            }
+          ],
+          "page": 37,
+          "note": "Recommended Operating Conditions table: Operating Temperature, Min -20 degrees C. Revision history page 54 separately confirms -20 to +70 degrees C.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "70",
+              "unit": "C"
+            }
+          ],
+          "page": 37,
+          "note": "Recommended Operating Conditions table: Operating Temperature, Max +70 degrees C. Not solder-reflow temperature.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 37,
+          "note": "Power Consumption table has typical operating-current values 65.8 mA (radio disabled), 66.1 mA (BLE advertising), 67.8 mA (access-point connection), plus sleep-mode values. The footnote identifies Typ as overall time consumption, but does not select one operating mode as the named-device reference. Page 10 supply capacity 500 mA is not typical consumption.",
+          "reason": "The fixed request leaves multiple applicable operating modes unresolved; selecting one would add a condition.",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 10,
+          "note": "Physical page 10 specifies a 3.3 V output, maximum 5% voltage drop and 100 mV peak-to-peak ripple. It does not state a numeric recommended supply-voltage endpoint. Pages 20-26 identify 3.3 V supply pins; page 48 defines the regulated +3.3 V rail. The 0-5 V battery ADC range, signal thresholds and external reset IC limits are not module supply ratings. I do not derive endpoints from nominal voltage/drop/ripple.",
+          "reason": "No numeric minimum recommended module supply-voltage limit is stated in the complete original.",
+          "second_check": true
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 10,
+          "note": "Physical page 10 specifies a 3.3 V output, maximum 5% voltage drop and 100 mV peak-to-peak ripple. It does not state a numeric recommended supply-voltage endpoint. Pages 20-26 identify 3.3 V supply pins; page 48 defines the regulated +3.3 V rail. The 0-5 V battery ADC range, signal thresholds and external reset IC limits are not module supply ratings. I do not derive endpoints from nominal voltage/drop/ripple.",
+          "reason": "No numeric maximum recommended module supply-voltage limit is stated in the complete original.",
+          "second_check": true
+        }
+      ]
+    },
+    {
+      "id": "annual-h10",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-1002000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 155,
+          "note": "Note 9 Total revenues, NDA Group 2026, printed (1,002) in GBP millions. Preserve the printed negative sign under the frozen scope. Physical page 143 Income and segment note page 150 corroborate (1,002). Page 151 geographical income is shown as a positive amount in a different sign convention; the explicitly labeled Total revenues line is used. The 1,014 million commercial-income figure on pages 13/14/120 uses Government financial reporting/budgeting basis rather than the financial statements, as the source states on pages 14/120.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 143,
+          "note": "The complete source contains no cost-of-sales/cost-of-revenue line. The primary statement presents authority administration, programme expenditure, adjustments to provisions and depreciation; these are not substituted for cost of sales. Notes 5/6, physical page 151, describe the expenditure components.",
+          "reason": "No cost-of-sales amount stated for the requested consolidated year; two full-source searches and original-statement/note review found none.",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 143,
+          "note": "No gross-profit or gross-margin line appears in the complete source. The primary statement is a Statement of Comprehensive Net Expenditure. Neither net expenditure nor income less selected expenditure is substituted.",
+          "reason": "No stated consolidated gross profit; no unstated profit was calculated.",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "3422000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 144,
+          "note": "Statement of Financial Position, Group 2026, Total assets 3,422 GBP million. Group columns are distinct from Authority-only and restated prior periods.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 144,
+          "note": "The statement prints Total current liabilities (5,375) and Total non-current liabilities (112,122) GBP million, but no combined total-liabilities line. Net liabilities (114,075) is assets less liabilities, not total liabilities. Note 16 total financial liabilities is a narrower category; pension and contingent liability disclosures also have narrower scope.",
+          "reason": "Full 215-page searches of liability terminology and exact/whitespace-insensitive total-liabilities variants found no requested combined total. I did not add current/non-current subtotals or infer total liabilities from assets/equity.",
+          "second_check": true
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-114075000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 144,
+          "note": "Statement of Financial Position, Group 2026, Total equity printed (114,075) GBP million. Includes non-controlling interests; Total taxpayers equity (114,077) excludes those interests and is not used.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h11",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1477000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 123,
+          "note": "Consolidated revenue account, 2025/26, Revenue 1,477 GBP million; Note 4 Revenue as reported on physical page 132 confirms it. Group consolidated total, not the proportional alternative measure or revenue before service charges.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 123,
+          "note": "No cost-of-sales/cost-of-revenue amount is stated in the complete source. The consolidated statement prints Expenses (262) and Note 5 page 132 separates direct expenses/service-charge expenses; these are not substituted for cost of sales. Strategic report page 21 Direct costs (142) uses a different presentation and is not the requested field.",
+          "reason": "Two full-source text searches, including whitespace-insensitive variants, and original statement/notes review found no stated cost of sales.",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 123,
+          "note": "The only Gross profit row is 1,333 GBP million on physical page 21 (printed 15), in the strategic financial review on a proportionally consolidated basis. Physical page 23 (printed 17) identifies that basis as an alternative performance measure. Page 151 (printed 145) explicitly distinguishes Group columns from proportional columns and says these supplementary tables do not form part of the consolidated primary statements/notes. The requested consolidated Group statements page 123 and notes do not state gross profit; no Group value is computed.",
+          "reason": "A gross-profit figure exists only on the different proportional alternative basis; no stated gross profit for the frozen consolidated Group scope was found after full-source checks.",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "17858000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 124,
+          "note": "Balance sheets, Group 2025/26, Total assets 17,858 GBP million. Physical page 119 auditor narrative corroborates 17,858; Parent columns are not used.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1167000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 124,
+          "note": "Balance sheets, Group 2025/26, Total liabilities 1,167 GBP million, printed positive. Preserve this sign.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "16691000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 124,
+          "note": "Balance sheets, Group 2025/26, explicitly stated Total capital and reserves 16,691 GBP million is the complete closing equity balance. Net assets repeats that amount; it is not computed from assets/liabilities. Group statement of changes in capital/reserves physical page 125 corroborates the closing total. Parent amount 16,789 is not used.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
     }
   ],
   "status": "draft"
