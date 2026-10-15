@@ -237,7 +237,7 @@ def test_targeted_missing_field_only_and_field_terms():
     assert_replays(result, "Known 2. Amount 5.", schema)
     assert _queries(
         "total_amount", {"aliases": ["Total Amount", "Amount"], "description": "Net amount"}
-    ) == ["total amount", "Amount", "total", "Net"]
+    )[0] == ["total amount", "Amount", "total", "Net"]
 
 
 def test_targeted_reference_pins_first_occurrence_accepting_review_cost():
@@ -866,3 +866,86 @@ def test_oversize_reply_is_retained_for_replay_but_never_parsed(monkeypatch):
     assert call["status"] == "reply_limit" and call["reply_bytes"] == len(raw)
     assert result.artifacts[call["reply_sha256"]] == raw
     assert_replays(result, "Amount 5.")
+
+
+@pytest.mark.parametrize("failure", [RuntimeError("stopped"), "invalid JSON"])
+def test_aborted_initial_pass_reports_no_valid_disposition_for_every_field(failure):
+    schema = {"fields": {"amount": {"type": "integer"}, "other": {"type": "integer"}}}
+    text = "Amount 5.\nOther 6.\nAmount 7."
+    client = Client(failure)
+    result = execute(text, client, schema, run_policy=RunPolicy(chunk_chars=10, overlap_chars=0))
+    assert not result.complete and len(client.prompts) == 1
+    assert result.record["final"]["fields"] == {
+        "amount": ["incomplete_no_disposition"],
+        "other": ["incomplete_no_disposition"],
+    }
+    assert not any(e["kind"] == "not_found" for e in result.record["entries"])
+    assert_replays(result, text, schema)
+
+
+def test_targeted_query_count_is_hard_capped_before_source_scans(monkeypatch):
+    import groundgate.run.runner as module
+
+    words = [f"term{i}" for i in range(5000)]
+    schema = {
+        "fields": {
+            "annual_total": {
+                "type": "integer",
+                "aliases": ["Preferred", "Secondary"],
+                "description": " ".join(words),
+            }
+        }
+    }
+    queries, omitted = _queries("annual_total", schema["fields"]["annual_total"])
+    assert queries[:5] == ["annual total", "Preferred", "Secondary", "annual", "total"]
+    assert len(queries) == 64 and omitted == 4941
+    scans = []
+    original = module._matches
+
+    def matches(source, query):
+        scans.append(query)
+        yield from original(source, query)
+
+    monkeypatch.setattr(module, "_matches", matches)
+    result = execute(
+        "Nothing here.",
+        Client(envelope(missing=("annual_total",))),
+        schema,
+        run_policy=RunPolicy(max_prompt_chars=200000),
+    )
+    search = next(e for e in result.record["entries"] if e["kind"] == "search")
+    assert scans == queries
+    assert search["queries"] == queries and search["omitted_queries"] == omitted
+    assert search["query_limit"] == 64 and search["status"] == "search_truncated"
+    assert_replays(result, "Nothing here.", schema)
+
+
+def test_repair_prompt_limit_differs_from_call_budget():
+    text = "Amount 5."
+    first = envelope(candidate(evidence=[item("missing" * 1000)]))
+    baseline = execute(text, Client(first, candidate()))
+    first_call = next(e for e in baseline.record["entries"] if e["kind"] == "call")
+    initial = len(baseline.artifacts[first_call["prompt_sha256"]])
+    # The complete repair prompt is larger than the initial prompt because it includes feedback.
+    client = Client(first)
+    result = execute(text, client, run_policy=RunPolicy(max_prompt_chars=initial))
+    stop = next(e for e in result.record["entries"] if e["kind"] == "limit")
+    assert stop["phase"] == "repair" and stop["status"] == "prompt_limit"
+    assert result.record["final"]["fields"]["amount"] == ["proposed", "prompt_limit"]
+    assert len(client.prompts) == 1 and not result.complete
+    assert_replays(result, text)
+
+    budget = execute(text, Client(first), run_policy=RunPolicy(max_calls=1))
+    stop = next(e for e in budget.record["entries"] if e["kind"] == "limit")
+    assert stop["status"] == "call_limit"
+    assert budget.record["final"]["fields"]["amount"] == ["proposed", "call_limit"]
+    assert_replays(budget, text)
+
+
+def test_source_region_protocol_abort_reports_no_valid_disposition():
+    references = [{"id": "r", "text": "Amount 5."}]
+    result = execute("", Client(envelope(candidate())), references=references)
+    assert not result.complete and result.candidates == []
+    assert result.record["final"]["fields"]["amount"] == ["incomplete_no_disposition"]
+    assert any(e.get("reason") == "source_region" for e in result.record["entries"])
+    assert_replays(result, "", references=references)

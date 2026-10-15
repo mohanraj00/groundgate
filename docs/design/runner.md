@@ -250,7 +250,10 @@ comparison. It keeps the first query when these forms are duplicates, so an earl
 alias wins the tie. It searches whole words or phrases with flexible whitespace. It does not
 use a model, stemming, an embedding or words from model output. Keys are included as context
 in the prompt, not searched alone: common year headings would match unrelated tables. Every
-query and searched source is recorded. Match records are bounded as below.
+retained query and searched source is recorded. The first 64 distinct nonempty queries are
+searched; `omitted_queries` counts later distinct queries without scanning the sources for them.
+This hard internal cap applies to live runs and replay and cannot be raised by a saved header.
+Query truncation records `search_truncated`. Match records are bounded as below.
 
 The script searches the full document and each supplied reference. Query order defines match
 priority: title, aliases, title words, then description words. Within one query, document hits
@@ -263,12 +266,14 @@ byte start. `omitted_regions` counts discarded regions from that bounded pool; i
 estimate regions from omitted matches. Either cap records `search_truncated`. The selected
 regions are sent in document, reference-id and byte-start order for stable quote anchoring.
 
-The record cap does not cap search work. Each query scans the supplied sources to count all
-hits. The runner builds and caches a casefold once per source across all fields and queries.
+The match-record cap does not cap the number of hits scanned. Each of at most 64 retained
+queries per missing field scans the supplied sources to count all hits. The runner builds and caches a casefold once per source across all fields and queries.
 Length-preserving folds use identity boundaries; expansions use compact array breakpoints.
 Runner byte offsets also use compact multibyte deltas, not a per-character reverse dictionary.
-Search memory grows with the supplied texts and cached folds; search CPU grows with source
-length and query count. No model-call budget is claimed to bound those scans.
+Search memory grows with the supplied texts, schema query deduplication and cached folds.
+Search CPU grows with source length, field count and up to 64 retained queries per field.
+Counting omitted queries still reads the schema terms. No model-call budget is claimed to
+bound those scans.
 
 The reply may quote any one retained region but may not combine two regions into a new quote.
 For document evidence the runner chooses the first retained region that holds the whole value
@@ -336,7 +341,14 @@ absent. Field states are a history of attempted work, not an active candidate in
 `proposed` can precede a resource rollback. A limit entry lists retained and dropped candidate
 ids and ids whose evidence version was reverted. Rollback restores the last accepted raw
 candidates as well as their admission packet. The returned candidate list and core receipt
-are the active inventory. No history state overrides a core outcome.
+are the active inventory. No history state overrides a core outcome. If an incomplete run
+leaves a field with no valid disposition, `incomplete_no_disposition` replaces its empty
+history. It makes no claim about whether the client attempted that field or whether the
+value is absent; call and protocol-failure entries describe the attempted work. A prompt
+character-budget stop records `prompt_limit`, separately from a total `call_limit`, in both
+the limit event and affected field history. Targeted call exhaustion keeps the field state
+`unsearched` with the limit event's `call_limit` status. A targeted not-found response records
+`model_not_found` followed by `targeted_not_found`, preserving response and phase history.
 
 ## 8. The run record and replay
 

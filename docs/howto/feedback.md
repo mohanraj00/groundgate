@@ -80,6 +80,12 @@ states do not prove that a field is absent. The record's entries give the failur
 reason; `record["final"]["fields"]` lists the field's search and repair history. These states
 record attempts, not an active candidate inventory. An admission-history limit entry lists
 retained, dropped and reverted ids. Read `result.candidates` with its receipt for active values.
+If a run stops before a field has a valid disposition, its history contains
+`incomplete_no_disposition`. This does not say whether a client was attempted or prove absence;
+read the call and protocol-failure entries for that detail. `prompt_limit` means a generated
+repair prompt exceeded its character budget; `call_limit` means the total call budget ended.
+A targeted not-found reply records both `model_not_found` and `targeted_not_found`: the first
+records the model response, and the second records completion of that phase.
 
 The initial response must account for every requested field in `candidates` or `not_found`,
 never both. For example, an empty response for the requested field is:
@@ -91,8 +97,9 @@ never both. For example, an empty response for the requested field is:
 For a field with no first-pass candidate, the runner searches the supplied texts using the
 field name, aliases and description. One targeted call gets only the selected regions and
 asks for that field. Title and alias matches take priority over individual description words.
-The search retains at most 1024 match records; omitted counts and truncation stay in the record.
-This caps recorded matches, not the work of scanning every source for each query. Casefolds
+The search uses at most the first 64 distinct queries in that priority order and records
+`omitted_queries`. It retains at most 1024 match records; omitted counts and truncation stay in
+the record. Each retained query still scans every supplied source to count its hits. Casefolds
 are cached once per source across fields; expansion maps and byte offsets use compact arrays.
 A rejected candidate does not trigger that pass. Search terms, retained regions, truncation and not-found replies stay in the record. No match is the result of that
 search, not proof of absence. Set `RunPolicy(targeted=False)` for a run without this pass.
