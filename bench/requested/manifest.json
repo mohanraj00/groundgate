@@ -392,6 +392,566 @@
    "source_retention": "original PDF in local work storage; not committed",
    "source_sha256": "sha256:eab508829aacb9c2d78a9d0ee8e9e1f6266b474bdd726c4f23ddf6fc3e6c1f40",
    "split": "heldout"
+  },
+  {
+   "id": "component-h04",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://sensirion.com/media/documents/4EAF6AF8/61652C3C/Sensirion_CO2_Sensors_SCD30_Datasheet.pdf",
+   "source_sha256": "sha256:8c47d6e4ca180ec893d8f47e24e175d9e81df42a2d26c16a6e9770c48f962a22",
+   "source_bytes": 584579,
+   "source_pages": 8,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "sensirion-scd30",
+   "license": "No affirmative open reuse grant found; exact limited permissions and notices are in source_checks.json",
+   "license_other_notices": "No PDF, page image or source text redistribution is proposed. Draft presence does not establish final benchmark permission.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
+   "named_source": "SCD30"
+  },
+  {
+   "id": "component-h05",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://sensirion.com/media/documents/213E6A3B/63A5A569/Datasheet_SHT3x_DIS.pdf",
+   "source_sha256": "sha256:095b1853e7f4328f5897c9ca6c392a7dd8b0202eda66b0a2629f9cb840dd496d",
+   "source_bytes": 810136,
+   "source_pages": 22,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "sensirion-sht3x-dis",
+   "license": "No affirmative open reuse grant found; exact limited permissions and notices are in source_checks.json",
+   "license_other_notices": "No PDF, page image or source text redistribution is proposed. Draft presence does not establish final benchmark permission.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
+   "named_source": "SHT31-DIS-B"
+  },
+  {
+   "id": "component-h06",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://sensirion.com/media/documents/4D045D69/6375F34F/DP_DS_SDP3x_digital_D1.pdf",
+   "source_sha256": "sha256:702bf46e64bd038f02cbe49819d58f57df10c718300418a60515d1208b2f8380",
+   "source_bytes": 757773,
+   "source_pages": 14,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "sensirion-sdp3x-digital",
+   "license": "No affirmative open reuse grant found; exact limited permissions and notices are in source_checks.json",
+   "license_other_notices": "No PDF, page image or source text redistribution is proposed. Draft presence does not establish final benchmark permission.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "label_scope_note": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear.",
+   "named_source": "SDP31"
+  },
+  {
+   "id": "sbc-h04",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://hr.mit.edu/sites/default/files/mit_ppo_sbc_2026_0.pdf",
+   "source_sha256": "sha256:d2de5c8a1af16c80ad005992d979855b51e8839811ed3c1b752ce3dfdb9e5d7b",
+   "source_bytes": 281428,
+   "source_pages": 8,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "bcbsma-mit-2026",
+   "license": "No affirmative open reuse grant found; exact limited permissions and notices are in source_checks.json",
+   "license_other_notices": "No PDF, page image or source text redistribution is proposed. Draft presence does not establish final benchmark permission.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
+   "named_source": "MIT BCBS PPO+ 2026"
+  },
+  {
+   "id": "sbc-h05",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://hr.mit.edu/sites/default/files/mit_hdhp_sbc_2026_0.pdf",
+   "source_sha256": "sha256:4cb4d636c45eab180521a8f140d370d04fae06c506e89b36bee6325e6a671780",
+   "source_bytes": 275217,
+   "source_pages": 8,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "bcbsma-mit-2026",
+   "license": "No affirmative open reuse grant found; exact limited permissions and notices are in source_checks.json",
+   "license_other_notices": "No PDF, page image or source text redistribution is proposed. Draft presence does not establish final benchmark permission.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
+   "named_source": "MIT BCBS HDHP 2026"
+  },
+  {
+   "id": "sbc-h06",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://hr.duke.edu/sites/default/files/2026-Summary-of-Benefits-and-Coverage-Duke-Select.pdf",
+   "source_sha256": "sha256:ff986be129215a3039e661d320bbda446918d943d3261024ac35e1475c5d1084",
+   "source_bytes": 596145,
+   "source_pages": 11,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "duke-select-cigna-2026",
+   "license": "No affirmative open reuse grant found; exact limited permissions and notices are in source_checks.json",
+   "license_other_notices": "No PDF, page image or source text redistribution is proposed. Draft presence does not establish final benchmark permission.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
+   "named_source": "Duke Select 2026"
+  },
+  {
+   "id": "annual-h04",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.gsk.com/media/kn0bknmd/annual-report-2025.pdf",
+   "source_sha256": "sha256:a3ef37d848fca940f85b6c33815a5d47d1f32726fd389a03910653e24af0f4d2",
+   "source_bytes": 24690253,
+   "source_pages": 331,
+   "approved_max_bytes": 31457280,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "gsk-annual-2025",
+   "license": "No affirmative open reuse grant found; exact limited permissions and notices are in source_checks.json",
+   "license_other_notices": "No PDF, page image or source text redistribution is proposed. Draft presence does not establish final benchmark permission.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "label_scope_note": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit.",
+   "named_source": "Latest consolidated group annual report"
   }
  ],
  "format": "requested-fields/1",
@@ -576,7 +1136,7 @@
   }
  },
  "selection_complete": false,
- "selection_note": "Three approved development pilots and four inspected held-out candidates have source-based draft labels. Final eligibility and membership remain open. The three inspected component candidates in source_checks.json are on hold and are not manifest members. No benchmark model output exists.",
+ "selection_note": "Approved development pilots and inspected held-out candidates have source-based draft labels. Final eligibility and membership remain open. The first three inspected component candidates in source_checks.json are on hold and are not manifest members. Related source families stay grouped. No benchmark model output exists.",
  "status": "draft",
  "label_method": "Draft source-only agent annotations from original PDFs, checked against original page renders. Independent second checks cover absence and disputed fields. No benchmark model call has run."
 }
