@@ -3377,6 +3377,25 @@ vector(
 )  # fmt: skip
 
 
+vector(
+    "49-prose-key-break",
+    "Two adjacent blank lines stop a prose heading from reaching its value. One blank line "
+    "retains the heading, and a key in the value's own sentence still applies after a break "
+    "(spec 0.9, #278).",
+    "Hypertension\n\n\nThe dose is 5 mg.\n\n"
+    "Angina\n\nThe dose is 7 mg.\n\n"
+    "Hypertension\n\n\nFor Hypertension the dose is 9 mg.",
+    {"fields": {"dose": {"type": "integer", "unit": "mg", "multiple": True,
+                         "keys": ["Hypertension", "Angina"]}}},
+    [
+        c("p1", "dose", "5", "mg", [q("5 mg")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="Hypertension"),
+        c("p2", "dose", "7", "mg", [q("7 mg")], key="Angina"),
+        c("p3", "dose", "9", "mg", [q("9 mg")], key="Hypertension"),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

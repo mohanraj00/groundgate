@@ -138,10 +138,16 @@ def test_the_label_line_scan_agrees_with_the_regex(text: str, a: int, b: int) ->
 
 def test_a_long_line_of_spaces_takes_linear_time() -> None:
     mentions = key_mentions("Hypertension", ("Hypertension",))
-    text = "Hypertension\n\n" + " " * 200_000 + "\nThe dose is 5 mg."
+    text = "Hypertension\n" + " " * 200_000 + "\nThe dose is 5 mg."
     t0 = time.perf_counter()
-    assert keys_at(text, mentions, text.index("5 mg")) == set()
+    assert keys_at(text, mentions, text.index("5 mg")) == {"Hypertension"}
     assert time.perf_counter() - t0 < 1
+
+
+def test_two_blank_lines_break_a_prose_heading() -> None:
+    text = "Hypertension\n\n" + " " * 200_000 + "\nThe dose is 5 mg."
+    mentions = key_mentions(text, ("Hypertension",))
+    assert keys_at(text, mentions, text.index("5 mg")) == set()
 
 
 _PIECES = st.lists(
