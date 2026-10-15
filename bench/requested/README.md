@@ -3,7 +3,8 @@
 Status: kinds and field lists approved by the maintainer in chat on 2026-10-15 and recorded on
 #269. Approved development pilots are cached in local work storage. `manifest.json` records their
 source URLs, byte sizes, hashes and notices; `labels.json` contains source-based development
-drafts and source-checked provisional labels for inspected held-out candidates. Source selection is still open. No model output exists. Every additional download needs approval.
+drafts and source-checked provisional labels for inspected held-out candidates. Source selection is
+still open. No model output exists. Every additional download needs approval.
 
 ## Proposed kinds and fixed requests
 
@@ -187,11 +188,10 @@ I check the harness with synthetic sources and fixed replies. No test reads the 
 source PDFs. The runner integration checks skip until the Runner lane is available; I run them
 against that lane before integration. No real client runs before the full corpus seal.
 
+## Inspected candidate batches
 
-## Inspected candidate batch
-
-`source_checks.json` records the seven individually approved downloads and their own notices.
-All originals fit their approved caps and remain in local work storage. The three component
+`source_checks.json` records the individually approved inspection downloads and their own notices.
+All originals fit their approved caps and remain in local work storage. The first three component
 candidates are on hold: their PDF notices add an application-specific use restriction, and
 applicable benchmark permission is not established. They are not in the label-page manifest.
 
@@ -204,10 +204,24 @@ page is not a final eligibility decision or permission to redistribute source ma
 Selection remains open and the set cannot seal. The component holds, all source notices and
 any final exclusion reasons must be resolved before membership is frozen.
 
-
-The new candidate labels use source-only agent annotations and original page renders. Independent
+The first candidate labels use source-only agent annotations and original page renders. Independent
 blind checks confirm the three new absence labels and the SBC fields. One SBC states both
 ordinary out-of-pocket limits and maximum cost shares for different medical expense categories;
 its two out-of-pocket slots stay unclear because the fixed request does not choose that scope.
 No expense components, unstated profit or closing totals were calculated. These source checks
 are not benchmark outputs, a sealed label set or a measured result.
+
+The second inspection batch adds three component datasheets, three SBCs and one annual report
+as draft candidates. Their source hashes, named variants, grouping and notices are recorded.
+The two related SBC plans share one source-family group and stay in the same split. Generic
+copyright and safety notices are recorded separately from document-use restrictions; no
+affirmative open reuse grant is inferred. The annual source has a limited personal noncommercial
+download permission, not an open license. Final source-use eligibility remains open.
+
+The requests use the same fixed fields. The annual report records GBP before value labeling.
+Source-only primary and independent checks retain the printed signs and table conditions.
+A cycle-average current does not resolve the fixed typical-current request, so it stays unclear.
+Unselected current modes, stress-only temperature interpretations and unselected in-network
+provider tiers also stay unclear. No field request or rule is changed to resolve these cases.
+These provisional labels stay unsealed; they do not permit a model run or establish a measured
+result. The earlier draft labels are preserved.

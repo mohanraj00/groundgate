@@ -357,6 +357,567 @@
         "remaining_boundary": "Document-only inspection. External website terms and applicable permission are for the parent to determine. Public availability and inspection download approval are not treated as benchmark-use permission.",
         "redistribution": "No source PDF, rendered page or long source passage is proposed for public redistribution."
       }
+    },
+    {
+      "id": "component-h04",
+      "source": "https://sensirion.com/media/documents/4EAF6AF8/61652C3C/Sensirion_CO2_Sensors_SCD30_Datasheet.pdf",
+      "catalog_source": "https://sensirion.com/products/catalog/SCD30",
+      "approved_max_bytes": 1048576,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 584579,
+      "source_sha256": "sha256:8c47d6e4ca180ec893d8f47e24e175d9e81df42a2d26c16a6e9770c48f962a22",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "sensirion-scd30",
+      "identity": {
+        "named_device": "SCD30",
+        "document_title": "Datasheet Sensirion SCD30 Sensor Module",
+        "revision": "Version 1.0 - D1 - May 2020",
+        "physical_evidence_pages": [
+          1,
+          5
+        ],
+        "component_kind": "Self-contained CO2, humidity and temperature sensor module, not a development/evaluation board.",
+        "ordering_identity": {
+          "physical_page": 5,
+          "named_product": "SCD30 sensor",
+          "article_numbers": [
+            "1-101625-10"
+          ],
+          "note": "Ordering table separately lists SEK-SCD30-Sensor and SEK-SensorBridge accessories. Those are excluded from this source identity."
+        },
+        "near_duplicate_group": "sensirion-scd30"
+      },
+      "text_layer": {
+        "eligible": true,
+        "method": "Direct pypdf text from every original page without OCR; English prose/headings and table structure checked against listed original page renders. No groundgate reader or benchmark tool used.",
+        "pdf_language_metadata": "en-US",
+        "page_text_character_counts": [
+          1969,
+          2928,
+          1883,
+          517,
+          1727,
+          308,
+          3944,
+          811
+        ],
+        "blank_text_pages": []
+      },
+      "operating_table_eligibility": {
+        "manufacturer_operating_or_electrical_tables_present": true,
+        "matches_ic_or_self_contained_module_kind": true,
+        "evidence": [
+          {
+            "physical_page": 3,
+            "section": "Electrical Specifications, Table 4",
+            "description": "DC supply-voltage row explicitly identifies minimum and maximum criteria to operate SCD30. Interface logic-voltage rows are separate."
+          },
+          {
+            "physical_page": 3,
+            "section": "Operation Conditions, Lifetime and Maximum Ratings, Table 5",
+            "description": "Temperature operating conditions are explicitly scoped to the CO2 sensor; storage temperature and damage-limit supply voltage appear as separate rows."
+          }
+        ],
+        "interpretation_caveats": [
+          "The requested source is the complete SCD30 module; do not switch to its embedded RH/T sensing element or evaluation accessories.",
+          "Table5 mixes operation conditions with maximum ratings. Preserve each row label and condition; storage/damage limits do not replace operating limits.",
+          "CO2 operating-temperature scope is explicit. No operating field values or labels were selected in this check."
+        ]
+      },
+      "notices": {
+        "physical_page": 7,
+        "printed_page": "7/8",
+        "section": "Important Notices",
+        "copyright_owner": "SENSIRION",
+        "copyright_years": "2018",
+        "short_notice": "All rights reserved",
+        "physical_product_restrictions": "Safety/emergency-stop and other unauthorized product applications are warned against. Buyer indemnity and technical-parameter validation obligations concern hardware/product applications. ESD precautions, warranty limitations, liability disclaimers and rights to change specifications also appear.",
+        "document_use_or_acquisition_restriction_found": false,
+        "document_restriction_scope": "No PDF-local clause found limiting this document to development with manufacturer parts, banning document analysis/acquisition/copying, or requiring prior consent for reading. This finding concerns the inspected PDF text, not an affirmative legal permission conclusion.",
+        "affirmative_reuse_or_open_license_found": false,
+        "copyright_or_license_xmp_text_found": false,
+        "interpretation": "Generic copyright and hardware safety/warranty restrictions are distinct from an express document-use restriction. None supplies affirmative permission for redistribution or benchmark reuse. Preserve notices and existing source-use approval scope.",
+        "search_scope": "All pages searched for rights/license/reproduction/permission/proprietary and document-use language; complete notice page read and visually inspected.",
+        "notice_search_candidate_pages": [
+          7
+        ]
+      },
+      "permission_note": "No affirmative reuse grant found. No PDF-local document-use or acquisition restriction found. Inspection and draft annotation do not establish final benchmark permission. No PDF, source text or image redistribution is proposed."
+    },
+    {
+      "id": "component-h05",
+      "source": "https://sensirion.com/media/documents/213E6A3B/63A5A569/Datasheet_SHT3x_DIS.pdf",
+      "catalog_source": "https://sensirion.com/products/catalog/SHT31-DIS-B",
+      "approved_max_bytes": 1048576,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 810136,
+      "source_sha256": "sha256:095b1853e7f4328f5897c9ca6c392a7dd8b0202eda66b0a2629f9cb840dd496d",
+      "source_pages": 22,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "sensirion-sht3x-dis",
+      "identity": {
+        "named_device": "SHT31-DIS-B",
+        "document_title": "Datasheet SHT3x-DIS - Humidity and Temperature Sensor",
+        "revision": "December 2022 - Version 7",
+        "physical_evidence_pages": [
+          1,
+          19
+        ],
+        "component_kind": "Digital humidity/temperature sensor IC in DFN package. Family PDF includes SHT30, SHT31 and SHT35; this source is the named SHT31-DIS-B variant.",
+        "ordering_identity": {
+          "physical_page": 19,
+          "table": "Table23 SHT3x-DIS ordering options",
+          "named_product": "SHT31-DIS-B",
+          "options": [
+            {
+              "name": "SHT31-DIS-B2.5kS",
+              "order_number": "1-101386-01",
+              "description": "Tape/reel quantity2500"
+            },
+            {
+              "name": "SHT31-DIS-B10kS",
+              "order_number": "1-101147-01",
+              "description": "Tape/reel quantity10000"
+            }
+          ],
+          "note": "Both ordering suffixes are packaging quantities for the named SHT31-DIS-B sensor. Lock the named device/ordering scope before labels; do not count SHT30/SHT35 or packing sizes as independent documents."
+        },
+        "near_duplicate_group": "sensirion-sht3x-dis"
+      },
+      "text_layer": {
+        "eligible": true,
+        "method": "Direct pypdf text from every original page without OCR; English prose/headings and table structure checked against listed original page renders. No groundgate reader or benchmark tool used.",
+        "pdf_language_metadata": "de-CH",
+        "page_text_character_counts": [
+          2659,
+          2569,
+          620,
+          1567,
+          1160,
+          2116,
+          2288,
+          3572,
+          4350,
+          3794,
+          2718,
+          3643,
+          2244,
+          2177,
+          493,
+          2241,
+          2071,
+          1240,
+          1975,
+          1158,
+          1348,
+          4696
+        ],
+        "blank_text_pages": []
+      },
+      "operating_table_eligibility": {
+        "manufacturer_operating_or_electrical_tables_present": true,
+        "matches_ic_or_self_contained_module_kind": true,
+        "evidence": [
+          {
+            "physical_page": 6,
+            "section": "1.1 Recommended Operating Condition",
+            "description": "Discusses a recommended normal temperature/humidity region, long exposure and recovery/ageing, separately from full electrical and stress ratings."
+          },
+          {
+            "physical_page": 6,
+            "section": "2.1 Electrical Specifications, Table3",
+            "description": "Contains explicit supply-voltage Min./Typ./Max. columns. Caption specifies temperature validity of min/max electrical values."
+          },
+          {
+            "physical_page": 7,
+            "section": "2.2 Timing Specification, Tables4/5",
+            "description": "Explicit temperature and supply-voltage validity conditions accompany timing tables."
+          },
+          {
+            "physical_page": 7,
+            "section": "2.3 Absolute Minimum and Maximum Ratings, Table6",
+            "description": "Contains a row explicitly named Operating temperature range and a separate Storage temperature range. Introductory text says these are stress ratings and functional operation at these conditions is not guaranteed."
+          }
+        ],
+        "interpretation_caveats": [
+          "An operating-temperature label in an absolute-rating table needs its stress-only context preserved; it cannot silently be treated as a guaranteed normal operating range.",
+          "Recommended normal conditions, electrical/timing validity and stress-rating bounds are distinct source statements. This inspection records their existence, not the eventual gold interpretation.",
+          "The PDF language metadata says de-CH, but all inspected prose/headings/tables and direct text are English. Do not reject English eligibility from that metadata tag alone."
+        ]
+      },
+      "notices": {
+        "physical_page": 22,
+        "printed_page": "22/22",
+        "section": "Important Notices",
+        "copyright_owner": "SENSIRION",
+        "copyright_years": "2019",
+        "short_notice": "All rights reserved",
+        "physical_product_restrictions": "Safety/emergency-stop and other unauthorized product applications are warned against. Buyer indemnity and technical-parameter validation obligations concern hardware/product applications. ESD precautions, warranty limitations, liability disclaimers and rights to change specifications also appear.",
+        "document_use_or_acquisition_restriction_found": false,
+        "document_restriction_scope": "No PDF-local clause found limiting this document to development with manufacturer parts, banning document analysis/acquisition/copying, or requiring prior consent for reading. This finding concerns the inspected PDF text, not an affirmative legal permission conclusion.",
+        "affirmative_reuse_or_open_license_found": false,
+        "copyright_or_license_xmp_text_found": false,
+        "interpretation": "Generic copyright and hardware safety/warranty restrictions are distinct from an express document-use restriction. None supplies affirmative permission for redistribution or benchmark reuse. Preserve notices and existing source-use approval scope.",
+        "search_scope": "All pages searched for rights/license/reproduction/permission/proprietary and document-use language; complete notice page read and visually inspected.",
+        "notice_search_candidate_pages": [
+          6,
+          8,
+          9,
+          22
+        ]
+      },
+      "permission_note": "No affirmative reuse grant found. No PDF-local document-use or acquisition restriction found. Inspection and draft annotation do not establish final benchmark permission. No PDF, source text or image redistribution is proposed."
+    },
+    {
+      "id": "component-h06",
+      "source": "https://sensirion.com/media/documents/4D045D69/6375F34F/DP_DS_SDP3x_digital_D1.pdf",
+      "catalog_source": "https://sensirion.com/products/catalog/SDP31",
+      "approved_max_bytes": 1048576,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 757773,
+      "source_sha256": "sha256:702bf46e64bd038f02cbe49819d58f57df10c718300418a60515d1208b2f8380",
+      "source_pages": 14,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "sensirion-sdp3x-digital",
+      "identity": {
+        "named_device": "SDP31",
+        "document_title": "Datasheet SDP3x-Digital - Digital Differential Pressure Sensor",
+        "revision": "Version 1.1 - November 2022",
+        "physical_evidence_pages": [
+          1,
+          2
+        ],
+        "component_kind": "Self-contained reflow-solderable digital differential-pressure sensor component. Family PDF includes SDP31 and SDP32; this source is SDP31, not an evaluation kit.",
+        "ordering_identity": {
+          "physical_page": 2,
+          "section": "1. Ordering Information",
+          "named_product": "SDP31",
+          "options": [
+            {
+              "order_number": "1-101445-02",
+              "description": "Tape/reel quantity1500, QFN Quad2 configuration"
+            },
+            {
+              "order_number": "1-101567-02",
+              "description": "Tape/reel quantity250, QFN Quad2 configuration"
+            }
+          ],
+          "note": "SDP32 is a separate family member. Keep all SDP3x family/packing/revision variants grouped across splits."
+        },
+        "near_duplicate_group": "sensirion-sdp3x-digital"
+      },
+      "text_layer": {
+        "eligible": true,
+        "method": "Direct pypdf text from every original page without OCR; English prose/headings and table structure checked against listed original page renders. No groundgate reader or benchmark tool used.",
+        "pdf_language_metadata": "de-CH",
+        "page_text_character_counts": [
+          2349,
+          1994,
+          2101,
+          2546,
+          3583,
+          1700,
+          2580,
+          2932,
+          2512,
+          1334,
+          126,
+          1269,
+          804,
+          4718
+        ],
+        "blank_text_pages": []
+      },
+      "operating_table_eligibility": {
+        "manufacturer_operating_or_electrical_tables_present": true,
+        "matches_ic_or_self_contained_module_kind": true,
+        "evidence": [
+          {
+            "physical_page": 3,
+            "section": "3.1 Electrical Specifications",
+            "description": "Contains supply-voltage Min./Typ./Max. columns, separate from the absolute supply-voltage rating."
+          },
+          {
+            "physical_page": 3,
+            "section": "3.5 Absolute Maximum Ratings",
+            "description": "Contains a row explicitly called Operating temperature range, a distinct Storage temperature range, and a footnote limiting operating-temperature statement to Air/N2 with lifetime caution for high temperature/oxygen exposure."
+          },
+          {
+            "physical_page": 2,
+            "section": "2. Sensor Performance",
+            "description": "Separate measurement and temperature-compensation ranges are printed; they must not be substituted for an operating rating merely because values may coincide."
+          }
+        ],
+        "interpretation_caveats": [
+          "The operating-temperature row is located in Absolute Maximum Ratings, with an Air/N2 condition and lifetime caution. Preserve this context during later blind labeling.",
+          "Sensor measurement/compensation ranges and storage range are separate concepts. No field-value label was selected here.",
+          "The PDF language metadata says de-CH, but direct text and inspected original page content are English."
+        ]
+      },
+      "notices": {
+        "physical_page": 14,
+        "printed_page": "14/14",
+        "section": "Important Notices",
+        "copyright_owner": "SENSIRION",
+        "copyright_years": "2016-2019",
+        "short_notice": "All rights reserved",
+        "physical_product_restrictions": "Safety/emergency-stop and other unauthorized product applications are warned against. Buyer indemnity and technical-parameter validation obligations concern hardware/product applications. ESD precautions, warranty limitations, liability disclaimers and rights to change specifications also appear.",
+        "document_use_or_acquisition_restriction_found": false,
+        "document_restriction_scope": "No PDF-local clause found limiting this document to development with manufacturer parts, banning document analysis/acquisition/copying, or requiring prior consent for reading. This finding concerns the inspected PDF text, not an affirmative legal permission conclusion.",
+        "affirmative_reuse_or_open_license_found": false,
+        "copyright_or_license_xmp_text_found": false,
+        "interpretation": "Generic copyright and hardware safety/warranty restrictions are distinct from an express document-use restriction. None supplies affirmative permission for redistribution or benchmark reuse. Preserve notices and existing source-use approval scope.",
+        "search_scope": "All pages searched for rights/license/reproduction/permission/proprietary and document-use language; complete notice page read and visually inspected.",
+        "notice_search_candidate_pages": [
+          6,
+          14
+        ]
+      },
+      "permission_note": "No affirmative reuse grant found. No PDF-local document-use or acquisition restriction found. Inspection and draft annotation do not establish final benchmark permission. No PDF, source text or image redistribution is proposed."
+    },
+    {
+      "id": "sbc-h04",
+      "source": "https://hr.mit.edu/sites/default/files/mit_ppo_sbc_2026_0.pdf",
+      "approved_max_bytes": 1048576,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 281428,
+      "source_sha256": "sha256:d2de5c8a1af16c80ad005992d979855b51e8839811ed3c1b752ce3dfdb9e5d7b",
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_pages": 8,
+      "source_family_group": "bcbsma-mit-2026",
+      "identity": {
+        "publisher": "Blue Cross Blue Shield of Massachusetts",
+        "plan_name": "MIT PPO+ Plan",
+        "network_or_product_as_printed": "Blue Care Elect $175 Deductible",
+        "plan_type_as_printed": "PPO Tiered",
+        "coverage_for_as_printed": "Individual and Family",
+        "coverage_period_as_printed": "on or after 01/01/2026",
+        "evidence_page": 1
+      },
+      "text_layer": {
+        "language": "English SBC body; appended language assistance may use other languages",
+        "nonempty_text_pages": 8,
+        "pages": 8,
+        "zero_text_physical_pages": [],
+        "zero_text_qualification": "No zero-text pages."
+      },
+      "notices": {
+        "inspection": "All original page text and PDF metadata inspected for notice terms; rendered original page 1 and 2 plus every original page footer visually checked.",
+        "explicit_reuse_license_or_permission_found": false,
+        "result": "No affirmative reuse grant found. No PDF-local document-use ban found. Coverage/benefit and language-assistance notices are not reuse grants.",
+        "notices": [],
+        "independent_check": "A second source-only reviewer read every original page and inspected relevant row and notice renders without reading primary drafts. No benchmark output was seen."
+      },
+      "permission_note": "Download approval is for source inspection. No source PDF, source text or image redistribution is proposed. Final benchmark permission/membership remains open."
+    },
+    {
+      "id": "sbc-h05",
+      "source": "https://hr.mit.edu/sites/default/files/mit_hdhp_sbc_2026_0.pdf",
+      "approved_max_bytes": 1048576,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 275217,
+      "source_sha256": "sha256:4cb4d636c45eab180521a8f140d370d04fae06c506e89b36bee6325e6a671780",
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_pages": 8,
+      "source_family_group": "bcbsma-mit-2026",
+      "identity": {
+        "publisher": "Blue Cross Blue Shield of Massachusetts",
+        "plan_name": "MIT HDHP",
+        "network_or_product_as_printed": "Blue Care Elect Saver with Coinsurance",
+        "plan_type_as_printed": "PPO",
+        "coverage_for_as_printed": "Individual and Family",
+        "coverage_period_as_printed": "on or after 01/01/2026",
+        "evidence_page": 1
+      },
+      "text_layer": {
+        "language": "English SBC body; appended language assistance may use other languages",
+        "nonempty_text_pages": 8,
+        "pages": 8,
+        "zero_text_physical_pages": [],
+        "zero_text_qualification": "No zero-text pages."
+      },
+      "notices": {
+        "inspection": "All original page text and PDF metadata inspected for notice terms; rendered original page 1 and 2 plus every original page footer visually checked.",
+        "explicit_reuse_license_or_permission_found": false,
+        "result": "No affirmative reuse grant found. No PDF-local document-use ban found. Coverage/benefit and language-assistance notices are not reuse grants.",
+        "notices": [],
+        "independent_check": "A second source-only reviewer read every original page and inspected relevant row and notice renders without reading primary drafts. No benchmark output was seen."
+      },
+      "permission_note": "Download approval is for source inspection. No source PDF, source text or image redistribution is proposed. Final benchmark permission/membership remains open."
+    },
+    {
+      "id": "sbc-h06",
+      "source": "https://hr.duke.edu/sites/default/files/2026-Summary-of-Benefits-and-Coverage-Duke-Select.pdf",
+      "approved_max_bytes": 1048576,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 596145,
+      "source_sha256": "sha256:ff986be129215a3039e661d320bbda446918d943d3261024ac35e1475c5d1084",
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_pages": 11,
+      "source_family_group": "duke-select-cigna-2026",
+      "identity": {
+        "publisher": "Cigna Healthcare",
+        "plan_name": "Duke Select",
+        "network_or_product_as_printed": "Open Access Plus IN",
+        "plan_type_as_printed": "OAP",
+        "coverage_for_as_printed": "Individual/Individual + Family",
+        "coverage_period_as_printed": "01/01/2026 - 12/31/2026",
+        "evidence_page": 1
+      },
+      "text_layer": {
+        "language": "English SBC body; appended language assistance may use other languages",
+        "nonempty_text_pages": 10,
+        "pages": 11,
+        "zero_text_physical_pages": [
+          9
+        ],
+        "zero_text_qualification": "Physical page 9 has no extractable text. Render shows only an intentional-blank watermark, with no benefit content."
+      },
+      "notices": {
+        "inspection": "All original page text and PDF metadata inspected for notice terms; rendered original page 1 and 2 plus every original page footer visually checked.",
+        "explicit_reuse_license_or_permission_found": false,
+        "result": "No affirmative reuse grant found. No PDF-local document-use ban found. Coverage/benefit and language-assistance notices are not reuse grants.",
+        "notices": [
+          {
+            "physical_page": 10,
+            "text": "Copyright 2024 Cigna Healthcare",
+            "location": "language-assistance footer",
+            "visual_checked": true
+          }
+        ],
+        "independent_check": "A second source-only reviewer read every original page and inspected relevant row and notice renders without reading primary drafts. No benchmark output was seen."
+      },
+      "permission_note": "Download approval is for source inspection. No source PDF, source text or image redistribution is proposed. Final benchmark permission/membership remains open."
+    },
+    {
+      "id": "annual-h04",
+      "source": "https://www.gsk.com/media/kn0bknmd/annual-report-2025.pdf",
+      "catalog_source": "https://www.gsk.com/en-gb/investors/financial-reports/annual-report-2025/",
+      "approved_max_bytes": 31457280,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 24690253,
+      "source_sha256": "sha256:a3ef37d848fca940f85b6c33815a5d47d1f32726fd389a03910653e24af0f4d2",
+      "source_pages": 331,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "gsk-annual-2025",
+      "identity": {
+        "issuer": "GSK plc",
+        "title": "GSK Annual Report 2025",
+        "financial_year": 2025,
+        "year_start": "2025-01-01",
+        "year_end": "2025-12-31",
+        "non_us_basis": "English public limited parent; UK company law and UK-adopted standards/IFRS basis.",
+        "evidence": [
+          {
+            "physical_page": 1,
+            "printed_page": null,
+            "location": "Graphical cover title"
+          },
+          {
+            "physical_page": 192,
+            "printed_page": "190",
+            "location": "Note1, financial period and consolidated composition"
+          },
+          {
+            "physical_page": 330,
+            "printed_page": "328",
+            "location": "About GSK, incorporation identity"
+          }
+        ]
+      },
+      "consolidated_scope": {
+        "full_annual_group_report": true,
+        "group": "GSK plc and its subsidiaries",
+        "printed_group_statement_and_note_pages": "186-273",
+        "printed_parent_only_statement_pages": "274-278",
+        "evidence": [
+          {
+            "physical_page": 174,
+            "printed_page": "172",
+            "location": "Directors responsibilities, group versus parent sections"
+          },
+          {
+            "physical_page": 192,
+            "printed_page": "190",
+            "location": "Note1, Composition of consolidated financial statements and Financial period"
+          }
+        ],
+        "scope_limit": "The report also presents Core/non-IFRS performance and separate parent-only accounts. A later fixed request must use the group reported IFRS basis, not mix these views."
+      },
+      "reporting_currency": {
+        "code": "GBP",
+        "name": "Sterling / pound sterling",
+        "scale_metadata": "Primary consolidated-statement headers use £m, meaning million pounds. No requested field amount has been labeled or recorded in this check.",
+        "evidence": [
+          {
+            "physical_page": 192,
+            "printed_page": "190",
+            "location": "Note1: consolidated statements drawn up in Sterling"
+          },
+          {
+            "physical_page": 188,
+            "printed_page": "186",
+            "location": "Consolidated statement headings and £m column units; source-text metadata only"
+          }
+        ]
+      },
+      "text_layer": {
+        "language": "English",
+        "pages_with_nonempty_pypdf_text": 330,
+        "zero_text_physical_pages": [
+          1
+        ],
+        "zero_text_qualification": "Physical page1 is a graphical cover; its issuer and 2025 annual-report title are visually readable. The remaining330 pages have digital text. Graphical-content completeness is not claimed.",
+        "ocr_used": false
+      },
+      "notices": [
+        {
+          "physical_page": 2,
+          "printed_page": null,
+          "type": "Non-IFRS presentation note",
+          "paraphrase": "The report distinguishes total reported IFRS results from Core and other non-IFRS measures; adjusted figures are additional context rather than replacements."
+        },
+        {
+          "physical_page": 330,
+          "printed_page": "328",
+          "type": "Trademark attribution",
+          "paraphrase": "Brand marks are identified as owned or licensed to the group or their respective owners. This is not an open reuse grant."
+        },
+        {
+          "physical_page": 330,
+          "printed_page": "328",
+          "type": "Cautionary and director-liability statements",
+          "paraphrase": "The page qualifies reliance on forward-looking statements, disclaims an investment invitation/profit forecast, explains outlook assumptions and states limitations of director liability under English law. These are reporting/reliance notices, not a blanket reproduction or extraction prohibition."
+        },
+        {
+          "physical_page": 330,
+          "printed_page": "328",
+          "type": "Website and downloadable-reports information",
+          "paraphrase": "The page lists downloadable reports and states that website information is not incorporated into this annual report by reference. Availability of a PDF is not treated as an affirmative open reuse grant."
+        }
+      ],
+      "permission_assessment": {
+        "affirmative_open_or_benchmark_reuse_grant_found_in_pdf": false,
+        "report_wide_reproduction_or_automated_extraction_ban_identified_in_pdf": false,
+        "site_terms_checked_in_this_task": false,
+        "limited_download_vs_reuse": "Any limited site permission the parent established for local download is separate from open reuse, redistribution or benchmark permission. This document-only inspection does not expand that permission or independently establish its scope.",
+        "generic_rights_distinction": "Trademark/copyright ownership or reporting disclaimers are not treated as an affirmative reuse license or automatically as a report-wide extraction prohibition.",
+        "redistribution": "No source PDF, rendered page or long source text is proposed for public redistribution."
+      },
+      "site_terms": {
+        "source": "https://www.gsk.com/en-gb/terms-of-use/",
+        "inspection_basis": "Catalog-only source discovery before download approval.",
+        "limited_permission": "Site terms permit personal noncommercial copies/downloads with attribution and copyright notices retained; other uses are not permitted. No open reuse grant inferred."
+      },
+      "permission_note": "Limited site-download permission is not expanded by PDF availability. Final benchmark permission/membership remains open. No PDF, source text or image redistribution is proposed."
     }
   ]
 }
