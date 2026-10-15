@@ -152,7 +152,9 @@ thresholds. This is built and experimental. The plan for it has two stages:
    reviews, so it is safe to use before it is measured. `doubt.field_match` is this stage.
 2. **Clear on a measured route.** A judgment can move a value from needs_verification to admitted
    only on a route (kind of document, field, code) where its error rate has a measured bound.
-   `clear.KEY_NOT_AT_VALUE` is the first clear; the measure of it is #67 and #112.
+   `clear.KEY_NOT_AT_VALUE` is the first clear. Its one measure on real extractor output is
+   the key clear on 10-K filings (#120, `bench/sec/results.json`). `groundgate-calibrate` (#112)
+   measures the thresholds on the app's own documents, and #67 measures more questions.
 
 A judge never admits a value that a check rejects. The judge must be a different model, or at
 least a different prompt, from the extractor. A model that approves the output of a model is weak
@@ -177,7 +179,10 @@ say so.
 A folder of mixed documents needs something that says which kind pack applies to each document.
 The router is a model or a rule outside the core, and its answer is an input that the packet
 records. If the router has low confidence, no kind pack applies, and the document uses the
-general core only. A wrong kind applies the wrong aliases, so the tools measure the router too.
+general core only. A wrong kind applies the wrong aliases. So the router is part of a route: an
+admit that a kind pack helped to make, after the router chose that kind, counts as `measured` only
+if the router also has a measured bound for that kind. If it has none, the admit has the mark of a
+`draft` route, even when the pack's route is `measured` on documents of the right kind.
 
 ## 6. What a pack cannot do
 
@@ -208,8 +213,11 @@ and is not. The app gets a measured number for each field instead, from its own 
    of whole documents supports both bounds of section 10: a sample of single values cannot show
    that a document has no wrong value. The tool gives the admitted error rate for each field over a
    recent period, and raises an alert when its bound passes the limit that the app set.
-5. **Review answers become labels.** Each answer from a reviewer adds to the measure. The measure
-   improves while the app works, with no extra work.
+5. **Review answers become labels.** Each answer from a reviewer is recorded as a label. These
+   labels feed the pack suggestions (6), the changed-value test (7) and the share of right values
+   sent to review. They never enter a bound that qualifies a route: the gate chose these values,
+   and the reviewer saw the proposal, so the sample is neither random nor blind. Only blind labels
+   and the audit sample (4) qualify a route.
 6. **Pack suggestions.** From review answers, the tool proposes knowledge for the app's own pack,
    for example: "reviewers approved 'Turnover' for the revenue field 40 times". A person approves
    each suggestion. The tool never applies one by itself, and an approved suggestion starts as
@@ -282,6 +290,8 @@ silent misses (the work of the runner).
   question: many safe clears on one field can hide an unsafe field. So a route gets the status
   `measured` only from its own bound, for that kind, field and code. A bound over a wider group
   never qualifies a narrower route.
+- **The sample.** A bound that qualifies a route comes only from blind labels or from the random
+  audit sample of whole documents. Review answers are never in it (section 7).
 - **The bound.** A one-sided 95% upper bound that stays above zero when no error occurs. Errors in
   one document come together, so values in one document are not separate trials. A resample by
   document alone is not sufficient: with 0 errors, every resample has 0 errors, and the bound is
