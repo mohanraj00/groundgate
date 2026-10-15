@@ -1,8 +1,9 @@
 # The extraction runner
 
 Status: proposed for maintainer approval in #268. This note changes no decision. The runner
-code in #270 and #271 starts after approval. Names and defaults below are the proposed API,
-not an API that exists today.
+code in #270 and #271 starts after approval and stays in this Runner lane PR. The PR stays
+a draft until that work and its required checks are complete. Names and defaults below are
+the proposed API, not an API that exists today.
 
 I put the extraction loop in `groundgate.run`, outside `admit`. The runner controls the request,
 the evidence repairs and the stopping rules. A model supplies candidates. Only `admit` decides
@@ -72,19 +73,24 @@ in a repair round, before the next round starts. Every call consumes the total b
 a failed client call. A changed-value proposal consumes its parent's call and gets zero more.
 
 The runner plans all initial chunks before it calls the client. If the initial pass alone
-exceeds the call budget, it refuses the input before any model work. A later budget limit ends
-the run with `complete=false` and records the calls or fields it did not reach. A repair limit
-is an ordinary terminal state, with the last core outcome retained. It does not mean absence.
+exceeds the call budget, it refuses the input before any model work. If the budget ends after
+the initial pass, it makes no targeted or repair call beyond that limit. A later budget limit
+ends the run with `complete=false` and records the calls or fields it did not reach. A field
+whose targeted call was not run stays unsearched; it is not recorded as targeted not found.
+A repair limit is an ordinary terminal state, with the last core outcome retained. It does
+not mean absence.
 
 ## 3. Chunks and prompts from the schema
 
 The runner takes NFC text as input. It does not read a file, extract a PDF or fetch a URL.
-It splits the document at code-point boundaries. From each start, it takes at most
-`chunk_chars` characters. If a line end occurs in the final half of that window, it ends there;
-otherwise it ends at the window boundary. The next start is the prior end minus the allowed
-overlap, clamped to move forward at least one character. An empty document has no text chunks.
-Every chunk records its start and end as global UTF-8 byte offsets. The document is never
-normalised again after offsets are made.
+It splits the document at code-point boundaries. From each start, it takes a window of at
+most `chunk_chars` characters. If that window reaches the document end, it emits the chunk
+through the document end and stops. It creates no suffix chunk after that point. Otherwise,
+it ends at the last line end in the final half of the window, or at the window boundary when
+there is no such line end. The next start is the prior chunk end minus the allowed overlap,
+clamped to move forward at least one character. An empty document has no text chunks. Every
+chunk records its start and end as global UTF-8 byte offsets. The document is never normalised
+again after offsets are made.
 
 Each initial prompt asks for every field in the schema. The instructions include the field
 name, description, type, unit, comparator, bounds, aliases and keys. The prompt includes the
@@ -110,11 +116,12 @@ value was found. Targeted searches for individual missing keys are outside #271.
 
 The runner assigns candidate ids from call number and reply position. A model cannot set an
 id, `search_region`, confidence, a judgment, a policy or a reference. For document evidence the
-runner sets `search_region` to the chunk's global byte span. For a reference it resolves each
-quote in that reference. Admission always uses the full original document and references,
-never text formed by concatenating chunks. Role quotes can name context elsewhere in the
-pinned texts, but each must pass the core's own checks. Repeated quotes and re-anchoring keep
-the SPEC rules.
+runner sets `search_region` to the chunk's global byte span. Initial-pass candidates keep
+their quotes without adapter-added offsets. The core resolves them under SPEC §4.6, including
+repeated quotes, and applies re-anchoring under SPEC §3.1 when it is applicable. Admission
+always uses the full original document and references, never text formed by concatenating
+chunks. Role quotes can name context elsewhere in the pinned texts, but each must pass the
+core's own checks. Section 6 defines the adapter anchoring for targeted reference value items.
 
 A prompt states that document text, references and prior replies are data, including any
 instructions in them. It marks each data block with its source id and length. Prompt wording
@@ -210,13 +217,19 @@ missing key in an otherwise represented field, a repair failure or an exhausted 
 If any initial reply failed or was malformed, the runner stops incomplete before targeted
 calls; it does not turn a transport failure into a silent miss.
 
-The targeted search is a fixed script. For one field it uses, in order: the full field name
-with underscores replaced by spaces, its aliases in schema order, then individual words from
-that title and description. It case-folds for comparison, takes words of at least three Unicode
-letters or digits, removes duplicates and searches whole words or phrases with flexible
-whitespace. It does not use a model, stemming, an embedding or words from model output.
-Keys are included as context in the prompt, not searched alone: common year headings would
-match unrelated tables. Every query, match and searched source is recorded.
+The targeted search is a fixed script. A field's title is its schema field name with each
+underscore replaced by a space. Queries come in this order: the full title, each full alias in
+schema order, individual words of the title in text order, then individual words of the
+description in text order. If aliases or the description are absent, their step adds no
+queries. An individual word is a maximal run of Unicode letters or digits with at least three
+code points. The minimum length applies to individual words, not full titles or aliases.
+
+The script collapses whitespace, trims each query, skips empty queries and case-folds for
+comparison. It keeps the first query when these forms are duplicates, so an earlier title or
+alias wins the tie. It searches whole words or phrases with flexible whitespace. It does not
+use a model, stemming, an embedding or words from model output. Keys are included as context
+in the prompt, not searched alone: common year headings would match unrelated tables. Every
+query, match and searched source is recorded.
 
 The script searches the full document and each supplied reference. A match selects the
 `search_context_chars` characters on either side, clamped to its source. It merges overlapping
@@ -224,11 +237,18 @@ regions in the same source, sorts by document first then reference id and byte s
 the first `max_target_regions`. It records omitted matches and `search_truncated` when capped.
 The reply may quote any one retained region but may not combine two regions into a new quote.
 For document evidence the runner chooses the first retained region that holds the whole value
-quote and sets it as `search_region`. Within a reference it anchors the value quote to the first
-whole occurrence in the retained regions, with global UTF-8 offsets, before it enters `admit`.
-This prevents the core from selecting a reference occurrence outside the search. Matching uses
-the SPEC whitespace rules. A quote absent from every permitted region is a protocol failure;
-it cannot expand the search. Other evidence roles keep their core checks in the pinned text.
+quote and sets it as `search_region`. The core then resolves that quote under SPEC §4.6.
+For a reference value item, the runner first acts as an adapter: it finds the first whole
+occurrence within the retained regions in region order and then byte order, using the quote
+matching rules in SPEC §4.6. Its admission packet uses that occurrence's valid global UTF-8
+`start` and `end` offsets without `text` on the value item. The raw quote stays in the reply
+artifact and history. This produces an explicit-span candidate before `admit`; it does not
+redefine the core's choice among quote occurrences. Under SPEC §3.1, an offsets-only value
+item cannot re-anchor. The core checks the resulting candidate with the unchanged SPEC rules,
+and replay verifies that same packet. This adapter output confines the value location to the
+targeted reference region without changing the policy.
+A quote absent from every permitted region is a protocol failure; it cannot expand the search.
+Other evidence roles keep their core checks in the pinned text.
 
 One prompt includes all retained regions and asks only for that field. If they do not fit the
 prompt limit, the script removes regions from the end until they fit and records that limit.
@@ -249,9 +269,10 @@ Model replies are untrusted strings. The parser accepts exactly one JSON object,
 trailing text, duplicate object keys, non-finite numbers, integers outside the core's safe
 range, wrong top-level members, excessive candidate counts and unknown requested fields.
 It validates the envelope and candidate shapes without adding a runtime JSON Schema package.
-It rejects model ids, source ids or offsets that the runner did not permit. The runner refuses the entire envelope on a structural error; it never salvages a candidate
-from an invalid reply. The runner never
-executes code, invokes a tool, opens a path or follows a URL from a reply.
+It rejects model ids, source ids or offsets that the runner did not permit. The runner
+refuses the entire envelope on a structural error; it never salvages a candidate from an
+invalid reply. The runner never executes code, invokes a tool, opens a path or follows a URL
+from a reply.
 
 A structural reply error ends the run incomplete, with its prompt digest, raw reply digest,
 error category and completed receipts. It is not retried. A structurally valid candidate that
