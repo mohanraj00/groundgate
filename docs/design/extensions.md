@@ -99,6 +99,9 @@ says so for every value that it helped to admit.
 | Reader | before the core | code | the document's digest only; `verify` needs the text again | PDF and markup extract. |
 | Strategy | Runner | code | not in the receipt; in the runner's log | No. The runner is 0.9. |
 
+For packs and checks, the digest in the receipt is a part of this design. A 0.8 receipt has no
+pack and no check of this kind.
+
 ### 5.1 Vocabulary pack
 
 Words that the reading rules use: scale words and phrases ("in thousands", "lakh"), unit words,
