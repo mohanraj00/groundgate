@@ -2,6 +2,8 @@
   "status": "Hand-written cases for maintainer review before rule code. No test consumes this file yet.",
   "geometry": "Each page line is [x, y, text] in PDF points on a 612 by 792 page, as tests/pdfgen.py reads it.",
   "expectations": "The expected text and safety requirements are written by hand. They were not produced by running groundgate.",
+  "geometry_assertions": "The page lines describe proposed inputs. UTF-8 byte-offset and source-box assertions will be added with consuming tests after the maintainer approves the rule.",
+  "outcome_scope": "required_outcomes allows review or rejection because this gate requires only that a wrong key never admits. The exact spec outcome awaits approval. A desired supported outcome is a gated proposal, not an approved spec decision.",
   "cases": [
     {
       "id": "running-head-above-table",
@@ -69,6 +71,38 @@
       ],
       "decision_requirement": "For value 30 and alias Cash, evidence for key 2024 must not admit. Evidence for key 2023 can admit only after all other checks pass.",
       "reason": "Each number keeps the position of the geometric column that contains it."
+    },
+    {
+      "id": "empty-tab-slot-still-admits-first-key",
+      "issue": 266,
+      "gate": "Approve explicit empty-cell semantics and hand-written conformance vectors before implementing the proposed outcomes.",
+      "text": "2025\t2024\nCash\t\t$100\nOther\t$20\t$30\nLast\t$40\t$50",
+      "schema": {
+        "fields": {
+          "cash": {
+            "type": "number", "unit": "USD", "aliases": ["Cash"],
+            "keys": ["2025", "2024"]
+          }
+        }
+      },
+      "candidate": {
+        "field": "cash", "value": "100", "unit": "USD", "key": "2025",
+        "evidence": [
+          {"text": "$100"}, {"role": "field", "text": "Cash"},
+          {"role": "key", "text": "2025"}
+        ]
+      },
+      "required_outcomes": ["needs_verification", "rejected"],
+      "supported_candidate": {
+        "field": "cash", "value": "100", "unit": "USD", "key": "2024",
+        "evidence": [
+          {"text": "$100"}, {"role": "field", "text": "Cash"},
+          {"role": "key", "text": "2024"}
+        ]
+      },
+      "desired_supported_outcome": "admitted",
+      "supported_outcome_gate": "This is the target for a supported second-column value after approval of explicit empty-cell semantics. All other evidence checks must also pass.",
+      "reason": "The empty tab slot must preserve the first numeric column. Value 100 belongs to 2024, so citing 2025 must not admit it. The current core does not count the empty slot."
     },
     {
       "id": "no-tabs-fallback-still-admits-first-key",
