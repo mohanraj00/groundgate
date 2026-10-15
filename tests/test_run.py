@@ -1,0 +1,528 @@
+"""Runner invariants with fixed replies, no network or model."""
+
+from __future__ import annotations
+
+import copy
+import json
+
+import pytest
+
+import groundgate as gg
+from groundgate.run import RunInputError, RunnerError, RunPolicy, replay, run
+from groundgate.run.runner import _chunks, _queries
+
+
+class Client:
+    def __init__(self, *replies):
+        self.replies = list(replies)
+        self.prompts = []
+
+    def __call__(self, prompt):
+        self.prompts.append(prompt)
+        if not self.replies:
+            raise AssertionError("unexpected call")
+        reply = self.replies.pop(0)
+        if isinstance(reply, Exception):
+            raise reply
+        return reply if isinstance(reply, str) else json.dumps(reply)
+
+
+def item(text, role="value", ref=None):
+    return {
+        "source": "document" if ref is None else "reference",
+        "role": role,
+        "text": text,
+        **({"ref": ref} if ref is not None else {}),
+    }
+
+
+def candidate(value="5", field="amount", unit=None, evidence=None, key=None):
+    return {
+        "field": field,
+        "value": value,
+        "unit": unit,
+        "key": key,
+        "evidence": [item(value)] if evidence is None else evidence,
+    }
+
+
+def envelope(*candidates, missing=()):
+    return {"candidates": list(candidates), "not_found": list(missing)}
+
+
+SCHEMA = {"fields": {"amount": {"type": "integer"}}}
+
+
+def execute(text, client, schema=SCHEMA, **kwargs):
+    return run(text, schema, client=client, model_id="fixed-1", **kwargs)
+
+
+def assert_replays(result, text, schema=SCHEMA, **kwargs):
+    assert replay(result.record, result.artifacts, text, schema, **kwargs).ok
+    assert gg.verify(result.receipt.to_dict(), text, schema, result.candidates, **kwargs).ok
+
+
+def test_one_pass_and_byte_identical_replay():
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    assert result.complete
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, "Amount 5.")
+    again = execute("Amount 5.", Client(envelope(candidate())))
+    assert gg.jcs(result.record) == gg.jcs(again.record)
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        '{"candidates":[],"candidates":[],"not_found":["amount"]}',
+        '{"candidates":[],"not_found":["amount"]} trailing',
+        '{"candidates":[],"not_found":["amount"],"x":NaN}',
+        '{"candidates":[],"not_found":[],"x":9007199254740992}',
+        envelope(missing=()),
+        envelope(candidate(), missing=("amount",)),
+        envelope(candidate(field="other")),
+        envelope({**candidate(), "id": "untrusted"}),
+        envelope(candidate(evidence=[{"source": "knowledge", "text": "5"}])),
+        envelope(candidate(evidence=[{**item("5"), "start": 0, "end": 1}])),
+    ],
+)
+def test_invalid_reply_is_incomplete_without_partial_admission(bad):
+    client = Client(bad)
+    result = execute("Amount 5.", client)
+    assert not result.complete and not result.candidates and len(client.prompts) == 1
+    assert result.record["entries"][1]["status"] == "invalid_reply"
+    assert_replays(result, "Amount 5.")
+
+
+def test_chunk_stop_utf8_and_degenerate_overlap_bound():
+    settings = RunPolicy(chunk_chars=6, overlap_chars=2)
+    assert _chunks("éé\néééé", settings) == [(0, 6), (4, 7)]
+    assert _chunks("éé", settings) == [(0, 2)]
+    client = Client(envelope(candidate()), envelope(candidate()))
+    result = execute("éé\néé5é", client, run_policy=settings)
+    plan = result.record["entries"][0]["chunks"]
+    assert plan[0]["end"] == len("éé\néé5".encode())
+    assert_replays(result, "éé\néé5é")
+    with pytest.raises(RunInputError, match="chunks"):
+        execute("x" * 50000, Client(), run_policy=RunPolicy(overlap_chars=11999))
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"max_calls": True},
+        {"max_calls": 0},
+        {"targeted": 1},
+        {"overlap_chars": 12000},
+        {"max_repair_rounds": -1},
+    ],
+)
+def test_invalid_policy_fails_before_call(kwargs):
+    with pytest.raises(RunInputError):
+        RunPolicy(**kwargs)
+
+
+def test_inputs_are_validated_before_model_call():
+    client = Client()
+    with pytest.raises(gg.PacketError):
+        execute("e\u0301", client)
+    with pytest.raises(gg.PacketError):
+        execute("5", client, references=[{"id": 3, "text": "5"}])
+    with pytest.raises(RunInputError):
+        execute("5", client, run_policy=RunPolicy(max_prompt_chars=1))
+    assert client.prompts == []
+
+
+def test_missing_scale_evidence_repair_value_locked():
+    text = "Amount 5."
+    first = candidate("5000", evidence=[item("5")])
+    new = candidate("5000", evidence=[item("5"), item("in thousands", "scale")])
+    client = Client(envelope(first), new, {"not_found": True})
+    result = execute(text, client)
+    assert len(client.prompts) == 3
+    assert result.candidates[0]["value"] == "5000"
+    assert result.receipt.decisions[0].outcome == "needs_verification"
+    assert any(e.get("status") == "evidence_repair" for e in result.record["entries"])
+    assert_replays(result, text)
+
+
+def test_quote_repair_admits_same_value():
+    first = candidate(evidence=[item("5x")])
+    client = Client(envelope(first), candidate())
+    result = execute("Amount 5.", client)
+    assert len(client.prompts) == 2
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, "Amount 5.")
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"unit": "USD"},
+        {"key": "new"},
+        {"evidence": [item("5"), item("Amount", "field")]},
+    ],
+)
+def test_forbidden_repair_changes_keep_old_tip(change):
+    first = candidate(evidence=[item("absent")])
+    reply = {**candidate(), **change}
+    result = execute("Amount 5.", Client(envelope(first), reply))
+    assert result.candidates[0]["evidence"][0]["text"] == "absent"
+    assert any(e.get("status") == "protocol_failure" for e in result.record["entries"])
+    assert_replays(result, "Amount 5.")
+
+
+def test_changed_value_is_one_shot_and_keeps_original():
+    first = candidate("5", evidence=[item("missing")])
+    new = candidate("6", evidence=[item("also missing")])
+    client = Client(envelope(first), new)
+    result = execute("Amount 5. Other 6.", client)
+    assert len(client.prompts) == 2 and len(result.candidates) == 2
+    assert {c["value"] for c in result.candidates} == {"5", "6"}
+    assert_replays(result, "Amount 5. Other 6.")
+
+
+def test_changed_value_can_admit_once_after_original_rejected():
+    client = Client(envelope(candidate(evidence=[item("missing")])), candidate("6"))
+    result = execute("Other 6.", client)
+    assert [d.outcome for d in result.receipt.decisions].count("admitted") == 1
+    assert len(client.prompts) == 2
+    assert_replays(result, "Other 6.")
+
+
+def test_scale_word_with_role_repair_can_change_value_terminally():
+    text = "Amount 5 million. Other 6 million."
+    schema = {"fields": {"amount": {"type": "integer"}}}
+    first = candidate("5", evidence=[item("5 million"), item("missing", "sign")])
+    new = candidate("5000000", evidence=[item("5 million")])
+    client = Client(envelope(first), new)
+    result = execute(text, client, schema)
+    assert len(client.prompts) == 2
+    assert len(result.candidates) == 2
+    assert all(d.outcome == "needs_verification" for d in result.receipt.decisions)
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
+    assert_replays(result, text, schema)
+
+
+def test_terminal_code_does_not_get_retry_or_target():
+    client = Client(envelope(candidate("6", evidence=[item("5")])))
+    result = execute("Amount 5.", client)
+    assert len(client.prompts) == 1
+    assert result.receipt.decisions[0].codes == ("VALUE_NOT_IN_EVIDENCE",)
+
+
+def test_no_op_and_not_found_preserve_previous_candidate():
+    first = candidate(evidence=[item("missing")])
+    for reply, status in [(first, "no_op"), ({"not_found": True}, "repair_not_found")]:
+        client = Client(envelope(first), reply)
+        result = execute("Amount 5.", client)
+        assert len(client.prompts) == 2
+        assert result.candidates[0]["evidence"] == first["evidence"]
+        assert any(e.get("status") == status for e in result.record["entries"])
+
+
+def test_targeted_missing_field_only_and_field_terms():
+    schema = {
+        "fields": {
+            "amount": {"type": "integer", "description": "Total count"},
+            "known": {"type": "integer"},
+        }
+    }
+    client = Client(envelope(candidate("2", "known"), missing=("amount",)), envelope(candidate()))
+    result = execute("Known 2. Amount 5.", client, schema)
+    assert len(client.prompts) == 2
+    targeted = json.loads(client.prompts[1].split("\n", 1)[1])
+    assert targeted["fields"] == ["amount"]
+    assert {d.field for d in result.receipt.decisions} == {"amount", "known"}
+    assert_replays(result, "Known 2. Amount 5.", schema)
+    assert _queries(
+        "total_amount", {"aliases": ["Total Amount", "Amount"], "description": "Net amount"}
+    ) == ["total amount", "Amount", "total", "Net"]
+
+
+def test_targeted_reference_pins_first_occurrence_accepting_review_cost():
+    reference = {"id": "r", "text": "Other 5,000.\nRevenue 5,000."}
+    schema = {"fields": {"amount": {"type": "integer", "aliases": ["Revenue", "Other"]}}}
+    raw = candidate("5000", evidence=[item("5,000", ref="r"), item("Revenue", "field", "r")])
+    # In the initial pass the quote resolves at the later field's occurrence.
+    initial = execute("Nothing here.", Client(envelope(raw)), schema, references=[reference])
+    assert initial.receipt.decisions[0].outcome == "admitted"
+    # The approved targeted adapter pins the first occurrence and accepts the field review.
+    targeted = execute(
+        "Nothing here.",
+        Client(envelope(missing=("amount",)), envelope(raw), {"not_found": True}),
+        schema,
+        references=[reference],
+    )
+    value_item = targeted.candidates[0]["evidence"][0]
+    assert value_item == {"source": "reference", "ref": "r", "role": "value", "start": 6, "end": 11}
+    assert targeted.receipt.decisions[0].outcome == "needs_verification"
+    assert_replays(targeted, "Nothing here.", schema, references=[reference])
+
+
+def test_target_no_terms_no_match_and_explicit_not_found():
+    cases = [
+        ("___", "Anything 5.", "search_no_terms"),
+        ("amount", "Anything 5.", "search_no_match"),
+        ("amount", "Amount absent.", "targeted_not_found"),
+    ]
+    for field, text, expected in cases:
+        schema = {"fields": {field: {}}}
+        client = Client(envelope(missing=(field,)), envelope(missing=(field,)))
+        result = execute(text, client, schema)
+        assert expected in result.record["final"]["fields"][field]
+        assert len(client.prompts) == (2 if expected == "targeted_not_found" else 1)
+        assert_replays(result, text, schema)
+
+
+def test_target_source_escape_is_not_absence():
+    client = Client(envelope(missing=("amount",)), envelope(candidate(evidence=[item("absent")])))
+    result = execute("Amount 5.", client)
+    assert not result.complete and not result.candidates
+    assert "targeted_not_found" not in result.record["final"]["fields"]["amount"]
+
+
+def test_call_budget_never_records_skipped_target_as_not_found():
+    client = Client(envelope(missing=("amount",)))
+    result = execute("Amount 5.", client, run_policy=RunPolicy(max_calls=1))
+    assert not result.complete and len(client.prompts) == 1
+    assert result.record["final"]["fields"]["amount"] == ["model_not_found", "unsearched"]
+    assert_replays(result, "Amount 5.")
+
+
+def test_reply_size_and_candidate_count_limits():
+    for settings, reply, status in [
+        (RunPolicy(max_reply_bytes=1), envelope(candidate()), "reply_limit"),
+        (
+            RunPolicy(max_candidates_per_reply=1),
+            envelope(candidate(), candidate()),
+            "invalid_reply",
+        ),
+    ]:
+        result = execute("Amount 5.", Client(reply), run_policy=settings)
+        assert not result.complete and not result.candidates
+        assert any(e.get("status") == status for e in result.record["entries"])
+        assert_replays(result, "Amount 5.")
+
+
+def test_client_error_keeps_record_without_exception_secret():
+    result = execute("Amount 5.", Client(RuntimeError("secret")))
+    assert not result.complete
+    assert "secret" not in gg.jcs(result.record)
+    assert_replays(result, "Amount 5.")
+
+
+def test_empty_source_records_absence_without_a_call():
+    client = Client()
+    result = execute("", client)
+    assert result.complete and not client.prompts
+    assert result.record["final"]["fields"]["amount"] == ["empty_source"]
+    assert_replays(result, "")
+
+
+def test_replay_detects_modified_artifacts_settings_and_record():
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    for mutate in [
+        lambda r: r["header"]["settings"].update(max_calls=2),
+        lambda r: r["entries"].pop(),
+        lambda r: r["final"].update(complete=False),
+    ]:
+        record = copy.deepcopy(result.record)
+        mutate(record)
+        assert not replay(record, result.artifacts, "Amount 5.", SCHEMA).ok
+    assert not replay(result.record, {}, "Amount 5.", SCHEMA).ok
+    assert not replay(result.record, result.artifacts, "Amount 6.", SCHEMA).ok
+
+
+def test_runtime_error_has_partial_record(monkeypatch):
+    import groundgate.run.runner as module
+
+    def fail(self, *args):
+        raise RuntimeError("failure")
+
+    monkeypatch.setattr(module._Engine, "decide", fail)
+    with pytest.raises(RunnerError) as error:
+        execute("Amount 5.", Client(envelope(candidate())))
+    assert error.value.record["entries"][0]["kind"] == "plan"
+
+
+@pytest.mark.parametrize(
+    "text,schema,first,new,code",
+    [
+        (
+            "Loss 5.",
+            SCHEMA,
+            candidate("-5", evidence=[item("5"), item("wrong", "sign")]),
+            candidate("-5", evidence=[item("5"), item("Loss", "sign")]),
+            "SIGN_CITATION_INVALID",
+        ),
+        (
+            "Amounts (in thousands)\nAmount 5.",
+            SCHEMA,
+            candidate("5000", evidence=[item("5"), item("in thousands missing", "scale")]),
+            candidate("5000", evidence=[item("5"), item("in thousands", "scale")]),
+            "SCALE_CITATION_INVALID",
+        ),
+        (
+            "Amount $ 5.",
+            {"fields": {"amount": {"unit": "USD", "aliases": ["Amount"]}}},
+            candidate(unit="USD", evidence=[item("5"), item("missing", "unit")]),
+            candidate(unit="USD", evidence=[item("5"), item("$", "unit")]),
+            "UNIT_CITATION_INVALID",
+        ),
+        (
+            "Amount 5.",
+            {"fields": {"amount": {"aliases": ["Amount"]}}},
+            candidate(evidence=[item("5"), item("wrong", "field")]),
+            candidate(evidence=[item("5"), item("Amount", "field")]),
+            "FIELD_CITATION_INVALID",
+        ),
+        (
+            "2026 Amount 5.",
+            {"fields": {"amount": {"keys": ["2026"]}}},
+            candidate(key="2026", evidence=[item("5"), item("wrong", "key")]),
+            candidate(key="2026", evidence=[item("5"), item("2026", "key")]),
+            "KEY_CITATION_INVALID",
+        ),
+        ("Amount 5.", SCHEMA, candidate(evidence=[]), candidate(), "NO_EVIDENCE"),
+        (
+            "Loss 5.",
+            SCHEMA,
+            candidate("-5", evidence=[item("5")]),
+            candidate("-5", evidence=[item("5"), item("Loss", "sign")]),
+            "PART_MISSING",
+        ),
+        (
+            "$\nAmount\t5",
+            {"fields": {"amount": {"unit": "USD", "aliases": ["Amount"]}}},
+            candidate(unit="USD"),
+            candidate(unit="USD", evidence=[item("5"), item("$", "unit"), item("Amount", "field")]),
+            "PART_MISSING",
+        ),
+        (
+            "2025\t2026\nAmount\t3\t5\nCount\t7\t8\nLast\t9\t10",
+            {"fields": {"amount": {"keys": ["2025", "2026"], "aliases": ["Amount"]}}},
+            candidate(key="2026"),
+            candidate(
+                key="2026", evidence=[item("5"), item("2026", "key"), item("Amount", "field")]
+            ),
+            "KEY_NOT_AT_VALUE",
+        ),
+    ],
+)
+def test_each_repairable_evidence_role(text, schema, first, new, code):
+    initial = gg.admit(text, schema, [{"id": "first", **first}])
+    assert code in initial.decisions[0].codes
+    client = Client(envelope(first), new)
+    result = execute(text, client, schema)
+    assert len(client.prompts) == 2
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, text, schema)
+
+
+def test_repair_round_limit_and_duplicate_budget():
+    first = candidate(evidence=[item("missing-a")])
+    client = Client(
+        envelope(first, first),
+        candidate(evidence=[item("missing-b")]),
+        candidate(evidence=[item("missing-c")]),
+    )
+    result = execute("Amount 5.", client)
+    assert len(client.prompts) == 3
+    assert "repair_limit" in result.record["final"]["fields"]["amount"]
+    assert_replays(result, "Amount 5.")
+
+
+def test_no_op_duplicate_stops_group_not_just_one_candidate():
+    first = candidate(evidence=[item("missing")])
+    client = Client(envelope(first, first), first)
+    result = execute("Amount 5.", client)
+    assert len(client.prompts) == 2
+    assert_replays(result, "Amount 5.")
+
+
+def test_conflicts_from_different_chunks_are_in_final_receipt():
+    text = "Amount 5.\nAmount 6."
+    client = Client(envelope(candidate()), envelope(candidate("6")))
+    result = execute(text, client, run_policy=RunPolicy(chunk_chars=10, overlap_chars=0))
+    assert len(client.prompts) == 2
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
+    assert_replays(result, text)
+
+
+def test_target_match_casefold_expansion_and_truncation():
+    schema = {"fields": {"strasse": {}}}
+    text = "Straße 5.\n" + "x" * 20 + "\nStraße 6."
+    client = Client(envelope(missing=("strasse",)), envelope(missing=("strasse",)))
+    result = execute(
+        text, client, schema, run_policy=RunPolicy(search_context_chars=1, max_target_regions=1)
+    )
+    search = next(e for e in result.record["entries"] if e["kind"] == "search")
+    assert search["status"] == "search_truncated" and search["omitted_regions"] == 1
+    assert search["matches"][0]["end"] == len("Straße".encode())
+    assert_replays(result, text, schema)
+
+
+def test_client_cannot_mutate_pinned_inputs():
+    schema = copy.deepcopy(SCHEMA)
+    policy = {"reanchor": False}
+    references = [{"id": "r", "text": "Amount 5."}]
+
+    def client(prompt):
+        schema["fields"]["amount"]["type"] = "string"
+        policy["reanchor"] = True
+        references[0]["text"] = "Amount 6."
+        return json.dumps(envelope(candidate()))
+
+    result = execute("Amount 5.", client, schema, policy=policy, references=references)
+    assert_replays(
+        result,
+        "Amount 5.",
+        SCHEMA,
+        policy={"reanchor": False},
+        references=[{"id": "r", "text": "Amount 5."}],
+    )
+
+
+@pytest.mark.parametrize("reply", [False, "\ud800", '{"candidates":[],"not_found":["\\ud800"]}'])
+def test_nonstring_and_surrogate_replies_are_recorded_incomplete(reply):
+    result = execute("Amount 5.", lambda prompt: reply)
+    assert not result.complete and not result.candidates
+    assert_replays(result, "Amount 5.")
+
+
+def test_repair_cannot_change_a_role_reference_even_to_value_source():
+    text = "Amount $ 5."
+    schema = {"fields": {"amount": {"unit": "USD"}}}
+    references = [{"id": "r", "text": "$"}]
+    first = candidate(unit="USD", evidence=[item("5"), item("$", "unit", "r")])
+    new = candidate(unit="USD", evidence=[item("5"), item("$", "unit")])
+    result = execute(text, Client(envelope(first), new), schema, references=references)
+    assert result.candidates[0]["evidence"][1]["source"] == "reference"
+    assert any(e.get("status") == "protocol_failure" for e in result.record["entries"])
+    assert_replays(result, text, schema, references=references)
+
+
+def test_targeted_document_repair_cannot_move_to_another_retained_region():
+    text = "Amount 5. " + "x" * 50 + " Amount 5000."
+    # Missing scale is repairable, but changing the quote to a different selected region is not.
+    first = candidate("5000", evidence=[item("5")])
+    new = candidate("5000", evidence=[item("5000")])
+    result = execute(
+        text,
+        Client(envelope(missing=("amount",)), envelope(first), new),
+        run_policy=RunPolicy(search_context_chars=10),
+    )
+    assert result.candidates[0]["search_region"]["start"] == 0
+    assert result.receipt.decisions[0].outcome == "needs_verification"
+    assert any(e.get("status") == "protocol_failure" for e in result.record["entries"])
+    assert_replays(result, text)
+
+
+@pytest.mark.parametrize("not_found", [1, 1.0, "true", False, None])
+def test_repair_not_found_requires_the_boolean_true(not_found):
+    first = candidate(evidence=[item("missing")])
+    result = execute("Amount 5.", Client(envelope(first), {"not_found": not_found}))
+    assert not result.complete
+    assert not any(e.get("status") == "repair_not_found" for e in result.record["entries"])
+    assert_replays(result, "Amount 5.")
