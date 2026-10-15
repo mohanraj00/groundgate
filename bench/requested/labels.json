@@ -234,6 +234,331 @@
           "second_check": true
         }
       ]
+    },
+    {
+      "id": "sbc-h01",
+      "fields": [
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "3200",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "2026 standard in-network Self and Family coverage overall deductible; Self Plus One has the same amount.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1600",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "2026 standard in-network Self coverage overall deductible.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "12000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "2026 in-network Self and Family coverage out-of-pocket limit; out-of-network amount is not used.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "6000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "2026 in-network Self coverage out-of-pocket limit; out-of-network amount is not used.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 2,
+          "note": "Independent second blind original-source check confirmed this absence before any benchmark output.",
+          "reason": "The in-network specialist visit row states 20 percent coinsurance, not a fixed USD copay. Independent full-document source check confirmed this absence.",
+          "second_check": true
+        }
+      ]
+    },
+    {
+      "id": "sbc-h02",
+      "fields": [
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "750",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "2026 named plan, network-provider overall medical family deductible; separate prescription deductible is not used.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "250",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "2026 named plan, network-provider overall medical deductible for one individual; separate prescription deductible is not used.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "",
+          "reason": "The same answer gives a network-provider out-of-pocket limit of USD 4500 and a network-provider maximum cost share of USD 13700, covering different expenses. The fixed request does not choose between those medical cost-share scopes; separate prescription limits are not added.",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "",
+          "reason": "The same answer gives a network-provider out-of-pocket limit of USD 1500 and a network-provider maximum cost share of USD 6850, covering different expenses. The fixed request does not choose between those medical cost-share scopes; separate prescription limits are not added.",
+          "second_check": false
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "10",
+              "unit": "USD"
+            }
+          ],
+          "page": 2,
+          "note": "2026 named plan, standard network-provider specialist visit copay per visit; the out-of-network percentage is not used. The row lists service-specific visit limits and preauthorization conditions.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h01",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "50503000000",
+              "unit": "EUR"
+            }
+          ],
+          "page": 142,
+          "note": "Consolidated group, full year ended 2025-12-31, continuing operations as presented after the demerger. Also stated on physical page 131 / printed 128. Scale multiplication only.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "26794000000",
+              "unit": "EUR"
+            }
+          ],
+          "page": 142,
+          "note": "Consolidated group, full year ended 2025-12-31, continuing operations as presented after the demerger. Printed as an expense in parentheses. Fixed request asks for positive cost magnitude; recorded magnitude after million scale. No expense components were summed.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "23709000000",
+              "unit": "EUR"
+            }
+          ],
+          "page": 142,
+          "note": "Consolidated group, full year ended 2025-12-31, continuing operations as presented after the demerger. Explicitly stated subtotal. Not computed from revenue and cost.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "70471000000",
+              "unit": "EUR"
+            }
+          ],
+          "page": 134,
+          "note": "Consolidated group closing balance at 2025-12-31; total includes non-controlling interests where applicable. Explicitly stated total; not an asset subtotal.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "52884000000",
+              "unit": "EUR"
+            }
+          ],
+          "page": 134,
+          "note": "Consolidated group closing balance at 2025-12-31; total includes non-controlling interests where applicable. Explicitly stated total; no current/noncurrent sum was calculated.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "17587000000",
+              "unit": "EUR"
+            }
+          ],
+          "page": 134,
+          "note": "Consolidated group closing balance at 2025-12-31; total includes non-controlling interests where applicable. Explicit total equity, including non-controlling interests, rather than shareholders-only equity.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h02",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "266886000000",
+              "unit": "USD"
+            }
+          ],
+          "page": 232,
+          "note": "Consolidated group, full year ended 2025-12-31. Revenue row only, not total revenue and other income. US-dollar presentation is explicit in notes physical p236 / printed234.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 232,
+          "note": "Independent second blind original-source check confirmed this absence before any benchmark output.",
+          "reason": "No stated consolidated cost-of-sales amount was found. The income statement separately lists purchases, production/manufacturing and other expenses; none is identified as the requested total, so none was substituted or combined.",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 232,
+          "note": "Independent second blind original-source check confirmed this absence before any benchmark output.",
+          "reason": "No stated full-group gross-profit amount was found in the income statement or full-PDF text search. The statement proceeds from revenue/other income and expense components to income before taxation; no unstated profit was computed.",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "370350000000",
+              "unit": "USD"
+            }
+          ],
+          "page": 233,
+          "note": "Consolidated group closing balance at 2025-12-31; total includes non-controlling interests where applicable. Explicitly stated closing consolidated total.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "195031000000",
+              "unit": "USD"
+            }
+          ],
+          "page": 233,
+          "note": "Consolidated group closing balance at 2025-12-31; total includes non-controlling interests where applicable. Explicitly stated total; no liabilities were calculated from assets less equity.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "175319000000",
+              "unit": "USD"
+            }
+          ],
+          "page": 233,
+          "note": "Consolidated group closing balance at 2025-12-31; total includes non-controlling interests where applicable. Explicit total equity including non-controlling interests, rather than equity attributable only to parent shareholders.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
     }
   ],
   "status": "draft"

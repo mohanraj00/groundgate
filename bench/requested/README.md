@@ -2,8 +2,8 @@
 
 Status: kinds and field lists approved by the maintainer in chat on 2026-10-15 and recorded on
 #269. Approved development pilots are cached in local work storage. `manifest.json` records their
-source URLs, byte sizes, hashes and notices; `labels.json` contains source-based draft labels. Source
-selection is still open. No model output exists. Every additional download needs approval.
+source URLs, byte sizes, hashes and notices; `labels.json` contains source-based development
+drafts and source-checked provisional labels for inspected held-out candidates. Source selection is still open. No model output exists. Every additional download needs approval.
 
 ## Proposed kinds and fixed requests
 
@@ -186,3 +186,28 @@ projection. A smaller harness limit is reported rather than silently treated as 
 I check the harness with synthetic sources and fixed replies. No test reads the corpus labels or
 source PDFs. The runner integration checks skip until the Runner lane is available; I run them
 against that lane before integration. No real client runs before the full corpus seal.
+
+
+## Inspected candidate batch
+
+`source_checks.json` records the seven individually approved downloads and their own notices.
+All originals fit their approved caps and remain in local work storage. The three component
+candidates are on hold: their PDF notices add an application-specific use restriction, and
+applicable benchmark permission is not established. They are not in the label-page manifest.
+
+The two SBCs and two annual reports are draft candidates in the manifest, with source-checked
+provisional labels.
+Their original identities, presentation currencies and scope notes are fixed before value
+labeling. They have readable English text layers. No affirmative open reuse grant was found;
+source availability and download approval do not establish one. Their presence in this draft
+page is not a final eligibility decision or permission to redistribute source material.
+Selection remains open and the set cannot seal. The component holds, all source notices and
+any final exclusion reasons must be resolved before membership is frozen.
+
+
+The new candidate labels use source-only agent annotations and original page renders. Independent
+blind checks confirm the three new absence labels and the SBC fields. One SBC states both
+ordinary out-of-pocket limits and maximum cost shares for different medical expense categories;
+its two out-of-pocket slots stay unclear because the fixed request does not choose that scope.
+No expense components, unstated profit or closing totals were calculated. These source checks
+are not benchmark outputs, a sealed label set or a measured result.
