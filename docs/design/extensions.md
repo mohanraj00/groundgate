@@ -10,8 +10,8 @@ to kinds of documents.
 
 The sets that measure extraction of fields are digital documents in English from U.S. government
 sources or U.S. public companies: drug labels, IRS publications, accident reports and Federal
-Register documents in the v0.1 set and set 2, and annual financial reports of companies, agencies
-and cities in the 0.8 sets. One small set from outside the U.S. exists: `bench/india` reads 101
+Register documents in the v0.1 set and set 2, and annual financial reports of companies, federal agencies
+and states in the 0.8 sets. One small set from outside the U.S. exists: `bench/india` reads 101
 number tokens from SEBI circulars, and it measures one number rule, not fields. A rule written
 from one of these documents and measured on a different one is held out by document, not by kind.
 So no published number says how groundgate extracts fields from an invoice, a bank statement, a
@@ -56,7 +56,7 @@ layer around it is general and accepts extensions:
 
 | Layer | Its job | "General" means | Extension |
 |---|---|---|---|
-| Readers | turn a file into text with locations | reads PDF, scans, Office files, HTML | a reader |
+| Readers | turn a file into text with locations | reads PDF, scans, word-processor and spreadsheet files (DOCX, XLSX), HTML | a reader |
 | Runner (#268) | asks the model for the requested fields and repairs them | works with any field list | a strategy |
 | Core | decides admitted, needs_verification or rejected | its checks are true for any document | a pack, a check |
 | Judges | answer a question of meaning before the decision | any model, recorded | a judge |
@@ -159,7 +159,7 @@ item.
 
 ### 5.5 Reader
 
-A reader turns a file into text and locations: OCR for scans, and Office files (#7). A reader can
+A reader turns a file into text and locations: OCR for scans, and word-processor and spreadsheet files (DOCX, XLSX) (#7). A reader can
 be code, because it runs before the decision. Its output is the document text that the receipt
 already hashes.
 
@@ -305,7 +305,7 @@ Readers, strategies and the router stay experimental after 1.0.
 | 0.9 | as planned in #274. The set of #269 includes two or three kinds unlike the current sets. |
 | 0.10 | the pack format, versioned and hashed into the receipt; the move of section 9; relation checks (5.3) |
 | 0.11 | the tools of section 7: label kit, measure, operating point, audit sample, review answers to labels |
-| 0.12 | readers: OCR with confidence as evidence, Office files (#7); the router |
+| 0.12 | readers: OCR with confidence as evidence, word-processor and spreadsheet files (DOCX, XLSX) (#7); the router |
 | 1.0 | a stable pack format, a measured general core, a published bound for each kind |
 
 ## 13. Open questions
