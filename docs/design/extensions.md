@@ -246,9 +246,12 @@ that are wrong. It is the number that an app needs before it trusts a value with
 to it: the share of right values sent to review (the manual work that the core causes), and the
 misses (the work of the runner).
 
-- **Unit.** One final admitted value for each document, requested field and key, after the repair
-  rounds. A field with `multiple` true counts each distinct value that the label gives. A keyed
-  field such as a dose for adults and a dose for children counts one value for each key.
+- **Unit.** One final admitted value, after the repair rounds, for each document, requested field
+  and key. A keyed field such as a dose for adults and a dose for children has one unit for each
+  key. A field with `multiple` true has one unit for each distinct value that groundgate admitted.
+  So every admitted value is in the rate, also a wrong one that the label does not give.
+- **Misses.** A labeled value with no matching admitted value is a miss. Misses are counted
+  separately and are never in the admitted error rate.
 - **Wrong.** The number, scale, unit, sign, key or condition does not match the blind label, or the
   document does not state the field.
 - **Not an escape.** A wrong value sent to review is a catch. A field with no value is a miss.
@@ -258,11 +261,13 @@ misses (the work of the runner).
   one document come together, so values in one document are not separate trials. A resample by
   document alone is not sufficient: with 0 errors, every resample has 0 errors, and the bound is
   0%. The report gives two bounds:
-  - the exact binomial bound (Clopper-Pearson) on the admitted values, with the number of values
-    divided by a design effect for clusters by document. The design effect is never less than 1.
-    If the set has too few errors to estimate it, the report uses a stated default;
-  - the exact binomial bound on documents: the share of documents with at least one wrong admitted
-    value. This bound does not depend on the design effect.
+  - a bound on the admitted values that allows for clusters by document. Divide the number of
+    values and the number of errors by a design effect of at least 1. Round the trials down and
+    the errors up to whole numbers, then take the Clopper-Pearson upper bound. Both roundings make
+    the bound larger, so it is approximate and conservative. If the set has too few errors to
+    estimate the design effect, the report uses a stated default;
+  - the exact Clopper-Pearson upper bound on documents: the share of documents with at least one
+    wrong admitted value. It needs no design effect.
 
   The report gives the number of documents and of kinds next to each bound. A status of
   `measured` (section 8) uses the larger of the two bounds.
