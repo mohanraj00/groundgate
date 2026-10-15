@@ -16,6 +16,32 @@ from typing import Any
 from groundgate import Schema
 from groundgate.text import canonical, parse_value
 
+COUNTERS = (
+    "present",
+    "hits",
+    "value_hits",
+    "absence_hits",
+    "reviews",
+    "silent_misses",
+    "escapes",
+    "admitted",
+    "catches",
+    "excluded",
+    "unreported_absences",
+)
+
+
+def blank_row() -> dict[str, Any]:
+    return dict.fromkeys(COUNTERS, 0)
+
+
+def decision_key(raw: Any) -> Any:
+    """Malformed admitted keys are unknown keys, and therefore escapes."""
+    try:
+        return key(raw)
+    except ValueError:
+        return ("invalid-key", json.dumps(raw, sort_keys=True))
+
 
 def upper95(errors: int, trials: int) -> float | None:
     """One-sided exact Clopper-Pearson upper bound; no trials means no bound."""
@@ -90,22 +116,7 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         if not row["excluded"]:
             docs[row["doc"]]["admitted"] += row["admitted"]
             docs[row["doc"]]["wrong"] += row["escapes"]
-    counts = {
-        name: sum(r[name] for r in rows)
-        for name in (
-            "present",
-            "hits",
-            "value_hits",
-            "absence_hits",
-            "reviews",
-            "silent_misses",
-            "escapes",
-            "admitted",
-            "catches",
-            "excluded",
-            "unreported_absences",
-        )
-    }
+    counts = {name: sum(r[name] for r in rows) for name in COUNTERS}
     n, e = counts["admitted"], counts["escapes"]
     effect = max(1, max((d["admitted"] for d in docs.values()), default=0))
     trials = n // effect
@@ -182,6 +193,7 @@ def measure(
             raise ValueError("labels must cover each requested field/key exactly once")
         if doc["split"] not in {"development", "heldout"}:
             raise ValueError("unknown document split")
+        values_by_slot = {}
         for slot in slots:
             spec = fields[slot["field"]]
             state = slot["status"]
@@ -194,6 +206,7 @@ def measure(
                 raise ValueError("a label unit must match its requested field")
             if len(wanted) > 1 and not spec.get("multiple", False):
                 raise ValueError("a single-value field has multiple labels")
+            values_by_slot[(slot["field"], key(slot.get("key")))] = wanted
         if doc["split"] != split:
             continue
         output = outputs.get(doc["id"], {})
@@ -210,31 +223,8 @@ def measure(
             name, skey = slot["field"], key(slot.get("key"))
             spec = fields[name]
             state = slot["status"]
-            if state not in {"present", "absent", "unclear"}:
-                raise ValueError("unknown label state")
-            wanted = {signature(v, spec.get("type", "number")) for v in slot.get("values", [])}
-            if state == "present" and not wanted:
-                raise ValueError("a present label needs at least one value")
-            if state != "present" and wanted:
-                raise ValueError("only a present label can have values")
-            if len(wanted) > 1 and not spec.get("multiple", False):
-                raise ValueError("a single-value field has multiple labels")
-            row = {
-                n: 0
-                for n in (
-                    "present",
-                    "hits",
-                    "value_hits",
-                    "absence_hits",
-                    "reviews",
-                    "silent_misses",
-                    "escapes",
-                    "admitted",
-                    "catches",
-                    "excluded",
-                    "unreported_absences",
-                )
-            }
+            wanted = values_by_slot[(name, skey)]
+            row = blank_row()
             row |= {"doc": doc["id"], "kind": doc["kind"], "field": name, "key": skey}
             if state == "unclear":
                 row["excluded"] = 1
@@ -242,7 +232,7 @@ def measure(
                 continue
             admitted, reviewed = set(), set()
             for d in decisions:
-                dkey = key(d.get("key")) if spec.get("keys") else None
+                dkey = decision_key(d.get("key")) if spec.get("keys") else None
                 if d["field"] != name or dkey != skey:
                     continue
                 try:
@@ -276,7 +266,7 @@ def measure(
                 d
                 for d in decisions
                 if d["field"] == name
-                and (key(d.get("key")) if spec.get("keys") else None) not in keys
+                and (decision_key(d.get("key")) if spec.get("keys") else None) not in keys
             ]
             seen = set()
             for d in unknown:
@@ -293,22 +283,7 @@ def measure(
                 if sig in seen:
                     continue
                 seen.add(sig)
-                row = {
-                    n: 0
-                    for n in (
-                        "present",
-                        "hits",
-                        "value_hits",
-                        "absence_hits",
-                        "reviews",
-                        "silent_misses",
-                        "escapes",
-                        "admitted",
-                        "catches",
-                        "excluded",
-                        "unreported_absences",
-                    )
-                }
+                row = blank_row()
                 row |= {"doc": doc["id"], "kind": doc["kind"], "field": name, "key": d.get("key")}
                 row["escapes"] = row["admitted"] = 1
                 rows.append(row)

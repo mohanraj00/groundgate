@@ -35,7 +35,7 @@ public URL by itself is not a redistribution license.
 
 After kind approval, I list exact URLs and response sizes, or a stated byte cap when a source does
 not give a size. I ask for approval of each download. I keep source PDFs, browser files and
-intermediate text in the workspace's local work folder outside iCloud. Final labels, request,
+intermediate text in the workspace's local work folder outside synced folders. Final labels, request,
 manifest and reproducible reports belong in this set. No new-set model output is read until the
 maintainer seals all labels.
 
