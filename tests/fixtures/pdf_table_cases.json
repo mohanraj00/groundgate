@@ -1,0 +1,97 @@
+{
+  "status": "Hand-written cases for maintainer review before rule code. No test consumes this file yet.",
+  "geometry": "Each page line is [x, y, text] in PDF points on a 612 by 792 page, as tests/pdfgen.py reads it.",
+  "expectations": "The expected text and safety requirements are written by hand. They were not produced by running groundgate.",
+  "cases": [
+    {
+      "id": "running-head-above-table",
+      "issue": 265,
+      "gate": "Approve the top-edge rule and its numerical boundary before implementation.",
+      "page": [
+        [72, 766, "Report"],
+        [500, 766, "Page 1"],
+        [72, 516, "Cash"],
+        [300, 516, "1"],
+        [72, 501, "Land"],
+        [300, 501, "2"]
+      ],
+      "expected_table_rows": [["Cash", "1"], ["Land", "2"]],
+      "expected_prose_words": ["Report", "Page", "1"],
+      "reason": "The page header stays in the extracted text but does not become a column heading."
+    },
+    {
+      "id": "distant-caption-outside-header-band",
+      "issue": 265,
+      "gate": "Approve the top-edge rule and its numerical boundary before implementation.",
+      "page": [
+        [72, 705, "As of year end"],
+        [400, 705, "In thousands"],
+        [72, 516, "Cash"],
+        [300, 516, "1"],
+        [72, 501, "Land"],
+        [300, 501, "2"]
+      ],
+      "expected_table_rows": [
+        ["As of year end", "In thousands"], ["Cash", "1"], ["Land", "2"]
+      ],
+      "reason": "A large vertical gap alone does not discard a caption."
+    },
+    {
+      "id": "blank-before-first-number",
+      "issue": 266,
+      "gate": "Approve explicit empty-cell semantics in the spec before implementing this output.",
+      "page": [
+        [300, 720, "2025"], [400, 720, "2024"],
+        [72, 700, "Cash"], [400, 700, "100"],
+        [72, 685, "Land"], [300, 685, "20"], [400, 685, "30"],
+        [72, 670, "Debt"], [300, 670, "40"], [400, 670, "50"]
+      ],
+      "expected_table_rows": [
+        ["2025", "2024"], ["Cash", "", "100"],
+        ["Land", "20", "30"], ["Debt", "40", "50"]
+      ],
+      "decision_requirement": "For value 100 and alias Cash, evidence for key 2025 must not admit. Evidence for key 2024 can admit only after all other checks pass.",
+      "reason": "A blank numeric column is a real position, not an absent value to slide past."
+    },
+    {
+      "id": "blank-middle-column",
+      "issue": 266,
+      "gate": "Approve explicit empty-cell semantics in the spec before implementing this output.",
+      "page": [
+        [260, 720, "2025"], [360, 720, "2024"], [460, 720, "2023"],
+        [72, 700, "Cash"], [260, 700, "10"], [460, 700, "30"],
+        [72, 685, "Land"], [260, 685, "11"], [360, 685, "21"], [460, 685, "31"],
+        [72, 670, "Debt"], [260, 670, "12"], [360, 670, "22"], [460, 670, "32"]
+      ],
+      "expected_table_rows": [
+        ["2025", "2024", "2023"], ["Cash", "10", "", "30"],
+        ["Land", "11", "21", "31"], ["Debt", "12", "22", "32"]
+      ],
+      "decision_requirement": "For value 30 and alias Cash, evidence for key 2024 must not admit. Evidence for key 2023 can admit only after all other checks pass.",
+      "reason": "Each number keeps the position of the geometric column that contains it."
+    },
+    {
+      "id": "no-tabs-fallback-still-admits-first-key",
+      "issue": 266,
+      "gate": "Approve the diagnosis and a core rule before selecting a fallback for ambiguous rows.",
+      "text": "2025\t2024\nCash $100\nOther\t$20\t$30\nLast\t$40\t$50",
+      "schema": {
+        "fields": {
+          "cash": {
+            "type": "number", "unit": "USD", "aliases": ["Cash"],
+            "keys": ["2025", "2024"]
+          }
+        }
+      },
+      "candidate": {
+        "field": "cash", "value": "100", "unit": "USD", "key": "2025",
+        "evidence": [
+          {"text": "$100"}, {"role": "field", "text": "Cash"},
+          {"role": "key", "text": "2025"}
+        ]
+      },
+      "required_outcomes": ["needs_verification", "rejected"],
+      "reason": "Removing tabs alone does not prove that a number belongs to the first header. The present column rule can still match its first cell."
+    }
+  ]
+}
