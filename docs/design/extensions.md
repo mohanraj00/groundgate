@@ -201,9 +201,11 @@ and is not. The app gets a measured number for each field instead, from its own 
 3. **Operating point.** For each field, the app chooses between more review and fewer escapes, or
    the opposite. The tool shows the measured trade-off for the policy settings. The app decides.
    groundgate never changes a policy by itself.
-4. **Audit sample.** In production, a fixed random share of the admitted values goes to a person
-   (hybrid design §4, rule 6). The tool gives the admitted error rate for each field over a recent period,
-   and raises an alert when its bound passes the limit that the app set.
+4. **Audit sample.** In production, a fixed random share of the documents goes to a person, and the
+   person checks every admitted value in each sampled document (hybrid design §4, rule 6). A sample
+   of whole documents supports both bounds of section 10: a sample of single values cannot show
+   that a document has no wrong value. The tool gives the admitted error rate for each field over a
+   recent period, and raises an alert when its bound passes the limit that the app set.
 5. **Review answers become labels.** Each answer from a reviewer adds to the measure. The measure
    improves while the app works, with no extra work.
 6. **Pack suggestions.** From review answers, the tool proposes knowledge for the app's own pack,
@@ -259,10 +261,13 @@ misses (the work of the runner).
   document does not state the field.
 - **Not an escape.** A wrong value sent to review is a catch. A field with no value is a miss.
 - **Excluded.** An item that the label marks as unclear in the document. The report gives the count.
-- **For each field, each kind and each route.** A route is a pack, a check or a judge question
-  that can change an outcome to admitted. A total can hide one field or one route that fails: 10,000
-  right admits from the core and 5 admits from a judge clear with 2 errors give 2 in 10,005, but
-  the judge route alone is 2 in 5. A route gets the status `measured` only from its own bound.
+- **For each field, each kind and each route.** A route is one pack, check or judge question that
+  can change an outcome to admitted, on one kind of document, one field and one code. A total can
+  hide one route that fails: 10,000 right admits from the core and 5 admits from a judge clear with
+  2 errors give 2 in 10,005, but that route alone is 2 in 5. The same is true inside one judge
+  question: many safe clears on one field can hide an unsafe field. So a route gets the status
+  `measured` only from its own bound, for that kind, field and code. A bound over a wider group
+  never qualifies a narrower route.
 - **The bound.** A one-sided 95% upper bound that stays above zero when no error occurs. Errors in
   one document come together, so values in one document are not separate trials. A resample by
   document alone is not sufficient: with 0 errors, every resample has 0 errors, and the bound is
