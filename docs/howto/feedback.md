@@ -59,6 +59,10 @@ amount 5000 admitted
 2
 ```
 
+For targeted reference evidence, `result.candidates` contains an offsets-only value item. The
+raw quote remains in the saved reply artifact; the adapter removes it from the admission
+packet to prevent re-anchoring outside the selected reference region.
+
 The first proposal lacks scale evidence. The repair keeps `5000` and cites the scale. The
 final receipt covers the repaired candidate. The earlier receipt and reply stay in the run
 record and its artifacts.
@@ -84,13 +88,21 @@ never both. For example, an empty response for the requested field is:
 
 For a field with no first-pass candidate, the runner searches the supplied texts using the
 field name, aliases and description. One targeted call gets only the selected regions and
-asks for that field. A rejected candidate does not trigger that pass. Search terms, retained
+asks for that field. Title and alias matches take priority over individual description words.
+The search retains at most 1024 match records; omitted counts and truncation stay in the record.
+A rejected candidate does not trigger that pass. Search terms, retained
 regions, truncation and not-found replies stay in the record. No match is the result of that
 search, not proof of absence. Set `RunPolicy(targeted=False)` for a run without this pass.
 
 ## 3. Keep repairs bounded
 
-The default is two extra calls per original value and 128 calls in total. Duplicate proposals
+The default is two extra calls per original value and 128 calls in total. There are at most
+1024 active proposals and 8 MiB of stored admission packet/receipt pairs. Active candidate
+payloads may use at most half that byte budget. These limits stop the run incomplete while
+retaining its last recorded packet and receipt. Proposals from an admission that could not be
+recorded are not active in the returned candidate list. This applies to new values and evidence
+repairs alike; the final field states name the admission-history limit. Raw prompts and replies
+have separate limits. Duplicate proposals
 share a repair budget. The runner fixes citation codes only. It keeps field, unit, key and
 source fixed. It refuses changes to unrelated evidence roles. A no-op or repair not-found
 reply ends that proposal's loop and keeps its last candidate.

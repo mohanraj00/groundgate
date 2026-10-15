@@ -60,6 +60,8 @@ The proposed defaults are settings for this runner, not measured operating point
 | `max_prompt_chars` | 65536 | Maximum size of one complete prompt. |
 | `max_reply_bytes` | 1048576 | Maximum UTF-8 reply size accepted for JSON parsing. |
 | `max_candidates_per_reply` | 256 | Maximum proposals parsed from one reply. |
+| `max_total_candidates` | 1024 | Maximum active proposals, including changed-value proposals. |
+| `max_admission_bytes` | 8388608 | Total canonical bytes of stored admission packets and receipts. |
 
 Counts must be integers, not booleans. Limits other than overlap and repair rounds are positive;
 those two can be zero. Overlap must be less than chunk size. `targeted` must be a boolean.
@@ -81,6 +83,16 @@ whose targeted call was not run stays unsearched; it is not recorded as targeted
 A repair limit is an ordinary terminal state, with the last core outcome retained. It does
 not mean absence.
 
+The aggregate candidate cap includes duplicate proposals. Active candidate payloads are also
+limited to half `max_admission_bytes`, before admission. An overflow stops the run incomplete.
+The admission-history budget covers the canonical JSON of each stored candidate-list/receipt
+pair. When the next pair cannot fit, the runner retains the last recorded packet and receipt
+and stops incomplete. It rolls back both new values and same-value evidence replacements from
+that unrecorded admission, so returned candidates and receipt describe the same last packet.
+Final admission records a receipt digest instead of another full copy.
+This byte limit covers admission history; call artifacts and search records have their own
+call, reply, prompt and match limits. It is not a byte cap on the entire returned result.
+
 ## 3. Chunks and prompts from the schema
 
 The runner takes NFC text as input. It does not read a file, extract a PDF or fetch a URL.
@@ -97,7 +109,9 @@ Each initial prompt asks for every field in the schema. The instructions include
 name, description, type, unit, comparator, bounds, aliases and keys. The prompt includes the
 resolved schema, the response shape, the chunk's source id and global range, the chunk text,
 and the app's reference texts with their ids and digests. References are pinned context in
-each prompt; they are not downloaded or shortened silently. If this context cannot fit the
+each prompt; they are not downloaded or shortened silently. Initial prompt sizes are validated
+one prompt at a time before any client call, then each prompt is recreated when called. The
+runner never retains an initial prompt list in addition to the returned call artifacts. If this context cannot fit the
 prompt budget, the runner refuses it before the first call. Large reference chunking is later
 work. An empty document with references gets one initial prompt for those references; with no
 references it records an empty-source search for each field without a model call.
@@ -233,12 +247,18 @@ comparison. It keeps the first query when these forms are duplicates, so an earl
 alias wins the tie. It searches whole words or phrases with flexible whitespace. It does not
 use a model, stemming, an embedding or words from model output. Keys are included as context
 in the prompt, not searched alone: common year headings would match unrelated tables. Every
-query, match and searched source is recorded.
+query and searched source is recorded. Match records are bounded as below.
 
-The script searches the full document and each supplied reference. A match selects the
-`search_context_chars` characters on either side, clamped to its source. It merges overlapping
-regions in the same source, sorts by document first then reference id and byte start, and keeps
-the first `max_target_regions`. It records omitted matches and `search_truncated` when capped.
+The script searches the full document and each supplied reference. Query order defines match
+priority: title, aliases, title words, then description words. Within one query, document hits
+come first, then references by id, then byte position. It streams matches and retains at most
+1024 in that order. It counts later matches in `omitted_matches` without allocating records or
+windows for them. A retained match selects `search_context_chars` characters on either side,
+clamped to its source. It merges overlapping regions in the same source and gives each merged
+region its best query rank. It selects at most `max_target_regions` by rank, then source and
+byte start. `omitted_regions` counts discarded regions from that bounded pool; it does not
+estimate regions from omitted matches. Either cap records `search_truncated`. The selected
+regions are sent in document, reference-id and byte-start order for stable quote anchoring.
 The reply may quote any one retained region but may not combine two regions into a new quote.
 For document evidence the runner chooses the first retained region that holds the whole value
 quote and sets it as `search_region`. The core then resolves that quote under SPEC §4.6.
@@ -325,7 +345,13 @@ against the saved manifest; it is not a signature or proof of the model's identi
 `replay(record, artifacts, text, schema, policy, references)` makes no model call. It checks
 input digests, rebuilds chunks and prompts, verifies artifact and chain digests, re-parses
 replies, enforces the same diffs and budgets, and runs `verify` for each core receipt and the
-final receipt. It checks not-found and search-only entries too. Missing artifacts, changed
+final receipt. Before building any prompt, replay bounds the initial chunk plan by the
+recorded chunk-plan length or call and limit entries, as well as the declared budget. An untrusted header cannot
+authorize a plan larger than those saved entries. The recorded chunk plan also bounds replay
+of an initial pass interrupted before every planned call ran. It validates each saved chunk
+and compares the regenerated source and byte ranges before constructing prompts. Replay
+allocation ceilings for candidates and admission history are further bounded by the actual
+canonical record and artifact byte counts, even when the header declares larger budgets. It checks not-found and search-only entries too. Missing artifacts, changed
 settings, unknown runner versions or a different core version fail replay. A client-error
 entry can verify the record of the attempted call, not reproduce the external failure.
 Replaying recorded replies is deterministic; a fresh model run need not produce those replies.

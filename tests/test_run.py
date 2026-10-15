@@ -526,3 +526,219 @@ def test_repair_not_found_requires_the_boolean_true(not_found):
     assert not result.complete
     assert not any(e.get("status") == "repair_not_found" for e in result.record["entries"])
     assert_replays(result, "Amount 5.")
+
+
+def test_replay_refuses_amplified_chunk_plan_before_prompt_allocation(monkeypatch):
+    import groundgate.run.runner as module
+
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    record = copy.deepcopy(result.record)
+    record["header"]["settings"].update(chunk_chars=1, overlap_chars=0, max_calls=9007199254740991)
+    planned_limits = []
+    original = module._chunks
+
+    def bounded_chunks(text, settings):
+        planned_limits.append(settings.max_calls)
+        assert settings.max_calls <= 2
+        return original(text, settings)
+
+    def unexpected_prompt(*args, **kwargs):
+        pytest.fail("untrusted replay allocated prompts before refusing its plan")
+
+    monkeypatch.setattr(module, "_chunks", bounded_chunks)
+    monkeypatch.setattr(module._Engine, "prompt", unexpected_prompt)
+    assert not replay(record, result.artifacts, "x" * 50000, SCHEMA).ok
+    assert planned_limits == [1]
+
+
+def test_replay_keeps_valid_interrupted_multichunk_initial_pass():
+    text = "Amount 5.\nAmount 6.\nAmount 7."
+    client = Client(RuntimeError("transport stopped"))
+    result = execute(text, client, run_policy=RunPolicy(chunk_chars=10, overlap_chars=0))
+    assert len(client.prompts) == 1 and not result.complete
+    assert len(result.record["entries"][0]["chunks"]) == 3
+    assert_replays(result, text)
+
+
+def test_targeted_title_beats_earlier_common_description_words():
+    schema = {
+        "fields": {
+            "revenue": {"type": "integer", "description": "Total revenue for the fiscal year"}
+        }
+    }
+    text = ("the " + "x" * 20 + "\n") * 1100 + "Revenue 5."
+    client = Client(envelope(missing=("revenue",)), envelope(candidate(field="revenue")))
+    result = execute(
+        text,
+        client,
+        schema,
+        run_policy=RunPolicy(
+            chunk_chars=50000, overlap_chars=0, search_context_chars=12, max_target_regions=1
+        ),
+    )
+    search = next(e for e in result.record["entries"] if e["kind"] == "search")
+    assert search["regions"][0]["text"].endswith("Revenue 5.")
+    assert len(search["matches"]) == search["match_limit"] == 1024
+    assert search["omitted_matches"] == 77
+    assert search["status"] == "search_truncated"
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, text, schema)
+
+
+def test_repair_prompt_explains_unexpected_changed_value_terminal_path():
+    first = candidate(evidence=[item("missing")])
+    client = Client(envelope(first), candidate("6"))
+    result = execute("Amount 6.", client)
+    assert "even unexpectedly" in client.prompts[1]
+    assert "neither receives another repair" in client.prompts[1]
+    assert len(client.prompts) == 2
+    assert any(e.get("status") == "changed_value" for e in result.record["entries"])
+
+
+def test_replay_rejects_forged_dummy_plan_before_building_chunks(monkeypatch):
+    import groundgate.run.runner as module
+
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    record = copy.deepcopy(result.record)
+    record["header"]["settings"].update(chunk_chars=1, overlap_chars=0, max_calls=9007199254740991)
+    record["entries"][0]["chunks"] = [None] * 1000
+
+    def unexpected_chunks(*args, **kwargs):
+        pytest.fail("dummy saved plan authorized chunk generation")
+
+    monkeypatch.setattr(module, "_chunks", unexpected_chunks)
+    assert not replay(record, result.artifacts, "x" * 50000, SCHEMA).ok
+
+
+def test_initial_prompt_validation_retains_one_prompt_before_first_client_call(monkeypatch):
+    import groundgate.run.runner as module
+
+    original = module._Engine.prompt
+    state = {"alive": 0, "peak": 0, "prompts": 0, "checked": False}
+
+    class Watched(str):
+        def __new__(cls, value):
+            result = super().__new__(cls, value)
+            state["alive"] += 1
+            state["peak"] = max(state["peak"], state["alive"])
+            return result
+
+        def __del__(self):
+            state["alive"] -= 1
+
+    def prompt(self, *args, **kwargs):
+        state["prompts"] += 1
+        return Watched(original(self, *args, **kwargs))
+
+    def client(prompt):
+        assert state["prompts"] == 4  # Three validated, then the first recreated call.
+        assert state["alive"] == state["peak"] == 1
+        state["checked"] = True
+        raise RuntimeError("stop after the first call")
+
+    monkeypatch.setattr(module._Engine, "prompt", prompt)
+    result = execute(
+        "Amount 5.\nAmount 6.\nAmount 7.",
+        client,
+        run_policy=RunPolicy(chunk_chars=10, overlap_chars=0),
+    )
+    assert state["checked"] and not result.complete
+
+
+def test_aggregate_candidate_limit_never_partially_applies_reply():
+    result = execute(
+        "Amount 5.",
+        Client(envelope(candidate(), candidate())),
+        run_policy=RunPolicy(max_total_candidates=1),
+    )
+    assert not result.complete and not result.candidates
+    assert any(e.get("status") == "aggregate_candidate_limit" for e in result.record["entries"])
+    assert_replays(result, "Amount 5.")
+
+
+def test_changed_value_cannot_exceed_aggregate_candidate_limit():
+    first = candidate(evidence=[item("missing")])
+    result = execute(
+        "Amount 6.",
+        Client(envelope(first), candidate("6")),
+        run_policy=RunPolicy(max_total_candidates=1),
+    )
+    assert not result.complete and len(result.candidates) == 1
+    assert result.candidates[0]["value"] == "5"
+    assert_replays(result, "Amount 6.")
+
+
+def test_admission_history_limit_retains_last_recorded_packet():
+    text = "Amount 5.\nAmount 6."
+    settings = RunPolicy(chunk_chars=10, overlap_chars=0)
+    baseline = execute(
+        text, Client(envelope(candidate()), envelope(candidate("6"))), run_policy=settings
+    )
+    pairs = [e for e in baseline.record["entries"] if e["kind"] == "admission"]
+    sizes = [
+        len(gg.jcs({"candidates": e["candidates"], "receipt": e["receipt"]}).encode())
+        for e in pairs
+    ]
+    budget = sizes[0] + sizes[1] // 2
+    result = execute(
+        text,
+        Client(envelope(candidate()), envelope(candidate("6"))),
+        run_policy=RunPolicy(chunk_chars=10, overlap_chars=0, max_admission_bytes=budget),
+    )
+    assert not result.complete and len(result.candidates) == 1
+    assert result.receipt.decisions[0].value == "5"
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert any(e.get("status") == "admission_history_limit" for e in result.record["entries"])
+    stored = [e for e in result.record["entries"] if e["kind"] == "admission"]
+    assert (
+        sum(
+            len(gg.jcs({"candidates": e["candidates"], "receipt": e["receipt"]}).encode())
+            for e in stored
+        )
+        <= budget
+    )
+    assert_replays(result, text)
+
+
+def test_candidate_payload_byte_limit_applies_before_admission():
+    first = candidate(evidence=[item("x" * 3000)])
+    result = execute(
+        "Amount 5.", Client(envelope(first)), run_policy=RunPolicy(max_admission_bytes=4096)
+    )
+    assert not result.complete and not result.candidates
+    assert not any(e["kind"] == "admission" for e in result.record["entries"])
+    assert_replays(result, "Amount 5.")
+
+
+@pytest.mark.parametrize("artifacts", [{"bad": None}, {1: "bad"}, None, []])
+def test_replay_malformed_artifacts_are_a_failed_verification(artifacts):
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    assert not replay(result.record, artifacts, "Amount 5.", SCHEMA).ok
+
+
+@pytest.mark.parametrize("replacement", [candidate(), candidate("6")])
+def test_admission_history_rollback_after_repair_keeps_packet_and_outcome(replacement):
+    text = "Amount 5. Other 6."
+    first = candidate(evidence=[item("missing")])
+    baseline = execute(text, Client(envelope(first), replacement))
+    pairs = [e for e in baseline.record["entries"] if e["kind"] == "admission"]
+    sizes = [
+        len(gg.jcs({"candidates": e["candidates"], "receipt": e["receipt"]}).encode())
+        for e in pairs
+    ]
+    budget = sizes[0] + sizes[1] // 2
+    result = execute(
+        text, Client(envelope(first), replacement), run_policy=RunPolicy(max_admission_bytes=budget)
+    )
+    assert not result.complete
+    assert len(result.candidates) == 1
+    assert result.candidates[0]["value"] == "5"
+    assert result.candidates[0]["evidence"] == [item("missing")]
+    assert result.receipt.decisions[0].outcome == "rejected"
+    assert result.receipt.decisions[0].codes == ("QUOTE_NOT_FOUND",)
+    states = result.record["final"]["fields"]["amount"]
+    assert "admission_history_limit" in states
+    assert "repair_limit" not in states
+    stop = next(e for e in result.record["entries"] if e.get("status") == "admission_history_limit")
+    assert stop["retained_candidate_ids"] == [result.candidates[0]["id"]]
+    assert_replays(result, text)
