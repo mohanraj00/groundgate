@@ -70,7 +70,9 @@ These two rules were decided on 2026-10-15. Every later section follows them.
 
 A pack or a check is declared data with an id, a version and a status. groundgate resolves it
 into the schema and the policy before the decision, and the receipt records its digest. If a pack
-changes, every hash changes, and `verify` with the same pack gives the same outcome.
+changes, its digest changes, and so do the digests that depend on it: the resolved schema and
+policy, and the receipt. The document and candidate digests do not change. `verify` with the same
+pack gives the same outcome.
 
 An app cannot add code to the decision. Code in the decision would break three things: `verify`
 could not reproduce the receipt, the core would no longer be dependency-free, and a bad plugin
@@ -85,8 +87,8 @@ that a pack can reach for these.
 
 A pack can still make groundgate less safe inside these limits. A wide list of aliases makes more
 wrong values match a field. So the receipt names the pack that each check used, and the tools
-measure each pack (section 10). A pack that nobody measured has the status `draft`, and the report
-says so for every value that it helped to admit.
+measure each route of each pack (section 10). A route that nobody measured has the status `draft`
+(section 8), and the report says so for every value that it helped to admit.
 
 ## 5. The extension points
 
@@ -219,16 +221,22 @@ and is not. The app gets a measured number for each field instead, from its own 
 
 ## 8. The status of an extension
 
-Every pack, check and judge route has one status:
+A status belongs to a route, not to a whole pack. A route is one pack, check or judge question, on
+one kind of document, one field and one code (section 10). One pack can give aliases for the
+revenue field and for the invoice number. If the revenue route has a bound and the invoice number
+route has none, one status for the pack would be wrong in one direction or the other.
+
+Each version of an extension carries a status table, with one row for each route that it
+qualifies. A route with no row is `draft`.
 
 | Status | Meaning | Effect |
 |---|---|---|
-| `draft` | not measured on documents that nobody used to write it | can add doubt; the report marks each value that it helped to admit |
-| `measured` | measured on held-out documents of its kind, with a published bound | can help to admit |
-| `retired` | replaced or found unsafe | the core refuses it; old receipts still verify |
+| `draft` | not measured on documents that nobody used to write it | its knowledge can apply, and the report marks each value that it helped to admit; a judge question can only add doubt |
+| `measured` | measured on held-out documents of its kind, with a published bound for this route | can help to admit with no mark; a judge question can clear |
+| `retired` | replaced or found unsafe | the core refuses the route; old receipts still verify |
 
-A pack can change its status only with a new version, so a receipt always says which status
-applied.
+A status table can change only with a new version of the extension, so a receipt always says
+which status applied to each route.
 
 ## 9. What stays in the core
 
@@ -263,8 +271,8 @@ silent misses (the work of the runner).
 - **Wrong.** The admitted value is not the field's value in the blind label, or the document does
   not state the field. For a number, the value is compared after its scale, with its unit and
   sign, and a right number under a wrong key or condition is wrong. For a string, the value is
-  compared after whitespace normalisation and lower-casing (SPEC §4.4), so "Premium" for a label
-  of "Basic" is wrong.
+  compared after whitespace normalisation (SPEC §4.4), with its case kept, so "Premium" for a label
+  of "Basic" is wrong, and so is "ab-1" for a label of "AB-1".
 - **Not an escape.** A wrong value sent to review is a catch. A field with no value is a silent miss or a review, not an escape.
 - **Excluded.** An item that the label marks as unclear in the document. The report gives the count.
 - **For each field, each kind and each route.** A route is one pack, check or judge question that
