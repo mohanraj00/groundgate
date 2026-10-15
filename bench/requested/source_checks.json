@@ -1,0 +1,362 @@
+{
+  "format": "requested-source-checks/1",
+  "status": "selection_open",
+  "inspection": "Source-only identity, notice and text-layer checks. No benchmark model call or requested-value label was used to choose these candidates. Download approval does not assert a redistribution license. No source PDF, page image or source text is published.",
+  "documents": [
+    {
+      "id": "component-h01",
+      "source": "https://www.ti.com/lit/ds/symlink/lm1117.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 2920491,
+      "source_sha256": "sha256:c117f5dd97fd15e62c0dee3adbf1af60480a128a10a0f9a9c28aafb8220ec3aa",
+      "download_status": "complete",
+      "selection_status": "on_hold",
+      "source_pages": 47,
+      "identity": {
+        "device": "LM1117",
+        "title": "LM1117 800-mA, Low-Dropout Linear Regulator",
+        "document_code": "SNOS412Q",
+        "revision": "Q",
+        "first_issued": "February 2000",
+        "printed_revision_date": "January 2023"
+      },
+      "text_layer": {
+        "language": "English",
+        "basis": "English narrative and headings on visually inspected identity and notice pages; digital text extraction succeeds across the datasheet body.",
+        "pages_with_nonempty_pypdf_text": 47,
+        "zero_text_physical_pages": [],
+        "zero_text_pages_visual_check": {},
+        "qualification": "Digital English text is extractable on every physical page. This is not a completeness claim for graphical content."
+      },
+      "notice": {
+        "physical_page": 47,
+        "printed_page_label": null,
+        "heading": "IMPORTANT NOTICE AND DISCLAIMER",
+        "copyright_year": 2026,
+        "notice_last_updated": "10/2025",
+        "permission_excerpt": "only for development of an application",
+        "paraphrase": "The notice limits its use permission to developing an application using the described products, prohibits other reproduction and display, disclaims warranties, and grants no further intellectual-property license.",
+        "benchmark_permission_established": false,
+        "open_reuse_license_found": false,
+        "visual_checked": true
+      },
+      "reason": "The PDF adds an application-specific use restriction. Applicable permission for benchmark use is not established; no value labeling or benchmark use proceeds for this candidate."
+    },
+    {
+      "id": "component-h02",
+      "source": "https://www.ti.com/lit/ds/symlink/lm358.pdf",
+      "approved_max_bytes": 5242880,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 4150429,
+      "source_sha256": "sha256:95fd2cc9c87014b32c2939009266e2c5938fc3c11a61d52015fa53fdeef5ab70",
+      "download_status": "complete",
+      "selection_status": "on_hold",
+      "source_pages": 68,
+      "identity": {
+        "device": "LM358",
+        "title": "Industry-Standard Dual Operational Amplifiers",
+        "document_code": "SLOS068AB",
+        "revision": "AB",
+        "first_issued": "June 1976",
+        "printed_revision_date": "October 2024"
+      },
+      "text_layer": {
+        "language": "English",
+        "basis": "English narrative and headings on visually inspected identity and notice pages; digital text extraction succeeds across the datasheet body.",
+        "pages_with_nonempty_pypdf_text": 65,
+        "zero_text_physical_pages": [
+          57,
+          58,
+          59
+        ],
+        "zero_text_pages_visual_check": {
+          "57": "Mechanical package drawing",
+          "58": "Land-pattern drawing",
+          "59": "Mechanical package drawing"
+        },
+        "qualification": "Digital English datasheet body. Appended drawing pages are not all text-extractable."
+      },
+      "notice": {
+        "physical_page": 68,
+        "printed_page_label": null,
+        "heading": "IMPORTANT NOTICE AND DISCLAIMER",
+        "copyright_year": 2026,
+        "notice_last_updated": "10/2025",
+        "permission_excerpt": "only for development of an application",
+        "paraphrase": "The notice limits its use permission to developing an application using the described products, prohibits other reproduction and display, disclaims warranties, and grants no further intellectual-property license.",
+        "benchmark_permission_established": false,
+        "open_reuse_license_found": false,
+        "visual_checked": true
+      },
+      "reason": "The PDF adds an application-specific use restriction. Applicable permission for benchmark use is not established; no value labeling or benchmark use proceeds for this candidate."
+    },
+    {
+      "id": "component-h03",
+      "source": "https://www.ti.com/lit/ds/symlink/tmp117.pdf",
+      "approved_max_bytes": 2097152,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 1717870,
+      "source_sha256": "sha256:afe974873c80a7a4e1d342e9044e71c6f905caf4f04c1f0ea0df5c6ba35f980e",
+      "download_status": "complete",
+      "selection_status": "on_hold",
+      "source_pages": 50,
+      "identity": {
+        "device": "TMP117",
+        "title": "TMP117 High-Accuracy, Low-Power, Digital Temperature Sensor With SMBus- and I2C-Compatible Interface",
+        "document_code": "SNOSD82D",
+        "revision": "D",
+        "first_issued": "June 2018",
+        "printed_revision_date": "September 2022"
+      },
+      "text_layer": {
+        "language": "English",
+        "basis": "English narrative and headings on visually inspected identity and notice pages; digital text extraction succeeds across the datasheet body.",
+        "pages_with_nonempty_pypdf_text": 50,
+        "zero_text_physical_pages": [],
+        "zero_text_pages_visual_check": {},
+        "qualification": "Digital English text is extractable on every physical page. This is not a completeness claim for graphical content."
+      },
+      "notice": {
+        "physical_page": 50,
+        "printed_page_label": null,
+        "heading": "IMPORTANT NOTICE AND DISCLAIMER",
+        "copyright_year": 2026,
+        "notice_last_updated": "10/2025",
+        "permission_excerpt": "only for development of an application",
+        "paraphrase": "The notice limits its use permission to developing an application using the described products, prohibits other reproduction and display, disclaims warranties, and grants no further intellectual-property license.",
+        "benchmark_permission_established": false,
+        "open_reuse_license_found": false,
+        "visual_checked": true
+      },
+      "reason": "The PDF adds an application-specific use restriction. Applicable permission for benchmark use is not established; no value labeling or benchmark use proceeds for this candidate."
+    },
+    {
+      "id": "sbc-h01",
+      "source": "https://aetnafeds.com/pdf/2026/2026SBC_AetnaDirect.pdf",
+      "approved_max_bytes": 1048576,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 393246,
+      "source_sha256": "sha256:44ebea795990acfda6c10f1c4deecc52714fe19d7b44e313636c9d905d9d21e5",
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_pages": 6,
+      "identity": {
+        "publisher": "Aetna",
+        "plan_name": "Aetna Direct",
+        "plan_code": "N6",
+        "network_or_product_as_printed": "AETNA OPEN CHOICE",
+        "plan_type_as_printed": "PPO",
+        "coverage_for_as_printed": "Self Only, Self Plus One or Self and Family",
+        "coverage_start": "2026-01-01",
+        "coverage_end": "2026-12-31",
+        "variant_notes": "FEHB plan; page 1 directs the reader to plan brochure RI 73-828. This is the Direct Code N6 variant, identified from the original page rather than the file name.",
+        "evidence_page": 1
+      },
+      "notices": {
+        "copyright_statement_found": false,
+        "explicit_reuse_license_or_permission_found": false,
+        "copyright_or_license_metadata_found": false,
+        "inspection": "All page text searched for copyright, rights, license, reuse, redistribution, reproduction, permission, copying, and proprietary terms. XMP rights/license text checked. Original page 1 and rendered footer strips from every page visually inspected.",
+        "scope_note": "A request to obtain a copy of plan terms or a glossary is not a reuse license for this SBC. This record makes no claim that public access grants redistribution rights.",
+        "notices": [
+          {
+            "text": "Proprietary",
+            "pages": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "location": "Left footer region",
+            "evidence": "Visually present on every rendered page. On page 2 the footer is partly overlapped by the table and was not returned by text extraction."
+          }
+        ],
+        "result": "PDF carries a proprietary notice; no open license or affirmative redistribution/reuse grant was found in the PDF."
+      },
+      "permission_note": "No affirmative open reuse grant found. This is a draft source inspection record, not permission to redistribute a PDF or source text. Final set eligibility is not established by download approval alone."
+    },
+    {
+      "id": "sbc-h02",
+      "source": "https://www.modahealth.com/-/media/modahealth/shared/PEBB/Plans/2026/2026-SBC-PEBB-Synergy-Full-Time-HEM.pdf",
+      "approved_max_bytes": 1048576,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 360393,
+      "source_sha256": "sha256:d031ee5dc19cba3897f95ada7dc6d6fd73c89facb0e0c2a7f06fca7be1d8b2cb",
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_pages": 7,
+      "identity": {
+        "publisher": "Moda Health Plan, Inc.",
+        "plan_name": "PEBB - Synergy Full Time HEM Plan",
+        "network_or_product_as_printed": "Synergy",
+        "plan_type_as_printed": "PPO CCM",
+        "coverage_for_as_printed": "Individual + Family",
+        "coverage_start": "2026-01-01",
+        "coverage_end": "2026-12-31",
+        "variant_notes": "Full Time HEM is explicit in the original page-1 title. Synergy is taken from that plan name; no expanded network identity is inferred.",
+        "evidence_page": 1
+      },
+      "notices": {
+        "copyright_statement_found": false,
+        "explicit_reuse_license_or_permission_found": false,
+        "copyright_or_license_metadata_found": false,
+        "inspection": "All page text searched for copyright, rights, license, reuse, redistribution, reproduction, permission, copying, and proprietary terms. XMP rights/license text checked. Original page 1 and rendered footer strips from every page visually inspected.",
+        "scope_note": "A request to obtain a copy of plan terms or a glossary is not a reuse license for this SBC. This record makes no claim that public access grants redistribution rights.",
+        "notices": [],
+        "result": "No PDF-local copyright statement, proprietary marker, or affirmative reuse/redistribution license found by the stated checks. Absence of a notice is not a permission grant."
+      },
+      "permission_note": "No affirmative open reuse grant found. This is a draft source inspection record, not permission to redistribute a PDF or source text. Final set eligibility is not established by download approval alone."
+    },
+    {
+      "id": "annual-h01",
+      "source": "https://www.unilever.com/files/unilever-annual-report-and-accounts-2025.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 6462362,
+      "source_sha256": "sha256:dcdc67ff84977e2beeb6b7a8113b6862fae1880838c613eceac42ba4b605d9d7",
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_pages": 285,
+      "identity": {
+        "issuer": "Unilever PLC",
+        "title": "Unilever Annual Report and Accounts 2025",
+        "financial_year": 2025,
+        "year_end": "2025-12-31",
+        "identity_physical_pages": [
+          1,
+          3,
+          284
+        ],
+        "non_us_basis": "The report identifies a UK-registered parent and includes group consolidated statements under IFRS/UK-adopted standards."
+      },
+      "notices": [
+        {
+          "physical_page": 1,
+          "printed_page": null,
+          "type": "disclaimer and format/audit notice",
+          "paraphrase": "The PDF is identified as an exact copy of the printed shareholder report. The ESEF version is the official version for that regulation. Audited sections are identified. For nonshareholders, the material is informational and does not confer legal rights; responsibility and investment-reliance disclaimers follow.",
+          "affirmative_benchmark_use_grant": false,
+          "report_wide_reproduction_or_extraction_prohibition_identified": false
+        },
+        {
+          "physical_page": 283,
+          "printed_page": null,
+          "type": "cautionary statement and trademark notice",
+          "paraphrase": "Forward-looking-statement and reporting-basis cautions apply. The report identifies group brand names as owned or licensed trademarks and excludes linked website information from the report. These statements are not an affirmative benchmark-use license.",
+          "affirmative_benchmark_use_grant": false,
+          "report_wide_reproduction_or_extraction_prohibition_identified": false
+        },
+        {
+          "physical_page": 284,
+          "printed_page": null,
+          "type": "report scope and production information",
+          "paraphrase": "The page identifies the report components and group definition, separates additional US listing information, and describes print production and recycling. A suggestion to pass a finished printed copy to other readers is not treated as a digital reproduction grant.",
+          "affirmative_benchmark_use_grant": false
+        }
+      ],
+      "permission_note": "No affirmative open reuse grant found. This is a draft source inspection record, not permission to redistribute a PDF or source text. Final set eligibility is not established by download approval alone.",
+      "reporting_currency": {
+        "code": "EUR",
+        "name": "euro",
+        "amount_scale_metadata": "Primary consolidated-statement column headers state millions. No amounts were recorded.",
+        "evidence": [
+          {
+            "physical_page": 136,
+            "printed_page": "133",
+            "location": "Note 1, Foreign currencies"
+          },
+          {
+            "physical_page": 131,
+            "printed_page": "128",
+            "location": "Consolidated-statement column header"
+          }
+        ]
+      },
+      "permission_assessment": {
+        "benchmark_use_permission_established_by_this_inspection": false,
+        "affirmative_open_reuse_grant_found_in_pdf": false,
+        "report_wide_reproduction_or_automated_extraction_prohibition_found_in_pdf_text_scan": false,
+        "generic_copyright_distinction": "Copyright or third-party reserved rights are not an affirmative use grant; their presence alone is not recorded as a report-wide extraction ban.",
+        "remaining_boundary": "Document-only inspection. External website terms and applicable permission are for the parent to determine. Public availability and inspection download approval are not treated as benchmark-use permission.",
+        "redistribution": "No source PDF, rendered page or long source passage is proposed for public redistribution."
+      }
+    },
+    {
+      "id": "annual-h02",
+      "source": "https://www.shell.com/investors/results-and-reporting/annual-report/_jcr_content/root/main/section/promo.multi.stream/1779352356739/36306d968747b6079d3f800b2b1552a033856b5d/shell-integrated-annual-and-sustainability-report.pdf",
+      "approved_max_bytes": 25165824,
+      "approval": "chat source-and-size approval, 2026-10-15",
+      "source_bytes": 19797470,
+      "source_sha256": "sha256:eab508829aacb9c2d78a9d0ee8e9e1f6266b474bdd726c4f23ddf6fc3e6c1f40",
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_pages": 474,
+      "identity": {
+        "issuer": "Shell plc",
+        "title": "Shell plc Annual Report and Accounts 2025",
+        "financial_year": 2025,
+        "year_end": "2025-12-31",
+        "identity_physical_pages": [
+          1,
+          471
+        ],
+        "non_us_basis": "The report serves UK annual-report requirements and presents a UK parent and subsidiaries under UK-adopted standards and IFRS.",
+        "metadata_title_caveat": "PDF metadata says Shell AR 2026 - Integrated Annual & Sustainability Report. The visible cover and About this Report expressly identify the year ended December 31, 2025. Use the visible reporting period, not the metadata year, for corpus identity."
+      },
+      "notices": [
+        {
+          "physical_page": 425,
+          "printed_page": "423",
+          "type": "third-party data copyright/licensing attribution",
+          "paraphrase": "Footnotes D and E attribute licensed biodiversity data, including a third-party supplier copyright and reserved-rights notice. This attribution concerns the cited supplementary data. It is not treated as an open license or automatically as a report-wide automated-extraction prohibition.",
+          "affirmative_benchmark_use_grant": false,
+          "report_wide_reproduction_or_extraction_prohibition_identified": false
+        },
+        {
+          "physical_page": 471,
+          "printed_page": "v",
+          "type": "scope, accounting and non-GAAP reporting note",
+          "paraphrase": "The report specifies its UK full-year group and parent-account scope, IFRS basis, rounding conventions, subsidiary definitions and reporting currency. These are reporting definitions, not an affirmative reuse grant.",
+          "affirmative_benchmark_use_grant": false
+        },
+        {
+          "physical_page": 472,
+          "printed_page": "vi",
+          "type": "cautionary statement, trademarks and document availability",
+          "paraphrase": "The page limits reliance on forward-looking statements, excludes linked website information from the report, identifies trademarks, and says report copies are available free of charge online, in offices or by mail. Free availability is not treated as a benchmark-use or redistribution license.",
+          "affirmative_benchmark_use_grant": false,
+          "report_wide_reproduction_or_extraction_prohibition_identified": false
+        }
+      ],
+      "permission_note": "No affirmative open reuse grant found. This is a draft source inspection record, not permission to redistribute a PDF or source text. Final set eligibility is not established by download approval alone.",
+      "reporting_currency": {
+        "code": "USD",
+        "name": "US dollar",
+        "amount_scale_metadata": "No individual amount or field-level scale was labeled in this source-only check.",
+        "evidence": [
+          {
+            "physical_page": 236,
+            "printed_page": "234",
+            "location": "Note 2, Nature of the Consolidated Financial Statements"
+          },
+          {
+            "physical_page": 471,
+            "printed_page": "v",
+            "location": "About this Report, final paragraph"
+          }
+        ]
+      },
+      "permission_assessment": {
+        "benchmark_use_permission_established_by_this_inspection": false,
+        "affirmative_open_reuse_grant_found_in_pdf": false,
+        "report_wide_reproduction_or_automated_extraction_prohibition_found_in_pdf_text_scan": false,
+        "generic_copyright_distinction": "Copyright or third-party reserved rights are not an affirmative use grant; their presence alone is not recorded as a report-wide extraction ban.",
+        "remaining_boundary": "Document-only inspection. External website terms and applicable permission are for the parent to determine. Public availability and inspection download approval are not treated as benchmark-use permission.",
+        "redistribution": "No source PDF, rendered page or long source passage is proposed for public redistribution."
+      }
+    }
+  ]
+}

@@ -120,6 +120,278 @@
    "source_retention": "original PDF in local work storage; not committed",
    "source_sha256": "sha256:a149efc66db135e06bad1cd74f0be030960ec6f80032fb6d654e7b4281ac753b",
    "split": "development"
+  },
+  {
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "id": "sbc-h01",
+   "kind": "sbc",
+   "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
+   "license": "No affirmative reuse grant found in PDF; URL and hash provenance only",
+   "license_other_notices": "Proprietary footer on every page. No PDF or source text redistribution is proposed.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "comparator": "eq",
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "comparator": "eq",
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "comparator": "le",
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "comparator": "le",
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "comparator": "eq",
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD"
+     }
+    }
+   },
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://aetnafeds.com/pdf/2026/2026SBC_AetnaDirect.pdf",
+   "source_bytes": 393246,
+   "source_pages": 6,
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_sha256": "sha256:44ebea795990acfda6c10f1c4deecc52714fe19d7b44e313636c9d905d9d21e5",
+   "split": "heldout"
+  },
+  {
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "id": "sbc-h02",
+   "kind": "sbc",
+   "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
+   "license": "No affirmative reuse grant found in PDF; URL and hash provenance only",
+   "license_other_notices": "No open reuse grant found. Own notices are recorded in source_checks.json. No PDF or source text redistribution is proposed.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "comparator": "eq",
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "comparator": "eq",
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "comparator": "le",
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "comparator": "le",
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "comparator": "eq",
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD"
+     }
+    }
+   },
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.modahealth.com/-/media/modahealth/shared/PEBB/Plans/2026/2026-SBC-PEBB-Synergy-Full-Time-HEM.pdf",
+   "source_bytes": 360393,
+   "source_pages": 7,
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_sha256": "sha256:d031ee5dc19cba3897f95ada7dc6d6fd73c89facb0e0c2a7f06fca7be1d8b2cb",
+   "split": "heldout"
+  },
+  {
+   "approved_max_bytes": 8388608,
+   "download_approved": "2026-10-15",
+   "id": "annual-h01",
+   "kind": "annual",
+   "label_scope_note": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. The reported group scope uses continuing operations after the demerger; do not substitute a prior-year comparative.",
+   "license": "No affirmative reuse grant found in PDF; URL and hash provenance only",
+   "license_other_notices": "No open reuse grant found. Own notices are recorded in source_checks.json. No PDF or source text redistribution is proposed.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "EUR"
+     }
+    }
+   },
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.unilever.com/files/unilever-annual-report-and-accounts-2025.pdf",
+   "source_bytes": 6462362,
+   "source_pages": 285,
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_sha256": "sha256:dcdc67ff84977e2beeb6b7a8113b6862fae1880838c613eceac42ba4b605d9d7",
+   "split": "heldout"
+  },
+  {
+   "approved_max_bytes": 25165824,
+   "download_approved": "2026-10-15",
+   "id": "annual-h02",
+   "kind": "annual",
+   "label_scope_note": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Visible cover and reporting period identify 2025 despite the PDF metadata title naming 2026.",
+   "license": "No affirmative reuse grant found in PDF; URL and hash provenance only",
+   "license_other_notices": "No open reuse grant found. Own notices are recorded in source_checks.json. No PDF or source text redistribution is proposed.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "USD"
+     }
+    }
+   },
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.shell.com/investors/results-and-reporting/annual-report/_jcr_content/root/main/section/promo.multi.stream/1779352356739/36306d968747b6079d3f800b2b1552a033856b5d/shell-integrated-annual-and-sustainability-report.pdf",
+   "source_bytes": 19797470,
+   "source_pages": 474,
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_sha256": "sha256:eab508829aacb9c2d78a9d0ee8e9e1f6266b474bdd726c4f23ddf6fc3e6c1f40",
+   "split": "heldout"
   }
  ],
  "format": "requested-fields/1",
@@ -304,7 +576,7 @@
   }
  },
  "selection_complete": false,
- "selection_note": "Approved development pilots only. Held-out source selection and every further download are pending. No model output exists.",
+ "selection_note": "Three approved development pilots and four inspected held-out candidates have source-based draft labels. Final eligibility and membership remain open. The three inspected component candidates in source_checks.json are on hold and are not manifest members. No benchmark model output exists.",
  "status": "draft",
  "label_method": "Draft source-only agent annotations from original PDFs, checked against original page renders. Independent second checks cover absence and disputed fields. No benchmark model call has run."
 }
