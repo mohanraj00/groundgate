@@ -86,6 +86,46 @@
     }
    ],
    "id": "component-001"
+  },
+  {
+   "id": "sbc-001",
+   "fields": [
+    {
+     "field": "deductible_family",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "deductible_individual",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "out_of_pocket_family",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "out_of_pocket_individual",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    },
+    {
+     "field": "specialist_copay",
+     "key": null,
+     "note": "",
+     "status": "unlabeled",
+     "values": []
+    }
+   ]
   }
  ],
  "status": "draft"

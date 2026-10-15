@@ -29,6 +29,20 @@
    "source_retention": "original PDF in local work storage; not committed",
    "source_sha256": "sha256:be56fbb75ba0ae9e26558a73c93ac3e75c2ad4e6878d3b6703de2a76d886ea8c",
    "split": "development"
+  },
+  {
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "id": "sbc-001",
+   "kind": "sbc",
+   "license": "No explicit reuse license found in the PDF",
+   "license_other_notices": "The PDF contains coverage, nondiscrimination and language-assistance notices. No PDF or source-text redistribution is proposed.",
+   "source": "https://www.hca.wa.gov/assets/pebb/ump-classic-nonmedicare-pebb-sbc-2026.pdf",
+   "source_bytes": 688595,
+   "source_pages": 10,
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_sha256": "sha256:a149efc66db135e06bad1cd74f0be030960ec6f80032fb6d654e7b4281ac753b",
+   "split": "development"
   }
  ],
  "format": "requested-fields/1",
