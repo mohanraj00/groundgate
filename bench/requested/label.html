@@ -34,7 +34,7 @@ button:disabled { cursor: default; }
 <label for="document">Document <select id="document"></select></label>
 <button id="save" type="button">Save draft</button>
 <button id="seal" type="button">Seal all labels</button>
-<a id="text" target="_blank" rel="noopener" hidden>Open optional source text</a>
+<a id="text" target="_blank" rel="noopener" hidden>Open optional local source text</a>
 </nav>
 <p id="message" role="status" aria-live="polite"></p>
 <p class="help">No model output is loaded. An absent label needs a second blind check. An unclear label needs a reason. Sealing covers every document in both splits and stops edits.</p>
@@ -99,6 +99,7 @@ function render() {
   node('original').href = `/pdf/${encodeURIComponent(doc.id)}`;
   showSource();
   node('text').hidden = doc.source_text_available !== true;
+  node('text').textContent = doc.source_text_hash_pinned ? 'Open local source text (hash checked)' : 'Open local source text (hash not pinned)';
   if (doc.source_text_available) node('text').href = `/text/${encodeURIComponent(doc.id)}`;
   else node('text').removeAttribute('href');
   node('fields').replaceChildren();
