@@ -742,3 +742,127 @@ def test_admission_history_rollback_after_repair_keeps_packet_and_outcome(replac
     stop = next(e for e in result.record["entries"] if e.get("status") == "admission_history_limit")
     assert stop["retained_candidate_ids"] == [result.candidates[0]["id"]]
     assert_replays(result, text)
+
+
+def test_fold_cache_builds_once_per_source_across_fields_and_queries(monkeypatch):
+    import groundgate.run.runner as module
+
+    built = []
+    original = module._Folded.build
+
+    def build(cls, text):
+        built.append(text)
+        return original(text)
+
+    monkeypatch.setattr(module._Folded, "build", classmethod(build))
+    text = "First item. Second item."
+    reference = {"id": "r", "text": "First reference. Second reference."}
+    schema = {
+        "fields": {
+            "first": {"description": "A different item"},
+            "second": {"description": "Another different item"},
+        }
+    }
+    result = execute(
+        text,
+        Client(
+            envelope(missing=("first", "second")),
+            envelope(missing=("first",)),
+            envelope(missing=("second",)),
+        ),
+        schema,
+        references=[reference],
+    )
+    assert built == [text, reference["text"]]
+    assert_replays(result, text, schema, references=[reference])
+
+
+@pytest.mark.parametrize("source", ["ASCII only", "Σς Œ Å", "Straße İ ﬃ", "İßﬃ🙂中é"])
+def test_compact_fold_and_byte_maps_preserve_original_boundaries(source):
+    from groundgate.run.runner import _ByteOffsets, _Folded
+
+    folded = _Folded.build(source)
+    offsets = _ByteOffsets(source)
+    position = 0
+    for index, char in enumerate(source):
+        assert folded.boundary(position) == index
+        for intermediate in range(1, len(char.casefold())):
+            assert folded.boundary(position + intermediate) is None
+        position += len(char.casefold())
+        assert folded.boundary(position) == index + 1
+        assert offsets.to_bytes(index + 1) == len(source[: index + 1].encode())
+    if len(source.casefold()) == len(source):
+        assert folded.source_positions is None and folded.folded_ends is None
+    else:
+        assert len(folded.source_positions) == sum(len(c.casefold()) > 1 for c in source)
+    assert len(offsets.positions) == sum(not c.isascii() for c in source)
+
+
+def test_large_ascii_fold_and_offsets_need_no_character_map():
+    from groundgate.run.runner import _ByteOffsets, _Folded
+
+    source = "A" * 100000
+    folded = _Folded.build(source)
+    offsets = _ByteOffsets(source)
+    assert folded.source_positions is None and folded.folded_ends is None
+    assert not offsets.positions and not offsets.extras
+    assert offsets.to_bytes(len(source)) == len(source)
+
+
+def test_rollback_names_dropped_ids_and_restores_accepted_raw(monkeypatch):
+    import groundgate.run.runner as module
+
+    text = "Amount 5. Other 6."
+    first = candidate(evidence=[item("missing")])
+    replacement = candidate()
+    baseline = execute(text, Client(envelope(first), replacement))
+    pairs = [e for e in baseline.record["entries"] if e["kind"] == "admission"]
+    sizes = [
+        len(gg.jcs({"candidates": e["candidates"], "receipt": e["receipt"]}).encode())
+        for e in pairs
+    ]
+    original = module._Engine.finish
+    checked = []
+
+    def finish(self):
+        if self.admission_exhausted:
+            checked.append(copy.deepcopy(self.raw))
+        return original(self)
+
+    monkeypatch.setattr(module._Engine, "finish", finish)
+    result = execute(
+        text,
+        Client(envelope(first), replacement),
+        run_policy=RunPolicy(max_admission_bytes=sizes[0] + sizes[1] // 2),
+    )
+    cid = result.candidates[0]["id"]
+    assert checked == [{cid: first}]
+    stop = next(e for e in result.record["entries"] if e.get("status") == "admission_history_limit")
+    assert stop["dropped_candidate_ids"] == []
+    assert stop["reverted_candidate_ids"] == [cid]
+    assert_replays(result, text)
+
+    # An initial proposal that cannot be recorded has no retained candidate.
+    initial = execute(text, Client(envelope(first)), run_policy=RunPolicy(max_admission_bytes=500))
+    stop = next(
+        e for e in initial.record["entries"] if e.get("status") == "admission_history_limit"
+    )
+    assert initial.candidates == [] and stop["retained_candidate_ids"] == []
+    assert stop["dropped_candidate_ids"] == ["c1-1"]
+    assert stop["reverted_candidate_ids"] == []
+    assert_replays(initial, text)
+
+
+def test_oversize_reply_is_retained_for_replay_but_never_parsed(monkeypatch):
+    import groundgate.run.runner as module
+
+    def unexpected_parse(raw):
+        pytest.fail("oversized reply was parsed")
+
+    monkeypatch.setattr(module, "_strict_json", unexpected_parse)
+    raw = "x" * 4096
+    result = execute("Amount 5.", lambda prompt: raw, run_policy=RunPolicy(max_reply_bytes=32))
+    call = next(e for e in result.record["entries"] if e["kind"] == "call")
+    assert call["status"] == "reply_limit" and call["reply_bytes"] == len(raw)
+    assert result.artifacts[call["reply_sha256"]] == raw
+    assert_replays(result, "Amount 5.")
