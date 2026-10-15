@@ -1,9 +1,8 @@
 # The extraction runner
 
-Status: proposed for maintainer approval in #268. This note changes no decision. The runner
-code in #270 and #271 starts after approval and stays in this Runner lane PR. The PR stays
-a draft until that work and its required checks are complete. Names and defaults below are
-the proposed API, not an API that exists today.
+Status: approved for #268. This note changes no core decision. The implementation of #270
+and #271 stays in the Runner lane PR. The PR stays a draft until that work and its required
+checks are complete. The runner is experimental; its held-out measure awaits #269.
 
 I put the extraction loop in `groundgate.run`, outside `admit`. The runner controls the request,
 the evidence repairs and the stopping rules. A model supplies candidates. Only `admit` decides
@@ -72,7 +71,9 @@ order, then repairs in candidate creation order. Each eligible candidate gets at
 in a repair round, before the next round starts. Every call consumes the total budget, including
 a failed client call. A changed-value proposal consumes its parent's call and gets zero more.
 
-The runner plans all initial chunks before it calls the client. If the initial pass alone
+The runner plans initial chunks before it calls the client. It bounds the plan as it builds
+it: when it reaches `max_calls + 1` chunks, it stops and refuses the input. It never allocates
+a complete oversized plan before checking that bound. If the initial pass alone
 exceeds the call budget, it refuses the input before any model work. If the budget ends after
 the initial pass, it makes no targeted or repair call beyond that limit. A later budget limit
 ends the run with `complete=false` and records the calls or fields it did not reach. A field
@@ -88,7 +89,7 @@ most `chunk_chars` characters. If that window reaches the document end, it emits
 through the document end and stops. It creates no suffix chunk after that point. Otherwise,
 it ends at the last line end in the final half of the window, or at the window boundary when
 there is no such line end. The next start is the prior chunk end minus the allowed overlap,
-clamped to move forward at least one character. An empty document has no text chunks. Every
+clamped to move forward at least one character relative to the previous start. An empty document has no text chunks. Every
 chunk records its start and end as global UTF-8 byte offsets. The document is never normalised
 again after offsets are made.
 
@@ -163,7 +164,10 @@ call that created it. The complete diff is recorded before admission.
 
 The following table is the full allowlist. Informational codes do not grant changes. With more
 than one non-informational code, every code must be eligible and changes are the union of their
-listed evidence roles. Every non-listed member and role stays fixed.
+listed evidence roles. Every non-listed member and role stays fixed. `SCALE_WORD` adds no
+evidence role. With `SCALE_WORD` and another eligible code, the reply may repair the union of
+those evidence roles while keeping the value, or change the value with those same evidence
+changes as one terminal proposal. A value change never grants another role or another round.
 
 | Decision code | Permitted change |
 |---|---|
@@ -246,7 +250,10 @@ artifact and history. This produces an explicit-span candidate before `admit`; i
 redefine the core's choice among quote occurrences. Under SPEC §3.1, an offsets-only value
 item cannot re-anchor. The core checks the resulting candidate with the unchanged SPEC rules,
 and replay verifies that same packet. This adapter output confines the value location to the
-targeted reference region without changing the policy.
+targeted reference region without changing the policy. I accept the cost of pinning the first
+permitted occurrence even when initial-pass alias-aware quote resolution would choose a later
+one. A two-occurrence fake-client test records the resulting field review. This is an adapter
+choice, not a change to the decision on an unchanged packet.
 A quote absent from every permitted region is a protocol failure; it cannot expand the search.
 Other evidence roles keep their core checks in the pinned text.
 
@@ -261,7 +268,8 @@ If no query matches, there is no client call: record `search_no_match`, the actu
 sources and zero regions. If the model returns no candidate, record `targeted_not_found` with
 the searched regions and the call. These are statements about a bounded search, not proof
 that a document lacks the value. Truncated searches remain marked as truncated even after
-`targeted_not_found`. An empty set of query words records `search_no_terms`.
+`targeted_not_found`. When no non-empty query remains after trimming, the record says `search_no_terms`. A field
+name made only of underscores can reach this state when it has no aliases or description.
 
 ## 7. Invalid replies and failures
 
@@ -284,7 +292,8 @@ Invalid caller inputs raise `PacketError` or a runner input error before the fir
 without a core receipt. A client exception is recorded as `client_error`; the runner stops
 incomplete and retains completed work. It records a fixed error category and the exception
 type, not an arbitrary exception string that may contain a secret. A runtime core packet
-error or unexpected internal failure is raised with the partial run record attached. It is
+error or unexpected internal failure raises `RunnerError` with its `record` set to the partial
+run record. It is
 never converted to a not-found result or an admitted candidate. A call timeout belongs to the
 client; the synchronous interface cannot force an uncooperative client to return.
 
@@ -323,11 +332,11 @@ Replaying recorded replies is deterministic; a fresh model run need not produce 
 
 ## 9. Checks and the release measure
 
-I will use a fake client for chunk boundaries, schema prompts, source quoting, every permitted
+Tests use a fake client for chunk boundaries, schema prompts, source quoting, every permitted
 repair role, forbidden diffs, no-ops, mixed terminal codes, changed-value stopping, cross-round
 conflicts, duplicates, limits, not-found states, targeted search order, malformed replies,
-client failures and byte-for-byte replay. Tests will not need keys, a network or a model.
-The how-to will replace the application loop in `docs/howto/feedback.md` after the gate.
+client failures and byte-for-byte replay. Tests need no keys, network or model. The how-to
+in `docs/howto/feedback.md` replaces the application loop with the runner.
 
 Search terms, region sizes and budgets can be chosen on the development part of #269 only.
 I freeze them before running its held-out part. The baseline, final admitted error rate with
@@ -338,6 +347,7 @@ No pack, relation check, judge route, router or reader from the later design is 
 
 ## 10. Approval
 
-Do you approve this runner design for #268, including evidence-only repairs, one admission and
-no further repairs for a changed value, a final admission over all active proposals, and one
-scripted targeted pass, so I can build #270 and #271 in this PR?
+The maintainer approved this design on 2026-10-15 before implementation of #270 and #271.
+The approval covers evidence-only repairs, one admission and no further repairs for a changed
+value, a final admission over all active proposals, and one scripted targeted pass. The design
+and implementation stay in the same Runner lane PR.

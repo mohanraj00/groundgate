@@ -5,7 +5,7 @@ store. It gives each fact one of three outcomes and writes a receipt that record
 This page builds that step for a short benefits notice with four fields. The model reads two
 fields right, one field has a qualifier in the text, and one value is wrong.
 
-groundgate never calls your model. Your app calls the model, and groundgate reads what the model
+`admit` never calls your model. This page calls the model in the app, and `admit` reads what it
 returned.
 
 ## 1. Write the schema
