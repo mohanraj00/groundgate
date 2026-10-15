@@ -24,6 +24,7 @@ textarea { min-height: 4rem; }
 button { padding: .6rem 1rem; font: inherit; cursor: pointer; }
 button:disabled { cursor: default; }
 #message { min-height: 1.5rem; font-weight: bold; }
+#request-context { white-space: pre-wrap; }
 .help { font-size: .9rem; }
 @media (max-width: 850px) { main { grid-template-columns: 1fr; } #source { position: static; } #source-viewer { height: 55vh; } }
 </style>
@@ -50,7 +51,7 @@ button:disabled { cursor: default; }
 <p id="source-status" role="status" aria-live="polite"></p>
 <div id="source-viewer" tabindex="0" aria-label="Scrollable original page view">
 <img id="preview" alt="Original PDF page" hidden><iframe id="pdf" title="Original PDF"></iframe></div></section>
-<section><h2 id="heading">Requested fields</h2><form id="fields"></form></section></main>
+<section><h2 id="heading">Requested fields</h2><p id="request-context" hidden></p><form id="fields"></form></section></main>
 <dialog id="confirm">
 <form method="dialog"><h2>Seal every label?</h2><p>Finish every requested field in every document first. Sealed labels cannot be edited here.</p>
 <button value="cancel">Keep editing</button><button id="confirm-seal" value="seal">Seal all labels</button></form>
@@ -95,6 +96,9 @@ function render() {
   const doc = state.documents.find(item => item.id === selected);
   const labels = state.labels.documents.find(item => item.id === selected);
   node('heading').textContent = `${doc.id}: ${doc.kind}, ${doc.split}`;
+  const requestContext = doc.request_context;
+  node('request-context').hidden = !requestContext;
+  node('request-context').textContent = requestContext ? `${requestContext.subject}\n${requestContext.scope}` : '';
   if (viewedDocument !== doc.id) { sourcePage = 1; viewedDocument = doc.id; }
   node('original').href = `/pdf/${encodeURIComponent(doc.id)}`;
   showSource();

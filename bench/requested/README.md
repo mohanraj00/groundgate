@@ -75,9 +75,13 @@ version and repair limits, on the development part. I run the held-out baseline 
 the same request, policy and model identity after labels are sealed. I keep all calls and receipts.
 A cache records the label-file and manifest digests, so the scorer refuses output from a different
 label seal, request or split. A document schema may supply its currency and aliases, while keeping
-the fixed kind field names, types and multiplicity. Each document schema is a full snapshot.
-Later edits to a kind template do not update existing document snapshots; I review them together
-before the manifest freeze.
+the fixed kind field names, types and multiplicity. Each document schema is a full field snapshot.
+An optional `request_context` records only the predeclared `subject` and `scope`. The harness
+appends its canonical JSON to each existing field description in an effective schema used by
+both arms, admission and replay. This supplies the selected ordering variant, group, year and
+other fixed request conditions without reading label values or annotation notes. Raw field
+schemas stay unchanged. Later edits to a kind template do not update existing document
+snapshots; I review all request parts together before the manifest freeze.
 A changed label after model output requires the maintainer's approval and is reported. Held-out
 output is used for the planned measure and never for tuning. A release-only sealed set for 1.0
 is outside this milestone.
@@ -125,10 +129,11 @@ scratch paths must stay inside that root. The server binds only to `127.0.0.1:87
 scope, unit and manual label controls. If `pdftoppm` is installed, it renders one page at a time
 to a PNG cache in local work storage. Each page request checks the original PDF hash. Page
 previews have page and size limits. Without the optional renderer, the page embeds the PDF and
-provides a link to open the original. The renderer is discovered on the server PATH and adds no Python or core dependency. An optional
-source-text link states when its text has no pinned hash; when the manifest provides
-`text_sha256`, the server checks that raw-file hash before display. It never opens cached model replies. Present values need an
-original PDF page; unclear fields need a reason; absences need a second blind check. The server
+provides a link to open the original. The renderer is discovered on the server PATH and adds no
+Python or core dependency. An optional source-text link states when its text has no pinned hash;
+when the manifest provides `text_sha256`, the server checks that raw-file hash before display.
+It never opens cached model replies. The page displays explicit request context as plain text
+above the fields. Present values need an original PDF page; unclear fields need a reason; absences need a second blind check. The server
 checks each PDF against its manifest hash before display and before sealing. A changed or missing
 source cannot be used to seal labels. Evidence pages cannot exceed the recorded PDF page count.
 
@@ -159,7 +164,13 @@ NFC. Sources are named `<id>.pdf` and `<id>.txt` in the external source director
 
 The configuration fixes `model_id`, transport identity/version/effort, policy, every runner
 setting, source commit, reader identity/commit/code digest and baseline guide commit. The harness
-also hashes the imported package and its own code. Commit, reader and transport names are caller
+also hashes the imported package and its own code. Explicit request context accepts only nonblank
+subject and scope strings, each at most 4096 Unicode characters. Before copying context across
+fields, it checks that the combined JSON string content of all resulting descriptions fits the
+frozen prompt budget. Full prompt checks still apply. It never infers context from
+`label_scope_note`, `named_source` or labels. Each arm sends the same effective schema, and the
+recorded schema digest covers the appended descriptions. Changed request metadata in memory or
+on disk stops a call before a reservation. Commit, reader and transport names are caller
 declarations; the actual code and input bytes are checked independently before each call.
 
 `session.run("baseline", client, split="heldout")` runs the released feedback-loop algorithm
@@ -237,3 +248,11 @@ drop and ripple requirements do not state numeric supply endpoints. A gross-prof
 explicitly different proportional reporting basis does not answer the fixed consolidated Group
 request. Those scope distinctions were reconciled before any benchmark client output. No endpoint,
 combined liabilities or profit was computed. The earlier fourteen draft labels remain unchanged.
+
+Further module drafts name their ordering variants before any source-value inspection. Related
+documentation stays in one conservative source-family group, with technical families recorded
+separately. Shared material does not create independent publishers or extra split clusters.
+Independent original-table checks agree on the source conditions. Unselected rails, current modes
+and normal versus extended performance qualifications stay unclear. Some documents have only
+unclear slots under the fixed requests; those exclusions stay visible instead of changing the
+requests. Source membership remains open and these drafts cannot be scored.
