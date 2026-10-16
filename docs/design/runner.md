@@ -176,8 +176,10 @@ For a citation repair the candidate's field, raw value, unit, key, id and every 
 member are fixed. The runner compares raw JSON values before canonical number comparison:
 changing `"1000"` to `"1,000"` counts as a changed value too. No repair can add outside evidence,
 change a reference id, change source, widen `search_region`, add confidence or supply judgments.
-If the original has no value evidence, its new value item must use the source context of the
-call that created it. The complete diff is recorded before admission.
+If the original has no value evidence, its new value item may cite the document or any
+reference in the source context of the call that created it. Other changed roles use that
+same source. A source outside that context is a protocol failure. The complete diff is
+recorded before admission.
 
 The following table is the full allowlist. Informational codes do not grant changes. With more
 than one non-informational code, every code must be eligible and changes are the union of their
@@ -297,10 +299,15 @@ permitted occurrence even when initial-pass alias-aware quote resolution would c
 one. A two-occurrence fake-client test records the resulting field review. This is an adapter
 choice, not a change to the decision on an unchanged packet.
 A quote absent from every permitted region is a protocol failure; it cannot expand the search.
+The runner admits no candidate from that reply. It records `protocol_failure` for that field
+only and continues with the other fields and the repair rounds. The run stays complete, as
+after a repair protocol failure. The field state does not claim that the value is absent.
 Other evidence roles keep their core checks in the pinned text.
 
 One prompt includes all retained regions and asks only for that field. If they do not fit the
-prompt limit, the script removes regions from the end until they fit and records that limit.
+prompt limit, the script removes the region with the worst rank first, then source and byte
+start as above, until they fit. The other regions keep their location order. The search entry
+records `trimmed_regions`, lists only the sent regions and has the status `search_truncated`.
 If none fit, the field is `search_limit` and the run is incomplete. A single-field reply uses
 the initial envelope. It can give candidates, or explicit `not_found`. Targeted candidates
 have the same repair rules and budget as initial candidates. There is one targeted call per
@@ -381,10 +388,14 @@ are no wall-clock times, host paths, credentials or random ids in this determini
 An app may keep times separately. The chain detects a changed or removed entry when checked
 against the saved manifest; it is not a signature or proof of the model's identity.
 
-`replay(record, artifacts, text, schema, policy, references)` makes no model call. It checks
-input digests, rebuilds chunks and prompts, verifies artifact and chain digests, re-parses
-replies, enforces the same diffs and budgets, and runs `verify` for each core receipt and the
-final receipt. Before building any prompt, replay bounds the initial chunk plan by the
+`replay(record, artifacts, text, schema, policy, references)` makes no model call. It runs
+the runner again on the supplied inputs and gives it the recorded replies in call order. Each
+new prompt must have its recorded digest. The rerun re-parses replies, enforces the same diffs
+and budgets and calls `admit` again for each admission. Replay then compares the complete new
+record with the saved record and the new artifact map with the supplied artifacts. That
+comparison covers the header input digests, every entry and its chain digest, each admission
+packet and core receipt, the final receipt digest and the manifest digest. Replay does not call
+`verify`; a receipt must be identical to the receipt that the rerun creates. Before building any prompt, replay bounds the initial chunk plan by the
 recorded chunk-plan length or call and limit entries, as well as the declared budget. An untrusted header cannot
 authorize a plan larger than those saved entries. The recorded chunk plan also bounds replay
 of an initial pass interrupted before every planned call ran. It validates each saved chunk

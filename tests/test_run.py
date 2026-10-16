@@ -278,8 +278,85 @@ def test_target_no_terms_no_match_and_explicit_not_found():
 def test_target_source_escape_is_not_absence():
     client = Client(envelope(missing=("amount",)), envelope(candidate(evidence=[item("absent")])))
     result = execute("Amount 5.", client)
-    assert not result.complete and not result.candidates
-    assert "targeted_not_found" not in result.record["final"]["fields"]["amount"]
+    assert result.complete and not result.candidates
+    assert result.record["final"]["fields"]["amount"] == ["model_not_found", "protocol_failure"]
+    assert_replays(result, "Amount 5.")
+
+
+def test_bad_targeted_quote_fails_only_its_field():
+    schema = {"fields": {"a": {"type": "integer"}, "b": {"type": "integer"}}}
+    client = Client(
+        envelope(missing=("a", "b")),
+        envelope(candidate("5", "a", evidence=[item("9")])),
+        envelope(candidate("7", "b")),
+    )
+    result = execute("A 5. B 7.", client, schema)
+    fields = result.record["final"]["fields"]
+    assert fields["a"] == ["model_not_found", "protocol_failure"]
+    assert fields["b"][:2] == ["model_not_found", "proposed"]
+    assert [c["field"] for c in result.candidates] == ["b"] and len(client.prompts) == 3
+    assert result.receipt.decisions[0].outcome == "admitted" and result.complete
+    failure = next(e for e in result.record["entries"] if e["kind"] == "protocol_failure")
+    assert failure["field"] == "a" and failure["phase"] == "targeted"
+    assert_replays(result, "A 5. B 7.", schema)
+
+
+def test_targeted_trim_drops_the_worst_ranked_region_first():
+    schema = {"fields": {"net_income": {"type": "integer", "description": "the yearly profit"}}}
+    text = "".join(f"profit line {i} y\n" for i in range(6)) + "Net income 42."
+    for limit in (2600, 2900, 3200):
+        client = Client(envelope(missing=("net_income",)), envelope(missing=("net_income",)))
+        settings = RunPolicy(search_context_chars=1, max_prompt_chars=limit)
+        result = execute(text, client, schema, run_policy=settings)
+        sent = json.loads(client.prompts[1].split("\n", 1)[1])["sources"]
+        # The title match has rank 0. It stays, and it stays last in location order.
+        assert sent[-1]["text"] == "\nNet income "
+        assert [s["start"] for s in sent] == sorted(s["start"] for s in sent)
+        search = next(e for e in result.record["entries"] if e["kind"] == "search")
+        assert search["status"] == "search_truncated" and search["trimmed_regions"] > 0
+        assert search["regions"] == [
+            {k: s[k] for k in ("source", "start", "end", "text")} for s in sent
+        ]
+        assert (
+            result.complete
+            and "targeted_not_found" in result.record["final"]["fields"]["net_income"]
+        )
+        assert_replays(result, text, schema)
+
+
+def test_repair_without_value_item_may_cite_a_reference_of_its_call():
+    references = [{"id": "r", "text": "Amount 5."}]
+    new = candidate(evidence=[item("5", ref="r")])
+    result = execute(
+        "Nothing.", Client(envelope(candidate(evidence=[])), new), references=references
+    )
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert result.candidates[0]["evidence"] == [item("5", ref="r")]
+    assert_replays(result, "Nothing.", references=references)
+    # A reference outside the call's context is still a protocol failure.
+    # An empty document gives a call with no document region. A document quote is outside it.
+    outside = candidate(evidence=[item("5")])
+    client = Client(envelope(candidate(evidence=[])), outside)
+    escape = execute("", client, references=references)
+    assert escape.receipt.decisions[0].outcome == "rejected"
+    assert any(e.get("status") == "protocol_failure" for e in escape.record["entries"])
+    assert_replays(escape, "", references=references)
+
+
+def test_repair_keeps_a_reference_unit_and_adds_a_document_value():
+    schema = {"fields": {"amount": {"type": "integer", "unit": "USD"}}}
+    references = [{"id": "r", "text": "Currency $"}]
+    first = candidate(unit="USD", evidence=[item("$", "unit", "r")])
+    new = candidate(unit="USD", evidence=[item("$", "unit", "r"), item("5")])
+    result = execute(
+        "Amount 5.",
+        Client(envelope(first), new, {"not_found": True}),
+        schema,
+        references=references,
+    )
+    assert any(e.get("status") == "evidence_repair" for e in result.record["entries"])
+    assert result.candidates[0]["evidence"][1] == item("5")
+    assert_replays(result, "Amount 5.", schema, references=references)
 
 
 def test_call_budget_never_records_skipped_target_as_not_found():
@@ -777,7 +854,7 @@ def test_fold_cache_builds_once_per_source_across_fields_and_queries(monkeypatch
     assert_replays(result, text, schema, references=[reference])
 
 
-@pytest.mark.parametrize("source", ["ASCII only", "Σς Œ Å", "Straße İ ﬃ", "İßﬃ🙂中é"])
+@pytest.mark.parametrize("source", ["ASCII only", "Σς Œ Å", "Straße İ ﬃ", "İßﬃ𝔘中é"])
 def test_compact_fold_and_byte_maps_preserve_original_boundaries(source):
     from groundgate.run.runner import _ByteOffsets, _Folded
 

@@ -545,6 +545,12 @@ class _Engine:
                 candidate["id"] = cid
                 pending.append((cid, raw, candidate))
         except ValueError:
+            if phase == "targeted":
+                # A targeted reply asks for one field. Only that field fails; the run continues.
+                name = parsed["candidates"][0]["field"]
+                self.states[name].append("protocol_failure")
+                self.event(kind="protocol_failure", phase=phase, field=name, reason="source_region")
+                return True
             self.complete = False
             self.event(kind="protocol_failure", phase=phase, reason="source_region")
             return False
@@ -616,6 +622,16 @@ class _Engine:
         selected.sort(key=lambda r: (r[1], r[2]))
         retained = [self.region(source, start, end) for _, _, start, end, source in selected]
         omitted_regions = len(ranked) - len(retained)
+        # If the prompt is too large, remove the worst-ranked region first.
+        # The other regions keep their location order.
+        priority = [r[:3] for r in selected]
+        trimmed_regions = 0
+        while retained and (
+            len(self.prompt("targeted", [name], retained)) > self.settings.max_prompt_chars
+        ):
+            worst = max(range(len(priority)), key=priority.__getitem__)
+            del retained[worst], priority[worst]
+            trimmed_regions += 1
         self.event(
             kind="search",
             field=name,
@@ -628,13 +644,18 @@ class _Engine:
             sources=list(self.sources),
             regions=copy.deepcopy(retained),
             omitted_regions=omitted_regions,
+            trimmed_regions=trimmed_regions,
             status=(
                 "search_truncated"
-                if omitted_regions or omitted_matches or omitted_queries
+                if omitted_regions or omitted_matches or omitted_queries or trimmed_regions
                 else "searched"
             ),
         )
-        if not retained:
+        if not retained and ranked:
+            self.complete = False
+            self.states[name].append("search_limit")
+            self.event(kind="limit", phase="targeted", fields=[name], status="search_limit")
+        elif not retained:
             status = "search_no_terms" if not queries else "search_no_match"
             self.states[name].append(status)
             self.event(kind="not_found", phase="targeted", field=name, status=status)
@@ -696,13 +717,25 @@ class _Engine:
                     if old_roles.get(r) != new_roles.get(r)
                 }
                 value_item = old_roles.get("value")
-                source = (
-                    (value_item["source"], value_item.get("ref"))
-                    if value_item
-                    else ("document", None)
-                    if any(r["source"] == "document" for r in self.contexts[cid])
-                    else ("reference", self.contexts[cid][0]["source"].split(":", 1)[1])
-                )
+                new_value = new_roles.get("value")
+                context_sources = {
+                    ("document", None)
+                    if r["source"] == "document"
+                    else ("reference", r["source"].split(":", 1)[1])
+                    for r in self.contexts[cid]
+                }
+                source: tuple[str, str | None] | None
+                if value_item:
+                    source = (value_item["source"], value_item.get("ref"))
+                elif new_value:
+                    # With no prior value item, the new one may cite any source of the call.
+                    source = (new_value["source"], new_value.get("ref"))
+                    if source not in context_sources:
+                        source = None
+                elif ("document", None) in context_sources:
+                    source = ("document", None)
+                else:
+                    source = ("reference", self.contexts[cid][0]["source"].split(":", 1)[1])
                 invalid = (
                     set(changed) - {"value", "evidence"}
                     or role_diff - roles
@@ -736,7 +769,9 @@ class _Engine:
                     continue
                 try:
                     adapted = self.adapt(reply, self.contexts[cid], cid in self.targeted)
-                    if adapted.get("search_region") != self.tips[cid].get("search_region"):
+                    # A reference value has no search region. It cannot widen a document one.
+                    region = adapted.get("search_region")
+                    if region is not None and region != self.tips[cid].get("search_region"):
                         raise ValueError("repair changed search region")
                 except ValueError:
                     self.stop(cid)
@@ -854,20 +889,7 @@ class _Engine:
                 regions = self.search(field)
                 if not regions:
                     continue
-                while regions:
-                    prompt = self.prompt("targeted", [field], regions)
-                    if len(prompt) <= self.settings.max_prompt_chars:
-                        break
-                    regions.pop()
-                    self.event(kind="search_trim", field=field, remaining=len(regions))
-                if not regions:
-                    self.complete = False
-                    self.states[field].append("search_limit")
-                    self.event(
-                        kind="limit", phase="targeted", fields=[field], status="search_limit"
-                    )
-                    continue
-                parsed = self.call("targeted", [field], prompt)
+                parsed = self.call("targeted", [field], self.prompt("targeted", [field], regions))
                 if parsed is None or not self.proposals(parsed, regions, "targeted"):
                     return self.finish()
                 if parsed["not_found"]:
