@@ -818,8 +818,10 @@ def render_requested(results: dict[str, Any]) -> str:
         "",
         "Bounds are one-sided 95% upper bounds. The value bound uses a default design effect "
         "equal to the largest admitted cluster in its slice, at least 1. Effective trials "
-        "round down; effective errors round up. The document bound counts documents with "
-        "a wrong admit. The combined bound is their maximum, and is n/a without value trials.",
+        "round down; effective errors round up. The document bound has one trial for each "
+        "document with an admitted value, and one error for each of those with a wrong admit. "
+        "It is n/a without such a document. The combined bound is their maximum, and is n/a "
+        "without value trials.",
         "",
     ]
     head = [
@@ -831,6 +833,8 @@ def render_requested(results: dict[str, Any]) -> str:
         "Admitted error",
         "Value upper",
         "Document upper",
+        "Docs with admits",
+        "Docs with wrong admit",
         "Combined upper",
         "Present",
         "Hits",
@@ -869,6 +873,8 @@ def render_requested(results: dict[str, Any]) -> str:
                     percent(r["admitted_error_rate"]["rate"]),
                     percent(b["value_upper95"]),
                     percent(b["document_upper95"]),
+                    b["document_trials"],
+                    b["document_errors"],
                     percent(b["combined_upper95"]),
                     r["present"],
                     r["hits"],

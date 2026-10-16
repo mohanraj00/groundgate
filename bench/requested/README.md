@@ -64,7 +64,10 @@ admitted error rate, the miss rate, right-value review share, silent miss share,
 sizes. It gives two one-sided 95% upper bounds from #269 and #277. For the value bound, the default
 design effect is the largest number of distinct admitted values from one document in that slice,
 at least 1. This assumes no independence within a document. Effective trials round down and
-effective errors round up. The document bound counts documents with at least one wrong admit.
+effective errors round up. The document bound is on the documents with at least one admitted
+value, and counts those with at least one wrong admit. A document with no admitted value cannot
+hold an admitted error, so it adds no document trial. A slice with no admitted value has no
+document bound.
 A slice with no effective value trials has no combined bound. The report states this default;
 it does not claim to estimate within-document correlation from zero errors.
 
