@@ -122,11 +122,15 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
     trials = n // effect
     errors = min(trials, math.ceil(e / effect))
     vb = upper95(errors, trials)
-    db = upper95(sum(d["wrong"] > 0 for d in docs.values()), len(docs))
+    # The document bound is a bound on admitted values, so its trials are the documents with
+    # at least one admitted value. A slice with no admitted value has no document bound.
+    admit_docs = sum(d["admitted"] > 0 for d in docs.values())
+    wrong_docs = sum(d["wrong"] > 0 for d in docs.values())
+    db = upper95(wrong_docs, admit_docs)
     return counts | {
         "documents": len(docs),
         "kinds": len({r["kind"] for r in rows if not r["excluded"]}),
-        "documents_with_admits": sum(d["admitted"] > 0 for d in docs.values()),
+        "documents_with_admits": admit_docs,
         "admitted_error_rate": ratio(e, n),
         "miss_rate": ratio(counts["reviews"] + counts["silent_misses"], counts["present"]),
         "right_value_review_share": ratio(counts["reviews"], counts["present"]),
@@ -138,7 +142,8 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "effective_trials": trials,
             "effective_errors": errors,
             "value_upper95": vb,
-            "document_errors": sum(d["wrong"] > 0 for d in docs.values()),
+            "document_trials": admit_docs,
+            "document_errors": wrong_docs,
             "document_upper95": db,
             "combined_upper95": max(vb, db) if vb is not None and db is not None else None,
         },

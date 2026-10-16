@@ -120,7 +120,9 @@ def test_rejection_is_a_silent_miss_and_no_output_is_not_an_absence_hit() -> Non
     assert out["absence_hits"] == 0 and out["unreported_absences"] == 1
     assert out["bounds"]["value_upper95"] is None
     assert out["bounds"]["combined_upper95"] is None
-    assert out["bounds"]["document_upper95"] > 0
+    # No document admitted a value, so no document bound exists.
+    assert out["bounds"]["document_trials"] == 0
+    assert out["bounds"]["document_upper95"] is None
 
 
 def test_keys_are_exact_and_unknown_key_duplicates_are_canonicalized() -> None:
@@ -270,3 +272,23 @@ def test_projection_with_a_missing_document_is_refused(tmp_path: Path) -> None:
     run["documents"].append({"id": "d2", "decisions": [], "not_found": []})
     (tmp_path / "runs/baseline.json").write_text(json.dumps(run))
     assert score_set(tmp_path, "heldout")["runs"]["baseline"]["total"]["documents"] == 2
+
+
+def test_document_bound_counts_only_documents_with_admits() -> None:
+    m, labels, run = data()
+    for ident in ("d2", "d3"):
+        m["documents"].append({"id": ident, "kind": "kind", "split": "heldout"})
+        gold = copy.deepcopy(labels["documents"][0])
+        gold["id"] = ident
+        labels["documents"].append(gold)
+    run["documents"][0]["decisions"] = [decision("amount", "300", unit="USD")]
+    run["documents"] += [{"id": "d2", "decisions": []}, {"id": "d3", "decisions": []}]
+    out = measure(m, labels, run, "heldout")["total"]
+    assert out["documents"] == 3 and out["documents_with_admits"] == 1
+    assert out["bounds"]["document_trials"] == 1 and out["bounds"]["document_errors"] == 1
+    assert out["bounds"]["document_upper95"] == 1.0
+    run["documents"][0]["decisions"] = [decision("amount", "100", unit="USD")]
+    run["documents"][1]["decisions"] = [decision("amount", "200", unit="USD")]
+    out = measure(m, labels, run, "heldout")["total"]
+    assert out["bounds"]["document_trials"] == 2 and out["bounds"]["document_errors"] == 0
+    assert out["bounds"]["document_upper95"] == pytest.approx(upper95(0, 2))
