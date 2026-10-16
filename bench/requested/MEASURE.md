@@ -45,6 +45,13 @@ blocked. I declare companion keyed views of the same approved values before any 
 | Benefit summary | in-network deductible with person/family keys | deductible_individual, deductible_family |
 | Benefit summary | in-network out-of-pocket limit with person/family keys | out_of_pocket_individual, out_of_pocket_family |
 
+The component companion endpoint-value fields explicitly use `eq`. Minimum/maximum meaning is
+carried by their keys; the original unkeyed endpoint requests retain `ge`/`le`. This is a declared
+diagnostic adapter choice, not a claim that the comparator semantics are identical. Both decision
+versions receive the same companion schema. I record source and companion comparators with the
+mapping and keep these views out of the original requested-field counts and bounds. The SBC
+companion deductible fields retain `eq` and out-of-pocket fields retain `le`.
+
 The exact printed key words, aliases and units are fixed from each source during blind labeling.
 The companion views ask for no new year, network, condition or value. Their manifest declares the
 mapping and shares the original sealed labels. They are diagnostic views, not extra independent
@@ -62,5 +69,21 @@ heads. If a route has no applicable case, I report that limit. I do not claim th
 requested-field success measures a route that the documents do not exercise. A separate corpus
 would need a plan and its own kind, field and download approvals before use. I keep the original
 rule, vectors and physical margin fixed when reporting held-out results.
+
+The diagnostic executor is `python -m requested.diagnostics` with `bench` on `PYTHONPATH`.
+I supply `--plan`, its exact `--plan-sha256`, `--set`, `--sources`, `--inputs` and `--cache`.
+The frozen plan pins both core packages and interpreters, the reader, the primary seals,
+companion mappings and genuine recorded packets. It passes the complete admission packet to
+both isolated public-API workers without changing keys or offsets. `--replay` reads only the
+completed immutable cache. A failed or missing worker stays incomplete; there is no retry.
+The synthetic fixture in `bench/requested/test_diagnostics.py` defines the input envelopes.
+
+Layout annotations declare reviewed pages and partial coverage. A running-head case includes
+a blind target-table anchor: the diagnostic compares their actual serialized page and block
+association while retaining the head text. Missing or ambiguous joins stay unassessed.
+I attach the pinned local export with `bench/score.py --requested --diagnostics PATH
+--diagnostics-sha256 SHA`; `bench/report.py` renders that separate `results.json` section.
+The executor and its synthetic checks do not supply a real companion packet, a layout label
+or a benchmark model transport. Those inputs still need their own frozen preparation.
 
 No arithmetic relation rule, pack system or later-milestone tool is built here.
