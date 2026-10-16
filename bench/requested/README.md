@@ -288,3 +288,13 @@ different participating-tier copays stays unclear. Independent blind checks agre
 statuses, values and units. The records retain insurer/form overlap, a generic source-template
 placeholder and raster language-notice appendices. Source copying rights remain unresolved or
 limited as recorded; these drafts do not establish final membership. Earlier drafts are unchanged.
+
+Six further checked drafts retain selected variant, own consolidated Group and printed GBP
+signs and scales. A whole-Group primary revenue line resolves one initial ambiguity; other
+unqualified revenue mappings and operating-current conditions remain unclear. I do not combine
+current and non-current liabilities or substitute financing, pension or tax Trust Statement
+figures. All absences have independent full-source checks. Three initial status disagreements
+and both immutable source drafts remain in the local reconciliation record. A report with a
+PDF-local reproduction restriction stays on hold outside the manifest and labels. General
+publication grants, third-party exceptions and a separate audit-report copying condition are
+recorded separately. Selection remains open, no labels are sealed, and earlier drafts are unchanged.
