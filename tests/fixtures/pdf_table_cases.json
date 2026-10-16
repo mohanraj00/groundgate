@@ -1,14 +1,14 @@
 {
-  "status": "Hand-written cases for maintainer review before rule code. No test consumes this file yet.",
+  "status": "Hand-written cases approved before rule code. Consuming tests check these inputs. The unseen-document measure is still required before merge.",
   "geometry": "Each page line is [x, y, text] in PDF points on a 612 by 792 page, as tests/pdfgen.py reads it.",
   "expectations": "The expected text and safety requirements are written by hand. They were not produced by running groundgate.",
-  "geometry_assertions": "The page lines describe proposed inputs. UTF-8 byte-offset and source-box assertions will be added with consuming tests after the maintainer approves the rule.",
-  "outcome_scope": "required_outcomes allows review or rejection because this gate requires only that a wrong key never admits. The exact spec outcome awaits approval. A desired supported outcome is a gated proposal, not an approved spec decision.",
+  "geometry_assertions": "The page lines define PDF inputs. Consuming tests check UTF-8 byte offsets, preserved source words, visible boxes, rotation and CropBox coordinates.",
+  "outcome_scope": "required_outcomes states the safety floor: a wrong key never admits. The spec conformance vectors define the exact outcome and reason codes. The supported second-column candidate must admit only when all evidence checks pass.",
   "cases": [
     {
       "id": "running-head-above-table",
       "issue": 265,
-      "gate": "Approve the top-edge rule and its numerical boundary before implementation.",
+      "approval": "The maintainer approved the 36-point top-edge policy, subject to an unseen-document measure.",
       "page": [
         [72, 766, "Report"],
         [500, 766, "Page 1"],
@@ -24,7 +24,7 @@
     {
       "id": "distant-caption-outside-header-band",
       "issue": 265,
-      "gate": "Approve the top-edge rule and its numerical boundary before implementation.",
+      "approval": "The maintainer approved the 36-point top-edge policy, subject to an unseen-document measure.",
       "page": [
         [72, 705, "As of year end"],
         [400, 705, "In thousands"],
@@ -41,7 +41,7 @@
     {
       "id": "blank-before-first-number",
       "issue": 266,
-      "gate": "Approve explicit empty-cell semantics in the spec before implementing this output.",
+      "approval": "The maintainer approved explicit empty-cell semantics as a Spec prerequisite to this output.",
       "page": [
         [300, 720, "2025"], [400, 720, "2024"],
         [72, 700, "Cash"], [400, 700, "100"],
@@ -58,7 +58,7 @@
     {
       "id": "blank-middle-column",
       "issue": 266,
-      "gate": "Approve explicit empty-cell semantics in the spec before implementing this output.",
+      "approval": "The maintainer approved explicit empty-cell semantics as a Spec prerequisite to this output.",
       "page": [
         [260, 720, "2025"], [360, 720, "2024"], [460, 720, "2023"],
         [72, 700, "Cash"], [260, 700, "10"], [460, 700, "30"],
@@ -75,7 +75,7 @@
     {
       "id": "empty-tab-slot-still-admits-first-key",
       "issue": 266,
-      "gate": "Approve explicit empty-cell semantics and hand-written conformance vectors before implementing the proposed outcomes.",
+      "approval": "The maintainer approved the diagnosis and Spec prerequisite. Hand-written conformance vectors precede the core rule.",
       "text": "2025\t2024\nCash\t\t$100\nOther\t$20\t$30\nLast\t$40\t$50",
       "schema": {
         "fields": {
@@ -101,13 +101,13 @@
         ]
       },
       "desired_supported_outcome": "admitted",
-      "supported_outcome_gate": "This is the target for a supported second-column value after approval of explicit empty-cell semantics. All other evidence checks must also pass.",
+      "supported_outcome_requirement": "The approved explicit empty-cell semantics must preserve the supported second column. All other evidence checks must also pass.",
       "reason": "The empty tab slot must preserve the first numeric column. Value 100 belongs to 2024, so citing 2025 must not admit it. The current core does not count the empty slot."
     },
     {
       "id": "no-tabs-fallback-still-admits-first-key",
       "issue": 266,
-      "gate": "Approve the diagnosis and a core rule before selecting a fallback for ambiguous rows.",
+      "approval": "The maintainer approved the no-tab diagnosis and conservative Spec prerequisite for ambiguous rows.",
       "text": "2025\t2024\nCash $100\nOther\t$20\t$30\nLast\t$40\t$50",
       "schema": {
         "fields": {
