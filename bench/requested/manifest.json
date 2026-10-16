@@ -4115,7 +4115,8 @@
     "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
-   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope."
+   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
+   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
   },
   {
    "id": "component-h24",
@@ -4214,7 +4215,8 @@
     "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
-   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope."
+   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
+   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
   },
   {
    "id": "component-h25",
@@ -4313,7 +4315,8 @@
     "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
-   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope."
+   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
+   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
   },
   {
    "id": "component-h26",
@@ -4412,7 +4415,8 @@
     "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
-   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope."
+   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
+   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
   },
   {
    "id": "sbc-h16",
@@ -5122,6 +5126,84 @@
    "coverage_period": "2026-07-01/2027-06-30",
    "employer_family_group": "university-utah-employer",
    "carrier_form_group": "regence-bcbs-standardized-sbc"
+  },
+  {
+   "id": "sbc-h24",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://resources.massgeneralbrighamhealthplan.org/members/gic/GIC_070126_SBC.pdf",
+   "source_bytes": 526031,
+   "source_sha256": "sha256:1f12260cd7aaf174de94ec18f5fd51ab2cfe0a0e20a4fb150f5f958debc0ba5b",
+   "source_pages": 10,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-16",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "massachusetts-gic-mgb-complete-hmo",
+   "license": "Site terms reserve rights and allow display, reformatting and printing for personal noncommercial use only. No PDF-local reproduction, licence or automated-extraction notice found by complete two-engine queries. No affirmative open reuse grant. URL plus SHA-256 provenance; original kept private.",
+   "license_source": "https://massgeneralbrighamhealthplan.org/privacy",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Massachusetts GIC state employee catalog; Mass General Brigham Health Plan Complete HMO for GIC members,2026-2027",
+    "scope": "Named non-Medicare active-employee GIC Complete HMO plan, coverageJuly1,2026 throughJune30,2027 from explicit live carrier catalog. Original exact identity, population and dates must confirm these before labels; hold mismatch without substituting another period or plan. In-network individual and family deductible and overall out-of-pocket limits and specialist office visit dollar copay. Distinguish equally applicable networks/provider tiers and medical/drug cost-category limits; do not choose a tier or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+   },
+   "publisher_overlap_note": "One MassachusettsGIC employer program and MGB carrier/administrator family. Not HarvardPilgrim/Point32 merely because the GIC catalog lists those separately. New employer/carrier candidate does not establish independent mandated SBC form; no independent-form claim.",
+   "verified_reporting_period": "2026-07-01/2027-06-30",
+   "coverage_period": "2026-07-01/2027-06-30",
+   "period_basis": "original_start_plus_catalog_end",
+   "period_note": "Original prints only \"On or after 07/01/2026\"; the pre-download MGB GIC catalog gives the end 2027-06-30. Pre-label provenance addendum: original start plus catalog end, same request. The PDF does not print the end date.",
+   "employer_family_group": "massachusetts-gic-employer",
+   "carrier_form_group": "mgb-health-plan-standardized-sbc"
   }
  ],
  "format": "requested-fields/1",

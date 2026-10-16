@@ -4686,6 +4686,81 @@
           "note": "Originalp2 Specialist visit has two applicable participating/provider tiers with different dollar office-visit copays: University of Utah Health/Primary Childrens/Granger and the general In-Network Provider column. Frozen request forbids selecting among equally applicable networks/tiers; no single unkeyed in-network copay is selected. Deductible does not apply to the office copay; laboratory/radiology and other-service coinsurance conditions are distinct. Coverage examplesp8 are illustrative and do not resolve provider-tier selection."
         }
       ]
+    },
+    {
+      "id": "sbc-h24",
+      "fields": [
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "reason": "Direct overall in-network family deductible 1,000 per benefit period; separate prescription deductible 200 excluded.",
+          "second_check": true,
+          "note": "Primary and independent blind checks agree. Coverage period basis: original start 2026-07-01 plus catalog end 2027-06-30."
+        },
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "500",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "reason": "Direct overall in-network deductible 500 per benefit period; separate prescription deductible 100 excluded.",
+          "second_check": true,
+          "note": "Primary and independent blind checks agree. Coverage period basis: original start 2026-07-01 plus catalog end 2027-06-30."
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "10000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "reason": "One out-of-pocket limit 10,000 family per benefit period; no separate medical or drug limit stated.",
+          "second_check": true,
+          "note": "Primary and independent blind checks agree. Coverage period basis: original start 2026-07-01 plus catalog end 2027-06-30."
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "reason": "One out-of-pocket limit 5,000 individual per benefit period; no separate medical or drug limit stated.",
+          "second_check": true,
+          "note": "Primary and independent blind checks agree. Coverage period basis: original start 2026-07-01 plus catalog end 2027-06-30."
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 2,
+          "reason": "Network Tier 1 30, Tier 2 60 and Tier 3 75 dollar specialist copays all apply. The request does not choose a tier.",
+          "second_check": true,
+          "note": "Primary and independent blind checks agree. Coverage period basis: original start 2026-07-01 plus catalog end 2027-06-30."
+        }
+      ]
     }
   ],
   "status": "draft"
