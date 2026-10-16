@@ -224,6 +224,66 @@ def _same_or_publish(path: Path, value: Json, replay_only: bool = False) -> None
         _publish(path, value)
 
 
+def _move(source: Path, target: Path) -> None:
+    """Move a file without replacing a name: link the target first, then unlink the source."""
+    _unlinked(source)
+    _unlinked(target)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    os.link(source, target)
+    source.unlink()
+
+
+def _attempts(document: Path) -> int:
+    """Count the archived transport attempts of one document."""
+    folder = _unlinked(document / "attempts")
+    if not folder.exists():
+        return 0
+    return sum(1 for path in folder.iterdir() if (path / "call.json").is_file())
+
+
+def _archive_transport_error(document: Path, binding: str) -> bool:
+    """Archive a transport error at the last call of a document, so that the call can run again.
+
+    The entry, its reservation and the document result move to ``attempts/NNNN``. Nothing is
+    deleted. A transport error before the last call stays refused. Returns True after a move.
+    """
+    calls = _unlinked(document / "calls")
+    if not calls.exists():
+        return False
+    names = sorted(p.name for p in calls.glob("*.json") if ".pending." not in p.name)
+    if not names:
+        return False
+    if names != [f"{i:04}.json" for i in range(1, len(names) + 1)]:
+        raise CacheError("extra or missing cached calls")
+    statuses = []
+    for number, name in enumerate(names, 1):
+        entry = _json(_read(calls / name))
+        checksum = entry.pop("entry_sha256", None)
+        if (
+            checksum != digest(encoded(entry))
+            or entry.get("binding_sha256") != binding
+            or entry.get("sequence") != number
+        ):
+            raise CacheError("cached call differs")
+        statuses.append(entry.get("status"))
+    if "transport_error" in statuses[:-1]:
+        raise CacheError("a transport error before the last call cannot be retried")
+    if statuses[-1] != "transport_error":
+        return False
+    pending = calls / names[-1].replace(".json", ".pending.json")
+    if not pending.is_file():
+        raise CacheError("a transport error without its reservation cannot be retried")
+    target = document / "attempts" / f"{_attempts(document) + 1:04}"
+    if target.exists():
+        raise CacheError("an incomplete transport attempt archive needs inspection")
+    result = document / "result.json"
+    if result.exists():
+        _move(result, target / "result.json")
+    _move(pending, target / "call.pending.json")
+    _move(calls / names[-1], target / "call.json")
+    return True
+
+
 def _settings(raw: Any) -> Json:
     if not isinstance(raw, dict) or set(raw) != {
         "chunk_chars",
@@ -294,6 +354,7 @@ class _Calls:
         self.count = 0
         self.missing = False
         self.failure: CacheError | None = None
+        self.transport_error = False
 
     def __call__(self, prompt: str) -> str:
         try:
@@ -355,6 +416,7 @@ class _Calls:
             entry["entry_sha256"] = digest(encoded(entry))
             _publish(path, entry)
         if entry["status"] != "ok":
+            self.transport_error = True
             raise CachedTransportError(entry["status"])
         reply = entry["reply"]
         if not isinstance(reply, str) or digest(reply.encode()) != entry["reply_sha256"]:
@@ -776,15 +838,22 @@ class FrozenSet:
         *,
         split: str = "heldout",
         documents: Collection[str] | None = None,
+        retry_transport_errors: bool = False,
     ) -> Json:
         """Run one arm, or replay it with client=None. Never overwrite cache artifacts.
 
         ``documents`` runs only those documents of the split, so separate processes can fill the
         cache in parallel. A partial run publishes no projection; a later run of the whole split
         reuses the completed documents without transport.
+
+        ``retry_transport_errors`` archives a transport error at the last call of a document,
+        with its reservation, its result and the split projection, then runs that call again.
+        It needs a client. The projection records the retries of each document.
         """
         if arm not in {"baseline", "runner"} or split not in {"development", "heldout"}:
             raise CacheError("unknown arm or split")
+        if retry_transport_errors and client is None:
+            raise CacheError("a transport retry needs a client")
         selected = None
         if documents is not None:
             selected = set(documents)
@@ -808,14 +877,16 @@ class FrozenSet:
         for ident, doc in sorted(self.documents.items()):
             if doc["split"] != split or (selected is not None and ident not in selected):
                 continue
-            calls = _Calls(
-                self,
-                folder / ident / "calls",
-                digest(
-                    encoded({"run": self.binding, "arm": arm, "split": split, "document": ident})
-                ),
-                client,
+            binding = digest(
+                encoded({"run": self.binding, "arm": arm, "split": split, "document": ident})
             )
+            if retry_transport_errors and _archive_transport_error(folder / ident, binding):
+                projection = folder / "projection.json"
+                if projection.exists():
+                    archive = folder / "_attempts"
+                    count = len(list(archive.glob("projection-*.json"))) if archive.exists() else 0
+                    _move(projection, archive / f"projection-{count + 1:04}.json")
+            calls = _Calls(self, folder / ident / "calls", binding, client)
             if arm == "baseline":
                 local = self._baseline(ident, calls)
             else:
@@ -883,7 +954,14 @@ class FrozenSet:
                 "policy_sha256": digest(encoded(self.policy)),
             }
             _same_or_publish(folder / ident / "result.json", local, client is None)
-            outputs.append(local["output"] | {"complete": local["complete"]})
+            outputs.append(
+                local["output"]
+                | {
+                    "complete": local["complete"],
+                    "transport_error": calls.transport_error,
+                    "transport_retries": _attempts(folder / ident),
+                }
+            )
         if selected is not None:
             return {"arm": arm, "split": split, "documents": outputs, "partial": True}
         public = {

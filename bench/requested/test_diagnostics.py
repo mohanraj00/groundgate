@@ -350,7 +350,16 @@ def test_diagnostic_export_adds_section_without_changing_primary_units_or_bounds
             "manifest_sha256": plan["manifest_sha256"],
             "labels_sha256": plan["labels_sha256"],
             "split": "heldout",
-            "documents": [{"id": "doc", "decisions": [], "not_found": []}],
+            "documents": [
+                {
+                    "id": "doc",
+                    "decisions": [],
+                    "not_found": [],
+                    "complete": True,
+                    "transport_error": False,
+                    "transport_retries": 0,
+                }
+            ],
         },
     )
     original = score_set(tmp_path / "set", "heldout")
