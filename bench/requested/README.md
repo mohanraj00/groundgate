@@ -256,3 +256,15 @@ Independent original-table checks agree on the source conditions. Unselected rai
 and normal versus extended performance qualifications stay unclear. Some documents have only
 unclear slots under the fixed requests; those exclusions stay visible instead of changing the
 requests. Source membership remains open and these drafts cannot be scored.
+
+The next SBC and sensor drafts retain the same predeclared requests. Independent blind source
+checks agree on their statuses, values and units. An SBC labelled Uniform Summary in its catalog
+is a standardized SBC in the original. Provider tiers within a network remain unresolved when
+the fixed request does not select one. Generic family-deductible prose and self-only examples
+do not state a numeric family deductible; that absence has two complete-source checks. Separate
+medical and drug-card limits are not added. Sensor operating-table endpoints and typical-current
+columns are distinct from stress ratings, current maxima and plotted estimates. Temperature
+endpoints have direct operating-range support outside a stress-only table. The source records
+retain the limited attributed-copy and noncommercial-copy conditions, unresolved rights and
+package-tooling restrictions. No broad reuse grant or final source eligibility is inferred.
+The earlier twenty draft labels remain unchanged.
