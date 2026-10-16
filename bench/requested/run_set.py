@@ -15,7 +15,7 @@ import re
 import tempfile
 import unicodedata
 from collections import defaultdict
-from collections.abc import Callable
+from collections.abc import Callable, Collection
 from pathlib import Path
 from typing import Any
 
@@ -728,11 +728,27 @@ class FrozenSet:
         }
 
     def run(
-        self, arm: str, client: Callable[[str], str] | None = None, *, split: str = "heldout"
+        self,
+        arm: str,
+        client: Callable[[str], str] | None = None,
+        *,
+        split: str = "heldout",
+        documents: Collection[str] | None = None,
     ) -> Json:
-        """Run one arm, or replay it with client=None. Never overwrite cache artifacts."""
+        """Run one arm, or replay it with client=None. Never overwrite cache artifacts.
+
+        ``documents`` runs only those documents of the split, so separate processes can fill the
+        cache in parallel. A partial run publishes no projection; a later run of the whole split
+        reuses the completed documents without transport.
+        """
         if arm not in {"baseline", "runner"} or split not in {"development", "heldout"}:
             raise CacheError("unknown arm or split")
+        selected = None
+        if documents is not None:
+            selected = set(documents)
+            known = {i for i, d in self.documents.items() if d["split"] == split}
+            if not selected or not selected <= known:
+                raise CacheError("documents must be a nonempty subset of the split")
         runner_api = None
         if arm == "runner":
             try:
@@ -748,7 +764,7 @@ class FrozenSet:
         )
         outputs = []
         for ident, doc in sorted(self.documents.items()):
-            if doc["split"] != split:
+            if doc["split"] != split or (selected is not None and ident not in selected):
                 continue
             calls = _Calls(
                 self,
@@ -826,6 +842,8 @@ class FrozenSet:
             }
             _same_or_publish(folder / ident / "result.json", local, client is None)
             outputs.append(local["output"] | {"complete": local["complete"]})
+        if selected is not None:
+            return {"arm": arm, "split": split, "documents": outputs, "partial": True}
         public = {
             "manifest_sha256": self.header["manifest_sha256"],
             "labels_sha256": self.header["labels_sha256"],

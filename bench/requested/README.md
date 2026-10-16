@@ -189,6 +189,9 @@ not a replay of the entire released reader and decision pipeline.
 Without that API it stops before any call. Explicit runner absence needs a complete, untruncated
 search with no active candidate. A field-level absence never creates a key-level absence.
 `session.run(arm, split="heldout")` replays the immutable call cache without a client.
+`documents=[...]` runs only those documents of the split, so separate processes can fill the
+cache in parallel. A partial run writes no projection. A later run of the whole split reuses the
+completed documents without transport and writes the projection.
 
 Each call reserves an exclusive cache entry before transport, then stores the prompt and reply
 before admission. A process stop with an unresolved reservation needs inspection; it is never
