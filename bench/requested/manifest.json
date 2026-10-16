@@ -3621,6 +3621,1507 @@
    },
    "publisher_overlap_note": "One own consolidated corporate Group; related years, renderings and subsidiaries are not independent source families. Earlier catalog headline exposure is recorded; no request or rule was selected from it.",
    "verified_reporting_period": "year ended2026-06-30"
+  },
+  {
+   "id": "component-h19",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.onsemi.com/download/data-sheet/pdf/lmv321-d.pdf",
+   "source_bytes": 801705,
+   "source_sha256": "sha256:2289a535a332fa6653b8ed5b49cec3f18c5f2406f7f3e6ddafb3cdf11eb32689",
+   "source_pages": 23,
+   "approved_max_bytes": 2097152,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "onsemi-analog-control-documentation-umbrella",
+   "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+   "license_source": "https://www.onsemi.com/terms-of-use",
+   "license_other_notices": "General IP licence non-conveyance, applicable copyright laws and no-resale notice. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "LMV321",
+    "scope": "Fixed base member LMV321; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
+   },
+   "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
+   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred."
+  },
+  {
+   "id": "component-h20",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.onsemi.com/download/data-sheet/pdf/ncs2001-d.pdf",
+   "source_bytes": 519543,
+   "source_sha256": "sha256:06ac6ee41d1fa95ab185135966e1e03f428bbaf40f211f339e215c0362d57ca1",
+   "source_pages": 18,
+   "approved_max_bytes": 2097152,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "onsemi-analog-control-documentation-umbrella",
+   "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+   "license_source": "https://www.onsemi.com/terms-of-use",
+   "license_other_notices": "General IP licence non-conveyance, applicable copyright laws and no-resale notice. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "NCS2001",
+    "scope": "Fixed base member NCS2001; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
+   },
+   "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
+   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred."
+  },
+  {
+   "id": "component-h21",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.onsemi.com/download/data-sheet/pdf/lm393-d.pdf",
+   "source_bytes": 448851,
+   "source_sha256": "sha256:f57250b0237b9f86a9b78eb485dd4a85388ffb047e44521f296f61457a97a285",
+   "source_pages": 13,
+   "approved_max_bytes": 2097152,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "onsemi-analog-control-documentation-umbrella",
+   "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+   "license_source": "https://www.onsemi.com/terms-of-use",
+   "license_other_notices": "General IP licence non-conveyance, applicable copyright laws and no-resale notice. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "LM393",
+    "scope": "Fixed base member LM393; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
+   },
+   "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
+   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred."
+  },
+  {
+   "id": "component-h22",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.onsemi.com/download/data-sheet/pdf/ncp300-d.pdf",
+   "source_bytes": 639327,
+   "source_sha256": "sha256:8172e912afc0e914e9e25b04e13e9884f806155c039e175131cf916689fe20f0",
+   "source_pages": 26,
+   "approved_max_bytes": 2097152,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "onsemi-analog-control-documentation-umbrella",
+   "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+   "license_source": "https://www.onsemi.com/terms-of-use",
+   "license_other_notices": "General IP licence non-conveyance, applicable copyright laws and no-resale notice. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "NCP301",
+    "scope": "Fixed base member NCP301; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
+   },
+   "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
+   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred."
+  },
+  {
+   "id": "component-h23",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf",
+   "source_bytes": 601986,
+   "source_sha256": "sha256:2ed5d1b0a1051d0e81399417c4ff0ced0658fa36e13c0487670f9cb6dfb4f1d4",
+   "source_pages": 50,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "nxp-documentation-family",
+   "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+   "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+   "license_other_notices": "No-offer/no-implied-IP-licence clause and export control notice; copyright/all rights reserved. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "PCF8563T",
+    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+   },
+   "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
+   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope."
+  },
+  {
+   "id": "component-h24",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.nxp.com/docs/en/data-sheet/PCA9548A.pdf",
+   "source_bytes": 308416,
+   "source_sha256": "sha256:a090b5ec78996babb32d283bbb2a7136ff789e450abd8394fff9f0bf53ddcc92",
+   "source_pages": 30,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "nxp-documentation-family",
+   "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+   "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+   "license_other_notices": "No-offer/no-implied-IP-licence clause and export control notice; copyright/all rights reserved. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "PCA9548AD",
+    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+   },
+   "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
+   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope."
+  },
+  {
+   "id": "component-h25",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.nxp.com/docs/en/data-sheet/PCA9306.pdf",
+   "source_bytes": 651707,
+   "source_sha256": "sha256:68146537d3a0f1ac116d8adfa54335dd724f605e8a5782fcb10b6aae665142bf",
+   "source_pages": 39,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "nxp-documentation-family",
+   "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+   "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+   "license_other_notices": "PCA9306p37 Disclaimers subsection visibly empty in original, not an extraction omission; definitions/trademarks and all-rights-reserved footer retained. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "PCA9306D",
+    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+   },
+   "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
+   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope."
+  },
+  {
+   "id": "component-h26",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.nxp.com/docs/en/data-sheet/TJA1042.pdf",
+   "source_bytes": 353417,
+   "source_sha256": "sha256:aac9491f00e594362d884ca25bf09ad6391cebc25b261f960a7b7e9282c205d2",
+   "source_pages": 27,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "nxp-documentation-family",
+   "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+   "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+   "license_other_notices": "No-offer/no-implied-IP-licence clause and export control notice; copyright/all rights reserved. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "TJA1042T",
+    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+   },
+   "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
+   "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope."
+  },
+  {
+   "id": "sbc-h16",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://shbp.georgia.gov/document/document/2026-anthem-gold-hra-sbc-0/download",
+   "source_bytes": 546283,
+   "source_sha256": "sha256:3a83f5f5d9723d7052d41aa9171a05a3678afc3777d40c7e2b5a4eb04843387a",
+   "source_pages": 7,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "georgia-shbp-employer-sbc-family",
+   "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+   "license_source": "https://georgia.gov/privacy-and-security",
+   "license_other_notices": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "2026 Anthem Gold HRA SBC",
+    "scope": "Named employer/population Georgia State Health Benefit Plan; exact selected catalog period 2026. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+   },
+   "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+   "rights_scope_note": "SHBP links this privacy/security page in its footer. It governs data collection/security, not document reuse. No affirmative SBC copying grant or explicit copying/automated-acquisition ban was established in inspected pages. Public URL and absence of a ban are not clearance. Insurer-owned original notices and intended use remain unresolved.",
+   "coverage_period": [
+    "2026-01-01",
+    "2026-12-31"
+   ],
+   "employer_family_group": "georgia-shbp-employer-sbc-family",
+   "carrier_form_group": "anthem-network-standard-employer-sbc"
+  },
+  {
+   "id": "sbc-h17",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://shbp.georgia.gov/document/document/2026-unitedhealthcare-hdhp-sbc/download",
+   "source_bytes": 251683,
+   "source_sha256": "sha256:d1c1f9813493cf6dc2597824e46ccea76a240b92d2e56caca09a8c1335e7186b",
+   "source_pages": 6,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "georgia-shbp-employer-sbc-family",
+   "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+   "license_source": "https://georgia.gov/privacy-and-security",
+   "license_other_notices": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "2026 UnitedHealthcare HDHP SBC",
+    "scope": "Named employer/population Georgia State Health Benefit Plan; exact selected catalog period 2026. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+   },
+   "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+   "rights_scope_note": "SHBP links this privacy/security page in its footer. It governs data collection/security, not document reuse. No affirmative SBC copying grant or explicit copying/automated-acquisition ban was established in inspected pages. Public URL and absence of a ban are not clearance. Insurer-owned original notices and intended use remain unresolved.",
+   "coverage_period": [
+    "2026-01-01",
+    "2026-12-31"
+   ],
+   "employer_family_group": "georgia-shbp-employer-sbc-family",
+   "carrier_form_group": "unitedhealthcare-standard-employer-sbc"
+  },
+  {
+   "id": "sbc-h18",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://carecompass.ct.gov/wp-content/uploads/2026/06/State-of-CT_POE-G-Primary-Care-Access-SBC-2026-2027.pdf",
+   "source_bytes": 307826,
+   "source_sha256": "sha256:62e6e25f0735bf7cea18e001bfa521a7a247bf8e5d70f30cab2302d1d63a81ad",
+   "source_pages": 9,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "connecticut-state-carecompass-employer-sbc-family",
+   "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+   "license_source": "https://portal.ct.gov/Policies/State-Privacy-Policy",
+   "license_other_notices": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "POE-G Primary Care Access SBC2026-2027",
+    "scope": "Named employer/population Connecticut state active employees; exact selected catalog period 2026-2027. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+   },
+   "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+   "rights_scope_note": "Care Compass links State Plan Policy. State privacy policy covers browsing/downloading but is not a reuse grant. Disclaimer disclaims privately owned rights and states seals/arms and CT.gov logo need permission. No explicit ordinary-document private-acquisition/automated-access ban observed; do not infer permission for logos/third-party material or final original reuse. Original notice and actual seal/logo scope remain unresolved.",
+   "coverage_period": [
+    "2026-07-01",
+    "2027-06-30"
+   ],
+   "employer_family_group": "connecticut-state-carecompass-employer-sbc-family",
+   "carrier_form_group": "connecticut-quantum-health-cvs-shared-multitier-sbc"
+  },
+  {
+   "id": "sbc-h19",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://carecompass.ct.gov/wp-content/uploads/2026/06/State-of-CT_POS-Expanded-Access-SBC-2026-2027.pdf",
+   "source_bytes": 375397,
+   "source_sha256": "sha256:5536df45a3a6a260317fca024ed6da0b4ad7cd90071404bf6e7c66dbaba2ea54",
+   "source_pages": 9,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "connecticut-state-carecompass-employer-sbc-family",
+   "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+   "license_source": "https://portal.ct.gov/Policies/State-Privacy-Policy",
+   "license_other_notices": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "POS Expanded Access SBC2026-2027",
+    "scope": "Named employer/population Connecticut state active employees; exact selected catalog period 2026-2027. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+   },
+   "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+   "rights_scope_note": "Care Compass links State Plan Policy. State privacy policy covers browsing/downloading but is not a reuse grant. Disclaimer disclaims privately owned rights and states seals/arms and CT.gov logo need permission. No explicit ordinary-document private-acquisition/automated-access ban observed; do not infer permission for logos/third-party material or final original reuse. Original notice and actual seal/logo scope remain unresolved.",
+   "coverage_period": [
+    "2026-07-01",
+    "2027-06-30"
+   ],
+   "employer_family_group": "connecticut-state-carecompass-employer-sbc-family",
+   "carrier_form_group": "connecticut-quantum-health-cvs-shared-multitier-sbc"
+  },
+  {
+   "id": "sbc-h20",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.dhrm.virginia.gov/docs/default-source/benefitsdocuments/health-benefits/open-enrollment-2026/covacarebasicsbc2026.pdf",
+   "source_bytes": 708323,
+   "source_sha256": "sha256:34848deacf6440a8511b75457776831bd1b2d148b50c5e19595602c19b59ecc1",
+   "source_pages": 7,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "virginia-cova-employer-sbc-family",
+   "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+   "license_source": "https://www.dhrm.virginia.gov/web-policy",
+   "license_other_notices": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "COVA Care Basic SBC2026",
+    "scope": "Named employer/population Virginia state active employees; exact selected catalog period 2026-2027 program catalog; exact original coverage dates unread. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+   },
+   "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+   "rights_scope_note": "DHRM policy disclaims accuracy/endorsement, restricts advertising/implied endorsement, prohibits unauthorized modification/security circumvention or use other than intended purposes, and limits its scope to its own sites. It is not an affirmative document-copy license. No explicit ordinary private-acquisition/automated-retrieval ban observed. Original/issuer notice and intended private benchmark scope remain unresolved.",
+   "coverage_period": [
+    "2026-07-01",
+    "2027-06-30"
+   ],
+   "employer_family_group": "virginia-cova-employer-sbc-family",
+   "carrier_form_group": "anthem-network-standard-employer-sbc"
+  },
+  {
+   "id": "sbc-h21",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.dhrm.virginia.gov/docs/default-source/benefitsdocuments/health-benefits/open-enrollment-2026/sentarasbc2026.pdf",
+   "source_bytes": 390497,
+   "source_sha256": "sha256:c933593f84fad21b4bdf6279f4cca8fbbebd9d5106774fb7e98a795e234e014d",
+   "source_pages": 8,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "virginia-cova-employer-sbc-family",
+   "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+   "license_source": "https://www.dhrm.virginia.gov/web-policy",
+   "license_other_notices": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Sentara Health Vantage HMO SBC2026",
+    "scope": "Named employer/population Virginia state active employees; exact selected catalog period 2026-2027 program catalog; exact original coverage dates unread. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+   },
+   "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+   "rights_scope_note": "DHRM policy disclaims accuracy/endorsement, restricts advertising/implied endorsement, prohibits unauthorized modification/security circumvention or use other than intended purposes, and limits its scope to its own sites. It is not an affirmative document-copy license. No explicit ordinary private-acquisition/automated-retrieval ban observed. Original/issuer notice and intended private benchmark scope remain unresolved.",
+   "coverage_period": [
+    "2026-07-01",
+    "2027-06-30"
+   ],
+   "employer_family_group": "virginia-cova-employer-sbc-family",
+   "carrier_form_group": "sentara-vantage-shared-tiered-hmo-sbc"
+  },
+  {
+   "id": "annual-h30",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.networkrail.co.uk/wp-content/uploads/2023/07/Network-Rail-Annual-Report-and-Accounts-2026.pdf",
+   "source_bytes": 10850921,
+   "source_sha256": "sha256:1891345664010aeba582aa4ed8e3886e1458511d7f5c91c8faeeab7386852343",
+   "source_pages": 232,
+   "approved_max_bytes": 11534336,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "network-rail-group",
+   "license": "Own PDF physical4 states OGLv3 except where otherwise stated; identified third-party exceptions retained. Separate site personal/noncommercial conditions recorded; no blanket third-party or image/logo grant inferred.",
+   "license_source": "https://www.networkrail.co.uk/wp-content/uploads/2023/07/Network-Rail-Annual-Report-and-Accounts-2026.pdf",
+   "license_other_notices": "PDF-local Crown copyright2026 and OGLv3 except where otherwise stated; identified third-party copyright requires rights-holder permission. No inference that third-party content, photographs or logos are covered. Site scope: Limited personal and noncommercial printing/downloading. Copies must stay unmodified, author/contributor status acknowledged, graphics not separated. Commercial use requires a licence. Other own-document notices can supersede site terms; unread. URL/SHA provenance and private original only. Benchmark purpose under this personal/noncommercial condition remains conditional, not final clearance.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Network Rail; Annual report and accounts 2026",
+    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels. Selected catalog period: 2026 annual report, expected FY2025-26; precise dates and own consolidated Group require original identity inspection. Jurisdiction fixes GBP before acquisition; original identity, currency and full annual Group scope must match before value labels. Hold mismatches; no substitute source or period."
+   },
+   "publisher_overlap_note": "One own railway corporate Group and publisher; broader UK public railway/government reporting dependence retained. Related revisions and subsidiaries are not independent documents.",
+   "verified_reporting_period": "2025-04-01/2026-03-31"
+  },
+  {
+   "id": "annual-h31",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.cmhc-schl.gc.ca/sites/cmhc/about-cmhc/corporate-reporting/annual-report/2025/cmhc-annual-report-2025-en.pdf",
+   "source_bytes": 7680444,
+   "source_sha256": "sha256:1e502fcee84459ed7dfb70acc4bf5096c041eaeb207c6b043979b04a1583ac38",
+   "source_pages": 163,
+   "approved_max_bytes": 8388608,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "cmhc-group",
+   "license": "Site personal copying/downloading/printing framework only; no affirmative PDF-local reuse grant. Other copying/derivatives/commercial uses require separate permission; final intended use unresolved.",
+   "license_source": "https://www.cmhc-schl.gc.ca/about-us/terms-conditions",
+   "license_other_notices": "Complete text search and original front/back render inspection found no PDF-local reproduction/automated-extraction prohibition or report-wide affirmative reuse grant. Silence is not a reuse permission; final use/redistribution rights remain unresolved. Site scope: Site expressly permits copying/downloading/printing for own personal use. Other copying, modification, redistribution, republication and derivative works require prior consent. Commercial exploitation restricted without rights/licences. Canadian-resident product/service scope, and independent-site terms retained. Own-PDF notices and private benchmark/provenance scope unresolved. No open redistribution grant inferred.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "CAD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Canada Mortgage and Housing Corporation; CMHC 2025 Annual Report",
+    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels. Selected catalog period: 2025 annual report, latest catalog-listed full annual; precise dates, currency and own consolidated Group unverified. Jurisdiction fixes CAD before acquisition; original identity, currency and full annual Group scope must match before value labels. Hold mismatches; no substitute source or period."
+   },
+   "publisher_overlap_note": "One own consolidated Crown housing/financial Group. Canadian government and financial reporting conventions overlap; company subsidiaries and repeated revisions are not independent source families.",
+   "verified_reporting_period": "2025-01-01/2025-12-31"
+  },
+  {
+   "id": "sbc-h23",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://benefits.utah.edu/wp-content/uploads/sites/78/2025/08/SBC_Advantage-VCP.pdf",
+   "source_bytes": 675340,
+   "source_sha256": "sha256:57e62a20af596c8d236e66d994de940ee78f8e447c691f37427b86ee5c7cea53",
+   "source_pages": 10,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "utah-university-employer-regence-advantage",
+   "license": "No affirmative copying or automated-use grant established from university disclaimer or PDF notices. No express source-specific acquisition ban found during inspection; final private/provenance and intended-use handling unresolved.",
+   "license_source": "https://www.utah.edu/disclaimer/",
+   "license_other_notices": "Coverage/civil-rights and language-assistance notices, with no PDF-local automated-extraction prohibition or affirmative report-wide reuse grant found. Silence does not establish permission; private draft only. Site scope: University disclaimer describes informational content and separate internal/external sources; it gives no affirmative source-document copying licence. No source-specific acquisition ban observed there, but that absence is not final clearance. Own-PDF/carrier rights and limited private-copy/provenance route must be inspected before fields.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "University of Utah active-employee benefits catalog; Advantage - Preferred ValueCare SBC",
+    "scope": "Named active-employee plan Advantage - Preferred ValueCare SBC from University of Utah active-employee benefits catalog; intended exact plan-year window2026-2027 from current HR catalog context. Original exact coverage dates must confirm this before field-value labels; hold another period without substitution. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+   },
+   "publisher_overlap_note": "One university employer/Regence plan family, with broader Blue Cross and mandated SBC-form dependence. Provider tiers and medical/drug benefit components are not independent documents.",
+   "verified_reporting_period": "2026-07-01/2027-06-30",
+   "coverage_period": "2026-07-01/2027-06-30",
+   "employer_family_group": "university-utah-employer",
+   "carrier_form_group": "regence-bcbs-standardized-sbc"
   }
  ],
  "format": "requested-fields/1",
