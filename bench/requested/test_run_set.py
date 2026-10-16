@@ -947,3 +947,90 @@ def test_tracked_manifest_has_one_request_context_for_each_kind():
     # names its part number only.
     assert len(subjects["annual"]) == len(subjects["sbc"]) == 1
     assert all(re.fullmatch(r"[A-Z0-9][A-Z0-9-]*", s) for s in subjects["component"])
+
+
+def test_transport_error_retries_only_on_request_and_keeps_the_archive(tmp_path):
+    session, _ = fixture(tmp_path)
+    failed = session.run("baseline", Client(RuntimeError("synthetic outage")))
+    assert not output(failed)["complete"] and output(failed)["transport_error"]
+    assert output(failed)["transport_retries"] == 0
+    folder = local(session, "result.json").parent
+    split = folder.parent
+    failed_call = (folder / "calls/0001.json").read_bytes()
+    failed_result = (folder / "result.json").read_bytes()
+    failed_projection = (split / "projection.json").read_bytes()
+
+    # Without the option, the recorded failure replays and no transport occurs.
+    unused = Client(envelope(candidate()))
+    assert session.run("baseline", unused) == failed and unused.prompts == []
+    with pytest.raises(harness.CacheError, match="needs a client"):
+        session.run("baseline", retry_transport_errors=True)
+
+    client = Client(envelope(candidate()))
+    retried = session.run("baseline", client, retry_transport_errors=True)
+    assert len(client.prompts) == 1
+    assert output(retried)["complete"] and not output(retried)["transport_error"]
+    assert output(retried)["transport_retries"] == 1
+    archive = folder / "attempts/0001"
+    assert (archive / "call.json").read_bytes() == failed_call
+    assert (archive / "call.pending.json").exists()
+    assert (archive / "result.json").read_bytes() == failed_result
+    assert (split / "_attempts/projection-0001.json").read_bytes() == failed_projection
+    # A completed document is not retried again, and replay needs no client.
+    again = Client()
+    assert session.run("baseline", again, retry_transport_errors=True) == retried
+    assert again.prompts == []
+    assert session.run("baseline") == retried
+
+
+def test_retry_of_a_second_failure_adds_a_second_attempt(tmp_path):
+    session, _ = fixture(tmp_path)
+    session.run("baseline", Client(RuntimeError("first")))
+    second = session.run("baseline", Client(RuntimeError("second")), retry_transport_errors=True)
+    assert output(second)["transport_error"] and output(second)["transport_retries"] == 1
+    third = session.run("baseline", Client(envelope(candidate())), retry_transport_errors=True)
+    assert output(third)["complete"] and output(third)["transport_retries"] == 2
+    folder = local(session, "result.json").parent
+    assert sorted(p.name for p in (folder / "attempts").iterdir()) == ["0001", "0002"]
+
+
+def test_retry_refuses_an_unresolved_reservation(tmp_path):
+    session, _ = fixture(tmp_path)
+    with pytest.raises(KeyboardInterrupt):
+        session.run("baseline", Client(KeyboardInterrupt()))
+    client = Client(envelope(candidate()))
+    with pytest.raises(harness.CacheError, match="unresolved"):
+        session.run("baseline", client, retry_transport_errors=True)
+    assert client.prompts == []
+
+
+def write_call(calls, binding, sequence, status):
+    entry = {
+        "binding_sha256": binding,
+        "sequence": sequence,
+        "prompt": "p",
+        "prompt_sha256": harness.digest(b"p"),
+        "status": status,
+    }
+    entry["entry_sha256"] = harness.digest(harness.encoded(entry))
+    (calls / f"{sequence:04}.json").write_bytes(harness.encoded(entry))
+    (calls / f"{sequence:04}.pending.json").write_bytes(b"{}")
+
+
+def test_transport_error_before_the_last_call_stays_refused(tmp_path):
+    document = tmp_path / "doc"
+    calls = document / "calls"
+    calls.mkdir(parents=True)
+    write_call(calls, "sha256:b", 1, "transport_error")
+    write_call(calls, "sha256:b", 2, "ok")
+    with pytest.raises(harness.CacheError, match="before the last call"):
+        harness._archive_transport_error(document, "sha256:b")
+    with pytest.raises(harness.CacheError, match="cached call differs"):
+        harness._archive_transport_error(document, "sha256:other")
+    assert sorted(p.name for p in calls.iterdir()) == [
+        "0001.json",
+        "0001.pending.json",
+        "0002.json",
+        "0002.pending.json",
+    ]
+    assert not (document / "attempts").exists()

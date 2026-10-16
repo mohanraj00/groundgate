@@ -204,12 +204,18 @@ completed documents without transport and writes the projection.
 
 Each call reserves an exclusive cache entry before transport, then stores the prompt and reply
 before admission. A process stop with an unresolved reservation needs inspection; it is never
-retried automatically. Completed calls can resume without repeated transport. A changed frozen
+retried automatically. A recorded transport error is never retried automatically either. With a
+client, `retry_transport_errors=True` moves the error at the last call of a document, its
+reservation and its result into `attempts/NNNN` in the document cache. It also moves the split
+projection into `_attempts`. Then that call runs again. Nothing is deleted. A transport error
+before the last call stays refused. Completed calls can resume without repeated transport. A changed frozen
 input or code snapshot stops reuse. The local transport reply retention limit is 8 MiB; larger
 replies record a size-limit failure and digest rather than their body. The client must bound its
 own download and memory use before returning a reply. Both arms also apply the frozen parsing,
-call, prompt, candidate and admission-history budgets. Incomplete documents remain marked in the
-projection. A smaller harness limit is reported rather than silently treated as an absence.
+call, prompt, candidate and admission-history budgets. Each projection document records
+`complete`, `transport_error` and `transport_retries`. `results.json` and the report give, for
+each arm and kind, the incomplete documents, the documents with a transport error and the
+retries. A smaller harness limit is reported rather than silently treated as an absence.
 
 I check the harness with synthetic sources and fixed replies. No test reads the source PDFs.
 One test reads the tracked manifest and labels only to check the request context rules. The

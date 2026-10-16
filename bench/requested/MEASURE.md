@@ -32,7 +32,8 @@ changes. This is part of the declared shared-request adapter, alongside shared c
 I rescore each final run with `bench/score.py --requested --set bench/requested` and render its
 `results.json` with `bench/report.py`. I report distinct admitted error rate, value and document
 upper bounds, right-value reviews, silent misses, miss rate and escapes for every field and kind.
-I also report unclear exclusions and document counts. The original fixed requests remain the
+I also report unclear exclusions and document counts. For each arm and kind, I report the
+incomplete documents, the documents with a transport error and the recorded transport retries. The original fixed requests remain the
 scoring units. No number is a measure until it comes from this set's generated `results.json`.
 
 ## Key and layout diagnostics

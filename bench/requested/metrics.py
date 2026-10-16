@@ -30,6 +30,9 @@ COUNTERS = (
     "unreported_absences",
 )
 
+# Run state for each document of a split: a harness stop, a failed call and archived retries.
+DOCUMENT_STATES = ("documents", "incomplete", "transport_error", "transport_retries")
+
 
 def blank_row() -> dict[str, Any]:
     return dict.fromkeys(COUNTERS, 0)
@@ -177,6 +180,7 @@ def measure(
     if set(outputs) - set(doc_ids):
         raise ValueError("run contains unknown documents")
     rows = []
+    states: dict[str, dict[str, int]] = {}
     for doc in documents:
         template = manifest["schemas"][doc["kind"]]
         schema = doc.get("schema", template)
@@ -215,6 +219,11 @@ def measure(
         if doc["split"] != split:
             continue
         output = outputs.get(doc["id"], {})
+        tally = states.setdefault(doc["kind"], dict.fromkeys(DOCUMENT_STATES, 0))
+        tally["documents"] += 1
+        tally["incomplete"] += output.get("complete") is False
+        tally["transport_error"] += output.get("transport_error") is True
+        tally["transport_retries"] += output.get("transport_retries", 0)
         decisions = output.get("decisions", [])
         if any(d.get("field") not in fields for d in decisions):
             raise ValueError("a final decision names an unrequested field")
@@ -304,6 +313,10 @@ def measure(
     pairs = sorted({(r["kind"], r["field"]) for r in rows})
     return {
         "split": split,
+        "document_states": {
+            "total": {n: sum(v[n] for v in states.values()) for n in DOCUMENT_STATES},
+            "by_kind": {k: states[k] for k in sorted(states)},
+        },
         "total": summarize(rows),
         "by_kind": by_kind,
         "by_field": by_field,
@@ -328,6 +341,17 @@ def check_coverage(manifest: dict[str, Any], run: dict[str, Any], split: str, na
     documents = run.get("documents")
     if not isinstance(documents, list) or any(not isinstance(d, dict) for d in documents):
         raise ValueError("cached run documents must be a list of objects: " + name)
+    for d in documents:
+        retries = d.get("transport_retries")
+        if (
+            type(d.get("complete")) is not bool
+            or type(d.get("transport_error")) is not bool
+            or type(retries) is not int
+            or retries < 0
+        ):
+            raise ValueError(
+                "cached run documents need their complete and transport state: " + name
+            )
     ids = [d.get("id") for d in documents]
     if any(not isinstance(i, str) for i in ids) or sorted(ids) != expected:
         raise ValueError(f"cached run documents are not exactly the {split} documents: {name}")

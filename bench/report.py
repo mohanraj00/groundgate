@@ -892,6 +892,29 @@ def render_requested(results: dict[str, Any]) -> str:
                 ]
             )
         lines += table(head, rows)
+        states = run["document_states"]
+        lines += [
+            "Run state for each document. An incomplete document stopped at a harness limit or "
+            "a failed call. Its fields without an admitted value count as misses, not as "
+            "absences. Retries are archived transport errors that ran again.",
+            "",
+        ]
+        lines += table(
+            ["Kind", "Docs", "Incomplete", "Transport error", "Transport retries"],
+            [
+                [
+                    label.replace("|", "\\|"),
+                    r["documents"],
+                    r["incomplete"],
+                    r["transport_error"],
+                    r["transport_retries"],
+                ]
+                for label, r in [
+                    ("total", states["total"]),
+                    *sorted(states["by_kind"].items()),
+                ]
+            ],
+        )
     if "diagnostics" in results:
         diagnostic = results["diagnostics"]
         lines += [

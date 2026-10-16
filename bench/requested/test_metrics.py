@@ -202,6 +202,8 @@ def cache(directory: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, An
             "sha256:" + hashlib.sha256((directory / (name + ".json")).read_bytes()).hexdigest()
         )
     run["split"] = "heldout"
+    for doc in run["documents"]:
+        doc |= {"complete": True, "transport_error": False, "transport_retries": 0}
     (directory / "runs/baseline.json").write_text(json.dumps(run))
     return m, labels, run
 
@@ -237,7 +239,9 @@ def test_malformed_admitted_key_is_an_escape(bad_key: Any) -> None:
         (lambda run: run.update(split="development", documents=[]), "split"),
         (lambda run: run.pop("split"), "split"),
         (lambda run: run.update(documents=[]), "exactly"),
-        (lambda run: run["documents"].append({"id": "x", "decisions": []}), "exactly"),
+        (lambda run: run["documents"].append(dict(run["documents"][0], id="x")), "exactly"),
+        (lambda run: run["documents"][0].pop("complete"), "transport state"),
+        (lambda run: run["documents"][0].update(transport_retries=-1), "transport state"),
         (lambda run: run["documents"].append(dict(run["documents"][0])), "exactly"),
         (lambda run: run["documents"][0].update(id=7), "exactly"),
         (lambda run: run.update(documents={}), "list"),
@@ -269,7 +273,10 @@ def test_projection_with_a_missing_document_is_refused(tmp_path: Path) -> None:
     (tmp_path / "runs/baseline.json").write_text(json.dumps(run))
     with pytest.raises(ValueError, match="exactly the heldout documents"):
         score_set(tmp_path, "heldout")
-    run["documents"].append({"id": "d2", "decisions": [], "not_found": []})
+    run["documents"].append(
+        {"id": "d2", "decisions": [], "not_found": []}
+        | {"complete": True, "transport_error": False, "transport_retries": 0}
+    )
     (tmp_path / "runs/baseline.json").write_text(json.dumps(run))
     assert score_set(tmp_path, "heldout")["runs"]["baseline"]["total"]["documents"] == 2
 
@@ -292,3 +299,50 @@ def test_document_bound_counts_only_documents_with_admits() -> None:
     out = measure(m, labels, run, "heldout")["total"]
     assert out["bounds"]["document_trials"] == 2 and out["bounds"]["document_errors"] == 0
     assert out["bounds"]["document_upper95"] == pytest.approx(upper95(0, 2))
+
+
+def test_incomplete_and_transport_documents_are_counted_for_each_kind(tmp_path: Path) -> None:
+    m, labels, run = cache(tmp_path)
+    m["schemas"]["other"] = copy.deepcopy(m["schemas"]["kind"])
+    for ident, kind in (("d2", "kind"), ("d3", "other")):
+        m["documents"].append({"id": ident, "kind": kind, "split": "heldout"})
+        gold = copy.deepcopy(labels["documents"][0])
+        gold["id"] = ident
+        labels["documents"].append(gold)
+    for name, content in (("manifest.json", m), ("labels.json", labels)):
+        (tmp_path / name).write_text(json.dumps(content))
+    for name in ("manifest", "labels"):
+        run[name + "_sha256"] = (
+            "sha256:" + hashlib.sha256((tmp_path / (name + ".json")).read_bytes()).hexdigest()
+        )
+    state = {"decisions": [], "not_found": []}
+    run["documents"] += [
+        state | {"id": "d2", "complete": False, "transport_error": True, "transport_retries": 2},
+        state | {"id": "d3", "complete": False, "transport_error": False, "transport_retries": 1},
+    ]
+    (tmp_path / "runs/baseline.json").write_text(json.dumps(run))
+    results = score_set(tmp_path, "heldout")
+    states = results["runs"]["baseline"]["document_states"]
+    assert states["by_kind"]["kind"] == {
+        "documents": 2,
+        "incomplete": 1,
+        "transport_error": 1,
+        "transport_retries": 2,
+    }
+    assert states["by_kind"]["other"] == {
+        "documents": 1,
+        "incomplete": 1,
+        "transport_error": 0,
+        "transport_retries": 1,
+    }
+    assert states["total"] == {
+        "documents": 3,
+        "incomplete": 2,
+        "transport_error": 1,
+        "transport_retries": 3,
+    }
+    report = render_requested(results)
+    assert "| Kind | Docs | Incomplete | Transport error | Transport retries |" in report
+    assert "| total | 3 | 2 | 1 | 3 |" in report
+    assert "| kind | 2 | 1 | 1 | 2 |" in report
+    assert "| other | 1 | 1 | 0 | 1 |" in report
