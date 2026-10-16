@@ -1756,6 +1756,135 @@
         ]
       },
       "copyright_attribution": "BBC Copyright 2026. BBC Group Annual Report and Accounts 2025/26. Text acknowledgment is retained; no image license inferred."
+    },
+    {
+      "id": "sbc-h09",
+      "source": "https://www.pebtf.org/api//appFiles/25b67171-110d-4c38-b3a3-3cf117401ade.pdf",
+      "catalog_source": "https://www.pebtf.org/active/forms",
+      "approved_max_bytes": 1048576,
+      "approval": "chat exact-source-and-size approval, 2026-10-15; notice, format and coverage-period inspection only",
+      "source_bytes": 378185,
+      "source_sha256": "sha256:cd2b61c52c4d583e543d5c6de439db510d82dbd9a571a173db41aed64d61200f",
+      "source_pages": 7,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "pebtf-active-medical-ppo-hmo-family",
+      "license": "No affirmative document-copy grant established in inspected website or original PDF; rights unresolved",
+      "license_source": "https://www.pebtf.org/legal/terms",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "publisher_overlap_note": "Employer trust is a new sponsor family. The selected file's insurer/administrator is not established by the inspected catalog metadata. Keep PEBTF PPO/HMO/Bronze variants and revisions together; determine carrier/form overlap from approved original notices/provenance without assuming a new insurer.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 7,
+        "note": "English standardized SBC has digital text on all physical pages; consumer notices and examples remain part of the complete source."
+      },
+      "identity": {
+        "type": "Summary of Benefits and Coverage",
+        "named_plan": "2026 Basic PPO",
+        "coverage_period": "2026-01-01 to 2026-12-31",
+        "physical_page": 1,
+        "period_note": "Calendar2026 coverage is explicitly stated."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": false,
+        "contrary_pdf_wide_copy_restriction_found": false,
+        "observation": "Consumer coverage, appeal, nondiscrimination and language notices remain intact. No affirmative PDF-local reproduction grant or contrary document-wide copying/extraction restriction found. Silence and public hosting do not establish permission. No PDF or source text is published.",
+        "method": "Complete pypdf and Poppler text notice queries plus original-page visual checks, including raster notices. All source pages checked visually by the primary annotator."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final benchmark eligibility and membership remain open",
+      "request_snapshot_sha256": "0796869d2052daabb7c7409b0331a559ff82687f8da662782f965ff1f3f8b5da",
+      "blind_check": {
+        "method": "Separate primary and parent source-only annotations frozen before comparison. All five statuses, values and units agree. No benchmark client output exists.",
+        "reconciliation_sha256": "8f1446b3695216e5d2b1dcb6454721055ce88b06040d00e73f416b0ba755008d",
+        "no_unstated_calculations": true
+      },
+      "source_format_caveat": "The file retains a generic continuation-rights contact placeholder on physical page5 and sample-title file metadata. Visible named-plan identity, dates and employer catalog are recorded; the imperfection is not treated as a grant or proof of a sample-only benefit table."
+    },
+    {
+      "id": "sbc-h10",
+      "source": "https://www.utsystem.edu/sites/default/files/documents/publication/2026/ppo-network-summary-of-benefits-and-coverage/sbc-ppo-fy2026.pdf",
+      "catalog_source": "https://www.utsystem.edu/documents/docs/publication/2026/ppo-network-summary-of-benefits-and-coverage",
+      "approved_max_bytes": 1048576,
+      "approval": "chat exact-source-and-size approval, 2026-10-15; notice, format and coverage-period inspection only",
+      "source_bytes": 481557,
+      "source_sha256": "sha256:5cb0a93f0962caf16a7554209e58cd4f9414c4a823c2f415109c7c5ae6b0a25b",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "ut-system-ut-select-bcbstx-medical-family",
+      "license": "No affirmative document-copy grant established in inspected website or original PDF; rights unresolved",
+      "license_source": "https://www.utsystem.edu/copyright",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "publisher_overlap_note": "Catalog identifies UT SELECT/BCBSTX contact context. BlueCross/BlueShield administration overlaps other broad BCBS sources, including MIT and the NJ candidate. UT sponsor/plan family is distinct, but this does not establish independent insurer/authorship/form diversity. Keep PPO/out-of-area, fiscal-year, language and rendering revisions together.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 8,
+        "note": "English standardized SBC has digital text on all physical pages; consumer notices and examples remain part of the complete source."
+      },
+      "identity": {
+        "type": "Summary of Benefits and Coverage",
+        "named_plan": "UT SELECT PPO Network, FY2026 (2025-2026)",
+        "coverage_period": "2025-09-01 to 2026-08-31",
+        "physical_page": 1,
+        "period_note": "FY2026 is September2025-August2026, as predeclared from the catalog; no calendar-year substitution."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": false,
+        "contrary_pdf_wide_copy_restriction_found": false,
+        "observation": "Consumer coverage, appeal, nondiscrimination and language notices remain intact. No affirmative PDF-local reproduction grant or contrary document-wide copying/extraction restriction found. Silence and public hosting do not establish permission. No PDF or source text is published.",
+        "method": "Complete pypdf and Poppler text notice queries plus original-page visual checks, including raster notices. All source pages checked visually by the primary annotator."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final benchmark eligibility and membership remain open",
+      "request_snapshot_sha256": "0796869d2052daabb7c7409b0331a559ff82687f8da662782f965ff1f3f8b5da",
+      "blind_check": {
+        "method": "Separate primary and parent source-only annotations frozen before comparison. All five statuses, values and units agree. No benchmark client output exists.",
+        "reconciliation_sha256": "8f1446b3695216e5d2b1dcb6454721055ce88b06040d00e73f416b0ba755008d",
+        "no_unstated_calculations": true
+      },
+      "condition_note": "Generic in-network specialist request does not choose between two participating network tiers. Their different copays stay unclear. Explicit Overall Limit is distinct from the narrower Coinsurance Limit; components are not added."
+    },
+    {
+      "id": "sbc-h11",
+      "source": "https://www.nj.gov/treasury/pensions/documents/hb/oe2026/sbcs/sbc216.pdf",
+      "catalog_source": "https://www.nj.gov/treasury/pensions/documents/hb/oe2026/hb-sbc-state-active-26.shtml",
+      "approved_max_bytes": 2097152,
+      "approval": "chat exact-source-and-size approval, 2026-10-15; notice, format and coverage-period inspection only",
+      "source_bytes": 1781523,
+      "source_sha256": "sha256:dad0453ceea9aea0d8d8a648e31bf9cc471cd640666164706b07e66ac7f6056c",
+      "source_pages": 10,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "new-jersey-shbp-state-horizon-medical-family",
+      "license": "State-information copy framework subject to local and third-party rights; exact insurer-content reuse grant unresolved",
+      "license_source": "https://www.nj.gov/nj/legal.shtml",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "publisher_overlap_note": "Horizon/BCBS brand-family and standardized SBC form overlap broad BlueCross sources, including UT/other employer plans. State sponsor/medical plan differs, but do not treat it as an independent publisher solely from a new URL. Group NJ SHBP/SEHBP Horizon/Aetna employer/plan/year/language/rendering variants conservatively and retain medical-versus-prescription separation.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 10,
+        "note": "Core English SBC pages1-8 have digital text. Nondiscrimination/language appendices on pages9-10 are largely raster and were checked from original renders; no scan-only benefit field is inferred."
+      },
+      "identity": {
+        "type": "Summary of Benefits and Coverage",
+        "named_plan": "2026 Horizon NJ DIRECT 15, active State employees",
+        "coverage_period": "2026-07-01 to 2026-12-31",
+        "physical_page": 1,
+        "period_note": "The source period is July-December2026. Some benefit limits are stated per calendar year; no amount is prorated, annualized or extrapolated to January-June."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": false,
+        "contrary_pdf_wide_copy_restriction_found": false,
+        "observation": "Consumer coverage, appeal, nondiscrimination and language notices remain intact. No affirmative PDF-local reproduction grant or contrary document-wide copying/extraction restriction found. Silence and public hosting do not establish permission. No PDF or source text is published.",
+        "method": "Complete pypdf and Poppler text notice queries plus original-page visual checks, including raster notices. All source pages checked visually by the primary annotator."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final benchmark eligibility and membership remain open",
+      "request_snapshot_sha256": "0796869d2052daabb7c7409b0331a559ff82687f8da662782f965ff1f3f8b5da",
+      "blind_check": {
+        "method": "Separate primary and parent source-only annotations frozen before comparison. All five statuses, values and units agree. No benchmark client output exists.",
+        "reconciliation_sha256": "8f1446b3695216e5d2b1dcb6454721055ce88b06040d00e73f416b0ba755008d",
+        "no_unstated_calculations": true
+      },
+      "condition_note": "Active employee health-provider out-of-pocket limit is distinct from the expressly named coinsurance sublimit, retiree and out-of-network entries. Prescription coverage points to a separate SBC; no limits are combined."
     }
   ]
 }
