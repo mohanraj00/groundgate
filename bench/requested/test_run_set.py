@@ -861,3 +861,21 @@ def test_request_context_expansion_refuses_before_schema_admission_or_cache(
         session.run("baseline", client)
     assert client.prompts == []
     assert not (tmp_path / "cache").exists()
+
+
+def test_partial_document_run_publishes_no_projection_and_full_run_reuses_it(tmp_path):
+    session, _ = fixture(tmp_path)
+    with pytest.raises(harness.CacheError):
+        session.run("baseline", Client(), documents=["other"])
+    with pytest.raises(harness.CacheError):
+        session.run("baseline", Client(), documents=[])
+    client = Client(envelope(candidate()))
+    partial = session.run("baseline", client, documents=["doc"])
+    assert partial["partial"] is True and len(client.prompts) == 1
+    folder = local(session, "result.json").parents[1]
+    assert not (folder / "projection.json").exists()
+    no_repeat = Client()
+    full = session.run("baseline", no_repeat)
+    assert not no_repeat.prompts and (folder / "projection.json").exists()
+    assert full["documents"] == partial["documents"]
+    assert session.run("baseline") == full
