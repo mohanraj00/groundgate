@@ -83,11 +83,11 @@ function showSource() {
     node('next-page').disabled = sourcePage === doc.source_pages;
     node('source-status').textContent = `Loading original PDF page ${sourcePage} of ${doc.source_pages}...`;
     node('preview').alt = `Original PDF page ${sourcePage} of ${doc.source_pages}`;
-    node('preview').src = `/page/${encodeURIComponent(doc.id)}/${sourcePage}`;
+    node('preview').src = `page/${encodeURIComponent(doc.id)}/${sourcePage}`;
     node('pdf').removeAttribute('src');
   } else {
     node('source-status').textContent = 'Page previews are unavailable. If the embedded PDF is blank, open the original PDF in a new tab.';
-    node('pdf').src = `/pdf/${encodeURIComponent(doc.id)}#page=${sourcePage}`;
+    node('pdf').src = `pdf/${encodeURIComponent(doc.id)}#page=${sourcePage}`;
     node('preview').removeAttribute('src');
   }
 }
@@ -100,11 +100,11 @@ function render() {
   node('request-context').hidden = !requestContext;
   node('request-context').textContent = requestContext ? `${requestContext.subject}\n${requestContext.scope}` : '';
   if (viewedDocument !== doc.id) { sourcePage = 1; viewedDocument = doc.id; }
-  node('original').href = `/pdf/${encodeURIComponent(doc.id)}`;
+  node('original').href = `pdf/${encodeURIComponent(doc.id)}`;
   showSource();
   node('text').hidden = doc.source_text_available !== true;
   node('text').textContent = doc.source_text_hash_pinned ? 'Open local source text (hash checked)' : 'Open local source text (hash not pinned)';
-  if (doc.source_text_available) node('text').href = `/text/${encodeURIComponent(doc.id)}`;
+  if (doc.source_text_available) node('text').href = `text/${encodeURIComponent(doc.id)}`;
   else node('text').removeAttribute('href');
   node('fields').replaceChildren();
   labels.fields.forEach((slot, index) => {
@@ -133,7 +133,7 @@ function render() {
   dirty = false; message(state.blocked || (state.can_seal ? 'Draft labels. Save each document before sealing.' : 'Source selection is still open. You can save draft labels; sealing is not available yet.'));
 }
 async function load() {
-  const response = await fetch('/api/state'); const result = await response.json();
+  const response = await fetch('api/state'); const result = await response.json();
   if (!response.ok) throw Error(result.error || 'Cannot load labels');
   state = result; node('document').replaceChildren();
   for (const doc of state.documents) { const option = element('option', `${doc.id} (${doc.split})`); option.value = doc.id; node('document').append(option); }
@@ -178,7 +178,7 @@ node('save').addEventListener('click', async () => {
       return {field: slot.field, key: slot.key || null, status, values, page: page ? Number(page) : null,
         note: get('note').value, reason: get('reason').value, second_check: get('second_check').checked};
     });
-    await post('/api/save', {id: selected, fields}); await load(); message('Draft saved.');
+    await post('api/save', {id: selected, fields}); await load(); message('Draft saved.');
   } catch (error) { message(error.message); }
 });
 node('seal').addEventListener('click', () => {
@@ -186,7 +186,7 @@ node('seal').addEventListener('click', () => {
 });
 node('confirm').addEventListener('close', async () => {
   if (node('confirm').returnValue !== 'seal') return;
-  try { await post('/api/seal', {}); await load(); message('All labels sealed.'); } catch (error) { message(error.message); }
+  try { await post('api/seal', {}); await load(); message('All labels sealed.'); } catch (error) { message(error.message); }
 });
 window.addEventListener('beforeunload', event => { if (dirty) { event.preventDefault(); event.returnValue = ''; } });
 load().catch(error => message(error.message));

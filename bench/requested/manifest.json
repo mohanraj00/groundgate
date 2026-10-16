@@ -3241,6 +3241,386 @@
    },
    "publisher_overlap_note": "Standardized CMS SBC format remains shared; employer/plan/year variants stay grouped. No new independent carrier is inferred from an employer URL.",
    "coverage_period": "2026-01-01 to 2026-12-31"
+  },
+  {
+   "id": "annual-h22",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a5740ec2f6185941a9a650a/Ministry_of_Defence_annual_report_and_accounts_2025_to_2026.pdf",
+   "source_bytes": 7677411,
+   "source_sha256": "sha256:4d1a1f186c6915563b3be8bd7409f4871e2e8b44ecdcd4efee32ae0233dd8eb6",
+   "source_pages": 268,
+   "approved_max_bytes": 8388608,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "uk-ministry-of-defence-departmental-family",
+   "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "Own physical4 states OGLv3 with identified third-party exceptions. No additional document-copy restriction found in complete source queries. Image and logo exceptions remain separate.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Ministry of Defence annual report 2025-26",
+    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
+   },
+   "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
+   "verified_reporting_period": "year ended2026-03-31"
+  },
+  {
+   "id": "annual-h23",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a61d75447af652afa0c8a73/FCDO_Annual_Report_2025_to_2026.pdf",
+   "source_bytes": 5988972,
+   "source_sha256": "sha256:988b058691b1c5f31f055afc583fc31556a3185638a3eccef18747995204c66c",
+   "source_pages": 265,
+   "approved_max_bytes": 6291456,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "uk-fcdo-departmental-family",
+   "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "Own physical4 states OGLv3 with third-party exceptions. The full report includes a staff-chart correction slip; it is not errata-only. No blanket permission for third-party material inferred.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Foreign Commonwealth and Development Office annual report 2025-26",
+    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
+   },
+   "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
+   "verified_reporting_period": "year ended2026-03-31"
+  },
+  {
+   "id": "annual-h24",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6ac8c105e8ef5609e7c93447/46.36_CO_ARA_25-26__FINAL_WEB.pdf",
+   "source_bytes": 4587306,
+   "source_sha256": "sha256:be22075503024138e548255cdbdee6e3cc510cd5cd0e4734764931bc0bf9a5db",
+   "source_pages": 285,
+   "approved_max_bytes": 5242880,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "uk-cabinet-office-departmental-family",
+   "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "Own physical3 states OGLv3 with third-party exceptions. Physical4 is an inserted SOPS correction slip; all285pages form the selected full report, not an errata-only replacement.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Cabinet Office annual report 2025-26",
+    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
+   },
+   "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
+   "verified_reporting_period": "year ended2026-03-31"
+  },
+  {
+   "id": "annual-h28",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a5609d42cbe5d1c179a6439/dbt-annual-report-and-accounts-2025-to-2026-web-accessible.pdf",
+   "source_bytes": 2079919,
+   "source_sha256": "sha256:a6ff1425f619b274bf2a3d83c9ba48f6d09ded04f02165a4cff0962980744eb5",
+   "source_pages": 276,
+   "approved_max_bytes": 3145728,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "uk-business-trade-departmental-family",
+   "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "Own physical4 states OGLv3 except where otherwise stated, with identified third-party exceptions. No broader image/logo or third-party grant inferred.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Department for Business and Trade annual report 2025-26",
+    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
+   },
+   "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
+   "verified_reporting_period": "year ended2026-03-31"
+  },
+  {
+   "id": "annual-h26",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.nzpost.co.nz/sites/nz/files/2026-08/annual-report-2026.pdf",
+   "source_bytes": 4238879,
+   "source_sha256": "sha256:bc71d1cdfb7fb53b6bf38e4566c2d26eb5ac872f91a2763e964a138284d2d909",
+   "source_pages": 66,
+   "approved_max_bytes": 5242880,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "new-zealand-post-group-family",
+   "license": "Conditional personal electronic or hardcopy site-use framework only; no affirmative PDF-local grant; final intended use unresolved",
+   "license_source": "https://www.nzpost.co.nz/about-us/who-we-are/terms-of-business/website-terms-conditions",
+   "license_other_notices": "No PDF-local copyright or document-copy notice found in complete two-engine notice queries and cover/backcover inspection. This does not establish a licence grant. Separate site terms allow personal electronic or hard copies only; other use and third-party content remain separate.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "NZD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "NZD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "NZD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "NZD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "NZD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "NZD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "NZ Post / New Zealand Post Limited annual report 2026 annual report; precise fiscal dates to confirm from original notice/title metadata before values",
+    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
+   },
+   "publisher_overlap_note": "One own consolidated corporate Group; related years, renderings and subsidiaries are not independent source families. Earlier catalog headline exposure is recorded; no request or rule was selected from it.",
+   "verified_reporting_period": "year ended2026-06-30"
   }
  ],
  "format": "requested-fields/1",

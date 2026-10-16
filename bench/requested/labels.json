@@ -3094,6 +3094,398 @@
           "second_check": false
         }
       ]
+    },
+    {
+      "id": "annual-h22",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 202,
+          "reason": "Primary statement physical178 labels operating income, supplies/services and other income. Note2.1 physical202 combines receipts, rentals, personnel, asset-sale proceeds and other income. Policy physical196/197 distinguishes contracts from asset disposals and rentals; no unique stated total revenue mapping. Do not select or derive a subtotal.",
+          "note": "Primary statement physical178 labels operating income, supplies/services and other income. Note2.1 physical202 combines receipts, rentals, personnel, asset-sale proceeds and other income. Policy physical196/197 distinguishes contracts from asset disposals and rentals; no unique stated total revenue mapping. Do not select or derive a subtotal."
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 178,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group cost of sales; purchase of goods/services and operating expenditure are different.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group cost of sales; purchase of goods/services and operating expenditure are different."
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 178,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group gross profit, loss or margin; do not subtract expenses.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group gross profit, loss or margin; do not subtract expenses."
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "216410900000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 179,
+          "reason": "",
+          "note": "31March2026 Departmental Group second column, GBP millions, Total assets216410.9. Not core/agencies215176.5."
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 180,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. Primary statement separates current and non-current liabilities. Full-source matches concern net assets, financing activities, lease or benefit subsets; no combined closing whole-Group liability total.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. Primary statement separates current and non-current liabilities. Full-source matches concern net assets, financing activities, lease or benefit subsets; no combined closing whole-Group liability total."
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "174076200000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 180,
+          "reason": "",
+          "note": "31March2026 Departmental Group second column, GBP millions, Total equity174076.2 including ALB reserves."
+        }
+      ]
+    },
+    {
+      "id": "annual-h23",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-247061000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 165,
+          "reason": "",
+          "note": "Primary consolidated latest Group Revenue from contracts with customers (247061), GBP thousands. Preserve printed credit sign. Separate consolidated-body income/total operating income is not substituted. Note4 physical190 corroborates magnitude."
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 165,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated cost of sales; operating expenditure is not cost of sales.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated cost of sales; operating expenditure is not cost of sales."
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 165,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group gross profit/loss/margin.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group gross profit/loss/margin."
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "21775296000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 167,
+          "reason": "",
+          "note": "31March2026 Departmental Group Total Assets21775296, GBP thousands; not core/agencies21770665."
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 168,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. Current and non-current liability subtotals only; physical209 totals cover financing activities, not all closing liabilities.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. Current and non-current liability subtotals only; physical209 totals cover financing activities, not all closing liabilities."
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "11894084000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 168,
+          "reason": "",
+          "note": "31March2026 Departmental Group Total Equity11894084, GBP thousands."
+        }
+      ]
+    },
+    {
+      "id": "annual-h24",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-1171100000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 187,
+          "reason": "",
+          "note": "Primary2025-26 Departmental group Revenue from contracts with customers (1171.1), GBP millions; preserve credit sign. Other/non-cash income and total operating income are separate."
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 187,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group cost of sales; operating expenditure differs.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group cost of sales; operating expenditure differs."
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 187,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group gross profit/loss/margin.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group gross profit/loss/margin."
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "3846100000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 188,
+          "reason": "",
+          "note": "31March2026 Departmental group Total assets3846.1, GBP millions. Prefer this stated precision to rounded performance-summary3846."
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-10343000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 51,
+          "reason": "",
+          "note": "Explicit latest closing departmental Group balance-sheet summary Total liabilities (10343), GBP millions. This rounded total is directly printed; no addition of primary statement subtotals. Preserve printed negative sign."
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-6496900000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 189,
+          "reason": "",
+          "note": "31March2026 Departmental group Total equity (6496.9), GBP millions, preserve sign."
+        }
+      ]
+    },
+    {
+      "id": "annual-h28",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-618000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 147,
+          "reason": "",
+          "note": "Primary latest Departmental Group Revenue from contracts with customers (618), GBP millions; preserve sign. Loan interest/total operating income are distinct."
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 147,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated cost of sales; operating expenditure is different.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated cost of sales; operating expenditure is different."
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 147,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group gross profit/loss/margin.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated whole-Group gross profit/loss/margin."
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "11007000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 149,
+          "reason": "",
+          "note": "31March2026 Departmental Group Total assets11007, GBP millions."
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5800000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 142,
+          "reason": "",
+          "note": "Latest2025-26 whole-Group audit-scope narrative directly states total liabilities of GBP5.8bn, positive as printed. Retain stated billion precision. The fixed request does not require a primary-statement location or exact millions. No total is computed from current/non-current categories. Initial parent precision/scope concern is preserved in local reconciliation."
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5269000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 150,
+          "reason": "",
+          "note": "31March2026 Departmental Group Total equity5269, GBP millions."
+        }
+      ]
+    },
+    {
+      "id": "annual-h26",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1267000000",
+              "unit": "NZD"
+            }
+          ],
+          "page": 20,
+          "reason": "",
+          "note": "Latest consolidated yearended30June2026 Revenue1267, NZD millions; Note3physical26 corroborates."
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 27,
+          "reason": "Note4 states Cost of services and goods separately from Employee expenses and Other expenditure. The source does not establish equivalence of that functional subtotal to the fixed cost-of-sales request. Do not substitute it or total Expenditure, or calculate a new aggregate.",
+          "second_check": false,
+          "note": "Both independent freezes retained; parent rechecked the original Note4 after comparison. No numeric cost label selected."
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 20,
+          "reason": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated gross profit/loss/margin; operating profit is different.",
+          "second_check": true,
+          "note": "Independent full original checked with pypdf and Poppler, whitespace-normalized cost of sales/goods sold/revenue and gross profit/loss/margin and total-liability queries, plus selected rendered statement/notice/scope pages. No stated gross profit/loss/margin; operating profit is different."
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1502000000",
+              "unit": "NZD"
+            }
+          ],
+          "page": 22,
+          "reason": "",
+          "note": "Latest consolidated closing Total assets1502, NZD millions."
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "911000000",
+              "unit": "NZD"
+            }
+          ],
+          "page": 22,
+          "reason": "",
+          "note": "Latest consolidated closing Total liabilities911, NZD millions; directly printed combined total."
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "591000000",
+              "unit": "NZD"
+            }
+          ],
+          "page": 22,
+          "reason": "",
+          "note": "Latest consolidated closing Total equity591, NZD millions."
+        }
+      ]
     }
   ],
   "status": "draft"
