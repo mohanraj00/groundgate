@@ -3486,6 +3486,1206 @@
           "note": "Latest consolidated closing Total equity591, NZD millions."
         }
       ]
+    },
+    {
+      "id": "component-h19",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "2.7",
+              "unit": "V"
+            }
+          ],
+          "page": 1,
+          "reason": "Operating lower endpoint agrees in feature and explicitly named operating range.",
+          "second_check": true,
+          "note": "Lower bound is common to explicit feature operating interval and parenthetical operating range; not differential input voltage."
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 3,
+          "reason": "Feature page gives operating upper5.0V, while Maximum Ratings row expressly calls2.7-5.5V an operating range and also lists5.5V as rating. No unique recommended upper bound established without resolving this source distinction. I do not promote a stress rating.",
+          "second_check": true,
+          "note": "Feature page gives operating upper5.0V, while Maximum Ratings row expressly calls2.7-5.5V an operating range and also lists5.5V as rating. No unique recommended upper bound established without resolving this source distinction. I do not promote a stress rating."
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 4,
+          "reason": "LMV321 Typ80uA at2.7V and Typ130uA at5.0V, both TA25C, V-=0V, VO=V+/2, RL1Mohm. Two separately headed reference tables; request does not choose one. Not LMV358/324 combined current.",
+          "second_check": true,
+          "note": "LMV321 Typ80uA at2.7V and Typ130uA at5.0V, both TA25C, V-=0V, VO=V+/2, RL1Mohm. Two separately headed reference tables; request does not choose one. Not LMV358/324 combined current."
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 3,
+          "reason": "Selected LMV321 operating ambient range; LMV321I and NCV321 excluded.",
+          "second_check": true,
+          "note": "LMV321 base member operating ambient range; corroborated by electrical-characteristic footnotes4/6. LMV321I and NCV321 ranges not substituted."
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "85",
+              "unit": "C"
+            }
+          ],
+          "page": 3,
+          "reason": "Selected LMV321 operating ambient range, corroborated by electrical-table footnote.",
+          "second_check": true,
+          "note": "Base LMV321 operating ambient upper bound, not storage or junction limit."
+        }
+      ]
+    },
+    {
+      "id": "component-h20",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "reason": "Originalp1 gives guaranteed fully operational down to0.9V and a Typical Application diagram0.8-7.0V. Originalp10 expressly describes operation below0.9V without a numeric lower endpoint. My primary0.9V was a supported guaranteed-operation point, but the exact minimum of the requested recommended operating interval is not unique. Preserve unclear, without choosing0.8V or treating0.9V as an exact minimum.",
+          "second_check": true,
+          "note": "Originalp1 gives guaranteed fully operational down to0.9V and a Typical Application diagram0.8-7.0V. Originalp10 expressly describes operation below0.9V without a numeric lower endpoint. My primary0.9V was a supported guaranteed-operation point, but the exact minimum of the requested recommended operating interval is not unique. Preserve unclear, without choosing0.8V or treating0.9V as an exact minimum."
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "7",
+              "unit": "V"
+            }
+          ],
+          "page": 10,
+          "reason": "Application operating description explicitly says supply range as high as 7.0 V; not inferred solely from absolute maximum.",
+          "second_check": true,
+          "note": "Re-read and rendered originalp10 General Information under Application Information and Operating Description. It expressly states normal operation as high as7.0V. This is independent functional evidence, not inference solely from the maximum-rating row. My primary assertion that no separate operating upper statement was established was incomplete; correct it to present7V. No source/request/code changes."
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 4,
+          "reason": "Originalp4 has three explicit supply-condition blocks atTA25C with Typ0.51,0.72,0.82mA. The table-wide header usesVCC2.5V/VEE-2.5V unless otherwise noted, which supported my initial0.82mA interpretation. However every current block explicitly states its own supply condition; frozen generic request does not unambiguously prioritize one of these equally applicable explicit conditions. Preserve all observations and unclear, without introducing a header-priority rule or selecting a rail condition.",
+          "second_check": true,
+          "note": "Originalp4 has three explicit supply-condition blocks atTA25C with Typ0.51,0.72,0.82mA. The table-wide header usesVCC2.5V/VEE-2.5V unless otherwise noted, which supported my initial0.82mA interpretation. However every current block explicitly states its own supply condition; frozen generic request does not unambiguously prioritize one of these equally applicable explicit conditions. Preserve all observations and unclear, without introducing a header-priority rule or selecting a rail condition."
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "reason": "NCS2001 operating ambient range, distinct from NCV2001.",
+          "second_check": true,
+          "note": "Use named NCS2001 ambient operating range; not NCV2001, storage or junction limit."
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "105",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "reason": "NCS2001 operating ambient range, distinct from NCV2001.",
+          "second_check": true,
+          "note": "NCS2001 row ends+105C; NCV2001+125C is a different base member."
+        }
+      ]
+    },
+    {
+      "id": "component-h21",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "reason": "Source offers2.0-36V single supply and\u00b11.0-\u00b118V split supply. The request does not name a rail/topology; no choice of single supply or summing rails is made.",
+          "second_check": true,
+          "note": "Source offers2.0-36V single supply and\u00b11.0-\u00b118V split supply. The request does not name a rail/topology; no choice of single supply or summing rails is made."
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "reason": "Source offers2.0-36V single supply and\u00b11.0-\u00b118V split supply, with36V also a maximum rating. No rail/topology chosen or span calculated.",
+          "second_check": true,
+          "note": "Source offers2.0-36V single supply and\u00b11.0-\u00b118V split supply, with36V also a maximum rating. No rail/topology chosen or span calculated."
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "0.4",
+              "unit": "mA"
+            }
+          ],
+          "page": 3,
+          "reason": "Both comparators; no load; TA25C, default VCC5V. Explicit Typ column.",
+          "second_check": true,
+          "note": "LM293/LM393/LM393E column, Typ0.4mA, RL=infinity, both comparators, TA25C; table default VCC5.0Vdc. Not divided per comparator.30V row has no Typ value."
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "0",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "reason": "Selected LM393 operating ambient range, independently corroborated by electrical characteristics footnote.",
+          "second_check": true,
+          "note": "Base LM393 operating ambient interval0 to+70C, corroborated by Tlow/Thigh footer. Other LM293/LM2903/NCV ranges excluded."
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "70",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "reason": "Selected LM393 operating ambient range, other named grades excluded.",
+          "second_check": true,
+          "note": "Base LM393 ambient operating upper+70C; storage and maximum junction150C excluded."
+        }
+      ]
+    },
+    {
+      "id": "component-h22",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "0.8",
+              "unit": "V"
+            }
+          ],
+          "page": 1,
+          "reason": "Feature explicitly states wide operating voltage range 0.8 V to 10 V; not typical 0.55/0.65 minimum-operation test statistic.",
+          "second_check": true,
+          "note": "Family-wide printed operating range. Electrical rows distinguish typical minimum operation0.55/0.65V from guaranteed minimum-operating maxima0.70/0.80V; I use the explicitly stated broad operating-range boundary, with no threshold suffix selected."
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "10",
+              "unit": "V"
+            }
+          ],
+          "page": 1,
+          "reason": "Direct operating range upper endpoint; electrical maximum operating voltage rows agree, absolute maximum12V excluded.",
+          "second_check": true,
+          "note": "10V is the printed family-wide operating upper bound and is separately repeated in electrical-characteristics variant tables;12V absolute input rating not used."
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 3,
+          "reason": "Typical current varies with unspecified detector threshold option and Vin test condition. Feature0.5uA is not an unambiguous family-wide reference: tables show multiple conditions/typicals. No suffix, Vin, mode or average selected.",
+          "second_check": true,
+          "note": "Typical current varies with unspecified detector threshold option and Vin test condition. Feature0.5uA is not an unambiguous family-wide reference: tables show multiple conditions/typicals. No suffix, Vin, mode or average selected."
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "reason": "Both threshold-dependent operating ambient ranges share -40C.",
+          "second_check": true,
+          "note": "Both threshold-option ranges start-40C; no unspecified suffix needs to be chosen for the lower boundary."
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 2,
+          "reason": "Upper operating ambient85C for0.9-1.1V threshold options and125C for1.2-4.9V. Base NCP301 has no selected threshold suffix. No option selected from source values.",
+          "second_check": true,
+          "note": "Upper operating ambient85C for0.9-1.1V threshold options and125C for1.2-4.9V. Base NCP301 has no selected threshold suffix. No option selected from source values."
+        }
+      ]
+    },
+    {
+      "id": "component-h23",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 31,
+          "reason": "Supply minimum depends on interface/mode:1.0V inactive at25C,1.8V active400kHz, Vlow data integrity; startup note recommends>1.3V for reliable/speedy oscillator start. No operating mode/startup condition selected.",
+          "second_check": true,
+          "note": "Supply minimum depends on interface/mode:1.0V inactive at25C,1.8V active400kHz, Vlow data integrity; startup note recommends>1.3V for reliable/speedy oscillator start. No operating mode/startup condition selected."
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5.5",
+              "unit": "V"
+            }
+          ],
+          "page": 31,
+          "reason": "Supply upper endpoint5.5V common across stated active, inactive and data-integrity conditions.",
+          "second_check": true,
+          "note": "All functional supply rows have5.5V maximum;6.5V absolute maximum excluded. VSS0V; mode-specific minima remain unresolved independently."
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 31,
+          "reason": "Many inactive/CLKOUT-enabled/disabled, voltage and temperature reference conditions; active-interface rows provide Max only. Feature backup typical0.25uA at3V/25C is a named backup condition, not a generic mode selection. No condition chosen.",
+          "second_check": true,
+          "note": "Many inactive/CLKOUT-enabled/disabled, voltage and temperature reference conditions; active-interface rows provide Max only. Feature backup typical0.25uA at3V/25C is a named backup condition, not a generic mode selection. No condition chosen."
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 30,
+          "reason": "Ambient operating-device limit, independently corroborated by static characteristics header.",
+          "second_check": true,
+          "note": "Operating-device ambient range also appears as functional static-characteristics reference. Storage and soldering excluded. PCF8563T package family is named in pin/ordering material; /5 versus/F4 does not change this common functional range."
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "85",
+              "unit": "C"
+            }
+          ],
+          "page": 30,
+          "reason": "Ambient operating-device limit, independently corroborated by static characteristics header.",
+          "second_check": true,
+          "note": "Functional ambient operating upper85C, not storage150C."
+        }
+      ]
+    },
+    {
+      "id": "component-h24",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "2.3",
+              "unit": "V"
+            }
+          ],
+          "page": 1,
+          "reason": "Explicit operating power supply range2.3V to5.5V, two electrical sections provide intermediate ranges.",
+          "second_check": true,
+          "note": "Explicit overall operating supply interval VDD; static tables split voltage subranges and footnote explains intermediate operation.7V stress rating excluded."
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5.5",
+              "unit": "V"
+            }
+          ],
+          "page": 1,
+          "reason": "Explicit operating power supply range2.3V to5.5V; absolute maximum7V excluded.",
+          "second_check": true,
+          "note": "Overall printed operating VDD upper, not input tolerance or absolute7V."
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 14,
+          "reason": "Operating Typ30uA at VDD3.6V and65uA at5.5V, no load, VI=VDDorVSS,fSCL100kHz. Standby0.1/0.2uA separately stated. Two equally applicable reference-voltage tables; no one value or mode selected.",
+          "second_check": true,
+          "note": "Operating Typ30uA at VDD3.6V and65uA at5.5V, no load, VI=VDDorVSS,fSCL100kHz. Standby0.1/0.2uA separately stated. Two equally applicable reference-voltage tables; no one value or mode selected."
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 14,
+          "reason": "Static characteristics ambient operating range shared by both supply ranges.",
+          "second_check": true,
+          "note": "Exact selected PCA9548AD ordering row and functional table ambient reference agree."
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "85",
+              "unit": "C"
+            }
+          ],
+          "page": 14,
+          "reason": "Static characteristics ambient operating range shared by both supply ranges.",
+          "second_check": true,
+          "note": "Exact selected SO24 variant operating ambient upper; storage/junction excluded."
+        }
+      ]
+    },
+    {
+      "id": "component-h25",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "reason": "Two reference/bias rails with relation constraints. General description gives1.0-3.6V and1.8-5.5V respectively; recommended table has0-5V pin limits, while application conditions differ. Generic supply voltage has no specified rail/application; no pin selected.",
+          "second_check": true,
+          "note": "Two reference/bias rails with relation constraints. General description gives1.0-3.6V and1.8-5.5V respectively; recommended table has0-5V pin limits, while application conditions differ. Generic supply voltage has no specified rail/application; no pin selected."
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "reason": "Separate reference/bias rails and constrained application ranges do not identify one generic supply upper. No rail selected and no maxima combined.",
+          "second_check": true,
+          "note": "Separate reference/bias rails and constrained application ranges do not identify one generic supply upper. No rail selected and no maxima combined."
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 10,
+          "reason": "Complete39-page search finds no directly named generic supply/quiescent-current Typ. Application table gives transistor reference current5uA and pass-switch current14mA, neither explicitly a whole-device supply-current total. Mapping Iref to generic supply current is unresolved, so unclear rather than a confident absence or substitution.",
+          "second_check": true,
+          "note": "Complete39-page search finds no directly named generic supply/quiescent-current Typ. Application table gives transistor reference current5uA and pass-switch current14mA, neither explicitly a whole-device supply-current total. Mapping Iref to generic supply current is unresolved, so unclear rather than a confident absence or substitution."
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 6,
+          "reason": "Recommended operating conditions explicitly ambient in free-air.",
+          "second_check": true,
+          "note": "Exact PCA9306D ordering row and recommended/application operating-temperature rows agree."
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "105",
+              "unit": "C"
+            }
+          ],
+          "page": 6,
+          "reason": "Recommended operating conditions explicitly ambient in free-air.",
+          "second_check": true,
+          "note": "Operating free-air upper105C; storage150C excluded."
+        }
+      ]
+    },
+    {
+      "id": "component-h26",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "4.5",
+              "unit": "V"
+            }
+          ],
+          "page": 9,
+          "reason": "Selected TJA1042T has VCC rail; VIO variants excluded. Static supply voltage minimum4.5V.",
+          "second_check": true,
+          "note": "Selected TJA1042T is non-VIO variant with SPLIT pin; separate VIO rows apply only other variants and internal VIO is tied to VCC here. Functional VCC supply min4.5V, not stress limit."
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5.5",
+              "unit": "V"
+            }
+          ],
+          "page": 9,
+          "reason": "Selected TJA1042T VCC supply upper endpoint5.5V.",
+          "second_check": true,
+          "note": "Same functional VCC range ends5.5V. Other variants VIO rail and7V pin stress limit not substituted."
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 9,
+          "reason": "Selected TJA1042T: Standby Typ10uA; Normal recessive Typ5mA; Normal dominant45mA; short-circuit dominant80mA. Request does not choose bus state/mode; no average or other-variant VIO current added.",
+          "second_check": true,
+          "note": "Selected TJA1042T: Standby Typ10uA; Normal recessive Typ5mA; Normal dominant45mA; short-circuit dominant80mA. Request does not choose bus state/mode; no average or other-variant VIO current added."
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 8,
+          "reason": "Physical pages 9 and 12 note 2 state a functional virtual-junction range of -40 to +150 C with guaranteed parameters. This is real functional evidence, not merely a stress-only rating. The generic operating-temperature request does not uniquely resolve virtual-junction versus ambient/case quantity mapping. Keep unclear without imposing an ambient-only request or substituting storage/shutdown limits. Both initial annotations remain preserved.",
+          "second_check": true,
+          "note": "Physical pages 9 and 12 note 2 state a functional virtual-junction range of -40 to +150 C with guaranteed parameters. This is real functional evidence, not merely a stress-only rating. The generic operating-temperature request does not uniquely resolve virtual-junction versus ambient/case quantity mapping. Keep unclear without imposing an ambient-only request or substituting storage/shutdown limits. Both initial annotations remain preserved."
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 8,
+          "reason": "Physical pages 9 and 12 note 2 state a functional virtual-junction range of -40 to +150 C with guaranteed parameters. This is real functional evidence, not merely a stress-only rating. The generic operating-temperature request does not uniquely resolve virtual-junction versus ambient/case quantity mapping. Keep unclear without imposing an ambient-only request or substituting storage/shutdown limits. Both initial annotations remain preserved.",
+          "second_check": true,
+          "note": "Physical pages 9 and 12 note 2 state a functional virtual-junction range of -40 to +150 C with guaranteed parameters. This is real functional evidence, not merely a stress-only rating. The generic operating-temperature request does not uniquely resolve virtual-junction versus ambient/case quantity mapping. Keep unclear without imposing an ambient-only request or substituting storage/shutdown limits. Both initial annotations remain preserved."
+        }
+      ]
+    },
+    {
+      "id": "sbc-h16",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1500",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit For network providers,You overall deductible. Do not use out-of-network or separate multi-person coverage amount. Calendar2026, source embedded-individual/family accumulation conditions retained; no HRA/HSA account balance subtraction.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "3000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit source coverage tier You+Family in For network providers overall deductible. Source also names a distinct You+SpouseorChild(ren) coverage tier; preserve that separate label rather than replacing or averaging the expressly named Family tier. No family multiplier computed.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "4000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit For network providers,You plan OOP limit. Keep premiums,balance-billing and uncovered-care exclusions. Do not use out-of-network or multi-person tier; no cost-category combined cap calculated.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "8000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit network-provider You+Family plan OOP limit. Source separately labels You+SpouseorChild(ren) and out-of-network tiers, which are not substituted. Retain source exclusions and accumulation context; no sum.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "Complete original7page pypdf and normalPoppler source searches plus all original-page contact sheets and full p2 show Specialist visit network charge as15%coinsurance after deductible, not a numericUSDcopay. Source example Specialist copayment label also contains a percentage, not a dollar copay. No dollar conversion, zero assumption, pharmacy min/max or unrelated service charge is substituted. No referral required; childhood-obesity visit limit retained. Physical page 2 supplies the percentage-charge context; absent quantity has no value page.",
+          "reason": "Complete original7page pypdf and normalPoppler source searches plus all original-page contact sheets and full p2 show Specialist visit network charge as15%coinsurance after deductible, not a numericUSDcopay. Source example Specialist copayment label also contains a percentage, not a dollar copay. No dollar conversion, zero assumption, pharmacy min/max or unrelated service charge is substituted. No referral required; childhood-obesity visit limit retained.",
+          "second_check": true
+        }
+      ]
+    },
+    {
+      "id": "sbc-h17",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "3500",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit For network providers,You overall deductible. Do not use out-of-network or separate multi-person coverage amount. Calendar2026, source embedded-individual/family accumulation conditions retained; no HRA/HSA account balance subtraction.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "7000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit source coverage tier You+Family in For network providers overall deductible. Source also names a distinct You+SpouseorChild(ren) coverage tier; preserve that separate label rather than replacing or averaging the expressly named Family tier. No family multiplier computed.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "6450",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit For network providers,You plan OOP limit. Keep premiums,balance-billing and uncovered-care exclusions. Do not use out-of-network or multi-person tier; no cost-category combined cap calculated.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "12900",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit network-provider You+Family plan OOP limit. Source separately labels You+SpouseorChild(ren) and out-of-network tiers, which are not substituted. Retain source exclusions and accumulation context; no sum.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "Complete original6page pypdf and normalPoppler source searches plus all original-page contact sheets and full p2 show Specialist visit network charge as30%coinsurance after deductible, not a numericUSDcopay. Source example Specialist copayment label also contains a percentage, not a dollar copay. No dollar conversion, zero assumption, pharmacy min/max or unrelated service charge is substituted. No referral required; childhood-obesity visit limit retained. Physical page 2 supplies the percentage-charge context; absent quantity has no value page.",
+          "reason": "Complete original6page pypdf and normalPoppler source searches plus all original-page contact sheets and full p2 show Specialist visit network charge as30%coinsurance after deductible, not a numericUSDcopay. Source example Specialist copayment label also contains a percentage, not a dollar copay. No dollar conversion, zero assumption, pharmacy min/max or unrelated service charge is substituted. No referral required; childhood-obesity visit limit retained.",
+          "second_check": true
+        }
+      ]
+    },
+    {
+      "id": "sbc-h18",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Overall in-network individual amount is explicitly$350, but waived for HealthEnhancementProgram(HEP)Members and pre-October2,2011retirees. The fixed active-employee population excludes retired-only substitutions but does not choose HEP membership. Active HEP versus non-HEP conditions remain unresolved; do not select the non-waived amount or infer a universal zero.",
+          "reason": "Overall in-network individual amount is explicitly$350, but waived for HealthEnhancementProgram(HEP)Members and pre-October2,2011retirees. The fixed active-employee population excludes retired-only substitutions but does not choose HEP membership. Active HEP versus non-HEP conditions remain unresolved; do not select the non-waived amount or infer a universal zero.",
+          "second_check": true
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Overall in-network family amount is explicitly$1400, but waived for HealthEnhancementProgram(HEP)Members and pre-October2,2011retirees. The fixed active-employee population excludes retired-only substitutions but does not choose HEP membership. Active HEP versus non-HEP conditions remain unresolved; do not select the non-waived amount or infer a universal zero.",
+          "reason": "Overall in-network family amount is explicitly$1400, but waived for HealthEnhancementProgram(HEP)Members and pre-October2,2011retirees. The fixed active-employee population excludes retired-only substitutions but does not choose HEP membership. Active HEP versus non-HEP conditions remain unresolved; do not select the non-waived amount or infer a universal zero.",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Overall-request scope unresolved: same source answer separately states Medical In-network$2000/individual and Prescription drugs$4600/individual. No stated unique combined overall cap or interaction is established in complete9page two-engine source check. Do not choose one cost category, sum limits, use out-of-network amounts or convert this to absence.",
+          "reason": "Overall-request scope unresolved: same source answer separately states Medical In-network$2000/individual and Prescription drugs$4600/individual. No stated unique combined overall cap or interaction is established in complete9page two-engine source check. Do not choose one cost category, sum limits, use out-of-network amounts or convert this to absence.",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Overall-request scope unresolved: same source answer separately states Medical In-network$4000/family and Prescription drugs$9200/family. No stated unique combined overall cap or interaction is established in complete9page two-engine source check. Do not choose one cost category, sum limits, use out-of-network amounts or convert this to absence.",
+          "reason": "Overall-request scope unresolved: same source answer separately states Medical In-network$4000/family and Prescription drugs$9200/family. No stated unique combined overall cap or interaction is established in complete9page two-engine source check. Do not choose one cost category, sum limits, use out-of-network amounts or convert this to absence.",
+          "second_check": true
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 2,
+          "note": "Both Tier1 In-NetworkProvider and other In-NetworkProvider columns apply under the unchanged generic in-network request: Tier1Nocharge versus$15copay/visit, deductible doesnotapply. Pre-1999retiree$5 exception is outside fixed active population, but two active network tiers remain. Do not select lowest tier, assign universalzero or substitute retired charge. POE-G requires selected primary-care physician and specialist referrals.",
+          "reason": "Both Tier1 In-NetworkProvider and other In-NetworkProvider columns apply under the unchanged generic in-network request: Tier1Nocharge versus$15copay/visit, deductible doesnotapply. Pre-1999retiree$5 exception is outside fixed active population, but two active network tiers remain. Do not select lowest tier, assign universalzero or substitute retired charge. POE-G requires selected primary-care physician and specialist referrals.",
+          "second_check": true
+        }
+      ]
+    },
+    {
+      "id": "sbc-h19",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Overall in-network individual amount is explicitly$350, but waived for HealthEnhancementProgram(HEP)Members and pre-October2,2011retirees. The fixed active-employee population excludes retired-only substitutions but does not choose HEP membership. Active HEP versus non-HEP conditions remain unresolved; do not select the non-waived amount or infer a universal zero.",
+          "reason": "Overall in-network individual amount is explicitly$350, but waived for HealthEnhancementProgram(HEP)Members and pre-October2,2011retirees. The fixed active-employee population excludes retired-only substitutions but does not choose HEP membership. Active HEP versus non-HEP conditions remain unresolved; do not select the non-waived amount or infer a universal zero.",
+          "second_check": true
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Overall in-network family amount is explicitly$1400, but waived for HealthEnhancementProgram(HEP)Members and pre-October2,2011retirees. The fixed active-employee population excludes retired-only substitutions but does not choose HEP membership. Active HEP versus non-HEP conditions remain unresolved; do not select the non-waived amount or infer a universal zero.",
+          "reason": "Overall in-network family amount is explicitly$1400, but waived for HealthEnhancementProgram(HEP)Members and pre-October2,2011retirees. The fixed active-employee population excludes retired-only substitutions but does not choose HEP membership. Active HEP versus non-HEP conditions remain unresolved; do not select the non-waived amount or infer a universal zero.",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Overall-request scope unresolved: same source answer separately states Medical In-network$2000/individual and Prescription drugs$4600/individual. No stated unique combined overall cap or interaction is established in complete9page two-engine source check. Do not choose one cost category, sum limits, use out-of-network amounts or convert this to absence.",
+          "reason": "Overall-request scope unresolved: same source answer separately states Medical In-network$2000/individual and Prescription drugs$4600/individual. No stated unique combined overall cap or interaction is established in complete9page two-engine source check. Do not choose one cost category, sum limits, use out-of-network amounts or convert this to absence.",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Overall-request scope unresolved: same source answer separately states Medical In-network$4000/family and Prescription drugs$9200/family. No stated unique combined overall cap or interaction is established in complete9page two-engine source check. Do not choose one cost category, sum limits, use out-of-network amounts or convert this to absence.",
+          "reason": "Overall-request scope unresolved: same source answer separately states Medical In-network$4000/family and Prescription drugs$9200/family. No stated unique combined overall cap or interaction is established in complete9page two-engine source check. Do not choose one cost category, sum limits, use out-of-network amounts or convert this to absence.",
+          "second_check": true
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 2,
+          "note": "Both Tier1 In-NetworkProvider and other In-NetworkProvider columns apply under the unchanged generic in-network request: Tier1Nocharge versus$15copay/visit, deductible doesnotapply. Pre-1999retiree$5 exception is outside fixed active population, but two active network tiers remain. Do not select lowest tier, assign universalzero or substitute retired charge. ExpandedPOS says specialist referral not required.",
+          "reason": "Both Tier1 In-NetworkProvider and other In-NetworkProvider columns apply under the unchanged generic in-network request: Tier1Nocharge versus$15copay/visit, deductible doesnotapply. Pre-1999retiree$5 exception is outside fixed active population, but two active network tiers remain. Do not select lowest tier, assign universalzero or substitute retired charge. ExpandedPOS says specialist referral not required.",
+          "second_check": true
+        }
+      ]
+    },
+    {
+      "id": "sbc-h20",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "300",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit overall$300/person for in-network providers, July1,2026-June30,2027. Separate preferred-drug deductible p2 is a specific-service condition and doesnot replace the overall request. Embedded family accumulation retained.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "600",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit overall$600/family for in-network providers. No multiplier or prescription-specific deductible substitution; source Individual+Family coverage and program period retained.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1500",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit$1500/person plan limit for in-network provider. Source excludes Dental,Routinehearingandvision,premiums,balance-billedcharges and uncoveredcare; preserve these exclusions, no expanded cap inferred.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "3000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit$3000/family in-network plan OOP limit, with original exclusions retained. No summed cap or non-network substitution.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "40",
+              "unit": "USD"
+            }
+          ],
+          "page": 2,
+          "note": "Specialistvisit row NetworkProvider column explicitly$40/visit; out-of-networkNotcovered. Generic after-deductible-if-applicable header retained, no referral required. No pharmacy or primary-care copay substitution.",
+          "reason": "",
+          "second_check": true
+        }
+      ]
+    },
+    {
+      "id": "sbc-h21",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "200",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit overall$200/Individual In-Network. Separate adultDental$50perperson/$150perfamily deductible is specific-service only; not overall. Source dates July1,2026-June30,2027 and population-support limitation from metadata retained.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "400",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit overall$400/family In-Network. No dental-specific substitute or family multiplication. Source doesnot give different overall deductibles for network tiers.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "2000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit ForIn-Network$2000person plan OOP limit. No separate tier or prescription limit stated for this overall row. Premiums,balance-billed and uncovered-care exclusions retained.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "4000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Explicit ForIn-Network$4000family plan OOP limit. No component sum, separate adultDental deductible or unstated category cap.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 2,
+          "note": "Specialistvisit has$20copayment In-NetworkTier1 and$50copayment In-NetworkTier2, both deductible doesnotapply. Unchanged generic in-network request doesnot choose a tier; do not select cheapest charge, average, or example total. Out-of-networkNotcovered and no-referral context retained.",
+          "reason": "Specialistvisit has$20copayment In-NetworkTier1 and$50copayment In-NetworkTier2, both deductible doesnotapply. Unchanged generic in-network request doesnot choose a tier; do not select cheapest charge, average, or example total. Out-of-networkNotcovered and no-referral context retained.",
+          "second_check": true
+        }
+      ]
+    },
+    {
+      "id": "annual-h30",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "11862000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 179,
+          "reason": "Direct latest Group Revenue11862GBPmillions, corroborated by note3.",
+          "second_check": true,
+          "note": "2026 Group, full year ended31March2026; million-pound printed scale. Explicit Group Revenue, not Company columns."
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "reason": "Full-source two-engine query and original income statement/note4 show net operating costs, not cost of sales; request expressly excludes operating-expense substitution.",
+          "second_check": true,
+          "note": "No Group cost of sales/cost of revenue/cost of goods is stated. Income statement and Note4 present net operating costs; the frozen request explicitly excludes substituting operating expenses. Direct-cost phrase hits concern initial lease costs, not cost of sales."
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "reason": "No stated gross profit in full-source two-engine query; operating profit is not substituted and no revenue-minus-cost calculation.",
+          "second_check": true,
+          "note": "No stated Group gross profit, gross margin, gross surplus or gross income was found in either full-source engine. Income statement gives operating profit/profit from operations, neither substituted or calculated as gross profit."
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "97153000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 182,
+          "reason": "Latest full Group directly stated total assets97153GBPmillions; company-only columns excluded.",
+          "second_check": true,
+          "note": "Closing2026 Group as at31March2026, GBPmillions. Explicit Total assets; Company columns excluded."
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-74206000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 182,
+          "reason": "Direct latest fullGroup total liabilities(74206)GBPmillions, preserving printed parentheses sign.",
+          "second_check": true,
+          "note": "Closing2026 Group as at31March2026, GBPmillions. Preserved printed parentheses negative; no sign normalization to positive liability magnitude."
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "22947000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 182,
+          "reason": "Direct fullGroup total shareholder funds/equity22947GBPmillions, corroborated by changes in equity.",
+          "second_check": true,
+          "note": "Closing2026 Group as at31March2026, GBPmillions. Explicit total equity in changes-in-equity statement agrees with total shareholders funds/equity on Group balance sheet; not computed from assets/liabilities."
+        }
+      ]
+    },
+    {
+      "id": "annual-h31",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 75,
+          "reason": "WholeGroup Total revenues and government funding7657CADmillions is an aggregate using net interest, insurance service result and net financial result; primary statement separately reports gross interest, insurance revenue and other streams. Mapping generic revenue to this net mixed aggregate unresolved; no sum or subtraction.",
+          "second_check": true,
+          "note": "Fixed unqualified consolidated Group revenue has unresolved semantic mapping. Originalp50 gives insurance revenue plus separate interest/investment/funding/fee/income categories. Originalp21,p75,p162 state Total revenues and government funding, whose footnote includes net interest income, insurance service result, net financial result, government funding, premiums/fees and other income. That combined funding/net-result measure is not silently substituted for unqualified revenue. Insurance revenue alone is explicitly Mortgage Insurance Activity onp75. No aggregate is calculated. Originalp89 Total revenues is the limited Canada Housing Trust statement, not whole CMHC. All candidates and source footnotes inspected; this is interpretation uncertainty, not a claim that revenue words are absent."
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "reason": "Full two-engine original query found no stated cost of sales. Insurance service, housing program and operating expenses are distinct categories; no substitution.",
+          "second_check": true,
+          "note": "No consolidated cost of sales/cost of revenue/cost of goods or direct-cost aggregate is stated in either full-source engine. Insurance service expense, housing programs expenses and operating expenses are separately reported and are not substituted."
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "reason": "Full two-engine original query found no stated gross profit. Net interest income, insurance service result and net financial result are not substituted.",
+          "second_check": true,
+          "note": "No stated consolidated gross profit/margin/surplus/income was found in either full-source engine. Insurance service result, net financial result and net income are distinct concepts; no unstated gross profit is computed."
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "357013000000",
+              "unit": "CAD"
+            }
+          ],
+          "page": 49,
+          "reason": "Consolidated assets subtotal357013CADmillions; historyp162 explicitly names Totalassets, confirming wholeGroup.",
+          "second_check": true,
+          "note": "Consolidated closing31December2025, CADmillions. Originalp49 bold Assets total is explicitly Total assets in corroborating consolidated highlightsp19; no sum performed."
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "340851000000",
+              "unit": "CAD"
+            }
+          ],
+          "page": 49,
+          "reason": "Direct consolidated liabilities subtotal340851CADmillions, positive printed sign, named in historyp162.",
+          "second_check": true,
+          "note": "Consolidated closing31December2025, CADmillions. Positive printed subtotal under Liabilities; explicit Total liabilities in consolidated highlightsp19."
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "16162000000",
+              "unit": "CAD"
+            }
+          ],
+          "page": 49,
+          "reason": "Consolidated EquityofCanada total16162CADmillions; corroborated by equity statement and history.",
+          "second_check": true,
+          "note": "Consolidated closing31December2025, CADmillions. Equity of Canada total; no substituted subsidiary or Government of Canada accounts and no arithmetic."
+        }
+      ]
+    },
+    {
+      "id": "sbc-h23",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "300",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "reason": "Direct overall in-network deductible300; specific prescription deductible55 excluded.",
+          "second_check": true,
+          "note": "In-network overall deductible per plan year07/01/2026-06/30/2027. Primary standardized overall-deductible row. Separate prescription-drug deductible is disclosed under other deductibles; not added or substituted."
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "600",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "reason": "Direct overall in-network family deductible600; specific prescription deductible110 excluded.",
+          "second_check": true,
+          "note": "In-network overall deductible per plan year07/01/2026-06/30/2027. Family members meet individual deductibles until family overall deductible met. Separate drug deductible is not added or substituted."
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "reason": "Overall medical row3000 excludes prescription cost sharing; physical3 separately gives prescription out-of-pocket3000individual. No combined overall cap stated. Equal component values do not establish combined overall limit; no sum.",
+          "second_check": true,
+          "note": "The fixed request asks for the overall in-network out-of-pocket limit. Originalp1 gives a plan/medical in-network limit but explicitly excludes prescription-drug cost sharing from it; originalp3 supplies a separate prescription-drug limit. No combined all-benefit overall limit is stated. Do not select one cost-category cap or add the two separate caps. The medical and prescription limits happen to print the same individual amount; equality of separate cap numbers does not establish one combined overall cap."
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "reason": "Medical row6000family excludes prescription cost sharing; physical3 separately gives prescription out-of-pocket6000family. Generic combined cap mapping unresolved, no sum.",
+          "second_check": true,
+          "note": "Originalp1 excludes prescription-drug cost sharing from its family in-network limit, and originalp3 supplies a separate drug family limit. Frozen overall scope is not established by choosing one category cap or calculating a combined total. Separate medical/drug cap numbers happen to agree but are separate cost accumulators. No invented total."
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 2,
+          "reason": "Preferred university/childrens/Granger provider25 and other in-network provider40 office visit copays both apply. Request does not choose provider tier. Separate other-service coinsurance excluded.",
+          "second_check": true,
+          "note": "Originalp2 Specialist visit has two applicable participating/provider tiers with different dollar office-visit copays: University of Utah Health/Primary Childrens/Granger and the general In-Network Provider column. Frozen request forbids selecting among equally applicable networks/tiers; no single unkeyed in-network copay is selected. Deductible does not apply to the office copay; laboratory/radiology and other-service coinsurance conditions are distinct. Coverage examplesp8 are illustrative and do not resolve provider-tier selection."
+        }
+      ]
     }
   ],
   "status": "draft"

@@ -2993,6 +2993,1348 @@
       "source_use_status": "hold; no field draft or benchmark input",
       "hold_reason": "Explicit PDF-local reproduction restriction; selected integrated report also presents summarised financial performance rather than full consolidated statements. No field draft or companion download.",
       "identity": "Selected2026 Integrated Annual Report refers to separate annual financial statements for complete Group results and position."
+    },
+    {
+      "id": "component-h19",
+      "source": "https://www.onsemi.com/download/data-sheet/pdf/lmv321-d.pdf",
+      "catalog_source": "https://www.onsemi.com/design/technical-documentation/#c3A9TE1WMzIxO3N0PXB1Ymxpc2hEYXRlO3NkPWRlc2M7",
+      "approved_max_bytes": 2097152,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 801705,
+      "source_sha256": "sha256:2289a535a332fa6653b8ed5b49cec3f18c5f2406f7f3e6ddafb3cdf11eb32689",
+      "source_pages": 23,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [
+          23
+        ],
+        "observation": "General IP licence non-conveyance, applicable copyright laws and no-resale notice. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+        "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
+      },
+      "notice_audit_sha256": "b33b901c7cec0eb470e6586da39d029d9c756309480893af5c9f27a7e62d0303",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "onsemi-analog-control-documentation-umbrella",
+      "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+      "license_source": "https://www.onsemi.com/terms-of-use",
+      "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
+      "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 23,
+        "note": "Every source page has extractable digital text; onsemi encoded glyphs were resolved against original rendered tables. No OCR or groundgate reader used."
+      },
+      "identity": {
+        "named_subject": "LMV321",
+        "verified_source_identity": "English full digital product data sheet for selected base member/package; no evaluation board. Fixed identifiers and common functional parameters only; no package/threshold suffix selected from values.",
+        "identifier_scope": "The selected base member is fixed; no package/threshold suffix has been chosen. If an answer depends on an unspecified subvariant, hold or mark unclear rather than choose a suffix after values."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "1a7ef87dcf48d6e29384a87d2128c9b40285663e8ae8a995ae7ec339e29ac6fd",
+        "primary_freeze_receipt_sha256": "da33caac99afe528d3d6a81732abbe8dfefe8b663211ada82872e22af310e9ba",
+        "parent_independent_draft_sha256": "1a1322c4730d048a8144c4160be30f829b75b7961659c385974eb04514bad4cb",
+        "parent_freeze_receipt_sha256": "40589c17e539f20ab3d4223d1bf7861220358443337bb95f33cbe6cf74db7925",
+        "original_evidence_physical_pages": {
+          "supply_voltage_min": [
+            1,
+            3
+          ],
+          "supply_voltage_max": [
+            1,
+            3
+          ],
+          "supply_current_typ": [
+            4,
+            5
+          ],
+          "operating_temperature_min": [
+            3,
+            4,
+            5
+          ],
+          "operating_temperature_max": [
+            3,
+            4,
+            5
+          ]
+        },
+        "initial_disagreements": [],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      }
+    },
+    {
+      "id": "component-h20",
+      "source": "https://www.onsemi.com/download/data-sheet/pdf/ncs2001-d.pdf",
+      "catalog_source": "https://www.onsemi.com/design/technical-documentation/#c3A9TkNTMjAwMTtzdD1wdWJsaXNoRGF0ZTtzZD1kZXNjOw==",
+      "approved_max_bytes": 2097152,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 519543,
+      "source_sha256": "sha256:06ac6ee41d1fa95ab185135966e1e03f428bbaf40f211f339e215c0362d57ca1",
+      "source_pages": 18,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [
+          18
+        ],
+        "observation": "General IP licence non-conveyance, applicable copyright laws and no-resale notice. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+        "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
+      },
+      "notice_audit_sha256": "e6c795c188455521cb2e221d919a0418037c09a34b0cc70746518de06bb19e9f",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "onsemi-analog-control-documentation-umbrella",
+      "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+      "license_source": "https://www.onsemi.com/terms-of-use",
+      "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
+      "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 18,
+        "note": "Every source page has extractable digital text; onsemi encoded glyphs were resolved against original rendered tables. No OCR or groundgate reader used."
+      },
+      "identity": {
+        "named_subject": "NCS2001",
+        "verified_source_identity": "English full digital product data sheet for selected base member/package; no evaluation board. Fixed identifiers and common functional parameters only; no package/threshold suffix selected from values.",
+        "identifier_scope": "The selected base member is fixed; no package/threshold suffix has been chosen. If an answer depends on an unspecified subvariant, hold or mark unclear rather than choose a suffix after values."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "8de77a3c0e8322f5748f991195d18cb8a4a56cfbc216fea9c173dc877cb849e4",
+        "primary_freeze_receipt_sha256": "da33caac99afe528d3d6a81732abbe8dfefe8b663211ada82872e22af310e9ba",
+        "parent_independent_draft_sha256": "1a1322c4730d048a8144c4160be30f829b75b7961659c385974eb04514bad4cb",
+        "parent_freeze_receipt_sha256": "40589c17e539f20ab3d4223d1bf7861220358443337bb95f33cbe6cf74db7925",
+        "original_evidence_physical_pages": {
+          "supply_voltage_min": [
+            1,
+            10
+          ],
+          "supply_voltage_max": [
+            10
+          ],
+          "supply_current_typ": [
+            4
+          ],
+          "operating_temperature_min": [
+            2
+          ],
+          "operating_temperature_max": [
+            2
+          ]
+        },
+        "initial_disagreements": [
+          {
+            "id": "component-h20",
+            "field": "supply_voltage_min",
+            "initial_primary": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "0.9",
+                  "unit": "V"
+                }
+              ],
+              "physical_pages": [
+                1
+              ],
+              "condition_note": "Explicit guaranteed fully operational lower supply span. Typical-application diagram labels0.8-7.0V, but0.8 is not the guaranteed-operation minimum. No split-rail addition performed."
+            },
+            "initial_parent": {
+              "status": "unclear",
+              "values": [],
+              "page": 1,
+              "reason": "Guaranteed operation down to 0.9 V; typical application shows 0.8 V and operating description says less than 0.9 V. Exact recommended minimum unresolved."
+            },
+            "final": {
+              "status": "unclear",
+              "values": []
+            },
+            "recheck_physical_pages": [
+              1,
+              10
+            ],
+            "reconciliation_reason": "Originalp1 gives guaranteed fully operational down to0.9V and a Typical Application diagram0.8-7.0V. Originalp10 expressly describes operation below0.9V without a numeric lower endpoint. My primary0.9V was a supported guaranteed-operation point, but the exact minimum of the requested recommended operating interval is not unique. Preserve unclear, without choosing0.8V or treating0.9V as an exact minimum."
+          },
+          {
+            "id": "component-h20",
+            "field": "supply_voltage_max",
+            "initial_primary": {
+              "status": "unclear",
+              "values": [],
+              "physical_pages": [
+                1,
+                2
+              ],
+              "condition_note": "7.0V is the maximum-rating value and also the upper value in a Typical Application diagram. No separately stated recommended upper supply bound was established by full-source scan; do not convert the absolute maximum into a recommendation."
+            },
+            "initial_parent": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "7",
+                  "unit": "V"
+                }
+              ],
+              "page": 10,
+              "reason": "Application operating description explicitly says supply range as high as 7.0 V; not inferred solely from absolute maximum."
+            },
+            "final": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "7",
+                  "unit": "V"
+                }
+              ]
+            },
+            "recheck_physical_pages": [
+              10
+            ],
+            "reconciliation_reason": "Re-read and rendered originalp10 General Information under Application Information and Operating Description. It expressly states normal operation as high as7.0V. This is independent functional evidence, not inference solely from the maximum-rating row. My primary assertion that no separate operating upper statement was established was incomplete; correct it to present7V. No source/request/code changes."
+          },
+          {
+            "id": "component-h20",
+            "field": "supply_current_typ",
+            "initial_primary": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "0.82",
+                  "unit": "mA"
+                }
+              ],
+              "physical_pages": [
+                2,
+                4
+              ],
+              "condition_note": "Source electrical-characteristics default reference header is VCC=2.5V,VEE=-2.5V,VCM=VO=0V,RLtoGND,TA25C. Matching explicitly printed row has Typ0.82mA. Other explicitly changed supply test rows have0.51/0.72mA and are not averaged or selected as the default."
+            },
+            "initial_parent": {
+              "status": "unclear",
+              "values": [],
+              "page": 4,
+              "reason": "Three supply conditions give typical currents 0.51, 0.72 and 0.82 mA. Do not choose among equally applicable voltage conditions."
+            },
+            "final": {
+              "status": "unclear",
+              "values": []
+            },
+            "recheck_physical_pages": [
+              4
+            ],
+            "reconciliation_reason": "Originalp4 has three explicit supply-condition blocks atTA25C with Typ0.51,0.72,0.82mA. The table-wide header usesVCC2.5V/VEE-2.5V unless otherwise noted, which supported my initial0.82mA interpretation. However every current block explicitly states its own supply condition; frozen generic request does not unambiguously prioritize one of these equally applicable explicit conditions. Preserve all observations and unclear, without introducing a header-priority rule or selecting a rail condition."
+          }
+        ],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      }
+    },
+    {
+      "id": "component-h21",
+      "source": "https://www.onsemi.com/download/data-sheet/pdf/lm393-d.pdf",
+      "catalog_source": "https://www.onsemi.com/design/technical-documentation/#c3A9TE0zOTM7c3Q9cHVibGlzaERhdGU7c2Q9ZGVzYzs=",
+      "approved_max_bytes": 2097152,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 448851,
+      "source_sha256": "sha256:f57250b0237b9f86a9b78eb485dd4a85388ffb047e44521f296f61457a97a285",
+      "source_pages": 13,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [
+          13
+        ],
+        "observation": "General IP licence non-conveyance, applicable copyright laws and no-resale notice. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+        "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
+      },
+      "notice_audit_sha256": "fbaa598ada9fa145233f05ebdf7e68c66ef7b319874b7e873f4f475174a79b94",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "onsemi-analog-control-documentation-umbrella",
+      "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+      "license_source": "https://www.onsemi.com/terms-of-use",
+      "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
+      "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 13,
+        "note": "Every source page has extractable digital text; onsemi encoded glyphs were resolved against original rendered tables. No OCR or groundgate reader used."
+      },
+      "identity": {
+        "named_subject": "LM393",
+        "verified_source_identity": "English full digital product data sheet for selected base member/package; no evaluation board. Fixed identifiers and common functional parameters only; no package/threshold suffix selected from values.",
+        "identifier_scope": "The selected base member is fixed; no package/threshold suffix has been chosen. If an answer depends on an unspecified subvariant, hold or mark unclear rather than choose a suffix after values."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "789df13c1dbdb925d610b0669a964dc24edc9d6387bb00c59dd6ab6b210d5616",
+        "primary_freeze_receipt_sha256": "da33caac99afe528d3d6a81732abbe8dfefe8b663211ada82872e22af310e9ba",
+        "parent_independent_draft_sha256": "1a1322c4730d048a8144c4160be30f829b75b7961659c385974eb04514bad4cb",
+        "parent_freeze_receipt_sha256": "40589c17e539f20ab3d4223d1bf7861220358443337bb95f33cbe6cf74db7925",
+        "original_evidence_physical_pages": {
+          "supply_voltage_min": [
+            1,
+            2
+          ],
+          "supply_voltage_max": [
+            1,
+            2
+          ],
+          "supply_current_typ": [
+            3
+          ],
+          "operating_temperature_min": [
+            2,
+            3
+          ],
+          "operating_temperature_max": [
+            2,
+            3
+          ]
+        },
+        "initial_disagreements": [],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      }
+    },
+    {
+      "id": "component-h22",
+      "source": "https://www.onsemi.com/download/data-sheet/pdf/ncp300-d.pdf",
+      "catalog_source": "https://www.onsemi.com/design/technical-documentation/#c3A9TkNQMzAxO3N0PXB1Ymxpc2hEYXRlO3NkPWRlc2M7",
+      "approved_max_bytes": 2097152,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 639327,
+      "source_sha256": "sha256:8172e912afc0e914e9e25b04e13e9884f806155c039e175131cf916689fe20f0",
+      "source_pages": 26,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [
+          26
+        ],
+        "observation": "General IP licence non-conveyance, applicable copyright laws and no-resale notice. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+        "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
+      },
+      "notice_audit_sha256": "2831ffd9054a883fa275ea93a97b332116f012c99ef5dcfb336ba586098b6829",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "onsemi-analog-control-documentation-umbrella",
+      "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+      "license_source": "https://www.onsemi.com/terms-of-use",
+      "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
+      "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 26,
+        "note": "Every source page has extractable digital text; onsemi encoded glyphs were resolved against original rendered tables. No OCR or groundgate reader used."
+      },
+      "identity": {
+        "named_subject": "NCP301",
+        "verified_source_identity": "English full digital product data sheet for selected base member/package; no evaluation board. Fixed identifiers and common functional parameters only; no package/threshold suffix selected from values.",
+        "identifier_scope": "The selected base member is fixed; no package/threshold suffix has been chosen. If an answer depends on an unspecified subvariant, hold or mark unclear rather than choose a suffix after values."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "12c342c9a9237a4e3cfbd982f33d7e2b868660cf3153927cfb5ab9a15ba0ca68",
+        "primary_freeze_receipt_sha256": "da33caac99afe528d3d6a81732abbe8dfefe8b663211ada82872e22af310e9ba",
+        "parent_independent_draft_sha256": "1a1322c4730d048a8144c4160be30f829b75b7961659c385974eb04514bad4cb",
+        "parent_freeze_receipt_sha256": "40589c17e539f20ab3d4223d1bf7861220358443337bb95f33cbe6cf74db7925",
+        "original_evidence_physical_pages": {
+          "supply_voltage_min": [
+            1,
+            3,
+            6
+          ],
+          "supply_voltage_max": [
+            1,
+            3,
+            6
+          ],
+          "supply_current_typ": [
+            1,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "operating_temperature_min": [
+            1,
+            2
+          ],
+          "operating_temperature_max": [
+            1,
+            2
+          ]
+        },
+        "initial_disagreements": [],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      }
+    },
+    {
+      "id": "component-h23",
+      "source": "https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf",
+      "catalog_source": "https://www.nxp.com/products/PCF8563",
+      "approved_max_bytes": 1048576,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 601986,
+      "source_sha256": "sha256:2ed5d1b0a1051d0e81399417c4ff0ced0658fa36e13c0487670f9cb6dfb4f1d4",
+      "source_pages": 50,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [
+          46,
+          47
+        ],
+        "observation": "No-offer/no-implied-IP-licence clause and export control notice; copyright/all rights reserved. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+        "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
+      },
+      "notice_audit_sha256": "31ba9bba93ab4c4f476c81de58cdf2417c953ae81e492887a78f5c190e7021b1",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "nxp-documentation-family",
+      "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+      "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+      "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
+      "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 50,
+        "note": "Every source page has extractable digital text; onsemi encoded glyphs were resolved against original rendered tables. No OCR or groundgate reader used."
+      },
+      "identity": {
+        "named_subject": "PCF8563T",
+        "verified_source_identity": "English full digital product data sheet for selected base member/package; no evaluation board. Fixed identifiers and common functional parameters only; no package/threshold suffix selected from values.",
+        "identifier_scope": "Exact suffix token verified in first-party catalog HTML before values, independently of packaging/year/revision differences. No rail or operating mode selected from body."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "32a4126b9ae4999b05dd03342c0abe9f9ea5bca0ea5707116362e6b1421d666a",
+        "primary_freeze_receipt_sha256": "da33caac99afe528d3d6a81732abbe8dfefe8b663211ada82872e22af310e9ba",
+        "parent_independent_draft_sha256": "1a1322c4730d048a8144c4160be30f829b75b7961659c385974eb04514bad4cb",
+        "parent_freeze_receipt_sha256": "40589c17e539f20ab3d4223d1bf7861220358443337bb95f33cbe6cf74db7925",
+        "original_evidence_physical_pages": {
+          "supply_voltage_min": [
+            3,
+            31,
+            32
+          ],
+          "supply_voltage_max": [
+            3,
+            31
+          ],
+          "supply_current_typ": [
+            3,
+            31,
+            32
+          ],
+          "operating_temperature_min": [
+            30,
+            31
+          ],
+          "operating_temperature_max": [
+            30,
+            31
+          ]
+        },
+        "initial_disagreements": [],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      }
+    },
+    {
+      "id": "component-h24",
+      "source": "https://www.nxp.com/docs/en/data-sheet/PCA9548A.pdf",
+      "catalog_source": "https://www.nxp.com/products/interfaces/ic-spi-i3c-interface-devices/ic-i3c-multiplexers-switches/eight-channel-ic-bus-switch-with-reset:PCA9548A",
+      "approved_max_bytes": 1048576,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 308416,
+      "source_sha256": "sha256:a090b5ec78996babb32d283bbb2a7136ff789e450abd8394fff9f0bf53ddcc92",
+      "source_pages": 30,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [
+          28,
+          29
+        ],
+        "observation": "No-offer/no-implied-IP-licence clause and export control notice; copyright/all rights reserved. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+        "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
+      },
+      "notice_audit_sha256": "eececc4115470424ee585fe82a79d6f091f6af5e27becc469fbbb42fbb0f06ab",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "nxp-documentation-family",
+      "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+      "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+      "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
+      "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 30,
+        "note": "Every source page has extractable digital text; onsemi encoded glyphs were resolved against original rendered tables. No OCR or groundgate reader used."
+      },
+      "identity": {
+        "named_subject": "PCA9548AD",
+        "verified_source_identity": "English full digital product data sheet for selected base member/package; no evaluation board. Fixed identifiers and common functional parameters only; no package/threshold suffix selected from values.",
+        "identifier_scope": "Exact suffix token verified in first-party catalog HTML before values, independently of packaging/year/revision differences. No rail or operating mode selected from body."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "4c8e6b8d1f6ace2ab5f2326a4e4bc97c5b24312ac9db2456eaa24188e9b04691",
+        "primary_freeze_receipt_sha256": "da33caac99afe528d3d6a81732abbe8dfefe8b663211ada82872e22af310e9ba",
+        "parent_independent_draft_sha256": "1a1322c4730d048a8144c4160be30f829b75b7961659c385974eb04514bad4cb",
+        "parent_freeze_receipt_sha256": "40589c17e539f20ab3d4223d1bf7861220358443337bb95f33cbe6cf74db7925",
+        "original_evidence_physical_pages": {
+          "supply_voltage_min": [
+            1,
+            14,
+            15
+          ],
+          "supply_voltage_max": [
+            1,
+            14,
+            15
+          ],
+          "supply_current_typ": [
+            14,
+            15
+          ],
+          "operating_temperature_min": [
+            2,
+            14,
+            15
+          ],
+          "operating_temperature_max": [
+            2,
+            14,
+            15
+          ]
+        },
+        "initial_disagreements": [],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      }
+    },
+    {
+      "id": "component-h25",
+      "source": "https://www.nxp.com/docs/en/data-sheet/PCA9306.pdf",
+      "catalog_source": "https://www.nxp.com/products/PCA9306",
+      "approved_max_bytes": 1048576,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 651707,
+      "source_sha256": "sha256:68146537d3a0f1ac116d8adfa54335dd724f605e8a5782fcb10b6aae665142bf",
+      "source_pages": 39,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [
+          37
+        ],
+        "observation": "PCA9306p37 Disclaimers subsection visibly empty in original, not an extraction omission; definitions/trademarks and all-rights-reserved footer retained. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+        "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
+      },
+      "notice_audit_sha256": "3ed4e71666068527f100f4bc5cdeccf58cc62d45b69bb11450172fca16db9d6b",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "nxp-documentation-family",
+      "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+      "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+      "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
+      "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 39,
+        "note": "Every source page has extractable digital text; onsemi encoded glyphs were resolved against original rendered tables. No OCR or groundgate reader used."
+      },
+      "identity": {
+        "named_subject": "PCA9306D",
+        "verified_source_identity": "English full digital product data sheet for selected base member/package; no evaluation board. Fixed identifiers and common functional parameters only; no package/threshold suffix selected from values.",
+        "identifier_scope": "Exact suffix token verified in first-party catalog HTML before values, independently of packaging/year/revision differences. No rail or operating mode selected from body."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "f038649ffacb87cd025d0d33131ecdbc08f2807bd4a459a86d247c828781f0fc",
+        "primary_freeze_receipt_sha256": "da33caac99afe528d3d6a81732abbe8dfefe8b663211ada82872e22af310e9ba",
+        "parent_independent_draft_sha256": "1a1322c4730d048a8144c4160be30f829b75b7961659c385974eb04514bad4cb",
+        "parent_freeze_receipt_sha256": "40589c17e539f20ab3d4223d1bf7861220358443337bb95f33cbe6cf74db7925",
+        "original_evidence_physical_pages": {
+          "supply_voltage_min": [
+            1,
+            6,
+            9,
+            10
+          ],
+          "supply_voltage_max": [
+            1,
+            6,
+            9,
+            10
+          ],
+          "supply_current_typ": [
+            6,
+            7,
+            9,
+            10
+          ],
+          "operating_temperature_min": [
+            3,
+            6,
+            10
+          ],
+          "operating_temperature_max": [
+            3,
+            6,
+            10
+          ]
+        },
+        "initial_disagreements": [],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      }
+    },
+    {
+      "id": "component-h26",
+      "source": "https://www.nxp.com/docs/en/data-sheet/TJA1042.pdf",
+      "catalog_source": "https://www.nxp.com/products/TJA1042",
+      "approved_max_bytes": 1048576,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 353417,
+      "source_sha256": "sha256:aac9491f00e594362d884ca25bf09ad6391cebc25b261f960a7b7e9282c205d2",
+      "source_pages": 27,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [
+          25,
+          26
+        ],
+        "observation": "No-offer/no-implied-IP-licence clause and export control notice; copyright/all rights reserved. No express document copying/extraction prohibition observed in complete-source legal queries and own-notice render. Own notice retained separately from conditional website personal-copy framework; no redistribution or blanket licence inferred.",
+        "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
+      },
+      "notice_audit_sha256": "447d08fe604fa77c668515586bdd1e173ff181c196a828c5eb66d35e677a2abe",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "nxp-documentation-family",
+      "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
+      "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+      "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
+      "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 27,
+        "note": "Every source page has extractable digital text; onsemi encoded glyphs were resolved against original rendered tables. No OCR or groundgate reader used."
+      },
+      "identity": {
+        "named_subject": "TJA1042T",
+        "verified_source_identity": "English full digital product data sheet for selected base member/package; no evaluation board. Fixed identifiers and common functional parameters only; no package/threshold suffix selected from values.",
+        "identifier_scope": "Exact suffix token verified in first-party catalog HTML before values, independently of packaging/year/revision differences. No rail or operating mode selected from body."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "6c5da382708fed5b9e3044e7d24c5ad961eec81189bbff9ef8cc057d6e3612e4",
+        "primary_freeze_receipt_sha256": "da33caac99afe528d3d6a81732abbe8dfefe8b663211ada82872e22af310e9ba",
+        "parent_independent_draft_sha256": "1a1322c4730d048a8144c4160be30f829b75b7961659c385974eb04514bad4cb",
+        "parent_freeze_receipt_sha256": "40589c17e539f20ab3d4223d1bf7861220358443337bb95f33cbe6cf74db7925",
+        "original_evidence_physical_pages": {
+          "supply_voltage_min": [
+            3,
+            9,
+            12
+          ],
+          "supply_voltage_max": [
+            3,
+            9,
+            12
+          ],
+          "supply_current_typ": [
+            9,
+            12
+          ],
+          "operating_temperature_min": [
+            8,
+            9,
+            12
+          ],
+          "operating_temperature_max": [
+            8,
+            9,
+            12
+          ]
+        },
+        "initial_disagreements": [
+          {
+            "id": "component-h26",
+            "field": "operating_temperature_min",
+            "initial_primary": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "-40",
+                  "unit": "C"
+                }
+              ],
+              "physical_pages": [
+                9,
+                12
+              ],
+              "condition_note": "Functional static-characteristics reference is virtual-junction range; note2 guarantees all parameters over it. This is not inferred from storage/absolute stress alone and is not an ambient temperature claim. Snapshot excludes junction-only stress ratings, not the explicitly guaranteed functional reference range."
+            },
+            "initial_parent": {
+              "status": "unclear",
+              "values": [],
+              "page": 8,
+              "reason": "Virtual junction range -40 to150 appears in quick reference, limiting values and characterization header. Source does not directly state separate ambient operating limit; stress-only exclusion versus characterized junction mapping unresolved."
+            },
+            "final": {
+              "status": "unclear",
+              "values": []
+            },
+            "recheck_physical_pages": [
+              8,
+              9,
+              12
+            ],
+            "reconciliation_reason": "Originalp9 states functional Tvj-40to+150C; p12note2 guarantees parameters over that virtual-junction range. Thus it is not merely a stress-only number, and my initial functional-range interpretation remains recorded. But no separate ambient/case operating interval is directly stated, and the frozen generic request does not explicitly select the virtual-junction temperature quantity. That quantity mapping remains unresolved; keep unclear, not absent, without rewriting the request to ambient-only or substituting junction range for ambient."
+          },
+          {
+            "id": "component-h26",
+            "field": "operating_temperature_max",
+            "initial_primary": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "150",
+                  "unit": "C"
+                }
+              ],
+              "physical_pages": [
+                9,
+                12
+              ],
+              "condition_note": "Functional reference upper150C, explicitly virtual junction, not ambient; note2 supplies operating guarantee. Shutdown junction190C and storage range not used."
+            },
+            "initial_parent": {
+              "status": "unclear",
+              "values": [],
+              "page": 8,
+              "reason": "Virtual junction range -40 to150 appears in characterization as well as limiting table. Do not substitute it for ambiguous ambient operating endpoint."
+            },
+            "final": {
+              "status": "unclear",
+              "values": []
+            },
+            "recheck_physical_pages": [
+              8,
+              9,
+              12
+            ],
+            "reconciliation_reason": "Same source-only quantity ambiguity as lower boundary. Functional virtual-junction+150C is directly stated and guaranteed, while separate ambient/case upper boundary is not. Do not use storage+150C, stress-only limit or shutdown190C as a substitute. Retain unclear mapping and both initial annotations."
+          }
+        ],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      }
+    },
+    {
+      "id": "sbc-h16",
+      "source": "https://shbp.georgia.gov/document/document/2026-anthem-gold-hra-sbc-0/download",
+      "catalog_source": "https://shbp.georgia.gov/plan-documents/other-documents/summary-benefits-and-coverage",
+      "approved_max_bytes": 1048576,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 546283,
+      "source_sha256": "sha256:3a83f5f5d9723d7052d41aa9171a05a3678afc3777d40c7e2b5a4eb04843387a",
+      "source_pages": 7,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [],
+        "observation": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+        "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
+      },
+      "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "georgia-shbp-employer-sbc-family",
+      "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+      "license_source": "https://georgia.gov/privacy-and-security",
+      "rights_scope_note": "SHBP links this privacy/security page in its footer. It governs data collection/security, not document reuse. No affirmative SBC copying grant or explicit copying/automated-acquisition ban was established in inspected pages. Public URL and absence of a ban are not clearance. Insurer-owned original notices and intended use remain unresolved.",
+      "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 7,
+        "note": "English standardized SBC with usable original text on all physical pages; extra language-access pages and examples retained. No OCR/fallback."
+      },
+      "identity": {
+        "plan": "Anthem BlueCross and BlueShield:GoldHRA",
+        "coverage": "You;You+SpouseorChild(ren);You+Family",
+        "plan_type": "HRA",
+        "period": [
+          "2026-01-01",
+          "2026-12-31"
+        ],
+        "population_support": "Named plan/SHBP contact link and Georgia insurance/SHBP appeals in original, together with exact approved SHBP catalog source. No contradictory employer/population found.",
+        "carrier_form_group": "anthem-network-standard-employer-sbc",
+        "named_subject": "2026 Anthem Gold HRA SBC"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "2df4d0b679699e9bf3cfce14a022dc1d844f56c46cc5b506c6f76349de3e771b",
+        "primary_freeze_receipt_sha256": "44482c7b611f85bc86024b43a1c13899bf5c95598e7528c221266ff6f9b17a5a",
+        "parent_independent_draft_sha256": "d2410275f424bcbc28f67187a778d8c3b3ddc5540e1dae498f83a9d358b785aa",
+        "parent_freeze_receipt_sha256": "79539df38404ecc9c7c48212b0574fb832c91e392fc0dea381b048ce07e0898d",
+        "field_context_pages": {
+          "specialist_copay": 2
+        },
+        "initial_disagreements": [
+          {
+            "id": "sbc-h16",
+            "field": "specialist_copay",
+            "initial_primary": {
+              "status": "absent",
+              "values": [],
+              "key": null,
+              "page": null
+            },
+            "initial_parent": {
+              "status": "absent",
+              "values": [],
+              "key": null,
+              "page": 2
+            },
+            "final": {
+              "status": "absent",
+              "values": [],
+              "page": null,
+              "context_page": 2
+            },
+            "reconciliation_reason": "Absent quantity has no value page. Keep primary page null; page 2 is the observed percentage-charge context, not a dollar-copay value page."
+          }
+        ],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      },
+      "coverage_period": [
+        "2026-01-01",
+        "2026-12-31"
+      ],
+      "employer_family_group": "georgia-shbp-employer-sbc-family",
+      "carrier_form_group": "anthem-network-standard-employer-sbc"
+    },
+    {
+      "id": "sbc-h17",
+      "source": "https://shbp.georgia.gov/document/document/2026-unitedhealthcare-hdhp-sbc/download",
+      "catalog_source": "https://shbp.georgia.gov/plan-documents/other-documents/summary-benefits-and-coverage",
+      "approved_max_bytes": 1048576,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 251683,
+      "source_sha256": "sha256:d1c1f9813493cf6dc2597824e46ccea76a240b92d2e56caca09a8c1335e7186b",
+      "source_pages": 6,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [],
+        "observation": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+        "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
+      },
+      "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "georgia-shbp-employer-sbc-family",
+      "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+      "license_source": "https://georgia.gov/privacy-and-security",
+      "rights_scope_note": "SHBP links this privacy/security page in its footer. It governs data collection/security, not document reuse. No affirmative SBC copying grant or explicit copying/automated-acquisition ban was established in inspected pages. Public URL and absence of a ban are not clearance. Insurer-owned original notices and intended use remain unresolved.",
+      "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 6,
+        "note": "English standardized SBC with usable original text on all physical pages; extra language-access pages and examples retained. No OCR/fallback."
+      },
+      "identity": {
+        "plan": "UnitedHealthcare:HDHP",
+        "coverage": "You;You+SpouseorChild(ren);You+Family",
+        "plan_type": "HDHP",
+        "period": [
+          "2026-01-01",
+          "2026-12-31"
+        ],
+        "population_support": "Originalp1 explicitly StateofGA benefits/SHBP source links and named HDHP, plus exact approved SHBP catalog source. No contradictory employer/population.",
+        "carrier_form_group": "unitedhealthcare-standard-employer-sbc",
+        "named_subject": "2026 UnitedHealthcare HDHP SBC"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "76a5696090990833089ff8cdf211bf079cfddcbd66e53a516b39dc60698f7bc5",
+        "primary_freeze_receipt_sha256": "44482c7b611f85bc86024b43a1c13899bf5c95598e7528c221266ff6f9b17a5a",
+        "parent_independent_draft_sha256": "d2410275f424bcbc28f67187a778d8c3b3ddc5540e1dae498f83a9d358b785aa",
+        "parent_freeze_receipt_sha256": "79539df38404ecc9c7c48212b0574fb832c91e392fc0dea381b048ce07e0898d",
+        "field_context_pages": {
+          "specialist_copay": 2
+        },
+        "initial_disagreements": [
+          {
+            "id": "sbc-h17",
+            "field": "specialist_copay",
+            "initial_primary": {
+              "status": "absent",
+              "values": [],
+              "key": null,
+              "page": null
+            },
+            "initial_parent": {
+              "status": "absent",
+              "values": [],
+              "key": null,
+              "page": 2
+            },
+            "final": {
+              "status": "absent",
+              "values": [],
+              "page": null,
+              "context_page": 2
+            },
+            "reconciliation_reason": "Absent quantity has no value page. Keep primary page null; page 2 is the observed percentage-charge context, not a dollar-copay value page."
+          }
+        ],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      },
+      "coverage_period": [
+        "2026-01-01",
+        "2026-12-31"
+      ],
+      "employer_family_group": "georgia-shbp-employer-sbc-family",
+      "carrier_form_group": "unitedhealthcare-standard-employer-sbc"
+    },
+    {
+      "id": "sbc-h18",
+      "source": "https://carecompass.ct.gov/wp-content/uploads/2026/06/State-of-CT_POE-G-Primary-Care-Access-SBC-2026-2027.pdf",
+      "catalog_source": "https://carecompass.ct.gov/state/medical/",
+      "approved_max_bytes": 1048576,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 307826,
+      "source_sha256": "sha256:62e6e25f0735bf7cea18e001bfa521a7a247bf8e5d70f30cab2302d1d63a81ad",
+      "source_pages": 9,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [],
+        "observation": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+        "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
+      },
+      "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "connecticut-state-carecompass-employer-sbc-family",
+      "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+      "license_source": "https://portal.ct.gov/Policies/State-Privacy-Policy",
+      "rights_scope_note": "Care Compass links State Plan Policy. State privacy policy covers browsing/downloading but is not a reuse grant. Disclaimer disclaims privately owned rights and states seals/arms and CT.gov logo need permission. No explicit ordinary-document private-acquisition/automated-access ban observed; do not infer permission for logos/third-party material or final original reuse. Original notice and actual seal/logo scope remain unresolved.",
+      "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 9,
+        "note": "English standardized SBC with usable original text on all physical pages; extra language-access pages and examples retained. No OCR/fallback."
+      },
+      "identity": {
+        "plan": "StateofConnecticut:POE-GPrimaryCareAccessMedicalHealthPlan",
+        "coverage": "Individual/Family",
+        "plan_type": "POE-G",
+        "period": [
+          "2026-07-01",
+          "2027-06-30"
+        ],
+        "population_support": "Originalp1 state/plan matches exact active-employee catalog source. PDF also contains retiree-specific conditions; fixed active-employee request excludes those substitutions. Active HEP/tier conditions remain relevant and must not be silently selected.",
+        "carrier_form_group": "connecticut-quantum-health-cvs-shared-multitier-sbc",
+        "carrier_caution": "QuantumHealth/CVSCaremark appear as coordination/pharmacy administrators; do not infer an unprinted carrier from them.",
+        "named_subject": "POE-G Primary Care Access SBC2026-2027"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "4af912a46761b335764b05fd94aa6fa0e85fd64fe5a7d6cf43d9b2f2af877eda",
+        "primary_freeze_receipt_sha256": "44482c7b611f85bc86024b43a1c13899bf5c95598e7528c221266ff6f9b17a5a",
+        "parent_independent_draft_sha256": "d2410275f424bcbc28f67187a778d8c3b3ddc5540e1dae498f83a9d358b785aa",
+        "parent_freeze_receipt_sha256": "79539df38404ecc9c7c48212b0574fb832c91e392fc0dea381b048ce07e0898d",
+        "field_context_pages": {},
+        "initial_disagreements": [],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      },
+      "coverage_period": [
+        "2026-07-01",
+        "2027-06-30"
+      ],
+      "employer_family_group": "connecticut-state-carecompass-employer-sbc-family",
+      "carrier_form_group": "connecticut-quantum-health-cvs-shared-multitier-sbc"
+    },
+    {
+      "id": "sbc-h19",
+      "source": "https://carecompass.ct.gov/wp-content/uploads/2026/06/State-of-CT_POS-Expanded-Access-SBC-2026-2027.pdf",
+      "catalog_source": "https://carecompass.ct.gov/state/medical/",
+      "approved_max_bytes": 1048576,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 375397,
+      "source_sha256": "sha256:5536df45a3a6a260317fca024ed6da0b4ad7cd90071404bf6e7c66dbaba2ea54",
+      "source_pages": 9,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [],
+        "observation": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+        "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
+      },
+      "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "connecticut-state-carecompass-employer-sbc-family",
+      "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+      "license_source": "https://portal.ct.gov/Policies/State-Privacy-Policy",
+      "rights_scope_note": "Care Compass links State Plan Policy. State privacy policy covers browsing/downloading but is not a reuse grant. Disclaimer disclaims privately owned rights and states seals/arms and CT.gov logo need permission. No explicit ordinary-document private-acquisition/automated-access ban observed; do not infer permission for logos/third-party material or final original reuse. Original notice and actual seal/logo scope remain unresolved.",
+      "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 9,
+        "note": "English standardized SBC with usable original text on all physical pages; extra language-access pages and examples retained. No OCR/fallback."
+      },
+      "identity": {
+        "plan": "StateofConnecticut:ExpandedAccessPOSMedicalHealthPlan",
+        "coverage": "Individual/Family",
+        "plan_type": "POS",
+        "period": [
+          "2026-07-01",
+          "2027-06-30"
+        ],
+        "population_support": "Originalp1 state/plan matches exact active-employee catalog source. Combined retiree,HEP and tier conditions do not change fixed population or allow value-based selection.",
+        "carrier_form_group": "connecticut-quantum-health-cvs-shared-multitier-sbc",
+        "carrier_caution": "Same shared administrator/form family as h18; not an independent plan-layout family.",
+        "named_subject": "POS Expanded Access SBC2026-2027"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "d5361f36b65631f8f91633f47314e858a1bdc2aeaef7cf667867e7acadb057b2",
+        "primary_freeze_receipt_sha256": "44482c7b611f85bc86024b43a1c13899bf5c95598e7528c221266ff6f9b17a5a",
+        "parent_independent_draft_sha256": "d2410275f424bcbc28f67187a778d8c3b3ddc5540e1dae498f83a9d358b785aa",
+        "parent_freeze_receipt_sha256": "79539df38404ecc9c7c48212b0574fb832c91e392fc0dea381b048ce07e0898d",
+        "field_context_pages": {},
+        "initial_disagreements": [],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      },
+      "coverage_period": [
+        "2026-07-01",
+        "2027-06-30"
+      ],
+      "employer_family_group": "connecticut-state-carecompass-employer-sbc-family",
+      "carrier_form_group": "connecticut-quantum-health-cvs-shared-multitier-sbc"
+    },
+    {
+      "id": "sbc-h20",
+      "source": "https://www.dhrm.virginia.gov/docs/default-source/benefitsdocuments/health-benefits/open-enrollment-2026/covacarebasicsbc2026.pdf",
+      "catalog_source": "https://www.dhrm.virginia.gov/employeebenefits/health-benefits/summary-of-benefits",
+      "approved_max_bytes": 1048576,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 708323,
+      "source_sha256": "sha256:34848deacf6440a8511b75457776831bd1b2d148b50c5e19595602c19b59ecc1",
+      "source_pages": 7,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [],
+        "observation": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+        "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
+      },
+      "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "virginia-cova-employer-sbc-family",
+      "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+      "license_source": "https://www.dhrm.virginia.gov/web-policy",
+      "rights_scope_note": "DHRM policy disclaims accuracy/endorsement, restricts advertising/implied endorsement, prohibits unauthorized modification/security circumvention or use other than intended purposes, and limits its scope to its own sites. It is not an affirmative document-copy license. No explicit ordinary private-acquisition/automated-retrieval ban observed. Original/issuer notice and intended private benchmark scope remain unresolved.",
+      "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 7,
+        "note": "English standardized SBC with usable original text on all physical pages; extra language-access pages and examples retained. No OCR/fallback."
+      },
+      "identity": {
+        "plan": "CommonwealthofVirginia:COVACareBasic",
+        "coverage": "Individual+Family",
+        "plan_type": "PPO",
+        "period": [
+          "2026-07-01",
+          "2027-06-30"
+        ],
+        "population_support": "Originalp1 names CommonwealthofVirginia/COVACareBasic and DHRM terms link, matching approved active-state program source. Date agrees2026-27 program scope.",
+        "carrier_form_group": "anthem-network-standard-employer-sbc",
+        "named_subject": "COVA Care Basic SBC2026"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "7e5b8c1ce9a0d52995ed7f445a082b0f56bad4112d12d69b9dca1660d2d5efbe",
+        "primary_freeze_receipt_sha256": "44482c7b611f85bc86024b43a1c13899bf5c95598e7528c221266ff6f9b17a5a",
+        "parent_independent_draft_sha256": "d2410275f424bcbc28f67187a778d8c3b3ddc5540e1dae498f83a9d358b785aa",
+        "parent_freeze_receipt_sha256": "79539df38404ecc9c7c48212b0574fb832c91e392fc0dea381b048ce07e0898d",
+        "field_context_pages": {},
+        "initial_disagreements": [],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      },
+      "coverage_period": [
+        "2026-07-01",
+        "2027-06-30"
+      ],
+      "employer_family_group": "virginia-cova-employer-sbc-family",
+      "carrier_form_group": "anthem-network-standard-employer-sbc"
+    },
+    {
+      "id": "sbc-h21",
+      "source": "https://www.dhrm.virginia.gov/docs/default-source/benefitsdocuments/health-benefits/open-enrollment-2026/sentarasbc2026.pdf",
+      "catalog_source": "https://www.dhrm.virginia.gov/employeebenefits/health-benefits/summary-of-benefits",
+      "approved_max_bytes": 1048576,
+      "approval": "Chat exact-source-and-size approval, 2026-10-15; original notice/identity inspection and provisional source annotations only. Final source-use and membership remain open.",
+      "source_bytes": 390497,
+      "source_sha256": "sha256:c933593f84fad21b4bdf6279f4cca8fbbebd9d5106774fb7e98a795e234e014d",
+      "source_pages": 8,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "c3be8d574493467f349164c20a55249111d2ddd8b5b9c98d1f8c9a379d7f26a5",
+      "pdf_local_notices": {
+        "physical_pages": [],
+        "observation": "No PDF-local copyright/reproduction/permission/licence keyword notice found in complete pypdf/normalPoppler source searches or original all-page visual contact-sheet inspection. Standard coverage/appeal/consumer/language rights are not document-copy grants. No explicit document-use restriction found; absence is not affirmative permission or an open licence. State hosting is not a blanket grant.",
+        "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
+      },
+      "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "virginia-cova-employer-sbc-family",
+      "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
+      "license_source": "https://www.dhrm.virginia.gov/web-policy",
+      "rights_scope_note": "DHRM policy disclaims accuracy/endorsement, restricts advertising/implied endorsement, prohibits unauthorized modification/security circumvention or use other than intended purposes, and limits its scope to its own sites. It is not an affirmative document-copy license. No explicit ordinary private-acquisition/automated-retrieval ban observed. Original/issuer notice and intended private benchmark scope remain unresolved.",
+      "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 8,
+        "note": "English standardized SBC with usable original text on all physical pages; extra language-access pages and examples retained. No OCR/fallback."
+      },
+      "identity": {
+        "plan": "SentaraVantageHMO/SentaraHealthPlans",
+        "coverage": "Individual/Family",
+        "plan_type": "HMO",
+        "period": [
+          "2026-07-01",
+          "2027-06-30"
+        ],
+        "population_support": "Original names exact selected VantageHMO/SentaraHealthPlans and coverage dates. Employer/active population is not expressly named in title; it is supported by exact approved Virginia DHRM active-program catalog source. No contrary population/title found. This limitation is retained, not replaced by an individual-market or retiree interpretation.",
+        "carrier_form_group": "sentara-vantage-shared-tiered-hmo-sbc",
+        "plan_identifier_printed": "11401VA000200210",
+        "named_subject": "Sentara Health Vantage HMO SBC2026"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent source-only primary and parent freezes, then original-source reconciliation accepted by parent before any model outputs. No model, groundgate reader/core, schema, rule or prompt changes. Fixed requests preserved; no calculated totals, unstated suffix, rail, mode, tier or period selected.",
+        "primary_draft_sha256": "a5a5073c36b803cc065fbce3cf73531da9cbea0df3ddca065cdceedb76802dde",
+        "primary_freeze_receipt_sha256": "44482c7b611f85bc86024b43a1c13899bf5c95598e7528c221266ff6f9b17a5a",
+        "parent_independent_draft_sha256": "d2410275f424bcbc28f67187a778d8c3b3ddc5540e1dae498f83a9d358b785aa",
+        "parent_freeze_receipt_sha256": "79539df38404ecc9c7c48212b0574fb832c91e392fc0dea381b048ce07e0898d",
+        "field_context_pages": {},
+        "initial_disagreements": [],
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true
+      },
+      "coverage_period": [
+        "2026-07-01",
+        "2027-06-30"
+      ],
+      "employer_family_group": "virginia-cova-employer-sbc-family",
+      "carrier_form_group": "sentara-vantage-shared-tiered-hmo-sbc"
+    },
+    {
+      "id": "annual-h30",
+      "source": "https://www.networkrail.co.uk/wp-content/uploads/2023/07/Network-Rail-Annual-Report-and-Accounts-2026.pdf",
+      "catalog_source": "https://www.networkrail.co.uk/who-we-are/publications-and-resources/regulatory-and-licensing/annual-report-and-accounts/",
+      "approved_max_bytes": 11534336,
+      "approval": "All4exactURLs/caps approved in chat2026-10-15,call_bbc7b1e40d874a2eb4b6338db7b48be9 both answersaffirmative; original inspection and private provisional annotations only",
+      "source_bytes": 10850921,
+      "source_sha256": "sha256:1891345664010aeba582aa4ed8e3886e1458511d7f5c91c8faeeab7386852343",
+      "source_pages": 232,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "57022630a5b64d72b050ecee79753c2ad49d0d6f8c6f8893cfd8daba3b1364a9",
+      "source_family_group": "network-rail-group",
+      "pdf_local_notices": {
+        "physical_pages": [
+          4
+        ],
+        "observation": "PDF-local Crown copyright2026 and OGLv3 except where otherwise stated; identified third-party copyright requires rights-holder permission. No inference that third-party content, photographs or logos are covered.",
+        "method": "Complete two-engine original-source notice queries and selected original title, notice, scope and statement renders. No OCR or groundgate reader/core."
+      },
+      "selection_status": "draft_candidate_not_frozen",
+      "license": "Own PDF physical4 states OGLv3 except where otherwise stated; identified third-party exceptions retained. Separate site personal/noncommercial conditions recorded; no blanket third-party or image/logo grant inferred.",
+      "license_source": "https://www.networkrail.co.uk/wp-content/uploads/2023/07/Network-Rail-Annual-Report-and-Accounts-2026.pdf",
+      "publisher_overlap_note": "One own railway corporate Group and publisher; broader UK public railway/government reporting dependence retained. Related revisions and subsidiaries are not independent documents.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 232,
+        "note": "Complete pypdf and Poppler source queries; original digital target tables and notice/scope renders inspected. Original zero/low-text pages qualified separately. No OCR or groundgate reader/core."
+      },
+      "identity": {
+        "named_subject": "Network Rail; Annual report and accounts 2026",
+        "verified_source_identity": "Network Rail Limited Annual report and accounts 2026; Own consolidated Network Rail Limited Group; company and subsidiaries identified p184, Group columns p179-183. Not superior Department for Transport accounts.",
+        "period": "2025-04-01/2026-03-31",
+        "basis_of_consolidation_physical_page": 184,
+        "reporting_currency": "GBP",
+        "printed_scale": 1000000
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Two independent source-only agent freezes before comparison. Complete original pypdf and Poppler queries, exact own Group/currency/period scope, original target/scope/notice and low/zero-text renders. All17 statuses/values/units/signs agree. Four absent annual cost_of_sales/gross_profit fields have independent complete-source checks. No human labeling claim, benchmark/client/model/core/reader output, arithmetic, request edits, or public source-text redistribution.",
+        "primary_draft_sha256": "8e02f5e80560b20fe7477e480d03f025b23c57f1f24cbcc1f72db166fede673e",
+        "parent_independent_draft_sha256": "890ad608718f50079e284b0709f88a759f5764213ab029058eeef8ec02da6c0e",
+        "reconciliation_sha256": "3a8d3c426247bc46af1be3013455edf7355b0bbd3f0826f40415772a249adfb1",
+        "comparison_sha256": "6d2e60c478700a7cdd0bf888573ceb8f4465b45a9c278f603f2460da37113abd",
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true,
+        "disagreements": []
+      }
+    },
+    {
+      "id": "annual-h31",
+      "source": "https://assets.cmhc-schl.gc.ca/sites/cmhc/about-cmhc/corporate-reporting/annual-report/2025/cmhc-annual-report-2025-en.pdf",
+      "catalog_source": "https://assets.cmhc-schl.gc.ca/",
+      "approved_max_bytes": 8388608,
+      "approval": "All4exactURLs/caps approved in chat2026-10-15,call_bbc7b1e40d874a2eb4b6338db7b48be9 both answersaffirmative; original inspection and private provisional annotations only",
+      "source_bytes": 7680444,
+      "source_sha256": "sha256:1e502fcee84459ed7dfb70acc4bf5096c041eaeb207c6b043979b04a1583ac38",
+      "source_pages": 163,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "57022630a5b64d72b050ecee79753c2ad49d0d6f8c6f8893cfd8daba3b1364a9",
+      "source_family_group": "cmhc-group",
+      "pdf_local_notices": {
+        "physical_pages": [],
+        "observation": "Complete text search and original front/back render inspection found no PDF-local reproduction/automated-extraction prohibition or report-wide affirmative reuse grant. Silence is not a reuse permission; final use/redistribution rights remain unresolved.",
+        "method": "Complete two-engine original-source notice queries and selected original title, notice, scope and statement renders. No OCR or groundgate reader/core."
+      },
+      "selection_status": "draft_candidate_not_frozen",
+      "license": "Site personal copying/downloading/printing framework only; no affirmative PDF-local reuse grant. Other copying/derivatives/commercial uses require separate permission; final intended use unresolved.",
+      "license_source": "https://www.cmhc-schl.gc.ca/about-us/terms-conditions",
+      "publisher_overlap_note": "One own consolidated Crown housing/financial Group. Canadian government and financial reporting conventions overlap; company subsidiaries and repeated revisions are not independent source families.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 163,
+        "note": "Complete pypdf and Poppler source queries; original digital target tables and notice/scope renders inspected. Original zero/low-text pages qualified separately. No OCR or groundgate reader/core."
+      },
+      "identity": {
+        "named_subject": "Canada Mortgage and Housing Corporation; CMHC 2025 Annual Report",
+        "verified_source_identity": "Canada Mortgage and Housing Corporation 2025 Annual Report; Own consolidated CMHC, including controlled Canada Housing Trust, explicitly p54; IFRS accounts p53, full consolidated statements p49-52.",
+        "period": "2025-01-01/2025-12-31",
+        "basis_of_consolidation_physical_page": 54,
+        "reporting_currency": "CAD",
+        "printed_scale": 1000000
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Two independent source-only agent freezes before comparison. Complete original pypdf and Poppler queries, exact own Group/currency/period scope, original target/scope/notice and low/zero-text renders. All17 statuses/values/units/signs agree. Four absent annual cost_of_sales/gross_profit fields have independent complete-source checks. No human labeling claim, benchmark/client/model/core/reader output, arithmetic, request edits, or public source-text redistribution.",
+        "primary_draft_sha256": "c07080b8f9d9fc7accc42cbd0bbc142de82a20aa79ea08ea09a1081adc3e25d5",
+        "parent_independent_draft_sha256": "890ad608718f50079e284b0709f88a759f5764213ab029058eeef8ec02da6c0e",
+        "reconciliation_sha256": "3a8d3c426247bc46af1be3013455edf7355b0bbd3f0826f40415772a249adfb1",
+        "comparison_sha256": "6d2e60c478700a7cdd0bf888573ceb8f4465b45a9c278f603f2460da37113abd",
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true,
+        "disagreements": []
+      }
+    },
+    {
+      "id": "sbc-h23",
+      "source": "https://benefits.utah.edu/wp-content/uploads/sites/78/2025/08/SBC_Advantage-VCP.pdf",
+      "catalog_source": "https://benefits.utah.edu/health-care-and-dental-plans/",
+      "approved_max_bytes": 1048576,
+      "approval": "All4exactURLs/caps approved in chat2026-10-15,call_bbc7b1e40d874a2eb4b6338db7b48be9 both answersaffirmative; original inspection and private provisional annotations only",
+      "source_bytes": 675340,
+      "source_sha256": "sha256:57e62a20af596c8d236e66d994de940ee78f8e447c691f37427b86ee5c7cea53",
+      "source_pages": 10,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "57022630a5b64d72b050ecee79753c2ad49d0d6f8c6f8893cfd8daba3b1364a9",
+      "source_family_group": "utah-university-employer-regence-advantage",
+      "pdf_local_notices": {
+        "physical_pages": [
+          9,
+          10
+        ],
+        "observation": "Coverage/civil-rights and language-assistance notices, with no PDF-local automated-extraction prohibition or affirmative report-wide reuse grant found. Silence does not establish permission; private draft only.",
+        "method": "Complete two-engine original-source notice queries and selected original title, notice, scope and statement renders. No OCR or groundgate reader/core."
+      },
+      "coverage_period": "2026-07-01/2027-06-30",
+      "employer_family_group": "university-utah-employer",
+      "carrier_form_group": "regence-bcbs-standardized-sbc",
+      "selection_status": "draft_candidate_not_frozen",
+      "license": "No affirmative copying or automated-use grant established from university disclaimer or PDF notices. No express source-specific acquisition ban found during inspection; final private/provenance and intended-use handling unresolved.",
+      "license_source": "https://www.utah.edu/disclaimer/",
+      "publisher_overlap_note": "One university employer/Regence plan family, with broader Blue Cross and mandated SBC-form dependence. Provider tiers and medical/drug benefit components are not independent documents.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 10,
+        "note": "Complete pypdf and Poppler source queries; original digital target tables and notice/scope renders inspected. Original zero/low-text pages qualified separately. No OCR or groundgate reader/core."
+      },
+      "identity": {
+        "named_subject": "University of Utah active-employee benefits catalog; Advantage - Preferred ValueCare SBC",
+        "verified_source_identity": "University of Utah Medical Plan; Regence BlueCross BlueShield of Utah claims administrator; codeUU0126SPRFL; Individual and Eligible Family; PPO. Originalp1 network link includes/UT/VCU. University of Utah/Primary Children/Granger provider group and general in-network columns are distinct. Eight SBC pages plus nondiscrimination/language-assistance pages9-10.",
+        "period": "2026-07-01/2027-06-30",
+        "basis_of_plan_scope_physical_page": 1
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Two independent source-only agent freezes before comparison. Complete original pypdf and Poppler queries, exact own Group/currency/period scope, original target/scope/notice and low/zero-text renders. All17 statuses/values/units/signs agree. Four absent annual cost_of_sales/gross_profit fields have independent complete-source checks. No human labeling claim, benchmark/client/model/core/reader output, arithmetic, request edits, or public source-text redistribution.",
+        "primary_draft_sha256": "84175bde8f7fb5a126664a48aa03387a2fbf9bd7fa48f1c0c42a9a77a95a5210",
+        "parent_independent_draft_sha256": "890ad608718f50079e284b0709f88a759f5764213ab029058eeef8ec02da6c0e",
+        "reconciliation_sha256": "3a8d3c426247bc46af1be3013455edf7355b0bbd3f0826f40415772a249adfb1",
+        "comparison_sha256": "6d2e60c478700a7cdd0bf888573ceb8f4465b45a9c278f603f2460da37113abd",
+        "no_unstated_calculations": true,
+        "independent_check_accepted": true,
+        "disagreements": []
+      }
+    },
+    {
+      "id": "sbc-h22",
+      "source": "https://www.hr.upenn.edu/docs/default-source/benefits/sbc-summaries-of-benefits-and-coverage/upenn-penncare-ppo-sbc.pdf?sfvrsn=ff168c56_29",
+      "catalog_source": "https://www.hr.upenn.edu/policies-and-procedures/legal-notices/summaries-of-benefits-coverage",
+      "approved_max_bytes": 1048576,
+      "approval": "All4exactURLs/caps approved in chat2026-10-15,call_bbc7b1e40d874a2eb4b6338db7b48be9 both answersaffirmative; original inspection and private provisional annotations only",
+      "source_bytes": 973968,
+      "source_sha256": "sha256:98ffab3f1ca2f627ae206064457fd680511d9063c5f77e62afa7e0fcb6bd4b7c",
+      "source_pages": 15,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "57022630a5b64d72b050ecee79753c2ad49d0d6f8c6f8893cfd8daba3b1364a9",
+      "source_family_group": "penn-employer-penncare-personal-choice",
+      "pdf_local_notices": {
+        "physical_pages": [
+          15
+        ],
+        "observation": "Nondiscrimination and language-assistance notices are coverage/civil-rights notices, not document reuse grants. No PDF-local automated-extraction prohibition found. No permission inferred from silence.",
+        "method": "Complete two-engine original-source notice queries and selected original title, notice, scope and statement renders. No OCR or groundgate reader/core."
+      },
+      "selection_status": "hold_not_in_manifest_or_labels",
+      "source_use_status": "hold; no field draft or benchmark input",
+      "hold_reason": "Original physical1 says coverage beginning on or after2024-07-01 and does not confirm frozen2026-27 period. No period or source substitution.",
+      "identity": "UPenn PennCare PPO Active and Cobra; Independence-branded standardized SBC; Beginning on or after 07/01/2024; exact frozen2026-27 window not established"
     }
   ]
 }

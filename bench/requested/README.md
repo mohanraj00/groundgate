@@ -322,3 +322,17 @@ a unique cost-of-sales mapping, so that field stays unclear. Both independent fr
 four initial status differences remain in the local record. One original with a reproduction
 restriction and one whose target statement tables lack a usable text layer stay outside the
 manifest and labels. Earlier drafts remain unchanged; membership and source-use handling stay open.
+
+The added component drafts keep unspecified rails, threshold options and operating conditions
+unclear. An explicit functional operating-range statement can establish a supply endpoint without
+using an absolute maximum alone. A guaranteed virtual-junction range remains distinct from an
+unresolved mapping to the requested operating-temperature quantity. Both initial annotations and
+the source-based reconciliation stay in the record.
+
+The added benefit drafts distinguish coverage tiers, membership conditions, provider networks,
+and separate medical and prescription limits. Percentage charges do not become dollar copays.
+The two annual drafts retain full consolidated scope, printed currencies, scales and signs;
+a mixed net-revenue and funding aggregate does not establish a unique revenue mapping.
+Every added absence has two complete independent source checks. A catalog-linked benefit PDF
+whose original does not confirm the selected period stays outside the manifest and labels.
+Earlier drafts remain unchanged; membership, source-use handling and seals remain open.
