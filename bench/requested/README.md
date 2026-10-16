@@ -298,3 +298,13 @@ and both immutable source drafts remain in the local reconciliation record. A re
 PDF-local reproduction restriction stays on hold outside the manifest and labels. General
 publication grants, third-party exceptions and a separate audit-report copying condition are
 recorded separately. Selection remains open, no labels are sealed, and earlier drafts are unchanged.
+
+Four further checked drafts keep the same selected variants, fiscal/calendar periods and
+request fields. A uniquely named operating supply-current row is distinct from standby rows;
+a source with several bus-state current typicals stays unclear. An explicit zero overall
+deductible is retained without inventing separate person/family cells. Separate general and
+prescription expense limits do not establish a unique overall cap. A dollar specialist copay
+remains a copay when additional percentage coinsurance is stated; it is not the total cost.
+The local record preserves both independent positions on the two limit ambiguities. Three
+originals with reproduction restrictions and one with a population mismatch stay outside the
+manifest and labels. Earlier drafts remain unchanged; selection and source-use handling are open.
