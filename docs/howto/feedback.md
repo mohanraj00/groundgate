@@ -1,280 +1,173 @@
-# Send reasons back to the extractor
+# Run extraction and evidence repairs
 
-groundgate tells you why it did not admit a fact. Some of these reasons are mistakes in the
-citation, such as a quote with one changed character or a scale that the model did not cite. The
-model can fix these mistakes if you tell it what is wrong. This page returns the reasons to the
-model once, admits the new candidates, and keeps both receipts.
+`groundgate.run` owns the extraction loop. Your app gives it text, a schema and one function
+that takes a prompt and returns a raw JSON reply. The runner makes bounded calls, admits the
+candidates and repairs only the evidence that each code permits. `admit` stays deterministic
+and never calls a model.
 
-## The pipeline
+## 1. Supply a client
 
-groundgate is one step in a pipeline that your app owns:
-
-1. The extractor reads the document and proposes candidates.
-2. A judge (optional) answers questions about the candidates. Your app records the answers and
-   gives them to `admit` as judgments. groundgate never calls the judge.
-3. groundgate decides each candidate and writes a receipt.
-4. A feedback loop (optional) returns the reasons for each decision that is not admitted to the
-   extractor. Your app admits the new candidates and keeps the new receipt.
-
-groundgate never calls a model, so the loop is in your code. Each decision is the feedback: the
-outcome, the codes, the parts that the evidence cited and the parts that are missing. You decide
-whether to return it to the extractor.
-
-## 1. Admit the first round
-
-The document is a table of plan costs in thousands of dollars. The model makes three mistakes:
-
-- For `claims_paid`, it gives the scaled value but does not cite "(in thousands)".
-- For `stop_loss_premiums`, its quote has no space after the `$`, so the quote is not in the text.
-- For `admin_costs`, it changes the order of two digits.
-
-The function `your_model` is a stub with fixed output. Your app replaces it with its own model
-call, as in [Check your own model's extractions](own-model.md#4-call-the-model). The stub returns
-better candidates when it gets feedback.
+This client is a fixed example. Replace its body with your model call. The client owns the
+transport, credentials and timeout. It returns a JSON string, with no Markdown fences. Give
+`model_id` the version that your client uses.
 
 ```python
 import json
-import tempfile
-from pathlib import Path
 
 import groundgate as gg
+from groundgate.run import RunPolicy, replay, run
 
-text = (
-    "PLAN COSTS FOR 2026\n"
-    "(in thousands)\n"
-    "\n"
-    "Claims paid\t$ 48,200\n"
-    "Stop-loss premiums\t$ 1,240\n"
-    "Administrative costs\t$ 3,150\n"
-    "\n"
-    "Members at year end: 12,400.\n"
-)
-schema = {
-    "fields": {
-        "claims_paid": {"type": "integer", "unit": "USD"},
-        "stop_loss_premiums": {"type": "integer", "unit": "USD"},
-        "admin_costs": {"type": "integer", "unit": "USD"},
-        "members": {"type": "integer"},
-    }
-}
-output_format = gg.extractor_schema(schema)
-instructions = "Extract the fields from the text. ..."  # the instructions from own-model.md
+text = "Amounts (in thousands)\nAmount 5."
+schema = {"fields": {"amount": {"type": "integer"}}}
 
 
-def item(words, role="value"):
+def value_item(words, role="value"):
     return {"source": "document", "role": role, "text": words}
 
 
-def your_model(instructions, text, output_format, feedback=None):
-    """A stub with fixed output, in the shape of output_format."""
-    if feedback is None:
-        return {
-            "candidates": [
-                {
-                    "field": "claims_paid",
-                    "value": "48200000",
-                    "unit": "USD",
-                    "key": None,
-                    "evidence": [item("48,200")],
-                },
-                {
-                    "field": "stop_loss_premiums",
-                    "value": "1240000",
-                    "unit": "USD",
-                    "key": None,
-                    "evidence": [item("$1,240"), item("(in thousands)", "scale")],
-                },
-                {
-                    "field": "admin_costs",
-                    "value": "3510000",
-                    "unit": "USD",
-                    "key": None,
-                    "evidence": [item("$ 3,150"), item("(in thousands)", "scale")],
-                },
-                {
-                    "field": "members",
-                    "value": "12400",
-                    "unit": None,
-                    "key": None,
-                    "evidence": [item("12,400")],
-                },
-            ]
-        }
-    return {
-        "candidates": [
-            {
-                "field": "claims_paid",
-                "value": "48200000",
-                "unit": "USD",
-                "key": None,
-                "evidence": [item("48,200"), item("(in thousands)", "scale")],
-            },
-            {
-                "field": "stop_loss_premiums",
-                "value": "1240000",
-                "unit": "USD",
-                "key": None,
-                "evidence": [item("$ 1,240"), item("(in thousands)", "scale")],
-            },
-        ]
+def client(prompt):
+    request = json.loads(prompt.split("\n", 1)[1])
+    candidate = {
+        "field": "amount",
+        "value": "5000",
+        "unit": None,
+        "key": None,
+        "evidence": [value_item("5")],
     }
+    if request["phase"] == "repair":
+        candidate["evidence"].append(value_item("in thousands", "scale"))
+        return json.dumps(candidate)
+    return json.dumps({"candidates": [candidate], "not_found": []})
 
 
-def show(receipt):
-    for d in sorted(receipt.decisions, key=lambda d: d.candidate_id):
-        print(f"{d.candidate_id} {d.outcome:<18} {d.field:<18} {' '.join(d.codes)}".rstrip())
-
-
-out = your_model(instructions, text, output_format)
-first = [{"id": f"c{i}", **c} for i, c in enumerate(out["candidates"], 1)]
-receipt1 = gg.admit(text, schema, first)
-show(receipt1)
+result = run(
+    text,
+    schema,
+    client=client,
+    model_id="fixed-example-1",
+    run_policy=RunPolicy(max_repair_rounds=2),
+)
+print(result.complete)
+for decision in result.receipt.decisions:
+    print(decision.field, decision.value, decision.outcome)
+print(sum(entry["kind"] == "call" for entry in result.record["entries"]))
 ```
 
 ```text
-c1 needs_verification claims_paid        PART_MISSING
-c2 rejected           stop_loss_premiums QUOTE_NOT_FOUND
-c3 rejected           admin_costs        VALUE_NOT_IN_EVIDENCE
-c4 admitted           members
+True
+amount 5000 admitted
+2
 ```
 
-## 2. Build a feedback message
+For targeted reference evidence, `result.candidates` contains an offsets-only value item. The
+raw quote remains in the saved reply artifact; the adapter removes it from the admission
+packet to prevent re-anchoring outside the selected reference region.
 
-Call `gg.feedback_message` with the decision, the candidate and the schema. Pass the document
-text and, if used, the references that you gave `admit`. The function returns a message only
-when a new answer can fix the decision. It returns `None` for an admitted decision or a reason
-that needs a person. It raises `ValueError` if the candidate's digest does not match the decision.
+The first proposal lacks scale evidence. The repair keeps `5000` and cites the scale. The
+final receipt covers the repaired candidate. The earlier receipt and reply stay in the run
+record and its artifacts.
 
-The message repeats the field, value and quotes that the candidate sent. It describes each code
-outside `INFO`, names each missing part and reports each part that failed:
+## 2. Read the final outcome and completeness
 
-```python
-by_id = {c["id"]: c for c in first}
-messages = {}
-for d in sorted(receipt1.decisions, key=lambda d: d.candidate_id):
-    message = gg.feedback_message(d, by_id[d.candidate_id], schema, text=text)
-    if message is not None:
-        messages[d.candidate_id] = message
-        print(message)
-```
+Use `result.receipt` and `result.candidates` together. The runner admits all final proposals
+in one call, so different values for one non-`multiple` field and key meet the conflict check.
+An admission in an earlier round is not a final admission.
 
-```text
-Field "claims_paid": you gave the value "48200000" with value "48,200".
-- PART_MISSING: The value needs a sign, a scale or a unit that no evidence item supports.
-- Cite the scale with a "scale" item.
-Field "stop_loss_premiums": you gave the value "1240000" with value "$1,240", scale "(in thousands)".
-- QUOTE_NOT_FOUND: The quoted value text does not occur in the document or reference.
-```
+`result.complete` says whether the planned calls completed. A client failure, malformed reply
+or exhausted total call budget returns an incomplete result with completed receipts. A
+rejected candidate, a failed repair or a repair-round limit retains its core outcome. These
+states do not prove that a field is absent. The record's entries give the failure or stop
+reason; `record["final"]["fields"]` lists the field's search and repair history. These states
+record attempts, not an active candidate inventory. An admission-history limit entry lists
+retained, dropped and reverted ids. Read `result.candidates` with its receipt for active values.
+If a run stops before a field has a valid disposition, its history contains
+`incomplete_no_disposition`. This does not say whether a client was attempted or prove absence;
+read the call and protocol-failure entries for that detail. Field histories do not include
+phase names. Call and limit events carry `phase`; use those events to identify the stopped work.
+The phase-specific stops are:
 
-## 3. Choose what to retry
-
-`gg.feedback_message` checks every code before it builds a message. These codes can give a message:
-
-| Code | What the extractor can fix |
+| Phase | Stop and field state |
 |---|---|
-| `PART_MISSING` | Cite the part that `missing` names. A missing `unit` or `key` also needs a passing `field` item. |
-| `QUOTE_NOT_FOUND` | Copy the quote exactly from the text. |
-| `NON_VERBATIM_EVIDENCE` | Copy the quote exactly from the text. |
-| `KEY_NOT_AT_VALUE`, with `key` in `missing` | On a line with a tab, cite the column heading with a `key` item and the row label with a `field` item. |
-| `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_CITATION_INVALID` | Cite the part at the value. If the retry fails again, a person checks the candidate. |
-| `SCALE_WORD` | Send the scaled value, such as `1250000000` for "$1.25 billion". |
-| `NO_EVIDENCE` | Quote the value. |
+| Initial | An oversized initial chunk plan or prompt raises `RunInputError` before the first call. An aborted reply with no valid field disposition leads to `incomplete_no_disposition`. |
+| Targeted | Exhausted `max_calls` records `unsearched` for each skipped field and a `call_limit` event. If the regions do not fit the prompt budget, the worst-ranked region goes first and the search records `search_truncated`. If no region fits, the field and event record `search_limit`. A targeted quote outside the sent regions records `protocol_failure` for that field only; the run continues. |
+| Repair | An oversized prompt records `prompt_limit`; exhausted `max_calls` records `call_limit`. A completed run with an eligible candidate left after its repair rounds records `repair_limit`. |
 
-A missing unit or key needs a field item, and a field item needs `aliases` on the field
-(see [the schema guide](../schema.md)). Without aliases, the function returns `None`.
-For `KEY_NOT_AT_VALUE`, it also returns `None` unless `key` is missing and the value is on a
-line with a tab in the document or its named reference. Pass `text` for a document item and
-`references` for a reference item. Without the needed source text, it returns `None`.
+`proposed` and `model_not_found` can appear in the initial or targeted phase. A targeted
+not-found reply records both `model_not_found` and `targeted_not_found`: the first records the
+model response, and the second records completion of that phase. `admission_history_limit`
+can stop admission in any phase, with the last accepted packet retained.
 
-Any other code outside `INFO` stops the retry:
+The initial response must account for every requested field in `candidates` or `not_found`,
+never both. For example, an empty response for the requested field is:
 
-- `VALUE_NOT_IN_EVIDENCE` with a wrong value usually means that the extractor read the wrong
-  number. Drop the candidate. A second answer from the same extractor is not better evidence.
-- `CONFLICTING_CANDIDATES` needs a person. Two candidates have different values, and groundgate
-  never picks.
-- `QUALIFIED_VALUE` can mean that the schema comparator is wrong. If the field is a limit, set its
-  `comparator`, such as `le` for "up to". If not, a person checks the candidate.
-- `KEY_NOT_AT_VALUE` with a key item needs a person to check the key at the value.
-- `LOW_CONFIDENCE`, `MODEL_DOUBT`, `EVIDENCE_QUOTED` and `EVIDENCE_STATED` come from your policy or
-  your judge, not from the quotes.
+```json
+{"candidates": [], "not_found": ["amount"]}
+```
 
-Retry the candidates whose decisions gave a message:
+For a field with no first-pass candidate, the runner searches the supplied texts using the
+field name, aliases and description. One targeted call gets only the selected regions and
+asks for that field. Title and alias matches take priority over individual description words.
+The search uses at most the first 64 distinct queries in that priority order and records
+`omitted_queries`. It retains at most 1024 match records; omitted counts and truncation stay in
+the record. Each retained query still scans every supplied source to count all its hits,
+including omitted matches. The caller must bound the number of requested fields, the number
+and size of references, and document length before calling the runner. Search may scan up to
+`missing fields * 64 * total source characters`, plus query matching and schema-processing
+work. `max_calls` limits client calls, not this CPU work. Casefolds are cached once per source
+across fields; expansion maps and byte offsets use compact arrays.
+A rejected candidate does not trigger that pass. Search terms, retained regions, truncation
+and not-found replies stay in the record. No match is the result of that search, not proof
+of absence. Set `RunPolicy(targeted=False)` for a run without this pass.
+
+## 3. Keep repairs bounded
+
+The default is two extra calls per original value and 128 calls in total. There are at most
+1024 active proposals and 8 MiB of stored admission packet/receipt pairs. Active candidate
+payloads may use at most half that byte budget. These limits stop the run incomplete while
+retaining its last recorded packet and receipt. Proposals from an admission that could not be
+recorded are not active in the returned candidate list. This applies to new values and evidence
+repairs alike; the final field states name the admission-history limit. Raw prompts and replies
+are separate from the admission-history byte budget. The reply-size setting limits parsing
+only; it does not limit the size of retained raw reply artifacts. Duplicate proposals
+share a repair budget. The runner fixes citation codes only. It keeps field, unit, key and
+source fixed. It refuses changes to unrelated evidence roles. A no-op or repair not-found
+reply ends that proposal's loop and keeps its last candidate.
+
+If a repair changes the value, the runner keeps the original and admits the new proposal
+once. The new proposal gets no repair. If both pass with different values, the final receipt
+flags the conflict. A `SCALE_WORD` response may supply a scaled value this way; it does not
+create a new repair budget. A terminal code such as `VALUE_NOT_IN_EVIDENCE` gets no repair.
+The [design note](../design/runner.md) gives the complete per-code rules and defaults.
+
+Caller input errors fail before a model call. A runtime core or internal error raises
+`RunnerError`; its `record` holds the completed part of the run. Model-client exceptions
+become recorded incomplete results without copying their exception messages.
+
+## 4. Save and replay
+
+Save the run record, artifacts, exact text, schema, policy and references together. Artifacts
+contain complete prompts and replies, including source text. This includes an oversized reply
+that exceeded `max_reply_bytes`: the runner retains that raw body for replay even though it
+does not parse it. The setting is a parsing limit, not a transport or artifact-size limit. The
+client owns any transport cap before returning. The runner returns artifacts in memory and
+does not choose file paths. The app chooses storage.
 
 ```python
-retry = [
-    d
-    for d in sorted(receipt1.decisions, key=lambda d: d.candidate_id)
-    if d.candidate_id in messages
-]
-print([d.candidate_id for d in retry])
+stored_record = json.loads(json.dumps(result.record))
+stored_artifacts = json.loads(json.dumps(result.artifacts))
+print(replay(stored_record, stored_artifacts, text, schema).ok)
+print(gg.verify(result.receipt.to_dict(), text, schema, result.candidates).ok)
 ```
 
 ```text
-['c1', 'c2']
+True
+True
 ```
 
-## 4. Ask the model again
+Replay uses the saved replies and makes no model calls. It reconstructs the prompts, search,
+limits, repairs and every admission, then compares the complete chained record. A changed
+input, artifact, setting, entry or final receipt fails verification. A model id in the record
+is the app's claim, not an authenticated model identity.
 
-Send the instructions, the text and the output format again, with the feedback message of each retry.
-Then admit the new candidates:
-
-```python
-feedback = "\n".join(messages[d.candidate_id] for d in retry)
-out = your_model(instructions, text, output_format, feedback=feedback)
-second = [{"id": f"r{i}", **c} for i, c in enumerate(out["candidates"], 1)]
-receipt2 = gg.admit(text, schema, second)
-show(receipt2)
-```
-
-```text
-r1 admitted           claims_paid        VALUE_DERIVED
-r2 admitted           stop_loss_premiums VALUE_DERIVED
-```
-
-Both facts are now admitted. `VALUE_DERIVED` only informs: the value is the cited number times the
-scale that the scale item cites.
-
-## 5. Limit the retries and keep both receipts
-
-Ask again once. Each round costs one model call, and a fixed limit stops a model that makes the
-same mistake again. After the last round, act on each outcome as usual:
-
-1. If a fact is admitted in any round, store it. The exception: if two rounds admit different
-   values for the same field and key, and the field is not `multiple`, store neither value. Send
-   both to a person. Each `admit` call sees only its own candidates, so no receipt flags this
-   `CONFLICTING_CANDIDATES`.
-2. If a retried fact is still flagged, send it to a person.
-3. If a fact is rejected, drop it and log the codes.
-
-Keep the receipt and the candidates of each round. Each receipt verifies against its own
-candidates:
-
-```python
-folder = Path(tempfile.mkdtemp())
-rounds = [(receipt1, first), (receipt2, second)]
-for n, (receipt, candidates) in enumerate(rounds, 1):
-    (folder / f"receipt-{n}.json").write_text(json.dumps(receipt.to_dict(), indent=2))
-    (folder / f"candidates-{n}.json").write_text(json.dumps(candidates, indent=2))
-
-for n in (1, 2):
-    stored = json.loads((folder / f"receipt-{n}.json").read_text())
-    sent = json.loads((folder / f"candidates-{n}.json").read_text())
-    print(n, stored["summary"], gg.verify(stored, text, schema, sent).ok)
-```
-
-```text
-1 {'admitted': 1, 'needs_verification': 1, 'rejected': 2} True
-2 {'admitted': 2, 'needs_verification': 0, 'rejected': 0} True
-```
-
-The first receipt still shows `c1` flagged and `c2` rejected. That is the record of what the model
-sent first. The second receipt holds only the new candidates. If your schema has required fields,
-read the coverage of both rounds together.
-
-## Next
-
-- [Check your own model's extractions](own-model.md): the output format, the instructions and the
-  first `admit` call.
-- [Check values in tables](tables.md): the scale, unit, field and key items in a table.
-- [Review flagged facts](review.md): the queue for a person.
-- [Decisions](../guide.md#decisions) in the guide, and [SPEC.md](../../SPEC.md) §3 for each check.
+For an app-owned loop, `gg.feedback_message` still builds reason text from one decision. It
+does not enforce repair diffs. Use the runner when groundgate should own those limits.
