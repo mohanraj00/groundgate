@@ -2262,6 +2262,354 @@
       },
       "source_use_status": "hold; no field draft, no benchmark model input",
       "request_snapshot_sha256": "062208c4412a8fcf226980aaff0c5eee3a2cc71510b67a943b6753e8d069594a"
+    },
+    {
+      "id": "component-h14",
+      "source": "https://toshiba.semicon-storage.com/info/TC75S51F_datasheet_en_20190911.pdf?did=21004&prodName=TC75S51F",
+      "catalog_source": "https://toshiba.semicon-storage.com/us/semiconductor/product/linear-ics/operational-amplifiers-and-comparators/detail.TC75S51F.html",
+      "approved_max_bytes": 1048576,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 234415,
+      "source_sha256": "sha256:b27bd2d72f1572e00ae0cdefa3bd5f8cb658e5c0fcb8bfede144723cb3090319",
+      "source_pages": 9,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "ea0f935de0a738d2ccbdca73d9b8787324d79625ab13dda579b5d9ffdb005a00",
+      "pdf_local_notices": {
+        "physical_pages": [
+          9
+        ],
+        "observation": "Own physicalp9 Restrictions on Product Use says this document and information may not be reproduced without prior written Toshiba permission, then only without alteration/omission. Information is presented only as guidance for Product use. Hardware safety/export/IP disclaimers are separate. Current downloaded notice page dated2026-04-07; URL date is not assumed to be current PDF revision.",
+        "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
+      },
+      "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
+      "selection_status": "hold_not_in_manifest_or_labels",
+      "source_family_group": "toshiba-linear-ics-documentation-family",
+      "source_use_status": "hold; no field draft or benchmark input",
+      "hold_reason": "HOLD_document_reproduction_restriction",
+      "identity": "Toshiba TC75S51F/FU family as printed on notice page; named TC75S51F from frozen request. Further variant/value audit stopped on contrary notice."
+    },
+    {
+      "id": "component-h15",
+      "source": "https://toshiba.semicon-storage.com/info/TC75W59FU_datasheet_en_20140301.pdf?did=21020&prodName=TC75W59FU",
+      "catalog_source": "https://toshiba.semicon-storage.com/us/semiconductor/product/linear-ics/operational-amplifiers-and-comparators/detail.TC75W59FU.html",
+      "approved_max_bytes": 1048576,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 186169,
+      "source_sha256": "sha256:94727b5e1f673b0c0bd3b3dee3f2c3bd029c3107aa48d85de924465b6fdfdd19",
+      "source_pages": 6,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "ea0f935de0a738d2ccbdca73d9b8787324d79625ab13dda579b5d9ffdb005a00",
+      "pdf_local_notices": {
+        "physical_pages": [
+          6
+        ],
+        "observation": "Own physicalp6 Restrictions on Product Use says document/information may not be reproduced without prior written Toshiba permission, then only without alteration/omission. Product-use guidance/IP/hardware disclaimers recorded separately. Notice page dated2026-04-07.",
+        "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
+      },
+      "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
+      "selection_status": "hold_not_in_manifest_or_labels",
+      "source_family_group": "toshiba-linear-ics-documentation-family",
+      "source_use_status": "hold; no field draft or benchmark input",
+      "hold_reason": "HOLD_document_reproduction_restriction",
+      "identity": "Toshiba TC75W59FU/FK family as printed on notice page; named TC75W59FU from frozen request. Further variant/value audit stopped on contrary notice."
+    },
+    {
+      "id": "component-h16",
+      "source": "https://www.nxp.com/docs/en/data-sheet/PCA9515A.pdf",
+      "catalog_source": "https://www.nxp.com/products/interfaces/ic-spi-i3c-interface-devices/ic-i3c-bus-repeaters-buffers-and-extenders/ic-bus-repeater:PCA9515A",
+      "approved_max_bytes": 1048576,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 222189,
+      "source_sha256": "sha256:a7de4e40e46e1253440ab5727eee00d1ef172f37a6b62041ba505b9a79772cdc",
+      "source_pages": 20,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "ea0f935de0a738d2ccbdca73d9b8787324d79625ab13dda579b5d9ffdb005a00",
+      "pdf_local_notices": {
+        "physical_pages": [
+          18,
+          19,
+          20
+        ],
+        "observation": "Own p18 has no offer/implied grant of copyright/patent/IP license, accuracy/limiting-value/hardware-use disclaimers; p19 document/item export-control notice and trademark ownership; copyrightNXP2012/allrightsreserved. No explicit document copying/extraction or benchmark-application-use prohibition found in full two-engine notice scan and original legal-page views. No affirmative own-PDF reuse grant inferred. Separate catalog conditional personal/noncommercial unmodified-copy framework remains separate; no publication or final use clearance.",
+        "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
+      },
+      "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "nxp-documentation-family",
+      "license": "Conditional unmodified personal noncommercial copy framework with notices; separate PDF no-implied-license clause; final use unresolved",
+      "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+      "publisher_overlap_note": "NXP umbrella overlaps the earlier temperature sensor and these two I2C devices. Distinct functions, package suffixes and revisions are not independent publishers.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 20,
+        "note": "Complete pypdf and Poppler source checks plus selected operating/coverage tables and original notices; sparse pages do not supply inferred values."
+      },
+      "identity": {
+        "named_subject": "PCA9515AD",
+        "source_identity": "NXP PCA9515A full Product data sheet Rev5,23March2012,20pages. Named PCA9515AD SO8/SOT96-1 ordering variant directly listed physicalp2. Individual I2C-bus repeater IC, not board documentation.",
+        "coverage_period": null,
+        "scope_note": "Preserve selected ordering variant or exact employer/plan period; no alternative condition, year or network chosen from outcomes."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent primary and parent source-only annotations frozen before comparison. Two initial overall-limit status disagreements remain unclear after original-page review, with both positions preserved. No benchmark output or forced numeric substitution.",
+        "reconciliation_sha256": "a91d17ae0a2b83fd889e5b156ea28ec480bfd5b6cf5a79ec8a49dc9682847843",
+        "no_unstated_calculations": true,
+        "disagreements": []
+      }
+    },
+    {
+      "id": "component-h17",
+      "source": "https://www.nxp.com/docs/en/data-sheet/PCA9555.pdf",
+      "catalog_source": "https://www.nxp.com/products/interfaces/ic-spi-i3c-interface-devices/general-purpose-i-o-gpio/16-bit-ic-bus-and-smbus-i-o-port-with-interrupt:PCA9555",
+      "approved_max_bytes": 1048576,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 264812,
+      "source_sha256": "sha256:9f4f9c0ce4c461d71e0a46858394f830c74daba72bb6616f368af78a39f44b1f",
+      "source_pages": 34,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "ea0f935de0a738d2ccbdca73d9b8787324d79625ab13dda579b5d9ffdb005a00",
+      "pdf_local_notices": {
+        "physical_pages": [
+          32,
+          33,
+          34
+        ],
+        "observation": "Own p32 no offer/implied license grant, hardware/accuracy/limiting-value disclaimers; p33 document/item export-control and trademark notice, Quick reference data incomplete/notlegallybinding notice; copyrightNXP2017/allrightsreserved. No explicit document copying/extraction or benchmark-application-use prohibition found in full two-engine notice scan and original legal-page views. No affirmative own-PDF reuse grant inferred; conditional site framework separate; final source-use clearance open.",
+        "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
+      },
+      "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "nxp-documentation-family",
+      "license": "Conditional unmodified personal noncommercial copy framework with notices; separate PDF no-implied-license clause; final use unresolved",
+      "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+      "publisher_overlap_note": "NXP umbrella overlaps the earlier temperature sensor and these two I2C devices. Distinct functions, package suffixes and revisions are not independent publishers.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 34,
+        "note": "Complete pypdf and Poppler source checks plus selected operating/coverage tables and original notices; sparse pages do not supply inferred values."
+      },
+      "identity": {
+        "named_subject": "PCA9555BS",
+        "source_identity": "NXP PCA9555 full Product data sheet Rev10,8November2017,34pages. Named PCA9555BS HVQFN24/SOT616-1 ordering variant directly listed physicalp2, including ordering optionPCA9555BS,118. Individual GPIO-expander IC, not board documentation.",
+        "coverage_period": null,
+        "scope_note": "Preserve selected ordering variant or exact employer/plan period; no alternative condition, year or network chosen from outcomes."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent primary and parent source-only annotations frozen before comparison. Two initial overall-limit status disagreements remain unclear after original-page review, with both positions preserved. No benchmark output or forced numeric substitution.",
+        "reconciliation_sha256": "a91d17ae0a2b83fd889e5b156ea28ec480bfd5b6cf5a79ec8a49dc9682847843",
+        "no_unstated_calculations": true,
+        "disagreements": []
+      }
+    },
+    {
+      "id": "component-h18",
+      "source": "https://www.maxlinear.com/ds/spx3819.pdf?productId=317",
+      "catalog_source": "https://www.maxlinear.com/product/power-management/power-conversion/ldos-and-regulators/linear-regulators-ldos/spx3819",
+      "approved_max_bytes": 2097152,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 1217248,
+      "source_sha256": "sha256:43b63129331150a20339623920ea9f7be758d93e700a3459beb190d483ad35a2",
+      "source_pages": 13,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "ea0f935de0a738d2ccbdca73d9b8787324d79625ab13dda579b5d9ffdb005a00",
+      "pdf_local_notices": {
+        "physical_pages": [
+          13
+        ],
+        "observation": "Own physicalp13 explicitly prohibits reproducing, storing/introducing into retrieval system, or transmitting any document part by any means/for any purpose without express written MaxLinear permission. Furnishing document does not grant IP license; informational-use statement and hardware life-support disclaimer are separate. Copyright2012\u20132019/allrightsreserved.",
+        "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
+      },
+      "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
+      "selection_status": "hold_not_in_manifest_or_labels",
+      "source_family_group": "maxlinear-exar-linear-regulator-family",
+      "source_use_status": "hold; no field draft or benchmark input",
+      "hold_reason": "HOLD_document_reproduction_storage_transmission_restriction",
+      "identity": "MaxLinear SPX3819 family,Rev2.0.5 per own notice/revision page; selected SPX3819M5-L/TR from frozen request. Further variant/value inspection stopped."
+    },
+    {
+      "id": "sbc-h12",
+      "source": "https://ghcscw.com/wp-content/uploads/2025/08/2026-SBC-State-Local-IYC-Health-Plan-Dane-Choice-Final.pdf",
+      "catalog_source": "https://etf.wi.gov/its-your-choice/2026/state-employee-and-retiree-health-plan-supplemental-benefits/health-insurance-employees-cobra-and-retirees-without-medicare/summary-benefits-and-coverage",
+      "approved_max_bytes": 1048576,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 500218,
+      "source_sha256": "sha256:791dbde270ae5f0eba6e831c4d971e692b1aa33eb5bf21a7cc08c72454650615",
+      "source_pages": 8,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "ea0f935de0a738d2ccbdca73d9b8787324d79625ab13dda579b5d9ffdb005a00",
+      "pdf_local_notices": {
+        "physical_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "observation": "All8 original pages inspected for notice layout; standard SBC rights-to-coverage/appeal/language-service notices and examples, not a document reuse grant. No explicit PDF copying/extraction restriction or affirmative reuse license found. Public availability does not establish general reuse rights.",
+        "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
+      },
+      "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
+      "selection_status": "hold_not_in_manifest_or_labels",
+      "source_family_group": "wisconsin-etf-ghcscw-uniform-benefits-family",
+      "source_use_status": "hold; no field draft or benchmark input",
+      "hold_reason": "HOLD_population_scope_mismatch",
+      "identity": "Ownp1 title State of Wisconsin Local\u2013IYC Health Plan Uniform Benefit\u2013Dane Choice; Group Health Cooperative of South Central Wisconsin,Individual&Family,HMO; document codeGHC-2605602-DORDC."
+    },
+    {
+      "id": "sbc-h13",
+      "source": "https://cms.illinois.gov/content/dam/soi/en/web/cms/benefits/stateemployee/documents/fy2026/sbc/SBC_IL6800_B06800_0104_State%20of%20Illinois_BAHMO_07-01-2025%20to%2006-30-2026_2025-07-01_v1.pdf",
+      "catalog_source": "https://cms.illinois.gov/benefits/stateemployee/summaryofbenefitsandcoverage.html",
+      "approved_max_bytes": 1048576,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 442322,
+      "source_sha256": "sha256:a08990bc37df0ab60594a5c1efead5d861ce996426295e76f0b8484611378b34",
+      "source_pages": 8,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "ea0f935de0a738d2ccbdca73d9b8787324d79625ab13dda579b5d9ffdb005a00",
+      "pdf_local_notices": {
+        "physical_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "observation": "All8 original page views checked. BCBS licensee wording concerns association identity, not a document-copy grant. Standard summary/appeal/coverage/language notices and examples; physicalp8 is raster nondiscrimination/multilingual assistance. No explicit PDF copying/extraction prohibition or affirmative reuse license found. State hosting is not a blanket insurer reuse grant.",
+        "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
+      },
+      "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "illinois-segip-bcbsil-family",
+      "license": "No affirmative broad copying grant established; original consumer and insurer notices retained; final use unresolved",
+      "license_source": "https://www.illinois.gov/about/privacy.html",
+      "publisher_overlap_note": "Standardized CMS SBC format remains shared. Illinois issuer HCSC/BCBSIL overlaps other broad BlueCross sources; employer identity alone does not establish an independent publisher.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 8,
+        "note": "Complete pypdf and Poppler source checks plus selected operating/coverage tables and original notices; sparse pages do not supply inferred values."
+      },
+      "identity": {
+        "named_subject": "Blue Advantage HMO, active employees",
+        "source_identity": "Ownp1 State of Illinois:Active BA HMO Plan,Individual/Family,HMO; BCBSIllinois division of HCSC,independent BCBSAssociation licensee. SBCILHMOLG2025 form,7numberedSBCpages plus physicalp8 nondiscrimination/language appendix.",
+        "coverage_period": "2025-07-01 to 2026-06-30",
+        "scope_note": "Preserve selected ordering variant or exact employer/plan period; no alternative condition, year or network chosen from outcomes."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent primary and parent source-only annotations frozen before comparison. Two initial overall-limit status disagreements remain unclear after original-page review, with both positions preserved. No benchmark output or forced numeric substitution.",
+        "reconciliation_sha256": "a91d17ae0a2b83fd889e5b156ea28ec480bfd5b6cf5a79ec8a49dc9682847843",
+        "no_unstated_calculations": true,
+        "disagreements": [
+          {
+            "document": "sbc-h13",
+            "field": "out_of_pocket_individual",
+            "primary": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "3000",
+                  "unit": "USD"
+                }
+              ]
+            },
+            "parent": {
+              "status": "unclear",
+              "values": []
+            },
+            "final": {
+              "status": "unclear",
+              "values": []
+            },
+            "resolution": "Generic overall limit remains unclear: general and prescription expense limits are separately stated; no unique interaction or combined cap established. Preserve both source-only judgments and do not choose a category or add values."
+          },
+          {
+            "document": "sbc-h13",
+            "field": "out_of_pocket_family",
+            "primary": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "6000",
+                  "unit": "USD"
+                }
+              ]
+            },
+            "parent": {
+              "status": "unclear",
+              "values": []
+            },
+            "final": {
+              "status": "unclear",
+              "values": []
+            },
+            "resolution": "Generic overall limit remains unclear: general and prescription expense limits are separately stated; no unique interaction or combined cap established. Preserve both source-only judgments and do not choose a category or add values."
+          }
+        ]
+      }
+    },
+    {
+      "id": "sbc-h15",
+      "source": "https://www.peba.sc.gov/sites/default/files/2026_sbc_standard.pdf",
+      "catalog_source": "https://www.peba.sc.gov/publications",
+      "approved_max_bytes": 1048576,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 357418,
+      "source_sha256": "sha256:b2ee39c5f3b77cf382e53241ddd701b6eaade93d3a471c1bf36bfd1f992d1e32",
+      "source_pages": 6,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "ea0f935de0a738d2ccbdca73d9b8787324d79625ab13dda579b5d9ffdb005a00",
+      "pdf_local_notices": {
+        "physical_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "observation": "All6 original pages checked. Standard SBC summary,coverage/appeal/language and example notices; no explicit document copying/extraction prohibition or affirmative reuse license found. State source does not imply a blanket insurer/rightsholder reuse grant.",
+        "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
+      },
+      "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "south-carolina-peba-state-health-plan-family",
+      "license": "No affirmative broad copying grant established; original consumer and insurer notices retained; final use unresolved",
+      "license_source": "https://www.peba.sc.gov/legal-disclaimer",
+      "publisher_overlap_note": "Standardized CMS SBC format remains shared; employer/plan/year variants stay grouped. No new independent carrier is inferred from an employer URL.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 6,
+        "note": "Complete pypdf and Poppler source checks plus selected operating/coverage tables and original notices; sparse pages do not supply inferred values."
+      },
+      "identity": {
+        "named_subject": "State Health Plan Standard Plan",
+        "source_identity": "Ownp1 State Health Plan:Standard Plan,South CarolinaPEBA source,CoverageforFamily,PPO. Individual and family contexts are printed within this coverage document; no individual-policy replacement inferred.",
+        "coverage_period": "2026-01-01 to 2026-12-31",
+        "scope_note": "Preserve selected ordering variant or exact employer/plan period; no alternative condition, year or network chosen from outcomes."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Independent primary and parent source-only annotations frozen before comparison. Two initial overall-limit status disagreements remain unclear after original-page review, with both positions preserved. No benchmark output or forced numeric substitution.",
+        "reconciliation_sha256": "a91d17ae0a2b83fd889e5b156ea28ec480bfd5b6cf5a79ec8a49dc9682847843",
+        "no_unstated_calculations": true,
+        "disagreements": []
+      }
     }
   ]
 }

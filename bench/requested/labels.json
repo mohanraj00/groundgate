@@ -2789,6 +2789,311 @@
           "second_check": false
         }
       ]
+    },
+    {
+      "id": "component-h16",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "2.3",
+              "unit": "V"
+            }
+          ],
+          "page": 1,
+          "note": "Source Features explicitly states Operating supply voltage range of2.3V to3.6V for this family, including named PCA9515AD p2. Select the lower endpoint of that single stated overall operating range, not absolute maximum VCC in Limiting values. This is not an endpoint invented by combining tables. Tables4/5 on p7/8 separately characterize voltage regions and their footnote1 covers operation between published ranges. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "3.6",
+              "unit": "V"
+            }
+          ],
+          "page": 1,
+          "note": "Upper endpoint of the same explicit overall Operating supply voltage range on p1 as the selected minimum. Distinguish supply voltage from5.5V tolerant bus/enable inputs and absolute limiting values; no I/O-voltage substitution. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 7,
+          "note": "Tables4/5 state different HIGH, LOW and contention LOW supply-current typicals and different supply reference ranges. Fixed request does not choose bus logic/state or voltage condition; no arbitrary0.8/1.7/1.6mA choice. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "Tables4/5 state different HIGH, LOW and contention LOW supply-current typicals and different supply reference ranges. Fixed request does not choose bus logic/state or voltage condition; no arbitrary0.8/1.7/1.6mA choice.",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "note": "Table1 ordering-information header Tamb=-40\u00b0C to+85\u00b0C applies directly to selected PCA9515AD SO8/SOT96-1. Static-characteristic table headers p7/8 corroborate this operating ambient range. No storage or junction stress temperature substituted. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "85",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "note": "Upper ambient endpoint in selected-variant ordering table header, corroborated by static-characteristic operating headers p7/8. Not a storage limit. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "component-h17",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "2.3",
+              "unit": "V"
+            }
+          ],
+          "page": 18,
+          "note": "Table14 Static characteristics VDD supply voltage Min, under VDD2.3V\u20135.5V operating conditions; p1 explicitly calls the same range Operating power supply voltage. Named PCA9555BS appears p2. Absolute limiting VDD in Table13 is excluded. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5.5",
+              "unit": "V"
+            }
+          ],
+          "page": 18,
+          "note": "Table14 VDD Max in the same source operating region as minimum, corroborated p1. No absolute-maximum or I/O-tolerance value selected. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "0.135",
+              "unit": "mA"
+            }
+          ],
+          "page": 18,
+          "note": "Table14 explicitly labels IDD supply current, Operating mode,VDD=5.5V,no load,fSCL=100kHz, Typ135\u00b5A. This is the sole operating supply-current parameter row; separate Istb standby-current rows are distinct named parameters and are not substituted. Table header gives Tamb=-40\u00b0C to+85\u00b0C unless otherwise specified; do not invent a25\u00b0C reference. Exact unit normalization135\u00b5A=0.135mA only; no current averaging, curve interpolation, or maximum200\u00b5A selection. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "note": "Ordering Table2 explicitly lists PCA9555BS,118/PCA9555BSHP in the selected PCA9555BS family at Tamb=-40\u00b0C to+85\u00b0C. Static table p18 has same ambient operating context. This avoids relying only on the Limiting values table. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "85",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "note": "Upper endpoint of the same explicit PCA9555BS ordering operating ambient range. Storage and junction-only limiting ratings excluded. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "sbc-h13",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "0",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Overall deductible Answer explicitly states$0 without an individual/family distinction; source coverage is Individual/Family, so this zero applies to the requested overall medical deductible for one person. It is not an empty or not-found value. Separate$150Rx deductible belongs to specific services and is not substituted. No individual key word/extra zero cell is fabricated. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "0",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Same explicit overall$0 deductible for the source Individual/Family coverage. No nonzero family amount or separately printed family-key cell is invented. The Rx-specific deductible is excluded from this overall medical field. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Same answer row gives3000Individual/6000Family plus separate Prescription drug expense limit2000Individual/4000Family. Fixed request asks overall in-network limit and does not choose a cost-category limit or permit adding them. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "Same answer row gives3000Individual/6000Family plus separate Prescription drug expense limit2000Individual/4000Family. Fixed request asks overall in-network limit and does not choose a cost-category limit or permit adding them.",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Different general and prescription-drug family expense limits are separately stated. No unique whole-plan combined limit is stated or calculated. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "Different general and prescription-drug family expense limits are separately stated. No unique whole-plan combined limit is stated or calculated.",
+          "second_check": false
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "40",
+              "unit": "USD"
+            }
+          ],
+          "page": 2,
+          "note": "Specialist visit row,In-Network Provider column,$40/visit. Referral required. Out-of-network is Not Covered, not a second equal network tier. General header states cost sharing after deductible if applicable; overall medical deductible is explicitly zero. Numeric USD copay selected directly, not from examples or percentage conversion. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "sbc-h15",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "515",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Overall deductible Answer explicitly prints$515 individual/$1,030 family for this Standard Plan Family-coverage document. Individual is the member amount within this family coverage; no separate individual-policy substitution. Preserve2026calendar coverage. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1030",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Overall family deductible explicitly printed. Do not substitute separately listed office/emergency/outpatient service-specific deductibles, or compute a family total from the individual amount. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "3000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Answer explicitly says For network providers$3,000 individual/$6,000 family; choose network individual amount rather than out-of-network amount. Source excludes premiums,copayments,preauthorization penalties,specific-service deductibles and uncovered care from this limit; retain those conditions rather than silently inventing a broader federal cap. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "6000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Family amount in the same expressly network-provider OOP pair. No out-of-network substitution, excluded-cost summation, or unstated combined cap. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "15",
+              "unit": "USD"
+            }
+          ],
+          "page": 2,
+          "note": "Specialist visit,Network Provider column explicitly states$15copay/office visit then20%coinsurance. Record only the literal USD copay component requested, not total visit cost or a dollar conversion of20%. General header applies after deductible if applicable. p1 separately calls$15office/video charge a specific-service deductible; preserve this wording difference as a source condition, while the selected specialist row itself explicitly calls the dollar amount copay. No referral required per p1. Independent blind original-source checks and reconciliation completed before any benchmark output.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
     }
   ],
   "status": "draft"
