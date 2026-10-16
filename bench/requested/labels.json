@@ -1494,6 +1494,306 @@
           "second_check": false
         }
       ]
+    },
+    {
+      "id": "sbc-h07",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 1,
+          "note": "Two in-network levels list different per-person inpatient admission deductibles, 500 and 750. The fixed request does not select a provider level.",
+          "reason": "Unselected in-network provider level changes the amount.",
+          "second_check": false
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 1,
+          "note": "No numeric family deductible is stated in the complete nine-page SBC. Page 1 has per-person amounts and a generic family accumulation explanation. Page 8 examples are self-only; its generic two-person/family warning does not state a family amount. Do not calculate from a person amount.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "2300",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Both in-network levels state the same medical limit, 2300 person. Drug Card limit is separate and is not added.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "4600",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Both in-network levels state the same medical limit, 4600 family. Separate Drug Card limit is not added.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 3,
+          "note": "Level1 and Level2 specialist exam copays are 15 and 30 per provider/date. Other services have separate coinsurance. The self-only examples do not resolve the unselected level.",
+          "reason": "Two applicable in-network provider levels have different numeric specialist copays.",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "sbc-h08",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "3000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Direct in-network overall deductible, person.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "9000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Direct in-network overall deductible, family.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "6500",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Direct in-network overall out-of-pocket limit, person; out-of-network column is excluded.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "16300",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Direct in-network overall out-of-pocket limit, family; out-of-network column is excluded.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 2,
+          "note": "Network specialist visit lists 50 Preferred Provider and 94 Other Provider. Page7 examples expressly assume no Preferred Provider, so 94 in those examples does not resolve the generic in-network request.",
+          "reason": "Preferred versus other in-network provider is unselected.",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "component-h11",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "4.5",
+              "unit": "V"
+            }
+          ],
+          "page": 5,
+          "note": "Min column of operating electrical Supply Voltage row; absolute-maximum 8 V is not used.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5.5",
+              "unit": "V"
+            }
+          ],
+          "page": 5,
+          "note": "Max column of operating electrical Supply Voltage row; nominal 5 V and stress-only 8 V are not substituted.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "10",
+              "unit": "mA"
+            }
+          ],
+          "page": 5,
+          "note": "Typ supply-current column, VCC 5 V, output open/no output load. Common operating reference condition applies to the selected variant; maximum is not typical.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "note": "The exact selected part row in the Selection Guide states its E operating range. Page 5 gives the same common operating thermal range. Higher ambient/leadframe operation is separately qualified by maximum junction temperature; no higher endpoint is calculated. Junction and storage ratings are excluded.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "85",
+              "unit": "C"
+            }
+          ],
+          "page": 2,
+          "note": "The exact selected part row in the Selection Guide states its E operating range. Page 5 gives the same common operating thermal range. Higher ambient/leadframe operation is separately qualified by maximum junction temperature; no higher endpoint is calculated. Junction and storage ratings are excluded.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "component-h12",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "4.5",
+              "unit": "V"
+            }
+          ],
+          "page": 4,
+          "note": "Min column of operating electrical Supply Voltage row; absolute-maximum 8 V is not used.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5.5",
+              "unit": "V"
+            }
+          ],
+          "page": 4,
+          "note": "Max column of operating electrical Supply Voltage row; nominal 5 V and stress-only 8 V are not substituted.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "6.9",
+              "unit": "mA"
+            }
+          ],
+          "page": 4,
+          "note": "Typ supply-current column, VCC 5 V, output open/no output load. Common operating reference condition applies to the selected variant; maximum is not typical.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-40",
+              "unit": "C"
+            }
+          ],
+          "page": 1,
+          "note": "Page 1 description explicitly states that the family operates through this ambient range; selected part is confirmed on page 2. The operating table on page 4 is valid throughout that range. This endpoint is not inferred solely from the Absolute Maximum Ratings table; junction and storage ratings are excluded.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "150",
+              "unit": "C"
+            }
+          ],
+          "page": 1,
+          "note": "Page 1 description explicitly states that the family operates through this ambient range; selected part is confirmed on page 2. The operating table on page 4 is valid throughout that range. This endpoint is not inferred solely from the Absolute Maximum Ratings table; junction and storage ratings are excluded.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
     }
   ],
   "status": "draft"

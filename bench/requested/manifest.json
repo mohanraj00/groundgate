@@ -1559,6 +1559,349 @@
     "subject": "T404",
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
    }
+  },
+  {
+   "id": "sbc-h07",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://hr.uiowa.edu/sites/hr.uiowa.edu/files/2025-10/The-University-of-Iowa-UIChoice-Active-Blue-POS_01012026_5777-198.pdf",
+   "source_bytes": 602193,
+   "source_sha256": "sha256:c4db86f550e28bfa1a9089be5b13d8f887cb2f7b8c0f458b8cd39151ad9fa89f",
+   "source_pages": 9,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "uiowa-wellmark-uichoice-uiselect-family",
+   "license": "No affirmative reuse grant found in PDF; website scope unresolved",
+   "license_source": "https://hr.uiowa.edu/accessibility-notice-and-website-disclaimers",
+   "license_other_notices": "The original contains coverage, illustrative-example and language notices. No PDF-local document-copy grant is inferred. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "UIChoice Active Blue POS, 2026",
+    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   }
+  },
+  {
+   "id": "sbc-h08",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.shpnc.gov/documents/open-enrollment-documents/2026-uniform-summary-coverage-standard-plan/download?attachment",
+   "source_bytes": 463532,
+   "source_sha256": "sha256:83f9435735fd5893e1fcd98636159570a27c9acef314b16029173b495ddf8ab3",
+   "source_pages": 7,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "north-carolina-state-health-plan-2026-aetna",
+   "license": "Limited noncommercial unmodified document-copy permission with citation, subject to document and third-party exceptions",
+   "license_source": "https://www.nc.gov/disclaimer-terms-use",
+   "license_other_notices": "The original contains coverage, illustrative-example and language notices. No PDF-local document-copy grant is inferred. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "NC Standard Plan, 2026",
+    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   },
+   "publisher_overlap_note": "The administrator also appears in another SBC family. This document is not a new insurer publisher or an independent publisher trial."
+  },
+  {
+   "id": "component-h11",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.allegromicro.com/-/media/files/datasheets/acs712-datasheet.pdf",
+   "source_bytes": 1047606,
+   "source_sha256": "sha256:21b345f7a98d36947d5562218b0bc730b80609b614e9fc4374f56993011466b9",
+   "source_pages": 16,
+   "approved_max_bytes": 2097152,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "allegro-hall-sensor-documentation",
+   "license": "Attributed-copy permission with notices retained; reserved broader uses, not an open license",
+   "license_source": "https://www.allegromicro.com/en/about-allegro/legal",
+   "license_other_notices": "Copyright and accuracy/IP notices retained. Product-safety restrictions concern hardware use. Package drawings prohibit tooling use. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "ACS712ELCTR-05B-T",
+    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+   },
+   "named_device": "ACS712ELCTR-05B-T",
+   "technical_family": "allegro-acs712-integrated-current-sensor-family"
+  },
+  {
+   "id": "component-h12",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.allegromicro.com/-/media/files/datasheets/a1324-5-6-datasheet.pdf",
+   "source_bytes": 1177926,
+   "source_sha256": "sha256:b7a2ba73d7831b255bdf29ef11995fddd85fda6b91088238aa74825b528057ae",
+   "source_pages": 13,
+   "approved_max_bytes": 2097152,
+   "download_approved": "2026-10-15",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "allegro-hall-sensor-documentation",
+   "license": "Attributed-copy permission with notices retained; reserved broader uses, not an open license",
+   "license_source": "https://www.allegromicro.com/en/about-allegro/legal",
+   "license_other_notices": "Copyright and accuracy/IP notices retained. Product-safety restrictions concern hardware use. Package drawings prohibit tooling use. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "A1324LLHLT-T",
+    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+   },
+   "named_device": "A1324LLHLT-T",
+   "technical_family": "allegro-a1324-a1325-a1326-linear-hall-sensor-family"
   }
  ],
  "format": "requested-fields/1",

@@ -1328,6 +1328,201 @@
         "coverage_limit": "Complete PDF text searches and targeted original-page visual checks, not a claim that every small schematic label on every page was read."
       },
       "third_party_exclusion": "No linked third-party certification/test reports are downloaded or included by assumption. No PDF, source text or rendered pages are published."
+    },
+    {
+      "id": "sbc-h07",
+      "source": "https://hr.uiowa.edu/sites/hr.uiowa.edu/files/2025-10/The-University-of-Iowa-UIChoice-Active-Blue-POS_01012026_5777-198.pdf",
+      "catalog_source": "https://hr.uiowa.edu/benefits/employee-benefits/regular-faculty-and-staff-benefits/employee-health-insurance/uichoice",
+      "approved_max_bytes": 1048576,
+      "approval": "chat source-and-size approval, 2026-10-15; private notice and eligibility inspection",
+      "source_bytes": 602193,
+      "source_sha256": "sha256:c4db86f550e28bfa1a9089be5b13d8f887cb2f7b8c0f458b8cd39151ad9fa89f",
+      "source_pages": 9,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "uiowa-wellmark-uichoice-uiselect-family",
+      "license": "No affirmative reuse grant found in PDF; website scope unresolved",
+      "license_source": "https://hr.uiowa.edu/accessibility-notice-and-website-disclaimers",
+      "source_retention": "original unmodified PDF in LocalWork with notices; not committed",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 9,
+        "note": "All pages have digital text. SBC benefits are English, with separate language-assistance notices."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": false,
+        "contrary_pdf_wide_copy_restriction_found": false,
+        "observation": "The original contains coverage, illustrative-example and language notices. No PDF-local document-copy grant is inferred. No PDF or source text is published.",
+        "method": "Complete pypdf and Poppler notice searches and original-page visual inspection. Silence does not establish permission."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final benchmark eligibility remains open",
+      "request_snapshot_sha256": "fed8a65cb854cdd692e7218b602e13674bc12aa0ac538b4f4f70ce48d84ec996",
+      "blind_check": {
+        "method": "Independent primary and parent source annotations frozen before comparison, with matching statuses, values and units. No benchmark client output exists.",
+        "reconciliation_sha256": "52918d8f9804b012883e1598482149e0f134237fb19d62b74340c396044e0106",
+        "no_unstated_calculations": true
+      },
+      "identity": {
+        "type": "Summary of Benefits and Coverage",
+        "coverage_period": "2026-01-01 to 2026-12-31",
+        "physical_page": 1,
+        "named_plan": "UIChoice Active Blue POS, 2026",
+        "catalog_title_note": "Exact named plan and year confirmed on original physical page 1."
+      },
+      "absence_check": {
+        "field": "deductible_family",
+        "complete_physical_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "engines": [
+          "pypdf",
+          "Poppler pdftotext -layout"
+        ],
+        "original_pages_verified": true,
+        "independent_second_check": true,
+        "note": "Per-person amounts, generic family accumulation and self-only examples do not state a numeric family deductible. No family amount is computed."
+      }
+    },
+    {
+      "id": "sbc-h08",
+      "source": "https://www.shpnc.gov/documents/open-enrollment-documents/2026-uniform-summary-coverage-standard-plan/download?attachment",
+      "catalog_source": "https://www.shpnc.gov/employee-benefits/standard-ppo-plan-employees",
+      "approved_max_bytes": 1048576,
+      "approval": "chat source-and-size approval, 2026-10-15; private notice and eligibility inspection",
+      "source_bytes": 463532,
+      "source_sha256": "sha256:83f9435735fd5893e1fcd98636159570a27c9acef314b16029173b495ddf8ab3",
+      "source_pages": 7,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "north-carolina-state-health-plan-2026-aetna",
+      "license": "Limited noncommercial unmodified document-copy permission with citation, subject to document and third-party exceptions",
+      "license_source": "https://www.nc.gov/disclaimer-terms-use",
+      "source_retention": "original unmodified PDF in LocalWork with notices; not committed",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 7,
+        "note": "All pages have digital text. SBC benefits are English, with separate language-assistance notices."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": false,
+        "contrary_pdf_wide_copy_restriction_found": false,
+        "observation": "The original contains coverage, illustrative-example and language notices. No PDF-local document-copy grant is inferred. No PDF or source text is published.",
+        "method": "Complete pypdf and Poppler notice searches and original-page visual inspection. Silence does not establish permission."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final benchmark eligibility remains open",
+      "request_snapshot_sha256": "fed8a65cb854cdd692e7218b602e13674bc12aa0ac538b4f4f70ce48d84ec996",
+      "blind_check": {
+        "method": "Independent primary and parent source annotations frozen before comparison, with matching statuses, values and units. No benchmark client output exists.",
+        "reconciliation_sha256": "52918d8f9804b012883e1598482149e0f134237fb19d62b74340c396044e0106",
+        "no_unstated_calculations": true
+      },
+      "identity": {
+        "type": "Summary of Benefits and Coverage",
+        "coverage_period": "2026-01-01 to 2026-12-31",
+        "physical_page": 1,
+        "named_plan": "NC Standard Plan, 2026",
+        "catalog_title_note": "Uniform Summary catalog title is resolved by the actual standardized SBC title and explanation on physical page 1."
+      },
+      "publisher_overlap_note": "The administrator also appears in another SBC family. This document is not a new insurer publisher or an independent publisher trial."
+    },
+    {
+      "id": "component-h11",
+      "source": "https://www.allegromicro.com/-/media/files/datasheets/acs712-datasheet.pdf",
+      "catalog_source": "https://www.allegromicro.com/en/products/sense/current-sensor-ics/integrated-current-sensors/acs712",
+      "approved_max_bytes": 2097152,
+      "approval": "chat source-and-size approval, 2026-10-15; private notice and eligibility inspection",
+      "source_bytes": 1047606,
+      "source_sha256": "sha256:21b345f7a98d36947d5562218b0bc730b80609b614e9fc4374f56993011466b9",
+      "source_pages": 16,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "allegro-hall-sensor-documentation",
+      "license": "Attributed-copy permission with notices retained; reserved broader uses, not an open license",
+      "license_source": "https://www.allegromicro.com/en/about-allegro/legal",
+      "source_retention": "original unmodified PDF in LocalWork with notices; not committed",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 16,
+        "note": "Individual IC datasheet, not a development-board manual. Exact catalog-selected variant appears on physical page 2."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": false,
+        "contrary_pdf_wide_copy_restriction_found": false,
+        "observation": "Copyright and accuracy/IP notices retained. Product-safety restrictions concern hardware use. Package drawings prohibit tooling use. No PDF or source text is published.",
+        "method": "Complete pypdf and Poppler notice searches and original-page visual inspection. Silence does not establish permission.",
+        "copyright_page": 16,
+        "package_tooling_restriction_pages": [
+          15
+        ]
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final benchmark eligibility remains open",
+      "request_snapshot_sha256": "01faeca3783b037820fec058c518e80d4f2c7c684543e050645ad925ddd3c668",
+      "blind_check": {
+        "method": "Independent primary and parent source annotations frozen before comparison, with matching statuses, values and units. No benchmark client output exists.",
+        "reconciliation_sha256": "52918d8f9804b012883e1598482149e0f134237fb19d62b74340c396044e0106",
+        "no_unstated_calculations": true
+      },
+      "identity": {
+        "named_device": "ACS712ELCTR-05B-T",
+        "physical_page": 2,
+        "type": "individual Hall-effect sensor IC"
+      },
+      "technical_family": "allegro-acs712-integrated-current-sensor-family",
+      "license_limitations": "Source attribution and notices are required for copies. The site reserves broader display, distribution, modification, republication and derivative uses unless separately authorized. No broader grant or endorsement is inferred."
+    },
+    {
+      "id": "component-h12",
+      "source": "https://www.allegromicro.com/-/media/files/datasheets/a1324-5-6-datasheet.pdf",
+      "catalog_source": "https://www.allegromicro.com/en/products/sense/linear-and-angular-position/linear-sensors-1d/a1324-5-6",
+      "approved_max_bytes": 2097152,
+      "approval": "chat source-and-size approval, 2026-10-15; private notice and eligibility inspection",
+      "source_bytes": 1177926,
+      "source_sha256": "sha256:b7a2ba73d7831b255bdf29ef11995fddd85fda6b91088238aa74825b528057ae",
+      "source_pages": 13,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "allegro-hall-sensor-documentation",
+      "license": "Attributed-copy permission with notices retained; reserved broader uses, not an open license",
+      "license_source": "https://www.allegromicro.com/en/about-allegro/legal",
+      "source_retention": "original unmodified PDF in LocalWork with notices; not committed",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 13,
+        "note": "Individual IC datasheet, not a development-board manual. Exact catalog-selected variant appears on physical page 2."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": false,
+        "contrary_pdf_wide_copy_restriction_found": false,
+        "observation": "Copyright and accuracy/IP notices retained. Product-safety restrictions concern hardware use. Package drawings prohibit tooling use. No PDF or source text is published.",
+        "method": "Complete pypdf and Poppler notice searches and original-page visual inspection. Silence does not establish permission.",
+        "copyright_page": 13,
+        "package_tooling_restriction_pages": [
+          11,
+          12
+        ]
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final benchmark eligibility remains open",
+      "request_snapshot_sha256": "01faeca3783b037820fec058c518e80d4f2c7c684543e050645ad925ddd3c668",
+      "blind_check": {
+        "method": "Independent primary and parent source annotations frozen before comparison, with matching statuses, values and units. No benchmark client output exists.",
+        "reconciliation_sha256": "52918d8f9804b012883e1598482149e0f134237fb19d62b74340c396044e0106",
+        "no_unstated_calculations": true
+      },
+      "identity": {
+        "named_device": "A1324LLHLT-T",
+        "physical_page": 2,
+        "type": "individual Hall-effect sensor IC"
+      },
+      "technical_family": "allegro-a1324-a1325-a1326-linear-hall-sensor-family",
+      "license_limitations": "Source attribution and notices are required for copies. The site reserves broader display, distribution, modification, republication and derivative uses unless separately authorized. No broader grant or endorsement is inferred."
     }
   ]
 }
