@@ -100,15 +100,16 @@ and a `fields` list. Each requested field/key occurs exactly once with `status` 
 reason in the labeling record. Scoring refuses incomplete labels in either split.
 
 Each `runs/<name>.json` has `labels_sha256` and `manifest_sha256`, each prefixed `sha256:` and
-computed over the exact file bytes, plus a `documents` list. Each run document has `id`, final
-`decisions` and an explicit `not_found` list of `{field, key}`. Runner decisions come from its
+computed over the exact file bytes, plus its `split` and a `documents` list. Each run document
+has `id`, final `decisions` and an explicit `not_found` list of `{field, key}`. Runner decisions come from its
 final core receipt. Baseline decisions are application storage outcomes: they keep independently
 admitted rounds, but withhold different admitted values for a single-value field. Those entries
 retain `core_outcome` and an `application_reason`; original core receipts remain unchanged.
 The scoring projection omits quotes and raw replies; the external cache keeps all calls and
-receipts. A missing run document is no candidate, not an absence hit. The manifest is frozen
-and the labels are sealed. No result file is committed before an actual sealed-label measure
-exists.
+receipts. A run document with no decisions is no candidate, not an absence hit. The scorer
+refuses a run of another split, a partial run, and a run whose documents are not exactly the
+documents of the split. The manifest is frozen and the labels are sealed. No result file is
+committed before an actual sealed-label measure exists.
 
 I check the scoring mode with synthetic values:
 

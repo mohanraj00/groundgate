@@ -313,6 +313,21 @@ def measure(
     }
 
 
+def check_coverage(manifest: dict[str, Any], run: dict[str, Any], split: str, name: str) -> None:
+    """Refuse a run of another split, or a run that does not hold each document of the split."""
+    if run.get("split") != split:
+        raise ValueError(f"cached run split is not {split}: {name}")
+    if run.get("partial"):
+        raise ValueError("cached run is partial: " + name)
+    expected = sorted(d["id"] for d in manifest["documents"] if d["split"] == split)
+    documents = run.get("documents")
+    if not isinstance(documents, list) or any(not isinstance(d, dict) for d in documents):
+        raise ValueError("cached run documents must be a list of objects: " + name)
+    ids = [d.get("id") for d in documents]
+    if any(not isinstance(i, str) for i in ids) or sorted(ids) != expected:
+        raise ValueError(f"cached run documents are not exactly the {split} documents: {name}")
+
+
 def score_set(
     directory: Path,
     split: str,
@@ -334,6 +349,7 @@ def score_set(
             raise ValueError("cached run does not match the frozen manifest: " + path.name)
         if run.get("labels_sha256") != seal:
             raise ValueError("cached run does not match the sealed labels: " + path.name)
+        check_coverage(manifest, run, split, path.name)
         runs[path.stem] = measure(manifest, labels, run, split) | {
             "cache_sha256": "sha256:" + hashlib.sha256(raw).hexdigest()
         }
