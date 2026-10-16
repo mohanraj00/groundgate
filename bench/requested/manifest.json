@@ -2424,6 +2424,479 @@
    },
    "coverage_period": "2026-07-01 to 2026-12-31",
    "publisher_overlap_note": "Horizon/BCBS brand-family and standardized SBC form overlap broad BlueCross sources, including UT/other employer plans. State sponsor/medical plan differs, but do not treat it as an independent publisher solely from a new URL. Group NJ SHBP/SEHBP Horizon/Aetna employer/plan/year/language/rendering variants conservatively and retain medical-versus-prescription separation."
+  },
+  {
+   "id": "component-h13",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.nxp.com/docs/en/data-sheet/LM75B.pdf",
+   "source_bytes": 539694,
+   "source_sha256": "sha256:b0a93950c14a02d1849f7aa37d0a795be01bb44fb8f54af99925b06af39cdde3",
+   "source_pages": 37,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "nxp-documentation-family",
+   "license": "Conditional unmodified personal noncommercial copy framework with notices; separate PDF no-implied-license clause, final use unresolved",
+   "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
+   "license_other_notices": "Own physical35 denies implied copyright/patent/IP license;36 records export controls; copyright and hardware disclaimers remain. No explicit document-wide copying/extraction prohibition found. Website copy conditions are separate and do not supply a broad model/benchmark license.",
+   "schema": {
+    "fields": {
+     "operating_temperature_max": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Upper operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "le"
+     },
+     "operating_temperature_min": {
+      "aliases": [
+       "Operating temperature",
+       "Ambient temperature",
+       "Case temperature"
+      ],
+      "description": "Lower operating temperature limit, not storage temperature.",
+      "type": "number",
+      "unit": "C",
+      "comparator": "ge"
+     },
+     "supply_current_typ": {
+      "aliases": [
+       "Supply current",
+       "Typical current"
+      ],
+      "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+      "type": "number",
+      "unit": "mA",
+      "comparator": "eq"
+     },
+     "supply_voltage_max": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "le"
+     },
+     "supply_voltage_min": {
+      "aliases": [
+       "Recommended operating conditions",
+       "Supply voltage"
+      ],
+      "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+      "type": "number",
+      "unit": "V",
+      "comparator": "ge"
+     }
+    },
+    "units": {
+     "C": {
+      "suffix": [
+       "\u00b0C",
+       "Celsius"
+      ]
+     },
+     "V": {
+      "suffix": [
+       "V",
+       "volts"
+      ]
+     },
+     "mA": {
+      "suffix": [
+       "mA",
+       "milliamps"
+      ]
+     }
+    }
+   },
+   "request_context": {
+    "subject": "LM75BD",
+    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+   },
+   "publisher_overlap_note": "NXP umbrella is shared with other NXP devices; ordering/packaging variants and revisions are not independent publishers."
+  },
+  {
+   "id": "annual-h16",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/687794132bad77c3dae4dc67/DfE_consolidated_annual_report_and_accounts_2024_to_2025__web-optimised_version_.pdf",
+   "source_bytes": 6516530,
+   "source_sha256": "sha256:d0dcc63435cd111618024d64a06fbb1862e81141a29b10be6e7f32fc475573bf",
+   "source_pages": 332,
+   "approved_max_bytes": 8388608,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "uk-department-for-education-consolidated-family",
+   "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party and other exceptions retained",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "Own physical4 states OGLv3 with identified third-party exceptions. No image/logo or third-party grant is inferred. Original and extracted text stay local; attribution and notices retained.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Department for Education consolidated annual report and accounts 2024 to 2025",
+    "scope": "Latest full fiscal year in this 2024-25 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
+   },
+   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence."
+  },
+  {
+   "id": "annual-h17",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/691213e3e9348ac8fb54f4c4/36.27_MOJ_Annual_Report_and_Accounts_2024-2025_WEB.pdf",
+   "source_bytes": 8550394,
+   "source_sha256": "sha256:7df710512e7cdebafc1bd0c5906669398729983149b705c7f00881b4a22ddbb0",
+   "source_pages": 314,
+   "approved_max_bytes": 10485760,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "uk-ministry-of-justice-departmental-family",
+   "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party and other exceptions retained",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "Own physical4 states OGLv3 with identified third-party exceptions. No image/logo or third-party grant is inferred. Original and extracted text stay local; attribution and notices retained.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Ministry of Justice annual report and accounts: 2024 to 2025",
+    "scope": "Latest full fiscal year in this 2024-25 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
+   },
+   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence."
+  },
+  {
+   "id": "annual-h18",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a4f66c406e7256c331df8a2/HMRC_annual_report_and_accounts_2025_to_2026.pdf",
+   "source_bytes": 11329840,
+   "source_sha256": "sha256:60c3bf382903629b2b0506fa6d1c130e1c54ec6d07c994b9c539fffc6bd1bb07",
+   "source_pages": 329,
+   "approved_max_bytes": 12582912,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "uk-hm-revenue-customs-departmental-family",
+   "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party and other exceptions retained",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "Own physical4 states OGLv3 with identified third-party exceptions. No image/logo or third-party grant is inferred. Original and extracted text stay local; attribution and notices retained. Physical286 NAO report has separate noncommercial research/private-study/internal-review copying conditions with acknowledgement, accuracy and no misleading context; commercial reproduction needs express permission. This exception is not covered by the general OGL claim.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "HMRC annual report and accounts: 2025 to 2026",
+    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
+   },
+   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence."
+  },
+  {
+   "id": "annual-h19",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a4e3a53895317eadc35459e/dwp_annual_report_and_accounts_2025_to_2026.pdf",
+   "source_bytes": 4980025,
+   "source_sha256": "sha256:129acf333db1a90022d1b6528e89dc61b4d8402a0f5c8c4dbec35593b48fd817",
+   "source_pages": 422,
+   "approved_max_bytes": 6291456,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "uk-work-pensions-departmental-family",
+   "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party and other exceptions retained",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "Own physical4 states OGLv3 with identified third-party exceptions. No image/logo or third-party grant is inferred. Original and extracted text stay local; attribution and notices retained.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "DWP annual report and accounts 2025 to 2026",
+    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
+   },
+   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence."
+  },
+  {
+   "id": "annual-h20",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a74a43abde92a23046b24a0/Defra-ARA-2025-26-laid-15July26.pdf",
+   "source_bytes": 3979195,
+   "source_sha256": "sha256:95b32ab98981b7bad6d18bd1f4661251dc592e23bd285cbc7ada292fbe491945",
+   "source_pages": 337,
+   "approved_max_bytes": 5242880,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "uk-defra-departmental-family",
+   "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party and other exceptions retained",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "Own physical4 states OGLv3 with identified third-party exceptions. No image/logo or third-party grant is inferred. Original and extracted text stay local; attribution and notices retained.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Defra's annual report and accounts 2025 to 2026",
+    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
+   },
+   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence."
   }
  ],
  "format": "requested-fields/1",

@@ -2334,6 +2334,461 @@
           "second_check": false
         }
       ]
+    },
+    {
+      "id": "component-h13",
+      "fields": [
+        {
+          "field": "supply_voltage_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "2.8",
+              "unit": "V"
+            }
+          ],
+          "page": 19,
+          "note": "Table17 Recommended operating characteristics, VCC supply voltage Min. This is recommended operation, not Table16 stress ratings; applies to named LM75BD, which appears in ordering tables p3. Same operating region as companion maximum. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_voltage_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5.5",
+              "unit": "V"
+            }
+          ],
+          "page": 19,
+          "note": "Table17 Recommended operating characteristics, VCC supply voltage Max. Same stated operating region as minimum; no absolute-maximum value substituted. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "supply_current_typ",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 20,
+          "note": "Table18 has an explicit Typ[1] column for IDD(AV), so this is not an assumption that an average is automatically typical. It gives distinct normal-mode/bus-inactive and shutdown typical entries; bus-active normal operation has no typical entry. Footnote1 fixes VCC=3.3V and Tamb=25\u00b0C for typical values but does not select an operating mode/bus condition. p1 power-up normal mode does not specify the requested steady-state bus condition. Source p21 separately plots inactive/active/shutdown behavior; no plotted interpolation or current averaging used. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "The fixed request does not select normal versus shutdown or bus activity. The shared voltage/temperature reference does not uniquely determine one typical supply-current condition. Choosing a mode or interpolating a curve would add an unstated choice.",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_min",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-55",
+              "unit": "C"
+            }
+          ],
+          "page": 19,
+          "note": "Table17 Tamb ambient temperature Min in Recommended operating characteristics. Ordering Table2 p3 independently states the same ambient range for LM75BD; LM75BGD cold-test caveat applies to a different variant. Storage/junction limiting values in Table16 excluded. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "operating_temperature_max",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "125",
+              "unit": "C"
+            }
+          ],
+          "page": 19,
+          "note": "Table17 Tamb ambient temperature Max in Recommended operating characteristics. Named LM75BD ordering range p3 corroborates. Storage and junction stress ratings excluded. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h16",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 229,
+          "note": "The primary Group statement labels (672) million as Income/Total income. Note 4.1 Revenue analysis totals 672 million but combines income from contracts, grants, RPA IFRS4 income and rental income. Note 1.9 distinguishes revenue from contracts, grants and RPA. The fixed request does not choose this broad income total or allow calculating an unstated revenue subtotal, so mapping remains unclear. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "The primary Group statement labels (672) million as Income/Total income. Note 4.1 Revenue analysis totals 672 million but combines income from contracts, grants, RPA IFRS4 income and rental income. Note 1.9 distinguishes revenue from contracts, grants and RPA. The fixed request does not choose this broad income total or allow calculating an unstated revenue subtotal, so mapping remains unclear.",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No stated consolidated full-year cost of sales found. Main source p204 reports operating expenditure and policy funding; these are not substituted for cost of sales. Both full-document engines have no cost-of-sales/cost-of-goods/cost-of-revenue hit. Complete original PDF checked with pypdf and Poppler layout text, all recorded query-hit contexts reviewed, primary statements/notes inspected and original low/sparse-text page renders checked. No unstated arithmetic or operating-expense substitution. Independent parent second check remains pending. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No stated consolidated gross profit/loss found. The reported net operating or net expenditure is not gross profit, and no unstated difference is computed. Both full-document engines have no gross-profit/loss/margin hit. Complete original PDF checked with pypdf and Poppler layout text, all recorded query-hit contexts reviewed, primary statements/notes inspected and original low/sparse-text page renders checked. No unstated arithmetic or operating-expense substitution. Independent parent second check remains pending. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "161638000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 205,
+          "note": "Consolidated Statement of Financial Position at31March2025, Total assets, current Group column. Excludes Department&Agencies and prior-year columns. Reported total selected directly, not derived from component totals. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No stated combined whole-Group total liabilities found. p205 gives separate current and non-current totals; they are not added and liabilities are not derived from assets/equity. Full-document Total liabilities hits p263/264 are expressly liabilities from financing activities (and p264 prior year), a narrower scope. Complete original PDF checked with pypdf and Poppler layout text, all recorded query-hit contexts reviewed, primary statements/notes inspected and original low/sparse-text page renders checked. No unstated arithmetic or operating-expense substitution. Independent parent second check remains pending. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "157274000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 205,
+          "note": "Total taxpayers\u2019 equity, 2025 Group column on own consolidated position statement; positive printed balance. This is the stated total, not a sum of reserves or an assets-minus-liabilities calculation. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h17",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-1866792000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 188,
+          "note": "Latest 2024-25 Departmental group primary statement explicitly states Revenue from contracts with customers (1866792), GBP thousands. The fixed request preserves printed signs. Note 3 at physical221 gives the same amount as positive revenue analysis, but I retain the explicit primary-statement credit sign rather than flip it or substitute broader Total operating income. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No stated consolidated full-year cost of sales found. Purchase of goods/services and total operating expenditure in p188 are not cost-of-sales substitutes. Both complete text engines have no cost-of-sales/cost-of-goods/cost-of-revenue hit. Complete original PDF checked with pypdf and Poppler layout text, all recorded query-hit contexts reviewed, primary statements/notes inspected and original low/sparse-text page renders checked. No unstated arithmetic or operating-expense substitution. Independent parent second check remains pending. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No stated consolidated gross profit/loss found. Net operating expenditure or net expenditure is not substituted, and no income-minus-expense difference is computed. Both complete text engines have no gross-profit/loss/margin hit. Complete original PDF checked with pypdf and Poppler layout text, all recorded query-hit contexts reviewed, primary statements/notes inspected and original low/sparse-text page renders checked. No unstated arithmetic or operating-expense substitution. Independent parent second check remains pending. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "18597099000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 190,
+          "note": "Consolidated Statement of Financial Position, Total assets,31March2025 Departmental group column, \u00a3000. Select second current-year column, not core department/agencies. Direct stated total. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No stated combined whole-Group total liabilities found. p190/191 report current and non-current liabilities separately; they are not added. Full-document total-liability hits p240/241 are financing-activity liabilities; p246 concerns a pension sensitivity; p279/281 concern individual pension schemes. None is the requested whole-Group closing total. Complete original PDF checked with pypdf and Poppler layout text, all recorded query-hit contexts reviewed, primary statements/notes inspected and original low/sparse-text page renders checked. No unstated arithmetic or operating-expense substitution. Independent parent second check remains pending. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "12653248000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 191,
+          "note": "Continuation of the consolidated position statement: Total taxpayers\u2019 equity,31March2025 Departmental group column, \u00a3000. Positive printed sign. No reserve sum or asset/liability calculation. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h18",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 230,
+          "note": "Note4 physical257 explicitly separates the Revenue from Contracts with Customers subtotal130.2m and Other Income248.9m. The primary Resource Accounts give Total operating income(378.4)m, not an unqualified revenue total. The distinct Trust Statement tax revenues are excluded by the fixed consolidated departmental scope. The request does not select contract-only subtotal versus broader income, so mapping is unclear. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "Note4 physical257 explicitly separates the Revenue from Contracts with Customers subtotal130.2m and Other Income248.9m. The primary Resource Accounts give Total operating income(378.4)m, not an unqualified revenue total. The distinct Trust Statement tax revenues are excluded by the fixed consolidated departmental scope. The request does not select contract-only subtotal versus broader income, so mapping is unclear.",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No consolidated full-year cost-of-sales amount is stated. Complete two-engine cost/goods-sales searches found no target; operating expenditure, benefits, goods/services and other costs are not substituted. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No consolidated full-year gross-profit amount is stated; no gross profit/loss wording in either complete extraction. Net operating expenditure or calculated revenue-minus-cost is not substituted. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5883400000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 231,
+          "note": "Latest full fiscal year ended 31 March 2026, own consolidated departmental Group. Closing 31 March 2026 total assets, GBP million. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "Current and non-current liabilities are separately totalled, but no standalone combined total liabilities is stated for Resource Accounts consolidated Group. Total assets less total liabilities is net assets, not total liabilities; Trust Statement totals are outside this Group scope. No sum or subtraction performed. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "2723500000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 231,
+          "note": "Latest full fiscal year ended 31 March 2026, own consolidated departmental Group. Closing 31 March 2026 total equity, GBP million. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h19",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 330,
+          "note": "Policy1.6 physical344 discusses revenue recognition(income), but the primary statement and Note7 physical365 state operating income534503k and total income588984k including finance/noncash income. No unique unqualified revenue mapping is given; I do not substitute either whole income total or compute one. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "Policy1.6 physical344 discusses revenue recognition(income), but the primary statement and Note7 physical365 state operating income534503k and total income588984k including finance/noncash income. No unique unqualified revenue mapping is given; I do not substitute either whole income total or compute one.",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No consolidated cost-of-sales amount is stated; complete two-engine exact/variant searches found no target. Staff, purchases, benefits and other operating costs are not cost of sales by substitution. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No consolidated gross-profit or gross-loss amount is stated in complete two-engine source checks. Do not calculate profit or use net expenditure. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "15961328000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 331,
+          "note": "Latest full fiscal year ended 31 March 2026, own consolidated departmental Group. Departmental group column at 31 March 2026, GBP thousand; not Core Department or prior comparative. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "The Group states total current and non-current liabilities separately, followed by assets less liabilities. No combined numeric Group total liabilities is stated. Note1 mentions total liabilities exceeding assets without a numeric aggregate. No addition/subtraction performed. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-6006742000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 332,
+          "note": "Latest full fiscal year ended 31 March 2026, own consolidated departmental Group. Departmental group total equity at 31 March 2026, GBP thousand; preserve printed parentheses as negative. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h20",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 187,
+          "note": "Primary statement separately states Revenue from contracts with customers and Insurance Revenue; other operating income is also separate. Note3 physical223/224 and policies physical209/211 retain these scopes. The fixed unqualified revenue request does not select one or permit combining unstated totals. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "Primary statement separately states Revenue from contracts with customers and Insurance Revenue; other operating income is also separate. Note3 physical223/224 and policies physical209/211 retain these scopes. The fixed unqualified revenue request does not select one or permit combining unstated totals.",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No consolidated full-year cost-of-sales amount is stated; complete two-engine exact/variant searches found no target. Other expenditure or insurance-service expenditure is not substituted. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "No consolidated full-year gross-profit/gross-loss amount is stated. Do not compute from income and expenses or substitute net operating expenditure. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "15881346000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 189,
+          "note": "Latest full fiscal year ended 31 March 2026, own consolidated departmental Group. Defra group column at 31 March 2026, GBP thousand; not core-and-agencies or prior-year columns. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": null,
+          "note": "The Group states total current liabilities and total non-current liabilities but no combined total liabilities. Assets less liabilities is net assets, not the requested total. No sum or subtraction performed. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": true
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "12324482000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 190,
+          "note": "Latest full fiscal year ended 31 March 2026, own consolidated departmental Group. Defra group total equity at 31 March 2026, GBP thousand; printed positive sign retained. Independent blind source checks and source-only reconciliation completed before benchmark output.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
     }
   ],
   "status": "draft"
