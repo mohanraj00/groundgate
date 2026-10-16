@@ -199,6 +199,7 @@ def cache(directory: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, An
         run[name + "_sha256"] = (
             "sha256:" + hashlib.sha256((directory / (name + ".json")).read_bytes()).hexdigest()
         )
+    run["split"] = "heldout"
     (directory / "runs/baseline.json").write_text(json.dumps(run))
     return m, labels, run
 
@@ -226,3 +227,46 @@ def test_malformed_admitted_key_is_an_escape(bad_key: Any) -> None:
     out = measure(m, labels, run, "heldout")["total"]
     assert out["escapes"] == out["admitted"] == 1
     assert out["hits"] == 0
+
+
+@pytest.mark.parametrize(
+    ("change", "message"),
+    [
+        (lambda run: run.update(split="development", documents=[]), "split"),
+        (lambda run: run.pop("split"), "split"),
+        (lambda run: run.update(documents=[]), "exactly"),
+        (lambda run: run["documents"].append({"id": "x", "decisions": []}), "exactly"),
+        (lambda run: run["documents"].append(dict(run["documents"][0])), "exactly"),
+        (lambda run: run["documents"][0].update(id=7), "exactly"),
+        (lambda run: run.update(documents={}), "list"),
+        (lambda run: run.update(partial=True), "partial"),
+    ],
+)
+def test_run_of_another_split_or_with_other_documents_is_refused(
+    tmp_path: Path, change: Any, message: str
+) -> None:
+    _, _, run = cache(tmp_path)
+    change(run)
+    (tmp_path / "runs/baseline.json").write_text(json.dumps(run))
+    with pytest.raises(ValueError, match=message):
+        score_set(tmp_path, "heldout")
+
+
+def test_projection_with_a_missing_document_is_refused(tmp_path: Path) -> None:
+    m, labels, run = cache(tmp_path)
+    m["documents"].append({"id": "d2", "kind": "kind", "split": "heldout"})
+    second = copy.deepcopy(labels["documents"][0])
+    second["id"] = "d2"
+    labels["documents"].append(second)
+    for name, content in (("manifest.json", m), ("labels.json", labels)):
+        (tmp_path / name).write_text(json.dumps(content))
+    for name in ("manifest", "labels"):
+        run[name + "_sha256"] = (
+            "sha256:" + hashlib.sha256((tmp_path / (name + ".json")).read_bytes()).hexdigest()
+        )
+    (tmp_path / "runs/baseline.json").write_text(json.dumps(run))
+    with pytest.raises(ValueError, match="exactly the heldout documents"):
+        score_set(tmp_path, "heldout")
+    run["documents"].append({"id": "d2", "decisions": [], "not_found": []})
+    (tmp_path / "runs/baseline.json").write_text(json.dumps(run))
+    assert score_set(tmp_path, "heldout")["runs"]["baseline"]["total"]["documents"] == 2
