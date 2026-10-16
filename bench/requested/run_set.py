@@ -148,6 +148,42 @@ def _validate_blind_labels(manifest: Json, labels: Json) -> None:
         ) from exc
 
 
+def _validate_request_contexts(manifest: Json, labels: Json) -> None:
+    """Refuse request context that changes in a kind or holds label annotation text.
+
+    Every document of one kind gets the same scope. No subject or scope may hold a label note,
+    an unclear reason or a manifest label scope note. schema() checks the context shape.
+    """
+
+    def plain(text: Any) -> str | None:
+        return " ".join(text.split()) if isinstance(text, str) and text.strip() else None
+
+    notes = {
+        note
+        for gold in labels["documents"]
+        for slot in gold["fields"]
+        for note in (plain(slot.get("note")), plain(slot.get("reason")))
+        if note is not None
+    }
+    notes |= {
+        note
+        for doc in manifest["documents"]
+        if (note := plain(doc.get("label_scope_note"))) is not None
+    }
+    scopes: dict[Any, Any] = {}
+    for doc in manifest["documents"]:
+        context = doc.get("request_context")
+        scope = context.get("scope") if isinstance(context, dict) else None
+        if scopes.setdefault(doc.get("kind"), scope) != scope:
+            raise CacheError("request_context scope must be one fixed string for each kind")
+        if not isinstance(context, dict):
+            continue
+        for member in context.values():
+            text = plain(member)
+            if text is not None and any(note in text for note in notes):
+                raise CacheError("request_context must not hold label annotation text")
+
+
 def _unlinked(path: Path) -> Path:
     if any(parent.is_symlink() for parent in (path, *path.parents)):
         raise CacheError("symlink paths are not supported")
@@ -450,7 +486,13 @@ class FrozenSet:
         ):
             raise CacheError("complete manifest must be frozen")
         # Validate the full seal before any client/cache work, without retaining parsed gold.
-        _validate_blind_labels(self.manifest, _json(raw[self.directory / "labels.json"]))
+        gold = _json(raw[self.directory / "labels.json"])
+        _validate_blind_labels(self.manifest, gold)
+        try:
+            _validate_request_contexts(self.manifest, gold)
+        except (KeyError, TypeError, AttributeError) as exc:
+            raise CacheError("request_context check needs a valid manifest") from exc
+        del gold
         self.config = _json(raw[_unlinked(configuration.absolute())])
         if set(self.config) != {
             "model_id",

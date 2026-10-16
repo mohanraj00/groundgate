@@ -6,6 +6,7 @@ import builtins
 import copy
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -879,3 +880,70 @@ def test_partial_document_run_publishes_no_projection_and_full_run_reuses_it(tmp
     assert not no_repeat.prompts and (folder / "projection.json").exists()
     assert full["documents"] == partial["documents"]
     assert session.run("baseline") == full
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        # A second document of the same kind with another scope.
+        lambda m, labels: m["documents"][1]["request_context"].update(scope="year2032"),
+        # A second document of the same kind with no request context.
+        lambda m, labels: m["documents"][1].pop("request_context"),
+        # A scope that holds a label note.
+        lambda m, labels: [
+            doc["request_context"].update(scope="year2031 secret-gold-annotation")
+            for doc in m["documents"]
+        ],
+        # A subject that equals an unclear reason, with other whitespace.
+        lambda m, labels: m["documents"][0]["request_context"].update(
+            subject="  secret-unclear-annotation\n"
+        ),
+        # A subject that holds a manifest label scope note.
+        lambda m, labels: (
+            m["documents"][1].update(label_scope_note="device Alpha"),
+            m["documents"][0]["request_context"].update(subject="The device Alpha part"),
+        ),
+    ],
+)
+def test_request_context_varying_in_a_kind_or_holding_a_note_refuses(tmp_path, change):
+    fields = {"amount": {"type": "number"}, "unclear": {"type": "number"}}
+
+    def mutate(manifest, labels, config):
+        add_development_document(tmp_path, manifest, labels)
+        for doc in manifest["documents"]:
+            doc["request_context"] = {"subject": "device Beta", "scope": "year2031"}
+        change(manifest, labels)
+
+    client = Client()
+    with pytest.raises(harness.CacheError, match="request_context"):
+        session, _ = fixture(tmp_path, fields=fields, mutate=mutate)
+        session.run("baseline", client)
+    assert client.prompts == []
+    assert not (tmp_path / "cache").exists()
+
+
+def test_documents_of_one_kind_may_have_their_own_subject(tmp_path):
+    def mutate(manifest, labels, config):
+        add_development_document(tmp_path, manifest, labels)
+        for name, doc in zip(("device Alpha", "device Beta"), manifest["documents"], strict=True):
+            doc["request_context"] = {"subject": name, "scope": "year2031"}
+
+    session, _ = fixture(tmp_path, mutate=mutate)
+    assert "device Alpha" in json.dumps(session.schema(session.documents["doc"]))
+
+
+def test_tracked_manifest_has_one_request_context_for_each_kind():
+    """The frozen set: one scope for each kind, identity-only subjects and no label notes."""
+    directory = Path(__file__).parent
+    manifest = json.loads((directory / "manifest.json").read_bytes())
+    labels = json.loads((directory / "labels.json").read_bytes())
+    harness._validate_request_contexts(manifest, labels)
+    subjects: dict[str, set[str]] = {}
+    for doc in manifest["documents"]:
+        assert set(doc["request_context"]) == {"subject", "scope"}
+        subjects.setdefault(doc["kind"], set()).add(doc["request_context"]["subject"])
+    assert set(subjects) == {"annual", "component", "sbc"}
+    # A plan or a group needs no identity. A datasheet can cover more parts, so the request
+    # names its part number only.
+    assert len(subjects["annual"]) == len(subjects["sbc"]) == 1
+    assert all(re.fullmatch(r"[A-Z0-9][A-Z0-9-]*", s) for s in subjects["component"])
