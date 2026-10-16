@@ -130,7 +130,7 @@ def test_pdf_table_rows_are_lines_with_tabs(tmp_path: Path) -> None:
     doc = extract(path)
     assert doc.text == (
         "Statement of things\n(in thousands)\n\n"
-        "2025\t2024\nAssets:\nCash\t$ 1,234\t$ 1,100\nTotal assets\t5,678\t4,321\n\n"
+        "\t2025\t2024\nAssets:\nCash\t$ 1,234\t$ 1,100\nTotal assets\t5,678\t4,321\n\n"
         "These notes are part of the statement."
     )
     assert doc.text == extract(path).text
@@ -257,7 +257,7 @@ def test_pdf_a_number_row_in_a_table_is_cut_into_cells(tmp_path: Path) -> None:
         (400, 672, "6"),
     ]
     path.write_bytes(make_pdf([page]))
-    assert extract(path).text == "Cash\t1\t2\n3\t4\nDebt\t5\t6"
+    assert extract(path).text == "Cash\t1\t2\n\t3\t4\nDebt\t5\t6"
 
 
 def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> None:
