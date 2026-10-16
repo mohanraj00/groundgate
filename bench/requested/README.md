@@ -279,3 +279,12 @@ initial ambiguity. All final absences have independent complete-source checks. B
 annotation freezes remain unchanged; reconciliation occurs before any benchmark output.
 Publication-local grants and their exceptions are recorded separately, including a conditional
 text grant that is not OGL. Final source selection is open and the earlier drafts are unchanged.
+
+Three further SBC drafts preserve their exact calendar, fiscal and half-year coverage periods.
+A stated calendar-year deductible within a half-year document is not prorated or extrapolated.
+Explicit overall or active health-provider out-of-pocket limits are distinct from narrower
+coinsurance limits; I do not add separate prescription limits. A generic network request with
+different participating-tier copays stays unclear. Independent blind checks agree on all new
+statuses, values and units. The records retain insurer/form overlap, a generic source-template
+placeholder and raster language-notice appendices. Source copying rights remain unresolved or
+limited as recorded; these drafts do not establish final membership. Earlier drafts are unchanged.

@@ -2202,6 +2202,228 @@
     "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
    },
    "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed."
+  },
+  {
+   "id": "sbc-h09",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.pebtf.org/api//appFiles/25b67171-110d-4c38-b3a3-3cf117401ade.pdf",
+   "source_bytes": 378185,
+   "source_sha256": "sha256:cd2b61c52c4d583e543d5c6de439db510d82dbd9a571a173db41aed64d61200f",
+   "source_pages": 7,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "pebtf-active-medical-ppo-hmo-family",
+   "license": "No affirmative document-copy grant established in inspected website or original PDF; rights unresolved",
+   "license_source": "https://www.pebtf.org/legal/terms",
+   "license_other_notices": "Consumer coverage, appeal, nondiscrimination and language notices remain intact. No affirmative PDF-local reproduction grant or contrary document-wide copying/extraction restriction found. Silence and public hosting do not establish permission. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "2026 Basic PPO",
+    "scope": "2026 named plan and active population, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   },
+   "coverage_period": "2026-01-01 to 2026-12-31",
+   "publisher_overlap_note": "Employer trust is a new sponsor family. The selected file's insurer/administrator is not established by the inspected catalog metadata. Keep PEBTF PPO/HMO/Bronze variants and revisions together; determine carrier/form overlap from approved original notices/provenance without assuming a new insurer."
+  },
+  {
+   "id": "sbc-h10",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.utsystem.edu/sites/default/files/documents/publication/2026/ppo-network-summary-of-benefits-and-coverage/sbc-ppo-fy2026.pdf",
+   "source_bytes": 481557,
+   "source_sha256": "sha256:5cb0a93f0962caf16a7554209e58cd4f9414c4a823c2f415109c7c5ae6b0a25b",
+   "source_pages": 8,
+   "approved_max_bytes": 1048576,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "ut-system-ut-select-bcbstx-medical-family",
+   "license": "No affirmative document-copy grant established in inspected website or original PDF; rights unresolved",
+   "license_source": "https://www.utsystem.edu/copyright",
+   "license_other_notices": "Consumer coverage, appeal, nondiscrimination and language notices remain intact. No affirmative PDF-local reproduction grant or contrary document-wide copying/extraction restriction found. Silence and public hosting do not establish permission. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "UT SELECT PPO Network, FY2026 (2025-2026)",
+    "scope": "FY2026, catalog period 2025-2026 named plan and active population, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   },
+   "coverage_period": "2025-09-01 to 2026-08-31",
+   "publisher_overlap_note": "Catalog identifies UT SELECT/BCBSTX contact context. BlueCross/BlueShield administration overlaps other broad BCBS sources, including MIT and the NJ candidate. UT sponsor/plan family is distinct, but this does not establish independent insurer/authorship/form diversity. Keep PPO/out-of-area, fiscal-year, language and rendering revisions together."
+  },
+  {
+   "id": "sbc-h11",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://www.nj.gov/treasury/pensions/documents/hb/oe2026/sbcs/sbc216.pdf",
+   "source_bytes": 1781523,
+   "source_sha256": "sha256:dad0453ceea9aea0d8d8a648e31bf9cc471cd640666164706b07e66ac7f6056c",
+   "source_pages": 10,
+   "approved_max_bytes": 2097152,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+   "source_family_group": "new-jersey-shbp-state-horizon-medical-family",
+   "license": "State-information copy framework subject to local and third-party rights; exact insurer-content reuse grant unresolved",
+   "license_source": "https://www.nj.gov/nj/legal.shtml",
+   "license_other_notices": "Consumer coverage, appeal, nondiscrimination and language notices remain intact. No affirmative PDF-local reproduction grant or contrary document-wide copying/extraction restriction found. Silence and public hosting do not establish permission. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "deductible_family": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network family deductible in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "deductible_individual": {
+      "aliases": [
+       "Overall deductible",
+       "Deductible"
+      ],
+      "description": "In-network deductible for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     },
+     "out_of_pocket_family": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "out_of_pocket_individual": {
+      "aliases": [
+       "Out-of-pocket limit"
+      ],
+      "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "le"
+     },
+     "specialist_copay": {
+      "aliases": [
+       "Specialist visit"
+      ],
+      "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+      "type": "number",
+      "unit": "USD",
+      "comparator": "eq"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "2026 Horizon NJ DIRECT 15, active State employees",
+    "scope": "2026 named plan and active population, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+   },
+   "coverage_period": "2026-07-01 to 2026-12-31",
+   "publisher_overlap_note": "Horizon/BCBS brand-family and standardized SBC form overlap broad BlueCross sources, including UT/other employer plans. State sponsor/medical plan differs, but do not treat it as an independent publisher solely from a new URL. Group NJ SHBP/SEHBP Horizon/Aetna employer/plan/year/language/rendering variants conservatively and retain medical-versus-prescription separation."
   }
  ],
  "format": "requested-fields/1",

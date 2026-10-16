@@ -2099,6 +2099,241 @@
           "second_check": false
         }
       ]
+    },
+    {
+      "id": "sbc-h09",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1500",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original overall-deductible row, in-network individual amount. Other service-specific or out-of-network amounts are excluded. Exact source coverage: 2026-01-01 to 2026-12-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "3000",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original overall-deductible row, in-network family amount; no sum of individual deductibles. Exact source coverage: 2026-01-01 to 2026-12-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "10600",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original stated network out-of-pocket individual limit, not a calculated sum. Exact source coverage: 2026-01-01 to 2026-12-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "21200",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original stated network family out-of-pocket limit, not a computed family accumulation. Exact source coverage: 2026-01-01 to 2026-12-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "45",
+              "unit": "USD"
+            }
+          ],
+          "page": 2,
+          "note": "Original specialist office-visit row, network provider dollar copayment per visit; deductible does not apply. Exact source coverage: 2026-01-01 to 2026-12-31.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "sbc-h10",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "600",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original overall-deductible row, in-network individual amount. Other service-specific or out-of-network amounts are excluded. UT Health and standard in-network tiers have the same amount. Exact source coverage: 2025-09-01 to 2026-08-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1800",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original overall-deductible row, in-network family amount; no sum of individual deductibles. UT Health and standard in-network tiers have the same amount. Exact source coverage: 2025-09-01 to 2026-08-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "9200",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original stated network out-of-pocket individual limit, not a calculated sum. Use explicitly stated Overall Limit for UT Health and In-Network, not narrower Coinsurance Limit. Separate prescription deductions/limits are not added. Exact source coverage: 2025-09-01 to 2026-08-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "18400",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original stated network family out-of-pocket limit, not a computed family accumulation. Use explicitly stated Overall Limit for UT Health and In-Network, not narrower Coinsurance Limit. Separate prescription deductions/limits are not added. Exact source coverage: 2025-09-01 to 2026-08-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 2,
+          "note": "UT Health Network Provider copay is 40 USD and In-Network Provider copay is 50 USD. The frozen generic in-network request does not choose a provider tier. Retain unclear; illustrative examples using 40 do not select a universal tier. Exact source coverage: 2025-09-01 to 2026-08-31.",
+          "reason": "UT Health Network Provider copay is 40 USD and In-Network Provider copay is 50 USD. The frozen generic in-network request does not choose a provider tier. Retain unclear; illustrative examples using 40 do not select a universal tier. Exact source coverage: 2025-09-01 to 2026-08-31.",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "sbc-h11",
+      "fields": [
+        {
+          "field": "deductible_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "110",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original overall-deductible row, in-network individual amount. Other service-specific or out-of-network amounts are excluded. Stated per calendar year for in-network services not requiring copayment, despite SBC coverage only July-December. No proration or new-year reset is inferred. Exact source coverage: 2026-07-01 to 2026-12-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "deductible_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "220",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original overall-deductible row, in-network family amount; no sum of individual deductibles. Stated per calendar year for in-network services not requiring copayment, despite SBC coverage only July-December. No proration or new-year reset is inferred. Exact source coverage: 2026-07-01 to 2026-12-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_individual",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "8480",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original stated network out-of-pocket individual limit, not a calculated sum. Active employee in-network Health providers limit is used, not separately labeled narrower coinsurance limit or out-of-network amount. Separate drug SBC is excluded; no sum. Exact source coverage: 2026-07-01 to 2026-12-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "out_of_pocket_family",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "16960",
+              "unit": "USD"
+            }
+          ],
+          "page": 1,
+          "note": "Original stated network family out-of-pocket limit, not a computed family accumulation. Active employee in-network Health providers limit is used, not separately labeled narrower coinsurance limit or out-of-network amount. Separate drug SBC is excluded; no sum. Exact source coverage: 2026-07-01 to 2026-12-31.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "specialist_copay",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "15",
+              "unit": "USD"
+            }
+          ],
+          "page": 2,
+          "note": "Original specialist office-visit row, network provider dollar copayment per visit; deductible does not apply. Exact source coverage: 2026-07-01 to 2026-12-31.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
     }
   ],
   "status": "draft"
