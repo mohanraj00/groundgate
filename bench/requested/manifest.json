@@ -15,8 +15,8 @@
    "source_sha256": "sha256:9651a99f3cd27426037bdbe5d56e35185c68ded698a423dc89c378797abe3e15",
    "split": "development",
    "request_context": {
-    "subject": "The consolidated group in this source",
-    "scope": "Latest full fiscal year, consolidated group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "text_sha256": "sha256:1ec586d3ff341a112f1412356f4fb8c716b3913c15b5443e4ecb84bfe9060cfc",
    "selection_status": "frozen_member"
@@ -114,7 +114,7 @@
    "label_scope_note": "The thermal table states chip case temperature TC. The fixed operating-temperature request is not ambient-only. Supply rail and software mode are not specified; unresolved power fields stay unclear.",
    "request_context": {
     "subject": "RP2040",
-    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "text_sha256": "sha256:e9bff7326c78db309ebd6f257641040ef2cbb289881d8d55970e88a038fdb598",
    "selection_status": "frozen_member"
@@ -133,8 +133,8 @@
    "source_sha256": "sha256:a149efc66db135e06bad1cd74f0be030960ec6f80032fb6d654e7b4281ac753b",
    "split": "development",
    "request_context": {
-    "subject": "UMP Classic non-Medicare plan, 2026",
-    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "text_sha256": "sha256:243be41ff454c9a70ccf958a3ee753f6f6e0be45a3e08a8c577a13fc3862060d",
    "selection_status": "frozen_member"
@@ -206,8 +206,8 @@
    "source_sha256": "sha256:44ebea795990acfda6c10f1c4deecc52714fe19d7b44e313636c9d905d9d21e5",
    "split": "heldout",
    "request_context": {
-    "subject": "The named plan in this source",
-    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "text_sha256": "sha256:d0d925862dc5ffc7917274d254a8aa4f6b9071e832117adb79b4717f55a0af95"
   },
@@ -278,8 +278,8 @@
    "source_sha256": "sha256:d031ee5dc19cba3897f95ada7dc6d6fd73c89facb0e0c2a7f06fca7be1d8b2cb",
    "split": "heldout",
    "request_context": {
-    "subject": "The named plan in this source",
-    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "text_sha256": "sha256:beb70eb8715eabda43d0f4ffef2984fbcc35f547a0c48537fa80891dfed46119"
   },
@@ -352,8 +352,8 @@
    "source_sha256": "sha256:dcdc67ff84977e2beeb6b7a8113b6862fae1880838c613eceac42ba4b605d9d7",
    "split": "heldout",
    "request_context": {
-    "subject": "The consolidated group in this source",
-    "scope": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "text_sha256": "sha256:c80f077520b80b282f436b75fb8c0fe990016f9bd5e1f9a7e10401d18a597901"
   },
@@ -426,8 +426,8 @@
    "source_sha256": "sha256:eab508829aacb9c2d78a9d0ee8e9e1f6266b474bdd726c4f23ddf6fc3e6c1f40",
    "split": "heldout",
    "request_context": {
-    "subject": "The consolidated group in this source",
-    "scope": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "text_sha256": "sha256:ca9c01d6910f7308bade870f6b4154d366183bfa3a608e31e58eaf1739a7ebf2"
   },
@@ -526,7 +526,7 @@
    "named_source": "SCD30",
    "request_context": {
     "subject": "SCD30",
-    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "text_sha256": "sha256:928132c49cab5fca7d5ee724b06217347b635d517e4107f50c4cb1b700e8bce3"
   },
@@ -625,7 +625,7 @@
    "named_source": "SHT31-DIS-B",
    "request_context": {
     "subject": "SHT31-DIS-B",
-    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "text_sha256": "sha256:ddf719d44c1954227941840df3f189f5cdc7c4f816861f4f5f36925edb90d4a2"
   },
@@ -724,7 +724,7 @@
    "named_source": "SDP31",
    "request_context": {
     "subject": "SDP31",
-    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "text_sha256": "sha256:642a8b2447802d783eb0eded3693b1f9e665b44f959576c33174bc5e47c55876"
   },
@@ -797,8 +797,8 @@
    "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
    "named_source": "MIT BCBS PPO+ 2026",
    "request_context": {
-    "subject": "MIT BCBS PPO+ 2026",
-    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "text_sha256": "sha256:abe65060f6fd1205767af767d11c28ab65c2570b6a23e65c29b2d9876ab2a7a2"
   },
@@ -871,8 +871,8 @@
    "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
    "named_source": "MIT BCBS HDHP 2026",
    "request_context": {
-    "subject": "MIT BCBS HDHP 2026",
-    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "text_sha256": "sha256:ff2e18fca2457297025ff8308d7bb611cf9d7f2837739ebb07a50ccea03147d1"
   },
@@ -945,8 +945,8 @@
    "label_scope_note": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added",
    "named_source": "Duke Select 2026",
    "request_context": {
-    "subject": "Duke Select 2026",
-    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "text_sha256": "sha256:888e1007a40eabb4eacd8ac65e384bf1458385835e990fd7919a34ddfd3be017"
   },
@@ -1021,8 +1021,8 @@
    "label_scope_note": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit.",
    "named_source": "Latest consolidated group annual report",
    "request_context": {
-    "subject": "The consolidated group in this source",
-    "scope": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "text_sha256": "sha256:258e51ab497f8985d55e35898685cfb6151491accfbedf66c39b1b9742fe3ef6"
   },
@@ -1122,7 +1122,7 @@
    "named_source": "P2",
    "request_context": {
     "subject": "P2",
-    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "text_sha256": "sha256:f8d029aa3a18c923cf6b8736e794711d1fd6f30d290838fdca608aadc76355a8"
   },
@@ -1198,8 +1198,8 @@
    "label_scope_note": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit.",
    "named_source": "Nuclear Decommissioning Authority group",
    "request_context": {
-    "subject": "Nuclear Decommissioning Authority group",
-    "scope": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "text_sha256": "sha256:01bc5ac257aaab4727149edac61e41e0488a69c76ba03ac9ebb8376f5dff3b6e"
   },
@@ -1275,8 +1275,8 @@
    "label_scope_note": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit.",
    "named_source": "The Crown Estate group",
    "request_context": {
-    "subject": "The Crown Estate group",
-    "scope": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "text_sha256": "sha256:f1c97c0f7dc289cad282454a10efcfb3e1b4aae5c201cce4c8cb4fdf7b0e5f1d"
   },
@@ -1377,7 +1377,7 @@
    "variant_selection_basis": "First listed power-condition variant in catalog headings before PDF download; M404 is not selected.",
    "request_context": {
     "subject": "M524",
-    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "text_sha256": "sha256:fe785ef9bbacfd76358cee9de77eb8c4d51eb3f6639527d5a25300a1e39fa87f"
   },
@@ -1478,7 +1478,7 @@
    "variant_selection_basis": "Exact ordering variant named by the source catalog before PDF download.",
    "request_context": {
     "subject": "B404X",
-    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "text_sha256": "sha256:21eb9a28a0ca5a7539d495426054ca6f2c5f3f1762957babcf1ae6647e2987de"
   },
@@ -1579,7 +1579,7 @@
    "variant_selection_basis": "First listed variant in the catalog T404/T402 power heading before PDF download; other Tracker variants are not selected.",
    "request_context": {
     "subject": "T404",
-    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "text_sha256": "sha256:f0e40cb9300d9f59cbd789a942abcb38ae01df85d170d827293d155e2b046d52"
   },
@@ -1651,8 +1651,8 @@
     }
    },
    "request_context": {
-    "subject": "UIChoice Active Blue POS, 2026",
-    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "text_sha256": "sha256:05c90a14ade2ab7b3e73a906cd3d81aa23900ce0bf0b749a2f5c8f776256c1f2"
   },
@@ -1724,8 +1724,8 @@
     }
    },
    "request_context": {
-    "subject": "NC Standard Plan, 2026",
-    "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "The administrator also appears in another SBC family. This document is not a new insurer publisher or an independent publisher trial.",
    "text_sha256": "sha256:8003c1cebd75aff38c4841217ee414c9bd7043a31e7dd86cc265e7e9525d68bc"
@@ -1824,7 +1824,7 @@
    },
    "request_context": {
     "subject": "ACS712ELCTR-05B-T",
-    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "named_device": "ACS712ELCTR-05B-T",
    "technical_family": "allegro-acs712-integrated-current-sensor-family",
@@ -1924,7 +1924,7 @@
    },
    "request_context": {
     "subject": "A1324LLHLT-T",
-    "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "named_device": "A1324LLHLT-T",
    "technical_family": "allegro-a1324-a1325-a1326-linear-hall-sensor-family",
@@ -2000,8 +2000,8 @@
     }
    },
    "request_context": {
-    "subject": "UK Atomic Energy Authority Annual Report and Accounts 2025 to 2026",
-    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
    "text_sha256": "sha256:34d5caa25fb0ddf4377d847ec6f7ec67152beeadc98adc0adef1d69543db082f"
@@ -2076,8 +2076,8 @@
     }
    },
    "request_context": {
-    "subject": "UKRI annual report and accounts 2025 to 2026 (web-accessible)",
-    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
    "text_sha256": "sha256:99854fffdce71ea622c31d79e89d993ec6c4c81a26100dad144d4dd9690d3440"
@@ -2152,8 +2152,8 @@
     }
    },
    "request_context": {
-    "subject": "Homes England Annual Report and Accounts 2025 to 2026",
-    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
    "text_sha256": "sha256:c4224654271b915cd0a41fb9feb2cd59854877329726ed7d8dfcbd68d33ade8d"
@@ -2228,8 +2228,8 @@
     }
    },
    "request_context": {
-    "subject": "BBC Group annual report and accounts for 2025 to 2026",
-    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
    "text_sha256": "sha256:936826a84d890b2d594110742f7ed5e193304dfaabb6a0a9106e1efbec4986a4"
@@ -2302,8 +2302,8 @@
     }
    },
    "request_context": {
-    "subject": "2026 Basic PPO",
-    "scope": "2026 named plan and active population, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "coverage_period": "2026-01-01 to 2026-12-31",
    "publisher_overlap_note": "Employer trust is a new sponsor family. The selected file's insurer/administrator is not established by the inspected catalog metadata. Keep PEBTF PPO/HMO/Bronze variants and revisions together; determine carrier/form overlap from approved original notices/provenance without assuming a new insurer.",
@@ -2377,8 +2377,8 @@
     }
    },
    "request_context": {
-    "subject": "UT SELECT PPO Network, FY2026 (2025-2026)",
-    "scope": "FY2026, catalog period 2025-2026 named plan and active population, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "coverage_period": "2025-09-01 to 2026-08-31",
    "publisher_overlap_note": "Catalog identifies UT SELECT/BCBSTX contact context. BlueCross/BlueShield administration overlaps other broad BCBS sources, including MIT and the NJ candidate. UT sponsor/plan family is distinct, but this does not establish independent insurer/authorship/form diversity. Keep PPO/out-of-area, fiscal-year, language and rendering revisions together.",
@@ -2452,8 +2452,8 @@
     }
    },
    "request_context": {
-    "subject": "2026 Horizon NJ DIRECT 15, active State employees",
-    "scope": "2026 named plan and active population, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "coverage_period": "2026-07-01 to 2026-12-31",
    "publisher_overlap_note": "Horizon/BCBS brand-family and standardized SBC form overlap broad BlueCross sources, including UT/other employer plans. State sponsor/medical plan differs, but do not treat it as an independent publisher solely from a new URL. Group NJ SHBP/SEHBP Horizon/Aetna employer/plan/year/language/rendering variants conservatively and retain medical-versus-prescription separation.",
@@ -2553,7 +2553,7 @@
    },
    "request_context": {
     "subject": "LM75BD",
-    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "NXP umbrella is shared with other NXP devices; ordering/packaging variants and revisions are not independent publishers.",
    "text_sha256": "sha256:2abe72e63e511d03b5a2920636a2c4ffc311c3bec8c9ad784b41768cf0383f3b"
@@ -2628,8 +2628,8 @@
     }
    },
    "request_context": {
-    "subject": "Department for Education consolidated annual report and accounts 2024 to 2025",
-    "scope": "Latest full fiscal year in this 2024-25 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
    "text_sha256": "sha256:2e5b1aeb504e647c547d084e5a8e20f80d06bdf1456e9a400e9842b2b9378dc9"
@@ -2704,8 +2704,8 @@
     }
    },
    "request_context": {
-    "subject": "Ministry of Justice annual report and accounts: 2024 to 2025",
-    "scope": "Latest full fiscal year in this 2024-25 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
    "text_sha256": "sha256:e317497191bb1dbc1e466fb360637be8894428f41e30f86b58a0793a532b7be2"
@@ -2780,8 +2780,8 @@
     }
    },
    "request_context": {
-    "subject": "HMRC annual report and accounts: 2025 to 2026",
-    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
    "text_sha256": "sha256:fdf9de8cb1f70eca41a8aac42414a3617e58fdef3cd4df0319d53283b8046723"
@@ -2856,8 +2856,8 @@
     }
    },
    "request_context": {
-    "subject": "DWP annual report and accounts 2025 to 2026",
-    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
    "text_sha256": "sha256:f3d5a7c6704cb901ce9a633eae7bdc203a451f9e5f7b80ce4227ef56979bb185"
@@ -2932,8 +2932,8 @@
     }
    },
    "request_context": {
-    "subject": "Defra's annual report and accounts 2025 to 2026",
-    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
    "text_sha256": "sha256:50686ae57c0c1140418e8e07680d18dcd601e1639a8fd70ff5f7bfdf33d2611b"
@@ -3032,7 +3032,7 @@
    },
    "request_context": {
     "subject": "PCA9515AD",
-    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "NXP umbrella overlaps the earlier temperature sensor and these two I2C devices. Distinct functions, package suffixes and revisions are not independent publishers.",
    "text_sha256": "sha256:791b717d5af24cfa3e754a73ec3be210222bcc78717d7ea178adea676a41b39e"
@@ -3131,7 +3131,7 @@
    },
    "request_context": {
     "subject": "PCA9555BS",
-    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "NXP umbrella overlaps the earlier temperature sensor and these two I2C devices. Distinct functions, package suffixes and revisions are not independent publishers.",
    "text_sha256": "sha256:c71e4557dc2fdf923de828163fa1d01b20045ce5f8a72a0797131015cc89d3f8"
@@ -3204,8 +3204,8 @@
     }
    },
    "request_context": {
-    "subject": "Blue Advantage HMO, active employees",
-    "scope": "Named employer/plan Illinois State Employees Group Insurance Program; exact coverage period FY2026; 2025-07-01 through 2026-06-30 per first-party catalog section and linked filename. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "Standardized CMS SBC format remains shared. Illinois issuer HCSC/BCBSIL overlaps other broad BlueCross sources; employer identity alone does not establish an independent publisher.",
    "coverage_period": "2025-07-01 to 2026-06-30",
@@ -3279,8 +3279,8 @@
     }
    },
    "request_context": {
-    "subject": "State Health Plan Standard Plan",
-    "scope": "Named employer/plan South Carolina Public Employee Benefit Authority; exact coverage period 2026. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "Standardized CMS SBC format remains shared; employer/plan/year variants stay grouped. No new independent carrier is inferred from an employer URL.",
    "coverage_period": "2026-01-01 to 2026-12-31",
@@ -3356,8 +3356,8 @@
     }
    },
    "request_context": {
-    "subject": "Ministry of Defence annual report 2025-26",
-    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
    "verified_reporting_period": "year ended2026-03-31",
@@ -3433,8 +3433,8 @@
     }
    },
    "request_context": {
-    "subject": "Foreign Commonwealth and Development Office annual report 2025-26",
-    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
    "verified_reporting_period": "year ended2026-03-31",
@@ -3510,8 +3510,8 @@
     }
    },
    "request_context": {
-    "subject": "Cabinet Office annual report 2025-26",
-    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
    "verified_reporting_period": "year ended2026-03-31",
@@ -3587,8 +3587,8 @@
     }
    },
    "request_context": {
-    "subject": "Department for Business and Trade annual report 2025-26",
-    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
    "verified_reporting_period": "year ended2026-03-31",
@@ -3664,8 +3664,8 @@
     }
    },
    "request_context": {
-    "subject": "NZ Post / New Zealand Post Limited annual report 2026 annual report; precise fiscal dates to confirm from original notice/title metadata before values",
-    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "One own consolidated corporate Group; related years, renderings and subsidiaries are not independent source families. Earlier catalog headline exposure is recorded; no request or rule was selected from it.",
    "verified_reporting_period": "year ended2026-06-30",
@@ -3765,7 +3765,7 @@
    },
    "request_context": {
     "subject": "LMV321",
-    "scope": "Fixed base member LMV321; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
    "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
@@ -3865,7 +3865,7 @@
    },
    "request_context": {
     "subject": "NCS2001",
-    "scope": "Fixed base member NCS2001; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
    "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
@@ -3965,7 +3965,7 @@
    },
    "request_context": {
     "subject": "LM393",
-    "scope": "Fixed base member LM393; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
    "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
@@ -4065,7 +4065,7 @@
    },
    "request_context": {
     "subject": "NCP301",
-    "scope": "Fixed base member NCP301; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
    "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
@@ -4165,7 +4165,7 @@
    },
    "request_context": {
     "subject": "PCF8563T",
-    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
@@ -4266,7 +4266,7 @@
    },
    "request_context": {
     "subject": "PCA9548AD",
-    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
@@ -4367,7 +4367,7 @@
    },
    "request_context": {
     "subject": "PCA9306D",
-    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
@@ -4468,7 +4468,7 @@
    },
    "request_context": {
     "subject": "TJA1042T",
-    "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
@@ -4543,8 +4543,8 @@
     }
    },
    "request_context": {
-    "subject": "2026 Anthem Gold HRA SBC",
-    "scope": "Named employer/population Georgia State Health Benefit Plan; exact selected catalog period 2026. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
    "rights_scope_note": "SHBP links this privacy/security page in its footer. It governs data collection/security, not document reuse. No affirmative SBC copying grant or explicit copying/automated-acquisition ban was established in inspected pages. Public URL and absence of a ban are not clearance. Insurer-owned original notices and intended use remain unresolved.",
@@ -4624,8 +4624,8 @@
     }
    },
    "request_context": {
-    "subject": "2026 UnitedHealthcare HDHP SBC",
-    "scope": "Named employer/population Georgia State Health Benefit Plan; exact selected catalog period 2026. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
    "rights_scope_note": "SHBP links this privacy/security page in its footer. It governs data collection/security, not document reuse. No affirmative SBC copying grant or explicit copying/automated-acquisition ban was established in inspected pages. Public URL and absence of a ban are not clearance. Insurer-owned original notices and intended use remain unresolved.",
@@ -4705,8 +4705,8 @@
     }
    },
    "request_context": {
-    "subject": "POE-G Primary Care Access SBC2026-2027",
-    "scope": "Named employer/population Connecticut state active employees; exact selected catalog period 2026-2027. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
    "rights_scope_note": "Care Compass links State Plan Policy. State privacy policy covers browsing/downloading but is not a reuse grant. Disclaimer disclaims privately owned rights and states seals/arms and CT.gov logo need permission. No explicit ordinary-document private-acquisition/automated-access ban observed; do not infer permission for logos/third-party material or final original reuse. Original notice and actual seal/logo scope remain unresolved.",
@@ -4786,8 +4786,8 @@
     }
    },
    "request_context": {
-    "subject": "POS Expanded Access SBC2026-2027",
-    "scope": "Named employer/population Connecticut state active employees; exact selected catalog period 2026-2027. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
    "rights_scope_note": "Care Compass links State Plan Policy. State privacy policy covers browsing/downloading but is not a reuse grant. Disclaimer disclaims privately owned rights and states seals/arms and CT.gov logo need permission. No explicit ordinary-document private-acquisition/automated-access ban observed; do not infer permission for logos/third-party material or final original reuse. Original notice and actual seal/logo scope remain unresolved.",
@@ -4867,8 +4867,8 @@
     }
    },
    "request_context": {
-    "subject": "COVA Care Basic SBC2026",
-    "scope": "Named employer/population Virginia state active employees; exact selected catalog period 2026-2027 program catalog; exact original coverage dates unread. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
    "rights_scope_note": "DHRM policy disclaims accuracy/endorsement, restricts advertising/implied endorsement, prohibits unauthorized modification/security circumvention or use other than intended purposes, and limits its scope to its own sites. It is not an affirmative document-copy license. No explicit ordinary private-acquisition/automated-retrieval ban observed. Original/issuer notice and intended private benchmark scope remain unresolved.",
@@ -4948,8 +4948,8 @@
     }
    },
    "request_context": {
-    "subject": "Sentara Health Vantage HMO SBC2026",
-    "scope": "Named employer/population Virginia state active employees; exact selected catalog period 2026-2027 program catalog; exact original coverage dates unread. Confirm original coverage dates before field-value labels, hold on identity or period mismatch. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "Employer and carrier/administrator template groups overlap within this batch and earlier sources. Preserve dependence; each field/key companion is not an independent trial.",
    "rights_scope_note": "DHRM policy disclaims accuracy/endorsement, restricts advertising/implied endorsement, prohibits unauthorized modification/security circumvention or use other than intended purposes, and limits its scope to its own sites. It is not an affirmative document-copy license. No explicit ordinary private-acquisition/automated-retrieval ban observed. Original/issuer notice and intended private benchmark scope remain unresolved.",
@@ -5031,8 +5031,8 @@
     }
    },
    "request_context": {
-    "subject": "Network Rail; Annual report and accounts 2026",
-    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels. Selected catalog period: 2026 annual report, expected FY2025-26; precise dates and own consolidated Group require original identity inspection. Jurisdiction fixes GBP before acquisition; original identity, currency and full annual Group scope must match before value labels. Hold mismatches; no substitute source or period."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "One own railway corporate Group and publisher; broader UK public railway/government reporting dependence retained. Related revisions and subsidiaries are not independent documents.",
    "verified_reporting_period": "2025-04-01/2026-03-31",
@@ -5108,8 +5108,8 @@
     }
    },
    "request_context": {
-    "subject": "Canada Mortgage and Housing Corporation; CMHC 2025 Annual Report",
-    "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels. Selected catalog period: 2025 annual report, latest catalog-listed full annual; precise dates, currency and own consolidated Group unverified. Jurisdiction fixes CAD before acquisition; original identity, currency and full annual Group scope must match before value labels. Hold mismatches; no substitute source or period."
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "One own consolidated Crown housing/financial Group. Canadian government and financial reporting conventions overlap; company subsidiaries and repeated revisions are not independent source families.",
    "verified_reporting_period": "2025-01-01/2025-12-31",
@@ -5183,8 +5183,8 @@
     }
    },
    "request_context": {
-    "subject": "University of Utah active-employee benefits catalog; Advantage - Preferred ValueCare SBC",
-    "scope": "Named active-employee plan Advantage - Preferred ValueCare SBC from University of Utah active-employee benefits catalog; intended exact plan-year window2026-2027 from current HR catalog context. Original exact coverage dates must confirm this before field-value labels; hold another period without substitution. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "One university employer/Regence plan family, with broader Blue Cross and mandated SBC-form dependence. Provider tiers and medical/drug benefit components are not independent documents.",
    "verified_reporting_period": "2026-07-01/2027-06-30",
@@ -5260,8 +5260,8 @@
     }
    },
    "request_context": {
-    "subject": "Massachusetts GIC state employee catalog; Mass General Brigham Health Plan Complete HMO for GIC members,2026-2027",
-    "scope": "Named non-Medicare active-employee GIC Complete HMO plan, coverageJuly1,2026 throughJune30,2027 from explicit live carrier catalog. Original exact identity, population and dates must confirm these before labels; hold mismatch without substituting another period or plan. In-network individual and family deductible and overall out-of-pocket limits and specialist office visit dollar copay. Distinguish equally applicable networks/provider tiers and medical/drug cost-category limits; do not choose a tier or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
    "publisher_overlap_note": "One MassachusettsGIC employer program and MGB carrier/administrator family. Not HarvardPilgrim/Point32 merely because the GIC catalog lists those separately. New employer/carrier candidate does not establish independent mandated SBC form; no independent-form claim.",
    "verified_reporting_period": "2026-07-01/2027-06-30",

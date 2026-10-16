@@ -78,10 +78,13 @@ label seal, request or split. A document schema may supply its currency and alia
 the fixed kind field names, types and multiplicity. Each document schema is a full field snapshot.
 An optional `request_context` records only the predeclared `subject` and `scope`. The harness
 appends its canonical JSON to each existing field description in an effective schema used by
-both arms, admission and replay. This supplies the selected ordering variant, group, year and
-other fixed request conditions without reading label values or annotation notes. Raw field
-schemas stay unchanged. Later edits to a kind template do not update existing document
-snapshots; I review all request parts together before the manifest freeze.
+both arms, admission and replay. The scope is one fixed string for each kind. The annual and SBC
+subject is one fixed string for each kind. A component subject is only the part number. Request
+context never holds a value, date, currency, scale or labeling instruction from a source.
+Raw field schemas stay unchanged. Later edits to a kind template do not update existing document
+snapshots; I review all request parts together before the manifest freeze. On 2026-10-16 I
+replaced each request context with one fixed scope for each kind, before any model output. This
+changed the manifest digest, so a cache made with the earlier context does not validate.
 A changed label after model output requires the maintainer's approval and is reported. Held-out
 output is used for the planned measure and never for tuning. A release-only sealed set for 1.0
 is outside this milestone.
@@ -103,8 +106,9 @@ final core receipt. Baseline decisions are application storage outcomes: they ke
 admitted rounds, but withhold different admitted values for a single-value field. Those entries
 retain `core_outcome` and an `application_reason`; original core receipts remain unchanged.
 The scoring projection omits quotes and raw replies; the external cache keeps all calls and
-receipts. A missing run document is no candidate, not an absence hit. The pilot manifest and
-labels are draft inputs. No result file is committed before an actual sealed-label measure exists.
+receipts. A missing run document is no candidate, not an absence hit. The manifest is frozen
+and the labels are sealed. No result file is committed before an actual sealed-label measure
+exists.
 
 I check the scoring mode with synthetic values:
 
@@ -172,9 +176,10 @@ also hashes the imported package and its own code. Explicit request context acce
 subject and scope strings, each at most 4096 Unicode characters. Before copying context across
 fields, it checks that the combined JSON string content of all resulting descriptions fits the
 frozen prompt budget. Full prompt checks still apply. It never infers context from
-`label_scope_note`, `named_source` or labels. Each arm sends the same effective schema, and the
-recorded schema digest covers the appended descriptions. Changed request metadata in memory or
-on disk stops a call before a reservation. Commit, reader and transport names are caller
+`label_scope_note`, `named_source` or labels. It refuses a scope that changes in a kind, and a
+subject or scope that holds a label note, an unclear reason or a `label_scope_note`. Each arm
+sends the same effective schema, and the recorded schema digest covers the appended descriptions.
+Changed request metadata in memory or on disk stops a call before a reservation. Commit, reader and transport names are caller
 declarations; the actual code and input bytes are checked independently before each call.
 
 `session.run("baseline", client, split="heldout")` runs the released feedback-loop algorithm
@@ -202,9 +207,10 @@ own download and memory use before returning a reply. Both arms also apply the f
 call, prompt, candidate and admission-history budgets. Incomplete documents remain marked in the
 projection. A smaller harness limit is reported rather than silently treated as an absence.
 
-I check the harness with synthetic sources and fixed replies. No test reads the corpus labels or
-source PDFs. The runner integration checks skip until the Runner lane is available; I run them
-against that lane before integration. No real client runs before the full corpus seal.
+I check the harness with synthetic sources and fixed replies. No test reads the source PDFs.
+One test reads the tracked manifest and labels only to check the request context rules. The
+runner integration checks skip until the Runner lane is available; I run them against that lane
+before integration. No real client runs before the full corpus seal.
 
 ## Inspected candidate batches
 
