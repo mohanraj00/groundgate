@@ -309,15 +309,18 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     first has COLUMN_HEADING_WORDS words or fewer. No row below a table joins it, so a table never
     takes the rows of the next. Above it, the walk goes past lines in the label column, and stops at
     a line across the edge of its first number cell or at a row of lines side by side that is no
-    column heading, such as two columns of prose. It also stops at a row whose top is less than
-    HEADER_BAND points from the visible page top (#265). The row stays in ordinary text. A heading
+    column heading, such as two columns of prose. A row whose top is less than HEADER_BAND points
+    from the visible page top is never a table row, and the walk stops at it (#265). The row stays
+    in ordinary text, also when it holds a page number or a year. A heading
     in the label column above the first table row joins only when a column heading is above it.
     The table is written where pdfminer gives the first of its lines, one row on each line.
 
-    A short number row uses the number columns of the widest rows on the page when their spans
-    agree. Each number cell must overlap exactly one column, in increasing order. Skipped columns
-    get empty cells (#266). If the grid or a cell is ambiguous, the short row is written without
-    tabs. An ambiguous numeric-only row also has two blank lines on either side, a key-scope
+    A short row uses the number columns of the widest rows of its own table when their spans agree.
+    Each number cell must overlap exactly one column, and each later text cell must be inside
+    exactly one column, in increasing order. Skipped columns get empty cells (#266). A full row of
+    only number cells, such as a row of year headings, starts with an empty label slot, so each
+    cell keeps its column position. If the grid or a cell is ambiguous, the short row is written
+    without tabs. An ambiguous numeric-only row also has two blank lines on either side, a key-scope
     barrier in spec 0.9, so it cannot reuse a prior field label as a column hint (#278).
     """
     rows, span, plan = _plan(blocks)
@@ -325,17 +328,15 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     def number(key: Key) -> bool:
         return _number_cell(blocks[key[0]][key[1]])
 
-    numbered = []
-    for _, group in plan:
-        for ri in group:
-            cells = [cell for bi, li in rows[ri] for cell in _cells(blocks[bi][li])]
-            numbered.append([cell for cell in cells if _number_cell(cell)])
-    widest = max(map(len, numbered), default=0)
-    columns = _number_columns([row for row in numbered if len(row) == widest])
-
     region: dict[Key, int] = {}
     tables: list[list[Row]] = []
     for n, (first, group) in enumerate(plan):
+        numbered = []
+        for ri in group:
+            cells = [cell for bi, li in rows[ri] for cell in _cells(blocks[bi][li])]
+            numbered.append([cell for cell in cells if _number_cell(cell)])
+        widest = max(map(len, numbered), default=0)
+        columns = _number_columns([row for row in numbered if len(row) == widest])
         tables.append([])
         for row in rows[first : group[-1] + 1]:
             lines = [blocks[bi][li] for bi, li in row]
@@ -393,7 +394,12 @@ def _number_columns(rows: list[Row]) -> list[tuple[float, float]]:
 
 
 def _fill_empty_cells(row: Row, columns: list[tuple[float, float]]) -> Row:
-    """Place a short row in an agreed grid, or retain all its words on one line without tabs."""
+    """Place a short row in an agreed grid, or retain all its words on one line without tabs.
+
+    A text cell before the first column is the label. A later text cell, such as "n/a", takes a
+    column only when it is fully inside that column, so a long label that crosses into the number
+    columns is ambiguous.
+    """
     fallback = [[word for cell in row for word in cell]]
     if not columns:
         return fallback
@@ -403,11 +409,12 @@ def _fill_empty_cells(row: Row, columns: list[tuple[float, float]]) -> Row:
     for cell in row:
         box = _span(cell)
         if not _number_cell(cell):
-            if placed or box.x1 > columns[0][0]:
-                return fallback
-            labels.extend(cell)
-            continue
-        hits = [n for n, (x0, x1) in enumerate(columns) if box.x0 < x1 and box.x1 > x0]
+            if not placed and box.x1 <= columns[0][0]:
+                labels.extend(cell)
+                continue
+            hits = [n for n, (x0, x1) in enumerate(columns) if x0 <= box.x0 and box.x1 <= x1]
+        else:
+            hits = [n for n, (x0, x1) in enumerate(columns) if box.x0 < x1 and box.x1 > x0]
         if len(hits) != 1 or hits[0] <= previous:
             return fallback
         previous = hits[0]
@@ -444,8 +451,11 @@ def _plan(
     def side_by_side(row: list[Key]) -> bool:
         return _side_by_side(row, span)
 
+    def in_band(row: list[Key]) -> bool:
+        return min(span[k].top for k in row) < HEADER_BAND
+
     def table_row(row: list[Key]) -> bool:
-        return side_by_side(row) and any(map(number, row))
+        return not in_band(row) and side_by_side(row) and any(map(number, row))
 
     def heading(row: list[Key]) -> bool:
         return side_by_side(row) and all(len(blocks[bi][li]) <= HEADING_WORDS for bi, li in row)
@@ -483,7 +493,7 @@ def _plan(
         edge = first_number(rows[first]) + 0.5
         above = first - 1
         while above >= 0 and above not in taken:
-            if min(span[k].top for k in rows[above]) < HEADER_BAND:
+            if in_band(rows[above]):
                 break
             if column_heading(rows[above]):
                 first = above
