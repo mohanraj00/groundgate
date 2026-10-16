@@ -17,7 +17,9 @@
    "request_context": {
     "subject": "The consolidated group in this source",
     "scope": "Latest full fiscal year, consolidated group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
-   }
+   },
+   "text_sha256": "sha256:1ec586d3ff341a112f1412356f4fb8c716b3913c15b5443e4ecb84bfe9060cfc",
+   "selection_status": "frozen_member"
   },
   {
    "approved_max_bytes": 8388608,
@@ -113,7 +115,9 @@
    "request_context": {
     "subject": "RP2040",
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
-   }
+   },
+   "text_sha256": "sha256:e9bff7326c78db309ebd6f257641040ef2cbb289881d8d55970e88a038fdb598",
+   "selection_status": "frozen_member"
   },
   {
    "approved_max_bytes": 1048576,
@@ -131,7 +135,9 @@
    "request_context": {
     "subject": "UMP Classic non-Medicare plan, 2026",
     "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
-   }
+   },
+   "text_sha256": "sha256:243be41ff454c9a70ccf958a3ee753f6f6e0be45a3e08a8c577a13fc3862060d",
+   "selection_status": "frozen_member"
   },
   {
    "approved_max_bytes": 1048576,
@@ -192,7 +198,7 @@
      }
     }
    },
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://aetnafeds.com/pdf/2026/2026SBC_AetnaDirect.pdf",
    "source_bytes": 393246,
    "source_pages": 6,
@@ -202,7 +208,8 @@
    "request_context": {
     "subject": "The named plan in this source",
     "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
-   }
+   },
+   "text_sha256": "sha256:d0d925862dc5ffc7917274d254a8aa4f6b9071e832117adb79b4717f55a0af95"
   },
   {
    "approved_max_bytes": 1048576,
@@ -263,7 +270,7 @@
      }
     }
    },
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.modahealth.com/-/media/modahealth/shared/PEBB/Plans/2026/2026-SBC-PEBB-Synergy-Full-Time-HEM.pdf",
    "source_bytes": 360393,
    "source_pages": 7,
@@ -273,7 +280,8 @@
    "request_context": {
     "subject": "The named plan in this source",
     "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
-   }
+   },
+   "text_sha256": "sha256:beb70eb8715eabda43d0f4ffef2984fbcc35f547a0c48537fa80891dfed46119"
   },
   {
    "approved_max_bytes": 8388608,
@@ -336,7 +344,7 @@
      }
     }
    },
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.unilever.com/files/unilever-annual-report-and-accounts-2025.pdf",
    "source_bytes": 6462362,
    "source_pages": 285,
@@ -346,7 +354,8 @@
    "request_context": {
     "subject": "The consolidated group in this source",
     "scope": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
-   }
+   },
+   "text_sha256": "sha256:c80f077520b80b282f436b75fb8c0fe990016f9bd5e1f9a7e10401d18a597901"
   },
   {
    "approved_max_bytes": 25165824,
@@ -409,7 +418,7 @@
      }
     }
    },
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.shell.com/investors/results-and-reporting/annual-report/_jcr_content/root/main/section/promo.multi.stream/1779352356739/36306d968747b6079d3f800b2b1552a033856b5d/shell-integrated-annual-and-sustainability-report.pdf",
    "source_bytes": 19797470,
    "source_pages": 474,
@@ -419,13 +428,14 @@
    "request_context": {
     "subject": "The consolidated group in this source",
     "scope": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
-   }
+   },
+   "text_sha256": "sha256:ca9c01d6910f7308bade870f6b4154d366183bfa3a608e31e58eaf1739a7ebf2"
   },
   {
    "id": "component-h04",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://sensirion.com/media/documents/4EAF6AF8/61652C3C/Sensirion_CO2_Sensors_SCD30_Datasheet.pdf",
    "source_sha256": "sha256:8c47d6e4ca180ec893d8f47e24e175d9e81df42a2d26c16a6e9770c48f962a22",
    "source_bytes": 584579,
@@ -517,13 +527,14 @@
    "request_context": {
     "subject": "SCD30",
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
-   }
+   },
+   "text_sha256": "sha256:928132c49cab5fca7d5ee724b06217347b635d517e4107f50c4cb1b700e8bce3"
   },
   {
    "id": "component-h05",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://sensirion.com/media/documents/213E6A3B/63A5A569/Datasheet_SHT3x_DIS.pdf",
    "source_sha256": "sha256:095b1853e7f4328f5897c9ca6c392a7dd8b0202eda66b0a2629f9cb840dd496d",
    "source_bytes": 810136,
@@ -615,13 +626,14 @@
    "request_context": {
     "subject": "SHT31-DIS-B",
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
-   }
+   },
+   "text_sha256": "sha256:ddf719d44c1954227941840df3f189f5cdc7c4f816861f4f5f36925edb90d4a2"
   },
   {
    "id": "component-h06",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://sensirion.com/media/documents/4D045D69/6375F34F/DP_DS_SDP3x_digital_D1.pdf",
    "source_sha256": "sha256:702bf46e64bd038f02cbe49819d58f57df10c718300418a60515d1208b2f8380",
    "source_bytes": 757773,
@@ -713,13 +725,14 @@
    "request_context": {
     "subject": "SDP31",
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
-   }
+   },
+   "text_sha256": "sha256:642a8b2447802d783eb0eded3693b1f9e665b44f959576c33174bc5e47c55876"
   },
   {
    "id": "sbc-h04",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://hr.mit.edu/sites/default/files/mit_ppo_sbc_2026_0.pdf",
    "source_sha256": "sha256:d2de5c8a1af16c80ad005992d979855b51e8839811ed3c1b752ce3dfdb9e5d7b",
    "source_bytes": 281428,
@@ -786,13 +799,14 @@
    "request_context": {
     "subject": "MIT BCBS PPO+ 2026",
     "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
-   }
+   },
+   "text_sha256": "sha256:abe65060f6fd1205767af767d11c28ab65c2570b6a23e65c29b2d9876ab2a7a2"
   },
   {
    "id": "sbc-h05",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://hr.mit.edu/sites/default/files/mit_hdhp_sbc_2026_0.pdf",
    "source_sha256": "sha256:4cb4d636c45eab180521a8f140d370d04fae06c506e89b36bee6325e6a671780",
    "source_bytes": 275217,
@@ -859,13 +873,14 @@
    "request_context": {
     "subject": "MIT BCBS HDHP 2026",
     "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
-   }
+   },
+   "text_sha256": "sha256:ff2e18fca2457297025ff8308d7bb611cf9d7f2837739ebb07a50ccea03147d1"
   },
   {
    "id": "sbc-h06",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://hr.duke.edu/sites/default/files/2026-Summary-of-Benefits-and-Coverage-Duke-Select.pdf",
    "source_sha256": "sha256:ff986be129215a3039e661d320bbda446918d943d3261024ac35e1475c5d1084",
    "source_bytes": 596145,
@@ -932,13 +947,14 @@
    "request_context": {
     "subject": "Duke Select 2026",
     "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
-   }
+   },
+   "text_sha256": "sha256:888e1007a40eabb4eacd8ac65e384bf1458385835e990fd7919a34ddfd3be017"
   },
   {
    "id": "annual-h04",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.gsk.com/media/kn0bknmd/annual-report-2025.pdf",
    "source_sha256": "sha256:a3ef37d848fca940f85b6c33815a5d47d1f32726fd389a03910653e24af0f4d2",
    "source_bytes": 24690253,
@@ -1007,13 +1023,14 @@
    "request_context": {
     "subject": "The consolidated group in this source",
     "scope": "Latest full year ended 2025-12-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
-   }
+   },
+   "text_sha256": "sha256:258e51ab497f8985d55e35898685cfb6151491accfbedf66c39b1b9742fe3ef6"
   },
   {
    "id": "component-h07",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://docs.particle.io/assets/pdfs/datasheets/p2-datasheet.pdf",
    "source_sha256": "sha256:0c051a936a99b84a7c3fc472ea8e203fadbd09f1d0e14945eb5ab1254fffbe32",
    "source_bytes": 1030087,
@@ -1106,13 +1123,14 @@
    "request_context": {
     "subject": "P2",
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
-   }
+   },
+   "text_sha256": "sha256:f8d029aa3a18c923cf6b8736e794711d1fd6f30d290838fdca608aadc76355a8"
   },
   {
    "id": "annual-h10",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a58984631fb6daf314137b6/NDA_Annual_Report_and_Accounts_2025-26.pdf",
    "source_sha256": "sha256:b020333b3e77b138ead86cb11213231d404e0b8fcf6664782305a5203962908c",
    "source_bytes": 9645977,
@@ -1182,13 +1200,14 @@
    "request_context": {
     "subject": "Nuclear Decommissioning Authority group",
     "scope": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
-   }
+   },
+   "text_sha256": "sha256:01bc5ac257aaab4727149edac61e41e0488a69c76ba03ac9ebb8376f5dff3b6e"
   },
   {
    "id": "annual-h11",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a3d467433bc5beefd3c4b2b/The_Crown_Estate_Integrated_Annual_Report_and_Accounts_2025_to_2026.pdf",
    "source_sha256": "sha256:93b03cda0de48053e9a4d5f10f5613076ebe05ea4d7076027ce142775c8831fe",
    "source_bytes": 7859490,
@@ -1258,13 +1277,14 @@
    "request_context": {
     "subject": "The Crown Estate group",
     "scope": "Latest full year ended 2026-03-31, consolidated group, reported original presentation currency GBP after printed million-pound scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit."
-   }
+   },
+   "text_sha256": "sha256:f1c97c0f7dc289cad282454a10efcfb3e1b4aae5c201cce4c8cb4fdf7b0e5f1d"
   },
   {
    "id": "component-h08",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://docs.particle.io/assets/pdfs/datasheets/msom-datasheet.pdf",
    "source_sha256": "sha256:ee3846f0a2e8b2f38d658ccc3284cfcf510ba84374a1653d8652a3caff36a58b",
    "source_bytes": 1035444,
@@ -1358,13 +1378,14 @@
    "request_context": {
     "subject": "M524",
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
-   }
+   },
+   "text_sha256": "sha256:fe785ef9bbacfd76358cee9de77eb8c4d51eb3f6639527d5a25300a1e39fa87f"
   },
   {
    "id": "component-h09",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://docs.particle.io/assets/pdfs/datasheets/b404x-datasheet.pdf",
    "source_sha256": "sha256:e3f672ee985f18c87a2c9771a0948e4cd6dd47787ffe83da4b288979290231e8",
    "source_bytes": 1558811,
@@ -1458,13 +1479,14 @@
    "request_context": {
     "subject": "B404X",
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
-   }
+   },
+   "text_sha256": "sha256:21eb9a28a0ca5a7539d495426054ca6f2c5f3f1762957babcf1ae6647e2987de"
   },
   {
    "id": "component-h10",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://docs.particle.io/assets/pdfs/datasheets/tracker-som-datasheet.pdf",
    "source_sha256": "sha256:eee94026e2566656a0038f4adfbd89bcbf30985ad2d084d520bbce521a2159ca",
    "source_bytes": 1797246,
@@ -1558,13 +1580,14 @@
    "request_context": {
     "subject": "T404",
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
-   }
+   },
+   "text_sha256": "sha256:f0e40cb9300d9f59cbd789a942abcb38ae01df85d170d827293d155e2b046d52"
   },
   {
    "id": "sbc-h07",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://hr.uiowa.edu/sites/hr.uiowa.edu/files/2025-10/The-University-of-Iowa-UIChoice-Active-Blue-POS_01012026_5777-198.pdf",
    "source_bytes": 602193,
    "source_sha256": "sha256:c4db86f550e28bfa1a9089be5b13d8f887cb2f7b8c0f458b8cd39151ad9fa89f",
@@ -1630,13 +1653,14 @@
    "request_context": {
     "subject": "UIChoice Active Blue POS, 2026",
     "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
-   }
+   },
+   "text_sha256": "sha256:05c90a14ade2ab7b3e73a906cd3d81aa23900ce0bf0b749a2f5c8f776256c1f2"
   },
   {
    "id": "sbc-h08",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.shpnc.gov/documents/open-enrollment-documents/2026-uniform-summary-coverage-standard-plan/download?attachment",
    "source_bytes": 463532,
    "source_sha256": "sha256:83f9435735fd5893e1fcd98636159570a27c9acef314b16029173b495ddf8ab3",
@@ -1703,13 +1727,14 @@
     "subject": "NC Standard Plan, 2026",
     "scope": "2026 named plan, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
    },
-   "publisher_overlap_note": "The administrator also appears in another SBC family. This document is not a new insurer publisher or an independent publisher trial."
+   "publisher_overlap_note": "The administrator also appears in another SBC family. This document is not a new insurer publisher or an independent publisher trial.",
+   "text_sha256": "sha256:8003c1cebd75aff38c4841217ee414c9bd7043a31e7dd86cc265e7e9525d68bc"
   },
   {
    "id": "component-h11",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.allegromicro.com/-/media/files/datasheets/acs712-datasheet.pdf",
    "source_bytes": 1047606,
    "source_sha256": "sha256:21b345f7a98d36947d5562218b0bc730b80609b614e9fc4374f56993011466b9",
@@ -1802,13 +1827,14 @@
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
    },
    "named_device": "ACS712ELCTR-05B-T",
-   "technical_family": "allegro-acs712-integrated-current-sensor-family"
+   "technical_family": "allegro-acs712-integrated-current-sensor-family",
+   "text_sha256": "sha256:3cd50277b7207a0b39d6a3d3406620fa3c8b3e6abe75d91a28c119c0c1c670de"
   },
   {
    "id": "component-h12",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.allegromicro.com/-/media/files/datasheets/a1324-5-6-datasheet.pdf",
    "source_bytes": 1177926,
    "source_sha256": "sha256:b7a2ba73d7831b255bdf29ef11995fddd85fda6b91088238aa74825b528057ae",
@@ -1901,13 +1927,14 @@
     "scope": "Named device, recommended operating supply voltage range, typical supply current at its stated reference condition and operating temperature range. Do not use absolute maximum or storage ratings. Leave unresolved rail, mode or condition choices unclear."
    },
    "named_device": "A1324LLHLT-T",
-   "technical_family": "allegro-a1324-a1325-a1326-linear-hall-sensor-family"
+   "technical_family": "allegro-a1324-a1325-a1326-linear-hall-sensor-family",
+   "text_sha256": "sha256:12e76a031a09cc7286af950fb3be2188ebc4c915f82bfca6dbaa68ab55893187"
   },
   {
    "id": "annual-h12",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a563f942f6185941a9a649c/uk-atomic-energy-authority-annual-report-and-accounts-2025-2026.pdf",
    "source_bytes": 16552977,
    "source_sha256": "sha256:1db5b87cfeb95c58d67eef180e79d5a8407751e5e00e4e09600686629e958629",
@@ -1976,13 +2003,14 @@
     "subject": "UK Atomic Energy Authority Annual Report and Accounts 2025 to 2026",
     "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
    },
-   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed."
+   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
+   "text_sha256": "sha256:34d5caa25fb0ddf4377d847ec6f7ec67152beeadc98adc0adef1d69543db082f"
   },
   {
    "id": "annual-h13",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a5614be31fb6daf31413627/260101_Annual_Report25_26_web_optimised_FINAL_MH.pdf",
    "source_bytes": 15885713,
    "source_sha256": "sha256:dca15181959b797aeb588bbca0ac92a48d2966470cde2e1dc0ff2149a8bdfcd9",
@@ -2051,13 +2079,14 @@
     "subject": "UKRI annual report and accounts 2025 to 2026 (web-accessible)",
     "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
    },
-   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed."
+   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
+   "text_sha256": "sha256:99854fffdce71ea622c31d79e89d993ec6c4c81a26100dad144d4dd9690d3440"
   },
   {
    "id": "annual-h14",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a5604159e631544544135ff/Homes_England_Annual_Report_and_Accounts_2025_26.pdf",
    "source_bytes": 21058019,
    "source_sha256": "sha256:5f803a801df3aeea1d81818b7ae212cb717de62429ac5cedb7bbcfc505c3fd5e",
@@ -2126,13 +2155,14 @@
     "subject": "Homes England Annual Report and Accounts 2025 to 2026",
     "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
    },
-   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed."
+   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
+   "text_sha256": "sha256:c4224654271b915cd0a41fb9feb2cd59854877329726ed7d8dfcbd68d33ade8d"
   },
   {
    "id": "annual-h15",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a55f7fca4890e65cce64ea2/BBC_Annual_Report___Accounts_25_26_accessible__3_.pdf",
    "source_bytes": 11336478,
    "source_sha256": "sha256:c571494cfb9e3a37dafe855ab8adc631563d317b94411c866cb55f7dc97477a8",
@@ -2201,13 +2231,14 @@
     "subject": "BBC Group annual report and accounts for 2025 to 2026",
     "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
    },
-   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed."
+   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
+   "text_sha256": "sha256:936826a84d890b2d594110742f7ed5e193304dfaabb6a0a9106e1efbec4986a4"
   },
   {
    "id": "sbc-h09",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.pebtf.org/api//appFiles/25b67171-110d-4c38-b3a3-3cf117401ade.pdf",
    "source_bytes": 378185,
    "source_sha256": "sha256:cd2b61c52c4d583e543d5c6de439db510d82dbd9a571a173db41aed64d61200f",
@@ -2275,13 +2306,14 @@
     "scope": "2026 named plan and active population, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
    },
    "coverage_period": "2026-01-01 to 2026-12-31",
-   "publisher_overlap_note": "Employer trust is a new sponsor family. The selected file's insurer/administrator is not established by the inspected catalog metadata. Keep PEBTF PPO/HMO/Bronze variants and revisions together; determine carrier/form overlap from approved original notices/provenance without assuming a new insurer."
+   "publisher_overlap_note": "Employer trust is a new sponsor family. The selected file's insurer/administrator is not established by the inspected catalog metadata. Keep PEBTF PPO/HMO/Bronze variants and revisions together; determine carrier/form overlap from approved original notices/provenance without assuming a new insurer.",
+   "text_sha256": "sha256:ac22e5f3ad0275eef6734dfbd200c4eb363ad95494bcbfce73799e10f2f4f330"
   },
   {
    "id": "sbc-h10",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.utsystem.edu/sites/default/files/documents/publication/2026/ppo-network-summary-of-benefits-and-coverage/sbc-ppo-fy2026.pdf",
    "source_bytes": 481557,
    "source_sha256": "sha256:5cb0a93f0962caf16a7554209e58cd4f9414c4a823c2f415109c7c5ae6b0a25b",
@@ -2349,13 +2381,14 @@
     "scope": "FY2026, catalog period 2025-2026 named plan and active population, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
    },
    "coverage_period": "2025-09-01 to 2026-08-31",
-   "publisher_overlap_note": "Catalog identifies UT SELECT/BCBSTX contact context. BlueCross/BlueShield administration overlaps other broad BCBS sources, including MIT and the NJ candidate. UT sponsor/plan family is distinct, but this does not establish independent insurer/authorship/form diversity. Keep PPO/out-of-area, fiscal-year, language and rendering revisions together."
+   "publisher_overlap_note": "Catalog identifies UT SELECT/BCBSTX contact context. BlueCross/BlueShield administration overlaps other broad BCBS sources, including MIT and the NJ candidate. UT sponsor/plan family is distinct, but this does not establish independent insurer/authorship/form diversity. Keep PPO/out-of-area, fiscal-year, language and rendering revisions together.",
+   "text_sha256": "sha256:42636295345f029568c03a215d1abde915f485d909a4dd1d0571a259888eca24"
   },
   {
    "id": "sbc-h11",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.nj.gov/treasury/pensions/documents/hb/oe2026/sbcs/sbc216.pdf",
    "source_bytes": 1781523,
    "source_sha256": "sha256:dad0453ceea9aea0d8d8a648e31bf9cc471cd640666164706b07e66ac7f6056c",
@@ -2423,13 +2456,14 @@
     "scope": "2026 named plan and active population, in-network medical benefits; numeric USD specialist copay only, not coinsurance; separate prescription-drug limits are not added"
    },
    "coverage_period": "2026-07-01 to 2026-12-31",
-   "publisher_overlap_note": "Horizon/BCBS brand-family and standardized SBC form overlap broad BlueCross sources, including UT/other employer plans. State sponsor/medical plan differs, but do not treat it as an independent publisher solely from a new URL. Group NJ SHBP/SEHBP Horizon/Aetna employer/plan/year/language/rendering variants conservatively and retain medical-versus-prescription separation."
+   "publisher_overlap_note": "Horizon/BCBS brand-family and standardized SBC form overlap broad BlueCross sources, including UT/other employer plans. State sponsor/medical plan differs, but do not treat it as an independent publisher solely from a new URL. Group NJ SHBP/SEHBP Horizon/Aetna employer/plan/year/language/rendering variants conservatively and retain medical-versus-prescription separation.",
+   "text_sha256": "sha256:be9cb1a27a236760b2b5d21e27390464bb18dcfe67fa8181bfb491f7904f4478"
   },
   {
    "id": "component-h13",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.nxp.com/docs/en/data-sheet/LM75B.pdf",
    "source_bytes": 539694,
    "source_sha256": "sha256:b0a93950c14a02d1849f7aa37d0a795be01bb44fb8f54af99925b06af39cdde3",
@@ -2521,13 +2555,14 @@
     "subject": "LM75BD",
     "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
    },
-   "publisher_overlap_note": "NXP umbrella is shared with other NXP devices; ordering/packaging variants and revisions are not independent publishers."
+   "publisher_overlap_note": "NXP umbrella is shared with other NXP devices; ordering/packaging variants and revisions are not independent publishers.",
+   "text_sha256": "sha256:2abe72e63e511d03b5a2920636a2c4ffc311c3bec8c9ad784b41768cf0383f3b"
   },
   {
    "id": "annual-h16",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/687794132bad77c3dae4dc67/DfE_consolidated_annual_report_and_accounts_2024_to_2025__web-optimised_version_.pdf",
    "source_bytes": 6516530,
    "source_sha256": "sha256:d0dcc63435cd111618024d64a06fbb1862e81141a29b10be6e7f32fc475573bf",
@@ -2596,13 +2631,14 @@
     "subject": "Department for Education consolidated annual report and accounts 2024 to 2025",
     "scope": "Latest full fiscal year in this 2024-25 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
    },
-   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence."
+   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
+   "text_sha256": "sha256:2e5b1aeb504e647c547d084e5a8e20f80d06bdf1456e9a400e9842b2b9378dc9"
   },
   {
    "id": "annual-h17",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/691213e3e9348ac8fb54f4c4/36.27_MOJ_Annual_Report_and_Accounts_2024-2025_WEB.pdf",
    "source_bytes": 8550394,
    "source_sha256": "sha256:7df710512e7cdebafc1bd0c5906669398729983149b705c7f00881b4a22ddbb0",
@@ -2671,13 +2707,14 @@
     "subject": "Ministry of Justice annual report and accounts: 2024 to 2025",
     "scope": "Latest full fiscal year in this 2024-25 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
    },
-   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence."
+   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
+   "text_sha256": "sha256:e317497191bb1dbc1e466fb360637be8894428f41e30f86b58a0793a532b7be2"
   },
   {
    "id": "annual-h18",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a4f66c406e7256c331df8a2/HMRC_annual_report_and_accounts_2025_to_2026.pdf",
    "source_bytes": 11329840,
    "source_sha256": "sha256:60c3bf382903629b2b0506fa6d1c130e1c54ec6d07c994b9c539fffc6bd1bb07",
@@ -2746,13 +2783,14 @@
     "subject": "HMRC annual report and accounts: 2025 to 2026",
     "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
    },
-   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence."
+   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
+   "text_sha256": "sha256:fdf9de8cb1f70eca41a8aac42414a3617e58fdef3cd4df0319d53283b8046723"
   },
   {
    "id": "annual-h19",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a4e3a53895317eadc35459e/dwp_annual_report_and_accounts_2025_to_2026.pdf",
    "source_bytes": 4980025,
    "source_sha256": "sha256:129acf333db1a90022d1b6528e89dc61b4d8402a0f5c8c4dbec35593b48fd817",
@@ -2821,13 +2859,14 @@
     "subject": "DWP annual report and accounts 2025 to 2026",
     "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
    },
-   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence."
+   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
+   "text_sha256": "sha256:f3d5a7c6704cb901ce9a633eae7bdc203a451f9e5f7b80ce4227ef56979bb185"
   },
   {
    "id": "annual-h20",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a74a43abde92a23046b24a0/Defra-ARA-2025-26-laid-15July26.pdf",
    "source_bytes": 3979195,
    "source_sha256": "sha256:95b32ab98981b7bad6d18bd1f4661251dc592e23bd285cbc7ada292fbe491945",
@@ -2896,13 +2935,14 @@
     "subject": "Defra's annual report and accounts 2025 to 2026",
     "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent or agency-only accounts if no own consolidated Group is established."
    },
-   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence."
+   "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
+   "text_sha256": "sha256:50686ae57c0c1140418e8e07680d18dcd601e1639a8fd70ff5f7bfdf33d2611b"
   },
   {
    "id": "component-h16",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.nxp.com/docs/en/data-sheet/PCA9515A.pdf",
    "source_bytes": 222189,
    "source_sha256": "sha256:a7de4e40e46e1253440ab5727eee00d1ef172f37a6b62041ba505b9a79772cdc",
@@ -2994,13 +3034,14 @@
     "subject": "PCA9515AD",
     "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
    },
-   "publisher_overlap_note": "NXP umbrella overlaps the earlier temperature sensor and these two I2C devices. Distinct functions, package suffixes and revisions are not independent publishers."
+   "publisher_overlap_note": "NXP umbrella overlaps the earlier temperature sensor and these two I2C devices. Distinct functions, package suffixes and revisions are not independent publishers.",
+   "text_sha256": "sha256:791b717d5af24cfa3e754a73ec3be210222bcc78717d7ea178adea676a41b39e"
   },
   {
    "id": "component-h17",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.nxp.com/docs/en/data-sheet/PCA9555.pdf",
    "source_bytes": 264812,
    "source_sha256": "sha256:9f4f9c0ce4c461d71e0a46858394f830c74daba72bb6616f368af78a39f44b1f",
@@ -3092,13 +3133,14 @@
     "subject": "PCA9555BS",
     "scope": "Named ordering variant, recommended operation, not absolute maximum ratings; typical supply current at the source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings."
    },
-   "publisher_overlap_note": "NXP umbrella overlaps the earlier temperature sensor and these two I2C devices. Distinct functions, package suffixes and revisions are not independent publishers."
+   "publisher_overlap_note": "NXP umbrella overlaps the earlier temperature sensor and these two I2C devices. Distinct functions, package suffixes and revisions are not independent publishers.",
+   "text_sha256": "sha256:c71e4557dc2fdf923de828163fa1d01b20045ce5f8a72a0797131015cc89d3f8"
   },
   {
    "id": "sbc-h13",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://cms.illinois.gov/content/dam/soi/en/web/cms/benefits/stateemployee/documents/fy2026/sbc/SBC_IL6800_B06800_0104_State%20of%20Illinois_BAHMO_07-01-2025%20to%2006-30-2026_2025-07-01_v1.pdf",
    "source_bytes": 442322,
    "source_sha256": "sha256:a08990bc37df0ab60594a5c1efead5d861ce996426295e76f0b8484611378b34",
@@ -3166,13 +3208,14 @@
     "scope": "Named employer/plan Illinois State Employees Group Insurance Program; exact coverage period FY2026; 2025-07-01 through 2026-06-30 per first-party catalog section and linked filename. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
    },
    "publisher_overlap_note": "Standardized CMS SBC format remains shared. Illinois issuer HCSC/BCBSIL overlaps other broad BlueCross sources; employer identity alone does not establish an independent publisher.",
-   "coverage_period": "2025-07-01 to 2026-06-30"
+   "coverage_period": "2025-07-01 to 2026-06-30",
+   "text_sha256": "sha256:bce98fb4b04befcea649c1d11f1d9eca9019f282d95f446e2c675cdf85bdc920"
   },
   {
    "id": "sbc-h15",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.peba.sc.gov/sites/default/files/2026_sbc_standard.pdf",
    "source_bytes": 357418,
    "source_sha256": "sha256:b2ee39c5f3b77cf382e53241ddd701b6eaade93d3a471c1bf36bfd1f992d1e32",
@@ -3240,13 +3283,14 @@
     "scope": "Named employer/plan South Carolina Public Employee Benefit Authority; exact coverage period 2026. In-network individual and family deductible and overall out-of-pocket limits and specialist copay. Distinguish tiers and cost-category sublimits; do not choose among equally applicable networks or calculate unstated totals. Preserve printed calendar-year conditions without annualization."
    },
    "publisher_overlap_note": "Standardized CMS SBC format remains shared; employer/plan/year variants stay grouped. No new independent carrier is inferred from an employer URL.",
-   "coverage_period": "2026-01-01 to 2026-12-31"
+   "coverage_period": "2026-01-01 to 2026-12-31",
+   "text_sha256": "sha256:8df0711134e795034d7163fd91c5a0970554af09a876eefc41abb714a38f871a"
   },
   {
    "id": "annual-h22",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a5740ec2f6185941a9a650a/Ministry_of_Defence_annual_report_and_accounts_2025_to_2026.pdf",
    "source_bytes": 7677411,
    "source_sha256": "sha256:4d1a1f186c6915563b3be8bd7409f4871e2e8b44ecdcd4efee32ae0233dd8eb6",
@@ -3316,13 +3360,14 @@
     "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
-   "verified_reporting_period": "year ended2026-03-31"
+   "verified_reporting_period": "year ended2026-03-31",
+   "text_sha256": "sha256:d50b81ed311d02068e643596ddc723d34936688795bf4ad4915c6bd56f975916"
   },
   {
    "id": "annual-h23",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a61d75447af652afa0c8a73/FCDO_Annual_Report_2025_to_2026.pdf",
    "source_bytes": 5988972,
    "source_sha256": "sha256:988b058691b1c5f31f055afc583fc31556a3185638a3eccef18747995204c66c",
@@ -3392,13 +3437,14 @@
     "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
-   "verified_reporting_period": "year ended2026-03-31"
+   "verified_reporting_period": "year ended2026-03-31",
+   "text_sha256": "sha256:2f175bcfecb23e2e5e1898fff43547e1cf7f3cbc399f4bd60ee737a5d3b01767"
   },
   {
    "id": "annual-h24",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6ac8c105e8ef5609e7c93447/46.36_CO_ARA_25-26__FINAL_WEB.pdf",
    "source_bytes": 4587306,
    "source_sha256": "sha256:be22075503024138e548255cdbdee6e3cc510cd5cd0e4734764931bc0bf9a5db",
@@ -3468,13 +3514,14 @@
     "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
-   "verified_reporting_period": "year ended2026-03-31"
+   "verified_reporting_period": "year ended2026-03-31",
+   "text_sha256": "sha256:478c645ca24273da0021c6c76fde016419ff906e13e3c0f3211714583865c3dd"
   },
   {
    "id": "annual-h28",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.publishing.service.gov.uk/media/6a5609d42cbe5d1c179a6439/dbt-annual-report-and-accounts-2025-to-2026-web-accessible.pdf",
    "source_bytes": 2079919,
    "source_sha256": "sha256:a6ff1425f619b274bf2a3d83c9ba48f6d09ded04f02165a4cff0962980744eb5",
@@ -3544,13 +3591,14 @@
     "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
-   "verified_reporting_period": "year ended2026-03-31"
+   "verified_reporting_period": "year ended2026-03-31",
+   "text_sha256": "sha256:767c4c3290e2283334f44c8d4cbda80223230ddc9cd5cf99e288aa25b67b55fc"
   },
   {
    "id": "annual-h26",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.nzpost.co.nz/sites/nz/files/2026-08/annual-report-2026.pdf",
    "source_bytes": 4238879,
    "source_sha256": "sha256:bc71d1cdfb7fb53b6bf38e4566c2d26eb5ac872f91a2763e964a138284d2d909",
@@ -3620,13 +3668,14 @@
     "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels."
    },
    "publisher_overlap_note": "One own consolidated corporate Group; related years, renderings and subsidiaries are not independent source families. Earlier catalog headline exposure is recorded; no request or rule was selected from it.",
-   "verified_reporting_period": "year ended2026-06-30"
+   "verified_reporting_period": "year ended2026-06-30",
+   "text_sha256": "sha256:0cb6d77a0694ac526e0bc0b049731e5397b3ac1890bc50a879cb9872f5ffeb63"
   },
   {
    "id": "component-h19",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.onsemi.com/download/data-sheet/pdf/lmv321-d.pdf",
    "source_bytes": 801705,
    "source_sha256": "sha256:2289a535a332fa6653b8ed5b49cec3f18c5f2406f7f3e6ddafb3cdf11eb32689",
@@ -3719,13 +3768,14 @@
     "scope": "Fixed base member LMV321; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
-   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred."
+   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
+   "text_sha256": "sha256:165bae4faf65171be312fb34a2677007e842fb5f7d7290c611e4d4794ed88a3c"
   },
   {
    "id": "component-h20",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.onsemi.com/download/data-sheet/pdf/ncs2001-d.pdf",
    "source_bytes": 519543,
    "source_sha256": "sha256:06ac6ee41d1fa95ab185135966e1e03f428bbaf40f211f339e215c0362d57ca1",
@@ -3818,13 +3868,14 @@
     "scope": "Fixed base member NCS2001; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
-   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred."
+   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
+   "text_sha256": "sha256:41e33ff58127d53677f24661d750c6585a8467eae23542e885bc8eef12cd6e94"
   },
   {
    "id": "component-h21",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.onsemi.com/download/data-sheet/pdf/lm393-d.pdf",
    "source_bytes": 448851,
    "source_sha256": "sha256:f57250b0237b9f86a9b78eb485dd4a85388ffb047e44521f296f61457a97a285",
@@ -3917,13 +3968,14 @@
     "scope": "Fixed base member LM393; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
-   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred."
+   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
+   "text_sha256": "sha256:696a079cc0d0ebd5aaad0026d8977ae6b99ee580d172648efbbb53d9573cd048"
   },
   {
    "id": "component-h22",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.onsemi.com/download/data-sheet/pdf/ncp300-d.pdf",
    "source_bytes": 639327,
    "source_sha256": "sha256:8172e912afc0e914e9e25b04e13e9884f806155c039e175131cf916689fe20f0",
@@ -4016,13 +4068,14 @@
     "scope": "Fixed base member NCP301; no package or threshold suffix chosen. Recommended operation, not absolute maximum ratings; typical supply current at one unambiguous source stated reference condition, not a chosen mode or calculated average. Operating temperature excludes storage and junction-only stress ratings. If an answer depends on an unspecified subvariant, mark unclear or hold; do not choose a suffix using values."
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
-   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred."
+   "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
+   "text_sha256": "sha256:26fc156f3ece8515c2279b74a504363ce3ac90ee5341f4de280325afa6a1fdc1"
   },
   {
    "id": "component-h23",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf",
    "source_bytes": 601986,
    "source_sha256": "sha256:2ed5d1b0a1051d0e81399417c4ff0ced0658fa36e13c0487670f9cb6dfb4f1d4",
@@ -4116,13 +4169,14 @@
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
-   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
+   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban.",
+   "text_sha256": "sha256:2515f5a6e4b1c9f33b42c27b3bc328bffb93aa1954c5666c836fa16cc6c98551"
   },
   {
    "id": "component-h24",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.nxp.com/docs/en/data-sheet/PCA9548A.pdf",
    "source_bytes": 308416,
    "source_sha256": "sha256:a090b5ec78996babb32d283bbb2a7136ff789e450abd8394fff9f0bf53ddcc92",
@@ -4216,13 +4270,14 @@
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
-   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
+   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban.",
+   "text_sha256": "sha256:a1288c8e2569a4e36f183e062dd6c04fcebbc3e319e94dae3afb836e4d50c88f"
   },
   {
    "id": "component-h25",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.nxp.com/docs/en/data-sheet/PCA9306.pdf",
    "source_bytes": 651707,
    "source_sha256": "sha256:68146537d3a0f1ac116d8adfa54335dd724f605e8a5782fcb10b6aae665142bf",
@@ -4316,13 +4371,14 @@
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
-   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
+   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban.",
+   "text_sha256": "sha256:92da3e4c6e0cab3f573c5b40e9220dec9e0347b3ee6876b41a655d211ba4af7e"
   },
   {
    "id": "component-h26",
    "kind": "component",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.nxp.com/docs/en/data-sheet/TJA1042.pdf",
    "source_bytes": 353417,
    "source_sha256": "sha256:aac9491f00e594362d884ca25bf09ad6391cebc25b261f960a7b7e9282c205d2",
@@ -4416,13 +4472,14 @@
    },
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
-   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
+   "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban.",
+   "text_sha256": "sha256:77a7d4305998d48b942793de5b53a297a568bc205c5d9a1af74bc0dde648d7f9"
   },
   {
    "id": "sbc-h16",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://shbp.georgia.gov/document/document/2026-anthem-gold-hra-sbc-0/download",
    "source_bytes": 546283,
    "source_sha256": "sha256:3a83f5f5d9723d7052d41aa9171a05a3678afc3777d40c7e2b5a4eb04843387a",
@@ -4496,13 +4553,14 @@
     "2026-12-31"
    ],
    "employer_family_group": "georgia-shbp-employer-sbc-family",
-   "carrier_form_group": "anthem-network-standard-employer-sbc"
+   "carrier_form_group": "anthem-network-standard-employer-sbc",
+   "text_sha256": "sha256:a7ff194eba2f92e5cfb6f369309a1f3a185c0c8cc0b9148531c08344a0750f5f"
   },
   {
    "id": "sbc-h17",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://shbp.georgia.gov/document/document/2026-unitedhealthcare-hdhp-sbc/download",
    "source_bytes": 251683,
    "source_sha256": "sha256:d1c1f9813493cf6dc2597824e46ccea76a240b92d2e56caca09a8c1335e7186b",
@@ -4576,13 +4634,14 @@
     "2026-12-31"
    ],
    "employer_family_group": "georgia-shbp-employer-sbc-family",
-   "carrier_form_group": "unitedhealthcare-standard-employer-sbc"
+   "carrier_form_group": "unitedhealthcare-standard-employer-sbc",
+   "text_sha256": "sha256:71fca4bc42a98d57189e2fe3df96feb0f4765914d34c70d4084074913a83a036"
   },
   {
    "id": "sbc-h18",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://carecompass.ct.gov/wp-content/uploads/2026/06/State-of-CT_POE-G-Primary-Care-Access-SBC-2026-2027.pdf",
    "source_bytes": 307826,
    "source_sha256": "sha256:62e6e25f0735bf7cea18e001bfa521a7a247bf8e5d70f30cab2302d1d63a81ad",
@@ -4656,13 +4715,14 @@
     "2027-06-30"
    ],
    "employer_family_group": "connecticut-state-carecompass-employer-sbc-family",
-   "carrier_form_group": "connecticut-quantum-health-cvs-shared-multitier-sbc"
+   "carrier_form_group": "connecticut-quantum-health-cvs-shared-multitier-sbc",
+   "text_sha256": "sha256:aa8c4efa803a82ee9ba33c31897f5bc797c0dd447999143fcc33cbd094ae572b"
   },
   {
    "id": "sbc-h19",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://carecompass.ct.gov/wp-content/uploads/2026/06/State-of-CT_POS-Expanded-Access-SBC-2026-2027.pdf",
    "source_bytes": 375397,
    "source_sha256": "sha256:5536df45a3a6a260317fca024ed6da0b4ad7cd90071404bf6e7c66dbaba2ea54",
@@ -4736,13 +4796,14 @@
     "2027-06-30"
    ],
    "employer_family_group": "connecticut-state-carecompass-employer-sbc-family",
-   "carrier_form_group": "connecticut-quantum-health-cvs-shared-multitier-sbc"
+   "carrier_form_group": "connecticut-quantum-health-cvs-shared-multitier-sbc",
+   "text_sha256": "sha256:0cfe6b17e9e27e673fcc97faa906a62df13b0c0dcbd55e48b84262ed76e24699"
   },
   {
    "id": "sbc-h20",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.dhrm.virginia.gov/docs/default-source/benefitsdocuments/health-benefits/open-enrollment-2026/covacarebasicsbc2026.pdf",
    "source_bytes": 708323,
    "source_sha256": "sha256:34848deacf6440a8511b75457776831bd1b2d148b50c5e19595602c19b59ecc1",
@@ -4816,13 +4877,14 @@
     "2027-06-30"
    ],
    "employer_family_group": "virginia-cova-employer-sbc-family",
-   "carrier_form_group": "anthem-network-standard-employer-sbc"
+   "carrier_form_group": "anthem-network-standard-employer-sbc",
+   "text_sha256": "sha256:b5fa73c6793dc2dc03d747983ae9b826fa6b1aa1e5859316d2718f4596c52c9b"
   },
   {
    "id": "sbc-h21",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.dhrm.virginia.gov/docs/default-source/benefitsdocuments/health-benefits/open-enrollment-2026/sentarasbc2026.pdf",
    "source_bytes": 390497,
    "source_sha256": "sha256:c933593f84fad21b4bdf6279f4cca8fbbebd9d5106774fb7e98a795e234e014d",
@@ -4896,13 +4958,14 @@
     "2027-06-30"
    ],
    "employer_family_group": "virginia-cova-employer-sbc-family",
-   "carrier_form_group": "sentara-vantage-shared-tiered-hmo-sbc"
+   "carrier_form_group": "sentara-vantage-shared-tiered-hmo-sbc",
+   "text_sha256": "sha256:98f799090a975bd1071f7a0df314ccc3dd1705dff70bc8fb2cc2071a63e6e2a3"
   },
   {
    "id": "annual-h30",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://www.networkrail.co.uk/wp-content/uploads/2023/07/Network-Rail-Annual-Report-and-Accounts-2026.pdf",
    "source_bytes": 10850921,
    "source_sha256": "sha256:1891345664010aeba582aa4ed8e3886e1458511d7f5c91c8faeeab7386852343",
@@ -4972,13 +5035,14 @@
     "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels. Selected catalog period: 2026 annual report, expected FY2025-26; precise dates and own consolidated Group require original identity inspection. Jurisdiction fixes GBP before acquisition; original identity, currency and full annual Group scope must match before value labels. Hold mismatches; no substitute source or period."
    },
    "publisher_overlap_note": "One own railway corporate Group and publisher; broader UK public railway/government reporting dependence retained. Related revisions and subsidiaries are not independent documents.",
-   "verified_reporting_period": "2025-04-01/2026-03-31"
+   "verified_reporting_period": "2025-04-01/2026-03-31",
+   "text_sha256": "sha256:3c3ad1044021ef904740e1de71f43f69924bde862ec99f2515c1e4fa84c73054"
   },
   {
    "id": "annual-h31",
    "kind": "annual",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://assets.cmhc-schl.gc.ca/sites/cmhc/about-cmhc/corporate-reporting/annual-report/2025/cmhc-annual-report-2025-en.pdf",
    "source_bytes": 7680444,
    "source_sha256": "sha256:1e502fcee84459ed7dfb70acc4bf5096c041eaeb207c6b043979b04a1583ac38",
@@ -5048,13 +5112,14 @@
     "scope": "Latest complete full fiscal year in the exact selected annual report, own consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude parent/agency-only, condensed or errata-only accounts; full own consolidated Group must be established before source-value labels. Selected catalog period: 2025 annual report, latest catalog-listed full annual; precise dates, currency and own consolidated Group unverified. Jurisdiction fixes CAD before acquisition; original identity, currency and full annual Group scope must match before value labels. Hold mismatches; no substitute source or period."
    },
    "publisher_overlap_note": "One own consolidated Crown housing/financial Group. Canadian government and financial reporting conventions overlap; company subsidiaries and repeated revisions are not independent source families.",
-   "verified_reporting_period": "2025-01-01/2025-12-31"
+   "verified_reporting_period": "2025-01-01/2025-12-31",
+   "text_sha256": "sha256:88478eba14ab567978fd46bb94be244526910906d8011d490feee314f07047e5"
   },
   {
    "id": "sbc-h23",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://benefits.utah.edu/wp-content/uploads/sites/78/2025/08/SBC_Advantage-VCP.pdf",
    "source_bytes": 675340,
    "source_sha256": "sha256:57e62a20af596c8d236e66d994de940ee78f8e447c691f37427b86ee5c7cea53",
@@ -5125,13 +5190,14 @@
    "verified_reporting_period": "2026-07-01/2027-06-30",
    "coverage_period": "2026-07-01/2027-06-30",
    "employer_family_group": "university-utah-employer",
-   "carrier_form_group": "regence-bcbs-standardized-sbc"
+   "carrier_form_group": "regence-bcbs-standardized-sbc",
+   "text_sha256": "sha256:0c4a16cc60f55e811cbd5cf32bf270970bcd2ea8b7ce40e2bc4b720a83dc3d0c"
   },
   {
    "id": "sbc-h24",
    "kind": "sbc",
    "split": "heldout",
-   "selection_status": "draft_candidate_not_frozen",
+   "selection_status": "frozen_member",
    "source": "https://resources.massgeneralbrighamhealthplan.org/members/gic/GIC_070126_SBC.pdf",
    "source_bytes": 526031,
    "source_sha256": "sha256:1f12260cd7aaf174de94ec18f5fd51ab2cfe0a0e20a4fb150f5f958debc0ba5b",
@@ -5203,7 +5269,8 @@
    "period_basis": "original_start_plus_catalog_end",
    "period_note": "Original prints only \"On or after 07/01/2026\"; the pre-download MGB GIC catalog gives the end 2027-06-30. Pre-label provenance addendum: original start plus catalog end, same request. The PDF does not print the end date.",
    "employer_family_group": "massachusetts-gic-employer",
-   "carrier_form_group": "mgb-health-plan-standardized-sbc"
+   "carrier_form_group": "mgb-health-plan-standardized-sbc",
+   "text_sha256": "sha256:61b2c3bd2bd6b44de2a16b868c90b08f1442c4b08e813c59f17c6cb85162b079"
   }
  ],
  "format": "requested-fields/1",
@@ -5387,8 +5454,17 @@
    }
   }
  },
- "selection_complete": false,
- "selection_note": "Approved development pilots and inspected held-out candidates have source-based draft labels. Final eligibility and membership remain open. Sources on hold in source_checks.json are excluded from the label-page manifest. Related source families stay grouped. No benchmark model output exists.",
- "status": "draft",
- "label_method": "Draft source-only agent annotations from original PDFs, checked against original page renders. Independent second checks cover absence and disputed fields. No benchmark model call has run."
+ "selection_complete": true,
+ "selection_note": "Frozen 2026-10-16 before any model output on this set. 64 documents: 3 development pilots (one per kind) and 61 held-out (20 component, 20 SBC, 21 annual). Sources on hold in source_checks.json stay outside. Related source families stay in one split. Selection used publisher metadata, notices and layout eligibility, never model success.",
+ "status": "frozen",
+ "label_method": "Draft source-only agent annotations from original PDFs, checked against original page renders. Independent second checks cover absence and disputed fields. No benchmark model call has run.",
+ "reader_text": {
+  "reader": "groundgate.extract (spec 0.9 draft reader: #265 top-edge band, #266 empty cells, #278 barrier)",
+  "code_sha256": "sha256:6b600810087bd18086aa69b7ea1e98963375668e7d66ed05b34dcd96d092176e",
+  "code_digest_method": "sha256 over sorted src/groundgate/extract/*.py lines \"name NUL sha256(file) LF\"",
+  "built_from": "local integration of the four 0.9 lanes on origin/main (Extract lane commit 31718e5)",
+  "pdfminer_six": "20260107",
+  "note": "Text files stay in local work storage with the original PDFs. Only their hashes are published."
+ },
+ "source_use": "Each member is cited by its public URL and SHA-256. Original PDFs, page images and reader text stay private in local work storage and are not redistributed. Sources with an express reproduction or use restriction in their own notices are on hold and are not members. Limited personal or noncommercial terms and attribution conditions stay recorded on each member; no broader right is inferred."
 }
