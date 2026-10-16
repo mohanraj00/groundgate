@@ -28,8 +28,12 @@ def test_hand_written_pdf_rows_and_word_offsets(tmp_path: Path, case: dict[str, 
     path = tmp_path / "case.pdf"
     path.write_bytes(make_pdf([[tuple(line) for line in case["page"]]]))
     doc = extract(path)
-    expected = "\n".join("\t".join(row) for row in case["expected_table_rows"])
-    assert expected in doc.text
+    lines = doc.text.split("\n")
+    for key in ("expected_table_rows", "expected_second_table_rows"):
+        rows = ["\t".join(row) for row in case.get(key, [])]
+        assert any(lines[i : i + len(rows)] == rows for i in range(len(lines))), key
+    for text in case.get("absent_text", []):
+        assert text not in doc.text
     assert doc.text == extract(path).text
     assert doc.layout is not None
     raw = doc.text.encode()
@@ -43,7 +47,6 @@ def test_hand_written_pdf_rows_and_word_offsets(tmp_path: Path, case: dict[str, 
     if "expected_prose_words" in case:
         head = [raw[w.start : w.end].decode() for w in doc.layout.words if w.box.top < HEADER_BAND]
         assert head == case["expected_prose_words"]
-        assert "Report\tPage 1" not in doc.text
 
 
 @pytest.mark.parametrize("top,included", [(35.99, False), (36.0, True), (36.01, True)])
