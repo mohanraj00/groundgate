@@ -1902,6 +1902,306 @@
    },
    "named_device": "A1324LLHLT-T",
    "technical_family": "allegro-a1324-a1325-a1326-linear-hall-sensor-family"
+  },
+  {
+   "id": "annual-h12",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a563f942f6185941a9a649c/uk-atomic-energy-authority-annual-report-and-accounts-2025-2026.pdf",
+   "source_bytes": 16552977,
+   "source_sha256": "sha256:1db5b87cfeb95c58d67eef180e79d5a8407751e5e00e4e09600686629e958629",
+   "source_pages": 89,
+   "approved_max_bytes": 20971520,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in local work storage; not committed",
+   "source_family_group": "ukaea-group-annual-reports",
+   "license": "Open Government Licence v3.0 except where otherwise stated; identified third-party and other license exceptions",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "The publication itself states OGL v3.0. Identified third-party images and other OGL exclusions remain outside that grant. Retain notices and attribution; no PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "UK Atomic Energy Authority Annual Report and Accounts 2025 to 2026",
+    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
+   },
+   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed."
+  },
+  {
+   "id": "annual-h13",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a5614be31fb6daf31413627/260101_Annual_Report25_26_web_optimised_FINAL_MH.pdf",
+   "source_bytes": 15885713,
+   "source_sha256": "sha256:dca15181959b797aeb588bbca0ac92a48d2966470cde2e1dc0ff2149a8bdfcd9",
+   "source_pages": 174,
+   "approved_max_bytes": 20971520,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in local work storage; not committed",
+   "source_family_group": "ukri-group-annual-reports",
+   "license": "Open Government Licence v3.0 except where otherwise stated; identified third-party and other license exceptions",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "The publication itself states OGL v3.0. Identified third-party images and other OGL exclusions remain outside that grant. Retain notices and attribution; no PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "UKRI annual report and accounts 2025 to 2026 (web-accessible)",
+    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
+   },
+   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed."
+  },
+  {
+   "id": "annual-h14",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a5604159e631544544135ff/Homes_England_Annual_Report_and_Accounts_2025_26.pdf",
+   "source_bytes": 21058019,
+   "source_sha256": "sha256:5f803a801df3aeea1d81818b7ae212cb717de62429ac5cedb7bbcfc505c3fd5e",
+   "source_pages": 282,
+   "approved_max_bytes": 25165824,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in local work storage; not committed",
+   "source_family_group": "homes-england-group-annual-reports",
+   "license": "Open Government Licence v3.0 except where otherwise stated; identified third-party and other license exceptions",
+   "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "license_other_notices": "The publication itself states OGL v3.0. Identified third-party images and other OGL exclusions remain outside that grant. Retain notices and attribution; no PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "Homes England Annual Report and Accounts 2025 to 2026",
+    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
+   },
+   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed."
+  },
+  {
+   "id": "annual-h15",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "draft_candidate_not_frozen",
+   "source": "https://assets.publishing.service.gov.uk/media/6a55f7fca4890e65cce64ea2/BBC_Annual_Report___Accounts_25_26_accessible__3_.pdf",
+   "source_bytes": 11336478,
+   "source_sha256": "sha256:c571494cfb9e3a37dafe855ab8adc631563d317b94411c866cb55f7dc97477a8",
+   "source_pages": 256,
+   "approved_max_bytes": 12582912,
+   "download_approved": "2026-10-15",
+   "source_retention": "original unmodified PDF with notices in local work storage; not committed",
+   "source_family_group": "bbc-group-annual-reports",
+   "license": "Conditional accurate and nonmisleading text-reproduction permission with copyright and title acknowledgment; image/logo exceptions",
+   "license_source": "https://assets.publishing.service.gov.uk/media/6a55f7fca4890e65cce64ea2/BBC_Annual_Report___Accounts_25_26_accessible__3_.pdf",
+   "license_other_notices": "The PDF-local text grant excludes Royal Arms and department/agency logos. Photograph rights require holder permission. Retain copyright and document-title acknowledgment. No photograph, PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "GBP"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "GBP"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "BBC Group annual report and accounts for 2025 to 2026",
+    "scope": "Latest full fiscal year in this 2025-26 report, consolidated Group, original reporting currency after printed scale. Cost of sales is positive cost magnitude; preserve other printed signs. Do not calculate unstated totals or profit. Exclude company-only or agency-only accounts if no consolidated Group is established."
+   },
+   "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed."
   }
  ],
  "format": "requested-fields/1",

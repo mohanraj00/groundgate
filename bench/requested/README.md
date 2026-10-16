@@ -268,3 +268,14 @@ endpoints have direct operating-range support outside a stress-only table. The s
 retain the limited attributed-copy and noncommercial-copy conditions, unresolved rights and
 package-tooling restrictions. No broad reuse grant or final source eligibility is inferred.
 The earlier twenty draft labels remain unchanged.
+
+Four further annual-report drafts retain latest-full-year consolidated Group scope and printed
+GBP signs and scales. Original statements distinguish Group from parent or agency columns.
+Some reports state only current and non-current subtotals; I do not add them to create an
+unstated total. A commercial subgroup cost is not a whole-Group cost. Unresolved revenue and
+cost mappings remain unclear, with both independent positions recorded rather than forced
+agreement. An explicit whole-Group revenue statement elsewhere in one report resolves its
+initial ambiguity. All final absences have independent complete-source checks. Both original
+annotation freezes remain unchanged; reconciliation occurs before any benchmark output.
+Publication-local grants and their exceptions are recorded separately, including a conditional
+text grant that is not OGL. Final source selection is open and the earlier drafts are unchanged.
