@@ -855,7 +855,7 @@
       "reporting_currency": {
         "code": "GBP",
         "name": "Sterling / pound sterling",
-        "scale_metadata": "Primary consolidated-statement headers use £m, meaning million pounds. No requested field amount has been labeled or recorded in this check.",
+        "scale_metadata": "Primary consolidated-statement headers use \u00a3m, meaning million pounds. No requested field amount has been labeled or recorded in this check.",
         "evidence": [
           {
             "physical_page": 192,
@@ -865,7 +865,7 @@
           {
             "physical_page": 188,
             "printed_page": "186",
-            "location": "Consolidated statement headings and £m column units; source-text metadata only"
+            "location": "Consolidated statement headings and \u00a3m column units; source-text metadata only"
           }
         ]
       },
@@ -3450,7 +3450,8 @@
         "initial_disagreements": [],
         "no_unstated_calculations": true,
         "independent_check_accepted": true
-      }
+      },
+      "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
     },
     {
       "id": "component-h24",
@@ -3525,7 +3526,8 @@
         "initial_disagreements": [],
         "no_unstated_calculations": true,
         "independent_check_accepted": true
-      }
+      },
+      "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
     },
     {
       "id": "component-h25",
@@ -3603,7 +3605,8 @@
         "initial_disagreements": [],
         "no_unstated_calculations": true,
         "independent_check_accepted": true
-      }
+      },
+      "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
     },
     {
       "id": "component-h26",
@@ -3747,7 +3750,8 @@
         ],
         "no_unstated_calculations": true,
         "independent_check_accepted": true
-      }
+      },
+      "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban."
     },
     {
       "id": "sbc-h16",
@@ -4335,6 +4339,58 @@
       "source_use_status": "hold; no field draft or benchmark input",
       "hold_reason": "Original physical1 says coverage beginning on or after2024-07-01 and does not confirm frozen2026-27 period. No period or source substitution.",
       "identity": "UPenn PennCare PPO Active and Cobra; Independence-branded standardized SBC; Beginning on or after 07/01/2024; exact frozen2026-27 window not established"
+    },
+    {
+      "id": "sbc-h24",
+      "source": "https://resources.massgeneralbrighamhealthplan.org/members/gic/GIC_070126_SBC.pdf",
+      "catalog_source": "https://massgeneralbrighamhealthplan.org/gic-members",
+      "approved_max_bytes": 1048576,
+      "approval": "Exact URL and 1 MiB cap approved in chat 2026-10-16",
+      "source_bytes": 526031,
+      "source_sha256": "sha256:1f12260cd7aaf174de94ec18f5fd51ab2cfe0a0e20a4fb150f5f958debc0ba5b",
+      "source_pages": 10,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "9357b6e8c5c96a35bbe44a32c4624fdddc91d0b16bffb44e1edc1cfb0d96c4b1",
+      "source_family_group": "massachusetts-gic-mgb-complete-hmo",
+      "pdf_local_notices": {
+        "physical_pages": [
+          9,
+          10
+        ],
+        "observation": "Nondiscrimination and language-assistance notices. No PDF-local reproduction, licence or automated-extraction notice.",
+        "method": "Complete pypdf and Poppler queries; pages 1, 9 and 10 rendered."
+      },
+      "coverage_period": "2026-07-01/2027-06-30",
+      "period_basis": "original_start_plus_catalog_end",
+      "period_note": "Original prints only \"On or after 07/01/2026\"; the pre-download MGB GIC catalog gives the end 2027-06-30. Pre-label provenance addendum: original start plus catalog end, same request. The PDF does not print the end date.",
+      "period_provenance_addendum_sha256": "275613a880797f0f51925f6cea45a0ea1c15eec306660b36874191ee5451d396",
+      "preserved_metadata_holds": [
+        "parent metadata hold",
+        "independent primary metadata hold 1d5360f755bba7d7549dd65e03398265a1ec93e6eaeede8194ca4f8e3cba826a"
+      ],
+      "selection_status": "draft_candidate_not_frozen",
+      "license": "Site terms reserve rights and allow display, reformatting and printing for personal noncommercial use only. No PDF-local reproduction, licence or automated-extraction notice found by complete two-engine queries. No affirmative open reuse grant. URL plus SHA-256 provenance; original kept private.",
+      "license_source": "https://massgeneralbrighamhealthplan.org/privacy",
+      "publisher_overlap_note": "One MassachusettsGIC employer program and MGB carrier/administrator family. Not HarvardPilgrim/Point32 merely because the GIC catalog lists those separately. New employer/carrier candidate does not establish independent mandated SBC form; no independent-form claim.",
+      "employer_family_group": "massachusetts-gic-employer",
+      "carrier_form_group": "mgb-health-plan-standardized-sbc",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 10,
+        "note": "Complete two-engine text queries; no OCR."
+      },
+      "identity": {
+        "named_subject": "Massachusetts GIC state employee catalog; Mass General Brigham Health Plan Complete HMO for GIC members,2026-2027",
+        "verified_source_identity": "Complete HMO, Mass General Brigham Health Plan, For Members of the Group Insurance Commission; Individual/Family; HMO.",
+        "period": "2026-07-01/2027-06-30",
+        "basis_of_plan_scope_physical_page": 1
+      },
+      "independent_checks": {
+        "primary_sha256": "6c352801374a80b782726afe8deb0dacf987010212310c764df6d7edd010be80",
+        "independent_sha256": "b445367c900b20120a55c0e2d51720bae1e7a85a5942eb00689dfd36ca28a57d",
+        "agreement": "5 of 5 field statuses, values, units and pages"
+      }
     }
   ]
 }
