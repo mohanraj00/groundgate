@@ -22,7 +22,6 @@ import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
 from requested.metrics import measure, signature
@@ -355,7 +354,17 @@ class LabelServer(ThreadingHTTPServer):
     def __init__(self, store: LabelStore, port: int = 8784) -> None:
         self.store = store
         self.token = secrets.token_urlsafe(32)
+        self.capability = secrets.token_urlsafe(32)
         super().__init__(("127.0.0.1", port), LabelHandler)
+
+    @property
+    def base_path(self) -> str:
+        return f"/session/{self.capability}/"
+
+    @property
+    def url(self) -> str:
+        """Private startup URL, given to the operator outside HTTP responses."""
+        return f"http://127.0.0.1:{self.server_port}{self.base_path}"
 
 
 class LabelHandler(BaseHTTPRequestHandler):
@@ -364,6 +373,11 @@ class LabelHandler(BaseHTTPRequestHandler):
     def log_message(self, format: str, *args: Any) -> None:
         # No label values or request contents enter server logs.
         return
+
+    def end_headers(self) -> None:
+        # Include private-URL protection even on parser and unsupported-method errors.
+        self.send_header("Referrer-Policy", "no-referrer")
+        super().end_headers()
 
     def reply(self, status: int, data: bytes, kind: str = "application/json") -> None:
         self.send_response(status)
@@ -378,7 +392,8 @@ class LabelHandler(BaseHTTPRequestHandler):
             "script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'",
         )
         self.end_headers()
-        self.wfile.write(data)
+        if self.command != "HEAD":
+            self.wfile.write(data)
 
     def error(self, status: int, message: str) -> None:
         self.reply(status, json.dumps({"error": message}).encode())
@@ -386,27 +401,52 @@ class LabelHandler(BaseHTTPRequestHandler):
     def host_ok(self) -> bool:
         return self.headers.get("Host") == f"127.0.0.1:{self.server.server_port}"
 
-    def do_GET(self) -> None:
+    def parse_request(self) -> bool:
+        if not super().parse_request():
+            return False
         if not self.host_ok():
             self.error(403, "unknown host")
-            return
-        route = urlsplit(self.path)
-        if route.query or route.fragment:
+            return False
+        # Inspect the raw target: BaseHTTPRequestHandler folds leading double slashes.
+        # Never decode, redirect or normalize a target into a capability-bearing path.
+        parts = self.requestline.split()
+        target = parts[1] if len(parts) == 3 else ""
+        if (
+            target != self.path
+            or not target.isascii()
+            or len(target) > 512
+            or not target.startswith("/")
+            or any(char in target for char in ("%", "\\", "?", "#"))
+            or "//" in target
+            or any(segment in {".", ".."} for segment in target.split("/"))
+        ):
             self.error(404, "unknown route")
-            return
+            return False
+        segments = target.split("/")
+        if (
+            len(segments) < 4
+            or segments[1] != "session"
+            or not hmac.compare_digest(segments[2], self.server.capability)
+        ):
+            self.error(403, "private startup URL required")
+            return False
+        self.route = "/" + "/".join(segments[3:])
+        return True
+
+    def do_GET(self) -> None:
         try:
-            if route.path == "/":
+            if self.route == "/":
                 self.reply(200, Path(__file__).with_name("label.html").read_bytes(), "text/html")
-            elif route.path == "/api/state":
+            elif self.route == "/api/state":
                 state = self.server.store.state() | {"token": self.server.token}
                 self.reply(200, json.dumps(state).encode())
-            elif route.path.startswith("/page/"):
-                parts = route.path.split("/")
+            elif self.route.startswith("/page/"):
+                parts = self.route.split("/")
                 if len(parts) != 4 or not re.fullmatch(r"[1-9][0-9]{0,5}", parts[3]):
                     raise ValueError("invalid page preview route")
                 self.reply(200, self.server.store.preview(parts[2], int(parts[3])), "image/png")
-            elif route.path.startswith(("/pdf/", "/text/")):
-                kind, ident = route.path[1:].split("/", 1)
+            elif self.route.startswith(("/pdf/", "/text/")):
+                kind, ident = self.route[1:].split("/", 1)
                 if kind == "pdf":
                     self.reply(200, self.server.store.verified_pdf(ident), "application/pdf")
                     return
@@ -431,7 +471,7 @@ class LabelHandler(BaseHTTPRequestHandler):
         ):
             self.error(403, "invalid request token or origin")
             return
-        if self.path not in {"/api/save", "/api/seal"}:
+        if self.route not in {"/api/save", "/api/seal"}:
             self.error(404, "unknown route")
             return
         if self.headers.get("Content-Type") != "application/json" or self.headers.get(
@@ -452,7 +492,7 @@ class LabelHandler(BaseHTTPRequestHandler):
             )
             if not isinstance(payload, dict):
                 raise ValueError("request must be a JSON object")
-            if self.path == "/api/save":
+            if self.route == "/api/save":
                 self.server.store.save(payload)
             elif payload:
                 raise ValueError("seal request must be an empty object")
@@ -491,7 +531,7 @@ def main() -> None:
         server = LabelServer(store, args.port)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         parser.error(str(exc))
-    print(f"Blind labels: http://127.0.0.1:{server.server_port}")
+    print(f"Blind labels (private startup URL): {server.url}")
     try:
         server.serve_forever()
     except KeyboardInterrupt:

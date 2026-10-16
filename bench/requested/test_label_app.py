@@ -10,6 +10,7 @@ import sys
 import threading
 from pathlib import Path
 from typing import Any
+from urllib.parse import urljoin, urlsplit
 
 import pytest
 
@@ -203,14 +204,26 @@ def server(store: LabelStore) -> Any:
         thread.join(timeout=2)
 
 
-def request(server: LabelServer, method: str, path: str, body: bytes = b"", **headers: str) -> Any:
+def request(
+    server: LabelServer,
+    method: str,
+    path: str,
+    body: bytes = b"",
+    *,
+    authorized: bool = True,
+    include_headers: bool = False,
+    **headers: str,
+) -> Any:
+    if authorized:
+        path = server.base_path + path.lstrip("/")
     connection = http.client.HTTPConnection("127.0.0.1", server.server_port, timeout=5)
     connection.request(method, path, body=body, headers=headers)
     response = connection.getresponse()
     data = response.read()
     status = response.status
+    response_headers = dict(response.getheaders())
     connection.close()
-    return status, data
+    return (status, data, response_headers) if include_headers else (status, data)
 
 
 def test_http_requires_token_origin_and_safe_host(server: LabelServer) -> None:
@@ -238,7 +251,7 @@ def test_http_body_limits_unknown_ids_and_no_arbitrary_files(server: LabelServer
     oversized = auth | {"Content-Length": str(MAX_BODY + 1)}
     assert request(server, "POST", "/api/save", **oversized)[0] == 413
     assert request(server, "POST", "/api/save", b'{"id":NaN}', **auth)[0] == 400
-    assert request(server, "GET", "/pdf/../manifest")[0] == 400
+    assert request(server, "GET", "/pdf/../manifest")[0] == 404
     assert request(server, "GET", "/labels.json")[0] == 404
     assert request(server, "GET", "/runs/cached.json")[0] == 404
     assert request(server, "GET", "/api/state?callback=other")[0] == 404
@@ -436,7 +449,7 @@ def test_page_routes_reject_unsafe_ids_and_bounds(
         "/page/../../private/1",
         "/page/dev%2fother/1",
     ):
-        assert request(server, "GET", route)[0] == 400
+        assert request(server, "GET", route)[0] in {400, 404}
     assert renderer == []
     assert request(server, "GET", "/page/dev/1") == (200, b"\x89PNG\r\n\x1a\nsynthetic page pixels")
 
@@ -511,7 +524,11 @@ def test_state_reports_optional_text_only_for_confined_existing_sources(
 
 @pytest.mark.parametrize("mode", ["argument", "environment", "argument_overrides_environment"])
 def test_cli_accepts_explicit_local_root(
-    store: LabelStore, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, mode: str
+    store: LabelStore,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    mode: str,
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     from requested import label_app
 
@@ -530,6 +547,7 @@ def test_cli_accepts_explicit_local_root(
             assert selected_store.sources.is_relative_to(tmp_path)
             assert selected_store.work_directory.is_relative_to(tmp_path)
             self.server_port = port
+            self.url = f"http://127.0.0.1:{port}/session/synthetic-startup-capability/"
 
         def serve_forever(self) -> None:
             raise KeyboardInterrupt
@@ -541,6 +559,8 @@ def test_cli_accepts_explicit_local_root(
     monkeypatch.setattr(sys, "argv", command)
     label_app.main()
     assert closed == [True]
+    assert "http://127.0.0.1:8784/session/synthetic-startup-capability/" in capsys.readouterr().out
+    assert all("synthetic-startup-capability" not in argument for argument in command)
 
 
 def test_cli_requires_local_root_instead_of_assuming_a_home_path(
@@ -617,3 +637,125 @@ def test_optional_local_text_is_explicitly_unpinned_until_digest_supplied(
     assert status == 400
     assert b"hash does not match" in error
     assert b"Swapped local text" not in error
+
+
+def test_unauthenticated_state_cannot_bootstrap_write_access(server: LabelServer) -> None:
+    # A local caller knows the port but has not received the startup capability.
+    assert request(server, "GET", "/api/state", authorized=False)[0] == 403
+    payload = {"id": "dev", "fields": filled(server.store, "dev")}
+    headers = {"Content-Type": "application/json", "X-Label-Token": server.token}
+    assert (
+        request(
+            server, "POST", "/api/save", json.dumps(payload).encode(), authorized=False, **headers
+        )[0]
+        == 403
+    )
+    assert request(server, "POST", "/api/seal", b"{}", authorized=False, **headers)[0] == 403
+    assert not server.store.path.exists()
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/",
+        "/api/state",
+        "/pdf/dev",
+        "/text/dev",
+        "/page/dev/1",
+        "/api/save",
+        "/api/seal",
+        "/session/wrong/api/state",
+    ],
+)
+def test_every_public_route_denies_without_startup_capability(
+    server: LabelServer, path: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def forbidden(*args: Any) -> None:
+        pytest.fail("unauthenticated request reached label/source storage")
+
+    for member in ("state", "verified_pdf", "read_source_text", "preview", "save", "seal"):
+        monkeypatch.setattr(server.store, member, forbidden)
+    for method in ("GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE"):
+        status, body, headers = request(
+            server,
+            method,
+            path,
+            b"{}",
+            authorized=False,
+            include_headers=True,
+            **{"Content-Type": "application/json"},
+        )
+        assert status == 403
+        assert server.token.encode() not in body and server.capability.encode() not in body
+        assert "Location" not in headers
+        assert headers["Referrer-Policy"] == "no-referrer"
+    assert not server.store.path.exists()
+
+
+@pytest.mark.parametrize(
+    "target",
+    [
+        "{base}../api/state",
+        "{base}./api/state",
+        "{base}api//state",
+        "{base}api%2fstate",
+        "{base}api/%2e%2e/state",
+        "{base}api\\state",
+        "{base}api/state?callback=x",
+        "{base}api/state#fragment",
+        "{base_no_slash}",
+        "/{base}api/state",
+        "/session/%{first_hex}{rest}/api/state",
+        "http://127.0.0.1:{port}{base}api/state",
+        "/session/wrong/../{cap}/api/state",
+        "/session/{cap}%2fapi/state",
+    ],
+)
+def test_raw_target_never_normalizes_into_a_capability_route(
+    server: LabelServer, target: str
+) -> None:
+    path = target.format(
+        base=server.base_path,
+        base_no_slash=server.base_path[:-1],
+        first_hex=f"{ord(server.capability[0]):02x}",
+        rest=server.capability[1:],
+        port=server.server_port,
+        cap=server.capability,
+    )
+    status, body, headers = request(server, "GET", path, authorized=False, include_headers=True)
+    assert status in {403, 404}
+    assert server.token.encode() not in body and server.capability.encode() not in body
+    assert "Location" not in headers
+
+
+def test_authenticated_routes_keep_browser_urls_private_and_relative(server: LabelServer) -> None:
+    status, html, headers = request(server, "GET", "/", include_headers=True)
+    assert status == 200 and headers["Referrer-Policy"] == "no-referrer"
+    assert server.capability.encode() not in html
+    for route in ("api/state", "api/save", "api/seal", "pdf/", "text/", "page/"):
+        assert route.encode() in html
+        assert ("/" + route).encode() not in html
+        joined = urlsplit(urljoin(server.url, route))
+        assert joined.path.startswith(server.base_path)
+    status, body, headers = request(server, "GET", "/api/state", include_headers=True)
+    assert status == 200 and json.loads(body)["token"] == server.token
+    assert server.capability.encode() not in body
+    assert headers["Cache-Control"] == "no-store"
+    assert headers["Referrer-Policy"] == "no-referrer"
+    status, body, headers = request(server, "OPTIONS", "/", include_headers=True)
+    assert status == 501 and headers["Referrer-Policy"] == "no-referrer"
+    assert server.token.encode() not in body and server.capability.encode() not in body
+
+
+def test_startup_capability_is_regenerated_and_old_session_cannot_read(server: LabelServer) -> None:
+    other = LabelServer(server.store, 0)
+    thread = threading.Thread(target=other.serve_forever, daemon=True)
+    thread.start()
+    try:
+        assert other.capability != server.capability and other.token != server.token
+        assert request(other, "GET", server.base_path + "api/state", authorized=False)[0] == 403
+        assert request(other, "GET", "/api/state")[0] == 200
+    finally:
+        other.shutdown()
+        other.server_close()
+        thread.join(timeout=2)

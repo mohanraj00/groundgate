@@ -125,7 +125,11 @@ uv run python bench/requested/label_app.py --set bench/requested --local-root /a
 ```
 
 I supply the local storage root with `--local-root` or `GROUNDGATE_LOCAL_WORK`. Source and
-scratch paths must stay inside that root. The server binds only to `127.0.0.1:8784`. It displays the original source beside the fixed field
+scratch paths must stay inside that root. The server binds only to `127.0.0.1:8784`. I open
+the exact private session URL printed at startup and keep it private. Every HTTP route needs
+that session capability; the old root URL cannot return source or label state. A restart creates
+a new capability. The server does not log requests and sends a no-referrer policy. It displays
+the original source beside the fixed field
 scope, unit and manual label controls. If `pdftoppm` is installed, it renders one page at a time
 to a PNG cache in local work storage. Each page request checks the original PDF hash. Page
 previews have page and size limits. Without the optional renderer, the page embeds the PDF and
@@ -140,7 +144,7 @@ source cannot be used to seal labels. Evidence pages cannot exceed the recorded 
 Draft labels can be saved while source selection is open. After the complete source list and
 request are frozen, I can seal all labels after the complete source checks. The server refuses edits after a seal or
 when cached run JSON exists. Each save is atomic and uses a local work directory for its temporary
-file. CSRF tokens, exact host/origin checks and document-ID routes keep the local write interface
+file. The startup capability, separate CSRF token, exact host/origin checks and document-ID routes keep the local write interface
 separate from source text and filenames. Restart the server after changing the manifest.
 
 The regular pytest run collects the requested-field scoring and label-server tests, so CI checks
@@ -308,3 +312,13 @@ remains a copay when additional percentage coinsurance is stated; it is not the 
 The local record preserves both independent positions on the two limit ambiguities. Three
 originals with reproduction restrictions and one with a population mismatch stay outside the
 manifest and labels. Earlier drafts remain unchanged; selection and source-use handling are open.
+
+Five further annual drafts keep the fixed requests, full own-Group scope and original reporting
+currencies. The corrected report with an inserted slip remains a full report. Directly named
+Group revenue credits retain their printed signs; positive note breakdowns corroborate their
+magnitudes. A directly stated rounded whole-Group liability amount retains its printed scale
+and sign without adding component categories. A services-and-goods subtotal does not establish
+a unique cost-of-sales mapping, so that field stays unclear. Both independent freezes and all
+four initial status differences remain in the local record. One original with a reproduction
+restriction and one whose target statement tables lack a usable text layer stay outside the
+manifest and labels. Earlier drafts remain unchanged; membership and source-use handling stay open.

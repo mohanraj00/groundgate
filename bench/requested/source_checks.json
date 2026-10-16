@@ -2610,6 +2610,389 @@
         "no_unstated_calculations": true,
         "disagreements": []
       }
+    },
+    {
+      "id": "annual-h22",
+      "source": "https://assets.publishing.service.gov.uk/media/6a5740ec2f6185941a9a650a/Ministry_of_Defence_annual_report_and_accounts_2025_to_2026.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/ministry-of-defence-annual-report-and-accounts-2025-to-2026",
+      "approved_max_bytes": 8388608,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 7677411,
+      "source_sha256": "sha256:4d1a1f186c6915563b3be8bd7409f4871e2e8b44ecdcd4efee32ae0233dd8eb6",
+      "source_pages": 268,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "9e1c77642b9f1301d21596baeb412795c070d2c6bd4bf065bb7cf9268d336d90",
+      "pdf_local_notices": {
+        "physical_pages": [
+          4
+        ],
+        "observation": "Own physical4 states OGLv3 with identified third-party exceptions. No additional document-copy restriction found in complete source queries. Image and logo exceptions remain separate.",
+        "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
+      },
+      "source_family_group": "uk-ministry-of-defence-departmental-family",
+      "selection_status": "draft_candidate_not_frozen",
+      "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
+      "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 268,
+        "note": "Complete pypdf and Poppler original-text queries plus selected original statements and notices. No OCR or groundgate reader/core execution."
+      },
+      "identity": {
+        "named_subject": "Ministry of Defence annual report 2025-26",
+        "verified_source_identity": "Full own departmental Group, year ended2026-03-31, GBP millions.",
+        "basis_of_consolidation_physical_page": 185,
+        "period": "year ended2026-03-31"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Both independent source-only freezes precede comparison. Four status differences resolved from original pages: two directly named primary Group revenue credits; one directly stated rounded whole-Group liability amount; one unresolved services/goods-to-cost-of-sales mapping stays unclear. No rule, request, schema, unstated arithmetic, model output or result informed curation.",
+        "primary_draft_sha256": "27db86367ea8a112954069fb3ec7dfc822a95581978250ab9bcf1842c7d93a3b",
+        "parent_independent_draft_sha256": "4ac47d1e14616ab052c5c697f30ecc5eede619fb50926014dce07809a20808f7",
+        "reconciliation_sha256": "fe81a16208868cbc30f0ab35a7e8723839952d4d8082e3191b1f59cedde247b7",
+        "no_unstated_calculations": true,
+        "disagreements": []
+      }
+    },
+    {
+      "id": "annual-h23",
+      "source": "https://assets.publishing.service.gov.uk/media/6a61d75447af652afa0c8a73/FCDO_Annual_Report_2025_to_2026.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/fcdo-annual-report-and-accounts-2025-to-2026",
+      "approved_max_bytes": 6291456,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 5988972,
+      "source_sha256": "sha256:988b058691b1c5f31f055afc583fc31556a3185638a3eccef18747995204c66c",
+      "source_pages": 265,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "9e1c77642b9f1301d21596baeb412795c070d2c6bd4bf065bb7cf9268d336d90",
+      "pdf_local_notices": {
+        "physical_pages": [
+          4
+        ],
+        "observation": "Own physical4 states OGLv3 with third-party exceptions. The full report includes a staff-chart correction slip; it is not errata-only. No blanket permission for third-party material inferred.",
+        "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
+      },
+      "source_family_group": "uk-fcdo-departmental-family",
+      "selection_status": "draft_candidate_not_frozen",
+      "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
+      "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 265,
+        "note": "Complete pypdf and Poppler original-text queries plus selected original statements and notices. No OCR or groundgate reader/core execution."
+      },
+      "identity": {
+        "named_subject": "Foreign Commonwealth and Development Office annual report 2025-26",
+        "verified_source_identity": "Full own departmental Group, year ended2026-03-31, GBP thousands.",
+        "basis_of_consolidation_physical_page": 173,
+        "period": "year ended2026-03-31"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Both independent source-only freezes precede comparison. Four status differences resolved from original pages: two directly named primary Group revenue credits; one directly stated rounded whole-Group liability amount; one unresolved services/goods-to-cost-of-sales mapping stays unclear. No rule, request, schema, unstated arithmetic, model output or result informed curation.",
+        "primary_draft_sha256": "19cb27bcb7aba4eda4f6a7c3cf0a45404e74c3ce56d496b6fed77bcd1b212318",
+        "parent_independent_draft_sha256": "4ac47d1e14616ab052c5c697f30ecc5eede619fb50926014dce07809a20808f7",
+        "reconciliation_sha256": "fe81a16208868cbc30f0ab35a7e8723839952d4d8082e3191b1f59cedde247b7",
+        "no_unstated_calculations": true,
+        "disagreements": [
+          {
+            "document": "annual-h23",
+            "field": "revenue",
+            "primary": {
+              "status": "unclear",
+              "values": []
+            },
+            "parent_initial": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "-247061000",
+                  "unit": "GBP"
+                }
+              ]
+            },
+            "final": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "-247061000",
+                  "unit": "GBP"
+                }
+              ],
+              "page": 165,
+              "reason": null,
+              "note": "Primary consolidated latest Group Revenue from contracts with customers (247061), GBP thousands. Preserve printed credit sign. Separate consolidated-body income/total operating income is not substituted. Note4 physical190 corroborates magnitude."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "annual-h24",
+      "source": "https://assets.publishing.service.gov.uk/media/6ac8c105e8ef5609e7c93447/46.36_CO_ARA_25-26__FINAL_WEB.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/cabinet-office-annual-report-and-accounts-2025-to-2026",
+      "approved_max_bytes": 5242880,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 4587306,
+      "source_sha256": "sha256:be22075503024138e548255cdbdee6e3cc510cd5cd0e4734764931bc0bf9a5db",
+      "source_pages": 285,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "9e1c77642b9f1301d21596baeb412795c070d2c6bd4bf065bb7cf9268d336d90",
+      "pdf_local_notices": {
+        "physical_pages": [
+          3
+        ],
+        "observation": "Own physical3 states OGLv3 with third-party exceptions. Physical4 is an inserted SOPS correction slip; all285pages form the selected full report, not an errata-only replacement.",
+        "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
+      },
+      "source_family_group": "uk-cabinet-office-departmental-family",
+      "selection_status": "draft_candidate_not_frozen",
+      "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
+      "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 285,
+        "note": "Complete pypdf and Poppler original-text queries plus selected original statements and notices. No OCR or groundgate reader/core execution."
+      },
+      "identity": {
+        "named_subject": "Cabinet Office annual report 2025-26",
+        "verified_source_identity": "Full own departmental Group, year ended2026-03-31, GBP millions.",
+        "basis_of_consolidation_physical_page": 195,
+        "period": "year ended2026-03-31"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Both independent source-only freezes precede comparison. Four status differences resolved from original pages: two directly named primary Group revenue credits; one directly stated rounded whole-Group liability amount; one unresolved services/goods-to-cost-of-sales mapping stays unclear. No rule, request, schema, unstated arithmetic, model output or result informed curation.",
+        "primary_draft_sha256": "6ffee81978943cbdcbeff3199e475be7efcc1fba9311df8809086a64561dbdfc",
+        "parent_independent_draft_sha256": "4ac47d1e14616ab052c5c697f30ecc5eede619fb50926014dce07809a20808f7",
+        "reconciliation_sha256": "fe81a16208868cbc30f0ab35a7e8723839952d4d8082e3191b1f59cedde247b7",
+        "no_unstated_calculations": true,
+        "disagreements": [
+          {
+            "document": "annual-h24",
+            "field": "revenue",
+            "primary": {
+              "status": "unclear",
+              "values": []
+            },
+            "parent_initial": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "-1171100000",
+                  "unit": "GBP"
+                }
+              ]
+            },
+            "final": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "-1171100000",
+                  "unit": "GBP"
+                }
+              ],
+              "page": 187,
+              "reason": null,
+              "note": "Primary2025-26 Departmental group Revenue from contracts with customers (1171.1), GBP millions; preserve credit sign. Other/non-cash income and total operating income are separate."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "annual-h28",
+      "source": "https://assets.publishing.service.gov.uk/media/6a5609d42cbe5d1c179a6439/dbt-annual-report-and-accounts-2025-to-2026-web-accessible.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/department-for-business-and-trade-annual-report-and-accounts-for-2025-to-2026",
+      "approved_max_bytes": 3145728,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 2079919,
+      "source_sha256": "sha256:a6ff1425f619b274bf2a3d83c9ba48f6d09ded04f02165a4cff0962980744eb5",
+      "source_pages": 276,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "9e1c77642b9f1301d21596baeb412795c070d2c6bd4bf065bb7cf9268d336d90",
+      "pdf_local_notices": {
+        "physical_pages": [
+          4
+        ],
+        "observation": "Own physical4 states OGLv3 except where otherwise stated, with identified third-party exceptions. No broader image/logo or third-party grant inferred.",
+        "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
+      },
+      "source_family_group": "uk-business-trade-departmental-family",
+      "selection_status": "draft_candidate_not_frozen",
+      "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
+      "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 276,
+        "note": "Complete pypdf and Poppler original-text queries plus selected original statements and notices. No OCR or groundgate reader/core execution."
+      },
+      "identity": {
+        "named_subject": "Department for Business and Trade annual report 2025-26",
+        "verified_source_identity": "Full own departmental Group, year ended2026-03-31, GBP millions.",
+        "basis_of_consolidation_physical_page": 155,
+        "period": "year ended2026-03-31"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Both independent source-only freezes precede comparison. Four status differences resolved from original pages: two directly named primary Group revenue credits; one directly stated rounded whole-Group liability amount; one unresolved services/goods-to-cost-of-sales mapping stays unclear. No rule, request, schema, unstated arithmetic, model output or result informed curation.",
+        "primary_draft_sha256": "8399eecf119c570ad4e4be9fd1e1acf4a9577b3fccd964d962fcd7a1ea2e495c",
+        "parent_independent_draft_sha256": "4ac47d1e14616ab052c5c697f30ecc5eede619fb50926014dce07809a20808f7",
+        "reconciliation_sha256": "fe81a16208868cbc30f0ab35a7e8723839952d4d8082e3191b1f59cedde247b7",
+        "no_unstated_calculations": true,
+        "disagreements": [
+          {
+            "document": "annual-h28",
+            "field": "total_liabilities",
+            "primary": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "5800000000",
+                  "unit": "GBP"
+                }
+              ]
+            },
+            "parent_initial": {
+              "status": "unclear",
+              "values": []
+            },
+            "final": {
+              "status": "present",
+              "values": [
+                {
+                  "value": "5800000000",
+                  "unit": "GBP"
+                }
+              ],
+              "page": 142,
+              "reason": null,
+              "note": "Latest2025-26 whole-Group audit-scope narrative directly states total liabilities of GBP5.8bn, positive as printed. Retain stated billion precision. The fixed request does not require a primary-statement location or exact millions. No total is computed from current/non-current categories. Initial parent precision/scope concern is preserved in local reconciliation."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "annual-h29",
+      "source": "https://assets.publishing.service.gov.uk/media/69412aa329501ea90654a4ba/dhsc-annual-report-and-accounts-2024-2025-web-accessible-corrected.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/dhsc-annual-report-and-accounts-2024-to-2025",
+      "approved_max_bytes": 10485760,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 9245102,
+      "source_sha256": "sha256:23748439386c639a98400414cd32e155e974140f437da65ad1828723766b550f",
+      "source_pages": 361,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "9e1c77642b9f1301d21596baeb412795c070d2c6bd4bf065bb7cf9268d336d90",
+      "pdf_local_notices": {
+        "physical_pages": [
+          4
+        ],
+        "observation": "Own physical4 OGLv3 with third-party exceptions. Format hold is independent of this publication grant.",
+        "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
+      },
+      "source_family_group": "uk-dhsc-nhs-departmental-family",
+      "selection_status": "hold_not_in_manifest_or_labels",
+      "source_use_status": "hold; no field draft or benchmark input",
+      "hold_reason": "Target financial tables lack usable text layer; no OCR or field draft. Scanned-table support is outside this digital set.",
+      "identity": "Selected corrected2024-25 report; primary statement bodies physical248-252 are image XObjects without usable field text, while narrative/headings are digital."
+    },
+    {
+      "id": "annual-h26",
+      "source": "https://www.nzpost.co.nz/sites/nz/files/2026-08/annual-report-2026.pdf",
+      "catalog_source": "https://www.nzpost.co.nz/about-us/investor-centre",
+      "approved_max_bytes": 5242880,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 4238879,
+      "source_sha256": "sha256:bc71d1cdfb7fb53b6bf38e4566c2d26eb5ac872f91a2763e964a138284d2d909",
+      "source_pages": 66,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "9e1c77642b9f1301d21596baeb412795c070d2c6bd4bf065bb7cf9268d336d90",
+      "pdf_local_notices": {
+        "physical_pages": [],
+        "observation": "No PDF-local copyright or document-copy notice found in complete two-engine notice queries and cover/backcover inspection. This does not establish a licence grant. Separate site terms allow personal electronic or hard copies only; other use and third-party content remain separate.",
+        "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
+      },
+      "source_family_group": "new-zealand-post-group-family",
+      "selection_status": "draft_candidate_not_frozen",
+      "license": "Conditional personal electronic or hardcopy site-use framework only; no affirmative PDF-local grant; final intended use unresolved",
+      "license_source": "https://www.nzpost.co.nz/about-us/who-we-are/terms-of-business/website-terms-conditions",
+      "publisher_overlap_note": "One own consolidated corporate Group; related years, renderings and subsidiaries are not independent source families. Earlier catalog headline exposure is recorded; no request or rule was selected from it.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 66,
+        "note": "Complete pypdf and Poppler original-text queries plus selected original statements and notices. No OCR or groundgate reader/core execution."
+      },
+      "identity": {
+        "named_subject": "NZ Post / New Zealand Post Limited annual report 2026 annual report; precise fiscal dates to confirm from original notice/title metadata before values",
+        "verified_source_identity": "Own Company and subsidiaries Group at physical25, full year ended2026-06-30, NZD millions.",
+        "basis_of_consolidation_physical_page": 25,
+        "period": "year ended2026-06-30"
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final membership/source-use handling open",
+      "blind_check": {
+        "method": "Both independent source-only freezes precede comparison. Four status differences resolved from original pages: two directly named primary Group revenue credits; one directly stated rounded whole-Group liability amount; one unresolved services/goods-to-cost-of-sales mapping stays unclear. No rule, request, schema, unstated arithmetic, model output or result informed curation.",
+        "primary_draft_sha256": "a3719466d42609d0e763fb0e21da58ea313fe0fcf15d6381bb3c64f6b95eea91",
+        "parent_independent_draft_sha256": "4ac47d1e14616ab052c5c697f30ecc5eede619fb50926014dce07809a20808f7",
+        "reconciliation_sha256": "fe81a16208868cbc30f0ab35a7e8723839952d4d8082e3191b1f59cedde247b7",
+        "no_unstated_calculations": true,
+        "disagreements": [
+          {
+            "document": "annual-h26",
+            "field": "cost_of_sales",
+            "primary": {
+              "status": "unclear",
+              "values": []
+            },
+            "parent_initial": {
+              "status": "absent",
+              "values": []
+            },
+            "final": {
+              "status": "unclear",
+              "values": [],
+              "page": 27,
+              "reason": "Note4 states Cost of services and goods separately from Employee expenses and Other expenditure. The source does not establish equivalence of that functional subtotal to the fixed cost-of-sales request. Do not substitute it or total Expenditure, or calculate a new aggregate.",
+              "note": "Both independent freezes retained; parent rechecked the original Note4 after comparison. No numeric cost label selected."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "annual-h27",
+      "source": "https://www.sasol.com/sites/default/files/2026-08/Integrated_Annual_Report_2026.pdf",
+      "catalog_source": "https://www.sasol.com/investor-centre/integrated-reports",
+      "approved_max_bytes": 37748736,
+      "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection only",
+      "source_bytes": 33355257,
+      "source_sha256": "sha256:be3b491adcc770ad2a7954755f7a8314d4930db63e7d9b3c133eb060d168b6f3",
+      "source_pages": 192,
+      "download_status": "complete",
+      "source_retention": "original unmodified PDF with notices in LocalWork; not committed",
+      "request_snapshot_sha256": "9e1c77642b9f1301d21596baeb412795c070d2c6bd4bf065bb7cf9268d336d90",
+      "pdf_local_notices": {
+        "physical_pages": [
+          189
+        ],
+        "observation": "Own physical189 prohibits reproduction in any form/by any means without written permission. Public classification on the site is not a copying grant.",
+        "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
+      },
+      "source_family_group": "sasol-consolidated-group-family",
+      "selection_status": "hold_not_in_manifest_or_labels",
+      "source_use_status": "hold; no field draft or benchmark input",
+      "hold_reason": "Explicit PDF-local reproduction restriction; selected integrated report also presents summarised financial performance rather than full consolidated statements. No field draft or companion download.",
+      "identity": "Selected2026 Integrated Annual Report refers to separate annual financial statements for complete Group results and position."
     }
   ]
 }
