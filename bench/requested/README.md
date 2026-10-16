@@ -1,10 +1,10 @@
 # Requested fields: proposed set for 0.9
 
 Status: kinds and field lists approved by the maintainer in chat on 2026-10-15 and recorded on
-#269. Approved development pilots are cached in local work storage. `manifest.json` records their
-source URLs, byte sizes, hashes and notices; `labels.json` contains source-based development
-drafts and source-checked provisional labels for inspected held-out candidates. Source selection is
-still open. No model output exists. Every additional download needs approval.
+#269. I froze the manifest and sealed the labels on 2026-10-16, before any model output on this set.
+The set has 64 documents: 3 development pilots and 61 held-out (20 component datasheets, 20 SBCs,
+21 annual reports). `manifest.json` records each source URL, byte size, PDF hash and reader text
+hash. The originals and reader texts stay in local work storage. Every download had approval.
 
 ## Proposed kinds and fixed requests
 

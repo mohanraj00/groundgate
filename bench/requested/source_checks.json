@@ -1,6 +1,6 @@
 {
   "format": "requested-source-checks/1",
-  "status": "selection_open",
+  "status": "selection_frozen",
   "inspection": "Source-only identity, notice and text-layer checks. No benchmark model call or requested-value label was used to choose these candidates. Download approval does not assert a redistribution license. No source PDF, page image or source text is published.",
   "documents": [
     {
@@ -139,7 +139,7 @@
       "source_bytes": 393246,
       "source_sha256": "sha256:44ebea795990acfda6c10f1c4deecc52714fe19d7b44e313636c9d905d9d21e5",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_pages": 6,
       "identity": {
         "publisher": "Aetna",
@@ -186,7 +186,7 @@
       "source_bytes": 360393,
       "source_sha256": "sha256:d031ee5dc19cba3897f95ada7dc6d6fd73c89facb0e0c2a7f06fca7be1d8b2cb",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_pages": 7,
       "identity": {
         "publisher": "Moda Health Plan, Inc.",
@@ -218,7 +218,7 @@
       "source_bytes": 6462362,
       "source_sha256": "sha256:dcdc67ff84977e2beeb6b7a8113b6862fae1880838c613eceac42ba4b605d9d7",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_pages": 285,
       "identity": {
         "issuer": "Unilever PLC",
@@ -292,7 +292,7 @@
       "source_bytes": 19797470,
       "source_sha256": "sha256:eab508829aacb9c2d78a9d0ee8e9e1f6266b474bdd726c4f23ddf6fc3e6c1f40",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_pages": 474,
       "identity": {
         "issuer": "Shell plc",
@@ -368,7 +368,7 @@
       "source_sha256": "sha256:8c47d6e4ca180ec893d8f47e24e175d9e81df42a2d26c16a6e9770c48f962a22",
       "source_pages": 8,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "sensirion-scd30",
       "identity": {
         "named_device": "SCD30",
@@ -456,7 +456,7 @@
       "source_sha256": "sha256:095b1853e7f4328f5897c9ca6c392a7dd8b0202eda66b0a2629f9cb840dd496d",
       "source_pages": 22,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "sensirion-sht3x-dis",
       "identity": {
         "named_device": "SHT31-DIS-B",
@@ -581,7 +581,7 @@
       "source_sha256": "sha256:702bf46e64bd038f02cbe49819d58f57df10c718300418a60515d1208b2f8380",
       "source_pages": 14,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "sensirion-sdp3x-digital",
       "identity": {
         "named_device": "SDP31",
@@ -687,7 +687,7 @@
       "source_bytes": 281428,
       "source_sha256": "sha256:d2de5c8a1af16c80ad005992d979855b51e8839811ed3c1b752ce3dfdb9e5d7b",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_pages": 8,
       "source_family_group": "bcbsma-mit-2026",
       "identity": {
@@ -723,7 +723,7 @@
       "source_bytes": 275217,
       "source_sha256": "sha256:4cb4d636c45eab180521a8f140d370d04fae06c506e89b36bee6325e6a671780",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_pages": 8,
       "source_family_group": "bcbsma-mit-2026",
       "identity": {
@@ -759,7 +759,7 @@
       "source_bytes": 596145,
       "source_sha256": "sha256:ff986be129215a3039e661d320bbda446918d943d3261024ac35e1475c5d1084",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_pages": 11,
       "source_family_group": "duke-select-cigna-2026",
       "identity": {
@@ -806,7 +806,7 @@
       "source_sha256": "sha256:a3ef37d848fca940f85b6c33815a5d47d1f32726fd389a03910653e24af0f4d2",
       "source_pages": 331,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "gsk-annual-2025",
       "identity": {
         "issuer": "GSK plc",
@@ -929,7 +929,7 @@
       "source_sha256": "sha256:0c051a936a99b84a7c3fc472ea8e203fadbd09f1d0e14945eb5ab1254fffbe32",
       "source_pages": 57,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "particle-connected-module-documentation",
       "technical_family": "particle-p2-photon2-wifi-module-family",
       "identity": {
@@ -1057,7 +1057,7 @@
       "source_sha256": "sha256:b020333b3e77b138ead86cb11213231d404e0b8fcf6664782305a5203962908c",
       "source_pages": 215,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "nda-group-annual-family",
       "identity": {
         "entity": "Nuclear Decommissioning Authority group",
@@ -1112,7 +1112,7 @@
       "source_sha256": "sha256:93b03cda0de48053e9a4d5f10f5613076ebe05ea4d7076027ce142775c8831fe",
       "source_pages": 160,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "crown-estate-group-annual-family",
       "identity": {
         "entity": "The Crown Estate group",
@@ -1173,7 +1173,7 @@
       "source_sha256": "sha256:ee3846f0a2e8b2f38d658ccc3284cfcf510ba84374a1653d8652a3caff36a58b",
       "source_pages": 45,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "particle-connected-module-documentation",
       "technical_family": "particle-m-som-m404-m524-family",
       "identity": {
@@ -1234,7 +1234,7 @@
       "source_sha256": "sha256:e3f672ee985f18c87a2c9771a0948e4cd6dd47787ffe83da4b288979290231e8",
       "source_pages": 57,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "particle-connected-module-documentation",
       "technical_family": "particle-b-series-cellular-som-family",
       "identity": {
@@ -1287,7 +1287,7 @@
       "source_sha256": "sha256:eee94026e2566656a0038f4adfbd89bcbf30985ad2d084d520bbce521a2159ca",
       "source_pages": 49,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "particle-connected-module-documentation",
       "technical_family": "particle-tracker-som-family",
       "identity": {
@@ -1339,7 +1339,7 @@
       "source_sha256": "sha256:c4db86f550e28bfa1a9089be5b13d8f887cb2f7b8c0f458b8cd39151ad9fa89f",
       "source_pages": 9,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "uiowa-wellmark-uichoice-uiselect-family",
       "license": "No affirmative reuse grant found in PDF; website scope unresolved",
       "license_source": "https://hr.uiowa.edu/accessibility-notice-and-website-disclaimers",
@@ -1401,7 +1401,7 @@
       "source_sha256": "sha256:83f9435735fd5893e1fcd98636159570a27c9acef314b16029173b495ddf8ab3",
       "source_pages": 7,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "north-carolina-state-health-plan-2026-aetna",
       "license": "Limited noncommercial unmodified document-copy permission with citation, subject to document and third-party exceptions",
       "license_source": "https://www.nc.gov/disclaimer-terms-use",
@@ -1443,7 +1443,7 @@
       "source_sha256": "sha256:21b345f7a98d36947d5562218b0bc730b80609b614e9fc4374f56993011466b9",
       "source_pages": 16,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "allegro-hall-sensor-documentation",
       "license": "Attributed-copy permission with notices retained; reserved broader uses, not an open license",
       "license_source": "https://www.allegromicro.com/en/about-allegro/legal",
@@ -1488,7 +1488,7 @@
       "source_sha256": "sha256:b7a2ba73d7831b255bdf29ef11995fddd85fda6b91088238aa74825b528057ae",
       "source_pages": 13,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "allegro-hall-sensor-documentation",
       "license": "Attributed-copy permission with notices retained; reserved broader uses, not an open license",
       "license_source": "https://www.allegromicro.com/en/about-allegro/legal",
@@ -1534,7 +1534,7 @@
       "source_sha256": "sha256:1db5b87cfeb95c58d67eef180e79d5a8407751e5e00e4e09600686629e958629",
       "source_pages": 89,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "ukaea-group-annual-reports",
       "license": "Open Government Licence v3.0 except where otherwise stated; identified third-party and other license exceptions",
       "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
@@ -1583,7 +1583,7 @@
       "source_sha256": "sha256:dca15181959b797aeb588bbca0ac92a48d2966470cde2e1dc0ff2149a8bdfcd9",
       "source_pages": 174,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "ukri-group-annual-reports",
       "license": "Open Government Licence v3.0 except where otherwise stated; identified third-party and other license exceptions",
       "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
@@ -1642,7 +1642,7 @@
       "source_sha256": "sha256:5f803a801df3aeea1d81818b7ae212cb717de62429ac5cedb7bbcfc505c3fd5e",
       "source_pages": 282,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "homes-england-group-annual-reports",
       "license": "Open Government Licence v3.0 except where otherwise stated; identified third-party and other license exceptions",
       "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
@@ -1707,7 +1707,7 @@
       "source_sha256": "sha256:c571494cfb9e3a37dafe855ab8adc631563d317b94411c866cb55f7dc97477a8",
       "source_pages": 256,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "bbc-group-annual-reports",
       "license": "Conditional accurate and nonmisleading text-reproduction permission with copyright and title acknowledgment; image/logo exceptions",
       "license_source": "https://assets.publishing.service.gov.uk/media/6a55f7fca4890e65cce64ea2/BBC_Annual_Report___Accounts_25_26_accessible__3_.pdf",
@@ -1767,7 +1767,7 @@
       "source_sha256": "sha256:cd2b61c52c4d583e543d5c6de439db510d82dbd9a571a173db41aed64d61200f",
       "source_pages": 7,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "pebtf-active-medical-ppo-hmo-family",
       "license": "No affirmative document-copy grant established in inspected website or original PDF; rights unresolved",
       "license_source": "https://www.pebtf.org/legal/terms",
@@ -1810,7 +1810,7 @@
       "source_sha256": "sha256:5cb0a93f0962caf16a7554209e58cd4f9414c4a823c2f415109c7c5ae6b0a25b",
       "source_pages": 8,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "ut-system-ut-select-bcbstx-medical-family",
       "license": "No affirmative document-copy grant established in inspected website or original PDF; rights unresolved",
       "license_source": "https://www.utsystem.edu/copyright",
@@ -1853,7 +1853,7 @@
       "source_sha256": "sha256:dad0453ceea9aea0d8d8a648e31bf9cc471cd640666164706b07e66ac7f6056c",
       "source_pages": 10,
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "new-jersey-shbp-state-horizon-medical-family",
       "license": "State-information copy framework subject to local and third-party rights; exact insurer-content reuse grant unresolved",
       "license_source": "https://www.nj.gov/nj/legal.shtml",
@@ -1901,7 +1901,7 @@
       "catalog_source": "https://www.nxp.com/products/sensors/i3c-ic-digital-temp-sensors/digital-temperature-sensor-and-thermal-watchdog:LM75B",
       "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "text_layer": {
         "english_digital_text": true,
         "physical_pages": 37,
@@ -1944,7 +1944,7 @@
       "catalog_source": "https://www.gov.uk/government/publications/department-for-education-consolidated-annual-report-and-accounts-2024-to-2025",
       "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "text_layer": {
         "english_digital_text": true,
         "physical_pages": 332,
@@ -2015,7 +2015,7 @@
       "catalog_source": "https://www.gov.uk/government/publications/ministry-of-justice-annual-report-and-accounts-2024-to-2025",
       "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "text_layer": {
         "english_digital_text": true,
         "physical_pages": 314,
@@ -2091,7 +2091,7 @@
       "catalog_source": "https://www.gov.uk/government/publications/hmrc-annual-report-and-accounts-2025-to-2026",
       "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "text_layer": {
         "english_digital_text": true,
         "physical_pages": 329,
@@ -2162,7 +2162,7 @@
       "catalog_source": "https://www.gov.uk/government/publications/dwp-annual-report-and-accounts-2025-to-2026",
       "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "text_layer": {
         "english_digital_text": true,
         "physical_pages": 422,
@@ -2210,7 +2210,7 @@
       "catalog_source": "https://www.gov.uk/government/publications/defras-annual-report-and-accounts-2025-to-2026",
       "approval": "chat exact-source-and-size approval,2026-10-15; private original notice and eligibility inspection",
       "download_status": "complete",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "text_layer": {
         "english_digital_text": true,
         "physical_pages": 337,
@@ -2337,7 +2337,7 @@
         "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
       },
       "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "nxp-documentation-family",
       "license": "Conditional unmodified personal noncommercial copy framework with notices; separate PDF no-implied-license clause; final use unresolved",
       "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
@@ -2383,7 +2383,7 @@
         "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
       },
       "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "nxp-documentation-family",
       "license": "Conditional unmodified personal noncommercial copy framework with notices; separate PDF no-implied-license clause; final use unresolved",
       "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
@@ -2493,7 +2493,7 @@
         "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
       },
       "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "illinois-segip-bcbsil-family",
       "license": "No affirmative broad copying grant established; original consumer and insurer notices retained; final use unresolved",
       "license_source": "https://www.illinois.gov/about/privacy.html",
@@ -2587,7 +2587,7 @@
         "method": "Complete two-engine notice queries and selected original-page/appendix views; hardware and document-use restrictions are distinguished."
       },
       "notice_audit_sha256": "29f56a85f43dfb97b3ad9a38da129c3fd85584bccadce8578587edd8f7ac9bde",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "south-carolina-peba-state-health-plan-family",
       "license": "No affirmative broad copying grant established; original consumer and insurer notices retained; final use unresolved",
       "license_source": "https://www.peba.sc.gov/legal-disclaimer",
@@ -2631,7 +2631,7 @@
         "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
       },
       "source_family_group": "uk-ministry-of-defence-departmental-family",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
       "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
       "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
@@ -2676,7 +2676,7 @@
         "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
       },
       "source_family_group": "uk-fcdo-departmental-family",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
       "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
       "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
@@ -2751,7 +2751,7 @@
         "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
       },
       "source_family_group": "uk-cabinet-office-departmental-family",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
       "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
       "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
@@ -2826,7 +2826,7 @@
         "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
       },
       "source_family_group": "uk-business-trade-departmental-family",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "license": "Own publication Open Government Licence v3.0 except where otherwise stated; third-party exceptions retained",
       "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
       "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
@@ -2924,7 +2924,7 @@
         "method": "Complete two-engine source queries where eligible plus selected original title, notice, scope and statement renders. Restricted source retained for notice inspection only."
       },
       "source_family_group": "new-zealand-post-group-family",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "license": "Conditional personal electronic or hardcopy site-use framework only; no affirmative PDF-local grant; final intended use unresolved",
       "license_source": "https://www.nzpost.co.nz/about-us/who-we-are/terms-of-business/website-terms-conditions",
       "publisher_overlap_note": "One own consolidated corporate Group; related years, renderings and subsidiaries are not independent source families. Earlier catalog headline exposure is recorded; no request or rule was selected from it.",
@@ -3014,7 +3014,7 @@
         "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
       },
       "notice_audit_sha256": "b33b901c7cec0eb470e6586da39d029d9c756309480893af5c9f27a7e62d0303",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "onsemi-analog-control-documentation-umbrella",
       "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
       "license_source": "https://www.onsemi.com/terms-of-use",
@@ -3086,7 +3086,7 @@
         "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
       },
       "notice_audit_sha256": "e6c795c188455521cb2e221d919a0418037c09a34b0cc70746518de06bb19e9f",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "onsemi-analog-control-documentation-umbrella",
       "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
       "license_source": "https://www.onsemi.com/terms-of-use",
@@ -3254,7 +3254,7 @@
         "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
       },
       "notice_audit_sha256": "fbaa598ada9fa145233f05ebdf7e68c66ef7b319874b7e873f4f475174a79b94",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "onsemi-analog-control-documentation-umbrella",
       "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
       "license_source": "https://www.onsemi.com/terms-of-use",
@@ -3323,7 +3323,7 @@
         "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
       },
       "notice_audit_sha256": "2831ffd9054a883fa275ea93a97b332116f012c99ef5dcfb336ba586098b6829",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "onsemi-analog-control-documentation-umbrella",
       "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
       "license_source": "https://www.onsemi.com/terms-of-use",
@@ -3400,7 +3400,7 @@
         "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
       },
       "notice_audit_sha256": "31ba9bba93ab4c4f476c81de58cdf2417c953ae81e492887a78f5c190e7021b1",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "nxp-documentation-family",
       "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
       "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
@@ -3474,7 +3474,7 @@
         "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
       },
       "notice_audit_sha256": "eececc4115470424ee585fe82a79d6f091f6af5e27becc469fbbb42fbb0f06ab",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "nxp-documentation-family",
       "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
       "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
@@ -3549,7 +3549,7 @@
         "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
       },
       "notice_audit_sha256": "3ed4e71666068527f100f4bc5cdeccf58cc62d45b69bb11450172fca16db9d6b",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "nxp-documentation-family",
       "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
       "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
@@ -3629,7 +3629,7 @@
         "method": "Complete original pypdf legal queries and selected original notice renders, independently checked by parent with two text engines and selected original renders. No all-page visual claim."
       },
       "notice_audit_sha256": "447d08fe604fa77c668515586bdd1e173ff181c196a828c5eb66d35e677a2abe",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "nxp-documentation-family",
       "license": "Conditional site personal/noncommercial copy framework only; PDF-local IP/copyright and export notices retained separately. No blanket document-reuse grant or final intended-use clearance inferred.",
       "license_source": "https://www.nxp.com/company/about-nxp/terms-of-use:TERMSOFUSE",
@@ -3771,7 +3771,7 @@
         "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
       },
       "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "georgia-shbp-employer-sbc-family",
       "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
       "license_source": "https://georgia.gov/privacy-and-security",
@@ -3857,7 +3857,7 @@
         "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
       },
       "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "georgia-shbp-employer-sbc-family",
       "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
       "license_source": "https://georgia.gov/privacy-and-security",
@@ -3943,7 +3943,7 @@
         "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
       },
       "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "connecticut-state-carecompass-employer-sbc-family",
       "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
       "license_source": "https://portal.ct.gov/Policies/State-Privacy-Policy",
@@ -4004,7 +4004,7 @@
         "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
       },
       "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "connecticut-state-carecompass-employer-sbc-family",
       "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
       "license_source": "https://portal.ct.gov/Policies/State-Privacy-Policy",
@@ -4065,7 +4065,7 @@
         "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
       },
       "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "virginia-cova-employer-sbc-family",
       "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
       "license_source": "https://www.dhrm.virginia.gov/web-policy",
@@ -4125,7 +4125,7 @@
         "method": "Complete pypdf and normal Poppler notice queries across every original page plus all-original-page contact sheets; independently checked before final projection. No affirmative copy grant inferred from absence."
       },
       "notice_audit_sha256": "764520e954c5349c2d6dde6a3ddaab39a1ec90203d2c9e8f3ca31a67de03d8d9",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "source_family_group": "virginia-cova-employer-sbc-family",
       "license": "Conditional state/employer site-use framework and URL/SHA provenance only; no affirmative PDF-local reuse grant established. Private provisional source-use scope remains open.",
       "license_source": "https://www.dhrm.virginia.gov/web-policy",
@@ -4188,7 +4188,7 @@
         "observation": "PDF-local Crown copyright2026 and OGLv3 except where otherwise stated; identified third-party copyright requires rights-holder permission. No inference that third-party content, photographs or logos are covered.",
         "method": "Complete two-engine original-source notice queries and selected original title, notice, scope and statement renders. No OCR or groundgate reader/core."
       },
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "license": "Own PDF physical4 states OGLv3 except where otherwise stated; identified third-party exceptions retained. Separate site personal/noncommercial conditions recorded; no blanket third-party or image/logo grant inferred.",
       "license_source": "https://www.networkrail.co.uk/wp-content/uploads/2023/07/Network-Rail-Annual-Report-and-Accounts-2026.pdf",
       "publisher_overlap_note": "One own railway corporate Group and publisher; broader UK public railway/government reporting dependence retained. Related revisions and subsidiaries are not independent documents.",
@@ -4235,7 +4235,7 @@
         "observation": "Complete text search and original front/back render inspection found no PDF-local reproduction/automated-extraction prohibition or report-wide affirmative reuse grant. Silence is not a reuse permission; final use/redistribution rights remain unresolved.",
         "method": "Complete two-engine original-source notice queries and selected original title, notice, scope and statement renders. No OCR or groundgate reader/core."
       },
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "license": "Site personal copying/downloading/printing framework only; no affirmative PDF-local reuse grant. Other copying/derivatives/commercial uses require separate permission; final intended use unresolved.",
       "license_source": "https://www.cmhc-schl.gc.ca/about-us/terms-conditions",
       "publisher_overlap_note": "One own consolidated Crown housing/financial Group. Canadian government and financial reporting conventions overlap; company subsidiaries and repeated revisions are not independent source families.",
@@ -4288,7 +4288,7 @@
       "coverage_period": "2026-07-01/2027-06-30",
       "employer_family_group": "university-utah-employer",
       "carrier_form_group": "regence-bcbs-standardized-sbc",
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "license": "No affirmative copying or automated-use grant established from university disclaimer or PDF notices. No express source-specific acquisition ban found during inspection; final private/provenance and intended-use handling unresolved.",
       "license_source": "https://www.utah.edu/disclaimer/",
       "publisher_overlap_note": "One university employer/Regence plan family, with broader Blue Cross and mandated SBC-form dependence. Provider tiers and medical/drug benefit components are not independent documents.",
@@ -4369,7 +4369,7 @@
         "parent metadata hold",
         "independent primary metadata hold 1d5360f755bba7d7549dd65e03398265a1ec93e6eaeede8194ca4f8e3cba826a"
       ],
-      "selection_status": "draft_candidate_not_frozen",
+      "selection_status": "frozen_member",
       "license": "Site terms reserve rights and allow display, reformatting and printing for personal noncommercial use only. No PDF-local reproduction, licence or automated-extraction notice found by complete two-engine queries. No affirmative open reuse grant. URL plus SHA-256 provenance; original kept private.",
       "license_source": "https://massgeneralbrighamhealthplan.org/privacy",
       "publisher_overlap_note": "One MassachusettsGIC employer program and MGB carrier/administrator family. Not HarvardPilgrim/Point32 merely because the GIC catalog lists those separately. New employer/carrier candidate does not establish independent mandated SBC form; no independent-form claim.",
