@@ -1794,6 +1794,311 @@
           "second_check": false
         }
       ]
+    },
+    {
+      "id": "annual-h12",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "428639000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 70,
+          "note": "2026 Group Revenue row, 428639 in GBP thousands; not total operating income or parent-only column.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 70,
+          "note": "Complete two-engine 89-page check has no stated consolidated cost of sales. Purchase of goods/services and operating expenditure are not substituted.",
+          "reason": "Complete two-engine 89-page check has no stated consolidated cost of sales. Purchase of goods/services and operating expenditure are not substituted.",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 70,
+          "note": "No stated consolidated gross profit in full two-engine source check. Operating profit and arithmetic are not substituted.",
+          "reason": "No stated consolidated gross profit in full two-engine source check. Operating profit and arithmetic are not substituted.",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "1914195000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 70,
+          "note": "2026 Group Total assets, 1914195 in GBP thousands.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 70,
+          "note": "Current and non-current liabilities are separately stated, but no combined consolidated total found in complete two-engine source. No sum or asset/equity subtraction.",
+          "reason": "Current and non-current liabilities are separately stated, but no combined consolidated total found in complete two-engine source. No sum or asset/equity subtraction.",
+          "second_check": true
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "688289000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 70,
+          "note": "2026 Group Total taxpayers equity, 688289 in GBP thousands.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h13",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 143,
+          "note": "Operating income includes grants, rental and other income. Notes 1.8 and following on pages131-132 distinguish revenue, grants and commercial income. No unambiguous unqualified consolidated Revenue aggregate is mapped from the fixed request; do not replace it with broader operating income or compute a subtotal.",
+          "reason": "Operating income includes grants, rental and other income. Notes 1.8 and following on pages131-132 distinguish revenue, grants and commercial income. No unambiguous unqualified consolidated Revenue aggregate is mapped from the fixed request; do not replace it with broader operating income or compute a subtotal.",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 125,
+          "note": "No stated consolidated cost of sales in complete two-engine 174-page source. Goods/services and research costs are operating expenses, not a declared cost-of-sales aggregate.",
+          "reason": "No stated consolidated cost of sales in complete two-engine 174-page source. Goods/services and research costs are operating expenses, not a declared cost-of-sales aggregate.",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 125,
+          "note": "No stated consolidated gross profit in complete two-engine source. Do not derive.",
+          "reason": "No stated consolidated gross profit in complete two-engine source. Do not derive.",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "7301972000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 126,
+          "note": "2025-26 Consolidated column, Total assets 7301972 GBP thousands; not first UKRI-only column.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 126,
+          "note": "Only current and non-current subtotals are stated. Total assets less total liabilities is a net-assets amount, not a combined liability total. Complete source checked in both engines, no sum.",
+          "reason": "Only current and non-current subtotals are stated. Total assets less total liabilities is a net-assets amount, not a combined liability total. Complete source checked in both engines, no sum.",
+          "second_check": true
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "-5597970000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 126,
+          "note": "Total reserves below Taxpayers equity and other reserves is printed (5597970) in 2025-26 Consolidated column. Preserve printed negative sign; page128 closing consolidated total corroborates.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h14",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 214,
+          "note": "IFRS15 revenue policy distinguishes contracts with customers from fair-value gains, interest and financial-disposal gains. Page204 Income subtotal includes those other items; no forced mapping or computed revenue subtotal.",
+          "reason": "IFRS15 revenue policy distinguishes contracts with customers from fair-value gains, interest and financial-disposal gains. Page204 Income subtotal includes those other items; no forced mapping or computed revenue subtotal.",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "unclear",
+          "values": [],
+          "page": 204,
+          "note": "Cost of land and property disposals is a specific property stream while other revenue streams also exist. No explicit full-Group cost-of-sales mapping in fixed request or complete source; no substitution of total operating expenditure.",
+          "reason": "Cost of land and property disposals is a specific property stream while other revenue streams also exist. No explicit full-Group cost-of-sales mapping in fixed request or complete source; no substitution of total operating expenditure.",
+          "second_check": false
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 204,
+          "note": "No stated consolidated gross profit in complete two-engine 282-page source. No difference of income and cost is derived.",
+          "reason": "No stated consolidated gross profit in complete two-engine 282-page source. No difference of income and cost is derived.",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "17543280000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 205,
+          "note": "2025/26 Group Total assets 17543280 GBP thousands.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 205,
+          "note": "Current and non-current liability subtotals only. Complete two-engine source checked; no unstated sum or balance-sheet subtraction.",
+          "reason": "Current and non-current liability subtotals only. Complete two-engine source checked; no unstated sum or balance-sheet subtraction.",
+          "second_check": true
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "17225044000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 205,
+          "note": "2025/26 Group Taxpayers equity 17225044 GBP thousands.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
+    },
+    {
+      "id": "annual-h15",
+      "fields": [
+        {
+          "field": "revenue",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "5962000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 62,
+          "note": "Original physical page 62 explicitly identifies full BBC Group revenue of 5962 GBP million for 2025/26, including licence fees and other income. Consolidated statement page140 and NoteB1 page150 corroborate the same directly stated amount. Scale conversion only, no income sum or subgroup substitution.",
+          "reason": "",
+          "second_check": false
+        },
+        {
+          "field": "cost_of_sales",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 157,
+          "note": "Only explicit cost of sales is Commercial Group subset, not full BBC consolidated Group. Complete two-engine 256-page check finds no whole-Group cost-of-sales aggregate; total operating costs are not substituted.",
+          "reason": "Only explicit cost of sales is Commercial Group subset, not full BBC consolidated Group. Complete two-engine 256-page check finds no whole-Group cost-of-sales aggregate; total operating costs are not substituted.",
+          "second_check": true
+        },
+        {
+          "field": "gross_profit",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 140,
+          "note": "No stated whole-Group gross profit in complete two-engine source. No subtraction or commercial-subset substitution.",
+          "reason": "No stated whole-Group gross profit in complete two-engine source. No subtraction or commercial-subset substitution.",
+          "second_check": true
+        },
+        {
+          "field": "total_assets",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 141,
+          "note": "Whole-Group balance sheet states separate current/non-current asset subtotals, no combined total. Other total-asset hits are audit coverage, a pension scheme or segment discussion. Complete source checked; no sum.",
+          "reason": "Whole-Group balance sheet states separate current/non-current asset subtotals, no combined total. Other total-asset hits are audit coverage, a pension scheme or segment discussion. Complete source checked; no sum.",
+          "second_check": true
+        },
+        {
+          "field": "total_liabilities",
+          "key": null,
+          "status": "absent",
+          "values": [],
+          "page": 141,
+          "note": "Separate current and non-current totals only, no stated combined full-Group liability amount in complete two-engine source. Do not calculate.",
+          "reason": "Separate current and non-current totals only, no stated combined full-Group liability amount in complete two-engine source. Do not calculate.",
+          "second_check": true
+        },
+        {
+          "field": "total_equity",
+          "key": null,
+          "status": "present",
+          "values": [
+            {
+              "value": "2231000000",
+              "unit": "GBP"
+            }
+          ],
+          "page": 141,
+          "note": "Total capital and reserves including non-controlling interests 2231 GBP million. Parent attributable 2232 is not substituted.",
+          "reason": "",
+          "second_check": false
+        }
+      ]
     }
   ],
   "status": "draft"

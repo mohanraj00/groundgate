@@ -1523,6 +1523,239 @@
       },
       "technical_family": "allegro-a1324-a1325-a1326-linear-hall-sensor-family",
       "license_limitations": "Source attribution and notices are required for copies. The site reserves broader display, distribution, modification, republication and derivative uses unless separately authorized. No broader grant or endorsement is inferred."
+    },
+    {
+      "id": "annual-h12",
+      "source": "https://assets.publishing.service.gov.uk/media/6a563f942f6185941a9a649c/uk-atomic-energy-authority-annual-report-and-accounts-2025-2026.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/ukaea-annual-report-and-accounts-2025-to-2026",
+      "approved_max_bytes": 20971520,
+      "approval": "chat exact-source-and-size approval, 2026-10-15; private notice and consolidated-group inspection",
+      "source_bytes": 16552977,
+      "source_sha256": "sha256:1db5b87cfeb95c58d67eef180e79d5a8407751e5e00e4e09600686629e958629",
+      "source_pages": 89,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "ukaea-group-annual-reports",
+      "license": "Open Government Licence v3.0 except where otherwise stated; identified third-party and other license exceptions",
+      "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "source_retention": "original unmodified PDF with notices in local work storage; not committed",
+      "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 89,
+        "note": "Complete report text checked in pypdf and Poppler. Sparse or blank cover/divider/back pages checked from originals; this is not an exhaustive visual audit of every page."
+      },
+      "identity": {
+        "title": "UK Atomic Energy Authority Annual Report and Accounts 2025 to 2026",
+        "own_consolidated_group_established": true,
+        "latest_full_fiscal_year_end": "2026-03-31",
+        "presentation_currency": "GBP",
+        "printed_scale": 1000,
+        "consolidation_physical_pages": [
+          72
+        ],
+        "statement_scope_note": "Use latest full-year consolidated Group columns; separate parent or agency columns, subsidiary totals and comparatives do not meet this request."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": true,
+        "copyright_physical_page": 3,
+        "grant_scope": "publication-local OGLv3 with exceptions",
+        "observation": "The publication itself states OGL v3.0. Identified third-party images and other OGL exclusions remain outside that grant. Retain notices and attribution; no PDF or source text is published.",
+        "method": "Complete two-engine notice searches and selected original-page visual checks; government hosting alone is not treated as a grant."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final corpus selection and source-use handling remain open",
+      "request_snapshot_sha256": "90c7257f467a7342ac32c52f88d846d29a0f3e82e3261d88a3b5af08b750c8c7",
+      "blind_check": {
+        "method": "Primary and independent parent source annotations frozen before comparison. All final absences have complete independent source checks. Status disagreements and source-only resolution are recorded; no forced consensus or benchmark output.",
+        "reconciliation_sha256": "92bbec8f1bfa8f7e18f547d80bfe3173d55ecadb8dcf7f9326481db8780e44b8",
+        "no_unstated_calculations": true,
+        "disagreements": []
+      },
+      "physical_page_note": "The 89 physical PDF pages are two-page spreads. Physical page70 contains printed pages134-135; page72 contains138-139. Evidence page numbers refer to physical PDF pages."
+    },
+    {
+      "id": "annual-h13",
+      "source": "https://assets.publishing.service.gov.uk/media/6a5614be31fb6daf31413627/260101_Annual_Report25_26_web_optimised_FINAL_MH.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/ukri-annual-report-and-accounts-2025-to-2026",
+      "approved_max_bytes": 20971520,
+      "approval": "chat exact-source-and-size approval, 2026-10-15; private notice and consolidated-group inspection",
+      "source_bytes": 15885713,
+      "source_sha256": "sha256:dca15181959b797aeb588bbca0ac92a48d2966470cde2e1dc0ff2149a8bdfcd9",
+      "source_pages": 174,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "ukri-group-annual-reports",
+      "license": "Open Government Licence v3.0 except where otherwise stated; identified third-party and other license exceptions",
+      "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "source_retention": "original unmodified PDF with notices in local work storage; not committed",
+      "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 174,
+        "note": "Complete report text checked in pypdf and Poppler. Sparse or blank cover/divider/back pages checked from originals; this is not an exhaustive visual audit of every page."
+      },
+      "identity": {
+        "title": "UKRI annual report and accounts 2025 to 2026 (web-accessible)",
+        "own_consolidated_group_established": true,
+        "latest_full_fiscal_year_end": "2026-03-31",
+        "presentation_currency": "GBP",
+        "printed_scale": 1000,
+        "consolidation_physical_pages": [
+          130,
+          131
+        ],
+        "statement_scope_note": "Use latest full-year consolidated Group columns; separate parent or agency columns, subsidiary totals and comparatives do not meet this request."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": true,
+        "copyright_physical_page": 4,
+        "grant_scope": "publication-local OGLv3 with exceptions",
+        "observation": "The publication itself states OGL v3.0. Identified third-party images and other OGL exclusions remain outside that grant. Retain notices and attribution; no PDF or source text is published.",
+        "method": "Complete two-engine notice searches and selected original-page visual checks; government hosting alone is not treated as a grant."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final corpus selection and source-use handling remain open",
+      "request_snapshot_sha256": "90c7257f467a7342ac32c52f88d846d29a0f3e82e3261d88a3b5af08b750c8c7",
+      "blind_check": {
+        "method": "Primary and independent parent source annotations frozen before comparison. All final absences have complete independent source checks. Status disagreements and source-only resolution are recorded; no forced consensus or benchmark output.",
+        "reconciliation_sha256": "92bbec8f1bfa8f7e18f547d80bfe3173d55ecadb8dcf7f9326481db8780e44b8",
+        "no_unstated_calculations": true,
+        "disagreements": [
+          {
+            "document": "annual-h13",
+            "field": "revenue",
+            "primary": "absent",
+            "parent": "unclear",
+            "final": "unclear",
+            "resolution": "Distinct grant/revenue/commercial-income policies do not resolve the unqualified aggregate. Primary reviewer later recommends unclear; retain mapping uncertainty."
+          }
+        ]
+      },
+      "consolidation_metadata_note": "Note1.4 continues on physical131: Group includes STFC Innovations, Innovate UK Loans and Knowledge Transfer Network operating as Innovate UK Business Connect, as well as UKRI. Separate authority/group columns are not interchangeable."
+    },
+    {
+      "id": "annual-h14",
+      "source": "https://assets.publishing.service.gov.uk/media/6a5604159e631544544135ff/Homes_England_Annual_Report_and_Accounts_2025_26.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/homes-england-annual-report-and-accounts-2025-to-2026",
+      "approved_max_bytes": 25165824,
+      "approval": "chat exact-source-and-size approval, 2026-10-15; private notice and consolidated-group inspection",
+      "source_bytes": 21058019,
+      "source_sha256": "sha256:5f803a801df3aeea1d81818b7ae212cb717de62429ac5cedb7bbcfc505c3fd5e",
+      "source_pages": 282,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "homes-england-group-annual-reports",
+      "license": "Open Government Licence v3.0 except where otherwise stated; identified third-party and other license exceptions",
+      "license_source": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "source_retention": "original unmodified PDF with notices in local work storage; not committed",
+      "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 282,
+        "note": "Complete report text checked in pypdf and Poppler. Sparse or blank cover/divider/back pages checked from originals; this is not an exhaustive visual audit of every page."
+      },
+      "identity": {
+        "title": "Homes England Annual Report and Accounts 2025 to 2026",
+        "own_consolidated_group_established": true,
+        "latest_full_fiscal_year_end": "2026-03-31",
+        "presentation_currency": "GBP",
+        "printed_scale": 1000,
+        "consolidation_physical_pages": [
+          210
+        ],
+        "statement_scope_note": "Use latest full-year consolidated Group columns; separate parent or agency columns, subsidiary totals and comparatives do not meet this request."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": true,
+        "copyright_physical_page": 4,
+        "grant_scope": "publication-local OGLv3 with exceptions",
+        "observation": "The publication itself states OGL v3.0. Identified third-party images and other OGL exclusions remain outside that grant. Retain notices and attribution; no PDF or source text is published.",
+        "method": "Complete two-engine notice searches and selected original-page visual checks; government hosting alone is not treated as a grant."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final corpus selection and source-use handling remain open",
+      "request_snapshot_sha256": "90c7257f467a7342ac32c52f88d846d29a0f3e82e3261d88a3b5af08b750c8c7",
+      "blind_check": {
+        "method": "Primary and independent parent source annotations frozen before comparison. All final absences have complete independent source checks. Status disagreements and source-only resolution are recorded; no forced consensus or benchmark output.",
+        "reconciliation_sha256": "92bbec8f1bfa8f7e18f547d80bfe3173d55ecadb8dcf7f9326481db8780e44b8",
+        "no_unstated_calculations": true,
+        "disagreements": [
+          {
+            "document": "annual-h14",
+            "field": "revenue",
+            "primary": "absent",
+            "parent": "unclear",
+            "final": "unclear",
+            "resolution": "Reviewer identifies no stated full-Group aggregate; parent retains unresolved semantic mapping. No forced consensus or operating-income substitution."
+          },
+          {
+            "document": "annual-h14",
+            "field": "cost_of_sales",
+            "primary": "absent",
+            "parent": "unclear",
+            "final": "unclear",
+            "resolution": "Reviewer identifies only disposal-activity costs and recommends absent. Parent retains semantic scope uncertainty; no partial or operating-expense substitution."
+          }
+        ]
+      }
+    },
+    {
+      "id": "annual-h15",
+      "source": "https://assets.publishing.service.gov.uk/media/6a55f7fca4890e65cce64ea2/BBC_Annual_Report___Accounts_25_26_accessible__3_.pdf",
+      "catalog_source": "https://www.gov.uk/government/publications/bbc-group-annual-report-and-accounts-for-2025-to-2026",
+      "approved_max_bytes": 12582912,
+      "approval": "chat exact-source-and-size approval, 2026-10-15; private notice and consolidated-group inspection",
+      "source_bytes": 11336478,
+      "source_sha256": "sha256:c571494cfb9e3a37dafe855ab8adc631563d317b94411c866cb55f7dc97477a8",
+      "source_pages": 256,
+      "download_status": "complete",
+      "selection_status": "draft_candidate_not_frozen",
+      "source_family_group": "bbc-group-annual-reports",
+      "license": "Conditional accurate and nonmisleading text-reproduction permission with copyright and title acknowledgment; image/logo exceptions",
+      "license_source": "https://assets.publishing.service.gov.uk/media/6a55f7fca4890e65cce64ea2/BBC_Annual_Report___Accounts_25_26_accessible__3_.pdf",
+      "source_retention": "original unmodified PDF with notices in local work storage; not committed",
+      "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
+      "text_layer": {
+        "english_digital_text": true,
+        "physical_pages": 256,
+        "note": "Complete report text checked in pypdf and Poppler. Sparse or blank cover/divider/back pages checked from originals; this is not an exhaustive visual audit of every page."
+      },
+      "identity": {
+        "title": "BBC Group annual report and accounts for 2025 to 2026",
+        "own_consolidated_group_established": true,
+        "latest_full_fiscal_year_end": "2026-03-31",
+        "presentation_currency": "GBP",
+        "printed_scale": 1000000,
+        "consolidation_physical_pages": [
+          147
+        ],
+        "statement_scope_note": "Use latest full-year consolidated Group columns; separate parent or agency columns, subsidiary totals and comparatives do not meet this request."
+      },
+      "pdf_local_notices": {
+        "affirmative_reuse_grant_found": true,
+        "copyright_physical_page": 4,
+        "grant_scope": "conditional text-only reproduction framework",
+        "observation": "The PDF-local text grant excludes Royal Arms and department/agency logos. Photograph rights require holder permission. Retain copyright and document-title acknowledgment. No photograph, PDF or source text is published.",
+        "method": "Complete two-engine notice searches and selected original-page visual checks; government hosting alone is not treated as a grant."
+      },
+      "source_use_status": "private inspection and provisional source annotations only; final corpus selection and source-use handling remain open",
+      "request_snapshot_sha256": "90c7257f467a7342ac32c52f88d846d29a0f3e82e3261d88a3b5af08b750c8c7",
+      "blind_check": {
+        "method": "Primary and independent parent source annotations frozen before comparison. All final absences have complete independent source checks. Status disagreements and source-only resolution are recorded; no forced consensus or benchmark output.",
+        "reconciliation_sha256": "92bbec8f1bfa8f7e18f547d80bfe3173d55ecadb8dcf7f9326481db8780e44b8",
+        "no_unstated_calculations": true,
+        "disagreements": [
+          {
+            "document": "annual-h15",
+            "field": "revenue",
+            "primary": "present",
+            "parent": "unclear",
+            "final": "present",
+            "value": "5962000000",
+            "unit": "GBP",
+            "resolution": "Explicit whole-Group revenue wording on original physical page62 resolves meaning. Parent independently read own text and original render before final curation."
+          }
+        ]
+      },
+      "copyright_attribution": "BBC Copyright 2026. BBC Group Annual Report and Accounts 2025/26. Text acknowledgment is retained; no image license inferred."
     }
   ]
 }
