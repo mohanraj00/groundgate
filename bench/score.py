@@ -952,7 +952,11 @@ def main() -> None:
     ap.add_argument("--controls", action="store_true", help="set 2: list the control items")
     ap.add_argument("--requested", action="store_true", help="score sealed requested-field labels")
     ap.add_argument("--split", choices=("development", "heldout"), default="heldout")
+    ap.add_argument("--diagnostics", type=Path, help="explicit cached diagnostic export")
+    ap.add_argument("--diagnostics-sha256", help="exact diagnostic export digest")
     args = ap.parse_args()
+    if (args.diagnostics is not None or args.diagnostics_sha256 is not None) and not args.requested:
+        ap.error("diagnostics require requested-field mode")
     if args.requested:
         if args.drafts or args.controls:
             ap.error("requested-field scoring refuses --drafts and --controls")
@@ -961,7 +965,12 @@ def main() -> None:
 
         directory = args.set.resolve()
         try:
-            results = score_set(directory, args.split)
+            results = score_set(
+                directory,
+                args.split,
+                diagnostics=args.diagnostics,
+                diagnostics_sha256=args.diagnostics_sha256,
+            )
         except (OSError, ValueError, KeyError) as exc:
             ap.error(f"requested-field scoring needs sealed labels and a valid set: {exc}")
         outputs = {

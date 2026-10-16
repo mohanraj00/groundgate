@@ -313,7 +313,13 @@ def measure(
     }
 
 
-def score_set(directory: Path, split: str) -> dict[str, Any]:
+def score_set(
+    directory: Path,
+    split: str,
+    *,
+    diagnostics: Path | None = None,
+    diagnostics_sha256: str | None = None,
+) -> dict[str, Any]:
     """Load a requested set, bind all runs to sealed label bytes, and score its final decisions."""
     manifest_raw = (directory / "manifest.json").read_bytes()
     labels_raw = (directory / "labels.json").read_bytes()
@@ -333,9 +339,19 @@ def score_set(directory: Path, split: str) -> dict[str, Any]:
         }
     if not runs:
         raise ValueError("no cached requested-field runs")
-    return {
+    result = {
         "format": "requested-fields/1",
         "labels_sha256": seal,
         "manifest_sha256": "sha256:" + hashlib.sha256(manifest_raw).hexdigest(),
         "runs": runs,
     }
+    if (diagnostics is None) != (diagnostics_sha256 is None):
+        raise ValueError("diagnostics need an export path and exact digest")
+    if diagnostics is not None:
+        from .diagnostics import load_export
+
+        assert diagnostics_sha256 is not None
+        result["diagnostics"] = load_export(
+            diagnostics, diagnostics_sha256, manifest_seal, seal, split
+        )
+    return result

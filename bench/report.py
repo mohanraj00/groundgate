@@ -886,4 +886,84 @@ def render_requested(results: dict[str, Any]) -> str:
                 ]
             )
         lines += table(head, rows)
+    if "diagnostics" in results:
+        diagnostic = results["diagnostics"]
+        lines += [
+            "## Separate diagnostics",
+            "",
+            "Companion views share source documents. Their counts do not add primary trials "
+            "or alter requested-field bounds.",
+            "",
+            "Diagnostic export: `" + diagnostic["export_sha256"] + "`.",
+            "",
+        ]
+        pair = diagnostic["decision_pair"]
+        lines += table(
+            ["Decision transition", "Candidates"],
+            [[name, count] for name, count in sorted(pair["transitions"].items())],
+        )
+        lines += ["", "Incomplete worker records: " + str(len(pair["failures"])) + ".", ""]
+        for title, key in (
+            ("Added reason codes", "added_codes"),
+            ("Removed reason codes", "removed_codes"),
+        ):
+            lines += ["### " + title, ""]
+            lines += table(
+                ["Code", "Candidates"], [[name, count] for name, count in sorted(pair[key].items())]
+            )
+        lines += ["", "### Companion views", ""]
+        view_rows = []
+        for view, versions in sorted(pair["by_view"].items()):
+            for version, stats in sorted(versions.items()):
+                if stats.get("status") == "incomplete":
+                    view_rows.append([view, version, "incomplete", "n/a", "n/a", "n/a"])
+                else:
+                    view_rows.append(
+                        [
+                            view,
+                            version,
+                            "complete",
+                            stats["admitted"],
+                            stats["escapes"],
+                            stats["silent_misses"],
+                        ]
+                    )
+        lines += table(
+            ["View", "Decision", "Status", "Admits", "Escapes", "Silent misses"], view_rows
+        )
+        lines += [
+            "",
+            "### Observable reader layout",
+            "",
+            "Status: " + diagnostic["reader_layout"]["status"] + ".",
+            "",
+        ]
+        rows = []
+        for route, row in sorted(diagnostic["reader_layout"]["routes"].items()):
+            rows.append(
+                [
+                    route,
+                    row["evaluated"],
+                    row["correct"],
+                    row["unclear"],
+                    row["unassessed"],
+                    row["not_applicable"],
+                    row["unreviewed_pages"],
+                    "n/a" if row["rate"] is None else percent(row["rate"]),
+                ]
+            )
+        lines += table(
+            [
+                "Kind/reader/route",
+                "Evaluated",
+                "Correct",
+                "Unclear",
+                "Unassessed",
+                "Not applicable",
+                "Unreviewed pages",
+                "Correct share",
+            ],
+            rows,
+        )
+        lines += [""] + diagnostic["reader_layout"]["limitations"] + [""]
     return "\n".join(lines) + "\n"
