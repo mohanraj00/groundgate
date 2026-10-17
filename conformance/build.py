@@ -3528,6 +3528,45 @@ vector(
 )  # fmt: skip
 
 
+vector(
+    "57-lone-prefix-row-slot",
+    "A tabbed row whose only data slot holds a lone unit prefix is not ambiguous. Its cells on "
+    "separate lines keep the column rule, as with no tab (spec 0.9 review).",
+    "2025\n2024\nCash\t$\n100\n200",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("w1", "cash", "100", "USD", [q("100"), row("Cash"), year("2025"), q("$", role="unit")],
+          ("admitted", ["KEY_CITED"]), key="2025"),
+        c("w2", "cash", "100", "USD", [q("100"), row("Cash"), year("2024"), q("$", role="unit")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "58-split-currency-slots",
+    "A lone unit prefix in its own slot before an empty slot or a lone dash belongs to that "
+    "column. It is not a second cell, so the next value keeps its own key (spec 0.9 review).",
+    "\t2025\t2024\t2023\nCash\t$\t\t$\t200\t$\t300\n\n"
+    "\t2025\t2024\t2023\nCash\t$\t-\t$\t400\t$\t500",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("w3", "cash", "200", "USD", [q("200"), q("$", 2, role="unit"), row("Cash"),
+                                       year("2024", 1)], ("admitted", ["KEY_CITED"]), key="2024"),
+        c("w4", "cash", "200", "USD", [q("200"), q("$", 2, role="unit"), row("Cash"),
+                                       year("2023", 1)], (REVIEW, ["KEY_NOT_AT_VALUE"]),
+          key="2023"),
+        c("w5", "cash", "300", "USD", [q("300"), q("$", 3, role="unit"), row("Cash"),
+                                       year("2023", 1)], ("admitted", ["KEY_CITED"]), key="2023"),
+        c("w6", "cash", "400", "USD", [q("400"), q("$", 5, role="unit"), row("Cash"),
+                                       year("2024", 2)], ("admitted", ["KEY_CITED"]), key="2024"),
+        c("w7", "cash", "400", "USD", [q("400"), q("$", 5, role="unit"), row("Cash"),
+                                       year("2023", 2)], (REVIEW, ["KEY_NOT_AT_VALUE"]),
+          key="2023"),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

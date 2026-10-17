@@ -663,8 +663,10 @@ all of these hold:
    slot is the text after a tab and before the next tab or line end on that same line, when it
    holds only spaces and carriage returns, or nothing. It counts once, also at the end of a line.
    The text before the first tab is the row label, even when it is empty. A prefix-only slot
-   immediately before a number keeps the existing numeric cell count. The value's token is the
-   n-th cell from the field item.
+   immediately before a number keeps the existing numeric cell count. A slot that holds only a
+   prefix of the field's unit, followed on its line by a slot that is empty or holds a lone dash,
+   is not a cell: the next slot holds the cell of that column, as in `$\t\t$\t200` (spec 0.9).
+   The value's token is the n-th cell from the field item.
 6. Each tabbed line crossed from the field item through the value must be unambiguous. Read its
    slots after the first tab. Each slot must hold exactly one cell, or hold only a prefix of the
    field's unit that is not itself a cell. More than one cell in a slot, a cell that crosses a
