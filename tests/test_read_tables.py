@@ -448,3 +448,29 @@ def test_text_before_the_columns_joins_the_row_label(tmp_path: Path) -> None:
     assert doc.layout is not None
     raw = doc.text.encode()
     assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
+
+
+def test_competing_majority_grids_give_no_grid() -> None:
+    spans = [(200, 230), (202, 232), (220, 250), (240, 270), (242, 272)]
+    rows = [[_line("1", a, b), _line("2", a + 100, b + 100)] for a, b in spans]
+    assert _grid(rows) == [] == _grid(rows[::-1])
+
+
+def test_label_row_above_the_first_number_row_is_placed_when_it_fits(tmp_path: Path) -> None:
+    path = tmp_path / "leading.pdf"
+    page = [
+        (72, 720, "Item"),
+        (300, 720, "December 31, 2025"),
+        (72, 705, "Cash"),
+        (402, 705, "n/a"),
+        (72, 690, "Land"),
+        (300, 690, "1,000"),
+        (400, 690, "2,000"),
+        (72, 675, "Debt"),
+        (300, 675, "3,000"),
+        (400, 675, "4,000"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    lines = read(path).text.split("\n")
+    assert "Cash\t\tn/a" in lines
+    assert "Item\tDecember 31, 2025" in lines  # a heading that fits no column stays as it is
