@@ -377,12 +377,14 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
             columns = _number_columns(fits) or columns
         # a column heading can show a column that every row leaves blank
         right = max((_span(c[0]).x1 for c in grouped if c and not _number_cell(c[0])), default=0)
-        wide = _heading_columns(
-            [[c for ri in range(first, group[0]) for bi, li in rows[ri]
-              for c in _cells(blocks[bi][li]) if _span(c).x1 > right]],
-            columns,
-        )  # fmt: skip
-        extended, columns = wide != columns, wide
+        heading = -1  # the row of the heading that gives the columns
+        for ri in range(first, group[0]):
+            cells = [
+                c for bi, li in rows[ri] for c in _cells(blocks[bi][li]) if _span(c).x1 > right
+            ]
+            if (wide := _heading_columns(cells, columns)) != columns:
+                heading, columns = ri, wide
+                break
         width = max(widest, len(columns))
         tables.append([])
         for ri in range(first, group[-1] + 1):
@@ -417,7 +419,7 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                 isolated = isolated or (not labeled and signs and len(lines) == 1)
             elif columns and _side_by_side(row, span):
                 cells = [cell for line in lines for cell in _cells(line)]
-                if extended and ri < group[0]:  # the heading that gave the columns
+                if ri == heading:  # the heading that gave the columns
                     lines = _fill_empty_cells(cells, columns)
                 elif _span(cells[0]).x1 <= columns[0][0]:  # a label, then text cells in the columns
                     placed = _fill_empty_cells(cells, columns)
@@ -507,25 +509,20 @@ def _text_columns(rows: list[Row]) -> set[int]:
     return found
 
 
-def _heading_columns(
-    headings: list[Row], columns: list[tuple[float, float]]
-) -> list[tuple[float, float]]:
+def _heading_columns(cells: Row, columns: list[tuple[float, float]]) -> list[tuple[float, float]]:
     """The columns of a heading row with more cells than the columns, when each heading cell
     holds at most one column and every column is under one heading cell. Otherwise the columns."""
-    for cells in headings:
-        if not columns or len(cells) <= len(columns):
-            continue
-        spans = [_span(cell) for cell in cells]
-        held = [[c for c in columns if c[0] < box.x1 and box.x0 < c[1]] for box in spans]
-        if any(len(h) > 1 for h in held) or sum(map(len, held)) != len(columns):
-            continue
-        wide = [
-            (min([box.x0, *(c[0] for c in h)]), max([box.x1, *(c[1] for c in h)]))
-            for box, h in zip(spans, held, strict=True)
-        ]
-        if all(a[1] <= b[0] for a, b in itertools.pairwise(wide)):
-            return wide
-    return columns
+    if not columns or len(cells) <= len(columns):
+        return columns
+    spans = [_span(cell) for cell in cells]
+    held = [[c for c in columns if c[0] < box.x1 and box.x0 < c[1]] for box in spans]
+    if any(len(h) > 1 for h in held) or sum(map(len, held)) != len(columns):
+        return columns
+    wide = [
+        (min([box.x0, *(c[0] for c in h)]), max([box.x1, *(c[1] for c in h)]))
+        for box, h in zip(spans, held, strict=True)
+    ]
+    return wide if all(a[1] <= b[0] for a, b in itertools.pairwise(wide)) else columns
 
 
 def _plain(row: Row) -> Row:
