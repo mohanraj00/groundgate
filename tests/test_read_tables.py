@@ -524,6 +524,27 @@ def test_row_with_a_lone_currency_sign_off_the_grid_is_isolated(tmp_path: Path) 
     assert "\n\n\n$ 100\n\n\n" in text
 
 
+def test_full_row_with_a_currency_sign_off_the_grid_is_isolated(tmp_path: Path) -> None:
+    path = tmp_path / "fullsign.pdf"
+    page = [
+        (300, 720, "Q1"),
+        (400, 720, "Q2"),
+        (72, 705, "Land"),
+        (300, 705, "10"),
+        (400, 705, "20"),
+        (72, 690, "Cash"),
+        (300, 675, "$"),
+        (350, 675, "100"),
+        (450, 675, "200"),
+        (72, 660, "Debt"),
+        (300, 660, "30"),
+        (400, 660, "40"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    text = read(path).text
+    assert "\n\n\n$ 100 200\n\n\n" in text
+
+
 def test_many_disagreeing_rows_give_no_grid_quickly() -> None:
     grids = [(200, 300), (250, 350)]
     rows = [[_line("1", a, a + 20), _line("2", b, b + 20)] for _ in range(500) for a, b in grids]
