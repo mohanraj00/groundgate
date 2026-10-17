@@ -915,11 +915,9 @@ class FrozenSet:
                     for d in result.receipt.decisions
                 ]
                 represented = {c["field"] for c in result.candidates}
-                searches = {
-                    e["field"]: e for e in result.record["entries"] if e["kind"] == "search"
-                }
+                searches = {e["field"]: e for e in result.record if e["kind"] == "search"}
                 missing = []
-                for field, states in result.record["final"]["fields"].items():
+                for field, states in result.record[-1]["fields"].items():
                     spec = self.schema(doc)["fields"][field]
                     searched = searches.get(field, {})
                     completed = (
