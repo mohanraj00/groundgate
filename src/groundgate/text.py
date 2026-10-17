@@ -754,6 +754,7 @@ _ITEM_SCALE = re.compile(
 _LONE_DASH = re.compile("(?<!\\S)[-\u2013\u2014](?!\\S)")
 _NOT_SPACE = re.compile(r"\S")
 _EMPTY_TAB = re.compile(r"(?<=\t)[ \r]*(?=\t|\n|\Z)")
+_NEXT_SLOT = re.compile(r"[ \r]*\t[ \r]*(?:[-\u2013\u2014][ \r]*)?(?=\t|\n|\Z)")
 _IN_SCALE = re.compile(
     r"(?<![^\W_])in\s+(?:thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
 )
@@ -908,8 +909,11 @@ def _table_line(text: str, start: int, end: int) -> bool:
     return not _blank(line) and ("\t" in line or not tokens(text, start, end))
 
 
-def _row_cells(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
-    """The cells of a line after its first tab, as (start, end)."""
+def _row_cells(
+    text: str, start: int, end: int, prefixes: list[str]
+) -> list[tuple[int, int]] | None:
+    """The cells of a line after its first tab, as (start, end), or None if a slot is ambiguous
+    (SPEC §4.5, rule 6). A line whose slots hold only unit prefixes has no cells."""
     tab = text.find("\t", start, end)
     if tab < 0:
         return []
@@ -924,12 +928,12 @@ def _row_cells(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
         count = 0
         while cursor < len(spans) and spans[cursor][0] <= right:
             if spans[cursor][1] > right:
-                return []
+                return None
             count += 1
             cursor += 1
         body = text[left:right].strip(" \r")
         if count > 1 or (count == 0 and body and body not in prefixes):
-            return []
+            return None
         if right == end:
             return spans
         left = right + 1
@@ -957,7 +961,7 @@ class UnitPlaces:
         self.starts: list[int] = []
         if "\t" not in text[va:vb]:
             return
-        mine = _row_cells(text, va, vb, prefixes)
+        mine = _row_cells(text, va, vb, prefixes) or []
         self.n = next((i for i, (c, _) in enumerate(mine) if c == tok.start), -1)
         pos = va
         while pos > 0:
@@ -1004,7 +1008,7 @@ class UnitPlaces:
         if la not in self.table or self.n < 0:
             return False
         if la not in self.rows:  # each row is read once, also for many items on it
-            self.rows[la] = _row_cells(text, la, lb, self.prefixes)
+            self.rows[la] = _row_cells(text, la, lb, self.prefixes) or []
         row = self.rows[la]
         if self.n >= len(row):
             return False
@@ -1024,6 +1028,13 @@ def _no_number_at(text: str, pos: int) -> bool:
         return True
     at = found.start()
     return text[at] != "(" and all(t.start != at for t in tokens(text, *_line(text, at)))
+
+
+def _slot_before_cell(text: str, a: int, b: int) -> bool:
+    """Whether the prefix at text[a:b] fills its tab slot and the next slot is empty or holds a
+    lone dash. That next slot holds the cell of the column (SPEC §4.5, rule 5)."""
+    left = len(text[:a].rstrip(" \r"))
+    return left > 0 and text[left - 1] == "\t" and _NEXT_SLOT.match(text, b) is not None
 
 
 def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
@@ -1056,7 +1067,7 @@ def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
                     past = _no_number_at(text, end)
                 if not past:
                     continue
-            elif nxt in numbers or text[nxt] == "(":
+            elif nxt in numbers or text[nxt] == "(" or _slot_before_cell(text, a, b):
                 continue
             empty[a] = max(b, empty.get(a, b))
     for a, b in empty.items():  # a prefix that is also a number token is one cell
@@ -1076,7 +1087,7 @@ def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int] | N
     while la <= end:
         lb = text.find("\n", la)
         lb = len(text) if lb < 0 else lb
-        if "\t" in text[la:lb] and not _row_cells(text, la, lb, prefixes):
+        if "\t" in text[la:lb] and _row_cells(text, la, lb, prefixes) is None:
             return None
         if lb >= end:
             break
