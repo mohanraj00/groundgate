@@ -1085,3 +1085,21 @@ def test_runs_share_one_object_folder(tmp_path):
     log.write_text(log.read_text().replace(second.record[0]["inputs"]["schema_sha256"], "../x"))
     with pytest.raises(ValueError, match="bad key"):
         RunResult.read(tmp_path)
+    log.write_text(log.read_text().replace('"../x"', '["../x"]'))
+    with pytest.raises(ValueError, match="bad key"):
+        RunResult.read(tmp_path)
+
+
+def test_read_names_a_missing_object_and_write_repairs_a_bad_one(tmp_path):
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    reply = next(e for e in result.record if e["kind"] == "call")["reply_sha256"]
+    result.write(tmp_path / "a")
+    path = tmp_path / "a" / "objects" / reply.removeprefix("sha256:")
+    path.unlink()
+    with pytest.raises(ValueError, match="missing object"):
+        RunResult.read(tmp_path / "a")
+    path.write_text("trunc")  # an object left short, for example by a crash
+    (tmp_path / "a" / "run.jsonl").unlink()
+    result.write(tmp_path / "a")
+    assert RunResult.read(tmp_path / "a").run_sha256 == result.run_sha256
+    assert not [p for p in (tmp_path / "a" / "objects").iterdir() if p.name.startswith(".tmp-")]

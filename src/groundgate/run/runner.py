@@ -5,7 +5,9 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import os
 import re
+import tempfile
 from array import array
 from bisect import bisect_left, bisect_right
 from collections.abc import Callable, Iterator, Mapping, Sequence
@@ -96,14 +98,25 @@ class RunResult:
         return cast(str, self.record[-1]["entry_sha256"])
 
     def write(self, folder: str | Path) -> None:
-        """Write ``folder/objects/<hex>`` for each object and the log ``folder/run.jsonl``, one
-        line of canonical JSON for each entry. An existing log is never replaced."""
+        """Write ``folder/objects/<hex>`` for each object, then the log ``folder/run.jsonl``, one
+        line of canonical JSON for each entry. Each object is written to a temporary file and
+        moved into place, and an object with other bytes is written again. So a log on disk has
+        all its objects. An existing log is never replaced."""
         objects = Path(folder) / "objects"
         objects.mkdir(parents=True, exist_ok=True)
         for key, body in sorted(self.artifacts.items()):
+            data = body.encode("utf-8")
             path = objects / key.removeprefix("sha256:")
-            if not path.exists():
-                path.write_bytes(body.encode("utf-8"))
+            if path.is_file() and path.read_bytes() == data:
+                continue
+            fd, temporary = tempfile.mkstemp(dir=objects, prefix=".tmp-")
+            try:
+                with os.fdopen(fd, "wb") as out:
+                    out.write(data)
+                os.replace(temporary, path)
+            except BaseException:
+                Path(temporary).unlink(missing_ok=True)
+                raise
         with open(Path(folder) / "run.jsonl", "x", encoding="utf-8", newline="\n") as log:
             log.write("".join(jcs(line) + "\n" for line in self.record))
 
@@ -111,10 +124,13 @@ class RunResult:
     def read(cls, folder: str | Path) -> RunResult:
         """Read a run that ``write`` made. Only the objects that the log names are read, so runs
         can share one folder. The inputs come from the objects that the header names, and the
-        run is replayed with the recorded replies, so a changed line or object raises
-        ``ValueError``."""
+        run is replayed with the recorded replies. A changed line, a changed or missing object
+        or a bad object key raises ``ValueError``. A missing log raises ``OSError``."""
         folder = Path(folder)
-        record = [_strict_json(line) for line in _lines(folder / "run.jsonl")]
+        try:
+            record = [_strict_json(line) for line in _lines(folder / "run.jsonl")]
+        except RecursionError as exc:
+            raise ValueError("a log line nests too deep") from exc
         try:
             inputs = record[0]["inputs"]
             keys = [
@@ -126,12 +142,15 @@ class RunResult:
             ]
         except (KeyError, TypeError, IndexError) as exc:
             raise ValueError("the log does not name its inputs") from exc
+        if not all(isinstance(k, str) and re.fullmatch(r"sha256:[0-9a-f]{64}", k) for k in keys):
+            raise ValueError("the log names an object with a bad key")
         artifacts: dict[str, str] = {}
-        for key in keys:  # only the objects of this run; other runs may share the folder
-            if not isinstance(key, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", key):
-                raise ValueError("the log names an object with a bad key")
-            path = folder / "objects" / key.removeprefix("sha256:")
-            artifacts[key] = path.read_bytes().decode("utf-8")
+        for key in dict.fromkeys(keys):  # only this run's objects; runs may share the folder
+            try:
+                data = (folder / "objects" / key.removeprefix("sha256:")).read_bytes()
+            except OSError as exc:
+                raise ValueError(f"the log names a missing object {key}") from exc
+            artifacts[key] = data.decode("utf-8")
         try:
             text = artifacts[inputs["document"]["sha256"]]
             schema = _strict_json(artifacts[inputs["schema_sha256"]])

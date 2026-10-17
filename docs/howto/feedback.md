@@ -156,9 +156,10 @@ exceeded `max_reply_bytes`: the runner keeps that raw body for replay but does n
 The setting is a parsing limit, not a transport or artifact-size limit. The client owns any
 transport cap before it returns.
 
-`result.write(folder)` writes each object to `folder/objects/` and the log to
-`folder/run.jsonl`, one line of canonical JSON for each entry. `RunResult.read(folder)` gets the
-inputs from the objects and replays the run. A changed line or object raises `ValueError`.
+`result.write(folder)` writes each object to `folder/objects/` first and the log to
+`folder/run.jsonl` last, one line of canonical JSON for each entry. `RunResult.read(folder)`
+reads only the objects that the log names, gets the inputs from them and replays the run. A
+changed line, or a changed or missing object, raises `ValueError`.
 
 ```python
 folder = Path(tempfile.mkdtemp()) / "run"

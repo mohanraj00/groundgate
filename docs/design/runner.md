@@ -396,11 +396,14 @@ credentials or random ids in this deterministic content. An app may keep times s
 chain detects a changed or removed line when checked against the saved run digest; it is not a
 signature or proof of the model's identity.
 
-`RunResult.write(folder)` writes each object to `folder/objects/<hex>` and the log to
-`folder/run.jsonl`. It uses only the standard library and never replaces an existing log.
+`RunResult.write(folder)` writes each object to `folder/objects/<hex>` first and the log to
+`folder/run.jsonl` last, so a log on disk has all its objects unless the folder was changed
+later. Each object goes to a temporary file and moves into place, and an existing object with
+other bytes is written again. `write` uses only the standard library and never replaces a log.
 `RunResult.read(folder)` reads only the objects that the log names, so runs can share one
 `objects/` folder. It gets the inputs from the objects that the header names and replays the
-run, so a changed line or object raises `ValueError`. A shared store for all the tools is #288.
+run, so a changed line, a changed or missing object, or a bad object key raises `ValueError`.
+A shared store for all the tools is #288.
 
 Two fields are reserved for the document model (#285), so that a later reader output needs no
 new log format. An input of `kind: "document"` will name an extracted document and its reader
