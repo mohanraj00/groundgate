@@ -281,3 +281,83 @@ def test_ambiguous_numeric_only_row_cannot_reuse_a_prior_field_or_header(
     }
     (decision,) = gg.admit(text, schema, [candidate]).decisions
     assert decision.outcome == "needs_verification"
+
+
+def test_full_width_numeric_row_off_the_grid_is_isolated(tmp_path: Path) -> None:
+    path = tmp_path / "offgrid.pdf"
+    page = [
+        (300, 720, "2025"),
+        (400, 720, "2024"),
+        (72, 705, "Land"),
+        (300, 705, "10"),
+        (400, 705, "20"),
+        (72, 690, "Cash"),
+        (350, 675, "100"),
+        (450, 675, "200"),
+        (72, 660, "Debt"),
+        (300, 660, "30"),
+        (400, 660, "40"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    text = read(path).text
+    assert "\t2025\t2024\nLand\t10\t20" in text
+    assert "\n\n\n100 200\n\n\n" in text
+    schema = {"fields": {"cash": {"aliases": ["Cash"], "keys": ["2025", "2024"]}}}
+    candidate = {
+        "field": "cash",
+        "value": "100",
+        "key": "2025",
+        "evidence": [
+            {"text": "100"},
+            {"role": "field", "text": "Cash"},
+            {"role": "key", "text": "2025"},
+        ],
+    }
+    (decision,) = gg.admit(text, schema, [candidate]).decisions
+    assert decision.outcome == "needs_verification"
+
+
+@pytest.mark.parametrize(
+    "x,expected",
+    [(402, "Cash\t\tn/a"), (300, "Cash\tn/a"), (420, "Cash n/a")],
+    ids=["inside-second-column", "inside-first-column", "across-the-column-edge"],
+)
+def test_text_only_row_in_a_table_keeps_its_column(tmp_path: Path, x: int, expected: str) -> None:
+    path = tmp_path / "text-cell.pdf"
+    page = [
+        (72, 705, "Land"),
+        (300, 705, "1,000"),
+        (400, 705, "2,000"),
+        (72, 690, "Cash"),
+        (x, 690, "n/a"),
+        (72, 675, "Debt"),
+        (300, 675, "3,000"),
+        (400, 675, "4,000"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    lines = read(path).text.split("\n")
+    assert expected in lines
+
+
+def test_numeric_row_label_is_not_a_number_column(tmp_path: Path) -> None:
+    path = tmp_path / "year-label.pdf"
+    page = [
+        (300, 720, "Q1"),
+        (400, 720, "Q2"),
+        (72, 705, "Cash"),
+        (300, 705, "10"),
+        (400, 705, "20"),
+        (72, 690, "Debt"),
+        (300, 690, "50"),
+        (400, 690, "60"),
+        (72, 675, "2024"),
+        (300, 675, "30"),
+        (400, 675, "40"),
+        (72, 660, "2023"),
+        (400, 660, "70"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    lines = read(path).text.split("\n")
+    for row in ("Cash\t10\t20", "Debt\t50\t60", "2024\t30\t40", "2023\t\t70"):
+        assert row in lines
+    assert not any(line.startswith("\tCash") for line in lines)
