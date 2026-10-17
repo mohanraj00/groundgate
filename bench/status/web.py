@@ -53,7 +53,7 @@ def pdf_of(src: dict[str, Any]) -> Path:
 def build(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Each item with its text around it and its box on the PDF page. An item has an id, a doc
     and a span in code points; nothing else of it reaches the page."""
-    from groundgate.extract import extract
+    from groundgate.read import read
 
     srcs = sources()
     out: list[dict[str, Any]] = []
@@ -61,7 +61,7 @@ def build(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     for it in items:
         doc = it["doc"]
         if doc not in docs:
-            got = extract(pdf_of(srcs[doc]), pages=srcs[doc]["select"]["pages"])
+            got = read(pdf_of(srcs[doc]), pages=srcs[doc]["select"]["pages"])
             text = (HERE / "docs" / f"{doc}.txt").read_text(encoding="utf-8")
             if got.text != text:
                 raise SystemExit(f"{doc}: docs/{doc}.txt is not the text of the pinned PDF")

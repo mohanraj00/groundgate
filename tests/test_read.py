@@ -1,14 +1,17 @@
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 from pathlib import Path
 
 import pytest
 
 import groundgate as gg
-from groundgate.extract import ExtractError, Layout, extract
-from groundgate.extract.markup import html_text, xml_text
-from groundgate.extract.pdf import LIGATURES
+from groundgate.cli import main
+from groundgate.read import Layout, ReadError, read
+from groundgate.read.markup import html_text, xml_text
+from groundgate.read.pdf import LIGATURES
 
 from pdfgen import make_pdf
 
@@ -33,7 +36,7 @@ def pdf(tmp_path: Path) -> Path:
 
 
 def test_pdf_text_pages_and_words(pdf: Path) -> None:
-    doc = extract(pdf)
+    doc = read(pdf)
     assert doc.text == (
         "Dosage\n\nStart at 500 mg once daily.\nDo not exceed 2,000 mg per day."
         "\n\fCafé staff: up to 3 filings.\n\f"
@@ -50,7 +53,7 @@ def test_pdf_text_pages_and_words(pdf: Path) -> None:
 
 
 def test_pdf_locate_maps_a_span_to_page_boxes(pdf: Path) -> None:
-    doc = extract(pdf)
+    doc = read(pdf)
     assert doc.layout is not None
     start = doc.text.encode().index(b"2,000 mg")
     boxes = doc.layout.locate(start, start + len(b"2,000 mg"))
@@ -71,7 +74,7 @@ def test_ligatures_are_expanded() -> None:
 
 
 def test_pdf_page_selection(pdf: Path) -> None:
-    doc = extract(pdf, pages=[2, 9])
+    doc = read(pdf, pages=[2, 9])
     assert doc.text == "Café staff: up to 3 filings."
     assert doc.layout is not None
     assert [p.number for p in doc.layout.pages] == [2]
@@ -79,7 +82,7 @@ def test_pdf_page_selection(pdf: Path) -> None:
 
 
 def test_layout_round_trip(pdf: Path) -> None:
-    layout = extract(pdf).layout
+    layout = read(pdf).layout
     assert layout is not None
     assert Layout.from_dict(json.loads(json.dumps(layout.to_dict()))) == layout
     with pytest.raises(gg.PacketError):
@@ -94,7 +97,7 @@ def test_layout_round_trip(pdf: Path) -> None:
 
 
 def test_a_pdf_decision_admits_against_extracted_text(pdf: Path) -> None:
-    doc = extract(pdf)
+    doc = read(pdf)
     start = doc.text.encode().index(b"2,000 mg")
     cand = {
         "field": "max_daily_dose",
@@ -127,13 +130,13 @@ def test_pdf_table_rows_are_lines_with_tabs(tmp_path: Path) -> None:
     """The column headings and the heading in the label column join the table (#230)."""
     path = tmp_path / "table.pdf"
     path.write_bytes(make_pdf([TABLE_PAGE]))
-    doc = extract(path)
+    doc = read(path)
     assert doc.text == (
         "Statement of things\n(in thousands)\n\n"
         "2025\t2024\nAssets:\nCash\t$ 1,234\t$ 1,100\nTotal assets\t5,678\t4,321\n\n"
         "These notes are part of the statement."
     )
-    assert doc.text == extract(path).text
+    assert doc.text == read(path).text
     raw = doc.text.encode()
     assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
 
@@ -148,7 +151,7 @@ def test_pdf_prose_side_by_side_is_no_table(tmp_path: Path) -> None:
         (320, 686, "with 2,000 words in it."),
     ]
     path.write_bytes(make_pdf([page]))
-    assert extract(path).text == (
+    assert read(path).text == (
         "The fund holds 100 acres of land and\nother things that it reports here.\n\n"
         "more text in the right column\nwith 2,000 words in it."
     )
@@ -164,7 +167,7 @@ def test_pdf_one_number_beside_prose_is_no_table(tmp_path: Path) -> None:
         (320, 686, "500"),
     ]
     path.write_bytes(make_pdf([page]))
-    assert extract(path).text == "The plan covers a minor child\nMinor\n\nAdult members pay\n500"
+    assert read(path).text == "The plan covers a minor child\nMinor\n\nAdult members pay\n500"
 
 
 def test_pdf_numbers_in_two_columns_of_prose_are_no_table(tmp_path: Path) -> None:
@@ -180,7 +183,7 @@ def test_pdf_numbers_in_two_columns_of_prose_are_no_table(tmp_path: Path) -> Non
         (320, 672, "300"),
     ]
     path.write_bytes(make_pdf([page]))
-    assert extract(path).text == (
+    assert read(path).text == (
         "Minor\nand the rest of the text goes on here\nSenior\n\n"
         "500\nand more text about the plan here\n300"
     )
@@ -202,7 +205,7 @@ def test_pdf_two_columns_of_prose_next_to_a_table_keep_their_lines(tmp_path: Pat
         (320, 660, "and the right column goes on with more of its prose", 7),
     ]
     path.write_bytes(make_pdf([page]))
-    text = extract(path).text
+    text = read(path).text
     assert "Cash\t1\nLand\t2" in text
     assert text.count("\t") == 2
 
@@ -223,7 +226,7 @@ def test_pdf_a_table_never_takes_the_rows_of_the_next(tmp_path: Path) -> None:
         (300, 626, "4"),
     ]
     path.write_bytes(make_pdf([page]))
-    text = extract(path).text
+    text = read(path).text
     assert text.startswith("Cash\t1\nLand\t2\n\n")
     assert text.count("Debt") == 1
     assert text.endswith("Debt\t3\nEquity\t4")
@@ -231,8 +234,8 @@ def test_pdf_a_table_never_takes_the_rows_of_the_next(tmp_path: Path) -> None:
 
 def test_pdf_number_cells_take_the_signs_of_the_builtin_units() -> None:
     """A cell such as "₹ 1,234" holds only numbers, so its row can be a table row."""
-    from groundgate.extract.layout import Box
-    from groundgate.extract.pdf import NUMBER_CHARS, _number_cell
+    from groundgate.read.layout import Box
+    from groundgate.read.pdf import NUMBER_CHARS, _number_cell
     from groundgate.text import builtin_units
 
     signs = {p for prefixes, _ in builtin_units().values() for p in prefixes if len(p) == 1}
@@ -257,7 +260,7 @@ def test_pdf_a_number_row_in_a_table_is_cut_into_cells(tmp_path: Path) -> None:
         (400, 672, "6"),
     ]
     path.write_bytes(make_pdf([page]))
-    assert extract(path).text == "Cash\t1\t2\n3\t4\nDebt\t5\t6"
+    assert read(path).text == "Cash\t1\t2\n3\t4\nDebt\t5\t6"
 
 
 def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> None:
@@ -278,7 +281,7 @@ def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> N
         (300, 650, "1,234          5,678"),
     ]
     path.write_bytes(make_pdf([page]))
-    assert extract(path).text == (
+    assert read(path).text == (
         "Cash\t1,234\t1,100\nLand\t200\t100\n\n"
         "A line of prose that crosses the number columns of the table here.\n\n"
         "Debt\t500\t400\nTotal\t1,234\t5,678"
@@ -289,7 +292,7 @@ def test_a_key_item_admits_a_value_in_the_second_column_of_a_pdf_table(tmp_path:
     """With a tab after the row label, the column rule reads a PDF table as an HTML one."""
     path = tmp_path / "table.pdf"
     path.write_bytes(make_pdf([TABLE_PAGE]))
-    text = extract(path).text
+    text = read(path).text
     schema = {
         "fields": {
             "total_assets": {
@@ -324,13 +327,13 @@ def test_pdf_superscripts_never_fuse_with_the_number(tmp_path: Path) -> None:
     path.write_bytes(
         make_pdf([[(72, 700, "count 10"), (x, 705, "9", 7), (x + 7 * 0.556, 700, "/L")]])
     )
-    assert extract(path).text == "count 10^9/L"
+    assert read(path).text == "count 10^9/L"
 
 
 def test_pdf_drops_text_outside_the_visible_page(tmp_path: Path) -> None:
     path = tmp_path / "proof.pdf"
     path.write_bytes(make_pdf([[(72, 800, "Draft proof 99"), (72, 700, "Fee: $5.")]]))
-    doc = extract(path)
+    doc = read(path)
     assert doc.text == "Fee: $5."
     assert doc.warnings == ("page 1: dropped 3 words drawn outside the visible page",)
 
@@ -338,7 +341,7 @@ def test_pdf_drops_text_outside_the_visible_page(tmp_path: Path) -> None:
 def test_pdfminer_breaks_ties_by_first_seen_order_not_by_address() -> None:
     from pdfminer import layout
 
-    from groundgate.extract.pdf import _stable_ids
+    from groundgate.read.pdf import _stable_ids
 
     class Box:
         pass
@@ -353,14 +356,14 @@ def test_pdfminer_breaks_ties_by_first_seen_order_not_by_address() -> None:
 def test_pdf_errors(tmp_path: Path, pdf: Path) -> None:
     bad = tmp_path / "bad.pdf"
     bad.write_bytes(b"%PDF-1.4 not really")
-    with pytest.raises(ExtractError, match="not a readable PDF"):
-        extract(bad)
+    with pytest.raises(ReadError, match="not a readable PDF"):
+        read(bad)
     for pages in ([0], []):
-        with pytest.raises(ExtractError, match="1-based"):
-            extract(pdf, pages=pages)
+        with pytest.raises(ReadError, match="1-based"):
+            read(pdf, pages=pages)
     empty = tmp_path / "empty.pdf"
     empty.write_bytes(make_pdf([]))
-    assert extract(empty).warnings == ("no pages were extracted",)
+    assert read(empty).warnings == ("no pages were extracted",)
 
 
 @pytest.mark.parametrize(
@@ -406,24 +409,62 @@ def test_xml(xml: str, text: str) -> None:
 
 def test_html_xml_and_text_files(tmp_path: Path) -> None:
     (tmp_path / "a.html").write_text("<p>Cafe\u0301</p>", encoding="utf-8")
-    assert extract(tmp_path / "a.html").text == "Café"
-    assert extract(tmp_path / "a.html").layout is None
+    assert read(tmp_path / "a.html").text == "Café"
+    assert read(tmp_path / "a.html").layout is None
     (tmp_path / "e.html").write_text("<script>x</script>", encoding="utf-8")
-    assert extract(tmp_path / "e.html").warnings == ("e.html: no text was extracted",)
+    assert read(tmp_path / "e.html").warnings == ("e.html: no text was extracted",)
     (tmp_path / "b.txt").write_bytes("\ufeffline one\r\nline two".encode())
-    assert extract(tmp_path / "b.txt").text == "line one\nline two"
+    assert read(tmp_path / "b.txt").text == "line one\nline two"
     (tmp_path / "c.txt").write_bytes(b"\xff\xfe")
-    with pytest.raises(ExtractError):
-        extract(tmp_path / "c.txt")
+    with pytest.raises(ReadError):
+        read(tmp_path / "c.txt")
     (tmp_path / "d.docx").write_bytes(b"")
-    with pytest.raises(ExtractError):
-        extract(tmp_path / "d.docx")
+    with pytest.raises(ReadError):
+        read(tmp_path / "d.docx")
     (tmp_path / "f.xml").write_bytes(
         "<r>Caf\u00e9</r>".encode("latin-1").replace(
             b"<r>", b'<?xml version="1.0" encoding="latin-1"?><r>'
         )
     )
-    assert extract(tmp_path / "f.xml").text == "Café"
+    assert read(tmp_path / "f.xml").text == "Café"
     (tmp_path / "g.xml").write_bytes(b"<r>unclosed")
-    with pytest.raises(ExtractError, match="well-formed"):
-        extract(tmp_path / "g.xml")
+    with pytest.raises(ReadError, match="well-formed"):
+        read(tmp_path / "g.xml")
+
+
+ROOT = Path(__file__).parent.parent
+CACHE = Path(os.environ.get("GROUNDGATE_BENCH_ROOT", ROOT)) / "bench"
+
+
+def _pinned_bench_texts() -> list[tuple[Path, list[int] | None, Path]]:
+    """Each source of bench/afr with a file in a local cache, and its text as #263 pinned it with
+    the current reader in bench/afr/tabs/docs. The caches are not in git, so CI has none and the
+    test skips there. The older sets pin the texts of older readers."""
+    dirs = [d for d in (CACHE / "afr" / ".cache", CACHE / ".cache") if d.is_dir()]
+    by_sha = {hashlib.sha256(f.read_bytes()).hexdigest(): f for d in dirs for f in d.glob("*.pdf")}
+    sources = json.loads((ROOT / "bench" / "afr" / "sources.json").read_text())["sources"]
+    return [
+        (by_sha[s["sha256"]], s["select"]["pages"], ROOT / "bench/afr/tabs/docs" / f"{s['id']}.txt")
+        for s in sources
+        if s["sha256"] in by_sha
+    ]
+
+
+def test_read_gives_the_bytes_of_the_pinned_bench_texts() -> None:
+    """0.9 moved the reader from groundgate.extract to groundgate.read (#286). The text of every
+    bench document stays the same, so every published number stays the same."""
+    cases = _pinned_bench_texts()
+    if not cases:
+        pytest.skip("no local bench cache (set GROUNDGATE_BENCH_ROOT to a checkout with one)")
+    for path, pages, pinned in cases:
+        assert read(path, pages=pages).text == pinned.read_text(encoding="utf-8"), pinned.name
+
+
+def test_cli_read_writes_the_text_and_extract_names_read(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    (tmp_path / "a.txt").write_text("line one\n", encoding="utf-8")
+    assert main(["read", str(tmp_path / "a.txt")]) == 0
+    assert capsys.readouterr().out == "line one\n"
+    assert main(["extract", str(tmp_path / "a.txt")]) == 2
+    assert "groundgate read FILE" in capsys.readouterr().err

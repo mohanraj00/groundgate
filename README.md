@@ -287,7 +287,7 @@ outside evidence, is rejected `NO_EVIDENCE`.
 ### From the command line
 
 ```bash
-groundgate extract p590a.pdf --pages 1-2 -o doc.txt --layout layout.json
+groundgate read p590a.pdf --pages 1-2 -o doc.txt --layout layout.json
 groundgate admit   doc.txt schema.json candidates.json -o receipt.json
 groundgate admit   --docs docs --candidates candidates --schema schema.json --out receipts
 groundgate verify  receipt.json doc.txt schema.json candidates.json

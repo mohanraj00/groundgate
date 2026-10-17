@@ -71,12 +71,12 @@ def _dump(path: Path, obj: Any) -> None:
 
 def check(pdf: Path, first: int, last: int) -> str:
     """Why the pages of pages.json are not a cut, or ""."""
-    from groundgate.extract import extract
+    from groundgate.read import read
 
     if not 1 <= first <= last or last - first + 1 > MAX_PAGES:
         return f"pages {first} to {last}: not 1 to {MAX_PAGES} pages"
     for page, line in ((first, FIRST), (last, LAST)):
-        text = extract(pdf, pages=[page]).text
+        text = read(pdf, pages=[page]).text
         if not any(line.match(t.strip()) for t in text.split("\n")):
             return f"page {page} has no line that starts with {line.pattern!r}"
     return ""
@@ -134,7 +134,7 @@ def pick() -> None:
 
 def docs() -> None:
     """docs/<id>.txt: the cut pages of each pinned report, after a check of its digest."""
-    from groundgate.extract import extract
+    from groundgate.read import read
 
     out = HERE / "docs"
     out.mkdir(exist_ok=True)
@@ -143,7 +143,7 @@ def docs() -> None:
         data = download(src["url"], path)
         if hashlib.sha256(data).hexdigest() != src["sha256"]:
             raise SystemExit(f"{src['id']}: the report changed since the pick")
-        text = extract(path, pages=src["select"]["pages"]).text
+        text = read(path, pages=src["select"]["pages"]).text
         (out / f"{src['id']}.txt").write_text(text, encoding="utf-8")
     print(f"wrote {len(_read(HERE / 'sources.json')['sources'])} documents")
 

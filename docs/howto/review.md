@@ -117,7 +117,7 @@ The CLI does the same steps with files. `report` verifies the receipt first, and
 render a receipt that does not match.
 
 ```bash
-groundgate extract lease.html -o doc.txt
+groundgate read lease.html -o doc.txt
 groundgate admit doc.txt schema.json candidates.json --document-id lease-0417 -o receipt.json
 groundgate verify receipt.json doc.txt schema.json candidates.json
 groundgate report receipt.json doc.txt schema.json candidates.json -o report.html

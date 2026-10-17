@@ -66,13 +66,13 @@ def _name(run: str, read: str) -> Path:
 
 def docs() -> None:
     """tabs/docs/<id>.txt: the cut pages of each pinned report, as this groundgate writes them."""
-    from groundgate.extract import extract
+    from groundgate.read import read
 
     out = TABS / "docs"
     out.mkdir(parents=True, exist_ok=True)
     srcs = measure._read(HERE / "sources.json")["sources"]
     for src in srcs:
-        text = extract(measure._pdf(src), pages=src["select"]["pages"]).text
+        text = read(measure._pdf(src), pages=src["select"]["pages"]).text
         (out / f"{src['id']}.txt").write_text(text, encoding="utf-8")
     print(f"wrote {len(srcs)} documents")
 

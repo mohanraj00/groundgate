@@ -610,7 +610,7 @@ all of these hold:
    no tab between the end of the field item and the start of the token. This stops the rule at a
    footnote marker, such as the `1` in "Sales (1)". It also stops the rule after the first column
    when only spaces stand between the field item and the row's first number token. A tab after
-   the field item, as `groundgate extract` writes HTML and PDF tables, or cells on their own
+   the field item, as `groundgate read` writes HTML and PDF tables, or cells on their own
    lines, keep the rule.
 4. Between the end of the field item and the value, the **cells** are the number tokens, the lone
    dashes (`-`, `–` or `—` with whitespace or a line end on both sides in the text), and the

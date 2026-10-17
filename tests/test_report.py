@@ -10,7 +10,7 @@ import pytest
 
 import groundgate as gg
 from groundgate.cli import main
-from groundgate.extract import extract
+from groundgate.read import read
 from groundgate.report import render
 
 from pdfgen import make_pdf
@@ -85,7 +85,7 @@ def test_report_shows_the_key() -> None:
 def test_report_with_layout_shows_page_numbers(tmp_path: Path) -> None:
     pdf = tmp_path / "x.pdf"
     pdf.write_bytes(make_pdf([[(72, 700, "Intro")], [(72, 700, "Fee: $500 per year.")]]))
-    doc = extract(pdf)
+    doc = read(pdf)
     cands = [{"field": "fee", "value": "500", "unit": "USD", "evidence": ev("$500", doc.text)}]
     receipt = gg.admit(doc.text, SCHEMA, cands).to_dict()
     html = render(receipt, doc.text, cands, layout=doc.layout)
@@ -97,13 +97,13 @@ def test_report_with_layout_shows_page_numbers(tmp_path: Path) -> None:
     assert 'data-page="page 2"' not in render(receipt, doc.text, cands)  # no layout: no numbers
 
 
-def test_cli_extract_admit_report(
+def test_cli_read_admit_report(
     tmp_path: Path, capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch
 ) -> None:
     pdf = tmp_path / "x.pdf"
     pdf.write_bytes(make_pdf([[(72, 700, "Fee: $500 per year.")], []]))
     text, layout = tmp_path / "x.txt", tmp_path / "layout.json"
-    assert main(["extract", str(pdf), "-o", str(text), "--layout", str(layout)]) == 0
+    assert main(["read", str(pdf), "-o", str(text), "--layout", str(layout)]) == 0
     assert "no text layer" in capsys.readouterr().err
     doc = text.read_text(encoding="utf-8")
     schema, cands = tmp_path / "s.json", tmp_path / "c.json"
@@ -131,7 +131,7 @@ def test_cli_extract_admit_report(
 
     other = tmp_path / "other.txt"
     other.write_text("Fee: $500 per year!")
-    assert main(["extract", str(other), "--layout", str(layout)]) == 2
+    assert main(["read", str(other), "--layout", str(layout)]) == 2
     receipt2 = tmp_path / "r2.json"
     assert main(["admit", str(other), str(schema), "[]", "-o", str(receipt2)]) == 2  # no file "[]"
     Path(tmp_path / "empty.json").write_text("[]")
@@ -144,15 +144,15 @@ def test_cli_extract_admit_report(
     assert "different document" in capsys.readouterr().err
 
 
-def test_cli_extract_to_stdout_and_bad_pages(
+def test_cli_read_to_stdout_and_bad_pages(
     tmp_path: Path, capsysbinary: pytest.CaptureFixture[bytes]
 ) -> None:
     (tmp_path / "a.html").write_text("<p>Café</p>", encoding="utf-8")
-    assert main(["extract", str(tmp_path / "a.html")]) == 0
+    assert main(["read", str(tmp_path / "a.html")]) == 0
     assert capsysbinary.readouterr().out == "Café".encode()
     for bad in ("0", "3-1", "x"):
         with pytest.raises(SystemExit):
-            main(["extract", str(tmp_path / "a.html"), "--pages", bad])
+            main(["read", str(tmp_path / "a.html"), "--pages", bad])
 
 
 def test_report_survives_surrogates_and_unknown_outcomes() -> None:
@@ -196,7 +196,7 @@ def test_cli_rejects_ambiguous_json(tmp_path: Path, capsys: pytest.CaptureFixtur
     assert main(["admit", str(doc), str(schema), str(surrogate), "-o", str(out)]) == 0
     assert "\\ud83d" in out.read_text()
     with pytest.raises(SystemExit):
-        main(["extract", str(doc), "--pages", "3-"])
+        main(["read", str(doc), "--pages", "3-"])
 
 
 TABLE = (

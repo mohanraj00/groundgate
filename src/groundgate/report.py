@@ -18,8 +18,8 @@ from typing import Any
 from .admit import verify
 from .canonical import Offsets, digest
 from .codes import DESCRIPTIONS
-from .extract.layout import Layout
 from .model import Policy, Schema
+from .read.layout import Layout
 
 OUTCOMES = ("needs_verification", "rejected", "admitted")
 LABELS = {

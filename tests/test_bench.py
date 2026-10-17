@@ -749,7 +749,7 @@ def test_the_fields_web_page_marks_a_dose_by_its_non_space_characters() -> None:
     sys.path.insert(0, str(BENCH / "fields"))
     import web
 
-    from groundgate.extract.markup import xml_text
+    from groundgate.read.markup import xml_text
 
     xml = (
         '<section xmlns="urn:hl7-org:v3"><title>2 DOSAGE</title><paragraph>Take 10<sup>3</sup> '

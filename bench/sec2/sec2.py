@@ -26,7 +26,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).parent.parent / "sec"))
 import sec  # bench/sec/sec.py
 
-from groundgate.extract import extract
+from groundgate.read import read
 
 HERE = Path(__file__).parent
 FILINGS = 20
@@ -73,7 +73,7 @@ def walk(count_only: bool) -> None:
             continue
         url = f"{sec.EDGAR}{folder}/{name}"
         data = sec.get(url, f"{acc}.htm")
-        part = sec.item7(extract(sec.CACHE / f"{acc}.htm").text)
+        part = sec.item7(read(sec.CACHE / f"{acc}.htm").text)
         if part is None:
             entry["skip"] = "no Item 7 and Item 7A or 8 headings"
         elif not sec.MIN_CHARS <= len(part) <= sec.MAX_CHARS:
@@ -118,7 +118,7 @@ def docs() -> None:
         data = sec.get(src["url"], f"{acc}.htm")
         if hashlib.sha256(data).hexdigest() != src["sha256"]:
             raise SystemExit(f"{src['id']}: the filing changed since the pick")
-        part = sec.item7(extract(sec.CACHE / f"{acc}.htm").text)
+        part = sec.item7(read(sec.CACHE / f"{acc}.htm").text)
         assert part is not None
         (HERE / "docs" / f"{src['id']}.txt").write_text(part, encoding="utf-8")
     print("wrote docs/")

@@ -779,7 +779,7 @@ The per-unit after 0.1 rejects it.
 An income statement is a table. Operating income has one value for each fiscal year, so the year
 is its key. The table writes the numbers in thousands, writes a loss in brackets, and puts the
 `$` only in the first row. The aliases name the row in the document's words. The text below is
-made up, with a tab between cells, as `groundgate extract` writes an HTML table.
+made up, with a tab between cells, as `groundgate read` writes an HTML table.
 
 ```python
 text = (

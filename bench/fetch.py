@@ -26,8 +26,8 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from groundgate.extract import extract
-from groundgate.extract.markup import xml_text
+from groundgate.read import read
+from groundgate.read.markup import xml_text
 
 HERE = Path(__file__).parent
 HL7 = "{urn:hl7-org:v3}"
@@ -62,7 +62,7 @@ def spl_sections(data: bytes, codes: list[str]) -> str:
 def text_of(src: dict, path: Path, data: bytes) -> str:
     if src["kind"] == "fda":
         return spl_sections(data, src["select"]["sections"])
-    doc = extract(path, pages=src["select"].get("pages"))
+    doc = read(path, pages=src["select"].get("pages"))
     return doc.text
 
 

@@ -56,7 +56,7 @@ Open `report.html` in a browser to see every decision next to its source text.
 
 | File | What it is |
 |---|---|
-| `document.txt` | pages 1-2, from `groundgate extract` |
+| `document.txt` | pages 1-2, from `groundgate read` |
 | `layout.json` | page and word boxes for the same text |
 | `schema.json` | 25 fields, all required, each with its comparator ("more than" is `gt`) |
 | `propose.py` | runs LangExtract; the only step that calls a model |
@@ -81,7 +81,7 @@ From scratch:
 cd examples/irs-590a   # needs groundgate[pdf,langextract]
 curl -LO https://www.irs.gov/pub/irs-pdf/p590a.pdf
 shasum -a 256 p590a.pdf   # ca0e42873cfd66d2d9bfd082125d381f8a0c2f3b0a441d7d65ab5ccc06a0e1c7
-groundgate extract p590a.pdf --pages 1-2 -o document.txt --layout layout.json
+groundgate read p590a.pdf --pages 1-2 -o document.txt --layout layout.json
 python propose.py --provider gemini --model gemini-2.5-flash    # needs GEMINI_API_KEY
 python build.py
 ```
