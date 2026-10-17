@@ -486,6 +486,44 @@ def test_column_of_text_placeholders_keeps_its_column(tmp_path: Path) -> None:
     assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
 
 
+def test_heading_gives_the_column_that_every_row_leaves_blank(tmp_path: Path) -> None:
+    path = tmp_path / "blankcolumn.pdf"
+    page = [
+        (300, 720, "Q1"),
+        (400, 720, "Q2"),
+        (72, 705, "Cash"),
+        (400, 705, "10"),
+        (72, 690, "Debt"),
+        (400, 690, "20"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    doc = read(path)
+    assert "\tQ1\tQ2\nCash\t\t10\nDebt\t\t20" in doc.text
+    assert doc.layout is not None
+    raw = doc.text.encode()
+    assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
+
+
+def test_row_with_a_lone_currency_sign_off_the_grid_is_isolated(tmp_path: Path) -> None:
+    path = tmp_path / "sign.pdf"
+    page = [
+        (300, 720, "Q1"),
+        (400, 720, "Q2"),
+        (72, 705, "Land"),
+        (300, 705, "10"),
+        (400, 705, "20"),
+        (72, 690, "Cash"),
+        (300, 675, "$"),
+        (350, 675, "100"),
+        (72, 660, "Debt"),
+        (300, 660, "30"),
+        (400, 660, "40"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    text = read(path).text
+    assert "\n\n\n$ 100\n\n\n" in text
+
+
 def test_many_disagreeing_rows_give_no_grid_quickly() -> None:
     grids = [(200, 300), (250, 350)]
     rows = [[_line("1", a, a + 20), _line("2", b, b + 20)] for _ in range(500) for a, b in grids]
