@@ -159,7 +159,8 @@ transport cap before it returns.
 `result.write(folder)` writes each object to `folder/objects/` first and the log to
 `folder/run.jsonl` last, one line of canonical JSON for each entry. `RunResult.read(folder)`
 reads only the objects that the log names, gets the inputs from them and replays the run. A
-changed line, or a changed or missing object, raises `ValueError`.
+changed line, or a changed, missing or oversized object, raises `ValueError`. It reads at most
+`max_bytes` (1 GiB by default) and refuses a symlink or a special file in the folder.
 
 ```python
 folder = Path(tempfile.mkdtemp()) / "run"

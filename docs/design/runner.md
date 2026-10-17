@@ -396,13 +396,18 @@ credentials or random ids in this deterministic content. An app may keep times s
 chain detects a changed or removed line when checked against the saved run digest; it is not a
 signature or proof of the model's identity.
 
-`RunResult.write(folder)` writes each object to `folder/objects/<hex>` first and the log to
-`folder/run.jsonl` last, so a log on disk has all its objects unless the folder was changed
-later. Each object goes to a temporary file and moves into place, and an existing object with
-other bytes is written again. `write` uses only the standard library and never replaces a log.
+`RunResult.write(folder)` checks every key and refuses an existing log before it writes. It
+writes each object to `folder/objects/<hex>` first and the log to `folder/run.jsonl` last. Each
+file goes to a temporary name and moves into place, and an existing object with other bytes is
+written again. After a crash, `read` refuses the run and `write` can run again. `write` uses only
+the standard library and never replaces a log. Runs that share a folder trust each other's
+writes.
 `RunResult.read(folder)` reads only the objects that the log names, so runs can share one
-`objects/` folder. It gets the inputs from the objects that the header names and replays the
-run, so a changed line, a changed or missing object, or a bad object key raises `ValueError`.
+`objects/` folder. The log and each object must be a regular file, not a symlink, and together
+at most `max_bytes` (1 GiB by default), so a FIFO, a device or a huge file cannot hang it or fill
+memory. It gets the inputs from the objects that the header names and replays the run, so a
+changed line, a changed, missing or oversized object, or a bad object key raises `ValueError`.
+The replay cost grows with the document and the record.
 A shared store for all the tools is #288.
 
 Two fields are reserved for the document model (#285), so that a later reader output needs no

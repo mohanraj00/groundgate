@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 import re
+import stat
 import tempfile
 from array import array
 from bisect import bisect_left, bisect_right
@@ -99,36 +100,46 @@ class RunResult:
 
     def write(self, folder: str | Path) -> None:
         """Write ``folder/objects/<hex>`` for each object, then the log ``folder/run.jsonl``, one
-        line of canonical JSON for each entry. Each object is written to a temporary file and
-        moved into place, and an object with other bytes is written again. So a log on disk has
-        all its objects. An existing log is never replaced."""
-        objects = Path(folder) / "objects"
+        line of canonical JSON for each entry. Each file is written to a temporary name and moved
+        into place, and an object with other bytes is written again. After a crash, ``read``
+        refuses the run and ``write`` can run again. An existing log is never replaced. Runs that
+        share a folder trust each other's writes."""
+        folder = Path(folder)
+        if not all(isinstance(k, str) and _KEY.fullmatch(k) for k in self.artifacts):
+            raise ValueError("an artifact key is not a sha256 digest")
+        log = folder / "run.jsonl"
+        if log.exists() or log.is_symlink():
+            raise FileExistsError(f"{log} exists")
+        objects = folder / "objects"
         objects.mkdir(parents=True, exist_ok=True)
         for key, body in sorted(self.artifacts.items()):
             data = body.encode("utf-8")
             path = objects / key.removeprefix("sha256:")
-            if path.is_file() and path.read_bytes() == data:
-                continue
-            fd, temporary = tempfile.mkstemp(dir=objects, prefix=".tmp-")
             try:
-                with os.fdopen(fd, "wb") as out:
-                    out.write(data)
-                os.replace(temporary, path)
-            except BaseException:
-                Path(temporary).unlink(missing_ok=True)
-                raise
-        with open(Path(folder) / "run.jsonl", "x", encoding="utf-8", newline="\n") as log:
-            log.write("".join(jcs(line) + "\n" for line in self.record))
+                if _file(path, len(data)) == data:
+                    continue
+            except (OSError, ValueError):
+                pass
+            os.replace(_temporary(objects, data), path)
+        lines = "".join(jcs(line) + "\n" for line in self.record).encode("utf-8")
+        temporary = _temporary(folder, lines)
+        try:
+            os.link(temporary, log)  # fails if a log exists, so no log is replaced
+        finally:
+            os.unlink(temporary)
 
     @classmethod
-    def read(cls, folder: str | Path) -> RunResult:
+    def read(cls, folder: str | Path, max_bytes: int = 2**30) -> RunResult:
         """Read a run that ``write`` made. Only the objects that the log names are read, so runs
         can share one folder. The inputs come from the objects that the header names, and the
-        run is replayed with the recorded replies. A changed line, a changed or missing object
-        or a bad object key raises ``ValueError``. A missing log raises ``OSError``."""
+        run is replayed with the recorded replies. The log and the objects must be regular files,
+        not symlinks, and together at most ``max_bytes``. A changed line, a changed, missing or
+        oversized object, or a bad object key raises ``ValueError``. A missing log raises
+        ``OSError``."""
         folder = Path(folder)
+        room = [max_bytes]
         try:
-            record = [_strict_json(line) for line in _lines(folder / "run.jsonl")]
+            record = [_strict_json(line) for line in _lines(_take(folder / "run.jsonl", room))]
         except RecursionError as exc:
             raise ValueError("a log line nests too deep") from exc
         try:
@@ -142,12 +153,13 @@ class RunResult:
             ]
         except (KeyError, TypeError, IndexError) as exc:
             raise ValueError("the log does not name its inputs") from exc
-        if not all(isinstance(k, str) and re.fullmatch(r"sha256:[0-9a-f]{64}", k) for k in keys):
+        if not all(isinstance(k, str) and _KEY.fullmatch(k) for k in keys):
             raise ValueError("the log names an object with a bad key")
         artifacts: dict[str, str] = {}
         for key in dict.fromkeys(keys):  # only this run's objects; runs may share the folder
+            path = folder / "objects" / key.removeprefix("sha256:")
             try:
-                data = (folder / "objects" / key.removeprefix("sha256:")).read_bytes()
+                data = _take(path, room)
             except OSError as exc:
                 raise ValueError(f"the log names a missing object {key}") from exc
             artifacts[key] = data.decode("utf-8")
@@ -156,7 +168,7 @@ class RunResult:
             schema = _strict_json(artifacts[inputs["schema_sha256"]])
             policy = _strict_json(artifacts[inputs["policy_sha256"]])
             refs = [_strict_json(artifacts[h]) for h in inputs["reference_sha256"]]
-        except (KeyError, TypeError, IndexError) as exc:
+        except (KeyError, TypeError, IndexError, RecursionError) as exc:
             raise ValueError("the log does not name its inputs") from exc
         result = _replay(record, artifacts, text, schema, policy, refs)
         if isinstance(result, str):
@@ -164,14 +176,52 @@ class RunResult:
         return result
 
 
+_KEY = re.compile(r"sha256:[0-9a-f]{64}")
 _OBJECT_KEYS = ("prompt_sha256", "reply_sha256", "admission_sha256")
 
 
-def _lines(path: Path) -> list[str]:
-    data = path.read_bytes().decode("utf-8")
-    if not data.endswith("\n"):
+def _file(path: Path, limit: int) -> bytes:
+    """The bytes of ``path``: a regular file, not a symlink, of at most ``limit`` bytes. A FIFO
+    or a device is refused before any read, so it cannot block or fill memory."""
+    if path.is_symlink():  # O_NOFOLLOW is not on every platform
+        raise ValueError(f"{path.name} is a symlink")
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+    with open(os.open(path, flags | getattr(os, "O_BINARY", 0)), "rb") as f:
+        info = os.fstat(f.fileno())
+        if not stat.S_ISREG(info.st_mode):
+            raise ValueError(f"{path.name} is not a regular file")
+        if info.st_size > limit:
+            raise ValueError(f"{path.name} is larger than max_bytes")
+        data = f.read(limit + 1)
+    if len(data) > limit:
+        raise ValueError(f"{path.name} is larger than max_bytes")
+    return data
+
+
+def _take(path: Path, room: list[int]) -> bytes:
+    data = _file(path, room[0])
+    room[0] -= len(data)
+    return data
+
+
+def _temporary(folder: Path, data: bytes) -> str:
+    """A new file in ``folder`` that holds ``data``, readable by all, as objects are shared."""
+    fd, name = tempfile.mkstemp(dir=folder, prefix=".tmp-")
+    try:
+        with os.fdopen(fd, "wb") as out:
+            out.write(data)
+        os.chmod(name, 0o644)
+    except BaseException:
+        os.unlink(name)
+        raise
+    return name
+
+
+def _lines(data: bytes) -> list[str]:
+    text = data.decode("utf-8")
+    if not text.endswith("\n"):
         raise ValueError("the log must end with a line break")
-    return data[:-1].split("\n")
+    return text[:-1].split("\n")
 
 
 def _hash(kind: str, obj: Any) -> str:

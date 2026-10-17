@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import dataclasses
 import hashlib
 import itertools
 import json
@@ -1103,3 +1104,51 @@ def test_read_names_a_missing_object_and_write_repairs_a_bad_one(tmp_path):
     result.write(tmp_path / "a")
     assert RunResult.read(tmp_path / "a").run_sha256 == result.run_sha256
     assert not [p for p in (tmp_path / "a" / "objects").iterdir() if p.name.startswith(".tmp-")]
+
+
+def test_read_refuses_symlinks_special_files_and_oversized_runs(tmp_path):
+    import os
+
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    reply = next(e for e in result.record if e["kind"] == "call")["reply_sha256"]
+    size = len(gg.jcs(result.record)) + sum(len(v.encode()) for v in result.artifacts.values())
+    result.write(tmp_path / "a")
+    assert RunResult.read(tmp_path / "a", max_bytes=size + 64).run_sha256 == result.run_sha256
+    with pytest.raises(ValueError, match="larger than max_bytes"):
+        RunResult.read(tmp_path / "a", max_bytes=size // 2)
+    path = tmp_path / "a" / "objects" / reply.removeprefix("sha256:")
+    (tmp_path / "copy").write_bytes(path.read_bytes())
+    path.unlink()
+    path.symlink_to(tmp_path / "copy")
+    with pytest.raises(ValueError, match="symlink"):
+        RunResult.read(tmp_path / "a")
+    if hasattr(os, "mkfifo"):
+        path.unlink()
+        os.mkfifo(path)  # an open for reading would wait for a writer
+        with pytest.raises(ValueError, match="not a regular file"):
+            RunResult.read(tmp_path / "a")
+
+
+def test_read_refuses_a_deep_input_object(tmp_path):
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    result.write(tmp_path)
+    schema = result.record[0]["inputs"]["schema_sha256"].removeprefix("sha256:")
+    (tmp_path / "objects" / schema).write_text("[" * 100000)
+    with pytest.raises(ValueError):
+        RunResult.read(tmp_path)
+
+
+def test_write_checks_keys_and_the_log_before_any_object(tmp_path):
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    bad = dataclasses.replace(result, artifacts={"sha256:../../x": "body"})
+    with pytest.raises(ValueError, match="not a sha256 digest"):
+        bad.write(tmp_path / "a")
+    assert not (tmp_path / "x").exists() and not (tmp_path / "a").exists()
+    (tmp_path / "b").mkdir()
+    (tmp_path / "b" / "run.jsonl").write_text("")
+    with pytest.raises(FileExistsError):
+        result.write(tmp_path / "b")
+    assert not (tmp_path / "b" / "objects").exists()
+    result.write(tmp_path / "c")
+    assert [p.name for p in (tmp_path / "c").iterdir() if p.name.startswith(".tmp-")] == []
+    assert all(p.stat().st_mode & 0o044 for p in (tmp_path / "c" / "objects").iterdir())
