@@ -12,7 +12,7 @@ import pytest
 import groundgate as gg
 from groundgate.read import read
 from groundgate.read.layout import Box
-from groundgate.read.pdf import HEADER_BAND, _fill_empty_cells, _number_columns, _plan
+from groundgate.read.pdf import HEADER_BAND, _fill_empty_cells, _grid, _number_columns, _plan
 
 from pdfgen import make_pdf
 
@@ -415,6 +415,36 @@ def test_text_after_a_numeric_row_label_stays(tmp_path: Path) -> None:
     path.write_bytes(make_pdf([page]))
     doc = read(path)
     assert "2024 Current\t50\t60" in doc.text.split("\n")
+    assert doc.layout is not None
+    raw = doc.text.encode()
+    assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
+
+
+def test_majority_grid_does_not_depend_on_row_order() -> None:
+    bridge = [_line("1", 210, 250), _line("2", 310, 350)]
+    agree = [[_line("3", 200, 220), _line("4", 300, 320)] for _ in range(3)]
+    off = [_line("5", 240, 260), _line("6", 340, 360)]
+    for rows in ([bridge, *agree, off], [*agree, off, bridge]):
+        assert _grid(rows) == [(200, 250), (300, 350)]
+
+
+def test_text_before_the_columns_joins_the_row_label(tmp_path: Path) -> None:
+    path = tmp_path / "restated.pdf"
+    page = [
+        (72, 705, "Cash"),
+        (150, 705, "Restated"),
+        (300, 705, "10"),
+        (400, 705, "20"),
+        (72, 690, "Debt"),
+        (300, 690, "30"),
+        (400, 690, "40"),
+        (72, 675, "Land"),
+        (300, 675, "50"),
+        (400, 675, "60"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    doc = read(path)
+    assert "Cash Restated\t10\t20" in doc.text.split("\n")
     assert doc.layout is not None
     raw = doc.text.encode()
     assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
