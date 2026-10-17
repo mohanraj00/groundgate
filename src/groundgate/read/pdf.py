@@ -316,18 +316,20 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     The table is written where pdfminer gives the first of its lines, one row on each line.
 
     The number columns of a table come from its widest rows when their spans agree. Rows with a
-    label set them when the table has any, or a strict majority of those rows that agree, and a full
-    row of only number cells joins them only when it fits. A full row keeps its tabs only when its
-    number cells fit the columns, and the text before its first number is one label. A number cell
-    before the first number cell of every labeled row, such as a year as a row label, is a label and
-    no column. A short row uses these columns: each number cell must overlap exactly one column, and
-    each later text cell must be inside exactly one column, in increasing order. Skipped columns get
-    empty cells (#266). A row with a label and only text cells after it, such as "n/a", is placed
-    the same way. A full row of only number cells, such as a row of year headings, starts with an
-    empty label slot, so each cell keeps its column position, and it must fit the columns too. If
-    the grid or a cell is ambiguous, the row is written without tabs. An ambiguous numeric-only row
-    also has two blank lines on either side, a key-scope barrier in spec 0.9, so it cannot reuse a
-    prior field label as a column hint (#278).
+    label set them when the table has any, or a strict majority of those rows that agree (two
+    majorities with different columns give none), and a full row of only number cells joins them
+    only when it fits. A full row keeps its tabs only when its number cells fit the columns, and the
+    text before its first number is one label. A number cell before the first number cell of every
+    labeled row, such as a year as a row label, is a label and no column. A short row uses these
+    columns: each number cell must overlap exactly one column, and each later text cell must be
+    inside exactly one column, in increasing order. Skipped columns get empty cells (#266). A row
+    with a label and only text cells after it, such as "n/a", is placed the same way. Above the
+    first table row, such a row is placed only when it fits, because it can be a column heading. A
+    full row of only number cells, such as a row of year headings, starts with an empty label slot,
+    so each cell keeps its column position, and it must fit the columns too. If the grid or a cell
+    is ambiguous, the row is written without tabs. An ambiguous numeric-only row also has two blank
+    lines on either side, a key-scope barrier in spec 0.9, so it cannot reuse a prior field label as
+    a column hint (#278).
     """
     rows, span, plan = _plan(blocks)
 
@@ -393,10 +395,12 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                         lines = _plain(cells)
                     else:  # the text before the first number is one label
                         lines = [[word for cell in cells[:at] for word in cell], *cells[at:]]
-            elif columns and ri > group[0] and _side_by_side(row, span):
+            elif columns and _side_by_side(row, span):
                 cells = [cell for line in lines for cell in _cells(line)]
                 if _span(cells[0]).x1 <= columns[0][0]:  # a label, then text cells in the columns
-                    lines = _fill_empty_cells(cells, columns)
+                    placed = _fill_empty_cells(cells, columns)
+                    if ri > group[0] or len(placed) > 1:  # a heading that does not fit stays
+                        lines = placed
             if isolated:
                 tables[n].extend([[], [], lines, [], []])
             else:
@@ -436,10 +440,11 @@ def _label_number(cells: Row, edge: float | None) -> bool:
 def _grid(rows: list[Row]) -> list[tuple[float, float]]:
     """The number columns of the labeled rows. If they disagree, the columns of a strict majority
     of rows whose cells each overlap the cells of one of them, so one row off the grid does not
-    remove the grid of the others."""
+    remove the grid of the others. Two majorities with different columns give no grid."""
     columns = _number_columns(rows)
     if columns or len(rows) < 3:
         return columns
+    grids = set()
     for row in rows:
         same = [
             other
@@ -450,8 +455,8 @@ def _grid(rows: list[Row]) -> list[tuple[float, float]]:
             )
         ]
         if 2 * len(same) > len(rows) and (columns := _number_columns(same)):
-            return columns
-    return []
+            grids.add(tuple(columns))
+    return list(grids.pop()) if len(grids) == 1 else []  # competing majorities give no grid
 
 
 def _plain(row: Row) -> Row:
