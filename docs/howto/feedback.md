@@ -13,9 +13,11 @@ transport, credentials and timeout. It returns a JSON string, with no Markdown f
 
 ```python
 import json
+import tempfile
+from pathlib import Path
 
 import groundgate as gg
-from groundgate.run import RunPolicy, replay, run
+from groundgate.run import RunPolicy, RunResult, replay, run
 
 text = "Amounts (in thousands)\nAmount 5."
 schema = {"fields": {"amount": {"type": "integer"}}}
@@ -50,7 +52,7 @@ result = run(
 print(result.complete)
 for decision in result.receipt.decisions:
     print(decision.field, decision.value, decision.outcome)
-print(sum(entry["kind"] == "call" for entry in result.record["entries"]))
+print(sum(entry["kind"] == "call" for entry in result.record))
 ```
 
 ```text
@@ -76,8 +78,8 @@ An admission in an earlier round is not a final admission.
 `result.complete` says whether the planned calls completed. A client failure, malformed reply
 or exhausted total call budget returns an incomplete result with completed receipts. A
 rejected candidate, a failed repair or a repair-round limit retains its core outcome. These
-states do not prove that a field is absent. The record's entries give the failure or stop
-reason; `record["final"]["fields"]` lists the field's search and repair history. These states
+states do not prove that a field is absent. The record's lines give the failure or stop
+reason; the last line, `record[-1]["fields"]`, lists the field's search and repair history. These states
 record attempts, not an active candidate inventory. An admission-history limit entry lists
 retained, dropped and reverted ids. Read `result.candidates` with its receipt for active values.
 If a run stops before a field has a valid disposition, its history contains
@@ -145,21 +147,29 @@ become recorded incomplete results without copying their exception messages.
 
 ## 4. Save and replay
 
-Save the run record, artifacts, exact text, schema, policy and references together. Artifacts
-contain complete prompts and replies, including source text. This includes an oversized reply
-that exceeded `max_reply_bytes`: the runner retains that raw body for replay even though it
-does not parse it. The setting is a parsing limit, not a transport or artifact-size limit. The
-client owns any transport cap before returning. The runner returns artifacts in memory and
-does not choose file paths. The app chooses storage.
+The record is a log: a list of lines, one dict for each line. The first line names every
+input by digest: the text, the schema, the policy and each reference. The last line holds the
+field states and the final receipt digest. Each line holds the digest of the line before it.
+The artifacts are objects keyed by digest: the inputs, the complete prompts and replies, and
+each admission packet. They include source text. They also include an oversized reply that
+exceeded `max_reply_bytes`: the runner keeps that raw body for replay but does not parse it.
+The setting is a parsing limit, not a transport or artifact-size limit. The client owns any
+transport cap before it returns.
+
+`result.write(folder)` writes each object to `folder/objects/` and the log to
+`folder/run.jsonl`, one line of canonical JSON for each entry. `RunResult.read(folder)` gets the
+inputs from the objects and replays the run. A changed line or object raises `ValueError`.
 
 ```python
-stored_record = json.loads(json.dumps(result.record))
-stored_artifacts = json.loads(json.dumps(result.artifacts))
-print(replay(stored_record, stored_artifacts, text, schema).ok)
+folder = Path(tempfile.mkdtemp()) / "run"
+result.write(folder)
+print(RunResult.read(folder).run_sha256 == result.run_sha256)
+print(replay(result.record, result.artifacts, text, schema).ok)
 print(gg.verify(result.receipt.to_dict(), text, schema, result.candidates).ok)
 ```
 
 ```text
+True
 True
 True
 ```

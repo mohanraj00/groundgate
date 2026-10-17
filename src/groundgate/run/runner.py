@@ -11,6 +11,7 @@ from bisect import bisect_left, bisect_right
 from collections.abc import Callable, Iterator, Mapping, Sequence
 from dataclasses import asdict, dataclass, replace
 from itertools import chain
+from pathlib import Path
 from typing import Any, cast
 
 from ..admit import Verification, admit
@@ -43,9 +44,9 @@ class RunInputError(ValueError):
 
 
 class RunnerError(RuntimeError):
-    """Internal failure with the completed record available in ``record``."""
+    """Internal failure with the log lines written so far available in ``record``."""
 
-    def __init__(self, message: str, record: Json) -> None:
+    def __init__(self, message: str, record: list[Json]) -> None:
         super().__init__(message)
         self.record = copy.deepcopy(record)
 
@@ -80,11 +81,78 @@ class RunPolicy:
 
 @dataclass(frozen=True)
 class RunResult:
+    """``record`` is the run log, one dict for each line. ``artifacts`` holds the objects that
+    the log names by digest: the inputs, prompts, replies and admission packets."""
+
     receipt: Receipt
     candidates: list[Json]
-    record: Json
+    record: list[Json]
     artifacts: dict[str, str]
     complete: bool
+
+    @property
+    def run_sha256(self) -> str:
+        """The digest of the last log line, which the chain ties to every line before it."""
+        return cast(str, self.record[-1]["entry_sha256"])
+
+    def write(self, folder: str | Path) -> None:
+        """Write ``folder/objects/<hex>`` for each object and the log ``folder/run.jsonl``, one
+        line of canonical JSON for each entry. An existing log is never replaced."""
+        objects = Path(folder) / "objects"
+        objects.mkdir(parents=True, exist_ok=True)
+        for key, body in sorted(self.artifacts.items()):
+            path = objects / key.removeprefix("sha256:")
+            if not path.exists():
+                path.write_bytes(body.encode("utf-8"))
+        with open(Path(folder) / "run.jsonl", "x", encoding="utf-8", newline="\n") as log:
+            log.write("".join(jcs(line) + "\n" for line in self.record))
+
+    @classmethod
+    def read(cls, folder: str | Path) -> RunResult:
+        """Read a run that ``write`` made. Only the objects that the log names are read, so runs
+        can share one folder. The inputs come from the objects that the header names, and the
+        run is replayed with the recorded replies, so a changed line or object raises
+        ``ValueError``."""
+        folder = Path(folder)
+        record = [_strict_json(line) for line in _lines(folder / "run.jsonl")]
+        try:
+            inputs = record[0]["inputs"]
+            keys = [
+                inputs["document"]["sha256"],
+                inputs["schema_sha256"],
+                inputs["policy_sha256"],
+                *inputs["reference_sha256"],
+                *(line[k] for line in record for k in _OBJECT_KEYS if k in line),
+            ]
+        except (KeyError, TypeError, IndexError) as exc:
+            raise ValueError("the log does not name its inputs") from exc
+        artifacts: dict[str, str] = {}
+        for key in keys:  # only the objects of this run; other runs may share the folder
+            if not isinstance(key, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", key):
+                raise ValueError("the log names an object with a bad key")
+            path = folder / "objects" / key.removeprefix("sha256:")
+            artifacts[key] = path.read_bytes().decode("utf-8")
+        try:
+            text = artifacts[inputs["document"]["sha256"]]
+            schema = _strict_json(artifacts[inputs["schema_sha256"]])
+            policy = _strict_json(artifacts[inputs["policy_sha256"]])
+            refs = [_strict_json(artifacts[h]) for h in inputs["reference_sha256"]]
+        except (KeyError, TypeError, IndexError) as exc:
+            raise ValueError("the log does not name its inputs") from exc
+        result = _replay(record, artifacts, text, schema, policy, refs)
+        if isinstance(result, str):
+            raise ValueError(result)
+        return result
+
+
+_OBJECT_KEYS = ("prompt_sha256", "reply_sha256", "admission_sha256")
+
+
+def _lines(path: Path) -> list[str]:
+    data = path.read_bytes().decode("utf-8")
+    if not data.endswith("\n"):
+        raise ValueError("the log must end with a line break")
+    return data[:-1].split("\n")
 
 
 def _hash(kind: str, obj: Any) -> str:
@@ -291,20 +359,27 @@ class _Engine:
         self.references = references
         self.sources = {"document": text, **{f"reference:{r['id']}": r["text"] for r in references}}
         self.offsets = {name: _ByteOffsets(body) for name, body in self.sources.items()}
-        self.record: Json = {
-            "header": {
-                "runner": _VERSION,
-                "core": SPEC_VERSION,
-                "model_id": model_id,
-                "settings": asdict(settings),
-                "document": empty.to_dict()["document"],
-                "references": empty.to_dict()["references"],
-                "schema_sha256": empty.schema_sha256,
-                "policy_sha256": empty.policy_sha256,
-            },
-            "entries": [],
-        }
+        self.record: list[Json] = []
         self.artifacts: dict[str, str] = {}
+        self.event(
+            kind="header",
+            runner=_VERSION,
+            core=SPEC_VERSION,
+            model_id=model_id,
+            settings=asdict(settings),
+            inputs={
+                # "text" today; the document model (#285) adds the kind "document"
+                "document": {
+                    "kind": "text",
+                    "id": document_id,
+                    "source": document_source,
+                    "sha256": self.put("text", text),
+                },
+                "schema_sha256": self.put("schema", jcs(schema.to_dict())),
+                "policy_sha256": self.put("policy", jcs(policy.to_dict())),
+                "reference_sha256": [self.put("reference", jcs(r)) for r in references],
+            },
+        )
         self.tips: dict[str, Json] = {}
         self.raw: dict[str, Json] = {}
         self.contexts: dict[str, list[Json]] = {}
@@ -325,8 +400,14 @@ class _Engine:
         self.complete = True
         self.states: dict[str, list[str]] = {name: [] for name in schema.fields}
 
+    def put(self, kind: str, data: str) -> str:
+        """Keep ``data`` as an object and give its key: the digest of its kind and exact bytes."""
+        key = _hash(kind, data)
+        self.artifacts[key] = data
+        return key
+
     def event(self, **body: Any) -> None:
-        entries = self.record["entries"]
+        entries = self.record
         entry = {
             "sequence": len(entries) + 1,
             "previous": entries[-1]["entry_sha256"] if entries else None,
@@ -377,8 +458,7 @@ class _Engine:
             self.event(kind="limit", phase=phase, fields=fields, status=status, **metadata)
             return None
         self.calls += 1
-        prompt_sha = _hash("prompt", prompt)
-        self.artifacts[prompt_sha] = prompt
+        prompt_sha = self.put("prompt", prompt)
         body = {
             "kind": "call",
             "call": self.calls,
@@ -404,8 +484,7 @@ class _Engine:
             self.complete = False
             self.event(**body, status="reply_encoding")
             return None
-        reply_sha = _hash("reply", raw)
-        self.artifacts[reply_sha] = raw
+        reply_sha = self.put("reply", raw)
         body.update(reply_sha256=reply_sha, reply_bytes=len(encoded))
         if len(encoded) > self.settings.max_reply_bytes:
             self.complete = False
@@ -466,7 +545,11 @@ class _Engine:
         )
         body = {"candidates": candidates, "receipt": receipt.to_dict()}
         if phase == "final":
-            self.event(kind="final_admission", receipt_sha256=receipt.receipt_sha256)
+            self.event(
+                kind="final_admission",
+                admission_sha256=self.put("admission", jcs(body)),
+                receipt_sha256=receipt.receipt_sha256,
+            )
         else:
             size = len(jcs(body).encode())
             if self.admission_bytes + size > self.admission_byte_limit:
@@ -493,7 +576,9 @@ class _Engine:
                     reverted_candidate_ids=reverted,
                 )
                 return False
-            self.event(kind="admission", phase=phase, **copy.deepcopy(body))
+            self.event(
+                kind="admission", phase=phase, admission_sha256=self.put("admission", jcs(body))
+            )
             self.admission_bytes += size
         self.receipt = receipt
         self.last_candidates = candidates
@@ -909,12 +994,12 @@ class _Engine:
             for states in self.states.values():
                 if not states:
                     states.append("incomplete_no_disposition")
-        self.record["final"] = {
-            "complete": self.complete,
-            "fields": self.states,
-            "receipt_sha256": self.receipt.receipt_sha256,
-        }
-        self.record["run_sha256"] = _hash("manifest", self.record)
+        self.event(
+            kind="final",
+            complete=self.complete,
+            fields=self.states,
+            receipt_sha256=self.receipt.receipt_sha256,
+        )
         return RunResult(
             self.receipt,
             copy.deepcopy(list(self.tips.values())),
@@ -997,7 +1082,7 @@ def run(
 
 
 def replay(
-    record: Mapping[str, Any],
+    record: Sequence[Mapping[str, Any]],
     artifacts: Mapping[str, str],
     text: str,
     schema: Schema | Mapping[str, Any],
@@ -1005,25 +1090,42 @@ def replay(
     references: Sequence[object] | None = None,
 ) -> Verification:
     """Rebuild a saved run with recorded replies and compare every entry, without a model."""
+    result = _replay(record, artifacts, text, schema, policy, references)
+    return Verification(False, (result,)) if isinstance(result, str) else Verification(True, ())
+
+
+def _replay(
+    record: Sequence[Mapping[str, Any]],
+    artifacts: Mapping[str, str],
+    text: str,
+    schema: Schema | Mapping[str, Any],
+    policy: Policy | Mapping[str, Any] | None,
+    references: Sequence[object] | None,
+) -> RunResult | str:
+    """The replayed run, or the reason why it differs from the saved one."""
     try:
         if not isinstance(artifacts, Mapping) or any(
             not isinstance(k, str) or not isinstance(v, str) for k, v in artifacts.items()
         ):
             raise ValueError("artifacts must map digests to strings")
-        saved = copy.deepcopy(dict(record))
-        header = saved["header"]
+        if isinstance(record, (str, bytes, Mapping)):
+            raise ValueError("the record is a list of log lines")
+        saved = [dict(line) for line in copy.deepcopy(list(record))]
+        header = saved[0]
+        if header["kind"] != "header":
+            raise ValueError("the first line is not the header")
         if header["runner"] != _VERSION or header["core"] != SPEC_VERSION:
-            return Verification(False, ("runner or core version differs",))
-        calls = [e for e in saved["entries"] if e["kind"] == "call"]
+            return "runner or core version differs"
+        calls = [e for e in saved if e["kind"] == "call"]
         settings = RunPolicy(**header["settings"])
         # A record cannot authorize more chunks than its recorded plan or work entries.
         # Preserve the declared budget for normal replay, including exhausted budgets.
         evidence_bound = max(
             1,
-            sum(e["kind"] in {"call", "limit"} for e in saved["entries"]),
-            sum(len(e["chunks"]) for e in saved["entries"] if e["kind"] == "plan"),
+            sum(e["kind"] in {"call", "limit"} for e in saved),
+            sum(len(e["chunks"]) for e in saved if e["kind"] == "plan"),
         )
-        plans = [e for e in saved["entries"] if e["kind"] == "plan"]
+        plans = [e for e in saved if e["kind"] == "plan"]
         if len(plans) != 1:
             raise ValueError("one initial plan required")
         chunks = plans[0]["chunks"]
@@ -1081,13 +1183,13 @@ def replay(
             run_policy=settings,
             replay_ceiling=ceiling,
             references=references,
-            document_id=header["document"]["id"],
-            document_source=header["document"]["source"],
+            document_id=header["inputs"]["document"]["id"],
+            document_source=header["inputs"]["document"]["source"],
         )
         if cursor != len(calls) or jcs(result.record) != jcs(saved):
-            return Verification(False, ("run differs from replay",))
+            return "run differs from replay"
         if dict(artifacts) != result.artifacts:
-            return Verification(False, ("artifacts differ from replay",))
-        return Verification(True, ())
+            return "artifacts differ from replay"
+        return result
     except (KeyError, ValueError, TypeError, IndexError, PacketError, RunnerError, RecursionError):
-        return Verification(False, ("invalid replay record or inputs",))
+        return "invalid replay record or inputs"

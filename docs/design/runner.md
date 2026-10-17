@@ -39,8 +39,8 @@ The core policy remains separate from `RunPolicy`; runner keys do not enter the 
 This version does not accept or create recorded judgments. An app that needs a judge keeps
 using `admit` with recorded judgments until that interface has a separate design.
 
-`RunResult` holds a final core receipt and its exact candidate list, the run record, and the
-prompt and reply artifacts needed to replay it. The result also has `complete: bool`. A core
+`RunResult` holds a final core receipt and its exact candidate list, the run log, and the
+objects needed to replay it (section 8). The result also has `complete: bool`. A core
 receipt can verify even when an interrupted run did not search all fields. Consumers must read
 both the receipt and `complete`.
 
@@ -369,32 +369,52 @@ completed repair rounds can leave `repair_limit`. A targeted not-found response 
 
 ## 8. The run record and replay
 
-The core receipt format stays unchanged. A separate `groundgate-run/1` record holds the runner
-version, core spec version, document and reference digests, resolved schema and policy digests,
-model id, every `RunPolicy` setting, chunk plan, search plan and terminal field states.
+The core receipt format stays unchanged. The `groundgate-run/1` record is a log: one line of
+canonical JSON for each entry. Each line has a `sequence`, the `previous` line's digest and its
+own `entry_sha256`. The first line, `header`, is the run manifest. It holds the runner version,
+core spec version, model id and every `RunPolicy` setting, and it names every input by digest:
+the text (with `kind: "text"`, the document id and source), the resolved schema, the resolved
+policy and each reference. The last line, `final`, holds `complete`, the terminal field states
+and the final core receipt digest. Its `entry_sha256` is the run digest, `run_sha256`.
 
-For each call the record holds its sequence number, phase, field or candidate ids, repair
-round, preceding entry digest, complete prompt digest, model id, raw reply digest and length,
-parse or client error, permitted and actual diff, exact admission packet candidate list,
-and the core receipt or its digest. Search-only and final-admission steps have entries too.
-Raw prompts and replies live in the returned artifacts; the record refers to their digests.
-Raw-reply digests cover exact UTF-8 bytes, including whitespace. Prompt digests cover the
-exact string given to `client`, encoded as UTF-8. Client errors have no reply digest.
+For each call the log holds its sequence number, phase, field or candidate ids, repair round,
+complete prompt digest, model id, raw reply digest and length, parse or client error, and
+permitted and actual diff. Each admission line names its admission packet: the exact candidate
+list and the core receipt. Search-only, limit and final-admission steps have lines too.
+
+The log names objects by digest, and the returned artifacts are those objects: the inputs,
+the prompts, the replies and the admission packets. An object's key is its digest with its kind
+tag (`text`, `schema`, `policy`, `reference`, `prompt`, `reply`, `admission`). Raw-reply digests
+cover exact UTF-8 bytes, including whitespace. Prompt digests cover the exact string given to
+`client`, encoded as UTF-8. Schema, policy, reference and admission objects are canonical JSON.
+Client errors have no reply digest.
 
 Runner digests use their own prefix, `groundgate-run/1:<kind>` followed by a zero byte and the
-canonical JSON or exact UTF-8 artifact bytes. They do not reuse a spec-dependent core digest
-prefix. The run manifest covers every entry digest and the final core receipt digest. There
-are no wall-clock times, host paths, credentials or random ids in this deterministic content.
-An app may keep times separately. The chain detects a changed or removed entry when checked
-against the saved manifest; it is not a signature or proof of the model's identity.
+object bytes. They do not reuse the core `digest()`, whose prefix names the spec version, so the
+same text keeps its key in each spec version. There are no wall-clock times, host paths,
+credentials or random ids in this deterministic content. An app may keep times separately. The
+chain detects a changed or removed line when checked against the saved run digest; it is not a
+signature or proof of the model's identity.
+
+`RunResult.write(folder)` writes each object to `folder/objects/<hex>` and the log to
+`folder/run.jsonl`. It uses only the standard library and never replaces an existing log.
+`RunResult.read(folder)` reads only the objects that the log names, so runs can share one
+`objects/` folder. It gets the inputs from the objects that the header names and replays the
+run, so a changed line or object raises `ValueError`. A shared store for all the tools is #288.
+
+Two fields are reserved for the document model (#285), so that a later reader output needs no
+new log format. An input of `kind: "document"` will name an extracted document and its reader
+version. A `node` key in an evidence item or a chunk plan entry will name a node, and the runner
+will resolve it to a span before `admit`. Today a reply with `node` is an invalid reply, and a
+chunk plan entry with any other key fails replay.
 
 `replay(record, artifacts, text, schema, policy, references)` makes no model call. It runs
 the runner again on the supplied inputs and gives it the recorded replies in call order. Each
 new prompt must have its recorded digest. The rerun re-parses replies, enforces the same diffs
 and budgets and calls `admit` again for each admission. Replay then compares the complete new
-record with the saved record and the new artifact map with the supplied artifacts. That
+log with the saved log and the new artifact map with the supplied artifacts. That
 comparison covers the header input digests, every entry and its chain digest, each admission
-packet and core receipt, the final receipt digest and the manifest digest. Replay does not call
+packet and core receipt, the final receipt digest and the run digest. Replay does not call
 `verify`; a receipt must be identical to the receipt that the rerun creates. Before building any prompt, replay bounds the initial chunk plan by the
 recorded chunk-plan length or call and limit entries, as well as the declared budget. An untrusted header cannot
 authorize a plan larger than those saved entries. The recorded chunk plan also bounds replay

@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import copy
+import hashlib
+import itertools
 import json
 
 import pytest
 
 import groundgate as gg
-from groundgate.run import RunInputError, RunnerError, RunPolicy, replay, run
+from groundgate.run import RunInputError, RunnerError, RunPolicy, RunResult, replay, run
 from groundgate.run.runner import _chunks, _queries
 
 
@@ -90,7 +92,7 @@ def test_invalid_reply_is_incomplete_without_partial_admission(bad):
     client = Client(bad)
     result = execute("Amount 5.", client)
     assert not result.complete and not result.candidates and len(client.prompts) == 1
-    assert result.record["entries"][1]["status"] == "invalid_reply"
+    assert result.record[2]["status"] == "invalid_reply"
     assert_replays(result, "Amount 5.")
 
 
@@ -100,7 +102,7 @@ def test_chunk_stop_utf8_and_degenerate_overlap_bound():
     assert _chunks("éé", settings) == [(0, 2)]
     client = Client(envelope(candidate()), envelope(candidate()))
     result = execute("éé\néé5é", client, run_policy=settings)
-    plan = result.record["entries"][0]["chunks"]
+    plan = result.record[1]["chunks"]
     assert plan[0]["end"] == len("éé\néé5".encode())
     assert_replays(result, "éé\néé5é")
     with pytest.raises(RunInputError, match="chunks"):
@@ -142,7 +144,7 @@ def test_missing_scale_evidence_repair_value_locked():
     assert len(client.prompts) == 3
     assert result.candidates[0]["value"] == "5000"
     assert result.receipt.decisions[0].outcome == "needs_verification"
-    assert any(e.get("status") == "evidence_repair" for e in result.record["entries"])
+    assert any(e.get("status") == "evidence_repair" for e in result.record)
     assert_replays(result, text)
 
 
@@ -168,7 +170,7 @@ def test_forbidden_repair_changes_keep_old_tip(change):
     reply = {**candidate(), **change}
     result = execute("Amount 5.", Client(envelope(first), reply))
     assert result.candidates[0]["evidence"][0]["text"] == "absent"
-    assert any(e.get("status") == "protocol_failure" for e in result.record["entries"])
+    assert any(e.get("status") == "protocol_failure" for e in result.record)
     assert_replays(result, "Amount 5.")
 
 
@@ -218,7 +220,7 @@ def test_no_op_and_not_found_preserve_previous_candidate():
         result = execute("Amount 5.", client)
         assert len(client.prompts) == 2
         assert result.candidates[0]["evidence"] == first["evidence"]
-        assert any(e.get("status") == status for e in result.record["entries"])
+        assert any(e.get("status") == status for e in result.record)
 
 
 def test_targeted_missing_field_only_and_field_terms():
@@ -270,7 +272,7 @@ def test_target_no_terms_no_match_and_explicit_not_found():
         schema = {"fields": {field: {}}}
         client = Client(envelope(missing=(field,)), envelope(missing=(field,)))
         result = execute(text, client, schema)
-        assert expected in result.record["final"]["fields"][field]
+        assert expected in result.record[-1]["fields"][field]
         assert len(client.prompts) == (2 if expected == "targeted_not_found" else 1)
         assert_replays(result, text, schema)
 
@@ -279,7 +281,7 @@ def test_target_source_escape_is_not_absence():
     client = Client(envelope(missing=("amount",)), envelope(candidate(evidence=[item("absent")])))
     result = execute("Amount 5.", client)
     assert result.complete and not result.candidates
-    assert result.record["final"]["fields"]["amount"] == ["model_not_found", "protocol_failure"]
+    assert result.record[-1]["fields"]["amount"] == ["model_not_found", "protocol_failure"]
     assert_replays(result, "Amount 5.")
 
 
@@ -291,12 +293,12 @@ def test_bad_targeted_quote_fails_only_its_field():
         envelope(candidate("7", "b")),
     )
     result = execute("A 5. B 7.", client, schema)
-    fields = result.record["final"]["fields"]
+    fields = result.record[-1]["fields"]
     assert fields["a"] == ["model_not_found", "protocol_failure"]
     assert fields["b"][:2] == ["model_not_found", "proposed"]
     assert [c["field"] for c in result.candidates] == ["b"] and len(client.prompts) == 3
     assert result.receipt.decisions[0].outcome == "admitted" and result.complete
-    failure = next(e for e in result.record["entries"] if e["kind"] == "protocol_failure")
+    failure = next(e for e in result.record if e["kind"] == "protocol_failure")
     assert failure["field"] == "a" and failure["phase"] == "targeted"
     assert_replays(result, "A 5. B 7.", schema)
 
@@ -312,15 +314,12 @@ def test_targeted_trim_drops_the_worst_ranked_region_first():
         # The title match has rank 0. It stays, and it stays last in location order.
         assert sent[-1]["text"] == "\nNet income "
         assert [s["start"] for s in sent] == sorted(s["start"] for s in sent)
-        search = next(e for e in result.record["entries"] if e["kind"] == "search")
+        search = next(e for e in result.record if e["kind"] == "search")
         assert search["status"] == "search_truncated" and search["trimmed_regions"] > 0
         assert search["regions"] == [
             {k: s[k] for k in ("source", "start", "end", "text")} for s in sent
         ]
-        assert (
-            result.complete
-            and "targeted_not_found" in result.record["final"]["fields"]["net_income"]
-        )
+        assert result.complete and "targeted_not_found" in result.record[-1]["fields"]["net_income"]
         assert_replays(result, text, schema)
 
 
@@ -339,7 +338,7 @@ def test_repair_without_value_item_may_cite_a_reference_of_its_call():
     client = Client(envelope(candidate(evidence=[])), outside)
     escape = execute("", client, references=references)
     assert escape.receipt.decisions[0].outcome == "rejected"
-    assert any(e.get("status") == "protocol_failure" for e in escape.record["entries"])
+    assert any(e.get("status") == "protocol_failure" for e in escape.record)
     assert_replays(escape, "", references=references)
 
 
@@ -354,7 +353,7 @@ def test_repair_keeps_a_reference_unit_and_adds_a_document_value():
         schema,
         references=references,
     )
-    assert any(e.get("status") == "evidence_repair" for e in result.record["entries"])
+    assert any(e.get("status") == "evidence_repair" for e in result.record)
     assert result.candidates[0]["evidence"][1] == item("5")
     assert_replays(result, "Amount 5.", schema, references=references)
 
@@ -363,7 +362,7 @@ def test_call_budget_never_records_skipped_target_as_not_found():
     client = Client(envelope(missing=("amount",)))
     result = execute("Amount 5.", client, run_policy=RunPolicy(max_calls=1))
     assert not result.complete and len(client.prompts) == 1
-    assert result.record["final"]["fields"]["amount"] == ["model_not_found", "unsearched"]
+    assert result.record[-1]["fields"]["amount"] == ["model_not_found", "unsearched"]
     assert_replays(result, "Amount 5.")
 
 
@@ -378,7 +377,7 @@ def test_reply_size_and_candidate_count_limits():
     ]:
         result = execute("Amount 5.", Client(reply), run_policy=settings)
         assert not result.complete and not result.candidates
-        assert any(e.get("status") == status for e in result.record["entries"])
+        assert any(e.get("status") == status for e in result.record)
         assert_replays(result, "Amount 5.")
 
 
@@ -393,16 +392,16 @@ def test_empty_source_records_absence_without_a_call():
     client = Client()
     result = execute("", client)
     assert result.complete and not client.prompts
-    assert result.record["final"]["fields"]["amount"] == ["empty_source"]
+    assert result.record[-1]["fields"]["amount"] == ["empty_source"]
     assert_replays(result, "")
 
 
 def test_replay_detects_modified_artifacts_settings_and_record():
     result = execute("Amount 5.", Client(envelope(candidate())))
     for mutate in [
-        lambda r: r["header"]["settings"].update(max_calls=2),
-        lambda r: r["entries"].pop(),
-        lambda r: r["final"].update(complete=False),
+        lambda r: r[0]["settings"].update(max_calls=2),
+        lambda r: r.pop(-2),
+        lambda r: r[-1].update(complete=False),
     ]:
         record = copy.deepcopy(result.record)
         mutate(record)
@@ -420,7 +419,7 @@ def test_runtime_error_has_partial_record(monkeypatch):
     monkeypatch.setattr(module._Engine, "decide", fail)
     with pytest.raises(RunnerError) as error:
         execute("Amount 5.", Client(envelope(candidate())))
-    assert error.value.record["entries"][0]["kind"] == "plan"
+    assert error.value.record[1]["kind"] == "plan"
 
 
 @pytest.mark.parametrize(
@@ -506,7 +505,7 @@ def test_repair_round_limit_and_duplicate_budget():
     )
     result = execute("Amount 5.", client)
     assert len(client.prompts) == 3
-    assert "repair_limit" in result.record["final"]["fields"]["amount"]
+    assert "repair_limit" in result.record[-1]["fields"]["amount"]
     assert_replays(result, "Amount 5.")
 
 
@@ -534,7 +533,7 @@ def test_target_match_casefold_expansion_and_truncation():
     result = execute(
         text, client, schema, run_policy=RunPolicy(search_context_chars=1, max_target_regions=1)
     )
-    search = next(e for e in result.record["entries"] if e["kind"] == "search")
+    search = next(e for e in result.record if e["kind"] == "search")
     assert search["status"] == "search_truncated" and search["omitted_regions"] == 1
     assert search["matches"][0]["end"] == len("Straße".encode())
     assert_replays(result, text, schema)
@@ -576,7 +575,7 @@ def test_repair_cannot_change_a_role_reference_even_to_value_source():
     new = candidate(unit="USD", evidence=[item("5"), item("$", "unit")])
     result = execute(text, Client(envelope(first), new), schema, references=references)
     assert result.candidates[0]["evidence"][1]["source"] == "reference"
-    assert any(e.get("status") == "protocol_failure" for e in result.record["entries"])
+    assert any(e.get("status") == "protocol_failure" for e in result.record)
     assert_replays(result, text, schema, references=references)
 
 
@@ -592,7 +591,7 @@ def test_targeted_document_repair_cannot_move_to_another_retained_region():
     )
     assert result.candidates[0]["search_region"]["start"] == 0
     assert result.receipt.decisions[0].outcome == "needs_verification"
-    assert any(e.get("status") == "protocol_failure" for e in result.record["entries"])
+    assert any(e.get("status") == "protocol_failure" for e in result.record)
     assert_replays(result, text)
 
 
@@ -601,7 +600,7 @@ def test_repair_not_found_requires_the_boolean_true(not_found):
     first = candidate(evidence=[item("missing")])
     result = execute("Amount 5.", Client(envelope(first), {"not_found": not_found}))
     assert not result.complete
-    assert not any(e.get("status") == "repair_not_found" for e in result.record["entries"])
+    assert not any(e.get("status") == "repair_not_found" for e in result.record)
     assert_replays(result, "Amount 5.")
 
 
@@ -610,7 +609,7 @@ def test_replay_refuses_amplified_chunk_plan_before_prompt_allocation(monkeypatc
 
     result = execute("Amount 5.", Client(envelope(candidate())))
     record = copy.deepcopy(result.record)
-    record["header"]["settings"].update(chunk_chars=1, overlap_chars=0, max_calls=9007199254740991)
+    record[0]["settings"].update(chunk_chars=1, overlap_chars=0, max_calls=9007199254740991)
     planned_limits = []
     original = module._chunks
 
@@ -633,7 +632,7 @@ def test_replay_keeps_valid_interrupted_multichunk_initial_pass():
     client = Client(RuntimeError("transport stopped"))
     result = execute(text, client, run_policy=RunPolicy(chunk_chars=10, overlap_chars=0))
     assert len(client.prompts) == 1 and not result.complete
-    assert len(result.record["entries"][0]["chunks"]) == 3
+    assert len(result.record[1]["chunks"]) == 3
     assert_replays(result, text)
 
 
@@ -653,7 +652,7 @@ def test_targeted_title_beats_earlier_common_description_words():
             chunk_chars=50000, overlap_chars=0, search_context_chars=12, max_target_regions=1
         ),
     )
-    search = next(e for e in result.record["entries"] if e["kind"] == "search")
+    search = next(e for e in result.record if e["kind"] == "search")
     assert search["regions"][0]["text"].endswith("Revenue 5.")
     assert len(search["matches"]) == search["match_limit"] == 1024
     assert search["omitted_matches"] == 77
@@ -669,7 +668,7 @@ def test_repair_prompt_explains_unexpected_changed_value_terminal_path():
     assert "even unexpectedly" in client.prompts[1]
     assert "neither receives another repair" in client.prompts[1]
     assert len(client.prompts) == 2
-    assert any(e.get("status") == "changed_value" for e in result.record["entries"])
+    assert any(e.get("status") == "changed_value" for e in result.record)
 
 
 def test_replay_rejects_forged_dummy_plan_before_building_chunks(monkeypatch):
@@ -677,8 +676,8 @@ def test_replay_rejects_forged_dummy_plan_before_building_chunks(monkeypatch):
 
     result = execute("Amount 5.", Client(envelope(candidate())))
     record = copy.deepcopy(result.record)
-    record["header"]["settings"].update(chunk_chars=1, overlap_chars=0, max_calls=9007199254740991)
-    record["entries"][0]["chunks"] = [None] * 1000
+    record[0]["settings"].update(chunk_chars=1, overlap_chars=0, max_calls=9007199254740991)
+    record[1]["chunks"] = [None] * 1000
 
     def unexpected_chunks(*args, **kwargs):
         pytest.fail("dummy saved plan authorized chunk generation")
@@ -729,7 +728,7 @@ def test_aggregate_candidate_limit_never_partially_applies_reply():
         run_policy=RunPolicy(max_total_candidates=1),
     )
     assert not result.complete and not result.candidates
-    assert any(e.get("status") == "aggregate_candidate_limit" for e in result.record["entries"])
+    assert any(e.get("status") == "aggregate_candidate_limit" for e in result.record)
     assert_replays(result, "Amount 5.")
 
 
@@ -751,11 +750,8 @@ def test_admission_history_limit_retains_last_recorded_packet():
     baseline = execute(
         text, Client(envelope(candidate()), envelope(candidate("6"))), run_policy=settings
     )
-    pairs = [e for e in baseline.record["entries"] if e["kind"] == "admission"]
-    sizes = [
-        len(gg.jcs({"candidates": e["candidates"], "receipt": e["receipt"]}).encode())
-        for e in pairs
-    ]
+    pairs = [e for e in baseline.record if e["kind"] == "admission"]
+    sizes = [len(baseline.artifacts[e["admission_sha256"]].encode()) for e in pairs]
     budget = sizes[0] + sizes[1] // 2
     result = execute(
         text,
@@ -765,15 +761,9 @@ def test_admission_history_limit_retains_last_recorded_packet():
     assert not result.complete and len(result.candidates) == 1
     assert result.receipt.decisions[0].value == "5"
     assert result.receipt.decisions[0].outcome == "admitted"
-    assert any(e.get("status") == "admission_history_limit" for e in result.record["entries"])
-    stored = [e for e in result.record["entries"] if e["kind"] == "admission"]
-    assert (
-        sum(
-            len(gg.jcs({"candidates": e["candidates"], "receipt": e["receipt"]}).encode())
-            for e in stored
-        )
-        <= budget
-    )
+    assert any(e.get("status") == "admission_history_limit" for e in result.record)
+    stored = [e for e in result.record if e["kind"] == "admission"]
+    assert sum(len(result.artifacts[e["admission_sha256"]].encode()) for e in stored) <= budget
     assert_replays(result, text)
 
 
@@ -783,7 +773,7 @@ def test_candidate_payload_byte_limit_applies_before_admission():
         "Amount 5.", Client(envelope(first)), run_policy=RunPolicy(max_admission_bytes=4096)
     )
     assert not result.complete and not result.candidates
-    assert not any(e["kind"] == "admission" for e in result.record["entries"])
+    assert not any(e["kind"] == "admission" for e in result.record)
     assert_replays(result, "Amount 5.")
 
 
@@ -798,11 +788,8 @@ def test_admission_history_rollback_after_repair_keeps_packet_and_outcome(replac
     text = "Amount 5. Other 6."
     first = candidate(evidence=[item("missing")])
     baseline = execute(text, Client(envelope(first), replacement))
-    pairs = [e for e in baseline.record["entries"] if e["kind"] == "admission"]
-    sizes = [
-        len(gg.jcs({"candidates": e["candidates"], "receipt": e["receipt"]}).encode())
-        for e in pairs
-    ]
+    pairs = [e for e in baseline.record if e["kind"] == "admission"]
+    sizes = [len(baseline.artifacts[e["admission_sha256"]].encode()) for e in pairs]
     budget = sizes[0] + sizes[1] // 2
     result = execute(
         text, Client(envelope(first), replacement), run_policy=RunPolicy(max_admission_bytes=budget)
@@ -813,10 +800,10 @@ def test_admission_history_rollback_after_repair_keeps_packet_and_outcome(replac
     assert result.candidates[0]["evidence"] == [item("missing")]
     assert result.receipt.decisions[0].outcome == "rejected"
     assert result.receipt.decisions[0].codes == ("QUOTE_NOT_FOUND",)
-    states = result.record["final"]["fields"]["amount"]
+    states = result.record[-1]["fields"]["amount"]
     assert "admission_history_limit" in states
     assert "repair_limit" not in states
-    stop = next(e for e in result.record["entries"] if e.get("status") == "admission_history_limit")
+    stop = next(e for e in result.record if e.get("status") == "admission_history_limit")
     assert stop["retained_candidate_ids"] == [result.candidates[0]["id"]]
     assert_replays(result, text)
 
@@ -893,11 +880,8 @@ def test_rollback_names_dropped_ids_and_restores_accepted_raw(monkeypatch):
     first = candidate(evidence=[item("missing")])
     replacement = candidate()
     baseline = execute(text, Client(envelope(first), replacement))
-    pairs = [e for e in baseline.record["entries"] if e["kind"] == "admission"]
-    sizes = [
-        len(gg.jcs({"candidates": e["candidates"], "receipt": e["receipt"]}).encode())
-        for e in pairs
-    ]
+    pairs = [e for e in baseline.record if e["kind"] == "admission"]
+    sizes = [len(baseline.artifacts[e["admission_sha256"]].encode()) for e in pairs]
     original = module._Engine.finish
     checked = []
 
@@ -914,16 +898,14 @@ def test_rollback_names_dropped_ids_and_restores_accepted_raw(monkeypatch):
     )
     cid = result.candidates[0]["id"]
     assert checked == [{cid: first}]
-    stop = next(e for e in result.record["entries"] if e.get("status") == "admission_history_limit")
+    stop = next(e for e in result.record if e.get("status") == "admission_history_limit")
     assert stop["dropped_candidate_ids"] == []
     assert stop["reverted_candidate_ids"] == [cid]
     assert_replays(result, text)
 
     # An initial proposal that cannot be recorded has no retained candidate.
     initial = execute(text, Client(envelope(first)), run_policy=RunPolicy(max_admission_bytes=500))
-    stop = next(
-        e for e in initial.record["entries"] if e.get("status") == "admission_history_limit"
-    )
+    stop = next(e for e in initial.record if e.get("status") == "admission_history_limit")
     assert initial.candidates == [] and stop["retained_candidate_ids"] == []
     assert stop["dropped_candidate_ids"] == ["c1-1"]
     assert stop["reverted_candidate_ids"] == []
@@ -939,7 +921,7 @@ def test_oversize_reply_is_retained_for_replay_but_never_parsed(monkeypatch):
     monkeypatch.setattr(module, "_strict_json", unexpected_parse)
     raw = "x" * 4096
     result = execute("Amount 5.", lambda prompt: raw, run_policy=RunPolicy(max_reply_bytes=32))
-    call = next(e for e in result.record["entries"] if e["kind"] == "call")
+    call = next(e for e in result.record if e["kind"] == "call")
     assert call["status"] == "reply_limit" and call["reply_bytes"] == len(raw)
     assert result.artifacts[call["reply_sha256"]] == raw
     assert_replays(result, "Amount 5.")
@@ -952,11 +934,11 @@ def test_aborted_initial_pass_reports_no_valid_disposition_for_every_field(failu
     client = Client(failure)
     result = execute(text, client, schema, run_policy=RunPolicy(chunk_chars=10, overlap_chars=0))
     assert not result.complete and len(client.prompts) == 1
-    assert result.record["final"]["fields"] == {
+    assert result.record[-1]["fields"] == {
         "amount": ["incomplete_no_disposition"],
         "other": ["incomplete_no_disposition"],
     }
-    assert not any(e["kind"] == "not_found" for e in result.record["entries"])
+    assert not any(e["kind"] == "not_found" for e in result.record)
     assert_replays(result, text, schema)
 
 
@@ -990,7 +972,7 @@ def test_targeted_query_count_is_hard_capped_before_source_scans(monkeypatch):
         schema,
         run_policy=RunPolicy(max_prompt_chars=200000),
     )
-    search = next(e for e in result.record["entries"] if e["kind"] == "search")
+    search = next(e for e in result.record if e["kind"] == "search")
     assert scans == queries
     assert search["queries"] == queries and search["omitted_queries"] == omitted
     assert search["query_limit"] == 64 and search["status"] == "search_truncated"
@@ -1001,21 +983,21 @@ def test_repair_prompt_limit_differs_from_call_budget():
     text = "Amount 5."
     first = envelope(candidate(evidence=[item("missing" * 1000)]))
     baseline = execute(text, Client(first, candidate()))
-    first_call = next(e for e in baseline.record["entries"] if e["kind"] == "call")
+    first_call = next(e for e in baseline.record if e["kind"] == "call")
     initial = len(baseline.artifacts[first_call["prompt_sha256"]])
     # The complete repair prompt is larger than the initial prompt because it includes feedback.
     client = Client(first)
     result = execute(text, client, run_policy=RunPolicy(max_prompt_chars=initial))
-    stop = next(e for e in result.record["entries"] if e["kind"] == "limit")
+    stop = next(e for e in result.record if e["kind"] == "limit")
     assert stop["phase"] == "repair" and stop["status"] == "prompt_limit"
-    assert result.record["final"]["fields"]["amount"] == ["proposed", "prompt_limit"]
+    assert result.record[-1]["fields"]["amount"] == ["proposed", "prompt_limit"]
     assert len(client.prompts) == 1 and not result.complete
     assert_replays(result, text)
 
     budget = execute(text, Client(first), run_policy=RunPolicy(max_calls=1))
-    stop = next(e for e in budget.record["entries"] if e["kind"] == "limit")
+    stop = next(e for e in budget.record if e["kind"] == "limit")
     assert stop["status"] == "call_limit"
-    assert budget.record["final"]["fields"]["amount"] == ["proposed", "call_limit"]
+    assert budget.record[-1]["fields"]["amount"] == ["proposed", "call_limit"]
     assert_replays(budget, text)
 
 
@@ -1023,6 +1005,83 @@ def test_source_region_protocol_abort_reports_no_valid_disposition():
     references = [{"id": "r", "text": "Amount 5."}]
     result = execute("", Client(envelope(candidate())), references=references)
     assert not result.complete and result.candidates == []
-    assert result.record["final"]["fields"]["amount"] == ["incomplete_no_disposition"]
-    assert any(e.get("reason") == "source_region" for e in result.record["entries"])
+    assert result.record[-1]["fields"]["amount"] == ["incomplete_no_disposition"]
+    assert any(e.get("reason") == "source_region" for e in result.record)
     assert_replays(result, "", references=references)
+
+
+def test_record_is_a_hash_chained_log_and_inputs_are_objects():
+    refs = [{"id": "r1", "text": "Units are dollars."}]
+    result = execute("Amount 5.", Client(envelope(candidate())), references=refs)
+    lines = result.record
+    assert [lines[0]["kind"], lines[-1]["kind"]] == ["header", "final"]
+    assert [line["sequence"] for line in lines] == list(range(1, len(lines) + 1))
+    assert lines[0]["previous"] is None
+    assert all(b["previous"] == a["entry_sha256"] for a, b in itertools.pairwise(lines))
+    assert result.run_sha256 == lines[-1]["entry_sha256"]
+    # Keys use the stable runner prefix, not the core digest that names the spec version.
+    inputs = lines[0]["inputs"]
+    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/1:text\0Amount 5.").hexdigest()
+    assert inputs["document"] == {"kind": "text", "id": None, "source": None, "sha256": text_key}
+    assert result.artifacts[text_key] == "Amount 5."
+    assert result.receipt.document_sha256 != text_key
+    assert (
+        json.loads(result.artifacts[inputs["schema_sha256"]])
+        == gg.Schema.from_dict(SCHEMA).to_dict()
+    )
+    assert [json.loads(result.artifacts[h]) for h in inputs["reference_sha256"]] == refs
+    final = next(e for e in lines if e["kind"] == "final_admission")
+    packet = json.loads(result.artifacts[final["admission_sha256"]])
+    assert packet["candidates"] == result.candidates
+    assert packet["receipt"]["receipt_sha256"] == result.receipt.receipt_sha256
+
+
+def test_write_and_read_a_run_folder(tmp_path):
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    result.write(tmp_path / "run")
+    log = (tmp_path / "run" / "run.jsonl").read_text(encoding="utf-8")
+    assert log == "".join(gg.jcs(line) + "\n" for line in result.record)
+    names = {p.name for p in (tmp_path / "run" / "objects").iterdir()}
+    assert names == {k.removeprefix("sha256:") for k in result.artifacts}
+    again = RunResult.read(tmp_path / "run")
+    assert gg.jcs(again.record) == gg.jcs(result.record)
+    assert again.artifacts == result.artifacts and again.candidates == result.candidates
+    assert again.receipt == result.receipt and again.complete == result.complete
+    with pytest.raises(FileExistsError):
+        result.write(tmp_path / "run")
+
+
+def test_read_rejects_a_changed_object_or_line(tmp_path):
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    reply = next(e for e in result.record if e["kind"] == "call")["reply_sha256"]
+    result.write(tmp_path / "a")
+    (tmp_path / "a" / "objects" / reply.removeprefix("sha256:")).write_text("{}")
+    with pytest.raises(ValueError):
+        RunResult.read(tmp_path / "a")
+    result.write(tmp_path / "b")
+    log = tmp_path / "b" / "run.jsonl"
+    log.write_text(log.read_text().replace('"complete":true', '"complete":false'))
+    with pytest.raises(ValueError):
+        RunResult.read(tmp_path / "b")
+
+
+def test_old_record_shape_and_node_citation_are_refused():
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    assert not replay({"header": result.record[0]}, result.artifacts, "Amount 5.", SCHEMA).ok
+    # `node` is reserved for node citations (#285). Today it makes the reply invalid.
+    cited = candidate(evidence=[{**item("5"), "node": "n1"}])
+    refused = execute("Amount 5.", Client(envelope(cited)))
+    assert next(e for e in refused.record if e["kind"] == "call")["status"] == "invalid_reply"
+
+
+def test_runs_share_one_object_folder(tmp_path):
+    first = execute("Amount 5.", Client(envelope(candidate())))
+    second = execute("Amount 7.", Client(envelope(candidate("7"))))
+    first.write(tmp_path)
+    (tmp_path / "run.jsonl").rename(tmp_path / "first.jsonl")
+    second.write(tmp_path)
+    assert RunResult.read(tmp_path).run_sha256 == second.run_sha256
+    log = tmp_path / "run.jsonl"
+    log.write_text(log.read_text().replace(second.record[0]["inputs"]["schema_sha256"], "../x"))
+    with pytest.raises(ValueError, match="bad key"):
+        RunResult.read(tmp_path)
