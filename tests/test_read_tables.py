@@ -464,6 +464,28 @@ def test_competing_majority_grids_give_no_grid() -> None:
     assert _grid(rows) == [] == _grid(rows[::-1])
 
 
+def test_column_of_text_placeholders_keeps_its_column(tmp_path: Path) -> None:
+    path = tmp_path / "placeholders.pdf"
+    page = [
+        (300, 720, "Q1"),
+        (400, 720, "Q2"),
+        (72, 705, "Cash"),
+        (300, 705, "n/a"),
+        (400, 705, "10"),
+        (72, 690, "Debt"),
+        (300, 690, "n/a"),
+        (400, 690, "20"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    doc = read(path)
+    lines = doc.text.split("\n")
+    assert "Cash\tn/a\t10" in lines
+    assert "Debt\tn/a\t20" in lines
+    assert doc.layout is not None
+    raw = doc.text.encode()
+    assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
+
+
 def test_many_disagreeing_rows_give_no_grid_quickly() -> None:
     grids = [(200, 300), (250, 350)]
     rows = [[_line("1", a, a + 20), _line("2", b, b + 20)] for _ in range(500) for a, b in grids]
