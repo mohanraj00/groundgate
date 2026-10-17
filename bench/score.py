@@ -950,7 +950,46 @@ def main() -> None:
     ap.add_argument("--check", action="store_true", help="fail if outputs would change")
     ap.add_argument("--set", type=Path, default=HERE, help="benchmark set directory")
     ap.add_argument("--controls", action="store_true", help="set 2: list the control items")
+    ap.add_argument("--requested", action="store_true", help="score sealed requested-field labels")
+    ap.add_argument("--split", choices=("development", "heldout"), default="heldout")
+    ap.add_argument("--diagnostics", type=Path, help="explicit cached diagnostic export")
+    ap.add_argument("--diagnostics-sha256", help="exact diagnostic export digest")
     args = ap.parse_args()
+    if (args.diagnostics is not None or args.diagnostics_sha256 is not None) and not args.requested:
+        ap.error("diagnostics require requested-field mode")
+    if args.requested:
+        if args.drafts or args.controls:
+            ap.error("requested-field scoring refuses --drafts and --controls")
+        from report import render_requested
+        from requested.metrics import score_set
+
+        directory = args.set.resolve()
+        try:
+            results = score_set(
+                directory,
+                args.split,
+                diagnostics=args.diagnostics,
+                diagnostics_sha256=args.diagnostics_sha256,
+            )
+        except (OSError, ValueError, KeyError) as exc:
+            ap.error(f"requested-field scoring needs sealed labels and a valid set: {exc}")
+        outputs = {
+            "results.json": json.dumps(results, indent=1, sort_keys=True) + "\n",
+            "RESULTS.md": render_requested(results),
+        }
+        if args.check:
+            stale = [
+                name
+                for name, content in outputs.items()
+                if not (directory / name).exists()
+                or (directory / name).read_text(encoding="utf-8") != content
+            ]
+            if stale:
+                raise SystemExit("out of date: " + ", ".join(stale))
+        else:
+            for name, content in outputs.items():
+                (directory / name).write_text(content, encoding="utf-8")
+        return
     global SET, SET2, CONFIGS, GATES, KINDS, SPEC01
     SET = args.set.resolve()
     committed = SET / "results.json"
