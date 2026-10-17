@@ -1,0 +1,86 @@
+{
+ "name": "31-empty-tab-middle",
+ "description": "Spaces and carriage returns inside a tab slot do not fill it. A dash is a cell and an empty tab slot after it is another cell (spec 0.9, #278).",
+ "document": "2025\t2024\t2023\nCash\t-\t \r\t$100",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "m1",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 29,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "m2",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 29,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "text": "2023"
+    }
+   ],
+   "key": "2023"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

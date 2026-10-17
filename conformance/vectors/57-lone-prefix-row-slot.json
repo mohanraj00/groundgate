@@ -1,0 +1,98 @@
+{
+ "name": "57-lone-prefix-row-slot",
+ "description": "A tabbed row whose only data slot holds a lone unit prefix is not ambiguous. Its cells on separate lines keep the column rule, as with no tab (spec 0.9 review).",
+ "document": "2025\n2024\nCash\t$\n100\n200",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "w1",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 17,
+     "end": 20,
+     "text": "100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "text": "2025"
+    },
+    {
+     "role": "unit",
+     "start": 15,
+     "end": 16,
+     "text": "$"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "w2",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 17,
+     "end": 20,
+     "text": "100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    },
+    {
+     "role": "unit",
+     "start": 15,
+     "end": 16,
+     "text": "$"
+    }
+   ],
+   "key": "2024"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

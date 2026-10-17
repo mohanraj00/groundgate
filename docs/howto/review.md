@@ -140,8 +140,8 @@ print(stored["receipt_sha256"][:23])
 ```
 
 ```text
-0.8 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
-sha256:e59080456ccadde3
+0.9 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
+sha256:e4d9d427ec2e3330
 ```
 
 A receipt holds digests of its inputs, not the inputs. To verify it later, you need the same
@@ -181,13 +181,14 @@ The digests in the output are cut to 16 digits:
 False
 coverage differs from the re-derived receipt
 summary differs from the re-derived receipt
-decision for candidate sha256:9f9aab25771a65da... differs
+decision for candidate sha256:0162634ee62e8064... differs
+decision for candidate sha256:88219e468c18a5b1... differs
 ```
 
 The changed rent is not in the text, so it is rejected. The required field `monthly_rent` then
 has no fact, so the coverage and the summary differ too. Decisions are sorted by the digest of
 their candidate. A changed candidate gets a new digest and can move other decisions. Here it
-moves none, so one decision differs.
+moves another decision, so two decisions differ.
 
 `verify` does not say which input changed. It says which part of the receipt differs. To find
 the changed input, compare the digest of each stored input with the receipt. For a candidate,
@@ -196,7 +197,8 @@ the changed input, compare the digest of each stored input with the receipt. For
 ## 6. Pin the groundgate version
 
 A receipt names the spec version that decided it, in its `groundgate` member. `verify` accepts
-only the spec version that it implements. groundgate 0.8.0 implements spec 0.8, groundgate 0.7.0
+only the spec version that it implements. The current development tree implements draft spec
+0.9. The released groundgate 0.8.0 implements spec 0.8, groundgate 0.7.0
 implements spec 0.7, groundgate 0.6.0 and 0.6.1 implement spec 0.6, and groundgate 0.5.0, 0.5.1
 and 0.5.2 implement spec 0.5.
 This is a receipt from another spec version:
@@ -210,7 +212,7 @@ print(check.problems)
 
 ```text
 False
-('receipt was decided under spec 0.4; this groundgate implements 0.8',)
+('receipt was decided under spec 0.4; this groundgate implements 0.9',)
 ```
 
 `verify` checks nothing more. So pin the groundgate release that decided the receipts in the

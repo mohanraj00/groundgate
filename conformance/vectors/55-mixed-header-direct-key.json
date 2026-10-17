@@ -1,0 +1,76 @@
+{
+ "name": "55-mixed-header-direct-key",
+ "description": "A direct key on the value's own line still applies beneath an ambiguous mixed header. A single-key heading retains its existing scope (spec 0.9, #278 security review).",
+ "document": "Year\t2025\n\t2024\nCash for 2024\t$500\n\nYear\t2024\nCash $600",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "m5",
+   "field": "cash",
+   "value": "500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 30,
+     "end": 34,
+     "text": "$500"
+    },
+    {
+     "role": "field",
+     "text": "Cash for 2024"
+    },
+    {
+     "role": "key",
+     "start": 25,
+     "end": 29,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "m6",
+   "field": "cash",
+   "value": "600",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 51,
+     "end": 55,
+     "text": "$600"
+    }
+   ],
+   "key": "2024"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

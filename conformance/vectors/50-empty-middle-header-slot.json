@@ -1,0 +1,120 @@
+{
+ "name": "50-empty-middle-header-slot",
+ "description": "A blank slot between known header keys cannot be compressed out of their ordinals. The header stays unusable even when a data value is physically aligned to its later key (spec 0.9, #278 security review).",
+ "document": "2025\t\t2024\nCash\t\t$100\n\n2025\t\t2024\nCash\t\t\t$200\n\nYear\t2025\t \r\t2024\nCash\t\t$300",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "h1",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 17,
+     "end": 21,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 6,
+     "end": 10,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "h2",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 41,
+     "end": 45,
+     "text": "$200"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 29,
+     "end": 33,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "h3",
+   "field": "cash",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 71,
+     "end": 75,
+     "text": "$300"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 60,
+     "end": 64,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
