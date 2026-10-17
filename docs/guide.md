@@ -27,7 +27,7 @@ summary.
 
 The document is a Python `str` in Unicode NFC. Anything else is an invalid packet: `admit`
 raises `PacketError` and writes no receipt. If your text came from somewhere else, normalise it
-before you extract, so the extractor's offsets and groundgate's agree:
+before you run the extractor, so the extractor's offsets and groundgate's agree:
 
 ```python
 import unicodedata
@@ -41,8 +41,8 @@ plain text and returns an `Extracted` with `text` (NFC), `layout` (PDFs only) an
 drops text a reader can't see, and for PDFs records the page and box of every word so the report
 can show page numbers.
 
-`extract` writes a table one row on each line, with a tab between two cells. For HTML, the cells are
-the table's `td` and `th` elements. A PDF has no cells, so `extract` finds them: a row is the text
+`read` writes a table one row on each line, with a tab between two cells. For HTML, the cells are
+the table's `td` and `th` elements. A PDF has no cells, so `read` finds them: a row is the text
 at the same height, and it is a table row when it has two or more separate parts side by side, and
 one part holds only numbers, such as `$ 1,234` or `(56)`. A table has two or more table rows.
 Between them, short headings, numbers and headings in the label column join the table. Column

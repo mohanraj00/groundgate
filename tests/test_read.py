@@ -466,5 +466,6 @@ def test_cli_read_writes_the_text_and_extract_names_read(
     (tmp_path / "a.txt").write_text("line one\n", encoding="utf-8")
     assert main(["read", str(tmp_path / "a.txt")]) == 0
     assert capsys.readouterr().out == "line one\n"
-    assert main(["extract", str(tmp_path / "a.txt")]) == 2
-    assert "groundgate read FILE" in capsys.readouterr().err
+    for old in (["a.txt"], ["-o", "x", "a.txt"], ["--pages", "1-2", "a.pdf"], ["--layout", "l"]):
+        assert main(["extract", *old]) == 2
+        assert "groundgate read FILE" in capsys.readouterr().err

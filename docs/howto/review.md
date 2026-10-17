@@ -109,7 +109,7 @@ The page shows:
   underlined.
 
 A checkbox for each outcome hides or shows its cards. The page has no scripts and loads nothing.
-For a PDF, pass `layout=` from `extract`, and each card shows its page number.
+For a PDF, pass `layout=` from `read`, and each card shows its page number.
 
 ## 3. Use the command line
 

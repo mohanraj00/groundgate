@@ -296,7 +296,7 @@ groundgate schema  schema.json -o extractor.schema.json
 groundgate schema check schema.json
 ```
 
-`extract` turns a PDF, HTML, XML or text file into the NFC text everything else reads, and
+`read` turns a PDF, HTML, XML or text file into the NFC text everything else reads, and
 records the page and box of every word. Text a reader can't see (proof marks drawn off the page,
 hidden HTML) is dropped, and superscripts are marked so that 10⁹ reads `10^9`, never `109`.
 `admit`, `verify` and `report` read the document from a pipe when DOC is `-`, and also take

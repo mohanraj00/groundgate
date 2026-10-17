@@ -286,7 +286,7 @@ oi-2024  needs_verification  KEY_NOT_AT_VALUE VALUE_DERIVED
 oi-2025  needs_verification  KEY_NOT_AT_VALUE VALUE_DERIVED
 ```
 
-`extract` writes the superscript as `^1`. groundgate does not count cells across a number that
+`read` writes the superscript as `^1`. groundgate does not count cells across a number that
 stands between the row label and the first tab. The marker could be a cell, and then the count
 of columns is wrong. So the column rule stops for the whole row, and both values go to review. A
 person checks them.

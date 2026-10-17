@@ -100,9 +100,6 @@ def _parser() -> argparse.ArgumentParser:
     x.add_argument("-o", "--output", help="write the text here instead of stdout")
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
     x.add_argument("--pages", type=_pages, help="PDF pages to read, e.g. 1-12,15")
-    # 0.9 moved the reader to `read`; `extract` is the name of the step that gets field values
-    e = sub.add_parser("extract", help=argparse.SUPPRESS)
-    e.add_argument("rest", nargs=argparse.REMAINDER)
 
     s = sub.add_parser(
         "schema",
@@ -160,6 +157,13 @@ def _check_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else list(argv)
+    if argv[:1] == ["extract"]:  # 0.9 moved the reader to `read`, with any old options
+        print(
+            "groundgate: to turn a file into text, use `groundgate read FILE` "
+            "(`groundgate extract` was renamed to `groundgate read` in 0.9)",
+            file=sys.stderr,
+        )
+        return 2
     check = argv[:2] == ["schema", "check"]
     parser = _check_parser() if check else _parser()
     args = parser.parse_args(argv[2:] if check else argv)
@@ -170,13 +174,6 @@ def main(argv: list[str] | None = None) -> int:
             return _check(args)
         if args.command == "read":
             return _read(args)
-        if args.command == "extract":
-            print(
-                "groundgate: to turn a file into text, use `groundgate read FILE` "
-                "(`groundgate extract` was renamed to `groundgate read` in 0.9)",
-                file=sys.stderr,
-            )
-            return 2
         if args.command == "schema":
             return _schema(args)
         if args.command == "admit" and args.docs is not None:
