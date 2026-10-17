@@ -47,6 +47,7 @@ Key = tuple[int, int]  # a text line: its block and its line in the block
 
 CELL_GAP = 0.65  # a gap between two words this many times the word's height starts a new cell
 HEADING_WORDS = 4  # a row with no number joins a table when each of its parts is this short
+GRID_ROWS = 200  # more disagreeing rows than this give no grid, so the scan stays bounded
 COLUMN_HEADING_WORDS = 8  # a column heading above a table, such as a spanning heading
 HEADER_BAND = 36.0  # PDF points from the visible page top, independent of page size (#265)
 DASHES = frozenset("-\u2013\u2014\u2212")  # hyphen, en dash, em dash, minus
@@ -440,19 +441,18 @@ def _label_number(cells: Row, edge: float | None) -> bool:
 def _grid(rows: list[Row]) -> list[tuple[float, float]]:
     """The number columns of the labeled rows. If they disagree, the columns of a strict majority
     of rows whose cells each overlap the cells of one of them, so one row off the grid does not
-    remove the grid of the others. Two majorities with different columns give no grid."""
+    remove the grid of the others. Two majorities with different columns give no grid, and so do
+    more than GRID_ROWS rows, because each row is compared with each other row."""
     columns = _number_columns(rows)
-    if columns or len(rows) < 3:
+    if columns or not 3 <= len(rows) <= GRID_ROWS:
         return columns
+    spans = [[(box.x0, box.x1) for box in map(_span, row)] for row in rows]
     grids = set()
-    for row in rows:
+    for one in spans:
         same = [
-            other
-            for other in rows
-            if all(
-                _span(a).x0 < _span(b).x1 and _span(b).x0 < _span(a).x1
-                for a, b in zip(row, other, strict=True)
-            )
+            row
+            for row, other in zip(rows, spans, strict=True)
+            if all(a0 < b1 and b0 < a1 for (a0, a1), (b0, b1) in zip(one, other, strict=True))
         ]
         if 2 * len(same) > len(rows) and (columns := _number_columns(same)):
             grids.add(tuple(columns))
