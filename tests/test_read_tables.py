@@ -361,3 +361,60 @@ def test_numeric_row_label_is_not_a_number_column(tmp_path: Path) -> None:
     for row in ("Cash\t10\t20", "Debt\t50\t60", "2024\t30\t40", "2023\t\t70"):
         assert row in lines
     assert not any(line.startswith("\tCash") for line in lines)
+
+
+def test_labeled_rows_off_the_grid_lose_their_tabs(tmp_path: Path) -> None:
+    path = tmp_path / "labeled-offgrid.pdf"
+    page = [
+        (300, 720, "Q1"),
+        (400, 720, "Q2"),
+        (72, 705, "Cash"),
+        (300, 705, "10"),
+        (400, 705, "20"),
+        (72, 690, "Debt"),
+        (300, 690, "30"),
+        (400, 690, "40"),
+        (72, 675, "Total"),
+        (350, 675, "50"),
+        (450, 675, "60"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    text = read(path).text
+    lines = text.split("\n")
+    assert "Total 50 60" in lines
+    assert "Cash\t10\t20" in lines and "Debt\t30\t40" in lines  # the majority keeps its grid
+    schema = {"fields": {"total": {"aliases": ["Total"], "keys": ["Q1", "Q2"]}}}
+    candidate = {
+        "field": "total",
+        "value": "50",
+        "key": "Q1",
+        "evidence": [
+            {"text": "50"},
+            {"role": "field", "text": "Total"},
+            {"role": "key", "text": "Q1"},
+        ],
+    }
+    (decision,) = gg.admit(text, schema, [candidate]).decisions
+    assert decision.outcome == "needs_verification"
+
+
+def test_text_after_a_numeric_row_label_stays(tmp_path: Path) -> None:
+    path = tmp_path / "label-text.pdf"
+    page = [
+        (72, 705, "Cash"),
+        (300, 705, "10"),
+        (400, 705, "20"),
+        (72, 690, "Debt"),
+        (300, 690, "30"),
+        (400, 690, "40"),
+        (72, 675, "2024"),
+        (150, 675, "Current"),
+        (300, 675, "50"),
+        (400, 675, "60"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    doc = read(path)
+    assert "2024 Current\t50\t60" in doc.text.split("\n")
+    assert doc.layout is not None
+    raw = doc.text.encode()
+    assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
