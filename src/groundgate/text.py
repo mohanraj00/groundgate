@@ -1041,9 +1041,9 @@ def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
     """The table cells in text[start:end] (SPEC §4.5, the column rule), as (start, end): number
     tokens, lone dashes, and a unit prefix that stands alone with no number after it, also where
     two occurrences of a prefix overlap; blank tab slots count too. One position is one cell.
-    An empty unit cell ends where the
-    longest prefix that makes it ends, and a cell that is both a number token and an empty cell
-    ends at the later end of the two."""
+    A prefix that fills its tab slot before an empty slot or a lone dash is not a cell (SPEC
+    §4.5, rule 5). An empty unit cell ends where the longest prefix that makes it ends, and a
+    cell that is both a number token and an empty cell ends at the later end of the two."""
     toks = tokens(text, start, end)
     numbers = {t.start for t in toks}
     spans = {t.start: t.end for t in toks}
