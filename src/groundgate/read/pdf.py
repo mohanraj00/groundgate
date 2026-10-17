@@ -321,16 +321,19 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     majorities with different columns give none), and a full row of only number cells joins them
     only when it fits. A full row keeps its tabs only when its number cells fit the columns, and the
     text before its first number is one label. A number cell before the first number cell of every
-    labeled row, such as a year as a row label, is a label and no column. A short row uses these
-    columns: each number cell must overlap exactly one column, and each later text cell must be
-    inside exactly one column, in increasing order. Skipped columns get empty cells (#266). A row
-    with a label and only text cells after it, such as "n/a", is placed the same way. Above the
-    first table row, such a row is placed only when it fits, because it can be a column heading. A
-    full row of only number cells, such as a row of year headings, starts with an empty label slot,
-    so each cell keeps its column position, and it must fit the columns too. If the grid or a cell
-    is ambiguous, the row is written without tabs. An ambiguous numeric-only row also has two blank
-    lines on either side, a key-scope barrier in spec 0.9, so it cannot reuse a prior field label as
-    a column hint (#278).
+    labeled row, such as a year as a row label, is a label and no column. A text cell after the
+    label that overlaps a text cell of another labeled row, such as a column of "n/a", is a column
+    cell. A column heading row with more cells than the columns gives the columns when each column
+    is under one of its cells, because every row can leave a column blank; the heading then starts
+    with an empty label slot. A short row uses these columns: each number cell must overlap exactly
+    one column, and each later text cell must be inside exactly one column, in increasing order.
+    Skipped columns get empty cells (#266). A row with a label and only text cells after it, such as
+    "n/a", is placed the same way. Above the first table row, such a row is placed only when it
+    fits, because it can be a column heading. A full row of only number cells, such as a row of year
+    headings, starts with an empty label slot, so each cell keeps its column position, and it must
+    fit the columns too. If the grid or a cell is ambiguous, the row is written without tabs. An
+    ambiguous row of only number cells and currency signs also has two blank lines on either side, a
+    key-scope barrier in spec 0.9, so it cannot reuse a prior field label as a column hint (#278).
     """
     rows, span, plan = _plan(blocks)
 
@@ -372,6 +375,15 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
         if basis and columns:
             fits = [num for num, cells in full if len(_fill_empty_cells(num, columns)) > 1]
             columns = _number_columns(fits) or columns
+        # a column heading can show a column that every row leaves blank
+        right = max((_span(c[0]).x1 for c in grouped if c and not _number_cell(c[0])), default=0)
+        wide = _heading_columns(
+            [[c for ri in range(first, group[0]) for bi, li in rows[ri]
+              for c in _cells(blocks[bi][li]) if _span(c).x1 > right]],
+            columns,
+        )  # fmt: skip
+        extended, columns = wide != columns, wide
+        width = max(widest, len(columns))
         tables.append([])
         for ri in range(first, group[-1] + 1):
             row = rows[ri]
@@ -386,9 +398,11 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                     lines = (
                         [cells[0] + placed[0], *placed[1:]] if len(placed) > 1 else _plain(cells)
                     )
-                elif sum(map(_number_cell, cells)) < widest:
+                elif sum(map(_number_cell, cells)) < width:
                     lines = _fill_empty_cells(cells, columns)
-                    isolated = numeric_only and len(lines) == 1
+                    # a lone currency sign, such as "$", does not make the row a labeled row
+                    signs = all(set("".join(t for t, _ in cell)) <= NUMBER_CHARS for cell in cells)
+                    isolated = not labeled and signs and len(lines) == 1
                 elif numeric_only:
                     placed = _fill_empty_cells(cells, columns)
                     isolated = len(placed) == 1
@@ -403,7 +417,9 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                         lines = [[word for cell in cells[:at] for word in cell], *cells[at:]]
             elif columns and _side_by_side(row, span):
                 cells = [cell for line in lines for cell in _cells(line)]
-                if _span(cells[0]).x1 <= columns[0][0]:  # a label, then text cells in the columns
+                if extended and ri < group[0]:  # the heading that gave the columns
+                    lines = _fill_empty_cells(cells, columns)
+                elif _span(cells[0]).x1 <= columns[0][0]:  # a label, then text cells in the columns
                     placed = _fill_empty_cells(cells, columns)
                     if ri > group[0] or len(placed) > 1:  # a heading that does not fit stays
                         lines = placed
@@ -489,6 +505,27 @@ def _text_columns(rows: list[Row]) -> set[int]:
         if len({n for n, _ in group}) > 1:
             found.update(id(cell) for _, cell in group)
     return found
+
+
+def _heading_columns(
+    headings: list[Row], columns: list[tuple[float, float]]
+) -> list[tuple[float, float]]:
+    """The columns of a heading row with more cells than the columns, when each heading cell
+    holds at most one column and every column is under one heading cell. Otherwise the columns."""
+    for cells in headings:
+        if not columns or len(cells) <= len(columns):
+            continue
+        spans = [_span(cell) for cell in cells]
+        held = [[c for c in columns if c[0] < box.x1 and box.x0 < c[1]] for box in spans]
+        if any(len(h) > 1 for h in held) or sum(map(len, held)) != len(columns):
+            continue
+        wide = [
+            (min([box.x0, *(c[0] for c in h)]), max([box.x1, *(c[1] for c in h)]))
+            for box, h in zip(spans, held, strict=True)
+        ]
+        if all(a[1] <= b[0] for a, b in itertools.pairwise(wide)):
+            return wide
+    return columns
 
 
 def _plain(row: Row) -> Row:
