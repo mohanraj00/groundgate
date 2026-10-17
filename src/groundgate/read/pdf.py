@@ -351,8 +351,13 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
             default=None,
         )
 
+        texts = _text_columns(grouped)
         numbered = [
-            [cell for cell in cells[_label_number(cells, edge) :] if _number_cell(cell)]
+            [
+                cell
+                for cell in cells[_label_number(cells, edge) :]
+                if _number_cell(cell) or id(cell) in texts
+            ]
             for cells in grouped
         ]
         widest = max(map(len, numbered), default=0)
@@ -457,6 +462,33 @@ def _grid(rows: list[Row]) -> list[tuple[float, float]]:
         if 2 * len(same) > len(rows) and (columns := _number_columns(same)):
             grids.add(tuple(columns))
     return list(grids.pop()) if len(grids) == 1 else []  # competing majorities give no grid
+
+
+def _text_columns(rows: list[Row]) -> set[int]:
+    """The ids of the text cells, such as "n/a", that form a column of a labeled number row.
+
+    A text cell after the label is in a column when a chain of overlaps joins it to a text cell of
+    another such row. A text cell with no partner, such as "Restated", stays with the label.
+    """
+    cells = sorted(
+        ((_span(cell), n, cell) for n, row in enumerate(rows)
+         if row and not _number_cell(row[0]) and any(map(_number_cell, row))
+         for cell in row[1:] if not _number_cell(cell)),
+        key=lambda item: item[0].x0,
+    )  # fmt: skip
+    groups: list[list[tuple[int, Line]]] = []
+    right = 0.0
+    for box, n, cell in cells:
+        if not groups or box.x0 >= right:
+            groups.append([])
+            right = box.x1
+        groups[-1].append((n, cell))
+        right = max(right, box.x1)
+    found: set[int] = set()
+    for group in groups:
+        if len({n for n, _ in group}) > 1:
+            found.update(id(cell) for _, cell in group)
+    return found
 
 
 def _plain(row: Row) -> Row:
