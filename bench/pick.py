@@ -31,9 +31,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from fetch import HL7, download, spl_sections
-
-from groundgate.read import read
+from fetch import HL7, download, read, spl_sections
 
 HERE = Path(__file__).parent
 SET = HERE / "set2"
