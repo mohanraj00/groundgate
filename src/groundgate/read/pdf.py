@@ -318,15 +318,16 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     The number columns of a table come from its widest rows when their spans agree. Rows with a
     label set them when the table has any, or a strict majority of those rows that agree, and a full
     row of only number cells joins them only when it fits. A full row keeps its tabs only when its
-    number cells fit the columns. A number cell before the first number cell of every labeled row,
-    such as a year as a row label, is a label and no column. A short row uses these columns: each
-    number cell must overlap exactly one column, and each later text cell must be inside exactly one
-    column, in increasing order. Skipped columns get empty cells (#266). A row with a label and only
-    text cells after it, such as "n/a", is placed the same way. A full row of only number cells,
-    such as a row of year headings, starts with an empty label slot, so each cell keeps its column
-    position, and it must fit the columns too. If the grid or a cell is ambiguous, the row is
-    written without tabs. An ambiguous numeric-only row also has two blank lines on either side, a
-    key-scope barrier in spec 0.9, so it cannot reuse a prior field label as a column hint (#278).
+    number cells fit the columns, and the text before its first number is one label. A number cell
+    before the first number cell of every labeled row, such as a year as a row label, is a label and
+    no column. A short row uses these columns: each number cell must overlap exactly one column, and
+    each later text cell must be inside exactly one column, in increasing order. Skipped columns get
+    empty cells (#266). A row with a label and only text cells after it, such as "n/a", is placed
+    the same way. A full row of only number cells, such as a row of year headings, starts with an
+    empty label slot, so each cell keeps its column position, and it must fit the columns too. If
+    the grid or a cell is ambiguous, the row is written without tabs. An ambiguous numeric-only row
+    also has two blank lines on either side, a key-scope barrier in spec 0.9, so it cannot reuse a
+    prior field label as a column hint (#278).
     """
     rows, span, plan = _plan(blocks)
 
@@ -387,7 +388,11 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                 else:  # a full row with a label keeps its tabs when its numbers fit the columns
                     numbers = [cell for cell in cells if _number_cell(cell)]
                     aligned = len(_fill_empty_cells(numbers, columns)) > 1
-                    lines = cells if aligned else _plain(cells)
+                    at = next(i for i, cell in enumerate(cells) if _number_cell(cell))
+                    if not aligned or not all(map(_number_cell, cells[at:])):
+                        lines = _plain(cells)
+                    else:  # the text before the first number is one label
+                        lines = [[word for cell in cells[:at] for word in cell], *cells[at:]]
             elif columns and ri > group[0] and _side_by_side(row, span):
                 cells = [cell for line in lines for cell in _cells(line)]
                 if _span(cells[0]).x1 <= columns[0][0]:  # a label, then text cells in the columns
@@ -444,8 +449,8 @@ def _grid(rows: list[Row]) -> list[tuple[float, float]]:
                 for a, b in zip(row, other, strict=True)
             )
         ]
-        if 2 * len(same) > len(rows):
-            return _number_columns(same)
+        if 2 * len(same) > len(rows) and (columns := _number_columns(same)):
+            return columns
     return []
 
 
