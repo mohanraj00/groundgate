@@ -1104,6 +1104,11 @@ def test_read_names_a_missing_object_and_write_repairs_a_bad_one(tmp_path):
     result.write(tmp_path / "a")
     assert RunResult.read(tmp_path / "a").run_sha256 == result.run_sha256
     assert not [p for p in (tmp_path / "a" / "objects").iterdir() if p.name.startswith(".tmp-")]
+    blocked = tmp_path / "b" / "objects" / reply.removeprefix("sha256:")
+    blocked.mkdir(parents=True)  # a directory where an object goes
+    with pytest.raises(OSError):
+        result.write(tmp_path / "b")
+    assert not [p for p in blocked.parent.iterdir() if p.name.startswith(".tmp-")]
 
 
 def test_read_refuses_symlinks_special_files_and_oversized_runs(tmp_path):

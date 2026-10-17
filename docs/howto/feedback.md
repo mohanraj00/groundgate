@@ -157,7 +157,8 @@ The setting is a parsing limit, not a transport or artifact-size limit. The clie
 transport cap before it returns.
 
 `result.write(folder)` writes each object to `folder/objects/` first and the log to
-`folder/run.jsonl` last, one line of canonical JSON for each entry. `RunResult.read(folder)`
+`folder/run.jsonl` last, one line of canonical JSON for each entry. The log goes in place with
+a hard link, so the folder must be on a file system with hard links. `RunResult.read(folder)`
 reads only the objects that the log names, gets the inputs from them and replays the run. A
 changed line, or a changed, missing or oversized object, raises `ValueError`. It reads at most
 `max_bytes` (1 GiB by default) and refuses a symlink or a special file in the folder.

@@ -102,8 +102,10 @@ class RunResult:
         """Write ``folder/objects/<hex>`` for each object, then the log ``folder/run.jsonl``, one
         line of canonical JSON for each entry. Each file is written to a temporary name and moved
         into place, and an object with other bytes is written again. After a crash, ``read``
-        refuses the run and ``write`` can run again. An existing log is never replaced. Runs that
-        share a folder trust each other's writes."""
+        refuses the run and ``write`` can run again. An existing log is never replaced, because
+        the log is put in place with a hard link: the folder must be on a file system with hard
+        links, or ``write`` raises ``OSError``. Runs that share a folder trust each other's
+        writes."""
         folder = Path(folder)
         if not all(isinstance(k, str) and _KEY.fullmatch(k) for k in self.artifacts):
             raise ValueError("an artifact key is not a sha256 digest")
@@ -120,7 +122,12 @@ class RunResult:
                     continue
             except (OSError, ValueError):
                 pass
-            os.replace(_temporary(objects, data), path)
+            temporary = _temporary(objects, data)
+            try:
+                os.replace(temporary, path)
+            except BaseException:
+                os.unlink(temporary)
+                raise
         lines = "".join(jcs(line) + "\n" for line in self.record).encode("utf-8")
         temporary = _temporary(folder, lines)
         try:
@@ -135,7 +142,8 @@ class RunResult:
         run is replayed with the recorded replies. The log and the objects must be regular files,
         not symlinks, and together at most ``max_bytes``. A changed line, a changed, missing or
         oversized object, or a bad object key raises ``ValueError``. A missing log raises
-        ``OSError``."""
+        ``OSError``. The objects are held in memory, so a full budget uses about twice
+        ``max_bytes``."""
         folder = Path(folder)
         room = [max_bytes]
         try:
