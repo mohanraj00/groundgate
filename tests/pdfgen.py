@@ -10,7 +10,23 @@ def _string(text: str) -> bytes:
     return b"(" + raw.replace(b"\\", b"\\\\").replace(b"(", b"\\(").replace(b")", b"\\)") + b")"
 
 
-def make_pdf(pages: list[list[Line]], size: float = 12) -> bytes:
+def make_pdf(
+    pages: list[list[Line]],
+    size: float = 12,
+    *,
+    page_size: tuple[float, float] = (612, 792),
+    crop_box: tuple[float, float, float, float] | None = None,
+    rotation: int = 0,
+) -> bytes:
+    """Draw in displayed page coordinates, including when the page has a rotation."""
+    width, height = page_size
+    media = (height, width) if rotation in (90, 270) else (width, height)
+    transforms = {
+        0: b"",
+        90: b"0 1 -1 0 %g 0 cm\n" % height,
+        180: b"-1 0 0 -1 %g %g cm\n" % (width, height),
+        270: b"0 -1 1 0 0 %g cm\n" % width,
+    }
     objects: list[bytes] = [
         b"<< /Type /Catalog /Pages 2 0 R >>",
         b"",  # pages, filled in below
@@ -24,11 +40,14 @@ def make_pdf(pages: list[list[Line]], size: float = 12) -> bytes:
             + b" Tj ET\n"
             for line in lines
         )
+        stream = transforms[rotation] + stream
         objects.append(b"<< /Length %d >>\nstream\n" % len(stream) + stream + b"endstream")
         content = len(objects)
         objects.append(
-            b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] "
-            b"/Resources << /Font << /F1 3 0 R >> >> /Contents %d 0 R >>" % content
+            b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 %g %g] " % media
+            + (b"/CropBox [%g %g %g %g] " % crop_box if crop_box else b"")
+            + (b"/Rotate %d " % rotation if rotation else b"")
+            + b"/Resources << /Font << /F1 3 0 R >> >> /Contents %d 0 R >>" % content
         )
         kids.append(len(objects))
     objects[1] = b"<< /Type /Pages /Kids [%s] /Count %d >>" % (

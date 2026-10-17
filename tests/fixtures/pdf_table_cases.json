@@ -1,0 +1,186 @@
+{
+  "status": "Hand-written cases approved before rule code. Consuming tests check these inputs. The unseen-document measure is still required before merge.",
+  "geometry": "Each page line is [x, y, text] in PDF points on a 612 by 792 page, as tests/pdfgen.py reads it.",
+  "expectations": "The expected text and safety requirements are written by hand. They were not produced by running groundgate.",
+  "geometry_assertions": "The page lines define PDF inputs. Consuming tests check UTF-8 byte offsets, preserved source words, visible boxes, rotation and CropBox coordinates.",
+  "outcome_scope": "required_outcomes states the safety floor: a wrong key never admits. The spec conformance vectors define the exact outcome and reason codes. The supported second-column candidate must admit only when all evidence checks pass.",
+  "cases": [
+    {
+      "id": "running-head-above-table",
+      "issue": 265,
+      "approval": "The maintainer approved the 36-point top-edge policy, subject to an unseen-document measure.",
+      "page": [
+        [72, 766, "Report"],
+        [500, 766, "Page 1"],
+        [72, 516, "Cash"],
+        [300, 516, "1"],
+        [72, 501, "Land"],
+        [300, 501, "2"]
+      ],
+      "expected_table_rows": [["Cash", "1"], ["Land", "2"]],
+      "expected_prose_words": ["Report", "Page", "1"],
+      "absent_text": ["Report\tPage 1"],
+      "reason": "The page header stays in the extracted text but does not become a column heading."
+    },
+    {
+      "id": "distant-caption-outside-header-band",
+      "issue": 265,
+      "approval": "The maintainer approved the 36-point top-edge policy, subject to an unseen-document measure.",
+      "page": [
+        [72, 705, "As of year end"],
+        [400, 705, "In thousands"],
+        [72, 516, "Cash"],
+        [300, 516, "1"],
+        [72, 501, "Land"],
+        [300, 501, "2"]
+      ],
+      "expected_table_rows": [
+        ["As of year end", "In thousands"], ["Cash", "1"], ["Land", "2"]
+      ],
+      "reason": "A large vertical gap alone does not discard a caption."
+    },
+    {
+      "id": "blank-before-first-number",
+      "issue": 266,
+      "approval": "The maintainer approved explicit empty-cell semantics as a Spec prerequisite to this output.",
+      "page": [
+        [300, 720, "2025"], [400, 720, "2024"],
+        [72, 700, "Cash"], [400, 700, "100"],
+        [72, 685, "Land"], [300, 685, "20"], [400, 685, "30"],
+        [72, 670, "Debt"], [300, 670, "40"], [400, 670, "50"]
+      ],
+      "expected_table_rows": [
+        ["", "2025", "2024"], ["Cash", "", "100"],
+        ["Land", "20", "30"], ["Debt", "40", "50"]
+      ],
+      "decision_requirement": "For value 100 and alias Cash, evidence for key 2025 must not admit. Evidence for key 2024 can admit only after all other checks pass.",
+      "reason": "A blank numeric column is a real position, not an absent value to slide past. A row of only numbers starts with an empty label slot, so each heading stays above its column."
+    },
+    {
+      "id": "running-head-with-number-above-table",
+      "issue": 265,
+      "approval": "The maintainer approved the 36-point top-edge policy, subject to an unseen-document measure.",
+      "page": [
+        [72, 766, "Annual Report 2024"],
+        [540, 766, "17"],
+        [72, 516, "Cash"],
+        [300, 516, "1"],
+        [72, 501, "Land"],
+        [300, 501, "2"]
+      ],
+      "expected_table_rows": [["Cash", "1"], ["Land", "2"]],
+      "expected_prose_words": ["Annual", "Report", "2024", "17"],
+      "absent_text": ["\t17", "2024 17"],
+      "reason": "A page number beside a running head is no table row. The header band applies to every row, not only to the walk above a table."
+    },
+    {
+      "id": "two-tables-keep-their-own-columns",
+      "issue": 266,
+      "approval": "The maintainer approved explicit empty-cell semantics as a Spec prerequisite to this output.",
+      "page": [
+        [72, 700, "Cash"], [350, 700, "1"], [450, 700, "2"],
+        [72, 685, "Land"], [350, 685, "3"], [450, 685, "4"],
+        [72, 670, "Debt"], [450, 670, "5"],
+        [72, 640, "The second table gives each part of the debt by year."],
+        [72, 610, "Bank"], [200, 610, "1"], [280, 610, "2"], [360, 610, "3"], [440, 610, "4"],
+        [72, 595, "Bond"], [200, 595, "5"], [280, 595, "6"], [360, 595, "7"], [440, 595, "8"]
+      ],
+      "expected_table_rows": [
+        ["Cash", "1", "2"], ["Land", "3", "4"], ["Debt", "", "5"]
+      ],
+      "expected_second_table_rows": [
+        ["Bank", "1", "2", "3", "4"], ["Bond", "5", "6", "7", "8"]
+      ],
+      "reason": "A short row takes the columns of its own table. A wider table on the same page has a different grid."
+    },
+    {
+      "id": "text-cell-in-number-column",
+      "issue": 266,
+      "approval": "The maintainer approved explicit empty-cell semantics as a Spec prerequisite to this output.",
+      "page": [
+        [300, 720, "2025"], [400, 720, "2024"],
+        [72, 700, "Cash"], [300, 700, "n/a"], [400, 700, "100"],
+        [72, 685, "Land"], [300, 685, "20"], [400, 685, "30"],
+        [72, 670, "Debt"], [300, 670, "40"], [400, 670, "50"]
+      ],
+      "expected_table_rows": [
+        ["", "2025", "2024"], ["Cash", "n/a", "100"],
+        ["Land", "20", "30"], ["Debt", "40", "50"]
+      ],
+      "decision_requirement": "For value 100 and alias Cash, evidence for key 2025 must not admit.",
+      "reason": "A text cell inside one number column keeps that column, so the number after it keeps its own column."
+    },
+    {
+      "id": "blank-middle-column",
+      "issue": 266,
+      "approval": "The maintainer approved explicit empty-cell semantics as a Spec prerequisite to this output.",
+      "page": [
+        [260, 720, "2025"], [360, 720, "2024"], [460, 720, "2023"],
+        [72, 700, "Cash"], [260, 700, "10"], [460, 700, "30"],
+        [72, 685, "Land"], [260, 685, "11"], [360, 685, "21"], [460, 685, "31"],
+        [72, 670, "Debt"], [260, 670, "12"], [360, 670, "22"], [460, 670, "32"]
+      ],
+      "expected_table_rows": [
+        ["", "2025", "2024", "2023"], ["Cash", "10", "", "30"],
+        ["Land", "11", "21", "31"], ["Debt", "12", "22", "32"]
+      ],
+      "decision_requirement": "For value 30 and alias Cash, evidence for key 2024 must not admit. Evidence for key 2023 can admit only after all other checks pass.",
+      "reason": "Each number keeps the position of the geometric column that contains it."
+    },
+    {
+      "id": "empty-tab-slot-still-admits-first-key",
+      "issue": 266,
+      "approval": "The maintainer approved the diagnosis and Spec prerequisite. Hand-written conformance vectors precede the core rule.",
+      "text": "2025\t2024\nCash\t\t$100\nOther\t$20\t$30\nLast\t$40\t$50",
+      "schema": {
+        "fields": {
+          "cash": {
+            "type": "number", "unit": "USD", "aliases": ["Cash"],
+            "keys": ["2025", "2024"]
+          }
+        }
+      },
+      "candidate": {
+        "field": "cash", "value": "100", "unit": "USD", "key": "2025",
+        "evidence": [
+          {"text": "$100"}, {"role": "field", "text": "Cash"},
+          {"role": "key", "text": "2025"}
+        ]
+      },
+      "required_outcomes": ["needs_verification", "rejected"],
+      "supported_candidate": {
+        "field": "cash", "value": "100", "unit": "USD", "key": "2024",
+        "evidence": [
+          {"text": "$100"}, {"role": "field", "text": "Cash"},
+          {"role": "key", "text": "2024"}
+        ]
+      },
+      "desired_supported_outcome": "admitted",
+      "supported_outcome_requirement": "The approved explicit empty-cell semantics must preserve the supported second column. All other evidence checks must also pass.",
+      "reason": "The empty tab slot must preserve the first numeric column. Value 100 belongs to 2024, so citing 2025 must not admit it. The current core does not count the empty slot."
+    },
+    {
+      "id": "no-tabs-fallback-still-admits-first-key",
+      "issue": 266,
+      "approval": "The maintainer approved the no-tab diagnosis and conservative Spec prerequisite for ambiguous rows.",
+      "text": "2025\t2024\nCash $100\nOther\t$20\t$30\nLast\t$40\t$50",
+      "schema": {
+        "fields": {
+          "cash": {
+            "type": "number", "unit": "USD", "aliases": ["Cash"],
+            "keys": ["2025", "2024"]
+          }
+        }
+      },
+      "candidate": {
+        "field": "cash", "value": "100", "unit": "USD", "key": "2025",
+        "evidence": [
+          {"text": "$100"}, {"role": "field", "text": "Cash"},
+          {"role": "key", "text": "2025"}
+        ]
+      },
+      "required_outcomes": ["needs_verification", "rejected"],
+      "reason": "Removing tabs alone does not prove that a number belongs to the first header. The present column rule can still match its first cell."
+    }
+  ]
+}

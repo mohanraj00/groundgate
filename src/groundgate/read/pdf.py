@@ -47,7 +47,9 @@ Key = tuple[int, int]  # a text line: its block and its line in the block
 
 CELL_GAP = 0.65  # a gap between two words this many times the word's height starts a new cell
 HEADING_WORDS = 4  # a row with no number joins a table when each of its parts is this short
+GRID_ROWS = 200  # more disagreeing rows than this give no grid, so the scan stays bounded
 COLUMN_HEADING_WORDS = 8  # a column heading above a table, such as a spanning heading
+HEADER_BAND = 36.0  # PDF points from the visible page top, independent of page size (#265)
 DASHES = frozenset("-\u2013\u2014\u2212")  # hyphen, en dash, em dash, minus
 NUMBER_CHARS = frozenset("0123456789,.$€£¥₹%()") | DASHES  # with the signs of the built-in units
 
@@ -308,12 +310,31 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     first has COLUMN_HEADING_WORDS words or fewer. No row below a table joins it, so a table never
     takes the rows of the next. Above it, the walk goes past lines in the label column, and stops at
     a line across the edge of its first number cell or at a row of lines side by side that is no
-    column heading, such as two columns of prose. It does not look at the space between rows, so a
-    short running head far above a table, with only lines in the label column between, joins the
-    table as a column heading (#246). A heading in the label column above the first table row joins
-    only when a column heading is above it. The table is written where pdfminer gives the first of
-    its lines, one row on each line. A row has only the cells that hold text: a blank cell gets no
-    empty cell, so the cells after it move one column left (#247).
+    column heading, such as two columns of prose. A row whose top is less than HEADER_BAND points
+    from the visible page top is never a table row, and the walk stops at it (#265). The row stays
+    in ordinary text, also when it holds a page number or a year. A heading
+    in the label column above the first table row joins only when a column heading is above it.
+    The table is written where pdfminer gives the first of its lines, one row on each line.
+
+    The number columns of a table come from its widest rows when their spans agree. The widest rows
+    with a label set them when the table has any, or a strict majority of those rows that agree (two
+    majorities with different columns give none), and a full row of only number cells joins them
+    only when it fits. A full row keeps its tabs only when its number cells fit the columns, and the
+    text before its first number is one label. A number cell before the first number cell of every
+    labeled row, such as a year as a row label, is a label and no column. A text cell after the
+    label that overlaps a text cell of another labeled row, such as a column of "n/a", is a column
+    cell. The nearest column heading row with more cells than the columns gives the columns when
+    each column is under one of its cells, because every row can leave a column blank; the heading
+    then starts with an empty label slot. A short row uses these columns: each number cell must
+    overlap exactly one column, and each later text cell must be inside exactly one column, in
+    increasing order. Skipped columns get empty cells (#266). A row with a label and only text cells
+    after it, such as "n/a", is placed the same way. Above the first table row, such a row is placed
+    only when it fits, because it can be a column heading. A full row of only number cells, such as
+    a row of year headings, starts with an empty label slot, so each cell keeps its column position,
+    and it must fit the columns too. A table with no label column gets no label slot in any row. If
+    the grid or a cell is ambiguous, the row is written without tabs. An ambiguous row of only
+    number cells and currency signs also has two blank lines on either side, a key-scope barrier in
+    spec 0.9, so it cannot reuse a prior field label as a column hint (#278).
     """
     rows, span, plan = _plan(blocks)
 
@@ -323,12 +344,102 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     region: dict[Key, int] = {}
     tables: list[list[Row]] = []
     for n, (first, group) in enumerate(plan):
+        grouped = [[cell for bi, li in rows[ri] for cell in _cells(blocks[bi][li])] for ri in group]
+        # a number left of the first number cell of every labeled row is a row label, such as a year
+        edge = min(
+            (
+                _span(next(c for c in cells if _number_cell(c))).x0
+                for cells in grouped
+                if cells and not _number_cell(cells[0]) and any(map(_number_cell, cells))
+            ),
+            default=None,
+        )
+
+        texts = _text_columns(grouped)
+        numbered = [
+            [
+                cell
+                for cell in cells[_label_number(cells, edge) :]
+                if _number_cell(cell) or id(cell) in texts
+            ]
+            for cells in grouped
+        ]
+        widest = max(map(len, numbered), default=0)
+        full = [
+            (num, cells) for num, cells in zip(numbered, grouped, strict=True) if len(num) == widest
+        ]
+        # labeled rows set the grid when there are any; a row of only numbers joins it if it fits
+        with_label = [
+            num
+            for num, cells in zip(numbered, grouped, strict=True)
+            if num and (not _number_cell(cells[0]) or _label_number(cells, edge))
+        ]
+        most = max(map(len, with_label), default=0)
+        basis = [num for num in with_label if len(num) == most]
+        columns = _grid(basis) if basis else _number_columns([num for num, _ in full])
+        if basis and columns:
+            fits = [
+                num
+                for num in numbered
+                if len(num) == most and len(_fill_empty_cells(num, columns)) > 1
+            ]
+            columns = _number_columns(fits) or columns
+        # a column heading can show a column that every row leaves blank
+        right = max((_span(c[0]).x1 for c in grouped if c and not _number_cell(c[0])), default=0)
+        heading = -1  # the row of the heading that gives the columns
+        for ri in reversed(range(first, group[0])):  # the nearest heading first
+            cells = [
+                c for bi, li in rows[ri] for c in _cells(blocks[bi][li]) if _span(c).x1 > right
+            ]
+            if (wide := _heading_columns(cells, columns)) != columns:
+                heading, columns = ri, wide
+                break
+        width = max(widest, len(columns))
         tables.append([])
-        for row in rows[first : group[-1] + 1]:
+        for ri in range(first, group[-1] + 1):
+            row = rows[ri]
             lines = [blocks[bi][li] for bi, li in row]
+            isolated = False
             if (_side_by_side(row, span) and any(map(number, row))) or all(map(number, row)):
-                lines = [cell for line in lines for cell in _cells(line)]
-            tables[n].append(lines)
+                cells = [cell for line in lines for cell in _cells(line)]
+                labeled = _label_number(cells, edge)
+                numeric_only = not labeled and all(map(_number_cell, cells))
+                if labeled:
+                    placed = _fill_empty_cells(cells[1:], columns)
+                    lines = (
+                        [cells[0] + placed[0], *placed[1:]] if len(placed) > 1 else _plain(cells)
+                    )
+                elif sum(map(_number_cell, cells)) < width:
+                    lines = _fill_empty_cells(cells, columns)
+                elif numeric_only:
+                    placed = _fill_empty_cells(cells, columns)
+                    isolated = len(placed) == 1
+                    lines = placed if isolated else [[], *cells]
+                else:  # a full row with a label keeps its tabs when its numbers fit the columns
+                    numbers = [cell for cell in cells if _number_cell(cell)]
+                    aligned = len(_fill_empty_cells(numbers, columns)) > 1
+                    at = next(i for i, cell in enumerate(cells) if _number_cell(cell))
+                    if not aligned or not all(map(_number_cell, cells[at:])):
+                        lines = _plain(cells)
+                    else:  # the text before the first number is one label
+                        lines = [[word for cell in cells[:at] for word in cell], *cells[at:]]
+                # a lone currency sign, such as "$", does not make the row a labeled row
+                signs = all(set("".join(t for t, _ in cell)) <= NUMBER_CHARS for cell in cells)
+                isolated = isolated or (not labeled and signs and len(lines) == 1)
+            elif columns and _side_by_side(row, span):
+                cells = [cell for line in lines for cell in _cells(line)]
+                if ri == heading:  # the heading that gave the columns
+                    lines = _fill_empty_cells(cells, columns)
+                elif _span(cells[0]).x1 <= columns[0][0]:  # a label, then text cells in the columns
+                    placed = _fill_empty_cells(cells, columns)
+                    if ri > group[0] or len(placed) > 1:  # a heading that does not fit stays
+                        lines = placed
+            if not with_label and len(lines) > 1 and not lines[0]:
+                lines = lines[1:]  # a table with no label column gets no label slot
+            if isolated:
+                tables[n].extend([[], [], lines, [], []])
+            else:
+                tables[n].append(lines)
             region.update((key, n) for key in row)
     out: list[list[Row]] = []
     done: set[int] = set()
@@ -348,6 +459,135 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
         if prose:
             out.append(prose)
     return out
+
+
+def _label_number(cells: Row, edge: float | None) -> bool:
+    """Whether the row starts with a number cell that ends before ``edge``, the first number cell
+    of the labeled rows, such as a year as a row label."""
+    return (
+        edge is not None
+        and len(cells) > 1
+        and _number_cell(cells[0])
+        and _span(cells[0]).x1 <= edge
+    )
+
+
+def _grid(rows: list[Row]) -> list[tuple[float, float]]:
+    """The number columns of the labeled rows. If they disagree, the columns of a strict majority
+    of rows whose cells each overlap the cells of one of them, so one row off the grid does not
+    remove the grid of the others. Two majorities with different columns give no grid, and so do
+    more than GRID_ROWS rows, because each row is compared with each other row."""
+    columns = _number_columns(rows)
+    if columns or not 3 <= len(rows) <= GRID_ROWS:
+        return columns
+    spans = [[(box.x0, box.x1) for box in map(_span, row)] for row in rows]
+    grids = set()
+    for one in spans:
+        same = [
+            row
+            for row, other in zip(rows, spans, strict=True)
+            if all(a0 < b1 and b0 < a1 for (a0, a1), (b0, b1) in zip(one, other, strict=True))
+        ]
+        if 2 * len(same) > len(rows) and (columns := _number_columns(same)):
+            grids.add(tuple(columns))
+    return list(grids.pop()) if len(grids) == 1 else []  # competing majorities give no grid
+
+
+def _text_columns(rows: list[Row]) -> set[int]:
+    """The ids of the text cells, such as "n/a", that form a column of a labeled number row.
+
+    A text cell after the label is in a column when a chain of overlaps joins it to a text cell of
+    another such row. A text cell with no partner, such as "Restated", stays with the label.
+    """
+    cells = sorted(
+        ((_span(cell), n, cell) for n, row in enumerate(rows)
+         if row and not _number_cell(row[0]) and any(map(_number_cell, row))
+         for cell in row[1:] if not _number_cell(cell)),
+        key=lambda item: item[0].x0,
+    )  # fmt: skip
+    groups: list[list[tuple[int, Line]]] = []
+    right = 0.0
+    for box, n, cell in cells:
+        if not groups or box.x0 >= right:
+            groups.append([])
+            right = box.x1
+        groups[-1].append((n, cell))
+        right = max(right, box.x1)
+    found: set[int] = set()
+    for group in groups:
+        if len({n for n, _ in group}) > 1:
+            found.update(id(cell) for _, cell in group)
+    return found
+
+
+def _heading_columns(cells: Row, columns: list[tuple[float, float]]) -> list[tuple[float, float]]:
+    """The columns of a heading row with more cells than the columns, when each heading cell
+    holds at most one column and every column is under one heading cell. Otherwise the columns."""
+    if not columns or len(cells) <= len(columns):
+        return columns
+    spans = [_span(cell) for cell in cells]
+    held = [[c for c in columns if c[0] < box.x1 and box.x0 < c[1]] for box in spans]
+    if any(len(h) > 1 for h in held) or sum(map(len, held)) != len(columns):
+        return columns
+    wide = [
+        (min([box.x0, *(c[0] for c in h)]), max([box.x1, *(c[1] for c in h)]))
+        for box, h in zip(spans, held, strict=True)
+    ]
+    return wide if all(a[1] <= b[0] for a, b in itertools.pairwise(wide)) else columns
+
+
+def _plain(row: Row) -> Row:
+    """All the words of a row on one line, with no tabs."""
+    return [[word for cell in row for word in cell]]
+
+
+def _number_columns(rows: list[Row]) -> list[tuple[float, float]]:
+    """The union of each widest-row column, only when those rows share a compatible grid.
+
+    Each column must have a common horizontal overlap across its rows, and the resulting
+    column bands must not overlap. A page with unrelated grids cannot supply a safe position.
+    """
+    if not rows:
+        return []
+    columns = []
+    for cells in zip(*rows, strict=True):
+        spans = [_span(cell) for cell in cells]
+        if max(b.x0 for b in spans) >= min(b.x1 for b in spans):
+            return []
+        columns.append((min(b.x0 for b in spans), max(b.x1 for b in spans)))
+    if any(a[1] > b[0] for a, b in itertools.pairwise(columns)):
+        return []
+    return columns
+
+
+def _fill_empty_cells(row: Row, columns: list[tuple[float, float]]) -> Row:
+    """Place a short row in an agreed grid, or retain all its words on one line without tabs.
+
+    A text cell before the first column is the label. A later text cell, such as "n/a", takes a
+    column only when it is fully inside that column, so a long label that crosses into the number
+    columns is ambiguous.
+    """
+    fallback = _plain(row)
+    if not columns:
+        return fallback
+    labels: Line = []
+    placed: dict[int, Line] = {}
+    previous = -1
+    for cell in row:
+        box = _span(cell)
+        if not _number_cell(cell):
+            if not placed and box.x1 <= columns[0][0]:
+                labels.extend(cell)
+                continue
+            hits = [n for n, (x0, x1) in enumerate(columns) if x0 <= box.x0 and box.x1 <= x1]
+        else:
+            hits = [n for n, (x0, x1) in enumerate(columns) if box.x0 < x1 and box.x1 > x0]
+        if len(hits) != 1 or hits[0] <= previous:
+            return fallback
+        previous = hits[0]
+        placed[previous] = cell
+    cells = [placed.get(n, []) for n in range(len(columns))]
+    return [labels, *cells]
 
 
 def _side_by_side(row: list[Key], span: dict[Key, Box]) -> bool:
@@ -378,8 +618,11 @@ def _plan(
     def side_by_side(row: list[Key]) -> bool:
         return _side_by_side(row, span)
 
+    def in_band(row: list[Key]) -> bool:
+        return min(span[k].top for k in row) < HEADER_BAND
+
     def table_row(row: list[Key]) -> bool:
-        return side_by_side(row) and any(map(number, row))
+        return not in_band(row) and side_by_side(row) and any(map(number, row))
 
     def heading(row: list[Key]) -> bool:
         return side_by_side(row) and all(len(blocks[bi][li]) <= HEADING_WORDS for bi, li in row)
@@ -417,6 +660,8 @@ def _plan(
         edge = first_number(rows[first]) + 0.5
         above = first - 1
         while above >= 0 and above not in taken:
+            if in_band(rows[above]):
+                break
             if column_heading(rows[above]):
                 first = above
             elif (
