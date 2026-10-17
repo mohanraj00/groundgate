@@ -504,6 +504,26 @@ def test_heading_gives_the_column_that_every_row_leaves_blank(tmp_path: Path) ->
     assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
 
 
+def test_second_heading_row_gives_the_blank_column(tmp_path: Path) -> None:
+    path = tmp_path / "twoheadings.pdf"
+    page = [
+        (72, 735, "Item"),
+        (300, 735, "Year ended"),
+        (300, 720, "Q1"),
+        (400, 720, "Q2"),
+        (72, 705, "Cash"),
+        (400, 705, "10"),
+        (72, 690, "Debt"),
+        (400, 690, "20"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    doc = read(path)
+    assert "\tQ1\tQ2\nCash\t\t10\nDebt\t\t20" in doc.text
+    assert doc.layout is not None
+    raw = doc.text.encode()
+    assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
+
+
 def test_row_with_a_lone_currency_sign_off_the_grid_is_isolated(tmp_path: Path) -> None:
     path = tmp_path / "sign.pdf"
     page = [
