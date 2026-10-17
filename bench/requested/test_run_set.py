@@ -362,7 +362,7 @@ def test_missing_runner_module_refuses_before_transport(tmp_path, monkeypatch):
     original = builtins.__import__
 
     def missing(name, *args, **kwargs):
-        if name == "groundgate.run":
+        if name == "groundgate.extract":
             raise ImportError("synthetic missing integration")
         return original(name, *args, **kwargs)
 
@@ -374,7 +374,7 @@ def test_missing_runner_module_refuses_before_transport(tmp_path, monkeypatch):
 
 
 requires_runner = pytest.mark.skipif(
-    importlib.util.find_spec("groundgate.run") is None, reason="runner integration pending"
+    importlib.util.find_spec("groundgate.extract") is None, reason="runner integration pending"
 )
 
 
@@ -663,7 +663,7 @@ def test_final_artifact_tampering_cannot_replace_replayed_projection(tmp_path, a
 def test_request_context_reaches_effective_schema_prompts_receipts_and_replay(
     tmp_path, arm, context
 ):
-    if arm == "runner" and importlib.util.find_spec("groundgate.run") is None:
+    if arm == "runner" and importlib.util.find_spec("groundgate.extract") is None:
         pytest.skip("runner integration pending")
     fields = {
         "amount": {
@@ -811,7 +811,7 @@ def test_frozen_request_context_mutation_refuses_before_reservation(tmp_path, ta
 
 @pytest.mark.parametrize("arm", ["baseline", "runner"])
 def test_legacy_documents_do_not_read_label_notes_or_named_source_as_context(tmp_path, arm):
-    if arm == "runner" and importlib.util.find_spec("groundgate.run") is None:
+    if arm == "runner" and importlib.util.find_spec("groundgate.extract") is None:
         pytest.skip("runner integration pending")
 
     def change(manifest, labels, config):

@@ -863,10 +863,10 @@ class FrozenSet:
         runner_api = None
         if arm == "runner":
             try:
-                from groundgate.run import RunPolicy, replay, run
+                from groundgate.extract import RunPolicy, extract, replay
             except ImportError as exc:
                 raise CacheError("runner execution requires the integrated runner API") from exc
-            runner_api = (RunPolicy, replay, run)
+            runner_api = (RunPolicy, replay, extract)
         self.check_inputs()
         folder = self.cache / self.binding.removeprefix("sha256:") / arm / split
         _unlinked(folder)

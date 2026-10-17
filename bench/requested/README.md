@@ -194,7 +194,7 @@ and a chunk-bounded `search_region`. It permits one batched feedback retry for e
 It does not infer an explicit absence from an omitted candidate. This is an adapted baseline,
 not a replay of the entire released reader and decision pipeline.
 
-`session.run("runner", client, split="heldout")` needs the integrated `groundgate.run` API.
+`session.run("runner", client, split="heldout")` needs the integrated `groundgate.extract` API.
 Without that API it stops before any call. Explicit runner absence needs a complete, untruncated
 search with no active candidate. A field-level absence never creates a key-level absence.
 `session.run(arm, split="heldout")` replays the immutable call cache without a client.
