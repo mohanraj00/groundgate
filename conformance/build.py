@@ -2186,7 +2186,8 @@ vector(
     "scale item needs 'in' before its scale word, a unit item needs a passing field item, brackets "
     "alone make no sign on a field without a unit, a negated or distant loss word makes no sign, "
     "and a scale item with offsets and no text reads its span. A quote is trimmed. Brackets take "
-    "the longest unit prefix first (spec 0.5).",
+    "the longest unit prefix first (spec 0.5). Spec 0.9 keeps m4 and m10 at review because the "
+    "two blank lines between their unit cells break the column key (#278).",
     "Amounts (in thousands)\n\nYear\n\n2025\n\n2024\n\n"
     "Units sold\n\n\u2013434,433\n\n46,016\n\n"
     "Sales (1)\n\n$\n\n7,100\n\n$\n\n6,900\n\n"
@@ -2219,7 +2220,7 @@ vector(
         c("m3", "costs", "5500", "USD", [q("5,500"), row("Costs"), year("2025")],
           (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
         c("m4", "costs", "5500", "USD", [q("5,500"), row("Costs"), year("2024")],
-          ("admitted", ["KEY_CITED"]), key="2024"),
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
         c("m5", "fee", "40000", "USD", [q("$40"), {"role": "scale", "text": "thousand"}],
           (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
         c("m6", "payroll", "120", "USD", [q("120"), DOLLAR], (REVIEW, ["UNIT_CITATION_INVALID"])),
@@ -2230,7 +2231,7 @@ vector(
           (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
         c("m10", "costs", "5500000", "USD",
           [q("5,500"), q("in thousands", text=NO_TEXT, role="scale"), row("Costs"), year("2024")],
-          ("admitted", ["VALUE_DERIVED", "KEY_CITED"]), key="2024"),
+          (REVIEW, ["KEY_NOT_AT_VALUE", "VALUE_DERIVED"]), key="2024"),
         c("m11", "costs", "5500000", "USD",
           [q("5,500"), {"role": "scale", "text": "(in"}, row("Costs"), year("2024")],
           ("rejected", ["VALUE_NOT_IN_EVIDENCE"]), key="2024"),
@@ -2827,7 +2828,9 @@ vector(
     "When a number token and an empty cell start at the same place, the cell ends at the later "
     "end of the two. Empty cells that overlap count each, as `a a` twice in `a a a`. An empty "
     "cell at the end of a line counts when the next character after the line end and the "
-    "whitespace is not the start of a number token or `(`.",
+    "whitespace is not the start of a number token or `(`. Spec 0.9 refuses the column unit "
+    "on an ambiguous tab row: q1 has an unrecognized slot, q9 has overlapping cells in one slot, "
+    "and q10 has several unit-prefix cells in one source slot (#278).",
     "Head\t1\t$\t4\nAmount\t2\t?\t3\n\nTop\t$ 5\n\u00a0\nLow\t6\n\nNeg V \n(12)\n\n"
     "Rows\tP Q\tZ\nItems\t7\n\nBox\t$$$8\nCrate\t9\n\nTag\tP Q%\tZ\nThing\t11\n\nMark\t2% R\nCount\t13\n\n"
     "Hdr\t1\t2\t$\t16\nSum\ta a a \t?\t17\n\nCap\t1\t$ U\nTotal\t2\t9\t19\n",
@@ -2855,7 +2858,8 @@ vector(
         },
     },
     [
-        c("q1", "amount", "3", "U", [q("3"), DOLLAR, row("Amount")]),
+        c("q1", "amount", "3", "U", [q("3"), DOLLAR, row("Amount")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
         c("q2", "low", "6", "USD", [q("6"), DOLLAR, row("Low")]),
         c("q3", "neg", "-12", "V", [q("12"), q("V ", role="unit"), row("Neg")],
           ("admitted", ["VALUE_DERIVED"])),
@@ -2867,8 +2871,10 @@ vector(
           (REVIEW, ["UNIT_CITATION_INVALID"])),
         c("q8", "count", "13", "Y", [q("13"), q("%", 2, role="unit"), row("Count")],
           (REVIEW, ["UNIT_CITATION_INVALID"])),
-        c("q9", "sum", "17", "Z", [q("17"), {"role": "unit", "text": "$"}, row("Sum")]),
-        c("q10", "total", "19", "T", [q("19"), {"role": "unit", "text": "$"}, row("Total")]),
+        c("q9", "sum", "17", "Z", [q("17"), {"role": "unit", "text": "$"}, row("Sum")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+        c("q10", "total", "19", "T", [q("19"), {"role": "unit", "text": "$"}, row("Total")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
     ],
 )  # fmt: skip
 
@@ -3048,6 +3054,515 @@ vector(
           key="hypertension"),
         c("p10", "instruction", "take with food", None, [ext(TWO)],
           (REVIEW, ["KEY_NOT_AT_VALUE", "EVIDENCE_QUOTED"], ["key"]), key="heart failure"),
+    ],
+)  # fmt: skip
+
+
+# ---------------------------------------------------------------- explicit tab slots (spec 0.9, #278)
+TAB_CASH = {
+    "type": "number",
+    "unit": "USD",
+    "aliases": ["Cash"],
+    "multiple": True,
+    "keys": ["2025", "2024", "2023"],
+}
+
+vector(
+    "30-empty-tab-leading",
+    "An explicit empty tab slot counts before a number. A short table uses its own row keys, "
+    "not both keys of a separate header line (spec 0.9, #278).",
+    "2025\t2024\nCash\t\t$100",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("e1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("e2", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024")],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "31-empty-tab-middle",
+    "Spaces and carriage returns inside a tab slot do not fill it. A dash is a cell and an "
+    "empty tab slot after it is another cell (spec 0.9, #278).",
+    "2025\t2024\t2023\nCash\t-\t \r\t$100",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("m1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("m2", "cash", "100", "USD", [q("$100"), row("Cash"), year("2023")],
+          ("admitted", ["KEY_CITED"]), key="2023"),
+    ],
+)  # fmt: skip
+
+vector(
+    "32-no-tab-row",
+    "A field and value on the same line need a tab between them for the column rule. A short "
+    "header made only of keys and whitespace does not supply both keys to the next line. "
+    "Long tables have the same protection (spec 0.9, #278).",
+    "2025\t2024\nCash $100\n\n2025 2024\nCash $200\n\n"
+    "2025\t2024\nCash $300\nOther\t$20\t$30\nLast\t$40\t$50",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("n1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("n2", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("n3", "cash", "200", "USD", [q("$200"), row("Cash"), year("2025", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("n4", "cash", "300", "USD", [q("$300"), row("Cash"), year("2025", 3)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+    ],
+)  # fmt: skip
+
+vector(
+    "33-ambiguous-tab-row",
+    "A tab row with several number cells inside one slot, or a nonempty slot with no cell, "
+    "cannot supply a column key, including at the first number (spec 0.9, #278).",
+    "2025\t2024\nCash\t$100 $200\t$300\n\n2025\t2024\nCash\t$400\tunknown",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("a1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("a2", "cash", "200", "USD", [q("$200"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("a3", "cash", "400", "USD", [q("$400"), row("Cash"), year("2025", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+    ],
+)  # fmt: skip
+
+vector(
+    "34-separate-line-cells",
+    "The column rule still supports one cell on each line. A key on the value's own line "
+    "still applies, including beside an ambiguous tab slot (spec 0.9, #278).",
+    "2025\n2024\nCash\n$100\n$200\n\n2025\t2024\nCash for 2024\t$300 $400",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("s1", "cash", "200", "USD", [q("$200"), row("Cash"), year("2025", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("s2", "cash", "200", "USD", [q("$200"), row("Cash"), year("2024", 1)],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+        c("s3", "cash", "300", "USD", [q("$300")], key="2024"),
+    ],
+)  # fmt: skip
+
+UNIT_CASH = {"type": "number", "unit": "USD", "aliases": ["Cash"], "multiple": True}
+vector(
+    "35-empty-tab-unit-wrong-column",
+    "An empty tab slot keeps a value out of the preceding unit column. An implicit unit stays "
+    "missing, and an explicit item from that other column fails (spec 0.9, #278).",
+    "Top\t$10\t20\nCash\t\t100\nOther\t30\t40",
+    {"fields": {"cash": UNIT_CASH}},
+    [
+        c("u1", "cash", "100", "USD", [q("100"), row("Cash")],
+          (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("u2", "cash", "100", "USD", [q("100"), row("Cash"), q("$", role="unit")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "36-empty-tab-unit-aligned",
+    "A unit in the same numeric column still reaches a value after an explicit empty slot "
+    "(spec 0.9, #278).",
+    "Top\t10\t$20\nCash\t\t100\nOther\t30\t40",
+    {"fields": {"cash": UNIT_CASH}},
+    [
+        c("u3", "cash", "100", "USD", [q("100"), row("Cash")]),
+        c("u4", "cash", "100", "USD", [q("100"), row("Cash"), q("$", role="unit")]),
+    ],
+)  # fmt: skip
+
+vector(
+    "37-empty-tab-unit-source",
+    "Empty slots in the unit's row count too. A lone currency prefix is a cell. A final blank "
+    "slot is distinct from a lone prefix. A prefix alone does not end before its own cell's "
+    "start, so it cannot itself supply a column unit. A blank slot cannot borrow the prior unit "
+    "(spec 0.9, #278).",
+    "Top\t\t$20\nCash\t10\t100\n\nTop\t10\t$\nCash\t\t200\n\n"
+    "Top\t$30\t\nCash\t\t300",
+    {"fields": {"cash": UNIT_CASH}},
+    [
+        c("u5", "cash", "100", "USD", [q("100"), row("Cash")]),
+        c("u6", "cash", "200", "USD", [q("200"), row("Cash")],
+          (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("u7", "cash", "300", "USD", [q("300"), row("Cash")],
+          (REVIEW, ["PART_MISSING"], ["unit"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "38-ambiguous-tab-unit-source",
+    "A unit row with multiple cells in a tab slot cannot supply a unit by column, nor can a "
+    "target row with multiple cells in one slot (spec 0.9, #278).",
+    "Top\t$10 20\t30\nCash\t100\t200\n\nTop\t$40\t50\nCash\t300 400\t500",
+    {"fields": {"cash": UNIT_CASH}},
+    [
+        c("u8", "cash", "100", "USD", [q("100"), row("Cash")],
+          (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("u9", "cash", "300", "USD", [q("300"), row("Cash")],
+          (REVIEW, ["PART_MISSING"], ["unit"])),
+    ],
+)  # fmt: skip
+
+
+# A reader isolates an unaligned numeric-only row with two blank lines on both sides.
+vector(
+    "39-isolated-numeric-row",
+    "Two adjacent blank lines break key inheritance and the column rule. An isolated numeric "
+    "row cannot take any header key through the nearest-key or cited-column path "
+    "(spec 0.9, #278).",
+    "2025\t2024\t2023\nCash\n\n\n$100\n\n\nOther\t$20\t$30\t$40",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("b1", "cash", "100", "USD", [q("$100")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2025"),
+        c("b2", "cash", "100", "USD", [q("$100")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2024"),
+        c("b3", "cash", "100", "USD", [q("$100")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2023"),
+        c("b4", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("b5", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("b6", "cash", "100", "USD", [q("$100"), row("Cash"), year("2023")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2023"),
+    ],
+)  # fmt: skip
+
+vector(
+    "40-isolated-field-block",
+    "The break also stops an earlier header before a new field block. One blank line between "
+    "separate cells retains the existing column rule (spec 0.9, #278).",
+    "2025\t2024\n\n\nCash\t$100\t$200\n\n"
+    "2025\n\n2024\n\nCash\n\n$300\n\n$400",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("b7", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("b8", "cash", "200", "USD", [q("$200"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("b9", "cash", "300", "USD", [q("$300"), row("Cash"), year("2025", 2)],
+          ("admitted", ["KEY_CITED"]), key="2025"),
+        c("b10", "cash", "400", "USD", [q("$400"), row("Cash"), year("2024", 2)],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "41-header-nearest-key",
+    "After a paragraph end, the last key of a header is not a nearest prose key. A no-tab "
+    "row cannot inherit that last header key, while a cited aligned tab row still uses columns "
+    "(spec 0.9, #278).",
+    "2025\t2024\n\nCash $100\n\n2025\t2024\n\nCash\t$200\t$300",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("h1", "cash", "100", "USD", [q("$100")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2025"),
+        c("h2", "cash", "100", "USD", [q("$100")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2024"),
+        c("h3", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h4", "cash", "300", "USD", [q("$300"), row("Cash"), year("2024", 2)],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "42-empty-unit-source-slot",
+    "A unit form cannot anchor to an empty tab slot in its own row. A bare currency prefix "
+    "in an earlier slot must not supply a later blank column (spec 0.9, #278).",
+    "Top\t$\t \r\nCash\t\t100",
+    {"fields": {"cash": UNIT_CASH}},
+    [
+        c("z1", "cash", "100", "USD", [q("100"), row("Cash")],
+          (REVIEW, ["PART_MISSING"], ["unit"])),
+        c("z2", "cash", "100", "USD", [q("100"), row("Cash"), q("$", role="unit")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "43-break-inside-header",
+    "A key break also splits a run of header keys. An earlier key cannot regain scope through "
+    "a later key after the break (spec 0.9, #278).",
+    "2025\n\n\n2024\n\nCash\t$100",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("r1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("r2", "cash", "100", "USD", [q("$100")], key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "44-labeled-short-header",
+    "A separate tabbed line with several keys is a table header even when it has a label. "
+    "Neither header key applies directly to the next no-tab row (spec 0.9, #278).",
+    "Year\t2025\t2024\nCash $100",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("l1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("l2", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "45-labeled-header-key-scope",
+    "A labeled tab header does not supply a nearest prose key after a paragraph end. A tabbed "
+    "data row can use the header, also with a non-key column after the known keys "
+    "(spec 0.9, #278).",
+    "Year\t2025\t2024\n\nCash $100\n\nYear\t2025\t2024\tChange\nCash\t\t$200\t$10",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("l3", "cash", "100", "USD", [q("$100")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="2024"),
+        c("l4", "cash", "200", "USD", [q("$200"), row("Cash"), year("2024", 2)],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "46-unknown-header-slot",
+    "A key run that starts after an unknown header slot cannot treat its first key as the first "
+    "data column. A non-key slot between keys also stops the later run (spec 0.9, #278).",
+    "Year\tChange\t2025\t2024\nCash\t$100\t$200\t$300\n\n"
+    "Year\t2025\tChange\t2024\nCash\t$400\t$500\t$600",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("l5", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("l6", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("l7", "cash", "400", "USD", [q("$400"), row("Cash"), year("2024", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "47-empty-leading-header-slot",
+    "A leading empty data slot in a header does not shift the first known key to column one. "
+    "The column rule refuses that header instead (spec 0.9, #278).",
+    "Year\t\t2025\t2024\nCash\t$100\t$200\t$300",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("l8", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("l9", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "48-ambiguous-header-prefix",
+    "A header's first slot that contains a key plus other text, or several keys, cannot be "
+    "discarded as a row label and shift the next key to the first numeric column "
+    "(spec 0.9, #278).",
+    "2025 (restated)\t2024\nCash\t$100\t$200\n\n"
+    "2025 2024\t2023\nCash\t$300\t$400\t$500",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("p1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("p2", "cash", "300", "USD", [q("$300"), row("Cash"), year("2023")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2023"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "49-prose-key-break",
+    "Two adjacent blank lines stop a prose heading from reaching its value. One blank line "
+    "retains the heading, and a key in the value's own sentence still applies after a break "
+    "(spec 0.9, #278).",
+    "Hypertension\n\n\nThe dose is 5 mg.\n\n"
+    "Angina\n\nThe dose is 7 mg.\n\n"
+    "Hypertension\n\n\nFor Hypertension the dose is 9 mg.",
+    {"fields": {"dose": {"type": "integer", "unit": "mg", "multiple": True,
+                         "keys": ["Hypertension", "Angina"]}}},
+    [
+        c("p1", "dose", "5", "mg", [q("5 mg")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]), key="Hypertension"),
+        c("p2", "dose", "7", "mg", [q("7 mg")], key="Angina"),
+        c("p3", "dose", "9", "mg", [q("9 mg")], key="Hypertension"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "50-empty-middle-header-slot",
+    "A blank slot between known header keys cannot be compressed out of their ordinals. "
+    "The header stays unusable even when a data value is physically aligned to its later key "
+    "(spec 0.9, #278 security review).",
+    "2025\t\t2024\nCash\t\t$100\n\n"
+    "2025\t\t2024\nCash\t\t\t$200\n\n"
+    "Year\t2025\t \r\t2024\nCash\t\t$300",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("h1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h2", "cash", "200", "USD", [q("$200"), row("Cash"), year("2024", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h3", "cash", "300", "USD", [q("$300"), row("Cash"), year("2024", 3)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "51-header-tab-boundaries",
+    "Adjacent keys in a tabbed header need exactly one tab between them. Keys merged into "
+    "one data slot cannot supply two column ordinals. A trailing non-key column remains "
+    "supported after the known keys (spec 0.9, #278 security review).",
+    "Year\t2025 2024\nCash\t$400\t$500\n\n"
+    "Year\t2025\t2024\tChange\nCash\t\t$900\t$5",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("h4", "cash", "500", "USD", [q("$500"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h5", "cash", "900", "USD", [q("$900"), row("Cash"), year("2024", 2)],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "52-cross-line-tab-header",
+    "A header run mixing tabs and line breaks has ambiguous ordinals and cannot supply a "
+    "column key. It cannot bypass the column check through short-sentence keys. The existing "
+    "separate-line header and cell stream with no tabs remains supported "
+    "(spec 0.9, #278 security review).",
+    "2025\n\t\t2024\nCash\t\t$600\n\n"
+    "2025\t\n2024\nCash\t\t$700\n\n"
+    "2025\t2024\n2023\nCash\t\t$800\n\n"
+    "2025\n2024\nCash\n$1,000\n$1,100",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("h6", "cash", "600", "USD", [q("$600"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h7", "cash", "700", "USD", [q("$700"), row("Cash"), year("2024", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h8", "cash", "800", "USD", [q("$800"), row("Cash"), year("2024", 3)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("h9", "cash", "1100", "USD", [q("$1,100"), row("Cash"), year("2024", 4)],
+          ("admitted", ["KEY_CITED"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "53-short-separate-key-header",
+    "A short header on separate key-only lines does not supply both keys to a no-tab row "
+    "(spec 0.9, #278 security review).",
+    "2025\n2024\nCash $100",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("h10", "cash", "100", "USD", [q("$100"), row("Cash"), year("2025")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2025"),
+        c("h11", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "54-labeled-mixed-header",
+    "Optional labels and trailing non-key slots do not turn a mixed tab/separate-line key "
+    "header into prose. Such a header must reach the conservative column refusal "
+    "(spec 0.9, #278 security review).",
+    "Year\t2025\n2024\nCash\t\t$100\n\n"
+    "Year\t2025\n\t2024\nCash\t\t$200\n\n"
+    "Year\t2025\n2024\tChange\nCash\t\t$300\n\n"
+    "Year\t2025\n\t2024\tChange\nCash\t\t$400",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("m1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("m2", "cash", "200", "USD", [q("$200"), row("Cash"), year("2024", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("m3", "cash", "300", "USD", [q("$300"), row("Cash"), year("2024", 3)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("m4", "cash", "400", "USD", [q("$400"), row("Cash"), year("2024", 4)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+vector(
+    "55-mixed-header-direct-key",
+    "A direct key on the value's own line still applies beneath an ambiguous mixed header. "
+    "A single-key heading retains its existing scope (spec 0.9, #278 security review).",
+    "Year\t2025\n\t2024\nCash for 2024\t$500\n\n"
+    "Year\t2024\nCash $600",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("m5", "cash", "500", "USD", [q("$500"), row("Cash for 2024"), year("2024", 2)],
+          ("admitted", []), key="2024"),
+        c("m6", "cash", "600", "USD", [q("$600")], key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "56-interrupted-mixed-header",
+    "A trailing non-key slot on an earlier key line cannot hide a mixed tabbed header. One "
+    "blank line between its key lines does not restore a prose heading or a compressed "
+    "column ordinal (spec 0.9, #278 security review).",
+    "Year\t2025\tChange\n2024\nCash\t\t$100\n\n"
+    "Year\t2025\tChange\n2024\nCash\t$200\n\n"
+    "Year\t2025\tChange\n\n2024\tChange\nCash\t\t$300\n\n"
+    "Data for 2025.\n\nFor 2024\nCash $400",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("i1", "cash", "100", "USD", [q("$100"), row("Cash"), year("2024", 1)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("i2", "cash", "200", "USD", [q("$200"), row("Cash"), year("2024", 2)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("i3", "cash", "300", "USD", [q("$300"), row("Cash"), year("2024", 3)],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+        c("i4", "cash", "400", "USD", [q("$400")], key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "57-lone-prefix-row-slot",
+    "A tabbed row whose only data slot holds a lone unit prefix is not ambiguous. Its cells on "
+    "separate lines keep the column rule, as with no tab (spec 0.9 review).",
+    "2025\n2024\nCash\t$\n100\n200",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("w1", "cash", "100", "USD", [q("100"), row("Cash"), year("2025"), q("$", role="unit")],
+          ("admitted", ["KEY_CITED"]), key="2025"),
+        c("w2", "cash", "100", "USD", [q("100"), row("Cash"), year("2024"), q("$", role="unit")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"]), key="2024"),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "58-split-currency-slots",
+    "A lone unit prefix in its own slot before an empty slot or a lone dash belongs to that "
+    "column. It is not a second cell, so the next value keeps its own key (spec 0.9 review).",
+    "\t2025\t2024\t2023\nCash\t$\t\t$\t200\t$\t300\n\n"
+    "\t2025\t2024\t2023\nCash\t$\t-\t$\t400\t$\t500",
+    {"fields": {"cash": TAB_CASH}},
+    [
+        c("w3", "cash", "200", "USD", [q("200"), q("$", 2, role="unit"), row("Cash"),
+                                       year("2024", 1)], ("admitted", ["KEY_CITED"]), key="2024"),
+        c("w4", "cash", "200", "USD", [q("200"), q("$", 2, role="unit"), row("Cash"),
+                                       year("2023", 1)], (REVIEW, ["KEY_NOT_AT_VALUE"]),
+          key="2023"),
+        c("w5", "cash", "300", "USD", [q("300"), q("$", 3, role="unit"), row("Cash"),
+                                       year("2023", 1)], ("admitted", ["KEY_CITED"]), key="2023"),
+        c("w6", "cash", "400", "USD", [q("400"), q("$", 5, role="unit"), row("Cash"),
+                                       year("2024", 2)], ("admitted", ["KEY_CITED"]), key="2024"),
+        c("w7", "cash", "400", "USD", [q("400"), q("$", 5, role="unit"), row("Cash"),
+                                       year("2023", 2)], (REVIEW, ["KEY_NOT_AT_VALUE"]),
+          key="2023"),
     ],
 )  # fmt: skip
 

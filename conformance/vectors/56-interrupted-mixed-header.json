@@ -1,0 +1,138 @@
+{
+ "name": "56-interrupted-mixed-header",
+ "description": "A trailing non-key slot on an earlier key line cannot hide a mixed tabbed header. One blank line between its key lines does not restore a prose heading or a compressed column ordinal (spec 0.9, #278 security review).",
+ "document": "Year\t2025\tChange\n2024\nCash\t\t$100\n\nYear\t2025\tChange\n2024\nCash\t$200\n\nYear\t2025\tChange\n\n2024\tChange\nCash\t\t$300\n\nData for 2025.\n\nFor 2024\nCash $400",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "i1",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 32,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 17,
+     "end": 21,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "i2",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 61,
+     "end": 65,
+     "text": "$200"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 51,
+     "end": 55,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "i3",
+   "field": "cash",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 103,
+     "end": 107,
+     "text": "$300"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 85,
+     "end": 89,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "i4",
+   "field": "cash",
+   "value": "400",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 139,
+     "end": 143,
+     "text": "$400"
+    }
+   ],
+   "key": "2024"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

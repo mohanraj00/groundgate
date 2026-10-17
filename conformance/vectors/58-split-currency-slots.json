@@ -1,0 +1,210 @@
+{
+ "name": "58-split-currency-slots",
+ "description": "A lone unit prefix in its own slot before an empty slot or a lone dash belongs to that column. It is not a second cell, so the next value keeps its own key (spec 0.9 review).",
+ "document": "\t2025\t2024\t2023\nCash\t$\t\t$\t200\t$\t300\n\n\t2025\t2024\t2023\nCash\t$\t-\t$\t400\t$\t500",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "w3",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 26,
+     "end": 29,
+     "text": "200"
+    },
+    {
+     "role": "unit",
+     "start": 24,
+     "end": 25,
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 6,
+     "end": 10,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "w4",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 26,
+     "end": 29,
+     "text": "200"
+    },
+    {
+     "role": "unit",
+     "start": 24,
+     "end": 25,
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 11,
+     "end": 15,
+     "text": "2023"
+    }
+   ],
+   "key": "2023"
+  },
+  {
+   "id": "w5",
+   "field": "cash",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 32,
+     "end": 35,
+     "text": "300"
+    },
+    {
+     "role": "unit",
+     "start": 30,
+     "end": 31,
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 11,
+     "end": 15,
+     "text": "2023"
+    }
+   ],
+   "key": "2023"
+  },
+  {
+   "id": "w6",
+   "field": "cash",
+   "value": "400",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 67,
+     "text": "400"
+    },
+    {
+     "role": "unit",
+     "start": 62,
+     "end": 63,
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 43,
+     "end": 47,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "w7",
+   "field": "cash",
+   "value": "400",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 67,
+     "text": "400"
+    },
+    {
+     "role": "unit",
+     "start": 62,
+     "end": 63,
+     "text": "$"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 48,
+     "end": 52,
+     "text": "2023"
+    }
+   ],
+   "key": "2023"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

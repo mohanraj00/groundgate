@@ -1,0 +1,85 @@
+{
+ "name": "49-prose-key-break",
+ "description": "Two adjacent blank lines stop a prose heading from reaching its value. One blank line retains the heading, and a key in the value's own sentence still applies after a break (spec 0.9, #278).",
+ "document": "Hypertension\n\n\nThe dose is 5 mg.\n\nAngina\n\nThe dose is 7 mg.\n\nHypertension\n\n\nFor Hypertension the dose is 9 mg.",
+ "schema": {
+  "fields": {
+   "dose": {
+    "type": "integer",
+    "unit": "mg",
+    "multiple": true,
+    "keys": [
+     "Hypertension",
+     "Angina"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "dose",
+   "value": "5",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 27,
+     "end": 31,
+     "text": "5 mg"
+    }
+   ],
+   "key": "Hypertension"
+  },
+  {
+   "id": "p2",
+   "field": "dose",
+   "value": "7",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 54,
+     "end": 58,
+     "text": "7 mg"
+    }
+   ],
+   "key": "Angina"
+  },
+  {
+   "id": "p3",
+   "field": "dose",
+   "value": "9",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 105,
+     "end": 109,
+     "text": "9 mg"
+    }
+   ],
+   "key": "Hypertension"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "name": "36-empty-tab-unit-aligned",
+ "description": "A unit in the same numeric column still reaches a value after an explicit empty slot (spec 0.9, #278).",
+ "document": "Top\t10\t$20\nCash\t\t100\nOther\t30\t40",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "u3",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 17,
+     "end": 20,
+     "text": "100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "u4",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 17,
+     "end": 20,
+     "text": "100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "unit",
+     "start": 7,
+     "end": 8,
+     "text": "$"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import bisect
 import contextlib
+import itertools
 import re
 import unicodedata
 from collections.abc import Iterator
@@ -213,15 +214,22 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
 _SENTENCES: ContextVar[dict[int, tuple[str, list[int], list[int]]] | None] = ContextVar(
     "sentences", default=None
 )
+# Mention lists belong to _Text and remain fixed for one admission. Hold their identities and
+# classifications only while the same admission context is open.
+_MIXED_HEADERS: ContextVar[
+    dict[tuple[int, int], tuple[str, list[tuple[int, int, str]], set[int]]] | None
+] = ContextVar("mixed_headers", default=None)
 
 
 @contextlib.contextmanager
 def sentence_index() -> Iterator[None]:
-    """Read the sentence ends of each text once, until the block ends."""
+    """Read sentence ends and mixed header blocks once, until the block ends."""
     token = _SENTENCES.set({})
+    headers = _MIXED_HEADERS.set({})
     try:
         yield
     finally:
+        _MIXED_HEADERS.reset(headers)
         _SENTENCES.reset(token)
 
 
@@ -537,8 +545,41 @@ def _label_line_in(text: str, start: int, end: int) -> bool:
     return False
 
 
-# a table sentence (SPEC §4.5): 3 or more line breaks and mentions of 2 or more keys
+# A table sentence has several keys and enough lines, or a separate recognized header.
 _TABLE_BREAKS, _TABLE_KEYS = 3, 2
+_KEY_BREAK = re.compile(r"\n[ \t\r]*\n[ \t\r]*\n")
+
+
+def _separate_header(text: str, mentions: list[tuple[int, int, str]], start: int, pos: int) -> bool:
+    """Recognize a separate header line, key-only stream or mixed tabbed header block."""
+    last = text.rfind("\n", 0, pos) + 1
+    before = max(((a, b, k) for a, b, k in mentions if start <= a < b <= last), default=None)
+    if before and _header_key(text, mentions, before[0]):
+        return True  # separate key-only lines also form a header in a short table
+    mentions = sorted(mentions)
+    i = 0
+    while i < len(mentions) and mentions[i][0] < start:
+        i += 1
+    left = start
+    while left < last:
+        right = text.find("\n", left, last)
+        right = last if right < 0 else right
+        cursor = left
+        keys: set[str] = set()
+        clean = True
+        while i < len(mentions) and mentions[i][0] < right:
+            a, b, k = mentions[i]
+            if b > right or text[cursor:a].strip():
+                clean = False
+            cursor = b
+            keys.add(k)
+            i += 1
+        if len(keys) >= _TABLE_KEYS and (
+            "\t" in text[left:right] or (clean and not text[cursor:right].strip())
+        ):
+            return True
+        left = right + 1
+    return False
 
 
 def _own_keys(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[str] | None:
@@ -546,7 +587,9 @@ def _own_keys(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[
     none), else those of its sentence, or None when the sentence names no key (SPEC §4.5)."""
     s0, s1 = sentence(text, pos)
     inside = {k for a, b, k in mentions if s0 <= a and b <= s1}
-    if len(inside) >= _TABLE_KEYS and text.count("\n", s0, s1) >= _TABLE_BREAKS:
+    if (len(inside) >= _TABLE_KEYS and text.count("\n", s0, s1) >= _TABLE_BREAKS) or (
+        inside and _separate_header(text, mentions, s0, pos)
+    ):
         # a table sentence: only the value's own line decides
         nl = text.rfind("\n", s0, pos)
         l0 = nl + 1 if nl >= 0 else s0
@@ -568,9 +611,116 @@ def keys_at(text: str, mentions: list[tuple[int, int, str]], pos: int) -> set[st
     if not before:
         return set()
     end, key = max(before)
+    at = next(a for a, b, k in mentions if b == end and k == key)
+    if key_break(text, end, pos) or _header_key(text, mentions, at):
+        return set()
     if _label_line_in(text, end, s0) and not _one_column(text, end, pos):
         return set()
     return {key}
+
+
+def _mixed_header_blocks(text: str, mentions: list[tuple[int, int, str]]) -> set[int]:
+    """Classify every connected header block once; return its qualifying key-line starts."""
+    ordered = sorted(mentions)
+    i = 0
+    mixed: set[int] = set()
+    block_lines: list[int] = []
+    block_keys: set[str] = set()
+    block_tabbed = False
+    blanks = 0
+
+    def finish() -> None:
+        nonlocal block_tabbed
+        if len(block_lines) >= 2 and len(block_keys) >= _TABLE_KEYS and block_tabbed:
+            mixed.update(block_lines)
+        block_lines.clear()
+        block_keys.clear()
+        block_tabbed = False
+
+    left = 0
+    while left <= len(text):
+        right = text.find("\n", left)
+        right = len(text) if right < 0 else right
+        while i < len(ordered) and ordered[i][0] < left:
+            i += 1
+        first = i
+        while i < len(ordered) and ordered[i][0] < right:
+            i += 1
+        spans = [(a, b, k) for a, b, k in ordered[first:i] if b <= right]
+        if not text[left:right].strip(" \t\r"):
+            blanks += 1
+            if blanks >= 2:
+                finish()
+        else:
+            blanks = 0
+            tabbed = "\t" in text[left:right]
+            clean = bool(spans)
+            cursor = left
+            for a, b, _ in spans:
+                if not tabbed and text[cursor:a].strip():
+                    clean = False
+                cursor = max(cursor, b)
+            if not tabbed and text[cursor:right].strip():
+                clean = False
+            # A data value ends the header block, even when its row also names a key.
+            j = 0
+            if clean:
+                for token in tokens(text, left, right):
+                    while j < len(spans) and spans[j][1] <= token.start:
+                        j += 1
+                    if j == len(spans) or not (
+                        spans[j][0] <= token.start < token.end <= spans[j][1]
+                    ):
+                        clean = False
+                        break
+            if clean:
+                block_lines.append(left)
+                block_keys.update(k for _, _, k in spans)
+                block_tabbed = block_tabbed or tabbed
+            else:
+                finish()
+        if right == len(text):
+            break
+        left = right + 1
+    finish()
+    return mixed
+
+
+def _mixed_header_lines(text: str, mentions: list[tuple[int, int, str]], at: int) -> bool:
+    """Read mixed-header classification once per text/key set in the admission context."""
+    index = _MIXED_HEADERS.get()
+    if index is None:
+        mixed = _mixed_header_blocks(text, mentions)
+    else:
+        key = id(text), id(mentions)
+        held = index.get(key)
+        if held is None or held[0] is not text or held[1] is not mentions:
+            held = index[key] = (text, mentions, _mixed_header_blocks(text, mentions))
+        mixed = held[2]
+    return _line(text, at)[0] in mixed
+
+
+def _header_key(text: str, mentions: list[tuple[int, int, str]], at: int) -> bool:
+    """A key in a tabbed or whitespace-only header cannot act as a prose heading."""
+    if _mixed_header_lines(text, mentions, at):
+        return True
+    la, lb = _line(text, at)
+    if "\t" in text[la:lb] and len({k for a, b, k in mentions if la <= a < b <= lb}) >= _TABLE_KEYS:
+        return True
+    run = header(text, mentions, at)
+    starts = {a for a, _ in run}
+    if len({k for a, _, k in mentions if a in starts}) < _TABLE_KEYS:
+        return False
+    a, b = run[0][0], run[-1][1]
+    left = text.rfind("\n", 0, a) + 1
+    right = text.find("\n", b)
+    right = len(text) if right < 0 else right
+    return "\t" in text[left:right] or (not text[left:a].strip() and not text[b:right].strip())
+
+
+def key_break(text: str, start: int, end: int) -> bool:
+    """Two adjacent blank lines isolate a block from earlier keys and column evidence."""
+    return _KEY_BREAK.search(text, start, end) is not None
 
 
 def _one_column(text: str, end: int, pos: int) -> bool:
@@ -603,6 +753,8 @@ _ITEM_SCALE = re.compile(
 )
 _LONE_DASH = re.compile("(?<!\\S)[-\u2013\u2014](?!\\S)")
 _NOT_SPACE = re.compile(r"\S")
+_EMPTY_TAB = re.compile(r"(?<=\t)[ \r]*(?=\t|\n|\Z)")
+_NEXT_SLOT = re.compile(r"[ \r]*\t[ \r]*(?:[-\u2013\u2014][ \r]*)?(?=\t|\n|\Z)")
 _IN_SCALE = re.compile(
     r"(?<![^\W_])in\s+(?:thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
 )
@@ -757,12 +909,35 @@ def _table_line(text: str, start: int, end: int) -> bool:
     return not _blank(line) and ("\t" in line or not tokens(text, start, end))
 
 
-def _row_cells(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
-    """The cells of a line after its first tab, as (start, end)."""
+def _row_cells(
+    text: str, start: int, end: int, prefixes: list[str]
+) -> list[tuple[int, int]] | None:
+    """The cells of a line after its first tab, as (start, end), or None if a slot is ambiguous
+    (SPEC §4.5, rule 6). A line whose slots hold only unit prefixes has no cells."""
     tab = text.find("\t", start, end)
     if tab < 0:
         return []
-    return cell_spans(text, tab + 1, end, prefixes)
+    spans = cell_spans(text, tab + 1, end, prefixes)
+    # One tab slot can hold a number cell, a dash, an empty slot, or a lone unit prefix.
+    # Prefix-only slots immediately before a number retain the existing numeric columns.
+    cursor = 0
+    left = tab + 1
+    while left <= end:
+        right = text.find("\t", left, end)
+        right = end if right < 0 else right
+        count = 0
+        while cursor < len(spans) and spans[cursor][0] <= right:
+            if spans[cursor][1] > right:
+                return None
+            count += 1
+            cursor += 1
+        body = text[left:right].strip(" \r")
+        if count > 1 or (count == 0 and body and body not in prefixes):
+            return None
+        if right == end:
+            return spans
+        left = right + 1
+    return spans
 
 
 class UnitPlaces:
@@ -786,7 +961,7 @@ class UnitPlaces:
         self.starts: list[int] = []
         if "\t" not in text[va:vb]:
             return
-        mine = _row_cells(text, va, vb, prefixes)
+        mine = _row_cells(text, va, vb, prefixes) or []
         self.n = next((i for i, (c, _) in enumerate(mine) if c == tok.start), -1)
         pos = va
         while pos > 0:
@@ -833,11 +1008,13 @@ class UnitPlaces:
         if la not in self.table or self.n < 0:
             return False
         if la not in self.rows:  # each row is read once, also for many items on it
-            self.rows[la] = _row_cells(text, la, lb, self.prefixes)
+            self.rows[la] = _row_cells(text, la, lb, self.prefixes) or []
         row = self.rows[la]
         if self.n >= len(row):
             return False
         c, ce = row[self.n]
+        if not text[c:ce].strip(" \r"):  # a blank source slot has no unit to repeat
+            return False
         if prefix:  # only whitespace between, found at the first character that is not one
             return end <= c and _NOT_SPACE.search(text, end, c) is None
         return start >= ce and _NOT_SPACE.search(text, ce, start) is None
@@ -845,7 +1022,7 @@ class UnitPlaces:
 
 def _no_number_at(text: str, pos: int) -> bool:
     """Whether the first character at or after pos that is not whitespace is neither the start
-    of a number token nor "(" (SPEC §4.5, rule 4). The text may end first."""
+    of a number token nor "(" (SPEC §4.5, rule 5). The text may end first."""
     found = _NOT_SPACE.search(text, pos)
     if found is None:
         return True
@@ -853,12 +1030,20 @@ def _no_number_at(text: str, pos: int) -> bool:
     return text[at] != "(" and all(t.start != at for t in tokens(text, *_line(text, at)))
 
 
+def _slot_before_cell(text: str, a: int, b: int) -> bool:
+    """Whether the prefix at text[a:b] fills its tab slot and the next slot is empty or holds a
+    lone dash. That next slot holds the cell of the column (SPEC §4.5, rule 5)."""
+    left = len(text[:a].rstrip(" \r"))
+    return left > 0 and text[left - 1] == "\t" and _NEXT_SLOT.match(text, b) is not None
+
+
 def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tuple[int, int]]:
     """The table cells in text[start:end] (SPEC §4.5, the column rule), as (start, end): number
     tokens, lone dashes, and a unit prefix that stands alone with no number after it, also where
-    two occurrences of a prefix overlap. One position is one cell. An empty cell ends where the
-    longest prefix that makes it ends, and a cell that is both a number token and an empty cell
-    ends at the later end of the two."""
+    two occurrences of a prefix overlap; blank tab slots count too. One position is one cell.
+    A prefix that fills its tab slot before an empty slot or a lone dash is not a cell (SPEC
+    §4.5, rule 5). An empty unit cell ends where the longest prefix that makes it ends, and a
+    cell that is both a number token and an empty cell ends at the later end of the two."""
     toks = tokens(text, start, end)
     numbers = {t.start for t in toks}
     spans = {t.start: t.end for t in toks}
@@ -882,28 +1067,79 @@ def cell_spans(text: str, start: int, end: int, prefixes: list[str]) -> list[tup
                     past = _no_number_at(text, end)
                 if not past:
                     continue
-            elif nxt in numbers or text[nxt] == "(":
+            elif nxt in numbers or text[nxt] == "(" or _slot_before_cell(text, a, b):
                 continue
             empty[a] = max(b, empty.get(a, b))
     for a, b in empty.items():  # a prefix that is also a number token is one cell
         spans[a] = max(b, spans.get(a, b))
+    for match in _EMPTY_TAB.finditer(text, start, end):
+        a, b = match.span()
+        # A bounded regex sees end as end-of-text. The real next character must also end
+        # the slot; a range that stops at a number must not invent an empty cell there.
+        if b == len(text) or text[b] in "\t\n":
+            spans.setdefault(a, b)
     return sorted(spans.items())
 
 
-def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int]:
-    """The starts of the table cells in text[start:end] (SPEC §4.5, the column rule)."""
+def cells(text: str, start: int, end: int, prefixes: list[str]) -> list[int] | None:
+    """Cell starts, or None if a crossed tab row has ambiguous slots (SPEC §4.5)."""
+    la = text.rfind("\n", 0, start) + 1
+    while la <= end:
+        lb = text.find("\n", la)
+        lb = len(text) if lb < 0 else lb
+        if "\t" in text[la:lb] and _row_cells(text, la, lb, prefixes) is None:
+            return None
+        if lb >= end:
+            break
+        la = lb + 1
     return [a for a, _ in cell_spans(text, start, end, prefixes)]
 
 
+def header_column(
+    text: str, mentions: list[tuple[int, int, str]], run: list[tuple[int, int]]
+) -> bool:
+    """A tabbed header has one key per consecutive slot, on one physical line."""
+    first = run[0][0]
+    if _mixed_header_lines(text, mentions, first):
+        return False
+    la, lb = _line(text, first)
+    last_end = _line(text, run[-1][1] - 1)[1]
+    if "\t" not in text[la:last_end]:
+        return True  # the existing stream with no tabbed header cells
+    if run[-1][1] > lb:
+        return False  # mixed line and tab boundaries do not define one ordinal sequence
+    if any(text[left[1] : right[0]].count("\t") != 1 for left, right in itertools.pairwise(run)):
+        return False  # neither skipped slots nor merged key slots may be compressed
+    tab = text.find("\t", la, lb)
+    first_keys = [(a, b) for a, b, _ in mentions if la <= a < b <= tab]
+    begins_with_key = (
+        len(first_keys) == 1
+        and not text[la : first_keys[0][0]].strip()
+        and not text[first_keys[0][1] : tab].strip()
+    )
+    if first_keys and not begins_with_key:
+        return False  # a decorated or merged key slot is not a disposable row label
+    start = la if begins_with_key else tab + 1
+    return first >= start and not text[start:first].strip(" \r")
+
+
 def header(text: str, mentions: list[tuple[int, int, str]], at: int) -> list[tuple[int, int]]:
-    """The run of key mentions that holds the mention starting at ``at``, where only whitespace
-    stands between two mentions of the run (SPEC §4.5)."""
+    """The run holding the mention at ``at``: only whitespace and no key break between mentions
+    (SPEC §4.5)."""
     spans = sorted((a, b) for a, b, _ in mentions)
     i = next(n for n, (a, _) in enumerate(spans) if a == at)
     lo = hi = i
-    while lo > 0 and not text[spans[lo - 1][1] : spans[lo][0]].strip():
+    while (
+        lo > 0
+        and not text[spans[lo - 1][1] : spans[lo][0]].strip()
+        and not key_break(text, spans[lo - 1][1], spans[lo][0])
+    ):
         lo -= 1
-    while hi + 1 < len(spans) and not text[spans[hi][1] : spans[hi + 1][0]].strip():
+    while (
+        hi + 1 < len(spans)
+        and not text[spans[hi][1] : spans[hi + 1][0]].strip()
+        and not key_break(text, spans[hi][1], spans[hi + 1][0])
+    ):
         hi += 1
     return spans[lo : hi + 1]
 

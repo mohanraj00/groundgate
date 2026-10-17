@@ -1,6 +1,6 @@
 {
  "name": "19k-role-limits",
- "description": "Limits of the role checks: a dash next to a number is not a cell, a number after the row label on its line (a footnote) stops the column rule, a $ with no number is an empty cell, a scale item needs 'in' before its scale word, a unit item needs a passing field item, brackets alone make no sign on a field without a unit, a negated or distant loss word makes no sign, and a scale item with offsets and no text reads its span. A quote is trimmed. Brackets take the longest unit prefix first (spec 0.5).",
+ "description": "Limits of the role checks: a dash next to a number is not a cell, a number after the row label on its line (a footnote) stops the column rule, a $ with no number is an empty cell, a scale item needs 'in' before its scale word, a unit item needs a passing field item, brackets alone make no sign on a field without a unit, a negated or distant loss word makes no sign, and a scale item with offsets and no text reads its span. A quote is trimmed. Brackets take the longest unit prefix first (spec 0.5). Spec 0.9 keeps m4 and m10 at review because the two blank lines between their unit cells break the column key (#278).",
  "document": "Amounts (in thousands)\n\nYear\n\n2025\n\n2024\n\nUnits sold\n\n–434,433\n\n46,016\n\nSales (1)\n\n$\n\n7,100\n\n$\n\n6,900\n\nCosts\n\n$\n\n\n\n$\n\n5,500\n\nWe serve a thousand customers. The filing fee is $40.\n\nEmployees\n\n120\n\nThere were 12 adverse events (5) in the trial.\n\nA refund (US$5) was paid.\n\nThe company had no loss this year and paid $9,000. We recorded a loss on the sale and paid dividends of $8,000.",
  "schema": {
   "fields": {
@@ -369,9 +369,9 @@
     ]
    },
    {
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
-     "KEY_CITED"
+     "KEY_NOT_AT_VALUE"
     ]
    },
    {
@@ -411,10 +411,10 @@
     ]
    },
    {
-    "outcome": "admitted",
+    "outcome": "needs_verification",
     "codes": [
-     "VALUE_DERIVED",
-     "KEY_CITED"
+     "KEY_NOT_AT_VALUE",
+     "VALUE_DERIVED"
     ]
    },
    {

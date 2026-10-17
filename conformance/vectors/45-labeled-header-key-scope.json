@@ -1,0 +1,83 @@
+{
+ "name": "45-labeled-header-key-scope",
+ "description": "A labeled tab header does not supply a nearest prose key after a paragraph end. A tabbed data row can use the header, also with a non-key column after the known keys (spec 0.9, #278).",
+ "document": "Year\t2025\t2024\n\nCash $100\n\nYear\t2025\t2024\tChange\nCash\t\t$200\t$10",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "l3",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "l4",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 55,
+     "end": 59,
+     "text": "$200"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 37,
+     "end": 41,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "KEY_CITED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

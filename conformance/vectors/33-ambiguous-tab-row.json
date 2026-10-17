@@ -1,0 +1,120 @@
+{
+ "name": "33-ambiguous-tab-row",
+ "description": "A tab row with several number cells inside one slot, or a nonempty slot with no cell, cannot supply a column key, including at the first number (spec 0.9, #278).",
+ "document": "2025\t2024\nCash\t$100 $200\t$300\n\n2025\t2024\nCash\t$400\tunknown",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash"
+    ],
+    "multiple": true,
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a1",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 15,
+     "end": 19,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 0,
+     "end": 4,
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "a2",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 20,
+     "end": 24,
+     "text": "$200"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 5,
+     "end": 9,
+     "text": "2024"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "a3",
+   "field": "cash",
+   "value": "400",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 46,
+     "end": 50,
+     "text": "$400"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "key",
+     "start": 31,
+     "end": 35,
+     "text": "2025"
+    }
+   ],
+   "key": "2025"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
