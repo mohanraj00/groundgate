@@ -562,6 +562,22 @@ def test_labeled_rows_set_the_grid_before_a_wider_numeric_row(tmp_path: Path) ->
     assert "\n\n\n1 2 3\n\n\n" in text
 
 
+def test_table_with_no_label_column_gets_no_label_slot(tmp_path: Path) -> None:
+    path = tmp_path / "nolabel.pdf"
+    page = [
+        (300, 735, "Q1"),
+        (400, 735, "Q2"),
+        (500, 735, "Q3"),
+        (300, 720, "10"),
+        (400, 720, "20"),
+        (500, 720, "30"),
+        (300, 705, "40"),
+        (500, 705, "60"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert "Q1\tQ2\tQ3\n10\t20\t30\n40\t\t60" in read(path).text
+
+
 def test_row_with_a_lone_currency_sign_off_the_grid_is_isolated(tmp_path: Path) -> None:
     path = tmp_path / "sign.pdf"
     page = [
