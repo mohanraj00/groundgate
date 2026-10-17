@@ -524,6 +524,44 @@ def test_second_heading_row_gives_the_blank_column(tmp_path: Path) -> None:
     assert [raw[w.start : w.end].decode() for w in doc.layout.words] == doc.text.split()
 
 
+def test_nearest_heading_row_gives_the_blank_column(tmp_path: Path) -> None:
+    path = tmp_path / "nearest.pdf"
+    page = [
+        (200, 735, "Region"),
+        (400, 735, "Q2"),
+        (300, 720, "Q1"),
+        (400, 720, "Q2"),
+        (72, 705, "Cash"),
+        (400, 705, "10"),
+        (72, 690, "Debt"),
+        (400, 690, "20"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    assert "\tQ1\tQ2\nCash\t\t10\nDebt\t\t20" in read(path).text
+
+
+def test_labeled_rows_set_the_grid_before_a_wider_numeric_row(tmp_path: Path) -> None:
+    path = tmp_path / "widernumbers.pdf"
+    page = [
+        (300, 735, "Q1"),
+        (400, 735, "Q2"),
+        (72, 720, "Cash"),
+        (300, 720, "10"),
+        (400, 720, "20"),
+        (350, 705, "1"),
+        (450, 705, "2"),
+        (550, 705, "3"),
+        (72, 690, "Debt"),
+        (300, 690, "30"),
+        (400, 690, "40"),
+    ]
+    path.write_bytes(make_pdf([page]))
+    text = read(path).text
+    assert "Cash\t10\t20" in text.split("\n")
+    assert "Debt\t30\t40" in text.split("\n")
+    assert "\n\n\n1 2 3\n\n\n" in text
+
+
 def test_row_with_a_lone_currency_sign_off_the_grid_is_isolated(tmp_path: Path) -> None:
     path = tmp_path / "sign.pdf"
     page = [
