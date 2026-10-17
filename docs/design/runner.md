@@ -4,17 +4,17 @@ Status: approved for #268. This note changes no core decision. The implementatio
 and #271 stays in the Runner lane PR. The PR stays a draft until that work and its required
 checks are complete. The runner is experimental; its held-out measure awaits #269.
 
-I put the extraction loop in `groundgate.run`, outside `admit`. The runner controls the request,
+I put the extraction loop in `groundgate.extract`, outside `admit`. The runner controls the request,
 the evidence repairs and the stopping rules. A model supplies candidates. Only `admit` decides
 whether those candidates pass. A run can still admit a wrong field: a location check does not
 prove meaning. The measure of #269 must report that error.
 
 ## 1. The boundary and the client
 
-The proposed entry point is `from groundgate.run import RunPolicy, run`. Its call is:
+The proposed entry point is `from groundgate.extract import RunPolicy, extract`. Its call is:
 
 ```python
-result = run(
+result = extract(
     text,
     schema,
     client=client,
@@ -344,7 +344,7 @@ Invalid caller inputs raise `PacketError` or a runner input error before the fir
 without a core receipt. A client exception is recorded as `client_error`; the runner stops
 incomplete and retains completed work. It records a fixed error category and the exception
 type, not an arbitrary exception string that may contain a secret. A runtime core packet
-error or unexpected internal failure raises `RunnerError` with its `record` set to the partial
+error or unexpected internal failure raises `ExtractError` with its `record` set to the partial
 run record. It is never converted to a not-found result or an admitted candidate. A call timeout belongs to the
 client; the synchronous interface cannot force an uncooperative client to return.
 

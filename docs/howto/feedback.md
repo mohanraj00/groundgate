@@ -1,6 +1,6 @@
 # Run extraction and evidence repairs
 
-`groundgate.run` owns the extraction loop. Your app gives it text, a schema and one function
+`groundgate.extract` owns the extraction loop. Your app gives it text, a schema and one function
 that takes a prompt and returns a raw JSON reply. The runner makes bounded calls, admits the
 candidates and repairs only the evidence that each code permits. `admit` stays deterministic
 and never calls a model.
@@ -17,7 +17,7 @@ import tempfile
 from pathlib import Path
 
 import groundgate as gg
-from groundgate.run import RunPolicy, RunResult, replay, run
+from groundgate.extract import RunPolicy, RunResult, extract, replay
 
 text = "Amounts (in thousands)\nAmount 5."
 schema = {"fields": {"amount": {"type": "integer"}}}
@@ -42,7 +42,7 @@ def client(prompt):
     return json.dumps({"candidates": [candidate], "not_found": []})
 
 
-result = run(
+result = extract(
     text,
     schema,
     client=client,
@@ -90,7 +90,7 @@ The phase-specific stops are:
 
 | Phase | Stop and field state |
 |---|---|
-| Initial | An oversized initial chunk plan or prompt raises `RunInputError` before the first call. An aborted reply with no valid field disposition leads to `incomplete_no_disposition`. |
+| Initial | An oversized initial chunk plan or prompt raises `ExtractInputError` before the first call. An aborted reply with no valid field disposition leads to `incomplete_no_disposition`. |
 | Targeted | Exhausted `max_calls` records `unsearched` for each skipped field and a `call_limit` event. If the regions do not fit the prompt budget, the worst-ranked region goes first and the search records `search_truncated`. If no region fits, the field and event record `search_limit`. A targeted quote outside the sent regions records `protocol_failure` for that field only; the run continues. |
 | Repair | An oversized prompt records `prompt_limit`; exhausted `max_calls` records `call_limit`. A completed run with an eligible candidate left after its repair rounds records `repair_limit`. |
 
@@ -142,7 +142,7 @@ create a new repair budget. A terminal code such as `VALUE_NOT_IN_EVIDENCE` gets
 The [design note](../design/runner.md) gives the complete per-code rules and defaults.
 
 Caller input errors fail before a model call. A runtime core or internal error raises
-`RunnerError`; its `record` holds the completed part of the run. Model-client exceptions
+`ExtractError`; its `record` holds the completed part of the run. Model-client exceptions
 become recorded incomplete results without copying their exception messages.
 
 ## 4. Save and replay

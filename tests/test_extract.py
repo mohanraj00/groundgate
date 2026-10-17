@@ -11,8 +11,15 @@ import json
 import pytest
 
 import groundgate as gg
-from groundgate.run import RunInputError, RunnerError, RunPolicy, RunResult, replay, run
-from groundgate.run.runner import _chunks, _queries
+from groundgate.extract import (
+    ExtractError,
+    ExtractInputError,
+    RunPolicy,
+    RunResult,
+    extract,
+    replay,
+)
+from groundgate.extract.runner import _chunks, _queries
 
 
 class Client:
@@ -57,7 +64,7 @@ SCHEMA = {"fields": {"amount": {"type": "integer"}}}
 
 
 def execute(text, client, schema=SCHEMA, **kwargs):
-    return run(text, schema, client=client, model_id="fixed-1", **kwargs)
+    return extract(text, schema, client=client, model_id="fixed-1", **kwargs)
 
 
 def assert_replays(result, text, schema=SCHEMA, **kwargs):
@@ -106,7 +113,7 @@ def test_chunk_stop_utf8_and_degenerate_overlap_bound():
     plan = result.record[1]["chunks"]
     assert plan[0]["end"] == len("éé\néé5".encode())
     assert_replays(result, "éé\néé5é")
-    with pytest.raises(RunInputError, match="chunks"):
+    with pytest.raises(ExtractInputError, match="chunks"):
         execute("x" * 50000, Client(), run_policy=RunPolicy(overlap_chars=11999))
 
 
@@ -121,7 +128,7 @@ def test_chunk_stop_utf8_and_degenerate_overlap_bound():
     ],
 )
 def test_invalid_policy_fails_before_call(kwargs):
-    with pytest.raises(RunInputError):
+    with pytest.raises(ExtractInputError):
         RunPolicy(**kwargs)
 
 
@@ -131,7 +138,7 @@ def test_inputs_are_validated_before_model_call():
         execute("e\u0301", client)
     with pytest.raises(gg.PacketError):
         execute("5", client, references=[{"id": 3, "text": "5"}])
-    with pytest.raises(RunInputError):
+    with pytest.raises(ExtractInputError):
         execute("5", client, run_policy=RunPolicy(max_prompt_chars=1))
     assert client.prompts == []
 
@@ -412,13 +419,13 @@ def test_replay_detects_modified_artifacts_settings_and_record():
 
 
 def test_runtime_error_has_partial_record(monkeypatch):
-    import groundgate.run.runner as module
+    import groundgate.extract.runner as module
 
     def fail(self, *args):
         raise RuntimeError("failure")
 
     monkeypatch.setattr(module._Engine, "decide", fail)
-    with pytest.raises(RunnerError) as error:
+    with pytest.raises(ExtractError) as error:
         execute("Amount 5.", Client(envelope(candidate())))
     assert error.value.record[1]["kind"] == "plan"
 
@@ -606,7 +613,7 @@ def test_repair_not_found_requires_the_boolean_true(not_found):
 
 
 def test_replay_refuses_amplified_chunk_plan_before_prompt_allocation(monkeypatch):
-    import groundgate.run.runner as module
+    import groundgate.extract.runner as module
 
     result = execute("Amount 5.", Client(envelope(candidate())))
     record = copy.deepcopy(result.record)
@@ -673,7 +680,7 @@ def test_repair_prompt_explains_unexpected_changed_value_terminal_path():
 
 
 def test_replay_rejects_forged_dummy_plan_before_building_chunks(monkeypatch):
-    import groundgate.run.runner as module
+    import groundgate.extract.runner as module
 
     result = execute("Amount 5.", Client(envelope(candidate())))
     record = copy.deepcopy(result.record)
@@ -688,7 +695,7 @@ def test_replay_rejects_forged_dummy_plan_before_building_chunks(monkeypatch):
 
 
 def test_initial_prompt_validation_retains_one_prompt_before_first_client_call(monkeypatch):
-    import groundgate.run.runner as module
+    import groundgate.extract.runner as module
 
     original = module._Engine.prompt
     state = {"alive": 0, "peak": 0, "prompts": 0, "checked": False}
@@ -810,7 +817,7 @@ def test_admission_history_rollback_after_repair_keeps_packet_and_outcome(replac
 
 
 def test_fold_cache_builds_once_per_source_across_fields_and_queries(monkeypatch):
-    import groundgate.run.runner as module
+    import groundgate.extract.runner as module
 
     built = []
     original = module._Folded.build
@@ -844,7 +851,7 @@ def test_fold_cache_builds_once_per_source_across_fields_and_queries(monkeypatch
 
 @pytest.mark.parametrize("source", ["ASCII only", "Σς Œ Å", "Straße İ ﬃ", "İßﬃ𝔘中é"])
 def test_compact_fold_and_byte_maps_preserve_original_boundaries(source):
-    from groundgate.run.runner import _ByteOffsets, _Folded
+    from groundgate.extract.runner import _ByteOffsets, _Folded
 
     folded = _Folded.build(source)
     offsets = _ByteOffsets(source)
@@ -864,7 +871,7 @@ def test_compact_fold_and_byte_maps_preserve_original_boundaries(source):
 
 
 def test_large_ascii_fold_and_offsets_need_no_character_map():
-    from groundgate.run.runner import _ByteOffsets, _Folded
+    from groundgate.extract.runner import _ByteOffsets, _Folded
 
     source = "A" * 100000
     folded = _Folded.build(source)
@@ -875,7 +882,7 @@ def test_large_ascii_fold_and_offsets_need_no_character_map():
 
 
 def test_rollback_names_dropped_ids_and_restores_accepted_raw(monkeypatch):
-    import groundgate.run.runner as module
+    import groundgate.extract.runner as module
 
     text = "Amount 5. Other 6."
     first = candidate(evidence=[item("missing")])
@@ -914,7 +921,7 @@ def test_rollback_names_dropped_ids_and_restores_accepted_raw(monkeypatch):
 
 
 def test_oversize_reply_is_retained_for_replay_but_never_parsed(monkeypatch):
-    import groundgate.run.runner as module
+    import groundgate.extract.runner as module
 
     def unexpected_parse(raw):
         pytest.fail("oversized reply was parsed")
@@ -944,7 +951,7 @@ def test_aborted_initial_pass_reports_no_valid_disposition_for_every_field(failu
 
 
 def test_targeted_query_count_is_hard_capped_before_source_scans(monkeypatch):
-    import groundgate.run.runner as module
+    import groundgate.extract.runner as module
 
     words = [f"term{i}" for i in range(5000)]
     schema = {

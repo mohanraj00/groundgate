@@ -42,11 +42,11 @@ _INSTRUCTIONS = (
 )
 
 
-class RunInputError(ValueError):
+class ExtractInputError(ValueError):
     """Invalid runner settings or an initial request beyond the declared limits."""
 
 
-class RunnerError(RuntimeError):
+class ExtractError(RuntimeError):
     """Internal failure with the log lines written so far available in ``record``."""
 
     def __init__(self, message: str, record: list[Json]) -> None:
@@ -73,13 +73,13 @@ class RunPolicy:
         for name, value in asdict(self).items():
             if name == "targeted":
                 if not isinstance(value, bool):
-                    raise RunInputError("targeted must be a boolean")
+                    raise ExtractInputError("targeted must be a boolean")
                 continue
             floor = 0 if name in {"overlap_chars", "max_repair_rounds"} else 1
             if type(value) is not int or not floor <= value <= 2**53 - 1:
-                raise RunInputError(f"{name} must be an integer at least {floor}")
+                raise ExtractInputError(f"{name} must be an integer at least {floor}")
         if self.overlap_chars >= self.chunk_chars:
-            raise RunInputError("overlap_chars must be less than chunk_chars")
+            raise ExtractInputError("overlap_chars must be less than chunk_chars")
 
 
 @dataclass(frozen=True)
@@ -248,7 +248,7 @@ def _chunks(text: str, settings: RunPolicy) -> list[tuple[int, int]]:
                 end = newline + 1
         chunks.append((start, end))
         if len(chunks) > settings.max_calls:
-            raise RunInputError("initial chunks exceed max_calls")
+            raise ExtractInputError("initial chunks exceed max_calls")
         if end == len(text):
             break
         start = max(start + 1, end - settings.overlap_chars)
@@ -1021,7 +1021,7 @@ class _Engine:
         # Validate every initial request before the first call, retaining one prompt at a time.
         for context in contexts:
             if len(self.prompt("initial", fields, context)) > self.settings.max_prompt_chars:
-                raise RunInputError("initial prompt exceeds max_prompt_chars")
+                raise ExtractInputError("initial prompt exceeds max_prompt_chars")
         self.event(
             kind="plan",
             chunks=[
@@ -1101,10 +1101,10 @@ def _run(
 ) -> RunResult:
     """Validate inputs, with an optional replay-only allocation ceiling."""
     if not callable(client) or not isinstance(model_id, str) or not model_id.strip():
-        raise RunInputError("client must be callable and model_id non-blank")
+        raise ExtractInputError("client must be callable and model_id non-blank")
     settings = RunPolicy() if run_policy is None else run_policy
     if not isinstance(settings, RunPolicy):
-        raise RunInputError("run_policy must be RunPolicy")
+        raise ExtractInputError("run_policy must be RunPolicy")
     s = Schema.from_dict(copy.deepcopy(schema.to_dict() if isinstance(schema, Schema) else schema))
     p = Policy.from_dict(
         copy.deepcopy(
@@ -1116,7 +1116,7 @@ def _run(
     valid_refs = cast(list[Json], refs)
     valid_refs.sort(key=lambda r: r["id"])
     if not s.fields:
-        raise RunInputError("schema must request at least one field")
+        raise ExtractInputError("schema must request at least one field")
     engine = _Engine(
         text, s, p, settings, client, model_id, document_id, document_source, valid_refs, empty
     )
@@ -1126,13 +1126,13 @@ def _run(
         engine.admission_byte_limit = min(engine.admission_byte_limit, replay_ceiling)
     try:
         return engine.execute()
-    except RunInputError:
+    except ExtractInputError:
         raise
     except Exception as exc:
-        raise RunnerError("runner failed; inspect the partial record", engine.record) from exc
+        raise ExtractError("runner failed; inspect the partial record", engine.record) from exc
 
 
-def run(
+def extract(
     text: str,
     schema: Schema | Mapping[str, Any],
     *,
@@ -1268,5 +1268,5 @@ def _replay(
         if dict(artifacts) != result.artifacts:
             return "artifacts differ from replay"
         return result
-    except (KeyError, ValueError, TypeError, IndexError, PacketError, RunnerError, RecursionError):
+    except (KeyError, ValueError, TypeError, IndexError, PacketError, ExtractError, RecursionError):
         return "invalid replay record or inputs"
