@@ -895,8 +895,9 @@ def render_requested(results: dict[str, Any]) -> str:
         states = run["document_states"]
         lines += [
             "Run state for each document. An incomplete document stopped at a harness limit or "
-            "a failed call. Its fields without an admitted value count as misses, not as "
-            "absences. Retries are archived transport errors that ran again.",
+            "a failed call. Its present fields without an admitted value count as misses, and "
+            "its absent fields count as unreported absences. Retries are archived transport "
+            "errors that ran again.",
             "",
         ]
         lines += table(
