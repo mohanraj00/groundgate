@@ -109,7 +109,7 @@ The page shows:
   underlined.
 
 A checkbox for each outcome hides or shows its cards. The page has no scripts and loads nothing.
-For a PDF, pass `layout=` from `extract`, and each card shows its page number.
+For a PDF, pass `layout=` from `read`, and each card shows its page number.
 
 ## 3. Use the command line
 
@@ -117,7 +117,7 @@ The CLI does the same steps with files. `report` verifies the receipt first, and
 render a receipt that does not match.
 
 ```bash
-groundgate extract lease.html -o doc.txt
+groundgate read lease.html -o doc.txt
 groundgate admit doc.txt schema.json candidates.json --document-id lease-0417 -o receipt.json
 groundgate verify receipt.json doc.txt schema.json candidates.json
 groundgate report receipt.json doc.txt schema.json candidates.json -o report.html

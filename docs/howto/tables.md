@@ -9,12 +9,12 @@ in [SPEC.md](../../SPEC.md) are the normative version.
 
 ## 1. Get the text with tabs between cells
 
-`groundgate extract` writes a tab between two cells of an HTML table, and a line break after each
+`groundgate read` writes a tab between two cells of an HTML table, and a line break after each
 row. The tab is important: it tells groundgate where the row label stops and the first cell
 starts.
 
 1. Save the page as an `.html` file.
-2. Extract it with `groundgate.extract.extract`, or with `groundgate extract FILE` on the command
+2. Read it with `groundgate.read.read`, or with `groundgate read FILE` on the command
    line.
 3. Give the same text to the extractor and to `admit`.
 
@@ -23,7 +23,7 @@ import tempfile
 from pathlib import Path
 
 import groundgate as gg
-from groundgate.extract import extract
+from groundgate.read import read
 
 html = """<html><body>
 <p>CONSOLIDATED STATEMENTS OF OPERATIONS</p>
@@ -39,7 +39,7 @@ html = """<html><body>
 
 work = Path(tempfile.mkdtemp())
 (work / "statement.html").write_text(html, encoding="utf-8")
-text = extract(work / "statement.html").text
+text = read(work / "statement.html").text
 print(text.replace("\t", "\\t"))
 ```
 
@@ -57,7 +57,7 @@ Operating expenses\t25,695\t24,471
 Loss from operations\t(3,415)\t(2,980)
 ```
 
-`groundgate extract` writes this form from an HTML table, and from a PDF table that draws its
+`groundgate read` writes this form from an HTML table, and from a PDF table that draws its
 cells apart (see the [guide](../guide.md)). Text from another tool often has spaces between the
 cells, or each cell on a line of its own. Read
 [A row with spaces instead of tabs](#a-row-with-spaces-instead-of-tabs) before you use it.
@@ -265,7 +265,7 @@ a number that belongs to the label. So the column rule stops after the first col
 on another line, and a line with no tab has no column, so the unit item is at no unit place and
 fails. Both values go to review. The 2024 value also has no key at it.
 
-To keep the columns, extract the file with `groundgate extract`, so the cells have tabs between
+To keep the columns, read the file with `groundgate read`, so the cells have tabs between
 them. If the text still has spaces between the cells, a person checks the values.
 
 ### A footnote marker after the row label
@@ -275,7 +275,7 @@ A footnote marker after the row label is a number between the label and the cell
 ```python
 marked = html.replace("<td>Loss from operations</td>", "<td>Loss from operations<sup>1</sup></td>")
 (work / "marked.html").write_text(marked, encoding="utf-8")
-marked_text = extract(work / "marked.html").text
+marked_text = read(work / "marked.html").text
 print(marked_text.splitlines()[-1].replace("\t", "\\t"))
 show(gg.admit(marked_text, schema, candidates))
 ```
@@ -286,7 +286,7 @@ oi-2024  needs_verification  KEY_NOT_AT_VALUE VALUE_DERIVED
 oi-2025  needs_verification  KEY_NOT_AT_VALUE VALUE_DERIVED
 ```
 
-`extract` writes the superscript as `^1`. groundgate does not count cells across a number that
+`read` writes the superscript as `^1`. groundgate does not count cells across a number that
 stands between the row label and the first tab. The marker could be a cell, and then the count
 of columns is wrong. So the column rule stops for the whole row, and both values go to review. A
 person checks them.
@@ -313,7 +313,7 @@ repeats it. The item is not necessary, but it passes, so both candidates are adm
 
 ## Checklist
 
-- Extract HTML tables with `groundgate extract`, so the cells have tabs between them.
+- Read HTML tables with `groundgate read`, so the cells have tabs between them.
 - Give the field its `unit`, its `keys` (the column headings) and its `aliases` (the row labels).
 - Ask for the value, scale, field and key items on every table value.
 - Ask for a unit item only when the unit is not next to the number.

@@ -1,6 +1,6 @@
 """groundgate command line.
 
-  groundgate extract  FILE                              > doc.txt
+  groundgate read     FILE                              > doc.txt
   groundgate admit    DOC SCHEMA CANDIDATES             > receipt.json
   groundgate admit    --docs D --candidates C --schema S --out R
   groundgate verify   RECEIPT DOC SCHEMA CANDIDATES
@@ -95,11 +95,11 @@ def _parser() -> argparse.ArgumentParser:
     )
     sub = ap.add_subparsers(dest="command", required=True)
 
-    x = sub.add_parser("extract", help="turn a PDF, HTML, XML or text file into NFC text")
+    x = sub.add_parser("read", help="turn a PDF, HTML, XML or text file into NFC text")
     x.add_argument("file")
     x.add_argument("-o", "--output", help="write the text here instead of stdout")
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
-    x.add_argument("--pages", type=_pages, help="PDF pages to extract, e.g. 1-12,15")
+    x.add_argument("--pages", type=_pages, help="PDF pages to read, e.g. 1-12,15")
 
     s = sub.add_parser(
         "schema",
@@ -139,7 +139,7 @@ def _parser() -> argparse.ArgumentParser:
     r = sub.add_parser("report", help="verify a receipt, then render an HTML review page")
     r.add_argument("receipt")
     inputs(r)
-    r.add_argument("--layout", help="layout JSON from extract, to show page numbers")
+    r.add_argument("--layout", help="layout JSON from read, to show page numbers")
     r.add_argument("--title")
     r.add_argument("-o", "--output", help="write the HTML here instead of stdout")
     return ap
@@ -157,6 +157,13 @@ def _check_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else list(argv)
+    if argv[:1] == ["extract"]:  # 0.9 moved the reader to `read`, with any old options
+        print(
+            "groundgate: to turn a file into text, use `groundgate read FILE` "
+            "(`groundgate extract` was renamed to `groundgate read` in 0.9)",
+            file=sys.stderr,
+        )
+        return 2
     check = argv[:2] == ["schema", "check"]
     parser = _check_parser() if check else _parser()
     args = parser.parse_args(argv[2:] if check else argv)
@@ -165,8 +172,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if check:
             return _check(args)
-        if args.command == "extract":
-            return _extract(args)
+        if args.command == "read":
+            return _read(args)
         if args.command == "schema":
             return _schema(args)
         if args.command == "admit" and args.docs is not None:
@@ -490,10 +497,10 @@ def _check(args: argparse.Namespace) -> int:
     return 1 if found else 0
 
 
-def _extract(args: argparse.Namespace) -> int:
-    from .extract import extract
+def _read(args: argparse.Namespace) -> int:
+    from .read import read
 
-    doc = extract(args.file, pages=args.pages)
+    doc = read(args.file, pages=args.pages)
     for w in doc.warnings:
         print(f"groundgate: warning: {w}", file=sys.stderr)
     if args.layout:
@@ -509,7 +516,7 @@ def _report(
     args: argparse.Namespace, receipt: Any, text: str, candidates: Any, extra: dict[str, Any]
 ) -> int:
     from .canonical import digest
-    from .extract import Layout
+    from .read import Layout
     from .report import render
 
     layout = None

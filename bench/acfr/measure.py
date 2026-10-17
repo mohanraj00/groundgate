@@ -142,7 +142,10 @@ def _pdf(src: dict[str, Any]) -> Path:
 def cards() -> list[dict[str, Any]]:
     """One card per fact, in id order: the field's description, the value, the text around the
     evidence and its box on the PDF page. A fact with no evidence has no box."""
-    from groundgate.extract import extract
+    try:
+        from groundgate.read import read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read  # type: ignore[no-redef]
 
     srcs = {s["id"]: s for s in _read(HERE / "sources.json")["sources"]}
     described = _read(HERE / "descriptions.json")
@@ -151,7 +154,7 @@ def cards() -> list[dict[str, Any]]:
     for fid, f in sorted(facts().items()):
         doc = f["doc"]
         if doc not in got:
-            got[doc] = extract(_pdf(srcs[doc]), pages=srcs[doc]["select"]["pages"])
+            got[doc] = read(_pdf(srcs[doc]), pages=srcs[doc]["select"]["pages"])
             if got[doc].text != (HERE / "docs" / f"{doc}.txt").read_text(encoding="utf-8"):
                 raise SystemExit(f"{doc}: docs/{doc}.txt is not the text of the pinned PDF")
         text, layout = got[doc].text, got[doc].layout

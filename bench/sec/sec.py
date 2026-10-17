@@ -31,7 +31,10 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-from groundgate.extract import extract
+try:
+    from groundgate.read import read
+except ImportError:  # a wheel before 0.9 names it extract
+    from groundgate.extract import extract as read  # type: ignore[no-redef]
 
 HERE = Path(__file__).parent
 BENCH = HERE.parent
@@ -140,7 +143,7 @@ def walk(count_only: bool) -> None:
             continue
         url = f"{EDGAR}{folder}/{name}"
         data = get(url, f"{acc}.htm")
-        part = item7(extract(CACHE / f"{acc}.htm").text)
+        part = item7(read(CACHE / f"{acc}.htm").text)
         if part is None:
             entry["skip"] = "no Item 7 and Item 7A or 8 headings"
         elif not MIN_CHARS <= len(part) <= MAX_CHARS:
@@ -185,7 +188,7 @@ def docs() -> None:
         data = get(src["url"], f"{acc}.htm")
         if hashlib.sha256(data).hexdigest() != src["sha256"]:
             raise SystemExit(f"{src['id']}: the filing changed since the pick")
-        part = item7(extract(CACHE / f"{acc}.htm").text)
+        part = item7(read(CACHE / f"{acc}.htm").text)
         assert part is not None
         (HERE / "docs" / f"{src['id']}.txt").write_text(part, encoding="utf-8")
     print("wrote docs/")

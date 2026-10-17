@@ -31,9 +31,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from fetch import HL7, download, spl_sections
-
-from groundgate.extract import extract
+from fetch import HL7, download, read, spl_sections
 
 HERE = Path(__file__).parent
 SET = HERE / "set2"
@@ -248,7 +246,7 @@ def select_ntsb(log: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if not data.startswith(b"%PDF"):
             entry["skip"] = "not a PDF"
             continue
-        doc = extract(CACHE / f"ntsb-{rid}.pdf")
+        doc = read(CACHE / f"ntsb-{rid}.pdf")
         pages = len(doc.layout.pages) if doc.layout else 0
         if not doc.text.lstrip().startswith("Aviation Investigation Final Report"):
             entry["skip"] = "not a final report"
@@ -308,7 +306,7 @@ def page_texts(doc_id: str, url: str) -> tuple[list[str], str]:
         pages = json.loads(cached.read_text(encoding="utf-8"))
         if pages["sha256"] == sha:
             return pages["text"], sha
-    doc = extract(pdf)
+    doc = read(pdf)
     raw = doc.text.encode()
     assert doc.layout is not None
     text = [raw[p.start : p.end].decode() for p in doc.layout.pages]

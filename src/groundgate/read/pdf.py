@@ -147,25 +147,25 @@ def _visible(page: Any) -> Rect:
     return min(cx0, cx1), min(cy0, cy1), max(cx0, cx1), max(cy0, cy1)
 
 
-def extract_pdf(path: str | Path, pages: Iterable[int] | None = None) -> Result:
+def read_pdf(path: str | Path, pages: Iterable[int] | None = None) -> Result:
     """Text, pages, words and warnings for a PDF. ``pages`` are 1-based page numbers."""
     try:
         from pdfminer.pdftypes import PDFException
         from pdfminer.psexceptions import PSException
     except ImportError as e:  # pragma: no cover - exercised only without the extra
         raise ImportError("PDF support needs pdfminer.six: pip install 'groundgate[pdf]'") from e
-    from . import ExtractError
+    from . import ReadError
 
     wanted = None
     if pages is not None:
         wanted = sorted(set(pages))
         if not wanted or wanted[0] < 1:
-            raise ExtractError("pages must be 1-based page numbers")
+            raise ReadError("pages must be 1-based page numbers")
     try:
         with open(path, "rb") as fp:
             return _read(fp, wanted)
     except (PDFException, PSException) as e:
-        raise ExtractError(f"{path}: not a readable PDF ({type(e).__name__}: {e})") from e
+        raise ReadError(f"{path}: not a readable PDF ({type(e).__name__}: {e})") from e
 
 
 _LAYOUT_LOCK = threading.Lock()

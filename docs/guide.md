@@ -27,7 +27,7 @@ summary.
 
 The document is a Python `str` in Unicode NFC. Anything else is an invalid packet: `admit`
 raises `PacketError` and writes no receipt. If your text came from somewhere else, normalise it
-before you extract, so the extractor's offsets and groundgate's agree:
+before you run the extractor, so the extractor's offsets and groundgate's agree:
 
 ```python
 import unicodedata
@@ -35,14 +35,14 @@ import unicodedata
 text = unicodedata.normalize("NFC", text)
 ```
 
-To get text from a file, use `groundgate.extract.extract(path, pages=None)` or
-`groundgate extract` on the command line. It reads PDF (with `groundgate[pdf]`), HTML, XML and
+To get text from a file, use `groundgate.read.read(path, pages=None)` or
+`groundgate read` on the command line. It reads PDF (with `groundgate[pdf]`), HTML, XML and
 plain text and returns an `Extracted` with `text` (NFC), `layout` (PDFs only) and `warnings`. It
 drops text a reader can't see, and for PDFs records the page and box of every word so the report
 can show page numbers.
 
-`extract` writes a table one row on each line, with a tab between two cells. For HTML, the cells are
-the table's `td` and `th` elements. A PDF has no cells, so `extract` finds them: a row is the text
+`read` writes a table one row on each line, with a tab between two cells. For HTML, the cells are
+the table's `td` and `th` elements. A PDF has no cells, so `read` finds them: a row is the text
 at the same height, and it is a table row when it has two or more separate parts side by side, and
 one part holds only numbers, such as `$ 1,234` or `(56)`. A table has two or more table rows.
 Between them, short headings, numbers and headings in the label column join the table. Column
@@ -163,7 +163,7 @@ at a unit place, such as the `$` of the value's column (spec 0.7). A value quote
 | `scale` | A value in thousands or millions. | "in thousands" or "in millions" before the value, with no other scale word between. With a scale item whose text holds a scale word, the value of a number with no scale word of its own must be the number times that scale: the number as written does not match (spec 0.8). A number such as "$2.2 million" keeps its own scale. |
 | `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The item holds a form of the field's unit. Either that unit is next to the number, so the item repeats it, or the field item passes, the item is before the value, no unit form is next to the number, and the item is on the value's line, in a caption line before the table, or in the value's column of the same table (spec 0.7). When the field item passes, a unit form at such a place also means that the unit is not missing, with no unit item (spec 0.8). |
 | `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. |
-| `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). A dash or a `$` with no number counts as a cell. A number after the field item on its line, such as a footnote marker, stops the rule. When only spaces stand between the row label and its first number, the rule stops after the first column. A tab after the label, as `groundgate extract` writes HTML tables, keeps it. |
+| `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). A dash or a `$` with no number counts as a cell. A number after the field item on its line, such as a footnote marker, stops the rule. When only spaces stand between the row label and its first number, the rule stops after the first column. A tab after the label, as `groundgate read` writes HTML tables, keeps it. |
 
 groundgate computes the value from the parts. The extractor does not state the steps. On a field
 with a unit, brackets that enclose the number make it negative with no item. When the value needs a sign, a scale or a
@@ -258,7 +258,7 @@ the page, and a quote from it.
 ```
 
 For example, for a field `operating_income` [USD] with keys `2025` and `2024` and the alias "Loss
-from operations", this table (with tabs between cells, as `groundgate extract` writes HTML tables):
+from operations", this table (with tabs between cells, as `groundgate read` writes HTML tables):
 
 ```text
 CONSOLIDATED STATEMENTS OF OPERATIONS
@@ -676,7 +676,7 @@ the page re-derives the receipt first and says whether it matched. `layout=` and
 ## Command line
 
 ```bash
-groundgate extract FILE [--pages 1-3,7] [-o doc.txt] [--layout layout.json]
+groundgate read FILE [--pages 1-3,7] [-o doc.txt] [--layout layout.json]
 groundgate admit   DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--document-id ID] [-o receipt.json]
 groundgate admit   --docs D --candidates C --schema S --out R [--policy P] [--judgments J]
 groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J]

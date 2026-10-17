@@ -15,7 +15,7 @@ from typing import Any
 
 import groundgate as gg
 from groundgate.adapters.langextract import to_candidates
-from groundgate.extract import Layout
+from groundgate.read import Layout
 from groundgate.report import render
 
 HERE = Path(__file__).parent

@@ -144,7 +144,11 @@ def _pages(
     """For each page (all of them when pages is None): its blocks and the tables of the extract,
     and each page's height. The extract runs as groundgate runs it; this only records what _plan
     gives."""
-    from groundgate.extract import extract, pdf
+    try:
+        from groundgate.read import pdf, read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read
+        from groundgate.extract import pdf  # type: ignore[no-redef]
 
     seen: list[dict[str, Any]] = []
     tables = pdf._tables
@@ -156,7 +160,7 @@ def _pages(
 
     pdf._tables = record
     try:
-        got = extract(pdf_path, pages=pages)
+        got = read(pdf_path, pages=pages)
     finally:
         pdf._tables = tables
     assert got.layout is not None
@@ -165,7 +169,10 @@ def _pages(
 
 def rows_of(doc: str, pdf_path: Path, pages: list[int]) -> list[dict[str, Any]]:
     """The rows of the three kinds on these pages of a PDF."""
-    from groundgate.extract import pdf
+    try:
+        from groundgate.read import pdf
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import pdf  # type: ignore[no-redef]
 
     seen, heights = _pages(pdf_path, pages)
     out: list[dict[str, Any]] = []

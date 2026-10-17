@@ -68,13 +68,16 @@ def _original(
 ) -> dict[str, Any] | None:
     """Where the page finds the cited text in the original: the match in the filing HTML, or
     the box on the PDF page. None for an FDA label."""
-    from groundgate.extract import extract
+    try:
+        from groundgate.read import read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read  # type: ignore[no-redef]
 
     if src["kind"] == "sec":
         import sec  # bench/sec/sec.py
 
         if src["id"] not in cache:
-            full = extract(_filing(src)).text
+            full = read(_filing(src)).text
             part = sec.item7(full)
             if part is None or part != text:
                 raise SystemExit(f"{src['id']}: docs/ is not Item 7 of the pinned filing")
@@ -86,7 +89,7 @@ def _original(
     ):  # the label is XML: the page shows the whole text that groundgate reads
         return {"type": "text", "full": text, "at": [a, b]}
     if src["id"] not in cache:
-        got = extract(_pdf(src), pages=src.get("select", {}).get("pages"))
+        got = read(_pdf(src), pages=src.get("select", {}).get("pages"))
         if got.text != text:
             raise SystemExit(f"{src['id']}: docs/ is not the text of the pinned PDF")
         cache[src["id"]] = got

@@ -72,7 +72,10 @@ def numbers_in(text: str) -> list[tuple[int, int]]:
 def walk(count_only: bool) -> None:
     pick.CACHE = HERE / ".cache"
     pick.CACHE.mkdir(exist_ok=True)
-    from groundgate.extract import extract
+    try:
+        from groundgate.read import read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read  # type: ignore[no-redef]
 
     log: list[dict[str, Any]] = []
     chosen: list[dict[str, Any]] = []
@@ -97,7 +100,7 @@ def walk(count_only: bool) -> None:
         if not data.startswith(b"%PDF"):
             entry["skip"] = "not a PDF"
             continue
-        doc = extract(pick.CACHE / f"ntsb-{rid}.pdf")
+        doc = read(pick.CACHE / f"ntsb-{rid}.pdf")
         pages = len(doc.layout.pages) if doc.layout else 0
         if not doc.text.lstrip().startswith("Aviation Investigation Final Report"):
             entry["skip"] = "not a final report"
