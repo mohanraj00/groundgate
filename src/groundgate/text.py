@@ -1033,7 +1033,9 @@ def _no_number_at(text: str, pos: int) -> bool:
 def _slot_before_cell(text: str, a: int, b: int) -> bool:
     """Whether the prefix at text[a:b] fills its tab slot and the next slot is empty or holds a
     lone dash. That next slot holds the cell of the column (SPEC §4.5, rule 5)."""
-    left = len(text[:a].rstrip(" \r"))
+    left = a
+    while left > 0 and text[left - 1] in " \r":  # no copy of the text before the prefix
+        left -= 1
     return left > 0 and text[left - 1] == "\t" and _NEXT_SLOT.match(text, b) is not None
 
 
