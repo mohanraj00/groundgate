@@ -400,9 +400,6 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                     )
                 elif sum(map(_number_cell, cells)) < width:
                     lines = _fill_empty_cells(cells, columns)
-                    # a lone currency sign, such as "$", does not make the row a labeled row
-                    signs = all(set("".join(t for t, _ in cell)) <= NUMBER_CHARS for cell in cells)
-                    isolated = not labeled and signs and len(lines) == 1
                 elif numeric_only:
                     placed = _fill_empty_cells(cells, columns)
                     isolated = len(placed) == 1
@@ -415,6 +412,9 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                         lines = _plain(cells)
                     else:  # the text before the first number is one label
                         lines = [[word for cell in cells[:at] for word in cell], *cells[at:]]
+                # a lone currency sign, such as "$", does not make the row a labeled row
+                signs = all(set("".join(t for t, _ in cell)) <= NUMBER_CHARS for cell in cells)
+                isolated = isolated or (not labeled and signs and len(lines) == 1)
             elif columns and _side_by_side(row, span):
                 cells = [cell for line in lines for cell in _cells(line)]
                 if extended and ri < group[0]:  # the heading that gave the columns
