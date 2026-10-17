@@ -31,7 +31,9 @@ try:
     from groundgate.read.markup import xml_text
 except ImportError:  # a wheel before 0.9, such as the pinned 0.2.0 and 0.7.0, names it extract
     from groundgate.extract import extract as read  # type: ignore[no-redef]
-    from groundgate.extract.markup import xml_text  # type: ignore[no-redef]
+    from groundgate.extract import markup
+
+    xml_text = markup.xml_text
 
 HERE = Path(__file__).parent
 HL7 = "{urn:hl7-org:v3}"
