@@ -315,13 +315,17 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     in the label column above the first table row joins only when a column heading is above it.
     The table is written where pdfminer gives the first of its lines, one row on each line.
 
-    A short row uses the number columns of the widest rows of its own table when their spans agree.
-    Each number cell must overlap exactly one column, and each later text cell must be inside
-    exactly one column, in increasing order. Skipped columns get empty cells (#266). A full row of
-    only number cells, such as a row of year headings, starts with an empty label slot, so each
-    cell keeps its column position. If the grid or a cell is ambiguous, the short row is written
-    without tabs. An ambiguous numeric-only row also has two blank lines on either side, a key-scope
-    barrier in spec 0.9, so it cannot reuse a prior field label as a column hint (#278).
+    The number columns of a table come from its widest rows when their spans agree. Rows with a
+    label set them when the table has any, and a full row of only number cells joins them only
+    when it fits. A number cell before the first number cell of every labeled row, such as a year
+    as a row label, is a label and no column. A short row uses these columns: each number cell
+    must overlap exactly one column, and each later text cell must be inside exactly one column,
+    in increasing order. Skipped columns get empty cells (#266). A row with a label and only text
+    cells after it, such as "n/a", is placed the same way. A full row of only number cells, such
+    as a row of year headings, starts with an empty label slot, so each cell keeps its column
+    position, and it must fit the columns too. If the grid or a cell is ambiguous, the row is
+    written without tabs. An ambiguous numeric-only row also has two blank lines on either side, a
+    key-scope barrier in spec 0.9, so it cannot reuse a prior field label as a column hint (#278).
     """
     rows, span, plan = _plan(blocks)
 
@@ -331,24 +335,58 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     region: dict[Key, int] = {}
     tables: list[list[Row]] = []
     for n, (first, group) in enumerate(plan):
-        numbered = []
-        for ri in group:
-            cells = [cell for bi, li in rows[ri] for cell in _cells(blocks[bi][li])]
-            numbered.append([cell for cell in cells if _number_cell(cell)])
+        grouped = [[cell for bi, li in rows[ri] for cell in _cells(blocks[bi][li])] for ri in group]
+        # a number left of the first number cell of every labeled row is a row label, such as a year
+        edge = min(
+            (
+                _span(next(c for c in cells if _number_cell(c))).x0
+                for cells in grouped
+                if cells and not _number_cell(cells[0]) and any(map(_number_cell, cells))
+            ),
+            default=None,
+        )
+
+        numbered = [
+            [cell for cell in cells[_label_number(cells, edge) :] if _number_cell(cell)]
+            for cells in grouped
+        ]
         widest = max(map(len, numbered), default=0)
-        columns = _number_columns([row for row in numbered if len(row) == widest])
+        full = [
+            (num, cells) for num, cells in zip(numbered, grouped, strict=True) if len(num) == widest
+        ]
+        # labeled rows set the grid when there are any; a row of only numbers joins it if it fits
+        basis = [
+            num for num, cells in full if not _number_cell(cells[0]) or _label_number(cells, edge)
+        ]
+        columns = _number_columns(basis or [num for num, _ in full])
+        if basis and columns:
+            fits = [num for num, cells in full if len(_fill_empty_cells(num, columns)) > 1]
+            columns = _number_columns(fits) or columns
         tables.append([])
-        for row in rows[first : group[-1] + 1]:
+        for ri in range(first, group[-1] + 1):
+            row = rows[ri]
             lines = [blocks[bi][li] for bi, li in row]
             isolated = False
             if (_side_by_side(row, span) and any(map(number, row))) or all(map(number, row)):
-                lines = [cell for line in lines for cell in _cells(line)]
-                if sum(_number_cell(cell) for cell in lines) < widest:
-                    numeric_only = all(_number_cell(cell) for cell in lines)
-                    lines = _fill_empty_cells(lines, columns)
+                cells = [cell for line in lines for cell in _cells(line)]
+                labeled = _label_number(cells, edge)
+                numeric_only = not labeled and all(map(_number_cell, cells))
+                if labeled:
+                    placed = _fill_empty_cells(cells[1:], columns)
+                    lines = [cells[0], *placed[1:]] if len(placed) > 1 else _plain(cells)
+                elif sum(map(_number_cell, cells)) < widest:
+                    lines = _fill_empty_cells(cells, columns)
                     isolated = numeric_only and len(lines) == 1
-                elif lines and all(_number_cell(cell) for cell in lines):
-                    lines = [[], *lines]
+                elif numeric_only:
+                    placed = _fill_empty_cells(cells, columns)
+                    isolated = len(placed) == 1
+                    lines = placed if isolated else [[], *cells]
+                else:
+                    lines = cells
+            elif columns and ri > group[0] and _side_by_side(row, span):
+                cells = [cell for line in lines for cell in _cells(line)]
+                if _span(cells[0]).x1 <= columns[0][0]:  # a label, then text cells in the columns
+                    lines = _fill_empty_cells(cells, columns)
             if isolated:
                 tables[n].extend([[], [], lines, [], []])
             else:
@@ -372,6 +410,22 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
         if prose:
             out.append(prose)
     return out
+
+
+def _label_number(cells: Row, edge: float | None) -> bool:
+    """Whether the row starts with a number cell that ends before ``edge``, the first number cell
+    of the labeled rows, such as a year as a row label."""
+    return (
+        edge is not None
+        and len(cells) > 1
+        and _number_cell(cells[0])
+        and _span(cells[0]).x1 <= edge
+    )
+
+
+def _plain(row: Row) -> Row:
+    """All the words of a row on one line, with no tabs."""
+    return [[word for cell in row for word in cell]]
 
 
 def _number_columns(rows: list[Row]) -> list[tuple[float, float]]:
@@ -400,7 +454,7 @@ def _fill_empty_cells(row: Row, columns: list[tuple[float, float]]) -> Row:
     column only when it is fully inside that column, so a long label that crosses into the number
     columns is ambiguous.
     """
-    fallback = [[word for cell in row for word in cell]]
+    fallback = _plain(row)
     if not columns:
         return fallback
     labels: Line = []

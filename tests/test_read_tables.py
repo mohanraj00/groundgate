@@ -319,7 +319,7 @@ def test_full_width_numeric_row_off_the_grid_is_isolated(tmp_path: Path) -> None
 
 @pytest.mark.parametrize(
     "x,expected",
-    [(402, "Cash\t\tn/a"), (300, "Cash\tn/a"), (420, "Cash n/a")],
+    [(402, "Cash\t\tn/a"), (300, "Cash\tn/a\t"), (420, "Cash n/a")],
     ids=["inside-second-column", "inside-first-column", "across-the-column-edge"],
 )
 def test_text_only_row_in_a_table_keeps_its_column(tmp_path: Path, x: int, expected: str) -> None:

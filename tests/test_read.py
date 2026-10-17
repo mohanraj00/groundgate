@@ -254,7 +254,7 @@ def test_pdf_a_number_row_in_a_table_is_cut_into_cells(tmp_path: Path) -> None:
         (72, 700, "Cash"),
         (300, 700, "1"),
         (400, 700, "2"),
-        (300, 686, "3                              4"),
+        (300, 686, "3" + " " * 28 + "4"),  # the 4 on the second column
         (72, 672, "Debt"),
         (300, 672, "5"),
         (400, 672, "6"),
