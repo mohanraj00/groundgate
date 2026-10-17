@@ -331,10 +331,10 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     after it, such as "n/a", is placed the same way. Above the first table row, such a row is placed
     only when it fits, because it can be a column heading. A full row of only number cells, such as
     a row of year headings, starts with an empty label slot, so each cell keeps its column position,
-    and it must fit the columns too. If the grid or a cell is ambiguous, the row is written without
-    tabs. An ambiguous row of only number cells and currency signs also has two blank lines on
-    either side, a key-scope barrier in spec 0.9, so it cannot reuse a prior field label as a column
-    hint (#278).
+    and it must fit the columns too. A table with no label column gets no label slot in any row. If
+    the grid or a cell is ambiguous, the row is written without tabs. An ambiguous row of only
+    number cells and currency signs also has two blank lines on either side, a key-scope barrier in
+    spec 0.9, so it cannot reuse a prior field label as a column hint (#278).
     """
     rows, span, plan = _plan(blocks)
 
@@ -434,6 +434,8 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                     placed = _fill_empty_cells(cells, columns)
                     if ri > group[0] or len(placed) > 1:  # a heading that does not fit stays
                         lines = placed
+            if not with_label and len(lines) > 1 and not lines[0]:
+                lines = lines[1:]  # a table with no label column gets no label slot
             if isolated:
                 tables[n].extend([[], [], lines, [], []])
             else:
