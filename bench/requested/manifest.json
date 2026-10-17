@@ -18,7 +18,7 @@
     "subject": "The reporting entity's own consolidated group in this annual report",
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
-   "text_sha256": "sha256:1ec586d3ff341a112f1412356f4fb8c716b3913c15b5443e4ecb84bfe9060cfc",
+   "text_sha256": "sha256:b7976e70a4ea9c41ad65fd888f0b6b69812fa5f8ab91df03cb2700fbfd1e520c",
    "selection_status": "frozen_member"
   },
   {
@@ -116,7 +116,7 @@
     "subject": "RP2040",
     "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
-   "text_sha256": "sha256:e9bff7326c78db309ebd6f257641040ef2cbb289881d8d55970e88a038fdb598",
+   "text_sha256": "sha256:17a5bb0e0c58f89a3c81ee7174cd9e0b40e295d0466afac1e3793b797f298d40",
    "selection_status": "frozen_member"
   },
   {
@@ -355,7 +355,7 @@
     "subject": "The reporting entity's own consolidated group in this annual report",
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
-   "text_sha256": "sha256:c80f077520b80b282f436b75fb8c0fe990016f9bd5e1f9a7e10401d18a597901"
+   "text_sha256": "sha256:2d97cf7b3865956070020412633a83b80a09d4911249a56b6726ae72b4b00cab"
   },
   {
    "approved_max_bytes": 25165824,
@@ -429,7 +429,7 @@
     "subject": "The reporting entity's own consolidated group in this annual report",
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
-   "text_sha256": "sha256:ca9c01d6910f7308bade870f6b4154d366183bfa3a608e31e58eaf1739a7ebf2"
+   "text_sha256": "sha256:ff1f4874782a013143897da97e401085b2d1b2a61014b6ebfa0859d35aa1201a"
   },
   {
    "id": "component-h04",
@@ -627,7 +627,7 @@
     "subject": "SHT31-DIS-B",
     "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
-   "text_sha256": "sha256:ddf719d44c1954227941840df3f189f5cdc7c4f816861f4f5f36925edb90d4a2"
+   "text_sha256": "sha256:ed10154ec92b9d18769bcbae17dd72c8eb5f3753cbb4ef3f0eef20e603e91328"
   },
   {
    "id": "component-h06",
@@ -726,7 +726,7 @@
     "subject": "SDP31",
     "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
-   "text_sha256": "sha256:642a8b2447802d783eb0eded3693b1f9e665b44f959576c33174bc5e47c55876"
+   "text_sha256": "sha256:0e960976a67331b1a55e1168f771f256cc6fa05a30c7aff4376283c64a7956a4"
   },
   {
    "id": "sbc-h04",
@@ -1024,7 +1024,7 @@
     "subject": "The reporting entity's own consolidated group in this annual report",
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
-   "text_sha256": "sha256:258e51ab497f8985d55e35898685cfb6151491accfbedf66c39b1b9742fe3ef6"
+   "text_sha256": "sha256:e2e3b8136f29fda0dca77a99e15c49163f2b4ea623e59724aa38b6bc87acd7f7"
   },
   {
    "id": "component-h07",
@@ -1124,7 +1124,7 @@
     "subject": "P2",
     "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
-   "text_sha256": "sha256:f8d029aa3a18c923cf6b8736e794711d1fd6f30d290838fdca608aadc76355a8"
+   "text_sha256": "sha256:5a809174ee485a2ea9a22bcee61bb41773f5b01fd97352294e853b8b083ddeab"
   },
   {
    "id": "annual-h10",
@@ -1201,7 +1201,7 @@
     "subject": "The reporting entity's own consolidated group in this annual report",
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
-   "text_sha256": "sha256:01bc5ac257aaab4727149edac61e41e0488a69c76ba03ac9ebb8376f5dff3b6e"
+   "text_sha256": "sha256:d1bb7cb921fbd682aeb13221319224a9b33c42bb60577e0aa7cd532d3eed37e7"
   },
   {
    "id": "annual-h11",
@@ -1278,7 +1278,7 @@
     "subject": "The reporting entity's own consolidated group in this annual report",
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
-   "text_sha256": "sha256:f1c97c0f7dc289cad282454a10efcfb3e1b4aae5c201cce4c8cb4fdf7b0e5f1d"
+   "text_sha256": "sha256:fe389bbcbe238464efe9e304666fb381c452ac2e5ea28913c4914fe1bfe4e437"
   },
   {
    "id": "component-h08",
@@ -1379,7 +1379,7 @@
     "subject": "M524",
     "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
-   "text_sha256": "sha256:fe785ef9bbacfd76358cee9de77eb8c4d51eb3f6639527d5a25300a1e39fa87f"
+   "text_sha256": "sha256:d3b5438e616d9d4e6ae91c0c97da2bbf45cb81a4fe0da012caa8240343e4bb94"
   },
   {
    "id": "component-h09",
@@ -1480,7 +1480,7 @@
     "subject": "B404X",
     "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
-   "text_sha256": "sha256:21eb9a28a0ca5a7539d495426054ca6f2c5f3f1762957babcf1ae6647e2987de"
+   "text_sha256": "sha256:254bf7ab2ba30cd2399c27ebd4a4ec2b42a291af97f9bd2642193fbaa54a5e16"
   },
   {
    "id": "component-h10",
@@ -1581,7 +1581,7 @@
     "subject": "T404",
     "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
-   "text_sha256": "sha256:f0e40cb9300d9f59cbd789a942abcb38ae01df85d170d827293d155e2b046d52"
+   "text_sha256": "sha256:95ba44e3c44a45847e3abed7b8ea61f4ec2f61e3e346f5736cb81cb8dde284ec"
   },
   {
    "id": "sbc-h07",
@@ -1654,7 +1654,7 @@
     "subject": "The plan that this Summary of Benefits and Coverage describes",
     "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
    },
-   "text_sha256": "sha256:05c90a14ade2ab7b3e73a906cd3d81aa23900ce0bf0b749a2f5c8f776256c1f2"
+   "text_sha256": "sha256:2d0497bee30a9f74d049052e9a1534d0089ad11d0c5ed76c408d7fda399ead27"
   },
   {
    "id": "sbc-h08",
@@ -1828,7 +1828,7 @@
    },
    "named_device": "ACS712ELCTR-05B-T",
    "technical_family": "allegro-acs712-integrated-current-sensor-family",
-   "text_sha256": "sha256:3cd50277b7207a0b39d6a3d3406620fa3c8b3e6abe75d91a28c119c0c1c670de"
+   "text_sha256": "sha256:f7ad2ec632ed48d88219dec736bfbce71ad02d5da287065a115e270b30ef9210"
   },
   {
    "id": "component-h12",
@@ -1928,7 +1928,7 @@
    },
    "named_device": "A1324LLHLT-T",
    "technical_family": "allegro-a1324-a1325-a1326-linear-hall-sensor-family",
-   "text_sha256": "sha256:12e76a031a09cc7286af950fb3be2188ebc4c915f82bfca6dbaa68ab55893187"
+   "text_sha256": "sha256:ea2bfb443fe248a90c767038ab301978798f22c6dee9ac85b83bed142296462e"
   },
   {
    "id": "annual-h12",
@@ -2004,7 +2004,7 @@
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
-   "text_sha256": "sha256:34d5caa25fb0ddf4377d847ec6f7ec67152beeadc98adc0adef1d69543db082f"
+   "text_sha256": "sha256:0b141dc560483cc2b353d0e6fd19c2634501b15cd8125d447485673c6fc685ca"
   },
   {
    "id": "annual-h13",
@@ -2080,7 +2080,7 @@
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
-   "text_sha256": "sha256:99854fffdce71ea622c31d79e89d993ec6c4c81a26100dad144d4dd9690d3440"
+   "text_sha256": "sha256:cca978b1e9756e41ad126f15c7bef863566e29f052f96319284eae4d7403319d"
   },
   {
    "id": "annual-h14",
@@ -2156,7 +2156,7 @@
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
-   "text_sha256": "sha256:c4224654271b915cd0a41fb9feb2cd59854877329726ed7d8dfcbd68d33ade8d"
+   "text_sha256": "sha256:3c4413c3c777557c2e3491462bfe262bdd73ba3972c0774e031350d8ed11e3d1"
   },
   {
    "id": "annual-h15",
@@ -2232,7 +2232,7 @@
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared government catalog and hosting do not establish independent publisher trials. Issuer-group revisions stay together; no hosted third-party material is presumed licensed.",
-   "text_sha256": "sha256:936826a84d890b2d594110742f7ed5e193304dfaabb6a0a9106e1efbec4986a4"
+   "text_sha256": "sha256:cf786bd23d2959d888155c5b39fa3da48321cd4d14bf677cb849ce3500f8a0c4"
   },
   {
    "id": "sbc-h09",
@@ -2556,7 +2556,7 @@
     "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "NXP umbrella is shared with other NXP devices; ordering/packaging variants and revisions are not independent publishers.",
-   "text_sha256": "sha256:2abe72e63e511d03b5a2920636a2c4ffc311c3bec8c9ad784b41768cf0383f3b"
+   "text_sha256": "sha256:38c0152c74df9bf56380428bf45623d8c3cec4f3e7b8e8f45ca9f61c41ff322d"
   },
   {
    "id": "annual-h16",
@@ -2632,7 +2632,7 @@
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
-   "text_sha256": "sha256:2e5b1aeb504e647c547d084e5a8e20f80d06bdf1456e9a400e9842b2b9378dc9"
+   "text_sha256": "sha256:44ca30dd4ce1fe90b7dddf41313fd9687c51d259a6700066d17db227cb84a6e9"
   },
   {
    "id": "annual-h17",
@@ -2708,7 +2708,7 @@
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
-   "text_sha256": "sha256:e317497191bb1dbc1e466fb360637be8894428f41e30f86b58a0793a532b7be2"
+   "text_sha256": "sha256:5745afcece8c37cda708ba0c6cdc52b69d10b1801bcb0b495bbaad6e8921fe22"
   },
   {
    "id": "annual-h18",
@@ -2784,7 +2784,7 @@
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
-   "text_sha256": "sha256:fdf9de8cb1f70eca41a8aac42414a3617e58fdef3cd4df0319d53283b8046723"
+   "text_sha256": "sha256:da19a25e9f5ddcc43e4328803cb2f7036ca0fb281c282d32e50bd10daf292040"
   },
   {
    "id": "annual-h19",
@@ -2860,7 +2860,7 @@
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
-   "text_sha256": "sha256:f3d5a7c6704cb901ce9a633eae7bdc203a451f9e5f7b80ce4227ef56979bb185"
+   "text_sha256": "sha256:dcb1a93435b5558782c3da6f7a6cdcc0d8bf363b154e98fd8db81ffb07b909cd"
   },
   {
    "id": "annual-h20",
@@ -2936,7 +2936,7 @@
     "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
    },
    "publisher_overlap_note": "Shared GOV.UK hosting and FReM framework do not establish independent publishers. Departmental Groups and related agency/report revisions stay together; interdepartmental transactions may create dependence.",
-   "text_sha256": "sha256:50686ae57c0c1140418e8e07680d18dcd601e1639a8fd70ff5f7bfdf33d2611b"
+   "text_sha256": "sha256:cc13a93932d11f65801cc04ff52c362690aa6e4dfaf741c4413b82023d93abaf"
   },
   {
    "id": "component-h16",
@@ -3035,7 +3035,7 @@
     "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "NXP umbrella overlaps the earlier temperature sensor and these two I2C devices. Distinct functions, package suffixes and revisions are not independent publishers.",
-   "text_sha256": "sha256:791b717d5af24cfa3e754a73ec3be210222bcc78717d7ea178adea676a41b39e"
+   "text_sha256": "sha256:099b477a72c32ca0d6ed896d954d83e37a762df9f95c95f8d926bddd72bc9338"
   },
   {
    "id": "component-h17",
@@ -3134,7 +3134,7 @@
     "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
    },
    "publisher_overlap_note": "NXP umbrella overlaps the earlier temperature sensor and these two I2C devices. Distinct functions, package suffixes and revisions are not independent publishers.",
-   "text_sha256": "sha256:c71e4557dc2fdf923de828163fa1d01b20045ce5f8a72a0797131015cc89d3f8"
+   "text_sha256": "sha256:ac23894d167b41e6567284e19858723de59adcc69f6a722919844703d9cc540f"
   },
   {
    "id": "sbc-h13",
@@ -3361,7 +3361,7 @@
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
    "verified_reporting_period": "year ended2026-03-31",
-   "text_sha256": "sha256:d50b81ed311d02068e643596ddc723d34936688795bf4ad4915c6bd56f975916"
+   "text_sha256": "sha256:53dea80f8a89ed4fbbd0774f51d92cd36b298dec3f68ccabf56fae73330eb58a"
   },
   {
    "id": "annual-h23",
@@ -3438,7 +3438,7 @@
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
    "verified_reporting_period": "year ended2026-03-31",
-   "text_sha256": "sha256:2f175bcfecb23e2e5e1898fff43547e1cf7f3cbc399f4bd60ee737a5d3b01767"
+   "text_sha256": "sha256:253c722e7f3fdce3526d6f3aaf5a045f6ce58f3ca5aaba9decc4876265a462b8"
   },
   {
    "id": "annual-h24",
@@ -3515,7 +3515,7 @@
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
    "verified_reporting_period": "year ended2026-03-31",
-   "text_sha256": "sha256:478c645ca24273da0021c6c76fde016419ff906e13e3c0f3211714583865c3dd"
+   "text_sha256": "sha256:015952ebc5b87bccda6f72d91fd4067ffecbb3f56d7d1acf48842b6fe3e12abc"
   },
   {
    "id": "annual-h28",
@@ -3592,7 +3592,7 @@
    },
    "publisher_overlap_note": "Departmental FReM accounts share a government publishing and reporting umbrella with earlier annual sources. Own departmental Groups are distinct documents, not independent publisher forms.",
    "verified_reporting_period": "year ended2026-03-31",
-   "text_sha256": "sha256:767c4c3290e2283334f44c8d4cbda80223230ddc9cd5cf99e288aa25b67b55fc"
+   "text_sha256": "sha256:9d728e61ecd9a3c8e08110f35472e42e7bb333f73fcb86ae18125180b777570b"
   },
   {
    "id": "annual-h26",
@@ -3669,7 +3669,7 @@
    },
    "publisher_overlap_note": "One own consolidated corporate Group; related years, renderings and subsidiaries are not independent source families. Earlier catalog headline exposure is recorded; no request or rule was selected from it.",
    "verified_reporting_period": "year ended2026-06-30",
-   "text_sha256": "sha256:0cb6d77a0694ac526e0bc0b049731e5397b3ac1890bc50a879cb9872f5ffeb63"
+   "text_sha256": "sha256:437f7bc74a9ed73b1d7d9903646263c9c643d043ab8e23d87828e943956c1970"
   },
   {
    "id": "component-h19",
@@ -3769,7 +3769,7 @@
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
    "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
-   "text_sha256": "sha256:165bae4faf65171be312fb34a2677007e842fb5f7d7290c611e4d4794ed88a3c"
+   "text_sha256": "sha256:b0ed7553a6308995e9c6febbcc1140918454b364f8feec835853844c8c4e6fa4"
   },
   {
    "id": "component-h20",
@@ -3869,7 +3869,7 @@
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
    "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
-   "text_sha256": "sha256:41e33ff58127d53677f24661d750c6585a8467eae23542e885bc8eef12cd6e94"
+   "text_sha256": "sha256:85c63a78a3d0bd94ec93be7e4cd2d4cb8d2fcc28ca9780859e9ac50d4faa2331"
   },
   {
    "id": "component-h21",
@@ -3969,7 +3969,7 @@
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
    "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
-   "text_sha256": "sha256:696a079cc0d0ebd5aaad0026d8977ae6b99ee580d172648efbbb53d9573cd048"
+   "text_sha256": "sha256:6f8712200177755f564f5c3673a2df1da7204a3930dfb99b7897d115dbe8ed50"
   },
   {
    "id": "component-h22",
@@ -4069,7 +4069,7 @@
    },
    "publisher_overlap_note": "onsemi analog/control documentation umbrella; base ICs are distinct devices, not independent manufacturer/publisher forms. Related members, packages, thresholds, years and revisions remain grouped.",
    "rights_scope_note": "Site Content includes information/materials. Terms permit printing or storing one copy for noncommercial personal use that does not oppose onsemi interests; preserve notices. Other reproduction/transmission restricted. Export/control and trademark conditions apply; factual trademark use requires attribution. No express automated-retrieval ban found in inspected terms. Whether this private benchmark/provenance use fits the personal/noncommercial/non-adverse condition remains unresolved; no broader extraction/model/reuse license inferred.",
-   "text_sha256": "sha256:26fc156f3ece8515c2279b74a504363ce3ac90ee5341f4de280325afa6a1fdc1"
+   "text_sha256": "sha256:d92674cd9596c39747a329e26b33434ec319fc932b14ef8be6d1ea5f4ec14787"
   },
   {
    "id": "component-h23",
@@ -4170,7 +4170,7 @@
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
    "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban.",
-   "text_sha256": "sha256:2515f5a6e4b1c9f33b42c27b3bc328bffb93aa1954c5666c836fa16cc6c98551"
+   "text_sha256": "sha256:54393bdbc94be30a1e4d7632c33816867182d7d201684924c07ce8b56a36ca1f"
   },
   {
    "id": "component-h24",
@@ -4271,7 +4271,7 @@
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
    "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban.",
-   "text_sha256": "sha256:a1288c8e2569a4e36f183e062dd6c04fcebbc3e319e94dae3afb836e4d50c88f"
+   "text_sha256": "sha256:31c57936be3b586c573ad49a7194978728d8002976feeb506d97ae424521768c"
   },
   {
    "id": "component-h25",
@@ -4372,7 +4372,7 @@
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
    "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban.",
-   "text_sha256": "sha256:92da3e4c6e0cab3f573c5b40e9220dec9e0347b3ee6876b41a655d211ba4af7e"
+   "text_sha256": "sha256:fb354a45bfb9b02ede0509ed68649bbf05ca7ed277c204f55268b21daaa42820"
   },
   {
    "id": "component-h26",
@@ -4473,7 +4473,7 @@
    "publisher_overlap_note": "NXP shared product-documentation and legal umbrella; distinct IC families retain manufacturer/form dependence. Packages, revisions and related interfaces are not independent publisher families.",
    "rights_scope_note": "Previously inspected first-party terms allow unmodified personal noncommercial copies with notices; other uses require consent. Ordinary URL links encouraged without logo use. Separate MCP-service AI terms do not establish blanket website permission or a blanket website ban. Exact originals unread. Related h13 notice audit found no-offer/no-implied-IP-license, export and all-rights-reserved notices, without an explicit PDF copying/extraction ban; this establishes neither final clearance nor these new originals notice scope.",
    "rights_scope_note_update": "Clarified 2026-10-16: \"Exact originals unread\" was the pre-download caveat. The later original-page notice audit in this record supersedes it. That audit adds no broader right and no new ban.",
-   "text_sha256": "sha256:77a7d4305998d48b942793de5b53a297a568bc205c5d9a1af74bc0dde648d7f9"
+   "text_sha256": "sha256:689f2bdf7221c1ea5c905b35716a9d00481dc6c7ece15436769ce25c131167cd"
   },
   {
    "id": "sbc-h16",
@@ -5036,7 +5036,7 @@
    },
    "publisher_overlap_note": "One own railway corporate Group and publisher; broader UK public railway/government reporting dependence retained. Related revisions and subsidiaries are not independent documents.",
    "verified_reporting_period": "2025-04-01/2026-03-31",
-   "text_sha256": "sha256:3c3ad1044021ef904740e1de71f43f69924bde862ec99f2515c1e4fa84c73054"
+   "text_sha256": "sha256:52fb3a5e212868710b0745d95a485ef07f0b929ee47d56f116ab95f41ddefee5"
   },
   {
    "id": "annual-h31",
@@ -5113,7 +5113,7 @@
    },
    "publisher_overlap_note": "One own consolidated Crown housing/financial Group. Canadian government and financial reporting conventions overlap; company subsidiaries and repeated revisions are not independent source families.",
    "verified_reporting_period": "2025-01-01/2025-12-31",
-   "text_sha256": "sha256:88478eba14ab567978fd46bb94be244526910906d8011d490feee314f07047e5"
+   "text_sha256": "sha256:e69ec7c62f600a43eb2095ad8ffac2eb12a09c8361e048c0d60c2fd49e328375"
   },
   {
    "id": "sbc-h23",
@@ -5455,14 +5455,14 @@
   }
  },
  "selection_complete": true,
- "selection_note": "Frozen 2026-10-16 before any model output on this set. 64 documents: 3 development pilots (one per kind) and 61 held-out (20 component, 20 SBC, 21 annual). Sources on hold in source_checks.json stay outside. Related source families stay in one split. Selection used publisher metadata, notices and layout eligibility, never model success.",
+ "selection_note": "Frozen 2026-10-16 before any model output on this set. 64 documents: 3 development pilots (one per kind) and 61 held-out (20 component, 20 SBC, 21 annual). Sources on hold in source_checks.json stay outside. Related source families stay in one split. Selection used publisher metadata, notices and layout eligibility, never model success. On 2026-10-17 I pinned the text hashes again, after review fixes to the reader changed 43 texts. Members, splits and labels did not change. Outputs from the first pin are void and no held-out output was scored.",
  "status": "frozen",
  "label_method": "Draft source-only agent annotations from original PDFs, checked against original page renders. Independent second checks cover absence and disputed fields. No benchmark model call has run.",
  "reader_text": {
   "reader": "groundgate.extract (spec 0.9 draft reader: #265 top-edge band, #266 empty cells, #278 barrier)",
-  "code_sha256": "sha256:6b600810087bd18086aa69b7ea1e98963375668e7d66ed05b34dcd96d092176e",
+  "code_sha256": "sha256:cb4d85377f2b044aee0f68e8c0243c966903399758f8b4eecf0a3bcd774120d7",
   "code_digest_method": "sha256 over sorted src/groundgate/extract/*.py lines \"name NUL sha256(file) LF\"",
-  "built_from": "local integration of the four 0.9 lanes on origin/main (Extract lane commit 31718e5)",
+  "built_from": "local integration of the four 0.9 PR heads on origin/main df49e4a (Extract commit f9d7520)",
   "pdfminer_six": "20260107",
   "note": "Text files stay in local work storage with the original PDFs. Only their hashes are published."
  },
