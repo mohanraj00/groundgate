@@ -31,7 +31,10 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-from groundgate.read import read
+try:
+    from groundgate.read import read
+except ImportError:  # a wheel before 0.9 names it extract
+    from groundgate.extract import extract as read  # type: ignore[no-redef]
 
 HERE = Path(__file__).parent
 BENCH = HERE.parent

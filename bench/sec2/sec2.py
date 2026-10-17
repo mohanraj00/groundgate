@@ -26,7 +26,10 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).parent.parent / "sec"))
 import sec  # bench/sec/sec.py
 
-from groundgate.read import read
+try:
+    from groundgate.read import read
+except ImportError:  # a wheel before 0.9 names it extract
+    from groundgate.extract import extract as read  # type: ignore[no-redef]
 
 HERE = Path(__file__).parent
 FILINGS = 20

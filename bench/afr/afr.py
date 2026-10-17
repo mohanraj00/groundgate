@@ -71,7 +71,10 @@ def _dump(path: Path, obj: Any) -> None:
 
 def check(pdf: Path, first: int, last: int) -> str:
     """Why the pages of pages.json are not a cut, or ""."""
-    from groundgate.read import read
+    try:
+        from groundgate.read import read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read  # type: ignore[no-redef]
 
     if not 1 <= first <= last or last - first + 1 > MAX_PAGES:
         return f"pages {first} to {last}: not 1 to {MAX_PAGES} pages"
@@ -134,7 +137,10 @@ def pick() -> None:
 
 def docs() -> None:
     """docs/<id>.txt: the cut pages of each pinned report, after a check of its digest."""
-    from groundgate.read import read
+    try:
+        from groundgate.read import read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read  # type: ignore[no-redef]
 
     out = HERE / "docs"
     out.mkdir(exist_ok=True)

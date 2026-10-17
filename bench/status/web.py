@@ -53,7 +53,10 @@ def pdf_of(src: dict[str, Any]) -> Path:
 def build(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Each item with its text around it and its box on the PDF page. An item has an id, a doc
     and a span in code points; nothing else of it reaches the page."""
-    from groundgate.read import read
+    try:
+        from groundgate.read import read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read  # type: ignore[no-redef]
 
     srcs = sources()
     out: list[dict[str, Any]] = []

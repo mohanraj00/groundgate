@@ -69,8 +69,12 @@ def _dump(path: Path, obj: Any) -> None:
 
 def _extract(pdf: Path, pages: list[int]) -> str:
     """The text of the pages, as groundgate writes it since #230: a table as rows with tabs."""
-    from groundgate.read import pdf as pdf_path
-    from groundgate.read import read
+    try:
+        from groundgate.read import pdf as pdf_path
+        from groundgate.read import read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read  # type: ignore[no-redef]
+        from groundgate.extract import pdf as pdf_path  # type: ignore[no-redef]
 
     if not hasattr(pdf_path, "CELL_BREAK"):
         raise SystemExit("this set reads the text of #230: run it with the extract of #230")

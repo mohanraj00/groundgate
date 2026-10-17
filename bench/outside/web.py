@@ -68,7 +68,10 @@ def _original(
 ) -> dict[str, Any] | None:
     """Where the page finds the cited text in the original: the match in the filing HTML, or
     the box on the PDF page. None for an FDA label."""
-    from groundgate.read import read
+    try:
+        from groundgate.read import read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read  # type: ignore[no-redef]
 
     if src["kind"] == "sec":
         import sec  # bench/sec/sec.py

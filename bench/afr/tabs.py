@@ -66,7 +66,10 @@ def _name(run: str, read: str) -> Path:
 
 def docs() -> None:
     """tabs/docs/<id>.txt: the cut pages of each pinned report, as this groundgate writes them."""
-    from groundgate.read import read
+    try:
+        from groundgate.read import read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read  # type: ignore[no-redef]
 
     out = TABS / "docs"
     out.mkdir(parents=True, exist_ok=True)

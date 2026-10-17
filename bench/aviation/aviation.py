@@ -72,7 +72,10 @@ def numbers_in(text: str) -> list[tuple[int, int]]:
 def walk(count_only: bool) -> None:
     pick.CACHE = HERE / ".cache"
     pick.CACHE.mkdir(exist_ok=True)
-    from groundgate.read import read
+    try:
+        from groundgate.read import read
+    except ImportError:  # a wheel before 0.9 names it extract
+        from groundgate.extract import extract as read  # type: ignore[no-redef]
 
     log: list[dict[str, Any]] = []
     chosen: list[dict[str, Any]] = []
