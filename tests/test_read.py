@@ -278,7 +278,7 @@ def test_pdf_prose_across_the_number_columns_ends_the_table(tmp_path: Path) -> N
         (300, 672, "500"),
         (400, 672, "400"),
         (72, 650, "Total"),
-        (300, 650, "1,234          5,678"),
+        (300, 650, "1,234" + " " * 22 + "5,678"),  # the 5,678 on the second column
     ]
     path.write_bytes(make_pdf([page]))
     assert read(path).text == (

@@ -316,13 +316,14 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     The table is written where pdfminer gives the first of its lines, one row on each line.
 
     The number columns of a table come from its widest rows when their spans agree. Rows with a
-    label set them when the table has any, and a full row of only number cells joins them only
-    when it fits. A number cell before the first number cell of every labeled row, such as a year
-    as a row label, is a label and no column. A short row uses these columns: each number cell
-    must overlap exactly one column, and each later text cell must be inside exactly one column,
-    in increasing order. Skipped columns get empty cells (#266). A row with a label and only text
-    cells after it, such as "n/a", is placed the same way. A full row of only number cells, such
-    as a row of year headings, starts with an empty label slot, so each cell keeps its column
+    label set them when the table has any, or a strict majority of those rows that agree, and a full
+    row of only number cells joins them only when it fits. A full row keeps its tabs only when its
+    number cells fit the columns. A number cell before the first number cell of every labeled row,
+    such as a year as a row label, is a label and no column. A short row uses these columns: each
+    number cell must overlap exactly one column, and each later text cell must be inside exactly one
+    column, in increasing order. Skipped columns get empty cells (#266). A row with a label and only
+    text cells after it, such as "n/a", is placed the same way. A full row of only number cells,
+    such as a row of year headings, starts with an empty label slot, so each cell keeps its column
     position, and it must fit the columns too. If the grid or a cell is ambiguous, the row is
     written without tabs. An ambiguous numeric-only row also has two blank lines on either side, a
     key-scope barrier in spec 0.9, so it cannot reuse a prior field label as a column hint (#278).
@@ -358,7 +359,7 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
         basis = [
             num for num, cells in full if not _number_cell(cells[0]) or _label_number(cells, edge)
         ]
-        columns = _number_columns(basis or [num for num, _ in full])
+        columns = _grid(basis) if basis else _number_columns([num for num, _ in full])
         if basis and columns:
             fits = [num for num, cells in full if len(_fill_empty_cells(num, columns)) > 1]
             columns = _number_columns(fits) or columns
@@ -373,7 +374,9 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                 numeric_only = not labeled and all(map(_number_cell, cells))
                 if labeled:
                     placed = _fill_empty_cells(cells[1:], columns)
-                    lines = [cells[0], *placed[1:]] if len(placed) > 1 else _plain(cells)
+                    lines = (
+                        [cells[0] + placed[0], *placed[1:]] if len(placed) > 1 else _plain(cells)
+                    )
                 elif sum(map(_number_cell, cells)) < widest:
                     lines = _fill_empty_cells(cells, columns)
                     isolated = numeric_only and len(lines) == 1
@@ -381,8 +384,10 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
                     placed = _fill_empty_cells(cells, columns)
                     isolated = len(placed) == 1
                     lines = placed if isolated else [[], *cells]
-                else:
-                    lines = cells
+                else:  # a full row with a label keeps its tabs when its numbers fit the columns
+                    numbers = [cell for cell in cells if _number_cell(cell)]
+                    aligned = len(_fill_empty_cells(numbers, columns)) > 1
+                    lines = cells if aligned else _plain(cells)
             elif columns and ri > group[0] and _side_by_side(row, span):
                 cells = [cell for line in lines for cell in _cells(line)]
                 if _span(cells[0]).x1 <= columns[0][0]:  # a label, then text cells in the columns
@@ -421,6 +426,27 @@ def _label_number(cells: Row, edge: float | None) -> bool:
         and _number_cell(cells[0])
         and _span(cells[0]).x1 <= edge
     )
+
+
+def _grid(rows: list[Row]) -> list[tuple[float, float]]:
+    """The number columns of the labeled rows. If they disagree, the columns of a strict majority
+    of rows whose cells each overlap the cells of one of them, so one row off the grid does not
+    remove the grid of the others."""
+    columns = _number_columns(rows)
+    if columns or len(rows) < 3:
+        return columns
+    for row in rows:
+        same = [
+            other
+            for other in rows
+            if all(
+                _span(a).x0 < _span(b).x1 and _span(b).x0 < _span(a).x1
+                for a, b in zip(row, other, strict=True)
+            )
+        ]
+        if 2 * len(same) > len(rows):
+            return _number_columns(same)
+    return []
 
 
 def _plain(row: Row) -> Row:
