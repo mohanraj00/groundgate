@@ -5459,10 +5459,10 @@
  "status": "frozen",
  "label_method": "Draft source-only agent annotations from original PDFs, checked against original page renders. Independent second checks cover absence and disputed fields. No benchmark model call has run.",
  "reader_text": {
-  "reader": "groundgate.extract (spec 0.9 draft reader: #265 top-edge band, #266 empty cells, #278 barrier)",
-  "code_sha256": "sha256:cb4d85377f2b044aee0f68e8c0243c966903399758f8b4eecf0a3bcd774120d7",
-  "code_digest_method": "sha256 over sorted src/groundgate/extract/*.py lines \"name NUL sha256(file) LF\"",
-  "built_from": "local integration of the four 0.9 PR heads on origin/main df49e4a (Extract commit f9d7520)",
+  "reader": "groundgate.read (spec 0.9 draft reader: #265 top-edge band, #266 empty cells, #278 barrier)",
+  "code_sha256": "sha256:58bc28d0e52448ebd621a402d9c3f1d39b03347c498029965fabdfd6ec883e8f",
+  "code_digest_method": "sha256 over sorted src/groundgate/read/*.py lines \"name NUL sha256(file) LF\"",
+  "built_from": "local integration of the four 0.9 PR heads on origin/main 141bc4a (Extract commit 4784d9c), after #289 moved the reader to groundgate.read. The 64 texts are the same bytes as under the second freeze.",
   "pdfminer_six": "20260107",
   "note": "Text files stay in local work storage with the original PDFs. Only their hashes are published."
  },
