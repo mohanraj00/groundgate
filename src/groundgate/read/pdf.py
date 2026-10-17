@@ -316,24 +316,25 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
     in the label column above the first table row joins only when a column heading is above it.
     The table is written where pdfminer gives the first of its lines, one row on each line.
 
-    The number columns of a table come from its widest rows when their spans agree. Rows with a
-    label set them when the table has any, or a strict majority of those rows that agree (two
+    The number columns of a table come from its widest rows when their spans agree. The widest rows
+    with a label set them when the table has any, or a strict majority of those rows that agree (two
     majorities with different columns give none), and a full row of only number cells joins them
     only when it fits. A full row keeps its tabs only when its number cells fit the columns, and the
     text before its first number is one label. A number cell before the first number cell of every
     labeled row, such as a year as a row label, is a label and no column. A text cell after the
     label that overlaps a text cell of another labeled row, such as a column of "n/a", is a column
-    cell. A column heading row with more cells than the columns gives the columns when each column
-    is under one of its cells, because every row can leave a column blank; the heading then starts
-    with an empty label slot. A short row uses these columns: each number cell must overlap exactly
-    one column, and each later text cell must be inside exactly one column, in increasing order.
-    Skipped columns get empty cells (#266). A row with a label and only text cells after it, such as
-    "n/a", is placed the same way. Above the first table row, such a row is placed only when it
-    fits, because it can be a column heading. A full row of only number cells, such as a row of year
-    headings, starts with an empty label slot, so each cell keeps its column position, and it must
-    fit the columns too. If the grid or a cell is ambiguous, the row is written without tabs. An
-    ambiguous row of only number cells and currency signs also has two blank lines on either side, a
-    key-scope barrier in spec 0.9, so it cannot reuse a prior field label as a column hint (#278).
+    cell. The nearest column heading row with more cells than the columns gives the columns when
+    each column is under one of its cells, because every row can leave a column blank; the heading
+    then starts with an empty label slot. A short row uses these columns: each number cell must
+    overlap exactly one column, and each later text cell must be inside exactly one column, in
+    increasing order. Skipped columns get empty cells (#266). A row with a label and only text cells
+    after it, such as "n/a", is placed the same way. Above the first table row, such a row is placed
+    only when it fits, because it can be a column heading. A full row of only number cells, such as
+    a row of year headings, starts with an empty label slot, so each cell keeps its column position,
+    and it must fit the columns too. If the grid or a cell is ambiguous, the row is written without
+    tabs. An ambiguous row of only number cells and currency signs also has two blank lines on
+    either side, a key-scope barrier in spec 0.9, so it cannot reuse a prior field label as a column
+    hint (#278).
     """
     rows, span, plan = _plan(blocks)
 
@@ -368,17 +369,25 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
             (num, cells) for num, cells in zip(numbered, grouped, strict=True) if len(num) == widest
         ]
         # labeled rows set the grid when there are any; a row of only numbers joins it if it fits
-        basis = [
-            num for num, cells in full if not _number_cell(cells[0]) or _label_number(cells, edge)
+        with_label = [
+            num
+            for num, cells in zip(numbered, grouped, strict=True)
+            if num and (not _number_cell(cells[0]) or _label_number(cells, edge))
         ]
+        most = max(map(len, with_label), default=0)
+        basis = [num for num in with_label if len(num) == most]
         columns = _grid(basis) if basis else _number_columns([num for num, _ in full])
         if basis and columns:
-            fits = [num for num, cells in full if len(_fill_empty_cells(num, columns)) > 1]
+            fits = [
+                num
+                for num in numbered
+                if len(num) == most and len(_fill_empty_cells(num, columns)) > 1
+            ]
             columns = _number_columns(fits) or columns
         # a column heading can show a column that every row leaves blank
         right = max((_span(c[0]).x1 for c in grouped if c and not _number_cell(c[0])), default=0)
         heading = -1  # the row of the heading that gives the columns
-        for ri in range(first, group[0]):
+        for ri in reversed(range(first, group[0])):  # the nearest heading first
             cells = [
                 c for bi, li in rows[ri] for c in _cells(blocks[bi][li]) if _span(c).x1 > right
             ]
