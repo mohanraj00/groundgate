@@ -119,12 +119,46 @@ def test_rejection_is_a_silent_miss_and_no_output_is_not_an_absence_hit() -> Non
     run["documents"][0]["decisions"] = [decision("amount", "100", "rejected", unit="USD")]
     out = measure(m, labels, run, "heldout")["total"]
     assert out["silent_misses"] == 3
+    assert (out["rejected_right_values"], out["no_right_candidate"]) == (1, 2)
     assert out["absence_hits"] == 0 and out["unreported_absences"] == 1
     assert out["bounds"]["value_upper95"] is None
     assert out["bounds"]["combined_upper95"] is None
     # No document admitted a value, so no document bound exists.
     assert out["bounds"]["document_trials"] == 0
     assert out["bounds"]["document_upper95"] is None
+
+
+def test_silent_misses_split_into_rejected_right_values_and_no_right_candidate() -> None:
+    m, labels, run = data()
+    run["documents"][0]["decisions"] = [
+        decision("amount", "100", "rejected", unit="USD"),
+        decision("amount", "300", "rejected", unit="USD"),
+        decision("name", "A B", "rejected"),
+        decision("name", "A B", "needs_verification"),
+    ]
+    out = measure(m, labels, run, "heldout")
+    total = out["total"]
+    # 100 is a rejected right value. 200 has no candidate: a wrong rejected value does not count.
+    # The name has a review, so its rejected copy is not a silent miss.
+    assert (total["reviews"], total["silent_misses"]) == (1, 2)
+    assert (total["rejected_right_values"], total["no_right_candidate"]) == (1, 1)
+    assert total["rejected_right_value_share"]["rate"] == pytest.approx(1 / 3)
+    assert total["no_right_candidate_share"]["rate"] == pytest.approx(1 / 3)
+    assert total["miss_rate"]["rate"] == pytest.approx(1)
+    for row in [total, *out["by_field"].values()]:
+        assert row["rejected_right_values"] + row["no_right_candidate"] == row["silent_misses"]
+    assert out["by_field"]["amount"]["rejected_right_values"] == 1
+
+
+def test_admitted_right_value_with_a_rejected_copy_is_a_hit_not_a_rejected_right_value() -> None:
+    m, labels, run = data()
+    run["documents"][0]["decisions"] = [
+        decision("amount", "100", unit="USD"),
+        decision("amount", "100", "rejected", unit="USD"),
+    ]
+    total = measure(m, labels, run, "heldout")["total"]
+    assert total["value_hits"] == 1
+    assert (total["rejected_right_values"], total["no_right_candidate"]) == (0, 2)
 
 
 def test_keys_are_exact_and_unknown_key_duplicates_are_canonicalized() -> None:

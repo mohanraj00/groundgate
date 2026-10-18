@@ -3,6 +3,15 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## Unreleased
+
+Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses the
+`groundgate/0.10:` prefix, so all hashes differ from 0.9.0.
+
+- A candidate can cite several field items, such as a row label and a column header (#300).
+  The field check passes when one of them passes. Two items of any other role stay
+  `CANDIDATE_INVALID`.
+
 ## 0.9.0 (2026-10-18)
 
 Spec 0.9. Receipts name `"groundgate": "0.9"` and every digest uses the `groundgate/0.9:` prefix, so
