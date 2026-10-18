@@ -207,7 +207,8 @@ reference items are **role items**. External and knowledge items are **outside i
 `candidate.schema.json` in the package (`candidate_schema()` in the reference implementation) is
 a JSON Schema for one candidate. Step 1 is the definition: the schema does not check that a `ref`
 names a reference in the packet, that two document or reference items other than field items have
-different roles, or that an integer has no fraction (`2.0`).
+different roles, that a candidate cites at most 8 field items, or that an integer has no fraction
+(`2.0`).
 
 ### 2.6 Judgments
 
