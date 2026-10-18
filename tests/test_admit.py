@@ -827,3 +827,25 @@ def test_unit_places_find_lines_and_cells_once() -> None:
         return best
 
     assert time_for(40000) < 6 * time_for(10000)
+
+
+def test_field_items_are_read_once_per_value(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Many field items and many occurrences of the value: each field quote is compiled and read
+    once, not once at each occurrence (#300)."""
+    admit_module = import_module("groundgate.admit")
+
+    calls = 0
+    pattern = admit_module.quote_pattern
+
+    def counted(quote: str) -> Any:
+        nonlocal calls
+        calls += 1
+        return pattern(quote)
+
+    monkeypatch.setattr(admit_module, "quote_pattern", counted)
+    doc = " ".join(["Cash 1"] * 600)
+    schema = {"fields": {"cash": {"type": "number", "aliases": ["Cash"]}}}
+    ev = [{"text": "1"}, *({"role": "field", "text": f"Nope {n}"} for n in range(600))]
+    r = gg.admit(doc, schema, [{"id": "c", "field": "cash", "value": "1", "evidence": ev}])
+    assert r.decisions[0].outcome == "needs_verification"
+    assert calls <= 700

@@ -92,6 +92,7 @@ PART_ORDER = ("sign", "scale", "unit", "field", "key")  # SPEC §5 `parts`
 MISSING_ORDER = ("sign", "scale", "unit", "key")
 _SCALES = (3, 5, 6, 7, 9, 12)  # the powers of ten of the scale words (SPEC §4.1)
 _ACTION_RANK = {"admit": 0, "review": 1, "reject": 2}
+_QUOTE_BUDGET = 1 << 18  # the quote occurrences that a text holds at one time (#300)
 
 
 class _Reject(Exception):
@@ -137,9 +138,10 @@ class _Text:
     ref: str | None = None
     mentions: dict[tuple[str, ...], list[tuple[int, int, str]]] = field(default_factory=dict)
     rows: list[tuple[int, int]] | None = None  # reached by a heading scale, read once
-    # the last quote read, for the many occurrences of one value (#249): one slot, so that its
-    # memory stays that of one quote
-    quote: tuple[tuple[str, int, int], _Index] | None = None
+    # the quotes read, for the many occurrences of one value (#249) and many field items (#300):
+    # the slots hold at most _QUOTE_BUDGET entries, and one larger quote at a time
+    quotes: dict[tuple[str, int, int], _Index] = field(default_factory=dict)
+    quoted: int = 0  # the entries held in ``quotes``
     spans: dict[tuple[str, ...], list[tuple[int, int]]] = field(default_factory=dict)
     letters: dict[int, int] = field(default_factory=dict)  # the first letter at or after each place
     numbers: dict[int, int | None] = field(default_factory=dict)  # the first token end, likewise
@@ -448,13 +450,20 @@ def _occurrences(t: _Text, quote: str, region: tuple[int, int]) -> list[tuple[in
 
 def _indexed(t: _Text, quote: str, region: tuple[int, int]) -> _Index:
     """The occurrences of a quote, with their starts and their ends, each in order: the matches
-    do not overlap. Quotes that match alike share the slot."""
-    pattern = quote_pattern(quote)
-    k = (pattern.pattern, *region)
-    if t.quote is None or t.quote[0] != k:
-        found = [(m.start(), m.end()) for m in pattern.finditer(t.text, *region)]
-        t.quote = (k, (found, [a for a, _ in found], [b for _, b in found]))
-    return t.quote[1]
+    do not overlap. A quote is read and compiled once while its slot is held, so many field
+    items do not read the text again at each occurrence of the value."""
+    k = (quote, *region)
+    held = t.quotes.get(k)
+    if held is None:
+        found = [(m.start(), m.end()) for m in quote_pattern(quote).finditer(t.text, *region)]
+        held = (found, [a for a, _ in found], [b for _, b in found])
+        size = len(found) + 1
+        if t.quoted + size > _QUOTE_BUDGET:
+            t.quotes.clear()
+            t.quoted = 0
+        t.quotes[k] = held
+        t.quoted += size
+    return held
 
 
 def _check(ctx: _Ctx, cand: object) -> _Passed:
