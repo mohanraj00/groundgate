@@ -143,6 +143,10 @@ def test_inputs_are_validated_before_model_call():
             execute("5", client, references=empty)
     with pytest.raises(ExtractInputError):
         execute("5", client, run_policy=RunPolicy(max_prompt_chars=1))
+    with pytest.raises(ExtractInputError, match="UTF-8"):
+        execute("x\udcff", client)
+    with pytest.raises(ExtractInputError, match="UTF-8"):
+        execute("5", client, references=[{"id": "r", "text": "x\udcff"}])
     assert client.prompts == []
 
 

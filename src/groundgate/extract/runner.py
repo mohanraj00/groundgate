@@ -1122,6 +1122,12 @@ def _run(
     empty = admit(text, s, [], p, document_id, references=refs, document_source=document_source)
     valid_refs = cast(list[Json], refs)
     valid_refs.sort(key=lambda r: r["id"])
+    # The run record hashes UTF-8 bytes, so a lone surrogate must stop before the first call.
+    try:
+        for source in (text, *(r["text"] for r in valid_refs)):
+            source.encode("utf-8")
+    except UnicodeEncodeError:
+        raise ExtractInputError("inputs must be encodable as UTF-8") from None
     if not s.fields:
         raise ExtractInputError("schema must request at least one field")
     engine = _Engine(
