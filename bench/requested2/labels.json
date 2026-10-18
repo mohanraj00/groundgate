@@ -4312,12 +4312,12 @@
         {
           "field": "revenue",
           "key": null,
-          "status": "unclear",
+          "status": "absent",
           "values": [],
           "page": null,
-          "note": "Departmental SoCNE p94; Trust Statement of Revenue, Other Income and Expenditure p119. A second independent blind pass gave the same label.",
-          "reason": "The departmental Statement of Comprehensive Net Expenditure p94 shows only 'Other operating income'. The separate Trust Statement p119 (fees collected for the Consolidated Fund) prints two candidates: 'Total fees and charges revenue' 496,816 and 'Total revenue and other income' 500,567 GBP'000.",
-          "second_check": false
+          "note": "Searched the full text. The departmental SoCNE p94 prints only 'Other operating income' and 'Total operating income', so revenue is absent. The Trust Statement p119 holds fees collected for the Consolidated Fund, which are agency-only accounts and out of scope. Changed after review of PR #309, before any model output.",
+          "reason": "",
+          "second_check": true
         },
         {
           "field": "total_assets",

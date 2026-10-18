@@ -48,16 +48,18 @@ Each pass confirmed each present value on a render of its PDF page. The passes g
 label on 407 slots (97.1%). An independent check of the original PDF decided the other 12. Each
 absence has a second blind check: both passes, or the independent check.
 
-The review of this PR changed 4 slots before any model output. Two annual reports print no total
+The review of this PR changed 5 slots before any model output. Two annual reports print no total
 liabilities line on the balance sheet, but print the consolidated total in the segment note. That
 total is now present, as for total assets. One datasheet had two unclear temperature slots. Its
-operating range is now present, because the other row is an absolute maximum rating.
+operating range is now present, because the other row is an absolute maximum rating. One annual
+report had an unclear revenue slot. Its own statement has no revenue line and the other candidates
+are agency-only accounts, so revenue is now absent.
 
 | Kind | Slots | Present | Absent | Unclear |
 |---|---:|---:|---:|---:|
 | component | 130 | 98 | 0 | 32 |
 | sbc | 145 | 122 | 16 | 7 |
-| annual | 144 | 92 | 50 | 2 |
+| annual | 144 | 92 | 51 | 1 |
 
 The manifest is frozen and the labels are sealed before the first model call. Next I run both
 arms with one frozen configuration on the 0.10 main commit, and score with:
