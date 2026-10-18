@@ -1,10 +1,35 @@
-# Requested fields: proposed set for 0.9
+# Requested fields: the 0.9 set
 
 Status: kinds and field lists approved by the maintainer in chat on 2026-10-15 and recorded on
 #269. I froze the manifest and sealed the labels on 2026-10-16, before any model output on this set.
 The set has 64 documents: 3 development pilots and 61 held-out (20 component datasheets, 20 SBCs,
 21 annual reports). `manifest.json` records each source URL, byte size, PDF hash and reader text
 hash. The originals and reader texts stay in local work storage. Every download had approval.
+
+## Held-out results
+
+I ran both arms on the 61 held-out documents on 2026-10-18, on main 2b892a7, with one frozen
+configuration (`runs/`, `results.json`, `RESULTS.md`). The labels were sealed before this output.
+The scorer counts 196 labeled values that the documents state. 75 unclear slots are not counted.
+
+| Arm | Right values admitted | Right absences | Escapes | Reviews | Silent misses | Miss rate |
+|---|---:|---:|---:|---:|---:|---:|
+| baseline | 9 | 0 | 1 | 69 | 118 | 95.41% (187 of 196) |
+| runner | 16 | 6 | 0 | 119 | 61 | 91.84% (180 of 196) |
+
+- The runner halves the silent misses (118 to 61) and sends more right values to review (69 to
+  119). Most of the gain is in the SBCs: 11 right values and 0 silent misses, against 2 and 56.
+- Admitted error: baseline 1 of 10, combined upper bound 86.46%. Runner 0 of 16, combined upper
+  bound 45.07%. Both bounds are wide because few documents have an admitted value (7 and 13).
+- The runner did not complete 18 of the 21 annual reports. Each one stopped at a harness limit,
+  with no transport error. Their unadmitted present fields count as misses. Annual miss rate is
+  95.52% for both arms.
+- The miss rate is above 90% for both arms. 0.9 does not meet its goal on this set yet.
+
+The diagnostics section of `RESULTS.md` comes from a pinned local export. Two harness fixes came
+before it: the layout input cap (#290) and the layout work count (#292). Neither file is in the
+run code digest. I re-sealed the layout annotations to the current manifest digest: between the
+two manifests only text pins and notes changed, and no annotation changed.
 
 ## Proposed kinds and fixed requests
 
