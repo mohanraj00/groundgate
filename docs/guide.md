@@ -128,9 +128,9 @@ line, goes to review. A table with one number column under a title such as "As o
 [`candidate.schema.json`](../src/groundgate/candidate.schema.json) in the package. It describes
 every candidate that step 1 accepts. For a model's structured output, use
 [`gg.extractor_schema`](#the-extractors-output) instead. groundgate does not validate with
-either schema: step 1 is the definition. The schema does not check three things: a
-`ref` that names no reference, two document or reference items with the same role other than `field`, and an integer
-written with a fraction (`2.0`).
+either schema: step 1 is the definition. The schema does not check four things: a
+`ref` that names no reference, two document or reference items with the same role other than
+`field`, more than 8 field items, and an integer written with a fraction (`2.0`).
 
 ### Evidence items
 
@@ -232,8 +232,9 @@ receipt = gg.admit(text, schema, candidates, references=references)
 - The schema has no `$schema` member, because the Claude CLI refuses a schema that names draft
   2020-12. Each `$ref` is a JSON pointer into the schema, so a client that loads an older draft
   reads it the same way.
-- Two step 1 rules stay outside the schema: two items with the same role other than `field`, and a blank `text`,
-  `url` or `retrieved`. Step 1 rejects such a candidate with `CANDIDATE_INVALID`.
+- Three step 1 rules stay outside the schema: two items with the same role other than `field`,
+  more than 8 field items, and a blank `text`, `url` or `retrieved`. Step 1 rejects such a
+  candidate with `CANDIDATE_INVALID`.
 
 The schema gives the shape. These instructions tell the model what to put in it:
 

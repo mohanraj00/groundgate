@@ -849,3 +849,24 @@ def test_field_items_are_read_once_per_value(monkeypatch: pytest.MonkeyPatch) ->
     r = gg.admit(doc, schema, [{"id": "c", "field": "cash", "value": "1", "evidence": ev}])
     assert r.decisions[0].outcome == "needs_verification"
     assert calls <= 20
+
+
+def test_a_large_field_quote_is_read_once(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A field quote with very many occurrences and a second field quote do not evict each other:
+    each is read once for the candidate, not once at each occurrence of the value (#300)."""
+    admit_module = import_module("groundgate.admit")
+    calls = 0
+    pattern = admit_module.quote_pattern
+
+    def counted(quote: str) -> Any:
+        nonlocal calls
+        calls += 1
+        return pattern(quote)
+
+    monkeypatch.setattr(admit_module, "quote_pattern", counted)
+    doc = "x " * 300_000 + "Cash 1 " * 50
+    schema = {"fields": {"cash": {"type": "number", "aliases": ["Cash"]}}}
+    ev = [{"text": "1"}, {"role": "field", "text": "x"}, {"role": "field", "text": "Nope"}]
+    r = gg.admit(doc, schema, [{"id": "c", "field": "cash", "value": "1", "evidence": ev}])
+    assert r.decisions[0].outcome == "needs_verification"
+    assert calls <= 10

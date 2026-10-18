@@ -93,7 +93,6 @@ MAX_FIELD_ITEMS = 8  # the field items that a candidate can cite (SPEC §3 step 
 MISSING_ORDER = ("sign", "scale", "unit", "key")
 _SCALES = (3, 5, 6, 7, 9, 12)  # the powers of ten of the scale words (SPEC §4.1)
 _ACTION_RANK = {"admit": 0, "review": 1, "reject": 2}
-_QUOTE_BUDGET = 1 << 18  # the quote occurrences that a text holds at one time (#300)
 
 
 class _Reject(Exception):
@@ -139,10 +138,10 @@ class _Text:
     ref: str | None = None
     mentions: dict[tuple[str, ...], list[tuple[int, int, str]]] = field(default_factory=dict)
     rows: list[tuple[int, int]] | None = None  # reached by a heading scale, read once
-    # the quotes read, for the many occurrences of one value (#249) and many field items (#300):
-    # the slots hold at most _QUOTE_BUDGET entries, and one larger quote at a time
+    # the quotes of the candidate being checked, for the many occurrences of one value (#249)
+    # and its field items (#300): cleared for each candidate, so that they are at most the value
+    # quote, 8 field items and one item of each other role
     quotes: dict[tuple[str, int, int], _Index] = field(default_factory=dict)
-    quoted: int = 0  # the entries held in ``quotes``
     spans: dict[tuple[str, ...], list[tuple[int, int]]] = field(default_factory=dict)
     letters: dict[int, int] = field(default_factory=dict)  # the first letter at or after each place
     numbers: dict[int, int | None] = field(default_factory=dict)  # the first token end, likewise
@@ -195,6 +194,7 @@ class _Ctx:
     policy: Policy
     source_host: str | None
     suffixes: frozenset[str] = frozenset()  # of every unit in the table (SPEC §4.3)
+    quoted: list[_Text] = field(default_factory=list)  # the text that holds quotes now
 
     def any_unit_at(self, t: _Text, tok: Token) -> bool:
         """Whether a form of any unit in the table is next to the token (SPEC §3.1)."""
@@ -450,19 +450,14 @@ def _occurrences(t: _Text, quote: str, region: tuple[int, int]) -> list[tuple[in
 
 def _indexed(t: _Text, quote: str, region: tuple[int, int]) -> _Index:
     """The occurrences of a quote, with their starts and their ends, each in order: the matches
-    do not overlap. A quote is read and compiled once while its slot is held, so many field
-    items do not read the text again at each occurrence of the value."""
+    do not overlap. A quote is read and compiled once for each candidate, so field items do not
+    read the text again at each occurrence of the value."""
     k = (quote, *region)
     held = t.quotes.get(k)
     if held is None:
         found = [(m.start(), m.end()) for m in quote_pattern(quote).finditer(t.text, *region)]
         held = (found, [a for a, _ in found], [b for _, b in found])
-        size = len(found) + 1
-        if t.quoted + size > _QUOTE_BUDGET:
-            t.quotes.clear()
-            t.quoted = 0
         t.quotes[k] = held
-        t.quoted += size
     return held
 
 
@@ -552,6 +547,9 @@ def _checked(
     """The checked path (SPEC §3.1) and the role checks (SPEC §4.6). ``roles`` holds the role
     items other than the field items, which are ``fields``."""
     t = ctx.doc if vitem.source == "document" else ctx.refs[vitem.ref or ""]
+    for held in ctx.quoted:  # only the quotes of this candidate are held
+        held.quotes.clear()
+    ctx.quoted[:] = [t]
     # 9. spans
     search = (0, len(ctx.doc.text)) if region_span is None else _valid(ctx.doc.offsets, region_span)
     if search is None:
