@@ -1,0 +1,4763 @@
+{
+ "diagnostics": {
+  "binding_sha256": "sha256:a47dda009deb159bbcac4152ad4abdd2afced16226a7c7880baa170dc4eeb18b",
+  "companion_views": {
+   "correlated_views": true,
+   "limitations": [
+    "Companion views do not add independent primary trials or bounds.",
+    "Explicit endpoint eq adaptation differs from original ge/le comparators.",
+    "No absence claim is inferred from missing candidates or unkeyed envelopes."
+   ],
+   "mapping_sha256": "sha256:63075ac71126d6f1408fffbc0c71094394e5601868fe61474394899eb26bf842",
+   "source_documents": [
+    "component-h04",
+    "component-h05",
+    "component-h06",
+    "component-h07",
+    "component-h08",
+    "component-h11",
+    "component-h12",
+    "component-h13",
+    "component-h17",
+    "component-h23",
+    "component-h25",
+    "component-h26",
+    "sbc-h01",
+    "sbc-h02",
+    "sbc-h04",
+    "sbc-h05",
+    "sbc-h06",
+    "sbc-h07",
+    "sbc-h08",
+    "sbc-h09",
+    "sbc-h10",
+    "sbc-h11",
+    "sbc-h15",
+    "sbc-h16",
+    "sbc-h17",
+    "sbc-h20",
+    "sbc-h21",
+    "sbc-h23",
+    "sbc-h24"
+   ]
+  },
+  "decision_pair": {
+   "added_codes": {
+    "KEY_NOT_AT_VALUE": 6
+   },
+   "by_kind": {
+    "component": {
+     "admitted->needs_verification": 2,
+     "needs_verification->needs_verification": 24,
+     "rejected->rejected": 4
+    },
+    "sbc": {
+     "admitted->admitted": 3,
+     "needs_verification->needs_verification": 16,
+     "rejected->rejected": 41
+    }
+   },
+   "by_view": {
+    "component-h04--supply_voltage": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "component-h05--supply_voltage": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "component-h06--supply_voltage": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "component-h07--operating_temperature": {
+     "groundgate-0.8.0": {
+      "admitted": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "component-h08--operating_temperature": {
+     "groundgate-0.8.0": {
+      "admitted": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 1
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 1
+     }
+    },
+    "component-h11--supply_voltage": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "component-h12--supply_voltage": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "component-h13--operating_temperature": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "component-h13--supply_voltage": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "component-h17--supply_voltage": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "component-h23--operating_temperature": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 1
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 1
+     }
+    },
+    "component-h25--operating_temperature": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "component-h26--supply_voltage": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "sbc-h01--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "sbc-h01--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 1
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 1
+     }
+    },
+    "sbc-h02--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h04--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h04--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h05--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 1
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 1
+     }
+    },
+    "sbc-h05--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 1
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 1
+     }
+    },
+    "sbc-h06--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h07--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h08--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h08--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h09--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h09--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h10--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h10--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h11--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h11--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h15--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 0
+     }
+    },
+    "sbc-h15--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h16--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h16--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "sbc-h17--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h17--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h20--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h20--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "sbc-h21--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 0
+     }
+    },
+    "sbc-h21--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "sbc-h23--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 0,
+      "silent_misses": 2
+     }
+    },
+    "sbc-h24--deductible": {
+     "groundgate-0.8.0": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "present": 2,
+      "reviews": 2,
+      "silent_misses": 0
+     }
+    },
+    "sbc-h24--out_of_pocket_limit": {
+     "groundgate-0.8.0": {
+      "admitted": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 0
+     },
+     "groundgate-0.9-main": {
+      "admitted": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "present": 2,
+      "reviews": 1,
+      "silent_misses": 0
+     }
+    }
+   },
+   "failures": [],
+   "removed_codes": {},
+   "transitions": {
+    "admitted->admitted": 3,
+    "admitted->needs_verification": 2,
+    "needs_verification->needs_verification": 40,
+    "rejected->rejected": 45
+   }
+  },
+  "export_sha256": "sha256:868d58908c8e6f6396676e6fa4083a2f05d7e0cea82915fbea0b2b8e2c546473",
+  "format": "requested-diagnostics/1",
+  "provenance": {
+   "code_sha256": "sha256:931f65116802bc948409c8232f4467214cb884d03b1d1ea20a81042fd8c37f2a",
+   "plan_sha256": "sha256:510e7b9bed28138de5893eb6f758cfb9f661510973d827fb8ad0b5b76585a590",
+   "reader": {
+    "code_sha256": "sha256:a71ce8c047e9dc94e13d7da99058e03f1e6bbf4b9c5d16f0bd81ddcd5c436ce6",
+    "commit": "0ebfddc (#279 on main), unchanged at 2b892a7",
+    "id": "groundgate.read-0.9",
+    "serializer": "pdf-delimiters/1"
+   },
+   "versions": [
+    {
+     "code_sha256": "sha256:4fca5c870501f0dafd38aa9b9d75acf893eb5f96e2fa25540b9f44ac3bac91f6",
+     "commit": "v0.8.0",
+     "id": "groundgate-0.8.0",
+     "package_version": "0.8.0",
+     "python": "/tmp/groundgate-workers/venv-0.8.0/bin/python",
+     "python_sha256": "sha256:3db3822b1ba0305482e83dd336c3cfcae15738a09693be5424d5ea123dedaeeb",
+     "spec_version": "0.8"
+    },
+    {
+     "code_sha256": "sha256:7249bee6211b2fefc7eb88adaf6828ced2317d204b47097e08d315c168a04b7d",
+     "commit": "2b892a7",
+     "id": "groundgate-0.9-main",
+     "package_version": "0.8.0",
+     "python": "/tmp/groundgate-workers/venv-0.9/bin/python",
+     "python_sha256": "sha256:3db3822b1ba0305482e83dd336c3cfcae15738a09693be5424d5ea123dedaeeb",
+     "spec_version": "0.9"
+    }
+   ]
+  },
+  "reader_layout": {
+   "coverage": [
+    {
+     "complete": false,
+     "document": "component-h04",
+     "reviewed_pages": 1,
+     "unreviewed_pages": 7
+    },
+    {
+     "complete": false,
+     "document": "component-h05",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 20
+    },
+    {
+     "complete": false,
+     "document": "component-h06",
+     "reviewed_pages": 1,
+     "unreviewed_pages": 13
+    },
+    {
+     "complete": false,
+     "document": "sbc-h04",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 6
+    },
+    {
+     "complete": false,
+     "document": "sbc-h05",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 6
+    },
+    {
+     "complete": false,
+     "document": "sbc-h06",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 9
+    },
+    {
+     "complete": false,
+     "document": "annual-h04",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 329
+    },
+    {
+     "complete": false,
+     "document": "component-h07",
+     "reviewed_pages": 1,
+     "unreviewed_pages": 56
+    },
+    {
+     "complete": false,
+     "document": "component-h08",
+     "reviewed_pages": 1,
+     "unreviewed_pages": 44
+    },
+    {
+     "complete": false,
+     "document": "component-h09",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 55
+    },
+    {
+     "complete": false,
+     "document": "component-h10",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 47
+    },
+    {
+     "complete": false,
+     "document": "annual-h10",
+     "reviewed_pages": 3,
+     "unreviewed_pages": 212
+    },
+    {
+     "complete": false,
+     "document": "annual-h11",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 158
+    },
+    {
+     "complete": false,
+     "document": "annual-h14",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 280
+    },
+    {
+     "complete": false,
+     "document": "annual-h15",
+     "reviewed_pages": 3,
+     "unreviewed_pages": 253
+    },
+    {
+     "complete": false,
+     "document": "sbc-h09",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 5
+    },
+    {
+     "complete": false,
+     "document": "sbc-h10",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 6
+    },
+    {
+     "complete": false,
+     "document": "sbc-h11",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 8
+    },
+    {
+     "complete": false,
+     "document": "component-h13",
+     "reviewed_pages": 3,
+     "unreviewed_pages": 34
+    },
+    {
+     "complete": false,
+     "document": "component-h16",
+     "reviewed_pages": 4,
+     "unreviewed_pages": 16
+    },
+    {
+     "complete": false,
+     "document": "component-h17",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 32
+    },
+    {
+     "complete": false,
+     "document": "sbc-h13",
+     "reviewed_pages": 3,
+     "unreviewed_pages": 5
+    },
+    {
+     "complete": false,
+     "document": "sbc-h15",
+     "reviewed_pages": 2,
+     "unreviewed_pages": 4
+    }
+   ],
+   "limitations": [
+    "Only exact emitted spans/geometry joins are assessed; missing joins are unassessed.",
+    "Running heads compare page/block association with a separately anchored target row.",
+    "Views and repeated source pages are correlated, not independent trials."
+   ],
+   "missing_observations": [],
+   "routes": {
+    "annual/groundgate.read-0.9/ambiguous_columns": {
+     "correct": 130,
+     "evaluated": 164,
+     "not_applicable": 0,
+     "partial_documents": 5,
+     "rate": 0.7926829268292683,
+     "reviewed_pages": 12,
+     "unassessed": 28,
+     "unclear": 8,
+     "unreviewed_pages": 1232
+    },
+    "annual/groundgate.read-0.9/empty_cells": {
+     "correct": 54,
+     "evaluated": 75,
+     "not_applicable": 0,
+     "partial_documents": 5,
+     "rate": 0.72,
+     "reviewed_pages": 12,
+     "unassessed": 11,
+     "unclear": 24,
+     "unreviewed_pages": 1232
+    },
+    "annual/groundgate.read-0.9/running_heads": {
+     "correct": 8,
+     "evaluated": 19,
+     "not_applicable": 0,
+     "partial_documents": 5,
+     "rate": 0.42105263157894735,
+     "reviewed_pages": 12,
+     "unassessed": 9,
+     "unclear": 0,
+     "unreviewed_pages": 1232
+    },
+    "component/groundgate.read-0.9/ambiguous_columns": {
+     "correct": 55,
+     "evaluated": 167,
+     "not_applicable": 0,
+     "partial_documents": 10,
+     "rate": 0.32934131736526945,
+     "reviewed_pages": 19,
+     "unassessed": 3,
+     "unclear": 0,
+     "unreviewed_pages": 324
+    },
+    "component/groundgate.read-0.9/empty_cells": {
+     "correct": 25,
+     "evaluated": 105,
+     "not_applicable": 0,
+     "partial_documents": 10,
+     "rate": 0.23809523809523808,
+     "reviewed_pages": 19,
+     "unassessed": 10,
+     "unclear": 0,
+     "unreviewed_pages": 324
+    },
+    "component/groundgate.read-0.9/running_heads": {
+     "correct": 38,
+     "evaluated": 54,
+     "not_applicable": 0,
+     "partial_documents": 10,
+     "rate": 0.7037037037037037,
+     "reviewed_pages": 19,
+     "unassessed": 4,
+     "unclear": 0,
+     "unreviewed_pages": 324
+    },
+    "sbc/groundgate.read-0.9/ambiguous_columns": {
+     "correct": 0,
+     "evaluated": 0,
+     "not_applicable": 0,
+     "partial_documents": 8,
+     "rate": null,
+     "reviewed_pages": 17,
+     "unassessed": 8,
+     "unclear": 0,
+     "unreviewed_pages": 49
+    },
+    "sbc/groundgate.read-0.9/empty_cells": {
+     "correct": 0,
+     "evaluated": 0,
+     "not_applicable": 0,
+     "partial_documents": 8,
+     "rate": null,
+     "reviewed_pages": 17,
+     "unassessed": 8,
+     "unclear": 0,
+     "unreviewed_pages": 49
+    },
+    "sbc/groundgate.read-0.9/running_heads": {
+     "correct": 0,
+     "evaluated": 22,
+     "not_applicable": 0,
+     "partial_documents": 8,
+     "rate": 0,
+     "reviewed_pages": 17,
+     "unassessed": 26,
+     "unclear": 0,
+     "unreviewed_pages": 49
+    }
+   },
+   "status": "assessed"
+  }
+ },
+ "format": "requested-fields/1",
+ "labels_sha256": "sha256:30d07b5bd2dd98e0577b590a366b65b7491ac58a1be5be2c26b21912dfb4f3f4",
+ "manifest_sha256": "sha256:323c43910577309bd5529b2d50880f0f8d0e812c6d4c33bf79a7f6fa991d8d6b",
+ "runs": {
+  "baseline": {
+   "by_field": {
+    "cost_of_sales": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 21,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 2,
+      "n": 2,
+      "rate": 1.0
+     },
+     "present": 2,
+     "reviews": 1,
+     "right_value_review_share": {
+      "k": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "silent_miss_share": {
+      "k": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "silent_misses": 1,
+     "unreported_absences": 17,
+     "value_hits": 0
+    },
+    "deductible_family": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 17,
+      "n": 17,
+      "rate": 1.0
+     },
+     "present": 17,
+     "reviews": 3,
+     "right_value_review_share": {
+      "k": 3,
+      "n": 17,
+      "rate": 0.17647058823529413
+     },
+     "silent_miss_share": {
+      "k": 14,
+      "n": 17,
+      "rate": 0.8235294117647058
+     },
+     "silent_misses": 14,
+     "unreported_absences": 1,
+     "value_hits": 0
+    },
+    "deductible_individual": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 3,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 16,
+      "n": 17,
+      "rate": 0.9411764705882353
+     },
+     "present": 17,
+     "reviews": 2,
+     "right_value_review_share": {
+      "k": 2,
+      "n": 17,
+      "rate": 0.11764705882352941
+     },
+     "silent_miss_share": {
+      "k": 14,
+      "n": 17,
+      "rate": 0.8235294117647058
+     },
+     "silent_misses": 14,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "gross_profit": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 21,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 2,
+      "n": 2,
+      "rate": 1.0
+     },
+     "present": 2,
+     "reviews": 1,
+     "right_value_review_share": {
+      "k": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "silent_miss_share": {
+      "k": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "silent_misses": 1,
+     "unreported_absences": 19,
+     "value_hits": 0
+    },
+    "operating_temperature_max": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 6,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 13,
+      "n": 14,
+      "rate": 0.9285714285714286
+     },
+     "present": 14,
+     "reviews": 10,
+     "right_value_review_share": {
+      "k": 10,
+      "n": 14,
+      "rate": 0.7142857142857143
+     },
+     "silent_miss_share": {
+      "k": 3,
+      "n": 14,
+      "rate": 0.21428571428571427
+     },
+     "silent_misses": 3,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "operating_temperature_min": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 5,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 14,
+      "n": 15,
+      "rate": 0.9333333333333333
+     },
+     "present": 15,
+     "reviews": 11,
+     "right_value_review_share": {
+      "k": 11,
+      "n": 15,
+      "rate": 0.7333333333333333
+     },
+     "silent_miss_share": {
+      "k": 3,
+      "n": 15,
+      "rate": 0.2
+     },
+     "silent_misses": 3,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "out_of_pocket_family": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 1,
+     "documents": 20,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 5,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 15,
+      "n": 15,
+      "rate": 1.0
+     },
+     "present": 15,
+     "reviews": 4,
+     "right_value_review_share": {
+      "k": 4,
+      "n": 15,
+      "rate": 0.26666666666666666
+     },
+     "silent_miss_share": {
+      "k": 11,
+      "n": 15,
+      "rate": 0.7333333333333333
+     },
+     "silent_misses": 11,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "out_of_pocket_individual": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 1,
+     "documents": 20,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 5,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 14,
+      "n": 15,
+      "rate": 0.9333333333333333
+     },
+     "present": 15,
+     "reviews": 3,
+     "right_value_review_share": {
+      "k": 3,
+      "n": 15,
+      "rate": 0.2
+     },
+     "silent_miss_share": {
+      "k": 11,
+      "n": 15,
+      "rate": 0.7333333333333333
+     },
+     "silent_misses": 11,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "revenue": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 3,
+     "documents": 21,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 8,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 13,
+      "n": 13,
+      "rate": 1.0
+     },
+     "present": 13,
+     "reviews": 6,
+     "right_value_review_share": {
+      "k": 6,
+      "n": 13,
+      "rate": 0.46153846153846156
+     },
+     "silent_miss_share": {
+      "k": 7,
+      "n": 13,
+      "rate": 0.5384615384615384
+     },
+     "silent_misses": 7,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "specialist_copay": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 10,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 7,
+      "n": 7,
+      "rate": 1.0
+     },
+     "present": 7,
+     "reviews": 1,
+     "right_value_review_share": {
+      "k": 1,
+      "n": 7,
+      "rate": 0.14285714285714285
+     },
+     "silent_miss_share": {
+      "k": 6,
+      "n": 7,
+      "rate": 0.8571428571428571
+     },
+     "silent_misses": 6,
+     "unreported_absences": 3,
+     "value_hits": 0
+    },
+    "supply_current_typ": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 16,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 4,
+      "n": 4,
+      "rate": 1.0
+     },
+     "present": 4,
+     "reviews": 0,
+     "right_value_review_share": {
+      "k": 0,
+      "n": 4,
+      "rate": 0.0
+     },
+     "silent_miss_share": {
+      "k": 4,
+      "n": 4,
+      "rate": 1.0
+     },
+     "silent_misses": 4,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "supply_voltage_max": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 6,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 13,
+      "n": 13,
+      "rate": 1.0
+     },
+     "present": 13,
+     "reviews": 9,
+     "right_value_review_share": {
+      "k": 9,
+      "n": 13,
+      "rate": 0.6923076923076923
+     },
+     "silent_miss_share": {
+      "k": 4,
+      "n": 13,
+      "rate": 0.3076923076923077
+     },
+     "silent_misses": 4,
+     "unreported_absences": 1,
+     "value_hits": 0
+    },
+    "supply_voltage_min": {
+     "absence_hits": 0,
+     "admitted": 2,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 2,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.7763932022500211,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 2,
+      "document_upper95": 0.7763932022500211,
+      "effective_errors": 0,
+      "effective_trials": 2,
+      "value_upper95": 0.7763932022500211
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 2,
+     "escapes": 0,
+     "excluded": 7,
+     "hits": 2,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 10,
+      "n": 12,
+      "rate": 0.8333333333333334
+     },
+     "present": 12,
+     "reviews": 7,
+     "right_value_review_share": {
+      "k": 7,
+      "n": 12,
+      "rate": 0.5833333333333334
+     },
+     "silent_miss_share": {
+      "k": 3,
+      "n": 12,
+      "rate": 0.25
+     },
+     "silent_misses": 3,
+     "unreported_absences": 1,
+     "value_hits": 2
+    },
+    "total_assets": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 2,
+     "documents": 21,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 19,
+      "n": 20,
+      "rate": 0.95
+     },
+     "present": 20,
+     "reviews": 4,
+     "right_value_review_share": {
+      "k": 4,
+      "n": 20,
+      "rate": 0.2
+     },
+     "silent_miss_share": {
+      "k": 15,
+      "n": 20,
+      "rate": 0.75
+     },
+     "silent_misses": 15,
+     "unreported_absences": 1,
+     "value_hits": 1
+    },
+    "total_equity": {
+     "absence_hits": 0,
+     "admitted": 2,
+     "admitted_error_rate": {
+      "k": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "bounds": {
+      "combined_upper95": 0.9746794344808964,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 1,
+      "document_trials": 2,
+      "document_upper95": 0.9746794344808964,
+      "effective_errors": 1,
+      "effective_trials": 2,
+      "value_upper95": 0.9746794344808964
+     },
+     "catches": 1,
+     "documents": 21,
+     "documents_with_admits": 2,
+     "escapes": 1,
+     "excluded": 0,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 20,
+      "n": 21,
+      "rate": 0.9523809523809523
+     },
+     "present": 21,
+     "reviews": 4,
+     "right_value_review_share": {
+      "k": 4,
+      "n": 21,
+      "rate": 0.19047619047619047
+     },
+     "silent_miss_share": {
+      "k": 16,
+      "n": 21,
+      "rate": 0.7619047619047619
+     },
+     "silent_misses": 16,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "total_liabilities": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 1,
+     "documents": 21,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 8,
+      "n": 9,
+      "rate": 0.8888888888888888
+     },
+     "present": 9,
+     "reviews": 3,
+     "right_value_review_share": {
+      "k": 3,
+      "n": 9,
+      "rate": 0.3333333333333333
+     },
+     "silent_miss_share": {
+      "k": 5,
+      "n": 9,
+      "rate": 0.5555555555555556
+     },
+     "silent_misses": 5,
+     "unreported_absences": 12,
+     "value_hits": 1
+    }
+   },
+   "by_kind": {
+    "annual": {
+     "absence_hits": 0,
+     "admitted": 4,
+     "admitted_error_rate": {
+      "k": 1,
+      "n": 4,
+      "rate": 0.25
+     },
+     "bounds": {
+      "combined_upper95": 1.0,
+      "confidence": 0.95,
+      "design_effect": 3,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 1,
+      "document_trials": 2,
+      "document_upper95": 0.9746794344808964,
+      "effective_errors": 1,
+      "effective_trials": 1,
+      "value_upper95": 1.0
+     },
+     "catches": 7,
+     "documents": 21,
+     "documents_with_admits": 2,
+     "escapes": 1,
+     "excluded": 10,
+     "hits": 3,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 64,
+      "n": 67,
+      "rate": 0.9552238805970149
+     },
+     "present": 67,
+     "reviews": 19,
+     "right_value_review_share": {
+      "k": 19,
+      "n": 67,
+      "rate": 0.2835820895522388
+     },
+     "silent_miss_share": {
+      "k": 45,
+      "n": 67,
+      "rate": 0.6716417910447762
+     },
+     "silent_misses": 45,
+     "unreported_absences": 49,
+     "value_hits": 3
+    },
+    "component": {
+     "absence_hits": 0,
+     "admitted": 4,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 4,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.7763932022500211,
+      "confidence": 0.95,
+      "design_effect": 2,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 3,
+      "document_upper95": 0.6315968501359613,
+      "effective_errors": 0,
+      "effective_trials": 2,
+      "value_upper95": 0.7763932022500211
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 3,
+     "escapes": 0,
+     "excluded": 40,
+     "hits": 4,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 54,
+      "n": 58,
+      "rate": 0.9310344827586207
+     },
+     "present": 58,
+     "reviews": 37,
+     "right_value_review_share": {
+      "k": 37,
+      "n": 58,
+      "rate": 0.6379310344827587
+     },
+     "silent_miss_share": {
+      "k": 17,
+      "n": 58,
+      "rate": 0.29310344827586204
+     },
+     "silent_misses": 17,
+     "unreported_absences": 2,
+     "value_hits": 4
+    },
+    "sbc": {
+     "absence_hits": 0,
+     "admitted": 2,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 2,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.7763932022500211,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 2,
+      "document_upper95": 0.7763932022500211,
+      "effective_errors": 0,
+      "effective_trials": 2,
+      "value_upper95": 0.7763932022500211
+     },
+     "catches": 2,
+     "documents": 20,
+     "documents_with_admits": 2,
+     "escapes": 0,
+     "excluded": 25,
+     "hits": 2,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 69,
+      "n": 71,
+      "rate": 0.971830985915493
+     },
+     "present": 71,
+     "reviews": 13,
+     "right_value_review_share": {
+      "k": 13,
+      "n": 71,
+      "rate": 0.18309859154929578
+     },
+     "silent_miss_share": {
+      "k": 56,
+      "n": 71,
+      "rate": 0.7887323943661971
+     },
+     "silent_misses": 56,
+     "unreported_absences": 4,
+     "value_hits": 2
+    }
+   },
+   "by_kind_field": {
+    "annual": {
+     "cost_of_sales": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 21,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 2,
+       "n": 2,
+       "rate": 1.0
+      },
+      "present": 2,
+      "reviews": 1,
+      "right_value_review_share": {
+       "k": 1,
+       "n": 2,
+       "rate": 0.5
+      },
+      "silent_miss_share": {
+       "k": 1,
+       "n": 2,
+       "rate": 0.5
+      },
+      "silent_misses": 1,
+      "unreported_absences": 17,
+      "value_hits": 0
+     },
+     "gross_profit": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 21,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 2,
+       "n": 2,
+       "rate": 1.0
+      },
+      "present": 2,
+      "reviews": 1,
+      "right_value_review_share": {
+       "k": 1,
+       "n": 2,
+       "rate": 0.5
+      },
+      "silent_miss_share": {
+       "k": 1,
+       "n": 2,
+       "rate": 0.5
+      },
+      "silent_misses": 1,
+      "unreported_absences": 19,
+      "value_hits": 0
+     },
+     "revenue": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 3,
+      "documents": 21,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 8,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 13,
+       "n": 13,
+       "rate": 1.0
+      },
+      "present": 13,
+      "reviews": 6,
+      "right_value_review_share": {
+       "k": 6,
+       "n": 13,
+       "rate": 0.46153846153846156
+      },
+      "silent_miss_share": {
+       "k": 7,
+       "n": 13,
+       "rate": 0.5384615384615384
+      },
+      "silent_misses": 7,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "total_assets": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 2,
+      "documents": 21,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 19,
+       "n": 20,
+       "rate": 0.95
+      },
+      "present": 20,
+      "reviews": 4,
+      "right_value_review_share": {
+       "k": 4,
+       "n": 20,
+       "rate": 0.2
+      },
+      "silent_miss_share": {
+       "k": 15,
+       "n": 20,
+       "rate": 0.75
+      },
+      "silent_misses": 15,
+      "unreported_absences": 1,
+      "value_hits": 1
+     },
+     "total_equity": {
+      "absence_hits": 0,
+      "admitted": 2,
+      "admitted_error_rate": {
+       "k": 1,
+       "n": 2,
+       "rate": 0.5
+      },
+      "bounds": {
+       "combined_upper95": 0.9746794344808964,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 1,
+       "document_trials": 2,
+       "document_upper95": 0.9746794344808964,
+       "effective_errors": 1,
+       "effective_trials": 2,
+       "value_upper95": 0.9746794344808964
+      },
+      "catches": 1,
+      "documents": 21,
+      "documents_with_admits": 2,
+      "escapes": 1,
+      "excluded": 0,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 20,
+       "n": 21,
+       "rate": 0.9523809523809523
+      },
+      "present": 21,
+      "reviews": 4,
+      "right_value_review_share": {
+       "k": 4,
+       "n": 21,
+       "rate": 0.19047619047619047
+      },
+      "silent_miss_share": {
+       "k": 16,
+       "n": 21,
+       "rate": 0.7619047619047619
+      },
+      "silent_misses": 16,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "total_liabilities": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 1,
+      "documents": 21,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 8,
+       "n": 9,
+       "rate": 0.8888888888888888
+      },
+      "present": 9,
+      "reviews": 3,
+      "right_value_review_share": {
+       "k": 3,
+       "n": 9,
+       "rate": 0.3333333333333333
+      },
+      "silent_miss_share": {
+       "k": 5,
+       "n": 9,
+       "rate": 0.5555555555555556
+      },
+      "silent_misses": 5,
+      "unreported_absences": 12,
+      "value_hits": 1
+     }
+    },
+    "component": {
+     "operating_temperature_max": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 6,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 13,
+       "n": 14,
+       "rate": 0.9285714285714286
+      },
+      "present": 14,
+      "reviews": 10,
+      "right_value_review_share": {
+       "k": 10,
+       "n": 14,
+       "rate": 0.7142857142857143
+      },
+      "silent_miss_share": {
+       "k": 3,
+       "n": 14,
+       "rate": 0.21428571428571427
+      },
+      "silent_misses": 3,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "operating_temperature_min": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 5,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 14,
+       "n": 15,
+       "rate": 0.9333333333333333
+      },
+      "present": 15,
+      "reviews": 11,
+      "right_value_review_share": {
+       "k": 11,
+       "n": 15,
+       "rate": 0.7333333333333333
+      },
+      "silent_miss_share": {
+       "k": 3,
+       "n": 15,
+       "rate": 0.2
+      },
+      "silent_misses": 3,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "supply_current_typ": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 16,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 4,
+       "n": 4,
+       "rate": 1.0
+      },
+      "present": 4,
+      "reviews": 0,
+      "right_value_review_share": {
+       "k": 0,
+       "n": 4,
+       "rate": 0.0
+      },
+      "silent_miss_share": {
+       "k": 4,
+       "n": 4,
+       "rate": 1.0
+      },
+      "silent_misses": 4,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "supply_voltage_max": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 6,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 13,
+       "n": 13,
+       "rate": 1.0
+      },
+      "present": 13,
+      "reviews": 9,
+      "right_value_review_share": {
+       "k": 9,
+       "n": 13,
+       "rate": 0.6923076923076923
+      },
+      "silent_miss_share": {
+       "k": 4,
+       "n": 13,
+       "rate": 0.3076923076923077
+      },
+      "silent_misses": 4,
+      "unreported_absences": 1,
+      "value_hits": 0
+     },
+     "supply_voltage_min": {
+      "absence_hits": 0,
+      "admitted": 2,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 2,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.7763932022500211,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 2,
+       "document_upper95": 0.7763932022500211,
+       "effective_errors": 0,
+       "effective_trials": 2,
+       "value_upper95": 0.7763932022500211
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 2,
+      "escapes": 0,
+      "excluded": 7,
+      "hits": 2,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 10,
+       "n": 12,
+       "rate": 0.8333333333333334
+      },
+      "present": 12,
+      "reviews": 7,
+      "right_value_review_share": {
+       "k": 7,
+       "n": 12,
+       "rate": 0.5833333333333334
+      },
+      "silent_miss_share": {
+       "k": 3,
+       "n": 12,
+       "rate": 0.25
+      },
+      "silent_misses": 3,
+      "unreported_absences": 1,
+      "value_hits": 2
+     }
+    },
+    "sbc": {
+     "deductible_family": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 17,
+       "n": 17,
+       "rate": 1.0
+      },
+      "present": 17,
+      "reviews": 3,
+      "right_value_review_share": {
+       "k": 3,
+       "n": 17,
+       "rate": 0.17647058823529413
+      },
+      "silent_miss_share": {
+       "k": 14,
+       "n": 17,
+       "rate": 0.8235294117647058
+      },
+      "silent_misses": 14,
+      "unreported_absences": 1,
+      "value_hits": 0
+     },
+     "deductible_individual": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 3,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 16,
+       "n": 17,
+       "rate": 0.9411764705882353
+      },
+      "present": 17,
+      "reviews": 2,
+      "right_value_review_share": {
+       "k": 2,
+       "n": 17,
+       "rate": 0.11764705882352941
+      },
+      "silent_miss_share": {
+       "k": 14,
+       "n": 17,
+       "rate": 0.8235294117647058
+      },
+      "silent_misses": 14,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "out_of_pocket_family": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 1,
+      "documents": 20,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 5,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 15,
+       "n": 15,
+       "rate": 1.0
+      },
+      "present": 15,
+      "reviews": 4,
+      "right_value_review_share": {
+       "k": 4,
+       "n": 15,
+       "rate": 0.26666666666666666
+      },
+      "silent_miss_share": {
+       "k": 11,
+       "n": 15,
+       "rate": 0.7333333333333333
+      },
+      "silent_misses": 11,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "out_of_pocket_individual": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 1,
+      "documents": 20,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 5,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 14,
+       "n": 15,
+       "rate": 0.9333333333333333
+      },
+      "present": 15,
+      "reviews": 3,
+      "right_value_review_share": {
+       "k": 3,
+       "n": 15,
+       "rate": 0.2
+      },
+      "silent_miss_share": {
+       "k": 11,
+       "n": 15,
+       "rate": 0.7333333333333333
+      },
+      "silent_misses": 11,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "specialist_copay": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 10,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 7,
+       "n": 7,
+       "rate": 1.0
+      },
+      "present": 7,
+      "reviews": 1,
+      "right_value_review_share": {
+       "k": 1,
+       "n": 7,
+       "rate": 0.14285714285714285
+      },
+      "silent_miss_share": {
+       "k": 6,
+       "n": 7,
+       "rate": 0.8571428571428571
+      },
+      "silent_misses": 6,
+      "unreported_absences": 3,
+      "value_hits": 0
+     }
+    }
+   },
+   "cache_sha256": "sha256:c302bacde8bd419e864d1c9d4db0a7eece18600efe6ac6a5f7bad0db923642fc",
+   "document_states": {
+    "by_kind": {
+     "annual": {
+      "documents": 21,
+      "incomplete": 0,
+      "transport_error": 0,
+      "transport_retries": 0
+     },
+     "component": {
+      "documents": 20,
+      "incomplete": 0,
+      "transport_error": 0,
+      "transport_retries": 0
+     },
+     "sbc": {
+      "documents": 20,
+      "incomplete": 0,
+      "transport_error": 0,
+      "transport_retries": 0
+     }
+    },
+    "total": {
+     "documents": 61,
+     "incomplete": 0,
+     "transport_error": 0,
+     "transport_retries": 0
+    }
+   },
+   "split": "heldout",
+   "total": {
+    "absence_hits": 0,
+    "admitted": 10,
+    "admitted_error_rate": {
+     "k": 1,
+     "n": 10,
+     "rate": 0.1
+    },
+    "bounds": {
+     "combined_upper95": 0.8646496378284163,
+     "confidence": 0.95,
+     "design_effect": 3,
+     "design_effect_method": "maximum admitted cluster size; default, not estimated",
+     "document_errors": 1,
+     "document_trials": 7,
+     "document_upper95": 0.5207029735913071,
+     "effective_errors": 1,
+     "effective_trials": 3,
+     "value_upper95": 0.8646496378284163
+    },
+    "catches": 9,
+    "documents": 61,
+    "documents_with_admits": 7,
+    "escapes": 1,
+    "excluded": 75,
+    "hits": 9,
+    "kinds": 3,
+    "miss_rate": {
+     "k": 187,
+     "n": 196,
+     "rate": 0.9540816326530612
+    },
+    "present": 196,
+    "reviews": 69,
+    "right_value_review_share": {
+     "k": 69,
+     "n": 196,
+     "rate": 0.3520408163265306
+    },
+    "silent_miss_share": {
+     "k": 118,
+     "n": 196,
+     "rate": 0.6020408163265306
+    },
+    "silent_misses": 118,
+    "unreported_absences": 55,
+    "value_hits": 9
+   }
+  },
+  "runner": {
+   "by_field": {
+    "cost_of_sales": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 21,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 2,
+      "n": 2,
+      "rate": 1.0
+     },
+     "present": 2,
+     "reviews": 1,
+     "right_value_review_share": {
+      "k": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "silent_miss_share": {
+      "k": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "silent_misses": 1,
+     "unreported_absences": 17,
+     "value_hits": 0
+    },
+    "deductible_family": {
+     "absence_hits": 1,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 1,
+     "documents": 20,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 17,
+      "n": 17,
+      "rate": 1.0
+     },
+     "present": 17,
+     "reviews": 17,
+     "right_value_review_share": {
+      "k": 17,
+      "n": 17,
+      "rate": 1.0
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 17,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "deductible_individual": {
+     "absence_hits": 0,
+     "admitted": 6,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 6,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.39303776899708276,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 6,
+      "document_upper95": 0.39303776899708276,
+      "effective_errors": 0,
+      "effective_trials": 6,
+      "value_upper95": 0.39303776899708276
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 6,
+     "escapes": 0,
+     "excluded": 3,
+     "hits": 6,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 11,
+      "n": 17,
+      "rate": 0.6470588235294118
+     },
+     "present": 17,
+     "reviews": 11,
+     "right_value_review_share": {
+      "k": 11,
+      "n": 17,
+      "rate": 0.6470588235294118
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 17,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 6
+    },
+    "gross_profit": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 21,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 2,
+      "n": 2,
+      "rate": 1.0
+     },
+     "present": 2,
+     "reviews": 1,
+     "right_value_review_share": {
+      "k": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "silent_miss_share": {
+      "k": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "silent_misses": 1,
+     "unreported_absences": 19,
+     "value_hits": 0
+    },
+    "operating_temperature_max": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 6,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 13,
+      "n": 14,
+      "rate": 0.9285714285714286
+     },
+     "present": 14,
+     "reviews": 12,
+     "right_value_review_share": {
+      "k": 12,
+      "n": 14,
+      "rate": 0.8571428571428571
+     },
+     "silent_miss_share": {
+      "k": 1,
+      "n": 14,
+      "rate": 0.07142857142857142
+     },
+     "silent_misses": 1,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "operating_temperature_min": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 5,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 14,
+      "n": 15,
+      "rate": 0.9333333333333333
+     },
+     "present": 15,
+     "reviews": 13,
+     "right_value_review_share": {
+      "k": 13,
+      "n": 15,
+      "rate": 0.8666666666666667
+     },
+     "silent_miss_share": {
+      "k": 1,
+      "n": 15,
+      "rate": 0.06666666666666667
+     },
+     "silent_misses": 1,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "out_of_pocket_family": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 3,
+     "documents": 20,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 5,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 15,
+      "n": 15,
+      "rate": 1.0
+     },
+     "present": 15,
+     "reviews": 15,
+     "right_value_review_share": {
+      "k": 15,
+      "n": 15,
+      "rate": 1.0
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 15,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "out_of_pocket_individual": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 2,
+     "documents": 20,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 5,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 14,
+      "n": 15,
+      "rate": 0.9333333333333333
+     },
+     "present": 15,
+     "reviews": 14,
+     "right_value_review_share": {
+      "k": 14,
+      "n": 15,
+      "rate": 0.9333333333333333
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 15,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "revenue": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 4,
+     "documents": 21,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 8,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 13,
+      "n": 13,
+      "rate": 1.0
+     },
+     "present": 13,
+     "reviews": 8,
+     "right_value_review_share": {
+      "k": 8,
+      "n": 13,
+      "rate": 0.6153846153846154
+     },
+     "silent_miss_share": {
+      "k": 5,
+      "n": 13,
+      "rate": 0.38461538461538464
+     },
+     "silent_misses": 5,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "specialist_copay": {
+     "absence_hits": 3,
+     "admitted": 4,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 4,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.5271291954984121,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 4,
+      "document_upper95": 0.5271291954984121,
+      "effective_errors": 0,
+      "effective_trials": 4,
+      "value_upper95": 0.5271291954984121
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 4,
+     "escapes": 0,
+     "excluded": 10,
+     "hits": 7,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 3,
+      "n": 7,
+      "rate": 0.42857142857142855
+     },
+     "present": 7,
+     "reviews": 3,
+     "right_value_review_share": {
+      "k": 3,
+      "n": 7,
+      "rate": 0.42857142857142855
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 7,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 4
+    },
+    "supply_current_typ": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 16,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 4,
+      "n": 4,
+      "rate": 1.0
+     },
+     "present": 4,
+     "reviews": 0,
+     "right_value_review_share": {
+      "k": 0,
+      "n": 4,
+      "rate": 0.0
+     },
+     "silent_miss_share": {
+      "k": 4,
+      "n": 4,
+      "rate": 1.0
+     },
+     "silent_misses": 4,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "supply_voltage_max": {
+     "absence_hits": 1,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 6,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 13,
+      "n": 13,
+      "rate": 1.0
+     },
+     "present": 13,
+     "reviews": 7,
+     "right_value_review_share": {
+      "k": 7,
+      "n": 13,
+      "rate": 0.5384615384615384
+     },
+     "silent_miss_share": {
+      "k": 6,
+      "n": 13,
+      "rate": 0.46153846153846156
+     },
+     "silent_misses": 6,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "supply_voltage_min": {
+     "absence_hits": 1,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 7,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 12,
+      "n": 12,
+      "rate": 1.0
+     },
+     "present": 12,
+     "reviews": 6,
+     "right_value_review_share": {
+      "k": 6,
+      "n": 12,
+      "rate": 0.5
+     },
+     "silent_miss_share": {
+      "k": 6,
+      "n": 12,
+      "rate": 0.5
+     },
+     "silent_misses": 6,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "total_assets": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 2,
+     "documents": 21,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 19,
+      "n": 20,
+      "rate": 0.95
+     },
+     "present": 20,
+     "reviews": 3,
+     "right_value_review_share": {
+      "k": 3,
+      "n": 20,
+      "rate": 0.15
+     },
+     "silent_miss_share": {
+      "k": 16,
+      "n": 20,
+      "rate": 0.8
+     },
+     "silent_misses": 16,
+     "unreported_absences": 1,
+     "value_hits": 1
+    },
+    "total_equity": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 2,
+     "documents": 21,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 20,
+      "n": 21,
+      "rate": 0.9523809523809523
+     },
+     "present": 21,
+     "reviews": 5,
+     "right_value_review_share": {
+      "k": 5,
+      "n": 21,
+      "rate": 0.23809523809523808
+     },
+     "silent_miss_share": {
+      "k": 15,
+      "n": 21,
+      "rate": 0.7142857142857143
+     },
+     "silent_misses": 15,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "total_liabilities": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 1,
+     "documents": 21,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 8,
+      "n": 9,
+      "rate": 0.8888888888888888
+     },
+     "present": 9,
+     "reviews": 3,
+     "right_value_review_share": {
+      "k": 3,
+      "n": 9,
+      "rate": 0.3333333333333333
+     },
+     "silent_miss_share": {
+      "k": 5,
+      "n": 9,
+      "rate": 0.5555555555555556
+     },
+     "silent_misses": 5,
+     "unreported_absences": 12,
+     "value_hits": 1
+    }
+   },
+   "by_kind": {
+    "annual": {
+     "absence_hits": 0,
+     "admitted": 3,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 3,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 3,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 9,
+     "documents": 21,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 10,
+     "hits": 3,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 64,
+      "n": 67,
+      "rate": 0.9552238805970149
+     },
+     "present": 67,
+     "reviews": 21,
+     "right_value_review_share": {
+      "k": 21,
+      "n": 67,
+      "rate": 0.31343283582089554
+     },
+     "silent_miss_share": {
+      "k": 43,
+      "n": 67,
+      "rate": 0.6417910447761194
+     },
+     "silent_misses": 43,
+     "unreported_absences": 49,
+     "value_hits": 3
+    },
+    "component": {
+     "absence_hits": 2,
+     "admitted": 2,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 2,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 2,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 0,
+     "documents": 20,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 40,
+     "hits": 4,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 56,
+      "n": 58,
+      "rate": 0.9655172413793104
+     },
+     "present": 58,
+     "reviews": 38,
+     "right_value_review_share": {
+      "k": 38,
+      "n": 58,
+      "rate": 0.6551724137931034
+     },
+     "silent_miss_share": {
+      "k": 18,
+      "n": 58,
+      "rate": 0.3103448275862069
+     },
+     "silent_misses": 18,
+     "unreported_absences": 0,
+     "value_hits": 2
+    },
+    "sbc": {
+     "absence_hits": 4,
+     "admitted": 11,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 11,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.23840419038085267,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 11,
+      "document_upper95": 0.23840419038085267,
+      "effective_errors": 0,
+      "effective_trials": 11,
+      "value_upper95": 0.23840419038085267
+     },
+     "catches": 6,
+     "documents": 20,
+     "documents_with_admits": 11,
+     "escapes": 0,
+     "excluded": 25,
+     "hits": 15,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 60,
+      "n": 71,
+      "rate": 0.8450704225352113
+     },
+     "present": 71,
+     "reviews": 60,
+     "right_value_review_share": {
+      "k": 60,
+      "n": 71,
+      "rate": 0.8450704225352113
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 71,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 11
+    }
+   },
+   "by_kind_field": {
+    "annual": {
+     "cost_of_sales": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 21,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 2,
+       "n": 2,
+       "rate": 1.0
+      },
+      "present": 2,
+      "reviews": 1,
+      "right_value_review_share": {
+       "k": 1,
+       "n": 2,
+       "rate": 0.5
+      },
+      "silent_miss_share": {
+       "k": 1,
+       "n": 2,
+       "rate": 0.5
+      },
+      "silent_misses": 1,
+      "unreported_absences": 17,
+      "value_hits": 0
+     },
+     "gross_profit": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 21,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 2,
+       "n": 2,
+       "rate": 1.0
+      },
+      "present": 2,
+      "reviews": 1,
+      "right_value_review_share": {
+       "k": 1,
+       "n": 2,
+       "rate": 0.5
+      },
+      "silent_miss_share": {
+       "k": 1,
+       "n": 2,
+       "rate": 0.5
+      },
+      "silent_misses": 1,
+      "unreported_absences": 19,
+      "value_hits": 0
+     },
+     "revenue": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 4,
+      "documents": 21,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 8,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 13,
+       "n": 13,
+       "rate": 1.0
+      },
+      "present": 13,
+      "reviews": 8,
+      "right_value_review_share": {
+       "k": 8,
+       "n": 13,
+       "rate": 0.6153846153846154
+      },
+      "silent_miss_share": {
+       "k": 5,
+       "n": 13,
+       "rate": 0.38461538461538464
+      },
+      "silent_misses": 5,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "total_assets": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 2,
+      "documents": 21,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 19,
+       "n": 20,
+       "rate": 0.95
+      },
+      "present": 20,
+      "reviews": 3,
+      "right_value_review_share": {
+       "k": 3,
+       "n": 20,
+       "rate": 0.15
+      },
+      "silent_miss_share": {
+       "k": 16,
+       "n": 20,
+       "rate": 0.8
+      },
+      "silent_misses": 16,
+      "unreported_absences": 1,
+      "value_hits": 1
+     },
+     "total_equity": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 2,
+      "documents": 21,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 20,
+       "n": 21,
+       "rate": 0.9523809523809523
+      },
+      "present": 21,
+      "reviews": 5,
+      "right_value_review_share": {
+       "k": 5,
+       "n": 21,
+       "rate": 0.23809523809523808
+      },
+      "silent_miss_share": {
+       "k": 15,
+       "n": 21,
+       "rate": 0.7142857142857143
+      },
+      "silent_misses": 15,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "total_liabilities": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 1,
+      "documents": 21,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 8,
+       "n": 9,
+       "rate": 0.8888888888888888
+      },
+      "present": 9,
+      "reviews": 3,
+      "right_value_review_share": {
+       "k": 3,
+       "n": 9,
+       "rate": 0.3333333333333333
+      },
+      "silent_miss_share": {
+       "k": 5,
+       "n": 9,
+       "rate": 0.5555555555555556
+      },
+      "silent_misses": 5,
+      "unreported_absences": 12,
+      "value_hits": 1
+     }
+    },
+    "component": {
+     "operating_temperature_max": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 6,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 13,
+       "n": 14,
+       "rate": 0.9285714285714286
+      },
+      "present": 14,
+      "reviews": 12,
+      "right_value_review_share": {
+       "k": 12,
+       "n": 14,
+       "rate": 0.8571428571428571
+      },
+      "silent_miss_share": {
+       "k": 1,
+       "n": 14,
+       "rate": 0.07142857142857142
+      },
+      "silent_misses": 1,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "operating_temperature_min": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 5,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 14,
+       "n": 15,
+       "rate": 0.9333333333333333
+      },
+      "present": 15,
+      "reviews": 13,
+      "right_value_review_share": {
+       "k": 13,
+       "n": 15,
+       "rate": 0.8666666666666667
+      },
+      "silent_miss_share": {
+       "k": 1,
+       "n": 15,
+       "rate": 0.06666666666666667
+      },
+      "silent_misses": 1,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "supply_current_typ": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 16,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 4,
+       "n": 4,
+       "rate": 1.0
+      },
+      "present": 4,
+      "reviews": 0,
+      "right_value_review_share": {
+       "k": 0,
+       "n": 4,
+       "rate": 0.0
+      },
+      "silent_miss_share": {
+       "k": 4,
+       "n": 4,
+       "rate": 1.0
+      },
+      "silent_misses": 4,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "supply_voltage_max": {
+      "absence_hits": 1,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 6,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 13,
+       "n": 13,
+       "rate": 1.0
+      },
+      "present": 13,
+      "reviews": 7,
+      "right_value_review_share": {
+       "k": 7,
+       "n": 13,
+       "rate": 0.5384615384615384
+      },
+      "silent_miss_share": {
+       "k": 6,
+       "n": 13,
+       "rate": 0.46153846153846156
+      },
+      "silent_misses": 6,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "supply_voltage_min": {
+      "absence_hits": 1,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 7,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 12,
+       "n": 12,
+       "rate": 1.0
+      },
+      "present": 12,
+      "reviews": 6,
+      "right_value_review_share": {
+       "k": 6,
+       "n": 12,
+       "rate": 0.5
+      },
+      "silent_miss_share": {
+       "k": 6,
+       "n": 12,
+       "rate": 0.5
+      },
+      "silent_misses": 6,
+      "unreported_absences": 0,
+      "value_hits": 0
+     }
+    },
+    "sbc": {
+     "deductible_family": {
+      "absence_hits": 1,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 1,
+      "documents": 20,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 17,
+       "n": 17,
+       "rate": 1.0
+      },
+      "present": 17,
+      "reviews": 17,
+      "right_value_review_share": {
+       "k": 17,
+       "n": 17,
+       "rate": 1.0
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 17,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "deductible_individual": {
+      "absence_hits": 0,
+      "admitted": 6,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 6,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.39303776899708276,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 6,
+       "document_upper95": 0.39303776899708276,
+       "effective_errors": 0,
+       "effective_trials": 6,
+       "value_upper95": 0.39303776899708276
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 6,
+      "escapes": 0,
+      "excluded": 3,
+      "hits": 6,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 11,
+       "n": 17,
+       "rate": 0.6470588235294118
+      },
+      "present": 17,
+      "reviews": 11,
+      "right_value_review_share": {
+       "k": 11,
+       "n": 17,
+       "rate": 0.6470588235294118
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 17,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 6
+     },
+     "out_of_pocket_family": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 3,
+      "documents": 20,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 5,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 15,
+       "n": 15,
+       "rate": 1.0
+      },
+      "present": 15,
+      "reviews": 15,
+      "right_value_review_share": {
+       "k": 15,
+       "n": 15,
+       "rate": 1.0
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 15,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "out_of_pocket_individual": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 2,
+      "documents": 20,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 5,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 14,
+       "n": 15,
+       "rate": 0.9333333333333333
+      },
+      "present": 15,
+      "reviews": 14,
+      "right_value_review_share": {
+       "k": 14,
+       "n": 15,
+       "rate": 0.9333333333333333
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 15,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "specialist_copay": {
+      "absence_hits": 3,
+      "admitted": 4,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 4,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.5271291954984121,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 4,
+       "document_upper95": 0.5271291954984121,
+       "effective_errors": 0,
+       "effective_trials": 4,
+       "value_upper95": 0.5271291954984121
+      },
+      "catches": 0,
+      "documents": 20,
+      "documents_with_admits": 4,
+      "escapes": 0,
+      "excluded": 10,
+      "hits": 7,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 3,
+       "n": 7,
+       "rate": 0.42857142857142855
+      },
+      "present": 7,
+      "reviews": 3,
+      "right_value_review_share": {
+       "k": 3,
+       "n": 7,
+       "rate": 0.42857142857142855
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 7,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 4
+     }
+    }
+   },
+   "cache_sha256": "sha256:6f69fdf7f15c92d23e8781c1f0fe33a0f34a4f0da12047b0087ea870c5fdf8ee",
+   "document_states": {
+    "by_kind": {
+     "annual": {
+      "documents": 21,
+      "incomplete": 18,
+      "transport_error": 0,
+      "transport_retries": 0
+     },
+     "component": {
+      "documents": 20,
+      "incomplete": 0,
+      "transport_error": 0,
+      "transport_retries": 0
+     },
+     "sbc": {
+      "documents": 20,
+      "incomplete": 0,
+      "transport_error": 0,
+      "transport_retries": 0
+     }
+    },
+    "total": {
+     "documents": 61,
+     "incomplete": 18,
+     "transport_error": 0,
+     "transport_retries": 0
+    }
+   },
+   "split": "heldout",
+   "total": {
+    "absence_hits": 6,
+    "admitted": 16,
+    "admitted_error_rate": {
+     "k": 0,
+     "n": 16,
+     "rate": 0.0
+    },
+    "bounds": {
+     "combined_upper95": 0.45071972834694113,
+     "confidence": 0.95,
+     "design_effect": 3,
+     "design_effect_method": "maximum admitted cluster size; default, not estimated",
+     "document_errors": 0,
+     "document_trials": 13,
+     "document_upper95": 0.20581666518655065,
+     "effective_errors": 0,
+     "effective_trials": 5,
+     "value_upper95": 0.45071972834694113
+    },
+    "catches": 15,
+    "documents": 61,
+    "documents_with_admits": 13,
+    "escapes": 0,
+    "excluded": 75,
+    "hits": 22,
+    "kinds": 3,
+    "miss_rate": {
+     "k": 180,
+     "n": 196,
+     "rate": 0.9183673469387755
+    },
+    "present": 196,
+    "reviews": 119,
+    "right_value_review_share": {
+     "k": 119,
+     "n": 196,
+     "rate": 0.6071428571428571
+    },
+    "silent_miss_share": {
+     "k": 61,
+     "n": 196,
+     "rate": 0.3112244897959184
+    },
+    "silent_misses": 61,
+    "unreported_absences": 49,
+    "value_hits": 16
+   }
+  }
+ }
+}
