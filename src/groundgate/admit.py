@@ -89,6 +89,7 @@ QUESTIONS = ("key", "field_match")
 SOURCES = ("document", "reference", "external", "knowledge")
 ROLES = ("value", "sign", "scale", "unit", "key", "field")
 PART_ORDER = ("sign", "scale", "unit", "field", "key")  # SPEC §5 `parts`
+MAX_FIELD_ITEMS = 8  # the field items that a candidate can cite (SPEC §3 step 1, #300)
 MISSING_ORDER = ("sign", "scale", "unit", "key")
 _SCALES = (3, 5, 6, 7, 9, 12)  # the powers of ten of the scale words (SPEC §4.1)
 _ACTION_RANK = {"admit": 0, "review": 1, "reject": 2}
@@ -285,9 +286,8 @@ def _items(ev: object, refs: Mapping[str, _Text]) -> list[_Item]:
                 role = "value"
             if role not in ROLES or (span is None and not (text and text.strip())):
                 raise _Reject("CANDIDATE_INVALID")
-            if role != "field" and any(  # several field items are allowed (#300)
-                o.role == role and o.source in ("document", "reference") for o in out
-            ):
+            same = sum(o.role == role and o.source in ("document", "reference") for o in out)
+            if same >= (MAX_FIELD_ITEMS if role == "field" else 1):  # several field items (#300)
                 raise _Reject("CANDIDATE_INVALID")
         else:
             if role is not None or has or not (text and text.strip()):

@@ -265,7 +265,8 @@ present but not an object or a list of objects. It also rejects when an evidence
   non-blank `text`;
 - has the same role as another document or reference item of the candidate, and that role is not
   `field`. A candidate can cite several field items, such as a row label and a column header
-  (#300).
+  (#300), but not more than 8. A ninth field item makes the candidate invalid, so that the work
+  of one candidate stays bounded.
 
 A member of the candidate itself whose value is null counts as absent. Inside an evidence item, a
 null member is invalid.

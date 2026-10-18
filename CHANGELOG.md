@@ -8,7 +8,7 @@ spec version, and receipts name the spec version they were decided under.
 Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses the
 `groundgate/0.10:` prefix, so all hashes differ from 0.9.0.
 
-- A candidate can cite several field items, such as a row label and a column header (#300).
+- A candidate can cite up to 8 field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay
   `CANDIDATE_INVALID`.
 - Currency scales (#301). `k`, `m` and `bn` count as a scale only directly next to a currency sign

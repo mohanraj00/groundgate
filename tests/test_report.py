@@ -330,7 +330,7 @@ def test_report_reads_the_evidence_once_per_card(monkeypatch: pytest.MonkeyPatch
 
     doc = "Cash\t$100"
     schema = {"fields": {"cash": {"type": "number", "unit": "USD", "aliases": ["Cash"]}}}
-    ev = [{"text": "$100"}, *({"role": "field", "text": f"Nope {n}"} for n in range(300))]
+    ev = [{"text": "$100"}, *({"role": "field", "text": f"Nope {n}"} for n in range(8))]
     cands = [{"id": "c", "field": "cash", "value": "100", "unit": "USD", "evidence": ev}]
     receipt = gg.admit(doc, schema, cands).to_dict()
     calls = 0
@@ -343,5 +343,5 @@ def test_report_reads_the_evidence_once_per_card(monkeypatch: pytest.MonkeyPatch
 
     monkeypatch.setattr(report, "_evidence", counted)
     html = render(receipt, doc, cands, schema=schema)
-    assert "quoted “Nope 299”, not found" in html
+    assert "quoted “Nope 7”, not found" in html
     assert calls <= 3

@@ -19,6 +19,7 @@ NOT_IN_SCHEMA = {
     ("19-evidence-list", "bad5"),  # two items with the role value
     ("19-evidence-list", "bad9"),  # a ref that names no reference in the packet
     *(("59-several-field-items", f"x{n}") for n in range(1, 7)),  # two items of a role not field
+    ("59-several-field-items", "p14"),  # more than 8 field items
 }
 
 
