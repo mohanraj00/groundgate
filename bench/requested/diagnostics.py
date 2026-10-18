@@ -38,6 +38,7 @@ Json = dict[str, Any]
 _MAX = 16 * 1024 * 1024
 # Full reader observations of the annotated documents together; 23 documents need 36 MiB.
 _LAYOUT_TOTAL = 64 * 1024 * 1024
+_LAYOUT_WORK = 20_000_000
 _ID = re.compile(r"[a-zA-Z0-9][a-zA-Z0-9_.-]{0,79}\Z")
 _SHA = re.compile(r"sha256:[0-9a-f]{64}\Z")
 _ROUTES = {"empty_cells", "ambiguous_columns", "running_heads"}
@@ -246,16 +247,21 @@ def score_layout(annotations: list[Json], observations: list[Json]) -> Json:
         }
     routes: dict[str, Any] = {}
     work = 0
+    # Rows of each observation by page, so a case scans and counts only the rows of its own page.
+    by_page: dict[int, dict[int, list[Json]]] = {}
 
     def joins(obs: Json, page: int, box: list[float]) -> list[tuple[Json, Json]]:
         nonlocal work
+        if id(obs) not in by_page:
+            pages: dict[int, list[Json]] = {}
+            for emitted in obs["trace"]["rows"]:
+                pages.setdefault(emitted["page"], []).append(emitted)
+            by_page[id(obs)] = pages
         matches = []
-        for emitted in obs["trace"]["rows"]:
+        for emitted in by_page[id(obs)].get(page, []):
             work += 1 + sum(len(cell["words"]) for cell in emitted["cells"])
-            if work > 20_000_000:
+            if work > _LAYOUT_WORK:
                 raise DiagnosticError("layout geometry work cap")
-            if emitted["page"] != page:
-                continue
             for cell in emitted["cells"]:
                 if any(
                     min(w["box"][2], box[2]) > max(w["box"][0], box[0])
