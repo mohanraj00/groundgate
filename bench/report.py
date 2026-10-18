@@ -968,6 +968,12 @@ def render_requested(results: dict[str, Any]) -> str:
             "Status: " + diagnostic["reader_layout"]["status"] + ".",
             "",
         ]
+        if missing := diagnostic["reader_layout"].get("missing_observations"):
+            lines += [
+                f"{len(missing)} annotated documents have no reader observation. "
+                "The table does not count their cases: " + ", ".join(missing) + ".",
+                "",
+            ]
         rows = []
         for route, row in sorted(diagnostic["reader_layout"]["routes"].items()):
             rows.append(

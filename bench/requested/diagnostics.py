@@ -1303,8 +1303,12 @@ def load_export(
         or layout.get("status") not in {"assessed", "unassessed"}
         or not isinstance(layout.get("routes"), dict)
         or not isinstance(layout.get("limitations"), list)
+        or not isinstance(layout.get("missing_observations", []), list)
+        or len(layout.get("missing_observations", [])) > 1024
     ):
         raise DiagnosticError("invalid diagnostic layout result")
+    for ident in layout.get("missing_observations", []):
+        _ident(ident)
     for name, row in layout["routes"].items():
         if not isinstance(name, str) or len(name) > 200 or not isinstance(row, dict):
             raise DiagnosticError("invalid layout slice")

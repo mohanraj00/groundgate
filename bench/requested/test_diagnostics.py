@@ -375,6 +375,10 @@ def test_diagnostic_export_adds_section_without_changing_primary_units_or_bounds
     )
     assert result["runs"] == original["runs"]
     assert result["runs"]["baseline"]["total"]["present"] == 2
+    missing = copy.deepcopy(result)
+    missing["diagnostics"]["reader_layout"]["missing_observations"] = ["doc"]
+    assert "1 annotated documents have no reader observation" in render_requested(missing)
+    assert "no reader observation" not in render_requested(result)
     assert result["diagnostics"]["export_sha256"] == export_sha
     assert "Separate diagnostics" in render_requested(result)
     assert "Separate diagnostics" not in render_requested(original)
