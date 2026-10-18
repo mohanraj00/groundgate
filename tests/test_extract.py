@@ -778,6 +778,18 @@ def test_admission_history_limit_retains_last_recorded_packet():
     assert_replays(result, text)
 
 
+def test_admission_history_limit_names_fields_without_candidates():
+    result = execute(
+        "Amount 5.",
+        Client({"candidates": [], "not_found": ["amount"]}),
+        run_policy=RunPolicy(max_admission_bytes=100),
+    )
+    assert not result.complete
+    states = result.record[-1]["fields"]["amount"]
+    assert states == ["model_not_found", "admission_history_limit"]
+    assert_replays(result, "Amount 5.")
+
+
 def test_candidate_payload_byte_limit_applies_before_admission():
     first = candidate(evidence=[item("x" * 3000)])
     result = execute(

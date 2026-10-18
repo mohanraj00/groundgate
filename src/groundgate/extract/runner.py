@@ -642,7 +642,8 @@ class _Engine:
                 self.contexts = {cid: self.contexts[cid] for cid in previous}
                 self.targeted.intersection_update(previous)
                 self.terminal.intersection_update(previous)
-                for name in {c["field"] for c in candidates}:
+                # The stop ends the run, so it affects every field, with or without a candidate.
+                for name in self.states:
                     self.states[name].append("admission_history_limit")
                 self.event(
                     kind="limit",
