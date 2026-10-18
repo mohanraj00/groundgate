@@ -11,6 +11,9 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
 - A candidate can cite several field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay
   `CANDIDATE_INVALID`.
+- The extract runner's repair round keeps several field items too (#304). Before, a repair reply
+  with two field items stopped with `protocol_failure`. A repair that may change `field` can now
+  add, remove or replace field items. Every other role stays one item.
 - Currency scales (#301). `k`, `m` and `bn` count as a scale only directly next to a currency sign
   (`$`, `€`, `£`, `₹`). `€70,471m` is 70471000000. `£m`, `$bn` and `£'000` in a column header are
   a heading scale, and a scale item can cite them. `70 m`, `5m` and `£5 m` stay as written,

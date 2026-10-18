@@ -365,6 +365,14 @@ def _repair_not_found(reply: Json) -> bool:
     return set(reply) == {"not_found"} and reply["not_found"] is True
 
 
+def _by_role(evidence: list[Json]) -> dict[str, list[Json]]:
+    """The evidence items of each role, in list order."""
+    roles: dict[str, list[Json]] = {}
+    for item in evidence:
+        roles.setdefault(item["role"], []).append(item)
+    return roles
+
+
 def _shape(candidate: Any, fields: set[str], refs: set[str]) -> None:
     if not isinstance(candidate, dict) or set(candidate) != {
         "field",
@@ -872,15 +880,15 @@ class _Engine:
                     self.event(kind="repair", candidate_id=cid, status="repair_not_found")
                     continue
                 changed = sorted(k for k in old if old[k] != reply[k])
-                old_roles = {e["role"]: e for e in old["evidence"]}
-                new_roles = {e["role"]: e for e in reply["evidence"]}
+                old_roles = _by_role(old["evidence"])
+                new_roles = _by_role(reply["evidence"])
                 role_diff = {
                     r
                     for r in old_roles.keys() | new_roles.keys()
                     if old_roles.get(r) != new_roles.get(r)
                 }
-                value_item = old_roles.get("value")
-                new_value = new_roles.get("value")
+                value_item = old_roles.get("value", [None])[0]
+                new_value = new_roles.get("value", [None])[0]
                 context_sources = {
                     ("document", None)
                     if r["source"] == "document"
@@ -902,17 +910,20 @@ class _Engine:
                 invalid = (
                     set(changed) - {"value", "evidence"}
                     or role_diff - roles
-                    or len(new_roles) != len(reply["evidence"])
+                    # Only the field role can hold more than one item (spec 0.10, #300).
+                    or any(len(items) > 1 for r, items in new_roles.items() if r != "field")
                     or any(
                         (e["source"], e.get("ref")) != source
-                        for r, e in new_roles.items()
+                        for r, items in new_roles.items()
                         if r in role_diff
+                        for e in items
                     )
                     or any(
                         (e["source"], e.get("ref"))
-                        != (old_roles[r]["source"], old_roles[r].get("ref"))
-                        for r, e in new_roles.items()
+                        not in {(o["source"], o.get("ref")) for o in old_roles[r]}
+                        for r, items in new_roles.items()
                         if r in role_diff and r in old_roles
+                        for e in items
                     )
                 )
                 self.event(
