@@ -224,12 +224,19 @@ class LabelStore:
                     document["fields"] = payload["fields"]
             self.write(labels)
 
+    def complete_manifest(self) -> bool:
+        # The run harness needs both flags, so sealing needs them too.
+        return (
+            self.manifest.get("status") == "frozen"
+            and self.manifest.get("selection_complete") is True
+        )
+
     def seal(self) -> None:
         with self.lock:
             labels = self.labels()
             if reason := self.blocked(labels):
                 raise ValueError(reason)
-            if self.manifest.get("status") != "frozen":
+            if not self.complete_manifest():
                 raise ValueError("the complete manifest must be frozen before sealing")
             if read_json(self.directory / "manifest.json") != self.manifest:
                 raise ValueError("manifest changed; restart the labeling server")
@@ -346,7 +353,7 @@ class LabelStore:
             ],
             "labels": labels,
             "blocked": self.blocked(labels),
-            "can_seal": self.manifest.get("status") == "frozen" and not self.blocked(labels),
+            "can_seal": self.complete_manifest() and not self.blocked(labels),
             "preview_available": self.renderer is not None,
         }
 

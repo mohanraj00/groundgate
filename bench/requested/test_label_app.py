@@ -32,6 +32,7 @@ def store(tmp_path: Path) -> LabelStore:
         (sources / f"{ident}.pdf").write_bytes(original)
     manifest = {
         "status": "frozen",
+        "selection_complete": True,
         "schemas": {
             "kind": {
                 "fields": {
@@ -267,11 +268,15 @@ def test_http_serves_only_allowlisted_original_sources(server: LabelServer) -> N
     assert request(server, "GET", "/pdf/unknown")[0] == 400
 
 
-def test_draft_manifest_saves_but_cannot_seal(store: LabelStore) -> None:
-    store.manifest["status"] = "draft"
+@pytest.mark.parametrize(
+    "change", [{"status": "draft"}, {"selection_complete": False}, {"selection_complete": None}]
+)
+def test_draft_manifest_saves_but_cannot_seal(store: LabelStore, change: dict[str, Any]) -> None:
+    store.manifest |= change
     (store.directory / "manifest.json").write_text(json.dumps(store.manifest))
     save_all(store)
     before = store.path.read_bytes()
+    assert store.state()["can_seal"] is False
     with pytest.raises(ValueError, match="manifest must be frozen"):
         store.seal()
     assert store.path.read_bytes() == before

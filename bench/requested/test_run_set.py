@@ -1056,3 +1056,28 @@ def test_concurrent_header_publication_checks_the_published_bytes(
         with pytest.raises(harness.CacheError, match=error):
             harness._same_or_publish(path, {"a": 1})
     assert path.read_bytes() == harness.encoded(other)
+
+
+def test_document_schema_changes_only_currency_aliases_keys_and_units() -> None:
+    template = {
+        "fields": {
+            "revenue": {"type": "number", "unit": "USD", "description": "Revenue."},
+            "supply_voltage_min": {"type": "number", "unit": "V", "comparator": "ge"},
+        }
+    }
+    allowed = copy.deepcopy(template)
+    allowed["fields"]["revenue"] |= {"unit": "GBP", "aliases": ["Turnover"]}
+    allowed["units"] = {"GBP": ["£"]}
+    assert harness._same_request(template, allowed)
+    changes = [
+        ("supply_voltage_min", "comparator", "eq"),
+        ("supply_voltage_min", "unit", "mV"),
+        ("revenue", "description", "Turnover."),
+        ("revenue", "type", "integer"),
+        ("revenue", "multiple", True),
+    ]
+    for name, member, value in changes:
+        changed = copy.deepcopy(template)
+        changed["fields"][name][member] = value
+        assert not harness._same_request(template, changed), member
+    assert not harness._same_request(template, template | {"currency": "GBP"})

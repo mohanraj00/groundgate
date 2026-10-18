@@ -190,6 +190,42 @@ def _unlinked(path: Path) -> Path:
     return path.resolve()
 
 
+_CURRENCY = re.compile(r"[A-Z]{3}")
+_DOCUMENT_MEMBERS = {"aliases", "keys", "unit"}
+
+
+def _same_request(template: Json, schema: Json) -> bool:
+    """Allow a document schema only its currency, aliases, keys and unit table."""
+    if not isinstance(schema, dict) or not isinstance(schema.get("fields"), dict):
+        return False
+    tops = (set(template) | set(schema)) - {"fields", "units"}
+    if any(template.get(k) != schema.get(k) for k in tops):
+        return False
+    if set(schema["fields"]) != set(template["fields"]):
+        return False
+    for name, field in schema["fields"].items():
+        fixed = template["fields"][name]
+        if not isinstance(field, dict):
+            return False
+
+        def rest(f: Json) -> Json:
+            kept = {k: v for k, v in f.items() if k not in _DOCUMENT_MEMBERS}
+            return {"type": "number", "multiple": False} | kept
+
+        if rest(field) != rest(fixed):
+            return False
+        unit, base = field.get("unit"), fixed.get("unit")
+        # Only a currency unit changes, to the document's reporting currency.
+        if unit != base and not (
+            isinstance(unit, str)
+            and isinstance(base, str)
+            and _CURRENCY.fullmatch(unit)
+            and _CURRENCY.fullmatch(base)
+        ):
+            return False
+    return True
+
+
 def _external(path: Path, repository: Path) -> Path:
     path = _unlinked(path.absolute())
     if path == repository or repository in path.parents:
@@ -661,11 +697,7 @@ class FrozenSet:
         """
         template = self.manifest["schemas"][doc["kind"]]
         schema = doc.get("schema", template)
-        if set(schema["fields"]) != set(template["fields"]) or any(
-            field.get("type", "number") != template["fields"][name].get("type", "number")
-            or field.get("multiple", False) != template["fields"][name].get("multiple", False)
-            for name, field in schema["fields"].items()
-        ):
+        if not _same_request(template, schema):
             raise CacheError("document schema changes fixed requests or types")
         effective = gg.Schema.from_dict(schema).to_dict()
         if "request_context" in doc:
