@@ -201,10 +201,11 @@ changes as one terminal proposal. A value change never grants another role or an
 | `KEY_NOT_AT_VALUE` | Only when key is in `missing`, aliases exist, and the value's line has a tab: add a key item and a field item. The candidate's key stays fixed. |
 | `SCALE_WORD` | A scaled numeric value is permitted as a new terminal proposal, as below. Evidence changes require their own eligible codes. |
 
-A candidate can cite several field items (spec 0.10, #300). The runner compares the field items
+A candidate can cite up to 8 field items (spec 0.10, #300). The runner compares the field items
 as one list, in list order. When a repair may change `field`, the reply can add, remove, replace
 or reorder field items. When it may not change `field`, the list stays the same. Every other role
-holds one item at most. A reply with two items of another role is a protocol failure.
+holds one item at most. A reply with a ninth field item, or with two items of another role, is a
+protocol failure.
 
 All other rejecting or flag codes end repairs for that candidate. Examples are
 `VALUE_NOT_IN_EVIDENCE`, `UNIT_NOT_IN_EVIDENCE`, `QUALIFIED_VALUE`, `KEY_INVALID`,

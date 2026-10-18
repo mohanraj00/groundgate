@@ -17,7 +17,7 @@ from itertools import chain
 from pathlib import Path
 from typing import Any, cast
 
-from ..admit import Verification, admit
+from ..admit import MAX_FIELD_ITEMS, Verification, admit
 from ..canonical import SPEC_VERSION, jcs
 from ..codes import INFO
 from ..feedback import feedback_message
@@ -910,8 +910,11 @@ class _Engine:
                 invalid = (
                     set(changed) - {"value", "evidence"}
                     or role_diff - roles
-                    # Only the field role can hold more than one item (spec 0.10, #300).
-                    or any(len(items) > 1 for r, items in new_roles.items() if r != "field")
+                    # The field role holds up to MAX_FIELD_ITEMS items, every other role one (#300).
+                    or any(
+                        len(items) > (MAX_FIELD_ITEMS if r == "field" else 1)
+                        for r, items in new_roles.items()
+                    )
                     or any(
                         (e["source"], e.get("ref")) != source
                         for r, items in new_roles.items()

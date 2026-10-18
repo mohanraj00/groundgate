@@ -471,7 +471,7 @@ A field item passes when it holds a mention of one of the aliases and ends befor
 must also be at the value: on its row with no letter between it and the number, or in the value's
 sentence with no number between them. Otherwise it fails with `FIELD_CITATION_INVALID`. A field
 with no `aliases` does not check its field item. That item adds no flag, but it does not pass.
-A candidate can cite several field items, such as a row label and a column header. One passing
+A candidate can cite up to 8 field items, such as a row label and a column header. One passing
 item is enough, and the flag comes only when none passes (spec 0.10).
 
 Two other checks need a passing field item:

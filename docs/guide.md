@@ -128,9 +128,9 @@ line, goes to review. A table with one number column under a title such as "As o
 [`candidate.schema.json`](../src/groundgate/candidate.schema.json) in the package. It describes
 every candidate that step 1 accepts. For a model's structured output, use
 [`gg.extractor_schema`](#the-extractors-output) instead. groundgate does not validate with
-either schema: step 1 is the definition. The schema does not check three things: a
-`ref` that names no reference, two document or reference items with the same role other than `field`, and an integer
-written with a fraction (`2.0`).
+either schema: step 1 is the definition. The schema does not check four things: a
+`ref` that names no reference, two document or reference items with the same role other than
+`field`, more than 8 field items, and an integer written with a fraction (`2.0`).
 
 ### Evidence items
 
@@ -163,7 +163,7 @@ at a unit place, such as the `$` of the value's column (spec 0.7). A value quote
 | `sign` | A negative value. | Brackets around the number, or a loss word ("loss", "deficit") at most 4 words before it in the same sentence, with no "no", "not" or "without" directly before it, and no number, line break, tab or gain word ("income", "profit") between it and the number. |
 | `scale` | A value in thousands or millions. | "in thousands" or "in millions" before the value, with no other scale word between. A currency scale such as `£m`, `$bn` or `£'000` in a column header also counts, when no currency scale of another size is between (spec 0.10). With a scale item whose text holds a scale word, the value of a number with no scale word of its own must be the number times that scale: the number as written does not match (spec 0.8). A number such as "$2.2 million" keeps its own scale. |
 | `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The item holds a form of the field's unit. Either that unit is next to the number, so the item repeats it, or the field item passes, the item is before the value, no unit form is next to the number, and the item is on the value's line, in a caption line before the table, or in the value's column of the same table (spec 0.7). When the field item passes, a unit form at such a place also means that the unit is not missing, with no unit item (spec 0.8). |
-| `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. A fact can cite several field items, such as a row label and a column header. One passing field item is enough, and the fact gets `FIELD_CITATION_INVALID` only when none passes (spec 0.10). |
+| `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. A fact can cite up to 8 field items, such as a row label and a column header. One passing field item is enough, and the fact gets `FIELD_CITATION_INVALID` only when none passes (spec 0.10). |
 | `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). A dash or a `$` with no number counts as a cell. A number after the field item on its line, such as a footnote marker, stops the rule. When only spaces stand between the row label and its first number, the rule stops after the first column. A tab after the label, as `groundgate read` writes HTML tables, keeps it. |
 
 groundgate computes the value from the parts. The extractor does not state the steps. On a field
@@ -232,8 +232,9 @@ receipt = gg.admit(text, schema, candidates, references=references)
 - The schema has no `$schema` member, because the Claude CLI refuses a schema that names draft
   2020-12. Each `$ref` is a JSON pointer into the schema, so a client that loads an older draft
   reads it the same way.
-- Two step 1 rules stay outside the schema: two items with the same role other than `field`, and a blank `text`,
-  `url` or `retrieved`. Step 1 rejects such a candidate with `CANDIDATE_INVALID`.
+- Three step 1 rules stay outside the schema: two items with the same role other than `field`,
+  more than 8 field items, and a blank `text`, `url` or `retrieved`. Step 1 rejects such a
+  candidate with `CANDIDATE_INVALID`.
 
 The schema gives the shape. These instructions tell the model what to put in it:
 

@@ -322,3 +322,26 @@ def test_report_quotes_each_field_item() -> None:
     html = render(receipt, doc, cands, schema=schema)
     assert '<b>field</b> <span class="ok">passed</span>, cited “Cash”' in html
     assert '<b>field</b> <span class="bad">failed</span>, quoted “Nope”, not found' in html
+
+
+def test_report_reads_the_evidence_once_per_card(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Many field items render in one pass over the evidence, not one pass for each part."""
+    import groundgate.report as report
+
+    doc = "Cash\t$100"
+    schema = {"fields": {"cash": {"type": "number", "unit": "USD", "aliases": ["Cash"]}}}
+    ev = [{"text": "$100"}, *({"role": "field", "text": f"Nope {n}"} for n in range(8))]
+    cands = [{"id": "c", "field": "cash", "value": "100", "unit": "USD", "evidence": ev}]
+    receipt = gg.admit(doc, schema, cands).to_dict()
+    calls = 0
+    evidence = report._evidence
+
+    def counted(c: object) -> list[Any]:
+        nonlocal calls
+        calls += 1
+        return evidence(c)
+
+    monkeypatch.setattr(report, "_evidence", counted)
+    html = render(receipt, doc, cands, schema=schema)
+    assert "quoted “Nope 7”, not found" in html
+    assert calls <= 3

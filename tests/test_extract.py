@@ -656,6 +656,16 @@ def test_evidence_repair_keeps_two_field_items():
     assert_replays(result, text, FIELDS_SCHEMA)
 
 
+def test_repair_reply_with_nine_field_items_is_a_protocol_failure():
+    # A candidate can cite up to 8 field items (SPEC section 3 step 1).
+    first = candidate(evidence=[item("5"), item("wrong", "field")])
+    new = candidate(evidence=[item("5"), *[item("Amount", "field")] * 9])
+    result = execute(FIELDS_TEXT, Client(envelope(first), new), FIELDS_SCHEMA)
+    assert result.candidates[0]["evidence"] == first["evidence"]
+    assert any(e.get("status") == "protocol_failure" for e in result.record)
+    assert_replays(result, FIELDS_TEXT, FIELDS_SCHEMA)
+
+
 @pytest.mark.parametrize(
     "evidence",
     [

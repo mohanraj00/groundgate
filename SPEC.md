@@ -207,7 +207,8 @@ reference items are **role items**. External and knowledge items are **outside i
 `candidate.schema.json` in the package (`candidate_schema()` in the reference implementation) is
 a JSON Schema for one candidate. Step 1 is the definition: the schema does not check that a `ref`
 names a reference in the packet, that two document or reference items other than field items have
-different roles, or that an integer has no fraction (`2.0`).
+different roles, that a candidate cites at most 8 field items, or that an integer has no fraction
+(`2.0`).
 
 ### 2.6 Judgments
 
@@ -265,7 +266,8 @@ present but not an object or a list of objects. It also rejects when an evidence
   non-blank `text`;
 - has the same role as another document or reference item of the candidate, and that role is not
   `field`. A candidate can cite several field items, such as a row label and a column header
-  (#300).
+  (#300), but not more than 8. A ninth field item makes the candidate invalid, so that the work
+  of one candidate stays bounded.
 
 A member of the candidate itself whose value is null counts as absent. Inside an evidence item, a
 null member is invalid.

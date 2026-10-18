@@ -3580,7 +3580,8 @@ vector(
     "is checked and listed in parts. The field check passes when one of them passes. Only when "
     "none passes does the decision get FIELD_CITATION_INVALID. A passing one lets a unit item or "
     "a unit at a unit place supply the unit, and selects the value's quote occurrence. Two items "
-    "of any other role stay CANDIDATE_INVALID (spec 0.10, #300).",
+    "of any other role stay CANDIDATE_INVALID, and so does a candidate with more than 8 field "
+    "items (spec 0.10, #300).",
     "Ending balance\n\nCash\t$100\n\n"
     "Amounts in $\nEnding balance\nCash\t200\n\n"
     "Other items were about $50.\nCash\t50",
@@ -3615,6 +3616,11 @@ vector(
           (REVIEW, ["PART_MISSING"], ["unit"], [F, T])),
         c("p12", "cash", "50", "USD", [{"text": "50"}, row("Revenue")],
           (REVIEW, ["QUALIFIED_VALUE", "FIELD_CITATION_INVALID"], [], [F])),
+        # at most 8 field items: 8 are checked, 9 make the candidate invalid
+        c("p13", "cash", "100", "USD", [q("$100"), *[row("Revenue")] * 7, row("Cash")],
+          ("admitted", [], [], [F, F, F, F, F, F, F, T])),
+        c("p14", "cash", "100", "USD", [q("$100"), *[row("Revenue")] * 8, row("Cash")],
+          ("rejected", ["CANDIDATE_INVALID"])),
         # two items of another role
         *[
             c(f"x{n}", "cash", "100", "USD", [q("$100"), *ev], ("rejected", ["CANDIDATE_INVALID"]))

@@ -6,6 +6,7 @@ import bisect
 import dataclasses
 import itertools
 import re
+from array import array
 from collections import defaultdict
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
@@ -89,6 +90,7 @@ QUESTIONS = ("key", "field_match")
 SOURCES = ("document", "reference", "external", "knowledge")
 ROLES = ("value", "sign", "scale", "unit", "key", "field")
 PART_ORDER = ("sign", "scale", "unit", "field", "key")  # SPEC §5 `parts`
+MAX_FIELD_ITEMS = 8  # the field items that a candidate can cite (SPEC §3 step 1, #300)
 MISSING_ORDER = ("sign", "scale", "unit", "key")
 _SCALES = (3, 5, 6, 7, 9, 12)  # the powers of ten of the scale words (SPEC §4.1)
 _ACTION_RANK = {"admit": 0, "review": 1, "reject": 2}
@@ -125,7 +127,7 @@ def _valid(offsets: Offsets, span: tuple[int, int]) -> tuple[int, int] | None:
     return None if cs is None or ce is None else (cs, ce)
 
 
-_Index = tuple[list[tuple[int, int]], list[int], list[int]]
+_Index = tuple["array[int]", "array[int]"]  # the starts and the ends of the occurrences, in order
 
 
 @dataclass
@@ -137,9 +139,10 @@ class _Text:
     ref: str | None = None
     mentions: dict[tuple[str, ...], list[tuple[int, int, str]]] = field(default_factory=dict)
     rows: list[tuple[int, int]] | None = None  # reached by a heading scale, read once
-    # the last quote read, for the many occurrences of one value (#249): one slot, so that its
-    # memory stays that of one quote
-    quote: tuple[tuple[str, int, int], _Index] | None = None
+    # the quotes of the candidate being checked, for the many occurrences of one value (#249)
+    # and its field items (#300): cleared for each candidate, so that they are at most the value
+    # quote, 8 field items and one item of each other role
+    quotes: dict[tuple[str, int, int], _Index] = field(default_factory=dict)
     spans: dict[tuple[str, ...], list[tuple[int, int]]] = field(default_factory=dict)
     letters: dict[int, int] = field(default_factory=dict)  # the first letter at or after each place
     numbers: dict[int, int | None] = field(default_factory=dict)  # the first token end, likewise
@@ -192,6 +195,7 @@ class _Ctx:
     policy: Policy
     source_host: str | None
     suffixes: frozenset[str] = frozenset()  # of every unit in the table (SPEC §4.3)
+    quoted: list[_Text] = field(default_factory=list)  # the text that holds quotes now
 
     def any_unit_at(self, t: _Text, tok: Token) -> bool:
         """Whether a form of any unit in the table is next to the token (SPEC §3.1)."""
@@ -283,9 +287,8 @@ def _items(ev: object, refs: Mapping[str, _Text]) -> list[_Item]:
                 role = "value"
             if role not in ROLES or (span is None and not (text and text.strip())):
                 raise _Reject("CANDIDATE_INVALID")
-            if role != "field" and any(  # several field items are allowed (#300)
-                o.role == role and o.source in ("document", "reference") for o in out
-            ):
+            same = sum(o.role == role and o.source in ("document", "reference") for o in out)
+            if same >= (MAX_FIELD_ITEMS if role == "field" else 1):  # several field items (#300)
                 raise _Reject("CANDIDATE_INVALID")
         else:
             if role is not None or has or not (text and text.strip()):
@@ -448,13 +451,17 @@ def _occurrences(t: _Text, quote: str, region: tuple[int, int]) -> list[tuple[in
 
 def _indexed(t: _Text, quote: str, region: tuple[int, int]) -> _Index:
     """The occurrences of a quote, with their starts and their ends, each in order: the matches
-    do not overlap. Quotes that match alike share the slot."""
-    pattern = quote_pattern(quote)
-    k = (pattern.pattern, *region)
-    if t.quote is None or t.quote[0] != k:
-        found = [(m.start(), m.end()) for m in pattern.finditer(t.text, *region)]
-        t.quote = (k, (found, [a for a, _ in found], [b for _, b in found]))
-    return t.quote[1]
+    do not overlap. A quote is read and compiled once for each candidate, so field items do not
+    read the text again at each occurrence of the value."""
+    k = (quote, *region)
+    held = t.quotes.get(k)
+    if held is None:
+        starts, ends = array("q"), array("q")  # 16 bytes for each occurrence
+        for m in quote_pattern(quote).finditer(t.text, *region):
+            starts.append(m.start())
+            ends.append(m.end())
+        held = t.quotes[k] = (starts, ends)
+    return held
 
 
 def _check(ctx: _Ctx, cand: object) -> _Passed:
@@ -543,6 +550,9 @@ def _checked(
     """The checked path (SPEC §3.1) and the role checks (SPEC §4.6). ``roles`` holds the role
     items other than the field items, which are ``fields``."""
     t = ctx.doc if vitem.source == "document" else ctx.refs[vitem.ref or ""]
+    for held in ctx.quoted:  # only the quotes of this candidate are held
+        held.quotes.clear()
+    ctx.quoted[:] = [t]
     # 9. spans
     search = (0, len(ctx.doc.text)) if region_span is None else _valid(ctx.doc.offsets, region_span)
     if search is None:
@@ -645,13 +655,13 @@ def _find(
         shown = item.text
         return span, shown is None or verbatim_equal(shown, t.text[span[0] : span[1]])
     assert item.text is not None
-    found, starts, ends = _indexed(t, item.text, region)
+    starts, ends = _indexed(t, item.text, region)
     tok = at.token
     held = (tok.start, tok.end) if tok is not None else (at.start, at.end)
     if held[0] is not None and held[1] is not None:
         i = bisect.bisect_right(starts, held[0]) - 1  # the only one that can hold the value
         if i >= 0 and held[1] <= ends[i]:
-            return found[i], True
+            return (starts[i], ends[i]), True
     pos = at.pos
     if place is not None:  # a unit quote: also the occurrences that overlap, as in "$$$"
         every = quote_pattern(item.text).pattern
@@ -662,9 +672,9 @@ def _find(
             return placed, True
     i = bisect.bisect_right(ends, pos)
     if i:
-        return found[i - 1], True
+        return (starts[i - 1], ends[i - 1]), True
     i = bisect.bisect_left(starts, pos)
-    return (found[i], True) if i < len(found) else (None, False)
+    return ((starts[i], ends[i]), True) if i < len(starts) else (None, False)
 
 
 def _repeats(ctx: _Ctx, t: _Text, tok: Token, prefixes: list[str], suffixes: list[str]) -> bool:
