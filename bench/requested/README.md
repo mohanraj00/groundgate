@@ -111,7 +111,7 @@ retain `core_outcome` and an `application_reason`; original core receipts remain
 The scoring projection omits quotes and raw replies; the external cache keeps all calls and
 receipts. A run document with no decisions is no candidate, not an absence hit. The scorer
 refuses a run of another split, a partial run, and a run whose documents are not exactly the
-documents of the split. The manifest is frozen and the labels are sealed. No result file is
+documents of the split. Each run file is named for its `arm` (`baseline.json` or `runner.json`). Its `binding_sha256` must match the JCS digest of its `provenance`, and all runs must share one binding. The manifest is frozen and the labels are sealed. No result file is
 committed before an actual sealed-label measure exists.
 
 I check the scoring mode with synthetic values:

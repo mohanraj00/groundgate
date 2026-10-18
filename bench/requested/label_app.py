@@ -186,7 +186,8 @@ class LabelStore:
 
     def write(self, labels: dict[str, Any]) -> None:
         self.work_directory.mkdir(parents=True, exist_ok=True)
-        fd, name = tempfile.mkstemp(prefix=".labels-", suffix=".tmp", dir=self.work_directory)
+        # Stage beside labels.json: os.replace cannot cross filesystems.
+        fd, name = tempfile.mkstemp(prefix=".labels-", suffix=".tmp", dir=self.path.parent)
         try:
             with os.fdopen(fd, "w", encoding="utf-8") as fp:
                 json.dump(labels, fp, ensure_ascii=False, indent=2, allow_nan=False)

@@ -344,11 +344,15 @@ def test_diagnostic_export_adds_section_without_changing_primary_units_or_bounds
     from requested.metrics import score_set
 
     factory, plan, _, _, _, _ = fixture(tmp_path)
+    header = {"manifest_sha256": plan["manifest_sha256"], "labels_sha256": plan["labels_sha256"]}
     write(
-        tmp_path / "set/runs/primary.json",
+        tmp_path / "set/runs/baseline.json",
         {
             "manifest_sha256": plan["manifest_sha256"],
             "labels_sha256": plan["labels_sha256"],
+            "arm": "baseline",
+            "provenance": header,
+            "binding_sha256": d.digest(d.gg.jcs(header).encode()),
             "split": "heldout",
             "documents": [
                 {
@@ -370,7 +374,7 @@ def test_diagnostic_export_adds_section_without_changing_primary_units_or_bounds
         tmp_path / "set", "heldout", diagnostics=export, diagnostics_sha256=export_sha
     )
     assert result["runs"] == original["runs"]
-    assert result["runs"]["primary"]["total"]["present"] == 2
+    assert result["runs"]["baseline"]["total"]["present"] == 2
     assert result["diagnostics"]["export_sha256"] == export_sha
     assert "Separate diagnostics" in render_requested(result)
     assert "Separate diagnostics" not in render_requested(original)

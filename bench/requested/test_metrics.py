@@ -16,6 +16,8 @@ sys.path.insert(0, str(Path(__file__).parents[1]))
 from report import render_requested
 from requested.metrics import measure, score_set, upper95
 
+from groundgate import jcs
+
 
 def data() -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     fields = {
@@ -204,8 +206,24 @@ def cache(directory: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, An
     run["split"] = "heldout"
     for doc in run["documents"]:
         doc |= {"complete": True, "transport_error": False, "transport_retries": 0}
+    bind(run, "baseline")
     (directory / "runs/baseline.json").write_text(json.dumps(run))
     return m, labels, run
+
+
+def bind(run: dict[str, Any], arm: str, config: str = "frozen") -> dict[str, Any]:
+    header = {
+        "manifest_sha256": run["manifest_sha256"],
+        "labels_sha256": run["labels_sha256"],
+        "configuration_sha256": config,
+    }
+    encoded = jcs(header).encode("utf-8")
+    run |= {
+        "arm": arm,
+        "provenance": header,
+        "binding_sha256": "sha256:" + hashlib.sha256(encoded).hexdigest(),
+    }
+    return run
 
 
 def test_cache_binds_manifest_and_label_seals_and_cli_reproduces(tmp_path: Path) -> None:
@@ -258,6 +276,40 @@ def test_run_of_another_split_or_with_other_documents_is_refused(
         score_set(tmp_path, "heldout")
 
 
+def test_runs_must_share_one_binding_and_be_named_for_their_arm(tmp_path: Path) -> None:
+    _, _, run = cache(tmp_path)
+    runner = tmp_path / "runs/runner.json"
+    runner.write_text(json.dumps(bind(copy.deepcopy(run), "runner")))
+    assert set(score_set(tmp_path, "heldout")["runs"]) == {"baseline", "runner"}
+    # A baseline projection copied under the runner name keeps its own arm.
+    runner.write_text(json.dumps(run))
+    with pytest.raises(ValueError, match="named for its arm"):
+        score_set(tmp_path, "heldout")
+    runner.write_text(json.dumps(bind(copy.deepcopy(run), "runner", config="other")))
+    with pytest.raises(ValueError, match="share one"):
+        score_set(tmp_path, "heldout")
+    tampered = bind(copy.deepcopy(run), "runner")
+    tampered["provenance"]["configuration_sha256"] = "other"
+    runner.write_text(json.dumps(tampered))
+    with pytest.raises(ValueError, match="provenance"):
+        score_set(tmp_path, "heldout")
+    runner.unlink()
+    (tmp_path / "runs/primary.json").write_text(json.dumps(run))
+    with pytest.raises(ValueError, match="named for its arm"):
+        score_set(tmp_path, "heldout")
+
+
+def test_document_with_only_unclear_slots_counts_in_the_sample() -> None:
+    m, labels, run = data()
+    m["documents"].append({"id": "d2", "kind": "kind", "split": "heldout"})
+    unclear = [{"field": f, "status": "unclear"} for f in ("amount", "name", "absent", "unclear")]
+    labels["documents"].append({"id": "d2", "fields": unclear})
+    run["documents"].append({"id": "d2", "decisions": [], "not_found": []})
+    out = measure(m, labels, run, "heldout")
+    assert out["total"]["documents"] == out["document_states"]["total"]["documents"] == 2
+    assert out["by_kind"]["kind"]["documents"] == 2
+
+
 def test_projection_with_a_missing_document_is_refused(tmp_path: Path) -> None:
     m, labels, run = cache(tmp_path)
     m["documents"].append({"id": "d2", "kind": "kind", "split": "heldout"})
@@ -270,6 +322,7 @@ def test_projection_with_a_missing_document_is_refused(tmp_path: Path) -> None:
         run[name + "_sha256"] = (
             "sha256:" + hashlib.sha256((tmp_path / (name + ".json")).read_bytes()).hexdigest()
         )
+    bind(run, "baseline")
     (tmp_path / "runs/baseline.json").write_text(json.dumps(run))
     with pytest.raises(ValueError, match="exactly the heldout documents"):
         score_set(tmp_path, "heldout")
@@ -315,6 +368,7 @@ def test_incomplete_and_transport_documents_are_counted_for_each_kind(tmp_path: 
         run[name + "_sha256"] = (
             "sha256:" + hashlib.sha256((tmp_path / (name + ".json")).read_bytes()).hexdigest()
         )
+    bind(run, "baseline")
     state = {"decisions": [], "not_found": []}
     run["documents"] += [
         state | {"id": "d2", "complete": False, "transport_error": True, "transport_retries": 2},

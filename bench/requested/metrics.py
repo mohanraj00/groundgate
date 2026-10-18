@@ -13,7 +13,7 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
-from groundgate import Schema
+from groundgate import Schema, jcs
 from groundgate.text import canonical, parse_value
 
 COUNTERS = (
@@ -30,6 +30,7 @@ COUNTERS = (
     "unreported_absences",
 )
 
+ARMS = ("baseline", "runner")
 # Run state for each document of a split: a harness stop, a failed call and archived retries.
 DOCUMENT_STATES = ("documents", "incomplete", "transport_error", "transport_retries")
 
@@ -115,6 +116,8 @@ def signature(item: dict[str, Any], field_type: str) -> tuple[str, Any]:
 
 def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
     docs: dict[str, dict[str, int]] = defaultdict(lambda: {"admitted": 0, "wrong": 0})
+    # A document with only unclear slots still counts in the sample, but adds no trial.
+    present = {row["doc"] for row in rows}
     for row in rows:
         if not row["excluded"]:
             docs[row["doc"]]["admitted"] += row["admitted"]
@@ -131,7 +134,7 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
     wrong_docs = sum(d["wrong"] > 0 for d in docs.values())
     db = upper95(wrong_docs, admit_docs)
     return counts | {
-        "documents": len(docs),
+        "documents": len(present),
         "kinds": len({r["kind"] for r in rows if not r["excluded"]}),
         "documents_with_admits": admit_docs,
         "admitted_error_rate": ratio(e, n),
@@ -357,6 +360,21 @@ def check_coverage(manifest: dict[str, Any], run: dict[str, Any], split: str, na
         raise ValueError(f"cached run documents are not exactly the {split} documents: {name}")
 
 
+def check_provenance(run: dict[str, Any], name: str, manifest_seal: str, seal: str) -> str:
+    """Refuse a run whose arm or binding does not match its file name and recorded header."""
+    arm, binding, header = run.get("arm"), run.get("binding_sha256"), run.get("provenance")
+    if arm not in ARMS or name != arm:
+        raise ValueError(f"cached run file must be named for its arm: {name}.json")
+    if (
+        not isinstance(header, dict)
+        or header.get("manifest_sha256") != manifest_seal
+        or header.get("labels_sha256") != seal
+        or binding != "sha256:" + hashlib.sha256(jcs(header).encode("utf-8")).hexdigest()
+    ):
+        raise ValueError(f"cached run binding does not match its provenance: {name}.json")
+    return str(binding)
+
+
 def score_set(
     directory: Path,
     split: str,
@@ -371,6 +389,7 @@ def score_set(
     seal = "sha256:" + hashlib.sha256(labels_raw).hexdigest()
     manifest_seal = "sha256:" + hashlib.sha256(manifest_raw).hexdigest()
     runs = {}
+    bindings = set()
     for path in sorted((directory / "runs").glob("*.json")):
         raw = path.read_bytes()
         run = json.loads(raw)
@@ -379,11 +398,14 @@ def score_set(
         if run.get("labels_sha256") != seal:
             raise ValueError("cached run does not match the sealed labels: " + path.name)
         check_coverage(manifest, run, split, path.name)
+        bindings.add(check_provenance(run, path.stem, manifest_seal, seal))
         runs[path.stem] = measure(manifest, labels, run, split) | {
             "cache_sha256": "sha256:" + hashlib.sha256(raw).hexdigest()
         }
     if not runs:
         raise ValueError("no cached requested-field runs")
+    if len(bindings) != 1:
+        raise ValueError("cached runs do not share one configuration and code binding")
     result = {
         "format": "requested-fields/1",
         "labels_sha256": seal,

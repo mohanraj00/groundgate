@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import copy
+import errno
 import hashlib
 import http.client
 import json
+import os
 import sys
 import threading
 from pathlib import Path
@@ -330,7 +332,7 @@ def test_atomic_replace_failure_preserves_draft_and_cleans_temp(
     with pytest.raises(OSError, match="replace failed"):
         store.save({"id": "dev", "fields": filled(store, "dev")})
     assert store.path.read_bytes() == before
-    assert not list(store.work_directory.glob(".labels-*.tmp"))
+    assert not list(store.directory.glob(".labels-*.tmp"))
 
 
 def test_http_writes_only_after_explicit_authenticated_post(server: LabelServer) -> None:
@@ -383,12 +385,28 @@ def test_evidence_page_cannot_exceed_original_page_count(store: LabelStore) -> N
     store.save({"id": "dev", "fields": fields})
 
 
-def test_write_temporary_files_stay_in_external_work_directory(store: LabelStore) -> None:
+def test_write_leaves_no_temporary_files(store: LabelStore) -> None:
     assert not store.work_directory.is_relative_to(store.directory)
     save_all(store)
     assert store.work_directory.is_dir()
     assert not list(store.work_directory.iterdir())
     assert not list(store.directory.glob(".labels-*.tmp"))
+
+
+def test_write_stages_on_the_labels_filesystem(
+    store: LabelStore, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    replace = os.replace
+
+    def same_filesystem_only(source: str, target: Path) -> None:
+        # A work directory on another filesystem makes a cross-directory rename fail.
+        if Path(source).parent != Path(target).parent:
+            raise OSError(errno.EXDEV, "Invalid cross-device link")
+        replace(source, target)
+
+    monkeypatch.setattr("requested.label_app.os.replace", same_filesystem_only)
+    save_all(store)
+    assert json.loads(store.path.read_text())["documents"]
 
 
 @pytest.fixture
