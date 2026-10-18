@@ -31,6 +31,7 @@ from .text import (
     brackets_around,
     canonical,
     cells,
+    currency_scale,
     first_token_end,
     form_next,
     gain_word,
@@ -49,6 +50,7 @@ from .text import (
     parse_value,
     qualifiers,
     quote_pattern,
+    scale_between,
     scale_word,
     scaled_value,
     sentence,
@@ -758,9 +760,9 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
                     )
             elif role == "scale":
                 ok = (
-                    in_scale(t.text, a, b)
+                    (in_scale(t.text, a, b) or currency_scale(t.text, a, b))
                     and b <= tok.start
-                    and item_scale(t.text, b, tok.start) is None
+                    and not scale_between(t.text, b, tok.start, item_scale(t.text, a, b))
                 )
             elif role == "unit":
                 ok = (
