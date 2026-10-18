@@ -610,6 +610,90 @@ def test_targeted_document_repair_cannot_move_to_another_retained_region():
     assert_replays(result, text)
 
 
+FIELDS_SCHEMA = {"fields": {"amount": {"aliases": ["Amount", "Total"]}}}
+FIELDS_TEXT = "Total\nAmount\t5"
+
+
+def test_repair_reply_with_two_field_items_is_kept():
+    # A row label and a column header both cite the field (spec 0.10, #300).
+    first = candidate(evidence=[item("5"), item("wrong", "field")])
+    new = candidate(evidence=[item("5"), item("Amount", "field"), item("Total", "field")])
+    client = Client(envelope(first), new)
+    result = execute(FIELDS_TEXT, client, FIELDS_SCHEMA)
+    assert len(client.prompts) == 2
+    assert any(e.get("status") == "evidence_repair" for e in result.record)
+    assert result.candidates[0]["evidence"] == new["evidence"]
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, FIELDS_TEXT, FIELDS_SCHEMA)
+
+
+@pytest.mark.parametrize(
+    "fields",
+    [
+        [item("Amount", "field")],
+        [item("Amount", "field"), item("Total", "field"), item("Amount", "field")],
+    ],
+)
+def test_repair_can_remove_or_add_field_items(fields):
+    first = candidate(evidence=[item("5"), item("wrong", "field"), item("other", "field")])
+    new = candidate(evidence=[item("5"), *fields])
+    client = Client(envelope(first), new)
+    result = execute(FIELDS_TEXT, client, FIELDS_SCHEMA)
+    assert result.candidates[0]["evidence"] == new["evidence"]
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, FIELDS_TEXT, FIELDS_SCHEMA)
+
+
+def test_evidence_repair_keeps_two_field_items():
+    text = "Amounts (in thousands)\nTotal\nAmount\t5"
+    fields = [item("Amount", "field"), item("Total", "field")]
+    first = candidate("5000", evidence=[item("5"), *fields])
+    new = candidate("5000", evidence=[item("5"), *fields, item("in thousands", "scale")])
+    client = Client(envelope(first), new)
+    result = execute(text, client, FIELDS_SCHEMA)
+    assert any(e.get("status") == "evidence_repair" for e in result.record)
+    assert result.candidates[0]["evidence"] == new["evidence"]
+    assert_replays(result, text, FIELDS_SCHEMA)
+
+
+def test_repair_reply_with_nine_field_items_is_a_protocol_failure():
+    # A candidate can cite up to 8 field items (SPEC section 3 step 1).
+    first = candidate(evidence=[item("5"), item("wrong", "field")])
+    new = candidate(evidence=[item("5"), *[item("Amount", "field")] * 9])
+    result = execute(FIELDS_TEXT, Client(envelope(first), new), FIELDS_SCHEMA)
+    assert result.candidates[0]["evidence"] == first["evidence"]
+    assert any(e.get("status") == "protocol_failure" for e in result.record)
+    assert_replays(result, FIELDS_TEXT, FIELDS_SCHEMA)
+
+
+@pytest.mark.parametrize(
+    "evidence",
+    [
+        # Every role other than field keeps one item.
+        [
+            item("5"),
+            item("Amount", "field"),
+            item("Total", "field"),
+            item("in thousands", "scale"),
+            item("thousands", "scale"),
+        ],
+        # A repair that may not change field cannot drop one of two field items.
+        [item("5"), item("Amount", "field"), item("in thousands", "scale")],
+        # Or change their order, which the column rule reads.
+        [item("5"), item("Total", "field"), item("Amount", "field"), item("in thousands", "scale")],
+    ],
+)
+def test_repair_field_items_stay_inside_the_allowed_roles(evidence):
+    text = "Amounts (in thousands)\nTotal\nAmount\t5"
+    fields = [item("Amount", "field"), item("Total", "field")]
+    first = candidate("5000", evidence=[item("5"), *fields])
+    client = Client(envelope(first), candidate("5000", evidence=evidence))
+    result = execute(text, client, FIELDS_SCHEMA)
+    assert result.candidates[0]["evidence"] == first["evidence"]
+    assert any(e.get("status") == "protocol_failure" for e in result.record)
+    assert_replays(result, text, FIELDS_SCHEMA)
+
+
 @pytest.mark.parametrize("not_found", [1, 1.0, "true", False, None])
 def test_repair_not_found_requires_the_boolean_true(not_found):
     first = candidate(evidence=[item("missing")])
