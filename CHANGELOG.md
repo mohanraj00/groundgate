@@ -11,6 +11,10 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
 - A candidate can cite several field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay
   `CANDIDATE_INVALID`.
+- Currency scales (#301). `k`, `m` and `bn` count as a scale only directly next to a currency sign
+  (`$`, `€`, `£`, `₹`). `€70,471m` is 70471000000. `£m`, `$bn` and `£'000` in a column header are
+  a heading scale, and a scale item can cite them. `70 m`, `5m` and `£5 m` stay as written,
+  because a bare `m` can be metres.
 
 ## 0.9.0 (2026-10-18)
 

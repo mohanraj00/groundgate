@@ -3660,6 +3660,126 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- spec 0.10 (#301)
+vector(
+    "60-currency-scale-suffix",
+    "A number with a currency sign directly before it and k, m or bn (and the listed case "
+    "variants) directly after it has a scaled value, as a scale word gives one. A candidate equal "
+    "to the number as written is flagged SCALE_WORD. Without the currency sign (70 m, 5m), with a "
+    "space before the m (£5 m) or after the sign (£ 9m), or with mm, the number has no scaled "
+    "value: such an m can be a unit (spec 0.10, #301).",
+    "Revenue was €70,471m in 2025. Debt was £32.7bn at year end. Fees were $250k and costs "
+    "were $1.2M. Grants were £3Bn. Taxes were ₹4m. The site is 70 m long. The pole is 5m high. "
+    "The fund holds £5 m in cash. The levy is £ 9m. The pipe is £5mm wide.",
+    {
+        "fields": {
+            "revenue": {"type": "number", "unit": "EUR", "multiple": True},
+            "debt": {"type": "number", "unit": "GBP"},
+            "fees": USD,
+            "costs": USD,
+            "grants": {"type": "integer", "unit": "GBP"},
+            "taxes": {"type": "integer", "unit": "INR"},
+            "length": {"type": "number"},
+            "height": {"type": "number", "multiple": True},
+            "cash": {"type": "integer", "unit": "GBP", "multiple": True},
+            "levy": {"type": "integer", "unit": "GBP"},
+            "width": {"type": "number", "unit": "GBP"},
+        }
+    },
+    [
+        c("cs1", "revenue", "70471000000", "EUR", [q("€70,471m")]),
+        c("cs2", "revenue", "70471", "EUR", [q("€70,471m")], (REVIEW, ["SCALE_WORD"])),
+        c("cs3", "debt", "32700000000", "GBP", [q("£32.7bn")]),
+        c("cs4", "fees", "250000", "USD", [q("$250k")]),
+        c("cs5", "costs", "1200000", "USD", [q("$1.2M")]),
+        c("cs6", "grants", "3000000000", "GBP", [q("£3Bn")]),
+        c("cs7", "taxes", "4000000", "INR", [q("₹4m")]),
+        # metres: no currency sign, so no scale
+        c("cs8", "length", "70", None, [q("70 m long")]),
+        c("cs9", "height", "5", None, [q("5m high")]),
+        c("cs10", "height", "5000000", None, [q("5m high")],
+          (REVIEW, ["PART_MISSING"], ["scale"])),
+        # a space between the number and the m: the m is not read as a scale
+        c("cs11", "cash", "5", "GBP", [q("£5 m in")]),
+        c("cs12", "cash", "5000000", "GBP", [q("£5 m in")],
+          (REVIEW, ["PART_MISSING"], ["scale"])),
+        # a space between the sign and the number
+        c("cs13", "levy", "9", "GBP", [q("£ 9m")]),
+        # mm is not m
+        c("cs14", "width", "5", "GBP", [q("£5mm")]),
+    ],
+)  # fmt: skip
+
+vector(
+    "61-currency-scale-heading",
+    "A currency scale (£m, £'000, $bn) is a heading scale on any line, with or without a tab. It "
+    "reaches the lines with tabs after it, as a heading scale in words does, so a value there "
+    "equal to the number as written misses its scale. A table after a blank line, a line with no "
+    "tab, a bare (m) and a £ m with a space are not reached (spec 0.10, #301).",
+    "Group income statement\n\n\t2025\t2024\n\t£m\t£m\nRevenue\t5,210\t4,980\n\n"
+    "Balance sheet\n£'000\t2025\t2024\nCash\t1,250\t1,100\n\n"
+    "Cash flow\n\t$bn\nCapex\t1.5\n\n"
+    "Segment note\n\t2025\nUnits\t870\n\n"
+    "Figures are in £m.\nStaff numbers were 640 at year end.\n\n"
+    "Pipe lengths (m)\n\t2025\nMain\t75\n\n"
+    "Water use\n\t£ m\nWater\t63\n",
+    {"fields": {"amount": {"type": "number", "multiple": True}}},
+    [
+        c("ch1", "amount", "5210", None, [q("5,210")], (REVIEW, ["PART_MISSING"], ["scale"])),
+        c("ch2", "amount", "1250", None, [q("1,250")], (REVIEW, ["PART_MISSING"], ["scale"])),
+        c("ch3", "amount", "1.5", None, [q("1.5")], (REVIEW, ["PART_MISSING"], ["scale"])),
+        c("ch4", "amount", "870", None, [q("870")]),
+        # a £m with no line with a tab after it reaches no number
+        c("ch5", "amount", "640", None, [q("640")]),
+        c("ch6", "amount", "75", None, [q("75")]),
+        c("ch7", "amount", "63", None, [q("63")]),
+    ],
+)  # fmt: skip
+
+CURRENCY_TABLES = (
+    "Group income statement\n\n\t2025\t2024\n\t£m\t£m\nRevenue\t5,210\t4,980\n\n"
+    "Balance sheet\n£'000\t2025\t2024\nCash\t1,250\t1,100\n\n"
+    "Notes\n\t£\u2019000\nFees\t75\n\n"
+    "Cash flow\n\t$M\nCapex\t42\n\n"
+    "Debt\n\t£m\nLoans\t30\n\t£bn\nBonds\t19\n\n"
+    "Interest of 12 is stated in £m.\n\n"
+    "Pipe lengths (m)\n\t2025\nMain\t96\n"
+)
+vector(
+    "62-currency-scale-item",
+    "A scale item can hold a currency scale (£m, £'000, £\u2019000, $M, £bn) in place of 'in' and a "
+    "scale word. It scales the number as written. It fails when it ends after the value, or when "
+    "a currency scale of another power of ten lies between it and the value; the same currency "
+    "scale in the next column does not stop it. A bare (m) is no scale (spec 0.10, #301).",
+    CURRENCY_TABLES,
+    {"fields": {"amount": {"type": "number", "multiple": True}}},
+    [
+        c("ci1", "amount", "5210000000", None, [q("5,210"), {"role": "scale", "text": "£m"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("ci2", "amount", "4980000000", None, [q("4,980"), q("£m", 1, role="scale")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("ci3", "amount", "5210", None, [q("5,210"), {"role": "scale", "text": "£m"}],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("ci4", "amount", "1250000", None, [q("1,250"), {"role": "scale", "text": "£'000"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("ci5", "amount", "75000", None, [q("75"), {"role": "scale", "text": "£\u2019000"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("ci6", "amount", "42000000", None, [q("42"), {"role": "scale", "text": "$M"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        # £bn lies between the £m and the value
+        c("ci7", "amount", "19000000", None, [q("19"), q("£m", 3, role="scale")],
+          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("ci8", "amount", "19000000000", None, [q("19"), {"role": "scale", "text": "£bn"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        # the scale item ends after the value: it fails, but still gives its scale
+        c("ci9", "amount", "12000000", None, [q("12"), q("£m", 4, role="scale")],
+          (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("ci10", "amount", "96000000", None, [q("96"), {"role": "scale", "text": "(m)"}],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

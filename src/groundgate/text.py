@@ -75,7 +75,7 @@ _ABBREVIATION_END = re.compile(
 _ABBREVIATION_MAX = max(len(a) for a in _ABBREVIATIONS)
 _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS_RUN = re.compile(r"\s*")
-_CONTINUES = "$€£₹"
+_CONTINUES = "$€£₹"  # the currency signs (SPEC §4.1, §4.2)
 # "No." before a code such as "DEA-1086": a word that holds a digit or starts with two capitals
 _CODE = re.compile(r"\S*?\d|[A-Z]{2}")
 _WS = re.compile(r"\s+")
@@ -419,16 +419,37 @@ _SCALE = re.compile(r"^\s{0,2}(thousand|million|billion|trillion|lakh|crore)\b",
 _SCALE_EXP = {"thousand": 3, "million": 6, "billion": 9, "trillion": 12, "lakh": 5, "crore": 7}
 
 
+# a scale suffix or a currency scale (SPEC §4.1, spec 0.10): the power of ten of each form
+_SUFFIX_EXP = {"k": 3, "m": 6, "bn": 9, "'000": 3, "\u2019000": 3}
+_SCALE_SUFFIX = re.compile(r"(k|K|m|M|bn|Bn|BN)(?![^\W_])")
+_CURRENCY_FORM = "[" + re.escape(_CONTINUES) + r"](k|K|m|M|bn|Bn|BN|'000|\u2019000)(?![^\W_])"
+_CURRENCY_SCALE = re.compile(_CURRENCY_FORM)
+
+
+def token_scale(text: str, tok: Token) -> int | None:
+    """The power of ten of the token's scale (SPEC §4.1): a scale word after it, or a scale
+    suffix directly after it when a currency sign stands directly before it. Else None."""
+    m = _SCALE.match(text[tok.end : tok.end + 12])
+    if m is not None:
+        return _SCALE_EXP[m.group(1).lower()]
+    if tok.start > 0 and text[tok.start - 1] in _CONTINUES:
+        s = _SCALE_SUFFIX.match(text, tok.end)
+        if s is not None:
+            return _SUFFIX_EXP[s.group(1).lower()]
+    return None
+
+
 def scale_word(text: str, tok: Token) -> bool:
-    return bool(_SCALE.match(text[tok.end : tok.end + 12]))
+    """Whether a scale word or a scale suffix follows the token (SPEC §4.1, SCALE_WORD)."""
+    return token_scale(text, tok) is not None
 
 
 def scaled_value(text: str, tok: Token) -> Decimal | None:
-    """The token's value times its scale word, or None (SPEC §4.1)."""
-    m = _SCALE.match(text[tok.end : tok.end + 12])
-    if m is None or tok.value is None:
+    """The token's value times its scale, or None (SPEC §4.1)."""
+    k = token_scale(text, tok)
+    if k is None or tok.value is None:
         return None
-    return tok.value.scaleb(_SCALE_EXP[m.group(1).lower()])
+    return tok.value.scaleb(k)
 
 
 # ----------------------------------------------------------------------- units
@@ -749,7 +770,7 @@ def _one_column(text: str, end: int, pos: int) -> bool:
 _LOSS = re.compile(r"(?<![^\W_])(?:loss|losses|deficit|deficits)(?![^\W_])", re.I)
 _GAIN = re.compile(r"(?<![^\W_])(?:income|gain|gains|profit|profits|earnings)(?![^\W_])", re.I)
 _ITEM_SCALE = re.compile(
-    r"(?<![^\W_])(thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
+    r"(?<![^\W_])(?i:(thousand|million|billion|trillion|lakh|crore)s?)(?![^\W_])|" + _CURRENCY_FORM
 )
 _LONE_DASH = re.compile("(?<!\\S)[-\u2013\u2014](?!\\S)")
 _NOT_SPACE = re.compile(r"\S")
@@ -828,8 +849,9 @@ def gain_word(text: str, start: int, end: int) -> bool:
 
 def heading_rows(text: str) -> list[tuple[int, int]]:
     """The spans of the table rows that a heading scale reaches (SPEC §4.1), in order and
-    merged, in one pass: a line with no tab that holds "in" and a scale word, then any blank
-    lines, then the lines with tabs up to the first line with no tab."""
+    merged, in one pass: a line with no tab that holds "in" and a scale word, or any line that
+    holds a currency scale, then any blank lines, then the lines with tabs up to the first line
+    with no tab."""
     out: list[tuple[int, int]] = []
     state = None  # "heading" after a heading line, "table" in its rows
     start = 0
@@ -847,6 +869,8 @@ def heading_rows(text: str) -> list[tuple[int, int]]:
                 state = None
         else:
             state = "heading" if in_scale(line, 0, len(line)) else None
+        if _CURRENCY_SCALE.search(line):  # a currency scale, with or without a tab (spec 0.10)
+            state = "heading"
         start = end + 1
     return out
 
@@ -856,10 +880,29 @@ def in_scale(text: str, start: int, end: int) -> bool:
     return bool(_IN_SCALE.search(text, start, end))
 
 
+def currency_scale(text: str, start: int, end: int) -> bool:
+    """Whether text[start:end] holds a currency scale, such as "£m" (SPEC §4.1)."""
+    return bool(_CURRENCY_SCALE.search(text, start, end))
+
+
 def item_scale(text: str, start: int, end: int) -> int | None:
-    """The power of ten of the first scale word in text[start:end], also with a final "s"."""
+    """The power of ten of the first scale word in text[start:end], also with a final "s", or
+    of the first currency scale, whichever comes first."""
     m = _ITEM_SCALE.search(text, start, end)
-    return None if m is None else _SCALE_EXP[m.group(1).lower()]
+    if m is None:
+        return None
+    if m.group(1) is not None:
+        return _SCALE_EXP[m.group(1).lower()]
+    return _SUFFIX_EXP[m.group(2).lower()]
+
+
+def scale_between(text: str, start: int, end: int, power: int | None) -> bool:
+    """Whether text[start:end] holds a scale word, also with a final "s", or a currency scale
+    whose power of ten is not ``power`` (SPEC §4.6)."""
+    for m in _ITEM_SCALE.finditer(text, start, end):
+        if m.group(1) is not None or _SUFFIX_EXP[m.group(2).lower()] != power:
+            return True
+    return False
 
 
 def holds_form(text: str, start: int, end: int, forms: list[str]) -> bool:

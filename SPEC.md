@@ -361,7 +361,7 @@ rejected by steps 1–11 or on the outside path.
 |---|---|
 | `NON_VERBATIM_EVIDENCE` | The value item has offsets and a `text` that differs from the span's text after whitespace normalisation and joining of line-break hyphenation (§4.4). |
 | `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the text and its comparator differs from the field's `comparator`. Not on a `string` field. |
-| `SCALE_WORD` | A scale word (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. Not on a `string` field. |
+| `SCALE_WORD` | A scale word or a scale suffix (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. Not on a `string` field. |
 | `PART_MISSING` | The decision lists a part in `missing` (§3.1). |
 | `SIGN_CITATION_INVALID` | The sign item fails its check (§4.6). |
 | `SCALE_CITATION_INVALID` | The scale item fails its check. |
@@ -435,8 +435,25 @@ times 10^3, 10^6, 10^9, 10^12, 10^5 or 10^7: "$1.25 billion" is 1250000000 and "
 400000. Like a unit, the scale word is read from the document, so it counts even past the end of
 the span. A scale word with no number before it ("millions of") has no value.
 
+A **currency sign** is `$`, `€`, `£` or `₹`, the signs that §4.2 also lists. A number token with a
+value also has a scaled value when a currency sign stands directly before it and a **scale
+suffix** stands directly after it: `k` or `K` (10^3), `m` or `M` (10^6), or `bn`, `Bn` or `BN`
+(10^9), with no letter or number directly after the suffix (spec 0.10, #301). So `€70,471m` is
+70471000000, `£32.7bn` is 32700000000 and `$250k` is 250000. Nothing can stand between the sign,
+the number and the suffix. A bare `m` can be a unit (metres), so `70 m` and `5m`, with no
+currency sign, have no scaled value. `£5 m`, with a space before the `m`, and `£ 9m`, with a space
+after the sign, have no scaled value either: the rule is strict, and a candidate with the scaled
+value of such a number misses its scale (§3.1). `£5mm` has no scaled value, because a letter
+follows the `m`.
+
+A **currency scale** is a currency sign directly followed by `k`, `K`, `m`, `M`, `bn`, `Bn`, `BN`,
+`'000` or `’000` (10^3), with no letter or number directly after it, such as `£m`, `$bn` or
+`£'000` in a column header.
+
 A **heading scale** is `in`, whitespace and a scale word (also with a final `s`) on a line that
-holds no tab, such as "(in thousands)". It reaches the lines after it that hold a tab: blank lines
+holds no tab, such as "(in thousands)". A currency scale on any line, with or without a tab, is
+also a heading scale, such as the header row `\t£m\t£m` (spec 0.10). It reaches the lines after it
+that hold a tab, not its own line: blank lines
 may stand between the heading and the first of them, and the first line after that holds no tab
 ends the table. So it reaches a token on such a line. A line with spaces between its cells, as
 from a plain-text table, holds no tab, so no heading scale reaches it (#152).
@@ -713,7 +730,7 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 | Role | Passes when |
 |---|---|
 | `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
-| `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands". It ends at or before the token, and no scale word, also with a final `s`, lies between its end and the token. |
+| `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands", or it holds a currency scale (§4.1), as in "£m" (spec 0.10). It ends at or before the token. No scale word, also with a final `s`, lies between its end and the token, and no currency scale with a power of ten other than the item's scale (below) lies there. So the second `£m` of the header row `\t£m\t£m` does not stop an item on the first. |
 | `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). |
 | `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then either no letter (general category L) lies between the item's end and the token (the item is at the **row**), or the item is in the value's sentence with no number token between its end and the token. |
 | `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
@@ -729,8 +746,9 @@ The scale and the sign of a token are its **parts**. A token is **negative** whe
 has a sign item, or, on a field with a unit, when brackets enclose it in the text, as the sign
 check reads them. The token's **derived values**
 are its value, and its scaled value if it has one. When the candidate has a scale item whose text
-holds a scale word (also with a final `s`), a token with no scaled value has only its value times
-the first such word's factor: the number as written is not a derived value (#242). When the token
+holds a scale word (also with a final `s`) or a currency scale, the item's **scale** is the factor
+of the first of them in that text. A token with no scaled value then has only its value times the
+item's scale: the number as written is not a derived value (#242). When the token
 is negative, each of these also has its negative (minus its absolute value). A failing sign or
 scale item still gives its part: the decision then has the item's flag.
 
