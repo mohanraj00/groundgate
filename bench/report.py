@@ -814,7 +814,10 @@ def render_requested(results: dict[str, Any]) -> str:
         "Labels: `" + results["labels_sha256"] + "`.",
         "",
         "Values are final distinct admissions. Misses count labeled values without an admitted "
-        "match. An absence hit requires explicit not-found. Unclear slots are excluded.",
+        "match. An absence hit requires explicit not-found. Unclear slots are excluded. "
+        "A silent miss is a labeled value that is not admitted and not sent to review. "
+        "Rejected right counts silent misses that a final decision rejected. No right "
+        "candidate counts silent misses with no decision that carries the value.",
         "",
         "Bounds are one-sided 95% upper bounds. The value bound uses a default design effect "
         "equal to the largest admitted cluster in its slice, at least 1. Effective trials "
@@ -841,9 +844,13 @@ def render_requested(results: dict[str, Any]) -> str:
         "Absence hits",
         "Reviews",
         "Silent misses",
+        "Rejected right",
+        "No right candidate",
         "Miss rate",
         "Right review share",
         "Silent share",
+        "Rejected right share",
+        "No candidate share",
         "Unclear",
         "Unreported absences",
         "Design effect",
@@ -881,9 +888,13 @@ def render_requested(results: dict[str, Any]) -> str:
                     r["absence_hits"],
                     r["reviews"],
                     r["silent_misses"],
+                    r["rejected_right_values"],
+                    r["no_right_candidate"],
                     percent(r["miss_rate"]["rate"]),
                     percent(r["right_value_review_share"]["rate"]),
                     percent(r["silent_miss_share"]["rate"]),
+                    percent(r["rejected_right_value_share"]["rate"]),
+                    percent(r["no_right_candidate_share"]["rate"]),
                     r["excluded"],
                     r["unreported_absences"],
                     b["design_effect"],
