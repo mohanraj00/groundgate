@@ -122,7 +122,8 @@ uv run python bench/score.py --requested --set bench/requested --split heldout
 uv run python bench/score.py --requested --set bench/requested --split heldout --check
 ```
 
-The last two commands require the sealed corpus and cached runs; they refuse the present draft.
+The manifest is frozen and the labels are sealed. The last two commands also need the cached
+runs in `runs/`; without them they stop.
 
 ## Blind label page
 
@@ -161,10 +162,10 @@ both. The CLI refuses unsealed pilot labels; it does not turn drafts into a repo
 
 The held-out comparison and companion key/layout diagnostics are planned in [MEASURE.md](MEASURE.md).
 
-The development drafts use source-only agent annotations, checked against original PDF page
+The labels started as source-only agent annotations, checked against original PDF page
 renders. Independent source checks cover absences and disputed fields. Component case-temperature
-limits retain that condition; fields with no selected rail or mode stay unclear. These drafts
-are not sealed and cannot be scored. No benchmark model call has run.
+limits retain that condition; fields with no selected rail or mode stay unclear. The labels are
+now sealed with the frozen manifest. No result file is committed before the held-out measure.
 
 ## Frozen run harness
 

@@ -667,6 +667,18 @@ def test_sealed_observation_layout_is_kind_sliced_and_replayed(tmp_path):
     session = d.DiagnosticSession(
         path, tmp_path / "set", tmp_path / "sources", inputs, cache, plan_sha256=seal
     )
+    # An observation that names its own reader or text consistently still needs the frozen ones.
+    session.plan["reader"]["commit"] = "other"
+    with pytest.raises(d.DiagnosticError, match="provenance differs"):
+        session._layout()
+    session.plan["reader"]["commit"] = "fixed"
+    other = obs | {"text": "Other text.", "text_sha256": d.digest(b"Other text.")}
+    refs = session.plan["layout"]["observations"]
+    refs[0]["sha256"] = write(inputs / "observation.json", other)
+    with pytest.raises(d.DiagnosticError, match="provenance differs"):
+        session._layout()
+    refs[0]["sha256"] = write(inputs / "observation.json", obs)
+    session._layout()
     # The only document is held out, so a development plan must refuse its layout cases.
     session.plan["split"] = "development"
     with pytest.raises(d.DiagnosticError, match="layout split differs"):

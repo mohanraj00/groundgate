@@ -853,6 +853,10 @@ class DiagnosticSession:
             if (
                 obs["source_sha256"] != self.docs[ref["document"]]["source_sha256"]
                 or any(obs[k] != ref[k] for k in ("reader", "commit", "code_sha256"))
+                # Layout comes only from the frozen reader and the document's frozen text.
+                or ref["reader"] != self.plan["reader"]["id"]
+                or any(ref[k] != self.plan["reader"][k] for k in ("commit", "code_sha256"))
+                or obs["text_sha256"] != self.docs[ref["document"]]["text_sha256"]
                 or not isinstance(obs["text"], str)
                 or digest(obs["text"].encode()) != obs["text_sha256"]
             ):
