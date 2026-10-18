@@ -1,0 +1,249 @@
+{
+ "name": "62-currency-scale-item",
+ "description": "A scale item can hold a currency scale (£m, £'000, £’000, $M, £bn) in place of 'in' and a scale word. It scales the number as written. It fails when it ends after the value, or when a currency scale of another power of ten lies between it and the value; the same currency scale in the next column does not stop it. A bare (m) is no scale (spec 0.10, #301).",
+ "document": "Group income statement\n\n\t2025\t2024\n\t£m\t£m\nRevenue\t5,210\t4,980\n\nBalance sheet\n£'000\t2025\t2024\nCash\t1,250\t1,100\n\nNotes\n\t£’000\nFees\t75\n\nCash flow\n\t$M\nCapex\t42\n\nDebt\n\t£m\nLoans\t30\n\t£bn\nBonds\t19\n\nInterest of 12 is stated in £m.\n\nPipe lengths (m)\n\t2025\nMain\t96\n",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "number",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "ci1",
+   "field": "amount",
+   "value": "5210000000",
+   "evidence": [
+    {
+     "start": 52,
+     "end": 57,
+     "text": "5,210"
+    },
+    {
+     "role": "scale",
+     "text": "£m"
+    }
+   ]
+  },
+  {
+   "id": "ci2",
+   "field": "amount",
+   "value": "4980000000",
+   "evidence": [
+    {
+     "start": 58,
+     "end": 63,
+     "text": "4,980"
+    },
+    {
+     "role": "scale",
+     "start": 36,
+     "end": 39,
+     "text": "£m"
+    }
+   ]
+  },
+  {
+   "id": "ci3",
+   "field": "amount",
+   "value": "5210",
+   "evidence": [
+    {
+     "start": 52,
+     "end": 57,
+     "text": "5,210"
+    },
+    {
+     "role": "scale",
+     "text": "£m"
+    }
+   ]
+  },
+  {
+   "id": "ci4",
+   "field": "amount",
+   "value": "1250000",
+   "evidence": [
+    {
+     "start": 101,
+     "end": 106,
+     "text": "1,250"
+    },
+    {
+     "role": "scale",
+     "text": "£'000"
+    }
+   ]
+  },
+  {
+   "id": "ci5",
+   "field": "amount",
+   "value": "75000",
+   "evidence": [
+    {
+     "start": 135,
+     "end": 137,
+     "text": "75"
+    },
+    {
+     "role": "scale",
+     "text": "£’000"
+    }
+   ]
+  },
+  {
+   "id": "ci6",
+   "field": "amount",
+   "value": "42000000",
+   "evidence": [
+    {
+     "start": 159,
+     "end": 161,
+     "text": "42"
+    },
+    {
+     "role": "scale",
+     "text": "$M"
+    }
+   ]
+  },
+  {
+   "id": "ci7",
+   "field": "amount",
+   "value": "19000000",
+   "evidence": [
+    {
+     "start": 194,
+     "end": 196,
+     "text": "19"
+    },
+    {
+     "role": "scale",
+     "start": 169,
+     "end": 172,
+     "text": "£m"
+    }
+   ]
+  },
+  {
+   "id": "ci8",
+   "field": "amount",
+   "value": "19000000000",
+   "evidence": [
+    {
+     "start": 194,
+     "end": 196,
+     "text": "19"
+    },
+    {
+     "role": "scale",
+     "text": "£bn"
+    }
+   ]
+  },
+  {
+   "id": "ci9",
+   "field": "amount",
+   "value": "12000000",
+   "evidence": [
+    {
+     "start": 210,
+     "end": 212,
+     "text": "12"
+    },
+    {
+     "role": "scale",
+     "start": 226,
+     "end": 229,
+     "text": "£m"
+    }
+   ]
+  },
+  {
+   "id": "ci10",
+   "field": "amount",
+   "value": "96000000",
+   "evidence": [
+    {
+     "start": 260,
+     "end": 262,
+     "text": "96"
+    },
+    {
+     "role": "scale",
+     "text": "(m)"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
