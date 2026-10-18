@@ -1402,21 +1402,31 @@
         {
           "field": "operating_temperature_max",
           "key": null,
-          "status": "unclear",
-          "values": [],
-          "page": null,
-          "note": "Searched p1, p5, p7, p16. A second independent blind pass gave the same label.",
-          "reason": "Electrical Characteristics p7 give Specified Range -40 to 125 C and Operating Range -55 to 150 C; Absolute Maximum Ratings p5 give Operating Temperature Range -40 to 125 C. Two operating values differ.",
+          "status": "present",
+          "values": [
+            {
+              "value": "150",
+              "unit": "C"
+            }
+          ],
+          "page": 7,
+          "note": "Electrical Characteristics p7, Temperature Range, Operating Range -55 to 150 C. The p5 Operating Temperature Range row is in Absolute Maximum Ratings, which the request excludes. The p7 Specified Range -40 to 125 C is the range where the limits apply, not the operating range. Changed after review of PR #309, before any model output.",
+          "reason": "",
           "second_check": false
         },
         {
           "field": "operating_temperature_min",
           "key": null,
-          "status": "unclear",
-          "values": [],
-          "page": null,
-          "note": "Searched p1, p5, p7, p16. A second independent blind pass gave the same label.",
-          "reason": "Electrical Characteristics p7 give Specified Range -40 to 125 C and Operating Range -55 to 150 C; Absolute Maximum Ratings p5 give Operating Temperature Range -40 to 125 C. Two operating values differ.",
+          "status": "present",
+          "values": [
+            {
+              "value": "-55",
+              "unit": "C"
+            }
+          ],
+          "page": 7,
+          "note": "Electrical Characteristics p7, Temperature Range, Operating Range -55 to 150 C. The p5 Operating Temperature Range row is in Absolute Maximum Ratings, which the request excludes. The p7 Specified Range -40 to 125 C is the range where the limits apply, not the operating range. Changed after review of PR #309, before any model output.",
+          "reason": "",
           "second_check": false
         },
         {
@@ -5272,12 +5282,17 @@
         {
           "field": "total_liabilities",
           "key": null,
-          "status": "absent",
-          "values": [],
-          "page": null,
-          "note": "Group balance sheet p121 prints no total liabilities line (rule: absent). Segment note p144 prints Total liabilities 25,726.7 $m Consolidated, not a balance sheet line. A second independent blind pass gave the same label.",
+          "status": "present",
+          "values": [
+            {
+              "value": "25726700000",
+              "unit": "SGD"
+            }
+          ],
+          "page": 144,
+          "note": "Group balance sheet p121 prints no total liabilities line. Segment note 4 as at 31 March 2026, Consolidated column, Total liabilities 25,726.7 $ million, the same source as total_assets. Changed after review of PR #309, before any model output.",
           "reason": "",
-          "second_check": true
+          "second_check": false
         }
       ]
     },
@@ -5612,12 +5627,17 @@
         {
           "field": "total_liabilities",
           "key": null,
-          "status": "absent",
-          "values": [],
-          "page": null,
-          "note": "Group statement of financial position p467 prints no total liabilities line (only unlabeled non-current and current subtotals, total equity and liabilities). A second independent blind pass gave the same label.",
+          "status": "present",
+          "values": [
+            {
+              "value": "489417766000",
+              "unit": "LKR"
+            }
+          ],
+          "page": 485,
+          "note": "Group statement of financial position p467 prints no total liabilities line. Segment note 8.2 (row label p484, GROUP column p485), Total liabilities 489,417,766 in Rs.'000s as at 31 March 2026. Changed after review of PR #309, before any model output.",
           "reason": "",
-          "second_check": true
+          "second_check": false
         }
       ]
     },
