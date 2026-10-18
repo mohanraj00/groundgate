@@ -1,5 +1,5 @@
 {
- "name": "59-several-field-items",
+ "name": "63-several-field-items",
  "description": "A candidate may cite several field items, such as a row label and a column header. Each one is checked and listed in parts. The field check passes when one of them passes. Only when none passes does the decision get FIELD_CITATION_INVALID. A passing one lets a unit item or a unit at a unit place supply the unit, and selects the value's quote occurrence. Two items of any other role stay CANDIDATE_INVALID (spec 0.10, #300).",
  "document": "Ending balance\n\nCash\t$100\n\nAmounts in $\nEnding balance\nCash\t200\n\nOther items were about $50.\nCash\t50",
  "schema": {

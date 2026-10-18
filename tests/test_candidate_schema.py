@@ -18,7 +18,7 @@ NOT_IN_SCHEMA = {
     ("05-non-ascii", "n5"),  # an offset written 2.0: JSON Schema counts it as an integer
     ("19-evidence-list", "bad5"),  # two items with the role value
     ("19-evidence-list", "bad9"),  # a ref that names no reference in the packet
-    *(("59-several-field-items", f"x{n}") for n in range(1, 7)),  # two items of a role not field
+    *(("63-several-field-items", f"x{n}") for n in range(1, 7)),  # two items of a role not field
 }
 
 

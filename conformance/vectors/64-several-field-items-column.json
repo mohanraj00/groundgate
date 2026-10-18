@@ -1,5 +1,5 @@
 {
- "name": "60-several-field-items-column",
+ "name": "64-several-field-items-column",
  "description": "The column rule reads the first field item that passes at the value's row. A column header that passes in the value's sentence, but not at the row, does not stop a row label after it from placing the key (spec 0.10, #300).",
  "document": "Balances\tCurrent\tPrior\nCash\t$400\t$500",
  "schema": {

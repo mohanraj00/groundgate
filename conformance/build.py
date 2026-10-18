@@ -3575,7 +3575,7 @@ SEVERAL = {"type": "number", "unit": "USD", "aliases": ["Cash", "Ending balance"
 NO_ALIASES = {"type": "number", "unit": "USD", "multiple": True}
 F, T = ("field", False), ("field", True)
 vector(
-    "59-several-field-items",
+    "63-several-field-items",
     "A candidate may cite several field items, such as a row label and a column header. Each one "
     "is checked and listed in parts. The field check passes when one of them passes. Only when "
     "none passes does the decision get FIELD_CITATION_INVALID. A passing one lets a unit item or "
@@ -3641,7 +3641,7 @@ BALANCES = {
     "keys": ["Current", "Prior"],
 }
 vector(
-    "60-several-field-items-column",
+    "64-several-field-items-column",
     "The column rule reads the first field item that passes at the value's row. A column header "
     "that passes in the value's sentence, but not at the row, does not stop a row label after it "
     "from placing the key (spec 0.10, #300).",
