@@ -223,13 +223,17 @@ def _evidence(c: object) -> list[Mapping[str, Any]]:
     return [i for i in ev if isinstance(i, Mapping)] if isinstance(ev, list) else []
 
 
-def _item_text(c: object, role: str) -> str | None:
-    """The quoted text of the candidate's document or reference item with this role."""
-    for i in _evidence(c):
-        source, r = i.get("source", "document"), i.get("role", "value")
-        if source in ("document", "reference") and r == role and isinstance(i.get("text"), str):
-            return str(i["text"])
-    return None
+def _item_text(c: object, role: str, n: int = 0) -> str | None:
+    """The quoted text of the candidate's n-th document or reference item with this role. A
+    candidate can have several field items (SPEC §4.6)."""
+    same = [
+        i
+        for i in _evidence(c)
+        if i.get("source", "document") in ("document", "reference")
+        and i.get("role", "value") == role
+    ]
+    text = same[n].get("text") if n < len(same) else None
+    return str(text) if isinstance(text, str) else None
 
 
 def _outcome(item: _Item) -> str:
@@ -292,12 +296,12 @@ def _card(item: _Item, layout: Layout | None) -> str:
                 out.append(f'<p class="quote">stated “{_e(_clip(i["text"]))}”</p>')
     if item.parts:
         out.append('<ul class="parts">')
-        for p in item.parts:
+        for k, p in enumerate(item.parts):
             state = (
                 '<span class="ok">passed</span>' if p.passed else '<span class="bad">failed</span>'
             )
             line = f"<b>{_e(p.role)}</b> {state}"
-            pquote = _item_text(c, p.role)
+            pquote = _item_text(c, p.role, sum(q.role == p.role for q in item.parts[:k]))
             if p.cited is not None:
                 line += f", cited “{_e(_clip(p.cited))}”"
                 if pquote is not None and pquote != p.cited:

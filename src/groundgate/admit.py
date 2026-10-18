@@ -281,7 +281,9 @@ def _items(ev: object, refs: Mapping[str, _Text]) -> list[_Item]:
                 role = "value"
             if role not in ROLES or (span is None and not (text and text.strip())):
                 raise _Reject("CANDIDATE_INVALID")
-            if any(o.role == role and o.source in ("document", "reference") for o in out):
+            if role != "field" and any(  # several field items are allowed (#300)
+                o.role == role and o.source in ("document", "reference") for o in out
+            ):
                 raise _Reject("CANDIDATE_INVALID")
         else:
             if role is not None or has or not (text and text.strip()):
@@ -506,7 +508,9 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
     elif key not in f.keys:
         raise _Reject("KEY_INVALID")
     # 8. evidence
-    checked = {i.role or "value": i for i in items if i.source in ("document", "reference")}
+    inside = [i for i in items if i.source in ("document", "reference")]
+    checked = {i.role or "value": i for i in inside if i.role != "field"}
+    fields = [i for i in inside if i.role == "field"]  # in list order (#300)
     outside = [i for i in items if i.source in ("external", "knowledge")]
     vitem = checked.pop("value", None)
     if vitem is None and not outside:
@@ -516,7 +520,7 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
         p = _outside(ctx, f, value, key, outside, "key" in checked)
         p.value, p.unit = canon, unit
     else:
-        p = _checked(ctx, f, value, key, vitem, checked, region_span)
+        p = _checked(ctx, f, value, key, vitem, checked, fields, region_span)
         p.value, p.unit = canon, unit
     mc = ctx.policy.min_confidence
     if mc is not None and conf is not None and conf < mc:
@@ -531,9 +535,11 @@ def _checked(
     key: str | None,
     vitem: _Item,
     roles: dict[str, _Item],
+    fields: list[_Item],
     region_span: tuple[int, int] | None,
 ) -> _Passed:
-    """The checked path (SPEC §3.1) and the role checks (SPEC §4.6)."""
+    """The checked path (SPEC §3.1) and the role checks (SPEC §4.6). ``roles`` holds the role
+    items other than the field items, which are ``fields``."""
     t = ctx.doc if vitem.source == "document" else ctx.refs[vitem.ref or ""]
     # 9. spans
     search = (0, len(ctx.doc.text)) if region_span is None else _valid(ctx.doc.offsets, region_span)
@@ -543,21 +549,21 @@ def _checked(
     flags: list[str] = []
     info: set[str] = set()
     if vitem.span is None:
-        # 9a. a quote: of the occurrences where the field item passes, or else of all of them
-        # (#249), the first where steps 10-11 pass, else the first one
+        # 9a. a quote: of the occurrences where a field item passes, or else of all of them
+        # (#249, #300), the first where steps 10-11 pass, else the first one
         assert vitem.text is not None
         found = _occurrences(t, vitem.text, region)
         if not found:
             raise _Reject("QUOTE_NOT_FOUND", item=vitem)
-        by_field = "field" in roles and f.aliases is not None
+        by_field = bool(fields) and f.aliases is not None
         at: _At | None = None
         first: _At | None = None  # the first occurrence where steps 10-11 pass
-        named: tuple[int, int] | None = None  # the first occurrence where the field item passes
+        named: tuple[int, int] | None = None  # the first occurrence where a field item passes
         for occ in found:  # one pass: it stops where both pass, as the first of the first kind
             strict, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=False)
             if by_field:
                 here, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=True)
-                if here is not None and _field_passes(t, f, here, roles, region):
+                if here is not None and _field_passes(t, f, here, fields, region):
                     named = named or occ
                     if strict is not None:
                         at = strict
@@ -580,9 +586,9 @@ def _checked(
             raise _Reject("SPAN_INVALID", item=vitem)
         # 10-11. value and unit at the evidence, with re-anchoring
         at, failure = _value_at(ctx, vitem, t, f, value, span, roles, lenient=False)
-        if at is None:  # the unit at a unit place where the field item passes (#249)
+        if at is None:  # the unit at a unit place where a field item passes (#249)
             near, _ = _value_at(ctx, vitem, t, f, value, span, roles, lenient=True)
-            if near is not None and _unit_relief(ctx, t, f, near, roles, region):
+            if near is not None and _unit_relief(ctx, t, f, near, fields, region):
                 at = near
         if at is None:
             quote = vitem.text
@@ -616,7 +622,7 @@ def _checked(
     if at.derived:
         info.add("VALUE_DERIVED")
     p = _Passed(f, "", None, key, at, flags, info, vitem.source, missing=set(at.missing))
-    _roles(ctx, p, roles, region)
+    _roles(ctx, p, roles, fields, region)
     return p
 
 
@@ -664,7 +670,7 @@ def _repeats(ctx: _Ctx, t: _Text, tok: Token, prefixes: list[str], suffixes: lis
     return unit_at(t.text, tok, prefixes, suffixes, ctx.policy.unit_window, ctx.suffixes)
 
 
-_CHECK_ORDER = ("field", "sign", "scale", "unit", "key")  # the unit check reads the field's
+_CHECK_ORDER = ("sign", "scale", "unit", "key")  # after the field items: the unit check reads them
 
 
 def _field_ok(t: _Text, f: Field, span: tuple[int, int], pos: int) -> tuple[bool, bool]:
@@ -685,34 +691,39 @@ def _unit_at_place(places: UnitPlaces, tok: Token) -> bool:
 
 
 def _unit_relief(
-    ctx: _Ctx, t: _Text, f: Field, at: _At, roles: dict[str, _Item], region: tuple[int, int]
+    ctx: _Ctx, t: _Text, f: Field, at: _At, fields: list[_Item], region: tuple[int, int]
 ) -> bool:
     """Whether the unit is the only missing part at this place of the value, and is not missing
-    there: the field item passes and a form of the unit is at a unit place (#249)."""
+    there: a field item passes and a form of the unit is at a unit place (#249)."""
     tok = at.token
     if at.missing != {"unit"} or tok is None or f.unit is None:
         return False
-    if not _field_passes(t, f, at, roles, region):
+    if not _field_passes(t, f, at, fields, region):
         return False
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], []))
     return _unit_at_place(UnitPlaces(t.text, tok, prefixes, suffixes), tok)
 
 
 def _field_passes(
-    t: _Text, f: Field, at: _At, roles: dict[str, _Item], region: tuple[int, int]
+    t: _Text, f: Field, at: _At, fields: list[_Item], region: tuple[int, int]
 ) -> bool:
-    """Whether the field item passes at this place of the value (#249)."""
-    item = roles.get("field")
-    if item is None or f.aliases is None or not _same(item, at.item):
+    """Whether one of the field items passes at this place of the value (#249, #300)."""
+    if f.aliases is None:
         return False
-    span, located = _find(t, item, at, region)
-    if span is None or not located:
-        return False
-    return _field_ok(t, f, span, at.pos)[0]
+    for item in fields:
+        if not _same(item, at.item):
+            continue
+        span, located = _find(t, item, at, region)
+        if span is not None and located and _field_ok(t, f, span, at.pos)[0]:
+            return True
+    return False
 
 
-def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, int]) -> None:
-    """Check each role item at the value, then place the key (SPEC §4.5, §4.6)."""
+def _roles(
+    ctx: _Ctx, p: _Passed, roles: dict[str, _Item], fields: list[_Item], region: tuple[int, int]
+) -> None:
+    """Check each role item at the value, then place the key (SPEC §4.5, §4.6). The field check
+    passes when one of the field items passes (#300)."""
     at, f = p.at, p.field
     assert at is not None
     t, tok = at.t, at.token
@@ -723,23 +734,25 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
         places = UnitPlaces(t.text, tok, prefixes, suffixes)
     found: dict[str, tuple[int, int]] = {}
     passed: dict[str, bool] = {}
-    row = False  # the field item is at the value's row
-    for role in _CHECK_ORDER:
-        item = roles.get(role)
-        if item is None:
-            continue
+    row = False  # a passing field item is at the value's row: found["field"] is the first one
+    checks = [("field", i) for i in fields] + [(r, roles[r]) for r in _CHECK_ORDER if r in roles]
+    for role, item in checks:
         place = places if role == "unit" else None
         span, located = _find(t, item, at, region, place) if _same(item, at.item) else (None, False)
         ok = False
         if span is not None and located:
-            found[role] = span
+            if role != "field":
+                found[role] = span
             a, b = span
             if role == "key":
                 ok = any(
                     a <= x and y <= b and k == p.key for x, y, k in t.key_mentions(f.keys or ())
                 )
             elif role == "field":
-                ok, row = _field_ok(t, f, span, pos)
+                ok, at_row = _field_ok(t, f, span, pos)
+                if ok and at_row and not row:
+                    row = True
+                    found["field"] = span
             elif tok is None:
                 ok = False  # a sign, scale or unit item on a string field
             elif role == "sign":
@@ -777,13 +790,15 @@ def _roles(ctx: _Ctx, p: _Passed, roles: dict[str, _Item], region: tuple[int, in
                         )
                     )
                 )
-        passed[role] = ok
+        passed[role] = ok or (role == "field" and passed.get("field", False))
         byte_span = None if span is None else _bytes(t, span)
         p.parts.append(Part(role, byte_span, ok))
-        if role == "field" and f.aliases is None:
-            continue  # not checked: changes nothing
+        if role == "field":
+            continue  # flagged once, below
         if not ok:
             p.flags.append(f"{role.upper()}_CITATION_INVALID")
+    if fields and f.aliases is not None and not passed["field"]:
+        p.flags.append("FIELD_CITATION_INVALID")  # no field item passes
     if "unit" in p.missing and passed.get("field") and tok is not None and f.unit is not None:
         # a form of the unit at a unit place of the value, as for a unit item (#249)
         if places is None:

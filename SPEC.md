@@ -206,8 +206,8 @@ reference items are **role items**. External and knowledge items are **outside i
 
 `candidate.schema.json` in the package (`candidate_schema()` in the reference implementation) is
 a JSON Schema for one candidate. Step 1 is the definition: the schema does not check that a `ref`
-names a reference in the packet, that two document or reference items have different roles, or
-that an integer has no fraction (`2.0`).
+names a reference in the packet, that two document or reference items other than field items have
+different roles, or that an integer has no fraction (`2.0`).
 
 ### 2.6 Judgments
 
@@ -263,7 +263,9 @@ present but not an object or a list of objects. It also rejects when an evidence
 - has a `text` that is not a string, or has neither offsets nor a non-blank `text`;
 - is external and lacks a non-blank `url`, `retrieved` or `text`, or is knowledge and lacks a
   non-blank `text`;
-- has the same role as another document or reference item of the candidate.
+- has the same role as another document or reference item of the candidate, and that role is not
+  `field`. A candidate can cite several field items, such as a row label and a column header
+  (#300).
 
 A member of the candidate itself whose value is null counts as absent. Inside an evidence item, a
 null member is invalid.
@@ -307,8 +309,8 @@ prefix of a unit in the table (§4.3) ends at the token's start (whitespace betw
 and no suffix of one starts within `policy.unit_window` code points after the token without
 crossing a sentence end. A per-unit counts as a form here, so "75 mg/m2" still rejects a value in
 mg. With a unit item, the item then supplies the unit, and it is checked at the value (§4.6).
-Without one, the decision lists `unit` in `missing`, unless the candidate's field item passes and
-a form of the field's unit is at a unit place of the value (§4.6), as a unit item there would
+Without one, the decision lists `unit` in `missing`, unless the field check passes (§4.6) and
+a form of the field's unit is at a unit place of the value, as a unit item there would
 be: then the unit is not missing (#249). A missing part adds the flag `PART_MISSING`, so the
 outcome is at best `needs_verification`.
 
@@ -364,7 +366,7 @@ rejected by steps 1–11 or on the outside path.
 | `SIGN_CITATION_INVALID` | The sign item fails its check (§4.6). |
 | `SCALE_CITATION_INVALID` | The scale item fails its check. |
 | `UNIT_CITATION_INVALID` | The unit item fails its check. |
-| `FIELD_CITATION_INVALID` | The field item fails its check. |
+| `FIELD_CITATION_INVALID` | The field has `aliases`, the candidate has field items, and none of them passes its check (§4.6). |
 | `KEY_NOT_AT_VALUE` | The field has `keys`, and the candidate's `key` is not a key at the value (§4.5), and a passing key item does not put it there. |
 | `KEY_CITATION_INVALID` | The key item fails its check. |
 | `EVIDENCE_QUOTED` | On the outside path, the deciding item is external, with the action `review`. |
@@ -626,7 +628,8 @@ header needs the column rule, even after one blank line ends the header's senten
 
 A key item (§4.6) can put the key at the value in a table. This is the **column rule**. It
 applies when the keys at the value are none, the candidate has a passing field item at the row
-(§4.6), and a passing key item. Let the **header** be the longest run of key mentions of the field
+(§4.6), and a passing key item. With several such field items, the rules below read the first
+one in list order (#300). Let the **header** be the longest run of key mentions of the field
 that holds the key item's mention, where only whitespace and no key break stands between two
 mentions of the run.
 The key item's mention is the n-th of the header. The column rule puts the key at the value when
@@ -687,7 +690,7 @@ The quote is trimmed of whitespace at both ends first.
 
 - For the value item, the occurrences are those inside `search_region` (document only). When the
   candidate has a field item and the field has `aliases`, only the occurrences where the field
-  item passes count, if there is one, with the token that steps 10 and 11 find there when a part
+  check passes (below) count, if there is one, with the token that steps 10 and 11 find there when a part
   may be missing (#249); otherwise all of them count. Of those, the first where steps 10 and 11
   pass without a missing part is the evidence. Here a unit form at a unit place does not make the
   unit present (step 11): an occurrence with the unit next to the value comes first. When there
@@ -711,9 +714,16 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 |---|---|
 | `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
 | `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands". It ends at or before the token, and no scale word, also with a final `s`, lies between its end and the token. |
-| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the candidate's field item passes, the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). |
+| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). |
 | `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then either no letter (general category L) lies between the item's end and the token (the item is at the **row**), or the item is in the value's sentence with no number token between its end and the token. |
 | `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
+
+**Several field items.** A candidate can cite more than one field item, for example the row label
+and the column header of a table cell (#300). Each field item is checked on its own, as the table
+says. The **field check** passes when one of them passes. A unit item, a unit at a unit place
+(§3.1) and the choice of a quote occurrence read the field check. The decision gets
+`FIELD_CITATION_INVALID` only when no field item passes. A candidate with one field item passes
+the field check when that item passes.
 
 The scale and the sign of a token are its **parts**. A token is **negative** when the candidate
 has a sign item, or, on a field with a unit, when brackets enclose it in the text, as the sign
@@ -748,7 +758,7 @@ on a table line is at the place of that `$`.
 
 So a `$` on the first row of a table applies to the same column in the rows below it, up to a
 blank line or a line with a number and no tab. It also applies to a row of counts in that column
-when the field item passes there. In a table with one cell on each line, a unit item on another
+when the field check passes there. In a table with one cell on each line, a unit item on another
 line than the value fails.
 
 A field item without `aliases` is not checked: it adds no flag, and it does not pass, so a unit
@@ -796,7 +806,8 @@ is a string, otherwise `null`.
   `{"role", "start", "end", "passed"}`, in the role order `sign`, `scale`, `unit`, `field`, `key`.
   `start` and `end` are the item's span in the value's text: the found occurrence of a quote, or
   the item's offsets when they are valid there. They are null when the item is not in that text.
-  A field item without `aliases` is listed with `passed` false.
+  Each field item is listed, in its order in the evidence list. A field item without `aliases` is
+  listed with `passed` false.
 - `missing` lists the missing parts in the order `sign`, `scale`, `unit`, `key`.
 
 Coverage is sorted by field name. `judgments` lists each judgment that applied, as

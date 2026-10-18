@@ -129,7 +129,7 @@ line, goes to review. A table with one number column under a title such as "As o
 every candidate that step 1 accepts. For a model's structured output, use
 [`gg.extractor_schema`](#the-extractors-output) instead. groundgate does not validate with
 either schema: step 1 is the definition. The schema does not check three things: a
-`ref` that names no reference, two document or reference items with the same role, and an integer
+`ref` that names no reference, two document or reference items with the same role other than `field`, and an integer
 written with a fraction (`2.0`).
 
 ### Evidence items
@@ -163,7 +163,7 @@ at a unit place, such as the `$` of the value's column (spec 0.7). A value quote
 | `sign` | A negative value. | Brackets around the number, or a loss word ("loss", "deficit") at most 4 words before it in the same sentence, with no "no", "not" or "without" directly before it, and no number, line break, tab or gain word ("income", "profit") between it and the number. |
 | `scale` | A value in thousands or millions. | "in thousands" or "in millions" before the value, with no other scale word between. With a scale item whose text holds a scale word, the value of a number with no scale word of its own must be the number times that scale: the number as written does not match (spec 0.8). A number such as "$2.2 million" keeps its own scale. |
 | `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The item holds a form of the field's unit. Either that unit is next to the number, so the item repeats it, or the field item passes, the item is before the value, no unit form is next to the number, and the item is on the value's line, in a caption line before the table, or in the value's column of the same table (spec 0.7). When the field item passes, a unit form at such a place also means that the unit is not missing, with no unit item (spec 0.8). |
-| `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. |
+| `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. A fact can cite several field items, such as a row label and a column header. One passing field item is enough, and the fact gets `FIELD_CITATION_INVALID` only when none passes (spec 0.10). |
 | `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). A dash or a `$` with no number counts as a cell. A number after the field item on its line, such as a footnote marker, stops the rule. When only spaces stand between the row label and its first number, the rule stops after the first column. A tab after the label, as `groundgate read` writes HTML tables, keeps it. |
 
 groundgate computes the value from the parts. The extractor does not state the steps. On a field
@@ -232,7 +232,7 @@ receipt = gg.admit(text, schema, candidates, references=references)
 - The schema has no `$schema` member, because the Claude CLI refuses a schema that names draft
   2020-12. Each `$ref` is a JSON pointer into the schema, so a client that loads an older draft
   reads it the same way.
-- Two step 1 rules stay outside the schema: two items with the same role, and a blank `text`,
+- Two step 1 rules stay outside the schema: two items with the same role other than `field`, and a blank `text`,
   `url` or `retrieved`. Step 1 rejects such a candidate with `CANDIDATE_INVALID`.
 
 The schema gives the shape. These instructions tell the model what to put in it:
@@ -488,7 +488,7 @@ Flags send the fact to a person:
 | `QUALIFIED_VALUE` | The text says "up to" and the field is `eq`. | If the field is a limit, set its `comparator`. If not, a person checks the fact. |
 | `SCALE_WORD` | The value is sent as written, without its scale word. | Send the scaled value. |
 | `PART_MISSING` | The value needs a sign, a scale or a unit that no item supports. A unit is missing when no unit form is next to the number: the text writes a surface that is not in the table, or the suffix is past `unit_window` or a sentence end. A scale is also missing when a heading such as "(in thousands)" is over the value's table and the value is the number as written. `missing` names the part. | Ask the extractor for those items, or add the unit's surfaces in the schema's `units`. |
-| `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID` | The item does not hold its part at the value (see [Evidence items](#evidence-items)). A unit item for a unit that is not next to the number also fails when the field item fails, or when it is not on the value's line, in a caption before the table or in the value's column. | A person checks the fact. |
+| `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID` | The item does not hold its part at the value (see [Evidence items](#evidence-items)). A unit item for a unit that is not next to the number also fails when no field item passes, or when it is not on the value's line, in a caption before the table or in the value's column. | A person checks the fact. |
 | `FIELD_CITATION_INVALID` | The item holds none of the field's `aliases`, or it is not on the value's row or in its sentence. | Give the field `aliases` in the document's words. |
 | `KEY_NOT_AT_VALUE` | The value is under a different condition in the text, or a label line or a table cell stands between the key and the value. | In a table, ask the extractor for a `field` item and a `key` item, and give the field `aliases`. Otherwise a person checks the fact. |
 | `KEY_CITATION_INVALID` | The key item does not hold a mention of the key, or is not in the value's text. | A person checks the fact. |

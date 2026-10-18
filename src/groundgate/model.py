@@ -413,8 +413,8 @@ def extractor_schema(
 
     It uses only the JSON Schema subset of the strict structured-output modes, and every
     candidate that it accepts passes step 1 of SPEC §3. Two step 1 rules stay outside it: two
-    items with the same role, and a blank text, url or retrieved. A field with no keys gets no
-    role "key", because a key item on it always fails (SPEC §4.6).
+    items with the same role other than field, and a blank text, url or retrieved. A field with
+    no keys gets no role "key", because a key item on it always fails (SPEC §4.6).
     """
     s = schema if isinstance(schema, Schema) else Schema.from_dict(schema)
     if not s.fields:

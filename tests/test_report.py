@@ -310,3 +310,15 @@ def test_report_shows_a_reference_decision_and_verifies_its_packet() -> None:
     assert "does not match" in render(receipt, text, cands, schema=schema)  # no references
     html = render(receipt, text, cands)  # no reference text: no cited text
     assert "cited" not in html and "quoted “$170,000”" in html
+
+
+def test_report_quotes_each_field_item() -> None:
+    doc = "Ending balance\nCash\t$100"
+    schema = {"fields": {"cash": {"type": "number", "unit": "USD", "aliases": ["Cash"]}}}
+    ev = [{"text": "$100"}, {"role": "field", "text": "Cash"}, {"role": "field", "text": "Nope"}]
+    cands = [{"id": "c", "field": "cash", "value": "100", "unit": "USD", "evidence": ev}]
+    receipt = gg.admit(doc, schema, cands).to_dict()
+    assert receipt["decisions"][0]["outcome"] == "admitted"
+    html = render(receipt, doc, cands, schema=schema)
+    assert '<b>field</b> <span class="ok">passed</span>, cited “Cash”' in html
+    assert '<b>field</b> <span class="bad">failed</span>, quoted “Nope”, not found' in html
