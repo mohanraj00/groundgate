@@ -81,12 +81,18 @@ that file. It leaves the published v0.1 and set 2 files unchanged.
 For each final distinct admitted value, the scorer compares field, key, normalized value and unit.
 It counts every distinct wrong admit, including extras on a multiple field and values on an absent
 field. A labeled value with no admitted match is either a right-value review or a silent miss.
+A silent miss is a labeled value that is not admitted and not sent to review. It is one of two
+kinds. A rejected right value is a silent miss that a final decision carries with the outcome
+rejected: the model proposed the right value, and admit rejected it. A silent miss with no right
+candidate has no final decision that carries the value: the model did not propose it. The two
+counts add up to the silent misses.
 Wrong reviews are catches. Explicit not-found for an absent field is an absence hit; silence is
 reported separately. Unclear slots are excluded and counted. Duplicate proposals never add hits.
 
 The report gives totals, each kind, each field, and each kind/field pair. Each slice includes the
-admitted error rate, the miss rate, right-value review share, silent miss share, escapes, and sample
-sizes. It gives two one-sided 95% upper bounds from #269 and #277. For the value bound, the default
+admitted error rate, the miss rate, right-value review share, silent miss share, the shares of
+rejected right values and of no right candidate, escapes, and sample sizes. It gives two
+one-sided 95% upper bounds from #269 and #277. For the value bound, the default
 design effect is the largest number of distinct admitted values from one document in that slice,
 at least 1. This assumes no independence within a document. Effective trials round down and
 effective errors round up. The document bound is on the documents with at least one admitted
