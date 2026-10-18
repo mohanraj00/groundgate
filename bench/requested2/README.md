@@ -2,7 +2,7 @@
 
 Status: I froze the manifest on 2026-10-18, before any model output on this set (#308). The set
 has 79 documents: 3 development pilots and 76 held-out (25 component datasheets, 28 SBCs and 23
-annual reports). Labels are in progress. No model has run on this set.
+annual reports). I sealed the labels on 2026-10-18. No model has run on this set.
 
 The 0.10 rules (#300, #301) came from the 0.9 held-out set in [bench/requested](../requested).
 That set cannot measure them. This set uses the same three kinds and the same fixed requests,
@@ -43,10 +43,19 @@ and the reader texts stay in local work storage and are not published.
 
 ## Labels and measure
 
-I label every requested slot from the original PDF before any model output on this set, with the
-method of the 0.9 set. An absence gets a second blind check. I freeze the manifest and seal the
-labels in both splits before the first model call. Then I run both arms with one frozen
-configuration on the 0.10 main commit, and score with:
+Two blind passes labeled all 419 slots from the original PDFs, with the rules of the 0.9 set.
+Each pass confirmed each present value on a render of its PDF page. The passes gave the same
+label on 407 slots (97.1%). An independent check of the original PDF decided the other 12. Each
+absence has a second blind check: both passes, or the independent check.
+
+| Kind | Slots | Present | Absent | Unclear |
+|---|---:|---:|---:|---:|
+| component | 130 | 96 | 0 | 34 |
+| sbc | 145 | 122 | 16 | 7 |
+| annual | 144 | 90 | 52 | 2 |
+
+The manifest is frozen and the labels are sealed before the first model call. Next I run both
+arms with one frozen configuration on the 0.10 main commit, and score with:
 
 ```bash
 uv run python bench/score.py --requested --set bench/requested2 --split heldout
