@@ -309,7 +309,7 @@ the document is admitted unless you say so (ADR
 
 ### Recorded judgments
 
-Spec 0.4, experimental. groundgate never calls a model. A judge, such as a small typed-decision model,
+Spec 0.4, experimental. The decision never calls a model. A judge, such as a small typed-decision model,
 answers questions about candidates before the decision, and you pass its answers as `judgments`:
 
 ```python
