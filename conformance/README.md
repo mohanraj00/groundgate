@@ -8,7 +8,8 @@ Each file in `vectors/` is a complete, language-agnostic test case:
   only a quote;
 - `judgments`, `references` and `document_source` (optional): inputs as in SPEC §2.1 and §2.6;
 - `expected.decisions`: one `{outcome, codes}` per candidate, in input order, and `missing` where
-  a part is missing;
+  a part is missing. `parts` (optional) gives the `role` and `passed` of each listed part, in
+  order;
 - `expected.coverage`: the coverage findings.
 
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no

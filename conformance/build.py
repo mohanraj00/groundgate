@@ -78,10 +78,13 @@ def raw(candidate: Any, expect: tuple[Any, ...]) -> dict[str, Any]:
 
 
 def _expect(expect: tuple[Any, ...]) -> dict[str, Any]:
-    """(outcome, codes) or (outcome, codes, missing): the decision a candidate must get."""
+    """(outcome, codes), (outcome, codes, missing) or (outcome, codes, missing, parts): the
+    decision a candidate must get. ``parts`` is a list of (role, passed) pairs."""
     out: dict[str, Any] = {"outcome": expect[0], "codes": expect[1]}
     if len(expect) > 2:
         out["missing"] = expect[2]
+    if len(expect) > 3:
+        out["parts"] = [{"role": role, "passed": passed} for role, passed in expect[3]]
     return out
 
 
@@ -3563,6 +3566,96 @@ vector(
         c("w7", "cash", "400", "USD", [q("400"), q("$", 5, role="unit"), row("Cash"),
                                        year("2023", 2)], (REVIEW, ["KEY_NOT_AT_VALUE"]),
           key="2023"),
+    ],
+)  # fmt: skip
+
+
+# ---------------------------------------------------------------- several field items (spec 0.10, #300)
+SEVERAL = {"type": "number", "unit": "USD", "aliases": ["Cash", "Ending balance"], "multiple": True}
+NO_ALIASES = {"type": "number", "unit": "USD", "multiple": True}
+F, T = ("field", False), ("field", True)
+vector(
+    "59-several-field-items",
+    "A candidate may cite several field items, such as a row label and a column header. Each one "
+    "is checked and listed in parts. The field check passes when one of them passes. Only when "
+    "none passes does the decision get FIELD_CITATION_INVALID. A passing one lets a unit item or "
+    "a unit at a unit place supply the unit, and selects the value's quote occurrence. Two items "
+    "of any other role stay CANDIDATE_INVALID (spec 0.10, #300).",
+    "Ending balance\n\nCash\t$100\n\n"
+    "Amounts in $\nEnding balance\nCash\t200\n\n"
+    "Other items were about $50.\nCash\t50",
+    {"fields": {"cash": SEVERAL, "plain": NO_ALIASES}},
+    [
+        # the header is in another sentence; the row label passes
+        c("p1", "cash", "100", "USD", [q("$100"), row("Ending balance"), row("Cash")],
+          ("admitted", [], [], [F, T])),
+        c("p2", "cash", "100", "USD", [q("$100"), row("Cash"), row("Ending balance")],
+          ("admitted", [], [], [T, F])),
+        c("p3", "cash", "100", "USD", [q("$100"), row("Ending balance"), row("Revenue")],
+          (REVIEW, ["FIELD_CITATION_INVALID"], [], [F, F])),
+        c("p4", "cash", "100", "USD", [q("$100"), row("Cash"), row("Cash")],
+          ("admitted", [], [], [T, T])),
+        # no aliases: the field items are not checked and add no flag
+        c("p5", "plain", "100", "USD", [q("$100"), row("Cash"), row("Ending balance")],
+          ("admitted", [], [], [F, F])),
+        # the header in the value's sentence also passes; the $ of the caption is at a unit place
+        c("p6", "cash", "200", "USD", [q("200"), row("Ending balance"), row("Cash")],
+          ("admitted", [], [], [T, T])),
+        c("p7", "cash", "200", "USD", [q("200"), row("Revenue"), row("Ending balance")],
+          ("admitted", [], [], [F, T])),
+        c("p8", "cash", "200", "USD", [q("200"), row("Amounts"), row("Cash"), DOLLAR],
+          ("admitted", [], [], [("unit", True), F, T])),
+        c("p9", "cash", "200", "USD", [q("200"), row("Amounts"), row("Revenue"), DOLLAR],
+          (REVIEW, ["UNIT_CITATION_INVALID", "FIELD_CITATION_INVALID"], [],
+           [("unit", False), F, F])),
+        c("p10", "cash", "200", "USD", [q("200"), row("Amounts"), row("Revenue")],
+          (REVIEW, ["PART_MISSING", "FIELD_CITATION_INVALID"], ["unit"], [F, F])),
+        # a quote: the occurrence where the second field item passes, not the first occurrence
+        c("p11", "cash", "50", "USD", [{"text": "50"}, row("Revenue"), row("Cash")],
+          (REVIEW, ["PART_MISSING"], ["unit"], [F, T])),
+        c("p12", "cash", "50", "USD", [{"text": "50"}, row("Revenue")],
+          (REVIEW, ["QUALIFIED_VALUE", "FIELD_CITATION_INVALID"], [], [F])),
+        # two items of another role
+        *[
+            c(f"x{n}", "cash", "100", "USD", [q("$100"), *ev], ("rejected", ["CANDIDATE_INVALID"]))
+            for n, ev in enumerate(
+                [
+                    [{"text": "$100"}],
+                    [DOLLAR, DOLLAR],
+                    [THOUSANDS, {"role": "scale", "text": "in thousands"}],
+                    [{"role": "sign", "text": "("}, {"role": "sign", "text": "loss"}],
+                    [year("2024"), year("2025")],
+                    [row("Cash"), DOLLAR, {"role": "unit", "text": "USD"}],
+                ],
+                1,
+            )
+        ],
+    ],
+)  # fmt: skip
+
+BALANCES = {
+    "type": "number",
+    "unit": "USD",
+    "aliases": ["Cash", "Balances"],
+    "multiple": True,
+    "keys": ["Current", "Prior"],
+}
+vector(
+    "60-several-field-items-column",
+    "The column rule reads the first field item that passes at the value's row. A column header "
+    "that passes in the value's sentence, but not at the row, does not stop a row label after it "
+    "from placing the key (spec 0.10, #300).",
+    "Balances\tCurrent\tPrior\nCash\t$400\t$500",
+    {"fields": {"cash": BALANCES}},
+    [
+        c("k1", "cash", "400", "USD", [q("$400"), row("Balances"), row("Cash"), year("Current")],
+          ("admitted", ["KEY_CITED"], [], [T, T, ("key", True)]), key="Current"),
+        c("k2", "cash", "500", "USD", [q("$500"), row("Cash"), row("Balances"), year("Prior")],
+          ("admitted", ["KEY_CITED"], [], [T, F, ("key", True)]), key="Prior"),
+        c("k3", "cash", "400", "USD", [q("$400"), row("Balances"), year("Current")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], [], [T, ("key", True)]), key="Current"),
+        c("k4", "cash", "400", "USD", [q("$400"), row("Balances"), row("Cash"), year("Prior")],
+          (REVIEW, ["KEY_NOT_AT_VALUE"], [], [T, T, ("key", True)]), key="Prior"),
     ],
 )  # fmt: skip
 
