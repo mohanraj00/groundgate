@@ -683,6 +683,14 @@ def test_sealed_observation_layout_is_kind_sliced_and_replayed(tmp_path):
         session._layout()
     refs[0]["sha256"] = write(inputs / "observation.json", obs)
     session._layout()
+    # The cap is on the sum of the observation files, and a file at the cap passes.
+    size = (inputs / "observation.json").stat().st_size
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(d, "_LAYOUT_TOTAL", size - 1)
+        with pytest.raises(d.DiagnosticError, match="layout input total cap"):
+            session._layout()
+        patch.setattr(d, "_LAYOUT_TOTAL", size)
+        session._layout()
     # The only document is held out, so a development plan must refuse its layout cases.
     session.plan["split"] = "development"
     with pytest.raises(d.DiagnosticError, match="layout split differs"):

@@ -36,6 +36,8 @@ from .run_set import (
 
 Json = dict[str, Any]
 _MAX = 16 * 1024 * 1024
+# Full reader observations of the annotated documents together; 23 documents need 36 MiB.
+_LAYOUT_TOTAL = 64 * 1024 * 1024
 _ID = re.compile(r"[a-zA-Z0-9][a-zA-Z0-9_.-]{0,79}\Z")
 _SHA = re.compile(r"sha256:[0-9a-f]{64}\Z")
 _ROUTES = {"empty_cells", "ambiguous_columns", "running_heads"}
@@ -834,7 +836,7 @@ class DiagnosticSession:
             _sha(ref["code_sha256"])
             path = _child(self.inputs, ref["path"])
             total += path.stat().st_size
-            if total > 32 * 1024 * 1024:
+            if total > _LAYOUT_TOTAL:
                 raise DiagnosticError("layout input total cap")
             obs = _load(path, ref["sha256"])
             self.paths[path] = ref["sha256"]
