@@ -138,6 +138,9 @@ def test_inputs_are_validated_before_model_call():
         execute("e\u0301", client)
     with pytest.raises(gg.PacketError):
         execute("5", client, references=[{"id": 3, "text": "5"}])
+    for empty in ("", b"", {}):
+        with pytest.raises(gg.PacketError):
+            execute("5", client, references=empty)
     with pytest.raises(ExtractInputError):
         execute("5", client, run_policy=RunPolicy(max_prompt_chars=1))
     assert client.prompts == []

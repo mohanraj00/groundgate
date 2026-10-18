@@ -1111,7 +1111,13 @@ def _run(
             policy.to_dict() if isinstance(policy, Policy) else {} if policy is None else policy
         )
     )
-    refs = copy.deepcopy(list(references or []))
+    # Only None means no references. A string or a mapping goes to admit, which refuses it.
+    refs: Any = references
+    if references is None:
+        refs = []
+    elif isinstance(references, Sequence) and not isinstance(references, (str, bytes)):
+        refs = list(references)
+    refs = copy.deepcopy(refs)
     empty = admit(text, s, [], p, document_id, references=refs, document_source=document_source)
     valid_refs = cast(list[Json], refs)
     valid_refs.sort(key=lambda r: r["id"])
