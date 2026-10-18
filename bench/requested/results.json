@@ -1946,16 +1946,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.7763932022500211,
+      "combined_upper95": 0.7763932023,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 2,
-      "document_upper95": 0.7763932022500211,
+      "document_upper95": 0.7763932023,
       "effective_errors": 0,
       "effective_trials": 2,
-      "value_upper95": 0.7763932022500211
+      "value_upper95": 0.7763932023
      },
      "catches": 0,
      "documents": 20,
@@ -2066,16 +2066,16 @@
       "rate": 0.5
      },
      "bounds": {
-      "combined_upper95": 0.9746794344808964,
+      "combined_upper95": 0.9746794345,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 1,
       "document_trials": 2,
-      "document_upper95": 0.9746794344808964,
+      "document_upper95": 0.9746794345,
       "effective_errors": 1,
       "effective_trials": 2,
-      "value_upper95": 0.9746794344808964
+      "value_upper95": 0.9746794345
      },
      "catches": 1,
      "documents": 21,
@@ -2194,7 +2194,7 @@
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 1,
       "document_trials": 2,
-      "document_upper95": 0.9746794344808964,
+      "document_upper95": 0.9746794345,
       "effective_errors": 1,
       "effective_trials": 1,
       "value_upper95": 1.0
@@ -2248,16 +2248,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.7763932022500211,
+      "combined_upper95": 0.7763932023,
       "confidence": 0.95,
       "design_effect": 2,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 3,
-      "document_upper95": 0.6315968501359613,
+      "document_upper95": 0.6315968502,
       "effective_errors": 0,
       "effective_trials": 2,
-      "value_upper95": 0.7763932022500211
+      "value_upper95": 0.7763932023
      },
      "catches": 0,
      "documents": 20,
@@ -2308,16 +2308,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.7763932022500211,
+      "combined_upper95": 0.7763932023,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 2,
-      "document_upper95": 0.7763932022500211,
+      "document_upper95": 0.7763932023,
       "effective_errors": 0,
       "effective_trials": 2,
-      "value_upper95": 0.7763932022500211
+      "value_upper95": 0.7763932023
      },
      "catches": 2,
      "documents": 20,
@@ -2611,16 +2611,16 @@
        "rate": 0.5
       },
       "bounds": {
-       "combined_upper95": 0.9746794344808964,
+       "combined_upper95": 0.9746794345,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 1,
        "document_trials": 2,
-       "document_upper95": 0.9746794344808964,
+       "document_upper95": 0.9746794345,
        "effective_errors": 1,
        "effective_trials": 2,
-       "value_upper95": 0.9746794344808964
+       "value_upper95": 0.9746794345
       },
       "catches": 1,
       "documents": 21,
@@ -2973,16 +2973,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.7763932022500211,
+       "combined_upper95": 0.7763932023,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 2,
-       "document_upper95": 0.7763932022500211,
+       "document_upper95": 0.7763932023,
        "effective_errors": 0,
        "effective_trials": 2,
-       "value_upper95": 0.7763932022500211
+       "value_upper95": 0.7763932023
       },
       "catches": 0,
       "documents": 20,
@@ -3367,16 +3367,16 @@
      "rate": 0.1
     },
     "bounds": {
-     "combined_upper95": 0.8646496378284163,
+     "combined_upper95": 0.8646496379,
      "confidence": 0.95,
      "design_effect": 3,
      "design_effect_method": "maximum admitted cluster size; default, not estimated",
      "document_errors": 1,
      "document_trials": 7,
-     "document_upper95": 0.5207029735913071,
+     "document_upper95": 0.5207029736,
      "effective_errors": 1,
      "effective_trials": 3,
-     "value_upper95": 0.8646496378284163
+     "value_upper95": 0.8646496379
     },
     "catches": 9,
     "documents": 61,
@@ -3550,16 +3550,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.39303776899708276,
+      "combined_upper95": 0.393037769,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 6,
-      "document_upper95": 0.39303776899708276,
+      "document_upper95": 0.393037769,
       "effective_errors": 0,
       "effective_trials": 6,
-      "value_upper95": 0.39303776899708276
+      "value_upper95": 0.393037769
      },
      "catches": 0,
      "documents": 20,
@@ -3970,16 +3970,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.5271291954984121,
+      "combined_upper95": 0.5271291955,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 4,
-      "document_upper95": 0.5271291954984121,
+      "document_upper95": 0.5271291955,
       "effective_errors": 0,
       "effective_trials": 4,
-      "value_upper95": 0.5271291954984121
+      "value_upper95": 0.5271291955
      },
      "catches": 0,
      "documents": 20,
@@ -4512,16 +4512,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.23840419038085267,
+      "combined_upper95": 0.2384041904,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 11,
-      "document_upper95": 0.23840419038085267,
+      "document_upper95": 0.2384041904,
       "effective_errors": 0,
       "effective_trials": 11,
-      "value_upper95": 0.23840419038085267
+      "value_upper95": 0.2384041904
      },
      "catches": 6,
      "documents": 20,
@@ -5299,16 +5299,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.39303776899708276,
+       "combined_upper95": 0.393037769,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 6,
-       "document_upper95": 0.39303776899708276,
+       "document_upper95": 0.393037769,
        "effective_errors": 0,
        "effective_trials": 6,
-       "value_upper95": 0.39303776899708276
+       "value_upper95": 0.393037769
       },
       "catches": 0,
       "documents": 20,
@@ -5479,16 +5479,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.5271291954984121,
+       "combined_upper95": 0.5271291955,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 4,
-       "document_upper95": 0.5271291954984121,
+       "document_upper95": 0.5271291955,
        "effective_errors": 0,
        "effective_trials": 4,
-       "value_upper95": 0.5271291954984121
+       "value_upper95": 0.5271291955
       },
       "catches": 0,
       "documents": 20,
@@ -5571,16 +5571,16 @@
      "rate": 0.0
     },
     "bounds": {
-     "combined_upper95": 0.45071972834694113,
+     "combined_upper95": 0.4507197284,
      "confidence": 0.95,
      "design_effect": 3,
      "design_effect_method": "maximum admitted cluster size; default, not estimated",
      "document_errors": 0,
      "document_trials": 13,
-     "document_upper95": 0.20581666518655065,
+     "document_upper95": 0.2058166652,
      "effective_errors": 0,
      "effective_trials": 5,
-     "value_upper95": 0.45071972834694113
+     "value_upper95": 0.4507197284
     },
     "catches": 15,
     "documents": 61,
