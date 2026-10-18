@@ -75,6 +75,9 @@ def test_bounds_have_a_fixed_number_of_digits() -> None:
         bound = upper95(errors, trials)
         assert bound is not None
         assert bound == round(bound, 10)
+    # Rounding goes up, so the bound stays above the exact endpoint.
+    assert upper95(0, 15) == 0.1810362726
+    assert upper95(0, 15) >= 1 - 0.05 ** (1 / 15)
 
 
 def test_extra_wrong_admit_and_right_review_are_both_counted() -> None:

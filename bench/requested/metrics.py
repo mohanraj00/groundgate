@@ -10,7 +10,7 @@ import json
 import math
 import re
 from collections import defaultdict
-from decimal import Decimal
+from decimal import ROUND_CEILING, Decimal
 from pathlib import Path
 from typing import Any
 
@@ -53,11 +53,17 @@ def decision_key(raw: Any) -> Any:
 BOUND_DIGITS = 10
 
 
+def _round_up(bound: float) -> float:
+    step = Decimal(1).scaleb(-BOUND_DIGITS)
+    return float(Decimal(bound).quantize(step, rounding=ROUND_CEILING))
+
+
 def upper95(errors: int, trials: int) -> float | None:
     """One-sided exact Clopper-Pearson upper bound; no trials means no bound.
 
-    The bound is rounded to BOUND_DIGITS decimals: the last bit of math.log and
-    math.exp can change with the Python version, and results.json must not.
+    The bound is rounded up to BOUND_DIGITS decimals: the last bit of math.log and
+    math.exp can change with the Python version, and results.json must not. Rounding
+    up keeps it an upper bound.
     """
     if not 0 <= errors <= trials:
         raise ValueError("errors must be between zero and trials")
@@ -66,7 +72,7 @@ def upper95(errors: int, trials: int) -> float | None:
     if errors == trials:
         return 1.0
     if errors == 0:
-        return round(-math.expm1(math.log(0.05) / trials), BOUND_DIGITS)
+        return _round_up(-math.expm1(math.log(0.05) / trials))
     # P(X <= errors | p=upper) = .05. Sum in log space to avoid underflow.
     coeff = [
         math.lgamma(trials + 1) - math.lgamma(i + 1) - math.lgamma(trials - i + 1)
@@ -84,7 +90,7 @@ def upper95(errors: int, trials: int) -> float | None:
             lo = p
         else:
             hi = p
-    return round(hi, BOUND_DIGITS)
+    return _round_up(hi)
 
 
 def ratio(k: int, n: int) -> dict[str, Any]:
