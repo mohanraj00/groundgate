@@ -2,7 +2,7 @@
 
 Status: I froze the manifest on 2026-10-18, before any model output on this set (#308). The set
 has 79 documents: 3 development pilots and 76 held-out (25 component datasheets, 28 SBCs and 23
-annual reports). I sealed the labels on 2026-10-18. No model has run on this set.
+annual reports). I sealed the labels on 2026-10-18. Both arms ran on the held-out split on 2026-10-18.
 
 The 0.10 rules (#300, #301) came from the 0.9 held-out set in [bench/requested](../requested).
 That set cannot measure them. This set uses the same three kinds and the same fixed requests,
@@ -61,9 +61,35 @@ are agency-only accounts, so revenue is now absent.
 | sbc | 145 | 122 | 16 | 7 |
 | annual | 144 | 92 | 51 | 1 |
 
-The manifest is frozen and the labels are sealed before the first model call. Next I run both
-arms with one frozen configuration on the 0.10 main commit, and score with:
+## Held-out results
+
+I ran both arms on the 76 held-out documents on 2026-10-18, on main 4c3da85, with one frozen
+configuration (`runs/`, `results.json`, `RESULTS.md`). The model, transport and run limits are the
+same as in the 0.9 run. The labels were sealed before this output. The scorer counts 300 labeled
+values that the documents state. 39 unclear slots are not counted.
+
+| Arm | Right values admitted | Right absences | Escapes | Reviews | Silent misses | Miss rate |
+|---|---:|---:|---:|---:|---:|---:|
+| baseline | 44 | 0 | 11 | 231 | 25 | 85.33% (256 of 300) |
+| runner | 34 | 15 | 0 | 241 | 25 | 88.67% (266 of 300) |
+
+- The runner admits no wrong value. The baseline admits 11 wrong values of 55, all in annual
+  reports (11 of 16). Combined upper bound: baseline 49.46%, runner 31.23%.
+- The runner misses more right values than the baseline: 266 against 256. Silent misses are the
+  same (25). The difference is values that the runner sends to review and the baseline admits.
+- The SBCs give the runner 15 right absences and 0 silent misses for both arms. SBC miss rate is
+  77.12% for the baseline and 80.51% for the runner.
+- The runner did not complete 15 of the 23 annual reports and 1 datasheet. Each one stopped at the
+  search limit, with no transport error. Their unadmitted present fields count as misses. Annual
+  miss rate is 94.32% for the baseline and 98.86% for the runner.
+- Three baseline calls failed with a transport error at the last call of a document. The harness
+  archived each one and ran it again (`Transport retries` in `RESULTS.md`).
+- The miss rate is above 85% for both arms. 0.10 does not meet the goal on this set, and the
+  runner does not beat the baseline on misses.
+
+To score again:
 
 ```bash
 uv run python bench/score.py --requested --set bench/requested2 --split heldout
+uv run python bench/score.py --requested --set bench/requested2 --split heldout --check
 ```
