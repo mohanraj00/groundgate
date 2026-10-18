@@ -161,7 +161,7 @@ at a unit place, such as the `$` of the value's column (spec 0.7). A value quote
 |---|---|---|
 | `value` (default) | The number as written. | The value is there, as in spec 0.4. |
 | `sign` | A negative value. | Brackets around the number, or a loss word ("loss", "deficit") at most 4 words before it in the same sentence, with no "no", "not" or "without" directly before it, and no number, line break, tab or gain word ("income", "profit") between it and the number. |
-| `scale` | A value in thousands or millions. | "in thousands" or "in millions" before the value, with no other scale word between. With a scale item whose text holds a scale word, the value of a number with no scale word of its own must be the number times that scale: the number as written does not match (spec 0.8). A number such as "$2.2 million" keeps its own scale. |
+| `scale` | A value in thousands or millions. | "in thousands" or "in millions" before the value, with no other scale word between. A currency scale such as `£m`, `$bn` or `£'000` in a column header also counts, when no currency scale of another size is between (spec 0.10). With a scale item whose text holds a scale word, the value of a number with no scale word of its own must be the number times that scale: the number as written does not match (spec 0.8). A number such as "$2.2 million" keeps its own scale. |
 | `unit` | A unit that is not next to the number, such as the `$` at the top of a column. | The item holds a form of the field's unit. Either that unit is next to the number, so the item repeats it, or the field item passes, the item is before the value, no unit form is next to the number, and the item is on the value's line, in a caption line before the table, or in the value's column of the same table (spec 0.7). When the field item passes, a unit form at such a place also means that the unit is not missing, with no unit item (spec 0.8). |
 | `field` | The field's own words. | The item holds one of the field's `aliases`, on the value's row or in its sentence. |
 | `key` | The key, such as a column header. | The item holds a mention of the key. In a table, the key is at the value when it is the n-th key of its header and the value is the n-th cell after the field item (the column rule). A dash or a `$` with no number counts as a cell. A number after the field item on its line, such as a footnote marker, stops the rule. When only spaces stand between the row label and its first number, the rule stops after the first column. A tab after the label, as `groundgate read` writes HTML tables, keeps it. |
@@ -432,7 +432,10 @@ and a span that stops at `29.` inside `29.97` does not hold 29.
 
 **Scale words.** `thousand`, `million`, `billion`, `trillion`, `lakh` and `crore` after a number
 multiply it. Send the scaled value. For "$1.25 billion", `"1250000000"` admits and `"1.25"` is
-flagged `SCALE_WORD`.
+flagged `SCALE_WORD`. Since spec 0.10, `k`, `m` and `bn` directly after a number also multiply
+it, but only when a currency sign (`$`, `€`, `£` or `₹`) stands directly before the number:
+`€70,471m` is 70471000000. `70 m`, `5m` and `£5 m` stay as written, because a bare `m` can be
+metres.
 
 **Qualifiers.** groundgate looks for a qualifier in the same sentence, up to 40 code points before
 and after the value, and not past the next number. Each qualifier implies a comparator. When that

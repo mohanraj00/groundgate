@@ -1,0 +1,148 @@
+{
+ "name": "61-currency-scale-heading",
+ "description": "A currency scale (£m, £'000, $bn) is a heading scale on any line, with or without a tab. It reaches the lines with tabs after it, as a heading scale in words does, so a value there equal to the number as written misses its scale. A table after a blank line, a line with no tab, a bare (m) and a £ m with a space are not reached (spec 0.10, #301).",
+ "document": "Group income statement\n\n\t2025\t2024\n\t£m\t£m\nRevenue\t5,210\t4,980\n\nBalance sheet\n£'000\t2025\t2024\nCash\t1,250\t1,100\n\nCash flow\n\t$bn\nCapex\t1.5\n\nSegment note\n\t2025\nUnits\t870\n\nFigures are in £m.\nStaff numbers were 640 at year end.\n\nPipe lengths (m)\n\t2025\nMain\t75\n\nWater use\n\t£ m\nWater\t63\n",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "number",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "ch1",
+   "field": "amount",
+   "value": "5210",
+   "evidence": [
+    {
+     "start": 52,
+     "end": 57,
+     "text": "5,210"
+    }
+   ]
+  },
+  {
+   "id": "ch2",
+   "field": "amount",
+   "value": "1250",
+   "evidence": [
+    {
+     "start": 101,
+     "end": 106,
+     "text": "1,250"
+    }
+   ]
+  },
+  {
+   "id": "ch3",
+   "field": "amount",
+   "value": "1.5",
+   "evidence": [
+    {
+     "start": 135,
+     "end": 138,
+     "text": "1.5"
+    }
+   ]
+  },
+  {
+   "id": "ch4",
+   "field": "amount",
+   "value": "870",
+   "evidence": [
+    {
+     "start": 165,
+     "end": 168,
+     "text": "870"
+    }
+   ]
+  },
+  {
+   "id": "ch5",
+   "field": "amount",
+   "value": "640",
+   "evidence": [
+    {
+     "start": 209,
+     "end": 212,
+     "text": "640"
+    }
+   ]
+  },
+  {
+   "id": "ch6",
+   "field": "amount",
+   "value": "75",
+   "evidence": [
+    {
+     "start": 255,
+     "end": 257,
+     "text": "75"
+    }
+   ]
+  },
+  {
+   "id": "ch7",
+   "field": "amount",
+   "value": "63",
+   "evidence": [
+    {
+     "start": 281,
+     "end": 283,
+     "text": "63"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

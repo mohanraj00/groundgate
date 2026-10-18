@@ -6,7 +6,12 @@ spec version, and receipts name the spec version they were decided under.
 ## Unreleased
 
 Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses the
-`groundgate/0.10:` prefix, so all hashes differ from 0.9.0. No decision changes yet.
+`groundgate/0.10:` prefix, so all hashes differ from 0.9.0.
+
+- Currency scales (#301). `k`, `m` and `bn` count as a scale only directly next to a currency sign
+  (`$`, `€`, `£`, `₹`). `€70,471m` is 70471000000. `£m`, `$bn` and `£'000` in a column header are
+  a heading scale, and a scale item can cite them. `70 m`, `5m` and `£5 m` stay as written,
+  because a bare `m` can be metres.
 
 ## 0.9.0 (2026-10-18)
 
