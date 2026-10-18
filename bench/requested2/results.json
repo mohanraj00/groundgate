@@ -134,16 +134,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.18103627252208468,
+      "combined_upper95": 0.1810362725,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 15,
-      "document_upper95": 0.18103627252208468,
+      "document_upper95": 0.1810362725,
       "effective_errors": 0,
       "effective_trials": 15,
-      "value_upper95": 0.18103627252208468
+      "value_upper95": 0.1810362725
      },
      "catches": 0,
      "documents": 28,
@@ -254,16 +254,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.6315968501359613,
+      "combined_upper95": 0.6315968501,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 3,
-      "document_upper95": 0.6315968501359613,
+      "document_upper95": 0.6315968501,
       "effective_errors": 0,
       "effective_trials": 3,
-      "value_upper95": 0.6315968501359613
+      "value_upper95": 0.6315968501
      },
      "catches": 1,
      "documents": 25,
@@ -314,16 +314,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.45071972834694113,
+      "combined_upper95": 0.4507197283,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 5,
-      "document_upper95": 0.45071972834694113,
+      "document_upper95": 0.4507197283,
       "effective_errors": 0,
       "effective_trials": 5,
-      "value_upper95": 0.45071972834694113
+      "value_upper95": 0.4507197283
      },
      "catches": 0,
      "documents": 25,
@@ -434,16 +434,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.5271291954984121,
+      "combined_upper95": 0.5271291955,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 4,
-      "document_upper95": 0.5271291954984121,
+      "document_upper95": 0.5271291955,
       "effective_errors": 0,
       "effective_trials": 4,
-      "value_upper95": 0.5271291954984121
+      "value_upper95": 0.5271291955
      },
      "catches": 0,
      "documents": 28,
@@ -494,16 +494,16 @@
       "rate": 0.8571428571428571
      },
      "bounds": {
-      "combined_upper95": 0.9926991680209853,
+      "combined_upper95": 0.992699168,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 6,
       "document_trials": 7,
-      "document_upper95": 0.9926991680209853,
+      "document_upper95": 0.992699168,
       "effective_errors": 6,
       "effective_trials": 7,
-      "value_upper95": 0.9926991680209853
+      "value_upper95": 0.992699168
      },
      "catches": 8,
      "documents": 23,
@@ -554,16 +554,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.3481636551311608,
+      "combined_upper95": 0.3481636551,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 7,
-      "document_upper95": 0.3481636551311608,
+      "document_upper95": 0.3481636551,
       "effective_errors": 0,
       "effective_trials": 7,
-      "value_upper95": 0.3481636551311608
+      "value_upper95": 0.3481636551
      },
      "catches": 1,
      "documents": 28,
@@ -674,16 +674,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.7763932022500211,
+      "combined_upper95": 0.7763932023,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 2,
-      "document_upper95": 0.7763932022500211,
+      "document_upper95": 0.7763932023,
       "effective_errors": 0,
       "effective_trials": 2,
-      "value_upper95": 0.7763932022500211
+      "value_upper95": 0.7763932023
      },
      "catches": 0,
      "documents": 25,
@@ -734,16 +734,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.7763932022500211,
+      "combined_upper95": 0.7763932023,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 2,
-      "document_upper95": 0.7763932022500211,
+      "document_upper95": 0.7763932023,
       "effective_errors": 0,
       "effective_trials": 2,
-      "value_upper95": 0.7763932022500211
+      "value_upper95": 0.7763932023
      },
      "catches": 0,
      "documents": 25,
@@ -794,16 +794,16 @@
       "rate": 0.75
      },
      "bounds": {
-      "combined_upper95": 0.9872585449014338,
+      "combined_upper95": 0.9872585449,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 3,
       "document_trials": 4,
-      "document_upper95": 0.9872585449014338,
+      "document_upper95": 0.9872585449,
       "effective_errors": 3,
       "effective_trials": 4,
-      "value_upper95": 0.9872585449014338
+      "value_upper95": 0.9872585449
      },
      "catches": 5,
      "documents": 23,
@@ -854,16 +854,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.7763932022500211,
+      "combined_upper95": 0.7763932023,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 2,
-      "document_upper95": 0.7763932022500211,
+      "document_upper95": 0.7763932023,
       "effective_errors": 0,
       "effective_trials": 2,
-      "value_upper95": 0.7763932022500211
+      "value_upper95": 0.7763932023
      },
      "catches": 5,
      "documents": 23,
@@ -914,16 +914,16 @@
       "rate": 0.5
      },
      "bounds": {
-      "combined_upper95": 0.9746794344808964,
+      "combined_upper95": 0.9746794345,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 1,
       "document_trials": 2,
-      "document_upper95": 0.9746794344808964,
+      "document_upper95": 0.9746794345,
       "effective_errors": 1,
       "effective_trials": 2,
-      "value_upper95": 0.9746794344808964
+      "value_upper95": 0.9746794345
      },
      "catches": 3,
      "documents": 23,
@@ -976,16 +976,16 @@
       "rate": 0.6875
      },
      "bounds": {
-      "combined_upper95": 0.9897937816869886,
+      "combined_upper95": 0.9897937817,
       "confidence": 0.95,
       "design_effect": 3,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 8,
       "document_trials": 10,
-      "document_upper95": 0.9632285621125349,
+      "document_upper95": 0.9632285621,
       "effective_errors": 4,
       "effective_trials": 5,
-      "value_upper95": 0.9897937816869886
+      "value_upper95": 0.9897937817
      },
      "catches": 24,
      "documents": 23,
@@ -1036,16 +1036,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.5271291954984121,
+      "combined_upper95": 0.5271291955,
       "confidence": 0.95,
       "design_effect": 3,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 9,
-      "document_upper95": 0.2831288355631135,
+      "document_upper95": 0.2831288356,
       "effective_errors": 0,
       "effective_trials": 4,
-      "value_upper95": 0.5271291954984121
+      "value_upper95": 0.5271291955
      },
      "catches": 1,
      "documents": 25,
@@ -1096,16 +1096,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.39303776899708276,
+      "combined_upper95": 0.393037769,
       "confidence": 0.95,
       "design_effect": 4,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 17,
-      "document_upper95": 0.1615661112607401,
+      "document_upper95": 0.1615661113,
       "effective_errors": 0,
       "effective_trials": 6,
-      "value_upper95": 0.39303776899708276
+      "value_upper95": 0.393037769
      },
      "catches": 1,
      "documents": 28,
@@ -1279,16 +1279,16 @@
        "rate": 0.8571428571428571
       },
       "bounds": {
-       "combined_upper95": 0.9926991680209853,
+       "combined_upper95": 0.992699168,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 6,
        "document_trials": 7,
-       "document_upper95": 0.9926991680209853,
+       "document_upper95": 0.992699168,
        "effective_errors": 6,
        "effective_trials": 7,
-       "value_upper95": 0.9926991680209853
+       "value_upper95": 0.992699168
       },
       "catches": 8,
       "documents": 23,
@@ -1339,16 +1339,16 @@
        "rate": 0.75
       },
       "bounds": {
-       "combined_upper95": 0.9872585449014338,
+       "combined_upper95": 0.9872585449,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 3,
        "document_trials": 4,
-       "document_upper95": 0.9872585449014338,
+       "document_upper95": 0.9872585449,
        "effective_errors": 3,
        "effective_trials": 4,
-       "value_upper95": 0.9872585449014338
+       "value_upper95": 0.9872585449
       },
       "catches": 5,
       "documents": 23,
@@ -1399,16 +1399,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.7763932022500211,
+       "combined_upper95": 0.7763932023,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 2,
-       "document_upper95": 0.7763932022500211,
+       "document_upper95": 0.7763932023,
        "effective_errors": 0,
        "effective_trials": 2,
-       "value_upper95": 0.7763932022500211
+       "value_upper95": 0.7763932023
       },
       "catches": 5,
       "documents": 23,
@@ -1459,16 +1459,16 @@
        "rate": 0.5
       },
       "bounds": {
-       "combined_upper95": 0.9746794344808964,
+       "combined_upper95": 0.9746794345,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 1,
        "document_trials": 2,
-       "document_upper95": 0.9746794344808964,
+       "document_upper95": 0.9746794345,
        "effective_errors": 1,
        "effective_trials": 2,
-       "value_upper95": 0.9746794344808964
+       "value_upper95": 0.9746794345
       },
       "catches": 3,
       "documents": 23,
@@ -1521,16 +1521,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.6315968501359613,
+       "combined_upper95": 0.6315968501,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 3,
-       "document_upper95": 0.6315968501359613,
+       "document_upper95": 0.6315968501,
        "effective_errors": 0,
        "effective_trials": 3,
-       "value_upper95": 0.6315968501359613
+       "value_upper95": 0.6315968501
       },
       "catches": 1,
       "documents": 25,
@@ -1581,16 +1581,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.45071972834694113,
+       "combined_upper95": 0.4507197283,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 5,
-       "document_upper95": 0.45071972834694113,
+       "document_upper95": 0.4507197283,
        "effective_errors": 0,
        "effective_trials": 5,
-       "value_upper95": 0.45071972834694113
+       "value_upper95": 0.4507197283
       },
       "catches": 0,
       "documents": 25,
@@ -1701,16 +1701,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.7763932022500211,
+       "combined_upper95": 0.7763932023,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 2,
-       "document_upper95": 0.7763932022500211,
+       "document_upper95": 0.7763932023,
        "effective_errors": 0,
        "effective_trials": 2,
-       "value_upper95": 0.7763932022500211
+       "value_upper95": 0.7763932023
       },
       "catches": 0,
       "documents": 25,
@@ -1761,16 +1761,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.7763932022500211,
+       "combined_upper95": 0.7763932023,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 2,
-       "document_upper95": 0.7763932022500211,
+       "document_upper95": 0.7763932023,
        "effective_errors": 0,
        "effective_trials": 2,
-       "value_upper95": 0.7763932022500211
+       "value_upper95": 0.7763932023
       },
       "catches": 0,
       "documents": 25,
@@ -1883,16 +1883,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.18103627252208468,
+       "combined_upper95": 0.1810362725,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 15,
-       "document_upper95": 0.18103627252208468,
+       "document_upper95": 0.1810362725,
        "effective_errors": 0,
        "effective_trials": 15,
-       "value_upper95": 0.18103627252208468
+       "value_upper95": 0.1810362725
       },
       "catches": 0,
       "documents": 28,
@@ -2003,16 +2003,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.5271291954984121,
+       "combined_upper95": 0.5271291955,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 4,
-       "document_upper95": 0.5271291954984121,
+       "document_upper95": 0.5271291955,
        "effective_errors": 0,
        "effective_trials": 4,
-       "value_upper95": 0.5271291954984121
+       "value_upper95": 0.5271291955
       },
       "catches": 0,
       "documents": 28,
@@ -2063,16 +2063,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.3481636551311608,
+       "combined_upper95": 0.3481636551,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 7,
-       "document_upper95": 0.3481636551311608,
+       "document_upper95": 0.3481636551,
        "effective_errors": 0,
        "effective_trials": 7,
-       "value_upper95": 0.3481636551311608
+       "value_upper95": 0.3481636551
       },
       "catches": 1,
       "documents": 28,
@@ -2155,16 +2155,16 @@
      "rate": 0.2
     },
     "bounds": {
-     "combined_upper95": 0.4946497301513656,
+     "combined_upper95": 0.4946497302,
      "confidence": 0.95,
      "design_effect": 4,
      "design_effect_method": "maximum admitted cluster size; default, not estimated",
      "document_errors": 8,
      "document_trials": 36,
-     "document_upper95": 0.36537319195616086,
+     "document_upper95": 0.365373192,
      "effective_errors": 3,
      "effective_trials": 13,
-     "value_upper95": 0.4946497301513656
+     "value_upper95": 0.4946497302
     },
     "catches": 26,
     "documents": 76,
@@ -2338,16 +2338,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.2209221919455559,
+      "combined_upper95": 0.2209221919,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 12,
-      "document_upper95": 0.2209221919455559,
+      "document_upper95": 0.2209221919,
       "effective_errors": 0,
       "effective_trials": 12,
-      "value_upper95": 0.2209221919455559
+      "value_upper95": 0.2209221919
      },
      "catches": 0,
      "documents": 28,
@@ -2458,16 +2458,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.6315968501359613,
+      "combined_upper95": 0.6315968501,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 3,
-      "document_upper95": 0.6315968501359613,
+      "document_upper95": 0.6315968501,
       "effective_errors": 0,
       "effective_trials": 3,
-      "value_upper95": 0.6315968501359613
+      "value_upper95": 0.6315968501
      },
      "catches": 0,
      "documents": 25,
@@ -2518,16 +2518,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.6315968501359613,
+      "combined_upper95": 0.6315968501,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 3,
-      "document_upper95": 0.6315968501359613,
+      "document_upper95": 0.6315968501,
       "effective_errors": 0,
       "effective_trials": 3,
-      "value_upper95": 0.6315968501359613
+      "value_upper95": 0.6315968501
      },
      "catches": 0,
      "documents": 25,
@@ -2638,16 +2638,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.6315968501359613,
+      "combined_upper95": 0.6315968501,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 3,
-      "document_upper95": 0.6315968501359613,
+      "document_upper95": 0.6315968501,
       "effective_errors": 0,
       "effective_trials": 3,
-      "value_upper95": 0.6315968501359613
+      "value_upper95": 0.6315968501
      },
      "catches": 0,
      "documents": 28,
@@ -2758,16 +2758,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.3481636551311608,
+      "combined_upper95": 0.3481636551,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 7,
-      "document_upper95": 0.3481636551311608,
+      "document_upper95": 0.3481636551,
       "effective_errors": 0,
       "effective_trials": 7,
-      "value_upper95": 0.3481636551311608
+      "value_upper95": 0.3481636551
      },
      "catches": 1,
      "documents": 28,
@@ -2938,16 +2938,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.6315968501359613,
+      "combined_upper95": 0.6315968501,
       "confidence": 0.95,
       "design_effect": 1,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 3,
-      "document_upper95": 0.6315968501359613,
+      "document_upper95": 0.6315968501,
       "effective_errors": 0,
       "effective_trials": 3,
-      "value_upper95": 0.6315968501359613
+      "value_upper95": 0.6315968501
      },
      "catches": 0,
      "documents": 25,
@@ -3240,16 +3240,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.45071972834694113,
+      "combined_upper95": 0.4507197283,
       "confidence": 0.95,
       "design_effect": 2,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 9,
-      "document_upper95": 0.2831288355631135,
+      "document_upper95": 0.2831288356,
       "effective_errors": 0,
       "effective_trials": 5,
-      "value_upper95": 0.45071972834694113
+      "value_upper95": 0.4507197283
      },
      "catches": 0,
      "documents": 25,
@@ -3300,16 +3300,16 @@
       "rate": 0.0
      },
      "bounds": {
-      "combined_upper95": 0.45071972834694113,
+      "combined_upper95": 0.4507197283,
       "confidence": 0.95,
       "design_effect": 4,
       "design_effect_method": "maximum admitted cluster size; default, not estimated",
       "document_errors": 0,
       "document_trials": 15,
-      "document_upper95": 0.18103627252208468,
+      "document_upper95": 0.1810362725,
       "effective_errors": 0,
       "effective_trials": 5,
-      "value_upper95": 0.45071972834694113
+      "value_upper95": 0.4507197283
      },
      "catches": 1,
      "documents": 28,
@@ -3725,16 +3725,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.6315968501359613,
+       "combined_upper95": 0.6315968501,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 3,
-       "document_upper95": 0.6315968501359613,
+       "document_upper95": 0.6315968501,
        "effective_errors": 0,
        "effective_trials": 3,
-       "value_upper95": 0.6315968501359613
+       "value_upper95": 0.6315968501
       },
       "catches": 0,
       "documents": 25,
@@ -3785,16 +3785,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.6315968501359613,
+       "combined_upper95": 0.6315968501,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 3,
-       "document_upper95": 0.6315968501359613,
+       "document_upper95": 0.6315968501,
        "effective_errors": 0,
        "effective_trials": 3,
-       "value_upper95": 0.6315968501359613
+       "value_upper95": 0.6315968501
       },
       "catches": 0,
       "documents": 25,
@@ -3965,16 +3965,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.6315968501359613,
+       "combined_upper95": 0.6315968501,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 3,
-       "document_upper95": 0.6315968501359613,
+       "document_upper95": 0.6315968501,
        "effective_errors": 0,
        "effective_trials": 3,
-       "value_upper95": 0.6315968501359613
+       "value_upper95": 0.6315968501
       },
       "catches": 0,
       "documents": 25,
@@ -4087,16 +4087,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.2209221919455559,
+       "combined_upper95": 0.2209221919,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 12,
-       "document_upper95": 0.2209221919455559,
+       "document_upper95": 0.2209221919,
        "effective_errors": 0,
        "effective_trials": 12,
-       "value_upper95": 0.2209221919455559
+       "value_upper95": 0.2209221919
       },
       "catches": 0,
       "documents": 28,
@@ -4207,16 +4207,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.6315968501359613,
+       "combined_upper95": 0.6315968501,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 3,
-       "document_upper95": 0.6315968501359613,
+       "document_upper95": 0.6315968501,
        "effective_errors": 0,
        "effective_trials": 3,
-       "value_upper95": 0.6315968501359613
+       "value_upper95": 0.6315968501
       },
       "catches": 0,
       "documents": 28,
@@ -4267,16 +4267,16 @@
        "rate": 0.0
       },
       "bounds": {
-       "combined_upper95": 0.3481636551311608,
+       "combined_upper95": 0.3481636551,
        "confidence": 0.95,
        "design_effect": 1,
        "design_effect_method": "maximum admitted cluster size; default, not estimated",
        "document_errors": 0,
        "document_trials": 7,
-       "document_upper95": 0.3481636551311608,
+       "document_upper95": 0.3481636551,
        "effective_errors": 0,
        "effective_trials": 7,
-       "value_upper95": 0.3481636551311608
+       "value_upper95": 0.3481636551
       },
       "catches": 1,
       "documents": 28,
@@ -4359,16 +4359,16 @@
      "rate": 0.0
     },
     "bounds": {
-     "combined_upper95": 0.3123439780663679,
+     "combined_upper95": 0.3123439781,
      "confidence": 0.95,
      "design_effect": 4,
      "design_effect_method": "maximum admitted cluster size; default, not estimated",
      "document_errors": 0,
      "document_trials": 25,
-     "document_upper95": 0.11292814500684323,
+     "document_upper95": 0.112928145,
      "effective_errors": 0,
      "effective_trials": 8,
-     "value_upper95": 0.3123439780663679
+     "value_upper95": 0.3123439781
     },
     "catches": 39,
     "documents": 76,

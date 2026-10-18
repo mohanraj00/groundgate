@@ -50,8 +50,15 @@ def decision_key(raw: Any) -> Any:
         return ("invalid-key", json.dumps(raw, sort_keys=True))
 
 
+BOUND_DIGITS = 10
+
+
 def upper95(errors: int, trials: int) -> float | None:
-    """One-sided exact Clopper-Pearson upper bound; no trials means no bound."""
+    """One-sided exact Clopper-Pearson upper bound; no trials means no bound.
+
+    The bound is rounded to BOUND_DIGITS decimals: the last bit of math.log and
+    math.exp can change with the Python version, and results.json must not.
+    """
     if not 0 <= errors <= trials:
         raise ValueError("errors must be between zero and trials")
     if trials == 0:
@@ -59,7 +66,7 @@ def upper95(errors: int, trials: int) -> float | None:
     if errors == trials:
         return 1.0
     if errors == 0:
-        return -math.expm1(math.log(0.05) / trials)
+        return round(-math.expm1(math.log(0.05) / trials), BOUND_DIGITS)
     # P(X <= errors | p=upper) = .05. Sum in log space to avoid underflow.
     coeff = [
         math.lgamma(trials + 1) - math.lgamma(i + 1) - math.lgamma(trials - i + 1)
@@ -77,7 +84,7 @@ def upper95(errors: int, trials: int) -> float | None:
             lo = p
         else:
             hi = p
-    return hi
+    return round(hi, BOUND_DIGITS)
 
 
 def ratio(k: int, n: int) -> dict[str, Any]:

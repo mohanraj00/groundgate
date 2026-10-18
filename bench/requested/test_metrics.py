@@ -69,6 +69,14 @@ def test_zero_error_exact_bound_is_positive() -> None:
         upper95(2, 1)
 
 
+def test_bounds_have_a_fixed_number_of_digits() -> None:
+    # The last float bit can change with the Python version; results.json must not.
+    for errors, trials in [(0, 7), (0, 300), (3, 41), (11, 300)]:
+        bound = upper95(errors, trials)
+        assert bound is not None
+        assert bound == round(bound, 10)
+
+
 def test_extra_wrong_admit_and_right_review_are_both_counted() -> None:
     m, labels, run = data()
     run["documents"][0]["decisions"] = [
