@@ -870,3 +870,25 @@ def test_a_large_field_quote_is_read_once(monkeypatch: pytest.MonkeyPatch) -> No
     r = gg.admit(doc, schema, [{"id": "c", "field": "cash", "value": "1", "evidence": ev}])
     assert r.decisions[0].outcome == "needs_verification"
     assert calls <= 10
+
+
+def test_dense_field_quotes_stay_compact() -> None:
+    """8 field quotes that occur very often keep 16 bytes for each occurrence (#300)."""
+    import tracemalloc
+
+    doc = "a" * 200_000 + " 1"
+    schema = {"fields": {"n": {"type": "number"}}}
+
+    def peak(fields: int) -> int:
+        ev = [{"start": 200_001, "end": 200_002}]
+        ev += [{"role": "field", "text": "a" * n} for n in range(1, fields + 1)]
+        tracemalloc.start()
+        try:
+            r = gg.admit(doc, schema, [{"id": "c", "field": "n", "value": "1", "evidence": ev}])
+            assert r.decisions[0].outcome == "admitted"
+            return tracemalloc.get_traced_memory()[1]
+        finally:
+            tracemalloc.stop()
+
+    # about 543,000 occurrences: 9 MB as arrays, against about 100 MB as lists of tuples
+    assert peak(8) - peak(0) < 30 * 2**20

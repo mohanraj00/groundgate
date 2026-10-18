@@ -6,6 +6,7 @@ import bisect
 import dataclasses
 import itertools
 import re
+from array import array
 from collections import defaultdict
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
@@ -126,7 +127,7 @@ def _valid(offsets: Offsets, span: tuple[int, int]) -> tuple[int, int] | None:
     return None if cs is None or ce is None else (cs, ce)
 
 
-_Index = tuple[list[tuple[int, int]], list[int], list[int]]
+_Index = tuple["array[int]", "array[int]"]  # the starts and the ends of the occurrences, in order
 
 
 @dataclass
@@ -455,9 +456,11 @@ def _indexed(t: _Text, quote: str, region: tuple[int, int]) -> _Index:
     k = (quote, *region)
     held = t.quotes.get(k)
     if held is None:
-        found = [(m.start(), m.end()) for m in quote_pattern(quote).finditer(t.text, *region)]
-        held = (found, [a for a, _ in found], [b for _, b in found])
-        t.quotes[k] = held
+        starts, ends = array("q"), array("q")  # 16 bytes for each occurrence
+        for m in quote_pattern(quote).finditer(t.text, *region):
+            starts.append(m.start())
+            ends.append(m.end())
+        held = t.quotes[k] = (starts, ends)
     return held
 
 
@@ -652,13 +655,13 @@ def _find(
         shown = item.text
         return span, shown is None or verbatim_equal(shown, t.text[span[0] : span[1]])
     assert item.text is not None
-    found, starts, ends = _indexed(t, item.text, region)
+    starts, ends = _indexed(t, item.text, region)
     tok = at.token
     held = (tok.start, tok.end) if tok is not None else (at.start, at.end)
     if held[0] is not None and held[1] is not None:
         i = bisect.bisect_right(starts, held[0]) - 1  # the only one that can hold the value
         if i >= 0 and held[1] <= ends[i]:
-            return found[i], True
+            return (starts[i], ends[i]), True
     pos = at.pos
     if place is not None:  # a unit quote: also the occurrences that overlap, as in "$$$"
         every = quote_pattern(item.text).pattern
@@ -669,9 +672,9 @@ def _find(
             return placed, True
     i = bisect.bisect_right(ends, pos)
     if i:
-        return found[i - 1], True
+        return (starts[i - 1], ends[i - 1]), True
     i = bisect.bisect_left(starts, pos)
-    return (found[i], True) if i < len(found) else (None, False)
+    return ((starts[i], ends[i]), True) if i < len(starts) else (None, False)
 
 
 def _repeats(ctx: _Ctx, t: _Text, tok: Token, prefixes: list[str], suffixes: list[str]) -> bool:
