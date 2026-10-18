@@ -1,0 +1,4415 @@
+{
+ "format": "requested-fields/1",
+ "labels_sha256": "sha256:b4a75af302fae4ea1b9130378576f694c2bceadd9cf18d6fd763cb3a381c152d",
+ "manifest_sha256": "sha256:cc12c358ab56bb452306be98e08de39409d115169d9c32aed4edc5f47da408d7",
+ "runs": {
+  "baseline": {
+   "by_field": {
+    "cost_of_sales": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 3,
+     "documents": 23,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 6,
+      "rate": 0.0
+     },
+     "present": 6,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 6,
+      "rate": 0.16666666666666666
+     },
+     "rejected_right_values": 1,
+     "reviews": 5,
+     "right_value_review_share": {
+      "k": 5,
+      "n": 6,
+      "rate": 0.8333333333333334
+     },
+     "silent_miss_share": {
+      "k": 1,
+      "n": 6,
+      "rate": 0.16666666666666666
+     },
+     "silent_misses": 1,
+     "unreported_absences": 17,
+     "value_hits": 0
+    },
+    "deductible_family": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 0,
+     "documents": 28,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 23,
+      "n": 24,
+      "rate": 0.9583333333333334
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 24,
+      "rate": 0.0
+     },
+     "present": 24,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 24,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 23,
+     "right_value_review_share": {
+      "k": 23,
+      "n": 24,
+      "rate": 0.9583333333333334
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 24,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 2,
+     "value_hits": 1
+    },
+    "deductible_individual": {
+     "absence_hits": 0,
+     "admitted": 15,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 15,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.18103627252208468,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 15,
+      "document_upper95": 0.18103627252208468,
+      "effective_errors": 0,
+      "effective_trials": 15,
+      "value_upper95": 0.18103627252208468
+     },
+     "catches": 0,
+     "documents": 28,
+     "documents_with_admits": 15,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 15,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 13,
+      "n": 28,
+      "rate": 0.4642857142857143
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "present": 28,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 13,
+     "right_value_review_share": {
+      "k": 13,
+      "n": 28,
+      "rate": 0.4642857142857143
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 15
+    },
+    "gross_profit": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 1,
+      "n": 1,
+      "rate": 1.0
+     },
+     "bounds": {
+      "combined_upper95": 1.0,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 1,
+      "document_trials": 1,
+      "document_upper95": 1.0,
+      "effective_errors": 1,
+      "effective_trials": 1,
+      "value_upper95": 1.0
+     },
+     "catches": 0,
+     "documents": 23,
+     "documents_with_admits": 1,
+     "escapes": 1,
+     "excluded": 0,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 5,
+      "n": 5,
+      "rate": 1.0
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 5,
+      "rate": 0.0
+     },
+     "present": 5,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 5,
+      "rate": 0.2
+     },
+     "rejected_right_values": 1,
+     "reviews": 4,
+     "right_value_review_share": {
+      "k": 4,
+      "n": 5,
+      "rate": 0.8
+     },
+     "silent_miss_share": {
+      "k": 1,
+      "n": 5,
+      "rate": 0.2
+     },
+     "silent_misses": 1,
+     "unreported_absences": 18,
+     "value_hits": 0
+    },
+    "operating_temperature_max": {
+     "absence_hits": 0,
+     "admitted": 3,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 3,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.6315968501359613,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 3,
+      "document_upper95": 0.6315968501359613,
+      "effective_errors": 0,
+      "effective_trials": 3,
+      "value_upper95": 0.6315968501359613
+     },
+     "catches": 1,
+     "documents": 25,
+     "documents_with_admits": 3,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 3,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 20,
+      "n": 23,
+      "rate": 0.8695652173913043
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "present": 23,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 20,
+     "right_value_review_share": {
+      "k": 20,
+      "n": 23,
+      "rate": 0.8695652173913043
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 3
+    },
+    "operating_temperature_min": {
+     "absence_hits": 0,
+     "admitted": 5,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 5,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.45071972834694113,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 5,
+      "document_upper95": 0.45071972834694113,
+      "effective_errors": 0,
+      "effective_trials": 5,
+      "value_upper95": 0.45071972834694113
+     },
+     "catches": 0,
+     "documents": 25,
+     "documents_with_admits": 5,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 5,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 18,
+      "n": 23,
+      "rate": 0.782608695652174
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "present": 23,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 18,
+     "right_value_review_share": {
+      "k": 18,
+      "n": 23,
+      "rate": 0.782608695652174
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 5
+    },
+    "out_of_pocket_family": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 28,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 25,
+      "n": 25,
+      "rate": 1.0
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 25,
+      "rate": 0.0
+     },
+     "present": 25,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 25,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 25,
+     "right_value_review_share": {
+      "k": 25,
+      "n": 25,
+      "rate": 1.0
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 25,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 1,
+     "value_hits": 0
+    },
+    "out_of_pocket_individual": {
+     "absence_hits": 0,
+     "admitted": 4,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 4,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.5271291954984121,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 4,
+      "document_upper95": 0.5271291954984121,
+      "effective_errors": 0,
+      "effective_trials": 4,
+      "value_upper95": 0.5271291954984121
+     },
+     "catches": 0,
+     "documents": 28,
+     "documents_with_admits": 4,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 4,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 24,
+      "n": 28,
+      "rate": 0.8571428571428571
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "present": 28,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 24,
+     "right_value_review_share": {
+      "k": 24,
+      "n": 28,
+      "rate": 0.8571428571428571
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 4
+    },
+    "revenue": {
+     "absence_hits": 0,
+     "admitted": 7,
+     "admitted_error_rate": {
+      "k": 6,
+      "n": 7,
+      "rate": 0.8571428571428571
+     },
+     "bounds": {
+      "combined_upper95": 0.9926991680209853,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 6,
+      "document_trials": 7,
+      "document_upper95": 0.9926991680209853,
+      "effective_errors": 6,
+      "effective_trials": 7,
+      "value_upper95": 0.9926991680209853
+     },
+     "catches": 8,
+     "documents": 23,
+     "documents_with_admits": 7,
+     "escapes": 6,
+     "excluded": 1,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 16,
+      "n": 17,
+      "rate": 0.9411764705882353
+     },
+     "no_right_candidate": 1,
+     "no_right_candidate_share": {
+      "k": 1,
+      "n": 17,
+      "rate": 0.058823529411764705
+     },
+     "present": 17,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 17,
+      "rate": 0.058823529411764705
+     },
+     "rejected_right_values": 1,
+     "reviews": 14,
+     "right_value_review_share": {
+      "k": 14,
+      "n": 17,
+      "rate": 0.8235294117647058
+     },
+     "silent_miss_share": {
+      "k": 2,
+      "n": 17,
+      "rate": 0.11764705882352941
+     },
+     "silent_misses": 2,
+     "unreported_absences": 3,
+     "value_hits": 1
+    },
+    "specialist_copay": {
+     "absence_hits": 0,
+     "admitted": 7,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 7,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.3481636551311608,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 7,
+      "document_upper95": 0.3481636551311608,
+      "effective_errors": 0,
+      "effective_trials": 7,
+      "value_upper95": 0.3481636551311608
+     },
+     "catches": 1,
+     "documents": 28,
+     "documents_with_admits": 7,
+     "escapes": 0,
+     "excluded": 3,
+     "hits": 7,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 6,
+      "n": 13,
+      "rate": 0.46153846153846156
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 13,
+      "rate": 0.0
+     },
+     "present": 13,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 13,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 6,
+     "right_value_review_share": {
+      "k": 6,
+      "n": 13,
+      "rate": 0.46153846153846156
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 13,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 12,
+     "value_hits": 7
+    },
+    "supply_current_typ": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 25,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 13,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 12,
+      "n": 12,
+      "rate": 1.0
+     },
+     "no_right_candidate": 1,
+     "no_right_candidate_share": {
+      "k": 1,
+      "n": 12,
+      "rate": 0.08333333333333333
+     },
+     "present": 12,
+     "rejected_right_value_share": {
+      "k": 8,
+      "n": 12,
+      "rate": 0.6666666666666666
+     },
+     "rejected_right_values": 8,
+     "reviews": 3,
+     "right_value_review_share": {
+      "k": 3,
+      "n": 12,
+      "rate": 0.25
+     },
+     "silent_miss_share": {
+      "k": 9,
+      "n": 12,
+      "rate": 0.75
+     },
+     "silent_misses": 9,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "supply_voltage_max": {
+     "absence_hits": 0,
+     "admitted": 2,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 2,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.7763932022500211,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 2,
+      "document_upper95": 0.7763932022500211,
+      "effective_errors": 0,
+      "effective_trials": 2,
+      "value_upper95": 0.7763932022500211
+     },
+     "catches": 0,
+     "documents": 25,
+     "documents_with_admits": 2,
+     "escapes": 0,
+     "excluded": 7,
+     "hits": 2,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 16,
+      "n": 18,
+      "rate": 0.8888888888888888
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 18,
+      "rate": 0.0
+     },
+     "present": 18,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 18,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 16,
+     "right_value_review_share": {
+      "k": 16,
+      "n": 18,
+      "rate": 0.8888888888888888
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 18,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 2
+    },
+    "supply_voltage_min": {
+     "absence_hits": 0,
+     "admitted": 2,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 2,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.7763932022500211,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 2,
+      "document_upper95": 0.7763932022500211,
+      "effective_errors": 0,
+      "effective_trials": 2,
+      "value_upper95": 0.7763932022500211
+     },
+     "catches": 0,
+     "documents": 25,
+     "documents_with_admits": 2,
+     "escapes": 0,
+     "excluded": 7,
+     "hits": 2,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 16,
+      "n": 18,
+      "rate": 0.8888888888888888
+     },
+     "no_right_candidate": 4,
+     "no_right_candidate_share": {
+      "k": 4,
+      "n": 18,
+      "rate": 0.2222222222222222
+     },
+     "present": 18,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 18,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 12,
+     "right_value_review_share": {
+      "k": 12,
+      "n": 18,
+      "rate": 0.6666666666666666
+     },
+     "silent_miss_share": {
+      "k": 4,
+      "n": 18,
+      "rate": 0.2222222222222222
+     },
+     "silent_misses": 4,
+     "unreported_absences": 0,
+     "value_hits": 2
+    },
+    "total_assets": {
+     "absence_hits": 0,
+     "admitted": 4,
+     "admitted_error_rate": {
+      "k": 3,
+      "n": 4,
+      "rate": 0.75
+     },
+     "bounds": {
+      "combined_upper95": 0.9872585449014338,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 3,
+      "document_trials": 4,
+      "document_upper95": 0.9872585449014338,
+      "effective_errors": 3,
+      "effective_trials": 4,
+      "value_upper95": 0.9872585449014338
+     },
+     "catches": 5,
+     "documents": 23,
+     "documents_with_admits": 4,
+     "escapes": 3,
+     "excluded": 0,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 21,
+      "n": 22,
+      "rate": 0.9545454545454546
+     },
+     "no_right_candidate": 2,
+     "no_right_candidate_share": {
+      "k": 2,
+      "n": 22,
+      "rate": 0.09090909090909091
+     },
+     "present": 22,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 22,
+      "rate": 0.045454545454545456
+     },
+     "rejected_right_values": 1,
+     "reviews": 18,
+     "right_value_review_share": {
+      "k": 18,
+      "n": 22,
+      "rate": 0.8181818181818182
+     },
+     "silent_miss_share": {
+      "k": 3,
+      "n": 22,
+      "rate": 0.13636363636363635
+     },
+     "silent_misses": 3,
+     "unreported_absences": 1,
+     "value_hits": 1
+    },
+    "total_equity": {
+     "absence_hits": 0,
+     "admitted": 2,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 2,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.7763932022500211,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 2,
+      "document_upper95": 0.7763932022500211,
+      "effective_errors": 0,
+      "effective_trials": 2,
+      "value_upper95": 0.7763932022500211
+     },
+     "catches": 5,
+     "documents": 23,
+     "documents_with_admits": 2,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 2,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 21,
+      "n": 23,
+      "rate": 0.9130434782608695
+     },
+     "no_right_candidate": 2,
+     "no_right_candidate_share": {
+      "k": 2,
+      "n": 23,
+      "rate": 0.08695652173913043
+     },
+     "present": 23,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 23,
+      "rate": 0.043478260869565216
+     },
+     "rejected_right_values": 1,
+     "reviews": 18,
+     "right_value_review_share": {
+      "k": 18,
+      "n": 23,
+      "rate": 0.782608695652174
+     },
+     "silent_miss_share": {
+      "k": 3,
+      "n": 23,
+      "rate": 0.13043478260869565
+     },
+     "silent_misses": 3,
+     "unreported_absences": 0,
+     "value_hits": 2
+    },
+    "total_liabilities": {
+     "absence_hits": 0,
+     "admitted": 2,
+     "admitted_error_rate": {
+      "k": 1,
+      "n": 2,
+      "rate": 0.5
+     },
+     "bounds": {
+      "combined_upper95": 0.9746794344808964,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 1,
+      "document_trials": 2,
+      "document_upper95": 0.9746794344808964,
+      "effective_errors": 1,
+      "effective_trials": 2,
+      "value_upper95": 0.9746794344808964
+     },
+     "catches": 3,
+     "documents": 23,
+     "documents_with_admits": 2,
+     "escapes": 1,
+     "excluded": 0,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 14,
+      "n": 15,
+      "rate": 0.9333333333333333
+     },
+     "no_right_candidate": 1,
+     "no_right_candidate_share": {
+      "k": 1,
+      "n": 15,
+      "rate": 0.06666666666666667
+     },
+     "present": 15,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 15,
+      "rate": 0.06666666666666667
+     },
+     "rejected_right_values": 1,
+     "reviews": 12,
+     "right_value_review_share": {
+      "k": 12,
+      "n": 15,
+      "rate": 0.8
+     },
+     "silent_miss_share": {
+      "k": 2,
+      "n": 15,
+      "rate": 0.13333333333333333
+     },
+     "silent_misses": 2,
+     "unreported_absences": 7,
+     "value_hits": 1
+    }
+   },
+   "by_kind": {
+    "annual": {
+     "absence_hits": 0,
+     "admitted": 16,
+     "admitted_error_rate": {
+      "k": 11,
+      "n": 16,
+      "rate": 0.6875
+     },
+     "bounds": {
+      "combined_upper95": 0.9897937816869886,
+      "confidence": 0.95,
+      "design_effect": 3,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 8,
+      "document_trials": 10,
+      "document_upper95": 0.9632285621125349,
+      "effective_errors": 4,
+      "effective_trials": 5,
+      "value_upper95": 0.9897937816869886
+     },
+     "catches": 24,
+     "documents": 23,
+     "documents_with_admits": 10,
+     "escapes": 11,
+     "excluded": 1,
+     "hits": 5,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 83,
+      "n": 88,
+      "rate": 0.9431818181818182
+     },
+     "no_right_candidate": 6,
+     "no_right_candidate_share": {
+      "k": 6,
+      "n": 88,
+      "rate": 0.06818181818181818
+     },
+     "present": 88,
+     "rejected_right_value_share": {
+      "k": 6,
+      "n": 88,
+      "rate": 0.06818181818181818
+     },
+     "rejected_right_values": 6,
+     "reviews": 71,
+     "right_value_review_share": {
+      "k": 71,
+      "n": 88,
+      "rate": 0.8068181818181818
+     },
+     "silent_miss_share": {
+      "k": 12,
+      "n": 88,
+      "rate": 0.13636363636363635
+     },
+     "silent_misses": 12,
+     "unreported_absences": 46,
+     "value_hits": 5
+    },
+    "component": {
+     "absence_hits": 0,
+     "admitted": 12,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 12,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.5271291954984121,
+      "confidence": 0.95,
+      "design_effect": 3,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 9,
+      "document_upper95": 0.2831288355631135,
+      "effective_errors": 0,
+      "effective_trials": 4,
+      "value_upper95": 0.5271291954984121
+     },
+     "catches": 1,
+     "documents": 25,
+     "documents_with_admits": 9,
+     "escapes": 0,
+     "excluded": 31,
+     "hits": 12,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 82,
+      "n": 94,
+      "rate": 0.8723404255319149
+     },
+     "no_right_candidate": 5,
+     "no_right_candidate_share": {
+      "k": 5,
+      "n": 94,
+      "rate": 0.05319148936170213
+     },
+     "present": 94,
+     "rejected_right_value_share": {
+      "k": 8,
+      "n": 94,
+      "rate": 0.0851063829787234
+     },
+     "rejected_right_values": 8,
+     "reviews": 69,
+     "right_value_review_share": {
+      "k": 69,
+      "n": 94,
+      "rate": 0.7340425531914894
+     },
+     "silent_miss_share": {
+      "k": 13,
+      "n": 94,
+      "rate": 0.13829787234042554
+     },
+     "silent_misses": 13,
+     "unreported_absences": 0,
+     "value_hits": 12
+    },
+    "sbc": {
+     "absence_hits": 0,
+     "admitted": 27,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 27,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.39303776899708276,
+      "confidence": 0.95,
+      "design_effect": 4,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 17,
+      "document_upper95": 0.1615661112607401,
+      "effective_errors": 0,
+      "effective_trials": 6,
+      "value_upper95": 0.39303776899708276
+     },
+     "catches": 1,
+     "documents": 28,
+     "documents_with_admits": 17,
+     "escapes": 0,
+     "excluded": 7,
+     "hits": 27,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 91,
+      "n": 118,
+      "rate": 0.7711864406779662
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 118,
+      "rate": 0.0
+     },
+     "present": 118,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 118,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 91,
+     "right_value_review_share": {
+      "k": 91,
+      "n": 118,
+      "rate": 0.7711864406779662
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 118,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 15,
+     "value_hits": 27
+    }
+   },
+   "by_kind_field": {
+    "annual": {
+     "cost_of_sales": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 3,
+      "documents": 23,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 6,
+       "n": 6,
+       "rate": 1.0
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 6,
+       "rate": 0.0
+      },
+      "present": 6,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 6,
+       "rate": 0.16666666666666666
+      },
+      "rejected_right_values": 1,
+      "reviews": 5,
+      "right_value_review_share": {
+       "k": 5,
+       "n": 6,
+       "rate": 0.8333333333333334
+      },
+      "silent_miss_share": {
+       "k": 1,
+       "n": 6,
+       "rate": 0.16666666666666666
+      },
+      "silent_misses": 1,
+      "unreported_absences": 17,
+      "value_hits": 0
+     },
+     "gross_profit": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 1,
+       "n": 1,
+       "rate": 1.0
+      },
+      "bounds": {
+       "combined_upper95": 1.0,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 1,
+       "document_trials": 1,
+       "document_upper95": 1.0,
+       "effective_errors": 1,
+       "effective_trials": 1,
+       "value_upper95": 1.0
+      },
+      "catches": 0,
+      "documents": 23,
+      "documents_with_admits": 1,
+      "escapes": 1,
+      "excluded": 0,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 5,
+       "n": 5,
+       "rate": 1.0
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 5,
+       "rate": 0.0
+      },
+      "present": 5,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 5,
+       "rate": 0.2
+      },
+      "rejected_right_values": 1,
+      "reviews": 4,
+      "right_value_review_share": {
+       "k": 4,
+       "n": 5,
+       "rate": 0.8
+      },
+      "silent_miss_share": {
+       "k": 1,
+       "n": 5,
+       "rate": 0.2
+      },
+      "silent_misses": 1,
+      "unreported_absences": 18,
+      "value_hits": 0
+     },
+     "revenue": {
+      "absence_hits": 0,
+      "admitted": 7,
+      "admitted_error_rate": {
+       "k": 6,
+       "n": 7,
+       "rate": 0.8571428571428571
+      },
+      "bounds": {
+       "combined_upper95": 0.9926991680209853,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 6,
+       "document_trials": 7,
+       "document_upper95": 0.9926991680209853,
+       "effective_errors": 6,
+       "effective_trials": 7,
+       "value_upper95": 0.9926991680209853
+      },
+      "catches": 8,
+      "documents": 23,
+      "documents_with_admits": 7,
+      "escapes": 6,
+      "excluded": 1,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 16,
+       "n": 17,
+       "rate": 0.9411764705882353
+      },
+      "no_right_candidate": 1,
+      "no_right_candidate_share": {
+       "k": 1,
+       "n": 17,
+       "rate": 0.058823529411764705
+      },
+      "present": 17,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 17,
+       "rate": 0.058823529411764705
+      },
+      "rejected_right_values": 1,
+      "reviews": 14,
+      "right_value_review_share": {
+       "k": 14,
+       "n": 17,
+       "rate": 0.8235294117647058
+      },
+      "silent_miss_share": {
+       "k": 2,
+       "n": 17,
+       "rate": 0.11764705882352941
+      },
+      "silent_misses": 2,
+      "unreported_absences": 3,
+      "value_hits": 1
+     },
+     "total_assets": {
+      "absence_hits": 0,
+      "admitted": 4,
+      "admitted_error_rate": {
+       "k": 3,
+       "n": 4,
+       "rate": 0.75
+      },
+      "bounds": {
+       "combined_upper95": 0.9872585449014338,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 3,
+       "document_trials": 4,
+       "document_upper95": 0.9872585449014338,
+       "effective_errors": 3,
+       "effective_trials": 4,
+       "value_upper95": 0.9872585449014338
+      },
+      "catches": 5,
+      "documents": 23,
+      "documents_with_admits": 4,
+      "escapes": 3,
+      "excluded": 0,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 21,
+       "n": 22,
+       "rate": 0.9545454545454546
+      },
+      "no_right_candidate": 2,
+      "no_right_candidate_share": {
+       "k": 2,
+       "n": 22,
+       "rate": 0.09090909090909091
+      },
+      "present": 22,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 22,
+       "rate": 0.045454545454545456
+      },
+      "rejected_right_values": 1,
+      "reviews": 18,
+      "right_value_review_share": {
+       "k": 18,
+       "n": 22,
+       "rate": 0.8181818181818182
+      },
+      "silent_miss_share": {
+       "k": 3,
+       "n": 22,
+       "rate": 0.13636363636363635
+      },
+      "silent_misses": 3,
+      "unreported_absences": 1,
+      "value_hits": 1
+     },
+     "total_equity": {
+      "absence_hits": 0,
+      "admitted": 2,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 2,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.7763932022500211,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 2,
+       "document_upper95": 0.7763932022500211,
+       "effective_errors": 0,
+       "effective_trials": 2,
+       "value_upper95": 0.7763932022500211
+      },
+      "catches": 5,
+      "documents": 23,
+      "documents_with_admits": 2,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 2,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 21,
+       "n": 23,
+       "rate": 0.9130434782608695
+      },
+      "no_right_candidate": 2,
+      "no_right_candidate_share": {
+       "k": 2,
+       "n": 23,
+       "rate": 0.08695652173913043
+      },
+      "present": 23,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 23,
+       "rate": 0.043478260869565216
+      },
+      "rejected_right_values": 1,
+      "reviews": 18,
+      "right_value_review_share": {
+       "k": 18,
+       "n": 23,
+       "rate": 0.782608695652174
+      },
+      "silent_miss_share": {
+       "k": 3,
+       "n": 23,
+       "rate": 0.13043478260869565
+      },
+      "silent_misses": 3,
+      "unreported_absences": 0,
+      "value_hits": 2
+     },
+     "total_liabilities": {
+      "absence_hits": 0,
+      "admitted": 2,
+      "admitted_error_rate": {
+       "k": 1,
+       "n": 2,
+       "rate": 0.5
+      },
+      "bounds": {
+       "combined_upper95": 0.9746794344808964,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 1,
+       "document_trials": 2,
+       "document_upper95": 0.9746794344808964,
+       "effective_errors": 1,
+       "effective_trials": 2,
+       "value_upper95": 0.9746794344808964
+      },
+      "catches": 3,
+      "documents": 23,
+      "documents_with_admits": 2,
+      "escapes": 1,
+      "excluded": 0,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 14,
+       "n": 15,
+       "rate": 0.9333333333333333
+      },
+      "no_right_candidate": 1,
+      "no_right_candidate_share": {
+       "k": 1,
+       "n": 15,
+       "rate": 0.06666666666666667
+      },
+      "present": 15,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 15,
+       "rate": 0.06666666666666667
+      },
+      "rejected_right_values": 1,
+      "reviews": 12,
+      "right_value_review_share": {
+       "k": 12,
+       "n": 15,
+       "rate": 0.8
+      },
+      "silent_miss_share": {
+       "k": 2,
+       "n": 15,
+       "rate": 0.13333333333333333
+      },
+      "silent_misses": 2,
+      "unreported_absences": 7,
+      "value_hits": 1
+     }
+    },
+    "component": {
+     "operating_temperature_max": {
+      "absence_hits": 0,
+      "admitted": 3,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 3,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.6315968501359613,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 3,
+       "document_upper95": 0.6315968501359613,
+       "effective_errors": 0,
+       "effective_trials": 3,
+       "value_upper95": 0.6315968501359613
+      },
+      "catches": 1,
+      "documents": 25,
+      "documents_with_admits": 3,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 3,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 20,
+       "n": 23,
+       "rate": 0.8695652173913043
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "present": 23,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 20,
+      "right_value_review_share": {
+       "k": 20,
+       "n": 23,
+       "rate": 0.8695652173913043
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 3
+     },
+     "operating_temperature_min": {
+      "absence_hits": 0,
+      "admitted": 5,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 5,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.45071972834694113,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 5,
+       "document_upper95": 0.45071972834694113,
+       "effective_errors": 0,
+       "effective_trials": 5,
+       "value_upper95": 0.45071972834694113
+      },
+      "catches": 0,
+      "documents": 25,
+      "documents_with_admits": 5,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 5,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 18,
+       "n": 23,
+       "rate": 0.782608695652174
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "present": 23,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 18,
+      "right_value_review_share": {
+       "k": 18,
+       "n": 23,
+       "rate": 0.782608695652174
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 5
+     },
+     "supply_current_typ": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 25,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 13,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 12,
+       "n": 12,
+       "rate": 1.0
+      },
+      "no_right_candidate": 1,
+      "no_right_candidate_share": {
+       "k": 1,
+       "n": 12,
+       "rate": 0.08333333333333333
+      },
+      "present": 12,
+      "rejected_right_value_share": {
+       "k": 8,
+       "n": 12,
+       "rate": 0.6666666666666666
+      },
+      "rejected_right_values": 8,
+      "reviews": 3,
+      "right_value_review_share": {
+       "k": 3,
+       "n": 12,
+       "rate": 0.25
+      },
+      "silent_miss_share": {
+       "k": 9,
+       "n": 12,
+       "rate": 0.75
+      },
+      "silent_misses": 9,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "supply_voltage_max": {
+      "absence_hits": 0,
+      "admitted": 2,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 2,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.7763932022500211,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 2,
+       "document_upper95": 0.7763932022500211,
+       "effective_errors": 0,
+       "effective_trials": 2,
+       "value_upper95": 0.7763932022500211
+      },
+      "catches": 0,
+      "documents": 25,
+      "documents_with_admits": 2,
+      "escapes": 0,
+      "excluded": 7,
+      "hits": 2,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 16,
+       "n": 18,
+       "rate": 0.8888888888888888
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 18,
+       "rate": 0.0
+      },
+      "present": 18,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 18,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 16,
+      "right_value_review_share": {
+       "k": 16,
+       "n": 18,
+       "rate": 0.8888888888888888
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 18,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 2
+     },
+     "supply_voltage_min": {
+      "absence_hits": 0,
+      "admitted": 2,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 2,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.7763932022500211,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 2,
+       "document_upper95": 0.7763932022500211,
+       "effective_errors": 0,
+       "effective_trials": 2,
+       "value_upper95": 0.7763932022500211
+      },
+      "catches": 0,
+      "documents": 25,
+      "documents_with_admits": 2,
+      "escapes": 0,
+      "excluded": 7,
+      "hits": 2,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 16,
+       "n": 18,
+       "rate": 0.8888888888888888
+      },
+      "no_right_candidate": 4,
+      "no_right_candidate_share": {
+       "k": 4,
+       "n": 18,
+       "rate": 0.2222222222222222
+      },
+      "present": 18,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 18,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 12,
+      "right_value_review_share": {
+       "k": 12,
+       "n": 18,
+       "rate": 0.6666666666666666
+      },
+      "silent_miss_share": {
+       "k": 4,
+       "n": 18,
+       "rate": 0.2222222222222222
+      },
+      "silent_misses": 4,
+      "unreported_absences": 0,
+      "value_hits": 2
+     }
+    },
+    "sbc": {
+     "deductible_family": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 0,
+      "documents": 28,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 23,
+       "n": 24,
+       "rate": 0.9583333333333334
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 24,
+       "rate": 0.0
+      },
+      "present": 24,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 24,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 23,
+      "right_value_review_share": {
+       "k": 23,
+       "n": 24,
+       "rate": 0.9583333333333334
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 24,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 2,
+      "value_hits": 1
+     },
+     "deductible_individual": {
+      "absence_hits": 0,
+      "admitted": 15,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 15,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.18103627252208468,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 15,
+       "document_upper95": 0.18103627252208468,
+       "effective_errors": 0,
+       "effective_trials": 15,
+       "value_upper95": 0.18103627252208468
+      },
+      "catches": 0,
+      "documents": 28,
+      "documents_with_admits": 15,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 15,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 13,
+       "n": 28,
+       "rate": 0.4642857142857143
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "present": 28,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 13,
+      "right_value_review_share": {
+       "k": 13,
+       "n": 28,
+       "rate": 0.4642857142857143
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 15
+     },
+     "out_of_pocket_family": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 28,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 25,
+       "n": 25,
+       "rate": 1.0
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 25,
+       "rate": 0.0
+      },
+      "present": 25,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 25,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 25,
+      "right_value_review_share": {
+       "k": 25,
+       "n": 25,
+       "rate": 1.0
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 25,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 1,
+      "value_hits": 0
+     },
+     "out_of_pocket_individual": {
+      "absence_hits": 0,
+      "admitted": 4,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 4,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.5271291954984121,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 4,
+       "document_upper95": 0.5271291954984121,
+       "effective_errors": 0,
+       "effective_trials": 4,
+       "value_upper95": 0.5271291954984121
+      },
+      "catches": 0,
+      "documents": 28,
+      "documents_with_admits": 4,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 4,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 24,
+       "n": 28,
+       "rate": 0.8571428571428571
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "present": 28,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 24,
+      "right_value_review_share": {
+       "k": 24,
+       "n": 28,
+       "rate": 0.8571428571428571
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 4
+     },
+     "specialist_copay": {
+      "absence_hits": 0,
+      "admitted": 7,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 7,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.3481636551311608,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 7,
+       "document_upper95": 0.3481636551311608,
+       "effective_errors": 0,
+       "effective_trials": 7,
+       "value_upper95": 0.3481636551311608
+      },
+      "catches": 1,
+      "documents": 28,
+      "documents_with_admits": 7,
+      "escapes": 0,
+      "excluded": 3,
+      "hits": 7,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 6,
+       "n": 13,
+       "rate": 0.46153846153846156
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 13,
+       "rate": 0.0
+      },
+      "present": 13,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 13,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 6,
+      "right_value_review_share": {
+       "k": 6,
+       "n": 13,
+       "rate": 0.46153846153846156
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 13,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 12,
+      "value_hits": 7
+     }
+    }
+   },
+   "cache_sha256": "sha256:5a58e7dd097afbb7be17b06e4cf2109076ca38c83f4654003a7b9e612ea95b7e",
+   "document_states": {
+    "by_kind": {
+     "annual": {
+      "documents": 23,
+      "incomplete": 0,
+      "transport_error": 0,
+      "transport_retries": 3
+     },
+     "component": {
+      "documents": 25,
+      "incomplete": 0,
+      "transport_error": 0,
+      "transport_retries": 0
+     },
+     "sbc": {
+      "documents": 28,
+      "incomplete": 0,
+      "transport_error": 0,
+      "transport_retries": 0
+     }
+    },
+    "total": {
+     "documents": 76,
+     "incomplete": 0,
+     "transport_error": 0,
+     "transport_retries": 3
+    }
+   },
+   "split": "heldout",
+   "total": {
+    "absence_hits": 0,
+    "admitted": 55,
+    "admitted_error_rate": {
+     "k": 11,
+     "n": 55,
+     "rate": 0.2
+    },
+    "bounds": {
+     "combined_upper95": 0.4946497301513656,
+     "confidence": 0.95,
+     "design_effect": 4,
+     "design_effect_method": "maximum admitted cluster size; default, not estimated",
+     "document_errors": 8,
+     "document_trials": 36,
+     "document_upper95": 0.36537319195616086,
+     "effective_errors": 3,
+     "effective_trials": 13,
+     "value_upper95": 0.4946497301513656
+    },
+    "catches": 26,
+    "documents": 76,
+    "documents_with_admits": 36,
+    "escapes": 11,
+    "excluded": 39,
+    "hits": 44,
+    "kinds": 3,
+    "miss_rate": {
+     "k": 256,
+     "n": 300,
+     "rate": 0.8533333333333334
+    },
+    "no_right_candidate": 11,
+    "no_right_candidate_share": {
+     "k": 11,
+     "n": 300,
+     "rate": 0.03666666666666667
+    },
+    "present": 300,
+    "rejected_right_value_share": {
+     "k": 14,
+     "n": 300,
+     "rate": 0.04666666666666667
+    },
+    "rejected_right_values": 14,
+    "reviews": 231,
+    "right_value_review_share": {
+     "k": 231,
+     "n": 300,
+     "rate": 0.77
+    },
+    "silent_miss_share": {
+     "k": 25,
+     "n": 300,
+     "rate": 0.08333333333333333
+    },
+    "silent_misses": 25,
+    "unreported_absences": 61,
+    "value_hits": 44
+   }
+  },
+  "runner": {
+   "by_field": {
+    "cost_of_sales": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 3,
+     "documents": 23,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 6,
+      "rate": 0.0
+     },
+     "present": 6,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 6,
+      "rate": 0.16666666666666666
+     },
+     "rejected_right_values": 1,
+     "reviews": 5,
+     "right_value_review_share": {
+      "k": 5,
+      "n": 6,
+      "rate": 0.8333333333333334
+     },
+     "silent_miss_share": {
+      "k": 1,
+      "n": 6,
+      "rate": 0.16666666666666666
+     },
+     "silent_misses": 1,
+     "unreported_absences": 17,
+     "value_hits": 0
+    },
+    "deductible_family": {
+     "absence_hits": 2,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 0,
+     "documents": 28,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 3,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 23,
+      "n": 24,
+      "rate": 0.9583333333333334
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 24,
+      "rate": 0.0
+     },
+     "present": 24,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 24,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 23,
+     "right_value_review_share": {
+      "k": 23,
+      "n": 24,
+      "rate": 0.9583333333333334
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 24,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "deductible_individual": {
+     "absence_hits": 0,
+     "admitted": 12,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 12,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.2209221919455559,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 12,
+      "document_upper95": 0.2209221919455559,
+      "effective_errors": 0,
+      "effective_trials": 12,
+      "value_upper95": 0.2209221919455559
+     },
+     "catches": 0,
+     "documents": 28,
+     "documents_with_admits": 12,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 12,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 16,
+      "n": 28,
+      "rate": 0.5714285714285714
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "present": 28,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 16,
+     "right_value_review_share": {
+      "k": 16,
+      "n": 28,
+      "rate": 0.5714285714285714
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 12
+    },
+    "gross_profit": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 1,
+     "documents": 23,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 5,
+      "n": 5,
+      "rate": 1.0
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 5,
+      "rate": 0.0
+     },
+     "present": 5,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 5,
+      "rate": 0.2
+     },
+     "rejected_right_values": 1,
+     "reviews": 4,
+     "right_value_review_share": {
+      "k": 4,
+      "n": 5,
+      "rate": 0.8
+     },
+     "silent_miss_share": {
+      "k": 1,
+      "n": 5,
+      "rate": 0.2
+     },
+     "silent_misses": 1,
+     "unreported_absences": 18,
+     "value_hits": 0
+    },
+    "operating_temperature_max": {
+     "absence_hits": 0,
+     "admitted": 3,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 3,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.6315968501359613,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 3,
+      "document_upper95": 0.6315968501359613,
+      "effective_errors": 0,
+      "effective_trials": 3,
+      "value_upper95": 0.6315968501359613
+     },
+     "catches": 0,
+     "documents": 25,
+     "documents_with_admits": 3,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 3,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 20,
+      "n": 23,
+      "rate": 0.8695652173913043
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "present": 23,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 20,
+     "right_value_review_share": {
+      "k": 20,
+      "n": 23,
+      "rate": 0.8695652173913043
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 3
+    },
+    "operating_temperature_min": {
+     "absence_hits": 0,
+     "admitted": 3,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 3,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.6315968501359613,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 3,
+      "document_upper95": 0.6315968501359613,
+      "effective_errors": 0,
+      "effective_trials": 3,
+      "value_upper95": 0.6315968501359613
+     },
+     "catches": 0,
+     "documents": 25,
+     "documents_with_admits": 3,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 3,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 20,
+      "n": 23,
+      "rate": 0.8695652173913043
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "present": 23,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 20,
+     "right_value_review_share": {
+      "k": 20,
+      "n": 23,
+      "rate": 0.8695652173913043
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 3
+    },
+    "out_of_pocket_family": {
+     "absence_hits": 1,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 28,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 2,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 25,
+      "n": 25,
+      "rate": 1.0
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 25,
+      "rate": 0.0
+     },
+     "present": 25,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 25,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 25,
+     "right_value_review_share": {
+      "k": 25,
+      "n": 25,
+      "rate": 1.0
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 25,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "out_of_pocket_individual": {
+     "absence_hits": 0,
+     "admitted": 3,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 3,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.6315968501359613,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 3,
+      "document_upper95": 0.6315968501359613,
+      "effective_errors": 0,
+      "effective_trials": 3,
+      "value_upper95": 0.6315968501359613
+     },
+     "catches": 0,
+     "documents": 28,
+     "documents_with_admits": 3,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 3,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 25,
+      "n": 28,
+      "rate": 0.8928571428571429
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "present": 28,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 25,
+     "right_value_review_share": {
+      "k": 25,
+      "n": 28,
+      "rate": 0.8928571428571429
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 28,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 3
+    },
+    "revenue": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 15,
+     "documents": 23,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 1,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 17,
+      "n": 17,
+      "rate": 1.0
+     },
+     "no_right_candidate": 1,
+     "no_right_candidate_share": {
+      "k": 1,
+      "n": 17,
+      "rate": 0.058823529411764705
+     },
+     "present": 17,
+     "rejected_right_value_share": {
+      "k": 2,
+      "n": 17,
+      "rate": 0.11764705882352941
+     },
+     "rejected_right_values": 2,
+     "reviews": 14,
+     "right_value_review_share": {
+      "k": 14,
+      "n": 17,
+      "rate": 0.8235294117647058
+     },
+     "silent_miss_share": {
+      "k": 3,
+      "n": 17,
+      "rate": 0.17647058823529413
+     },
+     "silent_misses": 3,
+     "unreported_absences": 5,
+     "value_hits": 0
+    },
+    "specialist_copay": {
+     "absence_hits": 12,
+     "admitted": 7,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 7,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.3481636551311608,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 7,
+      "document_upper95": 0.3481636551311608,
+      "effective_errors": 0,
+      "effective_trials": 7,
+      "value_upper95": 0.3481636551311608
+     },
+     "catches": 1,
+     "documents": 28,
+     "documents_with_admits": 7,
+     "escapes": 0,
+     "excluded": 3,
+     "hits": 19,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 6,
+      "n": 13,
+      "rate": 0.46153846153846156
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 13,
+      "rate": 0.0
+     },
+     "present": 13,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 13,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 6,
+     "right_value_review_share": {
+      "k": 6,
+      "n": 13,
+      "rate": 0.46153846153846156
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 13,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 7
+    },
+    "supply_current_typ": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 0,
+     "documents": 25,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 13,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 12,
+      "n": 12,
+      "rate": 1.0
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 12,
+      "rate": 0.0
+     },
+     "present": 12,
+     "rejected_right_value_share": {
+      "k": 8,
+      "n": 12,
+      "rate": 0.6666666666666666
+     },
+     "rejected_right_values": 8,
+     "reviews": 4,
+     "right_value_review_share": {
+      "k": 4,
+      "n": 12,
+      "rate": 0.3333333333333333
+     },
+     "silent_miss_share": {
+      "k": 8,
+      "n": 12,
+      "rate": 0.6666666666666666
+     },
+     "silent_misses": 8,
+     "unreported_absences": 0,
+     "value_hits": 0
+    },
+    "supply_voltage_max": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 0,
+     "documents": 25,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 7,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 17,
+      "n": 18,
+      "rate": 0.9444444444444444
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 18,
+      "rate": 0.0
+     },
+     "present": 18,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 18,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 17,
+     "right_value_review_share": {
+      "k": 17,
+      "n": 18,
+      "rate": 0.9444444444444444
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 18,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "supply_voltage_min": {
+     "absence_hits": 0,
+     "admitted": 3,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 3,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.6315968501359613,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 3,
+      "document_upper95": 0.6315968501359613,
+      "effective_errors": 0,
+      "effective_trials": 3,
+      "value_upper95": 0.6315968501359613
+     },
+     "catches": 0,
+     "documents": 25,
+     "documents_with_admits": 3,
+     "escapes": 0,
+     "excluded": 7,
+     "hits": 3,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 15,
+      "n": 18,
+      "rate": 0.8333333333333334
+     },
+     "no_right_candidate": 4,
+     "no_right_candidate_share": {
+      "k": 4,
+      "n": 18,
+      "rate": 0.2222222222222222
+     },
+     "present": 18,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 18,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 11,
+     "right_value_review_share": {
+      "k": 11,
+      "n": 18,
+      "rate": 0.6111111111111112
+     },
+     "silent_miss_share": {
+      "k": 4,
+      "n": 18,
+      "rate": 0.2222222222222222
+     },
+     "silent_misses": 4,
+     "unreported_absences": 0,
+     "value_hits": 3
+    },
+    "total_assets": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 9,
+     "documents": 23,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 22,
+      "n": 22,
+      "rate": 1.0
+     },
+     "no_right_candidate": 2,
+     "no_right_candidate_share": {
+      "k": 2,
+      "n": 22,
+      "rate": 0.09090909090909091
+     },
+     "present": 22,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 22,
+      "rate": 0.045454545454545456
+     },
+     "rejected_right_values": 1,
+     "reviews": 19,
+     "right_value_review_share": {
+      "k": 19,
+      "n": 22,
+      "rate": 0.8636363636363636
+     },
+     "silent_miss_share": {
+      "k": 3,
+      "n": 22,
+      "rate": 0.13636363636363635
+     },
+     "silent_misses": 3,
+     "unreported_absences": 1,
+     "value_hits": 0
+    },
+    "total_equity": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 6,
+     "documents": 23,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 22,
+      "n": 23,
+      "rate": 0.9565217391304348
+     },
+     "no_right_candidate": 2,
+     "no_right_candidate_share": {
+      "k": 2,
+      "n": 23,
+      "rate": 0.08695652173913043
+     },
+     "present": 23,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 23,
+      "rate": 0.043478260869565216
+     },
+     "rejected_right_values": 1,
+     "reviews": 19,
+     "right_value_review_share": {
+      "k": 19,
+      "n": 23,
+      "rate": 0.8260869565217391
+     },
+     "silent_miss_share": {
+      "k": 3,
+      "n": 23,
+      "rate": 0.13043478260869565
+     },
+     "silent_misses": 3,
+     "unreported_absences": 0,
+     "value_hits": 1
+    },
+    "total_liabilities": {
+     "absence_hits": 0,
+     "admitted": 0,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 0,
+      "rate": null
+     },
+     "bounds": {
+      "combined_upper95": null,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 0,
+      "document_upper95": null,
+      "effective_errors": 0,
+      "effective_trials": 0,
+      "value_upper95": null
+     },
+     "catches": 4,
+     "documents": 23,
+     "documents_with_admits": 0,
+     "escapes": 0,
+     "excluded": 0,
+     "hits": 0,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 15,
+      "n": 15,
+      "rate": 1.0
+     },
+     "no_right_candidate": 1,
+     "no_right_candidate_share": {
+      "k": 1,
+      "n": 15,
+      "rate": 0.06666666666666667
+     },
+     "present": 15,
+     "rejected_right_value_share": {
+      "k": 1,
+      "n": 15,
+      "rate": 0.06666666666666667
+     },
+     "rejected_right_values": 1,
+     "reviews": 13,
+     "right_value_review_share": {
+      "k": 13,
+      "n": 15,
+      "rate": 0.8666666666666667
+     },
+     "silent_miss_share": {
+      "k": 2,
+      "n": 15,
+      "rate": 0.13333333333333333
+     },
+     "silent_misses": 2,
+     "unreported_absences": 8,
+     "value_hits": 0
+    }
+   },
+   "by_kind": {
+    "annual": {
+     "absence_hits": 0,
+     "admitted": 1,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 1,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.95,
+      "confidence": 0.95,
+      "design_effect": 1,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 1,
+      "document_upper95": 0.95,
+      "effective_errors": 0,
+      "effective_trials": 1,
+      "value_upper95": 0.95
+     },
+     "catches": 38,
+     "documents": 23,
+     "documents_with_admits": 1,
+     "escapes": 0,
+     "excluded": 1,
+     "hits": 1,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 87,
+      "n": 88,
+      "rate": 0.9886363636363636
+     },
+     "no_right_candidate": 6,
+     "no_right_candidate_share": {
+      "k": 6,
+      "n": 88,
+      "rate": 0.06818181818181818
+     },
+     "present": 88,
+     "rejected_right_value_share": {
+      "k": 7,
+      "n": 88,
+      "rate": 0.07954545454545454
+     },
+     "rejected_right_values": 7,
+     "reviews": 74,
+     "right_value_review_share": {
+      "k": 74,
+      "n": 88,
+      "rate": 0.8409090909090909
+     },
+     "silent_miss_share": {
+      "k": 13,
+      "n": 88,
+      "rate": 0.14772727272727273
+     },
+     "silent_misses": 13,
+     "unreported_absences": 49,
+     "value_hits": 1
+    },
+    "component": {
+     "absence_hits": 0,
+     "admitted": 10,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 10,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.45071972834694113,
+      "confidence": 0.95,
+      "design_effect": 2,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 9,
+      "document_upper95": 0.2831288355631135,
+      "effective_errors": 0,
+      "effective_trials": 5,
+      "value_upper95": 0.45071972834694113
+     },
+     "catches": 0,
+     "documents": 25,
+     "documents_with_admits": 9,
+     "escapes": 0,
+     "excluded": 31,
+     "hits": 10,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 84,
+      "n": 94,
+      "rate": 0.8936170212765957
+     },
+     "no_right_candidate": 4,
+     "no_right_candidate_share": {
+      "k": 4,
+      "n": 94,
+      "rate": 0.0425531914893617
+     },
+     "present": 94,
+     "rejected_right_value_share": {
+      "k": 8,
+      "n": 94,
+      "rate": 0.0851063829787234
+     },
+     "rejected_right_values": 8,
+     "reviews": 72,
+     "right_value_review_share": {
+      "k": 72,
+      "n": 94,
+      "rate": 0.7659574468085106
+     },
+     "silent_miss_share": {
+      "k": 12,
+      "n": 94,
+      "rate": 0.1276595744680851
+     },
+     "silent_misses": 12,
+     "unreported_absences": 0,
+     "value_hits": 10
+    },
+    "sbc": {
+     "absence_hits": 15,
+     "admitted": 23,
+     "admitted_error_rate": {
+      "k": 0,
+      "n": 23,
+      "rate": 0.0
+     },
+     "bounds": {
+      "combined_upper95": 0.45071972834694113,
+      "confidence": 0.95,
+      "design_effect": 4,
+      "design_effect_method": "maximum admitted cluster size; default, not estimated",
+      "document_errors": 0,
+      "document_trials": 15,
+      "document_upper95": 0.18103627252208468,
+      "effective_errors": 0,
+      "effective_trials": 5,
+      "value_upper95": 0.45071972834694113
+     },
+     "catches": 1,
+     "documents": 28,
+     "documents_with_admits": 15,
+     "escapes": 0,
+     "excluded": 7,
+     "hits": 38,
+     "kinds": 1,
+     "miss_rate": {
+      "k": 95,
+      "n": 118,
+      "rate": 0.8050847457627118
+     },
+     "no_right_candidate": 0,
+     "no_right_candidate_share": {
+      "k": 0,
+      "n": 118,
+      "rate": 0.0
+     },
+     "present": 118,
+     "rejected_right_value_share": {
+      "k": 0,
+      "n": 118,
+      "rate": 0.0
+     },
+     "rejected_right_values": 0,
+     "reviews": 95,
+     "right_value_review_share": {
+      "k": 95,
+      "n": 118,
+      "rate": 0.8050847457627118
+     },
+     "silent_miss_share": {
+      "k": 0,
+      "n": 118,
+      "rate": 0.0
+     },
+     "silent_misses": 0,
+     "unreported_absences": 0,
+     "value_hits": 23
+    }
+   },
+   "by_kind_field": {
+    "annual": {
+     "cost_of_sales": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 3,
+      "documents": 23,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 6,
+       "n": 6,
+       "rate": 1.0
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 6,
+       "rate": 0.0
+      },
+      "present": 6,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 6,
+       "rate": 0.16666666666666666
+      },
+      "rejected_right_values": 1,
+      "reviews": 5,
+      "right_value_review_share": {
+       "k": 5,
+       "n": 6,
+       "rate": 0.8333333333333334
+      },
+      "silent_miss_share": {
+       "k": 1,
+       "n": 6,
+       "rate": 0.16666666666666666
+      },
+      "silent_misses": 1,
+      "unreported_absences": 17,
+      "value_hits": 0
+     },
+     "gross_profit": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 1,
+      "documents": 23,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 5,
+       "n": 5,
+       "rate": 1.0
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 5,
+       "rate": 0.0
+      },
+      "present": 5,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 5,
+       "rate": 0.2
+      },
+      "rejected_right_values": 1,
+      "reviews": 4,
+      "right_value_review_share": {
+       "k": 4,
+       "n": 5,
+       "rate": 0.8
+      },
+      "silent_miss_share": {
+       "k": 1,
+       "n": 5,
+       "rate": 0.2
+      },
+      "silent_misses": 1,
+      "unreported_absences": 18,
+      "value_hits": 0
+     },
+     "revenue": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 15,
+      "documents": 23,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 1,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 17,
+       "n": 17,
+       "rate": 1.0
+      },
+      "no_right_candidate": 1,
+      "no_right_candidate_share": {
+       "k": 1,
+       "n": 17,
+       "rate": 0.058823529411764705
+      },
+      "present": 17,
+      "rejected_right_value_share": {
+       "k": 2,
+       "n": 17,
+       "rate": 0.11764705882352941
+      },
+      "rejected_right_values": 2,
+      "reviews": 14,
+      "right_value_review_share": {
+       "k": 14,
+       "n": 17,
+       "rate": 0.8235294117647058
+      },
+      "silent_miss_share": {
+       "k": 3,
+       "n": 17,
+       "rate": 0.17647058823529413
+      },
+      "silent_misses": 3,
+      "unreported_absences": 5,
+      "value_hits": 0
+     },
+     "total_assets": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 9,
+      "documents": 23,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 22,
+       "n": 22,
+       "rate": 1.0
+      },
+      "no_right_candidate": 2,
+      "no_right_candidate_share": {
+       "k": 2,
+       "n": 22,
+       "rate": 0.09090909090909091
+      },
+      "present": 22,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 22,
+       "rate": 0.045454545454545456
+      },
+      "rejected_right_values": 1,
+      "reviews": 19,
+      "right_value_review_share": {
+       "k": 19,
+       "n": 22,
+       "rate": 0.8636363636363636
+      },
+      "silent_miss_share": {
+       "k": 3,
+       "n": 22,
+       "rate": 0.13636363636363635
+      },
+      "silent_misses": 3,
+      "unreported_absences": 1,
+      "value_hits": 0
+     },
+     "total_equity": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 6,
+      "documents": 23,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 22,
+       "n": 23,
+       "rate": 0.9565217391304348
+      },
+      "no_right_candidate": 2,
+      "no_right_candidate_share": {
+       "k": 2,
+       "n": 23,
+       "rate": 0.08695652173913043
+      },
+      "present": 23,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 23,
+       "rate": 0.043478260869565216
+      },
+      "rejected_right_values": 1,
+      "reviews": 19,
+      "right_value_review_share": {
+       "k": 19,
+       "n": 23,
+       "rate": 0.8260869565217391
+      },
+      "silent_miss_share": {
+       "k": 3,
+       "n": 23,
+       "rate": 0.13043478260869565
+      },
+      "silent_misses": 3,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "total_liabilities": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 4,
+      "documents": 23,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 15,
+       "n": 15,
+       "rate": 1.0
+      },
+      "no_right_candidate": 1,
+      "no_right_candidate_share": {
+       "k": 1,
+       "n": 15,
+       "rate": 0.06666666666666667
+      },
+      "present": 15,
+      "rejected_right_value_share": {
+       "k": 1,
+       "n": 15,
+       "rate": 0.06666666666666667
+      },
+      "rejected_right_values": 1,
+      "reviews": 13,
+      "right_value_review_share": {
+       "k": 13,
+       "n": 15,
+       "rate": 0.8666666666666667
+      },
+      "silent_miss_share": {
+       "k": 2,
+       "n": 15,
+       "rate": 0.13333333333333333
+      },
+      "silent_misses": 2,
+      "unreported_absences": 8,
+      "value_hits": 0
+     }
+    },
+    "component": {
+     "operating_temperature_max": {
+      "absence_hits": 0,
+      "admitted": 3,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 3,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.6315968501359613,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 3,
+       "document_upper95": 0.6315968501359613,
+       "effective_errors": 0,
+       "effective_trials": 3,
+       "value_upper95": 0.6315968501359613
+      },
+      "catches": 0,
+      "documents": 25,
+      "documents_with_admits": 3,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 3,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 20,
+       "n": 23,
+       "rate": 0.8695652173913043
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "present": 23,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 20,
+      "right_value_review_share": {
+       "k": 20,
+       "n": 23,
+       "rate": 0.8695652173913043
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 3
+     },
+     "operating_temperature_min": {
+      "absence_hits": 0,
+      "admitted": 3,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 3,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.6315968501359613,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 3,
+       "document_upper95": 0.6315968501359613,
+       "effective_errors": 0,
+       "effective_trials": 3,
+       "value_upper95": 0.6315968501359613
+      },
+      "catches": 0,
+      "documents": 25,
+      "documents_with_admits": 3,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 3,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 20,
+       "n": 23,
+       "rate": 0.8695652173913043
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "present": 23,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 20,
+      "right_value_review_share": {
+       "k": 20,
+       "n": 23,
+       "rate": 0.8695652173913043
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 23,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 3
+     },
+     "supply_current_typ": {
+      "absence_hits": 0,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 25,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 13,
+      "hits": 0,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 12,
+       "n": 12,
+       "rate": 1.0
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 12,
+       "rate": 0.0
+      },
+      "present": 12,
+      "rejected_right_value_share": {
+       "k": 8,
+       "n": 12,
+       "rate": 0.6666666666666666
+      },
+      "rejected_right_values": 8,
+      "reviews": 4,
+      "right_value_review_share": {
+       "k": 4,
+       "n": 12,
+       "rate": 0.3333333333333333
+      },
+      "silent_miss_share": {
+       "k": 8,
+       "n": 12,
+       "rate": 0.6666666666666666
+      },
+      "silent_misses": 8,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "supply_voltage_max": {
+      "absence_hits": 0,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 0,
+      "documents": 25,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 7,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 17,
+       "n": 18,
+       "rate": 0.9444444444444444
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 18,
+       "rate": 0.0
+      },
+      "present": 18,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 18,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 17,
+      "right_value_review_share": {
+       "k": 17,
+       "n": 18,
+       "rate": 0.9444444444444444
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 18,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "supply_voltage_min": {
+      "absence_hits": 0,
+      "admitted": 3,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 3,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.6315968501359613,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 3,
+       "document_upper95": 0.6315968501359613,
+       "effective_errors": 0,
+       "effective_trials": 3,
+       "value_upper95": 0.6315968501359613
+      },
+      "catches": 0,
+      "documents": 25,
+      "documents_with_admits": 3,
+      "escapes": 0,
+      "excluded": 7,
+      "hits": 3,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 15,
+       "n": 18,
+       "rate": 0.8333333333333334
+      },
+      "no_right_candidate": 4,
+      "no_right_candidate_share": {
+       "k": 4,
+       "n": 18,
+       "rate": 0.2222222222222222
+      },
+      "present": 18,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 18,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 11,
+      "right_value_review_share": {
+       "k": 11,
+       "n": 18,
+       "rate": 0.6111111111111112
+      },
+      "silent_miss_share": {
+       "k": 4,
+       "n": 18,
+       "rate": 0.2222222222222222
+      },
+      "silent_misses": 4,
+      "unreported_absences": 0,
+      "value_hits": 3
+     }
+    },
+    "sbc": {
+     "deductible_family": {
+      "absence_hits": 2,
+      "admitted": 1,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 1,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.95,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 1,
+       "document_upper95": 0.95,
+       "effective_errors": 0,
+       "effective_trials": 1,
+       "value_upper95": 0.95
+      },
+      "catches": 0,
+      "documents": 28,
+      "documents_with_admits": 1,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 3,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 23,
+       "n": 24,
+       "rate": 0.9583333333333334
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 24,
+       "rate": 0.0
+      },
+      "present": 24,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 24,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 23,
+      "right_value_review_share": {
+       "k": 23,
+       "n": 24,
+       "rate": 0.9583333333333334
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 24,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 1
+     },
+     "deductible_individual": {
+      "absence_hits": 0,
+      "admitted": 12,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 12,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.2209221919455559,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 12,
+       "document_upper95": 0.2209221919455559,
+       "effective_errors": 0,
+       "effective_trials": 12,
+       "value_upper95": 0.2209221919455559
+      },
+      "catches": 0,
+      "documents": 28,
+      "documents_with_admits": 12,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 12,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 16,
+       "n": 28,
+       "rate": 0.5714285714285714
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "present": 28,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 16,
+      "right_value_review_share": {
+       "k": 16,
+       "n": 28,
+       "rate": 0.5714285714285714
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 12
+     },
+     "out_of_pocket_family": {
+      "absence_hits": 1,
+      "admitted": 0,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "bounds": {
+       "combined_upper95": null,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 0,
+       "document_upper95": null,
+       "effective_errors": 0,
+       "effective_trials": 0,
+       "value_upper95": null
+      },
+      "catches": 0,
+      "documents": 28,
+      "documents_with_admits": 0,
+      "escapes": 0,
+      "excluded": 2,
+      "hits": 1,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 25,
+       "n": 25,
+       "rate": 1.0
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 25,
+       "rate": 0.0
+      },
+      "present": 25,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 25,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 25,
+      "right_value_review_share": {
+       "k": 25,
+       "n": 25,
+       "rate": 1.0
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 25,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 0
+     },
+     "out_of_pocket_individual": {
+      "absence_hits": 0,
+      "admitted": 3,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 3,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.6315968501359613,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 3,
+       "document_upper95": 0.6315968501359613,
+       "effective_errors": 0,
+       "effective_trials": 3,
+       "value_upper95": 0.6315968501359613
+      },
+      "catches": 0,
+      "documents": 28,
+      "documents_with_admits": 3,
+      "escapes": 0,
+      "excluded": 0,
+      "hits": 3,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 25,
+       "n": 28,
+       "rate": 0.8928571428571429
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "present": 28,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 25,
+      "right_value_review_share": {
+       "k": 25,
+       "n": 28,
+       "rate": 0.8928571428571429
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 28,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 3
+     },
+     "specialist_copay": {
+      "absence_hits": 12,
+      "admitted": 7,
+      "admitted_error_rate": {
+       "k": 0,
+       "n": 7,
+       "rate": 0.0
+      },
+      "bounds": {
+       "combined_upper95": 0.3481636551311608,
+       "confidence": 0.95,
+       "design_effect": 1,
+       "design_effect_method": "maximum admitted cluster size; default, not estimated",
+       "document_errors": 0,
+       "document_trials": 7,
+       "document_upper95": 0.3481636551311608,
+       "effective_errors": 0,
+       "effective_trials": 7,
+       "value_upper95": 0.3481636551311608
+      },
+      "catches": 1,
+      "documents": 28,
+      "documents_with_admits": 7,
+      "escapes": 0,
+      "excluded": 3,
+      "hits": 19,
+      "kinds": 1,
+      "miss_rate": {
+       "k": 6,
+       "n": 13,
+       "rate": 0.46153846153846156
+      },
+      "no_right_candidate": 0,
+      "no_right_candidate_share": {
+       "k": 0,
+       "n": 13,
+       "rate": 0.0
+      },
+      "present": 13,
+      "rejected_right_value_share": {
+       "k": 0,
+       "n": 13,
+       "rate": 0.0
+      },
+      "rejected_right_values": 0,
+      "reviews": 6,
+      "right_value_review_share": {
+       "k": 6,
+       "n": 13,
+       "rate": 0.46153846153846156
+      },
+      "silent_miss_share": {
+       "k": 0,
+       "n": 13,
+       "rate": 0.0
+      },
+      "silent_misses": 0,
+      "unreported_absences": 0,
+      "value_hits": 7
+     }
+    }
+   },
+   "cache_sha256": "sha256:e54af9b7b8abcc3ebf726f586759074af0baa5bc1b127fca9912fca6864316ba",
+   "document_states": {
+    "by_kind": {
+     "annual": {
+      "documents": 23,
+      "incomplete": 15,
+      "transport_error": 0,
+      "transport_retries": 0
+     },
+     "component": {
+      "documents": 25,
+      "incomplete": 1,
+      "transport_error": 0,
+      "transport_retries": 0
+     },
+     "sbc": {
+      "documents": 28,
+      "incomplete": 0,
+      "transport_error": 0,
+      "transport_retries": 0
+     }
+    },
+    "total": {
+     "documents": 76,
+     "incomplete": 16,
+     "transport_error": 0,
+     "transport_retries": 0
+    }
+   },
+   "split": "heldout",
+   "total": {
+    "absence_hits": 15,
+    "admitted": 34,
+    "admitted_error_rate": {
+     "k": 0,
+     "n": 34,
+     "rate": 0.0
+    },
+    "bounds": {
+     "combined_upper95": 0.3123439780663679,
+     "confidence": 0.95,
+     "design_effect": 4,
+     "design_effect_method": "maximum admitted cluster size; default, not estimated",
+     "document_errors": 0,
+     "document_trials": 25,
+     "document_upper95": 0.11292814500684323,
+     "effective_errors": 0,
+     "effective_trials": 8,
+     "value_upper95": 0.3123439780663679
+    },
+    "catches": 39,
+    "documents": 76,
+    "documents_with_admits": 25,
+    "escapes": 0,
+    "excluded": 39,
+    "hits": 49,
+    "kinds": 3,
+    "miss_rate": {
+     "k": 266,
+     "n": 300,
+     "rate": 0.8866666666666667
+    },
+    "no_right_candidate": 10,
+    "no_right_candidate_share": {
+     "k": 10,
+     "n": 300,
+     "rate": 0.03333333333333333
+    },
+    "present": 300,
+    "rejected_right_value_share": {
+     "k": 15,
+     "n": 300,
+     "rate": 0.05
+    },
+    "rejected_right_values": 15,
+    "reviews": 241,
+    "right_value_review_share": {
+     "k": 241,
+     "n": 300,
+     "rate": 0.8033333333333333
+    },
+    "silent_miss_share": {
+     "k": 25,
+     "n": 300,
+     "rate": 0.08333333333333333
+    },
+    "silent_misses": 25,
+    "unreported_absences": 49,
+    "value_hits": 34
+   }
+  }
+ }
+}
