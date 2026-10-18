@@ -39,3 +39,4 @@ bench/acfr/runs
 bench/acfr2/docs
 bench/acfr2/runs
 bench/requested/.labels-*.tmp
+bench/requested2/.labels-*.tmp

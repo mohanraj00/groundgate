@@ -1,0 +1,3146 @@
+{
+  "format": "requested-source-checks/1",
+  "status": "selection_frozen",
+  "inspection": "Source-only identity, notice and text-layer checks. No benchmark model call or requested-value label was used to choose these candidates. Download approval does not assert a redistribution license. No source PDF, page image or source text is published.",
+  "documents": [
+    {
+      "id": "component-c01",
+      "source": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf",
+      "final_url": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1663806,
+      "source_sha256": "sha256:a2ccdb449fec94380742fe8eec851a11d9bd4142252d332b34682b4deecd7d89",
+      "source_pages": 60,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.bosch-sensortec.com/en/imprint.html",
+      "terms_note": "Imprint says content may not be copied or made accessible to third parties for commercial purposes. No express ban on download or automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "Bosch Sensortec",
+        "device": "BME280",
+        "title": "BME280 combined humidity and pressure sensor, Data sheet",
+        "document_code_revision": "BST-BME280-DS001-24, revision 1.24",
+        "printed_date": "February 2024 (revision history: 2024-02-20)"
+      },
+      "text_layer": {
+        "pages_with_text": 60,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 58,
+        "heading": "11. Legal disclaimer",
+        "restriction": "Legal disclaimer (warranty and liability). No reproduction clause in the text. PDF permission flag copy:no (encrypted, AES-256); pdftotext still extracts text."
+      }
+    },
+    {
+      "id": "component-c02",
+      "source": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp280-ds001.pdf",
+      "final_url": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp280-ds001.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1162932,
+      "source_sha256": "sha256:473ff27d9df698b4757e36b36209f83b9f637b592c999d5fabe2a9453a488da6",
+      "source_pages": 49,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.bosch-sensortec.com/en/imprint.html",
+      "terms_note": "Imprint says content may not be copied or made accessible to third parties for commercial purposes. No express ban on download or automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "Bosch Sensortec",
+        "device": "BMP280",
+        "title": "BMP280 digital pressure sensor, Data sheet",
+        "document_code_revision": "BST-BMP280-DS001-26, revision 1.26",
+        "printed_date": "October 2021"
+      },
+      "text_layer": {
+        "pages_with_text": 49,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 46,
+        "heading": "Legal disclaimer",
+        "restriction": "Legal disclaimer (warranty and liability). No reproduction clause in the text. PDF permission flag copy:no (encrypted, AES-256); pdftotext still extracts text."
+      }
+    },
+    {
+      "id": "component-c03",
+      "source": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme680-ds001.pdf",
+      "final_url": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme680-ds001.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1390985,
+      "source_sha256": "sha256:8e42b591a9cabd84ae3377f2ea11e794120e4140dc4f0e4f29a30be3d1f6c9f6",
+      "source_pages": 53,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.bosch-sensortec.com/en/imprint.html",
+      "terms_note": "Imprint says content may not be copied or made accessible to third parties for commercial purposes. No express ban on download or automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "Bosch Sensortec",
+        "device": "BME680",
+        "title": "BME680 low power gas, pressure, temperature and humidity sensor, Datasheet",
+        "document_code_revision": "BST-BME680-DS001-09, revision 1.9",
+        "printed_date": "February 2024"
+      },
+      "text_layer": {
+        "pages_with_text": 53,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 51,
+        "heading": "Legal disclaimer",
+        "restriction": "Legal disclaimer (warranty and liability). No reproduction clause in the text. PDF permission flag copy:no (encrypted, AES-256); pdftotext still extracts text."
+      }
+    },
+    {
+      "id": "component-c04",
+      "source": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi160-ds000.pdf",
+      "final_url": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi160-ds000.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 2669088,
+      "source_sha256": "sha256:0c3dca28517322bdcfcef9be8b1dd2b872ff9df9464d0088c17ccc4a67472f3b",
+      "source_pages": 114,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.bosch-sensortec.com/en/imprint.html",
+      "terms_note": "Imprint says content may not be copied or made accessible to third parties for commercial purposes. No express ban on download or automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "Bosch Sensortec",
+        "device": "BMI160",
+        "title": "BMI160 small, low power inertial measurement unit, Data sheet",
+        "document_code_revision": "BST-BMI160-DS000-09, revision 1.0",
+        "printed_date": "November 25th 2020"
+      },
+      "text_layer": {
+        "pages_with_text": 114,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 113,
+        "heading": "6. Legal disclaimer",
+        "restriction": "Footer on pages 113-114 reserves rights: \"We reserve all rights of disposal such as copying and passing on\". A rights reservation, not an express ban. PDF permission flag copy:no."
+      }
+    },
+    {
+      "id": "component-c05",
+      "source": "https://content.u-blox.com/sites/default/files/NEO-M8-FW3_DataSheet_UBX-15031086.pdf",
+      "final_url": "https://content.u-blox.com/sites/default/files/NEO-M8-FW3_DataSheet_UBX-15031086.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1070870,
+      "source_sha256": "sha256:5dc7a6c044873a04e2dcc08a7f54e9e7374c5c69dcce694054ac4730c81a04a5",
+      "source_pages": 29,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "Not eligible: the notice on page 2 expressly forbids copying or reproduction without written permission from u-blox.",
+      "terms_url": "https://www.u-blox.com/en/terms-conditions-u-blox-website",
+      "terms_note": "Download, copy or print permitted only for personal non-commercial use. No express ban on automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "u-blox",
+        "device": "NEO-M8 series",
+        "title": "NEO-M8 u-blox M8 concurrent GNSS modules, Data sheet",
+        "document_code_revision": "UBX-15031086, R14",
+        "printed_date": "30-Sep-2025 (R14 in revision history)"
+      },
+      "text_layer": {
+        "pages_with_text": 29,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 2,
+        "heading": "Document information (legal notice)",
+        "restriction": "Copying, reproduction, or modification ... only permitted with the express written permission"
+      }
+    },
+    {
+      "id": "component-c06",
+      "source": "https://content.u-blox.com/sites/default/files/NINA-W10_DataSheet_UBX-17065507.pdf",
+      "final_url": "https://content.u-blox.com/sites/default/files/NINA-W10_DataSheet_UBX-17065507.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1967496,
+      "source_sha256": "sha256:813c79aeee1864c11634bdc763e32349ef1ba2a7769035cbfc3badfe7460accb",
+      "source_pages": 52,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "Not eligible: the notice on page 2 expressly forbids copying or reproduction without written permission from u-blox.",
+      "terms_url": "https://www.u-blox.com/en/terms-conditions-u-blox-website",
+      "terms_note": "Download, copy or print permitted only for personal non-commercial use. No express ban on automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "u-blox",
+        "device": "NINA-W10 series",
+        "title": "NINA-W10 series stand-alone multiradio modules, Data sheet",
+        "document_code_revision": "UBX-17065507, R17",
+        "printed_date": "05-May-2025 (R17 in revision history)"
+      },
+      "text_layer": {
+        "pages_with_text": 52,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 2,
+        "heading": "Document information (legal notice)",
+        "restriction": "Copying, reproduction, or modification ... only permitted with the express written permission"
+      }
+    },
+    {
+      "id": "component-c07",
+      "source": "https://content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf",
+      "final_url": "https://content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 3259178,
+      "source_sha256": "sha256:e36d9c8585809c0dc486804d2634c66cd1888ad71af0f28ce0b830ffa8df6bec",
+      "source_pages": 24,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "Not eligible: the notice on page 2 expressly forbids copying or reproduction without written permission from u-blox.",
+      "terms_url": "https://www.u-blox.com/en/terms-conditions-u-blox-website",
+      "terms_note": "Download, copy or print permitted only for personal non-commercial use. No express ban on automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "u-blox",
+        "device": "MAX-M10S",
+        "title": "MAX-M10S standard precision GNSS module, Data sheet",
+        "document_code_revision": "UBX-20035208, R08",
+        "printed_date": "30-Jan-2026 (R08 in revision history)"
+      },
+      "text_layer": {
+        "pages_with_text": 24,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 2,
+        "heading": "Document information (legal notice)",
+        "restriction": "Copying, reproduction, or modification ... only permitted with the express written permission"
+      }
+    },
+    {
+      "id": "component-c08",
+      "source": "https://content.u-blox.com/sites/default/files/ZED-F9P-04B_DataSheet_UBX-21044850.pdf",
+      "final_url": "https://content.u-blox.com/sites/default/files/ZED-F9P-04B_DataSheet_UBX-21044850.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1283367,
+      "source_sha256": "sha256:88b3f1a46b64afc50b1b2c84ace29edbe0f3a74ddeb2d5ad02162a0c7c8bda7b",
+      "source_pages": 26,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "Not eligible: the notice on page 2 expressly forbids copying or reproduction without written permission from u-blox.",
+      "terms_url": "https://www.u-blox.com/en/terms-conditions-u-blox-website",
+      "terms_note": "Download, copy or print permitted only for personal non-commercial use. No express ban on automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "u-blox",
+        "device": "ZED-F9P-04B",
+        "title": "ZED-F9P-04B high precision GNSS module, Data sheet",
+        "document_code_revision": "UBX-21044850, R05",
+        "printed_date": "21-Mar-2024 (R05 in revision history)"
+      },
+      "text_layer": {
+        "pages_with_text": 26,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 2,
+        "heading": "Document information (legal notice)",
+        "restriction": "Copying, reproduction, or modification ... only permitted with the express written permission"
+      }
+    },
+    {
+      "id": "component-c09",
+      "source": "https://fscdn.rohm.com/en/products/databook/datasheet/ic/sensor/temperature/bd1020hfv-e.pdf",
+      "final_url": "https://fscdn.rohm.com/en/products/databook/datasheet/ic/sensor/temperature/bd1020hfv-e.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 795412,
+      "source_sha256": "sha256:1dda4dc71edb3ef8e0498d88ded254beedf32b432d2cbd2d2588e30899a06739",
+      "source_pages": 12,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "Not eligible: the notice expressly forbids reprint or reproduction without prior written consent of ROHM.",
+      "terms_url": "https://www.rohm.com/terms-and-conditions",
+      "terms_note": "Content may be used for personal use; duplication or distribution beyond that needs consent. No express ban on download or automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "ROHM",
+        "device": "BD1020HFV",
+        "title": "Temperature Sensor IC, Analog Output, BD1020HFV, Datasheet",
+        "document_code_revision": "TSZ02201-0M2M0F515090-1-2, Rev.001",
+        "printed_date": "06.Nov.2015"
+      },
+      "text_layer": {
+        "pages_with_text": 12,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 11,
+        "heading": "Notice (Notice-PGA-E Rev.002), Other Precaution",
+        "restriction": "This document may not be reprinted or reproduced ... without prior written consent"
+      }
+    },
+    {
+      "id": "component-c10",
+      "source": "https://fscdn.rohm.com/en/products/databook/datasheet/ic/power/linear_regulator/bd4xxm2-c-e.pdf",
+      "final_url": "https://fscdn.rohm.com/en/products/databook/datasheet/ic/power/linear_regulator/bd4xxm2-c-e.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1593904,
+      "source_sha256": "sha256:bb207aa4c4e011b44cb96924d9f38e5c1c85a95fa71c7bd84cc06c2895d4bc43",
+      "source_pages": 37,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "Not eligible: the notice expressly forbids reprint or reproduction without prior written consent of ROHM.",
+      "terms_url": "https://www.rohm.com/terms-and-conditions",
+      "terms_note": "Content may be used for personal use; duplication or distribution beyond that needs consent. No express ban on download or automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "ROHM",
+        "device": "BD4xxM2-C / BD4xxU2-C series",
+        "title": "200-mA 3.3-V or 5.0-V output LDO regulators, BD4xxM2-C / BD4xxU2-C series, Datasheet",
+        "document_code_revision": "TSZ02201-0G1G0AN0063-1-2, Rev.006",
+        "printed_date": "22.May.2025"
+      },
+      "text_layer": {
+        "pages_with_text": 37,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 36,
+        "heading": "Notice (Notice-PAA-E Rev.004), Other Precaution",
+        "restriction": "This document may not be reprinted or reproduced ... without prior written consent"
+      }
+    },
+    {
+      "id": "component-c11",
+      "source": "https://fscdn.rohm.com/en/products/databook/datasheet/ic/motor/dc/bd621x-e.pdf",
+      "final_url": "https://fscdn.rohm.com/en/products/databook/datasheet/ic/motor/dc/bd621x-e.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1075884,
+      "source_sha256": "sha256:e8321890e723f754e7a1adc3f8bf255efd2021a619e2712bf2f7b379c72e38e6",
+      "source_pages": 23,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "Not eligible: the notice expressly forbids reprint or reproduction without prior written consent of ROHM.",
+      "terms_url": "https://www.rohm.com/terms-and-conditions",
+      "terms_note": "Content may be used for personal use; duplication or distribution beyond that needs consent. No express ban on download or automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "ROHM",
+        "device": "BD621xxx series",
+        "title": "DC brush motor drivers (7V max), BD621xxx Series, Datasheet",
+        "document_code_revision": "TSZ02201-0P2P0B300070-1-2, Rev.003",
+        "printed_date": "09.Sep.2014"
+      },
+      "text_layer": {
+        "pages_with_text": 23,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 22,
+        "heading": "Notice (Notice-GE Rev.002), Other Precaution",
+        "restriction": "This document may not be reprinted or reproduced ... without prior written consent"
+      }
+    },
+    {
+      "id": "component-c12",
+      "source": "https://fscdn.rohm.com/en/products/databook/datasheet/ic/interface/transceiver/bd41000afj-c-e.pdf",
+      "final_url": "https://fscdn.rohm.com/en/products/databook/datasheet/ic/interface/transceiver/bd41000afj-c-e.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1348625,
+      "source_sha256": "sha256:efcd4d667356de850871f5b87b875e1ff7fa860c9f8ddb4862e1343bd06a159c",
+      "source_pages": 23,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "Not eligible: the notice expressly forbids reprint or reproduction without prior written consent of ROHM.",
+      "terms_url": "https://www.rohm.com/terms-and-conditions",
+      "terms_note": "Content may be used for personal use; duplication or distribution beyond that needs consent. No express ban on download or automated use. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "ROHM",
+        "device": "BD41000AFJ-C",
+        "title": "CXPI Transceiver for Automotive, BD41000AFJ-C, Datasheet",
+        "document_code_revision": "TSZ02201-0E2E0H600190-1-2, Rev.003",
+        "printed_date": "2019.03.26"
+      },
+      "text_layer": {
+        "pages_with_text": 23,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 22,
+        "heading": "Notice (Notice-PAA-E Rev.004), Other Precaution",
+        "restriction": "This document may not be reprinted or reproduced ... without prior written consent"
+      }
+    },
+    {
+      "id": "component-c13",
+      "source": "https://www.infineon.com/assets/row/public/documents/10/49/infineon-tle7250g-datasheet-en.pdf",
+      "final_url": "https://www.infineon.com/assets/row/public/documents/10/49/infineon-tle7250g-datasheet-en.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1628510,
+      "source_sha256": "sha256:f2882d2773386fcd2a07e91bfd9f88ea8ec08610d4625b4110bbf59b98be8101",
+      "source_pages": 22,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.infineon.com/legal/usage-terms",
+      "terms_note": "Grants permission to download and reproduce Materials for informational, non-commercial or personal use. No automated-use clause found.",
+      "identity": {
+        "publisher": "Infineon",
+        "device": "TLE7250G",
+        "title": "TLE7250G High Speed CAN Transceiver, Data Sheet",
+        "document_code_revision": "no document code printed; Rev. 1.1",
+        "printed_date": "2013-07-22"
+      },
+      "text_layer": {
+        "pages_with_text": 22,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 22,
+        "heading": "Legal Disclaimer",
+        "restriction": "All Rights Reserved and a warranty disclaimer only. No reproduction clause. PDF encrypted (RC4) with copy:yes."
+      }
+    },
+    {
+      "id": "component-c14",
+      "source": "https://www.infineon.com/assets/row/public/documents/30/49/infineon-tle4913-datasheet-en.pdf",
+      "final_url": "https://www.infineon.com/assets/row/public/documents/30/49/infineon-tle4913-datasheet-en.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 157341,
+      "source_sha256": "sha256:cf4ff78cefa9b93685de3f732f1814eb620e8fcc648801c8391d60eee820eb74",
+      "source_pages": 12,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.infineon.com/legal/usage-terms",
+      "terms_note": "Grants permission to download and reproduce Materials for informational, non-commercial or personal use. No automated-use clause found.",
+      "identity": {
+        "publisher": "Infineon",
+        "device": "TLE4913",
+        "title": "Low Power Hall Switch TLE 4913, Data Sheet",
+        "document_code_revision": "no document code printed; V 2.3",
+        "printed_date": "2019-05-14"
+      },
+      "text_layer": {
+        "pages_with_text": 12,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 12,
+        "heading": "Attention please!",
+        "restriction": "All Rights Reserved and a warranty and life-support notice only. No reproduction clause."
+      }
+    },
+    {
+      "id": "component-c15",
+      "source": "https://www.infineon.com/assets/row/public/documents/30/49/infineon-psoc-4-psoc-4200-family-datasheet-programmable-system-on-chip-psoc-datasheet-datasheet-en.pdf",
+      "final_url": "https://www.infineon.com/assets/row/public/documents/30/49/infineon-psoc-4-psoc-4200-family-datasheet-programmable-system-on-chip-psoc-datasheet-datasheet-en.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1301334,
+      "source_sha256": "sha256:2659d1c36e35e0ea3a04aaa9e8c2e931522416dc242660325c05fe360da77d9e",
+      "source_pages": 46,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.infineon.com/legal/usage-terms",
+      "terms_note": "Grants permission to download and reproduce Materials for informational, non-commercial or personal use. No automated-use clause found.",
+      "identity": {
+        "publisher": "Infineon",
+        "device": "PSoC 4200 family",
+        "title": "PSoC 4: PSoC 4200 Family Datasheet, Programmable System-on-Chip",
+        "document_code_revision": "Document Number 001-87197 Rev. *L",
+        "printed_date": "Revised March 12, 2024"
+      },
+      "text_layer": {
+        "pages_with_text": 46,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 46,
+        "heading": "Copyright and license notice (last page)",
+        "restriction": "The use and reproduction prohibition applies to the Software only, not to the document text. Cover page 1 is an Infineon note about Cypress."
+      }
+    },
+    {
+      "id": "component-c16",
+      "source": "https://www.infineon.com/assets/row/public/documents/10/49/infineon-btn8982ta-datasheet-en.pdf",
+      "final_url": "https://www.infineon.com/assets/row/public/documents/10/49/infineon-btn8982ta-datasheet-en.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1916446,
+      "source_sha256": "sha256:2f4bad5cd6ed4f2779c7686da3f4064ffd94f21168bb47602eb244fe040d4a96",
+      "source_pages": 26,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.infineon.com/legal/usage-terms",
+      "terms_note": "Grants permission to download and reproduce Materials for informational, non-commercial or personal use. No automated-use clause found.",
+      "identity": {
+        "publisher": "Infineon",
+        "device": "BTN8982TA",
+        "title": "BTN8982TA High Current PN Half Bridge NovalithIC, Data Sheet",
+        "document_code_revision": "no document code printed; Rev. 1.0",
+        "printed_date": "2013-05-17"
+      },
+      "text_layer": {
+        "pages_with_text": 26,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 26,
+        "heading": "Legal Disclaimer",
+        "restriction": "All Rights Reserved and a warranty disclaimer only. No reproduction clause. PDF encrypted (RC4) with copy:yes."
+      }
+    },
+    {
+      "id": "component-c17",
+      "source": "https://www.winbond.com/resource-files/w25q128jv%20revf%2003272018%20plus.pdf",
+      "final_url": "https://www.winbond.com/resource-files/w25q128jv%20revf%2003272018%20plus.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 2462647,
+      "source_sha256": "sha256:809f066e62bcde10b12c2202daf05f4776929ad7dc5f9d3b5131cdcc84502bc1",
+      "source_pages": 78,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.winbond.com/hq/about-winbond/Legal/terms-of-use/?__locale=en",
+      "terms_note": "Permits download of one copy for personal non-commercial use. Bans robots only above the request rate of a normal browser user. No express datasheet ban.",
+      "identity": {
+        "publisher": "Winbond",
+        "device": "W25Q128JV",
+        "title": "W25Q128JV 3V 128M-bit serial flash memory with Dual/Quad SPI",
+        "document_code_revision": "no document code printed; Revision F",
+        "printed_date": "March 27, 2018"
+      },
+      "text_layer": {
+        "pages_with_text": 78,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 78,
+        "heading": "Important Notice",
+        "restriction": "Trademark and use-in-critical-systems notice only. No copyright line and no reproduction clause."
+      }
+    },
+    {
+      "id": "component-c18",
+      "source": "https://www.renesas.com/us/en/document/dst/isl28114-isl28214-isl28414-datasheet",
+      "final_url": "https://www.renesas.com/en/document/dst/isl28114-isl28214-isl28414-datasheet",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1719283,
+      "source_sha256": "sha256:cb4844b531bce024679e78160ddf0309badf82412d78db7d4e066837a43d8e64",
+      "source_pages": 23,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.renesas.com/en/legal-notices",
+      "terms_note": "Visitors may use Content for personal use; reproduction or distribution beyond that needs consent. No express ban on download or automated use.",
+      "identity": {
+        "publisher": "Renesas",
+        "device": "ISL28114/ISL28214/ISL28414",
+        "title": "ISL28114, ISL28214, ISL28414 single, dual, quad general purpose micropower RRIO operational amplifiers, Datasheet",
+        "document_code_revision": "FN6800 Rev 10.00",
+        "printed_date": "December 8, 2016"
+      },
+      "text_layer": {
+        "pages_with_text": 23,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 23,
+        "heading": "Copyright line (Intersil, last page)",
+        "restriction": "All Rights Reserved only. Page 10 has a SPICE model license statement for the model, not the document."
+      }
+    },
+    {
+      "id": "component-c19",
+      "source": "https://www.renesas.com/en/document/dst/isl26132-isl26134-datasheet",
+      "final_url": "https://www.renesas.com/en/document/dst/isl26132-isl26134-datasheet",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1329844,
+      "source_sha256": "sha256:fcaf3a9678a232b305e5d0164bdf90c440420c7953a3b6151025b46681804004",
+      "source_pages": 23,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.renesas.com/en/legal-notices",
+      "terms_note": "Visitors may use Content for personal use; reproduction or distribution beyond that needs consent. No express ban on download or automated use.",
+      "identity": {
+        "publisher": "Renesas",
+        "device": "ISL26132/ISL26134",
+        "title": "ISL26132, ISL26134 low-noise 24-bit delta sigma ADC, Datasheet",
+        "document_code_revision": "FN6954 Rev 3.00",
+        "printed_date": "November 20, 2014"
+      },
+      "text_layer": {
+        "pages_with_text": 23,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 21,
+        "heading": "Copyright line (Intersil)",
+        "restriction": "All Rights Reserved only. No reproduction clause."
+      }
+    },
+    {
+      "id": "component-c20",
+      "source": "https://www.renesas.com/en/document/dst/isl9001a-datasheet",
+      "final_url": "https://www.renesas.com/en/document/dst/isl9001a-datasheet",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 678125,
+      "source_sha256": "sha256:32a95695f4690055bd30468e38517a109ad4ef390121b2669fa2ba3bc9f1a1db",
+      "source_pages": 12,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.renesas.com/en/legal-notices",
+      "terms_note": "Visitors may use Content for personal use; reproduction or distribution beyond that needs consent. No express ban on download or automated use.",
+      "identity": {
+        "publisher": "Renesas",
+        "device": "ISL9001A",
+        "title": "ISL9001A LDO with low ISUPPLY, high PSRR, Datasheet",
+        "document_code_revision": "FN6433 Rev 3.00",
+        "printed_date": "December 10, 2015"
+      },
+      "text_layer": {
+        "pages_with_text": 12,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 11,
+        "heading": "Copyright line (Intersil)",
+        "restriction": "All Rights Reserved only. No reproduction clause."
+      }
+    },
+    {
+      "id": "component-c21",
+      "source": "https://www.renesas.com/en/document/dst/ra4m1-group-datasheet",
+      "final_url": "https://www.renesas.com/en/document/dst/ra4m1-group-datasheet",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1677695,
+      "source_sha256": "sha256:b96fe3862d2d91d910b04a662631d41dfd3ce02d026fbb80c09aefb853933dbf",
+      "source_pages": 131,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "Not eligible: the Proprietary Notice expressly forbids copying or reproduction without prior written consent from Renesas.",
+      "terms_url": "https://www.renesas.com/en/legal-notices",
+      "terms_note": "Visitors may use Content for personal use; reproduction or distribution beyond that needs consent. No express ban on download or automated use.",
+      "identity": {
+        "publisher": "Renesas",
+        "device": "RA4M1 group",
+        "title": "Renesas RA4M1 Group Datasheet",
+        "document_code_revision": "R01DS0355EJ0110 Rev.1.10",
+        "printed_date": "Sep 29, 2023"
+      },
+      "text_layer": {
+        "pages_with_text": 131,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 129,
+        "heading": "Proprietary Notice",
+        "restriction": "\"no part of this document or content may be copied, reproduced, republished\" without prior written consent (for publication, distribution or commercial use). Notice also on page 131."
+      }
+    },
+    {
+      "id": "component-c22",
+      "source": "https://statics.cirrus.com/pubs/proDatasheet/CS4344-45-48_F2.pdf",
+      "final_url": "https://statics.cirrus.com/pubs/proDatasheet/CS4344-45-48_F2.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 925937,
+      "source_sha256": "sha256:e4cf72f7136c4c9f47be4683f7a0a36d702b673d446ba8b4d5c74dc37d062c16",
+      "source_pages": 24,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.cirrus.com/legal/terms",
+      "terms_note": "Grants permission to download and reproduce Materials for informational and non-commercial or personal use. No automated-use clause found.",
+      "identity": {
+        "publisher": "Cirrus Logic",
+        "device": "CS4344/45/48",
+        "title": "CS4344/5/8 10-pin, 24-bit, 192 kHz stereo D/A converter",
+        "document_code_revision": "DS613F2",
+        "printed_date": "JUL '13 (copyright 2013)"
+      },
+      "text_layer": {
+        "pages_with_text": 24,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 24,
+        "heading": "IMPORTANT NOTICE",
+        "restriction": "Consent for copies only for use within your organization; other copying not consented. PDF permission flag copy:no (AES-256)."
+      }
+    },
+    {
+      "id": "component-c23",
+      "source": "https://statics.cirrus.com/pubs/proDatasheet/CS5343-44_F5.pdf",
+      "final_url": "https://statics.cirrus.com/pubs/proDatasheet/CS5343-44_F5.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 400654,
+      "source_sha256": "sha256:f8750c2aeae238662b88c2f7655e25f2245335af2c1eedd1f85b73c6834e633c",
+      "source_pages": 21,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.cirrus.com/legal/terms",
+      "terms_note": "Grants permission to download and reproduce Materials for informational and non-commercial or personal use. No automated-use clause found.",
+      "identity": {
+        "publisher": "Cirrus Logic",
+        "device": "CS5343/44",
+        "title": "CS5343/4 98 dB, 96 kHz, multi-bit audio A/D converter",
+        "document_code_revision": "DS687F5",
+        "printed_date": "MAR '15 (copyright 2006-2015)"
+      },
+      "text_layer": {
+        "pages_with_text": 21,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 21,
+        "heading": "IMPORTANT NOTICE",
+        "restriction": "Consent for copies only for internal use, without alteration and with notices; other copying not consented. PDF permission flag copy:no (AES-256)."
+      }
+    },
+    {
+      "id": "component-c24",
+      "source": "https://www.richtek.com/assets/product_file/RT8059/DS8059-06.pdf",
+      "final_url": "https://www.richtek.com/assets/product_file/RT8059/DS8059-06.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 231133,
+      "source_sha256": "sha256:4a5b02c8a7af0687b8628ba9405a6e4e7e950920cea0cd652abb8df2087d6bb4",
+      "source_pages": 11,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.richtek.com/My%20Richtek/Terms%20of%20Use?sc_lang=en",
+      "terms_note": "Terms of Use grant a non-exclusive right to download, reproduce, use and disclose files identified as available, with the copyright notice kept. They ban commercial resale of site content. No automated-use clause found. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "Richtek",
+        "device": "RT8059",
+        "title": "RT8059 1.5MHz, 1A, High Efficiency PWM Step-Down DC/DC Converter",
+        "document_code_revision": "DS8059-06",
+        "printed_date": "May 2016"
+      },
+      "text_layer": {
+        "pages_with_text": 11,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 1,
+        "heading": "page footer (all pages)",
+        "restriction": "Copyright (c) 2016 Richtek Technology Corporation. All rights reserved. Copyright and All rights reserved in each page footer. Last page disclaimer has no reproduction clause."
+      }
+    },
+    {
+      "id": "component-c25",
+      "source": "https://www.richtek.com/assets/product_file/RT9193/DS9193-18.pdf",
+      "final_url": "https://www.richtek.com/assets/product_file/RT9193/DS9193-18.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 185506,
+      "source_sha256": "sha256:600a0eef69bc2c3827f668e3b71d83b746738ee1bf7484f86483a7ca51686b8f",
+      "source_pages": 14,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.richtek.com/My%20Richtek/Terms%20of%20Use?sc_lang=en",
+      "terms_note": "Terms of Use grant a non-exclusive right to download, reproduce, use and disclose files identified as available, with the copyright notice kept. They ban commercial resale of site content. No automated-use clause found. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "Richtek",
+        "device": "RT9193",
+        "title": "RT9193 300mA, Ultra-Low Noise, Ultra-Fast CMOS LDO Regulator",
+        "document_code_revision": "DS9193-18",
+        "printed_date": "June 2022"
+      },
+      "text_layer": {
+        "pages_with_text": 14,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 1,
+        "heading": "page footer (all pages)",
+        "restriction": "Copyright (c) 2022 Richtek Technology Corporation. All rights reserved. Copyright and All rights reserved in each page footer. Last page disclaimer has no reproduction clause."
+      }
+    },
+    {
+      "id": "component-c26",
+      "source": "https://www.richtek.com/assets/product_file/RT9742/DS9742-10.pdf",
+      "final_url": "https://www.richtek.com/assets/product_file/RT9742/DS9742-10.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 295076,
+      "source_sha256": "sha256:8683bdd544157dcf4600c70bef2533c5fe54ee2806af49b99fcad1fe1d9d4f01",
+      "source_pages": 19,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.richtek.com/My%20Richtek/Terms%20of%20Use?sc_lang=en",
+      "terms_note": "Terms of Use grant a non-exclusive right to download, reproduce, use and disclose files identified as available, with the copyright notice kept. They ban commercial resale of site content. No automated-use clause found. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "Richtek",
+        "device": "RT9742",
+        "title": "RT9742 70mOhm/55mOhm, 3A/2.5A/2A/1.5A/1A/0.5A High-Side Power Switches with Flag",
+        "document_code_revision": "DS9742-10",
+        "printed_date": "January 2020"
+      },
+      "text_layer": {
+        "pages_with_text": 19,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 1,
+        "heading": "page footer (all pages)",
+        "restriction": "Copyright (c) 2020 Richtek Technology Corporation. All rights reserved. Copyright and All rights reserved in each page footer. Last page disclaimer has no reproduction clause."
+      }
+    },
+    {
+      "id": "component-c27",
+      "source": "https://www.richtek.com/assets/product_file/RT9818/DS9818-12.pdf",
+      "final_url": "https://www.richtek.com/assets/product_file/RT9818/DS9818-12.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1055976,
+      "source_sha256": "sha256:9efeb0404f65a00486be3018556c8e292f5f1e89e0cb60a1d9c63772565880a8",
+      "source_pages": 33,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.richtek.com/My%20Richtek/Terms%20of%20Use?sc_lang=en",
+      "terms_note": "Terms of Use grant a non-exclusive right to download, reproduce, use and disclose files identified as available, with the copyright notice kept. They ban commercial resale of site content. No automated-use clause found. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "Richtek",
+        "device": "RT9818",
+        "title": "RT9818 Micro-Power Voltage Detector",
+        "document_code_revision": "DS9818-12",
+        "printed_date": "November 2024 (revision history: 12, 2024/11/13)"
+      },
+      "text_layer": {
+        "pages_with_text": 33,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 1,
+        "heading": "page footer (all pages)",
+        "restriction": "Copyright (c) 2024 Richtek Technology Corporation. All rights reserved. Copyright and All rights reserved in each page footer. Last page disclaimer has no reproduction clause."
+      }
+    },
+    {
+      "id": "component-c28",
+      "source": "https://static.3peak.com/res/doc/ds/Datasheet_TPT1042-TPT1042V.pdf",
+      "final_url": "https://static.3peak.com/res/doc/ds/Datasheet_TPT1042-TPT1042V.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1198557,
+      "source_sha256": "sha256:a6a75e41f36350bd08d4346c7c6c8e8732f498807729b384fb82bdfbb19624c9",
+      "source_pages": 24,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.3peak.com/terms-of-use",
+      "terms_note": "Terms of Use permit use of datasheets made available for download if proprietary notices stay and nothing is modified. They ban copying to servers of a commercial enterprise without consent. No automated-use clause found. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "3PEAK",
+        "device": "TPT1042V, TPT1042",
+        "title": "TPT1042V, TPT1042 Fault Protected High-Speed CAN FD Transceiver with Standby Mode",
+        "document_code_revision": "CA20230202A2, Rev.A.2",
+        "printed_date": "2026-07-28 (revision history)"
+      },
+      "text_layer": {
+        "pages_with_text": 24,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 23,
+        "heading": "IMPORTANT NOTICE AND DISCLAIMER",
+        "restriction": "You may NOT reproduce, modify, publish, transmit or distribute any Trademark. The ban covers trademarks only, not the document."
+      }
+    },
+    {
+      "id": "component-c29",
+      "source": "https://static.3peak.com/res/doc/ds/Datasheet_TP181.pdf",
+      "final_url": "https://static.3peak.com/res/doc/ds/Datasheet_TP181.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 2422082,
+      "source_sha256": "sha256:0f60c4e0854456b38bfddcc6e4edeb6ea52de488af7a009e44c6e994bc9ff46f",
+      "source_pages": 18,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.3peak.com/terms-of-use",
+      "terms_note": "Terms of Use permit use of datasheets made available for download if proprietary notices stay and nothing is modified. They ban copying to servers of a commercial enterprise without consent. No automated-use clause found. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "3PEAK",
+        "device": "TP181",
+        "title": "TP181 Zero-Drift, Bi-Directional Current Sense Amplifier",
+        "document_code_revision": "AA20260409A4, Rev.A.4",
+        "printed_date": "2026-04-20 (revision history)"
+      },
+      "text_layer": {
+        "pages_with_text": 18,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 17,
+        "heading": "IMPORTANT NOTICE AND DISCLAIMER",
+        "restriction": "You may NOT reproduce, modify, publish, transmit or distribute any Trademark. The ban covers trademarks only, not the document."
+      }
+    },
+    {
+      "id": "component-c30",
+      "source": "https://static.3peak.com/res/doc/ds/Datasheet_TPT764x.pdf",
+      "final_url": "https://static.3peak.com/res/doc/ds/Datasheet_TPT764x.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1908505,
+      "source_sha256": "sha256:5a69f22282928c1fb0fbf2ea5e611791a690868d2663c2352d34aa64d57137b5",
+      "source_pages": 40,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.3peak.com/terms-of-use",
+      "terms_note": "Terms of Use permit use of datasheets made available for download if proprietary notices stay and nothing is modified. They ban copying to servers of a commercial enterprise without consent. No automated-use clause found. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "3PEAK",
+        "device": "TPT764x (TPT7640, TPT7641, TPT7642)",
+        "title": "TPT764x 4-Channel Reinforced High-Performance Digital Isolator",
+        "document_code_revision": "CA20250202A2, Rev.A.2",
+        "printed_date": "2026-07-16 (revision history)"
+      },
+      "text_layer": {
+        "pages_with_text": 40,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 39,
+        "heading": "IMPORTANT NOTICE AND DISCLAIMER",
+        "restriction": "You may NOT reproduce, modify, publish, transmit or distribute any Trademark. The ban covers trademarks only, not the document."
+      }
+    },
+    {
+      "id": "component-c31",
+      "source": "https://static.3peak.com/res/doc/ds/Datasheet_LM393_LM339.pdf",
+      "final_url": "https://static.3peak.com/res/doc/ds/Datasheet_LM393_LM339.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1847677,
+      "source_sha256": "sha256:8ba8307a3c0a040db97f11c75dd1faefec09e61ef9ebc14850eb641a84d17276",
+      "source_pages": 24,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.3peak.com/terms-of-use",
+      "terms_note": "Terms of Use permit use of datasheets made available for download if proprietary notices stay and nothing is modified. They ban copying to servers of a commercial enterprise without consent. No automated-use clause found. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "3PEAK",
+        "device": "LM393/LM339",
+        "title": "LM393/LM339 40-V High-Voltage Comparators with Open-Drain Output",
+        "document_code_revision": "AA20250613A1, Rev.A.1",
+        "printed_date": "2026-01-13 (revision history)"
+      },
+      "text_layer": {
+        "pages_with_text": 24,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 23,
+        "heading": "IMPORTANT NOTICE AND DISCLAIMER",
+        "restriction": "You may NOT reproduce, modify, publish, transmit or distribute any Trademark. The ban covers trademarks only, not the document."
+      }
+    },
+    {
+      "id": "component-c32",
+      "source": "https://www.cirrus.com/docs/ds/cs8416-datasheet.pdf",
+      "final_url": "https://www.cirrus.com/docs/ds/cs8416-datasheet.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 788143,
+      "source_sha256": "sha256:2bd423f47c687c10e8e5f074f1bb71cbc644f28cb7776f992aa3872ffce42737",
+      "source_pages": 61,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.cirrus.com/legal/terms",
+      "terms_note": "Grants permission to download and reproduce Materials for informational and non-commercial or personal use (same terms as the earlier Cirrus rows). No automated-use clause found. The cirrus.com URL sends no Content-Length; the size is from a HEAD of the publisher's own CDN copy linked on the product page.",
+      "identity": {
+        "publisher": "Cirrus Logic",
+        "device": "CS8416",
+        "title": "CS8416 192 kHz Digital Audio Interface Receiver",
+        "document_code_revision": "DS578F5",
+        "printed_date": "NOV 2021 (copyright 2011-2021)"
+      },
+      "text_layer": {
+        "pages_with_text": 61,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 61,
+        "heading": "IMPORTANT NOTICE",
+        "restriction": "gives consent for copies ... only for use within your organization. Other copying not consented. PDF permission flag copy:no (AES)."
+      }
+    },
+    {
+      "id": "component-c33",
+      "source": "https://www.cirrus.com/docs/ds/cs5361-datasheet.pdf",
+      "final_url": "https://www.cirrus.com/docs/ds/cs5361-datasheet.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 602844,
+      "source_sha256": "sha256:d995a203ae549c6b98c61300339e10ea4d8888fa36cabc94c0b07bfe958dec27",
+      "source_pages": 23,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.cirrus.com/legal/terms",
+      "terms_note": "Grants permission to download and reproduce Materials for informational and non-commercial or personal use (same terms as the earlier Cirrus rows). No automated-use clause found. The cirrus.com URL sends no Content-Length; the size is from a HEAD of the publisher's own CDN copy linked on the product page.",
+      "identity": {
+        "publisher": "Cirrus Logic",
+        "device": "CS5361",
+        "title": "CS5361 114 dB, 192 kHz, Multi-Bit Audio A/D Converter",
+        "document_code_revision": "DS467F3",
+        "printed_date": "OCT 2021 (copyright 2005-2021)"
+      },
+      "text_layer": {
+        "pages_with_text": 23,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": 23,
+        "heading": "IMPORTANT NOTICE",
+        "restriction": "gives consent for copies ... only for use within your organization. Other copying not consented. PDF permission flag copy:no (AES)."
+      }
+    },
+    {
+      "id": "component-c34",
+      "source": "https://www.sg-micro.com/rect/assets/43b62789-211b-4c80-8ac3-198b130908f1/SGM8261-2X.pdf",
+      "final_url": "https://www.sg-micro.com/rect/assets/43b62789-211b-4c80-8ac3-198b130908f1/SGM8261-2X.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 993498,
+      "source_sha256": "sha256:2fb7427fcaba9c3eff57e6b5ed2dd1c62a7b60c589d65f20f4266f550f62dafd",
+      "source_pages": 18,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.sg-micro.com/",
+      "terms_note": "No terms-of-use page found: the site footer has only a copyright line, and /terms, /legal and /terms-of-use return 404. No reproduction or automated-use ban found in the HTML pages. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "SG Micro",
+        "device": "SGM8261-2X",
+        "title": "SGM8261-2X Bipolar-Input, High Performance, Ultra-Low Noise Operational Amplifier",
+        "document_code_revision": "no document code printed; REV. A",
+        "printed_date": "AUGUST 2026"
+      },
+      "text_layer": {
+        "pages_with_text": 18,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": null,
+        "heading": null,
+        "restriction": "No copyright, licence or reproduction statement found in the text layer."
+      }
+    },
+    {
+      "id": "component-c35",
+      "source": "https://www.sg-micro.com/rect/assets/5bf0b2c7-2168-4861-8d2f-3aea1d46f73f/SGM42221A.pdf",
+      "final_url": "https://www.sg-micro.com/rect/assets/5bf0b2c7-2168-4861-8d2f-3aea1d46f73f/SGM42221A.pdf",
+      "approved_max_bytes": 8388608,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 739097,
+      "source_sha256": "sha256:8dcfe669251b896278c3a1ee2b6f49bce954d93702978f5fae5bf77a541904b4",
+      "source_pages": 14,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.sg-micro.com/",
+      "terms_note": "No terms-of-use page found: the site footer has only a copyright line, and /terms, /legal and /terms-of-use return 404. No reproduction or automated-use ban found in the HTML pages. We cite URL and SHA-256 only.",
+      "identity": {
+        "publisher": "SG Micro",
+        "device": "SGM42221A",
+        "title": "SGM42221A 200mOhm, Smart High-side Power Switch",
+        "document_code_revision": "no document code printed; REV. A",
+        "printed_date": "SEPTEMBER 2026"
+      },
+      "text_layer": {
+        "pages_with_text": 14,
+        "pages_without_text": [],
+        "language": "English"
+      },
+      "notice": {
+        "page": null,
+        "heading": null,
+        "restriction": "No copyright, licence or reproduction statement found in the text layer."
+      }
+    },
+    {
+      "id": "sbc-c01",
+      "source": "https://www.tn.gov/content/dam/tn/partnersforhealth/documents/sbc_premier_2026.pdf",
+      "final_url": "https://www.tn.gov/content/dam/tn/partnersforhealth/documents/sbc_premier_2026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1234905,
+      "source_sha256": "sha256:d2645323b75cf98c23a04f8f04c22742d6f9dcacf66b40c7ea306dece0d3f7ef",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.tn.gov/web-policies/linking-policy.html",
+      "terms_note": "TN.gov linking policy: posted information may be copied if presented in a non-misleading way. No ban on download or automated use found.",
+      "identity": {
+        "employer": "State of Tennessee",
+        "plan_name": "State of Tennessee Premier Plan",
+        "insurer_or_administrator": "BCBST and Cigna (Benefits Administration)",
+        "coverage_period": "01/01/2026 – 12/31/2026",
+        "coverage_type": "PPO"
+      },
+      "text_layer": {
+        "pages_with_text": 8,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c02",
+      "source": "https://www.tn.gov/content/dam/tn/partnersforhealth/documents/sbc_standard_2026.pdf",
+      "final_url": "https://www.tn.gov/content/dam/tn/partnersforhealth/documents/sbc_standard_2026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 2248711,
+      "source_sha256": "sha256:11324b55548d35abb8fa548489bedd84c8b755d6dffb59a2a15a0da8952f77db",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.tn.gov/web-policies/linking-policy.html",
+      "terms_note": "TN.gov linking policy: posted information may be copied if presented in a non-misleading way. No ban on download or automated use found.",
+      "identity": {
+        "employer": "State of Tennessee",
+        "plan_name": "State of Tennessee Standard Plan",
+        "insurer_or_administrator": "BCBST and Cigna (Benefits Administration)",
+        "coverage_period": "01/01/2026 – 12/31/2026",
+        "coverage_type": "PPO"
+      },
+      "text_layer": {
+        "pages_with_text": 8,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c03",
+      "source": "https://hr.arizona.edu/sites/default/files/2026-PPO-SBC.pdf",
+      "final_url": "https://hr.arizona.edu/sites/default/files/2026-PPO-SBC.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 640983,
+      "source_sha256": "sha256:b6f371ca86c00c7320c82c3c132481adca806fdd0b4fe7cec6c45de29b70f7e5",
+      "source_pages": 9,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.arizona.edu/copyright",
+      "terms_note": "UA copyright page gives only a copyright guide and DMCA agent. No express ban on reproduction, download or automated use. The SBC is the State of Arizona (ADOA Benefit Options) plan; the ADOA site benefitoptions.az.gov sits behind a bot challenge, so the UA copy is used.",
+      "identity": {
+        "employer": "State of Arizona Benefit Options (ADOA)",
+        "plan_name": "State of Arizona Benefit Options PPO",
+        "insurer_or_administrator": "State of Arizona Benefit Options (UnitedHealthcare, MedImpact named)",
+        "coverage_period": "01/01/2026-12/31/2026",
+        "coverage_type": "PPO"
+      },
+      "text_layer": {
+        "pages_with_text": 9,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c04",
+      "source": "https://hr.arizona.edu/sites/default/files/2026-HDHP-SBC.pdf",
+      "final_url": "https://hr.arizona.edu/sites/default/files/2026-HDHP-SBC.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 638614,
+      "source_sha256": "sha256:0437119e87201523d91ea189c7cccf17d5511790022e44cbbd1a4d72240d8b33",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.arizona.edu/copyright",
+      "terms_note": "UA copyright page gives only a copyright guide and DMCA agent. No express ban on reproduction, download or automated use. The SBC is the State of Arizona (ADOA Benefit Options) plan; the ADOA site benefitoptions.az.gov sits behind a bot challenge, so the UA copy is used.",
+      "identity": {
+        "employer": "State of Arizona Benefit Options (ADOA)",
+        "plan_name": "State of Arizona Benefit Options High Deductible Health Plan",
+        "insurer_or_administrator": "State of Arizona Benefit Options",
+        "coverage_period": "01/01/2026-12/31/2026",
+        "coverage_type": "High Deductible Health Plan"
+      },
+      "text_layer": {
+        "pages_with_text": 8,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c05",
+      "source": "https://media.pace.edu/hr/web-files/benefits-open-enrollment/SBC-2026-choice-plan.pdf",
+      "final_url": "https://media.pace.edu/hr/web-files/benefits-open-enrollment/SBC-2026-choice-plan.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 818427,
+      "source_sha256": "sha256:40b9722520b62243741a94896b02a33cac7c2f6ed56c34f23ea1a53887f5257e",
+      "source_pages": 10,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.pace.edu/copyright-notice",
+      "terms_note": "Pace copyright notice: \"Redistribution or commercial use is prohibited without express written permission.\" No ban on download or automated use. We cite URL and SHA-256 only and do not redistribute.",
+      "identity": {
+        "employer": "Pace University",
+        "plan_name": "Aetna Choice POS II (Choice Plan)",
+        "insurer_or_administrator": "Aetna",
+        "coverage_period": "01/01/2026-12/31/2026",
+        "coverage_type": "POS"
+      },
+      "text_layer": {
+        "pages_with_text": 10,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c06",
+      "source": "https://media.pace.edu/hr/web-files/benefits-open-enrollment/SBC-2026-consumer-core-HDHP.pdf",
+      "final_url": "https://media.pace.edu/hr/web-files/benefits-open-enrollment/SBC-2026-consumer-core-HDHP.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 802921,
+      "source_sha256": "sha256:2161624040639bd15a638845e27727b07c84205d892649351b27a0bfe3cc34f8",
+      "source_pages": 9,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.pace.edu/copyright-notice",
+      "terms_note": "Pace copyright notice: \"Redistribution or commercial use is prohibited without express written permission.\" No ban on download or automated use. We cite URL and SHA-256 only and do not redistribute.",
+      "identity": {
+        "employer": "Pace University",
+        "plan_name": "Aetna Open Access Aetna Select - HDHP",
+        "insurer_or_administrator": "Aetna",
+        "coverage_period": "01/01/2026-12/31/2026",
+        "coverage_type": "EPO"
+      },
+      "text_layer": {
+        "pages_with_text": 9,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c07",
+      "source": "https://hr.syr.edu/wp-content/uploads/2025/10/Final-SUBlue.SBC_.2026-1.pdf",
+      "final_url": "https://hr.syr.edu/wp-content/uploads/2025/10/Final-SUBlue.SBC_.2026-1.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1347599,
+      "source_sha256": "sha256:7f3f3f233af328f1caa8a7823e656ba26e4ea6f74ab5d6e3f82cc548f82bd477",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.syracuse.edu/about/site/copyright/",
+      "terms_note": "Syracuse copyright page covers infringement reports only. No express ban on reproduction, download or automated use found.",
+      "identity": {
+        "employer": "Syracuse University",
+        "plan_name": "Syracuse University Medical Benefits: SUBLUE",
+        "insurer_or_administrator": "Excellus BlueCross BlueShield",
+        "coverage_period": "01/01/2026 – 12/31/2026",
+        "coverage_type": "PPO"
+      },
+      "text_layer": {
+        "pages_with_text": 8,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c08",
+      "source": "https://hr.syr.edu/wp-content/uploads/2025/10/Final-SUOrange.SBC_.2026.pdf",
+      "final_url": "https://hr.syr.edu/wp-content/uploads/2025/10/Final-SUOrange.SBC_.2026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 737503,
+      "source_sha256": "sha256:063f503abcb4ea6d8b0cb06358f555af1f63763531a7e89f409bb3aec5ab452b",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.syracuse.edu/about/site/copyright/",
+      "terms_note": "Syracuse copyright page covers infringement reports only. No express ban on reproduction, download or automated use found.",
+      "identity": {
+        "employer": "Syracuse University",
+        "plan_name": "Syracuse University Medical Benefits: SUORANGE",
+        "insurer_or_administrator": "Excellus BlueCross BlueShield",
+        "coverage_period": "01/01/2026 – 12/31/2026",
+        "coverage_type": "EPO"
+      },
+      "text_layer": {
+        "pages_with_text": 8,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c09",
+      "source": "https://www.jocogov.org/sites/default/files/files/2025-10/2026SummaryofBenefitsandCoveragePPOPlan.pdf",
+      "final_url": "https://www.jocogov.org/sites/default/files/files/2025-10/2026SummaryofBenefitsandCoveragePPOPlan.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 642740,
+      "source_sha256": "sha256:37a4be9c2f25f7f40c63da196860e086e3410341b1186c09be742a976e5e79fe",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.jocogov.org/legal-disclosures",
+      "terms_note": "Johnson County legal disclosures cover ADA, comments and privacy. No ban on reproduction, download or automated use found.",
+      "identity": {
+        "employer": "Johnson County Government (group 11823000)",
+        "plan_name": "Preferred-Care Blue PPO TC (Medical Home) Plan",
+        "insurer_or_administrator": "Blue Cross and Blue Shield of Kansas City (Blue KC)",
+        "coverage_period": "Beginning on or after 01/01/2026",
+        "coverage_type": "PPO"
+      },
+      "text_layer": {
+        "pages_with_text": 8,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c10",
+      "source": "https://www.jocogov.org/sites/default/files/files/2025-10/2026SummaryofBenefitsandCoverageBlueSaverQHDHPIndividualPlan.pdf",
+      "final_url": "https://www.jocogov.org/sites/default/files/files/2025-10/2026SummaryofBenefitsandCoverageBlueSaverQHDHPIndividualPlan.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 428974,
+      "source_sha256": "sha256:eea0bae4d53311b1f0cec8855ca4c4704f0c8e075c49fb92889105dd8cb47f71",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.jocogov.org/legal-disclosures",
+      "terms_note": "Johnson County legal disclosures cover ADA, comments and privacy. No ban on reproduction, download or automated use found.",
+      "identity": {
+        "employer": "Johnson County Government",
+        "plan_name": "Preferred Care Blue BlueSaver PPO-Single",
+        "insurer_or_administrator": "Blue Cross and Blue Shield of Kansas City (Blue KC)",
+        "coverage_period": "Beginning on or after 01/01/2026",
+        "coverage_type": "PPO (HSA-qualified BlueSaver)"
+      },
+      "text_layer": {
+        "pages_with_text": 8,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c11",
+      "source": "https://extranet.personnel.ky.gov/KEHP/2026%20LW%20CDHP%20SBC.pdf",
+      "final_url": "https://extranet.personnel.ky.gov/KEHP/2026%20LW%20CDHP%20SBC.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 372595,
+      "source_sha256": "sha256:65ca0ab08d63a70ff7535ed7a53b55f4b4bbf7f1b324761c7a7d3146b6415188",
+      "source_pages": 6,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.kentucky.gov/policies",
+      "terms_note": "Kentucky.gov policies page shows privacy terms only. No ban on reproduction, download or automated use found. A draft copy of the CDHP SBC also exists on personnel.ky.gov; the extranet copy is used.",
+      "identity": {
+        "employer": "Commonwealth of Kentucky (Kentucky Employees' Health Plan)",
+        "plan_name": "LivingWell CDHP",
+        "insurer_or_administrator": "Kentucky Employees' Health Plan (Anthem named)",
+        "coverage_period": "01/01/2026 – 12/31/2026",
+        "coverage_type": "PPO (CDHP)"
+      },
+      "text_layer": {
+        "pages_with_text": 6,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c12",
+      "source": "https://extranet.personnel.ky.gov/KEHP/2026%20LW%20HDHP%20SBC.pdf",
+      "final_url": "https://extranet.personnel.ky.gov/KEHP/2026%20LW%20HDHP%20SBC.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 372344,
+      "source_sha256": "sha256:5e7e53c4dc0b6e68c1ebab8100a045bc8e725d14b213be9974ce9cc84ecc15d1",
+      "source_pages": 6,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.kentucky.gov/policies",
+      "terms_note": "Kentucky.gov policies page shows privacy terms only. No ban on reproduction, download or automated use found. A draft copy of the CDHP SBC also exists on personnel.ky.gov; the extranet copy is used.",
+      "identity": {
+        "employer": "Commonwealth of Kentucky (Kentucky Employees' Health Plan)",
+        "plan_name": "LivingWell HDHP",
+        "insurer_or_administrator": "Kentucky Employees' Health Plan",
+        "coverage_period": "01/01/2026 – 12/31/2026",
+        "coverage_type": "PPO (HDHP)"
+      },
+      "text_layer": {
+        "pages_with_text": 6,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c13",
+      "source": "https://hr.osu.edu/wp-content/uploads/sbc-prime-care-advantage.pdf",
+      "final_url": "https://hr.osu.edu/wp-content/uploads/sbc-prime-care-advantage.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 380139,
+      "source_sha256": "sha256:9a0cf78e9ce1e833ed21ecd43e48e68732d98701ff55c9030a3cc94d2fca2c4f",
+      "source_pages": 7,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://go.osu.edu/privacy",
+      "terms_note": "OSU privacy statement only; www.osu.edu/copyright gave no terms text. No ban on reproduction, download or automated use found.",
+      "identity": {
+        "employer": "The Ohio State University",
+        "plan_name": "Prime Care Advantage",
+        "insurer_or_administrator": "The Ohio State University (self-administered; no carrier named on page 1)",
+        "coverage_period": "01/01/2026 - 12/31/2026",
+        "coverage_type": "EPO"
+      },
+      "text_layer": {
+        "pages_with_text": 7,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c14",
+      "source": "https://hr.osu.edu/wp-content/uploads/sbc-prime-care-choice.pdf",
+      "final_url": "https://hr.osu.edu/wp-content/uploads/sbc-prime-care-choice.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 306952,
+      "source_sha256": "sha256:c334d5203ddfaaa01d9fe09692933f7c6015dfae7f3d9023d8a5f57e031c7bc6",
+      "source_pages": 7,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://go.osu.edu/privacy",
+      "terms_note": "OSU privacy statement only; www.osu.edu/copyright gave no terms text. No ban on reproduction, download or automated use found.",
+      "identity": {
+        "employer": "The Ohio State University",
+        "plan_name": "Prime Care Choice",
+        "insurer_or_administrator": "The Ohio State University (self-administered; no carrier named on page 1)",
+        "coverage_period": "01/01/2026 – 12/31/2026",
+        "coverage_type": "PPO"
+      },
+      "text_layer": {
+        "pages_with_text": 7,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c15",
+      "source": "https://www.sandiego.gov/sites/default/files/2025-10/cigna-hmo-summary-of-benefits-and-coverage-2026.pdf",
+      "final_url": "https://www.sandiego.gov/sites/default/files/2025-10/cigna-hmo-summary-of-benefits-and-coverage-2026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 579954,
+      "source_sha256": "sha256:4cc9aaf0ae648d03483c8355ed6e875ac2268ea1c81fdc53d0885069881f55d5",
+      "source_pages": 9,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.sandiego.gov/disclaimers",
+      "terms_note": "City of San Diego: site materials are freely available for non-commercial, non-profit use if notices stay intact; no mirroring without written permission. We cite URL and SHA-256 only.",
+      "identity": {
+        "employer": "not printed (host: City of San Diego)",
+        "plan_name": "Cigna HMO",
+        "insurer_or_administrator": "Cigna HealthCare of California, Inc.",
+        "coverage_period": "01/01/2026 - 12/31/2026",
+        "coverage_type": "HMO"
+      },
+      "text_layer": {
+        "pages_with_text": 8,
+        "pages_without_text": [
+          7
+        ]
+      },
+      "notice": "Copyright line only: '© 2024 Cigna Healthcare'. No reproduction ban."
+    },
+    {
+      "id": "sbc-c16",
+      "source": "https://www.sandiego.gov/sites/default/files/2025-10/cigna-oap-summary-of-benefits-and-coverage-2026.pdf",
+      "final_url": "https://www.sandiego.gov/sites/default/files/2025-10/cigna-oap-summary-of-benefits-and-coverage-2026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 606044,
+      "source_sha256": "sha256:e708581b94b0a2c13bd00510cd7f4bc3db543031ec68480018f9b22271f8f3ff",
+      "source_pages": 11,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.sandiego.gov/disclaimers",
+      "terms_note": "City of San Diego: site materials are freely available for non-commercial, non-profit use if notices stay intact; no mirroring without written permission. We cite URL and SHA-256 only.",
+      "identity": {
+        "employer": "not printed (host: City of San Diego)",
+        "plan_name": "Cigna Open Access Plus",
+        "insurer_or_administrator": "Cigna Health and Life Insurance Co.",
+        "coverage_period": "01/01/2026 - 12/31/2026",
+        "coverage_type": "OAP"
+      },
+      "text_layer": {
+        "pages_with_text": 10,
+        "pages_without_text": [
+          9
+        ]
+      },
+      "notice": "Copyright line only: '© 2024 Cigna Healthcare'. No reproduction ban."
+    },
+    {
+      "id": "sbc-c17",
+      "source": "https://www.purdue.edu/hr/global/benefits_enrollment/pdf/2026/UMR_Summary_of_Benefits_Select_Plan_2026.pdf",
+      "final_url": "https://www.purdue.edu/hr/global/benefits_enrollment/pdf/2026/UMR_Summary_of_Benefits_Select_Plan_2026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 309053,
+      "source_sha256": "sha256:43cc334f9396dba36c5a990e53bd081700645fa4637d1cd4b334ea57d913ad57",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.purdue.edu/purdue/disclaimer.php",
+      "terms_note": "Purdue disclaimer: \"All contents Copyright Purdue University. All rights reserved.\" No express ban on download or automated use. The HR catalog page returned 403, so the URL comes from search results.",
+      "identity": {
+        "employer": "Purdue University Global",
+        "plan_name": "UMR: Purdue University Global 7670-00-415658 015 (Select Plan)",
+        "insurer_or_administrator": "UMR",
+        "coverage_period": "01/01/2026 – 12/31/2026",
+        "coverage_type": "EPO"
+      },
+      "text_layer": {
+        "pages_with_text": 8,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c18",
+      "source": "https://www.purdue.edu/hr/global/benefits_enrollment/pdf/2026/UMR_Summary_of_Benefits_CDHP_2026.pdf",
+      "final_url": "https://www.purdue.edu/hr/global/benefits_enrollment/pdf/2026/UMR_Summary_of_Benefits_CDHP_2026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 312796,
+      "source_sha256": "sha256:915b948fc3f67fc420fdae0f4ee4e1a563b00736cb77a5bfccd4c7fbc8f6f5b2",
+      "source_pages": 9,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.purdue.edu/purdue/disclaimer.php",
+      "terms_note": "Purdue disclaimer: \"All contents Copyright Purdue University. All rights reserved.\" No express ban on download or automated use. The HR catalog page returned 403, so the URL comes from search results.",
+      "identity": {
+        "employer": "Purdue University Global",
+        "plan_name": "UMR: Purdue University Global 7670-00-415658 016 (CDHP)",
+        "insurer_or_administrator": "UMR",
+        "coverage_period": "01/01/2026 – 12/31/2026",
+        "coverage_type": "HDHP"
+      },
+      "text_layer": {
+        "pages_with_text": 9,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c19",
+      "source": "https://hr.msu.edu/benefits/healthcare/documents/2026-BCN-Active-Fac-Acad_SBC.pdf",
+      "final_url": "https://hr.msu.edu/benefits/healthcare/documents/2026-BCN-Active-Fac-Acad_SBC.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 357615,
+      "source_sha256": "sha256:2c058f739ef3e6a4ea9c819f07afe1ee9243114362b90ac8dd8a83e184e084bb",
+      "source_pages": 6,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://hr.msu.edu/privacy.html",
+      "terms_note": "MSU HR privacy statement only. No ban on reproduction, download or automated use found.",
+      "identity": {
+        "employer": "Michigan State University",
+        "plan_name": "BCN-Active – Faculty/Academic Staff",
+        "insurer_or_administrator": "Blue Care Network / BCBSM",
+        "coverage_period": "Beginning on or after 01/01/2026",
+        "coverage_type": "HMO"
+      },
+      "text_layer": {
+        "pages_with_text": 6,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c20",
+      "source": "https://hr.msu.edu/benefits/healthcare/documents/2026-CDHP_SBC.pdf",
+      "final_url": "https://hr.msu.edu/benefits/healthcare/documents/2026-CDHP_SBC.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 376920,
+      "source_sha256": "sha256:8b47756ed8c9bf776ef2515658c3ce31e2a416429cbcbd13c9560eefbb533fe6",
+      "source_pages": 6,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://hr.msu.edu/privacy.html",
+      "terms_note": "MSU HR privacy statement only. No ban on reproduction, download or automated use found.",
+      "identity": {
+        "employer": "Michigan State University",
+        "plan_name": "Consumer Driven Health Plan (CDHP)",
+        "insurer_or_administrator": "BCBSM",
+        "coverage_period": "Beginning on or after 01/01/2026",
+        "coverage_type": "PPO (CDHP)"
+      },
+      "text_layer": {
+        "pages_with_text": 6,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c21",
+      "source": "https://hr.iu.edu/_docs/benefits-pubs/anthem-ppo500-sbc-2026.pdf",
+      "final_url": "https://hr.iu.edu/_docs/benefits-pubs/anthem-ppo500-sbc-2026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 753206,
+      "source_sha256": "sha256:9a35379ad7ea5cb0922f818a828bfe99a69550a4c52a50bda1856e53c827b262",
+      "source_pages": 6,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.iu.edu/copyright/index.html",
+      "terms_note": "IU copyright page says works are protected by copyright; no express ban on download or automated use.",
+      "identity": {
+        "employer": "Trustees of Indiana University",
+        "plan_name": "PPO Deductible Plan (amount in name omitted)",
+        "insurer_or_administrator": "Anthem (ASO)",
+        "coverage_period": "01/01/2026 - 12/31/2026",
+        "coverage_type": "PPO"
+      },
+      "text_layer": {
+        "pages_with_text": 6,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c22",
+      "source": "https://hr.iu.edu/_docs/benefits-pubs/anthem-ppo-hdhp-sbc-2026.pdf",
+      "final_url": "https://hr.iu.edu/_docs/benefits-pubs/anthem-ppo-hdhp-sbc-2026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 742360,
+      "source_sha256": "sha256:a8efa8b1e87412bd7440aacb3a2c22d56375bfccc33ffe3cc1c82eebd5968e2f",
+      "source_pages": 6,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.iu.edu/copyright/index.html",
+      "terms_note": "IU copyright page says works are protected by copyright; no express ban on download or automated use.",
+      "identity": {
+        "employer": "Trustees of Indiana University",
+        "plan_name": "PPO HDHP",
+        "insurer_or_administrator": "Anthem (ASO)",
+        "coverage_period": "01/01/2026 - 12/31/2026",
+        "coverage_type": "PPO + HSA"
+      },
+      "text_layer": {
+        "pages_with_text": 6,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c23",
+      "source": "https://resources.finalsite.net/images/v1776958889/letchworthk12nyus/dnrmfvldortaezqzxqrm/PPOUnder65withRxSBC7126.pdf",
+      "final_url": "https://resources.finalsite.net/images/v1776958889/letchworthk12nyus/dnrmfvldortaezqzxqrm/PPOUnder65withRxSBC7126.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 691114,
+      "source_sha256": "sha256:1aa9a10497dc64d2f6b835d69da7284539ba5576598eca7e343288623d6bdcd1",
+      "source_pages": 7,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.letchworth.k12.ny.us/link-one/annual-notifications-important-documents/data-privacy-and-security",
+      "terms_note": "No site terms or copyright page found; only data privacy pages. No ban found.",
+      "identity": {
+        "employer": "Genesee Area Healthcare Plan (GAHP); host: Letchworth Central School District",
+        "plan_name": "GAHP – Under 65 PPO B with Rx coverage (Excellus Blue PPO)",
+        "insurer_or_administrator": "Excellus BCBS",
+        "coverage_period": "07/01/2026-06/30/2027",
+        "coverage_type": "PPO"
+      },
+      "text_layer": {
+        "pages_with_text": 5,
+        "pages_without_text": [
+          6,
+          7
+        ]
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c24",
+      "source": "https://resources.finalsite.net/images/v1776958889/letchworthk12nyus/qdwhc3cq2lnobvsltyam/PPOD2Under65withRxSBC7126.pdf",
+      "final_url": "https://resources.finalsite.net/images/v1776958889/letchworthk12nyus/qdwhc3cq2lnobvsltyam/PPOD2Under65withRxSBC7126.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 502701,
+      "source_sha256": "sha256:bbec266f37c8fdb6a484f9d4a8718e8ceea26aa46503ee401917cbe6eea09b93",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.letchworth.k12.ny.us/link-one/annual-notifications-important-documents/data-privacy-and-security",
+      "terms_note": "No site terms or copyright page found; only data privacy pages. No ban found.",
+      "identity": {
+        "employer": "Genesee Area Healthcare Plan (GAHP); host: Letchworth Central School District",
+        "plan_name": "GAHP – Under 65 PPO D-2 with Rx coverage (Excellus Blue PPO)",
+        "insurer_or_administrator": "Excellus BCBS",
+        "coverage_period": "07/01/2026- 06/30/2027",
+        "coverage_type": "PPO"
+      },
+      "text_layer": {
+        "pages_with_text": 6,
+        "pages_without_text": [
+          7,
+          8
+        ]
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c25",
+      "source": "https://www.reed.edu/human_resources/assets/downloads/Kaiser%20medical%20SBC%202026.pdf",
+      "final_url": "https://www.reed.edu/human_resources/assets/downloads/Kaiser%20medical%20SBC%202026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 704616,
+      "source_sha256": "sha256:56daf30dddf4989ffce5107f1f294322f7daad089025aed49a1108f4d7bf6a13",
+      "source_pages": 12,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.reed.edu/policies/",
+      "terms_note": "Reed privacy, web and copyright policy index. No express ban on reproduction, download or automated use found.",
+      "identity": {
+        "employer": "Reed College",
+        "plan_name": "REED COLLEGE (deductible amount in name omitted)",
+        "insurer_or_administrator": "Kaiser Foundation Health Plan of the Northwest",
+        "coverage_period": "01/01/2026-12/31/2026",
+        "coverage_type": "EPO"
+      },
+      "text_layer": {
+        "pages_with_text": 12,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c26",
+      "source": "https://www.reed.edu/human_resources/assets/downloads/Kiaser%20Dual%20Choice%20SBC%202026.pdf",
+      "final_url": "https://www.reed.edu/human_resources/assets/downloads/Kiaser%20Dual%20Choice%20SBC%202026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 737141,
+      "source_sha256": "sha256:1389353a3cbe81211e6102d96fdabd993e1cf0b7749aee7440af1ba272a2ffa6",
+      "source_pages": 12,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.reed.edu/policies/",
+      "terms_note": "Reed privacy, web and copyright policy index. No express ban on reproduction, download or automated use found.",
+      "identity": {
+        "employer": "Reed College",
+        "plan_name": "REED COLLEGE DC (Dual Choice; amount in name omitted)",
+        "insurer_or_administrator": "Kaiser Foundation Health Plan of the Northwest",
+        "coverage_period": "01/01/2026-12/31/2026",
+        "coverage_type": "PPO"
+      },
+      "text_layer": {
+        "pages_with_text": 12,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c27",
+      "source": "https://www.avc.edu/sites/default/files/administration/hr/benefits/26-27%20Benefits/Plan%20Docs/SBC/SBC_20261001_KP_2026%20Oct%20Kaiser%20SBC%20%2420%20OV%2C%20%2410-20%20Rx.pdf",
+      "final_url": "https://www.avc.edu/sites/default/files/administration/hr/benefits/26-27%20Benefits/Plan%20Docs/SBC/SBC_20261001_KP_2026%20Oct%20Kaiser%20SBC%20%2420%20OV%2C%20%2410-20%20Rx.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1353499,
+      "source_sha256": "sha256:b08339aaf442e9801861d8b6e9ac511b36dc1bbeadfde979ea4968c18bf19000",
+      "source_pages": 14,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.avc.edu/node/630",
+      "terms_note": "No site terms or disclaimer page found (disclaimer URLs return 404). No ban found.",
+      "identity": {
+        "employer": "SISC - Self Insured Schools of California (host: Antelope Valley Community College District)",
+        "plan_name": "TRADITIONAL PLAN (Kaiser)",
+        "insurer_or_administrator": "Kaiser Permanente (SISC)",
+        "coverage_period": "10/01/2026-09/30/2027",
+        "coverage_type": "HMO"
+      },
+      "text_layer": {
+        "pages_with_text": 14,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c28",
+      "source": "https://www.avc.edu/sites/default/files/administration/hr/benefits/26-27%20Benefits/Plan%20Docs/SBC/SBC_20261001_BC_2026%20Anthem%20PPO%20HSA%205000.pdf",
+      "final_url": "https://www.avc.edu/sites/default/files/administration/hr/benefits/26-27%20Benefits/Plan%20Docs/SBC/SBC_20261001_BC_2026%20Anthem%20PPO%20HSA%205000.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 591690,
+      "source_sha256": "sha256:0f4e7ffc6a84260fbb5ef6e92ca1025c4c31d86011b2cd96c20e44928f528896",
+      "source_pages": 8,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.avc.edu/node/630",
+      "terms_note": "No site terms or disclaimer page found (disclaimer URLs return 404). No ban found.",
+      "identity": {
+        "employer": "SISC (host: Antelope Valley Community College District)",
+        "plan_name": "Anthem Blue Cross: HSA; Rx HSA (amount in name omitted)",
+        "insurer_or_administrator": "Anthem Blue Cross",
+        "coverage_period": "10/1/2026 - 9/30/2027",
+        "coverage_type": "PPO (HSA)"
+      },
+      "text_layer": {
+        "pages_with_text": 8,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c29",
+      "source": "https://www.worthington.k12.oh.us/fs/resource-manager/view/5896d938-883f-4676-b341-0bc163ed0d1c",
+      "final_url": "https://resources.finalsite.net/images/v1763039614/worthingtonk12ohus/qxnhbczzyj3wmjnjq4x5/WorthingtonEmployeeSummaryofBenefits.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 463270,
+      "source_sha256": "sha256:89261b718c008879bec54bd5000917e7b7f09f14c6be683b676b5b134d258355",
+      "source_pages": 6,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "Not the federal SBC form (carrier summary) and scanned without a text layer.",
+      "terms_url": "https://www.worthington.k12.oh.us/staff/contracts-legal-documents",
+      "terms_note": "No site terms or copyright page found on the district site. No ban found.",
+      "identity": {
+        "employer": "Worthington City Schools",
+        "plan_name": "Anthem Blue Access PPO HSA",
+        "insurer_or_administrator": "Anthem Blue Cross and Blue Shield",
+        "coverage_period": "Effective Date: 1/1/2026",
+        "coverage_type": "PPO HSA"
+      },
+      "text_layer": {
+        "pages_with_text": 0,
+        "pages_without_text": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "sbc-c30",
+      "source": "https://hr.northwestern.edu/documents/benefits/sbc-essential-2026.pdf",
+      "final_url": "https://hr.northwestern.edu/documents/benefits/sbc-essential-2026.pdf",
+      "approved_max_bytes": 4194304,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 291886,
+      "source_sha256": "sha256:1c638ac5e0262861328d18f0d3bb68d09597f350683abb32ea08e4086cd9222f",
+      "source_pages": 7,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.northwestern.edu/disclaimer.html",
+      "terms_note": "Northwestern disclaimer page. No express ban on reproduction, download or automated use found. The HR medical catalog page was not found; URL comes from search results.",
+      "identity": {
+        "employer": "not printed (host: Northwestern University)",
+        "plan_name": "HSA Choice Plus Essential Plan",
+        "insurer_or_administrator": "UnitedHealthcare (welcometouhc.com)",
+        "coverage_period": "01/01/2026 – 12/31/2026",
+        "coverage_type": "PS1 (UHC Choice Plus, HSA)"
+      },
+      "text_layer": {
+        "pages_with_text": 7,
+        "pages_without_text": []
+      },
+      "notice": "none found"
+    },
+    {
+      "id": "annual-c01",
+      "source": "https://cdn.esb.ie/media/docs/default-source/investor-relations-documents/esb-annual-report-and-financial-statements-2025462b391a-8f8b-48d8-b770-ce225c33ea36.pdf?sfvrsn=204734a1_5",
+      "final_url": "https://cdn.esb.ie/media/docs/default-source/investor-relations-documents/esb-annual-report-and-financial-statements-2025462b391a-8f8b-48d8-b770-ce225c33ea36.pdf?sfvrsn=204734a1_5",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 17049936,
+      "source_sha256": "sha256:08060216ce5a7e26d22ad4959fb26f62d0109b226692cbcfa03ccbd663489131",
+      "source_pages": 131,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://esb.ie/copyright",
+      "terms_note": "No open licence; all rights reserved. Copying or reproduction for public or commercial purposes needs written permission. No clause on downloading or automated access. We do not redistribute.",
+      "identity": {
+        "organization": "ESB (Electricity Supply Board)",
+        "report_title": "Annual Report and Financial Statements 2025",
+        "fiscal_year_end": "2025-12-31",
+        "reporting_currency": "EUR"
+      },
+      "text_layer": {
+        "pages_with_text": 131,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "income_statement": 68,
+          "comprehensive_income": 69,
+          "balance_sheet": 69,
+          "parent_balance_sheet": 70
+        },
+        "basis": "both",
+        "note": "Group statements are complete. Parent has a balance sheet, statement of changes in equity and cash flow statement, but no parent income statement."
+      }
+    },
+    {
+      "id": "annual-c02",
+      "source": "https://www.bnm.ie/wp-content/uploads/2026/02/M17117-BnM-Annual-Report_September-2025_SPREADS_Web.pdf",
+      "final_url": "https://www.bnm.ie/wp-content/uploads/2026/02/M17117-BnM-Annual-Report_September-2025_SPREADS_Web.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 4733483,
+      "source_sha256": "sha256:65d0d40e80860272e34dabbb71183ee70c61507eee49f156461107985c26fa82",
+      "source_pages": 46,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "The latest period is a 6-month transition period, not a full fiscal year, so the fixed request has no single latest full year.",
+      "terms_url": "https://www.bnm.ie/terms-and-conditions/",
+      "terms_note": "No open licence. Use beyond viewing needs permission, but the terms let you print or download extracts for personal reference. No clause on robots. We do not redistribute.",
+      "identity": {
+        "organization": "Bord na Mona plc",
+        "report_title": "Annual Report (period ended 30 September 2025)",
+        "fiscal_year_end": "2025-09-30",
+        "reporting_currency": "EUR"
+      },
+      "text_layer": {
+        "pages_with_text": 46,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "income_statement": 15,
+          "comprehensive_income": 15,
+          "balance_sheet": 16,
+          "company_balance_sheet": 42
+        },
+        "basis": "both",
+        "note": "Each physical page is a two-page spread. The current period is 6 months to 30 September 2025; the comparative is 12 months to 26 March 2025. Company has a balance sheet only."
+      }
+    },
+    {
+      "id": "annual-c03",
+      "source": "https://www.tcd.ie/financial-services/external-assets/pdfs/Consolidated_Financial_Statements_2025_incl_OCAG_Cert.pdf",
+      "final_url": "https://www.tcd.ie/financial-services/external-assets/pdfs/Consolidated_Financial_Statements_2025_incl_OCAG_Cert.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 3793443,
+      "source_sha256": "sha256:f6b0d81a8e0dcf03bd21e5fe6d1982b53346acbb2b8be0f2a37534d79e1603cd",
+      "source_pages": 73,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.tcd.ie/disclaim/",
+      "terms_note": "The site disclaimer has no copyright, reproduction, download or automated-access terms. No open licence is stated.",
+      "identity": {
+        "organization": "Trinity College Dublin",
+        "report_title": "Consolidated Financial Statements for the year ended 30 September 2025 (with C&AG certificate)",
+        "fiscal_year_end": "2025-09-30",
+        "reporting_currency": "EUR"
+      },
+      "text_layer": {
+        "pages_with_text": 73,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_income": 31,
+          "financial_position": 33
+        },
+        "basis": "both",
+        "note": "Statements have Consolidated and University columns side by side."
+      }
+    },
+    {
+      "id": "annual-c04",
+      "source": "https://assets.publishing.service.gov.uk/media/6a6b7711862aaf18d9c62a77/HMLR_ARAC_2026_1307_WEB_2.pdf",
+      "final_url": "https://assets.publishing.service.gov.uk/media/6a6b7711862aaf18d9c62a77/HMLR_ARAC_2026_1307_WEB_2.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 13812361,
+      "source_sha256": "sha256:db0e6db4a95b392ac4e011c6e538069435c05817a64efcdaa94d1d9d08e53374",
+      "source_pages": 136,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "terms_note": "GOV.UK publication; Crown copyright under the Open Government Licence v3.0 unless stated otherwise. Open licence.",
+      "identity": {
+        "organization": "HM Land Registry",
+        "report_title": "Annual Report and Accounts 2025-26",
+        "fiscal_year_end": "2026-03-31",
+        "reporting_currency": "GBP"
+      },
+      "text_layer": {
+        "pages_with_text": 132,
+        "pages_without_text": [
+          2,
+          133,
+          134,
+          135
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": 4,
+        "quote": "licensed under the terms of the Open Government Licence v3.0",
+        "restriction": "Third-party copyright material needs permission from the holders."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_net_expenditure": 94,
+          "financial_position": 95,
+          "trust_statement_revenue": 119,
+          "trust_statement_financial_position": 120
+        },
+        "basis": "entity-only",
+        "note": "Departmental statements, not consolidated. A separate Trust Statement is also present."
+      }
+    },
+    {
+      "id": "annual-c05",
+      "source": "https://assets.publishing.service.gov.uk/media/6a55f266c3d64d94cacab914/HC477-companies-house-accessible.pdf",
+      "final_url": "https://assets.publishing.service.gov.uk/media/6a55f266c3d64d94cacab914/HC477-companies-house-accessible.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 4269872,
+      "source_sha256": "sha256:c704ab8f1a6df77bd17a053be84a42f4d0710e7946b3f1420e939315bc210bc5",
+      "source_pages": 186,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "terms_note": "GOV.UK publication; Crown copyright under the Open Government Licence v3.0 unless stated otherwise. Open licence.",
+      "identity": {
+        "organization": "Companies House",
+        "report_title": "Annual report and accounts 2025 to 2026",
+        "fiscal_year_end": "2026-03-31",
+        "reporting_currency": "GBP"
+      },
+      "text_layer": {
+        "pages_with_text": 185,
+        "pages_without_text": [
+          2
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": 4,
+        "quote": "licensed under the terms of the Open Government Licence v3.0",
+        "restriction": "Third-party copyright material needs permission from the holders."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_net_expenditure": 110,
+          "financial_position": 111,
+          "trust_statement_revenue": 163,
+          "trust_statement_financial_position": 164
+        },
+        "basis": "entity-only",
+        "note": "Agency statements, not consolidated. A separate Trust Statement is also present. Accessible version."
+      }
+    },
+    {
+      "id": "annual-c06",
+      "source": "https://assets.publishing.service.gov.uk/media/6a54c7872467584757371df3/DVLA_annual_report_and_accounts_2025_to_2026.pdf",
+      "final_url": "https://assets.publishing.service.gov.uk/media/6a54c7872467584757371df3/DVLA_annual_report_and_accounts_2025_to_2026.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 9947406,
+      "source_sha256": "sha256:abe20f7f5987819c396800777e294e34dc175daa34781054c0de7873f9b338d4",
+      "source_pages": 148,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "terms_note": "GOV.UK publication; Crown copyright under the Open Government Licence v3.0 unless stated otherwise. Open licence.",
+      "identity": {
+        "organization": "Driver and Vehicle Licensing Agency",
+        "report_title": "Annual Report & Accounts 2025-26",
+        "fiscal_year_end": "2026-03-31",
+        "reporting_currency": "GBP"
+      },
+      "text_layer": {
+        "pages_with_text": 147,
+        "pages_without_text": [
+          2
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": 4,
+        "quote": "licensed under the terms of the Open Government Licence v3.0",
+        "restriction": "Third-party copyright material needs permission from the holders."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_net_expenditure": 92,
+          "financial_position": 93,
+          "trust_statement_revenue": 136,
+          "trust_statement_financial_position": 137
+        },
+        "basis": "entity-only",
+        "note": "Agency statements, not consolidated. A separate Trust Statement is also present."
+      }
+    },
+    {
+      "id": "annual-c07",
+      "source": "https://corporate.marksandspencer.com/sites/marksandspencer/files/marksandspencer/annual-report/m-and-s-annual-report-and-financial-statements-2026.pdf",
+      "final_url": "https://corporate.marksandspencer.com/sites/marksandspencer/files/marksandspencer/annual-report/m-and-s-annual-report-and-financial-statements-2026.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 3651964,
+      "source_sha256": "sha256:84cbdce113fabe8354773dd0425717ffdf3e7acdfcb1411beca9021a687e21e4",
+      "source_pages": 208,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://corporate.marksandspencer.com/terms-conditions",
+      "terms_note": "No open licence. Copying other than for personal non-commercial use needs permission. No clause on robots. We do not redistribute.",
+      "identity": {
+        "organization": "Marks and Spencer Group plc",
+        "report_title": "Annual Report and Financial Statements 2026",
+        "fiscal_year_end": "2026-03-28",
+        "reporting_currency": "GBP"
+      },
+      "text_layer": {
+        "pages_with_text": 208,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "income_statement": 114,
+          "comprehensive_income": 115,
+          "financial_position": 116,
+          "company_financial_position": 176
+        },
+        "basis": "both",
+        "note": "52 weeks ended 28 March 2026. Company has a statement of financial position and changes in equity only. The file is the full report (208 pages). pdftotext -layout cuts text at the right edge of some landscape pages; plain pdftotext gives the full text."
+      }
+    },
+    {
+      "id": "annual-c08",
+      "source": "https://uoe-finance.ed.ac.uk/sites/default/files/2026-01/Annual%20Report%20and%20Accounts%20for%202024/25.pdf",
+      "final_url": "https://uoe-finance.ed.ac.uk/sites/default/files/2026-01/Annual%20Report%20and%20Accounts%20for%202024/25.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 8022925,
+      "source_sha256": "sha256:32e68133da189002fd3917911c0d4d76f7b33fc8eddca14c1683d7a50e3b9c25",
+      "source_pages": 107,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "The PDF expressly forbids reproduction without written permission (page 107).",
+      "terms_url": "https://www.ed.ac.uk/about/website/website-terms-conditions",
+      "terms_note": "No open licence. Viewing or downloading for private purposes is permitted; storing or copying for other purposes needs permission. No clause on robots.",
+      "identity": {
+        "organization": "The University of Edinburgh",
+        "report_title": "Annual Report and Accounts for the Year to 31 July 2025",
+        "fiscal_year_end": "2025-07-31",
+        "reporting_currency": "GBP"
+      },
+      "text_layer": {
+        "pages_with_text": 107,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": 107,
+        "quote": "No part of this publication may be reproduced without the written permission",
+        "restriction": "Express reproduction restriction: written permission of the University needed."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_income_and_expenditure": 57,
+          "financial_position": 59
+        },
+        "basis": "both",
+        "note": "Consolidated and Institution columns."
+      }
+    },
+    {
+      "id": "annual-c09",
+      "source": "https://media.viarail.ca/sites/default/files/publications/VIA%20Rail%27s%202025%20Annual%20Report.pdf",
+      "final_url": "https://media.viarail.ca/sites/default/files/publications/VIA%20Rail%27s%202025%20Annual%20Report.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 9248931,
+      "source_sha256": "sha256:124835d38334e7c64d46a3f2b5e197c70cba6ee8fb22d516907832da7081a9eb",
+      "source_pages": 142,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.viarail.ca/en/terms-and-conditions",
+      "terms_note": "No open licence. The terms forbid making and distributing copies of the site and commercial use. No clause on downloading or robots. We do not redistribute.",
+      "identity": {
+        "organization": "VIA Rail Canada Inc.",
+        "report_title": "2025 Annual Report",
+        "fiscal_year_end": "2025-12-31",
+        "reporting_currency": "CAD"
+      },
+      "text_layer": {
+        "pages_with_text": 141,
+        "pages_without_text": [
+          142
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "financial_position": 74,
+          "comprehensive_income": 76
+        },
+        "basis": "entity-only",
+        "note": "Statements are not consolidated (titles have no 'consolidated'; auditor names the statements of VIA Rail Canada Inc.). The row said consolidated. Titles are set in large type over two lines."
+      }
+    },
+    {
+      "id": "annual-c10",
+      "source": "https://www.mint.ca/globalassets/about/company/reports/2025/q4-2025/2025-annual-report-en.pdf",
+      "final_url": "https://www.mint.ca/globalassets/about/company/reports/2025/q4-2025/2025-annual-report-en.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 5537021,
+      "source_sha256": "sha256:68e22ff21a2fc527ee15bc175b88717fb7f3f6098cb965c80b6429eb2b20d72a",
+      "source_pages": 96,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.mint.ca/en/terms-of-use",
+      "terms_note": "No open licence. Reproduction is forbidden, but one download for personal non-commercial use is permitted. No clause on robots. The same file is at monnaie.ca.",
+      "identity": {
+        "organization": "Royal Canadian Mint",
+        "report_title": "2025 Annual Report",
+        "fiscal_year_end": "2025-12-31",
+        "reporting_currency": "CAD"
+      },
+      "text_layer": {
+        "pages_with_text": 95,
+        "pages_without_text": [
+          96
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "financial_position": 51,
+          "comprehensive_income": 52
+        },
+        "basis": "consolidated",
+        "note": "Consolidated only."
+      }
+    },
+    {
+      "id": "annual-c11",
+      "source": "https://www.edc.ca/content/dam/edc/en/corporate/corporate-reports/annual-reports/edc-2025-annual-report.pdf",
+      "final_url": "https://www.edc.ca/content/dam/edc/en/corporate/corporate-reports/annual-reports/edc-2025-annual-report.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 18364967,
+      "source_sha256": "sha256:c247cbc777adbeac58430032dffe74e7069b3ca3452e950c3cb0878b3e2743be",
+      "source_pages": 176,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.edc.ca/en/legal/website-terms-of-use.html",
+      "terms_note": "No open licence. Copy, download and print for personal use are permitted. Bots and scrapers are forbidden only for AI or machine-learning training without consent. Check that our use is not in that scope.",
+      "identity": {
+        "organization": "Export Development Canada",
+        "report_title": "2025 Integrated Annual Report",
+        "fiscal_year_end": "2025-12-31",
+        "reporting_currency": "CAD"
+      },
+      "text_layer": {
+        "pages_with_text": 176,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": 176,
+        "quote": "EDC retains all intellectual property rights but permits free reproduction",
+        "restriction": "Reproduction permitted with full credit to EDC; trademark use needs permission."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "financial_position": 118,
+          "comprehensive_income": 119
+        },
+        "basis": "consolidated",
+        "note": "Consolidated only. Pages 167 to 170 are a ten-year review, not primary statements."
+      }
+    },
+    {
+      "id": "annual-c12",
+      "source": "https://finance.utoronto.ca/wp-content/uploads/Financial-Report-2026.pdf",
+      "final_url": "https://finance.utoronto.ca/wp-content/uploads/Financial-Report-2026.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 1899540,
+      "source_sha256": "sha256:f1cedccafb40930b0a1f9ae0a97a0a9a3f6051f7c6c558af17415768231bf103",
+      "source_pages": 67,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://legal.utoronto.ca/",
+      "terms_note": "I found no site-wide terms of use on utoronto.ca or legal.utoronto.ca. No open licence is stated.",
+      "identity": {
+        "organization": "University of Toronto",
+        "report_title": "Financial Report 2025-26",
+        "fiscal_year_end": "2026-04-30",
+        "reporting_currency": "CAD"
+      },
+      "text_layer": {
+        "pages_with_text": 67,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "balance_sheet": 35,
+          "statement_of_operations": 36
+        },
+        "basis": "consolidated",
+        "note": "Consolidated only. Statement pages 35 to 38 are page images with an OCR text layer; OCR has errors in titles (for example 'CONSO LI DATED'). Currency printed as 'millions of dollars' (Canadian)."
+      }
+    },
+    {
+      "id": "annual-c13",
+      "source": "https://auspost.com.au/content/dam/auspost_corp/media/documents/2025-australia-post-annual-report.pdf",
+      "final_url": "https://auspost.com.au/content/dam/auspost_corp/media/documents/2025-australia-post-annual-report.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 17360749,
+      "source_sha256": "sha256:19a7c7bb0e7ddb172f55cab833dda97b9fb373e415697583819016d7aaf573ca",
+      "source_pages": 196,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://auspost.com.au/about-us/about-our-site/website-terms-conditions",
+      "terms_note": "No open licence. Reproduction or distribution to third parties needs written consent. Display and print for personal non-commercial use are permitted. No clause on robots.",
+      "identity": {
+        "organization": "Australian Postal Corporation (Australia Post)",
+        "report_title": "Annual Report 2025",
+        "fiscal_year_end": "2025-06-30",
+        "reporting_currency": "AUD"
+      },
+      "text_layer": {
+        "pages_with_text": 193,
+        "pages_without_text": [
+          1,
+          195,
+          196
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_income": 128,
+          "balance_sheet": 129
+        },
+        "basis": "consolidated",
+        "note": "Consolidated only. This is the FY2025 report, as the row says."
+      }
+    },
+    {
+      "id": "annual-c14",
+      "source": "https://www.nbnco.com.au/content/dam/nbn/documents/about-nbn/reports/financial-reports/nbn-co-annual-report-2026.pdf",
+      "final_url": "https://www.nbnco.com.au/content/dam/nbn/documents/about-nbn/reports/financial-reports/nbn-co-annual-report-2026.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 14306275,
+      "source_sha256": "sha256:bd077fa29456df92fa3d0c8d3b3dda48a55c5fb0e8dc564d9702b9c6b4c80bf9",
+      "source_pages": 274,
+      "download_status": "complete",
+      "selection_status": "rejected",
+      "reason": "The PDF expressly forbids reproduction without prior written consent (page 2).",
+      "terms_url": "https://www.nbnco.com.au/utility/terms-and-conditions-of-use",
+      "terms_note": "No open licence. Use is limited to personal purposes; other copying needs consent. No clause on robots. The URL follows the 2025 pattern and was not found on a catalog page; the HEAD response is a distinct 14.3 MB PDF.",
+      "identity": {
+        "organization": "NBN Co Limited",
+        "report_title": "Annual Report 2026",
+        "fiscal_year_end": "2026-06-30",
+        "reporting_currency": "AUD"
+      },
+      "text_layer": {
+        "pages_with_text": 273,
+        "pages_without_text": [
+          273
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": 2,
+        "quote": "cannot be reproduced, published, communicated or adapted without the prior written consent",
+        "restriction": "Express reproduction restriction other than as the Copyright Act 1968 (Cth) permits."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "profit_or_loss_and_oci": 152,
+          "financial_position": 153
+        },
+        "basis": "entity-only",
+        "note": "Statements are for the Company, not consolidated; a consolidated entity disclosure statement is on page 208. The row said consolidated."
+      }
+    },
+    {
+      "id": "annual-c15",
+      "source": "https://www.sydney.edu.au/content/dam/corporate/documents/about-us/values-and-visions/annual-report/annual-report-2025.pdf",
+      "final_url": "https://www.sydney.edu.au/content/dam/corporate/documents/about-us/values-and-visions/annual-report/annual-report-2025.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 4212629,
+      "source_sha256": "sha256:e64f18e1473c6b6826ff6240ecb93914c1cea7cfec6ac7d1e1e59b7415c8e3a9",
+      "source_pages": 218,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.sydney.edu.au/disclaimer.html",
+      "terms_note": "No open licence. Copying a reasonable portion under fair dealing is permitted. No clause against downloading or robots.",
+      "identity": {
+        "organization": "The University of Sydney",
+        "report_title": "2025 Annual Report",
+        "fiscal_year_end": "2025-12-31",
+        "reporting_currency": "AUD"
+      },
+      "text_layer": {
+        "pages_with_text": 216,
+        "pages_without_text": [
+          2,
+          217
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": 218,
+        "quote": "© The University of Sydney 2026",
+        "restriction": null
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "income_statement": 116,
+          "comprehensive_income": 117,
+          "financial_position": 118
+        },
+        "basis": "both",
+        "note": "Economic entity (consolidated) and parent entity columns. Separate statements of a controlled entity (Westmead IVF Pty Limited) are on pages 199 and 200."
+      }
+    },
+    {
+      "id": "annual-c16",
+      "source": "https://www.auckland.ac.nz/assets/about-us/about-the-university/the-university/official-publications/annual-report/UoA-AR-2025-Web.pdf",
+      "final_url": "https://www.auckland.ac.nz/assets/about-us/about-the-university/the-university/official-publications/annual-report/UoA-AR-2025-Web.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 12564235,
+      "source_sha256": "sha256:986c113652f4da5ab1c871f292badab42b832654c6b4c603fbce0f3d6867d77f",
+      "source_pages": 118,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.auckland.ac.nz/en/copyright.html",
+      "terms_note": "No open licence. Non-profit educational use and private research are permitted with credit; commercial use is not. No clause on robots. The server returns 406 to a bare curl HEAD; a browser user agent gets 200.",
+      "identity": {
+        "organization": "The University of Auckland",
+        "report_title": "Annual Report 2025",
+        "fiscal_year_end": "2025-12-31",
+        "reporting_currency": "NZD"
+      },
+      "text_layer": {
+        "pages_with_text": 116,
+        "pages_without_text": [
+          116,
+          117
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_revenue_and_expense_consolidated": 62,
+          "comprehensive_revenue_and_expense_university": 63,
+          "financial_position": 64
+        },
+        "basis": "both",
+        "note": "Consolidated and University columns, with budget columns."
+      }
+    },
+    {
+      "id": "annual-c17",
+      "source": "https://www.singaporeair.com/content/dam/sia/web-assets/pdfs/about-us/information-for-investors/annual-report/annualreport2526.pdf",
+      "final_url": "https://www.singaporeair.com/content/dam/sia/web-assets/pdfs/about-us/information-for-investors/annual-report/annualreport2526.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 10111322,
+      "source_sha256": "sha256:d000dbf5d9a3f3d90a3ac86e2ca754deafe4513ef4f714a215cd819129de63fa",
+      "source_pages": 244,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.singaporeair.com/en_UK/global_footer/conditions-of-use-website/",
+      "terms_note": "No open licence. Reproduction needs permission, but one copy may be downloaded for personal non-commercial use. No clause on robots. The HEAD response has no Content-Length; the catalog page says about 9.9 MB.",
+      "identity": {
+        "organization": "Singapore Airlines Limited",
+        "report_title": "Annual Report FY2025/26",
+        "fiscal_year_end": "2026-03-31",
+        "reporting_currency": "SGD"
+      },
+      "text_layer": {
+        "pages_with_text": 244,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "profit_and_loss_account": 119,
+          "comprehensive_income": 120,
+          "financial_position": 121
+        },
+        "basis": "both",
+        "note": "Group income statements; the statement of financial position has Group and Company columns. No company income statement."
+      }
+    },
+    {
+      "id": "annual-c18",
+      "source": "https://ranegroup.com/wp-content/uploads/2026/07/RML_AR_2025-26.pdf",
+      "final_url": "https://ranegroup.com/wp-content/uploads/2026/07/RML_AR_2025-26.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 2176690,
+      "source_sha256": "sha256:5da5d557657dd618013a6e657860d972883ef87a36a087e80ccad708bfd6a90c",
+      "source_pages": 216,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://ranegroup.com/privacy-policy/",
+      "terms_note": "I found no terms of use on ranegroup.com, only a privacy policy. No open licence is stated.",
+      "identity": {
+        "organization": "Rane (Madras) Limited",
+        "report_title": "22nd Annual Report 2025-26",
+        "fiscal_year_end": "2026-03-31",
+        "reporting_currency": "INR"
+      },
+      "text_layer": {
+        "pages_with_text": 216,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "standalone_balance_sheet": 80,
+          "standalone_profit_and_loss": 81,
+          "consolidated_balance_sheet": 152,
+          "consolidated_profit_and_loss": 153
+        },
+        "basis": "both",
+        "note": "Full standalone and consolidated sets."
+      }
+    },
+    {
+      "id": "annual-c19",
+      "source": "https://www.bosch.in/media/our_company/shareholder_information/2026/bosch_annual_report_2025-26-2.pdf",
+      "final_url": "https://www.bosch.in/media/our_company/shareholder_information/2026/bosch_annual_report_2025-26-2.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 23722811,
+      "source_sha256": "sha256:323bc513ab7b1852feb8010a0d39af8c048c869f291694a20a49eab965e50cce",
+      "source_pages": 424,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.bosch.in/legal-notice/",
+      "terms_note": "No open licence. Copying or dissemination for commercial purposes needs consent. No clause on downloading or robots. Size 23.7 MB is close to the 25 MB cap.",
+      "identity": {
+        "organization": "Bosch Limited",
+        "report_title": "Annual Report 2025-26",
+        "fiscal_year_end": "2026-03-31",
+        "reporting_currency": "INR"
+      },
+      "text_layer": {
+        "pages_with_text": 421,
+        "pages_without_text": [
+          1,
+          423,
+          424
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "standalone_balance_sheet": 276,
+          "standalone_profit_and_loss": 277,
+          "consolidated_balance_sheet": 352,
+          "consolidated_profit_and_loss": 353
+        },
+        "basis": "both",
+        "note": "Full standalone and consolidated sets."
+      }
+    },
+    {
+      "id": "annual-c20",
+      "source": "https://www.hongkongairport.com/iwov-resources/file/airport-authority/publications/annual-and-interim-reports/en/25_26/Eng_Full%20Book.pdf",
+      "final_url": "https://www.hongkongairport.com/iwov-resources/file/airport-authority/publications/annual-and-interim-reports/en/25_26/Eng_Full%20Book.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 17110318,
+      "source_sha256": "sha256:7247cc5cce9433d29d3468fc02c8fc2eabc954ad4ecdbe7fdd2d251dc86d8e4a",
+      "source_pages": 176,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.hongkongairport.com/en/terms-of-use.page",
+      "terms_note": "No open licence. The terms forbid modification, publication, redistribution or exploitation without approval. No clause on downloading or robots. We do not redistribute. The same file is on HKEXnews.",
+      "identity": {
+        "organization": "Airport Authority Hong Kong",
+        "report_title": "Annual Report 2025/26",
+        "fiscal_year_end": "2026-03-31",
+        "reporting_currency": "HKD"
+      },
+      "text_layer": {
+        "pages_with_text": 176,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "profit_or_loss": 105,
+          "profit_or_loss_and_oci": 106,
+          "financial_position": 107
+        },
+        "basis": "consolidated",
+        "note": "Consolidated only."
+      }
+    },
+    {
+      "id": "annual-c21",
+      "source": "https://www.keells.com/resource/reports/annual-reports/John_Keells_Holdings_PLC_AR_2025_26_CSE.pdf",
+      "final_url": "https://www.keells.com/resource/reports/annual-reports/John_Keells_Holdings_PLC_AR_2025_26_CSE.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 17280874,
+      "source_sha256": "sha256:6b749bc4ee3b36839afee56e6c1f027ab1f412c531965c64052661511bf50787",
+      "source_pages": 612,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.keells.com/terms-of-use/",
+      "terms_note": "No open licence. The terms of use have no copyright, reproduction, download or robots clause; they forbid abuse of the site.",
+      "identity": {
+        "organization": "John Keells Holdings PLC",
+        "report_title": "Annual Report 2025/26",
+        "fiscal_year_end": "2026-03-31",
+        "reporting_currency": "LKR"
+      },
+      "text_layer": {
+        "pages_with_text": 611,
+        "pages_without_text": [
+          2
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "income_statement": 465,
+          "comprehensive_income": 466,
+          "financial_position": 467
+        },
+        "basis": "both",
+        "note": "Group and Company columns. Pages 573 and 574 hold indicative US dollar statements for information only; these are not the primary statements."
+      }
+    },
+    {
+      "id": "annual-c22",
+      "source": "https://www.coillte.ie/development/wp-content/uploads/2026/05/Coillte-2025-Annual-Report.pdf",
+      "final_url": "https://www.coillte.ie/development/wp-content/uploads/2026/05/Coillte-2025-Annual-Report.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 14104716,
+      "source_sha256": "sha256:8b19abfbf060ee1c04a5c75194351201edf0fd7e7ffb7ccd68734fb678c3edbb",
+      "source_pages": 85,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.coillte.ie/disclaimer",
+      "terms_note": "Disclaimer covers data and cookies only; no reproduction ban found.",
+      "identity": {
+        "organization": "Coillte CGA (Coillte)",
+        "report_title": "Coillte Annual Report 2025",
+        "fiscal_year_end": "2025-12-31",
+        "reporting_currency": "EUR"
+      },
+      "text_layer": {
+        "pages_with_text": 84,
+        "pages_without_text": [
+          1
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "income_statement": 57,
+          "comprehensive_income": 57,
+          "balance_sheet": 58,
+          "company_balance_sheet": 58
+        },
+        "basis": "both",
+        "note": "Each PDF page is a two-page spread (PDF page 57 holds printed pages 112-113). Company has a balance sheet, cash flow and changes in equity, but no company profit and loss account."
+      },
+      "latest_period": {
+        "months": 12,
+        "evidence": "page 57 heading: Financial year ended 31 December 2025"
+      }
+    },
+    {
+      "id": "annual-c23",
+      "source": "https://www.kiwirail.co.nz/assets/Uploads/documents/Annual-reports/2026/KR-Integrated-Report-2026-website.pdf?vid=3",
+      "final_url": "https://www.kiwirail.co.nz/assets/Uploads/documents/Annual-reports/2026/KR-Integrated-Report-2026-website.pdf?vid=3",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 10866921,
+      "source_sha256": "sha256:27e67e025f59f31e7b8c3c89d469b325305efddf18d38edf25c5e54c84f82117",
+      "source_pages": 104,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.kiwirail.co.nz/",
+      "terms_note": "Main site has no terms page (footer Terms link goes to /; common paths 404). Footer says only 'Copyright 2026 KiwiRail'. media.kiwirail.co.nz/terms restricts reproduction but covers that media subsite only.",
+      "identity": {
+        "organization": "KiwiRail Holdings Limited",
+        "report_title": "KiwiRail Integrated Report 2026",
+        "fiscal_year_end": "2026-06-30",
+        "reporting_currency": "NZD"
+      },
+      "text_layer": {
+        "pages_with_text": 103,
+        "pages_without_text": [
+          104
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_income": 58,
+          "financial_position": 59
+        },
+        "basis": "consolidated",
+        "note": "Group columns only. Statement of comprehensive income includes the surplus or deficit section."
+      },
+      "latest_period": {
+        "months": 12,
+        "evidence": "page 58 heading: For the financial year ended 30 June 2026"
+      }
+    },
+    {
+      "id": "annual-c24",
+      "source": "https://www.wgtn.ac.nz/__data/assets/pdf_file/0004/2337727/2025-annual-report.pdf",
+      "final_url": "https://www.wgtn.ac.nz/__data/assets/pdf_file/0004/2337727/2025-annual-report.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 5568455,
+      "source_sha256": "sha256:ed305eaf0b6648eed8dcdbeee7634c480c790bb7d812588425d24ef6f08ae1a0",
+      "source_pages": 86,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.wgtn.ac.nz/site-info/copyright",
+      "terms_note": "Free non-commercial reuse if unaltered and attributed.",
+      "identity": {
+        "organization": "Te Herenga Waka - Victoria University of Wellington",
+        "report_title": "Annual Report 2025",
+        "fiscal_year_end": "2025-12-31",
+        "reporting_currency": "NZD"
+      },
+      "text_layer": {
+        "pages_with_text": 83,
+        "pages_without_text": [
+          16,
+          80,
+          86
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_revenue_and_expense": 37,
+          "financial_position": 38
+        },
+        "basis": "both",
+        "note": "Consolidated and University columns, each with a budget column. Printed page numbers are 35 and 36. Headings are in Maori and English."
+      },
+      "latest_period": {
+        "months": 12,
+        "evidence": "page 37 heading: For the year ended 31 December 2025"
+      }
+    },
+    {
+      "id": "annual-c25",
+      "source": "https://www.dcu.ie/sites/default/files/data_protection_unit_editor/2026-07/dcu-consolidated-financial-statements-2025-final.pdf",
+      "final_url": "https://www.dcu.ie/sites/default/files/data_protection_unit_editor/2026-07/dcu-consolidated-financial-statements-2025-final.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 887026,
+      "source_sha256": "sha256:c54ad587154f20c01f65aee7b64fc94e86c698b91f0b56a180ece45b469c255c",
+      "source_pages": 54,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.dcu.ie/disclaimer",
+      "terms_note": "Disclaimer has no reproduction clauses.",
+      "identity": {
+        "organization": "Dublin City University",
+        "report_title": "Consolidated Financial Statements for the year ended 30 September 2025",
+        "fiscal_year_end": "2025-09-30",
+        "reporting_currency": "EUR"
+      },
+      "text_layer": {
+        "pages_with_text": 54,
+        "pages_without_text": [],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_income": 17,
+          "financial_position": 18
+        },
+        "basis": "both",
+        "note": "Consolidated and University columns. The document is the financial statements only, not a full annual report. pdfimages reports flate stream errors in some images; the text layer extracts cleanly."
+      },
+      "latest_period": {
+        "months": 12,
+        "evidence": "cover: For the year ended 30 September 2025; page 17 column heading: Year Ended 30 September"
+      }
+    },
+    {
+      "id": "annual-c26",
+      "source": "https://www.ura.org.hk/f/publication/8155/URA_AR24-25_ENG.pdf",
+      "final_url": "https://www.ura.org.hk/f/publication/8155/URA_AR24-25_ENG.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 17420518,
+      "source_sha256": "sha256:500e8e9bf1c41b79f66afbc3c0d5b81f394f86ac431871fc891f678064333851",
+      "source_pages": 170,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.ura.org.hk/en/copyright",
+      "terms_note": "Free reproduction for personal or in-organisation use, not for sale, if accurate and acknowledged; other use needs prior written consent. FY 2025-26 report not yet published.",
+      "identity": {
+        "organization": "Urban Renewal Authority (Hong Kong)",
+        "report_title": "URA Annual Report 2024-25",
+        "fiscal_year_end": "2025-03-31",
+        "reporting_currency": "HKD"
+      },
+      "text_layer": {
+        "pages_with_text": 168,
+        "pages_without_text": [
+          1,
+          168
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_income": 119,
+          "financial_position": 120,
+          "authority_financial_position": 165
+        },
+        "basis": "both",
+        "note": "Consolidated statements. The Authority statement of financial position is in note 22 (PDF page 165). No Authority income statement. Printed page numbers are PDF page minus 2."
+      },
+      "latest_period": {
+        "months": 12,
+        "evidence": "page 119 heading: for the year ended 31 March 2025"
+      }
+    },
+    {
+      "id": "annual-c27",
+      "source": "https://www.massey.ac.nz/documents/2353/Massey-University-Annual-Report-2025.pdf",
+      "final_url": "https://www.massey.ac.nz/documents/2353/Massey-University-Annual-Report-2025.pdf",
+      "approved_max_bytes": 26214400,
+      "approval": "chat source-and-size approval, 2026-10-18",
+      "source_bytes": 9738065,
+      "source_sha256": "sha256:cde7e5f684b1710227594ac9b7979ad446e3f835388833ba25995457bcca4105",
+      "source_pages": 102,
+      "download_status": "complete",
+      "selection_status": "member",
+      "reason": "",
+      "terms_url": "https://www.massey.ac.nz/about/copyright/",
+      "terms_note": "Licence to download, print, share or reproduce for non-commercial purposes.",
+      "identity": {
+        "organization": "Massey University (Te Kunenga ki Purehuroa)",
+        "report_title": "Massey University Annual Report 2025",
+        "fiscal_year_end": "2025-12-31",
+        "reporting_currency": "NZD"
+      },
+      "text_layer": {
+        "pages_with_text": 101,
+        "pages_without_text": [
+          102
+        ],
+        "language": "en"
+      },
+      "notice": {
+        "page": null,
+        "quote": null,
+        "restriction": null,
+        "note": "No copyright or licence statement found in the PDF text layer."
+      },
+      "statements": {
+        "full_primary": true,
+        "start_pages": {
+          "comprehensive_revenue_and_expense": 63,
+          "financial_position": 64
+        },
+        "basis": "both",
+        "note": "Consolidated and University columns, each with a budget column. Headings are in Maori and English."
+      },
+      "latest_period": {
+        "months": 12,
+        "evidence": "page 63 heading: For the year ended 31 December 2025"
+      }
+    }
+  ]
+}
