@@ -223,13 +223,22 @@ def _evidence(c: object) -> list[Mapping[str, Any]]:
     return [i for i in ev if isinstance(i, Mapping)] if isinstance(ev, list) else []
 
 
-def _item_text(c: object, role: str) -> str | None:
-    """The quoted text of the candidate's document or reference item with this role."""
+def _item_texts(c: object) -> dict[str, list[str | None]]:
+    """The quoted texts of the candidate's document and reference items, by role, in list order.
+    A candidate can have several field items (SPEC §4.6)."""
+    texts: dict[str, list[str | None]] = {}
     for i in _evidence(c):
-        source, r = i.get("source", "document"), i.get("role", "value")
-        if source in ("document", "reference") and r == role and isinstance(i.get("text"), str):
-            return str(i["text"])
-    return None
+        if i.get("source", "document") in ("document", "reference"):
+            text = i.get("text")
+            texts.setdefault(str(i.get("role", "value")), []).append(
+                text if isinstance(text, str) else None
+            )
+    return texts
+
+
+def _nth(texts: dict[str, list[str | None]], role: str, n: int = 0) -> str | None:
+    same = texts.get(role, [])
+    return same[n] if n < len(same) else None
 
 
 def _outcome(item: _Item) -> str:
@@ -272,7 +281,8 @@ def _card(item: _Item, layout: Layout | None) -> str:
         out.append(f'<p class="where">from an external page <code>{_e(d.get("url"))}</code></p>')
     elif source == "knowledge":
         out.append('<p class="where">from the extractor\'s knowledge</p>')
-    quote = _item_text(c, "value")
+    texts = _item_texts(c)
+    quote = _nth(texts, "value")
     where = []
     if item.cited is not None:
         line = f"cited “{_e(_clip(item.cited))}”"
@@ -292,12 +302,14 @@ def _card(item: _Item, layout: Layout | None) -> str:
                 out.append(f'<p class="quote">stated “{_e(_clip(i["text"]))}”</p>')
     if item.parts:
         out.append('<ul class="parts">')
+        seen: dict[str, int] = {}
         for p in item.parts:
             state = (
                 '<span class="ok">passed</span>' if p.passed else '<span class="bad">failed</span>'
             )
             line = f"<b>{_e(p.role)}</b> {state}"
-            pquote = _item_text(c, p.role)
+            pquote = _nth(texts, p.role, seen.get(p.role, 0))
+            seen[p.role] = seen.get(p.role, 0) + 1
             if p.cited is not None:
                 line += f", cited “{_e(_clip(p.cited))}”"
                 if pquote is not None and pquote != p.cited:

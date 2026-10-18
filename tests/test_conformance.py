@@ -52,6 +52,9 @@ def test_vector(path: Path) -> None:
         assert (got["outcome"], got["codes"]) == (want["outcome"], want["codes"]), label
         if "missing" in want:
             assert got["missing"] == want["missing"], label
+        if "parts" in want:
+            parts = [{"role": x["role"], "passed": x["passed"]} for x in got["parts"]]
+            assert parts == want["parts"], label
     assert receipt["coverage"] == v["expected"]["coverage"]
     args = (v["document"], v["schema"], v["candidates"], v["policy"], js)
     assert gg.verify(receipt, *args, **_extra(v)).ok

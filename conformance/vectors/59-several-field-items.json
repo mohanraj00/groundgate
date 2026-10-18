@@ -1,0 +1,784 @@
+{
+ "name": "59-several-field-items",
+ "description": "A candidate may cite several field items, such as a row label and a column header. Each one is checked and listed in parts. The field check passes when one of them passes. Only when none passes does the decision get FIELD_CITATION_INVALID. A passing one lets a unit item or a unit at a unit place supply the unit, and selects the value's quote occurrence. Two items of any other role stay CANDIDATE_INVALID, and so does a candidate with more than 8 field items (spec 0.10, #300).",
+ "document": "Ending balance\n\nCash\t$100\n\nAmounts in $\nEnding balance\nCash\t200\n\nOther items were about $50.\nCash\t50",
+ "schema": {
+  "fields": {
+   "cash": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Cash",
+     "Ending balance"
+    ],
+    "multiple": true
+   },
+   "plain": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Ending balance"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "field",
+     "text": "Ending balance"
+    }
+   ]
+  },
+  {
+   "id": "p3",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Ending balance"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    }
+   ]
+  },
+  {
+   "id": "p4",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "p5",
+   "field": "plain",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "field",
+     "text": "Ending balance"
+    }
+   ]
+  },
+  {
+   "id": "p6",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 60,
+     "end": 63,
+     "text": "200"
+    },
+    {
+     "role": "field",
+     "text": "Ending balance"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "p7",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 60,
+     "end": 63,
+     "text": "200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Ending balance"
+    }
+   ]
+  },
+  {
+   "id": "p8",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 60,
+     "end": 63,
+     "text": "200"
+    },
+    {
+     "role": "field",
+     "text": "Amounts"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "p9",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 60,
+     "end": 63,
+     "text": "200"
+    },
+    {
+     "role": "field",
+     "text": "Amounts"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "p10",
+   "field": "cash",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 60,
+     "end": 63,
+     "text": "200"
+    },
+    {
+     "role": "field",
+     "text": "Amounts"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    }
+   ]
+  },
+  {
+   "id": "p11",
+   "field": "cash",
+   "value": "50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "50"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "p12",
+   "field": "cash",
+   "value": "50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "50"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    }
+   ]
+  },
+  {
+   "id": "p13",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "p14",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  },
+  {
+   "id": "x1",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "text": "$100"
+    }
+   ]
+  },
+  {
+   "id": "x2",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "x3",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "scale",
+     "text": "in thousands"
+    }
+   ]
+  },
+  {
+   "id": "x4",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "sign",
+     "text": "("
+    },
+    {
+     "role": "sign",
+     "text": "loss"
+    }
+   ]
+  },
+  {
+   "id": "x5",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "key",
+     "text": "2024"
+    },
+    {
+     "role": "key",
+     "text": "2025"
+    }
+   ]
+  },
+  {
+   "id": "x6",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 25,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    },
+    {
+     "role": "unit",
+     "text": "USD"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "field",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "unit",
+      "passed": true
+     },
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "unit",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [
+     "unit"
+    ],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE",
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
