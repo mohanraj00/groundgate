@@ -151,8 +151,9 @@ source cannot be used to seal labels. Evidence pages cannot exceed the recorded 
 
 Draft labels can be saved while source selection is open. After the complete source list and
 request are frozen, I can seal all labels after the complete source checks. The server refuses edits after a seal or
-when cached run JSON exists. Each save is atomic and uses a local work directory for its temporary
-file. The startup capability, separate CSRF token, exact host/origin checks and document-ID routes keep the local write interface
+when cached run JSON exists. Each save is atomic. Its temporary file `.labels-*.tmp` is staged beside `labels.json`, so the
+rename stays on one filesystem. The file is removed after each save. If the process stops
+before that, the file holds the full draft. Git ignores it; delete it by hand. The startup capability, separate CSRF token, exact host/origin checks and document-ID routes keep the local write interface
 separate from source text and filenames. Restart the server after changing the manifest.
 
 The regular pytest run collects the requested-field scoring and label-server tests, so CI checks

@@ -9,6 +9,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -1034,3 +1035,24 @@ def test_transport_error_before_the_last_call_stays_refused(tmp_path):
         "0002.pending.json",
     ]
     assert not (document / "attempts").exists()
+
+
+@pytest.mark.parametrize(("other", "error"), [({"a": 1}, None), ({"a": 2}, "differs")])
+def test_concurrent_header_publication_checks_the_published_bytes(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, other: Any, error: str | None
+) -> None:
+    path = tmp_path / "header.json"
+    publish = harness._publish
+
+    def race(target: Path, value: Any) -> None:
+        # Another process publishes after this one saw no file.
+        publish(target, other)
+        publish(target, value)
+
+    monkeypatch.setattr(harness, "_publish", race)
+    if error is None:
+        harness._same_or_publish(path, {"a": 1})
+    else:
+        with pytest.raises(harness.CacheError, match=error):
+            harness._same_or_publish(path, {"a": 1})
+    assert path.read_bytes() == harness.encoded(other)

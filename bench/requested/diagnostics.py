@@ -737,6 +737,8 @@ class DiagnosticSession:
                 or doc["source_pages"] != self.docs[doc["id"]]["source_pages"]
             ):
                 raise DiagnosticError("layout source differs")
+            if self.docs[doc["id"]]["split"] != self.plan["split"]:
+                raise DiagnosticError("layout split differs")
             seen.add(doc["id"])
             if (
                 type(doc["complete"]) is not bool
@@ -825,6 +827,8 @@ class DiagnosticSession:
             pair = (ref["document"], ref["reader"])
             if pair in seen or ref["document"] not in self.docs:
                 raise DiagnosticError("duplicate/unknown reader observation")
+            if self.docs[ref["document"]]["split"] != self.plan["split"]:
+                raise DiagnosticError("layout split differs")
             seen.add(pair)
             _ident(ref["reader"])
             _sha(ref["code_sha256"])

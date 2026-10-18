@@ -221,7 +221,12 @@ def _same_or_publish(path: Path, value: Json, replay_only: bool = False) -> None
     elif replay_only:
         raise CacheError("missing replay artifact: " + path.name)
     else:
-        _publish(path, value)
+        try:
+            _publish(path, value)
+        except FileExistsError:
+            # Another process published the name first. Its bytes must be the same.
+            if _read(path) != encoded(value):
+                raise CacheError("immutable cache differs: " + path.name) from None
 
 
 def _move(source: Path, target: Path) -> None:

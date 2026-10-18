@@ -661,6 +661,20 @@ def test_sealed_observation_layout_is_kind_sliced_and_replayed(tmp_path):
         d.DiagnosticSession(
             path, tmp_path / "set", tmp_path / "sources", inputs, cache, plan_sha256=seal
         )
+    obs["layout"]["words"][0][1] = 2
+    plan["layout"]["observations"][0]["sha256"] = write(inputs / "observation.json", obs)
+    seal = write(path, plan)
+    session = d.DiagnosticSession(
+        path, tmp_path / "set", tmp_path / "sources", inputs, cache, plan_sha256=seal
+    )
+    # The only document is held out, so a development plan must refuse its layout cases.
+    session.plan["split"] = "development"
+    with pytest.raises(d.DiagnosticError, match="layout split differs"):
+        session._layout()
+    ann["documents"] = []
+    session.plan["layout"]["annotations"]["sha256"] = write(inputs / "annotations.json", ann)
+    with pytest.raises(d.DiagnosticError, match="layout split differs"):
+        session._layout()
 
 
 @pytest.mark.parametrize("channel", ["stdout", "stderr"])
