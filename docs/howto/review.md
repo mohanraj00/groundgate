@@ -197,8 +197,8 @@ the changed input, compare the digest of each stored input with the receipt. For
 ## 6. Pin the groundgate version
 
 A receipt names the spec version that decided it, in its `groundgate` member. `verify` accepts
-only the spec version that it implements. The current development tree implements draft spec
-0.9. The released groundgate 0.8.0 implements spec 0.8, groundgate 0.7.0
+only the spec version that it implements. The released groundgate 0.9.0 implements spec 0.9,
+groundgate 0.8.0 implements spec 0.8, groundgate 0.7.0
 implements spec 0.7, groundgate 0.6.0 and 0.6.1 implement spec 0.6, and groundgate 0.5.0, 0.5.1
 and 0.5.2 implement spec 0.5.
 This is a receipt from another spec version:
@@ -216,10 +216,10 @@ False
 ```
 
 `verify` checks nothing more. So pin the groundgate release that decided the receipts in the
-environment that keeps them. For spec 0.8, that is:
+environment that keeps them. For spec 0.9, that is:
 
 ```bash
-pip install "groundgate==0.8.0"
+pip install "groundgate==0.9.0"
 ```
 
 To verify an old receipt, install the release for its spec version in a separate environment.

@@ -3,6 +3,59 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.9.0 (2026-10-18)
+
+Spec 0.9. Receipts name `"groundgate": "0.9"` and every digest uses the `groundgate/0.9:` prefix, so
+all hashes differ from 0.8.0. 0.9 is about misses on the fields that an app asks for. I measured it
+on a new set of 61 held-out documents, labeled blind before any model output. The miss rate is
+still above 90%, so 0.9 does not meet that goal yet.
+
+Breaking: two names change (#286).
+
+- The reader is now `groundgate.read` (#289). `groundgate.extract.extract` is now
+  `groundgate.read.read`, `ExtractError` is now `ReadError`, and the command `groundgate extract
+  FILE` is now `groundgate read FILE`. The text does not change, so no published number changes.
+- `groundgate.extract` is now the extraction loop (#281). `extract` takes a synchronous
+  prompt-in, reply-out client. It builds bounded chunks and prompts, admits the candidates,
+  repairs permitted evidence, and searches once for fields with no candidate. A repair can not
+  change the field, unit, key, source or search region. The run record is a log of canonical JSON
+  lines, each with the digest of the line before it, and `RunResult.read` replays a run with no
+  client call. Limits on calls, prompt and reply size, candidates and admission history stop a
+  run incomplete. The core stays dependency-free and makes no model call.
+
+Spec 0.9 rules for table cells (#280):
+
+- An explicit empty cell keeps its column. In `Cash\t\t$100` the blank first cell stays, so the
+  value can not take the first year key.
+- An ambiguous tab slot or a plain row can not supply a column key, and two blank lines keep a row
+  away from an earlier header. A blank unit cell can not borrow a unit from an earlier column.
+- A short table header uses its own row keys. A header with unknown, empty or decorated leading
+  slots that would shift the column ordinals is refused.
+
+The PDF reader (#279):
+
+- A row in the top 36 points of the visible page is never a table row, and the walk above a table
+  stops at it (#265). A running head with a page number or a year stays in ordinary text (#283).
+- A blank cell keeps its column: a short row gets an empty slot for each missing cell (#266).
+  Ambiguous geometry gives the plain row with no tabs, so the core sees no cell to cite.
+- On the 23 held-out documents with blind layout labels (`bench/requested`), the annual reports
+  keep 54 of 75 blank cells in their column and place 8 of 19 running heads right. The
+  datasheets keep 25 of 105 blank cells and place 38 of 54 running heads right.
+
+The measure (#269, #282, #294):
+
+- `bench/requested` is a new set of 64 documents in three kinds: 20 component datasheets, 20
+  health plan SBCs and 21 annual reports in the held-out part, and 3 development documents. Each
+  kind has one fixed field list. `bench/score.py --requested` writes hits, escapes, reviews, silent
+  misses, the miss rate and the admitted error rate with its upper bounds.
+- With `gpt-6.1-sol` at medium effort, the released one-pass extraction with its feedback loop
+  (baseline, on the 0.9 core) misses 187 of the 196 stated values (95.41%), with 9 right values admitted and 1
+  escape. The 0.9 extraction loop misses 180 of 196 (91.84%), with 16 right values admitted, 6
+  right absences and 0 escapes. It halves the silent misses (118 to 61) and sends more right values
+  to review (69 to 119). Most of the gain is in the SBCs.
+- The loop did not complete 18 of the 21 annual reports. Each stopped at a harness limit, with no
+  transport error, and its present fields count as misses.
+
 ## 0.8.0 (2026-10-11)
 
 Spec 0.8. Receipts name `"groundgate": "0.8"` and every digest uses the `groundgate/0.8:` prefix, so

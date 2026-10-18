@@ -214,6 +214,22 @@ the #249 row. [bench/afr/tabs/RESULTS.md](bench/afr/tabs/RESULTS.md),
 [bench/strings/RESULTS.md](bench/strings/RESULTS.md) and
 [bench/acfr/keyrole/RESULTS.md](bench/acfr/keyrole/RESULTS.md) have every number.
 
+### Spec 0.9 on requested fields
+
+0.9 is about misses on the fields that an app asks for. `bench/requested` has 61 held-out documents
+in three kinds that no rule came from: 20 component datasheets, 20 health plan SBCs and 21 annual
+reports. Each kind has one fixed field list, and a person labeled each field blind before any model
+output. The documents state 196 of the labeled values. Both arms use `gpt-6.1-sol` at medium effort.
+
+| Arm | Right values admitted | Right absences | Escapes | Reviews | Silent misses | Miss rate |
+|---|---:|---:|---:|---:|---:|---:|
+| One-pass extraction with feedback (baseline) | 9 | 0 | 1 | 69 | 118 | 95.41% |
+| `groundgate.extract` | 16 | 6 | 0 | 119 | 61 | 91.84% |
+
+The loop halves the silent misses and admits no wrong value, but both arms still miss more than 90%
+of the stated values. The loop did not complete 18 of the 21 annual reports: each stopped at a
+harness limit. [bench/requested/RESULTS.md](bench/requested/RESULTS.md) has every number.
+
 ## Quickstart
 
 ```bash
@@ -392,7 +408,7 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec 0.8.
+- **No dates, arrays of records, or cross-document checks** in spec 0.9.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
@@ -407,8 +423,11 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.8.0 implements spec v0.8. [CHANGELOG.md](CHANGELOG.md) lists what each
-version changes, with its measure. 0.8 writes PDF table rows as lines with tabs (#230), scales a
+Alpha. groundgate 0.9.0 implements spec v0.9. [CHANGELOG.md](CHANGELOG.md) lists what each
+version changes, with its measure. 0.9 moves the reader to `groundgate.read` (#289), adds the
+extraction loop `groundgate.extract` (#281), keeps an empty table cell in its column and refuses
+ambiguous column keys (#280), and keeps PDF running heads out of tables and blank cells in their
+column (#279). 0.8 writes PDF table rows as lines with tabs (#230), scales a
 value by its scale item (#242), takes the value's occurrence where the field item passes (#249),
 lets a title key reach a table with one number column (#250), puts a string value at its first
 occurrence in its span (#140), and offers the role `key` only on a field with keys (#256). 0.7 passes a unit item that is away from the number only at a
