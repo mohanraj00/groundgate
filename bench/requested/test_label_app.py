@@ -782,3 +782,15 @@ def test_startup_capability_is_regenerated_and_old_session_cannot_read(server: L
         other.shutdown()
         other.server_close()
         thread.join(timeout=2)
+
+
+def test_schema_override_that_the_harness_refuses_cannot_seal(store: LabelStore) -> None:
+    save_all(store)
+    doc = store.manifest["documents"][0]
+    doc["schema"] = copy.deepcopy(store.manifest["schemas"][doc["kind"]])
+    next(iter(doc["schema"]["fields"].values()))["description"] = "Another request."
+    (store.directory / "manifest.json").write_text(json.dumps(store.manifest))
+    before = store.path.read_bytes()
+    with pytest.raises(ValueError, match="fixed requested fields"):
+        store.seal()
+    assert store.path.read_bytes() == before

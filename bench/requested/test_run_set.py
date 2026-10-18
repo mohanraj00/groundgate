@@ -1068,7 +1068,7 @@ def test_document_schema_changes_only_currency_aliases_keys_and_units() -> None:
     allowed = copy.deepcopy(template)
     allowed["fields"]["revenue"] |= {"unit": "GBP", "aliases": ["Turnover"]}
     allowed["units"] = {"GBP": ["£"]}
-    assert harness._same_request(template, allowed)
+    assert harness.same_request(template, allowed)
     changes = [
         ("supply_voltage_min", "comparator", "eq"),
         ("supply_voltage_min", "unit", "mV"),
@@ -1079,5 +1079,5 @@ def test_document_schema_changes_only_currency_aliases_keys_and_units() -> None:
     for name, member, value in changes:
         changed = copy.deepcopy(template)
         changed["fields"][name][member] = value
-        assert not harness._same_request(template, changed), member
-    assert not harness._same_request(template, template | {"currency": "GBP"})
+        assert not harness.same_request(template, changed), member
+    assert not harness.same_request(template, template | {"currency": "GBP"})

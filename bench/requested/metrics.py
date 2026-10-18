@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import re
 from collections import defaultdict
 from decimal import Decimal
 from pathlib import Path
@@ -87,6 +88,42 @@ def key(value: Any) -> str | None:
     if not isinstance(value, str) or not value.strip():
         raise ValueError("a key must be a nonblank string or null")
     return value
+
+
+_CURRENCY = re.compile(r"[A-Z]{3}")
+_DOCUMENT_MEMBERS = {"aliases", "keys", "unit"}
+
+
+def same_request(template: dict[str, Any], schema: dict[str, Any]) -> bool:
+    """Allow a document schema only its currency, aliases, keys and unit table."""
+    if not isinstance(schema, dict) or not isinstance(schema.get("fields"), dict):
+        return False
+    tops = (set(template) | set(schema)) - {"fields", "units"}
+    if any(template.get(k) != schema.get(k) for k in tops):
+        return False
+    if set(schema["fields"]) != set(template["fields"]):
+        return False
+    for name, field in schema["fields"].items():
+        fixed = template["fields"][name]
+        if not isinstance(field, dict):
+            return False
+
+        def rest(f: dict[str, Any]) -> dict[str, Any]:
+            kept = {k: v for k, v in f.items() if k not in _DOCUMENT_MEMBERS}
+            return {"type": "number", "multiple": False} | kept
+
+        if rest(field) != rest(fixed):
+            return False
+        unit, base = field.get("unit"), fixed.get("unit")
+        # Only a currency unit changes, to the document's reporting currency.
+        if unit != base and not (
+            isinstance(unit, str)
+            and isinstance(base, str)
+            and _CURRENCY.fullmatch(unit)
+            and _CURRENCY.fullmatch(base)
+        ):
+            return False
+    return True
 
 
 def value(raw: Any, field_type: str) -> str:
@@ -189,12 +226,7 @@ def measure(
         schema = doc.get("schema", template)
         Schema.from_dict(schema)
         fields = schema["fields"]
-        if set(fields) != set(template["fields"]) or any(
-            fields[name].get("type", "number") != template["fields"][name].get("type", "number")
-            or fields[name].get("multiple", False)
-            != template["fields"][name].get("multiple", False)
-            for name in fields
-        ):
+        if not same_request(template, schema):
             raise ValueError(
                 "document schemas must keep the kind's fixed requested fields and types"
             )
