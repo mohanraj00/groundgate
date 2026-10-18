@@ -519,6 +519,41 @@ def test_partial_layout_empty_cell_and_missing_head_remain_honest():
         d.score_layout(ann, [{"document": "doc", "reader": "draft", "trace": trace}])
 
 
+def test_layout_work_counts_only_rows_on_the_case_page(monkeypatch):
+    text = "A\t\t9"
+    layout = {
+        "groundgate_layout": "0.1",
+        "document_sha256": d.core_digest("0.9", "document", {"text": text}),
+        "pages": [{"page": 1, "width": 100, "height": 100, "start": 0, "end": 4}],
+        "words": [[0, 1, 1, 0, 0, 10, 10], [3, 4, 1, 30, 0, 40, 10]],
+    }
+    trace = d.serialized_layout(text, layout)
+    # A full observation has many rows on pages that no case is on.
+    trace["rows"] += [copy.deepcopy(trace["rows"][0]) | {"page": 2} for _ in range(100)]
+    case = {"id": "blank", "page": 1, "state": "observed", "box": [0, 0, 10, 10]}
+    ann = [
+        {
+            "id": "doc",
+            "source_pages": 2,
+            "reviewed_pages": [1],
+            "complete": False,
+            "routes": [
+                {
+                    "route": "empty_cells",
+                    "assessment": "applicable",
+                    "cases": [case | {"expected": 1, "reason": ""}],
+                }
+            ],
+        }
+    ]
+    observations = [{"document": "doc", "reader": "draft", "trace": trace}]
+    monkeypatch.setattr(d, "_LAYOUT_WORK", 10)
+    assert d.score_layout(ann, observations)["routes"]["draft/empty_cells"]["correct"] == 1
+    monkeypatch.setattr(d, "_LAYOUT_WORK", 0)
+    with pytest.raises(d.DiagnosticError, match="layout geometry work cap"):
+        d.score_layout(ann, observations)
+
+
 def test_duplicate_candidate_occurrences_and_reference_domain_are_preserved(tmp_path):
     _, plan, packet, _, _, _ = fixture(tmp_path)
     version = plan["versions"][0]
