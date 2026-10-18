@@ -24,6 +24,8 @@ COUNTERS = (
     "absence_hits",
     "reviews",
     "silent_misses",
+    "rejected_right_values",
+    "no_right_candidate",
     "escapes",
     "admitted",
     "catches",
@@ -178,6 +180,8 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "miss_rate": ratio(counts["reviews"] + counts["silent_misses"], counts["present"]),
         "right_value_review_share": ratio(counts["reviews"], counts["present"]),
         "silent_miss_share": ratio(counts["silent_misses"], counts["present"]),
+        "rejected_right_value_share": ratio(counts["rejected_right_values"], counts["present"]),
+        "no_right_candidate_share": ratio(counts["no_right_candidate"], counts["present"]),
         "bounds": {
             "confidence": 0.95,
             "design_effect": effect,
@@ -279,7 +283,7 @@ def measure(
                 row["excluded"] = 1
                 rows.append(row)
                 continue
-            admitted, reviewed = set(), set()
+            admitted, reviewed, rejected = set(), set(), set()
             for d in decisions:
                 dkey = decision_key(d.get("key")) if spec.get("keys") else None
                 if d["field"] != name or dkey != skey:
@@ -296,10 +300,16 @@ def measure(
                     admitted.add(sig)
                 elif d["outcome"] == "needs_verification":
                     reviewed.add(sig)
+                else:
+                    rejected.add(sig)
             row["present"] = len(wanted)
             row["hits"] = row["value_hits"] = len(wanted & admitted)
             row["reviews"] = len((wanted - admitted) & reviewed)
-            row["silent_misses"] = len(wanted - admitted - reviewed)
+            # A silent miss is a rejected right value or a right value with no candidate.
+            missed = wanted - admitted - reviewed
+            row["silent_misses"] = len(missed)
+            row["rejected_right_values"] = len(missed & rejected)
+            row["no_right_candidate"] = len(missed - rejected)
             row["admitted"] = len(admitted)
             row["escapes"] = len(admitted - wanted)
             row["catches"] = len(reviewed - wanted - admitted)
