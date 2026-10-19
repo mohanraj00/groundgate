@@ -313,7 +313,8 @@ crossing a sentence end. A per-unit counts as a form here, so "75 mg/m2" still r
 mg. With a unit item, the item then supplies the unit, and it is checked at the value (§4.6).
 Without one, the decision lists `unit` in `missing`, unless the field check passes (§4.6) and
 a form of the field's unit is at a unit place of the value, as a unit item there would
-be: then the unit is not missing (#249). A missing part adds the flag `PART_MISSING`, so the
+be: then the unit is not missing (#249). A heading unit (§4.3) makes the unit present only
+through a unit item that holds it. A missing part adds the flag `PART_MISSING`, so the
 outcome is at best `needs_verification`.
 
 **Re-anchoring (steps 10–11).** When steps 10 and 11 do not pass at the cited span without a
@@ -428,7 +429,8 @@ Indian way, the last three digits and then pairs (`\d{1,2}(,\d{2})*,\d{3}`, so `
 252000 or 2520000, and `1,23,456,789` mixes the two groupings). The value is the digits without
 the commas, so a string valid under both groupings, such as `25,000`, has one value. When tokens are read inside a span, a
 token that continues past the span's end is ignored, so a span can never read a prefix of a longer
-number.
+number. The `000` of a currency scale (below) is no token, so `£000` and `£'000` are never an
+amount of zero (spec 0.10, #313).
 
 A number token with a value that is followed by a **scale word** also has a **scaled value**. The
 scale words are `thousand`, `million`, `billion`, `trillion`, `lakh` and `crore`, matched as whole
@@ -449,8 +451,10 @@ value of such a number misses its scale (§3.1). `£5mm` has no scaled value, be
 follows the `m`.
 
 A **currency scale** is a currency sign directly followed by `k`, `K`, `m`, `M`, `bn`, `Bn`, `BN`,
-`'000` or `’000` (10^3), with no letter or number directly after it, such as `£m`, `$bn` or
-`£'000` in a column header.
+`'000`, `’000` or `000` (10^3), with no letter or number directly after it, such as `£m`, `$bn`,
+`£'000` or `£000` in a column header. After a bare `000`, a `,` or a `.` and then a digit also
+stop the form. So `£000s`, `£0001`, `£000,000` and `£000.5` are no currency scale, and `£ 000`,
+with a space after the sign, is none either (spec 0.10, #313).
 
 A **heading scale** is `in`, whitespace and a scale word (also with a final `s`) on a line that
 holds no tab, such as "(in thousands)". A currency scale on any line, with or without a tab, is
@@ -570,6 +574,52 @@ denominator keeps the unit: "200 mg/day" is mg. A weight-based dose needs its ow
 as `mg/kg` with the suffix `mg/kg`. A unit code with no prefixes and no suffixes, because it is
 not in the table or because the schema gives it empty lists, is at every token (the check is
 vacuous).
+
+**Heading units (spec 0.10, #315).** A **heading unit** is a currency header or a currency
+statement.
+
+A **currency header** is a currency scale (§4.1) on any line. Its **form** is its currency sign
+with the letters directly before it, as `£` in `£m`, `US$` in `US$000` and `HK$` in `HK$'000`.
+
+A **currency statement** is `in`, whitespace, optionally a scale word (also with a final `s`),
+whitespace, `of` and whitespace, and then a currency name of the table below, all on one line
+that holds no tab. Examples are "presented in Australian dollars" and "(in millions of Canadian
+dollars". Each word is matched whole and case-insensitively, and a whitespace run matches any
+whitespace run on that line. Each name also matches in the singular. Each code also matches as a name of its row, in
+capitals only.
+
+| Code | Currency names | Sign |
+|---|---|---|
+| `USD` | `US dollars`, `U.S. dollars`, `United States dollars` | `$` |
+| `AUD` | `Australian dollars` | `$` |
+| `CAD` | `Canadian dollars` | `$` |
+| `HKD` | `Hong Kong dollars` | `$` |
+| `NZD` | `New Zealand dollars` | `$` |
+| `SGD` | `Singapore dollars` | `$` |
+| `EUR` | `euros` | `€` |
+| `GBP` | `pounds sterling`, `sterling` | `£` |
+| `INR` | `Indian rupees` | `₹` |
+| `LKR` | `Sri Lankan rupees` | |
+
+A heading unit **reaches** a token as a heading scale does (§4.1).
+
+A heading unit **allows** unit codes. A currency statement allows the code of its name. A currency
+header whose form is a lone sign allows the codes of that sign in the table above, and each unit
+that has the sign as a prefix in the unit table. A currency header with a longer form allows each
+unit that has the form as a prefix in the unit table. It is **unknown** when no unit has that
+prefix, as `HK$` is when the schema gives no unit with it. An unknown header allows no code and
+is skipped below. A `$` with a letter directly before it is never read as a lone `$`.
+
+The **heading currency** of a token is the field's unit when both of these hold:
+
+1. Each heading unit that reaches the token, other than an unknown header, allows the field's
+   unit.
+2. A currency statement reaches the token, or a currency header reaches it whose form is a
+   prefix of the field's unit in the unit table.
+
+So `$m` under "presented in Australian dollars" gives `AUD`. `$m` alone gives `USD` by its
+built-in prefix, and never `CAD`. `$m` under a statement of another currency, or two statements
+of two currencies, give no heading currency. groundgate never chooses between them.
 
 ### 4.4 Whitespace normalisation
 
@@ -733,7 +783,7 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 |---|---|
 | `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
 | `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands", or it holds a currency scale (§4.1), as in "£m" (spec 0.10). It ends at or before the token. No scale word, also with a final `s`, lies between its end and the token, and no currency scale with a power of ten other than the item's scale (below) lies there. So the second `£m` of the header row `\t£m\t£m` does not stop an item on the first. |
-| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). |
+| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). Or the item holds a heading unit (§4.3) that reaches the token, the field check passes, the item ends at or before the token, no unit form is next to the token, and the token's heading currency is the field's unit (spec 0.10). |
 | `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then either no letter (general category L) lies between the item's end and the token (the item is at the **row**), or the item is in the value's sentence with no number token between its end and the token. |
 | `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
 

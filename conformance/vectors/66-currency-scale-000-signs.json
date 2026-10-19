@@ -1,0 +1,141 @@
+{
+ "name": "66-currency-scale-000-signs",
+ "description": "$000, €000, ₹000 and US$000 are currency scales of 10^3, and a blank line may stand between the header and the rows (spec 0.10, #313).",
+ "document": "Cash flow\n\t$000\nCapex\t42\n\nNotes\n\t€000\nFees\t75\n\nLedger\n\t₹000\nTaxes\t31\n\nSegment\n\tUS$000\nSales\t58\n\nBalance sheet\n\t£000\t£000\n\nRevenue\t15,961,328\n",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "number",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "p3a",
+   "field": "amount",
+   "value": "42000",
+   "evidence": [
+    {
+     "start": 22,
+     "end": 24,
+     "text": "42"
+    },
+    {
+     "role": "scale",
+     "start": 11,
+     "end": 15,
+     "text": "$000"
+    }
+   ]
+  },
+  {
+   "id": "p3b",
+   "field": "amount",
+   "value": "75000",
+   "evidence": [
+    {
+     "start": 45,
+     "end": 47,
+     "text": "75"
+    },
+    {
+     "role": "scale",
+     "start": 33,
+     "end": 39,
+     "text": "€000"
+    }
+   ]
+  },
+  {
+   "id": "p3c",
+   "field": "amount",
+   "value": "31000",
+   "evidence": [
+    {
+     "start": 70,
+     "end": 72,
+     "text": "31"
+    },
+    {
+     "role": "scale",
+     "start": 57,
+     "end": 63,
+     "text": "₹000"
+    }
+   ]
+  },
+  {
+   "id": "p3d",
+   "field": "amount",
+   "value": "58000",
+   "evidence": [
+    {
+     "start": 96,
+     "end": 98,
+     "text": "58"
+    },
+    {
+     "role": "scale",
+     "start": 83,
+     "end": 89,
+     "text": "US$000"
+    }
+   ]
+  },
+  {
+   "id": "p4",
+   "field": "amount",
+   "value": "15961328000",
+   "evidence": [
+    {
+     "start": 136,
+     "end": 146,
+     "text": "15,961,328"
+    },
+    {
+     "role": "scale",
+     "start": 121,
+     "end": 126,
+     "text": "£000"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

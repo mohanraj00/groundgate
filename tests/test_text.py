@@ -11,10 +11,12 @@ from hypothesis import strategies as st
 from groundgate.text import (
     _MIXED_HEADERS,
     _SENTENCE_END,
+    HeadingIndex,
     _label_line_in,
     _mixed_header_lines,
     canonical,
     first_token_end,
+    heading_units,
     key_mentions,
     keys_at,
     parse_value,
@@ -217,3 +219,62 @@ def test_sentence_agrees_with_a_scan(text: str, data: st.DataObject) -> None:
     assert sentence(text, pos) == (left, right)
     with sentence_index():
         assert sentence(text, pos) == (left, right)
+
+
+def test_heading_units_read_each_line_once() -> None:
+    """A table with a currency header on every row stays linear (#315): four times the rows take
+    less than eight times as long."""
+
+    def time_for(rows: int) -> float:
+        text = "(in Australian dollars)\n" + "\t$m\n" * rows
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            found = heading_units(text)
+            best = min(best, time.perf_counter() - began)
+            assert len(found) == rows + 1
+        return best
+
+    assert time_for(20000) < 8 * time_for(5000)
+
+
+def test_heading_index_checks_each_kind_once() -> None:
+    """With a currency header on every row, the check at a token reads each kind of heading unit
+    once, not each unit that reaches it (#315): four times the rows and the checks take less
+    than eight times as long."""
+    units = {"USD": (["US$", "$"], ["USD", "dollars"])}
+
+    def time_for(rows: int) -> float:
+        head = "(in Australian dollars)\n"
+        text = head + "".join(f"Revenue\t{k + 1}\t$m\n" for k in range(rows))
+        index = HeadingIndex(text)
+        places = [text.index(f"\t{k + 1}\t") + 1 for k in range(0, rows, 4)]
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            for pos in places:
+                assert index.held(1, 22, pos)
+                assert index.currency(pos, "AUD", units)
+            best = min(best, time.perf_counter() - began)
+        return best
+
+    assert time_for(20000) < 8 * time_for(5000)
+
+
+def test_heading_index_held_skips_units_that_reach_nothing() -> None:
+    """An item span that holds many headers that reach nothing does not read them one by one
+    (#315): four times the headers and the checks take less than eight times as long."""
+
+    def time_for(rows: int) -> float:
+        text = "£m\n" * rows + "No table here.\nRevenue\t5\n"
+        index = HeadingIndex(text)
+        pos = text.index("\t5") + 1
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            for _ in range(rows // 4):
+                assert not index.held(0, pos, pos)
+            best = min(best, time.perf_counter() - began)
+        return best
+
+    assert time_for(40000) < 8 * time_for(10000)

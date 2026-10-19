@@ -147,10 +147,20 @@ def _tokens(text: str, start: int, end: int) -> Iterator[Token]:
         if tok.endswith(","):
             tok = tok[:-1]
         e = s + len(tok)
+        if tok == "000" and _scale_zeros(text, s):
+            continue  # the 000 of a currency scale, as in "£000", is no token (#313)
         whole = _TOKEN.match(text, s)
         if whole and s + len(whole.group().removesuffix(",")) > end:
             continue  # the number runs past the region: never read a prefix of it
         yield Token(s, e, _to_decimal(tok))
+
+
+def _scale_zeros(text: str, s: int) -> bool:
+    """Whether the 000 at ``s`` is the 000 of a currency scale (SPEC §4.1, #313)."""
+    sign = s - 1
+    if sign > 0 and text[sign] in "'\u2019":
+        sign -= 1
+    return sign >= 0 and text[sign] in _CONTINUES and _CURRENCY_SCALE.match(text, sign) is not None
 
 
 def parse_value(raw: str) -> Decimal | None:
@@ -420,9 +430,12 @@ _SCALE_EXP = {"thousand": 3, "million": 6, "billion": 9, "trillion": 12, "lakh":
 
 
 # a scale suffix or a currency scale (SPEC §4.1, spec 0.10): the power of ten of each form
-_SUFFIX_EXP = {"k": 3, "m": 6, "bn": 9, "'000": 3, "\u2019000": 3}
+_SUFFIX_EXP = {"k": 3, "m": 6, "bn": 9, "'000": 3, "\u2019000": 3, "000": 3}
 _SCALE_SUFFIX = re.compile(r"(k|K|m|M|bn|Bn|BN)(?![^\W_])")
-_CURRENCY_FORM = "[" + re.escape(_CONTINUES) + r"](k|K|m|M|bn|Bn|BN|'000|\u2019000)(?![^\W_])"
+# a bare 000 also stops before a "," or a "." and a digit, as in "£000,000" (#313)
+_CURRENCY_FORM = (
+    "[" + re.escape(_CONTINUES) + r"](k|K|m|M|bn|Bn|BN|'000|\u2019000|000(?![,.][0-9]))(?![^\W_])"
+)
 _CURRENCY_SCALE = re.compile(_CURRENCY_FORM)
 
 
@@ -873,6 +886,175 @@ def heading_rows(text: str) -> list[tuple[int, int]]:
             state = "heading"
         start = end + 1
     return out
+
+
+# The currency names of a currency statement and the sign that each currency shares (SPEC
+# §4.3, spec 0.10, #315). A name also matches in the singular, and the code matches in capitals.
+CURRENCY_NAMES: dict[str, tuple[tuple[str, ...], str | None]] = {
+    "USD": (("US dollars", "U.S. dollars", "United States dollars"), "$"),
+    "AUD": (("Australian dollars",), "$"),
+    "CAD": (("Canadian dollars",), "$"),
+    "HKD": (("Hong Kong dollars",), "$"),
+    "NZD": (("New Zealand dollars",), "$"),
+    "SGD": (("Singapore dollars",), "$"),
+    "EUR": (("euros",), "\u20ac"),
+    "GBP": (("pounds sterling", "sterling"), "\u00a3"),
+    "INR": (("Indian rupees",), "\u20b9"),
+    "LKR": (("Sri Lankan rupees",), None),
+}
+_PLURALS = ("dollars", "euros", "pounds", "rupees")
+
+
+def _name_pattern(name: str) -> str:
+    words = [re.escape(w[:-1]) + "s?" if w in _PLURALS else re.escape(w) for w in name.split()]
+    return _LINE_SPACE.join(words)
+
+
+_LINE_SPACE = r"[^\S\n]+"  # a whitespace run that stays on its line: a statement is on one line
+_STATEMENT = re.compile(
+    r"(?<![^\W_])(?i:in)[^\S\n]+"
+    r"(?:(?i:thousand|million|billion|trillion|lakh|crore)s?[^\S\n]+(?i:of)[^\S\n]+)?(?:"
+    + "|".join(
+        f"(?P<{code}>(?i:{'|'.join(_name_pattern(n) for n in names)})|{code})"
+        for code, (names, _) in CURRENCY_NAMES.items()
+    )
+    + r")(?![^\W_])"
+)
+
+
+@dataclass(frozen=True)
+class HeadingUnit:
+    """A currency header or a currency statement, and the rows that it reaches (SPEC §4.3)."""
+
+    start: int
+    end: int
+    code: str | None  # a statement's currency; None for a header
+    form: str  # a header's sign with the letters directly before it; "" for a statement
+    reach: tuple[int, int] | None  # the first and the last code point of the rows it reaches
+
+    def reaches(self, pos: int) -> bool:
+        return self.reach is not None and self.reach[0] <= pos <= self.reach[1]
+
+
+def heading_units(text: str) -> list[HeadingUnit]:
+    """The heading units of the text (SPEC §4.3, spec 0.10, #315). Each one reaches the rows that
+    a heading scale on its line reaches (SPEC §4.1): after its line and any blank lines, the lines
+    with a tab up to the first line with no tab."""
+    lines: list[tuple[int, int]] = []
+    start = 0
+    for line in text.split("\n"):
+        lines.append((start, start + len(line)))
+        start += len(line) + 1
+    starts = [a for a, _ in lines]
+    n = len(lines)
+    tab = ["\t" in text[a:b] for a, b in lines]
+    blank = [not tab[i] and not text[slice(*lines[i])].strip() for i in range(n)]
+    # one pass from the end, so that each line is read once: the end of the run of lines with a
+    # tab from each line, and the first line after each line that is not blank
+    run_end = [0] * n
+    after = [n] * (n + 1)
+    for i in range(n - 1, -1, -1):
+        run_end[i] = (run_end[i + 1] if i + 1 < n and tab[i + 1] else lines[i][1]) if tab[i] else 0
+        after[i] = i + 1 if i + 1 < n and not blank[i + 1] else after[i + 1]
+
+    def rows(i: int) -> tuple[int, int] | None:
+        j = after[i]
+        return (lines[j][0], run_end[j]) if j < n and tab[j] else None
+
+    out: list[HeadingUnit] = []
+    for m in _CURRENCY_SCALE.finditer(text):
+        a = m.start()
+        while a > 0 and unicodedata.category(text[a - 1]).startswith("L"):
+            a -= 1
+        i = bisect.bisect_right(starts, m.start()) - 1
+        out.append(HeadingUnit(a, m.end(), None, text[a : m.start() + 1], rows(i)))
+    for m in _STATEMENT.finditer(text):
+        i = bisect.bisect_right(starts, m.start()) - 1
+        if "\t" in text[slice(*lines[i])]:
+            continue  # a statement is on a line with no tab
+        code = next(c for c in CURRENCY_NAMES if m.group(c) is not None)
+        out.append(HeadingUnit(m.start(), m.end(), code, "", rows(i)))
+    return out
+
+
+Units = dict[str, tuple[list[str], list[str]]]
+
+
+def heading_allows(code: str | None, form: str, units: Units) -> set[str] | None:
+    """The unit codes that a heading unit allows, or None for an unknown header (SPEC §4.3)."""
+    if code is not None:
+        return {code}
+    have = {c for c, (prefixes, _) in units.items() if form in prefixes}
+    if len(form) == 1:
+        return have | {c for c, (_, sign) in CURRENCY_NAMES.items() if sign == form}
+    return have or None
+
+
+class HeadingIndex:
+    """The heading units of a text, for a check at a token in time that does not grow with the
+    number of heading units (#315). Units with the same code and form act the same, so each such
+    kind keeps the merged spans of the rows that its units reach."""
+
+    def __init__(self, text: str) -> None:
+        found = heading_units(text)
+        self.lines = [0] + [m.end() for m in re.finditer("\n", text)]
+        self.units = sorted(found, key=lambda h: h.start)
+        self.starts = [h.start for h in self.units]
+        spans: dict[tuple[str | None, str], list[tuple[int, int]]] = {}
+        for h in found:
+            if h.reach is not None:
+                spans.setdefault((h.code, h.form), []).append(h.reach)
+        self.reach: dict[tuple[str | None, str], tuple[list[int], list[int]]] = {}
+        for kind, got in spans.items():
+            merged: list[list[int]] = []
+            for x, y in sorted(got):
+                if merged and x <= merged[-1][1]:
+                    merged[-1][1] = max(merged[-1][1], y)
+                else:
+                    merged.append([x, y])
+            self.reach[kind] = ([x for x, _ in merged], [y for _, y in merged])
+
+    def reaches(self, kind: tuple[str | None, str], pos: int) -> bool:
+        if kind not in self.reach:
+            return False
+        lo, hi = self.reach[kind]
+        i = bisect.bisect_right(lo, pos) - 1
+        return i >= 0 and pos <= hi[i]
+
+    def held(self, a: int, b: int, pos: int) -> bool:
+        """Whether text[a:b] holds a heading unit that reaches ``pos``. The units that reach a
+        token are the last ones before its line, in a row: the heading line of its table and the
+        rows above it in the table. So a unit that does not reach the token ends the search, and
+        units that reach nothing are never read one by one."""
+        line = self.lines[bisect.bisect_right(self.lines, pos) - 1]
+        j = bisect.bisect_left(self.starts, min(b, line)) - 1
+        while j >= 0 and self.starts[j] >= a:
+            h = self.units[j]
+            if not h.reaches(pos):
+                return False
+            if h.end <= b:
+                return True
+            j -= 1  # this unit runs past the item: try the one before it
+        return False
+
+    def currency(self, pos: int, unit: str, units: Units) -> bool:
+        """Whether the heading currency of the token at ``pos`` is ``unit`` (SPEC §4.3): each
+        heading unit that reaches it and is not unknown allows the unit, and a statement or a
+        header whose form is a prefix of the unit settles it. groundgate never chooses between
+        two currencies. An unknown header changes nothing, so only the kinds that the currency
+        table and the unit table name are read."""
+        prefixes = units.get(unit, ([], []))[0]
+        forms = set(_CONTINUES) | {x for pre, _ in units.values() for x in pre}
+        kinds = [(c, "") for c in CURRENCY_NAMES] + [(None, f) for f in sorted(forms)]
+        settled = False
+        for code, form in kinds:
+            if not self.reaches((code, form), pos):
+                continue
+            allowed = heading_allows(code, form, units)
+            if allowed is not None and unit not in allowed:
+                return False
+            settled = settled or code is not None or form in prefixes
+        return settled
 
 
 def in_scale(text: str, start: int, end: int) -> bool:

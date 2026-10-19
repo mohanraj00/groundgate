@@ -1,0 +1,210 @@
+{
+ "name": "69-heading-unit-reach",
+ "description": "A currency statement reaches the rows after it as a heading scale does: across blank lines before the first line with a tab, and up to the first line with no tab. A line of prose after it, or the end of a table, stops it, and a line with a tab holds no statement (spec 0.10, #315).",
+ "document": "Income statement (in millions of Canadian dollars)\n\t2025\t2024\nRevenue\t5,200\t4,900\n\nThe figures are presented in Australian dollars.\n\n\t$m\t$m\nRevenue\t6,300\t5,800\n\nAmounts are presented in Australian dollars.\nThe notes form part of these statements.\n\t$m\nRevenue\t7,400\n\n(in Australian dollars)\n\t$m\nCash\t1,100\nThe table ends here.\n\t$m\nRevenue\t8,500\n\nRevenue (in Australian dollars)\t9,600\t9,100\n",
+ "schema": {
+  "fields": {
+   "cad": {
+    "type": "number",
+    "unit": "CAD",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   },
+   "aud": {
+    "type": "number",
+    "unit": "AUD",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "u1",
+   "field": "cad",
+   "value": "5200000000",
+   "unit": "CAD",
+   "evidence": [
+    {
+     "start": 70,
+     "end": 75,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 18,
+     "end": 29,
+     "text": "in millions"
+    },
+    {
+     "role": "unit",
+     "text": "in millions of Canadian dollars"
+    }
+   ]
+  },
+  {
+   "id": "u8",
+   "field": "aud",
+   "value": "6300000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 148,
+     "end": 153,
+     "text": "6,300"
+    },
+    {
+     "role": "field",
+     "start": 140,
+     "end": 147,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 137,
+     "end": 139,
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "start": 99,
+     "end": 130,
+     "text": "presented in Australian dollars"
+    }
+   ]
+  },
+  {
+   "id": "u15",
+   "field": "aud",
+   "value": "7400000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 259,
+     "end": 264,
+     "text": "7,400"
+    },
+    {
+     "role": "field",
+     "start": 251,
+     "end": 258,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 248,
+     "end": 250,
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "start": 173,
+     "end": 204,
+     "text": "presented in Australian dollars"
+    }
+   ]
+  },
+  {
+   "id": "u16",
+   "field": "aud",
+   "value": "8500000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 338,
+     "end": 343,
+     "text": "8,500"
+    },
+    {
+     "role": "field",
+     "start": 330,
+     "end": 337,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 327,
+     "end": 329,
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "start": 267,
+     "end": 288,
+     "text": "in Australian dollars"
+    }
+   ]
+  },
+  {
+   "id": "u17",
+   "field": "aud",
+   "value": "9600",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 377,
+     "end": 382,
+     "text": "9,600"
+    },
+    {
+     "role": "field",
+     "start": 345,
+     "end": 352,
+     "text": "Revenue"
+    },
+    {
+     "role": "unit",
+     "start": 354,
+     "end": 375,
+     "text": "in Australian dollars"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

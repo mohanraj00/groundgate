@@ -3786,6 +3786,289 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- spec 0.10 (#313)
+POUND_000 = "Statement of financial position\n\t£000\t£000\nRevenue\t15,961,328\t14,200,105\n"
+REVENUE_313 = {"type": "number", "aliases": ["Revenue"], "multiple": True}
+vector(
+    "64-currency-scale-000",
+    "A currency sign directly followed by 000 is a currency scale of 10^3, as £'000 is. A scale "
+    "item £000 scales the number as written, and the header is a heading scale. The 000 of a "
+    "currency scale is no number token, so £000, £'000 and £\u2019000 are never an amount of zero "
+    "(spec 0.10, #313).",
+    POUND_000,
+    {"fields": {"revenue": REVENUE_313,
+                "revenue_gbp": {"type": "number", "unit": "GBP", "aliases": ["Revenue"]}}},
+    [
+        c("p1", "revenue", "15961328000", None,
+          [q("15,961,328"), row("Revenue"), {"role": "scale", "text": "£000"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("p2", "revenue", "15961328000", None, [q("15,961,328"), row("Revenue")],
+          (REVIEW, ["PART_MISSING"], ["scale"])),
+        # the number as written under a £000 heading misses its scale
+        c("p2b", "revenue", "15961328", None, [q("15,961,328"), row("Revenue")],
+          (REVIEW, ["PART_MISSING"], ["scale"])),
+        # with #315: the £ of the header gives the unit
+        c("p5", "revenue_gbp", "15961328000", "GBP",
+          [q("15,961,328"), row("Revenue"), {"role": "scale", "text": "£000"},
+           {"role": "unit", "text": "£000"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        # £000 is not an amount of zero
+        c("z6", "revenue", "0", None, [q("000")], ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("z12", "revenue", "15961328", None,
+          [q("15,961,328"), row("Revenue"), {"role": "scale", "text": "£000"}],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "65-currency-scale-000-zero",
+    "The 000 of £'000 and £\u2019000 is no number token either, so a value of zero is not in the "
+    "evidence there (spec 0.10, #313).",
+    "Notes\n\t£'000\t£\u2019000\nFees\t75\t80\n",
+    {"fields": {"fees": {"type": "number"}}},
+    [
+        c("z7a", "fees", "0", None, [q("000", 1)], ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("z7b", "fees", "0", None, [q("000", 2)], ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "66-currency-scale-000-signs",
+    "$000, €000, ₹000 and US$000 are currency scales of 10^3, and a blank line may stand between "
+    "the header and the rows (spec 0.10, #313).",
+    "Cash flow\n\t$000\nCapex\t42\n\nNotes\n\t€000\nFees\t75\n\nLedger\n\t₹000\nTaxes\t31\n\n"
+    "Segment\n\tUS$000\nSales\t58\n\nBalance sheet\n\t£000\t£000\n\nRevenue\t15,961,328\n",
+    {"fields": {"amount": {"type": "number", "multiple": True}}},
+    [
+        c("p3a", "amount", "42000", None, [q("42"), q("$000", 1, role="scale")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("p3b", "amount", "75000", None, [q("75"), q("€000", role="scale")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("p3c", "amount", "31000", None, [q("31"), q("₹000", role="scale")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("p3d", "amount", "58000", None, [q("58"), q("US$000", role="scale")],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("p4", "amount", "15961328000", None, [q("15,961,328"), q("£000", 2, role="scale")],
+          ("admitted", ["VALUE_DERIVED"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "67-currency-scale-000-strict",
+    "The 000 form is strict. A letter or a number after 000, a , or . and then a digit, or a "
+    "space after the sign stops it: £000s, £0001, £000,000, £000.5 and £ 000 are no currency "
+    "scale, so no heading scale reaches their rows, and a scale item £000s holds no scale. A £000 "
+    "header followed by a line with no tab reaches no row (spec 0.10, #313).",
+    "Table A\n\t£0001\nRevenue\t15,961,328\n\n"
+    "Table B\n\t£000,000\nGrants\t2,345,678\n\n"
+    "Table C\n\t£000.5\nFees\t3,456,789\n\n"
+    "Table D\n\t£ 000\nRents\t4,567,890\n\n"
+    "Table E\n\t£000\nFigures follow.\nTaxes\t5,678,901\n\n"
+    "Table F\n\t£000s\nLoans\t6,789,012\n",
+    {"fields": {"amount": {"type": "number", "multiple": True}}},
+    [
+        c("z8", "amount", "6789012000", None, [q("6,789,012"), q("£000s", role="scale")],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        # the number as written: no heading scale reaches it, so no scale is missing
+        c("z9", "amount", "15961328", None, [q("15,961,328")]),
+        c("z10a", "amount", "2345678", None, [q("2,345,678")]),
+        c("z10b", "amount", "3456789", None, [q("3,456,789")]),
+        c("z11", "amount", "4567890", None, [q("4,567,890")]),
+        c("z13", "amount", "5678901", None, [q("5,678,901")]),
+    ],
+)  # fmt: skip
+
+
+# ---------------------------------------------------------------- spec 0.10 (#315)
+def revenue(unit: str) -> dict[str, Any]:
+    return {"type": "number", "unit": unit, "aliases": ["Revenue"]}
+
+
+def unit_item(text: str) -> dict[str, Any]:
+    return {"role": "unit", "text": text}
+
+
+def scale_item(text: str) -> dict[str, Any]:
+    return {"role": "scale", "text": text}
+
+
+REV = row("Revenue")
+HEADING_UNIT_FIELDS = {
+    "fields": {code.lower(): revenue(code) for code in ("USD", "AUD", "CAD", "GBP", "HKD")}
+}
+DERIVED = ("admitted", ["VALUE_DERIVED"])
+UNIT_REVIEW = (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED"])
+AUD_STATEMENT = (
+    "The figures are presented in Australian dollars.\n\t$m\t$m\nRevenue\t5,200\t4,900\n"
+)
+vector(
+    "68-heading-unit-statement",
+    "A currency statement ('in', an optional scale word and 'of', and a currency name) on a line "
+    "with no tab is a heading unit. It reaches the table rows as a heading scale does, and a "
+    "unit item that holds it gives the field's unit there. A lone $ agrees with each dollar "
+    "currency, so $m under 'presented in Australian dollars' gives AUD, and a USD field there "
+    "goes to review. A unit form next to the value, or a field check that does not pass, makes "
+    "the item fail (spec 0.10, #315).",
+    AUD_STATEMENT,
+    HEADING_UNIT_FIELDS,
+    [
+        c("u2", "aud", "5200000000", "AUD",
+          [q("5,200"), REV, scale_item("$m"), unit_item("presented in Australian dollars")],
+          DERIVED),
+        c("u3", "aud", "5200000000", "AUD", [q("5,200"), REV, scale_item("$m"), unit_item("$m")],
+          DERIVED),
+        # the statement and the field disagree
+        c("u11", "usd", "5200000000", "USD", [q("5,200"), REV, scale_item("$m"), unit_item("$m")],
+          UNIT_REVIEW),
+        # the field check must pass
+        c("u20", "aud", "5200000000", "AUD",
+          [q("5,200"), scale_item("$m"), unit_item("presented in Australian dollars")],
+          UNIT_REVIEW),
+    ],
+)  # fmt: skip
+
+vector(
+    "69-heading-unit-reach",
+    "A currency statement reaches the rows after it as a heading scale does: across blank lines "
+    "before the first line with a tab, and up to the first line with no tab. A line of prose "
+    "after it, or the end of a table, stops it, and a line with a tab holds no statement "
+    "(spec 0.10, #315).",
+    "Income statement (in millions of Canadian dollars)\n\t2025\t2024\nRevenue\t5,200\t4,900\n\n"
+    "The figures are presented in Australian dollars.\n\n\t$m\t$m\nRevenue\t6,300\t5,800\n\n"
+    "Amounts are presented in Australian dollars.\nThe notes form part of these statements.\n"
+    "\t$m\nRevenue\t7,400\n\n"
+    "(in Australian dollars)\n\t$m\nCash\t1,100\nThe table ends here.\n\t$m\nRevenue\t8,500\n\n"
+    "Revenue (in Australian dollars)\t9,600\t9,100\n",
+    {"fields": {"cad": {**revenue("CAD"), "multiple": True},
+                "aud": {**revenue("AUD"), "multiple": True}}},
+    [
+        c("u1", "cad", "5200000000", "CAD",
+          [q("5,200"), REV, q("in millions", role="scale"),
+           unit_item("in millions of Canadian dollars")],
+          DERIVED),
+        # blank lines between the statement and the table
+        c("u8", "aud", "6300000000", "AUD",
+          [q("6,300"), q("Revenue", 2, role="field"), q("$m", 2, role="scale"),
+           q("presented in Australian dollars", 1, role="unit")],
+          DERIVED),
+        # a line of prose stands between the statement and the table
+        c("u15", "aud", "7400000000", "AUD",
+          [q("7,400"), q("Revenue", 3, role="field"), q("$m", 3, role="scale"),
+           q("presented in Australian dollars", 2, role="unit")],
+          UNIT_REVIEW),
+        # the value is in the second table
+        c("u16", "aud", "8500000000", "AUD",
+          [q("8,500"), q("Revenue", 4, role="field"), q("$m", 5, role="scale"),
+           q("in Australian dollars", 3, role="unit")],
+          UNIT_REVIEW),
+        # the statement is on the value's own line, which holds a tab
+        c("u17", "aud", "9600", "AUD",
+          [q("9,600"), q("Revenue", 5, role="field"), q("in Australian dollars", 4, role="unit")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "70-heading-unit-header",
+    "A currency scale is also a currency header. Its form is the sign with the letters directly "
+    "before it. £m gives GBP, US$000 and $m give USD by their prefixes in the unit table, and $m "
+    "alone never gives CAD. HK$ is not in the unit table, so HK$'000 is unknown: it gives no "
+    "unit, and its $ is never read as a lone $. A heading unit acts only through a unit item "
+    "(spec 0.10, #315).",
+    "Group\n\t£m\t£m\nRevenue\t5,200\t4,900\n\n"
+    "Segment\n\tUS$000\tUS$000\nRevenue\t6,300\t5,800\n\n"
+    "Parent\n\t$m\t$m\nRevenue\t7,400\t6,900\n\n"
+    "Branch\n\tHK$'000\nRevenue\t8,500\n\n"
+    "(in Hong Kong dollars)\n\tHK$'000\nRevenue\t9,600\n",
+    {"fields": {code.lower(): {**revenue(code), "multiple": True}
+                for code in ("USD", "CAD", "GBP", "HKD")}},
+    [
+        c("u4", "gbp", "5200000000", "GBP", [q("5,200"), REV, scale_item("£m"), unit_item("£m")],
+          DERIVED),
+        c("u21", "gbp", "5200000000", "GBP", [q("5,200"), REV, scale_item("£m")],
+          (REVIEW, ["PART_MISSING", "VALUE_DERIVED"], ["unit"])),
+        c("u5", "usd", "6300000", "USD",
+          [q("6,300"), q("Revenue", 2, role="field"), scale_item("US$000"), unit_item("US$000")],
+          DERIVED),
+        c("u6", "usd", "7400000000", "USD",
+          [q("7,400"), q("Revenue", 3, role="field"), scale_item("$m"), unit_item("$m")],
+          DERIVED),
+        # the sign alone does not settle a currency that shares it
+        c("u10", "cad", "7400000000", "CAD",
+          [q("7,400"), q("Revenue", 3, role="field"), scale_item("$m"), unit_item("$m")],
+          UNIT_REVIEW),
+        c("u14", "usd", "8500000", "USD",
+          [q("8,500"), q("Revenue", 4, role="field"), q("HK$'000", 1, role="scale"),
+           q("HK$'000", 1, role="unit")],
+          UNIT_REVIEW),
+        c("u7", "hkd", "9600000", "HKD",
+          [q("9,600"), q("Revenue", 5, role="field"), q("HK$'000", 2, role="scale"),
+           q("HK$'000", 2, role="unit")],
+          DERIVED),
+    ],
+)  # fmt: skip
+
+vector(
+    "71-heading-unit-disagree",
+    "When the heading units that reach a value do not agree on the field's unit, the unit item "
+    "fails and the value goes to review. groundgate never chooses between them: two statements "
+    "of two currencies, a statement of another currency over £m, or a unit form next to the "
+    "value (spec 0.10, #315).",
+    "Group figures in Australian dollars, parent figures in New Zealand dollars\n\t$m\n"
+    "Revenue\t5,200\n\n"
+    "(in thousands of US dollars)\n\t£m\nRevenue\t6,300\n\n"
+    "(in millions of dollars)\n\t$m\nRevenue\t7,400\n\n"
+    "The figures are presented in Australian dollars.\n\t$m\t$m\nRevenue\t£8,500\t£7,900\n",
+    {"fields": {code.lower(): {**revenue(code), "multiple": True}
+                for code in ("AUD", "CAD", "GBP")}},
+    [
+        c("u12", "aud", "5200000000", "AUD",
+          [q("5,200"), REV, q("$m", 1, role="scale"), q("in Australian dollars", role="unit")],
+          UNIT_REVIEW),
+        c("u13", "gbp", "6300000000", "GBP",
+          [q("6,300"), q("Revenue", 2, role="field"), q("£m", role="scale"),
+           q("£m", role="unit")],
+          UNIT_REVIEW),
+        # "dollars" alone names no currency
+        c("u18", "cad", "7400000000", "CAD",
+          [q("7,400"), q("Revenue", 3, role="field"), q("$m", 2, role="scale"),
+           q("in millions of dollars", role="unit")],
+          UNIT_REVIEW),
+        # a unit form next to the value
+        c("u19", "aud", "8500000000", "AUD",
+          [q("8,500"), q("Revenue", 4, role="field"), q("$m", 4, role="scale"),
+           q("presented in Australian dollars", role="unit")],
+          UNIT_REVIEW),
+    ],
+)  # fmt: skip
+
+vector(
+    "72-heading-unit-schema-prefix",
+    "When the schema gives CAD the prefix $, a lone $ in a header settles CAD: the app says what "
+    "$ means in its documents (spec 0.10, #315).",
+    "\t$m\t$m\nRevenue\t5,200\t4,900\n",
+    {"fields": {"cad": revenue("CAD")}, "units": {"CAD": {"prefix": ["$"], "suffix": []}}},
+    [
+        c("u9", "cad", "5200000000", "CAD", [q("5,200"), REV, scale_item("$m"), unit_item("$m")],
+          DERIVED),
+    ],
+)  # fmt: skip
+
+
+vector(
+    "73-heading-unit-one-line",
+    "A currency statement lies on one line, which holds no tab. A statement that runs onto a "
+    "line with a tab is none, so it gives no unit (spec 0.10, #315).",
+    "Figures in\nAustralian dollars\t2025\t2024\nRevenue\t5,200\t4,900\n",
+    {"fields": {"aud": revenue("AUD")}},
+    [
+        c("u22", "aud", "5200", "AUD",
+          [q("5,200"), REV, q("in\nAustralian dollars", role="unit")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

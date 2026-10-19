@@ -1,0 +1,53 @@
+{
+ "name": "73-heading-unit-one-line",
+ "description": "A currency statement lies on one line, which holds no tab. A statement that runs onto a line with a tab is none, so it gives no unit (spec 0.10, #315).",
+ "document": "Figures in\nAustralian dollars\t2025\t2024\nRevenue\t5,200\t4,900\n",
+ "schema": {
+  "fields": {
+   "aud": {
+    "type": "number",
+    "unit": "AUD",
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "u22",
+   "field": "aud",
+   "value": "5200",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 48,
+     "end": 53,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "unit",
+     "start": 8,
+     "end": 29,
+     "text": "in\nAustralian dollars"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,174 @@
+{
+ "name": "68-heading-unit-statement",
+ "description": "A currency statement ('in', an optional scale word and 'of', and a currency name) on a line with no tab is a heading unit. It reaches the table rows as a heading scale does, and a unit item that holds it gives the field's unit there. A lone $ agrees with each dollar currency, so $m under 'presented in Australian dollars' gives AUD, and a USD field there goes to review. A unit form next to the value, or a field check that does not pass, makes the item fail (spec 0.10, #315).",
+ "document": "The figures are presented in Australian dollars.\n\t$m\t$m\nRevenue\t5,200\t4,900\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "aud": {
+    "type": "number",
+    "unit": "AUD",
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "cad": {
+    "type": "number",
+    "unit": "CAD",
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "gbp": {
+    "type": "number",
+    "unit": "GBP",
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "hkd": {
+    "type": "number",
+    "unit": "HKD",
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "u2",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 69,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "presented in Australian dollars"
+    }
+   ]
+  },
+  {
+   "id": "u3",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 69,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "u11",
+   "field": "usd",
+   "value": "5200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 69,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "u20",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 69,
+     "text": "5,200"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "presented in Australian dollars"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

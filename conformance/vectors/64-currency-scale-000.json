@@ -1,0 +1,182 @@
+{
+ "name": "64-currency-scale-000",
+ "description": "A currency sign directly followed by 000 is a currency scale of 10^3, as £'000 is. A scale item £000 scales the number as written, and the header is a heading scale. The 000 of a currency scale is no number token, so £000, £'000 and £’000 are never an amount of zero (spec 0.10, #313).",
+ "document": "Statement of financial position\n\t£000\t£000\nRevenue\t15,961,328\t14,200,105\n",
+ "schema": {
+  "fields": {
+   "revenue": {
+    "type": "number",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   },
+   "revenue_gbp": {
+    "type": "number",
+    "unit": "GBP",
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "revenue",
+   "value": "15961328000",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 63,
+     "text": "15,961,328"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "£000"
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "field": "revenue",
+   "value": "15961328000",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 63,
+     "text": "15,961,328"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    }
+   ]
+  },
+  {
+   "id": "p2b",
+   "field": "revenue",
+   "value": "15961328",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 63,
+     "text": "15,961,328"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    }
+   ]
+  },
+  {
+   "id": "p5",
+   "field": "revenue_gbp",
+   "value": "15961328000",
+   "unit": "GBP",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 63,
+     "text": "15,961,328"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "£000"
+    },
+    {
+     "role": "unit",
+     "text": "£000"
+    }
+   ]
+  },
+  {
+   "id": "z6",
+   "field": "revenue",
+   "value": "0",
+   "evidence": [
+    {
+     "start": 35,
+     "end": 38,
+     "text": "000"
+    }
+   ]
+  },
+  {
+   "id": "z12",
+   "field": "revenue",
+   "value": "15961328",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 63,
+     "text": "15,961,328"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "£000"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

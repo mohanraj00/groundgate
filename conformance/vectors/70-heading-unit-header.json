@@ -1,0 +1,286 @@
+{
+ "name": "70-heading-unit-header",
+ "description": "A currency scale is also a currency header. Its form is the sign with the letters directly before it. £m gives GBP, US$000 and $m give USD by their prefixes in the unit table, and $m alone never gives CAD. HK$ is not in the unit table, so HK$'000 is unknown: it gives no unit, and its $ is never read as a lone $. A heading unit acts only through a unit item (spec 0.10, #315).",
+ "document": "Group\n\t£m\t£m\nRevenue\t5,200\t4,900\n\nSegment\n\tUS$000\tUS$000\nRevenue\t6,300\t5,800\n\nParent\n\t$m\t$m\nRevenue\t7,400\t6,900\n\nBranch\n\tHK$'000\nRevenue\t8,500\n\n(in Hong Kong dollars)\n\tHK$'000\nRevenue\t9,600\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   },
+   "cad": {
+    "type": "number",
+    "unit": "CAD",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   },
+   "gbp": {
+    "type": "number",
+    "unit": "GBP",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   },
+   "hkd": {
+    "type": "number",
+    "unit": "HKD",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "u4",
+   "field": "gbp",
+   "value": "5200000000",
+   "unit": "GBP",
+   "evidence": [
+    {
+     "start": 23,
+     "end": 28,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "£m"
+    },
+    {
+     "role": "unit",
+     "text": "£m"
+    }
+   ]
+  },
+  {
+   "id": "u21",
+   "field": "gbp",
+   "value": "5200000000",
+   "unit": "GBP",
+   "evidence": [
+    {
+     "start": 23,
+     "end": 28,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "£m"
+    }
+   ]
+  },
+  {
+   "id": "u5",
+   "field": "usd",
+   "value": "6300000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 67,
+     "end": 72,
+     "text": "6,300"
+    },
+    {
+     "role": "field",
+     "start": 59,
+     "end": 66,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "US$000"
+    },
+    {
+     "role": "unit",
+     "text": "US$000"
+    }
+   ]
+  },
+  {
+   "id": "u6",
+   "field": "usd",
+   "value": "7400000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 102,
+     "end": 107,
+     "text": "7,400"
+    },
+    {
+     "role": "field",
+     "start": 94,
+     "end": 101,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "u10",
+   "field": "cad",
+   "value": "7400000000",
+   "unit": "CAD",
+   "evidence": [
+    {
+     "start": 102,
+     "end": 107,
+     "text": "7,400"
+    },
+    {
+     "role": "field",
+     "start": 94,
+     "end": 101,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "u14",
+   "field": "usd",
+   "value": "8500000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 139,
+     "end": 144,
+     "text": "8,500"
+    },
+    {
+     "role": "field",
+     "start": 131,
+     "end": 138,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 123,
+     "end": 130,
+     "text": "HK$'000"
+    },
+    {
+     "role": "unit",
+     "start": 123,
+     "end": 130,
+     "text": "HK$'000"
+    }
+   ]
+  },
+  {
+   "id": "u7",
+   "field": "hkd",
+   "value": "9600000",
+   "unit": "HKD",
+   "evidence": [
+    {
+     "start": 186,
+     "end": 191,
+     "text": "9,600"
+    },
+    {
+     "role": "field",
+     "start": 178,
+     "end": 185,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 170,
+     "end": 177,
+     "text": "HK$'000"
+    },
+    {
+     "role": "unit",
+     "start": 170,
+     "end": 177,
+     "text": "HK$'000"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

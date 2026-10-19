@@ -1,0 +1,56 @@
+{
+ "name": "65-currency-scale-000-zero",
+ "description": "The 000 of £'000 and £’000 is no number token either, so a value of zero is not in the evidence there (spec 0.10, #313).",
+ "document": "Notes\n\t£'000\t£’000\nFees\t75\t80\n",
+ "schema": {
+  "fields": {
+   "fees": {
+    "type": "number"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "z7a",
+   "field": "fees",
+   "value": "0",
+   "evidence": [
+    {
+     "start": 10,
+     "end": 13,
+     "text": "000"
+    }
+   ]
+  },
+  {
+   "id": "z7b",
+   "field": "fees",
+   "value": "0",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 22,
+     "text": "000"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
