@@ -396,7 +396,7 @@ completed repair rounds can leave `repair_limit`. A targeted not-found response 
 
 ## 8. The run record and replay
 
-The core receipt format stays unchanged. The `groundgate-run/1` record is a log: one line of
+The core receipt format stays unchanged. The `groundgate-run/2` record is a log: one line of
 canonical JSON for each entry. Each line has a `sequence`, the `previous` line's digest and its
 own `entry_sha256`. The first line, `header`, is the run manifest. It holds the runner version,
 core spec version, model id and every `RunPolicy` setting, and it names every input by digest:
@@ -420,7 +420,7 @@ cover exact UTF-8 bytes, including whitespace. Prompt digests cover the exact st
 `client`, encoded as UTF-8. Schema, policy, reference and admission objects are canonical JSON.
 Client errors have no reply digest.
 
-Runner digests use their own prefix, `groundgate-run/1:<kind>` followed by a zero byte and the
+Runner digests use their own prefix, `groundgate-run/2:<kind>` followed by a zero byte and the
 object bytes. They do not reuse the core `digest()`, whose prefix names the spec version, so the
 same text keeps its key in each spec version. There are no wall-clock times, host paths,
 credentials or random ids in this deterministic content. An app may keep times separately. The
@@ -462,7 +462,11 @@ and compares the regenerated source and byte ranges before constructing prompts.
 allocation ceilings for candidates and admission history are further bounded by the actual
 canonical record and artifact byte counts, even when the header declares larger budgets.
 It checks not-found and search-only entries too. Missing artifacts, changed
-settings, unknown runner versions or a different core version fail replay. A client-error
+settings, unknown runner versions or a different core version fail replay.
+`groundgate-run/2` replaced `groundgate-run/1`, the version that 0.9.0 wrote, because the prompt,
+the field causes and the `rounding` line changed (#318, #319). A `groundgate-run/1` record fails
+replay with the message `runner version differs`, which names both versions. It does not get to
+a prompt comparison. A client-error
 entry can verify the record of the attempted call, not reproduce the external failure.
 Replaying recorded replies is deterministic; a fresh model run need not produce those replies.
 

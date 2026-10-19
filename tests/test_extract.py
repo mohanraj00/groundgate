@@ -1132,7 +1132,7 @@ def test_record_is_a_hash_chained_log_and_inputs_are_objects():
     assert result.run_sha256 == lines[-1]["entry_sha256"]
     # Keys use the stable runner prefix, not the core digest that names the spec version.
     inputs = lines[0]["inputs"]
-    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/1:text\0Amount 5.").hexdigest()
+    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/2:text\0Amount 5.").hexdigest()
     assert inputs["document"] == {"kind": "text", "id": None, "source": None, "sha256": text_key}
     assert result.artifacts[text_key] == "Amount 5."
     assert result.receipt.document_sha256 != text_key
@@ -1362,3 +1362,20 @@ def test_a_rounded_figure_stays_when_the_exact_figure_meets_another_conflict():
     assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
     assert not any(e["kind"] == "rounding" for e in result.record)
     assert_replays(result, text, ROUND_SCHEMA)
+
+
+def test_a_groundgate_run_1_record_fails_replay_with_a_version_message(tmp_path):
+    # 0.9.0 wrote groundgate-run/1 records. This runner writes groundgate-run/2 (#318, #319).
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    assert result.record[0]["runner"] == "groundgate-run/2"
+    old = copy.deepcopy(result.record)
+    old[0]["runner"] = "groundgate-run/1"
+    verification = replay(old, result.artifacts, "Amount 5.", SCHEMA)
+    message = "runner version differs: the record is 'groundgate-run/1', this runner is "
+    assert not verification.ok
+    assert verification.problems == (message + "'groundgate-run/2'",)
+    result.write(tmp_path)
+    log = tmp_path / "run.jsonl"
+    log.write_text(log.read_text().replace("groundgate-run/2", "groundgate-run/1", 1))
+    with pytest.raises(ValueError, match="the record is 'groundgate-run/1'"):
+        RunResult.read(tmp_path)

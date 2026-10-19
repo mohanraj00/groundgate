@@ -22,6 +22,9 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   precision that the first one states, and the second one is admitted without it. "£17.3bn"
   beside 17,284 in millions keeps 17284000000. The record keeps the dropped candidate in a
   `rounding` line. Two figures that do not round to each other stay a conflict.
+- Breaking: the extract run record is `groundgate-run/2` (#318, #319). The prompt changed, so
+  every runner digest and prompt differs from 0.9.0. Replay of a `groundgate-run/1` record from
+  0.9.0 fails with `runner version differs`, which names both versions.
 - Currency scales (#301). `k`, `m` and `bn` count as a scale only directly next to a currency sign
   (`$`, `€`, `£`, `₹`). `€70,471m` is 70471000000. `£m`, `$bn` and `£'000` in a column header are
   a heading scale, and a scale item can cite them. `70 m`, `5m` and `£5 m` stay as written,

@@ -26,7 +26,9 @@ from ..model import Decision, PacketError, Policy, Receipt, Schema, extractor_sc
 from ..text import canonical, quote_pattern, tokens
 
 Json = dict[str, Any]
-_VERSION = "groundgate-run/1"
+# groundgate-run/2 (#318, #319): a new prompt, field item causes and rounding lines. A
+# groundgate-run/1 record, as 0.9.0 wrote, fails replay with a version message.
+_VERSION = "groundgate-run/2"
 _ROLES = {"value", "sign", "scale", "unit", "field", "key"}
 _SEARCH_MATCH_LIMIT = 1024
 _SEARCH_QUERY_LIMIT = 64
@@ -1360,7 +1362,10 @@ def _replay(
         header = saved[0]
         if header["kind"] != "header":
             raise ValueError("the first line is not the header")
-        if header["runner"] != _VERSION or header["core"] != SPEC_VERSION:
+        if header["runner"] != _VERSION:
+            found = header["runner"] if isinstance(header["runner"], str) else "unknown"
+            return f"runner version differs: the record is {found!r}, this runner is {_VERSION!r}"
+        if header["core"] != SPEC_VERSION:
             return "runner or core version differs"
         calls = [e for e in saved if e["kind"] == "call"]
         settings = RunPolicy(**header["settings"])
