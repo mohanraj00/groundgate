@@ -1396,6 +1396,62 @@ def test_a_rounded_figure_stays_when_the_exact_figure_meets_another_conflict():
     assert_replays(result, text, ROUND_SCHEMA)
 
 
+RELATION_SCHEMA = {
+    "fields": {
+        "revenue": {"type": "number", "aliases": ["Revenue"]},
+        "product": {"type": "number", "aliases": ["Product"]},
+        "service": {"type": "number", "aliases": ["Service"]},
+    },
+    "relations": [
+        {"id": "split", "total": "revenue", "parts": [{"field": "product"}, {"field": "service"}]}
+    ],
+}
+
+
+def test_a_relation_checks_the_re_admit_after_rounding():
+    # The re-admit without the rounded figure runs step 13 (#353). Each value has the place
+    # 1000000, so the allowance is 0 + 500000 * 3 = 1500000 (SPEC 3.4).
+    def part(field, label, quote, value):
+        evidence = [item(quote), item(label, "field"), item("in millions", "scale")]
+        return candidate(value, field, evidence=evidence)
+
+    # 12,000 + 5,284 = 17,284: the relation holds, the exact figure is admitted, the drop stands.
+    text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
+    text += "\nProduct\t12,000\nService\t5,284"
+    product = part("product", "Product", "12,000", "12000000000")
+    service = part("service", "Service", "5,284", "5284000000")
+    client = Client(envelope(rounded, exact, product, service))
+    result = execute(text, client, RELATION_SCHEMA, run_policy=DROP)
+    assert [c["id"] for c in result.candidates] == ["c1-2", "c1-3", "c1-4"]
+    assert [d.outcome for d in result.receipt.decisions] == ["admitted"] * 3
+    event = next(e for e in result.record if e["kind"] == "rounding")
+    assert event["dropped"] == [
+        {"candidate_id": "c1-1", "kept_ids": ["c1-2"], "precision": "100000000"}
+    ]
+    assert result.receipt.to_dict()["relations"] == [
+        {"id": "split", "key": None, "holds": True, "difference": "0", "allowance": "1500000"}
+    ]
+    assert_replays(result, text, RELATION_SCHEMA)
+
+    # 12,000 + 5,000 = 17,000: the relation fails on the re-admit, so the exact figure is not
+    # admitted, the drop does not stand, and both revenue figures stay a conflict.
+    text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
+    text += "\nProduct\t12,000\nService\t5,000"
+    service = part("service", "Service", "5,000", "5000000000")
+    client = Client(envelope(rounded, exact, product, service))
+    result = execute(text, client, RELATION_SCHEMA, run_policy=DROP)
+    assert [c["id"] for c in result.candidates] == ["c1-1", "c1-2", "c1-3", "c1-4"]
+    outcomes = {d.candidate_id: d for d in result.receipt.decisions}
+    assert "CONFLICTING_CANDIDATES" in outcomes["c1-1"].codes
+    assert "CONFLICTING_CANDIDATES" in outcomes["c1-2"].codes
+    assert outcomes["c1-1"].outcome != "admitted" and outcomes["c1-2"].outcome != "admitted"
+    assert outcomes["c1-3"].outcome == "admitted" and outcomes["c1-4"].outcome == "admitted"
+    assert not any(e["kind"] == "rounding" for e in result.record)
+    # Two revenue values stop the relation, so the final receipt lists no relation result.
+    assert result.receipt.to_dict()["relations"] == []
+    assert_replays(result, text, RELATION_SCHEMA)
+
+
 def test_a_groundgate_run_1_record_fails_replay_with_a_version_message(tmp_path):
     # 0.9.0 wrote groundgate-run/1 records. This runner writes groundgate-run/2 (#318, #319).
     result = execute("Amount 5.", Client(envelope(candidate())))
