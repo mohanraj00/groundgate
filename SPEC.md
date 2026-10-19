@@ -865,6 +865,27 @@ key at the value only by the column rule (§4.5). The decision records `KEY_CITE
 `KEY_NOT_AT_VALUE`. A recorded `key` judgment that applies, at or above `clear.KEY_NOT_AT_VALUE`,
 and names another key adds `MODEL_DOUBT` to a decision with `KEY_CITED`.
 
+### 4.7 The base vocabulary pack
+
+The word lists of §3 and §4 are data in one file, the base vocabulary pack `en` 1.0.0:
+[`src/groundgate/packs/en/1.0.0.json`](src/groundgate/packs/en/1.0.0.json). Its lists are the scale
+words and suffixes, the currency signs and scales, the unit table, the per-units, the qualifier
+words and their negations, the range words, the change words, the abbreviations, the gain words, the
+negations before a loss word, the currency names of a currency statement (§4.3), and the null
+literals. The loss words of §4.6 are not in it yet. The rules of §4 read each list as plain words,
+never as patterns, with the fixed rules of §4: whole words, the same case rules and the same
+windows.
+
+The digest of the base pack is
+
+`pack_sha256 = "sha256:" + hex(SHA-256("groundgate-pack/1:" + type + "\0" + JCS(pack)))`
+
+where `type` is `vocabulary` and JCS is §6. The prefix names the pack format, not the spec
+version. For this spec version the base pack is `en` 1.0.0, with the digest
+`sha256:de563584dee60f672225630670fc26def345c526954917591c5447220ac9d1e8`.
+An implementation loads a base pack with this digest, and refuses to run with another one. The base
+pack applies to every packet, and the receipt does not name it: the spec version names it.
+
 ## 5. Receipt
 
 ```json

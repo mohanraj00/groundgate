@@ -12,6 +12,8 @@ from contextvars import ContextVar
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 
+from .pack import BASE
+
 _TOKEN = re.compile(r"[-\u2212]?[0-9][0-9,]*(?:\.[0-9]+)?")
 # ungrouped, grouped in threes ("200,000"), or grouped the Indian way: the last three digits,
 # then pairs ("2,00,000")
@@ -19,55 +21,11 @@ _VALID = re.compile(
     r"^[-\u2212]?(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]{1,2}(?:,[0-9]{2})*,[0-9]{3}|[0-9]+)(?:\.[0-9]+)?$"
 )
 _SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t\r]*\n")
-_ABBREVIATIONS = [
-    "a.m.",
-    "p.m.",
-    "approx.",
-    "ca.",
-    "cf.",
-    "e.g.",
-    "i.e.",
-    "etc.",
-    "vs.",
-    "viz.",
-    "no.",
-    "nos.",
-    "p.",
-    "pp.",
-    "para.",
-    "fig.",
-    "figs.",
-    "vol.",
-    "rs.",
-    "u.s.",
-    "u.k.",
-    "dr.",
-    "mr.",
-    "mrs.",
-    "ms.",
-    "jr.",
-    "sr.",
-    "st.",
-    "inc.",
-    "co.",
-    "corp.",
-    "ltd.",
-    "est.",
-    "min.",
-    "max.",
-    "hr.",
-    "hrs.",
-    "mo.",
-    "mos.",
-    "yr.",
-    "yrs.",
-    "wk.",
-    "wks.",
-    "wt.",
-    "oz.",
-    "lb.",
-    "lbs.",
-]
+# the words of the base pack (SPEC §4.7); every word list of these rules comes from it
+_SENTENCE_WORDS = BASE["sentence"]
+_ABBREVIATIONS: list[str] = _SENTENCE_WORDS["abbreviations"]
+_JOIN_ALWAYS = frozenset(_SENTENCE_WORDS["join_always"])  # "U.S." never ends a sentence
+_JOIN_BEFORE_CODE = frozenset(_SENTENCE_WORDS["join_before_code"])  # "No." before a code
 # a listed abbreviation that ends at a dot, as a whole word ("Rs." but not the end of "Mrs.")
 _ABBREVIATION_END = re.compile(
     r"(?<!\w)(?:" + "|".join(re.escape(a) for a in _ABBREVIATIONS) + r")\Z", re.I
@@ -75,7 +33,7 @@ _ABBREVIATION_END = re.compile(
 _ABBREVIATION_MAX = max(len(a) for a in _ABBREVIATIONS)
 _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS_RUN = re.compile(r"\s*")
-_CONTINUES = "$€£₹"  # the currency signs (SPEC §4.1, §4.2)
+_CONTINUES = "".join(BASE["currency_signs"])  # the currency signs (SPEC §4.1, §4.2)
 # "No." before a code such as "DEA-1086": a word that holds a digit or starts with two capitals
 _CODE = re.compile(r"\S*?\d|[A-Z]{2}")
 _WS = re.compile(r"\s+")
@@ -212,7 +170,7 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
     if _BLANK_LINE.search(gap.group()) or nxt == len(text):
         return True
     word = abbreviation.group().lower()
-    if word == "u.s." or (word in ("no.", "nos.") and _CODE.match(text, nxt)):
+    if word in _JOIN_ALWAYS or (word in _JOIN_BEFORE_CODE and _CODE.match(text, nxt)):
         return False
     # only a plain continuation joins; an uppercase letter or punctuation may start a sentence
     ch = text[nxt]
@@ -283,28 +241,9 @@ def sentence(text: str, pos: int, qualifiers: bool = False) -> tuple[int, int]:
 
 # ------------------------------------------------------------------ qualifiers
 
-_BEFORE = {
-    "approx": [
-        "approximately",
-        "approx",
-        "about",
-        "around",
-        "nearly",
-        "roughly",
-        "generally",
-        "~",
-        "≈",
-    ],
-    "gt": ["more than", "greater than", "above", "over", "exceed", "exceeds", "exceeding", ">"],
-    "lt": ["less than", "fewer than", "below", "under", "<"],
-    "ge": ["at least", "minimum of", "no less than", "≥"],
-    "le": ["up to", "maximum of", "at most", "no more than", "≤"],
-    "range": ["between"],
-}
-_AFTER = {
-    "ge": ["or more", "or greater", "or older", "or higher", "or above"],
-    "le": ["or less", "or fewer", "or younger", "or lower", "or below"],
-}
+_QUALIFIERS = BASE["qualifiers"]
+_BEFORE: dict[str, list[str]] = _QUALIFIERS["before"]
+_AFTER: dict[str, list[str]] = _QUALIFIERS["after"]
 
 
 def _phrase(p: str) -> str:
@@ -315,30 +254,35 @@ def _phrase(p: str) -> str:
 _BEFORE_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in _BEFORE.items()}
 _AFTER_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in _AFTER.items()}
 _INVERT = {"gt": "le", "le": "gt", "lt": "ge", "ge": "lt"}
-_NEGATION_END = re.compile(r"\b(?:not|cannot|can['\u2019]t)\s+(?:be\s+)?$", re.I)
-_RANGE_NEXT = re.compile(r"^\s*(?:through|thru|to|-|\u2013)\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
+
+
+def _words(words: list[str]) -> str:
+    """An alternation of plain words, each escaped, in the order of the pack."""
+    return "|".join(re.escape(w) for w in words)
+
+
+def _phrases(phrases: list[str]) -> str:
+    """An alternation of phrases: each whitespace run in a phrase matches any whitespace run."""
+    return "|".join(r"\s+".join(re.escape(w) for w in p.split()) for p in phrases)
+
+
+_NEGATION_END = re.compile(rf"\b(?:{_phrases(_QUALIFIERS['negations'])})\s+$", re.I)
+_CONNECTORS: list[str] = BASE["ranges"]["connectors"]
+_BETWEEN_WORD, _AND_WORD = (re.escape(w) for w in BASE["ranges"]["pair"])
+_CONNECTOR = _words(_CONNECTORS)
+# the word connectors and the second word of the pair: "to", "through", "and"
+_WORD_CONNECTOR = _words([c for c in _CONNECTORS if c[0].isalnum()] + [BASE["ranges"]["pair"][1]])
+_RANGE_NEXT = re.compile(rf"^\s*(?:{_CONNECTOR})\s*\S{{0,4}}?(?=[-\u2212]?\d)", re.I)
 # one unit or scale word may stand before a word connector: "30 mg to 45", "$1 million to $2"
-_UNIT_WORD = r"(?:[^\s\d]{1,12}\s+(?=(?:through|thru|to|and)\b))?"
-_RANGE_PREV = re.compile(rf"\s*{_UNIT_WORD}(?:through|thru|to|-|\u2013)\s*\S{{0,4}}?", re.I)
-_AND_NEXT = re.compile(r"^\s*and\s*\S{0,4}?(?=[-\u2212]?\d)", re.I)
-_AND_PREV = re.compile(rf"\s*{_UNIT_WORD}and\s*\S{{0,4}}?", re.I)
-_BETWEEN_END = re.compile(r"\bbetween\s*\S{0,4}?$", re.I)
-_BETWEEN = re.compile(r"(?<![^\W_])between\s", re.I)
-_CHANGE = (
-    "increase|increases|increased|increasing|decrease|decreases|decreased|decreasing|"
-    "raise|raises|raised|raising|reduce|reduces|reduced|reducing|reduction|reductions|"
-    "lowers|lowered|lowering|rise|rises|rose|risen|rising|fall|falls|fell|fallen|falling|"
-    "drop|drops|dropped|dropping|grow|grows|grew|grown|growing|"
-    "change|changes|changed|changing|decline|declines|declined|declining|"
-    "adjust|adjusts|adjusted|adjusting|adjustment|adjustments|"
-    "revise|revises|revised|revising|revision|revisions"
-)
-_DETERMINER = "the|a|an|its|their|this|that|these|those"
-_NOT_BETWEEN = (
-    "about|above|across|after|among|at|before|below|between|by|during|for|from|in|into|on|over|"
-    "per|since|through|to|under|until|with|within|range|ranges|ranged|ranging|vary|varies|"
-    "varied|varying"
-)
+_UNIT_WORD = rf"(?:[^\s\d]{{1,12}}\s+(?=(?:{_WORD_CONNECTOR})\b))?"
+_RANGE_PREV = re.compile(rf"\s*{_UNIT_WORD}(?:{_CONNECTOR})\s*\S{{0,4}}?", re.I)
+_AND_NEXT = re.compile(rf"^\s*{_AND_WORD}\s*\S{{0,4}}?(?=[-\u2212]?\d)", re.I)
+_AND_PREV = re.compile(rf"\s*{_UNIT_WORD}{_AND_WORD}\s*\S{{0,4}}?", re.I)
+_BETWEEN_END = re.compile(rf"\b{_BETWEEN_WORD}\s*\S{{0,4}}?$", re.I)
+_BETWEEN = re.compile(rf"(?<![^\W_]){_BETWEEN_WORD}\s", re.I)
+_CHANGE = _words(BASE["changes"]["words"])
+_DETERMINER = _words(BASE["changes"]["determiners"])
+_NOT_BETWEEN = _words(BASE["changes"]["stop_words"])
 _PLAIN = rf"\s+(?!(?:{_NOT_BETWEEN})\b)[^\W\d_](?:[^\W\d_]|['\u2019-](?=[^\W\d_]))*"
 # at most six words between the change word and "from", the first of them a determiner or
 # "in", "of" or "to" and then a determiner: "reducing the fee from", "an increase in the fee from"
@@ -419,22 +363,36 @@ def _before_qualifiers(text: str, s0: int, start: int, end: int) -> set[str]:
 
 def _strip_unit_suffix(rest: str) -> str:
     # "30 mg to 45 mg": skip a short unit word before the range connector.
-    m = re.match(r"^\s*[^\s\d]{1,12}(?=\s+(?:through|thru|to|and)\b)", rest)
+    m = re.match(rf"^\s*[^\s\d]{{1,12}}(?=\s+(?:{_WORD_CONNECTOR})\b)", rest)
     return rest[m.end() :] if m else rest
 
 
-_SCALE = re.compile(r"^\s{0,2}(thousand|million|billion|trillion|lakh|crore)\b", re.I)
+_SCALE_EXP: dict[str, int] = BASE["scale"]["words"]
+_SCALE_WORDS = _words(list(_SCALE_EXP))
+_SCALE = re.compile(rf"^\s{{0,2}}({_SCALE_WORDS})\b", re.I)
 
 
-_SCALE_EXP = {"thousand": 3, "million": 6, "billion": 9, "trillion": 12, "lakh": 5, "crore": 7}
+def _cased(suffix: str) -> list[str]:
+    """A scale suffix in lowercase, with a first capital, and in capitals: "bn", "Bn", "BN"."""
+    return list(dict.fromkeys([suffix, suffix.capitalize(), suffix.upper()]))
 
 
 # a scale suffix or a currency scale (SPEC §4.1, spec 0.10): the power of ten of each form
-_SUFFIX_EXP = {"k": 3, "m": 6, "bn": 9, "'000": 3, "\u2019000": 3, "000": 3}
-_SCALE_SUFFIX = re.compile(r"(k|K|m|M|bn|Bn|BN)(?![^\W_])")
-# a bare 000 also stops before a "," or a "." and a digit, as in "£000,000" (#313)
+_SUFFIX_EXP: dict[str, int] = {**BASE["scale"]["suffixes"], **BASE["scale"]["currency"]}
+_SUFFIXES = _words([c for s in BASE["scale"]["suffixes"] for c in _cased(s)])
+_SCALE_SUFFIX = re.compile(rf"({_SUFFIXES})(?![^\W_])")
+
+
+def _currency_form(form: str) -> str:
+    """A currency scale form. A form of only digits, as the bare 000, also stops before a "," or
+    a "." and a digit, as in "£000,000" (#313)."""
+    return re.escape(form) + (r"(?![,.][0-9])" if form.isdigit() else "")
+
+
 _CURRENCY_FORM = (
-    "[" + re.escape(_CONTINUES) + r"](k|K|m|M|bn|Bn|BN|'000|\u2019000|000(?![,.][0-9]))(?![^\W_])"
+    "["
+    + re.escape(_CONTINUES)
+    + rf"]({_SUFFIXES}|{'|'.join(_currency_form(f) for f in BASE['scale']['currency'])})(?![^\W_])"
 )
 _CURRENCY_SCALE = re.compile(_CURRENCY_FORM)
 
@@ -467,32 +425,14 @@ def scaled_value(text: str, tok: Token) -> Decimal | None:
 
 # ----------------------------------------------------------------------- units
 
-_CURRENCY = {
-    "USD": (["US$", "$"], ["USD", "dollars"]),
-    "EUR": (["€"], ["EUR", "euros"]),
-    "GBP": (["£"], ["GBP"]),
-    "INR": (["₹", "Rs.", "Rs"], ["INR", "rupees"]),
-    "%": ([], ["%", "percent"]),
-}
-_TIME = ["hours", "days", "weeks", "months", "years", "minutes"]
-_SELF = ["mg", "mcg", "g", "kg", "mL", "L"]
-
 
 def builtin_units() -> dict[str, tuple[list[str], list[str]]]:
-    table = {k: (list(p), list(s)) for k, (p, s) in _CURRENCY.items()}
-    for code in _SELF:
-        table[code] = ([], [code])
-    for code in _TIME:
-        single = code[:-1]
-        table[code] = ([], [code, single, f"-{single}"])
-    return table
+    """The unit table of the base pack (SPEC §4.3): each code with its prefixes and suffixes."""
+    return {k: (list(u["prefixes"]), list(u["suffixes"])) for k, u in BASE["units"].items()}
 
 
 _PER_UNIT = re.compile(
-    r"\s*(?:/|per\b)\s*(?:\d+(?:\.\d+)?\s*)?"
-    r"(?:kg|kilograms?|lbs?|pounds?|m2|m\u00b2|m\^2|square\s+met(?:er|re)s?"
-    r"|mL|dL|L|lit(?:er|re)s?)(?![A-Za-z])",
-    re.I,
+    rf"\s*(?:/|per\b)\s*(?:\d+(?:\.\d+)?\s*)?(?:{_phrases(BASE['per_units'])})(?![A-Za-z])", re.I
 )
 
 
@@ -804,18 +744,14 @@ def _one_column(text: str, end: int, pos: int) -> bool:
 # -------------------------------------------------------------- evidence items
 
 _LOSS = re.compile(r"(?<![^\W_])(?:loss|losses|deficit|deficits)(?![^\W_])", re.I)
-_GAIN = re.compile(r"(?<![^\W_])(?:income|gain|gains|profit|profits|earnings)(?![^\W_])", re.I)
-_ITEM_SCALE = re.compile(
-    r"(?<![^\W_])(?i:(thousand|million|billion|trillion|lakh|crore)s?)(?![^\W_])|" + _CURRENCY_FORM
-)
+_GAIN = re.compile(rf"(?<![^\W_])(?:{_words(BASE['sign']['gain'])})(?![^\W_])", re.I)
+_ITEM_SCALE = re.compile(rf"(?<![^\W_])(?i:({_SCALE_WORDS})s?)(?![^\W_])|" + _CURRENCY_FORM)
 _LONE_DASH = re.compile("(?<!\\S)[-\u2013\u2014](?!\\S)")
 _NOT_SPACE = re.compile(r"\S")
 _EMPTY_TAB = re.compile(r"(?<=\t)[ \r]*(?=\t|\n|\Z)")
 _NEXT_SLOT = re.compile(r"[ \r]*\t[ \r]*(?:[-\u2013\u2014][ \r]*)?(?=\t|\n|\Z)")
-_IN_SCALE = re.compile(
-    r"(?<![^\W_])in\s+(?:thousand|million|billion|trillion|lakh|crore)s?(?![^\W_])", re.I
-)
-_NEGATION = re.compile(r"(?<![^\W_])(?:no|not|without)\s+\Z", re.I)
+_IN_SCALE = re.compile(rf"(?<![^\W_])in\s+(?:{_SCALE_WORDS})s?(?![^\W_])", re.I)
+_NEGATION = re.compile(rf"(?<![^\W_])(?:{_words(BASE['sign']['negations'])})\s+\Z", re.I)
 _WORD = re.compile(r"[^\W\d_]+")
 _LOSS_REACH = 4  # words between a loss word and the value (SPEC §4.6)
 
@@ -912,31 +848,21 @@ def heading_rows(text: str) -> list[tuple[int, int]]:
 
 
 # The currency names of a currency statement and the sign that each currency shares (SPEC
-# §4.3, spec 0.10, #315). A name also matches in the singular, and the code matches in capitals.
+# §4.3, spec 0.10, #315), from the base pack. The pack writes each name out, also in the
+# singular, and the code matches in capitals.
 CURRENCY_NAMES: dict[str, tuple[tuple[str, ...], str | None]] = {
-    "USD": (("US dollars", "U.S. dollars", "United States dollars"), "$"),
-    "AUD": (("Australian dollars",), "$"),
-    "CAD": (("Canadian dollars",), "$"),
-    "HKD": (("Hong Kong dollars",), "$"),
-    "NZD": (("New Zealand dollars",), "$"),
-    "SGD": (("Singapore dollars",), "$"),
-    "EUR": (("euros",), "\u20ac"),
-    "GBP": (("pounds sterling", "sterling"), "\u00a3"),
-    "INR": (("Indian rupees",), "\u20b9"),
-    "LKR": (("Sri Lankan rupees",), None),
+    code: (tuple(u["names"]), u["sign"]) for code, u in BASE["heading_units"].items()
 }
-_PLURALS = ("dollars", "euros", "pounds", "rupees")
 
 
 def _name_pattern(name: str) -> str:
-    words = [re.escape(w[:-1]) + "s?" if w in _PLURALS else re.escape(w) for w in name.split()]
-    return _LINE_SPACE.join(words)
+    return _LINE_SPACE.join(re.escape(w) for w in name.split())
 
 
 _LINE_SPACE = r"[^\S\n]+"  # a whitespace run that stays on its line: a statement is on one line
 _STATEMENT = re.compile(
     r"(?<![^\W_])(?i:in)[^\S\n]+"
-    r"(?:(?i:thousand|million|billion|trillion|lakh|crore)s?[^\S\n]+(?i:of)[^\S\n]+)?(?:"
+    rf"(?:(?i:{_SCALE_WORDS})s?[^\S\n]+(?i:of)[^\S\n]+)?(?:"
     + "|".join(
         f"(?P<{code}>(?i:{'|'.join(_name_pattern(n) for n in names)})|{code})"
         for code, (names, _) in CURRENCY_NAMES.items()
