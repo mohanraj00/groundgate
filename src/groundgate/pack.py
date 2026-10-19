@@ -60,6 +60,11 @@ _TOP_LISTS = {
     "heading_units": "headings",
 }
 _HEAD = ("groundgate_pack", "type", "id", "version", "description", "status")
+# format 1 of a kind pack (SPEC §4.9): the head, the vocabulary packs that it needs, and the
+# field templates. A template holds only these members of a field (SPEC §2.3).
+_KIND = ("needs", "fields")
+TEMPLATE_MEMBERS = ("type", "unit", "comparator", "aliases", "description")
+MAX_TEMPLATES = 200  # the field templates of one kind pack (L4)
 # the lists that only the base pack gives: a word there cancels a flag (SPEC §4.8, L5)
 BASE_ONLY = frozenset(
     {
@@ -80,6 +85,10 @@ def with_defaults(pack: dict[str, Any]) -> dict[str, Any]:
     out: dict[str, Any] = {k: pack[k] for k in ("groundgate_pack", "type", "id", "version")}
     out["description"] = pack.get("description", "")
     out["status"] = pack.get("status", [])
+    if pack["type"] == "kind":
+        out["needs"] = pack.get("needs", [])
+        out["fields"] = pack.get("fields", {})
+        return out
     for group, lists in _GROUPS.items():
         given = pack.get(group, {})
         out[group] = {
@@ -249,21 +258,23 @@ def _check_status(pack: dict[str, Any], rows: object, built_in: bool) -> None:
 
 
 def check_pack(pack: object, *, built_in: bool = False) -> dict[str, Any]:
-    """Run the checks L1 to L5, L7, L8 and L12 on one pack (SPEC §4.8), and return the pack.
-    L6 runs on the union, in ``combine``. L11: the digest is computed, never read from a pack."""
+    """Run the checks L1 to L5, L7 to L9 and L12 on one pack (SPEC §4.8, §4.9), and return
+    the pack. L6 runs on the union, in ``combine``, and L10 on the schema. L11: the digest is
+    computed, never read from a pack."""
     _check_data(pack)
     if not isinstance(pack, dict):
         raise PacketError("pack: a pack must be a JSON object (L1)")
     if len(jcs(pack).encode("utf-8", "surrogatepass")) > MAX_CANONICAL:
         raise _fail(pack, f"the pack is more than {MAX_CANONICAL} bytes as canonical JSON (L4)")
-    unknown = set(pack) - {*_HEAD, *_GROUPS, *_TOP_LISTS}
-    if unknown:
-        raise _fail(pack, f"members that the format does not list: {sorted(unknown)} (L1, L12)")
     fmt = pack.get("groundgate_pack")
     if isinstance(fmt, bool) or fmt != FORMAT:
         raise _fail(pack, f"groundgate_pack must be {FORMAT} (L1)")
-    if pack.get("type") != "vocabulary":
-        raise _fail(pack, "type must be 'vocabulary' (L1)")
+    if pack.get("type") not in ("vocabulary", "kind"):
+        raise _fail(pack, "type must be 'vocabulary' or 'kind' (L1)")
+    members = {*_HEAD, *_KIND} if pack["type"] == "kind" else {*_HEAD, *_GROUPS, *_TOP_LISTS}
+    unknown = set(pack) - members
+    if unknown:
+        raise _fail(pack, f"members that the format does not list: {sorted(unknown)} (L1, L12)")
     pid, version = pack.get("id"), pack.get("version")
     if not isinstance(pid, str) or len(pid) > MAX_WORD or not _ID.match(pid):
         raise _fail(pack, "the id must be lowercase letters and digits with single '-' (L7)")
@@ -276,6 +287,9 @@ def check_pack(pack: object, *, built_in: bool = False) -> dict[str, Any]:
     if not isinstance(pack.get("description", ""), str):
         raise _fail(pack, "description must be a text (L1)")
     _check_status(pack, pack.get("status", []), built_in)
+    if pack["type"] == "kind":
+        _check_kind(pack)
+        return pack
     for group, lists in _GROUPS.items():
         for name, v in _object(pack, pack.get(group, {}), lists, group).items():
             if not built_in and (group, name) in BASE_ONLY:
@@ -295,6 +309,40 @@ def check_pack(pack: object, *, built_in: bool = False) -> dict[str, Any]:
             if not w.endswith("."):
                 raise _fail(pack, f"sentence.{name}: {w!r} must end with a dot (L3)")
     return pack
+
+
+def _check_kind(pack: dict[str, Any]) -> None:
+    """L4 and L9: the needs and the field templates of a kind pack (SPEC §4.9)."""
+    from .model import check_template  # the rules of a field (SPEC §2.3); model imports this
+
+    needs = pack.get("needs", [])
+    if type(needs) is not list:
+        raise _fail(pack, "needs must be a list (L9)")
+    seen: set[str] = set()
+    for e in needs:
+        if type(e) is not dict or set(e) != {"id", "version"}:
+            raise _fail(pack, "a needs entry is an object with only id and version (L9)")
+        if type(e["id"]) is not str or not _ID.match(e["id"]):
+            raise _fail(pack, "a needs entry has an id of the wrong form (L7)")
+        if type(e["version"]) is not str or not _VERSION.match(e["version"]):
+            raise _fail(pack, "a needs entry has a version that is not MAJOR.MINOR.PATCH (L7)")
+        if e["id"] in BUILT_IN:
+            raise _fail(pack, f"needs names {e['id']!r}, the base pack, which always applies (L9)")
+        if e["id"] in seen or e["id"] == pack["id"]:
+            raise _fail(pack, f"needs names {e['id']!r} twice, or names the pack itself (L9)")
+        seen.add(e["id"])
+    fields = pack.get("fields", {})
+    if type(fields) is not dict:
+        raise _fail(pack, "fields must be an object of field templates (L9)")
+    if len(fields) > MAX_TEMPLATES:
+        raise _fail(pack, f"a kind pack has more than {MAX_TEMPLATES} field templates (L4)")
+    for name, t in fields.items():
+        if type(t) is not dict or set(t) - set(TEMPLATE_MEMBERS):
+            raise _fail(pack, f"template {name!r} holds another member than the five (L9)")
+        try:
+            check_template(name, t)
+        except PacketError as e:
+            raise _fail(pack, f"template {name!r} breaks the rules of a field: {e} (L9)") from None
 
 
 def checked_copy(pack: object) -> dict[str, Any]:

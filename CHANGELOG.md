@@ -28,6 +28,15 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   Both are `[]` for a packet with no pack, so every receipt digest changes, but no outcome or
   code changes. The base pack digest now reads the pack after defaults:
   `sha256:8ee2f5c367baa29969759e3ed3ec5acf39f412a8b4b6afbda6477c1cde7fdeae`.
+- An app can give kind packs and take field templates from them (#335). A kind pack gives field
+  templates and names the vocabulary packs that it needs (SPEC §4.9). A schema field takes a
+  template with `"template": "<pack id>/<field>"`. The template fills the members that the field
+  does not give, and a member that the field gives wins. A `type` or `unit` that differs from the
+  template's makes the packet invalid. The resolved schema keeps `template`, and its `packs`
+  holds the digest of each pack, so a changed template changes `schema_sha256`. The receipt
+  names a kind pack with the type `kind`, and a decision names the kind pack of its field's
+  template. 4 vectors (88 to 91) and 18 invalid packets cover it. No outcome of a packet without
+  a kind pack changes.
 - A candidate can cite up to 8 field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay
   `CANDIDATE_INVALID`.

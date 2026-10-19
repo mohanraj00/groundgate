@@ -596,6 +596,22 @@ The receipt names each pack with its digest, and each decision names the packs t
 pack only adds words, and a pack that fails a check makes the packet invalid. If you build a
 `gg.Schema` yourself, give the packs to `gg.Schema.from_dict(schema, packs)`.
 
+A kind pack (SPEC §4.9) holds field templates for one kind of document, and names the vocabulary
+packs that the kind needs. A field takes a template with `"template": "<pack id>/<field>"`:
+
+```python
+schema = {
+    "packs": [{"id": "filings-x-myapp", "version": "1.0.0"}],
+    "fields": {"revenue": {"template": "filings-x-myapp/revenue", "multiple": True}},
+}
+receipt = gg.admit(text, schema, candidates, packs=[filings, words])
+```
+
+The template fills each member that the field does not give. A member that the field gives
+wins, also `aliases`. If the field gives a `type` or a `unit` that differs from the template's,
+the packet is invalid. Give each vocabulary pack in the kind pack's `needs` too. The schema does
+not have to name it.
+
 ### LangExtract
 
 ```python
