@@ -1324,7 +1324,7 @@ def _run(
             raise ExtractInputError(
                 "give the packs to Schema.from_dict when the schema is a Schema"
             )
-        s = schema  # frozen, and it holds its own copy of each pack (#351)
+        s = schema.copy()  # the run owns its schema: the client cannot change it (#351)
     else:
         s = Schema.from_dict(copy.deepcopy(schema), packs)
     p = Policy.from_dict(

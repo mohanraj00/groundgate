@@ -216,6 +216,8 @@ class Schema:
     vocabulary: Vocabulary = field(default=BASE_VOCABULARY, compare=False, repr=False)
     # each pack id with the words that it adds to the base (SPEC §5, decision packs)
     marks: tuple[tuple[str, frozenset[str]], ...] = field(default=(), compare=False, repr=False)
+    # the checked copy of each given pack, sorted by id, so that ``copy`` can rebuild the schema
+    given: tuple[dict[str, Any], ...] = field(default=(), compare=False, repr=False)
 
     @classmethod
     def from_dict(cls, d: object, packs: Sequence[object] = ()) -> Schema:
@@ -226,7 +228,7 @@ class Schema:
         members = {"fields", "units", "relations", "packs"}
         if set(d) - members:
             raise PacketError(f"schema has unknown keys {sorted(set(d) - members)}")
-        resolved, vocabulary, marks, kinds = _resolve_packs(d.get("packs", []), packs)
+        resolved, vocabulary, marks, kinds, given = _resolve_packs(d.get("packs", []), packs)
         fields = {name: _field(name, f, kinds) for name, f in d["fields"].items()}
         user_units = d.get("units", {})
         if not isinstance(user_units, dict):
@@ -256,11 +258,17 @@ class Schema:
             packs=tuple(resolved),
             vocabulary=vocabulary,
             marks=marks,
+            given=given,
         )
 
     def to_dict(self) -> dict[str, Any]:
         """The schema with defaults filled in: the object ``schema_sha256`` covers."""
         return self._raw
+
+    def copy(self) -> Schema:
+        """A new schema from a deep copy of this one and of its packs. A later change of this
+        schema, of its fields or of its packs has no effect on the copy."""
+        return Schema.from_dict(copy.deepcopy(self._raw), copy.deepcopy(list(self.given)))
 
 
 _PIN = re.compile(r"sha256:[0-9a-f]{64}\Z")
@@ -355,6 +363,7 @@ def _resolve_packs(
     Vocabulary,
     tuple[tuple[str, frozenset[str]], ...],
     dict[str, dict[str, Any]],
+    tuple[dict[str, Any], ...],
 ]:
     """Check each given pack and the union (SPEC §4.8, §4.9). Return the receipt entries, the
     vocabulary, the words of each vocabulary pack and the kind packs that the schema names."""
@@ -393,8 +402,9 @@ def _resolve_packs(
         if pid not in named and pid not in needed:
             raise PacketError(f"packs: {pid!r} is given, but the schema does not name it")
     if not by_id:
-        return [], BASE_VOCABULARY, (), {}
+        return [], BASE_VOCABULARY, (), {}, ()
     ids = sorted(by_id)
+    copies = tuple(by_id[i][0] for i in ids)
     resolved = [
         {"id": i, "type": by_id[i][0]["type"], "version": by_id[i][0]["version"], "sha256": s}
         for i in ids
@@ -402,7 +412,7 @@ def _resolve_packs(
     ]
     ids = [i for i in ids if by_id[i][0]["type"] == "vocabulary"]
     if not ids:
-        return resolved, BASE_VOCABULARY, (), kinds
+        return resolved, BASE_VOCABULARY, (), kinds, copies
     key = tuple(by_id[i][1] for i in ids)
     vocabulary = _VOCABULARIES.get(key)
     if vocabulary is None:
@@ -411,7 +421,7 @@ def _resolve_packs(
             _VOCABULARIES.clear()
         _VOCABULARIES[key] = vocabulary
     marks = tuple((i, added_words(BASE, by_id[i][0])) for i in ids)
-    return resolved, vocabulary, marks, kinds
+    return resolved, vocabulary, marks, kinds, copies
 
 
 @dataclass(frozen=True)

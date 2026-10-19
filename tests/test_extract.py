@@ -1571,3 +1571,19 @@ def test_the_runner_keeps_a_schema_built_with_its_packs():
 def test_a_schema_that_names_a_pack_needs_the_pack():
     with pytest.raises((ExtractInputError, gg.PacketError)):
         execute(LAC_TEXT, Client(), PACKED)
+
+
+def test_a_client_that_changes_the_schema_does_not_change_the_run():
+    schema = gg.Schema.from_dict(PACKED, [AMOUNTS, LAC])
+    plain = execute(LAC_TEXT, Client(envelope(candidate())), schema)
+
+    class Changer(Client):
+        def __call__(self, prompt):
+            schema.to_dict()["fields"]["amount"]["aliases"].append("total")
+            schema.fields["amount"]._raw["type"] = "string"
+            schema.given[1]["scale"]["words"]["lac"] = 7
+            return super().__call__(prompt)
+
+    changed = execute(LAC_TEXT, Changer(envelope(candidate())), schema)
+    assert changed.record == plain.record
+    assert changed.receipt == plain.receipt
