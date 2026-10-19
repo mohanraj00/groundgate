@@ -288,6 +288,9 @@ def test_a_list_for_another_role_is_invalid_when_not_aligned() -> None:
         ext = x("limit", "$7,000", None, "7000", unit="USD", unit_text=["$"], **attrs)
         (d,) = admit_document(doc(ext), SCHEMA, policy).decisions
         assert (d.outcome, d.codes) == ("rejected", ("CANDIDATE_INVALID",))
-    ext = x("limit", "$7,000", None, "7000", unit="USD", **source)  # without the list
+        ext = x("limit", "$7,000", None, "7000", unit="USD", field_text=["limit"] * 9, **attrs)
+        (d,) = admit_document(doc(ext), SCHEMA, policy).decisions
+        assert (d.outcome, d.codes) == ("rejected", ("CANDIDATE_INVALID",))  # over the limit
+    ext = x("limit", "$7,000", None, "7000", unit="USD", field_text=["limit"] * 8, **source)
     (d,) = admit_document(doc(ext), SCHEMA, policy).decisions
     assert d.codes == ("ADMITTED_BY_POLICY",)

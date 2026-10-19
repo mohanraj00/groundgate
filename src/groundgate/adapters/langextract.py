@@ -162,6 +162,9 @@ def to_candidates(
             cand["key"] = attrs[key_attribute]
         roles = _role_items(attrs, names)
         bad = [item for item in roles if not isinstance(item["text"], str)]
+        fields_cited = [item for item in roles if item["role"] == "field"]
+        if len(fields_cited) > MAX_FIELD_ITEMS:  # over the limit: admit rejects it
+            bad.extend(fields_cited)
         outside = _outside_items(attrs, names)
         interval = _get(x, "char_interval")
         start, end = _get(interval, "start_pos"), _get(interval, "end_pos")
@@ -171,7 +174,7 @@ def to_candidates(
             value = {"start": offsets.to_bytes(start), "end": offsets.to_bytes(end), "text": quote}
             cand["evidence"] = [value, *roles, *outside]
         elif outside or bad:  # not aligned: only the outside items can support the value
-            cand["evidence"] = [*bad, *outside]  # a list for a role other than field: invalid
+            cand["evidence"] = [*bad, *outside]  # bad role lists make it CANDIDATE_INVALID
         out.append(cand)
     return out
 
