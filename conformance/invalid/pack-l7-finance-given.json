@@ -1,0 +1,36 @@
+{
+ "name": "pack-l7-finance-given",
+ "description": "L7: a given pack with the id of the built-in pack finance.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "finance",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "finance",
+   "version": "1.0.0",
+   "sign": {
+    "loss": [
+     "loss"
+    ]
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

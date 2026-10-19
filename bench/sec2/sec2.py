@@ -51,7 +51,8 @@ ALIASES = {
     "total_debt": ["total debt", "long-term debt", "total long-term debt", "total borrowings"],
 }  # fmt: skip
 SCHEMA = {
-    "fields": {f: {**spec, "aliases": ALIASES[f]} for f, spec in sec.SCHEMA["fields"].items()}
+    "fields": {f: {**spec, "aliases": ALIASES[f]} for f, spec in sec.SCHEMA["fields"].items()},
+    "packs": sec.SCHEMA["packs"],
 }
 
 

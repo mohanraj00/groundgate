@@ -1,0 +1,9 @@
+{
+ "groundgate_pack": 1,
+ "type": "vocabulary",
+ "id": "finance",
+ "version": "1.0.0",
+ "description": "English words of financial statements (GAAP and IFRS). Only the loss words of SPEC 4.6. Numbers are read by the core, not by this pack.",
+ "status": [],
+ "sign": {"loss": ["loss", "losses", "deficit", "deficits"]}
+}

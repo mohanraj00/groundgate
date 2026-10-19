@@ -1,0 +1,24 @@
+{
+ "name": "pack-schema-built-in-version",
+ "description": "The schema names a version of the built-in pack finance that is not built in.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "finance",
+    "version": "9.9.9"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

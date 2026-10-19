@@ -55,7 +55,10 @@ def _packets(name: str) -> list[tuple[str, str, dict[str, Any], list[dict[str, A
         rec = _read(path)
         doc = rec["document"]["document_id"]
         gold = _read(set_dir / "gold" / f"{doc}.json")
-        schema = {"fields": {f: s["schema"] for f, s in gold["fields"].items()}}
+        schema = {
+            "fields": {f: s["schema"] for f, s in gold["fields"].items()},
+            "packs": [{"id": "finance", "version": "1.0.0"}],
+        }
         text = (set_dir / "docs" / f"{doc}.txt").read_text(encoding="utf-8")
         rec["document"]["text"] = text
         out.append((doc, text, schema, to_candidates(rec["document"])))
@@ -71,7 +74,10 @@ def _decide(
     if spec == "0.4":  # spec 0.4 has no aliases (SPEC §2.3)
         fields = schema["fields"]
         schema = {
-            "fields": {f: {k: v for k, v in s.items() if k != "aliases"} for f, s in fields.items()}
+            **schema,
+            "fields": {
+                f: {k: v for k, v in s.items() if k != "aliases"} for f, s in fields.items()
+            },
         }
     if spec.startswith("0.5 without "):
         role = spec.removeprefix("0.5 without ")

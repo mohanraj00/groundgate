@@ -52,5 +52,11 @@
    ],
    "description": "Change in net position of the primary government (its Total column) for the year."
   }
- }
+ },
+ "packs": [
+  {
+   "id": "finance",
+   "version": "1.0.0"
+  }
+ ]
 }

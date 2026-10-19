@@ -417,3 +417,66 @@ def test_a_template_has_no_defaults_of_its_own() -> None:
     typed = {**KIND_SCHEMA, "fields": {"grant": text}}
     with pytest.raises(gg.PacketError, match=r"unknown type 'text'.*\(L10\)"):
         gg.Schema.from_dict(typed, [untyped, LAC])
+
+
+# ---------------------------------------------------------------- the finance pack (#336)
+FINANCE = {"id": "finance", "version": "1.0.0"}
+LOSS_DOC = "We had a net loss of $71,000 in 2024."
+LOSS_CAND = {
+    "id": "l",
+    "field": "amount",
+    "value": "-71000",
+    "unit": "USD",
+    "evidence": [{"text": "$71,000"}, {"role": "sign", "text": "net loss"}],
+}
+AMOUNT = {"amount": {"type": "integer", "unit": "USD"}}
+
+
+def test_the_schema_names_the_built_in_pack_finance() -> None:
+    from groundgate.pack import BUILT_IN_SHA256, built_in_pack
+
+    receipt = gg.admit(LOSS_DOC, {"packs": [FINANCE], "fields": AMOUNT}, [LOSS_CAND]).to_dict()
+    sha = BUILT_IN_SHA256[("finance", "1.0.0")]
+    assert receipt["packs"] == [{**FINANCE, "type": "vocabulary", "sha256": sha}]
+    assert receipt["decisions"][0]["outcome"] == "admitted"
+    assert receipt["decisions"][0]["packs"] == ["finance"]
+    assert pack_digest(built_in_pack("finance", "1.0.0") or {}) == sha
+    plain = gg.admit(LOSS_DOC, {"fields": AMOUNT}, [LOSS_CAND]).to_dict()
+    assert plain["decisions"][0]["codes"] == ["SIGN_CITATION_INVALID", "VALUE_DERIVED"]
+
+
+def test_a_kind_pack_can_need_finance_and_a_schema_copy_keeps_it() -> None:
+    k = kind("losses-x-test", needs=[FINANCE], fields={"amount": AMOUNT["amount"]})
+    schema = gg.Schema.from_dict(
+        {"packs": [{"id": "losses-x-test", "version": "1.0.0"}],
+         "fields": {"amount": {"template": "losses-x-test/amount"}}},
+        [k],
+    )  # fmt: skip
+    assert [p["id"] for p in schema.packs] == ["finance", "losses-x-test"]
+    assert [p["id"] for p in schema.given] == ["losses-x-test"]
+    assert schema.copy().to_dict() == schema.to_dict()
+    d = gg.admit(LOSS_DOC, schema.copy(), [LOSS_CAND]).decisions[0]
+    assert (d.outcome, d.packs) == ("admitted", ("finance", "losses-x-test"))
+
+
+def test_the_built_in_pack_cannot_be_changed_through_a_schema() -> None:
+    from groundgate.pack import built_in_pack
+
+    built_in_pack("finance", "1.0.0")["sign"]["loss"].append("profit")  # type: ignore[index]
+    assert built_in_pack("finance", "1.0.0")["sign"]["loss"] == [  # type: ignore[index]
+        "loss",
+        "losses",
+        "deficit",
+        "deficits",
+    ]
+
+
+def test_a_gain_word_loss_conflicts_only_with_finance() -> None:
+    # L6 checks the loss words against the gain words after the union (SPEC 4.8). Without
+    # finance there is no loss word, so a gain word "loss" only stops a loss reading.
+    gain = pack(sign={"gain": ["loss"]})
+    own = {"id": "words-x-test", "version": "1.0.0"}
+    plain = gg.admit(LOSS_DOC, {"packs": [own], "fields": AMOUNT}, [LOSS_CAND], packs=[gain])
+    assert plain.decisions[0].codes == ("SIGN_CITATION_INVALID", "VALUE_DERIVED")
+    with pytest.raises(gg.PacketError, match="L6"):
+        gg.admit(LOSS_DOC, {"packs": [FINANCE, own], "fields": AMOUNT}, [LOSS_CAND], packs=[gain])

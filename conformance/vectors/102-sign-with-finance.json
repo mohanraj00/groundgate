@@ -1,0 +1,119 @@
+{
+ "name": "102-sign-with-finance",
+ "description": "The same candidates with the pack finance: a loss word before the value in its sentence passes the sign check (spec 0.10, #336).",
+ "document": "For the year ended December 31, 2024, we had a net loss of $71,000.\n\nNet (loss) income\n\n$6,152\n\n($13,203\n)\n\nThe deficit was $9 in 2024.",
+ "schema": {
+  "packs": [
+   {
+    "id": "finance",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "amount": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "g1",
+   "field": "amount",
+   "value": "-71000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 59,
+     "end": 66,
+     "text": "$71,000"
+    },
+    {
+     "role": "sign",
+     "text": "net loss"
+    }
+   ]
+  },
+  {
+   "id": "g2",
+   "field": "amount",
+   "value": "-9",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 124,
+     "end": 126,
+     "text": "$9"
+    },
+    {
+     "role": "sign",
+     "text": "deficit"
+    }
+   ]
+  },
+  {
+   "id": "g3",
+   "field": "amount",
+   "value": "-13203",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 97,
+     "end": 104,
+     "text": "$13,203"
+    },
+    {
+     "role": "sign",
+     "text": "($13,203\n)"
+    }
+   ]
+  },
+  {
+   "id": "g4",
+   "field": "amount",
+   "value": "-71000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 59,
+     "end": 66,
+     "text": "$71,000"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "sign"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

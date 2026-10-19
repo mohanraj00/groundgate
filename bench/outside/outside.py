@@ -94,7 +94,10 @@ def walk(every: bool = False) -> Iterator[tuple[dict[str, Any], dict[str, Any], 
             if doc not in golds:
                 continue
             gold = golds[doc]
-            schema = {"fields": {f: s["schema"] for f, s in gold["fields"].items()}}
+            schema = {
+                "fields": {f: s["schema"] for f, s in gold["fields"].items()},
+                "packs": [{"id": "finance", "version": "1.0.0"}],
+            }
             text = (set_dir / "docs" / f"{doc}.txt").read_text(encoding="utf-8")
             rec["document"]["text"] = text
             cands = to_candidates(rec["document"])
