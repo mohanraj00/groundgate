@@ -81,7 +81,7 @@ def _samples(f: gg.Field, ids: list[str] | None) -> list[dict[str, Any]]:
 @pytest.mark.parametrize("path", VECTORS, ids=lambda p: p.stem)
 def test_only_strict_keywords(path: Path) -> None:
     v = _load(path)
-    s = gg.extractor_schema(v["schema"], _ids(v))
+    s = gg.extractor_schema(v["schema"], _ids(v), v.get("packs") or ())
     _validator(s)
     assert _keywords(s, set()) <= KEYWORDS
 
@@ -89,13 +89,12 @@ def test_only_strict_keywords(path: Path) -> None:
 @pytest.mark.parametrize("path", VECTORS, ids=lambda p: p.stem)
 def test_accepted_candidates_pass_steps_1_to_7(path: Path) -> None:
     v = _load(path)
-    check = _validator(gg.extractor_schema(v["schema"], _ids(v)))
-    schema = gg.Schema.from_dict(v["schema"])
+    packs = v.get("packs") or ()
+    check = _validator(gg.extractor_schema(v["schema"], _ids(v), packs))
+    schema = gg.Schema.from_dict(v["schema"], packs)
     cands = [c for f in schema.fields.values() for c in _samples(f, _ids(v))]
     assert check.is_valid({"candidates": cands})
-    receipt = gg.admit(
-        v["document"], v["schema"], cands, v["policy"], references=v.get("references")
-    )
+    receipt = gg.admit(v["document"], schema, cands, v["policy"], references=v.get("references"))
     for d in receipt.to_dict()["decisions"]:
         assert not BEFORE_STEP_8 & set(d["codes"]), d
 
@@ -103,7 +102,7 @@ def test_accepted_candidates_pass_steps_1_to_7(path: Path) -> None:
 @pytest.mark.parametrize("path", VECTORS, ids=lambda p: p.stem)
 def test_rejected_candidates_fail(path: Path) -> None:
     v = _load(path)
-    check = _validator(gg.extractor_schema(v["schema"], _ids(v)))
+    check = _validator(gg.extractor_schema(v["schema"], _ids(v), v.get("packs") or ()))
     for cand, want in zip(v["candidates"], v["expected"]["decisions"], strict=True):
         if {"CANDIDATE_INVALID", "FIELD_UNKNOWN", "UNIT_INVALID", "KEY_INVALID"} & set(
             want["codes"]

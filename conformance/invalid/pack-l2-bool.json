@@ -1,0 +1,36 @@
+{
+ "name": "pack-l2-bool",
+ "description": "L2: a boolean where a power of ten goes.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "scale": {
+    "words": {
+     "lac": true
+    }
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

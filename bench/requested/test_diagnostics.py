@@ -198,6 +198,7 @@ def fake_worker(version, packet):
         "policy_sha256": d.core_digest(version["spec_version"], "policy", policy),
         "decisions": [decision],
         "references": [],
+        "packs": [],
         "coverage": [],
         "judgments": [],
         "summary": {

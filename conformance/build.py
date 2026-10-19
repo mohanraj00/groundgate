@@ -38,6 +38,7 @@ def vector(
     references: list[dict[str, Any]] | None = None,
     document_source: str | None = None,
     relations: list[tuple[str, str | None, bool, str, str]] | None = None,
+    packs: list[dict[str, Any]] | None = None,
 ) -> None:
     """``relations`` is the receipt's relation results (SPEC §5), each as (id, key, holds,
     difference, allowance), in receipt order; None when the schema has no relations."""
@@ -59,6 +60,7 @@ def vector(
                 {"id": i, "key": k, "holds": h, "difference": d, "allowance": a}
                 for i, k, h, d, a in relations
             ],
+            "packs": packs,
         }
     )
 
@@ -4488,6 +4490,227 @@ INVALID.extend(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- vocabulary packs (#334)
+def pack(pid: str = "words-x-test", version: str = "1.0.0", **lists: Any) -> dict[str, Any]:
+    """An app's own vocabulary pack in format 1 (SPEC §4.8)."""
+    return {"groundgate_pack": 1, "type": "vocabulary", "id": pid, "version": version, **lists}
+
+
+def uses(*packs: dict[str, Any], **fields: Any) -> dict[str, Any]:
+    """A schema that names each pack by id and version."""
+    return {
+        "packs": [{"id": p["id"], "version": p["version"]} for p in packs],
+        "fields": fields,
+    }
+
+
+NULLS = pack(null_literals=["unknown"])
+LAC = pack(scale={"words": {"lac": 5}})
+UPWARDS = pack(qualifiers={"before": {"gt": ["upwards of"]}})
+
+vector(
+    "85-pack-null-literal",
+    "A pack adds a null literal. A string value that is the literal is rejected before evidence "
+    "is read, as the base literals are (spec 0.10, #334).",
+    "Status: unknown. Plan: pending.",
+    uses(NULLS, status={"type": "string"}, plan={"type": "string"}),
+    [
+        c("p1", "status", "unknown", None, q("unknown"), ("rejected", ["NULL_STRING_LITERAL"])),
+        c("p2", "status", " Unknown ", None, q("unknown"), ("rejected", ["NULL_STRING_LITERAL"])),
+        c("p3", "plan", "pending", None, q("pending")),
+    ],
+    packs=[NULLS],
+)
+vector(
+    "86-pack-scale-word",
+    "A pack adds a scale word with its power of ten. The value before it gets SCALE_WORD, as "
+    "before a base scale word (spec 0.10, #334).",
+    "The grant is 5 lac. The levy is 7 lakh. The fee is 9 sites.",
+    uses(LAC, grant={"type": "integer"}, levy={"type": "integer"}, fee={"type": "integer"}),
+    [
+        c("p4", "grant", "5", None, q("5 lac"), ("needs_verification", ["SCALE_WORD"])),
+        c("p5", "levy", "7", None, q("7 lakh"), ("needs_verification", ["SCALE_WORD"])),
+        c("p6", "fee", "9", None, q("9 sites")),
+    ],
+    packs=[LAC],
+)
+vector(
+    "87-pack-qualifier",
+    "A pack adds a qualifier phrase for a comparator. A value after it gets QUALIFIED_VALUE, as "
+    "after a base qualifier (spec 0.10, #334).",
+    "Upwards of 20 sites joined. Then 5 sites closed.",
+    uses(UPWARDS, joined={"type": "integer"}, closed={"type": "integer"}),
+    [
+        c("p7", "joined", "20", None, q("20"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        c("p8", "closed", "5", None, q("5")),
+    ],
+    packs=[UPWARDS],
+)
+
+
+def bad_pack(name: str, description: str, *packs: dict[str, Any], schema: Any = None) -> None:
+    """An invalid packet: the packs or the schema's packs break a loader check (SPEC §4.8)."""
+    INVALID.append(
+        {
+            "name": name,
+            "description": description,
+            "document": "The fee is 5 dollars.",
+            "schema": uses(*packs, fee={"type": "integer"}) if schema is None else schema,
+            "policy": None,
+            "packs": list(packs),
+        }
+    )
+
+
+bad_pack("pack-l1-unknown-member", "L1: a member that the format does not list.", pack(window=80))
+bad_pack("pack-l1-format", "L1: a pack format other than 1.", {**pack(), "groundgate_pack": 2})
+bad_pack(
+    "pack-l1-kind",
+    "L1: a kind pack, which the format of spec 0.10 adds in #335.",
+    {**pack(), "type": "kind"},
+)
+bad_pack(
+    "pack-l2-float",
+    "L2: a power of ten that is not an integer.",
+    pack(scale={"words": {"lac": 5.0}}),
+)
+bad_pack(
+    "pack-l2-bool", "L2: a boolean where a power of ten goes.", pack(scale={"words": {"lac": True}})
+)
+bad_pack("pack-l3-blank", "L3: a blank word.", pack(per_units=[" "]))
+bad_pack(
+    "pack-l3-line-break", "L3: a word that holds a line break.", pack(per_units=["square\nfoot"])
+)
+bad_pack("pack-l3-not-nfc", "L3: a word that is not NFC.", pack(per_units=["café"]))
+bad_pack("pack-l3-long", "L3: a word of more than 64 code points.", pack(per_units=["x" * 65]))
+bad_pack(
+    "pack-l4-list",
+    "L4: a list of more than 2,000 entries.",
+    pack(per_units=[f"u{i}" for i in range(2001)]),
+)
+bad_pack(
+    "pack-l4-depth", "L4: a JSON nesting depth of more than 8.", pack(status=[[[[[[[[["x"]]]]]]]]])
+)
+bad_pack(
+    "pack-l5-negation",
+    "L5: a pack adds to the negations of a qualifier, a list that only the base pack gives.",
+    pack(qualifiers={"negations": ["hardly"]}),
+)
+bad_pack(
+    "pack-l5-change-word",
+    "L5: a pack adds to the change words, a list that only the base pack gives.",
+    pack(changes={"words": ["shift"]}),
+)
+bad_pack(
+    "pack-l6-two-powers",
+    "L6: a scale word with a power other than its power in the base.",
+    pack(scale={"words": {"million": 9}}),
+)
+bad_pack(
+    "pack-l6-power",
+    "L6: a power of ten other than 3, 5, 6, 7, 9 or 12.",
+    pack(scale={"words": {"lac": 4}}),
+)
+bad_pack(
+    "pack-l6-holds-base",
+    "L6: a qualifier phrase that holds a base phrase of another "
+    'comparator: "less than or equal to" as le holds "less than" (lt).',
+    pack(qualifiers={"before": {"le": ["less than or equal to"]}}),
+)
+bad_pack(
+    "pack-l6-held-by-base",
+    "L6: a qualifier phrase that a base phrase of another "
+    'comparator holds: "more" as lt is in "more than" (gt).',
+    pack(qualifiers={"before": {"lt": ["more"]}}),
+)
+bad_pack(
+    "pack-l6-two-comparators",
+    "L6: a word in two comparator lists.",
+    pack(qualifiers={"before": {"lt": ["about"]}}),
+)
+bad_pack(
+    "pack-l6-unit-two-codes",
+    "L6: a unit form under two unit codes.",
+    pack(units={"EUR": {"prefixes": ["$"]}}),
+)
+bad_pack(
+    "pack-l6-suffix-unit",
+    "L6: a scale suffix that is also a unit suffix.",
+    pack(scale={"suffixes": {"mg": 6}}),
+)
+bad_pack(
+    "pack-l6-two-packs",
+    "L6: two packs give one scale word two powers.",
+    pack("lac-x-five", scale={"words": {"lac": 5}}),
+    pack("lac-x-seven", scale={"words": {"lac": 7}}),
+)
+bad_pack("pack-l7-built-in-id", "L7: a given pack with the id of a built-in pack.", pack("en"))
+bad_pack("pack-l7-no-app-name", "L7: an app's own pack with no -x- name.", pack("words"))
+bad_pack("pack-l7-version", "L7: a version that is not MAJOR.MINOR.PATCH.", pack(version="1.0"))
+bad_pack(
+    "pack-l7-two-versions",
+    "L7: one id with two versions in one packet.",
+    pack(version="1.0.0"),
+    pack(version="1.1.0"),
+)
+bad_pack(
+    "pack-l7-two-digests",
+    "L7: two copies of one id and version with different digests.",
+    pack(per_units=["acre"]),
+    pack(per_units=["hectare"]),
+)
+bad_pack(
+    "pack-l8-measured",
+    "L8: a measured status row in a pack that is not built in.",
+    pack(
+        status=[
+            {
+                "kind": "us-10k",
+                "field": "revenue",
+                "code": "SCALE_WORD",
+                "status": "measured",
+                "documents": 60,
+                "bound": "0.0487",
+                "limit": "0.05",
+                "results": "bench/example/results.json",
+            }
+        ]
+    ),
+)
+bad_pack("pack-l8-row", "L8: a malformed status row.", pack(status=[{"status": "draft"}]))
+bad_pack(
+    "pack-l12-text", "L12: a member that holds document text.", pack(text="The fee is 5 dollars.")
+)
+bad_pack(
+    "pack-schema-not-given",
+    "The schema names a pack that is neither built in nor given.",
+    schema=uses(pack("other-x-test"), fee={"type": "integer"}),
+)
+bad_pack(
+    "pack-schema-not-named",
+    "A given pack that the schema does not name.",
+    pack(),
+    schema={"fields": {"fee": {"type": "integer"}}},
+)
+bad_pack(
+    "pack-schema-base",
+    "The schema names the base pack, which always applies.",
+    schema={"packs": [{"id": "en", "version": "1.0.0"}], "fields": {"fee": {"type": "integer"}}},
+)
+bad_pack(
+    "pack-schema-pin",
+    "A pinned sha256 that differs from the digest of the given pack.",
+    pack(),
+    schema={
+        "packs": [{"id": "words-x-test", "version": "1.0.0", "sha256": "sha256:" + "0" * 64}],
+        "fields": {"fee": {"type": "integer"}},
+    },
+)
+bad_pack("pack-schema-entry", "A schema packs entry with an unknown member.",
+         pack(), schema={"packs": [{"id": "words-x-test", "version": "1.0.0", "url": "x"}],
+                         "fields": {"fee": {"type": "integer"}}})  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
@@ -4514,6 +4737,7 @@ def main() -> None:
             "policy": v["policy"],
             **({"document_source": v["document_source"]} if v["document_source"] else {}),
             **({"references": v["references"]} if v["references"] is not None else {}),
+            **({"packs": v["packs"]} if v["packs"] is not None else {}),
             "candidates": cands,
             **({"judgments": v["judgments"]} if v["judgments"] is not None else {}),
             "expected": {

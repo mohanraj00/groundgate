@@ -1,0 +1,91 @@
+{
+ "name": "86-pack-scale-word",
+ "description": "A pack adds a scale word with its power of ten. The value before it gets SCALE_WORD, as before a base scale word (spec 0.10, #334).",
+ "document": "The grant is 5 lac. The levy is 7 lakh. The fee is 9 sites.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "grant": {
+    "type": "integer"
+   },
+   "levy": {
+    "type": "integer"
+   },
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "scale": {
+    "words": {
+     "lac": 5
+    }
+   }
+  }
+ ],
+ "candidates": [
+  {
+   "id": "p4",
+   "field": "grant",
+   "value": "5",
+   "evidence": {
+    "start": 13,
+    "end": 18,
+    "text": "5 lac"
+   }
+  },
+  {
+   "id": "p5",
+   "field": "levy",
+   "value": "7",
+   "evidence": {
+    "start": 32,
+    "end": 38,
+    "text": "7 lakh"
+   }
+  },
+  {
+   "id": "p6",
+   "field": "fee",
+   "value": "9",
+   "evidence": {
+    "start": 51,
+    "end": 58,
+    "text": "9 sites"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

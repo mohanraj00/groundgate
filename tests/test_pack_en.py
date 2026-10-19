@@ -17,8 +17,9 @@ from typing import Any
 import pytest
 
 from groundgate import text
-from groundgate.admit import NULL_LITERALS
 from groundgate.pack import BASE, BASE_SHA256, pack_digest
+
+V = text.BASE_VOCABULARY
 
 REPO = Path(__file__).parent.parent
 SPEC = REPO / "SPEC.md"
@@ -202,8 +203,8 @@ def _probes(s: str, toks: list[text.Token]) -> dict[str, list[int]]:
     negation before a qualifier word or a loss word, `between` or a change phrase before a
     number, and an abbreviation before a dot."""
     starts = {t.start for t in toks}
-    qualifier_starts = {m.start() for rx in text._BEFORE_RE.values() for m in rx.finditer(s)}
-    loss_starts = {m.start() for m in text._LOSS.finditer(s)}
+    qualifier_starts = {m.start() for rx in V._BEFORE_RE.values() for m in rx.finditer(s)}
+    loss_starts = {m.start() for m in V._LOSS.finditer(s)}
     before_number = starts | {
         len(s[max(0, p - 200) : p].rstrip()) + max(0, p - 200) for p in starts
     }
@@ -224,33 +225,31 @@ def test_the_pack_patterns_match_as_the_old_patterns(name: str, s: str) -> None:
     """Part 1 of the proof: every match of every moved pattern stays the same."""
     toks = text.tokens(s)
     for key in FIND:
-        new, old = getattr(text, key), OLD[key]
+        new, old = getattr(V, key), OLD[key]
         assert [_spans(m) for m in new.finditer(s)] == [_spans(m) for m in old.finditer(s)], key
     ends = sorted({t.end for t in toks})
     for e in ends:
-        assert _spans(text._SCALE.match(s[e : e + 12])) == _spans(
-            OLD["_SCALE"].match(s[e : e + 12])
-        )
+        assert _spans(V._SCALE.match(s[e : e + 12])) == _spans(OLD["_SCALE"].match(s[e : e + 12]))
         for key in AT_END:
-            assert _spans(getattr(text, key).match(s, e)) == _spans(OLD[key].match(s, e)), key
+            assert _spans(getattr(V, key).match(s, e)) == _spans(OLD[key].match(s, e)), key
         rest = s[e : e + 300]
         new_rest, old_rest = text._strip_unit_suffix(rest), _old_strip_unit_suffix(rest)
         assert new_rest == old_rest
         for key in ("_RANGE_NEXT", "_AND_NEXT"):
-            assert _spans(getattr(text, key).match(rest)) == _spans(OLD[key].match(rest)), key
+            assert _spans(getattr(V, key).match(rest)) == _spans(OLD[key].match(rest)), key
     for p in (i for i, ch in enumerate(s) if ch in _OLD_CONTINUES):
-        new_m, old_m = text._CURRENCY_SCALE.match(s, p), OLD["_CURRENCY_SCALE"].match(s, p)
+        new_m, old_m = V._CURRENCY_SCALE.match(s, p), OLD["_CURRENCY_SCALE"].match(s, p)
         assert _spans(new_m) == _spans(old_m), ("_CURRENCY_SCALE", p)
     for key, points in _probes(s, toks).items():
         for p in points:
             lo = max(0, p - 200)
-            new_m, old_m = getattr(text, key).search(s, lo, p), OLD[key].search(s, lo, p)
+            new_m, old_m = getattr(V, key).search(s, lo, p), OLD[key].search(s, lo, p)
             assert _spans(new_m) == _spans(old_m), (key, p)
     for a, b in itertools.pairwise(toks):
         if a.end <= b.start:
             for key in BETWEEN_NUMBERS:
                 new_m, old_m = (
-                    getattr(text, key).fullmatch(s, a.end, b.start),
+                    getattr(V, key).fullmatch(s, a.end, b.start),
                     OLD[key].fullmatch(s, a.end, b.start),
                 )
                 assert _spans(new_m) == _spans(old_m), (key, a.end)
@@ -259,15 +258,15 @@ def test_the_pack_patterns_match_as_the_old_patterns(name: str, s: str) -> None:
 def test_the_pack_tables_are_the_old_tables() -> None:
     assert text.builtin_units() == _old_units()
     assert list(text.builtin_units()) == list(_old_units())
-    assert set(NULL_LITERALS) == {"null", "none", "nil", "n/a"}
-    assert text._CONTINUES == _OLD_CONTINUES
-    assert text._ABBREVIATIONS == _OLD_ABBREVIATIONS
-    assert text._BEFORE == _OLD_BEFORE and text._AFTER == _OLD_AFTER
-    assert text._SCALE_EXP == {
+    assert V.null_literals == {"null", "none", "nil", "n/a"}
+    assert V._CONTINUES == _OLD_CONTINUES
+    assert V._ABBREVIATIONS == _OLD_ABBREVIATIONS
+    assert V._BEFORE == _OLD_BEFORE and V._AFTER == _OLD_AFTER
+    assert V._SCALE_EXP == {
         "thousand": 3, "million": 6, "billion": 9, "trillion": 12, "lakh": 5, "crore": 7,
     }  # fmt: skip
-    assert text._SUFFIX_EXP == {"k": 3, "m": 6, "bn": 9, "'000": 3, "\u2019000": 3, "000": 3}
-    assert {c: s for c, (_, s) in text.CURRENCY_NAMES.items()} == {
+    assert V._SUFFIX_EXP == {"k": 3, "m": 6, "bn": 9, "'000": 3, "\u2019000": 3, "000": 3}
+    assert {c: s for c, (_, s) in V.CURRENCY_NAMES.items()} == {
         c: s for c, (_, s) in _OLD_CURRENCY_NAMES.items()
     }
 
@@ -287,12 +286,13 @@ def test_the_spec_gives_the_digest_of_the_base_pack() -> None:
 def test_the_base_pack_holds_no_loss_word() -> None:
     """The loss words stay in the code until the `finance` pack takes them (#336)."""
     assert "loss" not in BASE.get("sign", {})
+    assert V.pack["sign"]["loss"] == []
 
 
 def test_key_scope_and_the_unit_search_end_a_sentence_at_every_dot() -> None:
     """Part 6 of the proof: only the qualifier window reads the abbreviations. The key scope and
     the unit search use ``sentence`` without ``qualifiers``, and there every dot ends a sentence."""
-    for abbreviation in text._ABBREVIATIONS:
+    for abbreviation in V._ABBREVIATIONS:
         s = f"A fee {abbreviation} 25 applies."
         dot = s.index(abbreviation) + len(abbreviation) - 1
         pos = s.index("25")

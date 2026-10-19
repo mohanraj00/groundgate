@@ -1,0 +1,36 @@
+{
+ "name": "pack-l5-negation",
+ "description": "L5: a pack adds to the negations of a qualifier, a list that only the base pack gives.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "qualifiers": {
+    "negations": [
+     "hardly"
+    ]
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

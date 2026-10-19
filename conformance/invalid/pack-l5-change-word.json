@@ -1,0 +1,36 @@
+{
+ "name": "pack-l5-change-word",
+ "description": "L5: a pack adds to the change words, a list that only the base pack gives.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "changes": {
+    "words": [
+     "shift"
+    ]
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -35,7 +35,11 @@ def _load(path: Path) -> dict[str, Any]:
 
 def _extra(v: dict[str, Any]) -> dict[str, Any]:
     """The optional packet members of a vector (SPEC §2.1)."""
-    return {"references": v.get("references"), "document_source": v.get("document_source")}
+    return {
+        "references": v.get("references"),
+        "document_source": v.get("document_source"),
+        "packs": v.get("packs") or (),
+    }
 
 
 @pytest.mark.parametrize("path", VECTORS, ids=lambda p: p.stem)

@@ -141,7 +141,7 @@ print(stored["receipt_sha256"][:23])
 
 ```text
 0.10 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
-sha256:610a3f7f9c1de8be
+sha256:f4b594d8279c9d5e
 ```
 
 A receipt holds digests of its inputs, not the inputs. To verify it later, you need the same

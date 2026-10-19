@@ -1,0 +1,38 @@
+{
+ "name": "pack-l6-holds-base",
+ "description": "L6: a qualifier phrase that holds a base phrase of another comparator: \"less than or equal to\" as le holds \"less than\" (lt).",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "qualifiers": {
+    "before": {
+     "le": [
+      "less than or equal to"
+     ]
+    }
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

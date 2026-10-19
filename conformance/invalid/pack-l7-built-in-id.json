@@ -1,0 +1,31 @@
+{
+ "name": "pack-l7-built-in-id",
+ "description": "L7: a given pack with the id of a built-in pack.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "en",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "en",
+   "version": "1.0.0"
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

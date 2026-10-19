@@ -1,0 +1,24 @@
+{
+ "name": "pack-schema-base",
+ "description": "The schema names the base pack, which always applies.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "en",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

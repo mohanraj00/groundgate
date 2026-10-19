@@ -83,13 +83,14 @@ def render(
     judgments: Sequence[object] | None = None,
     references: Sequence[object] | None = None,
     document_source: str | None = None,
+    packs: Sequence[object] = (),
 ) -> str:
     """Render ``receipt`` over ``text``. ``candidates`` supply the quotes shown on each card.
 
-    With ``schema`` (and ``policy``, ``judgments``, ``references`` and ``document_source`` if they
-    were used), the receipt is re-derived first and the page says whether it matched. Without them
-    the page says it is unverified. The page shows the cited text of a reference decision only
-    when ``references`` holds that reference.
+    With ``schema`` (and ``policy``, ``judgments``, ``references``, ``document_source`` and
+    ``packs`` if they were used), the receipt is re-derived first and the page says whether it
+    matched. Without them the page says it is unverified. The page shows the cited text of a
+    reference decision only when ``references`` holds that reference.
     """
     verified = (
         None
@@ -103,6 +104,7 @@ def render(
             judgments,
             references=references,
             document_source=document_source,
+            packs=packs,
         ).ok
     )
     texts: dict[str, tuple[str, Offsets]] = {}

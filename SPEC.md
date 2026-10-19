@@ -62,6 +62,9 @@ supplies. A reference can hold only the part of its source that matters.
 a non-blank string or null (default). Other keys, or a malformed reference, make the packet
 invalid. A reference's digest is of kind `reference` over `{"text": <text>}`.
 
+A packet may also carry **packs**: the vocabulary packs that the schema names (§2.3, §4.8), as
+pack objects. Each given pack must pass the checks of §4.8, or the packet is invalid.
+
 ### 2.2 Offsets
 
 A **span** is `{"start": s, "end": e}`: zero-based, half-open **UTF-8 byte** offsets into the
@@ -86,7 +89,8 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
  "units": {"<unit code>": {"prefix": ["<surface>"], "suffix": ["<surface>"]}},
  "relations": [{"id": "<name>", "total": "<field>",
                 "parts": [{"field": "<field>", "factor": "<decimal>"}],
-                "tolerance": "<decimal>"}]}
+                "tolerance": "<decimal>"}],
+ "packs": [{"id": "<pack id>", "version": "<version>", "sha256": "sha256:..."}]}
 ```
 
 Defaults: `type` `"number"`, `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false,
@@ -106,8 +110,17 @@ operating income field. A field item (§4.6) is checked against them. They follo
 normalisation and lower-casing.
 `units` extends and overrides the built-in table (§4.3). Each unit is an object with only
 `prefix` and `suffix`, each a list of non-empty strings; an absent list is empty.
+`packs` names each vocabulary pack that the packet reads besides the base pack (§4.8), by `id`
+and `version`. An entry can also give `sha256`: then the given pack must have that digest. This
+pin is optional. The schema never names the base pack, because it always applies. The packet is
+invalid when an entry has other keys, an entry names a built-in pack, two entries name one id
+differently, a named pack is not given, a given pack is not named, or a pin differs. The pack
+table of §4.3 and the word lists of §4 are then the union of §4.8, and `units` still extends
+and overrides that table.
 `schema_sha256` is the digest of kind `schema` over the schema object **after** defaults are
-filled in.
+filled in. With packs, the schema object holds `packs` as `{"id", "version", "sha256"}`, sorted by
+`id`, with the digest of each given pack. So a changed pack changes `schema_sha256`. With no pack,
+the schema object holds no `packs`.
 
 `relations` (spec 0.10, #321) is a list of relations between fields, which step 13 checks (§3.4).
 A relation is an object with only these members:
@@ -135,7 +148,7 @@ relations, or with an empty list, has no `relations` member after defaults, so i
 change.
 
 The packet is invalid when the schema is not an object with a `fields` object, has keys other
-than `fields`, `units` and `relations`, or a field is not an object, has other keys, has a `type` or
+than `fields`, `units`, `relations` and `packs`, or a field is not an object, has other keys, has a `type` or
 `comparator` not listed above, a `unit` that is not a string or null, a bound that is not a
 decimal string or an integer that reads as a number (§4.1, so `"1,000"` is accepted), or a
 `required` or `multiple` that is not a boolean.
@@ -955,9 +968,65 @@ The digest of the base pack is
 
 where `type` is `vocabulary` and JCS is §6. The prefix names the pack format, not the spec
 version. For this spec version the base pack is `en` 1.0.0, with the digest
-`sha256:de563584dee60f672225630670fc26def345c526954917591c5447220ac9d1e8`.
+`sha256:8ee2f5c367baa29969759e3ed3ec5acf39f412a8b4b6afbda6477c1cde7fdeae`.
 An implementation loads a base pack with this digest, and refuses to run with another one. The base
 pack applies to every packet, and the receipt does not name it: the spec version names it.
+
+The digest reads the pack **after defaults**: each absent list is empty, `description` is `""`,
+`status` is `[]`, and a currency of `heading_units` with no `sign` has the sign null.
+
+### 4.8 Vocabulary packs
+
+An app can give its own vocabulary packs (§2.1). A pack only adds words to the base pack: the
+format has no member that removes, replaces or turns off a word, a check or a limit. A vocabulary
+pack is one JSON object in format 1:
+
+| Member | Meaning |
+|---|---|
+| `groundgate_pack` | The pack format, `1`. |
+| `type` | `"vocabulary"`. |
+| `id` | Lowercase letters and digits, with single `-` between them, at most 64 characters. The id of an app's own pack holds `-x-` and a name, for example `words-x-myapp`. |
+| `version` | `MAJOR.MINOR.PATCH`, each a non-negative integer with no leading zero. |
+| `description` | Optional text. It is in the digest and has no effect on a decision. |
+| `status` | Optional rows `{"kind", "field", "code", "status", "documents", "bound", "limit", "results"}`, with `status` `draft` or `measured`. |
+| the lists | The word lists of the base pack. Each one is optional. |
+
+The lists have the shape of the base pack: `scale.words`, `scale.suffixes` and `scale.currency`
+are objects from a word to a power of ten; `units` is an object from a unit code to
+`{"prefixes", "suffixes"}`; `qualifiers.before` and `qualifiers.after` are objects from a
+comparator (`approx`, `gt`, `lt`, `ge`, `le`, `range`) to phrases; `heading_units` is an object
+from a code of three capitals to `{"names", "sign"}`; every other list is a list of words. A pack
+other than the base pack cannot give `qualifiers.negations`, `ranges.pair`, `changes.words`,
+`changes.determiners`, `sentence.join_always` or `sentence.join_before_code`: a word there
+cancels a flag for every field.
+
+A word is plain text, never a pattern. The rules of §4 escape it and read it with their fixed
+rules: whole words, the same case rules and the same windows. A list with no word matches
+nothing.
+
+The packet is invalid when a given pack fails one of these checks:
+
+| Check | The packet is invalid with |
+|---|---|
+| L1 closed format | a member that the format does not list, a `groundgate_pack` other than `1`, or a `type` other than `vocabulary` |
+| L2 data only | a value that is not a string, an integer in [-(2^53), 2^53], null, a list or an object; a boolean or a number with a fraction is not data |
+| L3 words | a word that is not NFC, is blank, has whitespace at an end, holds a line break or a tab, or has more than 64 code points; a scale word, a null literal or an abbreviation that is not in lowercase; an abbreviation with no dot at its end; a currency sign that is not one code point other than a letter, a number, a separator or a control character |
+| L4 size | a pack file of more than 1 MiB, before it is parsed; a JSON nesting depth of more than 8, where the pack object has depth 1; more than 256 KiB as canonical JSON; a list or an object of more than 2,000 entries |
+| L5 add only | a list that only the base pack can give |
+| L6 no conflict | after the union: a phrase in two comparator lists; a scale word or form with two powers; a power other than 3, 5, 6, 7, 9 or 12; a scale suffix that is also a unit suffix in one of its cases; a unit form under two unit codes; a loss word that is also a gain word; a qualifier phrase from a pack that holds a phrase of another comparator, or is held in one; a currency name under two codes; two signs for one currency |
+| L7 ids and versions | an id or a version with the wrong form; a given pack with the id of a built-in pack; an app's own id with no `-x-`; one id in two versions; two copies of one id and version with two digests |
+| L8 status | a malformed row; a `measured` row in a pack that is not built in |
+| L11 digest | nothing to refuse: the implementation computes each digest, and never reads one from a pack |
+| L12 no text | a member that holds document text, a span, a value or an evidence item. L1 refuses each one. |
+
+The qualifier rule of L6 keeps the reading of the base. §4.2 applies the longer of two qualifiers
+that overlap. So a pack phrase "less than or equal to" as `le` hides the base phrase "less than"
+as `lt`, and a pack phrase "more" as `lt` sits in the base phrase "more than" as `gt`. Both are
+invalid.
+
+The union takes the base pack, then the given packs. Two words are one entry when they are
+equal. In each list, the words of the base keep their order, and the words that the packs add
+follow, longest first, then by code point. So the order of the packs never changes a match.
 
 ## 5. Receipt
 
@@ -965,11 +1034,13 @@ pack applies to every packet, and the receipt does not name it: the spec version
 {"groundgate": "0.10",
  "document": {"id": null, "sha256": "sha256:...", "source": null},
  "references": [],
+ "packs": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "c1", "candidate_sha256": "sha256:...", "field": "...",
                 "key": null, "outcome": "admitted", "codes": [], "value": "2000", "unit": "mg",
                 "source": "document", "ref": null, "url": null,
-                "evidence": {"start": 120, "end": 128}, "parts": [], "missing": []}],
+                "evidence": {"start": 120, "end": 128}, "parts": [], "missing": [],
+                "packs": []}],
  "coverage": [],
  "judgments": [],
  "summary": {"admitted": 1, "needs_verification": 0, "rejected": 0},
@@ -977,7 +1048,8 @@ pack applies to every packet, and the receipt does not name it: the spec version
 ```
 
 `document.source` is the document source, or null. `references` lists each reference as
-`{"id", "sha256", "source"}`, sorted by `id`.
+`{"id", "sha256", "source"}`, sorted by `id`. `packs` lists each pack that the schema names as
+`{"id", "type", "version", "sha256"}`, sorted by `id`. It never lists the base pack.
 
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
 code, or the flag codes in the order of the table in §3.3, followed by `EVIDENCE_REANCHORED`,
@@ -1001,6 +1073,11 @@ is a string, otherwise `null`.
   Each field item is listed, in its order in the evidence list. A field item without `aliases` is
   listed with `passed` false.
 - `missing` lists the missing parts in the order `sign`, `scale`, `unit`, `key`.
+- `packs` lists the ids, sorted, of each pack in the receipt's `packs` that adds a word that
+  occurs in the document, in a reference or in a string of the candidate. Both sides are compared
+  casefolded, with each whitespace run as one space. A word that the base pack gives in the same
+  list is not an added word. The list can name a pack that did not change the outcome; it never
+  leaves out a pack that changed it.
 
 Coverage is sorted by field name. `judgments` lists each judgment that applied, as
 `{"candidate_sha256", "question", "answer", "p"}` (`answer` only for `key`), sorted by

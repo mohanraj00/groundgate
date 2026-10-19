@@ -921,6 +921,7 @@ class DiagnosticSession:
                 "groundgate",
                 "document",
                 "references",
+                "packs",
                 "schema_sha256",
                 "policy_sha256",
                 "decisions",
@@ -955,6 +956,7 @@ class DiagnosticSession:
         ]
         if (
             receipt["references"] != references
+            or receipt["packs"] != []
             or not isinstance(receipt["coverage"], list)
             or not isinstance(receipt["judgments"], list)
         ):

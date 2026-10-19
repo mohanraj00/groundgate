@@ -540,6 +540,7 @@ receipt = gg.admit(
     judgments=None,
     references=None,
     document_source=None,
+    packs=(),
 )
 receipt.decisions  # tuple of gg.Decision
 receipt.coverage  # tuple of (field, "REQUIRED_FIELD_MISSING")
@@ -561,11 +562,12 @@ check = gg.verify(
     judgments=None,
     references=None,
     document_source=None,
+    packs=(),
 )
 check.ok, check.problems  # True, () when the receipt re-derives exactly
 ```
 
-`references` and `document_source` are keyword-only. `schema` and `policy` can be dicts or
+`references`, `document_source` and `packs` are keyword-only. `schema` and `policy` can be dicts or
 `gg.Schema` / `gg.Policy`. Invalid inputs raise `gg.PacketError`. In Python, `Decision.evidence`
 and `Part.span` are `(start, end)` tuples, and `to_dict()` writes them as `{"start", "end"}`.
 `gg.candidate_schema()` and `gg.extractor_schema(schema, reference_ids=None)` return the JSON
@@ -578,6 +580,21 @@ schema and, for a missing key, the document text or references that you gave `ad
 It returns `None` for an admitted decision or when a new answer cannot fix the reasons.
 It raises `ValueError` when the candidate's digest does not match the decision.
 See [Send reasons back to the extractor](howto/feedback.md) for a feedback loop.
+
+`packs` are your own vocabulary packs (SPEC §4.8): words that the text rules read in addition to
+the base pack, such as a scale word "lac". `gg.load_pack(path)` reads a pack file and runs the
+loader checks. The schema names each pack in its member `packs`, and you give each one to
+`admit` and to `verify`:
+
+```python
+lac = gg.load_pack("lac-x-myapp.json")
+schema = {"packs": [{"id": "lac-x-myapp", "version": "1.0.0"}], "fields": {...}}
+receipt = gg.admit(text, schema, candidates, packs=[lac])
+```
+
+The receipt names each pack with its digest, and each decision names the packs that it read. A
+pack only adds words, and a pack that fails a check makes the packet invalid. If you build a
+`gg.Schema` yourself, give the packs to `gg.Schema.from_dict(schema, packs)`.
 
 ### LangExtract
 
@@ -720,7 +737,8 @@ groundgate schema  SCHEMA [--references R] [-o extractor.schema.json]
 groundgate schema check SCHEMA
 ```
 
-`admit`, `verify` and `report` also take `--references R` and `--document-source URL`. `schema`
+`admit`, `verify` and `report` also take `--references R`, `--document-source URL` and
+`--pack FILE`, once for each pack. `schema` and `schema check` also take `--pack FILE`. `schema`
 writes the extractor schema, with the ids of the references in `R` as its refs. `schema check`
 prints the settings that make a check fail every time, or pass for the wrong key or field
 ([Check a schema](schema.md#check-a-schema)). `DOC` may be `-` for standard input. Exit codes:

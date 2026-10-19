@@ -1,0 +1,36 @@
+{
+ "name": "pack-l2-float",
+ "description": "L2: a power of ten that is not an integer.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "scale": {
+    "words": {
+     "lac": 5.0
+    }
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

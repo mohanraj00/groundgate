@@ -1,0 +1,86 @@
+{
+ "name": "85-pack-null-literal",
+ "description": "A pack adds a null literal. A string value that is the literal is rejected before evidence is read, as the base literals are (spec 0.10, #334).",
+ "document": "Status: unknown. Plan: pending.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "status": {
+    "type": "string"
+   },
+   "plan": {
+    "type": "string"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "null_literals": [
+    "unknown"
+   ]
+  }
+ ],
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "status",
+   "value": "unknown",
+   "evidence": {
+    "start": 8,
+    "end": 15,
+    "text": "unknown"
+   }
+  },
+  {
+   "id": "p2",
+   "field": "status",
+   "value": " Unknown ",
+   "evidence": {
+    "start": 8,
+    "end": 15,
+    "text": "unknown"
+   }
+  },
+  {
+   "id": "p3",
+   "field": "plan",
+   "value": "pending",
+   "evidence": {
+    "start": 23,
+    "end": 30,
+    "text": "pending"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NULL_STRING_LITERAL"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NULL_STRING_LITERAL"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

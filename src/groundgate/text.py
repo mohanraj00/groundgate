@@ -7,12 +7,13 @@ import contextlib
 import itertools
 import re
 import unicodedata
-from collections.abc import Iterator
+from collections.abc import Iterable, Iterator
 from contextvars import ContextVar
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
+from typing import Any
 
-from .pack import BASE
+from .pack import BASE, CODE_LOSS, combine
 
 _TOKEN = re.compile(r"[-\u2212]?[0-9][0-9,]*(?:\.[0-9]+)?")
 # ungrouped, grouped in threes ("200,000"), or grouped the Indian way: the last three digits,
@@ -21,19 +22,8 @@ _VALID = re.compile(
     r"^[-\u2212]?(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]{1,2}(?:,[0-9]{2})*,[0-9]{3}|[0-9]+)(?:\.[0-9]+)?$"
 )
 _SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t\r]*\n")
-# the words of the base pack (SPEC §4.7); every word list of these rules comes from it
-_SENTENCE_WORDS = BASE["sentence"]
-_ABBREVIATIONS: list[str] = _SENTENCE_WORDS["abbreviations"]
-_JOIN_ALWAYS = frozenset(_SENTENCE_WORDS["join_always"])  # "U.S." never ends a sentence
-_JOIN_BEFORE_CODE = frozenset(_SENTENCE_WORDS["join_before_code"])  # "No." before a code
-# a listed abbreviation that ends at a dot, as a whole word ("Rs." but not the end of "Mrs.")
-_ABBREVIATION_END = re.compile(
-    r"(?<!\w)(?:" + "|".join(re.escape(a) for a in _ABBREVIATIONS) + r")\Z", re.I
-)
-_ABBREVIATION_MAX = max(len(a) for a in _ABBREVIATIONS)
 _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS_RUN = re.compile(r"\s*")
-_CONTINUES = "".join(BASE["currency_signs"])  # the currency signs (SPEC §4.1, §4.2)
 # "No." before a code such as "DEA-1086": a word that holds a digit or starts with two capitals
 _CODE = re.compile(r"\S*?\d|[A-Z]{2}")
 _WS = re.compile(r"\s+")
@@ -115,10 +105,15 @@ def _tokens(text: str, start: int, end: int) -> Iterator[Token]:
 
 def _scale_zeros(text: str, s: int) -> bool:
     """Whether the 000 at ``s`` is the 000 of a currency scale (SPEC §4.1, #313)."""
+    voc = _VOCAB.get()
     sign = s - 1
     if sign > 0 and text[sign] in "'\u2019":
         sign -= 1
-    return sign >= 0 and text[sign] in _CONTINUES and _CURRENCY_SCALE.match(text, sign) is not None
+    return (
+        sign >= 0
+        and text[sign] in voc._CONTINUES
+        and voc._CURRENCY_SCALE.match(text, sign) is not None
+    )
 
 
 def parse_value(raw: str) -> Decimal | None:
@@ -158,10 +153,13 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
     """A "." that ends a listed abbreviation is not a sentence end when the next character is a
     lowercase letter, a digit or a currency sign and no blank line comes first. "U.S." never
     ends one, and "No." or "Nos." does not before a code (SPEC §4.2)."""
+    voc = _VOCAB.get()
     if not m.group().startswith("."):
         return True
     dot = m.start()
-    abbreviation = _ABBREVIATION_END.search(text, max(0, dot + 1 - _ABBREVIATION_MAX), dot + 1)
+    abbreviation = voc._ABBREVIATION_END.search(
+        text, max(0, dot + 1 - voc._ABBREVIATION_MAX), dot + 1
+    )
     if not abbreviation:
         return True
     gap = _WS_RUN.match(text, dot + 1)  # in place: no copy of the rest of the text
@@ -170,11 +168,11 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
     if _BLANK_LINE.search(gap.group()) or nxt == len(text):
         return True
     word = abbreviation.group().lower()
-    if word in _JOIN_ALWAYS or (word in _JOIN_BEFORE_CODE and _CODE.match(text, nxt)):
+    if word in voc._JOIN_ALWAYS or (word in voc._JOIN_BEFORE_CODE and _CODE.match(text, nxt)):
         return False
     # only a plain continuation joins; an uppercase letter or punctuation may start a sentence
     ch = text[nxt]
-    return not (ch.islower() or "0" <= ch <= "9" or ch in _CONTINUES)
+    return not (ch.islower() or "0" <= ch <= "9" or ch in voc._CONTINUES)
 
 
 # the sentence ends of each text, read once while an index is open (``sentence_index``), and
@@ -241,85 +239,65 @@ def sentence(text: str, pos: int, qualifiers: bool = False) -> tuple[int, int]:
 
 # ------------------------------------------------------------------ qualifiers
 
-_QUALIFIERS = BASE["qualifiers"]
-_BEFORE: dict[str, list[str]] = _QUALIFIERS["before"]
-_AFTER: dict[str, list[str]] = _QUALIFIERS["after"]
-
 
 def _phrase(p: str) -> str:
     body = r"\s+".join(re.escape(w) for w in p.split())
     return body if not p[0].isalnum() else rf"\b{body}\b"
 
 
-_BEFORE_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in _BEFORE.items()}
-_AFTER_RE = {c: re.compile("|".join(_phrase(p) for p in ps), re.I) for c, ps in _AFTER.items()}
 _INVERT = {"gt": "le", "le": "gt", "lt": "ge", "ge": "lt"}
+
+
+def _any(patterns: Iterable[str]) -> str:
+    """An alternation of patterns, in their order. With no pattern, it matches nothing: an
+    empty alternation would match at every point (#334)."""
+    return "|".join(patterns) or "(?!)"
 
 
 def _words(words: list[str]) -> str:
     """An alternation of plain words, each escaped, in the order of the pack."""
-    return "|".join(re.escape(w) for w in words)
+    return _any(re.escape(w) for w in words)
 
 
 def _phrases(phrases: list[str]) -> str:
     """An alternation of phrases: each whitespace run in a phrase matches any whitespace run."""
-    return "|".join(r"\s+".join(re.escape(w) for w in p.split()) for p in phrases)
+    return _any(r"\s+".join(re.escape(w) for w in p.split()) for p in phrases)
 
 
-_NEGATION_END = re.compile(rf"\b(?:{_phrases(_QUALIFIERS['negations'])})\s+$", re.I)
-_CONNECTORS: list[str] = BASE["ranges"]["connectors"]
-_BETWEEN_WORD, _AND_WORD = (re.escape(w) for w in BASE["ranges"]["pair"])
-_CONNECTOR = _words(_CONNECTORS)
-# the word connectors and the second word of the pair: "to", "through", "and"
-_WORD_CONNECTOR = _words([c for c in _CONNECTORS if c[0].isalnum()] + [BASE["ranges"]["pair"][1]])
-_RANGE_NEXT = re.compile(rf"^\s*(?:{_CONNECTOR})\s*\S{{0,4}}?(?=[-\u2212]?\d)", re.I)
-# one unit or scale word may stand before a word connector: "30 mg to 45", "$1 million to $2"
-_UNIT_WORD = rf"(?:[^\s\d]{{1,12}}\s+(?=(?:{_WORD_CONNECTOR})\b))?"
-_RANGE_PREV = re.compile(rf"\s*{_UNIT_WORD}(?:{_CONNECTOR})\s*\S{{0,4}}?", re.I)
-_AND_NEXT = re.compile(rf"^\s*{_AND_WORD}\s*\S{{0,4}}?(?=[-\u2212]?\d)", re.I)
-_AND_PREV = re.compile(rf"\s*{_UNIT_WORD}{_AND_WORD}\s*\S{{0,4}}?", re.I)
-_BETWEEN_END = re.compile(rf"\b{_BETWEEN_WORD}\s*\S{{0,4}}?$", re.I)
-_BETWEEN = re.compile(rf"(?<![^\W_]){_BETWEEN_WORD}\s", re.I)
-_CHANGE = _words(BASE["changes"]["words"])
-_DETERMINER = _words(BASE["changes"]["determiners"])
-_NOT_BETWEEN = _words(BASE["changes"]["stop_words"])
-_PLAIN = rf"\s+(?!(?:{_NOT_BETWEEN})\b)[^\W\d_](?:[^\W\d_]|['\u2019-](?=[^\W\d_]))*"
-# at most six words between the change word and "from", the first of them a determiner or
-# "in", "of" or "to" and then a determiner: "reducing the fee from", "an increase in the fee from"
-_CHANGE_GAP = (
-    rf"(?:\s+(?:in|of|to)\s+(?:{_DETERMINER})(?:{_PLAIN}){{0,4}}"
-    rf"|\s+(?:{_DETERMINER})(?:{_PLAIN}){{0,5}})?"
-)
-# "increased from X to Y": Y is the new value, not a range end
-_CHANGE_FROM = re.compile(rf"\b(?:{_CHANGE}){_CHANGE_GAP}\s+from\s+\S{{0,4}}?$", re.I)
+def _sign_class(signs: str) -> str:
+    """A character class of the currency signs. With no sign, it matches nothing."""
+    return "[" + re.escape(signs) + "]" if signs else "(?!)"
 
 
 def qualifiers(text: str, tok: Token) -> set[str]:
     """Comparators that apply to the value at ``tok`` (SPEC §4.2)."""
+    voc = _VOCAB.get()
     s0, s1 = sentence(text, tok.start, qualifiers=True)
     nearby = tokens(text, s0, s1)
     prev_end = max([t.end for t in nearby if t.end <= tok.start] + [s0, tok.start - _WINDOW])
     next_start = min([t.start for t in nearby if t.start >= tok.end] + [s1, tok.end + _WINDOW])
     before, after = text[prev_end : tok.start], text[tok.end : next_start]
     found = _before_qualifiers(text, s0, prev_end, tok.start)
-    found |= {c for c, rx in _AFTER_RE.items() if rx.search(after)}
+    found |= {c for c, rx in voc._AFTER_RE.items() if rx.search(after)}
     rest = _strip_unit_suffix(text[tok.end : s1])
     prev = [t for t in nearby if t.end <= tok.start and t.end >= prev_end]
-    between_before = bool(_BETWEEN_END.search(before.rstrip()))
+    between_before = bool(voc._BETWEEN_END.search(before.rstrip()))
     if (
-        _RANGE_NEXT.match(rest)
-        or (between_before and _AND_NEXT.match(rest))
-        or (_AND_NEXT.match(rest) and _between_words_before(text, tok.start))
+        voc._RANGE_NEXT.match(rest)
+        or (between_before and voc._AND_NEXT.match(rest))
+        or (voc._AND_NEXT.match(rest) and _between_words_before(text, tok.start))
         or (
             prev
-            and _RANGE_PREV.fullmatch(before)
-            and not _CHANGE_FROM.search(text[s0 : prev[-1].start])
+            and voc._RANGE_PREV.fullmatch(before)
+            and not voc._CHANGE_FROM.search(text[s0 : prev[-1].start])
         )
         or (
             prev
-            and _AND_PREV.fullmatch(before)
+            and voc._AND_PREV.fullmatch(before)
             and (
-                _BETWEEN_END.search(text[max(s0, prev[-1].start - 20) : prev[-1].start].rstrip())
+                voc._BETWEEN_END.search(
+                    text[max(s0, prev[-1].start - 20) : prev[-1].start].rstrip()
+                )
                 or _between_words_before(text, prev[-1].start)
             )
         )
@@ -332,8 +310,9 @@ def _between_words_before(text: str, start: int) -> bool:
     """Whether a `between` of the sentence stands before the number at ``start`` with only
     whitespace and at most six words between them (SPEC §4.2). A word is a run of letters and
     combining marks that starts with a letter. Each `between` is tried."""
+    voc = _VOCAB.get()
     s0, _ = sentence(text, start)
-    for m in _BETWEEN.finditer(text, s0, start):
+    for m in voc._BETWEEN.finditer(text, s0, start):
         words = text[m.end() - 1 : start].split()
         if len(words) <= 6 and text[start - 1].isspace() and all(map(_word, words)):
             return True
@@ -349,13 +328,16 @@ def _word(w: str) -> bool:
 def _before_qualifiers(text: str, s0: int, start: int, end: int) -> set[str]:
     """Comparators of the qualifiers in text[start:end]: the longest of overlapping matches,
     inverted by a negation directly before it in the same sentence."""
+    voc = _VOCAB.get()
     window = text[start:end]
-    hits = [(m.start(), m.end(), c) for c, rx in _BEFORE_RE.items() for m in rx.finditer(window)]
+    hits = [
+        (m.start(), m.end(), c) for c, rx in voc._BEFORE_RE.items() for m in rx.finditer(window)
+    ]
     found = set()
     for a, b, c in hits:
         if any(a2 <= a and b <= b2 and (a2, b2) != (a, b) for a2, b2, _ in hits):
             continue  # "more than" inside "no more than"
-        if c in _INVERT and _NEGATION_END.search(text[s0 : start + a]):
+        if c in _INVERT and voc._NEGATION_END.search(text[s0 : start + a]):
             c = _INVERT[c]
         found.add(c)
     return found
@@ -363,24 +345,14 @@ def _before_qualifiers(text: str, s0: int, start: int, end: int) -> set[str]:
 
 def _strip_unit_suffix(rest: str) -> str:
     # "30 mg to 45 mg": skip a short unit word before the range connector.
-    m = re.match(rf"^\s*[^\s\d]{{1,12}}(?=\s+(?:{_WORD_CONNECTOR})\b)", rest)
+    voc = _VOCAB.get()
+    m = re.match(rf"^\s*[^\s\d]{{1,12}}(?=\s+(?:{voc._WORD_CONNECTOR})\b)", rest)
     return rest[m.end() :] if m else rest
-
-
-_SCALE_EXP: dict[str, int] = BASE["scale"]["words"]
-_SCALE_WORDS = _words(list(_SCALE_EXP))
-_SCALE = re.compile(rf"^\s{{0,2}}({_SCALE_WORDS})\b", re.I)
 
 
 def _cased(suffix: str) -> list[str]:
     """A scale suffix in lowercase, with a first capital, and in capitals: "bn", "Bn", "BN"."""
     return list(dict.fromkeys([suffix, suffix.capitalize(), suffix.upper()]))
-
-
-# a scale suffix or a currency scale (SPEC §4.1, spec 0.10): the power of ten of each form
-_SUFFIX_EXP: dict[str, int] = {**BASE["scale"]["suffixes"], **BASE["scale"]["currency"]}
-_SUFFIXES = _words([c for s in BASE["scale"]["suffixes"] for c in _cased(s)])
-_SCALE_SUFFIX = re.compile(rf"({_SUFFIXES})(?![^\W_])")
 
 
 def _currency_form(form: str) -> str:
@@ -389,24 +361,17 @@ def _currency_form(form: str) -> str:
     return re.escape(form) + (r"(?![,.][0-9])" if form.isdigit() else "")
 
 
-_CURRENCY_FORM = (
-    "["
-    + re.escape(_CONTINUES)
-    + rf"]({_SUFFIXES}|{'|'.join(_currency_form(f) for f in BASE['scale']['currency'])})(?![^\W_])"
-)
-_CURRENCY_SCALE = re.compile(_CURRENCY_FORM)
-
-
 def token_scale(text: str, tok: Token) -> int | None:
     """The power of ten of the token's scale (SPEC §4.1): a scale word after it, or a scale
     suffix directly after it when a currency sign stands directly before it. Else None."""
-    m = _SCALE.match(text[tok.end : tok.end + 12])
+    voc = _VOCAB.get()
+    m = voc._SCALE.match(text[tok.end : tok.end + 12])
     if m is not None:
-        return _SCALE_EXP[m.group(1).lower()]
-    if tok.start > 0 and text[tok.start - 1] in _CONTINUES:
-        s = _SCALE_SUFFIX.match(text, tok.end)
+        return voc._SCALE_EXP[m.group(1).lower()]
+    if tok.start > 0 and text[tok.start - 1] in voc._CONTINUES:
+        s = voc._SCALE_SUFFIX.match(text, tok.end)
         if s is not None:
-            return _SUFFIX_EXP[s.group(1).lower()]
+            return voc._SUFFIX_EXP[s.group(1).lower()]
     return None
 
 
@@ -431,11 +396,6 @@ def builtin_units() -> dict[str, tuple[list[str], list[str]]]:
     return {k: (list(u["prefixes"]), list(u["suffixes"])) for k, u in BASE["units"].items()}
 
 
-_PER_UNIT = re.compile(
-    rf"\s*(?:/|per\b)\s*(?:\d+(?:\.\d+)?\s*)?(?:{_phrases(BASE['per_units'])})(?![A-Za-z])", re.I
-)
-
-
 def unit_at(
     text: str,
     tok: Token,
@@ -446,6 +406,7 @@ def unit_at(
 ) -> bool:
     """Whether a unit surface form is at ``tok`` (SPEC §4.3). ``table`` holds the suffixes of
     every unit in the table; the first of them after the number decides."""
+    voc = _VOCAB.get()
     if not prefixes and not suffixes:
         return True
     head = text[: tok.start].rstrip()
@@ -472,7 +433,7 @@ def unit_at(
     if first is None or first[0] > window or first[2] not in suffixes:
         return False  # "10 mcg (maximum 500 mg)": mcg comes first, so mg is not at 10
     # "10 mg/kg", "250 mg/5 mL": a per-unit is not the unit
-    return not _PER_UNIT.match(text, tok.end + first[1])
+    return not voc._PER_UNIT.match(text, tok.end + first[1])
 
 
 # ------------------------------------------------------------------------ keys
@@ -743,15 +704,10 @@ def _one_column(text: str, end: int, pos: int) -> bool:
 
 # -------------------------------------------------------------- evidence items
 
-_LOSS = re.compile(r"(?<![^\W_])(?:loss|losses|deficit|deficits)(?![^\W_])", re.I)
-_GAIN = re.compile(rf"(?<![^\W_])(?:{_words(BASE['sign']['gain'])})(?![^\W_])", re.I)
-_ITEM_SCALE = re.compile(rf"(?<![^\W_])(?i:({_SCALE_WORDS})s?)(?![^\W_])|" + _CURRENCY_FORM)
 _LONE_DASH = re.compile("(?<!\\S)[-\u2013\u2014](?!\\S)")
 _NOT_SPACE = re.compile(r"\S")
 _EMPTY_TAB = re.compile(r"(?<=\t)[ \r]*(?=\t|\n|\Z)")
 _NEXT_SLOT = re.compile(r"[ \r]*\t[ \r]*(?:[-\u2013\u2014][ \r]*)?(?=\t|\n|\Z)")
-_IN_SCALE = re.compile(rf"(?<![^\W_])in\s+(?:{_SCALE_WORDS})s?(?![^\W_])", re.I)
-_NEGATION = re.compile(rf"(?<![^\W_])(?:{_words(BASE['sign']['negations'])})\s+\Z", re.I)
 _WORD = re.compile(r"[^\W\d_]+")
 _LOSS_REACH = 4  # words between a loss word and the value (SPEC §4.6)
 
@@ -807,8 +763,9 @@ def brackets_around(text: str, tok: Token, prefixes: list[str]) -> tuple[int, in
 def loss_sign(text: str, start: int, end: int, at: int) -> bool:
     """Whether text[start:end] holds a loss word with no negation directly before it and at most
     four words between it and ``at`` (SPEC §4.6)."""
-    for m in _LOSS.finditer(text, start, end):
-        if _NEGATION.search(text, 0, m.start()):
+    voc = _VOCAB.get()
+    for m in voc._LOSS.finditer(text, start, end):
+        if voc._NEGATION.search(text, 0, m.start()):
             continue
         if len(_WORD.findall(text, m.end(), at)) <= _LOSS_REACH:
             return True
@@ -816,7 +773,8 @@ def loss_sign(text: str, start: int, end: int, at: int) -> bool:
 
 
 def gain_word(text: str, start: int, end: int) -> bool:
-    return bool(_GAIN.search(text, start, end))
+    voc = _VOCAB.get()
+    return bool(voc._GAIN.search(text, start, end))
 
 
 def heading_rows(text: str) -> list[tuple[int, int]]:
@@ -824,6 +782,7 @@ def heading_rows(text: str) -> list[tuple[int, int]]:
     merged, in one pass: a line with no tab that holds "in" and a scale word, or any line that
     holds a currency scale, then any blank lines, then the lines with tabs up to the first line
     with no tab."""
+    voc = _VOCAB.get()
     out: list[tuple[int, int]] = []
     state = None  # "heading" after a heading line, "table" in its rows
     start = 0
@@ -841,18 +800,10 @@ def heading_rows(text: str) -> list[tuple[int, int]]:
                 state = None
         else:
             state = "heading" if in_scale(line, 0, len(line)) else None
-        if _CURRENCY_SCALE.search(line):  # a currency scale, with or without a tab (spec 0.10)
+        if voc._CURRENCY_SCALE.search(line):  # a currency scale, with or without a tab (spec 0.10)
             state = "heading"
         start = end + 1
     return out
-
-
-# The currency names of a currency statement and the sign that each currency shares (SPEC
-# §4.3, spec 0.10, #315), from the base pack. The pack writes each name out, also in the
-# singular, and the code matches in capitals.
-CURRENCY_NAMES: dict[str, tuple[tuple[str, ...], str | None]] = {
-    code: (tuple(u["names"]), u["sign"]) for code, u in BASE["heading_units"].items()
-}
 
 
 def _name_pattern(name: str) -> str:
@@ -861,15 +812,6 @@ def _name_pattern(name: str) -> str:
 
 # a whitespace run that stays on its line: a statement is on one line
 _STATEMENT_SPACE = r"[^\S\n]+"
-_STATEMENT = re.compile(
-    r"(?<![^\W_])(?i:in)[^\S\n]+"
-    rf"(?:(?i:{_SCALE_WORDS})s?[^\S\n]+(?i:of)[^\S\n]+)?(?:"
-    + "|".join(
-        f"(?P<{code}>(?i:{'|'.join(_name_pattern(n) for n in names)})|{code})"
-        for code, (names, _) in CURRENCY_NAMES.items()
-    )
-    + r")(?![^\W_])"
-)
 
 
 @dataclass(frozen=True)
@@ -890,6 +832,7 @@ def heading_units(text: str) -> list[HeadingUnit]:
     """The heading units of the text (SPEC §4.3, spec 0.10, #315). Each one reaches the rows that
     a heading scale on its line reaches (SPEC §4.1): after its line and any blank lines, the lines
     with a tab up to the first line with no tab."""
+    voc = _VOCAB.get()
     lines: list[tuple[int, int]] = []
     start = 0
     for line in text.split("\n"):
@@ -912,17 +855,17 @@ def heading_units(text: str) -> list[HeadingUnit]:
         return (lines[j][0], run_end[j]) if j < n and tab[j] else None
 
     out: list[HeadingUnit] = []
-    for m in _CURRENCY_SCALE.finditer(text):
+    for m in voc._CURRENCY_SCALE.finditer(text):
         a = m.start()
         while a > 0 and unicodedata.category(text[a - 1]).startswith("L"):
             a -= 1
         i = bisect.bisect_right(starts, m.start()) - 1
         out.append(HeadingUnit(a, m.end(), None, text[a : m.start() + 1], rows(i)))
-    for m in _STATEMENT.finditer(text):
+    for m in voc._STATEMENT.finditer(text):
         i = bisect.bisect_right(starts, m.start()) - 1
         if "\t" in text[slice(*lines[i])]:
             continue  # a statement is on a line with no tab
-        code = next(c for c in CURRENCY_NAMES if m.group(c) is not None)
+        code = next(c for c in voc.CURRENCY_NAMES if m.group(c) is not None)
         out.append(HeadingUnit(m.start(), m.end(), code, "", rows(i)))
     return out
 
@@ -932,11 +875,12 @@ Units = dict[str, tuple[list[str], list[str]]]
 
 def heading_allows(code: str | None, form: str, units: Units) -> set[str] | None:
     """The unit codes that a heading unit allows, or None for an unknown header (SPEC §4.3)."""
+    voc = _VOCAB.get()
     if code is not None:
         return {code}
     have = {c for c, (prefixes, _) in units.items() if form in prefixes}
     if len(form) == 1:
-        return have | {c for c, (_, sign) in CURRENCY_NAMES.items() if sign == form}
+        return have | {c for c, (_, sign) in voc.CURRENCY_NAMES.items() if sign == form}
     return have or None
 
 
@@ -993,9 +937,10 @@ class HeadingIndex:
         header whose form is a prefix of the unit settles it. groundgate never chooses between
         two currencies. An unknown header changes nothing, so only the kinds that the currency
         table and the unit table name are read."""
+        voc = _VOCAB.get()
         prefixes = units.get(unit, ([], []))[0]
-        forms = set(_CONTINUES) | {x for pre, _ in units.values() for x in pre}
-        kinds = [(c, "") for c in CURRENCY_NAMES] + [(None, f) for f in sorted(forms)]
+        forms = set(voc._CONTINUES) | {x for pre, _ in units.values() for x in pre}
+        kinds = [(c, "") for c in voc.CURRENCY_NAMES] + [(None, f) for f in sorted(forms)]
         settled = False
         for code, form in kinds:
             if not self.reaches((code, form), pos):
@@ -1009,30 +954,34 @@ class HeadingIndex:
 
 def in_scale(text: str, start: int, end: int) -> bool:
     """Whether text[start:end] holds "in" and a scale word, such as "in thousands" (SPEC §4.6)."""
-    return bool(_IN_SCALE.search(text, start, end))
+    voc = _VOCAB.get()
+    return bool(voc._IN_SCALE.search(text, start, end))
 
 
 def currency_scale(text: str, start: int, end: int) -> bool:
     """Whether text[start:end] holds a currency scale, such as "£m" (SPEC §4.1)."""
-    return bool(_CURRENCY_SCALE.search(text, start, end))
+    voc = _VOCAB.get()
+    return bool(voc._CURRENCY_SCALE.search(text, start, end))
 
 
 def item_scale(text: str, start: int, end: int) -> int | None:
     """The power of ten of the first scale word in text[start:end], also with a final "s", or
     of the first currency scale, whichever comes first."""
-    m = _ITEM_SCALE.search(text, start, end)
+    voc = _VOCAB.get()
+    m = voc._ITEM_SCALE.search(text, start, end)
     if m is None:
         return None
     if m.group(1) is not None:
-        return _SCALE_EXP[m.group(1).lower()]
-    return _SUFFIX_EXP[m.group(2).lower()]
+        return voc._SCALE_EXP[m.group(1).lower()]
+    return voc._SUFFIX_EXP[m.group(2).lower()]
 
 
 def scale_between(text: str, start: int, end: int, power: int | None) -> bool:
     """Whether text[start:end] holds a scale word, also with a final "s", or a currency scale
     whose power of ten is not ``power`` (SPEC §4.6)."""
-    for m in _ITEM_SCALE.finditer(text, start, end):
-        if m.group(1) is not None or _SUFFIX_EXP[m.group(2).lower()] != power:
+    voc = _VOCAB.get()
+    for m in voc._ITEM_SCALE.finditer(text, start, end):
+        if m.group(1) is not None or voc._SUFFIX_EXP[m.group(2).lower()] != power:
             return True
     return False
 
@@ -1332,3 +1281,147 @@ def host(url: str) -> str | None:
         end = rest.find("]")
         return (rest if end < 0 else rest[: end + 1]).lower()
     return rest.split(":", 1)[0].lower()
+
+
+# ------------------------------------------------------------------ the vocabulary
+
+
+class Vocabulary:
+    """The patterns of the text rules, built from one union of vocabulary packs (SPEC §4.7,
+    §4.8). Each word is plain text: the patterns escape it. An empty list matches nothing."""
+
+    def __init__(self, pack: dict[str, Any]) -> None:
+        self.pack = pack
+        self.null_literals = frozenset(pack["null_literals"])
+        self.units: dict[str, tuple[list[str], list[str]]] = {
+            code: (list(u["prefixes"]), list(u["suffixes"])) for code, u in pack["units"].items()
+        }
+        self._SENTENCE_WORDS = pack["sentence"]
+        self._ABBREVIATIONS: list[str] = self._SENTENCE_WORDS["abbreviations"]
+        self._JOIN_ALWAYS = frozenset(
+            self._SENTENCE_WORDS["join_always"]
+        )  # "U.S." never ends a sentence
+        self._JOIN_BEFORE_CODE = frozenset(
+            self._SENTENCE_WORDS["join_before_code"]
+        )  # "No." before a code
+        # a listed abbreviation that ends at a dot, as a whole word: "Rs." but not the end of
+        # "Mrs."
+        self._ABBREVIATION_END = re.compile(
+            r"(?<!\w)(?:" + _words(self._ABBREVIATIONS) + r")\Z", re.I
+        )
+        self._ABBREVIATION_MAX = max((len(a) for a in self._ABBREVIATIONS), default=0)
+        self._CONTINUES = "".join(pack["currency_signs"])  # the currency signs (SPEC §4.1, §4.2)
+        self._QUALIFIERS = pack["qualifiers"]
+        self._BEFORE: dict[str, list[str]] = self._QUALIFIERS["before"]
+        self._AFTER: dict[str, list[str]] = self._QUALIFIERS["after"]
+        self._BEFORE_RE = {
+            c: re.compile(_any(_phrase(p) for p in ps), re.I) for c, ps in self._BEFORE.items()
+        }
+        self._AFTER_RE = {
+            c: re.compile(_any(_phrase(p) for p in ps), re.I) for c, ps in self._AFTER.items()
+        }
+        self._NEGATION_END = re.compile(
+            rf"\b(?:{_phrases(self._QUALIFIERS['negations'])})\s+$", re.I
+        )
+        self._CONNECTORS: list[str] = pack["ranges"]["connectors"]
+        self._BETWEEN_WORD, self._AND_WORD = (re.escape(w) for w in pack["ranges"]["pair"])
+        self._CONNECTOR = _words(self._CONNECTORS)
+        # the word connectors and the second word of the pair: "to", "through", "and"
+        self._WORD_CONNECTOR = _words(
+            [c for c in self._CONNECTORS if c[0].isalnum()] + [pack["ranges"]["pair"][1]]
+        )
+        self._RANGE_NEXT = re.compile(
+            rf"^\s*(?:{self._CONNECTOR})\s*\S{{0,4}}?(?=[-\u2212]?\d)", re.I
+        )
+        # one unit or scale word may stand before a word connector: "30 mg to 45",
+        # "$1 million to $2"
+        self._UNIT_WORD = rf"(?:[^\s\d]{{1,12}}\s+(?=(?:{self._WORD_CONNECTOR})\b))?"
+        self._RANGE_PREV = re.compile(
+            rf"\s*{self._UNIT_WORD}(?:{self._CONNECTOR})\s*\S{{0,4}}?", re.I
+        )
+        self._AND_NEXT = re.compile(rf"^\s*{self._AND_WORD}\s*\S{{0,4}}?(?=[-\u2212]?\d)", re.I)
+        self._AND_PREV = re.compile(rf"\s*{self._UNIT_WORD}{self._AND_WORD}\s*\S{{0,4}}?", re.I)
+        self._BETWEEN_END = re.compile(rf"\b{self._BETWEEN_WORD}\s*\S{{0,4}}?$", re.I)
+        self._BETWEEN = re.compile(rf"(?<![^\W_]){self._BETWEEN_WORD}\s", re.I)
+        self._CHANGE = _words(pack["changes"]["words"])
+        self._DETERMINER = _words(pack["changes"]["determiners"])
+        self._NOT_BETWEEN = _words(pack["changes"]["stop_words"])
+        self._PLAIN = (
+            rf"\s+(?!(?:{self._NOT_BETWEEN})\b)[^\W\d_](?:[^\W\d_]|['\u2019-](?=[^\W\d_]))*"
+        )
+        # at most six words between the change word and "from", the first of them a
+        # determiner or "in", "of" or "to" and then a determiner: "reducing the fee from",
+        # "an increase in the fee from"
+        self._CHANGE_GAP = (
+            rf"(?:\s+(?:in|of|to)\s+(?:{self._DETERMINER})(?:{self._PLAIN}){{0,4}}"
+            rf"|\s+(?:{self._DETERMINER})(?:{self._PLAIN}){{0,5}})?"
+        )
+        # "increased from X to Y": Y is the new value, not a range end
+        self._CHANGE_FROM = re.compile(
+            rf"\b(?:{self._CHANGE}){self._CHANGE_GAP}\s+from\s+\S{{0,4}}?$", re.I
+        )
+        self._SCALE_EXP: dict[str, int] = pack["scale"]["words"]
+        self._SCALE_WORDS = _words(list(self._SCALE_EXP))
+        self._SCALE = re.compile(rf"^\s{{0,2}}({self._SCALE_WORDS})\b", re.I)
+        # a scale suffix or a currency scale (SPEC §4.1, spec 0.10): the power of ten of each form
+        self._SUFFIX_EXP: dict[str, int] = {
+            **pack["scale"]["suffixes"],
+            **pack["scale"]["currency"],
+        }
+        self._SUFFIXES = _words([c for s in pack["scale"]["suffixes"] for c in _cased(s)])
+        self._SCALE_SUFFIX = re.compile(rf"({self._SUFFIXES})(?![^\W_])")
+        currency = _any(_currency_form(f) for f in pack["scale"]["currency"])
+        self._CURRENCY_FORM = (
+            _sign_class(self._CONTINUES) + rf"({self._SUFFIXES}|{currency})(?![^\W_])"
+        )
+        self._CURRENCY_SCALE = re.compile(self._CURRENCY_FORM)
+        self._PER_UNIT = re.compile(
+            rf"\s*(?:/|per\b)\s*(?:\d+(?:\.\d+)?\s*)?(?:{_phrases(pack['per_units'])})(?![A-Za-z])",
+            re.I,
+        )
+        self._LOSS = re.compile(
+            rf"(?<![^\W_])(?:{_words([*CODE_LOSS, *pack['sign']['loss']])})(?![^\W_])", re.I
+        )
+        self._GAIN = re.compile(rf"(?<![^\W_])(?:{_words(pack['sign']['gain'])})(?![^\W_])", re.I)
+        self._ITEM_SCALE = re.compile(
+            rf"(?<![^\W_])(?i:({self._SCALE_WORDS})s?)(?![^\W_])|" + self._CURRENCY_FORM
+        )
+        self._IN_SCALE = re.compile(rf"(?<![^\W_])in\s+(?:{self._SCALE_WORDS})s?(?![^\W_])", re.I)
+        self._NEGATION = re.compile(
+            rf"(?<![^\W_])(?:{_words(pack['sign']['negations'])})\s+\Z", re.I
+        )
+        # The currency names of a currency statement and the sign that each currency shares (SPEC
+        # §4.3, spec 0.10, #315). The pack writes each name out, also in the
+        # singular, and the code matches in capitals.
+        self.CURRENCY_NAMES: dict[str, tuple[tuple[str, ...], str | None]] = {
+            code: (tuple(u["names"]), u["sign"]) for code, u in pack["heading_units"].items()
+        }
+        self._STATEMENT = re.compile(
+            r"(?<![^\W_])(?i:in)[^\S\n]+"
+            rf"(?:(?i:{self._SCALE_WORDS})s?[^\S\n]+(?i:of)[^\S\n]+)?(?:"
+            + "|".join(
+                f"(?P<{code}>(?i:{_any(_name_pattern(n) for n in names)})|{code})"
+                for code, (names, _) in self.CURRENCY_NAMES.items()
+            )
+            + r")(?![^\W_])"
+        )
+
+
+# the patterns of the base pack alone: a packet with no pack reads them (SPEC §4.7)
+BASE_VOCABULARY = Vocabulary(combine(BASE, []))
+_VOCAB: ContextVar[Vocabulary] = ContextVar("vocabulary", default=BASE_VOCABULARY)
+
+
+def vocabulary() -> Vocabulary:
+    """The vocabulary of the packet that is read now."""
+    return _VOCAB.get()
+
+
+@contextlib.contextmanager
+def using(vocab: Vocabulary) -> Iterator[None]:
+    """Read the text rules with ``vocab`` in this context (SPEC §4.8)."""
+    reset = _VOCAB.set(vocab)
+    try:
+        yield
+    finally:
+        _VOCAB.reset(reset)

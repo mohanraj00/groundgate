@@ -1,0 +1,43 @@
+{
+ "name": "pack-l8-measured",
+ "description": "L8: a measured status row in a pack that is not built in.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "status": [
+    {
+     "kind": "us-10k",
+     "field": "revenue",
+     "code": "SCALE_WORD",
+     "status": "measured",
+     "documents": 60,
+     "bound": "0.0487",
+     "limit": "0.05",
+     "results": "bench/example/results.json"
+    }
+   ]
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

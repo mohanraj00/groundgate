@@ -1,0 +1,31 @@
+{
+ "name": "pack-l1-format",
+ "description": "L1: a pack format other than 1.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 2,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0"
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

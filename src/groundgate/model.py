@@ -2,14 +2,26 @@
 
 from __future__ import annotations
 
+import copy
 import json
+import re
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from decimal import Decimal
 from importlib import resources
 from typing import Any, Literal
 
 from .canonical import _SAFE_INT, SPEC_VERSION
-from .text import builtin_units, normalize_ws, parse_value
+from .pack import (
+    BASE,
+    BUILT_IN,
+    added_words,
+    check_pack,
+    combine,
+    pack_digest,
+)
+from .pack import PacketError as PacketError
+from .text import BASE_VOCABULARY, Vocabulary, normalize_ws, parse_value
 
 FieldType = Literal["number", "integer", "string"]
 Comparator = Literal["eq", "gt", "ge", "lt", "le", "approx", "range"]
@@ -18,10 +30,6 @@ Action = Literal["admit", "review", "reject"]
 
 _TYPES = ("number", "integer", "string")
 _COMPARATORS = ("eq", "gt", "ge", "lt", "le", "approx", "range")
-
-
-class PacketError(ValueError):
-    """The inputs themselves are invalid (SPEC §2): no receipt can be produced."""
 
 
 def _bound(name: str, raw: object, what: str = "field bound") -> Decimal | None:
@@ -206,19 +214,27 @@ class Schema:
     units: dict[str, tuple[list[str], list[str]]]
     _raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
     relations: tuple[Relation, ...] = ()
+    # the packs that apply, as the receipt names them (SPEC §2.3, §5), sorted by id
+    packs: tuple[dict[str, str], ...] = ()
+    vocabulary: Vocabulary = field(default=BASE_VOCABULARY, compare=False, repr=False)
+    # each pack id with the words that it adds to the base (SPEC §5, decision packs)
+    marks: tuple[tuple[str, frozenset[str]], ...] = field(default=(), compare=False, repr=False)
 
     @classmethod
-    def from_dict(cls, d: object) -> Schema:
+    def from_dict(cls, d: object, packs: Sequence[object] = ()) -> Schema:
+        """The schema, with the vocabulary packs that ``packs`` gives (SPEC §2.3, §4.8). The
+        schema names each pack in its member ``packs``, and the caller gives each one."""
         if not isinstance(d, dict) or not isinstance(d.get("fields"), dict):
             raise PacketError("schema must be an object with a 'fields' object")
-        members = {"fields", "units", "relations"}
+        members = {"fields", "units", "relations", "packs"}
         if set(d) - members:
             raise PacketError(f"schema has unknown keys {sorted(set(d) - members)}")
         fields = {name: Field.from_dict(name, f) for name, f in d["fields"].items()}
+        resolved, vocabulary, marks = _resolve_packs(d.get("packs", []), packs)
         user_units = d.get("units", {})
         if not isinstance(user_units, dict):
             raise PacketError("schema units must be an object")
-        units = builtin_units()
+        units = {code: (list(p), list(s)) for code, (p, s) in vocabulary.units.items()}
         raw_units: dict[str, Any] = {}
         for code, forms in user_units.items():
             if not isinstance(forms, dict) or set(forms) - {"prefix", "suffix"}:
@@ -233,11 +249,91 @@ class Schema:
         relations, filled = _relations(d.get("relations", []), fields)
         if filled:  # a schema without relations keeps its digest (SPEC §2.3)
             raw["relations"] = filled
-        return cls(fields=fields, units=units, _raw=raw, relations=relations)
+        if resolved:
+            raw["packs"] = [{k: e[k] for k in ("id", "version", "sha256")} for e in resolved]
+        return cls(
+            fields=fields,
+            units=units,
+            _raw=raw,
+            relations=relations,
+            packs=tuple(resolved),
+            vocabulary=vocabulary,
+            marks=marks,
+        )
 
     def to_dict(self) -> dict[str, Any]:
         """The schema with defaults filled in: the object ``schema_sha256`` covers."""
         return self._raw
+
+
+_PIN = re.compile(r"sha256:[0-9a-f]{64}\Z")
+_VOCABULARIES: dict[tuple[str, ...], Vocabulary] = {}  # by the digests of the packs
+_MAX_VOCABULARIES = 64
+
+
+def _pack_entries(entries: object) -> dict[str, dict[str, str]]:
+    """The schema member ``packs``: each pack by id and version, with an optional pin."""
+    if not isinstance(entries, list):
+        raise PacketError("schema packs must be a list")
+    out: dict[str, dict[str, str]] = {}
+    for e in entries:
+        if not isinstance(e, dict) or set(e) - {"id", "version", "sha256"}:
+            raise PacketError("a schema packs entry is an object with id, version and sha256")
+        if not all(isinstance(e.get(k), str) for k in ("id", "version")):
+            raise PacketError("a schema packs entry needs an id and a version")
+        if "sha256" in e and not (isinstance(e["sha256"], str) and _PIN.match(e["sha256"])):
+            raise PacketError(f"schema packs: the sha256 of {e['id']!r} is not a digest")
+        if e["id"] in BUILT_IN:
+            raise PacketError(f"schema packs: {e['id']!r} is the base pack, which always applies")
+        if e["id"] in out and out[e["id"]] != e:
+            raise PacketError(f"schema packs: {e['id']!r} is named twice (L7)")
+        out[e["id"]] = dict(e)
+    return out
+
+
+def _resolve_packs(
+    entries: object, given: Sequence[object]
+) -> tuple[list[dict[str, str]], Vocabulary, tuple[tuple[str, frozenset[str]], ...]]:
+    """Check each given pack and the union (SPEC §4.8). Return the receipt entries, the
+    vocabulary and the words of each pack."""
+    if isinstance(given, (str, bytes, dict)) or not isinstance(given, Sequence):
+        raise PacketError("packs must be a list of pack objects")
+    by_id: dict[str, tuple[dict[str, Any], str]] = {}
+    for obj in given:
+        p = copy.deepcopy(check_pack(obj))  # the caller cannot change it after the check
+        sha = pack_digest(p)
+        if p["id"] in by_id:
+            other, other_sha = by_id[p["id"]]
+            if other["version"] != p["version"]:
+                raise PacketError(f"packs: {p['id']!r} is given in two versions (L7)")
+            if other_sha != sha:
+                raise PacketError(f"packs: two copies of {p['id']!r} have two digests (L7)")
+        by_id[p["id"]] = (p, sha)
+    named = _pack_entries(entries)
+    for pid, e in named.items():
+        if pid not in by_id or by_id[pid][0]["version"] != e["version"]:
+            raise PacketError(f"schema packs: {pid!r} {e['version']} is not given")
+        if "sha256" in e and e["sha256"] != by_id[pid][1]:
+            raise PacketError(f"schema packs: {pid!r} has the digest {by_id[pid][1]}, not the pin")
+    for pid in by_id:
+        if pid not in named:
+            raise PacketError(f"packs: {pid!r} is given, but the schema does not name it")
+    if not by_id:
+        return [], BASE_VOCABULARY, ()
+    ids = sorted(by_id)
+    resolved = [
+        {"id": i, "type": "vocabulary", "version": by_id[i][0]["version"], "sha256": by_id[i][1]}
+        for i in ids
+    ]
+    key = tuple(by_id[i][1] for i in ids)
+    vocabulary = _VOCABULARIES.get(key)
+    if vocabulary is None:
+        vocabulary = Vocabulary(combine(BASE, [by_id[i][0] for i in ids]))
+        if len(_VOCABULARIES) >= _MAX_VOCABULARIES:
+            _VOCABULARIES.clear()
+        _VOCABULARIES[key] = vocabulary
+    marks = tuple((i, added_words(BASE, by_id[i][0])) for i in ids)
+    return resolved, vocabulary, marks
 
 
 @dataclass(frozen=True)
@@ -370,6 +466,7 @@ class Decision:
     url: str | None = None
     parts: tuple[Part, ...] = ()
     missing: tuple[str, ...] = ()
+    packs: tuple[str, ...] = ()  # the ids of the packs that the decision read (SPEC §5)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -389,6 +486,7 @@ class Decision:
             else {"start": self.evidence[0], "end": self.evidence[1]},
             "parts": [p.to_dict() for p in self.parts],
             "missing": list(self.missing),
+            "packs": list(self.packs),
         }
 
 
@@ -454,6 +552,7 @@ class Receipt:
     document_source: str | None = None
     references: tuple[tuple[str, str, str | None], ...] = ()  # (id, sha256, source)
     relations: tuple[RelationResult, ...] | None = None  # None when the schema has no relations
+    packs: tuple[dict[str, str], ...] = ()  # the packs that applied, sorted by id (SPEC §5)
 
     def body(self) -> dict[str, Any]:
         counts = {"admitted": 0, "needs_verification": 0, "rejected": 0}
@@ -467,6 +566,7 @@ class Receipt:
                 "source": self.document_source,
             },
             "references": [{"id": i, "sha256": h, "source": s} for i, h, s in self.references],
+            "packs": [dict(p) for p in self.packs],
             "schema_sha256": self.schema_sha256,
             "policy_sha256": self.policy_sha256,
             "decisions": [d.to_dict() for d in self.decisions],
@@ -512,7 +612,9 @@ def _closed(props: dict[str, Any], description: str | None = None) -> dict[str, 
 
 
 def extractor_schema(
-    schema: Schema | dict[str, Any], reference_ids: list[str] | None = None
+    schema: Schema | dict[str, Any],
+    reference_ids: list[str] | None = None,
+    packs: Sequence[object] = (),
 ) -> dict[str, Any]:
     """A JSON Schema for an extractor's structured output: {"candidates": [...]} for one schema.
 
@@ -520,9 +622,10 @@ def extractor_schema(
     candidate that it accepts passes step 1 of SPEC §3. Three step 1 rules stay outside it: two
     items with the same role other than field, more than 8 field items, and a blank text, url or
     retrieved. A field with
-    no keys gets no role "key", because a key item on it always fails (SPEC §4.6).
+    no keys gets no role "key", because a key item on it always fails (SPEC §4.6). ``packs``
+    are the vocabulary packs that the schema names (SPEC §4.8).
     """
-    s = schema if isinstance(schema, Schema) else Schema.from_dict(schema)
+    s = schema if isinstance(schema, Schema) else Schema.from_dict(schema, packs)
     if not s.fields:
         raise PacketError("the schema has no fields, so an extractor can send no candidate")
     if reference_ids is not None and (
