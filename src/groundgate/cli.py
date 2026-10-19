@@ -15,17 +15,15 @@ does not match its inputs (or schema check has a finding), 2 invalid input.
 from __future__ import annotations
 
 import argparse
-import functools
 import json
 import re
 import sys
-import unicodedata
 from collections import Counter
-from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
 from .admit import admit, verify
+from .fold import fold, fold_text
 from .model import PacketError, Schema, extractor_schema
 from .pack import load_pack
 from .text import KEY_DASHES, key_mentions, normalize_ws
@@ -386,7 +384,7 @@ def _findings(schema: Schema) -> list[str]:
                 f"alias {alias!r} is on fields {listed}: a field item does not tell them apart"
             )
     # An alias in a longer alias of another field. One pass over all aliases finds each alias
-    # in each other alias, with letters folded as re.I matches them (Aho-Corasick). key_mentions
+    # in each other alias, with each letter folded as SPEC §4 says (Aho-Corasick). key_mentions
     # then confirms each pair, so the work grows with the aliases and the findings.
     rank = {name: n for n, name in enumerate(schema.fields)}
     # folded alias: normalized alias: (field, place, alias). Equal normalized aliases are
@@ -425,12 +423,13 @@ _DASH_FOLD = str.maketrans(dict.fromkeys(KEY_DASHES, "-"))
 
 
 def _norm(word: str) -> str:
-    """The alias as key_mentions compares it: whitespace runs and dashes folded (SPEC §4.5)."""
-    return normalize_ws(word).lower().translate(_DASH_FOLD)
+    """The alias as key_mentions compares it: letters (SPEC §4), whitespace runs and dashes folded
+    (SPEC §4.5)."""
+    return fold_text(normalize_ws(word)).translate(_DASH_FOLD)
 
 
 def _folded(text: str) -> tuple[str, list[int]]:
-    """The text with each letter folded as re.I matches it, each run of whitespace as one space
+    """The text with each letter folded as SPEC §4 says, each run of whitespace as one space
     and each dash as "-", as key_mentions reads a key, and the place in the text of each
     character."""
     out: list[str] = []
@@ -441,7 +440,7 @@ def _folded(text: str) -> tuple[str, list[int]]:
                 out.append(" ")
                 places.append(i)
             continue
-        out.append("-" if c in KEY_DASHES else _fold(c))
+        out.append("-" if c in KEY_DASHES else fold(c))
         places.append(i)
     if out and out[-1] == " ":
         out.pop()
@@ -500,27 +499,6 @@ def _automaton(patterns: list[str]) -> _Automaton:
 
 
 _SPACE, _WORD = re.compile(r"\s"), re.compile(r"[^\W_]")
-_ONE_LETTER = {"\ufb05": "\ufb06"}  # re.I matches the two "st" ligatures
-
-
-@functools.lru_cache(maxsize=4096)
-def _fold(c: str) -> str:
-    """One letter for each set of letters that re.I matches with each other."""
-    seen, todo = {c}, [c]
-    while todo:
-        x = todo.pop()
-        for y in (x.lower(), x.upper(), x.casefold(), x.title(), unicodedata.normalize("NFC", x)):
-            d = y[:1]
-            if d not in seen and re.fullmatch(re.escape(x), d, re.I):
-                seen.add(d)
-                todo.append(d)
-    k = min(_single(str.lower, _single(str.upper, x)) for x in seen)
-    return _ONE_LETTER.get(k, k)
-
-
-def _single(case: Callable[[str], str], c: str) -> str:
-    out = case(c)
-    return out if len(out) == 1 else c
 
 
 def _check(args: argparse.Namespace) -> int:

@@ -294,22 +294,42 @@ def test_heading_index_held_skips_units_that_reach_nothing() -> None:
 
 def test_a_long_s_in_a_scale_word_gives_a_receipt() -> None:
     """The input of #350: re.I matched "thou\u017fand" with "thousand", and the lookup then raised
-    KeyError. Now the long s is no "s", so the word is no scale word and the value is admitted."""
+    KeyError. The fold of the long s is "s" (#356), so the word is a scale word."""
     s = "The fee is 5 thou\u017fand."  # U+017F LATIN SMALL LETTER LONG S
     receipt = gg.admit(
         s,
         {"fields": {"fee": {"type": "integer"}}},
         [{"id": "a", "field": "fee", "value": "5", "evidence": {"text": "5 thou\u017fand"}}],
     )
-    assert [d.outcome for d in receipt.decisions] == ["admitted"]
+    assert [(d.outcome, d.codes) for d in receipt.decisions] == [
+        ("needs_verification", ("SCALE_WORD",))
+    ]
 
 
-NOT_CASED = ["thou\u017fand", "b\u0130llion", "b\u0131llion", "m\u0131ll\u0131on"]
+FOLDED = [
+    ("thou\u017fand", 3),
+    ("THOU\u017fAND", 3),
+    ("b\u0130llion", 9),
+    ("b\u0131llion", 9),
+    ("m\u0131ll\u0131on", 6),
+    ("tr\u0130ll\u0131on", 12),
+    ("la\u212ah", 5),
+]
 
 
-@pytest.mark.parametrize("word", NOT_CASED)
-def test_letters_that_re_i_folds_are_no_scale_word(word: str) -> None:
-    """Each letter of a scale word matches only itself or its capital (#350)."""
+@pytest.mark.parametrize(("word", "power"), FOLDED)
+def test_the_look_alike_letters_fold_in_a_scale_word(word: str, power: int) -> None:
+    """The fold of the long s, the dotless i, the dotted capital I and the Kelvin sign is an
+    ASCII letter (SPEC §4, #356). The final "s" of "(in thousands)" folds too."""
+    for s in (f"5 {word} (in {word}s)", f"5 {word} (in {word}\u017f)"):
+        assert token_scale(s, tokens(s)[0]) == power
+        assert item_scale(s, 0, len(s)) == power
+        assert in_scale(s, 0, len(s))
+
+
+@pytest.mark.parametrize("word", ["thous\u00e1nd", "m\u00edllion", "thou\u00dfand"])
+def test_other_letters_are_no_scale_word(word: str) -> None:
+    """A letter whose fold is not the letter of the word does not match it."""
     s = f"5 {word} (in {word}s)"
     assert token_scale(s, tokens(s)[0]) is None
     assert item_scale(s, 0, len(s)) is None
@@ -322,3 +342,10 @@ def test_capitals_still_make_a_scale_word(word: str, power: int) -> None:
     assert token_scale(s, tokens(s)[0]) == power
     assert item_scale(s, 0, len(s)) == power
     assert in_scale(s, 0, len(s))
+
+
+@pytest.mark.parametrize("abbreviation", ["U.S.", "u.s.", "U.\N{LATIN SMALL LETTER LONG S}."])
+def test_an_abbreviation_matches_by_the_fold(abbreviation: str) -> None:
+    """SPEC §4.2 reads an abbreviation letter by letter by the fold (#356)."""
+    s = f"The fee is in {abbreviation} dollars and is 5."
+    assert sentence(s, len(s) - 2, qualifiers=True) == (0, len(s))

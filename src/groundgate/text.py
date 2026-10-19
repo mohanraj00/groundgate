@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
+from .fold import LOOK_ALIKE, fold_text, folded_word
 from .pack import BASE, combine
 
 _TOKEN = re.compile(r"[-\u2212]?[0-9][0-9,]*(?:\.[0-9]+)?")
@@ -241,7 +242,9 @@ def sentence(text: str, pos: int, qualifiers: bool = False) -> tuple[int, int]:
 
 
 def _phrase(p: str) -> str:
-    body = r"\s+".join(re.escape(w) for w in p.split())
+    """A qualifier phrase (SPEC §4.2): each word by the fold of its letters (SPEC §4), and each
+    whitespace run in the phrase matches any whitespace run."""
+    body = r"\s+".join(folded_word(w) for w in p.split())
     return body if not p[0].isalnum() else rf"\b{body}\b"
 
 
@@ -259,35 +262,26 @@ def _words(words: list[str]) -> str:
     return _any(re.escape(w) for w in words)
 
 
-def _cased_word(word: str) -> str:
-    """A listed word as SPEC §4.1 matches it case-insensitively: each letter matches itself or
-    its capital, when the capital is one code point. With no re.I, so the long s (U+017F) is no
-    "s", and the dotted capital I (U+0130) and the dotless i (U+0131) are no "i" (#350)."""
-    out = []
-    for ch in word:
-        up = ch.upper()
-        cased = len(up) == 1 and up != ch
-        out.append(f"[{re.escape(ch)}{re.escape(up)}]" if cased else re.escape(ch))
-    return "".join(out)
-
-
-def _cased_words(words: list[str]) -> str:
-    """An alternation of listed words, each matched as ``_cased_word`` does, in the pack order."""
-    return _any(_cased_word(w) for w in words)
+def _folded_words(words: list[str]) -> str:
+    """An alternation of listed words, each matched by the fold of its letters (SPEC §4), in the
+    order of the pack."""
+    return _any(folded_word(w) for w in words)
 
 
 def _listed(words: Iterable[str], found: str) -> str:
-    """The first listed word that ``found`` matches as ``_cased_word`` does. The pattern matched
-    ``found`` with the same rule, so the lookup never fails (#350)."""
+    """The first listed word that ``found`` matches by the fold of each letter (SPEC §4). The
+    pattern matched ``found`` with the same fold, so the lookup never fails (#350, #356)."""
+    key = fold_text(found)
     for w in words:
-        if len(w) == len(found) and all(d in (c, c.upper()) for c, d in zip(w, found, strict=True)):
+        if fold_text(w) == key:
             return w
     raise AssertionError(f"{found!r} is no listed word")
 
 
 def _phrases(phrases: list[str]) -> str:
-    """An alternation of phrases: each whitespace run in a phrase matches any whitespace run."""
-    return _any(r"\s+".join(re.escape(w) for w in p.split()) for p in phrases)
+    """An alternation of phrases: each word by the fold of its letters (SPEC §4), and each
+    whitespace run in a phrase matches any whitespace run."""
+    return _any(r"\s+".join(folded_word(w) for w in p.split()) for p in phrases)
 
 
 def _sign_class(signs: str) -> str:
@@ -372,7 +366,7 @@ def _before_qualifiers(text: str, s0: int, start: int, end: int) -> set[str]:
 def _strip_unit_suffix(rest: str) -> str:
     # "30 mg to 45 mg": skip a short unit word before the range connector.
     voc = _VOCAB.get()
-    m = re.match(rf"^\s*[^\s\d]{{1,12}}(?=\s+(?:{voc._WORD_CONNECTOR})\b)", rest)
+    m = re.match(rf"^\s*[^\s\d]{{1,12}}(?=\s+(?:{voc._WORD_CONNECTOR_CASED})\b)", rest)
     return rest[m.end() :] if m else rest
 
 
@@ -473,8 +467,9 @@ _DASH_BREAK = _DASH + r"(?:[ \r]*\n[ \r]*)?"  # a dash, then one line break
 
 
 def _key_pattern(key: str) -> str:
-    """The regex body of a key: each whitespace run matches any whitespace run, each dash any
-    dash, and a dash between two letters also a dash and one line break (SPEC §4.5)."""
+    """The regex body of a key: each letter by its fold (SPEC §4), each whitespace run matches any
+    whitespace run, each dash any dash, and a dash between two letters also a dash and one line
+    break (SPEC §4.5)."""
     words = normalize_ws(key)
     out: list[str] = []
     for i, ch in enumerate(words):
@@ -484,7 +479,7 @@ def _key_pattern(key: str) -> str:
             between = 0 < i < len(words) - 1 and words[i - 1].isalpha() and words[i + 1].isalpha()
             out.append(_DASH_BREAK if between else _DASH)
         else:
-            out.append(re.escape(ch))
+            out.append(folded_word(ch))
     return "".join(out)
 
 
@@ -492,7 +487,7 @@ def key_mentions(text: str, keys: tuple[str, ...]) -> list[tuple[int, int, str]]
     """(start, end, key) for each mention of a key, the longer of overlapping ones (SPEC §4.5)."""
     hits = []
     for key in keys:
-        rx = re.compile(_NOT_ALNUM_BEFORE + _key_pattern(key) + _NOT_ALNUM_AFTER, re.I)
+        rx = re.compile(_NOT_ALNUM_BEFORE + _key_pattern(key) + _NOT_ALNUM_AFTER)
         hits += [(m.start(), m.end(), key) for m in rx.finditer(text)]
     # a sweep in start order, the longer span first: a span is inside another one when an
     # earlier span with a different extent ends at or after its end
@@ -833,7 +828,7 @@ def heading_rows(text: str) -> list[tuple[int, int]]:
 
 
 def _name_pattern(name: str) -> str:
-    return _STATEMENT_SPACE.join(re.escape(w) for w in name.split())
+    return _STATEMENT_SPACE.join(folded_word(w) for w in name.split())
 
 
 # a whitespace run that stays on its line: a statement is on one line
@@ -1333,7 +1328,7 @@ class Vocabulary:
         # a listed abbreviation that ends at a dot, as a whole word: "Rs." but not the end of
         # "Mrs."
         self._ABBREVIATION_END = re.compile(
-            r"(?<!\w)(?:" + _cased_words(self._ABBREVIATIONS) + r")\Z"
+            r"(?<!\w)(?:" + _folded_words(self._ABBREVIATIONS) + r")\Z"
         )
         self._ABBREVIATION_MAX = max((len(a) for a in self._ABBREVIATIONS), default=0)
         self._CONTINUES = "".join(pack["currency_signs"])  # the currency signs (SPEC §4.1, §4.2)
@@ -1341,37 +1336,34 @@ class Vocabulary:
         self._BEFORE: dict[str, list[str]] = self._QUALIFIERS["before"]
         self._AFTER: dict[str, list[str]] = self._QUALIFIERS["after"]
         self._BEFORE_RE = {
-            c: re.compile(_any(_phrase(p) for p in ps), re.I) for c, ps in self._BEFORE.items()
+            c: re.compile(_any(_phrase(p) for p in ps)) for c, ps in self._BEFORE.items()
         }
         self._AFTER_RE = {
-            c: re.compile(_any(_phrase(p) for p in ps), re.I) for c, ps in self._AFTER.items()
+            c: re.compile(_any(_phrase(p) for p in ps)) for c, ps in self._AFTER.items()
         }
-        self._NEGATION_END = re.compile(
-            rf"\b(?:{_phrases(self._QUALIFIERS['negations'])})\s+$", re.I
-        )
+        self._NEGATION_END = re.compile(rf"\b(?:{_phrases(self._QUALIFIERS['negations'])})\s+$")
         self._CONNECTORS: list[str] = pack["ranges"]["connectors"]
-        self._BETWEEN_WORD, self._AND_WORD = (re.escape(w) for w in pack["ranges"]["pair"])
-        self._CONNECTOR = _words(self._CONNECTORS)
+        self._BETWEEN_WORD, self._AND_WORD = (folded_word(w) for w in pack["ranges"]["pair"])
+        self._CONNECTOR = _folded_words(self._CONNECTORS)
         # the word connectors and the second word of the pair: "to", "through", "and"
-        self._WORD_CONNECTOR = _words(
-            [c for c in self._CONNECTORS if c[0].isalnum()] + [pack["ranges"]["pair"][1]]
-        )
-        self._RANGE_NEXT = re.compile(
-            rf"^\s*(?:{self._CONNECTOR})\s*\S{{0,4}}?(?=[-\u2212]?\d)", re.I
-        )
+        word_connectors = [c for c in self._CONNECTORS if c[0].isalnum()] + [
+            pack["ranges"]["pair"][1]
+        ]
+        # _strip_unit_suffix reads the connector words with their case, as before #356.
+        self._WORD_CONNECTOR_CASED = _words(word_connectors)
+        self._WORD_CONNECTOR = _folded_words(word_connectors)
+        self._RANGE_NEXT = re.compile(rf"^\s*(?:{self._CONNECTOR})\s*\S{{0,4}}?(?=[-\u2212]?\d)")
         # one unit or scale word may stand before a word connector: "30 mg to 45",
         # "$1 million to $2"
         self._UNIT_WORD = rf"(?:[^\s\d]{{1,12}}\s+(?=(?:{self._WORD_CONNECTOR})\b))?"
-        self._RANGE_PREV = re.compile(
-            rf"\s*{self._UNIT_WORD}(?:{self._CONNECTOR})\s*\S{{0,4}}?", re.I
-        )
-        self._AND_NEXT = re.compile(rf"^\s*{self._AND_WORD}\s*\S{{0,4}}?(?=[-\u2212]?\d)", re.I)
-        self._AND_PREV = re.compile(rf"\s*{self._UNIT_WORD}{self._AND_WORD}\s*\S{{0,4}}?", re.I)
-        self._BETWEEN_END = re.compile(rf"\b{self._BETWEEN_WORD}\s*\S{{0,4}}?$", re.I)
-        self._BETWEEN = re.compile(rf"(?<![^\W_]){self._BETWEEN_WORD}\s", re.I)
-        self._CHANGE = _words(pack["changes"]["words"])
-        self._DETERMINER = _words(pack["changes"]["determiners"])
-        self._NOT_BETWEEN = _words(pack["changes"]["stop_words"])
+        self._RANGE_PREV = re.compile(rf"\s*{self._UNIT_WORD}(?:{self._CONNECTOR})\s*\S{{0,4}}?")
+        self._AND_NEXT = re.compile(rf"^\s*{self._AND_WORD}\s*\S{{0,4}}?(?=[-\u2212]?\d)")
+        self._AND_PREV = re.compile(rf"\s*{self._UNIT_WORD}{self._AND_WORD}\s*\S{{0,4}}?")
+        self._BETWEEN_END = re.compile(rf"\b{self._BETWEEN_WORD}\s*\S{{0,4}}?$")
+        self._BETWEEN = re.compile(rf"(?<![^\W_]){self._BETWEEN_WORD}\s")
+        self._CHANGE = _folded_words(pack["changes"]["words"])
+        self._DETERMINER = _folded_words(pack["changes"]["determiners"])
+        self._NOT_BETWEEN = _folded_words(pack["changes"]["stop_words"])
         self._PLAIN = (
             rf"\s+(?!(?:{self._NOT_BETWEEN})\b)[^\W\d_](?:[^\W\d_]|['\u2019-](?=[^\W\d_]))*"
         )
@@ -1379,16 +1371,19 @@ class Vocabulary:
         # determiner or "in", "of" or "to" and then a determiner: "reducing the fee from",
         # "an increase in the fee from"
         self._CHANGE_GAP = (
-            rf"(?:\s+(?:in|of|to)\s+(?:{self._DETERMINER})(?:{self._PLAIN}){{0,4}}"
+            rf"(?:\s+(?:{_folded_words(['in', 'of', 'to'])})\s+(?:{self._DETERMINER})"
+            rf"(?:{self._PLAIN}){{0,4}}"
             rf"|\s+(?:{self._DETERMINER})(?:{self._PLAIN}){{0,5}})?"
         )
         # "increased from X to Y": Y is the new value, not a range end
         self._CHANGE_FROM = re.compile(
-            rf"\b(?:{self._CHANGE}){self._CHANGE_GAP}\s+from\s+\S{{0,4}}?$", re.I
+            rf"\b(?:{self._CHANGE}){self._CHANGE_GAP}\s+{folded_word('from')}\s+\S{{0,4}}?$"
         )
         self._SCALE_EXP: dict[str, int] = pack["scale"]["words"]
-        # a scale word matches with the case rule of _cased_word, not with re.I (#350)
-        self._SCALE_WORDS = _cased_words(list(self._SCALE_EXP))
+        # a scale word matches by the fold of each letter, and the lookup folds the same way
+        # (SPEC §4, #350, #356)
+        self._SCALE_WORDS = _folded_words(list(self._SCALE_EXP))
+        final_s = folded_word("s") + "?"
         self._SCALE = re.compile(rf"^\s{{0,2}}({self._SCALE_WORDS})\b")
         # a scale suffix or a currency scale (SPEC §4.1, spec 0.10): the power of ten of each form
         self._SUFFIX_EXP: dict[str, int] = {
@@ -1402,18 +1397,22 @@ class Vocabulary:
             _sign_class(self._CONTINUES) + rf"({self._SUFFIXES}|{currency})(?![^\W_])"
         )
         self._CURRENCY_SCALE = re.compile(self._CURRENCY_FORM)
+        # "not followed by a letter" reads the ASCII letters and the four look-alikes, as re.I
+        # read [A-Za-z] before #356 (#363)
         self._PER_UNIT = re.compile(
-            rf"\s*(?:/|per\b)\s*(?:\d+(?:\.\d+)?\s*)?(?:{_phrases(pack['per_units'])})(?![A-Za-z])",
-            re.I,
+            rf"\s*(?:/|{folded_word('per')}\b)\s*(?:\d+(?:\.\d+)?\s*)?"
+            rf"(?:{_phrases(pack['per_units'])})(?![A-Za-z{''.join(LOOK_ALIKE)}])"
         )
-        self._LOSS = re.compile(rf"(?<![^\W_])(?:{_words(pack['sign']['loss'])})(?![^\W_])", re.I)
-        self._GAIN = re.compile(rf"(?<![^\W_])(?:{_words(pack['sign']['gain'])})(?![^\W_])", re.I)
+        self._LOSS = re.compile(rf"(?<![^\W_])(?:{_folded_words(pack['sign']['loss'])})(?![^\W_])")
+        self._GAIN = re.compile(rf"(?<![^\W_])(?:{_folded_words(pack['sign']['gain'])})(?![^\W_])")
         self._ITEM_SCALE = re.compile(
-            rf"(?<![^\W_])({self._SCALE_WORDS})[sS]?(?![^\W_])|" + self._CURRENCY_FORM
+            rf"(?<![^\W_])({self._SCALE_WORDS}){final_s}(?![^\W_])|" + self._CURRENCY_FORM
         )
-        self._IN_SCALE = re.compile(rf"(?<![^\W_])(?i:in)\s+(?:{self._SCALE_WORDS})[sS]?(?![^\W_])")
+        self._IN_SCALE = re.compile(
+            rf"(?<![^\W_]){folded_word('in')}\s+(?:{self._SCALE_WORDS}){final_s}(?![^\W_])"
+        )
         self._NEGATION = re.compile(
-            rf"(?<![^\W_])(?:{_words(pack['sign']['negations'])})\s+\Z", re.I
+            rf"(?<![^\W_])(?:{_folded_words(pack['sign']['negations'])})\s+\Z"
         )
         # The currency names of a currency statement and the sign that each currency shares (SPEC
         # §4.3, spec 0.10, #315). The pack writes each name out, also in the
@@ -1422,10 +1421,10 @@ class Vocabulary:
             code: (tuple(u["names"]), u["sign"]) for code, u in pack["heading_units"].items()
         }
         self._STATEMENT = re.compile(
-            r"(?<![^\W_])(?i:in)[^\S\n]+"
-            rf"(?:(?:{self._SCALE_WORDS})s?[^\S\n]+(?i:of)[^\S\n]+)?(?:"
+            rf"(?<![^\W_]){folded_word('in')}[^\S\n]+"
+            rf"(?:(?:{self._SCALE_WORDS}){final_s}[^\S\n]+{folded_word('of')}[^\S\n]+)?(?:"
             + "|".join(
-                f"(?P<{code}>(?i:{_any(_name_pattern(n) for n in names)})|{code})"
+                f"(?P<{code}>{_any(_name_pattern(n) for n in names)}|{code})"
                 for code, (names, _) in self.CURRENCY_NAMES.items()
             )
             + r")(?![^\W_])"

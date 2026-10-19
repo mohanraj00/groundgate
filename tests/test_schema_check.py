@@ -180,10 +180,11 @@ def test_alias_in_alias_by_word_index(tmp_path: Path, capsys: pytest.CaptureFixt
     )
 
 
-def test_alias_in_alias_with_re_i_letters(
+def test_alias_in_alias_with_folded_letters(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    """The word index matches letters as re.I does, as key_mentions does."""
+    """The word index matches letters by their fold (SPEC §4), as key_mentions does. re.I
+    matched the iota mark with the iota, and the fold does not (#356)."""
     dotless, kelvin = "\N{LATIN SMALL LETTER DOTLESS I}", "\N{KELVIN SIGN}"
     mark, iota = "\N{COMBINING GREEK YPOGEGRAMMENI}", "\N{GREEK SMALL LETTER IOTA}"
     schema = {
@@ -198,7 +199,6 @@ def test_alias_in_alias_with_re_i_letters(
     found = [
         ("i", "short", f"{dotless} x", "dotless"),
         ("kg", "short", f"{kelvin}g total", "kelvin"),
-        (f"a{mark}", "mark", f"a{iota} b", "iota"),
     ]
     assert check(tmp_path, schema, capsys) == (
         1,

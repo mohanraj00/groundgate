@@ -104,12 +104,12 @@ It has no effect on a decision, but is part of the schema digest.
 `keys` makes a field **keyed**: its values belong to one of several conditions, such as the
 indications of a drug, and each candidate names its condition. The keys are written in the
 document's words (§4.5). `keys` is null or a non-empty list of strings, no key is blank, and no
-two keys are equal after whitespace normalisation (§4.4) and lower-casing; otherwise the packet is
-invalid.
+two keys are equal after whitespace normalisation (§4.4) and the fold of each letter (§4);
+otherwise the packet is invalid.
 `aliases` are the field's names in the document's words, such as "loss from operations" for an
 operating income field. A field item (§4.6) is checked against them. They follow the same rules as
 `keys`: null or a non-empty list of strings, none blank, no two equal after whitespace
-normalisation and lower-casing.
+normalisation (§4.4) and the fold of each letter (§4).
 `units` extends and overrides the built-in table (§4.3). Each unit is an object with only
 `prefix` and `suffix`, each a list of non-empty strings; an absent list is empty.
 `packs` names each vocabulary pack and kind pack that the packet reads besides the base pack
@@ -509,6 +509,31 @@ does not show which value is wrong, so all of its values go to review.
 
 ## 4. Text rules
 
+**Case (spec 0.10, #356).** A rule of this section that matches case-insensitively compares the
+word and the text letter by letter, by the **fold** of each letter. The fold of `ſ` (U+017F) is
+`s`. The fold of `ı` (U+0131) and of `İ` (U+0130) is `i`. The fold of the Kelvin sign `K`
+(U+212A) is `k`. The fold of each other letter is its Unicode lowercase mapping with no locale,
+when that mapping is one code point. Otherwise the fold is the letter itself. Two letters match
+when they have the same fold. So `THOUSAND`, `thouſand`, `bİllion` and `mıllıon` are scale words,
+and "(ın thousands)" is a heading scale. `µ` (U+00B5) and `μ` (U+03BC) have different folds, and
+so do `ς` (U+03C2) and `σ` (U+03C3). A character with no case matches only itself, or as the rule
+says, as a whitespace run or a dash does. A match covers as many code points in the text as in
+the word.
+
+The rule applies to these words:
+
+- the scale words, their final `s`, and the `in` of a heading scale (§4.1)
+- the abbreviations, the qualifiers, the negations, the range connectors, `between` and `and`,
+  and each word of a change phrase, `from` included (§4.2)
+- the per-units, and the `in`, the scale word, its final `s`, the `of` and the names of a
+  currency statement (§4.3)
+- keys and aliases (§4.5, §4.6)
+- the loss words, the gain words and the negations of a sign item (§4.6)
+
+A form whose cases are listed matches only as listed: the scale suffixes and the currency scales
+(§4.1), and the codes of a currency statement (§4.3). The prefixes and suffixes of the unit table
+(§4.3) match exactly.
+
 ### 4.1 Numbers
 
 In the rules that make a value, a digit, and `\d`, is an ASCII digit, `0` to `9`. Other digits,
@@ -539,10 +564,9 @@ words, case-insensitively, after at most 2 whitespace code points. The scaled va
 times 10^3, 10^6, 10^9, 10^12, 10^5 or 10^7: "$1.25 billion" is 1250000000 and "4 lakh" is
 400000. Like a unit, the scale word is read from the document, so it counts even past the end of
 the span. A scale word with no number before it ("millions of") has no value. Case-insensitive
-here means that each letter of the word matches itself or its capital, when the capital is one
-code point. So `THOUSAND` is a scale word, and `thouſand` (with U+017F), `bİllion` (U+0130) and
-`mıllıon` (U+0131) are not. The same holds for each place that names a scale word, and for the
-final `s` of a heading scale and a scale item (spec 0.10, #350).
+here is the rule at the start of §4. It also applies to the final `s` of a heading scale, a scale
+item and a currency statement. So `THOUSAND`, `thouſand` (with U+017F), `bİllion` (U+0130) and
+`mıllıon` (U+0131) are scale words (spec 0.10, #350, #356).
 
 A **currency sign** is `$`, `€`, `£` or `₹`, the signs that §4.2 also lists. A number token with a
 value also has a scaled value when a currency sign stands directly before it and a **scale
@@ -592,7 +616,8 @@ a key or unit of one sentence reach a value in the next. The abbreviations, case
 p.m., approx., ca., cf., e.g., i.e., etc., vs., viz., no., nos., p., pp., para., fig., figs., vol.,
 rs., u.s., u.k., dr., mr., mrs., ms., jr., sr., st., inc., co., corp., ltd., est., min., max., hr.,
 hrs., mo., mos., yr., yrs., wk., wks., wt., oz., lb. and lbs. Matching is case-insensitive on whole
-words, letter by letter as for the scale words (§4.1), so `U.ſ.` is no abbreviation (#350).
+words, letter by letter by the rule at the start of §4, so `U.ſ.` is the abbreviation `u.s.`
+(#350, #356).
 `from` is deliberately absent: "from 7 to 8" is already a range through its connector, and
 "up from $236,000" is not a qualifier.
 
@@ -1039,6 +1064,9 @@ The packet is invalid when a given pack fails one of these checks:
 | L11 digest | nothing to refuse: the implementation computes each digest, and never reads one from a pack |
 | L12 no text | a member that holds document text, a span, a value or an evidence item. L1 refuses each one. |
 
+L6 compares two words after whitespace normalisation and the fold of each letter (§4). A
+qualifier phrase holds another phrase when the other phrase matches in it by the rule of §4.
+
 The qualifier rule of L6 keeps the reading of the base. §4.2 applies the longer of two qualifiers
 that overlap. So a pack phrase "less than or equal to" as `le` hides the base phrase "less than"
 as `lt`, and a pack phrase "more" as `lt` sits in the base phrase "more than" as `gt`. Both are
@@ -1142,7 +1170,8 @@ is a string, otherwise `null`.
 - `packs` lists the ids, sorted, of each pack in the receipt's `packs` that adds a word that
   occurs in the document, in a reference or in a string of the candidate, and of the kind pack
   that gave the template of the candidate's field (§2.3). Both sides are compared
-  casefolded, with each whitespace run as one space. A word that the base pack gives in the same
+  with the fold of `ſ`, `ı`, `İ` and `K` from §4 and then casefolded, with each whitespace run as
+  one space. A word that the base pack gives in the same
   list is not an added word. The list can name a pack that did not change the outcome; it never
   leaves out a pack that changed it.
 

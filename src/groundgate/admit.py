@@ -15,6 +15,7 @@ from fractions import Fraction
 from typing import Any
 
 from .canonical import SPEC_VERSION, Offsets, digest, is_nfc
+from .fold import mark_fold
 from .model import (
     Action,
     Decision,
@@ -1317,8 +1318,10 @@ def _relate(relations: tuple[Relation, ...], passed: list[_Passed]) -> tuple[Rel
 
 
 def _fold(s: str) -> str:
-    """A text as the pack marks compare it: casefolded, each whitespace run one space."""
-    return " ".join(s.casefold().split())
+    """A text as the pack marks compare it (SPEC §5): the four look-alikes of SPEC §4 folded,
+    then casefolded, each whitespace run one space. So it never misses a word that a rule
+    matches by the fold of its letters (#356)."""
+    return mark_fold(s)
 
 
 def _strings(obj: object) -> list[str]:

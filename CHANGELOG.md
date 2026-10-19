@@ -9,8 +9,19 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
 `groundgate/0.10:` prefix, so all hashes differ from 0.9.0.
 
 - A scale word with a long s (U+017F), a dotted capital I (U+0130) or a dotless i (U+0131), such
-  as "5 thouſand", made `admit` raise `KeyError` and give no receipt (#350). Each letter of a scale
-  word or an abbreviation now matches only itself or its capital, so "thouſand" is no scale word.
+  as "5 thouſand", made `admit` raise `KeyError` and give no receipt (#350). The lookup now folds
+  the found word by the case rule of #356, so it always finds the listed word, and "5 thouſand"
+  is a scale word that goes to review with `SCALE_WORD`.
+- One case rule for every rule that matched with `re.I` (#356). SPEC §4 defines the fold of a
+  letter: the long s (U+017F) folds to `s`, the dotless i (U+0131) and the dotted capital I (U+0130)
+  to `i`, the Kelvin sign (U+212A) to `k`, and each other letter to its Unicode lowercase when that
+  is one code point. Two letters match when their folds are the same. The scale words,
+  abbreviations, qualifier and change words, sign words, per-unit words, heading names, keys,
+  aliases and the L6 checks all use it. It is a strict subset of `re.I`: 45 pairs that `re.I` joined
+  no longer match, such as `µ` and `μ`, and none of them is ASCII. The final `s` of a currency
+  statement now matches `S` and `ſ` too, so "IN MILLIONS OF CANADIAN DOLLARS" is a statement. Two
+  keys, or two aliases, of one field with the same fold, such as "State" and "ſtate", make the
+  packet invalid. Every bench check gives the same numbers.
 - The word lists of the text rules are data now, in the base vocabulary pack `en` 1.0.0
   (`src/groundgate/packs/en/1.0.0.json`, #333). SPEC §4.7 gives its digest. No decision and no
   receipt changes: a test shows that every moved pattern matches the same text as before, on
