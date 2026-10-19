@@ -26,6 +26,7 @@ from .model import (
     Receipt,
     Schema,
 )
+from .pack import BASE
 from .text import (
     HeadingIndex,
     Token,
@@ -62,7 +63,7 @@ from .text import (
     verbatim_equal,
 )
 
-NULL_LITERALS = {"null", "none", "nil", "n/a"}
+NULL_LITERALS = frozenset(BASE["null_literals"])  # the base pack (SPEC §4.7)
 FLAG_ORDER = (  # SPEC §3.3 table order; it is part of every receipt hash
     "NON_VERBATIM_EVIDENCE",
     "QUALIFIED_VALUE",

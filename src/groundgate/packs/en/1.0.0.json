@@ -1,0 +1,541 @@
+{
+ "groundgate_pack": 1,
+ "type": "vocabulary",
+ "id": "en",
+ "version": "1.0.0",
+ "description": "The base vocabulary of groundgate: the English words that the text rules of SPEC section 4 read.",
+ "status": [],
+ "scale": {
+  "words": {
+   "thousand": 3,
+   "million": 6,
+   "billion": 9,
+   "trillion": 12,
+   "lakh": 5,
+   "crore": 7
+  },
+  "suffixes": {
+   "k": 3,
+   "m": 6,
+   "bn": 9
+  },
+  "currency": {
+   "'000": 3,
+   "’000": 3,
+   "000": 3
+  }
+ },
+ "currency_signs": [
+  "$",
+  "€",
+  "£",
+  "₹"
+ ],
+ "units": {
+  "USD": {
+   "prefixes": [
+    "US$",
+    "$"
+   ],
+   "suffixes": [
+    "USD",
+    "dollars"
+   ]
+  },
+  "EUR": {
+   "prefixes": [
+    "€"
+   ],
+   "suffixes": [
+    "EUR",
+    "euros"
+   ]
+  },
+  "GBP": {
+   "prefixes": [
+    "£"
+   ],
+   "suffixes": [
+    "GBP"
+   ]
+  },
+  "INR": {
+   "prefixes": [
+    "₹",
+    "Rs.",
+    "Rs"
+   ],
+   "suffixes": [
+    "INR",
+    "rupees"
+   ]
+  },
+  "%": {
+   "prefixes": [],
+   "suffixes": [
+    "%",
+    "percent"
+   ]
+  },
+  "mg": {
+   "prefixes": [],
+   "suffixes": [
+    "mg"
+   ]
+  },
+  "mcg": {
+   "prefixes": [],
+   "suffixes": [
+    "mcg"
+   ]
+  },
+  "g": {
+   "prefixes": [],
+   "suffixes": [
+    "g"
+   ]
+  },
+  "kg": {
+   "prefixes": [],
+   "suffixes": [
+    "kg"
+   ]
+  },
+  "mL": {
+   "prefixes": [],
+   "suffixes": [
+    "mL"
+   ]
+  },
+  "L": {
+   "prefixes": [],
+   "suffixes": [
+    "L"
+   ]
+  },
+  "hours": {
+   "prefixes": [],
+   "suffixes": [
+    "hours",
+    "hour",
+    "-hour"
+   ]
+  },
+  "days": {
+   "prefixes": [],
+   "suffixes": [
+    "days",
+    "day",
+    "-day"
+   ]
+  },
+  "weeks": {
+   "prefixes": [],
+   "suffixes": [
+    "weeks",
+    "week",
+    "-week"
+   ]
+  },
+  "months": {
+   "prefixes": [],
+   "suffixes": [
+    "months",
+    "month",
+    "-month"
+   ]
+  },
+  "years": {
+   "prefixes": [],
+   "suffixes": [
+    "years",
+    "year",
+    "-year"
+   ]
+  },
+  "minutes": {
+   "prefixes": [],
+   "suffixes": [
+    "minutes",
+    "minute",
+    "-minute"
+   ]
+  }
+ },
+ "per_units": [
+  "kg",
+  "kilogram",
+  "kilograms",
+  "lb",
+  "lbs",
+  "pound",
+  "pounds",
+  "m2",
+  "m²",
+  "m^2",
+  "square meter",
+  "square meters",
+  "square metre",
+  "square metres",
+  "mL",
+  "dL",
+  "L",
+  "liter",
+  "liters",
+  "litre",
+  "litres"
+ ],
+ "qualifiers": {
+  "before": {
+   "approx": [
+    "approximately",
+    "approx",
+    "about",
+    "around",
+    "nearly",
+    "roughly",
+    "generally",
+    "~",
+    "≈"
+   ],
+   "gt": [
+    "more than",
+    "greater than",
+    "above",
+    "over",
+    "exceed",
+    "exceeds",
+    "exceeding",
+    ">"
+   ],
+   "lt": [
+    "less than",
+    "fewer than",
+    "below",
+    "under",
+    "<"
+   ],
+   "ge": [
+    "at least",
+    "minimum of",
+    "no less than",
+    "≥"
+   ],
+   "le": [
+    "up to",
+    "maximum of",
+    "at most",
+    "no more than",
+    "≤"
+   ],
+   "range": [
+    "between"
+   ]
+  },
+  "after": {
+   "ge": [
+    "or more",
+    "or greater",
+    "or older",
+    "or higher",
+    "or above"
+   ],
+   "le": [
+    "or less",
+    "or fewer",
+    "or younger",
+    "or lower",
+    "or below"
+   ]
+  },
+  "negations": [
+   "not",
+   "not be",
+   "cannot",
+   "cannot be",
+   "can't",
+   "can't be",
+   "can’t",
+   "can’t be"
+  ]
+ },
+ "ranges": {
+  "connectors": [
+   "through",
+   "thru",
+   "to",
+   "-",
+   "–"
+  ],
+  "pair": [
+   "between",
+   "and"
+  ]
+ },
+ "changes": {
+  "words": [
+   "increase",
+   "increases",
+   "increased",
+   "increasing",
+   "decrease",
+   "decreases",
+   "decreased",
+   "decreasing",
+   "raise",
+   "raises",
+   "raised",
+   "raising",
+   "reduce",
+   "reduces",
+   "reduced",
+   "reducing",
+   "reduction",
+   "reductions",
+   "lowers",
+   "lowered",
+   "lowering",
+   "rise",
+   "rises",
+   "rose",
+   "risen",
+   "rising",
+   "fall",
+   "falls",
+   "fell",
+   "fallen",
+   "falling",
+   "drop",
+   "drops",
+   "dropped",
+   "dropping",
+   "grow",
+   "grows",
+   "grew",
+   "grown",
+   "growing",
+   "change",
+   "changes",
+   "changed",
+   "changing",
+   "decline",
+   "declines",
+   "declined",
+   "declining",
+   "adjust",
+   "adjusts",
+   "adjusted",
+   "adjusting",
+   "adjustment",
+   "adjustments",
+   "revise",
+   "revises",
+   "revised",
+   "revising",
+   "revision",
+   "revisions"
+  ],
+  "determiners": [
+   "the",
+   "a",
+   "an",
+   "its",
+   "their",
+   "this",
+   "that",
+   "these",
+   "those"
+  ],
+  "stop_words": [
+   "about",
+   "above",
+   "across",
+   "after",
+   "among",
+   "at",
+   "before",
+   "below",
+   "between",
+   "by",
+   "during",
+   "for",
+   "from",
+   "in",
+   "into",
+   "on",
+   "over",
+   "per",
+   "since",
+   "through",
+   "to",
+   "under",
+   "until",
+   "with",
+   "within",
+   "range",
+   "ranges",
+   "ranged",
+   "ranging",
+   "vary",
+   "varies",
+   "varied",
+   "varying"
+  ]
+ },
+ "sentence": {
+  "abbreviations": [
+   "a.m.",
+   "p.m.",
+   "approx.",
+   "ca.",
+   "cf.",
+   "e.g.",
+   "i.e.",
+   "etc.",
+   "vs.",
+   "viz.",
+   "no.",
+   "nos.",
+   "p.",
+   "pp.",
+   "para.",
+   "fig.",
+   "figs.",
+   "vol.",
+   "rs.",
+   "u.s.",
+   "u.k.",
+   "dr.",
+   "mr.",
+   "mrs.",
+   "ms.",
+   "jr.",
+   "sr.",
+   "st.",
+   "inc.",
+   "co.",
+   "corp.",
+   "ltd.",
+   "est.",
+   "min.",
+   "max.",
+   "hr.",
+   "hrs.",
+   "mo.",
+   "mos.",
+   "yr.",
+   "yrs.",
+   "wk.",
+   "wks.",
+   "wt.",
+   "oz.",
+   "lb.",
+   "lbs."
+  ],
+  "join_always": [
+   "u.s."
+  ],
+  "join_before_code": [
+   "no.",
+   "nos."
+  ]
+ },
+ "sign": {
+  "gain": [
+   "income",
+   "gain",
+   "gains",
+   "profit",
+   "profits",
+   "earnings"
+  ],
+  "negations": [
+   "no",
+   "not",
+   "without"
+  ]
+ },
+ "null_literals": [
+  "null",
+  "none",
+  "nil",
+  "n/a"
+ ],
+ "heading_units": {
+  "USD": {
+   "names": [
+    "US dollars",
+    "US dollar",
+    "U.S. dollars",
+    "U.S. dollar",
+    "United States dollars",
+    "United States dollar"
+   ],
+   "sign": "$"
+  },
+  "AUD": {
+   "names": [
+    "Australian dollars",
+    "Australian dollar"
+   ],
+   "sign": "$"
+  },
+  "CAD": {
+   "names": [
+    "Canadian dollars",
+    "Canadian dollar"
+   ],
+   "sign": "$"
+  },
+  "HKD": {
+   "names": [
+    "Hong Kong dollars",
+    "Hong Kong dollar"
+   ],
+   "sign": "$"
+  },
+  "NZD": {
+   "names": [
+    "New Zealand dollars",
+    "New Zealand dollar"
+   ],
+   "sign": "$"
+  },
+  "SGD": {
+   "names": [
+    "Singapore dollars",
+    "Singapore dollar"
+   ],
+   "sign": "$"
+  },
+  "EUR": {
+   "names": [
+    "euros",
+    "euro"
+   ],
+   "sign": "€"
+  },
+  "GBP": {
+   "names": [
+    "pounds sterling",
+    "pound sterling",
+    "sterling"
+   ],
+   "sign": "£"
+  },
+  "INR": {
+   "names": [
+    "Indian rupees",
+    "Indian rupee"
+   ],
+   "sign": "₹"
+  },
+  "LKR": {
+   "names": [
+    "Sri Lankan rupees",
+    "Sri Lankan rupee"
+   ],
+   "sign": null
+  }
+ }
+}

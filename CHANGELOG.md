@@ -8,6 +8,11 @@ spec version, and receipts name the spec version they were decided under.
 Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses the
 `groundgate/0.10:` prefix, so all hashes differ from 0.9.0.
 
+- The word lists of the text rules are data now, in the base vocabulary pack `en` 1.0.0
+  (`src/groundgate/packs/en/1.0.0.json`, #333). SPEC §4.7 gives its digest. No decision and no
+  receipt changes: a test shows that every moved pattern matches the same text as before, on
+  every conformance string and every bench document text. The loss words stay in the code
+  until the `finance` pack takes them (#336).
 - A candidate can cite up to 8 field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay
   `CANDIDATE_INVALID`.
