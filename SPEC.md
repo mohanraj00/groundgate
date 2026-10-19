@@ -1065,7 +1065,8 @@ takes the template (§2.3).
 
 The packet reads each vocabulary pack that the schema names, and each pack in the `needs` of each
 kind pack that the schema names. The packet must give each one. A pack that is named twice in one
-version is read once. The union of §4.8 takes the vocabulary packs only.
+version is read once. A `needs` entry has no pin. To pin a needed pack, the schema names it in
+`packs` with its `sha256` (§2.3). The union of §4.8 takes the vocabulary packs only.
 
 The checks L1, L2, L3, L7, L8, L11 and L12 of §4.8 apply to a kind pack, and L4 applies with one
 more limit. The packet is also invalid when a kind pack fails one of these checks:

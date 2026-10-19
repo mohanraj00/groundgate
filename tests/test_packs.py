@@ -377,3 +377,33 @@ def test_load_pack_reads_a_kind_pack(tmp_path: Path) -> None:
 def test_the_digest_of_a_kind_pack_reads_it_after_defaults() -> None:
     assert pack_digest(kind()) == pack_digest(kind(description="", status=[], needs=[], fields={}))
     assert pack_digest(kind()) != pack_digest({**kind(), "type": "vocabulary"})
+
+
+def test_the_schema_can_pin_a_needed_pack() -> None:
+    pin = {"id": "words-x-test", "version": "1.0.0", "sha256": pack_digest(LAC)}
+    pinned = {**KIND_SCHEMA, "packs": [*KIND_SCHEMA["packs"], pin]}  # type: ignore[list-item]
+    assert gg.admit(DOC, pinned, CANDS, packs=[GRANTS, LAC]).to_dict()["packs"][1] == {
+        **pin,
+        "type": "vocabulary",
+    }
+    other = pack(scale={"words": {"lac": 5}}, description="another copy")
+    with pytest.raises(gg.PacketError, match="not the pin"):
+        gg.admit(DOC, pinned, CANDS, packs=[GRANTS, other])
+
+
+@pytest.mark.parametrize(
+    ("field", "match"),
+    [
+        ({"template": "grants-x-test/grant", "type": "integer", "unit": "USD"}, "unit differs"),
+        ({"template": "grants-x-test/grant", "type": "number"}, "type differs"),
+        ({"template": "grants-x-test/fee"}, "no template 'fee'"),
+        ({"template": "words-x-test/grant"}, "not a kind pack"),
+        ({"template": 7}, "must be"),
+    ],
+    ids=["unit", "type", "no template", "vocabulary pack", "not a string"],
+)
+def test_a_template_that_breaks_l10(field: dict[str, Any], match: str) -> None:
+    g = kind(needs=GRANTS["needs"], fields={"grant": {"type": "integer", "unit": "EUR"}})
+    schema = {**KIND_SCHEMA, "fields": {"grant": field}}
+    with pytest.raises(gg.PacketError, match=match):
+        gg.Schema.from_dict(schema, [g, LAC])

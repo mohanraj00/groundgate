@@ -1357,7 +1357,7 @@ class _PackMarks:
             for pid, words in self.marks
             if pid not in self.found and any(w in folded for w in words)
         }
-        name = cand.get("field") if isinstance(cand, dict) else None
+        name = cand.get("field") if isinstance(cand, Mapping) else None
         field = self.fields.get(name) if isinstance(name, str) else None
         if field is not None and field.template is not None:
             more.add(field.template.split("/", 1)[0])  # the kind pack gave the template
