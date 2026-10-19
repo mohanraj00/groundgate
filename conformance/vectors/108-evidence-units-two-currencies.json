@@ -1,0 +1,90 @@
+{
+ "name": "108-evidence-units-two-currencies",
+ "description": "When the schema gives the prefix $ to CAD, a lone $ header settles both CAD and USD, so currency names both. groundgate does not choose (spec 0.10, #362).",
+ "document": "\t$m\nRevenue\t5,200\n",
+ "schema": {
+  "fields": {
+   "aud": {
+    "type": "number",
+    "unit": "AUD",
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  },
+  "units": {
+   "CAD": {
+    "prefix": [
+     "$"
+    ],
+    "suffix": []
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "w14",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 12,
+     "end": 17,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "$m"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "evidence_units": {
+     "token": {
+      "start": 12,
+      "end": 17
+     },
+     "next": [],
+     "per": false,
+     "headers": [
+      {
+       "form": "$",
+       "allows": [
+        "AUD",
+        "CAD",
+        "HKD",
+        "NZD",
+        "SGD",
+        "USD"
+       ]
+      }
+     ],
+     "statements": [],
+     "currency": [
+      "CAD",
+      "USD"
+     ]
+    }
+   }
+  ],
+  "coverage": []
+ }
+}

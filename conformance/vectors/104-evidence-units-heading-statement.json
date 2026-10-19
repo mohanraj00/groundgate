@@ -1,0 +1,178 @@
+{
+ "name": "104-evidence-units-heading-statement",
+ "description": "When the unit check of a value does not pass, the decision names the units that groundgate finds for the token: here the header $m, which allows each dollar currency, and the statement 'presented in Australian dollars'. The heading currency is AUD. The outcome and the codes stay the same, and a decision without a unit code has no evidence_units (spec 0.10, #362).",
+ "document": "The figures are presented in Australian dollars.\n\t$m\t$m\nRevenue\t5,200\t4,900\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   },
+   "aud": {
+    "type": "number",
+    "unit": "AUD",
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "w1",
+   "field": "usd",
+   "value": "5200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 69,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "w2",
+   "field": "usd",
+   "value": "4900000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 70,
+     "end": 75,
+     "text": "4,900"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "w3",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 69,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "$m"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": [],
+    "evidence_units": {
+     "token": {
+      "start": 64,
+      "end": 69
+     },
+     "next": [],
+     "per": false,
+     "headers": [
+      {
+       "form": "$",
+       "allows": [
+        "AUD",
+        "CAD",
+        "HKD",
+        "NZD",
+        "SGD",
+        "USD"
+       ]
+      }
+     ],
+     "statements": [
+      "AUD"
+     ],
+     "currency": [
+      "AUD"
+     ]
+    }
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ],
+    "evidence_units": {
+     "token": {
+      "start": 70,
+      "end": 75
+     },
+     "next": [],
+     "per": false,
+     "headers": [
+      {
+       "form": "$",
+       "allows": [
+        "AUD",
+        "CAD",
+        "HKD",
+        "NZD",
+        "SGD",
+        "USD"
+       ]
+      }
+     ],
+     "statements": [
+      "AUD"
+     ],
+     "currency": [
+      "AUD"
+     ]
+    }
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ],
+    "evidence_units": null
+   }
+  ],
+  "coverage": []
+ }
+}
