@@ -40,7 +40,6 @@ from .text import (
     header,
     header_column,
     heading_rows,
-    heading_units,
     holds_form,
     host,
     in_scale,
@@ -194,7 +193,7 @@ def _heading_unit(ctx: _Ctx, t: _Text, unit: str, tok: Token, a: int, b: int) ->
     """Whether text[a:b] holds a heading unit that reaches the token, and the token's heading
     currency is ``unit`` (SPEC §4.3, §4.6, spec 0.10, #315)."""
     if t.headings is None:
-        t.headings = HeadingIndex(heading_units(t.text))
+        t.headings = HeadingIndex(t.text)
     if not t.headings.held(a, b, tok.start):
         return False
     return t.headings.currency(tok.start, unit, ctx.schema.units)

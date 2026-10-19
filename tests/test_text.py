@@ -247,7 +247,7 @@ def test_heading_index_checks_each_kind_once() -> None:
     def time_for(rows: int) -> float:
         head = "(in Australian dollars)\n"
         text = head + "".join(f"Revenue\t{k + 1}\t$m\n" for k in range(rows))
-        index = HeadingIndex(heading_units(text))
+        index = HeadingIndex(text)
         places = [text.index(f"\t{k + 1}\t") + 1 for k in range(0, rows, 4)]
         best = float("inf")
         for _ in range(2):
@@ -259,3 +259,22 @@ def test_heading_index_checks_each_kind_once() -> None:
         return best
 
     assert time_for(20000) < 8 * time_for(5000)
+
+
+def test_heading_index_held_skips_units_that_reach_nothing() -> None:
+    """An item span that holds many headers that reach nothing does not read them one by one
+    (#315): four times the headers and the checks take less than eight times as long."""
+
+    def time_for(rows: int) -> float:
+        text = "£m\n" * rows + "No table here.\nRevenue\t5\n"
+        index = HeadingIndex(text)
+        pos = text.index("\t5") + 1
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            for _ in range(rows // 4):
+                assert not index.held(0, pos, pos)
+            best = min(best, time.perf_counter() - began)
+        return best
+
+    assert time_for(40000) < 8 * time_for(10000)

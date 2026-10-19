@@ -582,10 +582,10 @@ A **currency header** is a currency scale (§4.1) on any line. Its **form** is i
 with the letters directly before it, as `£` in `£m`, `US$` in `US$000` and `HK$` in `HK$'000`.
 
 A **currency statement** is `in`, whitespace, optionally a scale word (also with a final `s`),
-whitespace, `of` and whitespace, and then a currency name of the table below, on a line that holds
-no tab. Examples are "presented in Australian dollars" and "(in millions of Canadian dollars".
-Each word is matched whole and case-insensitively, and a whitespace run matches any whitespace
-run. Each name also matches in the singular. Each code also matches as a name of its row, in
+whitespace, `of` and whitespace, and then a currency name of the table below, all on one line
+that holds no tab. Examples are "presented in Australian dollars" and "(in millions of Canadian
+dollars". Each word is matched whole and case-insensitively, and a whitespace run matches any
+whitespace run on that line. Each name also matches in the singular. Each code also matches as a name of its row, in
 capitals only.
 
 | Code | Currency names | Sign |

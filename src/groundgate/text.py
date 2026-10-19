@@ -907,11 +907,13 @@ _PLURALS = ("dollars", "euros", "pounds", "rupees")
 
 def _name_pattern(name: str) -> str:
     words = [re.escape(w[:-1]) + "s?" if w in _PLURALS else re.escape(w) for w in name.split()]
-    return r"\s+".join(words)
+    return _LINE_SPACE.join(words)
 
 
+_LINE_SPACE = r"[^\S\n]+"  # a whitespace run that stays on its line: a statement is on one line
 _STATEMENT = re.compile(
-    r"(?<![^\W_])(?i:in)\s+(?:(?i:thousand|million|billion|trillion|lakh|crore)s?\s+(?i:of)\s+)?(?:"
+    r"(?<![^\W_])(?i:in)[^\S\n]+"
+    r"(?:(?i:thousand|million|billion|trillion|lakh|crore)s?[^\S\n]+(?i:of)[^\S\n]+)?(?:"
     + "|".join(
         f"(?P<{code}>(?i:{'|'.join(_name_pattern(n) for n in names)})|{code})"
         for code, (names, _) in CURRENCY_NAMES.items()
@@ -993,7 +995,9 @@ class HeadingIndex:
     number of heading units (#315). Units with the same code and form act the same, so each such
     kind keeps the merged spans of the rows that its units reach."""
 
-    def __init__(self, found: list[HeadingUnit]) -> None:
+    def __init__(self, text: str) -> None:
+        found = heading_units(text)
+        self.lines = [0] + [m.end() for m in re.finditer("\n", text)]
         self.units = sorted(found, key=lambda h: h.start)
         self.starts = [h.start for h in self.units]
         spans: dict[tuple[str | None, str], list[tuple[int, int]]] = {}
@@ -1018,13 +1022,19 @@ class HeadingIndex:
         return i >= 0 and pos <= hi[i]
 
     def held(self, a: int, b: int, pos: int) -> bool:
-        """Whether text[a:b] holds a heading unit that reaches ``pos``."""
-        i = bisect.bisect_left(self.starts, a)
-        while i < len(self.units) and self.units[i].start < b:
-            h = self.units[i]
-            if h.end <= b and h.reaches(pos):
+        """Whether text[a:b] holds a heading unit that reaches ``pos``. The units that reach a
+        token are the last ones before its line, in a row: the heading line of its table and the
+        rows above it in the table. So a unit that does not reach the token ends the search, and
+        units that reach nothing are never read one by one."""
+        line = self.lines[bisect.bisect_right(self.lines, pos) - 1]
+        j = bisect.bisect_left(self.starts, min(b, line)) - 1
+        while j >= 0 and self.starts[j] >= a:
+            h = self.units[j]
+            if not h.reaches(pos):
+                return False
+            if h.end <= b:
                 return True
-            i += 1
+            j -= 1  # this unit runs past the item: try the one before it
         return False
 
     def currency(self, pos: int, unit: str, units: Units) -> bool:
