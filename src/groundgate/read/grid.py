@@ -197,6 +197,19 @@ def _covered(spans: list[tuple[float, float]], lo: float, hi: float) -> bool:
     return any(a <= lo + JOIN and b >= hi - JOIN for a, b in spans)
 
 
+def _same_slot(above: list[tuple[float, float, int]], x0: float, x1: float) -> int:
+    """The cell of the slot above with the same walls (within JOIN), or -1.
+
+    The slots are in order from left to right, so a bisect finds the first candidate.
+    """
+    i = bisect.bisect_left(above, (x0 - JOIN,))
+    while i < len(above) and above[i][0] <= x0 + JOIN:
+        if abs(above[i][1] - x1) <= JOIN:
+            return above[i][2]
+        i += 1
+    return -1
+
+
 def _grid(horizontal: list[Segment], vertical: list[Segment]) -> Grid | None:
     """The cells of one group of rules, or None when the grid is irregular.
 
@@ -230,9 +243,7 @@ def _grid(horizontal: list[Segment], vertical: list[Segment]) -> Grid | None:
                 cells.append([x0, top, x1, bottom])
                 n = len(cells) - 1
             else:
-                n = next(
-                    (c for a, b, c in above if abs(a - x0) <= JOIN and abs(b - x1) <= JOIN), -1
-                )
+                n = _same_slot(above, x0, x1)
                 if n < 0:
                     return None
                 cells[n][3] = bottom
