@@ -1,0 +1,38 @@
+{
+ "name": "schema-relation-bad-factor",
+ "description": "A relation is invalid: a factor must be a decimal (SPEC §2.3, spec 0.10, #321).",
+ "document": "A is $3, B is $1 and C is $2.",
+ "schema": {
+  "fields": {
+   "a": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "b": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "c": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  },
+  "relations": [
+   {
+    "id": "r",
+    "total": "a",
+    "parts": [
+     {
+      "field": "b",
+      "factor": "1/1000"
+     }
+    ]
+   }
+  ]
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

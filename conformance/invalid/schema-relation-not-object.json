@@ -1,0 +1,29 @@
+{
+ "name": "schema-relation-not-object",
+ "description": "A relation is invalid: a relation must be an object (SPEC §2.3, spec 0.10, #321).",
+ "document": "A is $3, B is $1 and C is $2.",
+ "schema": {
+  "fields": {
+   "a": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "b": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "c": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  },
+  "relations": [
+   "a = b + c"
+  ]
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -1,0 +1,204 @@
+{
+ "name": "80-relation-keyed",
+ "description": "A relation is checked once for each key that all of its fields list. In 2025 the total assets equal the liabilities plus the equity, so the relation holds and admits nothing more. In 2024 the equity candidate took the cash figure, a right number for the wrong field: the relation fails by 50, and each of its three values goes to review. 2023 is a key of the assets only, so no relation is checked there (spec 0.10, #321).",
+ "document": "In 2025, total assets were $1,500, total liabilities were $900 and total equity was $600. In 2024, total assets were $1,400, total liabilities were $900, total equity was $500 and cash was $450. In 2023, total assets were $1,300.",
+ "schema": {
+  "fields": {
+   "assets": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024",
+     "2023"
+    ]
+   },
+   "liabilities": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024"
+    ]
+   },
+   "equity": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025",
+     "2024"
+    ]
+   }
+  },
+  "relations": [
+   {
+    "id": "balance",
+    "total": "assets",
+    "parts": [
+     {
+      "field": "liabilities"
+     },
+     {
+      "field": "equity"
+     }
+    ]
+   }
+  ]
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a25",
+   "field": "assets",
+   "value": 1500,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 27,
+     "end": 33,
+     "text": "$1,500"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "l25",
+   "field": "liabilities",
+   "value": 900,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 58,
+     "end": 62,
+     "text": "$900"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "e25",
+   "field": "equity",
+   "value": 600,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 84,
+     "end": 88,
+     "text": "$600"
+    }
+   ],
+   "key": "2025"
+  },
+  {
+   "id": "a24",
+   "field": "assets",
+   "value": 1400,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 117,
+     "end": 123,
+     "text": "$1,400"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "l24",
+   "field": "liabilities",
+   "value": 900,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 148,
+     "end": 152,
+     "text": "$900"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "e24",
+   "field": "equity",
+   "value": 450,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 189,
+     "end": 193,
+     "text": "$450"
+    }
+   ],
+   "key": "2024"
+  },
+  {
+   "id": "a23",
+   "field": "assets",
+   "value": 1300,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 222,
+     "end": 228,
+     "text": "$1,300"
+    }
+   ],
+   "key": "2023"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RELATION_FAILED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RELATION_FAILED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RELATION_FAILED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": [],
+  "relations": [
+   {
+    "id": "balance",
+    "key": "2024",
+    "holds": false,
+    "difference": "50",
+    "allowance": "1.5"
+   },
+   {
+    "id": "balance",
+    "key": "2025",
+    "holds": true,
+    "difference": "0",
+    "allowance": "1.5"
+   }
+  ]
+ }
+}

@@ -7,8 +7,9 @@ groundgate 0.9.0, from commit 23095bf. Spec 0.8 is in the `v0.8.0` tag, spec 0.7
 `v0.1.0` tag. Any change to how
 a candidate is decided is a new version with a new version string. An implementation conforms if
 it produces the outcome, codes and missing parts of every decision, the parts where a vector gives
-them, and the coverage findings in every vector under `conformance/vectors/`, and refuses every packet under `conformance/invalid/`
-with no receipt.
+them, the coverage findings, and the relation results where a vector gives them, in every vector
+under `conformance/vectors/`, and refuses every packet under `conformance/invalid/` with no
+receipt.
 
 ## 1. Purpose
 
@@ -31,7 +32,9 @@ conflicting proposal). The extractor can cite more than the value: the sign, the
 the key and the field's own words, each at its own place (§4.6). It can also cite a reference that
 the app supplies, an external source, or its own knowledge (§2.5). groundgate admits what checked
 evidence supports, plus what the app's policy allows for evidence that it cannot check (§2.4), and
-the receipt says which. It does **not** judge whether the text means what the field claims.
+the receipt says which. The app can also state relations between fields, such as a total and its
+parts, and a relation that fails sends its values to a person (§3.4). groundgate does **not**
+judge whether the text means what the field claims.
 Anything it cannot prove is flagged, not silently admitted. A model's answer can enter a decision
 only as a recorded judgment (§2.6), never as a call: the decision stays a function of its inputs.
 
@@ -80,7 +83,10 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
   "aliases": ["<words>"] | null,
   "description": "<text>"
 }},
- "units": {"<unit code>": {"prefix": ["<surface>"], "suffix": ["<surface>"]}}}
+ "units": {"<unit code>": {"prefix": ["<surface>"], "suffix": ["<surface>"]}},
+ "relations": [{"id": "<name>", "total": "<field>",
+                "parts": [{"field": "<field>", "factor": "<decimal>"}],
+                "tolerance": "<decimal>"}]}
 ```
 
 Defaults: `type` `"number"`, `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false,
@@ -103,8 +109,33 @@ normalisation and lower-casing.
 `schema_sha256` is the digest of kind `schema` over the schema object **after** defaults are
 filled in.
 
+`relations` (spec 0.10, #321) is a list of relations between fields, which step 13 checks (§3.4).
+A relation is an object with only these members:
+
+- `id`: a non-blank string. No two relations have the same `id`.
+- `total`: the name of a field in the schema.
+- `parts`: a non-empty list of objects with only `field`, the name of a field in the schema, and
+  `factor`. `factor` is a decimal string or an integer that reads as a number (§4.1), as a bound
+  is, and it is not zero. The default is `"1"`. A factor of `"-1"` subtracts the part. A factor
+  such as `"0.001"` changes the unit of the part, for example from mg to g.
+- `tolerance`: a decimal string or an integer that reads as a number, not negative, in the unit of
+  the total. The default is `"0"`.
+
+The packet is also invalid when `relations` is not a list, a relation breaks the rules above, or:
+
+- a field of the relation has the type `string`, or `multiple` true;
+- the total is also a part, or two parts name the same field;
+- the field of a part has a `unit` other than the unit of the total's field, and the part gives no
+  `factor`. Null counts as a unit here, so a part without a unit under a total in USD needs a
+  factor;
+- some fields of the relation have `keys`, and others do not.
+
+After defaults, each part has its `factor` and each relation its `tolerance`. A schema with no
+relations, or with an empty list, has no `relations` member after defaults, so its digest does not
+change.
+
 The packet is invalid when the schema is not an object with a `fields` object, has keys other
-than `fields` and `units`, or a field is not an object, has other keys, has a `type` or
+than `fields`, `units` and `relations`, or a field is not an object, has other keys, has a `type` or
 `comparator` not listed above, a `unit` that is not a string or null, a bound that is not a
 decimal string or an integer that reads as a number (§4.1, so `"1,000"` is accepted), or a
 `required` or `multiple` that is not a boolean.
@@ -376,6 +407,7 @@ rejected by steps 1–11 or on the outside path.
 | `EVIDENCE_STATED` | On the outside path, the deciding item is knowledge, with the action `review`. |
 | `LOW_CONFIDENCE` | `policy.min_confidence` is set and `confidence` is below it. |
 | `CONFLICTING_CANDIDATES` | Another candidate for the same non-`multiple` field, and on a keyed field the same `key`, also passed with a different canonical value. Set on every such candidate. |
+| `RELATION_FAILED` | A relation that names the candidate's field fails at the candidate's key (step 13, §3.4). |
 | `MODEL_DOUBT` | An applying judgment doubts the value (step 12). |
 
 `EVIDENCE_REANCHORED`, `VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and `MODEL_CLEARED` are
@@ -400,11 +432,52 @@ flag.
 - `field_match`, with `p` below `doubt.field_match`: the decision gets `MODEL_DOUBT`.
 
 The outcome then follows the flags that are left, as above. When `MODEL_CLEARED` removes
-`KEY_NOT_AT_VALUE`, `key` stays in `missing`.
+`KEY_NOT_AT_VALUE`, `key` stays in `missing`. Step 13 (§3.4) runs after this step and can add
+`RELATION_FAILED`.
 
 **Coverage.** For every `required` field with no candidate that is `admitted` or
 `needs_verification`, the receipt lists `{"field": <name>, "code": "REQUIRED_FIELD_MISSING"}`.
 Coverage is per field, not per key.
+
+### 3.4 Relations (step 13)
+
+A relation (§2.3) says that the total equals the sum of its parts, each part times its factor. So
+it checks a sum, a difference, a scale and a unit change across fields. Step 13 reads only the
+values of the candidates that passed. It does not read the text again, and it never rejects.
+
+Each relation is checked once for each **relation key**: null when its fields have no `keys`, and
+otherwise each key that every field of the relation lists, compared as exact strings.
+
+1. The relation **applies** at a relation key when each of its fields has at least one candidate
+   that passed (§3.3) with that `key`, and the candidates of each field that passed with that key
+   have one canonical value. On fields without `keys`, every candidate that passed counts. When
+   the relation does not apply, it changes nothing. So a field with no value that passed, or with
+   two values (`CONFLICTING_CANDIDATES`), stops the relation at that key.
+2. Let T be the value of the total, and P and f the value and the factor of each part. The
+   **difference** is T minus the sum of f × P over the parts.
+3. The **allowance** is the relation's `tolerance`, plus half of the place of T, plus half of |f|
+   times the place of P for each part. The place of a field's value is the smallest place of the
+   candidates of that field that passed with the key (below).
+4. The relation **holds** when the absolute value of the difference is at most the allowance.
+   Otherwise it **fails**: each candidate that passed with the key, of each field of the
+   relation, gets the flag `RELATION_FAILED`.
+
+The arithmetic is exact, with no rounding. A field can be in several relations. A candidate gets
+the flag once, when one or more of them fail.
+
+The **place** of a candidate's value is one unit of its last written digit. On the checked path,
+it is the place of the supporting number token (§3.1): 1 for a token with no `.`, or 10^-d for a
+token with d digits after the `.`. When the token's value is not 0, this is multiplied by |value|
+divided by |token value|, so a scale that the value takes from a scale word, a scale suffix, a
+scale item or a missing scale (§3.1) also scales the place. On the outside path, the place is that
+of the last digit of the canonical value. So "$1,250" with a scale item "(in thousands" and the
+value 1250000 has the place 1000, "$1.25 billion" with the value 1250000000 has the place
+10000000, and a knowledge item with the value 3.3 has the place 0.1. A total and its parts that a
+document rounds to thousands can then differ by up to 500 for each value, and the relation still
+holds.
+
+A relation that holds admits nothing: it removes no flag and adds no code. A relation that fails
+does not show which value is wrong, so all of its values go to review.
 
 ## 4. Text rules
 
@@ -932,7 +1005,14 @@ is a string, otherwise `null`.
 Coverage is sorted by field name. `judgments` lists each judgment that applied, as
 `{"candidate_sha256", "question", "answer", "p"}` (`answer` only for `key`), sorted by
 `candidate_sha256`, then by input position of the candidate, then by question; the judge is in the
-policy. `receipt_sha256` is the digest of kind `receipt` over the receipt without its
+policy.
+
+When the schema has relations, the receipt has a member `relations`: each relation that applied
+at a relation key (§3.4), as `{"id", "key", "holds", "difference", "allowance"}`, sorted by `id`,
+then by `key` in code point order. `key` is null for a relation over fields without `keys`.
+`holds` is a boolean. `difference` and `allowance` are canonical decimals (§4.1). A relation that
+did not apply is not listed, so the list can be empty. A receipt of a schema without relations
+has no `relations` member. `receipt_sha256` is the digest of kind `receipt` over the receipt without its
 `receipt_sha256` key.
 
 ## 6. Canonical JSON and digests
@@ -949,7 +1029,8 @@ the prefix is ASCII and `JCS(obj)` is UTF-8.
 
 Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
 `field_match` judgment can only add doubt, and a field item checks only the field's own aliases.
-Calling a model, fetching a URL, dates, arrays of records, arithmetic over several numbers, the
+Calling a model, fetching a URL, dates, arrays of records, arithmetic over several numbers other
+than a relation (§3.4), a relation that admits a value, the
 subject of the document (groundgate assumes one subject per document), and PDF geometry (page and
 bounding box) as evidence. Adapters may convert richer evidence into spans. Number formats other
 than English and Indian grouping, and digits other than 0 to 9 (#60).

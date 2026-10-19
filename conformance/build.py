@@ -37,7 +37,10 @@ def vector(
     judgments: list[dict[str, Any]] | None = None,
     references: list[dict[str, Any]] | None = None,
     document_source: str | None = None,
+    relations: list[tuple[str, str | None, bool, str, str]] | None = None,
 ) -> None:
+    """``relations`` is the receipt's relation results (SPEC §5), each as (id, key, holds,
+    difference, allowance), in receipt order; None when the schema has no relations."""
     VECTORS.append(
         {
             "name": name,
@@ -50,6 +53,12 @@ def vector(
             "judgments": judgments,
             "references": references,
             "document_source": document_source,
+            "relations": None
+            if relations is None
+            else [
+                {"id": i, "key": k, "holds": h, "difference": d, "allowance": a}
+                for i, k, h, d, a in relations
+            ],
         }
     )
 
@@ -4249,6 +4258,233 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- spec 0.10 (#321, #284)
+# Relations across fields (SPEC §2.3, §3.4). Every difference and allowance below is worked out by
+# hand: the difference is the total minus each part times its factor, and the allowance is the
+# tolerance plus half of the place of each value, times |factor| for a part.
+YEARS3 = ["2025", "2024", "2023"]
+BALANCE = {
+    "id": "balance",
+    "total": "assets",
+    "parts": [{"field": "liabilities"}, {"field": "equity"}],
+}
+vector(
+    "80-relation-keyed",
+    "A relation is checked once for each key that all of its fields list. In 2025 the total "
+    "assets equal the liabilities plus the equity, so the relation holds and admits nothing more. "
+    "In 2024 the equity candidate took the cash figure, a right number for the wrong field: the "
+    "relation fails by 50, and each of its three values goes to review. 2023 is a key of the "
+    "assets only, so no relation is checked there (spec 0.10, #321).",
+    "In 2025, total assets were $1,500, total liabilities were $900 and total equity was $600. "
+    "In 2024, total assets were $1,400, total liabilities were $900, total equity was $500 and "
+    "cash was $450. In 2023, total assets were $1,300.",
+    {
+        "fields": {
+            "assets": {"type": "integer", "unit": "USD", "keys": YEARS3},
+            "liabilities": {"type": "integer", "unit": "USD", "keys": YEARS3[:2]},
+            "equity": {"type": "integer", "unit": "USD", "keys": YEARS3[:2]},
+        },
+        "relations": [BALANCE],
+    },
+    [
+        c("a25", "assets", 1500, "USD", [q("$1,500")], key="2025"),
+        c("l25", "liabilities", 900, "USD", [q("$900", 1)], key="2025"),
+        c("e25", "equity", 600, "USD", [q("$600")], key="2025"),
+        c("a24", "assets", 1400, "USD", [q("$1,400")], (REVIEW, ["RELATION_FAILED"]), key="2024"),
+        c("l24", "liabilities", 900, "USD", [q("$900", 2)], (REVIEW, ["RELATION_FAILED"]),
+          key="2024"),
+        c("e24", "equity", 450, "USD", [q("$450")], (REVIEW, ["RELATION_FAILED"]), key="2024"),
+        c("a23", "assets", 1300, "USD", [q("$1,300")], key="2023"),
+    ],
+    relations=[("balance", "2024", False, "50", "1.5"), ("balance", "2025", True, "0", "1.5")],
+)  # fmt: skip
+
+MILLIONS = {"role": "scale", "text": "(in millions"}
+vector(
+    "81-relation-scale",
+    "The place of a value is one unit of its last written digit, times the scale that the value "
+    "takes: a scale item, or a missing scale under a heading. So values in thousands may differ "
+    "by half a thousand each: 10,001 against 6,000 plus 4,000 holds, with an allowance of 1500. "
+    "In millions, 12 against 7 plus 3 fails by 2000000, more than its allowance of 1500000. A "
+    "value with a missing part still counts (spec 0.10, #321, #284).",
+    "Balance sheet (in thousands)\n\nTotal assets\t$10,001\nTotal liabilities\t$6,000\n"
+    "Total equity\t$4,000\n\nDebt (in millions)\n\nTotal debt\t$12\nBank loans\t$7\nBonds\t$3\n",
+    {
+        "fields": {
+            "assets": USD, "liabilities": USD, "equity": USD,
+            "debt": USD, "loans": USD, "bonds": USD,
+        },
+        "relations": [
+            BALANCE,
+            {"id": "debt", "total": "debt", "parts": [{"field": "loans"}, {"field": "bonds"}]},
+        ],
+    },
+    [
+        c("s1", "assets", 10001000, "USD", [q("$10,001"), THOUSANDS],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("s2", "liabilities", 6000000, "USD", [q("$6,000")], (REVIEW, ["PART_MISSING"], ["scale"])),
+        c("s3", "equity", 4000000, "USD", [q("$4,000"), THOUSANDS], ("admitted", ["VALUE_DERIVED"])),
+        c("s4", "debt", 12000000, "USD", [q("$12"), MILLIONS],
+          (REVIEW, ["RELATION_FAILED", "VALUE_DERIVED"])),
+        c("s5", "loans", 7000000, "USD", [q("$7"), MILLIONS],
+          (REVIEW, ["RELATION_FAILED", "VALUE_DERIVED"])),
+        c("s6", "bonds", 3000000, "USD", [q("$3"), MILLIONS],
+          (REVIEW, ["RELATION_FAILED", "VALUE_DERIVED"])),
+    ],
+    relations=[("balance", None, True, "1000", "1500"),
+               ("debt", None, False, "2000000", "1500000")],
+)  # fmt: skip
+
+vector(
+    "82-relation-factor",
+    "A factor changes the unit of a part (mg to g, 0.001) or subtracts it (-1), and also scales "
+    "the part's place in the allowance. A tolerance adds to the allowance in the unit of the "
+    "total. The net pay is 100 below gross pay minus tax: the relation with a tolerance of 100 "
+    "holds, the one without it fails, and one failing relation is enough for the flag "
+    "(spec 0.10, #321, #284).",
+    "Each tablet weighs 1.2 g. It holds 950 mg of drug and 250 mg of filler. "
+    "Gross pay was $5,000, tax was $1,200 and net pay was $3,700.",
+    {
+        "fields": {
+            "tablet": {"type": "number", "unit": "g"},
+            "drug": {"type": "integer", "unit": "mg"},
+            "filler": {"type": "integer", "unit": "mg"},
+            "gross": USD, "tax": USD, "net": USD,
+        },
+        "relations": [
+            {"id": "weight", "total": "tablet",
+             "parts": [{"field": "drug", "factor": "0.001"}, {"field": "filler", "factor": "0.001"}]},
+            {"id": "net", "total": "net",
+             "parts": [{"field": "gross"}, {"field": "tax", "factor": "-1"}], "tolerance": "100"},
+            {"id": "net_strict", "total": "net",
+             "parts": [{"field": "gross"}, {"field": "tax", "factor": -1}]},
+        ],
+    },
+    [
+        c("f1", "tablet", "1.2", "g", [q("1.2 g")]),
+        c("f2", "drug", 950, "mg", [q("950 mg")]),
+        c("f3", "filler", 250, "mg", [q("250 mg")]),
+        c("f4", "gross", 5000, "USD", [q("$5,000")], (REVIEW, ["RELATION_FAILED"])),
+        c("f5", "tax", 1200, "USD", [q("$1,200")], (REVIEW, ["RELATION_FAILED"])),
+        c("f6", "net", 3700, "USD", [q("$3,700")], (REVIEW, ["RELATION_FAILED"])),
+    ],
+    relations=[("net", None, True, "-100", "101.5"), ("net_strict", None, False, "-100", "1.5"),
+               ("weight", None, True, "0", "0.051")],
+)  # fmt: skip
+
+vector(
+    "83-relation-not-applied",
+    "A relation applies only when each of its fields has values that passed, with one canonical "
+    "value. A rejected sales value stops the gross relation, and two profit values stop the "
+    "profit relation: no value gets RELATION_FAILED, and the receipt lists no result "
+    "(spec 0.10, #321).",
+    "Sales were $600 and fees were $300, so revenue was $900. Costs were $500. Profit was $400. "
+    "The draft said profit was $300.",
+    {
+        "fields": {"sales": USD, "fees": USD, "revenue": USD, "costs": USD, "profit": USD},
+        "relations": [
+            {"id": "gross", "total": "revenue", "parts": [{"field": "sales"}, {"field": "fees"}]},
+            {"id": "profit", "total": "profit",
+             "parts": [{"field": "revenue"}, {"field": "costs", "factor": "-1"}]},
+        ],
+    },
+    [
+        c("n1", "sales", 700, "USD", [q("$600")], ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("n2", "fees", 300, "USD", [q("$300", 1)]),
+        c("n3", "revenue", 900, "USD", [q("$900")]),
+        c("n4", "costs", 500, "USD", [q("$500")]),
+        c("n5", "profit", 400, "USD", [q("$400")], (REVIEW, ["CONFLICTING_CANDIDATES"])),
+        c("n6", "profit", 300, "USD", [q("$300", 2)], (REVIEW, ["CONFLICTING_CANDIDATES"])),
+    ],
+    relations=[],
+)  # fmt: skip
+
+PERCENT = {"type": "number", "unit": "%"}
+vector(
+    "84-relation-places",
+    "The place of a token comes from its written digits, not from the canonical value: 4.00% "
+    "has the place 0.01. Two values of one field that are equal take the smaller place, 0.001 "
+    "from 7.250%. A knowledge item has the place of the canonical value, 0.1 for 3.3. So the "
+    "allowance is 0.0005 + 0.005 + 0.05 = 0.0555 (spec 0.10, #321).",
+    "The fund's total return was 7.25%. The audited total return was 7.250%. "
+    "The income return was 4.00%.",
+    {
+        "fields": {"total_return": PERCENT, "income": PERCENT, "growth": PERCENT},
+        "relations": [{"id": "returns", "total": "total_return",
+                       "parts": [{"field": "income"}, {"field": "growth"}]}],
+    },
+    [
+        c("t1", "total_return", "7.25", "%", [q("7.25%")]),
+        c("t2", "total_return", "7.25", "%", [q("7.250%")]),
+        c("i1", "income", "4", "%", [q("4.00%")]),
+        c("g1", "growth", "3.3", "%", [know("The growth return was 3.3%.")],
+          ("admitted", ["ADMITTED_BY_POLICY"])),
+    ],
+    {"sources": {"knowledge": "admit"}},
+    relations=[("returns", None, True, "-0.05", "0.0555")],
+)  # fmt: skip
+
+TWO_USD = {"a": USD, "b": USD, "c": USD}
+INVALID.extend(
+    [
+        {
+            "name": f"schema-relation-{name}",
+            "description": f"A relation is invalid: {why} (SPEC §2.3, spec 0.10, #321).",
+            "document": "A is $3, B is $1 and C is $2.",
+            "schema": {"fields": fields or TWO_USD, "relations": relations},
+            "policy": None,
+        }
+        for name, why, fields, relations in [
+            ("not-list", "relations must be a list", None,
+             {"id": "r", "total": "a", "parts": [{"field": "b"}]}),
+            ("not-object", "a relation must be an object", None, ["a = b + c"]),
+            ("unknown-member", "a relation has only id, total, parts and tolerance", None,
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}], "op": "sum"}]),
+            ("blank-id", "the id must be a non-blank string", None,
+             [{"id": " ", "total": "a", "parts": [{"field": "b"}]}]),
+            ("duplicate-id", "two relations have one id", None,
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}]},
+              {"id": "r", "total": "a", "parts": [{"field": "c"}]}]),
+            ("unknown-field", "the total names no field of the schema", None,
+             [{"id": "r", "total": "d", "parts": [{"field": "b"}]}]),
+            ("unknown-part", "a part names no field of the schema", None,
+             [{"id": "r", "total": "a", "parts": [{"field": "d"}]}]),
+            ("empty-parts", "parts must be a non-empty list", None,
+             [{"id": "r", "total": "a", "parts": []}]),
+            ("part-not-object", "a part must be an object with field and factor", None,
+             [{"id": "r", "total": "a", "parts": ["b"]}]),
+            ("part-unknown-member", "a part has only field and factor", None,
+             [{"id": "r", "total": "a", "parts": [{"field": "b", "sign": "-"}]}]),
+            ("zero-factor", "a factor must not be zero", None,
+             [{"id": "r", "total": "a", "parts": [{"field": "b", "factor": "0"}]}]),
+            ("bad-factor", "a factor must be a decimal", None,
+             [{"id": "r", "total": "a", "parts": [{"field": "b", "factor": "1/1000"}]}]),
+            ("negative-tolerance", "a tolerance must not be negative", None,
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}], "tolerance": "-1"}]),
+            ("string-field", "a field of a relation must not be a string field",
+             {**TWO_USD, "b": {"type": "string"}},
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}]}]),
+            ("multiple-field", "a field of a relation must not be multiple",
+             {**TWO_USD, "b": {**USD, "multiple": True}},
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}]}]),
+            ("total-is-part", "the total must not also be a part", None,
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}, {"field": "a"}]}]),
+            ("part-twice", "two parts must not name one field", None,
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}, {"field": "b"}]}]),
+            ("unit-without-factor", "a part in another unit needs a factor",
+             {**TWO_USD, "b": {"type": "integer", "unit": "EUR"}},
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}]}]),
+            ("no-unit-without-factor", "a part without a unit under a total with one needs a factor",
+             {**TWO_USD, "b": {"type": "integer"}},
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}]}]),
+            ("mixed-keys", "either every field of a relation has keys, or none has",
+             {**TWO_USD, "a": {**USD, "keys": ["2025"]}},
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}]}]),
+        ]
+    ]
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
@@ -4277,7 +4513,11 @@ def main() -> None:
             **({"references": v["references"]} if v["references"] is not None else {}),
             "candidates": cands,
             **({"judgments": v["judgments"]} if v["judgments"] is not None else {}),
-            "expected": {"decisions": expected, "coverage": v["coverage"]},
+            "expected": {
+                "decisions": expected,
+                "coverage": v["coverage"],
+                **({"relations": v["relations"]} if v["relations"] is not None else {}),
+            },
         }
         (out_dir / f"{v['name']}.json").write_text(
             json.dumps(body, indent=1, ensure_ascii=False) + "\n"

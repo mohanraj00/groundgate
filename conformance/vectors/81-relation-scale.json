@@ -1,0 +1,223 @@
+{
+ "name": "81-relation-scale",
+ "description": "The place of a value is one unit of its last written digit, times the scale that the value takes: a scale item, or a missing scale under a heading. So values in thousands may differ by half a thousand each: 10,001 against 6,000 plus 4,000 holds, with an allowance of 1500. In millions, 12 against 7 plus 3 fails by 2000000, more than its allowance of 1500000. A value with a missing part still counts (spec 0.10, #321, #284).",
+ "document": "Balance sheet (in thousands)\n\nTotal assets\t$10,001\nTotal liabilities\t$6,000\nTotal equity\t$4,000\n\nDebt (in millions)\n\nTotal debt\t$12\nBank loans\t$7\nBonds\t$3\n",
+ "schema": {
+  "fields": {
+   "assets": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "liabilities": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "equity": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "debt": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "loans": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "bonds": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  },
+  "relations": [
+   {
+    "id": "balance",
+    "total": "assets",
+    "parts": [
+     {
+      "field": "liabilities"
+     },
+     {
+      "field": "equity"
+     }
+    ]
+   },
+   {
+    "id": "debt",
+    "total": "debt",
+    "parts": [
+     {
+      "field": "loans"
+     },
+     {
+      "field": "bonds"
+     }
+    ]
+   }
+  ]
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "assets",
+   "value": 10001000,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 43,
+     "end": 50,
+     "text": "$10,001"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "field": "liabilities",
+   "value": 6000000,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 69,
+     "end": 75,
+     "text": "$6,000"
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "field": "equity",
+   "value": 4000000,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 89,
+     "end": 95,
+     "text": "$4,000"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "field": "debt",
+   "value": 12000000,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 128,
+     "end": 131,
+     "text": "$12"
+    },
+    {
+     "role": "scale",
+     "text": "(in millions"
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "field": "loans",
+   "value": 7000000,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 143,
+     "end": 145,
+     "text": "$7"
+    },
+    {
+     "role": "scale",
+     "text": "(in millions"
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "field": "bonds",
+   "value": 3000000,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 152,
+     "end": 154,
+     "text": "$3"
+    },
+    {
+     "role": "scale",
+     "text": "(in millions"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RELATION_FAILED",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RELATION_FAILED",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RELATION_FAILED",
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": [],
+  "relations": [
+   {
+    "id": "balance",
+    "key": null,
+    "holds": true,
+    "difference": "1000",
+    "allowance": "1500"
+   },
+   {
+    "id": "debt",
+    "key": null,
+    "holds": false,
+    "difference": "2000000",
+    "allowance": "1500000"
+   }
+  ]
+ }
+}
