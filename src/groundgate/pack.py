@@ -26,7 +26,7 @@ BASE_SHA256 = "sha256:8ee2f5c367baa29969759e3ed3ec5acf39f412a8b4b6afbda6477c1cde
 # each released version of a built-in pack other than the base, with the digest that SPEC §4.8
 # gives. A schema names one by id and version, and the packet never gives it (#336).
 BUILT_IN_SHA256 = {
-    ("finance", "1.0.0"): "sha256:970c4809b1e092944f4ff3afb915bce07563414638db11c8cfe34ea5c4e99e01",
+    ("finance", "1.0.0"): "sha256:822c91124cbd23f29e683873975d4f3f85f2207dbbb02ca3664f0ef74848162b",
 }
 BUILT_IN = frozenset({BASE_ID, *(pid for pid, _ in BUILT_IN_SHA256)})  # (SPEC §4.8, L7)
 

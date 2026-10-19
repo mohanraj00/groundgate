@@ -1050,7 +1050,7 @@ with its id. An implementation loads a built-in pack with its digest, and refuse
 one. The receipt names it in `packs` with its digest, as it names a given pack. For this spec version
 there is one: `finance` 1.0.0,
 [`src/groundgate/packs/finance/1.0.0.json`](src/groundgate/packs/finance/1.0.0.json), with the
-digest `sha256:970c4809b1e092944f4ff3afb915bce07563414638db11c8cfe34ea5c4e99e01`. It gives the loss
+digest `sha256:822c91124cbd23f29e683873975d4f3f85f2207dbbb02ca3664f0ef74848162b`. It gives the loss
 words of §4.6. A loss word only helps to admit a value: without `finance`, a sign item that holds
 only a loss word fails, and the decision goes to review. The currency names of a currency
 statement (§4.3) stay in the base pack, because they can stop an admit.
