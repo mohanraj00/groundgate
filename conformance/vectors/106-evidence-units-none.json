@@ -1,0 +1,57 @@
+{
+ "name": "106-evidence-units-none",
+ "description": "When groundgate finds no unit for the token, each list of evidence_units is empty (spec 0.10, #362).",
+ "document": "Revenue was 5,200 in 2025.\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "w8",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 12,
+     "end": 17,
+     "text": "5,200"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ],
+    "evidence_units": {
+     "token": {
+      "start": 12,
+      "end": 17
+     },
+     "next": [],
+     "per": false,
+     "headers": [],
+     "statements": [],
+     "currency": []
+    }
+   }
+  ],
+  "coverage": []
+ }
+}

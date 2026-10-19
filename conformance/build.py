@@ -5117,6 +5117,137 @@ INVALID.append(
 )
 
 
+# ---------------------------------------------------------------- spec 0.10 (#362)
+def units(
+    start: int,
+    end: int,
+    next_units: tuple[str, ...] = (),
+    per: bool = False,
+    headers: tuple[tuple[str, list[str]], ...] = (),
+    statements: tuple[str, ...] = (),
+    currency: tuple[str, ...] = (),
+) -> dict[str, Any]:
+    """The expected `evidence_units` member of a decision (SPEC §5). ``start`` and ``end`` are
+    the UTF-8 byte span of the token, written by hand."""
+    return {
+        "token": {"start": start, "end": end},
+        "next": list(next_units),
+        "per": per,
+        "headers": [{"form": form, "allows": allows} for form, allows in headers],
+        "statements": list(statements),
+        "currency": list(currency),
+    }
+
+
+def shows(item: dict[str, Any], want: dict[str, Any] | None) -> dict[str, Any]:
+    """A candidate whose decision must have ``want`` as `evidence_units`, or, with None, must not
+    have the member (SPEC §5)."""
+    item["expect"]["evidence_units"] = want
+    return item
+
+
+DOLLARS = ["AUD", "CAD", "HKD", "NZD", "SGD", "USD"]
+vector(
+    "104-evidence-units-heading-statement",
+    "When the unit check of a value does not pass, the decision names the units that groundgate "
+    "finds for the token: here the header $m, which allows each dollar currency, and the "
+    "statement 'presented in Australian dollars'. The heading currency is AUD. The outcome and "
+    "the codes stay the same, and a decision without a unit code has no evidence_units "
+    "(spec 0.10, #362).",
+    "The figures are presented in Australian dollars.\n\t$m\t$m\nRevenue\t5,200\t4,900\n",
+    {"fields": {"usd": {**revenue("USD"), "multiple": True}, "aud": revenue("AUD")}},
+    [
+        shows(c("w1", "usd", "5200000000", "USD",
+                [q("5,200"), REV, scale_item("$m"), unit_item("$m")],
+                (REVIEW, ["UNIT_CITATION_INVALID", "VALUE_DERIVED"], [])),
+              units(64, 69, headers=(("$", DOLLARS),), statements=("AUD",), currency=("AUD",))),
+        shows(c("w2", "usd", "4900000000", "USD", [q("4,900"), scale_item("$m")],
+                (REVIEW, ["PART_MISSING", "VALUE_DERIVED"], ["unit"])),
+              units(70, 75, headers=(("$", DOLLARS),), statements=("AUD",), currency=("AUD",))),
+        shows(c("w3", "aud", "5200000000", "AUD",
+                [q("5,200"), REV, scale_item("$m"), unit_item("$m")], DERIVED),
+              None),
+    ],
+)  # fmt: skip
+vector(
+    "105-evidence-units-unit-form",
+    "A unit form next to the token is named in next, and per says when it is a per-unit. "
+    "groundgate never converts a value: 0.25 g is not in '250 mg'. UNIT_INVALID reads no "
+    "evidence, so its decision has no evidence_units (spec 0.10, #362).",
+    "Each tablet contains 250 mg of the active substance. The dose is 75 mg/m2 once a day.\n",
+    {"fields": {"dose": {"type": "number", "unit": "g", "multiple": True},
+                "dose_area": {"type": "number", "unit": "mg"}}},
+    [
+        shows(c("w4", "dose", "250", "g", [q("250 mg")], ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+              units(21, 24, next_units=("mg",))),
+        shows(c("w5", "dose", "0.25", "g", [q("250 mg")],
+                ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+              None),
+        shows(c("w6", "dose", "250", "mg", [q("250 mg")], ("rejected", ["UNIT_INVALID"])), None),
+        shows(c("w7", "dose_area", "75", "mg", [q("75 mg/m2")],
+                ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+              units(65, 67, next_units=("mg",), per=True)),
+    ],
+)  # fmt: skip
+vector(
+    "106-evidence-units-none",
+    "When groundgate finds no unit for the token, each list of evidence_units is empty "
+    "(spec 0.10, #362).",
+    "Revenue was 5,200 in 2025.\n",
+    {"fields": {"usd": revenue("USD")}},
+    [
+        shows(c("w8", "usd", "5200", "USD", [q("5,200")], (REVIEW, ["PART_MISSING"], ["unit"])),
+              units(12, 17)),
+    ],
+)  # fmt: skip
+vector(
+    "107-evidence-units-disagree",
+    "When the heading units do not agree, headers and statements name them and currency is "
+    "empty: groundgate never chooses between them. An unknown header allows no code "
+    "(spec 0.10, #362).",
+    "Group figures in Australian dollars, parent figures in New Zealand dollars\n\t$m\n"
+    "Revenue\t5,200\n\n(in thousands of US dollars)\n\t£m\nRevenue\t6,300\n\n"
+    "Branch\n\tHK$'000\nRevenue\t8,500\n",
+    {"fields": {"usd": {**revenue("USD"), "multiple": True}, "aud": revenue("AUD"),
+                "gbp": revenue("GBP")}},
+    [
+        shows(c("w9", "usd", "5200000000", "USD",
+                [q("5,200"), q("Revenue", 1, role="field"), scale_item("$m"), unit_item("$m")],
+                UNIT_REVIEW),
+              units(87, 92, headers=(("$", DOLLARS),), statements=("AUD", "NZD"))),
+        shows(c("w10", "aud", "5200000000", "AUD",
+                [q("5,200"), q("Revenue", 1, role="field"), scale_item("$m"),
+                 unit_item("in Australian dollars")],
+                UNIT_REVIEW),
+              units(87, 92, headers=(("$", DOLLARS),), statements=("AUD", "NZD"))),
+        shows(c("w11", "gbp", "6300000000", "GBP",
+                [q("6,300"), q("Revenue", 2, role="field"), scale_item("£m"), unit_item("£m")],
+                UNIT_REVIEW),
+              units(136, 141, headers=(("£", ["GBP"]),), statements=("USD",))),
+        shows(c("w12", "usd", "6300000000", "USD", [q("6,300"), scale_item("£m")],
+                (REVIEW, ["PART_MISSING", "VALUE_DERIVED"], ["unit"])),
+              units(136, 141, headers=(("£", ["GBP"]),), statements=("USD",))),
+        shows(c("w13", "usd", "8500000", "USD",
+                [q("8,500"), q("Revenue", 3, role="field"), scale_item("HK$'000"),
+                 unit_item("HK$'000")],
+                UNIT_REVIEW),
+              units(167, 172, headers=(("HK$", []),))),
+    ],
+)  # fmt: skip
+vector(
+    "108-evidence-units-two-currencies",
+    "When the schema gives the prefix $ to CAD, a lone $ header settles both CAD and USD, so "
+    "currency names both. groundgate does not choose (spec 0.10, #362).",
+    "\t$m\nRevenue\t5,200\n",
+    {"fields": {"aud": revenue("AUD")}, "units": {"CAD": {"prefix": ["$"], "suffix": []}}},
+    [
+        shows(c("w14", "aud", "5200000000", "AUD",
+                [q("5,200"), REV, scale_item("$m"), unit_item("$m")], UNIT_REVIEW),
+              units(12, 17, headers=(("$", DOLLARS),), currency=("CAD", "USD"))),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

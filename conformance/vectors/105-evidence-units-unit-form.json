@@ -1,0 +1,130 @@
+{
+ "name": "105-evidence-units-unit-form",
+ "description": "A unit form next to the token is named in next, and per says when it is a per-unit. groundgate never converts a value: 0.25 g is not in '250 mg'. UNIT_INVALID reads no evidence, so its decision has no evidence_units (spec 0.10, #362).",
+ "document": "Each tablet contains 250 mg of the active substance. The dose is 75 mg/m2 once a day.\n",
+ "schema": {
+  "fields": {
+   "dose": {
+    "type": "number",
+    "unit": "g",
+    "multiple": true
+   },
+   "dose_area": {
+    "type": "number",
+    "unit": "mg"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "w4",
+   "field": "dose",
+   "value": "250",
+   "unit": "g",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 27,
+     "text": "250 mg"
+    }
+   ]
+  },
+  {
+   "id": "w5",
+   "field": "dose",
+   "value": "0.25",
+   "unit": "g",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 27,
+     "text": "250 mg"
+    }
+   ]
+  },
+  {
+   "id": "w6",
+   "field": "dose",
+   "value": "250",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 21,
+     "end": 27,
+     "text": "250 mg"
+    }
+   ]
+  },
+  {
+   "id": "w7",
+   "field": "dose_area",
+   "value": "75",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 65,
+     "end": 73,
+     "text": "75 mg/m2"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "evidence_units": {
+     "token": {
+      "start": 21,
+      "end": 24
+     },
+     "next": [
+      "mg"
+     ],
+     "per": false,
+     "headers": [],
+     "statements": [],
+     "currency": []
+    }
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ],
+    "evidence_units": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_INVALID"
+    ],
+    "evidence_units": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ],
+    "evidence_units": {
+     "token": {
+      "start": 65,
+      "end": 67
+     },
+     "next": [
+      "mg"
+     ],
+     "per": true,
+     "headers": [],
+     "statements": [],
+     "currency": []
+    }
+   }
+  ],
+  "coverage": []
+ }
+}
