@@ -73,10 +73,12 @@ record and its artifacts.
 
 Use `result.receipt` and `result.candidates` together. The runner admits all final proposals
 in one call, so different values for one non-`multiple` field and key meet the conflict check.
-An admission in an earlier round is not a final admission. One exception: the runner drops a
-rounded figure, such as "£17.3bn", when an exact figure that rounds to it at its stated precision
-is admitted without it (#319). The record keeps the dropped candidate in a `rounding` line.
-Section 4 of the [design note](../design/runner.md) gives the rule.
+An admission in an earlier round is not a final admission. One opt-in exception: with
+`RunPolicy(drop_rounded=True)`, the runner drops a rounded figure, such as "£17.3bn", when an
+exact figure that rounds to it at its stated precision is admitted without it (#319, #331). The
+record keeps the dropped candidate in a `rounding` line. The default is off, because the rule
+trusts the document: its author can choose the admitted value inside half of the rounded
+figure's precision. Section 4 of the [design note](../design/runner.md) gives the rule.
 
 `result.complete` says whether the planned calls completed. A client failure, malformed reply
 or exhausted total call budget returns an incomplete result with completed receipts. A
