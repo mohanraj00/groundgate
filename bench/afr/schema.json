@@ -60,5 +60,11 @@
     "total budgetary resources"
    ]
   }
- }
+ },
+ "packs": [
+  {
+   "id": "finance",
+   "version": "1.0.0"
+  }
+ ]
 }

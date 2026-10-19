@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
-from .pack import BASE, CODE_LOSS, combine
+from .pack import BASE, combine
 
 _TOKEN = re.compile(r"[-\u2212]?[0-9][0-9,]*(?:\.[0-9]+)?")
 # ungrouped, grouped in threes ("200,000"), or grouped the Indian way: the last three digits,
@@ -1406,9 +1406,7 @@ class Vocabulary:
             rf"\s*(?:/|per\b)\s*(?:\d+(?:\.\d+)?\s*)?(?:{_phrases(pack['per_units'])})(?![A-Za-z])",
             re.I,
         )
-        self._LOSS = re.compile(
-            rf"(?<![^\W_])(?:{_words([*CODE_LOSS, *pack['sign']['loss']])})(?![^\W_])", re.I
-        )
+        self._LOSS = re.compile(rf"(?<![^\W_])(?:{_words(pack['sign']['loss'])})(?![^\W_])", re.I)
         self._GAIN = re.compile(rf"(?<![^\W_])(?:{_words(pack['sign']['gain'])})(?![^\W_])", re.I)
         self._ITEM_SCALE = re.compile(
             rf"(?<![^\W_])({self._SCALE_WORDS})[sS]?(?![^\W_])|" + self._CURRENCY_FORM

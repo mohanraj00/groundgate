@@ -115,10 +115,12 @@ normalisation and lower-casing.
 `packs` names each vocabulary pack and kind pack that the packet reads besides the base pack
 (§4.8, §4.9), by `id` and `version`. The schema does not have to name a vocabulary pack that a
 named kind pack needs. An entry can also give `sha256`: then the given pack must have that digest. This
-pin is optional. The schema never names the base pack, because it always applies. The packet is
-invalid when an entry has other keys, an entry names a built-in pack, two entries name one id
-differently, a named pack is not given, a given pack is neither named nor needed, or a pin
-differs. The pack
+pin is optional. The schema never names the base pack, because it always applies. The schema
+names a built-in pack such as `finance` (§4.8) the same way, but the packet never gives it: the
+implementation holds it. The packet is
+invalid when an entry has other keys, an entry names the base pack, two entries name one id
+differently, a named pack is not given or built in, a named built-in pack has a version that is
+not built in, a given pack is neither named nor needed, or a pin differs. The pack
 table of §4.3 and the word lists of §4 are then the union of §4.8, and `units` still extends
 and overrides that table.
 `template` (spec 0.10, #335) takes a field template of a kind pack (§4.9). It is
@@ -894,7 +896,7 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 
 | Role | Passes when |
 |---|---|
-| `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
+| `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (a `sign.loss` word of the packs that the packet reads; the base pack gives none, and the built-in pack `finance` of §4.8 gives `loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
 | `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands", or it holds a currency scale (§4.1), as in "£m" (spec 0.10). It ends at or before the token. No scale word, also with a final `s`, lies between its end and the token, and no currency scale with a power of ten other than the item's scale (below) lies there. So the second `£m` of the header row `\t£m\t£m` does not stop an item on the first. |
 | `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). Or the item holds a heading unit (§4.3) that reaches the token, the field check passes, the item ends at or before the token, no unit form is next to the token, and the token's heading currency is the field's unit (spec 0.10). |
 | `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then one of these holds: no letter (general category L) lies between the item's end and the token (the item is at the **row**); the item is a **label cell** for the token (below); or the item is in the value's sentence with no number token between its end and the token, and the token is not after the end of a label slot that holds the item. |
@@ -976,7 +978,7 @@ The word lists of §3 and §4 are data in one file, the base vocabulary pack `en
 words and suffixes, the currency signs and scales, the unit table, the per-units, the qualifier
 words and their negations, the range words, the change words, the abbreviations, the gain words, the
 negations before a loss word, the currency names of a currency statement (§4.3), and the null
-literals. The loss words of §4.6 are not in it yet. The rules of §4 read each list as plain words,
+literals. It gives no loss word of §4.6: the built-in pack `finance` gives them (§4.8). The rules of §4 read each list as plain words,
 never as patterns, with the fixed rules of §4: whole words, the same case rules and the same
 windows.
 
@@ -1042,7 +1044,18 @@ that overlap. So a pack phrase "less than or equal to" as `le` hides the base ph
 as `lt`, and a pack phrase "more" as `lt` sits in the base phrase "more than" as `gt`. Both are
 invalid.
 
-The union takes the base pack, then the given packs. Two words are one entry when they are
+A **built-in pack** ships with the implementation, like the base pack, but applies only when the
+schema or a kind pack names it (§2.3, §4.9). The packet never gives it, and L7 refuses a given pack
+with its id. An implementation loads a built-in pack with its digest, and refuses to run with another
+one. The receipt names it in `packs` with its digest, as it names a given pack. For this spec version
+there is one: `finance` 1.0.0,
+[`src/groundgate/packs/finance/1.0.0.json`](src/groundgate/packs/finance/1.0.0.json), with the
+digest `sha256:970c4809b1e092944f4ff3afb915bce07563414638db11c8cfe34ea5c4e99e01`. It gives the loss
+words of §4.6. A loss word only helps to admit a value: without `finance`, a sign item that holds
+only a loss word fails, and the decision goes to review. The currency names of a currency
+statement (§4.3) stay in the base pack, because they can stop an admit.
+
+The union takes the base pack, then the other packs that the packet reads. Two words are one entry when they are
 equal. In each list, the words of the base keep their order, and the words that the packs add
 follow, longest first, then by code point. So the order of the packs never changes a match.
 
@@ -1076,7 +1089,7 @@ more limit. The packet is also invalid when a kind pack fails one of these check
 |---|---|
 | L4 size | more than 200 field templates |
 | L7 ids and versions | a `needs` entry with an id or a version of the wrong form; a `needs` entry and the schema, or two `needs` entries, that name one id in two versions |
-| L9 kind pack | a `needs` that is not a list of objects with only `id` and `version`; a `needs` entry that names the base pack, the pack itself, an id twice, a kind pack or a pack that is not given; a `fields` that is not an object; a template member other than the five above; a template that breaks a rule of §2.3 |
+| L9 kind pack | a `needs` that is not a list of objects with only `id` and `version`; a `needs` entry that names the base pack, the pack itself, an id twice, a kind pack or a pack that is not given or built in; a `fields` that is not an object; a template member other than the five above; a template that breaks a rule of §2.3 |
 | L10 schema | a `template` that breaks a rule of §2.3, or a field that breaks a rule of §2.3 after it takes its template |
 
 ## 5. Receipt
@@ -1101,7 +1114,8 @@ more limit. The packet is also invalid when a kind pack fails one of these check
 `document.source` is the document source, or null. `references` lists each reference as
 `{"id", "sha256", "source"}`, sorted by `id`. `packs` lists each pack that the schema names, and
 each pack that a named kind pack needs, as `{"id", "type", "version", "sha256"}`, sorted by `id`.
-`type` is `vocabulary` or `kind`. It never lists the base pack.
+`type` is `vocabulary` or `kind`. It lists a named built-in pack such as `finance`, but never the
+base pack.
 
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
 code, or the flag codes in the order of the table in §3.3, followed by `EVIDENCE_REANCHORED`,

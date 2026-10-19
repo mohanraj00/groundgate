@@ -1,0 +1,89 @@
+{
+ "name": "103-sign-own-loss-word",
+ "description": "An app's own vocabulary pack can give a loss word without the pack finance. Then only its words are loss words (spec 0.10, #336).",
+ "document": "There was a shortfall of $40 in 2024. The deficit was $9 in 2024.",
+ "schema": {
+  "packs": [
+   {
+    "id": "shortfall-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "amount": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "shortfall-x-test",
+   "version": "1.0.0",
+   "sign": {
+    "loss": [
+     "shortfall"
+    ]
+   }
+  }
+ ],
+ "candidates": [
+  {
+   "id": "h1",
+   "field": "amount",
+   "value": "-40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 28,
+     "text": "$40"
+    },
+    {
+     "role": "sign",
+     "text": "shortfall"
+    }
+   ]
+  },
+  {
+   "id": "h2",
+   "field": "amount",
+   "value": "-9",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 54,
+     "end": 56,
+     "text": "$9"
+    },
+    {
+     "role": "sign",
+     "text": "deficit"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -165,7 +165,8 @@ def fields() -> None:
                 "aliases": [alias],
             }
             for name, (alias, _) in FIELDS.items()
-        }
+        },
+        "packs": [{"id": "finance", "version": "1.0.0"}],
     }
     _dump(HERE / "schema.json", schema)
     _dump(HERE / "descriptions.json", {name: d for name, (_, d) in FIELDS.items()})

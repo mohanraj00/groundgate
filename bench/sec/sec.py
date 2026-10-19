@@ -57,7 +57,10 @@ FIELDS = {
     "total_debt": "Total debt at the end of the fiscal year.",
 }
 SCHEMA = {
-    "fields": {f: {"type": "number", "unit": "USD", "multiple": True, "keys": KEYS} for f in FIELDS}
+    "fields": {
+        f: {"type": "number", "unit": "USD", "multiple": True, "keys": KEYS} for f in FIELDS
+    },
+    "packs": [{"id": "finance", "version": "1.0.0"}],
 }
 
 

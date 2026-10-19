@@ -14,8 +14,10 @@ from typing import Any, Literal
 from .canonical import _SAFE_INT, SPEC_VERSION
 from .pack import (
     BASE,
+    BASE_ID,
     BUILT_IN,
     added_words,
+    built_in_pack,
     checked_copy,
     combine,
     pack_digest,
@@ -288,7 +290,7 @@ def _pack_entries(entries: object) -> dict[str, dict[str, str]]:
             raise PacketError("a schema packs entry needs an id and a version")
         if "sha256" in e and not (isinstance(e["sha256"], str) and _PIN.match(e["sha256"])):
             raise PacketError(f"schema packs: the sha256 of {e['id']!r} is not a digest")
-        if e["id"] in BUILT_IN:
+        if e["id"] == BASE_ID:
             raise PacketError(f"schema packs: {e['id']!r} is the base pack, which always applies")
         if e["id"] in out and out[e["id"]] != e:
             raise PacketError(f"schema packs: {e['id']!r} is named twice (L7)")
@@ -380,7 +382,20 @@ def _resolve_packs(
             if other_sha != sha:
                 raise PacketError(f"packs: two copies of {p['id']!r} have two digests (L7)")
         by_id[p["id"]] = (p, sha)
+    built: set[str] = set()
+
+    def load(pid: str, version: str) -> None:
+        """A built-in pack that the schema or a kind pack names; the packet never gives it."""
+        if pid in BUILT_IN and pid not in by_id:
+            p = built_in_pack(pid, version)
+            if p is None:
+                raise PacketError(f"packs: {pid!r} {version} is not a built-in version")
+            by_id[pid] = (p, pack_digest(p))
+            built.add(pid)
+
     named = _pack_entries(entries)
+    for pid, e in named.items():
+        load(pid, e["version"])
     for pid, e in named.items():
         if pid not in by_id or by_id[pid][0]["version"] != e["version"]:
             raise PacketError(f"schema packs: {pid!r} {e['version']} is not given")
@@ -390,6 +405,7 @@ def _resolve_packs(
     needed: set[str] = set()
     for kid, k in kinds.items():
         for e in k.get("needs", []):
+            load(e["id"], e["version"])
             p = by_id.get(e["id"], ({}, ""))[0]
             if not p:
                 raise PacketError(f"packs: {kid!r} needs {e['id']!r}, which is not given (L9)")
@@ -404,7 +420,7 @@ def _resolve_packs(
     if not by_id:
         return [], BASE_VOCABULARY, (), {}, ()
     ids = sorted(by_id)
-    copies = tuple(by_id[i][0] for i in ids)
+    copies = tuple(by_id[i][0] for i in ids if i not in built)
     resolved = [
         {"id": i, "type": by_id[i][0]["type"], "version": by_id[i][0]["version"], "sha256": s}
         for i in ids

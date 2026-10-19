@@ -1,0 +1,117 @@
+{
+ "name": "101-sign-without-finance",
+ "description": "Without the pack finance, the packet reads no loss word. A sign item that holds only a loss word still gives its part, but it fails: the decision gets SIGN_CITATION_INVALID and goes to review, and sign is not missing. Brackets still make a sign, with or without an item (spec 0.10, #336).",
+ "document": "For the year ended December 31, 2024, we had a net loss of $71,000.\n\nNet (loss) income\n\n$6,152\n\n($13,203\n)\n\nThe deficit was $9 in 2024.",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "f1",
+   "field": "amount",
+   "value": "-71000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 59,
+     "end": 66,
+     "text": "$71,000"
+    },
+    {
+     "role": "sign",
+     "text": "net loss"
+    }
+   ]
+  },
+  {
+   "id": "f2",
+   "field": "amount",
+   "value": "-9",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 124,
+     "end": 126,
+     "text": "$9"
+    },
+    {
+     "role": "sign",
+     "text": "deficit"
+    }
+   ]
+  },
+  {
+   "id": "f3",
+   "field": "amount",
+   "value": "-13203",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 97,
+     "end": 104,
+     "text": "$13,203"
+    },
+    {
+     "role": "sign",
+     "text": "($13,203\n)"
+    }
+   ]
+  },
+  {
+   "id": "f4",
+   "field": "amount",
+   "value": "-71000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 59,
+     "end": 66,
+     "text": "$71,000"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "sign"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -61,6 +61,8 @@ def envelope(*candidates, missing=()):
 
 
 SCHEMA = {"fields": {"amount": {"type": "integer"}}}
+# the loss words come from the built-in pack finance (#336)
+FINANCE_SCHEMA = {"packs": [{"id": "finance", "version": "1.0.0"}], **SCHEMA}
 
 
 def execute(text, client, schema=SCHEMA, **kwargs):
@@ -443,7 +445,7 @@ def test_runtime_error_has_partial_record(monkeypatch):
     [
         (
             "Loss 5.",
-            SCHEMA,
+            FINANCE_SCHEMA,
             candidate("-5", evidence=[item("5"), item("wrong", "sign")]),
             candidate("-5", evidence=[item("5"), item("Loss", "sign")]),
             "SIGN_CITATION_INVALID",
@@ -479,7 +481,7 @@ def test_runtime_error_has_partial_record(monkeypatch):
         ("Amount 5.", SCHEMA, candidate(evidence=[]), candidate(), "NO_EVIDENCE"),
         (
             "Loss 5.",
-            SCHEMA,
+            FINANCE_SCHEMA,
             candidate("-5", evidence=[item("5")]),
             candidate("-5", evidence=[item("5"), item("Loss", "sign")]),
             "PART_MISSING",

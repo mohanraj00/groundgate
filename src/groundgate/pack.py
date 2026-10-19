@@ -23,7 +23,12 @@ BASE_ID = "en"
 BASE_VERSION = "1.0.0"
 # the digest of the base pack that SPEC §4.7 gives for this spec version
 BASE_SHA256 = "sha256:8ee2f5c367baa29969759e3ed3ec5acf39f412a8b4b6afbda6477c1cde7fdeae"
-BUILT_IN = frozenset({BASE_ID})  # the ids of the built-in packs (SPEC §4.8, L7)
+# each released version of a built-in pack other than the base, with the digest that SPEC §4.8
+# gives. A schema names one by id and version, and the packet never gives it (#336).
+BUILT_IN_SHA256 = {
+    ("finance", "1.0.0"): "sha256:970c4809b1e092944f4ff3afb915bce07563414638db11c8cfe34ea5c4e99e01",
+}
+BUILT_IN = frozenset({BASE_ID, *(pid for pid, _ in BUILT_IN_SHA256)})  # (SPEC §4.8, L7)
 
 FORMAT = 1
 MAX_FILE = 1 << 20  # bytes of a pack file, before the loader parses it (L4)
@@ -34,8 +39,6 @@ MAX_WORD = 64  # the code points of one word (L3)
 MAX_INT = 2**53  # an integer of a pack is at most this, as in JSON (L2)
 POWERS = frozenset({3, 5, 6, 7, 9, 12})  # the powers of ten of a scale (L6)
 COMPARATORS = ("approx", "gt", "lt", "ge", "le", "range")
-# the loss words that stay in the code until the `finance` pack takes them (#336)
-CODE_LOSS = ("loss", "losses", "deficit", "deficits")
 
 _ID = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
 _VERSION = re.compile(r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\Z")
@@ -326,7 +329,7 @@ def _check_kind(pack: dict[str, Any]) -> None:
             raise _fail(pack, "a needs entry has an id of the wrong form (L7)")
         if type(e["version"]) is not str or not _VERSION.match(e["version"]):
             raise _fail(pack, "a needs entry has a version that is not MAJOR.MINOR.PATCH (L7)")
-        if e["id"] in BUILT_IN:
+        if e["id"] == BASE_ID:
             raise _fail(pack, f"needs names {e['id']!r}, the base pack, which always applies (L9)")
         if e["id"] in seen or e["id"] == pack["id"]:
             raise _fail(pack, f"needs names {e['id']!r} twice, or names the pack itself (L9)")
@@ -509,7 +512,7 @@ def _conflicts(base: dict[str, Any], m: dict[str, Any]) -> None:
     for s in scale["suffixes"]:
         if set(_cased(s)) & unit_suffixes:
             raise PacketError(f"packs: the scale suffix {s!r} is also a unit suffix (L6)")
-    loss = {_key(w) for w in (*CODE_LOSS, *m["sign"]["loss"])}
+    loss = {_key(w) for w in m["sign"]["loss"]}
     both = loss & {_key(w) for w in m["sign"]["gain"]}
     if both:
         raise PacketError(f"packs: {sorted(both)} are loss words and gain words (L6)")
@@ -563,3 +566,20 @@ def _load_base() -> dict[str, Any]:
 
 
 BASE = _load_base()
+_LOADED: dict[tuple[str, str], dict[str, Any]] = {}
+
+
+def built_in_pack(pid: str, version: str) -> dict[str, Any] | None:
+    """A built-in pack other than the base, or None when this version is not built in. A file
+    with another digest than the released one stops the call (SPEC §4.8)."""
+    want = BUILT_IN_SHA256.get((pid, version))
+    if want is None:
+        return None
+    if (pid, version) not in _LOADED:
+        path = resources.files("groundgate") / "packs" / pid / f"{version}.json"
+        pack: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+        found = pack_digest(pack)
+        if found != want:
+            raise RuntimeError(f"built-in pack {pid} {version} has digest {found}, not {want}")
+        _LOADED[(pid, version)] = check_pack(pack, built_in=True)
+    return copy.deepcopy(_LOADED[(pid, version)])  # a caller cannot change the cached pack

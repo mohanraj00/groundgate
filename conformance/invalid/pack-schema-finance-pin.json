@@ -1,0 +1,25 @@
+{
+ "name": "pack-schema-finance-pin",
+ "description": "A pinned sha256 that differs from the digest of the built-in pack finance.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "finance",
+    "version": "1.0.0",
+    "sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

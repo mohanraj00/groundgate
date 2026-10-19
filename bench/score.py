@@ -122,6 +122,7 @@ def load_gold(drafts: bool) -> dict[str, Gold]:
         schema = {
             "fields": {n: s["schema"] for n, s in g["fields"].items()},
             "units": g["units"],
+            "packs": [{"id": "finance", "version": "1.0.0"}],
         }
         out[g["doc"]] = Gold(
             doc=g["doc"],

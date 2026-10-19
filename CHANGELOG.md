@@ -16,8 +16,15 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   receipt changes: a test shows that every moved pattern matches the same text as before, on
   every conformance string and every bench document text. The pack also holds the bare `000`
   currency scale of #313 and the currency names of a currency statement of #315, each name
-  written out also in the singular. The loss words stay in the code until the `finance` pack
-  takes them (#336).
+  written out also in the singular.
+- The loss words `loss`, `losses`, `deficit` and `deficits` move from the code to the built-in
+  vocabulary pack `finance` 1.0.0 (#336). A schema names it with
+  `{"id": "finance", "version": "1.0.0"}`, and the packet does not give it. SPEC §4.8 gives its
+  digest. Without `finance`, a sign item that holds only a loss word fails with
+  `SIGN_CITATION_INVALID`, and the decision goes to review. Brackets still give a sign. The bench
+  schemas of the financial sets name `finance`, and every bench check gives the same numbers. The
+  currency names of a currency statement stay in `en`: they can stop an admit, so a schema without
+  `finance` must still read them. The `en` digest does not change.
 - An app can give its own vocabulary packs (#334). `groundgate.load_pack(path)` reads a pack
   file, `admit(..., packs=[...])` and `verify` take the pack objects, and the CLI takes
   `--pack FILE`. The schema names each pack in a new member `packs`. A pack only adds words to

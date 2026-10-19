@@ -1,0 +1,9 @@
+{
+ "groundgate_pack": 1,
+ "type": "vocabulary",
+ "id": "finance",
+ "version": "1.0.0",
+ "description": "Words of financial statements that only help to admit a value. The loss words make a sign item pass (SPEC 4.6).",
+ "status": [],
+ "sign": {"loss": ["loss", "losses", "deficit", "deficits"]}
+}

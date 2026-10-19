@@ -1821,19 +1821,23 @@ vector(
 )
 
 AMOUNT = {"type": "integer", "unit": "USD", "multiple": True}
+# the built-in pack that gives the loss words (spec 0.10, #336): the schema names it, and the
+# packet does not give it
+FINANCE = {"id": "finance", "version": "1.0.0"}
 vector(
     "19b-derived-sign",
     "A sign item makes a token negative: brackets around the value, or a loss word before it in "
     "the same sentence with no number, line break, tab or gain word between. Brackets around the "
     "token make it negative with no item. A failing sign item still gives its part, with its flag. "
-    "A negative value with no sign is a missing part (spec 0.5).",
+    "A negative value with no sign is a missing part (spec 0.5). The loss words come from the "
+    "built-in pack finance, which the schema names (spec 0.10, #336).",
     "For the year ended December 31, 2024, we had a net loss of $71,000, which consisted of "
     "$71,000 of general and administrative expenses.\n\n"
     "Loss from operations\n\n($105,198\n)\n\n($34,904\n)\n\n"
     "Net (loss) income\n\n$6,152\n\n($13,203\n)\n\n"
     "In 2023 the company reported a loss of $5,000 and revenue of $9,000.\n\n"
     "Loss was $5 million in 2022.",
-    {"fields": {"amount": AMOUNT}},
+    {"packs": [FINANCE], "fields": {"amount": AMOUNT}},
     [
         c("s1", "amount", "-71000", "USD", [q("$71,000"), {"role": "sign", "text": "net loss"}],
           ("admitted", ["VALUE_DERIVED"])),
@@ -2149,12 +2153,13 @@ vector(
     "19j-role-checks",
     "Each role item is checked at the value: in a table only brackets make a sign, a scale item "
     "after the value fails, a unit item that is not found fails, a field item that holds no alias "
-    "fails, and on a string field every role item but a key or field item fails (spec 0.5).",
+    "fails, and on a string field every role item but a key or field item fails (spec 0.5). The "
+    "loss words come from the built-in pack finance (spec 0.10, #336).",
     "Results\n\nYear\n\n2025\n\n2024\n\n"
     "Net loss\n\n$\n\n(2,500\n)\n\n$\n\n(1,900\n)\n\n"
     "Shares outstanding\n\n7,000\n\n6,500\n\n"
     "The net loss for 2025 was $2,500 thousand. The deficit grew to $9 in 2024, and income was $3.",
-    {"fields": {"net_income": NET, "title": {"type": "string"}}},
+    {"packs": [FINANCE], "fields": {"net_income": NET, "title": {"type": "string"}}},
     [
         c("j1", "net_income", "-1900", "USD", [q("1,900"), row("Net loss"), year("2024"), DOLLAR],
           ("admitted", ["VALUE_DERIVED", "KEY_CITED"]), key="2024"),
@@ -4891,6 +4896,78 @@ bad_kind("pack-l10-pin", "L10: a pinned sha256 of a kind pack that differs from 
                             "sha256": "sha256:" + "0" * 64}],
                  "fields": {"fee": TEMPLATE}})
 # fmt: on
+
+
+# ---------------------------------------------------------------- the finance pack (#336)
+LOSS_DOC = (
+    "For the year ended December 31, 2024, we had a net loss of $71,000.\n\n"
+    "Net (loss) income\n\n$6,152\n\n($13,203\n)\n\n"
+    "The deficit was $9 in 2024."
+)
+vector(
+    "101-sign-without-finance",
+    "Without the pack finance, the packet reads no loss word. A sign item that holds only a loss "
+    "word still gives its part, but it fails: the decision gets SIGN_CITATION_INVALID and goes to "
+    "review, and sign is not missing. Brackets still make a sign, with or without an item "
+    "(spec 0.10, #336).",
+    LOSS_DOC,
+    {"fields": {"amount": AMOUNT}},
+    [
+        c("f1", "amount", "-71000", "USD", [q("$71,000"), {"role": "sign", "text": "net loss"}],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"], [])),
+        c("f2", "amount", "-9", "USD", [q("$9"), {"role": "sign", "text": "deficit"}],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"], [])),
+        c("f3", "amount", "-13203", "USD",
+          [q("$13,203"), {"role": "sign", "text": "($13,203\n)"}], ("admitted", ["VALUE_DERIVED"])),
+        c("f4", "amount", "-71000", "USD", [q("$71,000")], (REVIEW, ["PART_MISSING"], ["sign"])),
+    ],
+)  # fmt: skip
+vector(
+    "102-sign-with-finance",
+    "The same candidates with the pack finance: a loss word before the value in its sentence "
+    "passes the sign check (spec 0.10, #336).",
+    LOSS_DOC,
+    {"packs": [FINANCE], "fields": {"amount": AMOUNT}},
+    [
+        c("g1", "amount", "-71000", "USD", [q("$71,000"), {"role": "sign", "text": "net loss"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("g2", "amount", "-9", "USD", [q("$9"), {"role": "sign", "text": "deficit"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("g3", "amount", "-13203", "USD",
+          [q("$13,203"), {"role": "sign", "text": "($13,203\n)"}], ("admitted", ["VALUE_DERIVED"])),
+        c("g4", "amount", "-71000", "USD", [q("$71,000")], (REVIEW, ["PART_MISSING"], ["sign"])),
+    ],
+)  # fmt: skip
+OWN_LOSS = pack("shortfall-x-test", sign={"loss": ["shortfall"]})
+vector(
+    "103-sign-own-loss-word",
+    "An app's own vocabulary pack can give a loss word without the pack finance. Then only its "
+    "words are loss words (spec 0.10, #336).",
+    "There was a shortfall of $40 in 2024. The deficit was $9 in 2024.",
+    uses(OWN_LOSS, amount=AMOUNT),
+    [
+        c("h1", "amount", "-40", "USD", [q("$40"), {"role": "sign", "text": "shortfall"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("h2", "amount", "-9", "USD", [q("$9"), {"role": "sign", "text": "deficit"}],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"], [])),
+    ],
+    packs=[OWN_LOSS],
+)  # fmt: skip
+bad_pack("pack-l7-finance-given", "L7: a given pack with the id of the built-in pack finance.",
+         {**pack("finance"), "sign": {"loss": ["loss"]}})  # fmt: skip
+bad_pack("pack-schema-built-in-version",
+         "The schema names a version of the built-in pack finance that is not built in.",
+         schema={"packs": [{"id": "finance", "version": "9.9.9"}],
+                 "fields": {"fee": {"type": "integer"}}})  # fmt: skip
+bad_pack("pack-schema-finance-pin",
+         "A pinned sha256 that differs from the digest of the built-in pack finance.",
+         schema={"packs": [{**FINANCE, "sha256": "sha256:" + "0" * 64}],
+                 "fields": {"fee": {"type": "integer"}}})  # fmt: skip
+bad_pack("pack-l6-finance-gain",
+         "L6: a pack gives a gain word that the pack finance gives as a loss word.",
+         pack(sign={"gain": ["deficit"]}),
+         schema={"packs": [FINANCE, {"id": "words-x-test", "version": "1.0.0"}],
+                 "fields": {"fee": {"type": "integer"}}})  # fmt: skip
 
 
 def main() -> None:
