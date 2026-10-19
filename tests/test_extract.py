@@ -1407,3 +1407,25 @@ def test_replay_refuses_a_changed_rounding_line():
         assert not replay(record, result.artifacts, text, ROUND_SCHEMA).ok
     removed = [e for i, e in enumerate(result.record) if i != at]
     assert not replay(removed, result.artifacts, text, ROUND_SCHEMA).ok
+
+
+def test_rounding_fails_closed_on_numbers_outside_the_digit_bound():
+    # Exact arithmetic with a bound: no decimal trap can end the run, and no drop happens (#319).
+    from decimal import Decimal
+
+    from groundgate.extract.runner import _within
+
+    assert not _within(Decimal("1E+999999"), Decimal("1"), Decimal("1E+999999"))
+    assert not _within(Decimal("1"), Decimal("1.1"), Decimal("NaN"))
+    assert _within(Decimal("17284000000"), Decimal("17300000000"), Decimal("1E+8"))
+    long = "1" + "0" * 1100
+    text = f"Revenue was {long}.0 in total.\nRevenue\t{long}.04"
+    rounded = candidate(long, "revenue", evidence=[item(f"{long}.0")])
+    exact = candidate(
+        f"{long}.04", "revenue", evidence=[item(f"{long}.04"), item("Revenue", "field")]
+    )
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    assert len(result.candidates) == 2
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
+    assert not any(e["kind"] == "rounding" for e in result.record)
+    assert_replays(result, text, ROUND_SCHEMA)

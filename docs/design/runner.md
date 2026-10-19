@@ -187,6 +187,18 @@ does not change a decision of the core: it changes the candidates that the runne
 record keeps a `rounding` line before the final admission. That line names the admission packet
 with all tips, and each dropped candidate id with the kept ids and the precision.
 
+The check uses exact integer arithmetic. It reads only numbers with at most 1000 digits and an
+exponent of at most 1000. A larger number fails closed: it is never dropped, and no decimal
+error ends the run.
+
+**Threat.** This rule trusts the document to hold a more exact figure. Before it, a second value
+always sent the field to review. Now the author of a document or a reference can choose the
+admitted value inside half of the rounded figure's precision. Beside "£17.3bn", a line "Revenue
+was 17,299 million" drops the rounded figure and admits 17299000000. The shift is bounded by
+that half precision, and the `rounding` line records the drop. A value outside it stays a
+conflict. An app that cannot trust its documents for this reads the `rounding` lines and sends
+those fields to review.
+
 ## 5. What each repair may change
 
 A repair request names exactly one candidate id, the prior candidate, its current decision,
