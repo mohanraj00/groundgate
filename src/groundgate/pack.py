@@ -117,13 +117,19 @@ def _fail(pack: object, msg: str) -> PacketError:
 def _check_data(pack: object) -> None:
     """L2, and the depth and entry limits of L4, with no recursion: only strings, integers,
     null, lists and objects with string keys. Each type must be exact: a subclass can give
-    another answer when it is read again (#334)."""
+    another answer when it is read again (#334). JSON cannot give one list or object at two
+    places, so a container that occurs twice is not data: the walk stays linear."""
     stack: list[tuple[object, int]] = [(pack, 1)]
+    seen: set[int] = set()
     while stack:
         obj, depth = stack.pop()
         if depth > MAX_DEPTH:
             raise _fail(pack, f"the JSON nesting depth is more than {MAX_DEPTH} (L4)")
         kind = type(obj)
+        if kind is dict or kind is list:
+            if id(obj) in seen:
+                raise _fail(pack, "a list or an object occurs at two places (L2)")
+            seen.add(id(obj))
         if kind is dict:
             assert isinstance(obj, dict)
             if len(obj) > MAX_ENTRIES:

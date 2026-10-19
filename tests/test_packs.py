@@ -85,7 +85,7 @@ def test_load_pack_refuses_a_file_that_is_not_one_json_object(tmp_path: Path, ra
 
 def test_a_pack_of_more_than_256_kib_as_canonical_json_is_invalid() -> None:
     words = [f"{'w' * 60}{i:04d}" for i in range(1999)]
-    big = pack(per_units=words, null_literals=words, changes={"stop_words": words})
+    big = pack(per_units=words, null_literals=list(words), changes={"stop_words": list(words)})
     assert len(gg.jcs(big)) > MAX_CANONICAL
     with pytest.raises(gg.PacketError, match="262144"):
         gg.admit(DOC, SCHEMA, [], packs=[big])
@@ -294,3 +294,15 @@ def test_a_documents_count_is_not_a_bool() -> None:
     gg.admit(DOC, SCHEMA, [], packs=[pack(status=[{**row, "documents": 3}])])
     with pytest.raises(gg.PacketError, match="bool is not data"):
         gg.admit(DOC, SCHEMA, [], packs=[pack(status=[{**row, "documents": True}])])
+
+
+def test_a_shared_list_is_refused_at_once() -> None:
+    x: Any = []
+    for _ in range(6):
+        x = [x] * 2000  # 2000**6 paths through 7 lists, at depth 8
+    with pytest.raises(gg.PacketError, match="two places"):
+        gg.admit(DOC, SCHEMA, [], packs=[pack(status=x)])
+    loop: list[Any] = []
+    loop.append(loop)
+    with pytest.raises(gg.PacketError, match="two places"):
+        gg.admit(DOC, SCHEMA, [], packs=[pack(status=loop)])
