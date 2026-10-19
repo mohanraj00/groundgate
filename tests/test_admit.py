@@ -963,3 +963,78 @@ def test_evidence_units_keeps_other_bytes() -> None:
     """A receipt with no unit code is the same as before: no decision has the key (#362)."""
     r = gg.admit(DOC, SCHEMA, CANDS).to_dict()
     assert all("evidence_units" not in d for d in r["decisions"])
+
+
+def test_evidence_units_cuts_a_long_form() -> None:
+    """A run of 1 MB of letters before "$" gives a form of 11 code points with "cut", not 1 MB
+    in the receipt (SPEC §5, #366)."""
+    doc = "\t" + "A" * 2**20 + "$m\nRevenue\t5,200\n"
+    schema: dict[str, Any] = {"fields": {"usd": {"type": "number", "unit": "USD"}}}
+    cand = {"id": "a", "field": "usd", "value": "5200000000", "unit": "USD",
+            "evidence": [{"text": "5,200"}, {"role": "scale", "text": "$m"}]}  # fmt: skip
+    got = _units(doc, schema, cand)
+    assert got is not None
+    assert got["headers"] == [{"form": "AAAAAAAAAA$", "allows": [], "cut": True}]
+    # a unit of the schema with a longer prefix makes the limit longer
+    schema["units"] = {"XYZ": {"prefix": ["ABCDEFGHIJKL$"]}}
+    got = _units(doc, schema, cand)
+    assert got is not None
+    assert got["headers"] == [{"form": "A" * 20 + "$", "allows": [], "cut": True}]
+
+
+def _report_by_kind(idx: Any, pos: int, units: Any) -> Any:
+    """The report as #362 made it first: from each kind of heading unit, not from the token."""
+    from groundgate.text import heading_allows
+
+    kinds = [kind for kind in idx.reach if idx.reaches(kind, pos)]
+    limit = max((len(p) for pre, _ in units.values() for p in pre), default=0) + 8
+    found: dict[str, Any] = {}
+    for code, form in kinds:
+        if code is None:
+            cut = len(form) > limit
+            shown = form[-limit:] if cut else form
+            allows = tuple(sorted(heading_allows(None, form, units) or ()))
+            found[shown] = (allows, cut or found.get(shown, ((), False))[1])
+    headers = tuple((f, a, c) for f, (a, c) in sorted(found.items()))
+    return headers, tuple(sorted({c for c, _ in kinds if c is not None}))
+
+
+def test_evidence_units_report_reads_only_the_units_that_reach(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The report walks back from the token's line, as ``held`` does, so its cost does not grow
+    with the heading units that do not reach the token. Its output is the same as from each kind
+    on each digit of each vector document and of a document with many headers (#366)."""
+    from groundgate.model import Schema
+    from groundgate.text import HeadingIndex, HeadingUnit
+
+    units = Schema.from_dict({"fields": {}}).units
+    paths = sorted((Path(__file__).parent.parent / "conformance" / "vectors").glob("*.json"))
+    docs = [json.loads(p.read_text(encoding="utf-8"))["document"] for p in paths]
+    docs.append("Note $m.\nNote £m.\n\t$m\t€m\nA\t1\tUSD 2\nB\t3\t4\n\nIn euros\n\t5\n")
+    for doc in docs:
+        if not isinstance(doc, str):
+            continue
+        idx = HeadingIndex(doc)
+        for pos, ch in enumerate(doc):
+            if ch.isdigit():
+                headers, statements, _ = idx.report(pos, units)
+                assert (headers, statements) == _report_by_kind(idx, pos, units), (doc, pos)
+
+    calls = [0]
+    reaches = HeadingUnit.reaches
+
+    def counted(self: HeadingUnit, pos: int) -> bool:
+        calls[0] += 1
+        return reaches(self, pos)
+
+    monkeypatch.setattr(HeadingUnit, "reaches", counted)
+
+    def cost(n: int) -> int:
+        doc = "".join(f"Note {c}m.\n" for c in "$£€" * n) + "Other.\n\t$m\nRevenue\t5,200\n"
+        idx = HeadingIndex(doc)
+        calls[0] = 0
+        idx.report(doc.index("5,200"), units)
+        return calls[0]
+
+    assert cost(10) == cost(10_000) == 2

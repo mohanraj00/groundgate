@@ -1200,8 +1200,16 @@ is a string, otherwise `null`.
   - `per` is true when the suffix of `next` is a per-unit (§4.3). Otherwise it is false. So
     "75 mg/m2" gives `"next": ["mg"], "per": true`.
   - `headers` lists each form of a currency header that reaches the token (§4.3), one time for
-    each form, as `{"form", "allows"}`. `allows` lists the codes that the header allows. It is
-    empty for an unknown header.
+    each reported form, as `{"form", "allows"}`. `allows` lists the codes that the header allows.
+    It is empty for an unknown header. A form is reported as it is in the text when its length
+    is at most the limit: the length of the longest prefix in the unit table, plus 8 code
+    points. The unit table is the built-in table with the schema's `units` (§4.3). A longer form
+    is **cut** to its last code points, up to the limit, so that it keeps its sign, and its
+    entry has the member `"cut": true`. Only a cut form has `cut`. If two forms give the same
+    reported form, they have one entry, and it has `cut` when one of them is cut. A cut form is
+    always unknown, because each prefix of the unit table is within the limit. With the
+    built-in table the limit is 11 (`US$` and `Rs.` have 3), so `ABCDEFGHIJKLMNOPQRST$m` gives
+    `{"form": "KLMNOPQRST$", "allows": [], "cut": true}`.
   - `statements` lists the code of each currency statement that reaches the token, one time for
     each code.
   - `currency` lists each code X for which the heading currency of the token is X when the

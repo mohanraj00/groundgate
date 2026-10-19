@@ -976,21 +976,34 @@ class HeadingIndex:
 
     def report(
         self, pos: int, units: Units
-    ) -> tuple[tuple[tuple[str, tuple[str, ...]], ...], tuple[str, ...], tuple[str, ...]]:
+    ) -> tuple[tuple[tuple[str, tuple[str, ...], bool], ...], tuple[str, ...], tuple[str, ...]]:
         """The heading units that reach the token at ``pos``, for the receipt's
         ``evidence_units`` (SPEC §5, spec 0.10, #362): each header form with the codes that it
-        allows (none for an unknown header), the codes of the statements, and each code X that
-        is the token's heading currency when the field's unit is X. Each is sorted. This is a
-        report: no check reads it, and it never chooses between two currencies."""
+        allows (none for an unknown header) and whether the form is cut, the codes of the
+        statements, and each code X that is the token's heading currency when the field's unit
+        is X. Each is sorted. This is a report: no check reads it, and it never chooses between
+        two currencies.
+
+        A form is the sign with all the letters before it, so the text sets its length. A form
+        longer than the longest prefix of ``units`` plus 8 code points keeps only its last code
+        points up to that limit. The units that reach the token are read as ``held`` reads them,
+        from its line back, so the cost does not grow with the units that do not reach it."""
         voc = _VOCAB.get()
-        kinds = [kind for kind in self.reach if self.reaches(kind, pos)]
-        headers = tuple(
-            sorted(
-                (form, tuple(sorted(heading_allows(None, form, units) or ())))
-                for code, form in kinds
-                if code is None
-            )
-        )
+        line = self.lines[bisect.bisect_right(self.lines, pos) - 1]
+        j = bisect.bisect_left(self.starts, line) - 1
+        kinds: set[tuple[str | None, str]] = set()
+        while j >= 0 and self.units[j].reaches(pos):
+            kinds.add((self.units[j].code, self.units[j].form))
+            j -= 1
+        limit = max((len(p) for prefixes, _ in units.values() for p in prefixes), default=0) + 8
+        found: dict[str, tuple[tuple[str, ...], bool]] = {}
+        for code, form in kinds:
+            if code is None:
+                cut = len(form) > limit
+                shown = form[-limit:] if cut else form
+                allows = tuple(sorted(heading_allows(None, form, units) or ()))
+                found[shown] = (allows, cut or found.get(shown, ((), False))[1])
+        headers = tuple((form, allows, cut) for form, (allows, cut) in sorted(found.items()))
         statements = tuple(sorted({code for code, _ in kinds if code is not None}))
         codes = sorted(set(units) | set(voc.CURRENCY_NAMES))
         currency = tuple(c for c in codes if kinds and self.currency(pos, c, units))

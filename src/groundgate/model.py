@@ -607,7 +607,7 @@ class EvidenceUnits:
     token: tuple[int, int]  # UTF-8 byte span in the value item's text
     next: tuple[str, ...]  # the codes with a form next to the token, sorted
     per: bool  # the suffix of ``next`` is a per-unit
-    headers: tuple[tuple[str, tuple[str, ...]], ...]  # (form, allowed codes), sorted by form
+    headers: tuple[tuple[str, tuple[str, ...], bool], ...]  # (form, allowed codes, cut), by form
     statements: tuple[str, ...]  # the codes of the currency statements, sorted
     currency: tuple[str, ...]  # each code that is the heading currency for itself, sorted
 
@@ -616,7 +616,10 @@ class EvidenceUnits:
             "token": {"start": self.token[0], "end": self.token[1]},
             "next": list(self.next),
             "per": self.per,
-            "headers": [{"form": form, "allows": list(allows)} for form, allows in self.headers],
+            "headers": [
+                {"form": form, "allows": list(allows), **({"cut": True} if cut else {})}
+                for form, allows, cut in self.headers
+            ],
             "statements": list(self.statements),
             "currency": list(self.currency),
         }
