@@ -6,8 +6,8 @@ admits a right value and sends a doubtful one to a person. This page shows how t
 [SPEC.md](../SPEC.md) §2.3 and §4 are the normative rules, and the
 [guide](guide.md#schema) has the short reference table.
 
-A schema is an object with `fields` and, optionally, `units`. This is a minimal one, with one
-candidate that quotes its evidence:
+A schema is an object with `fields` and, optionally, `units` and `relations`. This is a minimal
+one, with one candidate that quotes its evidence:
 
 ```python
 import groundgate as gg
@@ -565,6 +565,74 @@ t3  admitted            up to 30 days
 t4  rejected            -             TYPE_INVALID
 t5  rejected            -             TYPE_INVALID
 ```
+
+## Relations
+
+A value can be in the document and still belong to another field. A relation between fields is a
+check of that error that needs no model (spec 0.10, #321). It says that a total equals the sum of
+its parts, such as "assets equal liabilities plus equity". After the other checks, groundgate
+adds the values that passed. If the relation fails, each of its values goes to review with
+`RELATION_FAILED`, because groundgate cannot tell which value is wrong. If it holds, it admits
+nothing more.
+
+```python
+text = (
+    "In 2025, total assets were $1,500, total liabilities were $900 and total equity was $600. "
+    "In 2024, total assets were $1,400, total liabilities were $900, total equity was $500 "
+    "and cash was $450."
+)
+money = {"type": "integer", "unit": "USD", "keys": ["2025", "2024"]}
+schema = {
+    "fields": {"assets": money, "liabilities": money, "equity": money},
+    "relations": [
+        {
+            "id": "balance",
+            "total": "assets",
+            "parts": [{"field": "liabilities"}, {"field": "equity"}],
+        }
+    ],
+}
+candidates = [
+    cite("a25", "assets", "1500", "$1,500", "USD", key="2025"),
+    cite("l25", "liabilities", "900", "$900", "USD", key="2025"),
+    cite("e25", "equity", "600", "$600", "USD", key="2025"),
+    cite("a24", "assets", "1400", "$1,400", "USD", key="2024"),
+    cite("l24", "liabilities", "900", "liabilities were $900, total equity", "USD", key="2024"),
+    cite("e24", "equity", "450", "$450", "USD", key="2024"),
+]
+receipt = gg.admit(text, schema, candidates)
+show(receipt)
+for r in receipt.relations:
+    print(r.id, r.key, r.holds, r.difference, r.allowance)
+```
+
+```text
+a24 needs_verification  1400          key=2024 RELATION_FAILED
+a25 admitted            1500          key=2025
+e24 needs_verification  450           key=2024 RELATION_FAILED
+e25 admitted            600           key=2025
+l24 needs_verification  900           key=2024 RELATION_FAILED
+l25 admitted            900           key=2025
+balance 2024 False 50 1.5
+balance 2025 True 0 1.5
+```
+
+In 2024 the equity candidate took the cash figure. The relation fails by 50, so all three values
+of 2024 go to review. The relation runs once for each key that all of its fields list. It
+applies only when each field has values that passed, all with one value. A rejected value or a
+conflict (`CONFLICTING_CANDIDATES`) stops it, and then nothing changes.
+
+`difference` is the total minus the parts. `allowance` is how far apart they can be, for
+rounding: half of one unit of the last written digit of each value. A value in thousands, such as
+"$1,250" under "(in thousands)", has the unit 1000, so the allowance grows to 500 for that value.
+A value such as "$1 billion" has the unit 10^9. So a relation catches less on values that the
+document rounds a lot.
+
+Each part has a `factor`, `"1"` by default. `"-1"` subtracts the part, as in "net pay equals gross
+pay minus tax". A factor such as `"0.001"` changes the unit of a part, as from mg to g. If a part
+has another unit than the total, it must give a factor. `tolerance` adds to the allowance, in the
+unit of the total, and is `"0"` by default. The fields of a relation are numbers, not `multiple`,
+and all of them have `keys` or none of them. [SPEC.md](../SPEC.md) §3.4 has the rules.
 
 ## When the schema is invalid
 

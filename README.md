@@ -363,6 +363,7 @@ A fact that passes every check can still be flagged for a person:
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | only an external quote, or the extractor's own knowledge, supports the value |
 | `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
 | `CONFLICTING_CANDIDATES` | another proposal for the same field and key has a different value |
+| `RELATION_FAILED` | a relation of the schema, such as a total and its parts, does not add up |
 | `MODEL_DOUBT` | a recorded judgment of the policy's judge doubts the value |
 
 Number matching is collision-safe. The span `500 mg` inside `1,500 mg` never reads as 500, a span

@@ -24,16 +24,17 @@ class PacketError(ValueError):
     """The inputs themselves are invalid (SPEC §2): no receipt can be produced."""
 
 
-def _bound(name: str, raw: object) -> Decimal | None:
+def _bound(name: str, raw: object, what: str = "field bound") -> Decimal | None:
+    """A decimal string or an integer that reads as a number (SPEC §2.3, §4.1), or None."""
     if raw is None:
         return None
     if isinstance(raw, bool) or not isinstance(raw, (int, str)):
-        raise PacketError(f"field bound {name} must be a decimal string or integer")
+        raise PacketError(f"{what} {name} must be a decimal string or integer")
     if isinstance(raw, int) and abs(raw) > _SAFE_INT:
-        raise PacketError(f"field bound {name}: integer is outside [-(2^53-1), 2^53-1]")
+        raise PacketError(f"{what} {name}: integer is outside [-(2^53-1), 2^53-1]")
     value = parse_value(str(raw))
     if value is None:
-        raise PacketError(f"field bound {name}={raw!r} is not a decimal")
+        raise PacketError(f"{what} {name}={raw!r} is not a decimal")
     return value
 
 
@@ -127,17 +128,92 @@ class Field:
 
 
 @dataclass(frozen=True)
+class Relation:
+    """A relation between fields (SPEC §2.3): the total equals the sum of each part times its
+    factor, within the tolerance and the places of the values (SPEC §3.4)."""
+
+    id: str
+    total: str
+    parts: tuple[tuple[str, Decimal], ...]  # (field name, factor)
+    tolerance: Decimal = Decimal(0)
+
+    @property
+    def fields(self) -> tuple[str, ...]:
+        return (self.total, *(name for name, _ in self.parts))
+
+
+def _relation_field(where: str, name: object, fields: dict[str, Field]) -> Field:
+    if not isinstance(name, str) or name not in fields:
+        raise PacketError(f"{where} names {name!r}, which is not a field of the schema")
+    f = fields[name]
+    if f.type == "string" or f.multiple:
+        raise PacketError(f"{where}: field {name!r} is a string field or a multiple field")
+    return f
+
+
+def _relations(raw: object, fields: dict[str, Field]) -> tuple[tuple[Relation, ...], list[Any]]:
+    """The schema's relations, and their form after defaults (SPEC §2.3, #321)."""
+    if not isinstance(raw, list):
+        raise PacketError("schema relations must be a list")
+    out: list[Relation] = []
+    filled: list[Any] = []
+    for n, r in enumerate(raw):
+        if not isinstance(r, dict) or set(r) - {"id", "total", "parts", "tolerance"}:
+            raise PacketError(f"relation {n} must be an object with id, total, parts, tolerance")
+        rid = r.get("id")
+        if not isinstance(rid, str) or not rid.strip():
+            raise PacketError(f"relation {n} id must be a non-blank string")
+        where = f"relation {rid!r}"
+        if any(x.id == rid for x in out):
+            raise PacketError(f"{where}: another relation has the same id")
+        total = _relation_field(where, r.get("total"), fields)
+        parts_raw = r.get("parts")
+        if not isinstance(parts_raw, list) or not parts_raw:
+            raise PacketError(f"{where} parts must be a non-empty list")
+        parts: list[tuple[str, Decimal]] = []
+        parts_filled: list[dict[str, Any]] = []
+        for part in parts_raw:
+            if not isinstance(part, dict) or set(part) - {"field", "factor"}:
+                raise PacketError(f"{where}: a part must be an object with only field and factor")
+            f = _relation_field(where, part.get("field"), fields)
+            given = part.get("factor", "1")
+            factor = _bound("factor", given, where)
+            if factor is None or factor == 0:
+                raise PacketError(f"{where}: a factor must be a decimal that is not zero")
+            if "factor" not in part and f.unit != total.unit:
+                raise PacketError(f"{where}: part {f.name!r} has another unit and no factor")
+            parts.append((f.name, factor))
+            parts_filled.append({"field": f.name, "factor": given})
+        names = [total.name, *(name for name, _ in parts)]
+        if len(set(names)) != len(names):
+            raise PacketError(f"{where} names one field twice")
+        if len({fields[name].keys is None for name in names}) > 1:
+            raise PacketError(f"{where}: some of its fields have keys, and others do not")
+        given_tolerance = r.get("tolerance", "0")
+        tolerance = _bound("tolerance", given_tolerance, where)
+        if tolerance is None or tolerance < 0:
+            raise PacketError(f"{where} tolerance must be a decimal that is not negative")
+        out.append(Relation(rid, total.name, tuple(parts), tolerance))
+        filled.append(
+            {"id": rid, "total": total.name, "parts": parts_filled, "tolerance": given_tolerance}
+        )
+    return tuple(out), filled
+
+
+@dataclass(frozen=True)
 class Schema:
     fields: dict[str, Field]
     units: dict[str, tuple[list[str], list[str]]]
     _raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
+    relations: tuple[Relation, ...] = ()
 
     @classmethod
     def from_dict(cls, d: object) -> Schema:
         if not isinstance(d, dict) or not isinstance(d.get("fields"), dict):
             raise PacketError("schema must be an object with a 'fields' object")
-        if set(d) - {"fields", "units"}:
-            raise PacketError(f"schema has unknown keys {sorted(set(d) - {'fields', 'units'})}")
+        members = {"fields", "units", "relations"}
+        if set(d) - members:
+            raise PacketError(f"schema has unknown keys {sorted(set(d) - members)}")
         fields = {name: Field.from_dict(name, f) for name, f in d["fields"].items()}
         user_units = d.get("units", {})
         if not isinstance(user_units, dict):
@@ -153,8 +229,11 @@ class Schema:
                     raise PacketError(f"unit {code!r} surfaces must be non-empty strings")
             units[code] = (list(prefix), list(suffix))
             raw_units[code] = {"prefix": list(prefix), "suffix": list(suffix)}
-        raw = {"fields": {n: f._raw for n, f in fields.items()}, "units": raw_units}
-        return cls(fields=fields, units=units, _raw=raw)
+        raw: dict[str, Any] = {"fields": {n: f._raw for n, f in fields.items()}, "units": raw_units}
+        relations, filled = _relations(d.get("relations", []), fields)
+        if filled:  # a schema without relations keeps its digest (SPEC §2.3)
+            raw["relations"] = filled
+        return cls(fields=fields, units=units, _raw=raw, relations=relations)
 
     def to_dict(self) -> dict[str, Any]:
         """The schema with defaults filled in: the object ``schema_sha256`` covers."""
@@ -343,6 +422,26 @@ class Judgment:
 
 
 @dataclass(frozen=True)
+class RelationResult:
+    """A relation that applied at one relation key (SPEC §3.4, §5)."""
+
+    id: str
+    key: str | None
+    holds: bool
+    difference: str  # canonical decimal
+    allowance: str  # canonical decimal
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "id": self.id,
+            "key": self.key,
+            "holds": self.holds,
+            "difference": self.difference,
+            "allowance": self.allowance,
+        }
+
+
+@dataclass(frozen=True)
 class Receipt:
     document_id: str | None
     document_sha256: str
@@ -354,6 +453,7 @@ class Receipt:
     judgments: tuple[Judgment, ...] = ()  # the judgments that applied (SPEC §5)
     document_source: str | None = None
     references: tuple[tuple[str, str, str | None], ...] = ()  # (id, sha256, source)
+    relations: tuple[RelationResult, ...] | None = None  # None when the schema has no relations
 
     def body(self) -> dict[str, Any]:
         counts = {"admitted": 0, "needs_verification": 0, "rejected": 0}
@@ -372,6 +472,11 @@ class Receipt:
             "decisions": [d.to_dict() for d in self.decisions],
             "coverage": [{"field": f, "code": c} for f, c in self.coverage],
             "judgments": [j.to_dict() for j in self.judgments],
+            **(
+                {}
+                if self.relations is None
+                else {"relations": [r.to_dict() for r in self.relations]}
+            ),
             "summary": counts,
         }
 

@@ -97,6 +97,18 @@ sentence. The whole suffix must be in that sentence, so a suffix that holds `. `
 500 mg)" the 10 is mcg, never mg. `units` in the schema adds codes or replaces built-in ones. A code with no surfaces
 matches everywhere, so the unit check becomes a no-op for it.
 
+**Relations.** `relations` says that a total equals the sum of its parts, each part times its
+`factor` (spec 0.10). After the other checks, groundgate adds the values that passed, once for
+each key. If the sum is outside the allowance for rounding, each value of the relation gets
+`RELATION_FAILED`. A relation that holds admits nothing. [schema.md](schema.md#relations) has
+an example.
+
+```json
+{"relations": [{"id": "balance", "total": "assets",
+                "parts": [{"field": "liabilities"}, {"field": "equity", "factor": "1"}],
+                "tolerance": "0"}]}
+```
+
 **Keys.** A label gives a different starting dose per indication. Declare them on the field and
 send one candidate per indication:
 
@@ -374,8 +386,9 @@ A fact that passes them all is checked for flags. Any flag makes it `needs_verif
 `NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `PART_MISSING`, `SIGN_CITATION_INVALID`,
 `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_NOT_AT_VALUE`,
 `KEY_CITATION_INVALID`, `EVIDENCE_QUOTED`, `EVIDENCE_STATED`, `LOW_CONFIDENCE`,
-`CONFLICTING_CANDIDATES`, and `MODEL_DOUBT` from a recorded judgment. `EVIDENCE_REANCHORED`,
-`VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and `MODEL_CLEARED` only inform.
+`CONFLICTING_CANDIDATES`, `RELATION_FAILED`, and `MODEL_DOUBT` from a recorded judgment.
+`EVIDENCE_REANCHORED`, `VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and `MODEL_CLEARED`
+only inform.
 
 `CONFLICTING_CANDIDATES` is set on every candidate for a single-valued field (and key) when two
 of them passed the checks with different values. groundgate never picks between them. That is also why
@@ -507,6 +520,7 @@ Flags send the fact to a person:
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | Only outside evidence supports the value. | Check the source. If you trust it, add the URL prefix to `sources.external.allow`, or set `sources.knowledge` to `admit`. |
 | `LOW_CONFIDENCE` | The extractor's `confidence` is below `min_confidence`. | A person checks the fact. |
 | `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |
+| `RELATION_FAILED` | The values of a relation, such as a total and its parts, do not add up. One of them can be a number of another field. | A person checks each value of the relation. The receipt's `relations` gives the difference and the allowance. |
 | `MODEL_DOUBT` | A recorded judgment of the policy's judge doubts the value or its key. | A person checks the fact. |
 
 `REQUIRED_FIELD_MISSING` is a coverage finding, not a decision: no candidate of a required field
@@ -739,7 +753,8 @@ In Python, a loop over `gg.admit` does the same, and the API has no batch functi
 
 A receipt holds the spec version, the document's id, SHA-256 and source, each reference's id,
 SHA-256 and source, the SHA-256 of the schema and policy, one decision per candidate, the coverage
-findings, the judgments that applied, a summary and its own hash. Hashes are over RFC 8785
+findings, the judgments that applied, the results of the schema's relations when it has any, a
+summary and its own hash. Hashes are over RFC 8785
 canonical JSON with a `groundgate/<spec version>:<kind>` prefix, so a receipt made in one language
 verifies in another. `verify` recomputes everything from the inputs. Any change to the document,
 its source, a reference, the schema, the policy, a judgment that applied, a candidate or a
