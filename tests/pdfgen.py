@@ -17,8 +17,12 @@ def make_pdf(
     page_size: tuple[float, float] = (612, 792),
     crop_box: tuple[float, float, float, float] | None = None,
     rotation: int = 0,
+    drawings: list[bytes] | None = None,
 ) -> bytes:
-    """Draw in displayed page coordinates, including when the page has a rotation."""
+    """Draw in displayed page coordinates, including when the page has a rotation.
+
+    ``drawings`` holds raw content-stream operators for each page, such as rules of a table.
+    """
     width, height = page_size
     media = (height, width) if rotation in (90, 270) else (width, height)
     transforms = {
@@ -33,8 +37,8 @@ def make_pdf(
         b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>",
     ]
     kids = []
-    for lines in pages:
-        stream = b"".join(
+    for page, lines in enumerate(pages):
+        stream = (drawings[page] if drawings else b"") + b"".join(
             b"BT /F1 %g Tf %g %g Td " % (line[3] if len(line) > 3 else size, line[0], line[1])
             + _string(line[2])
             + b" Tj ET\n"
