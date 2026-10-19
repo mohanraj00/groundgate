@@ -2875,7 +2875,7 @@ vector(
         c("q8", "count", "13", "Y", [q("13"), q("%", 2, role="unit"), row("Count")],
           (REVIEW, ["UNIT_CITATION_INVALID"])),
         c("q9", "sum", "17", "Z", [q("17"), {"role": "unit", "text": "$"}, row("Sum")],
-          (REVIEW, ["UNIT_CITATION_INVALID"])),
+          (REVIEW, ["UNIT_CITATION_INVALID", "FIELD_CITATION_INVALID"])),
         c("q10", "total", "19", "T", [q("19"), {"role": "unit", "text": "$"}, row("Total")],
           (REVIEW, ["UNIT_CITATION_INVALID"])),
     ],
@@ -3648,20 +3648,22 @@ BALANCES = {
 }
 vector(
     "63-several-field-items-column",
-    "The column rule reads the first field item that passes at the value's row. A column header "
-    "that passes in the value's sentence, but not at the row, does not stop a row label after it "
-    "from placing the key (spec 0.10, #300).",
+    "The column rule reads the first field item that passes at the value's row (spec 0.10, "
+    "#300). A column header in the corner slot, before the first tab of the header line, is in a "
+    "label slot, so it does not pass for a value on a later line (spec 0.10, #316). The row "
+    "label after it still passes and places the key.",
     "Balances\tCurrent\tPrior\nCash\t$400\t$500",
     {"fields": {"cash": BALANCES}},
     [
         c("k1", "cash", "400", "USD", [q("$400"), row("Balances"), row("Cash"), year("Current")],
-          ("admitted", ["KEY_CITED"], [], [T, T, ("key", True)]), key="Current"),
+          ("admitted", ["KEY_CITED"], [], [F, T, ("key", True)]), key="Current"),
         c("k2", "cash", "500", "USD", [q("$500"), row("Cash"), row("Balances"), year("Prior")],
           ("admitted", ["KEY_CITED"], [], [T, F, ("key", True)]), key="Prior"),
         c("k3", "cash", "400", "USD", [q("$400"), row("Balances"), year("Current")],
-          (REVIEW, ["KEY_NOT_AT_VALUE"], [], [T, ("key", True)]), key="Current"),
+          (REVIEW, ["FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE"], [], [F, ("key", True)]),
+          key="Current"),
         c("k4", "cash", "400", "USD", [q("$400"), row("Balances"), row("Cash"), year("Prior")],
-          (REVIEW, ["KEY_NOT_AT_VALUE"], [], [T, T, ("key", True)]), key="Prior"),
+          (REVIEW, ["KEY_NOT_AT_VALUE"], [], [F, T, ("key", True)]), key="Prior"),
     ],
 )  # fmt: skip
 
