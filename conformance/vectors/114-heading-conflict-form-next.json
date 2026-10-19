@@ -1,0 +1,154 @@
+{
+ "name": "114-heading-conflict-form-next",
+ "description": "A unit form next to the token does not win over a heading unit: $5,200, US$1,100 and 300 EUR under a statement of AUD go to review in USD and in EUR, and a unit item $ fails. A form of another unit next to the token still rejects (spec 0.10, #365).",
+ "document": "The figures are presented in Australian dollars.\n\t2025\nRevenue\t$5,200\nCosts\tUS$1,100\nOther\t300 EUR\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "Revenue",
+     "Costs",
+     "Other"
+    ]
+   },
+   "eur": {
+    "type": "number",
+    "unit": "EUR",
+    "multiple": false,
+    "aliases": [
+     "Other"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "hc15",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "$5,200"
+    }
+   ]
+  },
+  {
+   "id": "hc16",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "unit",
+     "text": "$"
+    }
+   ]
+  },
+  {
+   "id": "hc17",
+   "field": "usd",
+   "value": "1100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "US$1,100"
+    },
+    {
+     "role": "field",
+     "text": "Costs"
+    }
+   ]
+  },
+  {
+   "id": "hc18",
+   "field": "usd",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "300 EUR"
+    },
+    {
+     "role": "field",
+     "text": "Other"
+    }
+   ]
+  },
+  {
+   "id": "hc19",
+   "field": "eur",
+   "value": "300",
+   "unit": "EUR",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "300 EUR"
+    },
+    {
+     "role": "field",
+     "text": "Other"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

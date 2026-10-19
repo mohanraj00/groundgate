@@ -1025,25 +1025,43 @@ class HeadingIndex:
             j -= 1  # this unit runs past the item: try the one before it
         return False
 
+    def _allowing(self, pos: int, units: Units) -> list[tuple[str | None, str, set[str]]]:
+        """The kinds of the heading units that reach ``pos`` and are not unknown, each with the
+        codes that it allows (SPEC §4.3). An unknown header changes nothing, so only the kinds
+        that the currency table and the unit table name are read."""
+        voc = _VOCAB.get()
+        forms = set(voc._CONTINUES) | {x for pre, _ in units.values() for x in pre}
+        kinds = [(c, "") for c in voc.CURRENCY_NAMES] + [(None, f) for f in sorted(forms)]
+        out = []
+        for code, form in kinds:
+            if self.reaches((code, form), pos):
+                allowed = heading_allows(code, form, units)
+                if allowed is not None:
+                    out.append((code, form, allowed))
+        return out
+
     def currency(self, pos: int, unit: str, units: Units) -> bool:
         """Whether the heading currency of the token at ``pos`` is ``unit`` (SPEC §4.3): each
         heading unit that reaches it and is not unknown allows the unit, and a statement or a
         header whose form is a prefix of the unit settles it. groundgate never chooses between
-        two currencies. An unknown header changes nothing, so only the kinds that the currency
-        table and the unit table name are read."""
-        voc = _VOCAB.get()
+        two currencies."""
         prefixes = units.get(unit, ([], []))[0]
-        forms = set(voc._CONTINUES) | {x for pre, _ in units.values() for x in pre}
-        kinds = [(c, "") for c in voc.CURRENCY_NAMES] + [(None, f) for f in sorted(forms)]
         settled = False
-        for code, form in kinds:
-            if not self.reaches((code, form), pos):
-                continue
-            allowed = heading_allows(code, form, units)
-            if allowed is not None and unit not in allowed:
+        for code, form, allowed in self._allowing(pos, units):
+            if unit not in allowed:
                 return False
             settled = settled or code is not None or form in prefixes
         return settled
+
+    def conflict(self, pos: int, unit: str, units: Units) -> bool:
+        """Whether the token at ``pos`` has a heading conflict (SPEC §4.3, spec 0.10, #365):
+        ``unit`` is a currency unit, and a heading unit that reaches the token and is not
+        unknown does not allow it."""
+        voc = _VOCAB.get()
+        prefixes = units.get(unit, ([], []))[0]
+        if unit not in voc.CURRENCY_NAMES and not any(x[-1] in voc._CONTINUES for x in prefixes):
+            return False  # not a currency unit
+        return any(unit not in allowed for _, _, allowed in self._allowing(pos, units))
 
 
 def in_scale(text: str, start: int, end: int) -> bool:

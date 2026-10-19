@@ -1,0 +1,124 @@
+{
+ "name": "113-heading-conflict-two-statements",
+ "description": "Two statements that do not agree, AUD and NZD, give a heading conflict for each currency, so a value in AUD and a value in USD go to review (spec 0.10, #365).",
+ "document": "Group figures in Australian dollars, parent figures in New Zealand dollars\n\t$m\nRevenue\t5,200\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "aud": {
+    "type": "number",
+    "unit": "AUD",
+    "multiple": true,
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "hc12",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "hc13",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "in Australian dollars"
+    }
+   ]
+  },
+  {
+   "id": "hc14",
+   "field": "usd",
+   "value": "5200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

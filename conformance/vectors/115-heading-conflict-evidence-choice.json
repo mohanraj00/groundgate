@@ -1,0 +1,62 @@
+{
+ "name": "115-heading-conflict-evidence-choice",
+ "description": "A heading conflict does not move the evidence: the quote $5,200 stays at its first occurrence, in the table under a statement of AUD, and goes to review, also when a later occurrence passes (spec 0.10, #365).",
+ "document": "The figures are presented in Australian dollars.\n\t2025\nRevenue\t$5,200\n\nThe US unit sold $5,200 of goods.\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "hc20",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "$5,200"
+    }
+   ]
+  },
+  {
+   "id": "hc21",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "$5,200 of goods"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

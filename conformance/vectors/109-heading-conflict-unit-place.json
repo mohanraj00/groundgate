@@ -1,0 +1,179 @@
+{
+ "name": "109-heading-conflict-unit-place",
+ "description": "A currency statement that does not allow the field's unit sends the value to review. The statement line holds 'dollars', a suffix of USD, at a unit place of the value, but the heading conflict stops it, and a unit item fails. A value in AUD is still admitted, and a value in % is not in a currency unit, so the statement does not change it (spec 0.10, #365).",
+ "document": "The figures are presented in Australian dollars.\n\t$m\t$m\nMargin\t12.5%\t11.0%\nRevenue\t5,200\t4,900\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "aud": {
+    "type": "number",
+    "unit": "AUD",
+    "multiple": false,
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "margin": {
+    "type": "number",
+    "unit": "%",
+    "multiple": false,
+    "aliases": [
+     "Margin"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "hc1",
+   "field": "usd",
+   "value": "4900000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "4,900"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "hc2",
+   "field": "usd",
+   "value": "5200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "Australian dollars"
+    }
+   ]
+  },
+  {
+   "id": "hc3",
+   "field": "usd",
+   "value": "5200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "hc4",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "hc5",
+   "field": "margin",
+   "value": "12.5",
+   "unit": "%",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "12.5%"
+    },
+    {
+     "role": "field",
+     "text": "Margin"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

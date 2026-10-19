@@ -1,0 +1,92 @@
+{
+ "name": "110-heading-conflict-caption",
+ "description": "A statement of LKR does not allow INR, so the caption word 'rupees', a suffix of INR, does not admit a value in INR. A unit item that holds the statement admits a value in LKR (spec 0.10, #365).",
+ "document": "Amounts in Sri Lankan rupees\n\nRevenue\t5,200\n",
+ "schema": {
+  "fields": {
+   "inr": {
+    "type": "number",
+    "unit": "INR",
+    "multiple": false,
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "lkr": {
+    "type": "number",
+    "unit": "LKR",
+    "multiple": false,
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  },
+  "units": {
+   "LKR": {
+    "prefix": [
+     "Rs"
+    ],
+    "suffix": [
+     "LKR"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "hc6",
+   "field": "inr",
+   "value": "5200",
+   "unit": "INR",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    }
+   ]
+  },
+  {
+   "id": "hc7",
+   "field": "lkr",
+   "value": "5200",
+   "unit": "LKR",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "unit",
+     "text": "in Sri Lankan rupees"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

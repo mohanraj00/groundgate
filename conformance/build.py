@@ -5266,6 +5266,139 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- spec 0.10 (#365)
+def value_quote(text: str) -> dict[str, Any]:
+    """A value item that is a quote, with no offsets (SPEC §4.6)."""
+    return {"role": "value", "text": text}
+
+
+def money(unit: str, *aliases: str, multiple: bool = False) -> dict[str, Any]:
+    return {"type": "number", "unit": unit, "multiple": multiple, "aliases": list(aliases)}
+
+
+UNIT_GONE = (REVIEW, ["PART_MISSING"], ["unit"])
+UNIT_GONE_DERIVED = (REVIEW, ["PART_MISSING", "VALUE_DERIVED"], ["unit"])
+UNIT_ITEM_FAILS = (REVIEW, ["UNIT_CITATION_INVALID"])
+AUSTRALIAN = "The figures are presented in Australian dollars.\n"
+
+vector(
+    "109-heading-conflict-unit-place",
+    "A currency statement that does not allow the field's unit sends the value to review. The "
+    "statement line holds 'dollars', a suffix of USD, at a unit place of the value, but the "
+    "heading conflict stops it, and a unit item fails. A value in AUD is still admitted, and a "
+    "value in % is not in a currency unit, so the statement does not change it "
+    "(spec 0.10, #365).",
+    AUSTRALIAN + "\t$m\t$m\nMargin\t12.5%\t11.0%\nRevenue\t5,200\t4,900\n",
+    {"fields": {"usd": money("USD", "Revenue", multiple=True), "aud": money("AUD", "Revenue"),
+                "margin": money("%", "Margin")}},
+    [
+        c("hc1", "usd", "4900000000", "USD",
+          [value_quote("4,900"), REV, scale_item("$m")], UNIT_GONE_DERIVED),
+        c("hc2", "usd", "5200000000", "USD",
+          [value_quote("5,200"), REV, scale_item("$m"), unit_item("Australian dollars")],
+          UNIT_REVIEW),
+        c("hc3", "usd", "5200000000", "USD",
+          [value_quote("5,200"), REV, scale_item("$m"), unit_item("$m")], UNIT_REVIEW),
+        c("hc4", "aud", "5200000000", "AUD",
+          [value_quote("5,200"), REV, scale_item("$m")], DERIVED),
+        c("hc5", "margin", "12.5", "%", [value_quote("12.5%"), row("Margin")]),
+    ],
+)  # fmt: skip
+
+vector(
+    "110-heading-conflict-caption",
+    "A statement of LKR does not allow INR, so the caption word 'rupees', a suffix of INR, does "
+    "not admit a value in INR. A unit item that holds the statement admits a value in LKR "
+    "(spec 0.10, #365).",
+    "Amounts in Sri Lankan rupees\n\nRevenue\t5,200\n",
+    {"fields": {"inr": money("INR", "Revenue"), "lkr": money("LKR", "Revenue")},
+     "units": {"LKR": {"prefix": ["Rs"], "suffix": ["LKR"]}}},
+    [
+        c("hc6", "inr", "5200", "INR", [value_quote("5,200"), REV], UNIT_GONE),
+        c("hc7", "lkr", "5200", "LKR",
+          [value_quote("5,200"), REV, unit_item("in Sri Lankan rupees")]),
+    ],
+)  # fmt: skip
+
+vector(
+    "111-heading-conflict-same-currency",
+    "A statement of USD over a $m header allows USD, so a value in USD is admitted with and "
+    "without a unit item (spec 0.10, #365).",
+    "The figures are presented in US dollars.\n\t$m\nRevenue\t5,200\n",
+    {"fields": {"usd": money("USD", "Revenue", multiple=True)}},
+    [
+        c("hc8", "usd", "5200000000", "USD", [value_quote("5,200"), REV, scale_item("$m")],
+          DERIVED),
+        c("hc9", "usd", "5200000000", "USD",
+          [value_quote("5,200"), REV, scale_item("$m"), unit_item("$m")], DERIVED),
+    ],
+)  # fmt: skip
+
+vector(
+    "112-heading-conflict-header-alone",
+    "A $m header with no statement allows USD: a unit item $m admits a value in USD, and with no "
+    "unit item the unit is missing, as before (spec 0.10, #365).",
+    "\t$m\nRevenue\t5,200\n",
+    {"fields": {"usd": money("USD", "Revenue", multiple=True)}},
+    [
+        c("hc10", "usd", "5200000000", "USD",
+          [value_quote("5,200"), REV, scale_item("$m"), unit_item("$m")], DERIVED),
+        c("hc11", "usd", "5200000000", "USD", [value_quote("5,200"), REV, scale_item("$m")],
+          UNIT_GONE_DERIVED),
+    ],
+)  # fmt: skip
+
+vector(
+    "113-heading-conflict-two-statements",
+    "Two statements that do not agree, AUD and NZD, give a heading conflict for each currency, "
+    "so a value in AUD and a value in USD go to review (spec 0.10, #365).",
+    "Group figures in Australian dollars, parent figures in New Zealand dollars\n"
+    "\t$m\nRevenue\t5,200\n",
+    {"fields": {"usd": money("USD", "Revenue"), "aud": money("AUD", "Revenue", multiple=True)}},
+    [
+        c("hc12", "aud", "5200000000", "AUD", [value_quote("5,200"), REV, scale_item("$m")],
+          UNIT_GONE_DERIVED),
+        c("hc13", "aud", "5200000000", "AUD",
+          [value_quote("5,200"), REV, scale_item("$m"), unit_item("in Australian dollars")],
+          UNIT_REVIEW),
+        c("hc14", "usd", "5200000000", "USD", [value_quote("5,200"), REV, scale_item("$m")],
+          UNIT_GONE_DERIVED),
+    ],
+)  # fmt: skip
+
+vector(
+    "114-heading-conflict-form-next",
+    "A unit form next to the token does not win over a heading unit: $5,200, US$1,100 and "
+    "300 EUR under a statement of AUD go to review in USD and in EUR, and a unit item $ fails. "
+    "A form of another unit next to the token still rejects (spec 0.10, #365).",
+    AUSTRALIAN + "\t2025\nRevenue\t$5,200\nCosts\tUS$1,100\nOther\t300 EUR\n",
+    {"fields": {"usd": money("USD", "Revenue", "Costs", "Other", multiple=True),
+                "eur": money("EUR", "Other")}},
+    [
+        c("hc15", "usd", "5200", "USD", [value_quote("$5,200")], UNIT_GONE),
+        c("hc16", "usd", "5200", "USD", [value_quote("5,200"), REV, unit_item("$")],
+          UNIT_ITEM_FAILS),
+        c("hc17", "usd", "1100", "USD", [value_quote("US$1,100"), row("Costs")], UNIT_GONE),
+        c("hc18", "usd", "300", "USD", [value_quote("300 EUR"), row("Other")],
+          ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("hc19", "eur", "300", "EUR", [value_quote("300 EUR"), row("Other")], UNIT_GONE),
+    ],
+)  # fmt: skip
+
+vector(
+    "115-heading-conflict-evidence-choice",
+    "A heading conflict does not move the evidence: the quote $5,200 stays at its first "
+    "occurrence, in the table under a statement of AUD, and goes to review, also when a later "
+    "occurrence passes (spec 0.10, #365).",
+    AUSTRALIAN + "\t2025\nRevenue\t$5,200\n\nThe US unit sold $5,200 of goods.\n",
+    {"fields": {"usd": money("USD", "Revenue", multiple=True)}},
+    [
+        c("hc20", "usd", "5200", "USD", [value_quote("$5,200")], UNIT_GONE),
+        c("hc21", "usd", "5200", "USD", [value_quote("$5,200 of goods")]),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

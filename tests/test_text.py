@@ -273,6 +273,60 @@ def test_heading_index_checks_each_kind_once() -> None:
     assert time_for(20000) < 8 * time_for(5000)
 
 
+def test_heading_conflict_reads_only_currency_units() -> None:
+    """A heading conflict needs a currency unit: a code of the currency table, or a unit with a
+    prefix that ends with a currency sign (SPEC §4.3, #365). `%`, and a schema unit with a sign
+    that §4.1 does not list, have none."""
+    units = {
+        "USD": (["US$", "$"], ["USD", "dollars"]),
+        "AUD": ([], []),
+        "CAD2": (["C$"], []),
+        "%": ([], ["%"]),
+        "JPY": (["\u00a5"], []),
+    }
+    text = "(in Australian dollars)\nRevenue\t5\n"
+    index = HeadingIndex(text)
+    pos = text.index("5")
+    assert index.conflict(pos, "USD", units)
+    assert index.conflict(pos, "CAD2", units)
+    assert not index.conflict(pos, "AUD", units)
+    assert not index.conflict(pos, "%", units)
+    assert not index.conflict(pos, "JPY", units)
+    assert not index.conflict(text.index("Australian"), "USD", units)  # its own line
+
+
+def test_heading_conflict_of_two_statements_and_unknown_headers() -> None:
+    """Two statements that do not agree give a conflict for each currency. An unknown header
+    allows no code and gives no conflict (SPEC §4.3, #365)."""
+    units = {"USD": (["US$", "$"], ["USD", "dollars"])}
+    text = "Group in Australian dollars, parent in New Zealand dollars\nRevenue\t5\n"
+    pos = text.index("5")
+    index = HeadingIndex(text)
+    assert index.conflict(pos, "AUD", units)
+    assert index.conflict(pos, "NZD", units)
+    text = "\tHK$'000\nRevenue\t5\n"
+    assert not HeadingIndex(text).conflict(text.index("5"), "USD", units)
+
+
+def test_the_outside_path_does_not_read_the_heading_conflict() -> None:
+    """An external item still holds a value under a statement of another currency: the outside
+    path does not read the heading conflict (SPEC §4.3, #365). #367 decides it for 0.11."""
+    item = {
+        "source": "external",
+        "url": "https://example.org/a",
+        "retrieved": "2026-10-01",
+        "text": "Presented in Australian dollars\n\t2025\nRevenue\t$5,200\n",
+    }
+    receipt = gg.admit(
+        "x",
+        {"fields": {"usd": {"unit": "USD"}}},
+        [{"id": "c1", "field": "usd", "value": "5200", "unit": "USD", "evidence": [item]}],
+        {"sources": {"external": {"allow": ["*"], "other": "review"}, "knowledge": "review"}},
+    )
+    (d,) = receipt.decisions
+    assert (d.outcome, list(d.codes)) == ("admitted", ["ADMITTED_BY_POLICY"])
+
+
 def test_heading_index_held_skips_units_that_reach_nothing() -> None:
     """An item span that holds many headers that reach nothing does not read them one by one
     (#315): four times the headers and the checks take less than eight times as long."""
