@@ -1,0 +1,37 @@
+{
+ "name": "pack-l10-untyped-bad-type",
+ "description": "L10: a template with no type, and a field that gives a type that SPEC 2.3 does not list.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "untyped-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "template": "untyped-x-test/amount",
+    "type": "text"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "untyped-x-test",
+   "version": "1.0.0",
+   "fields": {
+    "amount": {
+     "unit": "USD"
+    }
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

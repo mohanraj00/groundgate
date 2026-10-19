@@ -35,7 +35,7 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   template's makes the packet invalid. The resolved schema keeps `template`, and its `packs`
   holds the digest of each pack, so a changed template changes `schema_sha256`. The receipt
   names a kind pack with the type `kind`, and a decision names the kind pack of its field's
-  template. 3 vectors (88 to 90) and 17 invalid packets cover it. No outcome of a packet without
+  template. 4 vectors (88 to 91) and 18 invalid packets cover it. No outcome of a packet without
   a kind pack changes.
 - A candidate can cite up to 8 field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay

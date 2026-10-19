@@ -313,7 +313,7 @@ def check_pack(pack: object, *, built_in: bool = False) -> dict[str, Any]:
 
 def _check_kind(pack: dict[str, Any]) -> None:
     """L4 and L9: the needs and the field templates of a kind pack (SPEC §4.9)."""
-    from .model import Field  # the rules of a field (SPEC §2.3); model imports this module
+    from .model import check_template  # the rules of a field (SPEC §2.3); model imports this
 
     needs = pack.get("needs", [])
     if type(needs) is not list:
@@ -340,7 +340,7 @@ def _check_kind(pack: dict[str, Any]) -> None:
         if type(t) is not dict or set(t) - set(TEMPLATE_MEMBERS):
             raise _fail(pack, f"template {name!r} holds another member than the five (L9)")
         try:
-            Field.from_dict(name, t)
+            check_template(name, t)
         except PacketError as e:
             raise _fail(pack, f"template {name!r} breaks the rules of a field: {e} (L9)") from None
 

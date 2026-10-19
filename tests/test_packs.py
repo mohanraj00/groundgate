@@ -407,3 +407,13 @@ def test_a_template_that_breaks_l10(field: dict[str, Any], match: str) -> None:
     schema = {**KIND_SCHEMA, "fields": {"grant": field}}
     with pytest.raises(gg.PacketError, match=match):
         gg.Schema.from_dict(schema, [g, LAC])
+
+
+def test_a_template_has_no_defaults_of_its_own() -> None:
+    untyped = kind(needs=GRANTS["needs"], fields={"grant": {"unit": "USD"}})
+    schema = gg.Schema.from_dict(KIND_SCHEMA, [untyped, LAC])
+    assert schema.to_dict()["fields"]["grant"]["type"] == "number"
+    text = {"template": "grants-x-test/grant", "type": "text"}
+    typed = {**KIND_SCHEMA, "fields": {"grant": text}}
+    with pytest.raises(gg.PacketError, match=r"unknown type 'text'.*\(L10\)"):
+        gg.Schema.from_dict(typed, [untyped, LAC])

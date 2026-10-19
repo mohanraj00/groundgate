@@ -111,19 +111,9 @@ class Field:
             if not isinstance(raw[flag], bool):
                 raise PacketError(f"field {name!r} {flag} must be a boolean")
         for member in ("keys", "aliases"):
-            words = raw[member]
-            if words is None:
-                continue
-            if (
-                not isinstance(words, list)
-                or not words
-                or not all(isinstance(k, str) for k in words)
-            ):
-                raise PacketError(f"field {name!r} {member} must be null or a list of strings")
-            seen = [normalize_ws(k).lower() for k in words]
-            if "" in seen or len(set(seen)) != len(seen):
-                raise PacketError(f"field {name!r} {member} must be distinct, non-blank text")
-            raw[member] = list(words)
+            _words(name, member, raw[member])
+            if raw[member] is not None:
+                raw[member] = list(raw[member])
         keys, aliases = raw["keys"], raw["aliases"]
         return cls(
             name=name,
@@ -237,10 +227,7 @@ class Schema:
         if set(d) - members:
             raise PacketError(f"schema has unknown keys {sorted(set(d) - members)}")
         resolved, vocabulary, marks, kinds = _resolve_packs(d.get("packs", []), packs)
-        fields = {
-            name: Field.from_dict(name, _with_template(name, f, kinds))
-            for name, f in d["fields"].items()
-        }
+        fields = {name: _field(name, f, kinds) for name, f in d["fields"].items()}
         user_units = d.get("units", {})
         if not isinstance(user_units, dict):
             raise PacketError("schema units must be an object")
@@ -301,6 +288,34 @@ def _pack_entries(entries: object) -> dict[str, dict[str, str]]:
     return out
 
 
+def check_template(name: str, t: dict[str, Any]) -> None:
+    """Check each member that a template gives, with the rules of a field (SPEC §2.3, §4.9).
+    A template has no defaults of its own, so an absent member is not checked."""
+    if "type" in t and t["type"] not in _TYPES:
+        raise PacketError(f"field {name!r} has unknown type {t['type']!r}")
+    if "comparator" in t and t["comparator"] not in _COMPARATORS:
+        raise PacketError(f"field {name!r} has unknown comparator {t['comparator']!r}")
+    if "unit" in t and t["unit"] is not None and not isinstance(t["unit"], str):
+        raise PacketError(f"field {name!r} unit must be a string or null")
+    if "description" in t and (
+        not isinstance(t["description"], str) or not t["description"].strip()
+    ):
+        raise PacketError(f"field {name!r} description must be a non-blank string")
+    if "aliases" in t:
+        _words(name, "aliases", t["aliases"])
+
+
+def _words(name: str, member: str, words: object) -> None:
+    """The rule of keys and aliases: null or a non-empty list of distinct, non-blank strings."""
+    if words is None:
+        return
+    if not isinstance(words, list) or not words or not all(isinstance(k, str) for k in words):
+        raise PacketError(f"field {name!r} {member} must be null or a list of strings")
+    seen = [normalize_ws(k).lower() for k in words]
+    if "" in seen or len(set(seen)) != len(seen):
+        raise PacketError(f"field {name!r} {member} must be distinct, non-blank text")
+
+
 def _with_template(name: str, f: object, kinds: dict[str, dict[str, Any]]) -> object:
     """The field with each member that it does not give filled from its template (SPEC §2.3,
     L10). A member that the field gives wins, but a type or a unit must not differ."""
@@ -319,6 +334,18 @@ def _with_template(name: str, f: object, kinds: dict[str, dict[str, Any]]) -> ob
         if k in f and k in template and f[k] != template[k]:
             raise PacketError(f"field {name!r}: its {k} differs from the template's (L10)")
     return {**copy.deepcopy(template), **f}
+
+
+def _field(name: str, f: object, kinds: dict[str, dict[str, Any]]) -> Field:
+    """A field of the schema. A field that takes a template and then breaks a rule of a field
+    makes the packet invalid under L10 (SPEC §2.3)."""
+    merged = _with_template(name, f, kinds)
+    if merged is f:
+        return Field.from_dict(name, f)
+    try:
+        return Field.from_dict(name, merged)
+    except PacketError as e:
+        raise PacketError(f"{e}, after the field takes its template (L10)") from None
 
 
 def _resolve_packs(

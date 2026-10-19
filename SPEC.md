@@ -1061,7 +1061,8 @@ members `groundgate_pack`, `type` (`"kind"`), `id`, `version`, `description` and
 
 After defaults, an absent `needs` is `[]` and an absent `fields` is `{}`. The digest is the digest
 of §4.7 with the type `kind`. A template has no defaults of its own: a field fills them after it
-takes the template (§2.3).
+takes the template (§2.3). So L9 checks only the members that a template gives. A template with
+no `type` is valid, and the field that takes it gives the type or gets the default `number`.
 
 The packet reads each vocabulary pack that the schema names, and each pack in the `needs` of each
 kind pack that the schema names. The packet must give each one. A pack that is named twice in one
@@ -1076,7 +1077,7 @@ more limit. The packet is also invalid when a kind pack fails one of these check
 | L4 size | more than 200 field templates |
 | L7 ids and versions | a `needs` entry with an id or a version of the wrong form; a `needs` entry and the schema, or two `needs` entries, that name one id in two versions |
 | L9 kind pack | a `needs` that is not a list of objects with only `id` and `version`; a `needs` entry that names the base pack, the pack itself, an id twice, a kind pack or a pack that is not given; a `fields` that is not an object; a template member other than the five above; a template that breaks a rule of §2.3 |
-| L10 schema | a `template` that breaks a rule of §2.3 |
+| L10 schema | a `template` that breaks a rule of §2.3, or a field that breaks a rule of §2.3 after it takes its template |
 
 ## 5. Receipt
 

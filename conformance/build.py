@@ -4818,6 +4818,23 @@ vector(
     packs=[GRANTS, LAC],
 )  # fmt: skip
 
+UNTYPED = kind("untyped-x-test", fields={"amount": {"unit": "USD"}})
+vector(
+    "91-kind-template-no-type",
+    "A template with no type has no defaults of its own. The field fills them after it takes the "
+    "template: the field that gives integer is an integer field, and the field that gives no "
+    "type is a number field (spec 0.10, #335).",
+    SALES_DOC,
+    {"packs": [{"id": "untyped-x-test", "version": "1.0.0"}],
+     "fields": {"fee": {"template": "untyped-x-test/amount", "type": "integer"},
+                "sales": {"template": "untyped-x-test/amount"}}},
+    [
+        c("u1", "fee", "90", "USD", q("$90")),
+        c("u2", "sales", "5200", "USD", q("$5,200")),
+    ],
+    packs=[UNTYPED],
+)  # fmt: skip
+
 
 def bad_kind(
     name: str, description: str, *packs: dict[str, Any], fields: Any = None, schema: Any = None
@@ -4865,6 +4882,9 @@ bad_kind("pack-l10-type", "L10: a field type that differs from the template's.",
          FILINGS, fields={"fee": {**TEMPLATE, "type": "number"}})
 bad_kind("pack-l10-unit", "L10: a field unit that differs from the template's.",
          FILINGS, fields={"fee": {**TEMPLATE, "unit": "EUR"}})
+bad_kind("pack-l10-untyped-bad-type",
+         "L10: a template with no type, and a field that gives a type that SPEC 2.3 does not list.",
+         UNTYPED, fields={"fee": {"template": "untyped-x-test/amount", "type": "text"}})
 bad_kind("pack-l10-pin", "L10: a pinned sha256 of a kind pack that differs from its digest.",
          FILINGS,
          schema={"packs": [{"id": "filings-x-test", "version": "1.0.0",

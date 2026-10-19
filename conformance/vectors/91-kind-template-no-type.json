@@ -1,0 +1,73 @@
+{
+ "name": "91-kind-template-no-type",
+ "description": "A template with no type has no defaults of its own. The field fills them after it takes the template: the field that gives integer is an integer field, and the field that gives no type is a number field (spec 0.10, #335).",
+ "document": "Net sales were $5,200 in 2025. The fee was $90.",
+ "schema": {
+  "packs": [
+   {
+    "id": "untyped-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "template": "untyped-x-test/amount",
+    "type": "integer"
+   },
+   "sales": {
+    "template": "untyped-x-test/amount"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "untyped-x-test",
+   "version": "1.0.0",
+   "fields": {
+    "amount": {
+     "unit": "USD"
+    }
+   }
+  }
+ ],
+ "candidates": [
+  {
+   "id": "u1",
+   "field": "fee",
+   "value": "90",
+   "unit": "USD",
+   "evidence": {
+    "start": 43,
+    "end": 46,
+    "text": "$90"
+   }
+  },
+  {
+   "id": "u2",
+   "field": "sales",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": {
+    "start": 15,
+    "end": 21,
+    "text": "$5,200"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
