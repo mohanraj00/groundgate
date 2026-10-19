@@ -3785,6 +3785,168 @@ vector(
     ],
 )  # fmt: skip
 
+# ---------------------------------------------------------------- dash variants (spec 0.10, #317)
+OOP = {"type": "integer", "unit": "USD", "multiple": True}
+vector(
+    "70-alias-dash-variants",
+    "A dash in an alias matches any of the five dashes: U+002D, U+2010, U+2011, U+2012 and "
+    "U+2013. A dash between two letters also matches a dash, one line break and spaces or "
+    "carriage returns around it. The minus sign, the em dash, a space, a blank line or a tab after "
+    "the dash, a space for a dash, and a line break in a word with no dash do not match "
+    "(spec 0.10, #317).",
+    "Out\u2013of\u2013pocket limit\t$3,001\n\n"
+    "Out\u2010of\u2010pocket limit\t$3,002\n\n"
+    "Out\u2011of\u2011pocket limit\t$3,003\n\n"
+    "Out\u2012of\u2012pocket limit\t$3,004\n\n"
+    "Out-of-pocket limit\t$3,005\n\n"
+    "Out-of-\npocket limit\t$3,006\n\n"
+    "Out-of- \r\n  pocket limit\t$3,007\n\n"
+    "Out\u2212of\u2212pocket limit\t$3,008\n\n"
+    "Out\u2014of\u2014pocket limit\t$3,009\n\n"
+    "Out-of- pocket limit\t$3,010\n\n"
+    "Out-of-\n\npocket limit\t$3,011\n\n"
+    "Out-of-\tpocket limit\t$3,012\n\n"
+    "Out of pocket limit\t$3,013\n\n"
+    "Out-of-pocket limit\t$3,014\n\n"
+    "Overall deduct-\nible\t$500",
+    {
+        "fields": {
+            "oop": {**OOP, "aliases": ["out-of-pocket limit"]},
+            "oop_en": {**OOP, "aliases": ["out\u2013of\u2013pocket limit"]},
+            "oop_space": {**OOP, "aliases": ["out of pocket limit"]},
+            "ded": {**OOP, "aliases": ["deductible"]},
+        }
+    },
+    [
+        c("d1", "oop", "3001", "USD", [q("$3,001"), q("Out\u2013of\u2013pocket limit", role="field")]),
+        c("d2", "oop", "3002", "USD", [q("$3,002"), q("Out\u2010of\u2010pocket limit", role="field")]),
+        c("d3", "oop", "3003", "USD", [q("$3,003"), q("Out\u2011of\u2011pocket limit", role="field")]),
+        c("d4", "oop", "3004", "USD", [q("$3,004"), q("Out\u2012of\u2012pocket limit", role="field")]),
+        # an alias with en dashes matches the text with hyphens
+        c("d5", "oop_en", "3005", "USD", [q("$3,005"), q("Out-of-pocket limit", role="field")]),
+        # a line break after the dash: the quote finds the text with any whitespace run
+        c("d6", "oop", "3006", "USD", [q("$3,006"), row("Out-of- pocket limit")]),
+        c("d7", "oop", "3007", "USD",
+          [q("$3,007"), q("Out-of- \r\n  pocket limit", role="field")]),
+        # the minus sign and the em dash are not dashes here
+        c("d8", "oop", "3008", "USD", [q("$3,008"), q("Out\u2212of\u2212pocket limit", role="field")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        c("d9", "oop", "3009", "USD", [q("$3,009"), q("Out\u2014of\u2014pocket limit", role="field")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        # a space, a blank line or a tab after the dash does not join
+        c("d10", "oop", "3010", "USD", [q("$3,010"), q("Out-of- pocket limit", role="field")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        c("d11", "oop", "3011", "USD",
+          [q("$3,011"), q("Out-of-\n\npocket limit", role="field")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        c("d12", "oop", "3012", "USD", [q("$3,012"), q("Out-of-\tpocket limit", role="field")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        # a space is not a dash, and a dash is not a space
+        c("d13", "oop", "3013", "USD", [q("$3,013"), q("Out of pocket limit", role="field")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        c("d14", "oop_space", "3014", "USD",
+          [q("$3,014"), q("Out-of-pocket limit", 2, role="field")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        # a line break in a word with no dash in the alias does not join
+        c("d15", "ded", "500", "USD", [q("$500"), q("Overall deduct-\nible", role="field")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "71-key-dash-variants",
+    "Keys follow the same rule as aliases. A key with an en dash matches the text with a hyphen, "
+    "and a key with a dash between two letters matches across one line break. A dash between two "
+    "digits does not join across a line break, and the minus sign is not a dash "
+    "(spec 0.10, #317).",
+    "For 2024-25: $100.\n\n\n"
+    "For non-\nsmall cell lung cancer, the dose is 150 mg.\n\n\n"
+    "For 2024-\n25: $200.\n\n\n"
+    "For FY2024\u221225: $300.",
+    {
+        "fields": {
+            "year_en": {**OOP, "keys": ["2024\u201325"]},
+            "dose": {"type": "number", "unit": "mg", "keys": ["non-small cell lung cancer"]},
+            "year": {**OOP, "keys": ["2024-25"]},
+            "fiscal": {**OOP, "keys": ["FY2024-25"]},
+        }
+    },
+    [
+        c("y1", "year_en", "100", "USD", [q("$100")], key="2024\u201325"),
+        c("y2", "dose", "150", "mg", [q("150 mg")], key="non-small cell lung cancer"),
+        c("y3", "year", "200", "USD", [q("$200")], (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]),
+          key="2024-25"),
+        c("y4", "fiscal", "300", "USD", [q("$300")], (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]),
+          key="FY2024-25"),
+    ],
+)  # fmt: skip
+
+
+# ---------------------------------------------------------------- label cells (spec 0.10, #316)
+QUESTION = "What is the overall deductible?"
+vector(
+    "72-label-cells",
+    "On a line with a tab, a field item in the label slot (before the first tab) is a label cell "
+    "for a value in the answer slot (the next slot): no number token between, at most 4 words "
+    "before the value in the answer slot, no sentence end there and no alias mention there. A "
+    "field item in a label slot reaches a later slot or a later line only at the row. A value in "
+    "the label slot, and a line with no tab, keep the sentence rule (spec 0.10, #316).",
+    f"{QUESTION}\tIn-Network: Individual $850 / Family $1,700\tGenerally, you must pay all of "
+    "the costs.\n\n"
+    f"{QUESTION}\t$500 individual\n\n"
+    f"{QUESTION}\tFor all network providers: $500\n\n"
+    f"{QUESTION}\tFor all of the network providers: $500\n\n"
+    f"{QUESTION}\tYes. $250 for drugs\n\n"
+    f"{QUESTION}\tOut-of-pocket limit $3,000\n\n"
+    f"{QUESTION}\tNone\tThis plan pays after a $40 copay\n\n"
+    f"{QUESTION}\tNone\nAre there other costs?\tA $40 copay\n\n"
+    f"{QUESTION}\n\nIn-Network: Individual $850\n\n"
+    "The overall deductible is $500 per person.\tSee page 2\n\n"
+    f"{QUESTION} In-Network: Individual $850\n\n"
+    "Cash\tn/a\t$100",
+    {
+        "fields": {
+            "ded": {**OOP, "aliases": ["overall deductible"]},
+            "oop": {**OOP, "aliases": ["out-of-pocket limit"]},
+            "cash": {**OOP, "aliases": ["cash"]},
+        }
+    },
+    [
+        c("l1", "ded", "850", "USD", [q("$850"), row("overall deductible")]),
+        # at the row, as before
+        c("l2", "ded", "500", "USD", [q("$500"), row("overall deductible")]),
+        # 4 words before the value
+        c("l3", "ded", "500", "USD", [q("$500", 2), row("overall deductible")]),
+        # a number token between
+        c("l4", "ded", "1700", "USD", [q("$1,700"), row("overall deductible")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        # 6 words before the value
+        c("l5", "ded", "500", "USD", [q("$500", 3), row("overall deductible")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        # a sentence end in the answer slot
+        c("l6", "ded", "250", "USD", [q("$250"), row("overall deductible")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        # an alias of another field in the answer slot
+        c("l7", "ded", "3000", "USD", [q("$3,000"), row("overall deductible")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        # a later slot and a later line: admitted before spec 0.10
+        c("l8", "ded", "40", "USD", [q("$40"), row("overall deductible")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        c("l9", "ded", "40", "USD", [q("$40", 2), row("overall deductible")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        # the question and the answer in two blocks, as the PDF reader writes them today
+        c("l10", "ded", "850", "USD", [q("$850", 2), row("overall deductible")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        # the value in the label slot keeps the sentence rule
+        c("l11", "ded", "500", "USD", [q("$500", 4), row("overall deductible")]),
+        # a line with no tab keeps the sentence rule
+        c("l12", "ded", "850", "USD", [q("$850", 3), row("overall deductible")]),
+        # a text cell between the label and the value: admitted before spec 0.10
+        c("l13", "cash", "100", "USD", [q("$100"), row("Cash")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
 
 # ---------------------------------------------------------------- spec 0.10 (#313)
 POUND_000 = "Statement of financial position\n\t£000\t£000\nRevenue\t15,961,328\t14,200,105\n"

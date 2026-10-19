@@ -1,0 +1,130 @@
+{
+ "name": "71-key-dash-variants",
+ "description": "Keys follow the same rule as aliases. A key with an en dash matches the text with a hyphen, and a key with a dash between two letters matches across one line break. A dash between two digits does not join across a line break, and the minus sign is not a dash (spec 0.10, #317).",
+ "document": "For 2024-25: $100.\n\n\nFor non-\nsmall cell lung cancer, the dose is 150 mg.\n\n\nFor 2024-\n25: $200.\n\n\nFor FY2024−25: $300.",
+ "schema": {
+  "fields": {
+   "year_en": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2024–25"
+    ]
+   },
+   "dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "non-small cell lung cancer"
+    ]
+   },
+   "year": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "2024-25"
+    ]
+   },
+   "fiscal": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "keys": [
+     "FY2024-25"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "y1",
+   "field": "year_en",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 13,
+     "end": 17,
+     "text": "$100"
+    }
+   ],
+   "key": "2024–25"
+  },
+  {
+   "id": "y2",
+   "field": "dose",
+   "value": "150",
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 66,
+     "end": 72,
+     "text": "150 mg"
+    }
+   ],
+   "key": "non-small cell lung cancer"
+  },
+  {
+   "id": "y3",
+   "field": "year",
+   "value": "200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 90,
+     "end": 94,
+     "text": "$200"
+    }
+   ],
+   "key": "2024-25"
+  },
+  {
+   "id": "y4",
+   "field": "fiscal",
+   "value": "300",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 115,
+     "end": 119,
+     "text": "$300"
+    }
+   ],
+   "key": "FY2024-25"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
