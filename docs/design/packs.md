@@ -16,7 +16,7 @@ the move of §9. The last section lists the code issues for 0.10.
 | Where packs live (§13, question 1) | Built-in packs are data files in this repository and in the wheel. The app's own packs are files that the app gives. No separate package in 0.10. | 7 |
 | How a kind pack and a vocabulary pack combine (§13, question 3) | A kind pack names vocabulary packs. Every vocabulary pack adds to the base. A word that two packs give two meanings makes the packet invalid. | 8 |
 | When a pack becomes `measured` (§13, question 4) | A route becomes `measured`, not a pack: a bound from blind labels on at least 60 held-out documents of its kind, at or below the limit in its status row. | 9 |
-| The move of §9 | Four stages. First every core list moves into the base pack `en`, with every receipt byte for byte the same. Then the loader, kind packs and the bench templates come with no decision change. Last, the loss words move into `finance`: the one change, and it goes toward review. | 10 |
+| The move of §9 | Four stages. First every core list moves into the base pack `en`, with every receipt byte for byte the same. Then the loader and kind packs come with no decision change. Then the loss words move into `finance`: the one change, and it goes toward review. Last, the bench templates become kind packs, with no decision change. | 10 |
 | How `verify` finds the pack of an old receipt | By the id, version and digest in the receipt: built-in versions stay in the wheel, and the app gives its own pack files or a folder of them. | 11 |
 | What a pack cannot do (§6) | Thirteen checks that the loader runs. Each limit of §6 maps to one or more of them. | 12 |
 
@@ -365,12 +365,7 @@ before. The receipt gets two new members: `"packs": []` at the top, and `"packs"
 decision (section 6). Both are empty for a packet with no pack. So receipt digests change, but no
 outcome, code, `missing` or `parts` changes. The new vectors that use packs are new files, written by hand.
 
-**Stage 3: kind packs from the bench schemas (no decision change).** The bench sets keep their
-own schema files, so their results do not change. A test writes each set's schema in the
-template form and checks that it resolves to the same `fields`, member by member. That proves
-that the templates hold the sets' knowledge with no change.
-
-**Stage 4: the `finance` pack (a decision change toward review).** The loss words leave the
+**Stage 3: the `finance` pack (a decision change toward review).** The loss words leave the
 base. A packet with no pack then reads no loss word. A sign item that holds only a loss word
 still gives its part, as SPEC §3.1 and §4.6 say, but it fails its check. So the decision gets
 `SIGN_CITATION_INVALID` and goes to review. `sign` is not in `missing`, because the candidate
@@ -387,6 +382,13 @@ with vectors written by hand before the code:
 
 If an outcome changes even with the pack, the issue reports it as a rule that was tuned, as §9
 says. It does not hide it.
+
+**Stage 4: kind packs from the bench schemas (no decision change).** The kind packs come after
+`finance`, because `us-10k` and the other financial kinds name it in `needs`, and L9 refuses a
+`needs` entry that does not load. The bench sets keep their own schema files, so their results
+do not change. A test writes each set's schema in the
+template form and checks that it resolves to the same `fields`, member by member. That proves
+that the templates hold the sets' knowledge with no change.
 
 ## 11. How `verify` finds the packs of an old receipt
 
@@ -468,9 +470,9 @@ as "presented in Australian dollars". The statement words and the currency names
 admit: without them, a value under such a statement goes to review, as in 0.9. So they can be
 the first item of a vocabulary pack: `finance`, list `heading_units`. #315 is in lane 3 and
 merges before the pack code. I ask that #315 keeps its words in one named list in `text.py`, so
-that issue 5 below moves that one list. The review when `$` and a statement disagree is a rule
+that issue 4 below moves that one list. The review when `$` and a statement disagree is a rule
 of #315, and it stays in the core. If the maintainer decides on #315 that the words stay in the
-core list, issue 5 puts them in `en` instead. The format does not change.
+core list, issue 4 puts them in `en` instead. The format does not change.
 
 ## 14. Changes to other design notes
 
@@ -485,7 +487,7 @@ core list, issue 5 puts them in `en` instead. The format does not change.
 
 ## 15. Code issues for 0.10
 
-I open these after the maintainer approves this note, in this order. Issues 1, 2, 3 and 5 change
+I open these after the maintainer approves this note, in this order. Issues 1, 2, 3 and 4 change
 SPEC.md and `conformance/build.py`, so they merge one at a time with the other spec lanes of #326.
 
 1. **Spec 0.10: the core lists move into the base vocabulary pack `en`.**
@@ -501,14 +503,14 @@ SPEC.md and `conformance/build.py`, so they merge one at a time with the other s
    The kind pack format, `needs`, the schema member `template`, and the resolved schema and its
    digest (section 5.1), with the checks L9 and L10. Vectors by hand first: a template fills, the schema wins, a conflict of
    type or unit is invalid, a pin that differs is invalid. #321 adds `relations` after this issue.
-4. **Kind packs from the current bench schemas.**
+4. **Spec 0.10: the `finance` pack takes the loss words and the currency statement words.**
+   The decision change of stage 3: SPEC text, and vectors with and without `finance`, by hand first.
+   The bench scripts of the financial sets name `finance`, and every check stays the same.
+   The issue reports, for each set, how many decisions change without `finance`.
+5. **Kind packs from the current bench schemas.**
    `us-10k`, `us-government-reports`, `annual-reports`, `component-datasheets` with the vocabulary
    pack `electronics`, and `benefit-summaries`, all `draft`. The bench sets keep their schemas.
    A test shows that the schema of each set in template form resolves to its current `fields`.
-5. **Spec 0.10: the `finance` pack takes the loss words and the currency statement words.**
-   The decision change of stage 4: SPEC text, and vectors with and without `finance`, by hand first.
-   The bench scripts of the financial sets name `finance`, and every check stays the same.
-   The issue reports, for each set, how many decisions change without `finance`.
 6. **`verify` finds the packs of a receipt.**
    The steps of section 11, `--pack-dir`, and the problems for a missing pack or another digest.
    The list of digests of the released built-in versions, its CI test, and `retired`.
