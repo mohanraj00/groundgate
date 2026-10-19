@@ -1,0 +1,191 @@
+{
+ "name": "71-heading-unit-disagree",
+ "description": "When the heading units that reach a value do not agree on the field's unit, the unit item fails and the value goes to review. groundgate never chooses between them: two statements of two currencies, a statement of another currency over £m, or a unit form next to the value (spec 0.10, #315).",
+ "document": "Group figures in Australian dollars, parent figures in New Zealand dollars\n\t$m\nRevenue\t5,200\n\n(in thousands of US dollars)\n\t£m\nRevenue\t6,300\n\n(in millions of dollars)\n\t$m\nRevenue\t7,400\n\nThe figures are presented in Australian dollars.\n\t$m\t$m\nRevenue\t£8,500\t£7,900\n",
+ "schema": {
+  "fields": {
+   "aud": {
+    "type": "number",
+    "unit": "AUD",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   },
+   "cad": {
+    "type": "number",
+    "unit": "CAD",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   },
+   "gbp": {
+    "type": "number",
+    "unit": "GBP",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "u12",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 87,
+     "end": 92,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 76,
+     "end": 78,
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "start": 14,
+     "end": 35,
+     "text": "in Australian dollars"
+    }
+   ]
+  },
+  {
+   "id": "u13",
+   "field": "gbp",
+   "value": "6300000000",
+   "unit": "GBP",
+   "evidence": [
+    {
+     "start": 136,
+     "end": 141,
+     "text": "6,300"
+    },
+    {
+     "role": "field",
+     "start": 128,
+     "end": 135,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 124,
+     "end": 127,
+     "text": "£m"
+    },
+    {
+     "role": "unit",
+     "start": 124,
+     "end": 127,
+     "text": "£m"
+    }
+   ]
+  },
+  {
+   "id": "u18",
+   "field": "cad",
+   "value": "7400000000",
+   "unit": "CAD",
+   "evidence": [
+    {
+     "start": 180,
+     "end": 185,
+     "text": "7,400"
+    },
+    {
+     "role": "field",
+     "start": 172,
+     "end": 179,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 169,
+     "end": 171,
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "start": 144,
+     "end": 166,
+     "text": "in millions of dollars"
+    }
+   ]
+  },
+  {
+   "id": "u19",
+   "field": "aud",
+   "value": "8500000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 253,
+     "end": 258,
+     "text": "8,500"
+    },
+    {
+     "role": "field",
+     "start": 243,
+     "end": 250,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 240,
+     "end": 242,
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "start": 203,
+     "end": 234,
+     "text": "presented in Australian dollars"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

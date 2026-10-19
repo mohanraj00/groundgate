@@ -1,0 +1,125 @@
+{
+ "name": "67-currency-scale-000-strict",
+ "description": "The 000 form is strict. A letter or a number after 000, a , or . and then a digit, or a space after the sign stops it: £000s, £0001, £000,000, £000.5 and £ 000 are no currency scale, so no heading scale reaches their rows, and a scale item £000s holds no scale. A £000 header followed by a line with no tab reaches no row (spec 0.10, #313).",
+ "document": "Table A\n\t£0001\nRevenue\t15,961,328\n\nTable B\n\t£000,000\nGrants\t2,345,678\n\nTable C\n\t£000.5\nFees\t3,456,789\n\nTable D\n\t£ 000\nRents\t4,567,890\n\nTable E\n\t£000\nFigures follow.\nTaxes\t5,678,901\n\nTable F\n\t£000s\nLoans\t6,789,012\n",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "number",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "z8",
+   "field": "amount",
+   "value": "6789012000",
+   "evidence": [
+    {
+     "start": 209,
+     "end": 218,
+     "text": "6,789,012"
+    },
+    {
+     "role": "scale",
+     "start": 196,
+     "end": 202,
+     "text": "£000s"
+    }
+   ]
+  },
+  {
+   "id": "z9",
+   "field": "amount",
+   "value": "15961328",
+   "evidence": [
+    {
+     "start": 24,
+     "end": 34,
+     "text": "15,961,328"
+    }
+   ]
+  },
+  {
+   "id": "z10a",
+   "field": "amount",
+   "value": "2345678",
+   "evidence": [
+    {
+     "start": 62,
+     "end": 71,
+     "text": "2,345,678"
+    }
+   ]
+  },
+  {
+   "id": "z10b",
+   "field": "amount",
+   "value": "3456789",
+   "evidence": [
+    {
+     "start": 95,
+     "end": 104,
+     "text": "3,456,789"
+    }
+   ]
+  },
+  {
+   "id": "z11",
+   "field": "amount",
+   "value": "4567890",
+   "evidence": [
+    {
+     "start": 128,
+     "end": 137,
+     "text": "4,567,890"
+    }
+   ]
+  },
+  {
+   "id": "z13",
+   "field": "amount",
+   "value": "5678901",
+   "evidence": [
+    {
+     "start": 176,
+     "end": 185,
+     "text": "5,678,901"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
