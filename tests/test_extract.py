@@ -1277,15 +1277,18 @@ CAUSE_SCHEMA = {"fields": {"amount": {"type": "integer", "aliases": ["Amount"]}}
     [
         ("Amount 5.", "Amount 5", "holds_value"),
         ("Amount 5, Amount.", "Amount.", "after_value"),
+        # The value quote holds more than the token: the token decides the cause.
+        ("Amount 5 total.", "total", "after_value"),
     ],
 )
 def test_repair_names_the_cause_of_a_field_item_that_cannot_pass(text, field, cause):
     # A field item must end at or before the value (SPEC §4.6, #318).
-    first = candidate(evidence=[item("5"), item(field, "field")])
+    quote = "Amount 5 total" if "total" in text else "5"
+    first = candidate(evidence=[item(quote), item(field, "field")])
     assert gg.admit(text, CAUSE_SCHEMA, [{"id": "a", **first}]).decisions[0].codes == (
         "FIELD_CITATION_INVALID",
     )
-    new = candidate(evidence=[item("5"), item("Amount", "field")])
+    new = candidate(evidence=[item(quote), item("Amount", "field")])
     client = Client(envelope(first), new)
     result = execute(text, client, CAUSE_SCHEMA)
     assert "It must not hold the value." in client.prompts[0]

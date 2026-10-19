@@ -419,24 +419,6 @@ def _shape(candidate: Any, fields: set[str], refs: set[str]) -> None:
             raise ValueError("unknown reference")
 
 
-def _field_causes(d: Decision) -> list[str]:
-    """The cause of each failing field item, in evidence order, when no field item passes: it
-    holds the value, or it comes after the value. Other failures have no cause here."""
-    if "FIELD_CITATION_INVALID" not in d.codes or d.evidence is None:
-        return []
-    start, end = d.evidence
-    causes = []
-    for part in d.parts:
-        if part.role != "field" or part.passed or part.span is None:
-            continue
-        a, b = part.span
-        if a < end and b > start:
-            causes.append("holds_value")
-        elif a >= end:
-            causes.append("after_value")
-    return causes
-
-
 def _output_schema(schema: Schema, fields: list[str], refs: list[str]) -> Json:
     subset = schema.to_dict()
     subset = {**subset, "fields": {f: subset["fields"][f] for f in fields}}
@@ -662,7 +644,7 @@ class _Engine:
         )
         body = {"candidates": candidates, "receipt": receipt.to_dict()}
         if phase == "final":
-            causes = {d.candidate_id: _field_causes(d) for d in receipt.decisions}
+            causes = {d.candidate_id: self.field_causes(d) for d in receipt.decisions}
             self.event(
                 kind="final_admission",
                 admission_sha256=self.put("admission", jcs(body)),
@@ -895,7 +877,7 @@ class _Engine:
                 attempted.add(group)
                 self.budgets[group] = self.budgets.get(group, 0) + 1
                 old = self.raw[cid]
-                causes = _field_causes(d)
+                causes = self.field_causes(d)
                 feedback = feedback_message(
                     d, self.tips[cid], self.schema, self.text, self.references
                 )
@@ -1121,9 +1103,10 @@ class _Engine:
         self.repairs()
         return self.finish()
 
-    def precision(self, d: Decision) -> Decimal | None:
-        """The precision that a numeric decision's value states in its text: one unit in the last
-        written digit of its token, times the token's scale. None without such a token."""
+    def token(self, d: Decision) -> tuple[int, int, Decimal, Decimal] | None:
+        """The value's token in a numeric decision's evidence span: the first number token whose
+        value, times a power of ten, is the decision's value. Its UTF-8 byte span, its value and
+        that power of ten. None without such a token."""
         field = self.schema.fields.get(d.field) if d.field is not None else None
         if (
             field is None
@@ -1139,6 +1122,7 @@ class _Engine:
             return None
         source = "document" if d.source == "document" else f"reference:{d.ref}"
         text = self.sources[source]
+        offsets = self.offsets[source]
         data = text.encode()
         start = len(data[: d.evidence[0]].decode(errors="ignore"))
         end = len(data[: d.evidence[1]].decode(errors="ignore"))
@@ -1146,12 +1130,38 @@ class _Engine:
             if tok.value is None or tok.value == 0:
                 continue
             ratio = value / abs(tok.value)
-            if ratio.normalize().as_tuple().digits != (1,):
-                continue  # the value is not the token times a power of ten
-            exponent = tok.value.as_tuple().exponent
-            assert isinstance(exponent, int)
-            return Decimal(1).scaleb(exponent) * ratio
+            if ratio.normalize().as_tuple().digits == (1,):
+                return offsets.to_bytes(tok.start), offsets.to_bytes(tok.end), tok.value, ratio
         return None
+
+    def precision(self, d: Decision) -> Decimal | None:
+        """The precision that a numeric decision's value states in its text: one unit in the last
+        written digit of its token, times the token's scale. None without such a token."""
+        found = self.token(d)
+        if found is None:
+            return None
+        exponent = found[2].as_tuple().exponent
+        assert isinstance(exponent, int)
+        return Decimal(1).scaleb(exponent) * found[3]
+
+    def field_causes(self, d: Decision) -> list[str]:
+        """The cause of each failing field item, in evidence order, when no field item passes:
+        it holds the value's token, or it comes after the token (SPEC §4.6). Without a numeric
+        token, the value span stands for it. Other failures have no cause here."""
+        if "FIELD_CITATION_INVALID" not in d.codes or d.evidence is None:
+            return []
+        found = self.token(d)
+        start, end = d.evidence if found is None else found[:2]
+        causes = []
+        for part in d.parts:
+            if part.role != "field" or part.passed or part.span is None:
+                continue
+            a, b = part.span
+            if a < end and b > start:
+                causes.append("holds_value")
+            elif a >= end:
+                causes.append("after_value")
+        return causes
 
     def rounding(self) -> None:
         """Drop a candidate in a conflict when a second candidate for the same field, key and

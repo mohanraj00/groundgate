@@ -408,8 +408,9 @@ For each call the log holds its sequence number, phase, field or candidate ids, 
 complete prompt digest, model id, raw reply digest and length, parse or client error, and
 permitted and actual diff. Each admission line names its admission packet: the exact candidate
 list and the core receipt. Search-only, limit and final-admission steps have lines too.
-A field item that fails because it holds the value or comes after the value has the cause
-`holds_value` or `after_value` (#318). A repair call line lists the causes of its candidate in
+A field item that fails because it holds the value's token or comes after the token has the
+cause `holds_value` or `after_value` (#318). The token is the one that the precision of section 4
+reads. Without it, the value span stands for the token. A repair call line lists the causes of its candidate in
 `field_causes`. The final admission line maps each candidate id with a cause to its causes, in
 the same key, so that a bench can count each cause.
 
