@@ -975,32 +975,76 @@ def heading_units(text: str) -> list[HeadingUnit]:
     return out
 
 
-def heading_allows(
-    h: HeadingUnit, units: dict[str, tuple[list[str], list[str]]]
-) -> set[str] | None:
+Units = dict[str, tuple[list[str], list[str]]]
+
+
+def heading_allows(code: str | None, form: str, units: Units) -> set[str] | None:
     """The unit codes that a heading unit allows, or None for an unknown header (SPEC §4.3)."""
-    if h.code is not None:
-        return {h.code}
-    have = {code for code, (prefixes, _) in units.items() if h.form in prefixes}
-    if len(h.form) == 1:
-        return have | {c for c, (_, sign) in CURRENCY_NAMES.items() if sign == h.form}
+    if code is not None:
+        return {code}
+    have = {c for c, (prefixes, _) in units.items() if form in prefixes}
+    if len(form) == 1:
+        return have | {c for c, (_, sign) in CURRENCY_NAMES.items() if sign == form}
     return have or None
 
 
-def heading_currency(
-    found: list[HeadingUnit], unit: str, units: dict[str, tuple[list[str], list[str]]]
-) -> bool:
-    """Whether the heading currency of a token is ``unit``, from the heading units that reach it
-    (SPEC §4.3): each one that is not unknown allows the unit, and a statement or a header whose
-    form is a prefix of the unit settles it. groundgate never chooses between two currencies."""
-    prefixes = units.get(unit, ([], []))[0]
-    settled = False
-    for h in found:
-        allowed = heading_allows(h, units)
-        if allowed is not None and unit not in allowed:
+class HeadingIndex:
+    """The heading units of a text, for a check at a token in time that does not grow with the
+    number of heading units (#315). Units with the same code and form act the same, so each such
+    kind keeps the merged spans of the rows that its units reach."""
+
+    def __init__(self, found: list[HeadingUnit]) -> None:
+        self.units = sorted(found, key=lambda h: h.start)
+        self.starts = [h.start for h in self.units]
+        spans: dict[tuple[str | None, str], list[tuple[int, int]]] = {}
+        for h in found:
+            if h.reach is not None:
+                spans.setdefault((h.code, h.form), []).append(h.reach)
+        self.reach: dict[tuple[str | None, str], tuple[list[int], list[int]]] = {}
+        for kind, got in spans.items():
+            merged: list[list[int]] = []
+            for x, y in sorted(got):
+                if merged and x <= merged[-1][1]:
+                    merged[-1][1] = max(merged[-1][1], y)
+                else:
+                    merged.append([x, y])
+            self.reach[kind] = ([x for x, _ in merged], [y for _, y in merged])
+
+    def reaches(self, kind: tuple[str | None, str], pos: int) -> bool:
+        if kind not in self.reach:
             return False
-        settled = settled or h.code is not None or h.form in prefixes
-    return settled
+        lo, hi = self.reach[kind]
+        i = bisect.bisect_right(lo, pos) - 1
+        return i >= 0 and pos <= hi[i]
+
+    def held(self, a: int, b: int, pos: int) -> bool:
+        """Whether text[a:b] holds a heading unit that reaches ``pos``."""
+        i = bisect.bisect_left(self.starts, a)
+        while i < len(self.units) and self.units[i].start < b:
+            h = self.units[i]
+            if h.end <= b and h.reaches(pos):
+                return True
+            i += 1
+        return False
+
+    def currency(self, pos: int, unit: str, units: Units) -> bool:
+        """Whether the heading currency of the token at ``pos`` is ``unit`` (SPEC §4.3): each
+        heading unit that reaches it and is not unknown allows the unit, and a statement or a
+        header whose form is a prefix of the unit settles it. groundgate never chooses between
+        two currencies. An unknown header changes nothing, so only the kinds that the currency
+        table and the unit table name are read."""
+        prefixes = units.get(unit, ([], []))[0]
+        forms = set(_CONTINUES) | {x for pre, _ in units.values() for x in pre}
+        kinds = [(c, "") for c in CURRENCY_NAMES] + [(None, f) for f in sorted(forms)]
+        settled = False
+        for code, form in kinds:
+            if not self.reaches((code, form), pos):
+                continue
+            allowed = heading_allows(code, form, units)
+            if allowed is not None and unit not in allowed:
+                return False
+            settled = settled or code is not None or form in prefixes
+        return settled
 
 
 def in_scale(text: str, start: int, end: int) -> bool:

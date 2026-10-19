@@ -27,7 +27,7 @@ from .model import (
     Schema,
 )
 from .text import (
-    HeadingUnit,
+    HeadingIndex,
     Token,
     UnitPlaces,
     brackets_around,
@@ -39,7 +39,6 @@ from .text import (
     gain_word,
     header,
     header_column,
-    heading_currency,
     heading_rows,
     heading_units,
     holds_form,
@@ -142,7 +141,7 @@ class _Text:
     ref: str | None = None
     mentions: dict[tuple[str, ...], list[tuple[int, int, str]]] = field(default_factory=dict)
     rows: list[tuple[int, int]] | None = None  # reached by a heading scale, read once
-    headings: list[HeadingUnit] | None = None  # the heading units (#315), read once
+    headings: HeadingIndex | None = None  # the heading units (#315), read once
     # the quotes of the candidate being checked, for the many occurrences of one value (#249)
     # and its field items (#300): cleared for each candidate, so that they are at most the value
     # quote, 8 field items and one item of each other role
@@ -195,11 +194,10 @@ def _heading_unit(ctx: _Ctx, t: _Text, unit: str, tok: Token, a: int, b: int) ->
     """Whether text[a:b] holds a heading unit that reaches the token, and the token's heading
     currency is ``unit`` (SPEC §4.3, §4.6, spec 0.10, #315)."""
     if t.headings is None:
-        t.headings = heading_units(t.text)
-    found = [h for h in t.headings if h.reaches(tok.start)]
-    if not any(a <= h.start and h.end <= b for h in found):
+        t.headings = HeadingIndex(heading_units(t.text))
+    if not t.headings.held(a, b, tok.start):
         return False
-    return heading_currency(found, unit, ctx.schema.units)
+    return t.headings.currency(tok.start, unit, ctx.schema.units)
 
 
 @dataclass
