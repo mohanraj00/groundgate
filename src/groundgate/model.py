@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import copy
 import json
 import re
 from collections.abc import Sequence
@@ -16,7 +15,7 @@ from .pack import (
     BASE,
     BUILT_IN,
     added_words,
-    check_pack,
+    checked_copy,
     combine,
     pack_digest,
 )
@@ -300,7 +299,7 @@ def _resolve_packs(
         raise PacketError("packs must be a list of pack objects")
     by_id: dict[str, tuple[dict[str, Any], str]] = {}
     for obj in given:
-        p = copy.deepcopy(check_pack(obj))  # the caller cannot change it after the check
+        p = checked_copy(obj)
         sha = pack_digest(p)
         if p["id"] in by_id:
             other, other_sha = by_id[p["id"]]

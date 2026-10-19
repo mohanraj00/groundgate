@@ -263,3 +263,34 @@ def test_the_cli_reads_each_pack_file(tmp_path: Path, capsys: pytest.CaptureFixt
     assert "not given" in capsys.readouterr().err
     assert main(["schema", schema, "--pack", lac]) == 0
     assert main(["schema", "check", schema, "--pack", lac]) == 0
+
+
+class _Shifty(dict):  # type: ignore[type-arg]
+    """A dict that gives another value on the second read."""
+
+    reads = 0
+
+    def __getitem__(self, key: object) -> object:
+        _Shifty.reads += 1
+        return {"lac": 2**60} if _Shifty.reads > 1 else super().__getitem__(key)
+
+
+def test_a_subclass_of_a_json_type_is_not_data() -> None:
+    shifty = pack(scale={"words": _Shifty(lac=5)})
+    with pytest.raises(gg.PacketError, match="L2"):
+        gg.admit(DOC, SCHEMA, [], packs=[shifty])
+    with pytest.raises(gg.PacketError, match="L2"):
+        gg.admit(DOC, SCHEMA, [], packs=[pack(per_units=type("L", (list,), {})(["acre"]))])
+
+
+def test_load_pack_refuses_a_path_that_is_not_a_file(tmp_path: Path) -> None:
+    for path in (tmp_path / "missing.json", tmp_path):
+        with pytest.raises(gg.PacketError, match="is not a file"):
+            gg.load_pack(path)
+
+
+def test_a_documents_count_is_not_a_bool() -> None:
+    row = {"kind": "scale", "field": "words", "code": "lac", "status": "draft"}
+    gg.admit(DOC, SCHEMA, [], packs=[pack(status=[{**row, "documents": 3}])])
+    with pytest.raises(gg.PacketError, match="bool is not data"):
+        gg.admit(DOC, SCHEMA, [], packs=[pack(status=[{**row, "documents": True}])])

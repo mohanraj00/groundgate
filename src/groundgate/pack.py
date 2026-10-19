@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import re
@@ -115,26 +116,30 @@ def _fail(pack: object, msg: str) -> PacketError:
 
 def _check_data(pack: object) -> None:
     """L2, and the depth and entry limits of L4, with no recursion: only strings, integers,
-    null, lists and objects with string keys."""
+    null, lists and objects with string keys. Each type must be exact: a subclass can give
+    another answer when it is read again (#334)."""
     stack: list[tuple[object, int]] = [(pack, 1)]
     while stack:
         obj, depth = stack.pop()
         if depth > MAX_DEPTH:
             raise _fail(pack, f"the JSON nesting depth is more than {MAX_DEPTH} (L4)")
-        if isinstance(obj, dict):
+        kind = type(obj)
+        if kind is dict:
+            assert isinstance(obj, dict)
             if len(obj) > MAX_ENTRIES:
                 raise _fail(pack, f"an object has more than {MAX_ENTRIES} entries (L4)")
             for k, v in obj.items():
-                if not isinstance(k, str):
+                if type(k) is not str:
                     raise _fail(pack, "an object key is not a string (L2)")
                 stack.append((v, depth + 1))
-        elif isinstance(obj, list):
+        elif kind is list:
+            assert isinstance(obj, list)
             if len(obj) > MAX_ENTRIES:
                 raise _fail(pack, f"a list has more than {MAX_ENTRIES} entries (L4)")
             stack.extend((v, depth + 1) for v in obj)
-        elif isinstance(obj, bool) or not (obj is None or isinstance(obj, (str, int))):
-            raise _fail(pack, f"a value of type {type(obj).__name__} is not data (L2)")
-        elif isinstance(obj, int) and abs(obj) > MAX_INT:
+        elif not (obj is None or kind is str or kind is int):
+            raise _fail(pack, f"a value of type {kind.__name__} is not data (L2)")
+        elif kind is int and abs(obj) > MAX_INT:  # type: ignore[arg-type]
             raise _fail(pack, "an integer is out of the range of JSON (L2)")
 
 
@@ -227,7 +232,7 @@ def _check_status(pack: dict[str, Any], rows: object, built_in: bool) -> None:
         for k in ("bound", "limit", "results"):
             if k in row and not isinstance(row[k], str):
                 raise _fail(pack, f"the {k} of a status row must be a string (L8)")
-        if "documents" in row and (not isinstance(row["documents"], int) or row["documents"] < 0):
+        if "documents" in row and (type(row["documents"]) is not int or row["documents"] < 0):
             raise _fail(pack, "the documents of a status row must be a count (L8)")
         if row["status"] not in ("draft", "measured"):
             raise _fail(pack, f"a status row has the status {row['status']!r} (L8)")
@@ -286,6 +291,13 @@ def check_pack(pack: object, *, built_in: bool = False) -> dict[str, Any]:
     return pack
 
 
+def checked_copy(pack: object) -> dict[str, Any]:
+    """A copy of a given pack, after the checks. The copy is made from exact JSON types, and
+    the checks run on the copy, so a change of ``pack`` after this call has no effect."""
+    _check_data(pack)
+    return check_pack(copy.deepcopy(pack))
+
+
 def _no_twice(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     keys = [k for k, _ in pairs]
     if len(set(keys)) != len(keys):
@@ -296,8 +308,13 @@ def _no_twice(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
 def load_pack(path: str | Path) -> dict[str, Any]:
     """Read a pack file and run the checks of SPEC §4.8 on it. A file of more than 1 MiB is
     refused before it is parsed. Raises ``PacketError``."""
-    with open(path, "rb") as f:
-        data = f.read(MAX_FILE + 1)
+    if not Path(path).is_file():
+        raise PacketError(f"pack file {str(path)!r} is not a file")
+    try:
+        with open(path, "rb") as f:
+            data = f.read(MAX_FILE + 1)
+    except OSError as e:
+        raise PacketError(f"pack file {str(path)!r} cannot be read: {e}") from None
     if len(data) > MAX_FILE:
         raise PacketError(f"pack file {str(path)!r} is more than {MAX_FILE} bytes (L4)")
     try:
