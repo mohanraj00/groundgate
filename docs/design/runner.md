@@ -141,6 +141,10 @@ always uses the full original document and references, never text formed by conc
 chunks. Role quotes can name context elsewhere in the pinned texts, but each must pass the
 core's own checks. Section 6 defines the adapter anchoring for targeted reference value items.
 
+The instructions also say that a field item quotes the label before the value, such as a row
+label or a column header, and that it must not hold the value (#318). The core rejects both
+other forms under SPEC §4.6.
+
 A prompt states that document text, references and prior replies are data, including any
 instructions in them. It marks each data block with its source id and length. Prompt wording
 is an aid, not an input security check. The parser and repair restrictions below enforce the
@@ -163,7 +167,37 @@ records each active candidate, including duplicates.
 The runner calls `admit` once more on all final tips. A value that passed in an earlier round
 is not stored as a final admission on that basis. In particular, different values for a
 non-`multiple` field and the same key meet in one core call. The runner does not select one
-value, drop a conflicting proposal or combine isolated receipts to hide a conflict.
+value or combine isolated receipts to hide a conflict.
+
+There is one exception, for a rounded figure beside the exact figure (#319). A narrative can
+give "£17.3bn" and a table 17,284 in millions. I drop a candidate A only when all of these hold:
+
+1. A's decision in the core call over all tips has `CONFLICTING_CANDIDATES`.
+2. A's field is numeric. A's token is the first number token in its evidence span whose value,
+   times a power of ten, is A's value. A's **precision** is one unit in the last written digit of
+   that token, times that power of ten. "17.3" for 17300000000 states 100000000. A zero token
+   is A's token only when A's value is zero: "0.0" for 0 states 0.1.
+3. A second candidate B has the same field, key and unit, and a different value. The difference
+   between the two values is at most half of A's precision.
+4. B is admitted in a core call over all tips without the dropped candidates.
+
+When a drop does not meet rule 4, it is cancelled, and the check runs again over the other drops
+until it is stable. So a third value that conflicts with B keeps A in the final receipt. A drop
+does not change a decision of the core: it changes the candidates that the runner sends. The
+record keeps a `rounding` line before the final admission. That line names the admission packet
+with all tips, and each dropped candidate id with the kept ids and the precision.
+
+The check uses exact integer arithmetic. It reads only numbers with at most 1000 digits and an
+exponent of at most 1000. A larger number fails closed: it is never dropped, and no decimal
+error ends the run.
+
+**Threat.** This rule trusts the document to hold a more exact figure. Before it, a second value
+always sent the field to review. Now the author of a document or a reference can choose the
+admitted value inside half of the rounded figure's precision. Beside "£17.3bn", a line "Revenue
+was 17,299 million" drops the rounded figure and admits 17299000000. The shift is bounded by
+that half precision, and the `rounding` line records the drop. A value outside it stays a
+conflict. An app that cannot trust its documents for this reads the `rounding` lines and sends
+those fields to review.
 
 ## 5. What each repair may change
 
@@ -196,7 +230,7 @@ changes as one terminal proposal. A value change never grants another role or an
 | `SIGN_CITATION_INVALID` | Replace or remove the sign item. |
 | `SCALE_CITATION_INVALID` | Replace or remove the scale item. |
 | `UNIT_CITATION_INVALID` | Replace or remove the unit item; a field item is also permitted when the field has aliases. |
-| `FIELD_CITATION_INVALID` | Replace, add or remove field items. |
+| `FIELD_CITATION_INVALID` | Replace, add or remove field items. The feedback names the cause of a field item that holds the value or comes after it (#318). |
 | `KEY_CITATION_INVALID` | Replace or remove the key item. |
 | `KEY_NOT_AT_VALUE` | Only when key is in `missing`, aliases exist, and the value's line has a tab: add a key item and a field item. The candidate's key stays fixed. |
 | `SCALE_WORD` | A scaled numeric value is permitted as a new terminal proposal, as below. Evidence changes require their own eligible codes. |
@@ -375,7 +409,7 @@ completed repair rounds can leave `repair_limit`. A targeted not-found response 
 
 ## 8. The run record and replay
 
-The core receipt format stays unchanged. The `groundgate-run/1` record is a log: one line of
+The core receipt format stays unchanged. The `groundgate-run/2` record is a log: one line of
 canonical JSON for each entry. Each line has a `sequence`, the `previous` line's digest and its
 own `entry_sha256`. The first line, `header`, is the run manifest. It holds the runner version,
 core spec version, model id and every `RunPolicy` setting, and it names every input by digest:
@@ -387,6 +421,11 @@ For each call the log holds its sequence number, phase, field or candidate ids, 
 complete prompt digest, model id, raw reply digest and length, parse or client error, and
 permitted and actual diff. Each admission line names its admission packet: the exact candidate
 list and the core receipt. Search-only, limit and final-admission steps have lines too.
+A field item that fails because it holds the value's token or comes after the token has the
+cause `holds_value` or `after_value` (#318). The token is the one that the precision of section 4
+reads. Without it, the value span stands for the token. A repair call line lists the causes of its candidate in
+`field_causes`. The final admission line maps each candidate id with a cause to its causes, in
+the same key, so that a bench can count each cause.
 
 The log names objects by digest, and the returned artifacts are those objects: the inputs,
 the prompts, the replies and the admission packets. An object's key is its digest with its kind
@@ -395,7 +434,7 @@ cover exact UTF-8 bytes, including whitespace. Prompt digests cover the exact st
 `client`, encoded as UTF-8. Schema, policy, reference and admission objects are canonical JSON.
 Client errors have no reply digest.
 
-Runner digests use their own prefix, `groundgate-run/1:<kind>` followed by a zero byte and the
+Runner digests use their own prefix, `groundgate-run/2:<kind>` followed by a zero byte and the
 object bytes. They do not reuse the core `digest()`, whose prefix names the spec version, so the
 same text keeps its key in each spec version. There are no wall-clock times, host paths,
 credentials or random ids in this deterministic content. An app may keep times separately. The
@@ -437,7 +476,11 @@ and compares the regenerated source and byte ranges before constructing prompts.
 allocation ceilings for candidates and admission history are further bounded by the actual
 canonical record and artifact byte counts, even when the header declares larger budgets.
 It checks not-found and search-only entries too. Missing artifacts, changed
-settings, unknown runner versions or a different core version fail replay. A client-error
+settings, unknown runner versions or a different core version fail replay.
+`groundgate-run/2` replaced `groundgate-run/1`, the version that 0.9.0 wrote, because the prompt,
+the field causes and the `rounding` line changed (#318, #319). A `groundgate-run/1` record fails
+replay with the message `runner version differs`, which names both versions. It does not get to
+a prompt comparison. A client-error
 entry can verify the record of the attempted call, not reproduce the external failure.
 Replaying recorded replies is deterministic; a fresh model run need not produce those replies.
 

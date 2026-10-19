@@ -321,7 +321,7 @@ def test_bad_targeted_quote_fails_only_its_field():
 def test_targeted_trim_drops_the_worst_ranked_region_first():
     schema = {"fields": {"net_income": {"type": "integer", "description": "the yearly profit"}}}
     text = "".join(f"profit line {i} y\n" for i in range(6)) + "Net income 42."
-    for limit in (2600, 2900, 3200):
+    for limit in (2750, 3050, 3350):
         client = Client(envelope(missing=("net_income",)), envelope(missing=("net_income",)))
         settings = RunPolicy(search_context_chars=1, max_prompt_chars=limit)
         result = execute(text, client, schema, run_policy=settings)
@@ -1132,7 +1132,7 @@ def test_record_is_a_hash_chained_log_and_inputs_are_objects():
     assert result.run_sha256 == lines[-1]["entry_sha256"]
     # Keys use the stable runner prefix, not the core digest that names the spec version.
     inputs = lines[0]["inputs"]
-    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/1:text\0Amount 5.").hexdigest()
+    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/2:text\0Amount 5.").hexdigest()
     assert inputs["document"] == {"kind": "text", "id": None, "source": None, "sha256": text_key}
     assert result.artifacts[text_key] == "Amount 5."
     assert result.receipt.document_sha256 != text_key
@@ -1267,3 +1267,165 @@ def test_write_checks_keys_and_the_log_before_any_object(tmp_path):
     result.write(tmp_path / "c")
     assert [p.name for p in (tmp_path / "c").iterdir() if p.name.startswith(".tmp-")] == []
     assert all(p.stat().st_mode & 0o044 for p in (tmp_path / "c" / "objects").iterdir())
+
+
+CAUSE_SCHEMA = {"fields": {"amount": {"type": "integer", "aliases": ["Amount"]}}}
+
+
+@pytest.mark.parametrize(
+    "text,field,cause",
+    [
+        ("Amount 5.", "Amount 5", "holds_value"),
+        ("Amount 5, Amount.", "Amount.", "after_value"),
+        # The value quote holds more than the token: the token decides the cause.
+        ("Amount 5 total.", "total", "after_value"),
+    ],
+)
+def test_repair_names_the_cause_of_a_field_item_that_cannot_pass(text, field, cause):
+    # A field item must end at or before the value (SPEC §4.6, #318).
+    quote = "Amount 5 total" if "total" in text else "5"
+    first = candidate(evidence=[item(quote), item(field, "field")])
+    assert gg.admit(text, CAUSE_SCHEMA, [{"id": "a", **first}]).decisions[0].codes == (
+        "FIELD_CITATION_INVALID",
+    )
+    new = candidate(evidence=[item(quote), item("Amount", "field")])
+    client = Client(envelope(first), new)
+    result = execute(text, client, CAUSE_SCHEMA)
+    assert "It must not hold the value." in client.prompts[0]
+    repair = json.loads(client.prompts[1].split("\n", 1)[1])
+    expected = {"holds_value": "holds the value", "after_value": "comes after the value"}
+    assert expected[cause] in repair["feedback"]
+    assert "label before the value" in repair["feedback"]
+    call = next(e for e in result.record if e["kind"] == "call" and e["phase"] == "repair")
+    assert call["field_causes"] == [cause]
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert "field_causes" not in result.record[-2]
+    assert_replays(result, text, CAUSE_SCHEMA)
+
+
+def test_final_admission_keeps_the_field_cause_after_the_last_repair():
+    first = candidate(evidence=[item("5"), item("Amount 5", "field")])
+    client = Client(envelope(first), first)
+    result = execute("Amount 5.", client, CAUSE_SCHEMA)
+    final = next(e for e in result.record if e["kind"] == "final_admission")
+    assert final["field_causes"] == {"c1-1": ["holds_value"]}
+    assert_replays(result, "Amount 5.", CAUSE_SCHEMA)
+
+
+ROUND_SCHEMA = {"fields": {"revenue": {"type": "number", "aliases": ["Revenue"]}}}
+
+
+def rounded_and_exact(rounded_quote, rounded_value):
+    text = f"Revenue rose to {rounded_quote}.\n(in millions)\nRevenue\t17,284"
+    rounded = candidate(rounded_value, "revenue", evidence=[item(rounded_quote)])
+    exact = candidate(
+        "17284000000",
+        "revenue",
+        evidence=[item("17,284"), item("Revenue", "field"), item("in millions", "scale")],
+    )
+    return text, rounded, exact
+
+
+def test_a_rounded_figure_beside_the_exact_figure_is_dropped_and_recorded():
+    text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
+    both = gg.admit(text, ROUND_SCHEMA, [{"id": "a", **rounded}, {"id": "b", **exact}])
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in both.decisions)
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    assert [c["id"] for c in result.candidates] == ["c1-2"]
+    assert [d.outcome for d in result.receipt.decisions] == ["admitted"]
+    event = next(e for e in result.record if e["kind"] == "rounding")
+    assert event["dropped"] == [
+        {"candidate_id": "c1-1", "kept_ids": ["c1-2"], "precision": "100000000"}
+    ]
+    packet = json.loads(result.artifacts[event["admission_sha256"]])
+    assert [c["id"] for c in packet["candidates"]] == ["c1-1", "c1-2"]
+    assert_replays(result, text, ROUND_SCHEMA)
+
+
+def test_two_figures_that_do_not_round_to_each_other_stay_a_conflict():
+    text, rounded, exact = rounded_and_exact("£17.5bn", "17500000000")
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    assert len(result.candidates) == 2
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
+    assert not any(e["kind"] == "rounding" for e in result.record)
+    assert_replays(result, text, ROUND_SCHEMA)
+
+
+def test_a_rounded_figure_stays_when_the_exact_figure_meets_another_conflict():
+    # Dropping the rounded figure must not hide a real conflict: 17,284 against 18,000.
+    text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
+    text += "\nRevenue\t18,000"
+    other = candidate(
+        "18000000000",
+        "revenue",
+        evidence=[item("18,000"), item("Revenue", "field"), item("in millions", "scale")],
+    )
+    result = execute(text, Client(envelope(rounded, exact, other)), ROUND_SCHEMA)
+    assert len(result.candidates) == 3
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
+    assert not any(e["kind"] == "rounding" for e in result.record)
+    assert_replays(result, text, ROUND_SCHEMA)
+
+
+def test_a_groundgate_run_1_record_fails_replay_with_a_version_message(tmp_path):
+    # 0.9.0 wrote groundgate-run/1 records. This runner writes groundgate-run/2 (#318, #319).
+    result = execute("Amount 5.", Client(envelope(candidate())))
+    assert result.record[0]["runner"] == "groundgate-run/2"
+    old = copy.deepcopy(result.record)
+    old[0]["runner"] = "groundgate-run/1"
+    verification = replay(old, result.artifacts, "Amount 5.", SCHEMA)
+    message = "runner version differs: the record is 'groundgate-run/1', this runner is "
+    assert not verification.ok
+    assert verification.problems == (message + "'groundgate-run/2'",)
+    result.write(tmp_path)
+    log = tmp_path / "run.jsonl"
+    log.write_text(log.read_text().replace("groundgate-run/2", "groundgate-run/1", 1))
+    with pytest.raises(ValueError, match="the record is 'groundgate-run/1'"):
+        RunResult.read(tmp_path)
+
+
+def test_a_rounded_zero_states_its_precision():
+    # "0.0" states 0 to one decimal place, so 0.04 rounds to it (#319).
+    text = "Revenue was 0.0 in total.\nRevenue\t0.04"
+    rounded = candidate("0", "revenue", evidence=[item("0.0")])
+    exact = candidate("0.04", "revenue", evidence=[item("0.04"), item("Revenue", "field")])
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    assert [c["id"] for c in result.candidates] == ["c1-2"]
+    assert [d.outcome for d in result.receipt.decisions] == ["admitted"]
+    event = next(e for e in result.record if e["kind"] == "rounding")
+    assert event["dropped"] == [{"candidate_id": "c1-1", "kept_ids": ["c1-2"], "precision": "0.1"}]
+    assert_replays(result, text, ROUND_SCHEMA)
+
+
+def test_replay_refuses_a_changed_rounding_line():
+    text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    at = next(i for i, e in enumerate(result.record) if e["kind"] == "rounding")
+    for change in ({"dropped": []}, {"admission_sha256": result.record[at - 1]["entry_sha256"]}):
+        record = copy.deepcopy(result.record)
+        record[at].update(change)
+        assert not replay(record, result.artifacts, text, ROUND_SCHEMA).ok
+    removed = [e for i, e in enumerate(result.record) if i != at]
+    assert not replay(removed, result.artifacts, text, ROUND_SCHEMA).ok
+
+
+def test_rounding_fails_closed_on_numbers_outside_the_digit_bound():
+    # Exact arithmetic with a bound: no decimal trap can end the run, and no drop happens (#319).
+    from decimal import Decimal
+
+    from groundgate.extract.runner import _within
+
+    assert not _within(Decimal("1E+999999"), Decimal("1"), Decimal("1E+999999"))
+    assert not _within(Decimal("1"), Decimal("1.1"), Decimal("NaN"))
+    assert _within(Decimal("17284000000"), Decimal("17300000000"), Decimal("1E+8"))
+    long = "1" + "0" * 1100
+    text = f"Revenue was {long}.0 in total.\nRevenue\t{long}.04"
+    rounded = candidate(long, "revenue", evidence=[item(f"{long}.0")])
+    exact = candidate(
+        f"{long}.04", "revenue", evidence=[item(f"{long}.04"), item("Revenue", "field")]
+    )
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    assert len(result.candidates) == 2
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
+    assert not any(e["kind"] == "rounding" for e in result.record)
+    assert_replays(result, text, ROUND_SCHEMA)
