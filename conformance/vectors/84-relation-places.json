@@ -1,0 +1,125 @@
+{
+ "name": "84-relation-places",
+ "description": "The place of a token comes from its written digits, not from the canonical value: 4.00% has the place 0.01. Two values of one field that are equal take the smaller place, 0.001 from 7.250%. A knowledge item has the place of the canonical value, 0.1 for 3.3. So the allowance is 0.0005 + 0.005 + 0.05 = 0.0555 (spec 0.10, #321).",
+ "document": "The fund's total return was 7.25%. The audited total return was 7.250%. The income return was 4.00%.",
+ "schema": {
+  "fields": {
+   "total_return": {
+    "type": "number",
+    "unit": "%"
+   },
+   "income": {
+    "type": "number",
+    "unit": "%"
+   },
+   "growth": {
+    "type": "number",
+    "unit": "%"
+   }
+  },
+  "relations": [
+   {
+    "id": "returns",
+    "total": "total_return",
+    "parts": [
+     {
+      "field": "income"
+     },
+     {
+      "field": "growth"
+     }
+    ]
+   }
+  ]
+ },
+ "policy": {
+  "sources": {
+   "knowledge": "admit"
+  }
+ },
+ "candidates": [
+  {
+   "id": "t1",
+   "field": "total_return",
+   "value": "7.25",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 33,
+     "text": "7.25%"
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "field": "total_return",
+   "value": "7.25",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 70,
+     "text": "7.250%"
+    }
+   ]
+  },
+  {
+   "id": "i1",
+   "field": "income",
+   "value": "4",
+   "unit": "%",
+   "evidence": [
+    {
+     "start": 94,
+     "end": 99,
+     "text": "4.00%"
+    }
+   ]
+  },
+  {
+   "id": "g1",
+   "field": "growth",
+   "value": "3.3",
+   "unit": "%",
+   "evidence": [
+    {
+     "source": "knowledge",
+     "text": "The growth return was 3.3%."
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   }
+  ],
+  "coverage": [],
+  "relations": [
+   {
+    "id": "returns",
+    "key": null,
+    "holds": true,
+    "difference": "-0.05",
+    "allowance": "0.0555"
+   }
+  ]
+ }
+}

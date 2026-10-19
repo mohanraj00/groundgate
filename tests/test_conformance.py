@@ -25,7 +25,7 @@ FLAG_CODES = {
     "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "EVIDENCE_REANCHORED", "MODEL_DOUBT",
     "MODEL_CLEARED", "KEY_CITED", "KEY_CITATION_INVALID", "PART_MISSING", "SIGN_CITATION_INVALID",
     "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID", "FIELD_CITATION_INVALID", "EVIDENCE_QUOTED",
-    "EVIDENCE_STATED", "VALUE_DERIVED", "ADMITTED_BY_POLICY",
+    "EVIDENCE_STATED", "VALUE_DERIVED", "ADMITTED_BY_POLICY", "RELATION_FAILED",
 }  # fmt: skip
 
 
@@ -56,6 +56,7 @@ def test_vector(path: Path) -> None:
             parts = [{"role": x["role"], "passed": x["passed"]} for x in got["parts"]]
             assert parts == want["parts"], label
     assert receipt["coverage"] == v["expected"]["coverage"]
+    assert receipt.get("relations") == v["expected"].get("relations")
     args = (v["document"], v["schema"], v["candidates"], v["policy"], js)
     assert gg.verify(receipt, *args, **_extra(v)).ok
 

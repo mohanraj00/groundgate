@@ -1,0 +1,40 @@
+{
+ "name": "schema-relation-mixed-keys",
+ "description": "A relation is invalid: either every field of a relation has keys, or none has (SPEC §2.3, spec 0.10, #321).",
+ "document": "A is $3, B is $1 and C is $2.",
+ "schema": {
+  "fields": {
+   "a": {
+    "type": "integer",
+    "unit": "USD",
+    "keys": [
+     "2025"
+    ]
+   },
+   "b": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "c": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  },
+  "relations": [
+   {
+    "id": "r",
+    "total": "a",
+    "parts": [
+     {
+      "field": "b"
+     }
+    ]
+   }
+  ]
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

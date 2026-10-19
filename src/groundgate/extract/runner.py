@@ -446,8 +446,9 @@ def _shape(candidate: Any, fields: set[str], refs: set[str]) -> None:
 
 
 def _output_schema(schema: Schema, fields: list[str], refs: list[str]) -> Json:
-    subset = schema.to_dict()
-    subset = {**subset, "fields": {f: subset["fields"][f] for f in fields}}
+    full = schema.to_dict()
+    # the output shape needs no relations, and a relation can name a field outside the subset
+    subset = {"fields": {f: full["fields"][f] for f in fields}, "units": full["units"]}
     shape = extractor_schema(subset, refs or None)
     defs = shape["$defs"]
     for name in list(defs):

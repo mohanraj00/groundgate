@@ -339,7 +339,9 @@ Readers, strategies and the router stay experimental after 1.0.
 
 ## 13. Open questions
 
-[packs.md](packs.md) proposes answers to questions 1, 3 and 4, for approval on #320.
+[packs.md](packs.md) proposes answers to questions 1, 3 and 4, for approval on #320. Spec 0.10
+answers question 2 (#321, SPEC §3.4): a sum, with a factor for each part. So a difference and a
+unit change are sums too, and there is no expression language.
 
 1. Where the packs live: in this repository, in a separate package, or both, with the app's own
    packs outside.

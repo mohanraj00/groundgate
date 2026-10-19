@@ -1,0 +1,173 @@
+{
+ "name": "83-relation-not-applied",
+ "description": "A relation applies only when each of its fields has values that passed, with one canonical value. A rejected sales value stops the gross relation, and two profit values stop the profit relation: no value gets RELATION_FAILED, and the receipt lists no result (spec 0.10, #321).",
+ "document": "Sales were $600 and fees were $300, so revenue was $900. Costs were $500. Profit was $400. The draft said profit was $300.",
+ "schema": {
+  "fields": {
+   "sales": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "fees": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "revenue": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "costs": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "profit": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  },
+  "relations": [
+   {
+    "id": "gross",
+    "total": "revenue",
+    "parts": [
+     {
+      "field": "sales"
+     },
+     {
+      "field": "fees"
+     }
+    ]
+   },
+   {
+    "id": "profit",
+    "total": "profit",
+    "parts": [
+     {
+      "field": "revenue"
+     },
+     {
+      "field": "costs",
+      "factor": "-1"
+     }
+    ]
+   }
+  ]
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "n1",
+   "field": "sales",
+   "value": 700,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 11,
+     "end": 15,
+     "text": "$600"
+    }
+   ]
+  },
+  {
+   "id": "n2",
+   "field": "fees",
+   "value": 300,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 30,
+     "end": 34,
+     "text": "$300"
+    }
+   ]
+  },
+  {
+   "id": "n3",
+   "field": "revenue",
+   "value": 900,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 51,
+     "end": 55,
+     "text": "$900"
+    }
+   ]
+  },
+  {
+   "id": "n4",
+   "field": "costs",
+   "value": 500,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 68,
+     "end": 72,
+     "text": "$500"
+    }
+   ]
+  },
+  {
+   "id": "n5",
+   "field": "profit",
+   "value": 400,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 85,
+     "end": 89,
+     "text": "$400"
+    }
+   ]
+  },
+  {
+   "id": "n6",
+   "field": "profit",
+   "value": 300,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 117,
+     "end": 121,
+     "text": "$300"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   }
+  ],
+  "coverage": [],
+  "relations": []
+ }
+}

@@ -10,7 +10,8 @@ from array import array
 from collections import defaultdict
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
-from decimal import Decimal
+from decimal import MAX_PREC, Context, Decimal, Inexact
+from fractions import Fraction
 from typing import Any
 
 from .canonical import SPEC_VERSION, Offsets, digest, is_nfc
@@ -24,6 +25,8 @@ from .model import (
     Part,
     Policy,
     Receipt,
+    Relation,
+    RelationResult,
     Schema,
 )
 from .pack import BASE
@@ -79,6 +82,7 @@ FLAG_ORDER = (  # SPEC §3.3 table order; it is part of every receipt hash
     "EVIDENCE_STATED",
     "LOW_CONFIDENCE",
     "CONFLICTING_CANDIDATES",
+    "RELATION_FAILED",
     "MODEL_DOUBT",
 )
 INFO_ORDER = (
@@ -1178,6 +1182,8 @@ def admit(
         if isinstance(p, _Passed) and len(by_key.get((p.field.name, p.key), ())) > 1:
             p.flags.append("CONFLICTING_CANDIDATES")
 
+    relations = _relate(schema.relations, [p for *_, p in results if isinstance(p, _Passed)])
+
     decisions: list[Decision] = []
     applied: list[Judgment] = []
     for sha, i, cand, p in sorted(results, key=lambda r: (r[0], r[1])):
@@ -1207,8 +1213,84 @@ def admit(
             (rid, digest("reference", {"text": t.text}), source)
             for rid, (t, source) in sorted(refs.items())
         ),
+        relations if schema.relations else None,
     )
     return Receipt(**{**draft.__dict__, "receipt_sha256": digest("receipt", draft.body())})
+
+
+def _place(p: _Passed) -> Fraction:
+    """One unit of the last written digit of a passed value, times the scale that the value
+    takes from its token (SPEC §3.4). On the outside path, that of the canonical value."""
+    tok = None if p.at is None else p.at.token
+    if tok is None or tok.value is None:
+        exponent = Decimal(p.value).as_tuple().exponent
+        assert isinstance(exponent, int)
+        return Fraction(10) ** min(exponent, 0)
+    exponent = tok.value.as_tuple().exponent
+    assert isinstance(exponent, int)
+    place = Fraction(10) ** exponent
+    if tok.value != 0:
+        place *= abs(Fraction(Decimal(p.value))) / abs(Fraction(tok.value))
+    return place
+
+
+def _decimal(x: Fraction) -> str:
+    """The canonical decimal of an exact sum of decimals (SPEC §4.1)."""
+    d = x.denominator  # 2^a * 5^b, because every input is a decimal
+    twos = (d & -d).bit_length() - 1
+    fives = d >> twos
+    b = max(0, round((fives.bit_length() - 1) / 2.321928094887362))  # log2(5)
+    while 5**b < fives:
+        b += 1
+    while b and 5 ** (b - 1) >= fives:
+        b -= 1
+    assert 5**b == fives
+    digits = max(twos, b)
+    # Decimal(int) and scaleb do not convert the int to a string, so no digit limit applies.
+    exact = Context(prec=MAX_PREC, traps=[Inexact])
+    return canonical(Decimal(x.numerator * (10**digits // d)).scaleb(-digits, exact))
+
+
+def _relate(relations: tuple[Relation, ...], passed: list[_Passed]) -> tuple[RelationResult, ...]:
+    """Step 13: check each relation at each relation key, and flag the values of each relation
+    that fails (SPEC §3.4). The values come from the candidates that passed."""
+    by: dict[tuple[str, str | None], list[_Passed]] = defaultdict(list)
+    for p in passed:
+        by[p.field.name, p.key].append(p)
+    keys_of: dict[str, set[str | None]] = defaultdict(set)
+    for name, key in by:
+        keys_of[name].add(key)
+    out: list[RelationResult] = []
+    for r in sorted(relations, key=lambda r: r.id):
+        keys = sorted(keys_of.get(r.total, set()), key=lambda k: "" if k is None else k)
+        for key in keys:
+            values: list[tuple[Fraction, Fraction]] = []  # (value, place) of each field
+            for name in r.fields:
+                ps = by.get((name, key), [])
+                if len({p.value for p in ps}) != 1:
+                    break  # no value that passed, or two values: the relation does not apply
+                values.append((Fraction(Decimal(ps[0].value)), min(_place(p) for p in ps)))
+            else:
+                (total, total_place), parts = values[0], values[1:]
+                factors = [Fraction(f) for _, f in r.parts]
+                difference = total - sum(
+                    (f * v for f, (v, _) in zip(factors, parts, strict=True)), Fraction(0)
+                )
+                allowance = Fraction(r.tolerance) + total_place / 2
+                allowance += sum(
+                    (abs(f) * place / 2 for f, (_, place) in zip(factors, parts, strict=True)),
+                    Fraction(0),
+                )
+                holds = abs(difference) <= allowance
+                if not holds:
+                    for name in r.fields:
+                        for p in by[name, key]:
+                            if "RELATION_FAILED" not in p.flags:
+                                p.flags.append("RELATION_FAILED")
+                out.append(
+                    RelationResult(r.id, key, holds, _decimal(difference), _decimal(allowance))
+                )
+    return tuple(out)
 
 
 def _bytes(t: _Text, span: tuple[int, int]) -> tuple[int, int]:
@@ -1358,9 +1440,10 @@ def verify(
         "policy_sha256",
         "coverage",
         "judgments",
+        "relations",
         "summary",
     ):
-        if receipt.get(key) != fresh[key]:
+        if receipt.get(key) != fresh.get(key):
             problems.append(f"{key} differs from the re-derived receipt")
     theirs, ours = receipt.get("decisions"), fresh["decisions"]
     if not isinstance(theirs, list) or len(theirs) != len(ours):

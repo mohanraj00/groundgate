@@ -69,6 +69,14 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
 - The LangExtract adapter reads a list in `field_text` (#324). Each entry that holds text becomes
   one field item, up to 8. Before, the adapter skipped a list. A list for any other role now makes
   the candidate `CANDIDATE_INVALID`.
+- Relations across fields (#321, #284). A schema can give `relations`: a total equals the sum of
+  its parts, each part times a `factor`. A factor of `-1` subtracts a part, and `0.001` changes
+  its unit, as from mg to g. Step 13 adds the values that passed, once for each key. If the sum is
+  outside the allowance, each value of the relation gets `RELATION_FAILED`. The allowance is the
+  `tolerance` plus half of one unit of the last written digit of each value, times its scale, so
+  values in thousands can differ by 500 each. A relation that holds admits nothing. The receipt
+  gets a `relations` member with the difference and the allowance of each relation that applied.
+  A schema without relations keeps its digest and its receipt.
 
 ## 0.9.0 (2026-10-18)
 

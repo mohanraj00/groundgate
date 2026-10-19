@@ -465,6 +465,11 @@ adds reviews, and it is safe while its route is `draft`. If #321 also lets the s
 relations, both apply: a union of checks that only add reviews is safe. The digest of the pack
 covers its relations.
 
+Spec 0.10 defines the form in SPEC §2.3 and §3.4 (#321): a total, its parts with a factor for
+each part, and a tolerance. The schema gives relations now. A kind pack gives them in the same
+form when the kind pack code comes (issue 3 below), and check L13 then refuses a pack relation
+that names a field that is not a template of its pack.
+
 **The heading unit (#315).** #315 reads a currency unit from a column header or a statement such
 as "presented in Australian dollars". The statement words and the currency names only help to
 admit: without them, a value under such a statement goes to review, as in 0.9. So they can be

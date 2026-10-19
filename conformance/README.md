@@ -11,6 +11,8 @@ Each file in `vectors/` is a complete, language-agnostic test case:
   a part is missing. `parts` (optional) gives the `role` and `passed` of each listed part, in
   order;
 - `expected.coverage`: the coverage findings.
+- `expected.relations` (optional): the receipt's relation results (SPEC §5), in receipt order.
+  A vector without it has a schema with no relations.
 
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.
