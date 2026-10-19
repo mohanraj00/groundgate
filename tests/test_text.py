@@ -15,6 +15,7 @@ from groundgate.text import (
     _mixed_header_lines,
     canonical,
     first_token_end,
+    heading_units,
     key_mentions,
     keys_at,
     parse_value,
@@ -217,3 +218,20 @@ def test_sentence_agrees_with_a_scan(text: str, data: st.DataObject) -> None:
     assert sentence(text, pos) == (left, right)
     with sentence_index():
         assert sentence(text, pos) == (left, right)
+
+
+def test_heading_units_read_each_line_once() -> None:
+    """A table with a currency header on every row stays linear (#315): four times the rows take
+    less than eight times as long."""
+
+    def time_for(rows: int) -> float:
+        text = "(in Australian dollars)\n" + "\t$m\n" * rows
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            found = heading_units(text)
+            best = min(best, time.perf_counter() - began)
+            assert len(found) == rows + 1
+        return best
+
+    assert time_for(20000) < 8 * time_for(5000)

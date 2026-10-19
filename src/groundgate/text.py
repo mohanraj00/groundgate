@@ -944,20 +944,20 @@ def heading_units(text: str) -> list[HeadingUnit]:
         lines.append((start, start + len(line)))
         start += len(line) + 1
     starts = [a for a, _ in lines]
-    reach: dict[int, tuple[int, int] | None] = {}
+    n = len(lines)
+    tab = ["\t" in text[a:b] for a, b in lines]
+    blank = [not tab[i] and not text[slice(*lines[i])].strip() for i in range(n)]
+    # one pass from the end, so that each line is read once: the end of the run of lines with a
+    # tab from each line, and the first line after each line that is not blank
+    run_end = [0] * n
+    after = [n] * (n + 1)
+    for i in range(n - 1, -1, -1):
+        run_end[i] = (run_end[i + 1] if i + 1 < n and tab[i + 1] else lines[i][1]) if tab[i] else 0
+        after[i] = i + 1 if i + 1 < n and not blank[i + 1] else after[i + 1]
 
     def rows(i: int) -> tuple[int, int] | None:
-        if i not in reach:
-            j = i + 1
-            while j < len(lines) and "\t" not in text[slice(*lines[j])]:
-                if text[slice(*lines[j])].strip():
-                    break  # a line with no tab that is not blank: nothing is reached
-                j += 1
-            k = j
-            while k < len(lines) and "\t" in text[slice(*lines[k])]:
-                k += 1
-            reach[i] = (lines[j][0], lines[k - 1][1]) if k > j else None
-        return reach[i]
+        j = after[i]
+        return (lines[j][0], run_end[j]) if j < n and tab[j] else None
 
     out: list[HeadingUnit] = []
     for m in _CURRENCY_SCALE.finditer(text):
