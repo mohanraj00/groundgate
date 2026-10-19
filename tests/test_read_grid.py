@@ -247,3 +247,18 @@ def test_a_page_of_many_small_tables_gives_none() -> None:
     assert len(_grid(table(0.0))) == 1
     many = [rule for n in range(PAGE_TABLES + 1) for rule in table(20.0 * n)]
     assert _grid(many) == []
+
+
+def test_the_largest_tables_under_the_limits_are_fast() -> None:
+    def table(left: float, n: int = 199) -> list[tuple[float, float, float, float]]:
+        # Inner rules cross only the first column, so each other cell is 199 bands tall.
+        side = 4.0 * n
+        out = [(left, 0.0, left + side, 0.5), (left, side, left + side, side + 0.5)]
+        out += [(left, 4.0 * y, left + 4.0, 4.0 * y + 0.5) for y in range(1, n)]
+        return out + [(left + 4.0 * x, 0.0, left + 4.0 * x + 0.5, side) for x in range(n + 1)]
+
+    rules = table(0.0) + table(1000.0)  # 400 by 400 rules: more tables pass the pair limit
+    started = time.perf_counter()
+    assert len(_grid(rules)) == 2
+    assert time.perf_counter() - started < 2
+    assert _grid(rules + table(2000.0)) == []
