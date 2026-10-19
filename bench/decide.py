@@ -26,8 +26,7 @@ def as_01(schema: dict[str, Any]) -> dict[str, Any]:
         if spec.pop("keys", None):
             spec["multiple"] = True
         fields[name] = spec
-    # spec 0.1 has no packs: its words were in the core (#336)
-    return {**{k: v for k, v in schema.items() if k != "packs"}, "fields": fields}
+    return {**schema, "fields": fields}
 
 
 def main() -> None:

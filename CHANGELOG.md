@@ -25,6 +25,8 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   schemas of the financial sets name `finance`, and every bench check gives the same numbers. The
   currency names of a currency statement stay in `en`: they can stop an admit, so a schema without
   `finance` must still read them. The `en` digest does not change.
+  An app pack with the gain word "loss" is now invalid (L6) only when the packet also reads
+  `finance`.
 - An app can give its own vocabulary packs (#334). `groundgate.load_pack(path)` reads a pack
   file, `admit(..., packs=[...])` and `verify` take the pack objects, and the CLI takes
   `--pack FILE`. The schema names each pack in a new member `packs`. A pack only adds words to

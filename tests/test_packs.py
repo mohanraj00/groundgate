@@ -469,3 +469,14 @@ def test_the_built_in_pack_cannot_be_changed_through_a_schema() -> None:
         "deficit",
         "deficits",
     ]
+
+
+def test_a_gain_word_loss_conflicts_only_with_finance() -> None:
+    # L6 checks the loss words against the gain words after the union (SPEC 4.8). Without
+    # finance there is no loss word, so a gain word "loss" only stops a loss reading.
+    gain = pack(sign={"gain": ["loss"]})
+    own = {"id": "words-x-test", "version": "1.0.0"}
+    plain = gg.admit(LOSS_DOC, {"packs": [own], "fields": AMOUNT}, [LOSS_CAND], packs=[gain])
+    assert plain.decisions[0].codes == ("SIGN_CITATION_INVALID", "VALUE_DERIVED")
+    with pytest.raises(gg.PacketError, match="L6"):
+        gg.admit(LOSS_DOC, {"packs": [FINANCE, own], "fields": AMOUNT}, [LOSS_CAND], packs=[gain])
