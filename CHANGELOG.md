@@ -14,6 +14,16 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   and statements that reach it, and its heading currency. "250 mg" on a field in `g` names `mg`,
   and `$m` under "presented in Australian dollars" names `AUD`. It is a report: no outcome and no
   code changes, groundgate converts no value, and other decisions do not have the member.
+- A value in a dollar column under a statement of another currency was admitted in the wrong
+  currency (#365). The statement "presented in Australian dollars" holds `dollars`, a suffix of
+  `USD`, and the unit place rule of #249 read it as the unit of a `USD` value. A `$` next to the
+  value, or a `$` at a unit place, did the same. Now a **heading conflict** (SPEC §4.3) sends such
+  a value to review: the field's unit is a currency unit, and a heading unit that reaches the
+  value does not allow it. Two statements that do not agree also give one. Then no unit form,
+  unit place or unit item makes the unit present, so the decision lists `unit` in `missing`, or
+  gets `UNIT_CITATION_INVALID` with a unit item. No decision moves to `admitted` or to
+  `rejected`. The choice of the evidence and the outside path do not change. Vectors 109 to 115.
+  Every bench check gives the same numbers.
 - A scale word with a long s (U+017F), a dotted capital I (U+0130) or a dotless i (U+0131), such
   as "5 thouſand", made `admit` raise `KeyError` and give no receipt (#350). The lookup now folds
   the found word by the case rule of #356, so it always finds the listed word, and "5 thouſand"

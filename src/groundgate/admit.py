@@ -236,6 +236,16 @@ def _heading_unit(ctx: _Ctx, t: _Text, unit: str, tok: Token, a: int, b: int) ->
     return t.headings.currency(tok.start, unit, ctx.schema.units)
 
 
+def _conflict(ctx: _Ctx, t: _Text, unit: str | None, tok: Token | None) -> bool:
+    """Whether the token has a heading conflict: the field's unit is a currency unit that a
+    heading unit that reaches the token does not allow (SPEC §4.3, spec 0.10, #365)."""
+    if unit is None or tok is None:
+        return False
+    if t.headings is None:
+        t.headings = HeadingIndex(t.text)
+    return t.headings.conflict(tok.start, unit, ctx.schema.units)
+
+
 @dataclass
 class _Ctx:
     doc: _Text
@@ -679,6 +689,10 @@ def _checked(
             vitem.text, t.text[at.span[0] : at.span[1]]
         ):
             flags.append("NON_VERBATIM_EVIDENCE")
+    # the evidence is chosen as if no heading unit reached the token: then at a heading conflict
+    # no unit form or unit place makes the unit present, and a unit item fails (#365)
+    if "unit" not in roles and _conflict(ctx, at.t, f.unit, at.token):
+        at.missing.add("unit")
     token = at.token
     if token is not None:
         if qualifiers(t.text, token) - {f.comparator}:
@@ -824,6 +838,7 @@ def _roles(
     places = None
     if tok is not None and "unit" in roles:
         places = UnitPlaces(t.text, tok, prefixes, suffixes)
+    conflict = _conflict(ctx, t, f.unit, tok)  # no unit is present at the token (#365)
     found: dict[str, tuple[int, int]] = {}
     passed: dict[str, bool] = {}
     row = False  # a passing field item is at the value's row: found["field"] is the first one
@@ -888,6 +903,7 @@ def _roles(
                     and not ctx.any_unit_at(t, tok)
                     and _heading_unit(ctx, t, f.unit, tok, a, b)
                 )
+                ok = ok and not conflict  # a heading conflict: the item fails (#365)
         passed[role] = ok or (role == "field" and passed.get("field", False))
         byte_span = None if span is None else _bytes(t, span)
         p.parts.append(Part(role, byte_span, ok))
@@ -897,7 +913,13 @@ def _roles(
             p.flags.append(f"{role.upper()}_CITATION_INVALID")
     if fields and f.aliases is not None and not passed["field"]:
         p.flags.append("FIELD_CITATION_INVALID")  # no field item passes
-    if "unit" in p.missing and passed.get("field") and tok is not None and f.unit is not None:
+    if (
+        "unit" in p.missing
+        and passed.get("field")
+        and tok is not None
+        and f.unit is not None
+        and not conflict
+    ):
         # a form of the unit at a unit place of the value, as for a unit item (#249)
         if places is None:
             places = UnitPlaces(t.text, tok, prefixes, suffixes)

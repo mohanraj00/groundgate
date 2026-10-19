@@ -375,7 +375,8 @@ Without one, the decision lists `unit` in `missing`, unless the field check pass
 a form of the field's unit is at a unit place of the value, as a unit item there would
 be: then the unit is not missing (#249). A heading unit (§4.3) makes the unit present only
 through a unit item that holds it. A missing part adds the flag `PART_MISSING`, so the
-outcome is at best `needs_verification`.
+outcome is at best `needs_verification`. At a token with a heading conflict (§4.3), no unit
+form, unit place or unit item makes the unit present (spec 0.10, #365).
 
 **Re-anchoring (steps 10–11).** When steps 10 and 11 do not pass at the cited span without a
 missing part, `policy.reanchor` is true, and the value item has offsets and a non-blank `text`, the implementation finds every occurrence of `text` inside
@@ -753,6 +754,35 @@ So `$m` under "presented in Australian dollars" gives `AUD`. `$m` alone gives `U
 built-in prefix, and never `CAD`. `$m` under a statement of another currency, or two statements
 of two currencies, give no heading currency. groundgate never chooses between them.
 
+**Heading conflict (spec 0.10, #365).** A **currency unit** is a code of the currency table
+above, or a unit with a prefix in the unit table that ends with a currency sign (§4.1). A token
+has a **heading conflict** when the field's unit is a currency unit, and a heading unit that
+reaches the token, other than an unknown header, does not allow the field's unit. When two
+heading units that reach a token do not agree, one of them does not allow the field's unit, so
+the token has a heading conflict.
+
+At a token with a heading conflict, the field's unit is never present:
+
+- A form of the field's unit next to the token does not put the unit at the token (step 11).
+  Step 11 then reads the token as a token with no unit form next to it. A form of another unit
+  next to the token still rejects the candidate, as before.
+- A form at a unit place of the value does not make the unit present (§3.1, #249).
+- A unit item fails its check (§4.6).
+
+So the decision lists `unit` in `missing` and gets `PART_MISSING`, or it gets
+`UNIT_CITATION_INVALID` when the candidate has a unit item. The outcome is at best
+`needs_verification`. A heading conflict never rejects a candidate.
+
+A heading conflict does not change which occurrence of a quote is the evidence (§4.6), and it
+does not change if re-anchoring moves the evidence (§3.1). These choices are made as if no
+heading unit reaches the token. Then the heading conflict applies at the evidence. The outside
+path (§3.2) does not read the heading conflict.
+
+So under "presented in Australian dollars" and `$m`, a value in `USD` goes to review, and a value
+in `AUD` can be admitted. Under "presented in US dollars" and `$m`, a value in `USD` can be
+admitted. A value in `%` in that table has no heading conflict, because `%` is not a currency
+unit.
+
 ### 4.4 Whitespace normalisation
 
 Collapse every whitespace run to one space and trim. For the verbatim comparison only, also delete
@@ -924,7 +954,7 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 |---|---|
 | `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (a `sign.loss` word of the packs that the packet reads; the base pack gives none, and the built-in pack `finance` of §4.8 gives `loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
 | `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands", or it holds a currency scale (§4.1), as in "£m" (spec 0.10). It ends at or before the token. No scale word, also with a final `s`, lies between its end and the token, and no currency scale with a power of ten other than the item's scale (below) lies there. So the second `£m` of the header row `\t£m\t£m` does not stop an item on the first. |
-| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). Or the item holds a heading unit (§4.3) that reaches the token, the field check passes, the item ends at or before the token, no unit form is next to the token, and the token's heading currency is the field's unit (spec 0.10). |
+| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). Or the item holds a heading unit (§4.3) that reaches the token, the field check passes, the item ends at or before the token, no unit form is next to the token, and the token's heading currency is the field's unit (spec 0.10). In each case, the token has no heading conflict (§4.3, spec 0.10, #365). |
 | `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then one of these holds: no letter (general category L) lies between the item's end and the token (the item is at the **row**); the item is a **label cell** for the token (below); or the item is in the value's sentence with no number token between its end and the token, and the token is not after the end of a label slot that holds the item. |
 | `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
 
