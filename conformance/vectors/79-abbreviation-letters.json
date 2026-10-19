@@ -1,0 +1,57 @@
+{
+ "name": "79-abbreviation-letters",
+ "description": "An abbreviation matches case-insensitively as a scale word does: each letter matches itself or its capital. So 'U.ſ.' with a long s (U+017F) is no abbreviation, and its dot ends the sentence before a lowercase word. 'U.S.' still joins (spec 0.10, #350).",
+ "document": "Fees are up to the U.ſ. code cap of $60. Fees are up to the U.S. code cap of $70.",
+ "schema": {
+  "fields": {
+   "long_s_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "us_fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a1",
+   "field": "long_s_fee",
+   "value": "60",
+   "unit": "USD",
+   "evidence": {
+    "start": 37,
+    "end": 40,
+    "text": "$60"
+   }
+  },
+  {
+   "id": "a2",
+   "field": "us_fee",
+   "value": "70",
+   "unit": "USD",
+   "evidence": {
+    "start": 78,
+    "end": 81,
+    "text": "$70"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

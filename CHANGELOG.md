@@ -8,6 +8,9 @@ spec version, and receipts name the spec version they were decided under.
 Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses the
 `groundgate/0.10:` prefix, so all hashes differ from 0.9.0.
 
+- A scale word with a long s (U+017F), a dotted capital I (U+0130) or a dotless i (U+0131), such
+  as "5 thouſand", made `admit` raise `KeyError` and give no receipt (#350). Each letter of a scale
+  word or an abbreviation now matches only itself or its capital, so "thouſand" is no scale word.
 - The word lists of the text rules are data now, in the base vocabulary pack `en` 1.0.0
   (`src/groundgate/packs/en/1.0.0.json`, #333). SPEC §4.7 gives its digest. No decision and no
   receipt changes: a test shows that every moved pattern matches the same text as before, on

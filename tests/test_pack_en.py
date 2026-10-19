@@ -218,11 +218,16 @@ def _probes(s: str, toks: list[text.Token]) -> dict[str, list[int]]:
 
 
 TEXTS = _texts()
+# #350 changed the case rule of the scale words and the abbreviations: re.I matched these letters
+# with an ASCII letter, and the new rule does not. The proof of #333 holds for the other text, so
+# each of them stands as "?" here, with the same offsets.
+_NOT_CASED = str.maketrans({c: "?" for c in "\u017f\u0130\u0131\u212a"})
 
 
 @pytest.mark.parametrize(("name", "s"), TEXTS, ids=[name for name, _ in TEXTS])
 def test_the_pack_patterns_match_as_the_old_patterns(name: str, s: str) -> None:
     """Part 1 of the proof: every match of every moved pattern stays the same."""
+    s = s.translate(_NOT_CASED)
     toks = text.tokens(s)
     for key in FIND:
         new, old = getattr(V, key), OLD[key]

@@ -8,6 +8,7 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
+import groundgate as gg
 from groundgate.text import (
     _MIXED_HEADERS,
     _SENTENCE_END,
@@ -17,12 +18,15 @@ from groundgate.text import (
     canonical,
     first_token_end,
     heading_units,
+    in_scale,
+    item_scale,
     key_mentions,
     keys_at,
     parse_value,
     qualifiers,
     sentence,
     sentence_index,
+    token_scale,
     tokens,
     verbatim_equal,
 )
@@ -286,3 +290,35 @@ def test_heading_index_held_skips_units_that_reach_nothing() -> None:
         return best
 
     assert time_for(40000) < 8 * time_for(10000)
+
+
+def test_a_long_s_in_a_scale_word_gives_a_receipt() -> None:
+    """The input of #350: re.I matched "thou\u017fand" with "thousand", and the lookup then raised
+    KeyError. Now the long s is no "s", so the word is no scale word and the value is admitted."""
+    s = "The fee is 5 thou\u017fand."  # U+017F LATIN SMALL LETTER LONG S
+    receipt = gg.admit(
+        s,
+        {"fields": {"fee": {"type": "integer"}}},
+        [{"id": "a", "field": "fee", "value": "5", "evidence": {"text": "5 thou\u017fand"}}],
+    )
+    assert [d.outcome for d in receipt.decisions] == ["admitted"]
+
+
+NOT_CASED = ["thou\u017fand", "b\u0130llion", "b\u0131llion", "m\u0131ll\u0131on"]
+
+
+@pytest.mark.parametrize("word", NOT_CASED)
+def test_letters_that_re_i_folds_are_no_scale_word(word: str) -> None:
+    """Each letter of a scale word matches only itself or its capital (#350)."""
+    s = f"5 {word} (in {word}s)"
+    assert token_scale(s, tokens(s)[0]) is None
+    assert item_scale(s, 0, len(s)) is None
+    assert not in_scale(s, 0, len(s))
+
+
+@pytest.mark.parametrize(("word", "power"), [("THOUSAND", 3), ("Million", 6), ("LAKH", 5)])
+def test_capitals_still_make_a_scale_word(word: str, power: int) -> None:
+    s = f"5 {word} (in {word}S)"
+    assert token_scale(s, tokens(s)[0]) == power
+    assert item_scale(s, 0, len(s)) == power
+    assert in_scale(s, 0, len(s))

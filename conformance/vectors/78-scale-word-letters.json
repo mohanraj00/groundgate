@@ -1,0 +1,153 @@
+{
+ "name": "78-scale-word-letters",
+ "description": "A scale word matches case-insensitively: each letter matches itself or its capital. The long s (U+017F), the dotted capital I (U+0130) and the dotless i (U+0131) are other letters, so 'thouſand', 'bİllion' and 'mıllıon' are no scale words. The value is the number as written, and '(in thouſands' is no scale item. Before, such a packet raised an error and gave no receipt (spec 0.10, #350).",
+ "document": "The fee is 5 thouſand. The levy is 2 bİllion. The toll is 3 mıllıon. The cap is 4 THOUSAND.\n\nAmounts (in thouſands)\nFees\t75\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer"
+   },
+   "fee_scaled": {
+    "type": "integer"
+   },
+   "levy": {
+    "type": "integer"
+   },
+   "toll": {
+    "type": "integer"
+   },
+   "cap": {
+    "type": "integer"
+   },
+   "fees": {
+    "type": "number"
+   },
+   "fees_scaled": {
+    "type": "number"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "t1",
+   "field": "fee",
+   "value": "5",
+   "evidence": {
+    "start": 11,
+    "end": 22,
+    "text": "5 thouſand"
+   }
+  },
+  {
+   "id": "t2",
+   "field": "fee_scaled",
+   "value": "5000",
+   "evidence": {
+    "start": 11,
+    "end": 22,
+    "text": "5 thouſand"
+   }
+  },
+  {
+   "id": "t3",
+   "field": "levy",
+   "value": "2",
+   "evidence": {
+    "start": 36,
+    "end": 46,
+    "text": "2 bİllion"
+   }
+  },
+  {
+   "id": "t4",
+   "field": "toll",
+   "value": "3",
+   "evidence": {
+    "start": 60,
+    "end": 71,
+    "text": "3 mıllıon"
+   }
+  },
+  {
+   "id": "t5",
+   "field": "cap",
+   "value": "4000",
+   "evidence": {
+    "start": 84,
+    "end": 94,
+    "text": "4 THOUSAND"
+   }
+  },
+  {
+   "id": "t6",
+   "field": "fees",
+   "value": "75",
+   "evidence": [
+    {
+     "start": 126,
+     "end": 128,
+     "text": "75"
+    }
+   ]
+  },
+  {
+   "id": "t7",
+   "field": "fees_scaled",
+   "value": "75000",
+   "evidence": [
+    {
+     "start": 126,
+     "end": 128,
+     "text": "75"
+    },
+    {
+     "role": "scale",
+     "start": 105,
+     "end": 119,
+     "text": "(in thouſands"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

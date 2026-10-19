@@ -3977,6 +3977,58 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- case of listed words (#350)
+vector(
+    "78-scale-word-letters",
+    "A scale word matches case-insensitively: each letter matches itself or its capital. The "
+    "long s (U+017F), the dotted capital I (U+0130) and the dotless i (U+0131) are other "
+    "letters, so 'thou\u017fand', 'b\u0130llion' and 'm\u0131ll\u0131on' are no scale words. The value is the number "
+    "as written, and '(in thou\u017fands' is no scale item. Before, such a packet raised an error and "
+    "gave no receipt (spec 0.10, #350).",
+    "The fee is 5 thou\u017fand. The levy is 2 b\u0130llion. The toll is 3 m\u0131ll\u0131on. The cap is 4 THOUSAND."
+    "\n\nAmounts (in thou\u017fands)\nFees\t75\n",
+    {
+        "fields": {
+            "fee": {"type": "integer"},
+            "fee_scaled": {"type": "integer"},
+            "levy": {"type": "integer"},
+            "toll": {"type": "integer"},
+            "cap": {"type": "integer"},
+            "fees": {"type": "number"},
+            "fees_scaled": {"type": "number"},
+        }
+    },
+    [
+        # the input of #350
+        c("t1", "fee", "5", None, q("5 thou\u017fand")),
+        # the number times 10^3 with no scale item: the scale is a missing part (SPEC §3.1)
+        c("t2", "fee_scaled", "5000", None, q("5 thou\u017fand"),
+          ("needs_verification", ["PART_MISSING"], ["scale"])),
+        c("t3", "levy", "2", None, q("2 b\u0130llion")),
+        c("t4", "toll", "3", None, q("3 m\u0131ll\u0131on")),
+        # capitals still match
+        c("t5", "cap", "4000", None, q("4 THOUSAND")),
+        # no heading scale reaches the row, so no scale is missing
+        c("t6", "fees", "75", None, [q("75")]),
+        c("t7", "fees_scaled", "75000", None, [q("75"), q("(in thou\u017fands", role="scale")],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "79-abbreviation-letters",
+    "An abbreviation matches case-insensitively as a scale word does: each letter matches itself "
+    "or its capital. So 'U.\u017f.' with a long s (U+017F) is no abbreviation, and its dot ends the "
+    "sentence before a lowercase word. 'U.S.' still joins (spec 0.10, #350).",
+    "Fees are up to the U.\u017f. code cap of $60. Fees are up to the U.S. code cap of $70.",
+    {"fields": {"long_s_fee": USD, "us_fee": USD}},
+    [
+        c("a1", "long_s_fee", "60", "USD", q("$60")),
+        c("a2", "us_fee", "70", "USD", q("$70"), ("needs_verification", ["QUALIFIED_VALUE"])),
+    ],
+)  # fmt: skip
+
+
 # ---------------------------------------------------------------- spec 0.10 (#313)
 POUND_000 = "Statement of financial position\n\t£000\t£000\nRevenue\t15,961,328\t14,200,105\n"
 REVENUE_313 = {"type": "number", "aliases": ["Revenue"], "multiple": True}

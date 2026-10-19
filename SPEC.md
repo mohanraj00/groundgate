@@ -523,7 +523,11 @@ scale words are `thousand`, `million`, `billion`, `trillion`, `lakh` and `crore`
 words, case-insensitively, after at most 2 whitespace code points. The scaled value is the value
 times 10^3, 10^6, 10^9, 10^12, 10^5 or 10^7: "$1.25 billion" is 1250000000 and "4 lakh" is
 400000. Like a unit, the scale word is read from the document, so it counts even past the end of
-the span. A scale word with no number before it ("millions of") has no value.
+the span. A scale word with no number before it ("millions of") has no value. Case-insensitive
+here means that each letter of the word matches itself or its capital, when the capital is one
+code point. So `THOUSAND` is a scale word, and `thouſand` (with U+017F), `bİllion` (U+0130) and
+`mıllıon` (U+0131) are not. The same holds for each place that names a scale word, and for the
+final `s` of a heading scale and a scale item (spec 0.10, #350).
 
 A **currency sign** is `$`, `€`, `£` or `₹`, the signs that §4.2 also lists. A number token with a
 value also has a scaled value when a currency sign stands directly before it and a **scale
@@ -573,7 +577,8 @@ a key or unit of one sentence reach a value in the next. The abbreviations, case
 p.m., approx., ca., cf., e.g., i.e., etc., vs., viz., no., nos., p., pp., para., fig., figs., vol.,
 rs., u.s., u.k., dr., mr., mrs., ms., jr., sr., st., inc., co., corp., ltd., est., min., max., hr.,
 hrs., mo., mos., yr., yrs., wk., wks., wt., oz., lb. and lbs. Matching is case-insensitive on whole
-words. `from` is deliberately absent: "from 7 to 8" is already a range through its connector, and
+words, letter by letter as for the scale words (§4.1), so `U.ſ.` is no abbreviation (#350).
+`from` is deliberately absent: "from 7 to 8" is already a range through its connector, and
 "up from $236,000" is not a qualifier.
 
 | Comparator | Before the value | After the value |

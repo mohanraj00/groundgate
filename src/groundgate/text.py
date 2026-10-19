@@ -167,7 +167,7 @@ def _ends_sentence(text: str, m: re.Match[str]) -> bool:
     nxt = gap.end()
     if _BLANK_LINE.search(gap.group()) or nxt == len(text):
         return True
-    word = abbreviation.group().lower()
+    word = _listed(voc._ABBREVIATIONS, abbreviation.group())
     if word in voc._JOIN_ALWAYS or (word in voc._JOIN_BEFORE_CODE and _CODE.match(text, nxt)):
         return False
     # only a plain continuation joins; an uppercase letter or punctuation may start a sentence
@@ -257,6 +257,32 @@ def _any(patterns: Iterable[str]) -> str:
 def _words(words: list[str]) -> str:
     """An alternation of plain words, each escaped, in the order of the pack."""
     return _any(re.escape(w) for w in words)
+
+
+def _cased_word(word: str) -> str:
+    """A listed word as SPEC §4.1 matches it case-insensitively: each letter matches itself or
+    its capital, when the capital is one code point. With no re.I, so the long s (U+017F) is no
+    "s", and the dotted capital I (U+0130) and the dotless i (U+0131) are no "i" (#350)."""
+    out = []
+    for ch in word:
+        up = ch.upper()
+        cased = len(up) == 1 and up != ch
+        out.append(f"[{re.escape(ch)}{re.escape(up)}]" if cased else re.escape(ch))
+    return "".join(out)
+
+
+def _cased_words(words: list[str]) -> str:
+    """An alternation of listed words, each matched as ``_cased_word`` does, in the pack order."""
+    return _any(_cased_word(w) for w in words)
+
+
+def _listed(words: Iterable[str], found: str) -> str:
+    """The first listed word that ``found`` matches as ``_cased_word`` does. The pattern matched
+    ``found`` with the same rule, so the lookup never fails (#350)."""
+    for w in words:
+        if len(w) == len(found) and all(d in (c, c.upper()) for c, d in zip(w, found, strict=True)):
+            return w
+    raise AssertionError(f"{found!r} is no listed word")
 
 
 def _phrases(phrases: list[str]) -> str:
@@ -367,7 +393,7 @@ def token_scale(text: str, tok: Token) -> int | None:
     voc = _VOCAB.get()
     m = voc._SCALE.match(text[tok.end : tok.end + 12])
     if m is not None:
-        return voc._SCALE_EXP[m.group(1).lower()]
+        return voc._SCALE_EXP[_listed(voc._SCALE_EXP, m.group(1))]
     if tok.start > 0 and text[tok.start - 1] in voc._CONTINUES:
         s = voc._SCALE_SUFFIX.match(text, tok.end)
         if s is not None:
@@ -972,7 +998,7 @@ def item_scale(text: str, start: int, end: int) -> int | None:
     if m is None:
         return None
     if m.group(1) is not None:
-        return voc._SCALE_EXP[m.group(1).lower()]
+        return voc._SCALE_EXP[_listed(voc._SCALE_EXP, m.group(1))]
     return voc._SUFFIX_EXP[m.group(2).lower()]
 
 
@@ -1307,7 +1333,7 @@ class Vocabulary:
         # a listed abbreviation that ends at a dot, as a whole word: "Rs." but not the end of
         # "Mrs."
         self._ABBREVIATION_END = re.compile(
-            r"(?<!\w)(?:" + _words(self._ABBREVIATIONS) + r")\Z", re.I
+            r"(?<!\w)(?:" + _cased_words(self._ABBREVIATIONS) + r")\Z"
         )
         self._ABBREVIATION_MAX = max((len(a) for a in self._ABBREVIATIONS), default=0)
         self._CONTINUES = "".join(pack["currency_signs"])  # the currency signs (SPEC §4.1, §4.2)
@@ -1361,8 +1387,9 @@ class Vocabulary:
             rf"\b(?:{self._CHANGE}){self._CHANGE_GAP}\s+from\s+\S{{0,4}}?$", re.I
         )
         self._SCALE_EXP: dict[str, int] = pack["scale"]["words"]
-        self._SCALE_WORDS = _words(list(self._SCALE_EXP))
-        self._SCALE = re.compile(rf"^\s{{0,2}}({self._SCALE_WORDS})\b", re.I)
+        # a scale word matches with the case rule of _cased_word, not with re.I (#350)
+        self._SCALE_WORDS = _cased_words(list(self._SCALE_EXP))
+        self._SCALE = re.compile(rf"^\s{{0,2}}({self._SCALE_WORDS})\b")
         # a scale suffix or a currency scale (SPEC §4.1, spec 0.10): the power of ten of each form
         self._SUFFIX_EXP: dict[str, int] = {
             **pack["scale"]["suffixes"],
@@ -1384,9 +1411,9 @@ class Vocabulary:
         )
         self._GAIN = re.compile(rf"(?<![^\W_])(?:{_words(pack['sign']['gain'])})(?![^\W_])", re.I)
         self._ITEM_SCALE = re.compile(
-            rf"(?<![^\W_])(?i:({self._SCALE_WORDS})s?)(?![^\W_])|" + self._CURRENCY_FORM
+            rf"(?<![^\W_])({self._SCALE_WORDS})[sS]?(?![^\W_])|" + self._CURRENCY_FORM
         )
-        self._IN_SCALE = re.compile(rf"(?<![^\W_])in\s+(?:{self._SCALE_WORDS})s?(?![^\W_])", re.I)
+        self._IN_SCALE = re.compile(rf"(?<![^\W_])(?i:in)\s+(?:{self._SCALE_WORDS})[sS]?(?![^\W_])")
         self._NEGATION = re.compile(
             rf"(?<![^\W_])(?:{_words(pack['sign']['negations'])})\s+\Z", re.I
         )
@@ -1398,7 +1425,7 @@ class Vocabulary:
         }
         self._STATEMENT = re.compile(
             r"(?<![^\W_])(?i:in)[^\S\n]+"
-            rf"(?:(?i:{self._SCALE_WORDS})s?[^\S\n]+(?i:of)[^\S\n]+)?(?:"
+            rf"(?:(?:{self._SCALE_WORDS})s?[^\S\n]+(?i:of)[^\S\n]+)?(?:"
             + "|".join(
                 f"(?P<{code}>(?i:{_any(_name_pattern(n) for n in names)})|{code})"
                 for code, (names, _) in self.CURRENCY_NAMES.items()
