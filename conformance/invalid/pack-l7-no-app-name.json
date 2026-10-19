@@ -1,0 +1,31 @@
+{
+ "name": "pack-l7-no-app-name",
+ "description": "L7: an app's own pack with no -x- name.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words",
+   "version": "1.0.0"
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

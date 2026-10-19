@@ -6,6 +6,7 @@
     "source": null
   },
   "references": [],
+  "packs": [],
   "schema_sha256": "sha256:fcd49bcceff8ffb732e312a8ff10b19522a564e7ec8defa83ec2ec84396c7b63",
   "policy_sha256": "sha256:d4c6df6d3ed31a1b880300040e6463a863030da8eb96bc2e3353aee5ed380eee",
   "decisions": [
@@ -26,7 +27,8 @@
         "end": 5218
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/8",
@@ -47,7 +49,8 @@
         "end": 4075
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/3",
@@ -66,7 +69,8 @@
         "end": 3476
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/19",
@@ -87,7 +91,8 @@
         "end": 6228
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/25",
@@ -106,7 +111,8 @@
         "end": 6935
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/5",
@@ -125,7 +131,8 @@
         "end": 3601
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/10",
@@ -144,7 +151,8 @@
         "end": 4560
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/6",
@@ -163,7 +171,8 @@
         "end": 3623
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/8",
@@ -182,7 +191,8 @@
         "end": 4075
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/10",
@@ -201,7 +211,8 @@
         "end": 5210
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/18",
@@ -220,7 +231,8 @@
         "end": 6115
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/15",
@@ -239,7 +251,8 @@
         "end": 5706
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/20",
@@ -258,7 +271,8 @@
         "end": 6166
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/1",
@@ -277,7 +291,8 @@
         "end": 2331
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/20",
@@ -296,7 +311,8 @@
         "end": 6586
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/13",
@@ -315,7 +331,8 @@
         "end": 5582
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/9",
@@ -334,7 +351,8 @@
         "end": 4485
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/11",
@@ -353,7 +371,8 @@
         "end": 5218
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/9",
@@ -372,7 +391,8 @@
         "end": 4756
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/7",
@@ -391,7 +411,8 @@
         "end": 4024
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/0",
@@ -410,7 +431,8 @@
         "end": 2323
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/23",
@@ -431,7 +453,8 @@
         "end": 6662
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/16",
@@ -450,7 +473,8 @@
         "end": 5684
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/7",
@@ -471,7 +495,8 @@
         "end": 4024
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/18",
@@ -490,7 +515,8 @@
         "end": 6115
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/14",
@@ -509,7 +535,8 @@
         "end": 5684
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/22",
@@ -528,7 +555,8 @@
         "end": 6586
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/12",
@@ -547,7 +575,8 @@
         "end": 5210
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/2",
@@ -566,7 +595,8 @@
         "end": 2791
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/21",
@@ -585,7 +615,8 @@
         "end": 6184
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/19",
@@ -604,7 +635,8 @@
         "end": 6133
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/3",
@@ -623,7 +655,8 @@
         "end": 3476
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/12",
@@ -642,7 +675,8 @@
         "end": 5559
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/4",
@@ -661,7 +695,8 @@
         "end": 3499
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/17",
@@ -680,7 +715,8 @@
         "end": 6184
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/2",
@@ -699,7 +735,8 @@
         "end": 2791
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/24",
@@ -718,7 +755,8 @@
         "end": 6858
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/17",
@@ -737,7 +775,8 @@
         "end": 5706
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/6",
@@ -756,7 +795,8 @@
         "end": 3623
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/4",
@@ -775,7 +815,8 @@
         "end": 3499
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/14",
@@ -794,7 +835,8 @@
         "end": 5559
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/5",
@@ -813,7 +855,8 @@
         "end": 3601
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/21",
@@ -832,7 +875,8 @@
         "end": 6228
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/0",
@@ -851,7 +895,8 @@
         "end": 2323
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/15",
@@ -870,7 +915,8 @@
         "end": 5582
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/1",
@@ -889,7 +935,8 @@
         "end": 2331
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/16",
@@ -908,7 +955,8 @@
         "end": 6133
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/11",
@@ -927,7 +975,8 @@
         "end": 4756
       },
       "parts": [],
-      "missing": []
+      "missing": [],
+      "packs": []
     }
   ],
   "coverage": [
@@ -942,5 +991,5 @@
     "needs_verification": 3,
     "rejected": 1
   },
-  "receipt_sha256": "sha256:f4dbe039b0246b2e1d7a441b897087f3de561fe78f3133787632f5e52cf01a16"
+  "receipt_sha256": "sha256:6d9eabe2b67f4dfa0297d5215c82c8f7ee775d419295d0fc79a7fcd9335c637f"
 }

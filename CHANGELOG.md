@@ -15,6 +15,16 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   currency scale of #313 and the currency names of a currency statement of #315, each name
   written out also in the singular. The loss words stay in the code until the `finance` pack
   takes them (#336).
+- An app can give its own vocabulary packs (#334). `groundgate.load_pack(path)` reads a pack
+  file, `admit(..., packs=[...])` and `verify` take the pack objects, and the CLI takes
+  `--pack FILE`. The schema names each pack in a new member `packs`. A pack only adds words to
+  the base pack. The loader checks of SPEC §4.8 refuse a pack that changes a base word, adds to
+  a list that cancels a flag, or exceeds a limit: 1 MiB as a file, 256 KiB as canonical JSON, a
+  nesting depth of 8 and 2,000 entries in a list. The receipt gets a member `packs` after
+  `references`, and each decision gets a member `packs` with the ids of the packs that it read.
+  Both are `[]` for a packet with no pack, so every receipt digest changes, but no outcome or
+  code changes. The base pack digest now reads the pack after defaults:
+  `sha256:8ee2f5c367baa29969759e3ed3ec5acf39f412a8b4b6afbda6477c1cde7fdeae`.
 - A candidate can cite up to 8 field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay
   `CANDIDATE_INVALID`.

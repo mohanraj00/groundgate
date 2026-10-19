@@ -1,0 +1,41 @@
+{
+ "name": "pack-l7-two-versions",
+ "description": "L7: one id with two versions in one packet.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   },
+   {
+    "id": "words-x-test",
+    "version": "1.1.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0"
+  },
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.1.0"
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

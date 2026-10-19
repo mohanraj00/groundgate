@@ -7,6 +7,8 @@ Each file in `vectors/` is a complete, language-agnostic test case:
 - `candidates`: the candidates exactly as proposed; an evidence item has UTF-8 byte offsets, or
   only a quote;
 - `judgments`, `references` and `document_source` (optional): inputs as in SPEC §2.1 and §2.6;
+- `packs` (optional): the vocabulary packs that the caller gives, as in SPEC §4.8. Each one is a
+  parsed pack file, and the schema names each one in its `packs` member;
 - `expected.decisions`: one `{outcome, codes}` per candidate, in input order, and `missing` where
   a part is missing. `parts` (optional) gives the `role` and `passed` of each listed part, in
   order;

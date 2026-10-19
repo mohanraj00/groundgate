@@ -317,7 +317,7 @@ groundgate schema check schema.json
 records the page and box of every word. Text a reader can't see (proof marks drawn off the page,
 hidden HTML) is dropped, and superscripts are marked so that 10⁹ reads `10^9`, never `109`.
 `admit`, `verify` and `report` read the document from a pipe when DOC is `-`, and also take
-`--references` and `--document-source`. `report` refuses to render a receipt that doesn't
+`--references`, `--document-source` and `--pack`. `report` refuses to render a receipt that doesn't
 re-derive from its inputs. `schema` writes the extractor schema, and `schema check` prints the
 settings that make a check fail every time, or pass for the wrong key or field
 ([Check a schema](docs/schema.md#check-a-schema)).
@@ -385,11 +385,12 @@ implementation can prove it agrees.
 {"groundgate": "0.10",
  "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:70339a5e68f8...", "source": null},
  "references": [],
+ "packs": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "Gemini_3.6_Flash_Medium/0", "field": "ira_limit_2025", "key": null,
                 "outcome": "admitted", "codes": [], "value": "7000", "unit": "USD",
                 "source": "document", "ref": null, "url": null,
-                "evidence": {"start": 2317, "end": 2323}, "parts": [], "missing": [],
+                "evidence": {"start": 2317, "end": 2323}, "parts": [], "missing": [], "packs": [],
                 "candidate_sha256": "sha256:5e979a80..."},
                "..."],
  "coverage": [{"field": "roth_phaseout_single_2025_end", "code": "REQUIRED_FIELD_MISSING"}],

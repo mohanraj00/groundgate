@@ -1,0 +1,32 @@
+{
+ "name": "pack-l1-unknown-member",
+ "description": "L1: a member that the format does not list.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "window": 80
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

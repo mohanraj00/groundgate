@@ -1,0 +1,36 @@
+{
+ "name": "pack-l8-row",
+ "description": "L8: a malformed status row.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "status": [
+    {
+     "status": "draft"
+    }
+   ]
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

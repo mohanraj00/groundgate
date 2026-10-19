@@ -1,0 +1,74 @@
+{
+ "name": "87-pack-qualifier",
+ "description": "A pack adds a qualifier phrase for a comparator. A value after it gets QUALIFIED_VALUE, as after a base qualifier (spec 0.10, #334).",
+ "document": "Upwards of 20 sites joined. Then 5 sites closed.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "joined": {
+    "type": "integer"
+   },
+   "closed": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "qualifiers": {
+    "before": {
+     "gt": [
+      "upwards of"
+     ]
+    }
+   }
+  }
+ ],
+ "candidates": [
+  {
+   "id": "p7",
+   "field": "joined",
+   "value": "20",
+   "evidence": {
+    "start": 11,
+    "end": 13,
+    "text": "20"
+   }
+  },
+  {
+   "id": "p8",
+   "field": "closed",
+   "value": "5",
+   "evidence": {
+    "start": 33,
+    "end": 34,
+    "text": "5"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

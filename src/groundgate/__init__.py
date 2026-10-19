@@ -14,6 +14,7 @@ from .model import (
     candidate_schema,
     extractor_schema,
 )
+from .pack import load_pack
 
 __version__ = "0.9.0"
 
@@ -33,5 +34,6 @@ __all__ = [
     "extractor_schema",
     "feedback_message",
     "jcs",
+    "load_pack",
     "verify",
 ]

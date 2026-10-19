@@ -1,0 +1,32 @@
+{
+ "name": "pack-schema-pin",
+ "description": "A pinned sha256 that differs from the digest of the given pack.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0",
+    "sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0"
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

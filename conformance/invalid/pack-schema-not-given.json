@@ -1,0 +1,24 @@
+{
+ "name": "pack-schema-not-given",
+ "description": "The schema names a pack that is neither built in nor given.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "other-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

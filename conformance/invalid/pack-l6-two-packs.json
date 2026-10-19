@@ -1,0 +1,51 @@
+{
+ "name": "pack-l6-two-packs",
+ "description": "L6: two packs give one scale word two powers.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "lac-x-five",
+    "version": "1.0.0"
+   },
+   {
+    "id": "lac-x-seven",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "lac-x-five",
+   "version": "1.0.0",
+   "scale": {
+    "words": {
+     "lac": 5
+    }
+   }
+  },
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "lac-x-seven",
+   "version": "1.0.0",
+   "scale": {
+    "words": {
+     "lac": 7
+    }
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

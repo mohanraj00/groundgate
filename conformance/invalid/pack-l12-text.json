@@ -1,0 +1,32 @@
+{
+ "name": "pack-l12-text",
+ "description": "L12: a member that holds document text.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "text": "The fee is 5 dollars."
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

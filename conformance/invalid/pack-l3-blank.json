@@ -1,0 +1,34 @@
+{
+ "name": "pack-l3-blank",
+ "description": "L3: a blank word.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "per_units": [
+    " "
+   ]
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

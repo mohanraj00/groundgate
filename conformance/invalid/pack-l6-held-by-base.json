@@ -1,0 +1,38 @@
+{
+ "name": "pack-l6-held-by-base",
+ "description": "L6: a qualifier phrase that a base phrase of another comparator holds: \"more\" as lt is in \"more than\" (gt).",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "words-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "qualifiers": {
+    "before": {
+     "lt": [
+      "more"
+     ]
+    }
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

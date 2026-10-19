@@ -63,10 +63,12 @@ from .text import (
     sentence_index,
     tokens,
     unit_at,
+    using,
     verbatim_equal,
+    vocabulary,
 )
 
-NULL_LITERALS = frozenset(BASE["null_literals"])  # the base pack (SPEC §4.7)
+NULL_LITERALS = frozenset(BASE["null_literals"])  # the null literals of the base pack (SPEC §4.7)
 FLAG_ORDER = (  # SPEC §3.3 table order; it is part of every receipt hash
     "NON_VERBATIM_EVIDENCE",
     "QUALIFIED_VALUE",
@@ -538,7 +540,7 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
     if f is None:
         raise _Reject("FIELD_UNKNOWN")
     text_value = str(raw)
-    if text_value.strip().lower() in NULL_LITERALS:
+    if text_value.strip().lower() in vocabulary().null_literals:
         raise _Reject("NULL_STRING_LITERAL")
     value: Decimal | str
     if f.type == "string":
@@ -1120,6 +1122,7 @@ def admit(
     *,
     references: Sequence[object] | None = None,
     document_source: str | None = None,
+    packs: Sequence[object] = (),
 ) -> Receipt:
     """Decide every candidate and return the receipt.
 
@@ -1130,10 +1133,11 @@ def admit(
     makes the packet invalid. ``document_id`` is copied into the receipt.
     ``judgments`` are recorded answers of a judge (SPEC §2.6); the policy's ``judge`` block says
     which apply. ``references`` are other source texts that the app supplies, and
-    ``document_source`` is the URL of the document (SPEC §2.1).
+    ``document_source`` is the URL of the document (SPEC §2.1). ``packs`` are the vocabulary
+    packs that the schema names, as pack objects (SPEC §4.8).
 
     Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema,
-    policy, judgments, references or document source are invalid. Then no receipt is made.
+    policy, judgments, references, document source or packs are invalid. Then no receipt is made.
     """
     if not isinstance(text, str) or not is_nfc(text):
         raise PacketError("document text must be a string in Unicode NFC")
@@ -1145,7 +1149,9 @@ def admit(
     _check_integers(judgments, "judgments")
     _check_integers(policy.to_dict() if isinstance(policy, Policy) else policy, "policy")
     if not isinstance(schema, Schema):
-        schema = Schema.from_dict(schema)
+        schema = Schema.from_dict(schema, packs)
+    elif packs:
+        raise PacketError("give the packs to Schema.from_dict when the schema is a Schema")
     if not isinstance(policy, Policy):
         policy = Policy() if policy is None else Policy.from_dict(policy)
     if document_source is not None and not (
@@ -1154,6 +1160,20 @@ def admit(
         raise PacketError("document source must be a non-blank string or null")
     refs = _references(references)
     by_cand = _judgments(judgments, candidates)
+    with using(schema.vocabulary):
+        return _admit(text, schema, candidates, policy, document_id, refs, by_cand, document_source)
+
+
+def _admit(
+    text: str,
+    schema: Schema,
+    candidates: Sequence[object],
+    policy: Policy,
+    document_id: str | None,
+    refs: dict[str, tuple[_Text, str | None]],
+    by_cand: dict[int, dict[str, Any]],
+    document_source: str | None,
+) -> Receipt:
     table = frozenset(x for _, suffixes in schema.units.values() for x in suffixes)
     ctx = _Ctx(
         _Text(text, Offsets(text)),
@@ -1186,12 +1206,14 @@ def admit(
 
     decisions: list[Decision] = []
     applied: list[Judgment] = []
+    read = _PackMarks(schema, [text, *(t.text for t, _ in refs.values())])
     for sha, i, cand, p in sorted(results, key=lambda r: (r[0], r[1])):
         if isinstance(p, _Passed):
             for j in sorted(_judge(policy, p, by_cand.get(i, {})), key=lambda j: j.question):
                 applied.append(Judgment(sha, j.question, j.answer, j.p))
         cid = cand.get("id") if isinstance(cand, Mapping) else None
-        decisions.append(_decision(ctx, sha, cand, cid, p))
+        d = _decision(ctx, sha, cand, cid, p)
+        decisions.append(dataclasses.replace(d, packs=read.packs(cand)) if schema.marks else d)
 
     live = {d.field for d in decisions if d.outcome != "rejected"}
     coverage = tuple(
@@ -1214,6 +1236,7 @@ def admit(
             for rid, (t, source) in sorted(refs.items())
         ),
         relations if schema.relations else None,
+        packs=schema.packs,
     )
     return Receipt(**{**draft.__dict__, "receipt_sha256": digest("receipt", draft.body())})
 
@@ -1291,6 +1314,49 @@ def _relate(relations: tuple[Relation, ...], passed: list[_Passed]) -> tuple[Rel
                     RelationResult(r.id, key, holds, _decimal(difference), _decimal(allowance))
                 )
     return tuple(out)
+
+
+def _fold(s: str) -> str:
+    """A text as the pack marks compare it: casefolded, each whitespace run one space."""
+    return " ".join(s.casefold().split())
+
+
+def _strings(obj: object) -> list[str]:
+    """Each string in a candidate, keys included, and each number and boolean as text."""
+    out: list[str] = []
+    stack = [obj]
+    while stack:
+        x = stack.pop()
+        if isinstance(x, str):
+            out.append(x)
+        elif isinstance(x, Mapping):
+            stack.extend(k for k in x if isinstance(k, str))
+            stack.extend(x.values())
+        elif isinstance(x, (list, tuple)):
+            stack.extend(x)
+        elif isinstance(x, (bool, int, float)):
+            out.append(str(x))  # step 3 reads str(value): a null literal can be "0" or "true"
+    return out
+
+
+class _PackMarks:
+    """The packs that a decision read (SPEC §5): each pack that adds a word that occurs in the
+    document, in a reference or in the candidate. A pack can be named when its word did not
+    change the outcome. That error is safe: a report then marks one value too many."""
+
+    def __init__(self, schema: Schema, texts: list[str]) -> None:
+        self.marks = schema.marks
+        folded = "\n".join(_fold(t) for t in texts)
+        self.found = {pid for pid, words in self.marks if any(w in folded for w in words)}
+
+    def packs(self, cand: object) -> tuple[str, ...]:
+        folded = "\n".join(_fold(s) for s in _strings(cand))
+        more = {
+            pid
+            for pid, words in self.marks
+            if pid not in self.found and any(w in folded for w in words)
+        }
+        return tuple(sorted(self.found | more))
 
 
 def _bytes(t: _Text, span: tuple[int, int]) -> tuple[int, int]:
@@ -1398,12 +1464,13 @@ def verify(
     *,
     references: Sequence[object] | None = None,
     document_source: str | None = None,
+    packs: Sequence[object] = (),
 ) -> Verification:
     """Re-derive the receipt from its inputs and compare it with ``receipt``.
 
     ``receipt`` is the JSON object that ``Receipt.to_dict()`` returned. The other arguments are
-    the inputs given to ``admit``, with the same ``judgments``, ``references`` and
-    ``document_source``. The result has ``ok`` and
+    the inputs given to ``admit``, with the same ``judgments``, ``references``,
+    ``document_source`` and ``packs``. The result has ``ok`` and
     ``problems``: ``(True, ())`` when every byte re-derives. A receipt from another spec version
     gives one problem and no further
     checks. Raises ``PacketError`` when ``receipt`` is not a JSON object or an input is invalid.
@@ -1432,10 +1499,12 @@ def verify(
         judgments,
         references=references,
         document_source=document_source,
+        packs=packs,
     ).to_dict()
     for key in (
         "document",
         "references",
+        "packs",
         "schema_sha256",
         "policy_sha256",
         "coverage",

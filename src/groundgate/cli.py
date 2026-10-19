@@ -27,6 +27,7 @@ from typing import Any
 
 from .admit import admit, verify
 from .model import PacketError, Schema, extractor_schema
+from .pack import load_pack
 from .text import KEY_DASHES, key_mentions, normalize_ws
 
 
@@ -107,6 +108,13 @@ def _parser() -> argparse.ArgumentParser:
     )
     s.add_argument("schema", help="schema JSON")
     s.add_argument("--references", help="JSON array of references; their ids become refs")
+    s.add_argument(
+        "--pack",
+        action="append",
+        default=[],
+        metavar="FILE",
+        help="a vocabulary pack that the schema names (SPEC §4.8); repeat for each pack",
+    )
     s.add_argument("-o", "--output", help="write the JSON Schema here instead of stdout")
 
     def inputs(p: argparse.ArgumentParser, *, batch: bool = False) -> None:
@@ -122,6 +130,13 @@ def _parser() -> argparse.ArgumentParser:
         )
         p.add_argument("--references", help="JSON array of references (SPEC §2.1)")
         p.add_argument("--document-source", help="the URL of the document (SPEC §2.1)")
+        p.add_argument(
+            "--pack",
+            action="append",
+            default=[],
+            metavar="FILE",
+            help="a vocabulary pack that the schema names (SPEC §4.8); repeat for each pack",
+        )
 
     a = sub.add_parser("admit", help="decide candidates and write a receipt")
     inputs(a, batch=True)
@@ -152,6 +167,13 @@ def _check_parser() -> argparse.ArgumentParser:
         "Exit codes: 0 no finding, 1 a finding, 2 invalid schema.",
     )
     ap.add_argument("schema", help="schema JSON")
+    ap.add_argument(
+        "--pack",
+        action="append",
+        default=[],
+        metavar="FILE",
+        help="a vocabulary pack that the schema names (SPEC §4.8); repeat for each pack",
+    )
     return ap
 
 
@@ -185,6 +207,7 @@ def main(argv: list[str] | None = None) -> int:
         extra = {
             "references": _json(args.references) if args.references else None,
             "document_source": args.document_source,
+            "packs": [load_pack(f) for f in args.pack],
         }
         if args.command == "admit":
             receipt = admit(text, schema, candidates, policy, args.document_id, judgments, **extra)
@@ -259,6 +282,7 @@ def _batch_admit(args: argparse.Namespace) -> int:
     schema = _json(args.batch_schema)
     policy = _json(args.policy) if args.policy else None
     references = _json(args.references) if args.references else None
+    packs = [load_pack(f) for f in args.pack]
     receipts: dict[str, Any] = {}
     documents: dict[str, Any] = {}
     outcomes = Counter({"admitted": 0, "needs_verification": 0, "rejected": 0})
@@ -277,6 +301,7 @@ def _batch_admit(args: argparse.Namespace) -> int:
                 judgments,
                 references=references,
                 document_source=args.document_source,
+                packs=packs,
             )
         except (PacketError, ValueError, OSError) as e:
             raise ValueError(f"{path.name}: {e}") from e
@@ -312,7 +337,8 @@ def _schema(args: argparse.Namespace) -> int:
         if not isinstance(refs, list) or not all(isinstance(r, dict) for r in refs):
             raise PacketError("references must be a list of objects")
         ids = [r.get("id") for r in refs]
-    _write(_dumps(extractor_schema(_json(args.schema), ids)), args.output)
+    packs = [load_pack(f) for f in args.pack]
+    _write(_dumps(extractor_schema(_json(args.schema), ids, packs)), args.output)
     return 0
 
 
@@ -498,7 +524,7 @@ def _single(case: Callable[[str], str], c: str) -> str:
 
 
 def _check(args: argparse.Namespace) -> int:
-    found = _findings(Schema.from_dict(_json(args.schema)))
+    found = _findings(Schema.from_dict(_json(args.schema), [load_pack(f) for f in args.pack]))
     for line in found:
         print(line)
     return 1 if found else 0
