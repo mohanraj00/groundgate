@@ -228,3 +228,69 @@ def test_admit_document_passes_the_packet_members_to_admit() -> None:
     d = r.to_dict()
     assert d["document"]["source"] == "https://example.org/doc"
     assert d["decisions"][0]["codes"] == ["ADMITTED_BY_POLICY"]
+
+
+def test_a_field_list_becomes_several_field_items() -> None:
+    at = TEXT.index("$7,000")
+    (c,) = to_candidates(
+        doc(x("limit", "$7,000", at, "7000", field_text=["Café", " ", 3, "limit"]))
+    )
+    assert c["evidence"][1:] == [
+        {"role": "field", "text": "Café"},
+        {"role": "field", "text": "limit"},
+    ]  # an entry that is blank or not a string adds no item
+    (c,) = to_candidates(doc(x("limit", "$7,000", at, "7000", field_text=[])))
+    assert c["evidence"] == [{"start": at + 1, "end": at + 7, "text": "$7,000"}]
+
+
+def test_a_field_list_cites_the_row_and_the_column() -> None:
+    def cell(**texts: Any) -> Any:
+        quote = "434,433"
+        return x("revenue", quote, TABLE.index(quote), "434433000", unit="USD", key="2024",
+                 key_text="2024", scale_text="(in thousands", **texts)  # fmt: skip
+
+    extractions = [
+        cell(field_text=["Year Ended December 31,", "Revenue"]),  # the second item passes
+        cell(field_text=[]),
+        cell(field_text=["Revenue"] * 9),  # over the limit of 8 (#300)
+        cell(field_text=["Revenue"] * 8),
+        cell(field_text="Revenue", unit_text=["$", "$"]),  # a list for another role
+        cell(field_text="Revenue", unit_text=["$"]),
+    ]
+    receipt = admit_document({"text": TABLE, "extractions": extractions}, TABLE_SCHEMA)
+    got = sorted((d.candidate_id, d.outcome, d.codes) for d in receipt.decisions)
+    assert got == [
+        (0, "admitted", ("VALUE_DERIVED", "KEY_CITED")),
+        (1, "needs_verification", ("KEY_NOT_AT_VALUE", "VALUE_DERIVED")),  # no field item
+        (2, "rejected", ("CANDIDATE_INVALID",)),
+        (3, "admitted", ("VALUE_DERIVED", "KEY_CITED")),
+        (4, "rejected", ("CANDIDATE_INVALID",)),
+        (5, "rejected", ("CANDIDATE_INVALID",)),  # also with one entry
+    ]
+
+
+def test_a_long_field_list_stops_past_the_limit() -> None:
+    at = TEXT.index("$7,000")
+    many = [" "] + ["limit"] * 1000
+    (c,) = to_candidates(doc(x("limit", "$7,000", at, "7000", field_text=many)))
+    assert len(c["evidence"]) == 1 + 9  # the value item, then one field item past the limit of 8
+    (d,) = admit_document(doc(x("limit", "$7,000", at, "7000", field_text=many)), SCHEMA).decisions
+    assert d.codes == ("CANDIDATE_INVALID",)
+    (c,) = to_candidates(doc(x("limit", "$7,000", at, "7000", field_text=["limit"] * 8 + [" "])))
+    assert len(c["evidence"]) == 1 + 8  # 9 entries, but only 8 hold text
+
+
+def test_a_list_for_another_role_is_invalid_when_not_aligned() -> None:
+    source = {"source_url": "https://example.org/limits", "source_retrieved": "2026-10-01",
+              "source_quote": "The limit is $7,000."}  # fmt: skip
+    policy = {"sources": {"external": {"allow": ["https://example.org/"]}}}
+    for attrs in ({}, source):
+        ext = x("limit", "$7,000", None, "7000", unit="USD", unit_text=["$"], **attrs)
+        (d,) = admit_document(doc(ext), SCHEMA, policy).decisions
+        assert (d.outcome, d.codes) == ("rejected", ("CANDIDATE_INVALID",))
+        ext = x("limit", "$7,000", None, "7000", unit="USD", field_text=["limit"] * 9, **attrs)
+        (d,) = admit_document(doc(ext), SCHEMA, policy).decisions
+        assert (d.outcome, d.codes) == ("rejected", ("CANDIDATE_INVALID",))  # over the limit
+    ext = x("limit", "$7,000", None, "7000", unit="USD", field_text=["limit"] * 8, **source)
+    (d,) = admit_document(doc(ext), SCHEMA, policy).decisions
+    assert d.codes == ("ADMITTED_BY_POLICY",)
