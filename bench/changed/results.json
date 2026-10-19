@@ -1,0 +1,775 @@
+{
+ "spec": "0.10",
+ "source": "bench/afr, labels.json, text of bench/afr/tabs/docs",
+ "seed": "322",
+ "counts": {
+  "right labels": 89,
+  "bases": 86,
+  "not applied": {
+   "next column": 76
+  },
+  "same value": {}
+ },
+ "controls": {
+  "bases": 86,
+  "admitted": 86,
+  "admitted with the relation": 86,
+  "relation on the clean packets": {
+   "applied": 14,
+   "holds": 14
+  }
+ },
+ "kinds": {
+  "next row": {
+   "changed values": 86,
+   "documents": 20,
+   "design effect": 5,
+   "rejected": {
+    "k": 0,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "sent to review": {
+    "k": 85,
+    "n": 86,
+    "lower95": 0.8384338887,
+    "upper95": 1.0
+   },
+   "admitted": {
+    "k": 1,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.2501244519
+   },
+   "admitted without the relation": {
+    "k": 3,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.2501244519
+   },
+   "rejected by code": {},
+   "codes": {
+    "FIELD_CITATION_INVALID": {
+     "k": 81,
+     "n": 86,
+     "lower95": 0.7498755481,
+     "upper95": 1.0
+    },
+    "KEY_NOT_AT_VALUE": {
+     "k": 2,
+     "n": 86,
+     "lower95": 0.0,
+     "upper95": 0.2501244519
+    },
+    "PART_MISSING": {
+     "k": 21,
+     "n": 86,
+     "lower95": 0.084645102,
+     "upper95": 0.5219176932
+    },
+    "RELATION_FAILED": {
+     "k": 42,
+     "n": 86,
+     "lower95": 0.2601144203,
+     "upper95": 0.7398855797
+    },
+    "SCALE_CITATION_INVALID": {
+     "k": 3,
+     "n": 86,
+     "lower95": 0.0,
+     "upper95": 0.2501244519
+    }
+   },
+   "flags": {
+    "FIELD_CITATION_INVALID": 25,
+    "FIELD_CITATION_INVALID + KEY_NOT_AT_VALUE": 2,
+    "FIELD_CITATION_INVALID + RELATION_FAILED": 34,
+    "PART_MISSING + FIELD_CITATION_INVALID": 13,
+    "PART_MISSING + FIELD_CITATION_INVALID + RELATION_FAILED": 5,
+    "PART_MISSING + RELATION_FAILED": 1,
+    "PART_MISSING + SCALE_CITATION_INVALID": 1,
+    "PART_MISSING + SCALE_CITATION_INVALID + FIELD_CITATION_INVALID": 1,
+    "RELATION_FAILED": 2,
+    "SCALE_CITATION_INVALID + FIELD_CITATION_INVALID": 1
+   },
+   "relation": {
+    "checked": 42,
+    "failed": 42,
+    "stopped alone": {
+     "k": 2,
+     "n": 86,
+     "lower95": 0.0,
+     "upper95": 0.2501244519
+    },
+    "right values sent to review": 84
+   },
+   "documents with an admitted change": {
+    "k": 1,
+    "n": 20,
+    "upper95": 0.2161061643
+   }
+  },
+  "next column": {
+   "changed values": 10,
+   "documents": 10,
+   "design effect": 1,
+   "rejected": {
+    "k": 0,
+    "n": 10,
+    "lower95": 0.0,
+    "upper95": 0.2588655509
+   },
+   "sent to review": {
+    "k": 1,
+    "n": 10,
+    "lower95": 0.0051161968,
+    "upper95": 0.3941633025
+   },
+   "admitted": {
+    "k": 9,
+    "n": 10,
+    "lower95": 0.6058366975,
+    "upper95": 0.9948838032
+   },
+   "admitted without the relation": {
+    "k": 9,
+    "n": 10,
+    "lower95": 0.6058366975,
+    "upper95": 0.9948838032
+   },
+   "rejected by code": {},
+   "codes": {
+    "KEY_NOT_AT_VALUE": {
+     "k": 1,
+     "n": 10,
+     "lower95": 0.0051161968,
+     "upper95": 0.3941633025
+    }
+   },
+   "flags": {
+    "KEY_NOT_AT_VALUE": 1
+   },
+   "relation": {
+    "checked": 0,
+    "failed": 0,
+    "stopped alone": {
+     "k": 0,
+     "n": 10,
+     "lower95": 0.0,
+     "upper95": 0.2588655509
+    },
+    "right values sent to review": 0
+   },
+   "documents with an admitted change": {
+    "k": 9,
+    "n": 10,
+    "upper95": 0.9948838032
+   }
+  },
+  "wrong scale": {
+   "changed values": 172,
+   "documents": 20,
+   "design effect": 10,
+   "rejected": {
+    "k": 172,
+    "n": 172,
+    "lower95": 0.8384338887,
+    "upper95": 1.0
+   },
+   "sent to review": {
+    "k": 0,
+    "n": 172,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "admitted": {
+    "k": 0,
+    "n": 172,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "admitted without the relation": {
+    "k": 0,
+    "n": 172,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "rejected by code": {
+    "VALUE_NOT_IN_EVIDENCE": {
+     "k": 172,
+     "n": 172,
+     "lower95": 0.8384338887,
+     "upper95": 1.0
+    }
+   },
+   "codes": {
+    "VALUE_NOT_IN_EVIDENCE": {
+     "k": 172,
+     "n": 172,
+     "lower95": 0.8384338887,
+     "upper95": 1.0
+    }
+   },
+   "flags": {},
+   "relation": {
+    "checked": 0,
+    "failed": 0,
+    "stopped alone": {
+     "k": 0,
+     "n": 172,
+     "lower95": 0.0,
+     "upper95": 0.1615661113
+    },
+    "right values sent to review": 0
+   },
+   "documents with an admitted change": {
+    "k": 0,
+    "n": 20,
+    "upper95": 0.1391083407
+   }
+  },
+  "sign": {
+   "changed values": 86,
+   "documents": 20,
+   "design effect": 5,
+   "rejected": {
+    "k": 0,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "sent to review": {
+    "k": 84,
+    "n": 86,
+    "lower95": 0.7498755481,
+    "upper95": 1.0
+   },
+   "admitted": {
+    "k": 2,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.2501244519
+   },
+   "admitted without the relation": {
+    "k": 5,
+    "n": 86,
+    "lower95": 0.0030127052,
+    "upper95": 0.2501244519
+   },
+   "rejected by code": {},
+   "codes": {
+    "FIELD_CITATION_INVALID": {
+     "k": 1,
+     "n": 86,
+     "lower95": 0.0,
+     "upper95": 0.2501244519
+    },
+    "PART_MISSING": {
+     "k": 80,
+     "n": 86,
+     "lower95": 0.7498755481,
+     "upper95": 0.9969872948
+    },
+    "RELATION_FAILED": {
+     "k": 42,
+     "n": 86,
+     "lower95": 0.2601144203,
+     "upper95": 0.7398855797
+    },
+    "UNIT_CITATION_INVALID": {
+     "k": 1,
+     "n": 86,
+     "lower95": 0.0,
+     "upper95": 0.2501244519
+    }
+   },
+   "flags": {
+    "PART_MISSING": 41,
+    "PART_MISSING + RELATION_FAILED": 39,
+    "RELATION_FAILED": 3,
+    "UNIT_CITATION_INVALID + FIELD_CITATION_INVALID": 1
+   },
+   "relation": {
+    "checked": 42,
+    "failed": 42,
+    "stopped alone": {
+     "k": 3,
+     "n": 86,
+     "lower95": 0.0,
+     "upper95": 0.2501244519
+    },
+    "right values sent to review": 84
+   },
+   "documents with an admitted change": {
+    "k": 2,
+    "n": 20,
+    "upper95": 0.2826185249
+   }
+  },
+  "digit swap": {
+   "changed values": 86,
+   "documents": 20,
+   "design effect": 5,
+   "rejected": {
+    "k": 86,
+    "n": 86,
+    "lower95": 0.8384338887,
+    "upper95": 1.0
+   },
+   "sent to review": {
+    "k": 0,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "admitted": {
+    "k": 0,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "admitted without the relation": {
+    "k": 0,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "rejected by code": {
+    "VALUE_NOT_IN_EVIDENCE": {
+     "k": 86,
+     "n": 86,
+     "lower95": 0.8384338887,
+     "upper95": 1.0
+    }
+   },
+   "codes": {
+    "VALUE_NOT_IN_EVIDENCE": {
+     "k": 86,
+     "n": 86,
+     "lower95": 0.8384338887,
+     "upper95": 1.0
+    }
+   },
+   "flags": {},
+   "relation": {
+    "checked": 0,
+    "failed": 0,
+    "stopped alone": {
+     "k": 0,
+     "n": 86,
+     "lower95": 0.0,
+     "upper95": 0.1615661113
+    },
+    "right values sent to review": 0
+   },
+   "documents with an admitted change": {
+    "k": 0,
+    "n": 20,
+    "upper95": 0.1391083407
+   }
+  },
+  "other field": {
+   "changed values": 310,
+   "documents": 20,
+   "design effect": 20,
+   "rejected": {
+    "k": 0,
+    "n": 310,
+    "lower95": 0.0,
+    "upper95": 0.1810362726
+   },
+   "sent to review": {
+    "k": 307,
+    "n": 310,
+    "lower95": 0.8189637274,
+    "upper95": 1.0
+   },
+   "admitted": {
+    "k": 3,
+    "n": 310,
+    "lower95": 0.0,
+    "upper95": 0.2793961937
+   },
+   "admitted without the relation": {
+    "k": 9,
+    "n": 310,
+    "lower95": 0.0,
+    "upper95": 0.2793961937
+   },
+   "rejected by code": {},
+   "codes": {
+    "FIELD_CITATION_INVALID": {
+     "k": 290,
+     "n": 310,
+     "lower95": 0.7206038063,
+     "upper95": 1.0
+    },
+    "KEY_NOT_AT_VALUE": {
+     "k": 4,
+     "n": 310,
+     "lower95": 0.0,
+     "upper95": 0.2793961937
+    },
+    "PART_MISSING": {
+     "k": 24,
+     "n": 310,
+     "lower95": 0.0034137129,
+     "upper95": 0.3634417656
+    },
+    "RELATION_FAILED": {
+     "k": 168,
+     "n": 310,
+     "lower95": 0.2999864741,
+     "upper95": 0.8091353139
+    },
+    "SCALE_CITATION_INVALID": {
+     "k": 34,
+     "n": 310,
+     "lower95": 0.0034137129,
+     "upper95": 0.3634417656
+    },
+    "UNIT_CITATION_INVALID": {
+     "k": 2,
+     "n": 310,
+     "lower95": 0.0,
+     "upper95": 0.2793961937
+    }
+   },
+   "flags": {
+    "FIELD_CITATION_INVALID": 109,
+    "FIELD_CITATION_INVALID + KEY_NOT_AT_VALUE": 1,
+    "FIELD_CITATION_INVALID + KEY_NOT_AT_VALUE + RELATION_FAILED": 3,
+    "FIELD_CITATION_INVALID + RELATION_FAILED": 131,
+    "PART_MISSING": 1,
+    "PART_MISSING + FIELD_CITATION_INVALID": 10,
+    "PART_MISSING + FIELD_CITATION_INVALID + RELATION_FAILED": 8,
+    "PART_MISSING + RELATION_FAILED": 2,
+    "PART_MISSING + SCALE_CITATION_INVALID": 1,
+    "PART_MISSING + SCALE_CITATION_INVALID + FIELD_CITATION_INVALID": 2,
+    "RELATION_FAILED": 6,
+    "SCALE_CITATION_INVALID": 3,
+    "SCALE_CITATION_INVALID + FIELD_CITATION_INVALID": 10,
+    "SCALE_CITATION_INVALID + FIELD_CITATION_INVALID + RELATION_FAILED": 14,
+    "SCALE_CITATION_INVALID + RELATION_FAILED": 4,
+    "UNIT_CITATION_INVALID + FIELD_CITATION_INVALID": 2
+   },
+   "relation": {
+    "checked": 168,
+    "failed": 168,
+    "stopped alone": {
+     "k": 6,
+     "n": 310,
+     "lower95": 0.0,
+     "upper95": 0.2793961937
+    },
+    "right values sent to review": 336
+   },
+   "documents with an admitted change": {
+    "k": 1,
+    "n": 20,
+    "upper95": 0.2161061643
+   }
+  },
+  "rounded": {
+   "changed values": 86,
+   "documents": 20,
+   "design effect": 5,
+   "rejected": {
+    "k": 86,
+    "n": 86,
+    "lower95": 0.8384338887,
+    "upper95": 1.0
+   },
+   "sent to review": {
+    "k": 0,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "admitted": {
+    "k": 0,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "admitted without the relation": {
+    "k": 0,
+    "n": 86,
+    "lower95": 0.0,
+    "upper95": 0.1615661113
+   },
+   "rejected by code": {
+    "VALUE_NOT_IN_EVIDENCE": {
+     "k": 86,
+     "n": 86,
+     "lower95": 0.8384338887,
+     "upper95": 1.0
+    }
+   },
+   "codes": {
+    "VALUE_NOT_IN_EVIDENCE": {
+     "k": 86,
+     "n": 86,
+     "lower95": 0.8384338887,
+     "upper95": 1.0
+    }
+   },
+   "flags": {},
+   "relation": {
+    "checked": 0,
+    "failed": 0,
+    "stopped alone": {
+     "k": 0,
+     "n": 86,
+     "lower95": 0.0,
+     "upper95": 0.1615661113
+    },
+    "right values sent to review": 0
+   },
+   "documents with an admitted change": {
+    "k": 0,
+    "n": 20,
+    "upper95": 0.1391083407
+   }
+  }
+ },
+ "all": {
+  "changed values": 836,
+  "documents": 20,
+  "design effect": 51,
+  "rejected": {
+   "k": 344,
+   "n": 836,
+   "lower95": 0.1777658516,
+   "upper95": 0.6666258285
+  },
+  "sent to review": {
+   "k": 477,
+   "n": 836,
+   "lower95": 0.3333741715,
+   "upper95": 0.8222341484
+  },
+  "admitted": {
+   "k": 15,
+   "n": 836,
+   "lower95": 0.0,
+   "upper95": 0.2639573973
+  },
+  "admitted without the relation": {
+   "k": 26,
+   "n": 836,
+   "lower95": 0.0,
+   "upper95": 0.2639573973
+  },
+  "rejected by code": {
+   "VALUE_NOT_IN_EVIDENCE": {
+    "k": 344,
+    "n": 836,
+    "lower95": 0.1777658516,
+    "upper95": 0.6666258285
+   }
+  },
+  "codes": {
+   "FIELD_CITATION_INVALID": {
+    "k": 372,
+    "n": 836,
+    "lower95": 0.2266915684,
+    "upper95": 0.7213973145
+   },
+   "KEY_NOT_AT_VALUE": {
+    "k": 7,
+    "n": 836,
+    "lower95": 0.0,
+    "upper95": 0.2639573973
+   },
+   "PART_MISSING": {
+    "k": 125,
+    "n": 836,
+    "lower95": 0.0226787827,
+    "upper95": 0.4165722808
+   },
+   "RELATION_FAILED": {
+    "k": 252,
+    "n": 836,
+    "lower95": 0.090252433,
+    "upper95": 0.5483470809
+   },
+   "SCALE_CITATION_INVALID": {
+    "k": 37,
+    "n": 836,
+    "lower95": 0.0,
+    "upper95": 0.2639573973
+   },
+   "UNIT_CITATION_INVALID": {
+    "k": 3,
+    "n": 836,
+    "lower95": 0.0,
+    "upper95": 0.2639573973
+   },
+   "VALUE_NOT_IN_EVIDENCE": {
+    "k": 344,
+    "n": 836,
+    "lower95": 0.1777658516,
+    "upper95": 0.6666258285
+   }
+  },
+  "flags": {
+   "FIELD_CITATION_INVALID": 134,
+   "FIELD_CITATION_INVALID + KEY_NOT_AT_VALUE": 3,
+   "FIELD_CITATION_INVALID + KEY_NOT_AT_VALUE + RELATION_FAILED": 3,
+   "FIELD_CITATION_INVALID + RELATION_FAILED": 165,
+   "KEY_NOT_AT_VALUE": 1,
+   "PART_MISSING": 42,
+   "PART_MISSING + FIELD_CITATION_INVALID": 23,
+   "PART_MISSING + FIELD_CITATION_INVALID + RELATION_FAILED": 13,
+   "PART_MISSING + RELATION_FAILED": 42,
+   "PART_MISSING + SCALE_CITATION_INVALID": 2,
+   "PART_MISSING + SCALE_CITATION_INVALID + FIELD_CITATION_INVALID": 3,
+   "RELATION_FAILED": 11,
+   "SCALE_CITATION_INVALID": 3,
+   "SCALE_CITATION_INVALID + FIELD_CITATION_INVALID": 11,
+   "SCALE_CITATION_INVALID + FIELD_CITATION_INVALID + RELATION_FAILED": 14,
+   "SCALE_CITATION_INVALID + RELATION_FAILED": 4,
+   "UNIT_CITATION_INVALID + FIELD_CITATION_INVALID": 3
+  },
+  "relation": {
+   "checked": 252,
+   "failed": 252,
+   "stopped alone": {
+    "k": 11,
+    "n": 836,
+    "lower95": 0.0,
+    "upper95": 0.2639573973
+   },
+   "right values sent to review": 504
+  },
+  "documents with an admitted change": {
+   "k": 11,
+   "n": 20,
+   "upper95": 0.7413493903
+  }
+ },
+ "admitted changes": [
+  {
+   "doc": "afr-commerce",
+   "kind": "next column",
+   "detail": "5,708,923",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "5708923000"
+  },
+  {
+   "doc": "afr-doe",
+   "kind": "next column",
+   "detail": "87,304",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "87304000000"
+  },
+  {
+   "doc": "afr-doi",
+   "kind": "next column",
+   "detail": "84,564",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "84564000"
+  },
+  {
+   "doc": "afr-dot",
+   "kind": "next column",
+   "detail": "8,056,878",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "8056878000"
+  },
+  {
+   "doc": "afr-epa",
+   "kind": "next column",
+   "detail": "2,060,607",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "2060607000"
+  },
+  {
+   "doc": "afr-nasa",
+   "kind": "sign",
+   "detail": "added",
+   "field": "net_cost_of_operations",
+   "key": "2025",
+   "value": "-23699000000"
+  },
+  {
+   "doc": "afr-opm",
+   "kind": "sign",
+   "detail": "dropped",
+   "field": "net_cost_of_operations",
+   "key": "2025",
+   "value": "63149000000"
+  },
+  {
+   "doc": "afr-ssa",
+   "kind": "next column",
+   "detail": "75,615",
+   "field": "net_cost_of_operations",
+   "key": "2025",
+   "value": "75615000000"
+  },
+  {
+   "doc": "afr-treasury",
+   "kind": "next column",
+   "detail": "915",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "915000000"
+  },
+  {
+   "doc": "afr-usda",
+   "kind": "next column",
+   "detail": "47,062",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "47062000000"
+  },
+  {
+   "doc": "afr-va",
+   "kind": "next row",
+   "detail": "412,401",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "412401000000"
+  },
+  {
+   "doc": "afr-va",
+   "kind": "next column",
+   "detail": "35,116",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "35116000000"
+  },
+  {
+   "doc": "afr-va",
+   "kind": "other field",
+   "detail": "net_cost_of_operations",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "529641000000"
+  },
+  {
+   "doc": "afr-va",
+   "kind": "other field",
+   "detail": "total_assets",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "167798000000"
+  },
+  {
+   "doc": "afr-va",
+   "kind": "other field",
+   "detail": "total_liabilities",
+   "field": "total_budgetary_resources",
+   "key": "2025",
+   "value": "7627557000000"
+  }
+ ]
+}
