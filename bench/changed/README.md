@@ -50,8 +50,11 @@ reads only `changes.json` and the texts, so a later rule cannot change the list.
 | other field | the value of each other field at the same year | at that value |
 | rounded | the written number rounded to 3 significant digits | of the base |
 
-The number cells of a row are the numbers after the first tab of its line. A changed value keeps
-the sign and the scale of the base, unless brackets in the text make the new number negative.
+The number cells of a row are the numbers after the first tab of its line. A value from the next
+row, the next column or another field keeps the scale of the base, and takes the sign of the new
+number: negative when it has a minus or brackets around it. So it is the value that a model gives
+when it reads the wrong cell correctly. The other changes keep the sign of the base, except the
+sign change itself.
 The seed `322` chooses the two digits of a digit swap. All other changes have no random part. A
 change that gives the right value again is left out.
 
@@ -90,5 +93,9 @@ the exact upper bound on documents with at least one admitted change.
   other items, so a changed value can pass or fail other checks than here.
 - The relation checks a value only when the two other fields of the balance sheet have a base at
   that year. A field outside the relation, such as total budgetary resources, has no relation.
+- The relation stops every changed value that it checks, because each change of a total or a
+  part breaks the sum. So its count is not a detection rate: it shows how many changed values
+  reach the relation, and what it adds to the other checks. A failed relation cannot name the
+  wrong value, so it sends the right values of the other fields to review too. That is its cost.
 - A rule that changes a decision changes `results.json`. Then `results --check` fails until the
   results are written again with that rule.

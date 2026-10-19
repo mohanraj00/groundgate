@@ -91,9 +91,10 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   right values of `bench/afr` in seven ways (next row, next column, wrong scale, sign, digit swap,
   other field, rounded), with no model run, and decides 836 changed values. 15 get through: 9 of
   the 10 values from the next column, 3 of another field and 2 sign changes, and 1 from the next
-  row. The relation of the balance sheet checks 252 changed values and stops all 252. It alone
-  stops 11, and it sends 504 right values to review with them. RESULTS.md gives each count by
-  check, with a 95% bound that allows for clusters by document.
+  row. The relation of the balance sheet checks 252 changed values and stops all 252, because
+  each change breaks the sum. It alone stops 11. Its cost: it sends 504 right values to review
+  with them, because it cannot name the wrong value. RESULTS.md gives each count by check, with a
+  95% bound that allows for clusters by document.
 
 ## 0.9.0 (2026-10-18)
 

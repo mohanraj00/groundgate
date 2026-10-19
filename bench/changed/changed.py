@@ -109,6 +109,8 @@ def bases() -> tuple[dict[str, list[dict[str, Any]]], dict[str, int]]:
                 fid = measure.item_id(doc, d.field or "", d.key, d.value)
                 if fid in right and fid not in found:
                     found[fid] = {"doc": doc, "candidate": _pin(text, c, d.evidence)}
+    if not found:
+        raise SystemExit("no base: no run of tabs.PAIRS reads bench/afr/tabs/docs")
     per_doc: dict[str, list[dict[str, Any]]] = collections.defaultdict(list)
     for fid, got in sorted(found.items()):
         c = got["candidate"]
@@ -173,11 +175,13 @@ def _value(written: Decimal, factor: Decimal, negative: bool) -> str:
 
 
 def _moved(text: str, base: dict[str, Any], tok: Any, factor: Decimal) -> dict[str, Any]:
-    """The base with the value of ``tok``, cited at its place."""
+    """The base with the value of ``tok``, cited at its place. The value takes the scale of the
+    base and the sign of ``tok``: negative when it has a minus or brackets around it."""
     out = copy.deepcopy(base)
     start = len(text[: tok.start].encode("utf-8"))
     end = len(text[: tok.end].encode("utf-8"))
-    out["value"] = _value(tok.value, factor, _bracketed(text, tok.start, tok.end))
+    negative = tok.value < 0 or _bracketed(text, tok.start, tok.end)  # the sign of the new cell
+    out["value"] = _value(tok.value, factor, negative)
     out["evidence"][0] = {"start": start, "end": end, "text": text[tok.start : tok.end]}
     return out
 
