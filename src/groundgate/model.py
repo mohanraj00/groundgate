@@ -572,9 +572,10 @@ class Decision:
     parts: tuple[Part, ...] = ()
     missing: tuple[str, ...] = ()
     packs: tuple[str, ...] = ()  # the ids of the packs that the decision read (SPEC §5)
+    evidence_units: EvidenceUnits | None = None  # only after a failed unit check (SPEC §5)
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        out: dict[str, Any] = {
             "candidate_id": self.candidate_id,
             "candidate_sha256": self.candidate_sha256,
             "field": self.field,
@@ -592,6 +593,32 @@ class Decision:
             "parts": [p.to_dict() for p in self.parts],
             "missing": list(self.missing),
             "packs": list(self.packs),
+        }
+        if self.evidence_units is not None:  # other decisions keep their bytes (#362)
+            out["evidence_units"] = self.evidence_units.to_dict()
+        return out
+
+
+@dataclass(frozen=True)
+class EvidenceUnits:
+    """The units that groundgate finds for the value's token when the unit check does not pass
+    (SPEC §5, spec 0.10, #362). A report only: it changes no outcome and no code."""
+
+    token: tuple[int, int]  # UTF-8 byte span in the value item's text
+    next: tuple[str, ...]  # the codes with a form next to the token, sorted
+    per: bool  # the suffix of ``next`` is a per-unit
+    headers: tuple[tuple[str, tuple[str, ...]], ...]  # (form, allowed codes), sorted by form
+    statements: tuple[str, ...]  # the codes of the currency statements, sorted
+    currency: tuple[str, ...]  # each code that is the heading currency for itself, sorted
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "token": {"start": self.token[0], "end": self.token[1]},
+            "next": list(self.next),
+            "per": self.per,
+            "headers": [{"form": form, "allows": list(allows)} for form, allows in self.headers],
+            "statements": list(self.statements),
+            "currency": list(self.currency),
         }
 
 

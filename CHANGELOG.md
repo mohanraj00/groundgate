@@ -8,6 +8,12 @@ spec version, and receipts name the spec version they were decided under.
 Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses the
 `groundgate/0.10:` prefix, so all hashes differ from 0.9.0.
 
+- A decision whose unit check does not pass names the units that the evidence shows (#362). A
+  decision with `UNIT_NOT_IN_EVIDENCE`, `UNIT_CITATION_INVALID` or `unit` in `missing` gets the
+  member `evidence_units`: the token, the unit codes with a form next to it, the currency headers
+  and statements that reach it, and its heading currency. "250 mg" on a field in `g` names `mg`,
+  and `$m` under "presented in Australian dollars" names `AUD`. It is a report: no outcome and no
+  code changes, groundgate converts no value, and other decisions do not have the member.
 - A scale word with a long s (U+017F), a dotted capital I (U+0130) or a dotless i (U+0131), such
   as "5 thouſand", made `admit` raise `KeyError` and give no receipt (#350). The lookup now folds
   the found word by the case rule of #356, so it always finds the listed word, and "5 thouſand"

@@ -59,6 +59,9 @@ def test_vector(path: Path) -> None:
         if "parts" in want:
             parts = [{"role": x["role"], "passed": x["passed"]} for x in got["parts"]]
             assert parts == want["parts"], label
+        if "evidence_units" in want:  # null in a vector: the decision has no member (SPEC §5)
+            assert got.get("evidence_units", None) == want["evidence_units"], label
+            assert want["evidence_units"] is not None or "evidence_units" not in got, label
     assert receipt["coverage"] == v["expected"]["coverage"]
     assert receipt.get("relations") == v["expected"].get("relations")
     args = (v["document"], v["schema"], v["candidates"], v["policy"], js)

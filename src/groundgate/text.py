@@ -416,6 +416,42 @@ def builtin_units() -> dict[str, tuple[list[str], list[str]]]:
     return {k: (list(u["prefixes"]), list(u["suffixes"])) for k, u in BASE["units"].items()}
 
 
+def _prefix_at(head: str, p: str) -> bool:
+    """Whether the prefix ``p`` ends ``head``, the text before a token without its trailing
+    whitespace. A prefix that starts with a letter or digit does not count after another one
+    (SPEC §4.3)."""
+    if not head.endswith(p):
+        return False
+    before = head[: len(head) - len(p)]
+    return not (p[0].isalnum() and before and before[-1].isalnum())
+
+
+def _first_suffix(
+    text: str, tok: Token, candidates: Iterable[str], window: int
+) -> tuple[int, int, str] | None:
+    """The first suffix after ``tok`` (SPEC §4.3): of ``candidates``, the match that starts
+    earliest in the token's sentence, the longest one at a tie, as (start, end, suffix) relative
+    to the token end. None when there is no match, or when it starts after ``window``."""
+    candidates = sorted(set(candidates))
+    if not candidates:
+        return None
+    _, s1 = sentence(text, tok.start)
+    region = text[tok.end : min(s1, tok.end + window + max(len(s) for s in candidates))]
+    first: tuple[int, int, str] | None = None  # the earliest suffix match, longest at a tie
+    for suffix in candidates:
+        pat = re.escape(suffix)
+        if suffix[-1].isalnum():
+            pat += r"(?![A-Za-z0-9])"
+        if suffix[0].isalnum():
+            pat = r"(?<![A-Za-z0-9])" + pat
+        m = re.search(pat, region)
+        if m and (first is None or (m.start(), -m.end()) < (first[0], -first[1])):
+            first = (m.start(), m.end(), suffix)
+    if first is None or first[0] > window:
+        return None
+    return first
+
+
 def unit_at(
     text: str,
     tok: Token,
@@ -430,30 +466,32 @@ def unit_at(
     if not prefixes and not suffixes:
         return True
     head = text[: tok.start].rstrip()
-    for p in prefixes:
-        if head.endswith(p):
-            before = head[: len(head) - len(p)]
-            if not (p[0].isalnum() and before and before[-1].isalnum()):
-                return True
+    if any(_prefix_at(head, p) for p in prefixes):
+        return True
     if not suffixes:
         return False
-    candidates = table | set(suffixes)
-    _, s1 = sentence(text, tok.start)
-    region = text[tok.end : min(s1, tok.end + window + max(len(s) for s in candidates))]
-    first: tuple[int, int, str] | None = None  # the earliest suffix match, longest at a tie
-    for suffix in sorted(candidates):
-        pat = re.escape(suffix)
-        if suffix[-1].isalnum():
-            pat += r"(?![A-Za-z0-9])"
-        if suffix[0].isalnum():
-            pat = r"(?<![A-Za-z0-9])" + pat
-        m = re.search(pat, region)
-        if m and (first is None or (m.start(), -m.end()) < (first[0], -first[1])):
-            first = (m.start(), m.end(), suffix)
-    if first is None or first[0] > window or first[2] not in suffixes:
+    first = _first_suffix(text, tok, table | set(suffixes), window)
+    if first is None or first[2] not in suffixes:
         return False  # "10 mcg (maximum 500 mg)": mcg comes first, so mg is not at 10
     # "10 mg/kg", "250 mg/5 mL": a per-unit is not the unit
     return not voc._PER_UNIT.match(text, tok.end + first[1])
+
+
+def units_next(
+    text: str, tok: Token, units: dict[str, tuple[list[str], list[str]]], window: int
+) -> tuple[tuple[str, ...], bool]:
+    """The codes of the unit table with a form next to ``tok``, sorted, and whether the suffix
+    among them is a per-unit (SPEC §5, spec 0.10, #362). A per-unit counts here, and a code with
+    no forms is never listed. This is a report: no check reads it."""
+    voc = _VOCAB.get()
+    head = text[: tok.start].rstrip()
+    codes = {c for c, (prefixes, _) in units.items() if any(_prefix_at(head, p) for p in prefixes)}
+    per = False
+    first = _first_suffix(text, tok, (x for _, sufs in units.values() for x in sufs), window)
+    if first is not None:
+        codes |= {c for c, (_, suffixes) in units.items() if first[2] in suffixes}
+        per = voc._PER_UNIT.match(text, tok.end + first[1]) is not None
+    return tuple(sorted(codes)), per
 
 
 # ------------------------------------------------------------------------ keys
@@ -935,6 +973,28 @@ class HeadingIndex:
         lo, hi = self.reach[kind]
         i = bisect.bisect_right(lo, pos) - 1
         return i >= 0 and pos <= hi[i]
+
+    def report(
+        self, pos: int, units: Units
+    ) -> tuple[tuple[tuple[str, tuple[str, ...]], ...], tuple[str, ...], tuple[str, ...]]:
+        """The heading units that reach the token at ``pos``, for the receipt's
+        ``evidence_units`` (SPEC §5, spec 0.10, #362): each header form with the codes that it
+        allows (none for an unknown header), the codes of the statements, and each code X that
+        is the token's heading currency when the field's unit is X. Each is sorted. This is a
+        report: no check reads it, and it never chooses between two currencies."""
+        voc = _VOCAB.get()
+        kinds = [kind for kind in self.reach if self.reaches(kind, pos)]
+        headers = tuple(
+            sorted(
+                (form, tuple(sorted(heading_allows(None, form, units) or ())))
+                for code, form in kinds
+                if code is None
+            )
+        )
+        statements = tuple(sorted({code for code, _ in kinds if code is not None}))
+        codes = sorted(set(units) | set(voc.CURRENCY_NAMES))
+        currency = tuple(c for c in codes if kinds and self.currency(pos, c, units))
+        return headers, statements, currency
 
     def held(self, a: int, b: int, pos: int) -> bool:
         """Whether text[a:b] holds a heading unit that reaches ``pos``. The units that reach a

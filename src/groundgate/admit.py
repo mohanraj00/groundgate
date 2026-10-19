@@ -19,6 +19,7 @@ from .fold import mark_fold
 from .model import (
     Action,
     Decision,
+    EvidenceUnits,
     Field,
     Judgment,
     Outcome,
@@ -64,6 +65,7 @@ from .text import (
     sentence_index,
     tokens,
     unit_at,
+    units_next,
     using,
     verbatim_equal,
     vocabulary,
@@ -404,9 +406,11 @@ def _value_at(
     span: tuple[int, int],
     roles: dict[str, _Item],
     lenient: bool,
+    failed: list[Token] | None = None,
 ) -> tuple[_At | None, str | None]:
     """Steps 10-11 at one span: where the value is, or a failure code. ``lenient`` lets a part
-    be missing (SPEC §3.1)."""
+    be missing (SPEC §3.1). On ``UNIT_NOT_IN_EVIDENCE``, the first token that step 10 matched
+    is added to ``failed``, for the receipt's ``evidence_units`` (SPEC §5, #362)."""
     s, e = span
     if f.type == "string":
         assert isinstance(value, str)
@@ -473,6 +477,8 @@ def _value_at(
                 a = at(k, need | {"unit"})
                 a.derived = not need and value not in {k.value, scaled_value(t.text, k)}
                 return a, None
+    if failed is not None:
+        failed.append(hits[0][0])
     return None, "UNIT_NOT_IN_EVIDENCE"
 
 
@@ -636,10 +642,11 @@ def _checked(
             at = first
         if at is None:
             occ = named or found[0]
-            at, failure = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=True)
+            failed: list[Token] = []
+            at, failure = _value_at(ctx, vitem, t, f, value, occ, roles, True, failed)
             if at is None:
                 assert failure is not None
-                raise _Reject(failure, _At(vitem, t, occ, None))
+                raise _Reject(failure, _At(vitem, t, occ, failed[0] if failed else None))
     else:
         span = _valid(t.offsets, vitem.span)
         if span is None:
@@ -662,11 +669,12 @@ def _checked(
                 if len(passing) == 1:
                     at = passing[0]
                     info.add("EVIDENCE_REANCHORED")
+            failed = []
             if at is None:
-                at, failure = _value_at(ctx, vitem, t, f, value, span, roles, lenient=True)
+                at, failure = _value_at(ctx, vitem, t, f, value, span, roles, True, failed)
             if at is None:
                 assert failure is not None
-                raise _Reject(failure, _At(vitem, t, span, None))
+                raise _Reject(failure, _At(vitem, t, span, failed[0] if failed else None))
         if vitem.text is not None and not verbatim_equal(
             vitem.text, t.text[at.span[0] : at.span[1]]
         ):
@@ -1371,6 +1379,24 @@ def _bytes(t: _Text, span: tuple[int, int]) -> tuple[int, int]:
     return t.offsets.to_bytes(span[0]), t.offsets.to_bytes(span[1])
 
 
+_UNIT_CODES = frozenset({"UNIT_NOT_IN_EVIDENCE", "UNIT_CITATION_INVALID"})
+
+
+def _evidence_units(
+    ctx: _Ctx, at: _At | None, codes: tuple[str, ...], missing: tuple[str, ...]
+) -> EvidenceUnits | None:
+    """The units that groundgate finds for the token when the unit check does not pass, or None
+    (SPEC §5, spec 0.10, #362). A report only: it never changes the outcome or the codes."""
+    if at is None or at.token is None or not (_UNIT_CODES & set(codes) or "unit" in missing):
+        return None
+    t, tok, units = at.t, at.token, ctx.schema.units
+    near, per = units_next(t.text, tok, units, ctx.policy.unit_window)
+    if t.headings is None:
+        t.headings = HeadingIndex(t.text)
+    headers, statements, currency = t.headings.report(tok.start, units)
+    return EvidenceUnits(_bytes(t, (tok.start, tok.end)), near, per, headers, statements, currency)
+
+
 def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | _Reject) -> Decision:
     if isinstance(p, _Passed):
         flags = [c for c in FLAG_ORDER if c in p.flags]
@@ -1381,12 +1407,14 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | _Reje
         )
         outcome: Outcome = "needs_verification" if flags else "admitted"
         at = p.at
+        codes = (*flags, *(c for c in INFO_ORDER if c in info))
+        missing = tuple(m for m in MISSING_ORDER if m in p.missing)
         return Decision(
             _json_id(cid),
             sha,
             p.field.name,
             outcome,
-            (*flags, *(c for c in INFO_ORDER if c in info)),
+            codes,
             p.value,
             p.unit,
             None if at is None else _bytes(at.t, at.span),
@@ -1395,7 +1423,8 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | _Reje
             None if at is None else at.item.ref,
             p.url,
             tuple(sorted(p.parts, key=lambda x: PART_ORDER.index(x.role))),
-            tuple(m for m in MISSING_ORDER if m in p.missing),
+            missing,
+            evidence_units=_evidence_units(ctx, at, codes, missing),
         )
     # rejected: report what is known about the candidate
     field_name: str | None = None
@@ -1431,7 +1460,7 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | _Reje
                     source, ref = cited[1], cited[2]
     return Decision(
         _json_id(cid), sha, field_name, "rejected", (p.code,), value, unit, span, key, source, ref,
-        url,
+        url, evidence_units=_evidence_units(ctx, p.at, (p.code,), ()),
     )  # fmt: skip
 
 

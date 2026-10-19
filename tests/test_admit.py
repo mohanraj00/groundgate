@@ -921,3 +921,45 @@ def test_dense_field_quotes_stay_compact() -> None:
 
     # about 543,000 occurrences: 9 MB as arrays, against about 100 MB as lists of tuples
     assert peak(8) - peak(0) < 30 * 2**20
+
+
+def _units(doc: str, schema: dict[str, Any], cand: dict[str, Any]) -> dict[str, Any] | None:
+    """The evidence_units member of the one decision, or None when it is absent (#362)."""
+    r = gg.admit(doc, schema, [cand]).to_dict()
+    assert gg.verify(r, doc, schema, [cand]).ok
+    (d,) = r["decisions"]
+    return d.get("evidence_units")  # type: ignore[no-any-return]
+
+
+def test_evidence_units_on_a_quote() -> None:
+    """A value item without offsets: the token of the found occurrence, and the first suffix
+    after it, not a later one (SPEC §4.3, §5, #362)."""
+    doc = "Give 10 mcg (maximum 500 mg) each day."
+    schema = {"fields": {"dose": {"type": "number", "unit": "mg"}}}
+    got = _units(doc, schema, {"id": "a", "field": "dose", "value": "10", "unit": "mg",
+                               "evidence": [{"text": "10 mcg"}]})  # fmt: skip
+    assert got == {"token": {"start": 5, "end": 7}, "next": ["mcg"], "per": False,
+                   "headers": [], "statements": [], "currency": []}  # fmt: skip
+
+
+def test_evidence_units_absent() -> None:
+    """No member on an admitted value, on a string field, or on the outside path (#362)."""
+    doc = "Revenue was $5,200 in 2025. The name is Acme."
+    schema = {"fields": {"usd": {"type": "number", "unit": "USD"},
+                         "name": {"type": "string", "unit": "USD"}}}  # fmt: skip
+    assert _units(doc, schema, {"id": "a", "field": "usd", "value": "5200", "unit": "USD",
+                                "evidence": [{"text": "$5,200"}]}) is None  # fmt: skip
+    string = {"id": "b", "field": "name", "value": "Acme", "unit": "USD",
+              "evidence": [{"text": "Acme"}, {"role": "unit", "text": "$"}]}  # fmt: skip
+    r = gg.admit(doc, schema, [string]).to_dict()
+    assert "UNIT_CITATION_INVALID" in r["decisions"][0]["codes"]
+    assert "evidence_units" not in r["decisions"][0]
+    outside = {"id": "c", "field": "usd", "value": "9", "unit": "USD",
+               "evidence": [{"source": "knowledge", "text": "It is 9 euros."}]}  # fmt: skip
+    assert _units(doc, schema, outside) is None
+
+
+def test_evidence_units_keeps_other_bytes() -> None:
+    """A receipt with no unit code is the same as before: no decision has the key (#362)."""
+    r = gg.admit(DOC, SCHEMA, CANDS).to_dict()
+    assert all("evidence_units" not in d for d in r["decisions"])
