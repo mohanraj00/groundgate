@@ -68,6 +68,13 @@ label on 589 slots (98.8%). An independent check of the original PDF decided the
 | annual | 126 | 72 | 51 | 3 |
 | sds | 255 | 77 | 112 | 66 |
 
+Pass B ran again for the 4 component datasheets of one batch (component-c23 to c26). While the
+first pass B of that batch ran, the label script of pass A for the same batch was in a shared
+scratch directory that pass B could read. I moved the first output out of reach and ran a new
+pass B that could not read pass A, the first output or the label files. The new pass B gave the
+same label as pass A on 20 of 20 slots, and no label changed. The agreement above
+uses the new pass B.
+
 Three reports print income in brackets in a statement of net expenditure. The statement adds the
 bracketed amount as a negative, so the check kept the printed sign, as requested2 did for a
 bracketed total liabilities line. Revenue is negative in these three reports.
