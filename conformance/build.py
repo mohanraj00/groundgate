@@ -3950,6 +3950,22 @@ vector(
 )  # fmt: skip
 
 
+vector(
+    "77-label-line-spaces",
+    "A line that holds only spaces is a blank line (§4.2), also before and after a label line. "
+    "So the label line stops the key of the earlier heading, and the value goes to review (#348).",
+    "2.1 Hypertension\n\nThe starting dose is 10 mg once daily.\n \n"
+    "Adults\n \nThe usual dose is 15 mg daily.",
+    {"fields": {"starting_dose": KEYED_MG, "usual_dose": KEYED_MG}},
+    [
+        c("s1", "starting_dose", "10", "mg", q("10 mg"), key="hypertension"),
+        # "Adults" has a line of spaces on each side, so it is a label line
+        c("s2", "usual_dose", "15", "mg", q("15 mg"), (REVIEW, ["KEY_NOT_AT_VALUE"]),
+          key="hypertension"),
+    ],
+)  # fmt: skip
+
+
 # ---------------------------------------------------------------- spec 0.10 (#313)
 POUND_000 = "Statement of financial position\n\t£000\t£000\nRevenue\t15,961,328\t14,200,105\n"
 REVENUE_313 = {"type": "number", "aliases": ["Revenue"], "multiple": True}

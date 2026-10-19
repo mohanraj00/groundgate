@@ -856,10 +856,11 @@ CURRENCY_NAMES: dict[str, tuple[tuple[str, ...], str | None]] = {
 
 
 def _name_pattern(name: str) -> str:
-    return _LINE_SPACE.join(re.escape(w) for w in name.split())
+    return _STATEMENT_SPACE.join(re.escape(w) for w in name.split())
 
 
-_LINE_SPACE = r"[^\S\n]+"  # a whitespace run that stays on its line: a statement is on one line
+# a whitespace run that stays on its line: a statement is on one line
+_STATEMENT_SPACE = r"[^\S\n]+"
 _STATEMENT = re.compile(
     r"(?<![^\W_])(?i:in)[^\S\n]+"
     rf"(?:(?i:{_SCALE_WORDS})s?[^\S\n]+(?i:of)[^\S\n]+)?(?:"
