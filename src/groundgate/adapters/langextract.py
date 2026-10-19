@@ -23,10 +23,11 @@ Mapping, per extraction:
   holds text, with the role ``sign``, ``scale``, ``unit``, ``key`` or ``field``. ``field_text``
   can also be a list, such as a row label and a column header: each entry that holds text
   becomes one field item. A candidate can cite up to 8 field items (SPEC §3, #300), so a list
-  with more entries makes the candidate ``CANDIDATE_INVALID``. A list for any other role also
-  makes it ``CANDIDATE_INVALID``. A quote has no offsets: groundgate finds it near the value.
-  Then the outside items: one ``external`` item from ``source_url``, ``source_retrieved`` and
-  ``source_quote`` when all three hold text, and one ``knowledge`` item from ``knowledge``.
+  with 9 or more entries that hold text makes the candidate ``CANDIDATE_INVALID``. A list for
+  any other role also makes it ``CANDIDATE_INVALID``, also when the extraction is not aligned.
+  A quote has no offsets: groundgate finds it near the value. Then the outside items: one
+  ``external`` item from ``source_url``, ``source_retrieved`` and ``source_quote`` when all three
+  hold text, and one ``knowledge`` item from ``knowledge``.
 
 An extraction LangExtract could not align has no value item. With outside items, its evidence is
 those items, and groundgate takes the outside path. Without them, it has no evidence and is
@@ -40,9 +41,10 @@ checks ignore them.
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+from itertools import islice
 from typing import Any
 
-from ..admit import admit
+from ..admit import MAX_FIELD_ITEMS, admit
 from ..canonical import Offsets, is_nfc
 from ..model import PacketError, Policy, Receipt, Schema
 
@@ -98,13 +100,14 @@ def _names(attributes: Mapping[str, str] | None) -> dict[str, str]:
 def _role_items(attrs: Mapping[str, Any], names: Mapping[str, str]) -> list[dict[str, Any]]:
     """One quote for each role attribute that holds text. groundgate finds it. The field
     attribute can hold a list, with one field item for each entry (#300). admit rejects more
-    than MAX_FIELD_ITEMS of them. A list for another role goes to admit as it is, so admit
-    rejects the candidate CANDIDATE_INVALID."""
+    than MAX_FIELD_ITEMS of them, so the list stops at one item past that limit. A list for
+    another role goes to admit as it is, so admit rejects the candidate CANDIDATE_INVALID."""
     out: list[dict[str, Any]] = []
     for role, name in ROLES.items():
         raw = attrs.get(names[name])
         if isinstance(raw, list) and role == "field":
-            out.extend({"role": role, "text": t} for t in map(_text, raw) if t is not None)
+            texts = (t for t in map(_text, raw) if t is not None)
+            out.extend({"role": role, "text": t} for t in islice(texts, MAX_FIELD_ITEMS + 1))
         elif isinstance(raw, list):
             out.append({"role": role, "text": raw})  # not a string: CANDIDATE_INVALID
         elif (text := _text(raw)) is not None:
@@ -157,6 +160,8 @@ def to_candidates(
             cand["unit"] = attrs[unit_attribute]
         if attrs.get(key_attribute) is not None:
             cand["key"] = attrs[key_attribute]
+        roles = _role_items(attrs, names)
+        bad = [item for item in roles if not isinstance(item["text"], str)]
         outside = _outside_items(attrs, names)
         interval = _get(x, "char_interval")
         start, end = _get(interval, "start_pos"), _get(interval, "end_pos")
@@ -164,9 +169,9 @@ def to_candidates(
             if not 0 <= start <= end <= len(text):
                 raise PacketError(f"extraction {i} has a char_interval outside the document text")
             value = {"start": offsets.to_bytes(start), "end": offsets.to_bytes(end), "text": quote}
-            cand["evidence"] = [value, *_role_items(attrs, names), *outside]
-        elif outside:  # not aligned: only the outside items can support the value
-            cand["evidence"] = outside
+            cand["evidence"] = [value, *roles, *outside]
+        elif outside or bad:  # not aligned: only the outside items can support the value
+            cand["evidence"] = [*bad, *outside]  # a list for a role other than field: invalid
         out.append(cand)
     return out
 

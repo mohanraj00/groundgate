@@ -602,8 +602,9 @@ The adapter skips an attribute that is blank or not a string.
 `"field_text": ["Widgets", "Sales"]`. Each entry that holds text becomes one field item, and the
 field check passes when one of them passes. The adapter skips an entry that is blank or not a
 string, so an empty list adds no item. A candidate can cite up to 8 field items, so a list with 9
-or more entries makes it `CANDIDATE_INVALID`. A list for any other role, such as `unit_text`, also
-makes it `CANDIDATE_INVALID`, because each other role holds one item. If your prompt uses other names,
+or more entries that hold text makes it `CANDIDATE_INVALID`. A list for any other role, such as
+`unit_text`, also makes it `CANDIDATE_INVALID`, because each other role holds one item. This is
+also true when LangExtract could not align the extraction. If your prompt uses other names,
 map them: `attributes={"key_text": "row_label"}`.
 
 If LangExtract could not align an extraction, it has no value item. With outside items, the

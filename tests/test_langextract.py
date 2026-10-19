@@ -267,3 +267,27 @@ def test_a_field_list_cites_the_row_and_the_column() -> None:
         (4, "rejected", ("CANDIDATE_INVALID",)),
         (5, "rejected", ("CANDIDATE_INVALID",)),  # also with one entry
     ]
+
+
+def test_a_long_field_list_stops_past_the_limit() -> None:
+    at = TEXT.index("$7,000")
+    many = [" "] + ["limit"] * 1000
+    (c,) = to_candidates(doc(x("limit", "$7,000", at, "7000", field_text=many)))
+    assert len(c["evidence"]) == 1 + 9  # the value item, then one field item past the limit of 8
+    (d,) = admit_document(doc(x("limit", "$7,000", at, "7000", field_text=many)), SCHEMA).decisions
+    assert d.codes == ("CANDIDATE_INVALID",)
+    (c,) = to_candidates(doc(x("limit", "$7,000", at, "7000", field_text=["limit"] * 8 + [" "])))
+    assert len(c["evidence"]) == 1 + 8  # 9 entries, but only 8 hold text
+
+
+def test_a_list_for_another_role_is_invalid_when_not_aligned() -> None:
+    source = {"source_url": "https://example.org/limits", "source_retrieved": "2026-10-01",
+              "source_quote": "The limit is $7,000."}  # fmt: skip
+    policy = {"sources": {"external": {"allow": ["https://example.org/"]}}}
+    for attrs in ({}, source):
+        ext = x("limit", "$7,000", None, "7000", unit="USD", unit_text=["$"], **attrs)
+        (d,) = admit_document(doc(ext), SCHEMA, policy).decisions
+        assert (d.outcome, d.codes) == ("rejected", ("CANDIDATE_INVALID",))
+    ext = x("limit", "$7,000", None, "7000", unit="USD", **source)  # without the list
+    (d,) = admit_document(doc(ext), SCHEMA, policy).decisions
+    assert d.codes == ("ADMITTED_BY_POLICY",)
