@@ -1,0 +1,68 @@
+{
+ "name": "116-evidence-units-cut-form",
+ "description": "A header form is the sign with all the letters directly before it, so the text sets its length. In evidence_units it is cut to its last 11 code points: the longest prefix of the unit table, US$ or Rs., has 3, plus 8. A cut form has cut true. This form is unknown, so it allows no code (spec 0.10, #362).",
+ "document": "\tABCDEFGHIJKLMNOPQRST$m\nRevenue\t5,200\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "w15",
+   "field": "usd",
+   "value": "5200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 32,
+     "end": 37,
+     "text": "5,200"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ],
+    "evidence_units": {
+     "token": {
+      "start": 32,
+      "end": 37
+     },
+     "next": [],
+     "per": false,
+     "headers": [
+      {
+       "form": "KLMNOPQRST$",
+       "allows": [],
+       "cut": true
+      }
+     ],
+     "statements": [],
+     "currency": []
+    }
+   }
+  ],
+  "coverage": []
+ }
+}

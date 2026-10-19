@@ -5123,17 +5123,21 @@ def units(
     end: int,
     next_units: tuple[str, ...] = (),
     per: bool = False,
-    headers: tuple[tuple[str, list[str]], ...] = (),
+    headers: tuple[tuple[Any, ...], ...] = (),
     statements: tuple[str, ...] = (),
     currency: tuple[str, ...] = (),
 ) -> dict[str, Any]:
     """The expected `evidence_units` member of a decision (SPEC §5). ``start`` and ``end`` are
-    the UTF-8 byte span of the token, written by hand."""
+    the UTF-8 byte span of the token, written by hand. Each header is (form, allows), or (form,
+    allows, True) for a cut form."""
     return {
         "token": {"start": start, "end": end},
         "next": list(next_units),
         "per": per,
-        "headers": [{"form": form, "allows": allows} for form, allows in headers],
+        "headers": [
+            {"form": h[0], "allows": h[1], **({"cut": True} if h[2:] == (True,) else {})}
+            for h in headers
+        ],
         "statements": list(statements),
         "currency": list(currency),
     }
@@ -5244,6 +5248,20 @@ vector(
         shows(c("w14", "aud", "5200000000", "AUD",
                 [q("5,200"), REV, scale_item("$m"), unit_item("$m")], UNIT_REVIEW),
               units(12, 17, headers=(("$", DOLLARS),), currency=("CAD", "USD"))),
+    ],
+)  # fmt: skip
+vector(
+    "116-evidence-units-cut-form",
+    "A header form is the sign with all the letters directly before it, so the text sets its "
+    "length. In evidence_units it is cut to its last 11 code points: the longest prefix of the "
+    "unit table, US$ or Rs., has 3, plus 8. A cut form has cut true. This form is unknown, so it "
+    "allows no code (spec 0.10, #362).",
+    "\tABCDEFGHIJKLMNOPQRST$m\nRevenue\t5,200\n",
+    {"fields": {"usd": revenue("USD")}},
+    [
+        shows(c("w15", "usd", "5200000000", "USD", [q("5,200"), scale_item("$m")],
+                (REVIEW, ["PART_MISSING", "VALUE_DERIVED"], ["unit"])),
+              units(32, 37, headers=(("KLMNOPQRST$", [], True),))),
     ],
 )  # fmt: skip
 
