@@ -1382,3 +1382,28 @@ def test_a_groundgate_run_1_record_fails_replay_with_a_version_message(tmp_path)
     log.write_text(log.read_text().replace("groundgate-run/2", "groundgate-run/1", 1))
     with pytest.raises(ValueError, match="the record is 'groundgate-run/1'"):
         RunResult.read(tmp_path)
+
+
+def test_a_rounded_zero_states_its_precision():
+    # "0.0" states 0 to one decimal place, so 0.04 rounds to it (#319).
+    text = "Revenue was 0.0 in total.\nRevenue\t0.04"
+    rounded = candidate("0", "revenue", evidence=[item("0.0")])
+    exact = candidate("0.04", "revenue", evidence=[item("0.04"), item("Revenue", "field")])
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    assert [c["id"] for c in result.candidates] == ["c1-2"]
+    assert [d.outcome for d in result.receipt.decisions] == ["admitted"]
+    event = next(e for e in result.record if e["kind"] == "rounding")
+    assert event["dropped"] == [{"candidate_id": "c1-1", "kept_ids": ["c1-2"], "precision": "0.1"}]
+    assert_replays(result, text, ROUND_SCHEMA)
+
+
+def test_replay_refuses_a_changed_rounding_line():
+    text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    at = next(i for i, e in enumerate(result.record) if e["kind"] == "rounding")
+    for change in ({"dropped": []}, {"admission_sha256": result.record[at - 1]["entry_sha256"]}):
+        record = copy.deepcopy(result.record)
+        record[at].update(change)
+        assert not replay(record, result.artifacts, text, ROUND_SCHEMA).ok
+    removed = [e for i, e in enumerate(result.record) if i != at]
+    assert not replay(removed, result.artifacts, text, ROUND_SCHEMA).ok

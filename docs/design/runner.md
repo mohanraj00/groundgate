@@ -175,7 +175,8 @@ give "£17.3bn" and a table 17,284 in millions. I drop a candidate A only when a
 1. A's decision in the core call over all tips has `CONFLICTING_CANDIDATES`.
 2. A's field is numeric. A's token is the first number token in its evidence span whose value,
    times a power of ten, is A's value. A's **precision** is one unit in the last written digit of
-   that token, times that power of ten. "17.3" for 17300000000 states 100000000.
+   that token, times that power of ten. "17.3" for 17300000000 states 100000000. A zero token
+   is A's token only when A's value is zero: "0.0" for 0 states 0.1.
 3. A second candidate B has the same field, key and unit, and a different value. The difference
    between the two values is at most half of A's precision.
 4. B is admitted in a core call over all tips without the dropped candidates.
