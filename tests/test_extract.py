@@ -321,7 +321,7 @@ def test_bad_targeted_quote_fails_only_its_field():
 def test_targeted_trim_drops_the_worst_ranked_region_first():
     schema = {"fields": {"net_income": {"type": "integer", "description": "the yearly profit"}}}
     text = "".join(f"profit line {i} y\n" for i in range(6)) + "Net income 42."
-    for limit in (2600, 2900, 3200):
+    for limit in (2750, 3050, 3350):
         client = Client(envelope(missing=("net_income",)), envelope(missing=("net_income",)))
         settings = RunPolicy(search_context_chars=1, max_prompt_chars=limit)
         result = execute(text, client, schema, run_policy=settings)
@@ -1267,3 +1267,98 @@ def test_write_checks_keys_and_the_log_before_any_object(tmp_path):
     result.write(tmp_path / "c")
     assert [p.name for p in (tmp_path / "c").iterdir() if p.name.startswith(".tmp-")] == []
     assert all(p.stat().st_mode & 0o044 for p in (tmp_path / "c" / "objects").iterdir())
+
+
+CAUSE_SCHEMA = {"fields": {"amount": {"type": "integer", "aliases": ["Amount"]}}}
+
+
+@pytest.mark.parametrize(
+    "text,field,cause",
+    [
+        ("Amount 5.", "Amount 5", "holds_value"),
+        ("Amount 5, Amount.", "Amount.", "after_value"),
+    ],
+)
+def test_repair_names_the_cause_of_a_field_item_that_cannot_pass(text, field, cause):
+    # A field item must end at or before the value (SPEC §4.6, #318).
+    first = candidate(evidence=[item("5"), item(field, "field")])
+    assert gg.admit(text, CAUSE_SCHEMA, [{"id": "a", **first}]).decisions[0].codes == (
+        "FIELD_CITATION_INVALID",
+    )
+    new = candidate(evidence=[item("5"), item("Amount", "field")])
+    client = Client(envelope(first), new)
+    result = execute(text, client, CAUSE_SCHEMA)
+    assert "It must not hold the value." in client.prompts[0]
+    repair = json.loads(client.prompts[1].split("\n", 1)[1])
+    expected = {"holds_value": "holds the value", "after_value": "comes after the value"}
+    assert expected[cause] in repair["feedback"]
+    assert "label before the value" in repair["feedback"]
+    call = next(e for e in result.record if e["kind"] == "call" and e["phase"] == "repair")
+    assert call["field_causes"] == [cause]
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert "field_causes" not in result.record[-2]
+    assert_replays(result, text, CAUSE_SCHEMA)
+
+
+def test_final_admission_keeps_the_field_cause_after_the_last_repair():
+    first = candidate(evidence=[item("5"), item("Amount 5", "field")])
+    client = Client(envelope(first), first)
+    result = execute("Amount 5.", client, CAUSE_SCHEMA)
+    final = next(e for e in result.record if e["kind"] == "final_admission")
+    assert final["field_causes"] == {"c1-1": ["holds_value"]}
+    assert_replays(result, "Amount 5.", CAUSE_SCHEMA)
+
+
+ROUND_SCHEMA = {"fields": {"revenue": {"type": "number", "aliases": ["Revenue"]}}}
+
+
+def rounded_and_exact(rounded_quote, rounded_value):
+    text = f"Revenue rose to {rounded_quote}.\n(in millions)\nRevenue\t17,284"
+    rounded = candidate(rounded_value, "revenue", evidence=[item(rounded_quote)])
+    exact = candidate(
+        "17284000000",
+        "revenue",
+        evidence=[item("17,284"), item("Revenue", "field"), item("in millions", "scale")],
+    )
+    return text, rounded, exact
+
+
+def test_a_rounded_figure_beside_the_exact_figure_is_dropped_and_recorded():
+    text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
+    both = gg.admit(text, ROUND_SCHEMA, [{"id": "a", **rounded}, {"id": "b", **exact}])
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in both.decisions)
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    assert [c["id"] for c in result.candidates] == ["c1-2"]
+    assert [d.outcome for d in result.receipt.decisions] == ["admitted"]
+    event = next(e for e in result.record if e["kind"] == "rounding")
+    assert event["dropped"] == [
+        {"candidate_id": "c1-1", "kept_ids": ["c1-2"], "precision": "100000000"}
+    ]
+    packet = json.loads(result.artifacts[event["admission_sha256"]])
+    assert [c["id"] for c in packet["candidates"]] == ["c1-1", "c1-2"]
+    assert_replays(result, text, ROUND_SCHEMA)
+
+
+def test_two_figures_that_do_not_round_to_each_other_stay_a_conflict():
+    text, rounded, exact = rounded_and_exact("£17.5bn", "17500000000")
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    assert len(result.candidates) == 2
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
+    assert not any(e["kind"] == "rounding" for e in result.record)
+    assert_replays(result, text, ROUND_SCHEMA)
+
+
+def test_a_rounded_figure_stays_when_the_exact_figure_meets_another_conflict():
+    # Dropping the rounded figure must not hide a real conflict: 17,284 against 18,000.
+    text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
+    text += "\nRevenue\t18,000"
+    other = candidate(
+        "18000000000",
+        "revenue",
+        evidence=[item("18,000"), item("Revenue", "field"), item("in millions", "scale")],
+    )
+    result = execute(text, Client(envelope(rounded, exact, other)), ROUND_SCHEMA)
+    assert len(result.candidates) == 3
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
+    assert not any(e["kind"] == "rounding" for e in result.record)
+    assert_replays(result, text, ROUND_SCHEMA)

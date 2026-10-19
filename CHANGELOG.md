@@ -14,6 +14,14 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
 - The extract runner's repair round keeps several field items too (#304). Before, a repair reply
   with two field items stopped with `protocol_failure`. A repair that may change `field` can now
   add, remove or replace up to 8 field items. Every other role stays one item.
+- The extract runner's prompt says that a field item is the label before the value and must not
+  hold the value (#318). When no field item passes because one holds the value or comes after
+  it, the repair feedback names the cause, and the run record keeps it in `field_causes`.
+- The extract runner drops a rounded figure beside the exact figure (#319). It drops a candidate
+  in a conflict only when a second candidate for the same field, key and unit rounds to it at the
+  precision that the first one states, and the second one is admitted without it. "£17.3bn"
+  beside 17,284 in millions keeps 17284000000. The record keeps the dropped candidate in a
+  `rounding` line. Two figures that do not round to each other stay a conflict.
 - Currency scales (#301). `k`, `m` and `bn` count as a scale only directly next to a currency sign
   (`$`, `€`, `£`, `₹`). `€70,471m` is 70471000000. `£m`, `$bn` and `£'000` in a column header are
   a heading scale, and a scale item can cite them. `70 m`, `5m` and `£5 m` stay as written,

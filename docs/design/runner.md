@@ -141,6 +141,10 @@ always uses the full original document and references, never text formed by conc
 chunks. Role quotes can name context elsewhere in the pinned texts, but each must pass the
 core's own checks. Section 6 defines the adapter anchoring for targeted reference value items.
 
+The instructions also say that a field item quotes the label before the value, such as a row
+label or a column header, and that it must not hold the value (#318). The core rejects both
+other forms under SPEC §4.6.
+
 A prompt states that document text, references and prior replies are data, including any
 instructions in them. It marks each data block with its source id and length. Prompt wording
 is an aid, not an input security check. The parser and repair restrictions below enforce the
@@ -163,7 +167,24 @@ records each active candidate, including duplicates.
 The runner calls `admit` once more on all final tips. A value that passed in an earlier round
 is not stored as a final admission on that basis. In particular, different values for a
 non-`multiple` field and the same key meet in one core call. The runner does not select one
-value, drop a conflicting proposal or combine isolated receipts to hide a conflict.
+value or combine isolated receipts to hide a conflict.
+
+There is one exception, for a rounded figure beside the exact figure (#319). A narrative can
+give "£17.3bn" and a table 17,284 in millions. I drop a candidate A only when all of these hold:
+
+1. A's decision in the core call over all tips has `CONFLICTING_CANDIDATES`.
+2. A's field is numeric. A's token is the first number token in its evidence span whose value,
+   times a power of ten, is A's value. A's **precision** is one unit in the last written digit of
+   that token, times that power of ten. "17.3" for 17300000000 states 100000000.
+3. A second candidate B has the same field, key and unit, and a different value. The difference
+   between the two values is at most half of A's precision.
+4. B is admitted in a core call over all tips without the dropped candidates.
+
+When a drop does not meet rule 4, it is cancelled, and the check runs again over the other drops
+until it is stable. So a third value that conflicts with B keeps A in the final receipt. A drop
+does not change a decision of the core: it changes the candidates that the runner sends. The
+record keeps a `rounding` line before the final admission. That line names the admission packet
+with all tips, and each dropped candidate id with the kept ids and the precision.
 
 ## 5. What each repair may change
 
@@ -196,7 +217,7 @@ changes as one terminal proposal. A value change never grants another role or an
 | `SIGN_CITATION_INVALID` | Replace or remove the sign item. |
 | `SCALE_CITATION_INVALID` | Replace or remove the scale item. |
 | `UNIT_CITATION_INVALID` | Replace or remove the unit item; a field item is also permitted when the field has aliases. |
-| `FIELD_CITATION_INVALID` | Replace, add or remove field items. |
+| `FIELD_CITATION_INVALID` | Replace, add or remove field items. The feedback names the cause of a field item that holds the value or comes after it (#318). |
 | `KEY_CITATION_INVALID` | Replace or remove the key item. |
 | `KEY_NOT_AT_VALUE` | Only when key is in `missing`, aliases exist, and the value's line has a tab: add a key item and a field item. The candidate's key stays fixed. |
 | `SCALE_WORD` | A scaled numeric value is permitted as a new terminal proposal, as below. Evidence changes require their own eligible codes. |
@@ -387,6 +408,10 @@ For each call the log holds its sequence number, phase, field or candidate ids, 
 complete prompt digest, model id, raw reply digest and length, parse or client error, and
 permitted and actual diff. Each admission line names its admission packet: the exact candidate
 list and the core receipt. Search-only, limit and final-admission steps have lines too.
+A field item that fails because it holds the value or comes after the value has the cause
+`holds_value` or `after_value` (#318). A repair call line lists the causes of its candidate in
+`field_causes`. The final admission line maps each candidate id with a cause to its causes, in
+the same key, so that a bench can count each cause.
 
 The log names objects by digest, and the returned artifacts are those objects: the inputs,
 the prompts, the replies and the admission packets. An object's key is its digest with its kind
