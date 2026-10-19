@@ -434,9 +434,10 @@ invalid packet: `admit` raises `PacketError` and makes no receipt.
 The qualifier rule of L6 has a reason. SPEC §4.2 applies the longer of two qualifiers that
 overlap. A pack phrase that holds a base phrase of another comparator then replaces the base
 reading. For example, "less than or equal to" as `le` would hide "less than" as `lt`. The loader
-refuses that, so an added qualifier can only add a reading. Issue 2 gives this case its own
-invalid packet under `conformance/invalid/`, written by hand: a pack that adds "less than or equal
-to" as `le`.
+refuses that, so an added qualifier can only add a reading. Issue 2 gives this rule two
+invalid packets under `conformance/invalid/`, written by hand, one for each direction: a pack that
+adds "less than or equal to" as `le` (it holds the base phrase "less than"), and a pack that adds
+"more" as `lt` (the base phrase "more than" holds it).
 
 Each limit of extensions.md §6 maps to these checks:
 
@@ -492,13 +493,13 @@ SPEC.md and `conformance/build.py`, so they merge one at a time with the other s
    `text.py` and `admit.py` build their patterns from it. SPEC points to it and gives its digest.
    The proof of stage 1 (section 10.3): vectors, bench checks, example and receipts stay the same.
 2. **Spec 0.10: the pack loader, its checks and the pack digest.**
-   `groundgate.load_pack`, the checks L1 to L12, the digest of section 6 and the union of section 8.
+   `groundgate.load_pack`, the checks L1 to L8, L11 and L12, the digest of section 6 and the union of section 8.
    The schema member `packs`, `admit(..., packs=)`, the CLI `--pack`, the receipt member `packs`,
    and the decision member `packs` of section 6.
    An invalid packet for each check under `conformance/invalid/`, written by hand before the code.
 3. **Spec 0.10: kind packs and field templates.**
    The kind pack format, `needs`, the schema member `template`, and the resolved schema and its
-   digest (section 5.1). Vectors by hand first: a template fills, the schema wins, a conflict of
+   digest (section 5.1), with the checks L9 and L10. Vectors by hand first: a template fills, the schema wins, a conflict of
    type or unit is invalid, a pin that differs is invalid. #321 adds `relations` after this issue.
 4. **Kind packs from the current bench schemas.**
    `us-10k`, `us-government-reports`, `annual-reports`, `component-datasheets` with the vocabulary
@@ -514,4 +515,5 @@ SPEC.md and `conformance/build.py`, so they merge one at a time with the other s
    A how-to page: how the app keeps its pack files next to its receipts.
 7. **The report names the packs of a receipt and their status.**
    `groundgate report` lists each pack with its version and digest, and says that it is `draft`.
-   It marks each admitted value whose decision member `packs` names a pack with a draft route.
+   It marks each admitted value whose decision member `packs` names a pack with a draft route, and
+   says that a mark means the pack was read, not that it changed the outcome.
