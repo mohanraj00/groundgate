@@ -1,6 +1,6 @@
 {
  "name": "78-scale-word-letters",
- "description": "A scale word matches case-insensitively: each letter matches itself or its capital. The long s (U+017F), the dotted capital I (U+0130) and the dotless i (U+0131) are other letters, so 'thouſand', 'bİllion' and 'mıllıon' are no scale words. The value is the number as written, and '(in thouſands' is no scale item. Before, such a packet raised an error and gave no receipt (spec 0.10, #350).",
+ "description": "A scale word matches case-insensitively by the fold of each letter (SPEC §4): the long s (U+017F) folds to s, and the dotted capital I (U+0130) and the dotless i (U+0131) fold to i. So 'thouſand', 'bİllion' and 'mıllıon' are scale words, and '(in thouſands)' is a heading scale and a scale item. Before #350, such a packet raised an error and gave no receipt (spec 0.10, #350, #356).",
  "document": "The fee is 5 thouſand. The levy is 2 bİllion. The toll is 3 mıllıon. The cap is 4 THOUSAND.\n\nAmounts (in thouſands)\nFees\t75\n",
  "schema": {
   "fields": {
@@ -113,6 +113,28 @@
  "expected": {
   "decisions": [
    {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD"
+    ]
+   },
+   {
     "outcome": "admitted",
     "codes": []
    },
@@ -127,24 +149,8 @@
    },
    {
     "outcome": "admitted",
-    "codes": []
-   },
-   {
-    "outcome": "admitted",
-    "codes": []
-   },
-   {
-    "outcome": "admitted",
-    "codes": []
-   },
-   {
-    "outcome": "admitted",
-    "codes": []
-   },
-   {
-    "outcome": "rejected",
     "codes": [
-     "VALUE_NOT_IN_EVIDENCE"
+     "VALUE_DERIVED"
     ]
    }
   ],

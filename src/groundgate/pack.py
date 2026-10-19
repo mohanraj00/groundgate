@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from .canonical import jcs
+from .fold import fold_text, folded_word, mark_fold
 
 
 class PacketError(ValueError):
@@ -387,8 +388,9 @@ def load_pack(path: str | Path) -> dict[str, Any]:
 
 
 def _key(w: str) -> str:
-    """A word as the conflict checks compare it: casefolded, each whitespace run one space."""
-    return " ".join(w.casefold().split())
+    """A word as the conflict checks compare it (L6): each letter folded (SPEC §4), each
+    whitespace run one space."""
+    return " ".join(fold_text(w).split())
 
 
 def _added(base: Sequence[str], words: Iterable[str]) -> list[str]:
@@ -409,9 +411,9 @@ def _powers(base: dict[str, int], more: Iterable[dict[str, int]], where: str) ->
 
 
 def _phrase_re(p: str) -> re.Pattern[str]:
-    """A qualifier phrase as SPEC §4.2 matches it."""
-    body = r"\s+".join(re.escape(w) for w in p.split())
-    return re.compile(body if not p[0].isalnum() else rf"\b{body}\b", re.I)
+    """A qualifier phrase as SPEC §4.2 matches it: each letter by its fold (SPEC §4)."""
+    body = r"\s+".join(folded_word(w) for w in p.split())
+    return re.compile(body if not p[0].isalnum() else rf"\b{body}\b")
 
 
 def _qualifier_conflicts(base: dict[str, Any], merged: dict[str, Any]) -> None:
@@ -546,10 +548,12 @@ def _entries(pack: dict[str, Any]) -> Iterator[tuple[str, str]]:
 
 
 def added_words(base: dict[str, Any], pack: dict[str, Any]) -> frozenset[str]:
-    """The words that a pack adds to the base, casefolded with each whitespace run as one
-    space. A word that the base gives in the same list is not added (SPEC §5, decision packs)."""
+    """The words that a pack adds to the base, as ``mark_fold`` gives them. A word that the base
+    gives in the same list is not added (SPEC §5, decision packs)."""
     have = set(_entries(with_defaults(base)))
-    return frozenset(_key(w) for path, w in _entries(with_defaults(pack)) if (path, w) not in have)
+    return frozenset(
+        mark_fold(w) for path, w in _entries(with_defaults(pack)) if (path, w) not in have
+    )
 
 
 def _load_base() -> dict[str, Any]:

@@ -12,6 +12,7 @@ from importlib import resources
 from typing import Any, Literal
 
 from .canonical import _SAFE_INT, SPEC_VERSION
+from .fold import fold_text
 from .pack import (
     BASE,
     BASE_ID,
@@ -321,7 +322,7 @@ def _words(name: str, member: str, words: object) -> None:
         return
     if not isinstance(words, list) or not words or not all(isinstance(k, str) for k in words):
         raise PacketError(f"field {name!r} {member} must be null or a list of strings")
-    seen = [normalize_ws(k).lower() for k in words]
+    seen = [fold_text(normalize_ws(k)) for k in words]  # the fold of SPEC §4 (#356)
     if "" in seen or len(set(seen)) != len(seen):
         raise PacketError(f"field {name!r} {member} must be distinct, non-blank text")
 

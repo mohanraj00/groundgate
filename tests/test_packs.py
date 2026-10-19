@@ -480,3 +480,11 @@ def test_a_gain_word_loss_conflicts_only_with_finance() -> None:
     assert plain.decisions[0].codes == ("SIGN_CITATION_INVALID", "VALUE_DERIVED")
     with pytest.raises(gg.PacketError, match="L6"):
         gg.admit(LOSS_DOC, {"packs": [FINANCE, own], "fields": AMOUNT}, [LOSS_CAND], packs=[gain])
+
+
+def test_l6_compares_words_by_the_fold() -> None:
+    # #356: the fold of "LO\N{LATIN SMALL LETTER LONG S}S" is "loss", so L6 finds the conflict.
+    gain = pack(sign={"gain": ["LO\N{LATIN SMALL LETTER LONG S}S"]})
+    own = {"id": "words-x-test", "version": "1.0.0"}
+    with pytest.raises(gg.PacketError, match="L6"):
+        gg.admit(LOSS_DOC, {"packs": [FINANCE, own], "fields": AMOUNT}, [LOSS_CAND], packs=[gain])

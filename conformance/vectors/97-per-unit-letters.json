@@ -1,0 +1,120 @@
+{
+ "name": "97-per-unit-letters",
+ "description": "A per-unit matches by the fold of each letter (SPEC §4). 'kılogram', 'ml' for 'mL', 'KG' and 'lİter' are per-units, so mg is not at 10, 20, 30 or 40 (spec 0.10, #356).",
+ "document": "Give 10 mg/kılogram daily. Give 20 mg/ml daily. Give 30 mg/KG daily. Give 40 mg/lİter daily. Give 50 mg daily.",
+ "schema": {
+  "fields": {
+   "a": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "b": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "c": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "d": {
+    "type": "number",
+    "unit": "mg"
+   },
+   "e": {
+    "type": "number",
+    "unit": "mg"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "a",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 5,
+    "end": 10,
+    "text": "10 mg"
+   }
+  },
+  {
+   "id": "p2",
+   "field": "b",
+   "value": "20",
+   "unit": "mg",
+   "evidence": {
+    "start": 33,
+    "end": 38,
+    "text": "20 mg"
+   }
+  },
+  {
+   "id": "p3",
+   "field": "c",
+   "value": "30",
+   "unit": "mg",
+   "evidence": {
+    "start": 54,
+    "end": 59,
+    "text": "30 mg"
+   }
+  },
+  {
+   "id": "p4",
+   "field": "d",
+   "value": "40",
+   "unit": "mg",
+   "evidence": {
+    "start": 75,
+    "end": 80,
+    "text": "40 mg"
+   }
+  },
+  {
+   "id": "p5",
+   "field": "e",
+   "value": "50",
+   "unit": "mg",
+   "evidence": {
+    "start": 100,
+    "end": 105,
+    "text": "50 mg"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "UNIT_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

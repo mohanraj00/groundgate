@@ -3982,14 +3982,14 @@ vector(
 )  # fmt: skip
 
 
-# ---------------------------------------------------------------- case of listed words (#350)
+# ---------------------------------------------------------------- case of listed words (#350, #356)
 vector(
     "78-scale-word-letters",
-    "A scale word matches case-insensitively: each letter matches itself or its capital. The "
-    "long s (U+017F), the dotted capital I (U+0130) and the dotless i (U+0131) are other "
-    "letters, so 'thou\u017fand', 'b\u0130llion' and 'm\u0131ll\u0131on' are no scale words. The value is the number "
-    "as written, and '(in thou\u017fands' is no scale item. Before, such a packet raised an error and "
-    "gave no receipt (spec 0.10, #350).",
+    "A scale word matches case-insensitively by the fold of each letter (SPEC §4): the long s "
+    "(U+017F) folds to s, and the dotted capital I (U+0130) and the dotless i (U+0131) fold to i. "
+    "So 'thou\u017fand', 'b\u0130llion' and 'm\u0131ll\u0131on' are scale words, and "
+    "'(in thou\u017fands)' is a heading scale and a scale item. Before #350, such a packet raised "
+    "an error and gave no receipt (spec 0.10, #350, #356).",
     "The fee is 5 thou\u017fand. The levy is 2 b\u0130llion. The toll is 3 m\u0131ll\u0131on. The cap is 4 THOUSAND."
     "\n\nAmounts (in thou\u017fands)\nFees\t75\n",
     {
@@ -4004,32 +4004,31 @@ vector(
         }
     },
     [
-        # the input of #350
-        c("t1", "fee", "5", None, q("5 thou\u017fand")),
-        # the number times 10^3 with no scale item: the scale is a missing part (SPEC §3.1)
-        c("t2", "fee_scaled", "5000", None, q("5 thou\u017fand"),
-          ("needs_verification", ["PART_MISSING"], ["scale"])),
-        c("t3", "levy", "2", None, q("2 b\u0130llion")),
-        c("t4", "toll", "3", None, q("3 m\u0131ll\u0131on")),
-        # capitals still match
+        # the input of #350: the number as written before a scale word
+        c("t1", "fee", "5", None, q("5 thou\u017fand"), (REVIEW, ["SCALE_WORD"])),
+        # the scaled value of the token
+        c("t2", "fee_scaled", "5000", None, q("5 thou\u017fand")),
+        c("t3", "levy", "2", None, q("2 b\u0130llion"), (REVIEW, ["SCALE_WORD"])),
+        c("t4", "toll", "3", None, q("3 m\u0131ll\u0131on"), (REVIEW, ["SCALE_WORD"])),
         c("t5", "cap", "4000", None, q("4 THOUSAND")),
-        # no heading scale reaches the row, so no scale is missing
-        c("t6", "fees", "75", None, [q("75")]),
+        # the heading scale reaches the row, so the number as written misses its scale (SPEC §3.1)
+        c("t6", "fees", "75", None, [q("75")], (REVIEW, ["PART_MISSING"], ["scale"])),
+        # the scale item gives 10^3
         c("t7", "fees_scaled", "75000", None, [q("75"), q("(in thou\u017fands", role="scale")],
-          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+          ("admitted", ["VALUE_DERIVED"])),
     ],
 )  # fmt: skip
 
 vector(
     "79-abbreviation-letters",
-    "An abbreviation matches case-insensitively as a scale word does: each letter matches itself "
-    "or its capital. So 'U.\u017f.' with a long s (U+017F) is no abbreviation, and its dot ends the "
-    "sentence before a lowercase word. 'U.S.' still joins (spec 0.10, #350).",
+    "An abbreviation matches case-insensitively by the fold of each letter (SPEC §4). So "
+    "'U.\u017f.' with a long s (U+017F) is the abbreviation 'u.s.', and it joins as 'U.S.' does: "
+    "'up to' reaches $60 and $70 (spec 0.10, #350, #356).",
     "Fees are up to the U.\u017f. code cap of $60. Fees are up to the U.S. code cap of $70.",
     {"fields": {"long_s_fee": USD, "us_fee": USD}},
     [
-        c("a1", "long_s_fee", "60", "USD", q("$60")),
-        c("a2", "us_fee", "70", "USD", q("$70"), ("needs_verification", ["QUALIFIED_VALUE"])),
+        c("a1", "long_s_fee", "60", "USD", q("$60"), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("a2", "us_fee", "70", "USD", q("$70"), (REVIEW, ["QUALIFIED_VALUE"])),
     ],
 )  # fmt: skip
 
@@ -4968,6 +4967,154 @@ bad_pack("pack-l6-finance-gain",
          pack(sign={"gain": ["deficit"]}),
          schema={"packs": [FINANCE, {"id": "words-x-test", "version": "1.0.0"}],
                  "fields": {"fee": {"type": "integer"}}})  # fmt: skip
+
+
+# ---------------------------------------------------------------- the fold of each letter (#356)
+# SPEC §4: two letters match when they have the same fold. The long s (U+017F) folds to s, the
+# dotless i (U+0131) and the dotted capital I (U+0130) to i, and the Kelvin sign (U+212A) to k.
+# Each vector checks capitals and these letters, and shows that a stop check still fires.
+vector(
+    "95-qualifier-letters",
+    "A qualifier matches by the fold of each letter (SPEC §4). 'at lea\u017ft', 'max\u0131mum of', "
+    "'or le\u017fs', 'AT LEAST' and 'MAX\u0130MUM OF' each qualify the value (spec 0.10, #356).",
+    "The base is $40. The fee is at lea\u017ft $50. The cap is max\u0131mum of $60. The levy is $70 "
+    "or le\u017fs. The toll is AT LEAST $80. The rate is MAX\u0130MUM OF $90.",
+    {"fields": {f: USD for f in ("base", "fee", "cap", "levy", "toll", "rate")}},
+    [
+        c("q1", "base", "40", "USD", q("$40")),
+        c("q2", "fee", "50", "USD", q("$50"), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("q3", "cap", "60", "USD", q("$60"), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("q4", "levy", "70", "USD", q("$70"), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("q5", "toll", "80", "USD", q("$80"), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("q6", "rate", "90", "USD", q("$90"), (REVIEW, ["QUALIFIED_VALUE"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "96-change-letters",
+    "A change word and the range words match by the fold of each letter (SPEC §4). After "
+    "'increa\u017fed from' and 'INCREASED from', the second number is the new value, and the "
+    "first keeps its range reading. 'BETWEEN $5 AND $9' is a range (spec 0.10, #356).",
+    "The fee increa\u017fed from $10 to $20. The cap INCREASED from $30 to $40. The levy is "
+    "BETWEEN $5 AND $9.",
+    {"fields": {f: USD for f in ("new_fee", "old_fee", "new_cap", "old_cap", "low", "high")}},
+    [
+        c("d1", "new_fee", "20", "USD", q("$20")),
+        c("d2", "old_fee", "10", "USD", q("$10"), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("d3", "new_cap", "40", "USD", q("$40")),
+        c("d4", "old_cap", "30", "USD", q("$30"), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("d5", "low", "5", "USD", q("$5"), (REVIEW, ["QUALIFIED_VALUE"])),
+        c("d6", "high", "9", "USD", q("$9"), (REVIEW, ["QUALIFIED_VALUE"])),
+    ],
+)  # fmt: skip
+
+MG = {"type": "number", "unit": "mg"}
+vector(
+    "97-per-unit-letters",
+    "A per-unit matches by the fold of each letter (SPEC §4). 'k\u0131logram', 'ml' for 'mL', 'KG' "
+    "and 'l\u0130ter' are per-units, so mg is not at 10, 20, 30 or 40 (spec 0.10, #356).",
+    "Give 10 mg/k\u0131logram daily. Give 20 mg/ml daily. Give 30 mg/KG daily. Give 40 mg/l\u0130ter "
+    "daily. Give 50 mg daily.",
+    {"fields": {f: MG for f in ("a", "b", "c", "d", "e")}},
+    [
+        c("p1", "a", "10", "mg", q("10 mg"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("p2", "b", "20", "mg", q("20 mg"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("p3", "c", "30", "mg", q("30 mg"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("p4", "d", "40", "mg", q("40 mg"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
+        c("p5", "e", "50", "mg", q("50 mg")),
+    ],
+)  # fmt: skip
+
+SIGN_REVIEW = (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"], [])
+vector(
+    "98-sign-word-letters",
+    "The loss words, the negations and the gain words of a sign item match by the fold of each "
+    "letter (SPEC §4). 'lo\u017fs' and 'LOSS' are loss words. 'w\u0131thout' and 'W\u0130THOUT' are "
+    "negations, and 'ga\u0131n\u017f' is a gain word, so those items fail (spec 0.10, #356).",
+    "Net lo\u017fs of $500 in 2024. Net LOSS of $600 in 2024. The plan ended w\u0131thout loss of $700 "
+    "in 2024. The plan ended W\u0130THOUT loss of $800 in 2024. Operating loss and ga\u0131n\u017f of "
+    "$900 in 2024.",
+    {"packs": [FINANCE], "fields": {"amount": AMOUNT}},
+    [
+        c("s1", "amount", "-500", "USD", [q("$500"), {"role": "sign", "text": "Net lo\u017fs"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("s2", "amount", "-600", "USD", [q("$600"), {"role": "sign", "text": "Net LOSS"}],
+          ("admitted", ["VALUE_DERIVED"])),
+        c("s3", "amount", "-700", "USD",
+          [q("$700"), {"role": "sign", "text": "w\u0131thout loss"}], SIGN_REVIEW),
+        c("s4", "amount", "-800", "USD",
+          [q("$800"), {"role": "sign", "text": "W\u0130THOUT loss"}], SIGN_REVIEW),
+        c("s5", "amount", "-900", "USD",
+          [q("$900"), {"role": "sign", "text": "loss and ga\u0131n\u017f"}], SIGN_REVIEW),
+    ],
+)  # fmt: skip
+
+vector(
+    "99-heading-letters",
+    "The 'in' of a heading scale, and the words of a currency statement, match by the fold of "
+    "each letter (SPEC §4). '(\u0131n thousands)' is a heading scale, 'presented in "
+    "Au\u017ftralian dollars' is a statement of AUD, and 'IN MILLIONS OF CANADIAN DOLLARS' is a "
+    "statement of CAD by its capital S (spec 0.10, #356).",
+    "Fees (\u0131n thousands)\nFees\t75\n\n"
+    "The figures are presented in Au\u017ftralian dollars.\n\t$m\t$m\nRevenue\t5,200\t4,900\n\n"
+    "INCOME STATEMENT (IN MILLIONS OF CANADIAN DOLLARS)\n\t2025\t2024\nRevenue\t6,300\t5,800\n",
+    {"fields": {**HEADING_UNIT_FIELDS["fields"], "fees": {"type": "number"},
+                "fees_scaled": {"type": "number"}}},
+    [
+        c("h1", "fees", "75", None, [q("75")], (REVIEW, ["PART_MISSING"], ["scale"])),
+        c("h2", "fees_scaled", "75000", None, [q("75"), q("(\u0131n thousands", role="scale")],
+          DERIVED),
+        c("h3", "aud", "5200000000", "AUD",
+          [q("5,200"), q("Revenue", 1, role="field"), scale_item("$m"),
+           unit_item("presented in Au\u017ftralian dollars")],
+          DERIVED),
+        c("h4", "aud", "5200000000", "AUD",
+          [q("5,200"), q("Revenue", 1, role="field"), scale_item("$m"), unit_item("$m")],
+          DERIVED),
+        # the statement of AUD and the field disagree
+        c("h5", "usd", "5200000000", "USD",
+          [q("5,200"), q("Revenue", 1, role="field"), scale_item("$m"), unit_item("$m")],
+          UNIT_REVIEW),
+        c("h6", "cad", "6300000000", "CAD",
+          [q("6,300"), q("Revenue", 2, role="field"), q("IN MILLIONS", role="scale"),
+           unit_item("IN MILLIONS OF CANADIAN DOLLARS")],
+          DERIVED),
+    ],
+)  # fmt: skip
+
+KELVIN_RATE = "\u212aelvin rate"  # with the Kelvin sign (U+212A): a key need not be NFC
+vector(
+    "100-key-letters",
+    "Keys and aliases match by the fold of each letter (SPEC §4). 'state income' has a mention "
+    "in '\u017ftate income', 'STATE \u0131NCOME' and 'state \u0130ncome'. A key with the Kelvin "
+    "sign (U+212A) has a mention in 'KELVIN RATE'. The alias 'State Income' matches "
+    "'\u017ftate income' (spec 0.10, #356).",
+    "The federal rate is 41. The \u017ftate income rate is 52. The STATE \u0131NCOME rate is 63. The "
+    "state \u0130ncome rate is 74. The KELVIN RATE is 85.",
+    {"fields": {"rate": {"type": "integer", "keys": ["state income", KELVIN_RATE],
+                         "aliases": ["State Income"], "multiple": True}}},
+    [
+        c("k1", "rate", "41", None, q("41"), (REVIEW, ["KEY_NOT_AT_VALUE"], ["key"]),
+          key="state income"),
+        c("k2", "rate", "52", None, q("52"), key="state income"),
+        c("k3", "rate", "63", None, q("63"), key="state income"),
+        c("k4", "rate", "74", None, q("74"), key="state income"),
+        c("k5", "rate", "85", None, q("85"), key=KELVIN_RATE),
+        c("k6", "rate", "52", None, [q("52"), q("\u017ftate income", role="field")],
+          key="state income"),
+    ],
+)  # fmt: skip
+
+INVALID.append(
+    {
+        "name": "keys-fold-equal",
+        "description": "Two keys with the same fold of each letter (SPEC §2.3, §4) are invalid: "
+        "'State' and '\u017ftate' match the same text (spec 0.10, #356).",
+        "document": "x",
+        "schema": {"fields": {"dose": {"keys": ["State", "\u017ftate"]}}},
+        "policy": None,
+    }
+)
 
 
 def main() -> None:
