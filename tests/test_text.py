@@ -140,6 +140,14 @@ def test_the_label_line_scan_agrees_with_the_regex(text: str, a: int, b: int) ->
     assert _label_line_in(text, start, end) == _label_line_by_regex(text, start, end)
 
 
+def test_a_line_of_spaces_is_blank_for_a_label_line() -> None:
+    # #348: the statement pattern of #341 used the same name as the label-line strip set
+    s = "The fee is 25. More text here.\n\nLabel\n \nThe fee is 25.\n"
+    assert _label_line_in(s, 0, len(s))
+    t = s.replace(" \n", "\n")
+    assert _label_line_in(t, 0, len(t))
+
+
 def test_a_long_line_of_spaces_takes_linear_time() -> None:
     mentions = key_mentions("Hypertension", ("Hypertension",))
     text = "Hypertension\n" + " " * 200_000 + "\nThe dose is 5 mg."

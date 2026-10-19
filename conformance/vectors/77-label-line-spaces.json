@@ -1,0 +1,69 @@
+{
+ "name": "77-label-line-spaces",
+ "description": "A line that holds only spaces is a blank line (§4.2), also before and after a label line. So the label line stops the key of the earlier heading, and the value goes to review (#348).",
+ "document": "2.1 Hypertension\n\nThe starting dose is 10 mg once daily.\n \nAdults\n \nThe usual dose is 15 mg daily.",
+ "schema": {
+  "fields": {
+   "starting_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "usual_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "starting_dose",
+   "value": "10",
+   "unit": "mg",
+   "evidence": {
+    "start": 39,
+    "end": 44,
+    "text": "10 mg"
+   },
+   "key": "hypertension"
+  },
+  {
+   "id": "s2",
+   "field": "usual_dose",
+   "value": "15",
+   "unit": "mg",
+   "evidence": {
+    "start": 86,
+    "end": 91,
+    "text": "15 mg"
+   },
+   "key": "hypertension"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
