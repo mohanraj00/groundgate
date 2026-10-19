@@ -168,6 +168,12 @@ reads only the objects that the log names, gets the inputs from them and replays
 changed line, or a changed, missing or oversized object, raises `ValueError`. It reads at most
 `max_bytes` (1 GiB by default) and refuses a symlink or a special file in the folder.
 
+If the schema names packs ([guide](../guide.md), SPEC §4.8), give them to
+`extract(..., packs=[...])`, or give a `gg.Schema` that you built with
+`gg.Schema.from_dict(schema, packs)`. The record holds the digest of each pack, not the pack. So
+give the same packs to `replay(..., packs=[...])` and to `RunResult.read(folder, packs=[...])`.
+Another copy of a pack makes the replay fail.
+
 ```python
 folder = Path(tempfile.mkdtemp()) / "run"
 result.write(folder)

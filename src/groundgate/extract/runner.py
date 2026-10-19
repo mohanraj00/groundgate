@@ -176,14 +176,17 @@ class RunResult:
             os.unlink(temporary)
 
     @classmethod
-    def read(cls, folder: str | Path, max_bytes: int = 2**30) -> RunResult:
+    def read(
+        cls, folder: str | Path, max_bytes: int = 2**30, packs: Sequence[object] = ()
+    ) -> RunResult:
         """Read a run that ``write`` made. Only the objects that the log names are read, so runs
         can share one folder. The inputs come from the objects that the header names, and the
         run is replayed with the recorded replies. The log and the objects must be regular files,
         not symlinks, and together at most ``max_bytes``. A changed line, a changed, missing or
         oversized object, or a bad object key raises ``ValueError``. A missing log raises
         ``OSError``. The objects are held in memory, so a full budget uses about twice
-        ``max_bytes``."""
+        ``max_bytes``. ``packs`` are the packs that the saved schema names (SPEC §4.8, §4.9):
+        the record holds their digests, not the packs."""
         folder = Path(folder)
         room = [max_bytes]
         try:
@@ -218,7 +221,7 @@ class RunResult:
             refs = [_strict_json(artifacts[h]) for h in inputs["reference_sha256"]]
         except (KeyError, TypeError, IndexError, RecursionError) as exc:
             raise ValueError("the log does not name its inputs") from exc
-        result = _replay(record, artifacts, text, schema, policy, refs)
+        result = _replay(record, artifacts, text, schema, policy, refs, packs)
         if isinstance(result, str):
             raise ValueError(result)
         return result
@@ -448,7 +451,9 @@ def _shape(candidate: Any, fields: set[str], refs: set[str]) -> None:
 def _output_schema(schema: Schema, fields: list[str], refs: list[str]) -> Json:
     full = schema.to_dict()
     # the output shape needs no relations, and a relation can name a field outside the subset
-    subset = {"fields": {f: full["fields"][f] for f in fields}, "units": full["units"]}
+    # each field is resolved, so the output shape needs no template and no pack (SPEC §2.3)
+    resolved = {f: {k: v for k, v in full["fields"][f].items() if k != "template"} for f in fields}
+    subset = {"fields": resolved, "units": full["units"]}
     shape = extractor_schema(subset, refs or None)
     defs = shape["$defs"]
     for name in list(defs):
@@ -1306,6 +1311,7 @@ def _run(
     document_source: str | None = None,
     references: Sequence[object] | None = None,
     replay_ceiling: int | None = None,
+    packs: Sequence[object] = (),
 ) -> RunResult:
     """Validate inputs, with an optional replay-only allocation ceiling."""
     if not callable(client) or not isinstance(model_id, str) or not model_id.strip():
@@ -1313,7 +1319,14 @@ def _run(
     settings = RunPolicy() if run_policy is None else run_policy
     if not isinstance(settings, RunPolicy):
         raise ExtractInputError("run_policy must be RunPolicy")
-    s = Schema.from_dict(copy.deepcopy(schema.to_dict() if isinstance(schema, Schema) else schema))
+    if isinstance(schema, Schema):
+        if packs:
+            raise ExtractInputError(
+                "give the packs to Schema.from_dict when the schema is a Schema"
+            )
+        s = schema  # frozen, and it holds its own copy of each pack (#351)
+    else:
+        s = Schema.from_dict(copy.deepcopy(schema), packs)
     p = Policy.from_dict(
         copy.deepcopy(
             policy.to_dict() if isinstance(policy, Policy) else {} if policy is None else policy
@@ -1363,8 +1376,10 @@ def extract(
     document_id: str | None = None,
     document_source: str | None = None,
     references: Sequence[object] | None = None,
+    packs: Sequence[object] = (),
 ) -> RunResult:
-    """Extract and constrain repairs; return final admission and the complete replay record."""
+    """Extract and constrain repairs; return final admission and the complete replay record.
+    ``packs`` take the same form as in ``admit`` (SPEC §4.8, §4.9)."""
     return _run(
         text,
         schema,
@@ -1375,6 +1390,7 @@ def extract(
         document_id=document_id,
         document_source=document_source,
         references=references,
+        packs=packs,
     )
 
 
@@ -1385,9 +1401,11 @@ def replay(
     schema: Schema | Mapping[str, Any],
     policy: Policy | Mapping[str, Any] | None = None,
     references: Sequence[object] | None = None,
+    packs: Sequence[object] = (),
 ) -> Verification:
-    """Rebuild a saved run with recorded replies and compare every entry, without a model."""
-    result = _replay(record, artifacts, text, schema, policy, references)
+    """Rebuild a saved run with recorded replies and compare every entry, without a model.
+    ``packs`` are the packs that the run read."""
+    result = _replay(record, artifacts, text, schema, policy, references, packs)
     return Verification(False, (result,)) if isinstance(result, str) else Verification(True, ())
 
 
@@ -1398,6 +1416,7 @@ def _replay(
     schema: Schema | Mapping[str, Any],
     policy: Policy | Mapping[str, Any] | None,
     references: Sequence[object] | None,
+    packs: Sequence[object] = (),
 ) -> RunResult | str:
     """The replayed run, or the reason why it differs from the saved one."""
     try:
@@ -1485,6 +1504,7 @@ def _replay(
             references=references,
             document_id=header["inputs"]["document"]["id"],
             document_source=header["inputs"]["document"]["source"],
+            packs=packs,
         )
         if cursor != len(calls) or jcs(result.record) != jcs(saved):
             return "run differs from replay"
