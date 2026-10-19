@@ -22,11 +22,11 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   candidates, so admit gives `CONFLICTING_CANDIDATES` (#331). With the setting, it drops a
   candidate in a conflict only when a second candidate for the same field, key and unit rounds to
   it at the precision that the first one states, and the second one is admitted without it.
-  "£17.3bn"
-  beside 17,284 in millions keeps 17284000000. The record keeps the dropped candidate in a
-  `rounding` line. Two figures that do not round to each other stay a conflict. The rule trusts
-  the document: its author can choose the admitted value inside half of the rounded figure's
-  precision. A number with more than 1000 digits or an exponent over 1000 is never dropped.
+  "£17.3bn" beside 17,284 in millions keeps 17284000000. The record keeps the dropped candidate
+  in a `rounding` line. Two figures that do not round to each other stay a conflict. The rule
+  trusts the document: its author can choose the admitted value inside half of the rounded
+  figure's precision. A number with more than 1000 digits or an exponent over 1000 is never
+  dropped.
 - Breaking: the extract run record is `groundgate-run/2` (#318, #319). The prompt changed, so
   every runner digest and prompt differs from 0.9.0. Replay of a `groundgate-run/1` record from
   0.9.0 fails with `runner version differs`, which names both versions.
