@@ -4055,6 +4055,20 @@ vector(
 )  # fmt: skip
 
 
+vector(
+    "73-heading-unit-one-line",
+    "A currency statement lies on one line, which holds no tab. A statement that runs onto a "
+    "line with a tab is none, so it gives no unit (spec 0.10, #315).",
+    "Figures in\nAustralian dollars\t2025\t2024\nRevenue\t5,200\t4,900\n",
+    {"fields": {"aud": revenue("AUD")}},
+    [
+        c("u22", "aud", "5200", "AUD",
+          [q("5,200"), REV, q("in\nAustralian dollars", role="unit")],
+          (REVIEW, ["UNIT_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
