@@ -4340,8 +4340,8 @@ vector(
     "A factor changes the unit of a part (mg to g, 0.001) or subtracts it (-1), and also scales "
     "the part's place in the allowance. A tolerance adds to the allowance in the unit of the "
     "total. The net pay is 100 below gross pay minus tax: the relation with a tolerance of 100 "
-    "holds, the one without it fails, and one failing relation is enough for the flag "
-    "(spec 0.10, #321, #284).",
+    "holds, the one without it fails, and one failing relation is enough for the flag. A factor "
+    "reads as a bound does, so 1,000 is 1000 (spec 0.10, #321, #284).",
     "Each tablet weighs 1.2 g. It holds 950 mg of drug and 250 mg of filler. "
     "Gross pay was $5,000, tax was $1,200 and net pay was $3,700.",
     {
@@ -4358,6 +4358,9 @@ vector(
              "parts": [{"field": "gross"}, {"field": "tax", "factor": "-1"}], "tolerance": "100"},
             {"id": "net_strict", "total": "net",
              "parts": [{"field": "gross"}, {"field": "tax", "factor": -1}]},
+            # 950 = 1.2 * 1000 - 250; allowance 1/2 + 1000 * 0.1/2 + 1/2
+            {"id": "weight_mg", "total": "drug",
+             "parts": [{"field": "tablet", "factor": "1,000"}, {"field": "filler", "factor": "-1"}]},
         ],
     },
     [
@@ -4369,7 +4372,7 @@ vector(
         c("f6", "net", 3700, "USD", [q("$3,700")], (REVIEW, ["RELATION_FAILED"])),
     ],
     relations=[("net", None, True, "-100", "101.5"), ("net_strict", None, False, "-100", "1.5"),
-               ("weight", None, True, "0", "0.051")],
+               ("weight", None, True, "0", "0.051"), ("weight_mg", None, True, "0", "51")],
 )  # fmt: skip
 
 vector(

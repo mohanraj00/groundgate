@@ -1029,8 +1029,8 @@ the prefix is ASCII and `JCS(obj)` is UTF-8.
 
 Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
 `field_match` judgment can only add doubt, and a field item checks only the field's own aliases.
-Calling a model, fetching a URL, dates, arrays of records, arithmetic over several numbers other
-than a relation (§3.4), a relation that admits a value, the
+Calling a model, fetching a URL, dates, arrays of records, arithmetic over several numbers (a
+relation of §3.4 is the one exception, and it never admits a value), the
 subject of the document (groundgate assumes one subject per document), and PDF geometry (page and
 bounding box) as evidence. Adapters may convert richer evidence into spans. Number formats other
 than English and Indian grouping, and digits other than 0 to 9 (#60).
