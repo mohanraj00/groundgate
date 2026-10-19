@@ -1,5 +1,5 @@
 {
- "name": "71-key-dash-variants",
+ "name": "75-key-dash-variants",
  "description": "Keys follow the same rule as aliases. A key with an en dash matches the text with a hyphen, and a key with a dash between two letters matches across one line break. A dash between two digits does not join across a line break, and the minus sign is not a dash (spec 0.10, #317).",
  "document": "For 2024-25: $100.\n\n\nFor non-\nsmall cell lung cancer, the dose is 150 mg.\n\n\nFor 2024-\n25: $200.\n\n\nFor FY2024−25: $300.",
  "schema": {

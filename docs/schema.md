@@ -397,7 +397,10 @@ rejected `KEY_INVALID`. Case counts in this comparison.
 ```
 
 A **key mention** is an occurrence of a key in the text. It matches without regard to case, a
-space in the key matches any whitespace run in the text, and no letter or digit may touch it.
+space in the key matches any whitespace run in the text, and no letter or digit may touch it. A
+dash in the key matches a hyphen, a non-breaking hyphen, a figure dash or an en dash. Between
+two letters it also matches a dash at the end of a line, so "out-of-\npocket" is a mention of
+"out-of-pocket". A minus sign and an em dash match only themselves (spec 0.10).
 groundgate then reads which keys the text puts at the value:
 
 1. The keys mentioned in the value's sentence.
@@ -469,7 +472,13 @@ value, such as a table row label.
 
 A field item passes when it holds a mention of one of the aliases and ends before the value. It
 must also be at the value: on its row with no letter between it and the number, or in the value's
-sentence with no number between them. Otherwise it fails with `FIELD_CITATION_INVALID`. A field
+sentence with no number between them. Otherwise it fails with `FIELD_CITATION_INVALID`.
+
+A table row has a tab between its cells. A field item in the first cell, such as the question
+"What is the overall deductible?", passes for a value in the next cell, such as "In-Network:
+Individual $850". At most 4 words can stand before the value in that cell, with no number, no
+sentence end and no alias of a field. A field item in the first cell does not pass for a value
+in a later cell or on a later line, unless no letter stands between them (spec 0.10). A field
 with no `aliases` does not check its field item. That item adds no flag, but it does not pass.
 A candidate can cite up to 8 field items, such as a row label and a column header. One passing
 item is enough, and the flag comes only when none passes (spec 0.10).

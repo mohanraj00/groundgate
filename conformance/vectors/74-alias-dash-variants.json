@@ -1,5 +1,5 @@
 {
- "name": "70-alias-dash-variants",
+ "name": "74-alias-dash-variants",
  "description": "A dash in an alias matches any of the five dashes: U+002D, U+2010, U+2011, U+2012 and U+2013. A dash between two letters also matches a dash, one line break and spaces or carriage returns around it. The minus sign, the em dash, a space, a blank line or a tab after the dash, a space for a dash, and a line break in a word with no dash do not match (spec 0.10, #317).",
  "document": "Out–of–pocket limit\t$3,001\n\nOut‐of‐pocket limit\t$3,002\n\nOut‑of‑pocket limit\t$3,003\n\nOut‒of‒pocket limit\t$3,004\n\nOut-of-pocket limit\t$3,005\n\nOut-of-\npocket limit\t$3,006\n\nOut-of- \r\n  pocket limit\t$3,007\n\nOut−of−pocket limit\t$3,008\n\nOut—of—pocket limit\t$3,009\n\nOut-of- pocket limit\t$3,010\n\nOut-of-\n\npocket limit\t$3,011\n\nOut-of-\tpocket limit\t$3,012\n\nOut of pocket limit\t$3,013\n\nOut-of-pocket limit\t$3,014\n\nOverall deduct-\nible\t$500",
  "schema": {

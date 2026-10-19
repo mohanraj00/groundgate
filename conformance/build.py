@@ -3790,7 +3790,7 @@ vector(
 # ---------------------------------------------------------------- dash variants (spec 0.10, #317)
 OOP = {"type": "integer", "unit": "USD", "multiple": True}
 vector(
-    "70-alias-dash-variants",
+    "74-alias-dash-variants",
     "A dash in an alias matches any of the five dashes: U+002D, U+2010, U+2011, U+2012 and "
     "U+2013. A dash between two letters also matches a dash, one line break and spaces or "
     "carriage returns around it. The minus sign, the em dash, a space, a blank line or a tab after "
@@ -3856,7 +3856,7 @@ vector(
 )  # fmt: skip
 
 vector(
-    "71-key-dash-variants",
+    "75-key-dash-variants",
     "Keys follow the same rule as aliases. A key with an en dash matches the text with a hyphen, "
     "and a key with a dash between two letters matches across one line break. A dash between two "
     "digits does not join across a line break, and the minus sign is not a dash "
@@ -3887,7 +3887,7 @@ vector(
 # ---------------------------------------------------------------- label cells (spec 0.10, #316)
 QUESTION = "What is the overall deductible?"
 vector(
-    "72-label-cells",
+    "76-label-cells",
     "On a line with a tab, a field item in the label slot (before the first tab) is a label cell "
     "for a value in the answer slot (the next slot): no number token between, at most 4 words "
     "before the value in the answer slot, no sentence end there and no alias mention there. A "

@@ -632,9 +632,18 @@ line break.
 ### 4.5 Keys
 
 A **key mention** is an occurrence of one of a field's keys in the document: matched
-case-insensitively, with each whitespace run in the key matching any whitespace run, and not
-preceded or followed by a letter or digit. Where two mentions overlap and one contains the
-other, only the longer counts. A mention is in a sentence (§4.2) when it lies wholly inside it.
+case-insensitively, with each whitespace run in the key matching any whitespace run, each dash
+in the key matching any dash, and not preceded or followed by a letter or digit. The **dashes**
+are `-` (U+002D), `‐` (U+2010), `‑` (U+2011), `‒` (U+2012) and `–` (U+2013) (spec 0.10, #317).
+A dash in the key that stands between two letters (general category L) also matches a dash,
+then optional spaces and carriage returns, one line break, and optional spaces and carriage
+returns. So "Out–of–pocket" and "out-of-\npocket" are mentions of "out-of-pocket". The minus
+sign `−` (U+2212) and the em dash `—` (U+2014) are not dashes here, and each matches only
+itself: a minus is the sign of a number (§4.1). A whitespace run in the key never matches a
+dash, and a dash never matches a whitespace run, so "out of pocket" is no mention of
+"out-of-pocket". A line break inside a word that has no dash in the key does not join it.
+Where two mentions overlap and one contains the other, only the longer counts. A mention is in
+a sentence (§4.2) when it lies wholly inside it.
 
 The value is at its supporting number token (§3 steps 10–11), or, for a `string` field, at its
 first occurrence in the evidence span (§3.1). On the outside path, the evidence span is the deciding
@@ -784,7 +793,7 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 | `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (`loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
 | `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands", or it holds a currency scale (§4.1), as in "£m" (spec 0.10). It ends at or before the token. No scale word, also with a final `s`, lies between its end and the token, and no currency scale with a power of ten other than the item's scale (below) lies there. So the second `£m` of the header row `\t£m\t£m` does not stop an item on the first. |
 | `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). Or the item holds a heading unit (§4.3) that reaches the token, the field check passes, the item ends at or before the token, no unit form is next to the token, and the token's heading currency is the field's unit (spec 0.10). |
-| `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then either no letter (general category L) lies between the item's end and the token (the item is at the **row**), or the item is in the value's sentence with no number token between its end and the token. |
+| `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then one of these holds: no letter (general category L) lies between the item's end and the token (the item is at the **row**); the item is a **label cell** for the token (below); or the item is in the value's sentence with no number token between its end and the token, and the token is not after the end of a label slot that holds the item. |
 | `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
 
 **Several field items.** A candidate can cite more than one field item, for example the row label
@@ -793,6 +802,25 @@ says. The **field check** passes when one of them passes. A unit item, a unit at
 (§3.1) and the choice of a quote occurrence read the field check. The decision gets
 `FIELD_CITATION_INVALID` only when no field item passes. A candidate with one field item passes
 the field check when that item passes.
+
+**Label cells.** On a line that holds a tab, the **label slot** is the text from the start of the
+line to the first tab, and the **answer slot** is the text after the first tab, up to the next
+tab or the end of the line. A reader writes a table row this way, so a question cell and its
+answer cell read "What is the overall deductible?\tIn-Network: Individual $850". A field item
+that lies wholly in a label slot is a label cell for a token in the answer slot of the same
+line when all of these hold (spec 0.10, #316):
+
+1. No number token lies between the end of the item and the token.
+2. At most 4 words stand in the answer slot before the token. A word is a run of non-whitespace,
+   and the run that holds the token does not count.
+3. No sentence end (§4.2) lies in the answer slot before the token.
+4. No mention of an alias of a field of the schema lies in the answer slot before the token.
+
+A field item in a label slot reaches a token after that slot only at the row or as a label
+cell. The sentence rule does not carry it into a later slot or onto a later line, because a tab
+and a line break do not end a sentence, and the next cell or row can hold another value. A
+label cell is not at the row, so the column rule (§4.5) does not use it. A line with no tab has
+no label slot, and its field items keep the sentence rule.
 
 The scale and the sign of a token are its **parts**. A token is **negative** when the candidate
 has a sign item, or, on a field with a unit, when brackets enclose it in the text, as the sign
