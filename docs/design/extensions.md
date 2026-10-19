@@ -339,6 +339,8 @@ Readers, strategies and the router stay experimental after 1.0.
 
 ## 13. Open questions
 
+[packs.md](packs.md) proposes answers to questions 1, 3 and 4, for approval on #320.
+
 1. Where the packs live: in this repository, in a separate package, or both, with the app's own
    packs outside.
 2. The fixed form of a relation: a sum and a difference only, or a small expression language.
