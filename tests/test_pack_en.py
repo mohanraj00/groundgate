@@ -18,7 +18,7 @@ import pytest
 
 from groundgate import text
 from groundgate.admit import NULL_LITERALS
-from groundgate.pack import BASE, pack_digest
+from groundgate.pack import BASE, BASE_SHA256, pack_digest
 
 REPO = Path(__file__).parent.parent
 SPEC = REPO / "SPEC.md"
@@ -278,7 +278,7 @@ def test_the_spec_gives_the_digest_of_the_base_pack() -> None:
         r"`(sha256:[0-9a-f]{64})`", SPEC.read_text(encoding="utf-8").split("### 4.7")[1]
     )
     assert found is not None
-    assert pack_digest(BASE) == found.group(1)
+    assert pack_digest(BASE) == BASE_SHA256 == found.group(1)
     assert (BASE["groundgate_pack"], BASE["type"], BASE["id"], BASE["version"]) == (
         1, "vocabulary", "en", "1.0.0",
     )  # fmt: skip

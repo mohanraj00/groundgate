@@ -883,8 +883,8 @@ The digest of the base pack is
 where `type` is `vocabulary` and JCS is §6. The prefix names the pack format, not the spec
 version. For this spec version the base pack is `en` 1.0.0, with the digest
 `sha256:de563584dee60f672225630670fc26def345c526954917591c5447220ac9d1e8`.
-An implementation loads a base pack with this digest. The base pack applies to every packet,
-and the receipt does not name it: the spec version names it.
+An implementation loads a base pack with this digest, and refuses to run with another one. The base
+pack applies to every packet, and the receipt does not name it: the spec version names it.
 
 ## 5. Receipt
 
