@@ -123,6 +123,7 @@ def test_chunk_stop_utf8_and_degenerate_overlap_bound():
         {"max_calls": True},
         {"max_calls": 0},
         {"targeted": 1},
+        {"drop_rounded": 1},
         {"overlap_chars": 12000},
         {"max_repair_rounds": -1},
     ],
@@ -1313,6 +1314,8 @@ def test_final_admission_keeps_the_field_cause_after_the_last_repair():
 
 
 ROUND_SCHEMA = {"fields": {"revenue": {"type": "number", "aliases": ["Revenue"]}}}
+# The rounding rule of #319 is opt-in (#331).
+DROP = RunPolicy(drop_rounded=True)
 
 
 def rounded_and_exact(rounded_quote, rounded_value):
@@ -1330,7 +1333,7 @@ def test_a_rounded_figure_beside_the_exact_figure_is_dropped_and_recorded():
     text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
     both = gg.admit(text, ROUND_SCHEMA, [{"id": "a", **rounded}, {"id": "b", **exact}])
     assert all("CONFLICTING_CANDIDATES" in d.codes for d in both.decisions)
-    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA, run_policy=DROP)
     assert [c["id"] for c in result.candidates] == ["c1-2"]
     assert [d.outcome for d in result.receipt.decisions] == ["admitted"]
     event = next(e for e in result.record if e["kind"] == "rounding")
@@ -1342,9 +1345,35 @@ def test_a_rounded_figure_beside_the_exact_figure_is_dropped_and_recorded():
     assert_replays(result, text, ROUND_SCHEMA)
 
 
+def test_the_rounding_rule_is_off_by_default():
+    # The rule trusts the document, so a run without the setting keeps the conflict (#331).
+    text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    assert result.record[0]["settings"]["drop_rounded"] is False
+    assert [c["id"] for c in result.candidates] == ["c1-1", "c1-2"]
+    assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
+    assert not any(e["kind"] == "rounding" for e in result.record)
+    assert_replays(result, text, ROUND_SCHEMA)
+
+
+def test_replay_uses_the_recorded_rounding_setting():
+    text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
+    for settings in (RunPolicy(), DROP):
+        result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA, run_policy=settings)
+        assert result.record[0]["settings"]["drop_rounded"] is settings.drop_rounded
+        assert_replays(result, text, ROUND_SCHEMA)
+        flipped = copy.deepcopy(result.record)
+        flipped[0]["settings"]["drop_rounded"] = not settings.drop_rounded
+        assert not replay(flipped, result.artifacts, text, ROUND_SCHEMA).ok
+        # A groundgate-run/2 record from before #331 has no such setting.
+        missing = copy.deepcopy(result.record)
+        del missing[0]["settings"]["drop_rounded"]
+        assert not replay(missing, result.artifacts, text, ROUND_SCHEMA).ok
+
+
 def test_two_figures_that_do_not_round_to_each_other_stay_a_conflict():
     text, rounded, exact = rounded_and_exact("£17.5bn", "17500000000")
-    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA, run_policy=DROP)
     assert len(result.candidates) == 2
     assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
     assert not any(e["kind"] == "rounding" for e in result.record)
@@ -1360,7 +1389,7 @@ def test_a_rounded_figure_stays_when_the_exact_figure_meets_another_conflict():
         "revenue",
         evidence=[item("18,000"), item("Revenue", "field"), item("in millions", "scale")],
     )
-    result = execute(text, Client(envelope(rounded, exact, other)), ROUND_SCHEMA)
+    result = execute(text, Client(envelope(rounded, exact, other)), ROUND_SCHEMA, run_policy=DROP)
     assert len(result.candidates) == 3
     assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
     assert not any(e["kind"] == "rounding" for e in result.record)
@@ -1389,7 +1418,7 @@ def test_a_rounded_zero_states_its_precision():
     text = "Revenue was 0.0 in total.\nRevenue\t0.04"
     rounded = candidate("0", "revenue", evidence=[item("0.0")])
     exact = candidate("0.04", "revenue", evidence=[item("0.04"), item("Revenue", "field")])
-    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA, run_policy=DROP)
     assert [c["id"] for c in result.candidates] == ["c1-2"]
     assert [d.outcome for d in result.receipt.decisions] == ["admitted"]
     event = next(e for e in result.record if e["kind"] == "rounding")
@@ -1399,7 +1428,7 @@ def test_a_rounded_zero_states_its_precision():
 
 def test_replay_refuses_a_changed_rounding_line():
     text, rounded, exact = rounded_and_exact("£17.3bn", "17300000000")
-    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA, run_policy=DROP)
     at = next(i for i, e in enumerate(result.record) if e["kind"] == "rounding")
     for change in ({"dropped": []}, {"admission_sha256": result.record[at - 1]["entry_sha256"]}):
         record = copy.deepcopy(result.record)
@@ -1424,7 +1453,7 @@ def test_rounding_fails_closed_on_numbers_outside_the_digit_bound():
     exact = candidate(
         f"{long}.04", "revenue", evidence=[item(f"{long}.04"), item("Revenue", "field")]
     )
-    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA)
+    result = execute(text, Client(envelope(rounded, exact)), ROUND_SCHEMA, run_policy=DROP)
     assert len(result.candidates) == 2
     assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
     assert not any(e["kind"] == "rounding" for e in result.record)

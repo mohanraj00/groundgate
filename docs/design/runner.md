@@ -62,11 +62,12 @@ The proposed defaults are settings for this runner, not measured operating point
 | `max_candidates_per_reply` | 256 | Maximum proposals parsed from one reply. |
 | `max_total_candidates` | 1024 | Maximum active proposals, including changed-value proposals. |
 | `max_admission_bytes` | 8388608 | Total canonical bytes of stored admission packets and receipts. |
+| `drop_rounded` | false | Drop a rounded figure beside the exact figure (section 4, #319, #331). |
 
 Counts must be integers, not booleans. Limits other than overlap and repair rounds are positive;
-those two can be zero. Overlap must be less than chunk size. `targeted` must be a boolean.
-Invalid settings fail before a call. There is no automatic transport retry, JSON retry,
-model fallback, second targeted search or adaptive increase of a limit.
+those two can be zero. Overlap must be less than chunk size. `targeted` and `drop_rounded` must
+be booleans. Invalid settings fail before a call. There is no automatic transport retry, JSON
+retry, model fallback, second targeted search or adaptive increase of a limit.
 
 All calls are sequential. The order is document chunks, targeted fields in sorted field-name
 order, then repairs in candidate creation order. Each eligible candidate gets at most one call
@@ -169,8 +170,9 @@ is not stored as a final admission on that basis. In particular, different value
 non-`multiple` field and the same key meet in one core call. The runner does not select one
 value or combine isolated receipts to hide a conflict.
 
-There is one exception, for a rounded figure beside the exact figure (#319). A narrative can
-give "£17.3bn" and a table 17,284 in millions. I drop a candidate A only when all of these hold:
+There is one exception, for a rounded figure beside the exact figure (#319). It is opt-in: it
+applies only when `drop_rounded` is true, and the default is false (#331). A narrative can give
+"£17.3bn" and a table 17,284 in millions. I drop a candidate A only when all of these hold:
 
 1. A's decision in the core call over all tips has `CONFLICTING_CANDIDATES`.
 2. A's field is numeric. A's token is the first number token in its evidence span whose value,
@@ -191,13 +193,15 @@ The check uses exact integer arithmetic. It reads only numbers with at most 1000
 exponent of at most 1000. A larger number fails closed: it is never dropped, and no decimal
 error ends the run.
 
-**Threat.** This rule trusts the document to hold a more exact figure. Before it, a second value
-always sent the field to review. Now the author of a document or a reference can choose the
-admitted value inside half of the rounded figure's precision. Beside "£17.3bn", a line "Revenue
-was 17,299 million" drops the rounded figure and admits 17299000000. The shift is bounded by
-that half precision, and the `rounding` line records the drop. A value outside it stays a
-conflict. An app that cannot trust its documents for this reads the `rounding` lines and sends
-those fields to review.
+**Threat.** This rule trusts the document to hold a more exact figure. Without it, a second
+value always sends the field to review. With it, the author of a document or a reference can
+choose the admitted value inside half of the rounded figure's precision. Beside "£17.3bn", a line
+"Revenue was 17,299 million" drops the rounded figure and admits 17299000000. The shift is
+bounded by that half precision, and the `rounding` line records the drop. A value outside it
+stays a conflict. For this reason the rule is off by default (#331). With the default, the runner
+keeps both candidates, and admit gives `CONFLICTING_CANDIDATES` to each. Set `drop_rounded` only
+when you trust the authors of your documents and references. The header of the run record keeps
+the setting, so replay gives the same result.
 
 ## 5. What each repair may change
 

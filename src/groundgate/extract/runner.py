@@ -106,12 +106,14 @@ class RunPolicy:
     max_candidates_per_reply: int = 256
     max_total_candidates: int = 1024
     max_admission_bytes: int = 8388608
+    # The rounding rule of #319 trusts the document, so it is opt-in (#331).
+    drop_rounded: bool = False
 
     def __post_init__(self) -> None:
         for name, value in asdict(self).items():
-            if name == "targeted":
+            if name in {"targeted", "drop_rounded"}:
                 if not isinstance(value, bool):
-                    raise ExtractInputError("targeted must be a boolean")
+                    raise ExtractInputError(f"{name} must be a boolean")
                 continue
             floor = 0 if name in {"overlap_chars", "max_repair_rounds"} else 1
             if type(value) is not int or not floor <= value <= 2**53 - 1:
@@ -1200,7 +1202,8 @@ class _Engine:
     def rounding(self) -> None:
         """Drop a candidate in a conflict when a second candidate for the same field, key and
         unit rounds to it at the precision that the first one states, and the second one is
-        admitted without it (#319). The record keeps the dropped candidates."""
+        admitted without it (#319). The record keeps the dropped candidates. The runner calls
+        this only when ``RunPolicy.drop_rounded`` is true (#331)."""
         candidates = list(self.tips.values())
         decisions = {d.candidate_id: d for d in self.receipt.decisions}
         reasons: dict[str, tuple[list[str], Decimal]] = {}
@@ -1263,7 +1266,8 @@ class _Engine:
 
     def finish(self) -> RunResult:
         if not self.admission_exhausted:
-            self.rounding()
+            if self.settings.drop_rounded:
+                self.rounding()
             self.decide("final")
         for cid in self.tips:
             if self.complete and cid not in self.terminal:
