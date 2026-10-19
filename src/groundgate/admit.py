@@ -148,6 +148,33 @@ class _Text:
     spans: dict[tuple[str, ...], list[tuple[int, int]]] = field(default_factory=dict)
     letters: dict[int, int] = field(default_factory=dict)  # the first letter at or after each place
     numbers: dict[int, int | None] = field(default_factory=dict)  # the first token end, likewise
+    breaks: list[int] | None = None  # the places of the line breaks, read once
+    tabs: list[int] | None = None  # the places of the tabs, read once
+    words: dict[int, list[int]] = field(default_factory=dict)  # word starts of each answer slot
+
+    def line(self, pos: int) -> tuple[int, int]:
+        """The start and the end of the line that holds ``pos``."""
+        if self.breaks is None:
+            self.breaks = [m.start() for m in re.finditer("\n", self.text)]
+        i = bisect.bisect_left(self.breaks, pos)
+        start = self.breaks[i - 1] + 1 if i else 0
+        return start, self.breaks[i] if i < len(self.breaks) else len(self.text)
+
+    def tab_in(self, a: int, b: int) -> int:
+        """The first tab in text[a:b], or -1."""
+        if self.tabs is None:
+            self.tabs = [m.start() for m in re.finditer("\t", self.text)]
+        i = bisect.bisect_left(self.tabs, a)
+        return self.tabs[i] if i < len(self.tabs) and self.tabs[i] < b else -1
+
+    def words_before(self, slot: int, end: int, pos: int) -> int:
+        """The words in text[slot:pos] of the slot text[slot:end], not the run that holds
+        ``pos`` (SPEC §4.6)."""
+        if slot not in self.words:
+            runs = re.compile(r"\S+").finditer(self.text, slot, end)
+            self.words[slot] = [m.start() for m in runs]
+        n = bisect.bisect_left(self.words[slot], pos)
+        return n - 1 if n and pos > slot and not self.text[pos - 1].isspace() else n
 
     def key_mentions(self, words: tuple[str, ...]) -> list[tuple[int, int, str]]:
         if words not in self.mentions:
@@ -699,6 +726,7 @@ _CHECK_ORDER = ("sign", "scale", "unit", "key")  # after the field items: the un
 
 
 LABEL_CELL_WORDS = 4  # the most words before the value in an answer slot (SPEC §4.6)
+_NOT_SPACE = re.compile(r"\S")
 
 
 def _field_ok(
@@ -715,24 +743,20 @@ def _field_ok(
     if end is not None and end <= pos:
         return False, False
     text = t.text
-    start = text.rfind("\n", 0, a) + 1
-    line_end = text.find("\n", a)
-    tab = text.find("\t", start, len(text) if line_end < 0 else line_end)
+    start, line_end = t.line(a)
+    tab = t.tab_in(start, line_end)
     if tab < 0 or b > tab or pos <= tab:
         return a >= sentence(text, pos)[0], False  # no label slot, or the value is in it
     # the item is in a label slot and the value after it: only a label cell passes (#316)
     slot = tab + 1
-    slot_end = min((i for i in (text.find("\t", slot), line_end) if i >= 0), default=len(text))
+    slot_end = t.tab_in(slot, line_end)
+    slot_end = line_end if slot_end < 0 else slot_end
     if pos >= slot_end:
         return False, False  # a later slot or a later line
-    before = text[slot:pos]
-    words = before.split()
-    if words and not before[-1].isspace():
-        words.pop()  # the run that holds the token
     left = sentence(text, pos)[0]
     return (
-        len(words) <= LABEL_CELL_WORDS
-        and (left <= slot or not text[slot:left].strip())  # no sentence end in the slot
+        t.words_before(slot, slot_end, pos) <= LABEL_CELL_WORDS
+        and (left <= slot or _NOT_SPACE.search(text, slot, left) is None)  # no sentence end
         and not (names and t.named(names, slot, pos))
     ), False
 

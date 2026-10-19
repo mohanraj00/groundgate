@@ -567,11 +567,14 @@ def key_mentions(text: str, keys: tuple[str, ...]) -> list[tuple[int, int, str]]
     for key in keys:
         rx = re.compile(_NOT_ALNUM_BEFORE + _key_pattern(key) + _NOT_ALNUM_AFTER, re.I)
         hits += [(m.start(), m.end(), key) for m in rx.finditer(text)]
-    return [
-        (a, b, k)
-        for a, b, k in hits
-        if not any(a2 <= a and b <= b2 and (a2, b2) != (a, b) for a2, b2, _ in hits)
-    ]
+    # a sweep in start order, the longer span first: a span is inside another one when an
+    # earlier span with a different extent ends at or after its end
+    inside, reach = set(), -1
+    for a, b in sorted({(a, b) for a, b, _ in hits}, key=lambda s: (s[0], -s[1])):
+        if reach >= b:
+            inside.add((a, b))
+        reach = max(reach, b)
+    return [(a, b, k) for a, b, k in hits if (a, b) not in inside]
 
 
 # a label line (SPEC §4.5): a line of its own, after a blank line or the start of the text and

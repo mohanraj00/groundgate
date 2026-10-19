@@ -478,7 +478,9 @@ A table row has a tab between its cells. A field item in the first cell, such as
 "What is the overall deductible?", passes for a value in the next cell, such as "In-Network:
 Individual $850". At most 4 words can stand before the value in that cell, with no number, no
 sentence end and no alias of a field. A field item in the first cell does not pass for a value
-in a later cell or on a later line, unless no letter stands between them (spec 0.10). A field
+in a later cell or on a later line, unless no letter stands between them (spec 0.10). The
+answer cell can hold a number that is not the answer, as in "Not covered, see note 3". Give such
+a field a `unit` or a `minimum` and `maximum` to stop it. A field
 with no `aliases` does not check its field item. That item adds no flag, but it does not pass.
 A candidate can cite up to 8 field items, such as a row label and a column header. One passing
 item is enough, and the flag comes only when none passes (spec 0.10).

@@ -707,6 +707,34 @@ def test_unit_places_read_a_long_table_once() -> None:
     assert time_for(4000) < 8 * time_for(1000)
 
 
+def test_label_cells_read_a_long_table_once() -> None:
+    """The label cell rule (#316) reads the lines, tabs and words of a text once: four times the
+    rows of a question/answer table take less than eight times as long."""
+    import time
+
+    schema = {"fields": {"ded": {"type": "integer", "unit": "USD", "aliases": ["deductible"]}}}
+
+    def time_for(rows: int) -> float:
+        line = "What is the deductible?\tIn-Network: Individual $7 " + "word " * 50 + "\n"
+        text = line * rows
+        cand = {
+            "id": "c",
+            "field": "ded",
+            "value": 7,
+            "unit": "USD",
+            "evidence": [{"text": "$7"}, {"role": "field", "text": "deductible"}],
+        }
+        best = float("inf")
+        for _ in range(2):
+            began = time.perf_counter()
+            r = gg.admit(text, schema, [cand])
+            best = min(best, time.perf_counter() - began)
+            assert r.decisions[0].outcome == "admitted"
+        return best
+
+    assert time_for(4000) < 8 * time_for(1000)
+
+
 def test_unit_places_read_a_wide_row_once() -> None:
     """A unit quote with many occurrences on one wide row stays linear (#164), also when none
     is at a unit place, so each one is checked: four times the columns take less than eight
