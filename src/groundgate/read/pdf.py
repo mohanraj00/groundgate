@@ -8,7 +8,10 @@ before them: a raised 9 after 10 reads ``10^9``, not ``109``.
 
 A table is written one row on each line, with a tab between two cells, as the HTML path writes
 table cells (#230). pdfminer gives each column of a table as its own text box, so ``_tables``
-rebuilds the rows from the height of the text lines. Prose keeps pdfminer's lines.
+rebuilds the rows from the height of the text lines. A table of text cells, such as questions
+beside their answers, has no number to find its rows. When the page draws the rules of such a
+table, ``grid`` gives its cells, and each row of cells is one line (#332). Prose keeps
+pdfminer's lines.
 
 The same PDF always gives the same text. pdfminer breaks a tie between two equally distant text
 boxes by ``id()``, a memory address, so the reading order could change from run to run (#30).
@@ -21,10 +24,11 @@ import contextlib
 import itertools
 import threading
 import unicodedata
-from collections.abc import Iterable, Iterator
+from collections.abc import Iterable, Iterator, Sequence
 from pathlib import Path
 from typing import Any, BinaryIO
 
+from .grid import RULE_WIDTH, Grid, Rule, grids
 from .layout import Box, Page, Word, _same_line
 
 LIGATURES = str.maketrans(
@@ -49,6 +53,8 @@ CELL_GAP = 0.65  # a gap between two words this many times the word's height sta
 HEADING_WORDS = 4  # a row with no number joins a table when each of its parts is this short
 GRID_ROWS = 200  # more disagreeing rows than this give no grid, so the scan stays bounded
 COLUMN_HEADING_WORDS = 8  # a column heading above a table, such as a spanning heading
+LISTED_LINES = 3  # two cells side by side with this many lines each, line for line, are lists
+SPACE = 0.25  # the width of a space, as a part of the word's height
 HEADER_BAND = 36.0  # PDF points from the visible page top, independent of page size (#265)
 DASHES = frozenset("-\u2013\u2014\u2212")  # hyphen, en dash, em dash, minus
 NUMBER_CHARS = frozenset("0123456789,.$€£¥₹%()") | DASHES  # with the signs of the built-in units
@@ -69,6 +75,27 @@ class _Builder:
 
     def text(self) -> str:
         return "".join(self.parts)
+
+
+def _rules(obj: Any) -> Iterator[Rect]:
+    """The bbox of each straight line and rectangle that the page draws, also inside a figure.
+
+    A stroked rectangle gives its four sides. A filled rectangle counts only when it is thin, as
+    a rule drawn as a rectangle is: a wider fill, such as a shaded cell, is no rule.
+    """
+    from pdfminer.layout import LTFigure, LTLine, LTRect
+
+    for child in obj:
+        if isinstance(child, LTFigure):
+            yield from _rules(child)
+        elif isinstance(child, LTRect):
+            x0, y0, x1, y1 = child.bbox
+            if min(x1 - x0, y1 - y0) <= RULE_WIDTH:
+                yield x0, y0, x1, y1
+            elif child.stroke:
+                yield from ((x0, y0, x1, y0), (x0, y1, x1, y1), (x0, y0, x0, y1), (x1, y0, x1, y1))
+        elif isinstance(child, LTLine):
+            yield child.bbox
 
 
 def _text_boxes(obj: Any) -> Iterator[Any]:
@@ -243,7 +270,13 @@ def _read_pages(fp: BinaryIO, wanted: list[int] | None) -> Result:
                     lines.append(line_words)
             if lines:
                 blocks.append(lines)
-        for bi, rows in enumerate(_tables(blocks)):
+        rules: list[Rule] = []
+        for x0, y0, x1, y1 in _rules(device.get_result()):
+            if not (x1 >= vx0 and x0 <= vx1 and y1 >= vy0 and y0 <= vy1):
+                continue  # a rule a reader cannot see (or with no position) draws no cell
+            x0, y0, x1, y1 = max(x0, vx0), max(y0, vy0), min(x1, vx1), min(y1, vy1)
+            rules.append((x0 - vx0, vy1 - y1, x1 - vx0, vy1 - y0))
+        for bi, rows in enumerate(_tables(blocks, grids(rules))):
             if bi:
                 out.add(BLOCK_BREAK)
             for ri, cells in enumerate(rows):
@@ -293,7 +326,7 @@ def _number_cell(line: Line) -> bool:
     return chars <= NUMBER_CHARS and any(c.isdigit() or c in DASHES for c in chars)
 
 
-def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
+def _tables(blocks: list[list[Line]], ruled: Sequence[Grid] = ()) -> list[list[Row]]:
     """The page's output blocks. pdfminer gives a table as one text box for each column, so its
     rows are rebuilt here: the text lines at the same height become one row, with a tab between
     two cells. Other text keeps pdfminer's boxes and lines.
@@ -441,6 +474,11 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
             else:
                 tables[n].append(lines)
             region.update((key, n) for key in row)
+    for grid in ruled:  # a table with numbers keeps its rows (#332)
+        found = _ruled_rows(blocks, grid, region.keys())
+        if found is not None:
+            region.update((key, len(tables)) for key in found[0])
+            tables.append(found[1])
     out: list[list[Row]] = []
     done: set[int] = set()
     for bi, block in enumerate(blocks):
@@ -459,6 +497,107 @@ def _tables(blocks: list[list[Line]]) -> list[list[Row]]:
         if prose:
             out.append(prose)
     return out
+
+
+def _ruled_rows(
+    blocks: list[list[Line]], grid: Grid, taken: Iterable[Key]
+) -> tuple[list[Key], list[Row]] | None:
+    """The text lines in a ruled table and its output rows, or None to write the text as before.
+
+    Each word in the table must be in exactly one cell, and each text line that has a word in the
+    table must have all its words in it. The words of one cell are one slot: its lines top to
+    bottom, joined with one space. A row is the cells that start at the same rule, left to right,
+    with an empty slot for an empty cell. A tall cell is in the row where it starts. In the rows
+    below it, its slot is empty, so each cell keeps its column. A row of one cell, such as a
+    framed note, keeps its lines and gets no tab. A table needs two or more rows with two or more
+    cells that hold words, and no line of a table with numbers. A row of two cells that are lists
+    side by side (``_listed``) makes the table ambiguous.
+    """
+    x0, top, x1, bottom = grid.box
+    taken = set(taken)
+    keys: list[Key] = []
+    words: dict[int, list[tuple[Key, int]]] = {}
+    for bi, block in enumerate(blocks):
+        for li, line in enumerate(block):
+            inside = [
+                x0 <= (b.x0 + b.x1) / 2 <= x1 and top <= (b.top + b.bottom) / 2 <= bottom
+                for _, b in line
+            ]
+            if not any(inside):
+                continue
+            if not all(inside) or (bi, li) in taken:
+                return None
+            for wi, (_, box) in enumerate(line):
+                cell = grid.cell_of(box)
+                if cell is None:
+                    return None
+                words.setdefault(cell, []).append(((bi, li), wi))
+            keys.append((bi, li))
+    table: list[Row] = []
+    full = 0
+    for r in range(len(grid.starts)):
+        cells = grid.slots(r)
+        lines = [
+            _cell_lines(blocks, words.get(n, [])) if grid.cells[n].row == r else [] for n in cells
+        ]
+        if not any(lines):
+            continue
+        if len(cells) == 1:
+            table.extend([line] for line in lines[0])
+            continue
+        if _listed(lines, [(grid.cells[n].x0, grid.cells[n].x1) for n in cells]):
+            return None
+        full += sum(map(bool, lines)) >= 2
+        table.append([[word for line in cell for word in line] for cell in lines])
+    if full < 2:
+        return None
+    return keys, table
+
+
+def _listed(cells: list[list[Line]], walls: list[tuple[float, float]]) -> bool:
+    """Whether a row holds two cells that are lists side by side: rows that the page draws no
+    rule between, such as names beside their counts.
+
+    Both cells have LISTED_LINES or more lines, as many lines as the other, and each line at the
+    height of a line of the other. Also, no line of either cell ends where it must: the first word
+    of the next line fits on it, inside the cell's walls less the cell's left padding. Text that
+    wraps in a cell ends a line only where the next word does not fit.
+    """
+
+    def broken(cell: list[Line], x0: float, x1: float) -> bool:
+        right = x1 - max(0.0, min(_span(line).x0 for line in cell) - x0)
+        for line, after in itertools.pairwise(cell):
+            word = after[0][1]
+            space = SPACE * (word.bottom - word.top)
+            if _span(line).x1 + space + (word.x1 - word.x0) > right:
+                return False  # the next word does not fit: the line wraps
+        return True
+
+    tall = [
+        (cell, x0, x1) for cell, (x0, x1) in zip(cells, walls, strict=True)
+        if len(cell) >= LISTED_LINES
+    ]  # fmt: skip
+    return any(
+        len(a) == len(b)
+        and all(_same_line(_span(x), _span(y)) for x, y in zip(a, b, strict=True))
+        and broken(a, a0, a1)
+        and broken(b, b0, b1)
+        for (a, a0, a1), (b, b0, b1) in itertools.combinations(tall, 2)
+    )
+
+
+def _cell_lines(blocks: list[list[Line]], at: list[tuple[Key, int]]) -> list[Line]:
+    """The words of one cell as its visual lines, top to bottom, each left to right."""
+    parts: dict[Key, Line] = {}
+    for (bi, li), wi in at:
+        parts.setdefault((bi, li), []).append(blocks[bi][li][wi])
+    lines: list[Line] = []
+    for part in sorted(parts.values(), key=lambda p: (_span(p).top, _span(p).x0)):
+        if lines and _same_line(_span(lines[-1]), _span(part)):
+            lines[-1] = sorted([*lines[-1], *part], key=lambda w: w[1].x0)
+        else:
+            lines.append(part)
+    return lines
 
 
 def _label_number(cells: Row, edge: float | None) -> bool:

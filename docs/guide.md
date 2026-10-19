@@ -53,6 +53,14 @@ stay two columns. A short running head far above a table can still join it as a 
 `Cash` with no first number reads `Cash\t\t100`. When the rows do not agree on the columns, the row
 keeps its words on one line with no tabs, so no number moves to a wrong column.
 
+A table of text cells, such as a question beside its answer, has no number to find its rows. If
+the PDF draws the rules of the table, `read` takes the cells from those rules (#332). Each row of
+cells is one line, with a tab between two cells, and the wrapped lines of one cell are joined with
+one space. A tall cell is in the row where it starts, and the rows below it get an empty slot in
+its column. If the rules are irregular, a word crosses a rule, or two cells look like lists side
+by side with no rule between their rows, the text stays as it was. A table with numbers keeps the
+rows above.
+
 ## Schema
 
 [schema.md](schema.md) explains how to write a schema, with examples. This section is the

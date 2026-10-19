@@ -58,6 +58,14 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   value and no number, sentence end or alias between. Such an item no longer passes through the
   sentence rule for a value in a later cell or on a later line, so in "What is the overall
   deductible?\tNone\tThis plan pays after a $40 copay" the 40 goes to review.
+- The PDF reader writes a ruled table of text cells one row on each line (#332). The rows and
+  the cells come from the rules that the page draws, never from the words. The wrapped lines of
+  one cell are joined with one space, so "What is the overall deductible?" and its answer are on
+  one line with a tab between them. A tall cell keeps its column with an empty slot in the rows
+  below it. An irregular grid, a word across a rule, or two cells that look like lists side by
+  side keep the text as before. A table with numbers keeps its rows. This changes the reader
+  text, and so the text digest, of each PDF with such a table. The recorded texts of the
+  published sets do not change.
 - The LangExtract adapter reads a list in `field_text` (#324). Each entry that holds text becomes
   one field item, up to 8. Before, the adapter skipped a list. A list for any other role now makes
   the candidate `CANDIDATE_INVALID`.
