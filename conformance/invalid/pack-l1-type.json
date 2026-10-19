@@ -1,6 +1,6 @@
 {
- "name": "pack-l1-kind",
- "description": "L1: a kind pack, which the format of spec 0.10 adds in #335.",
+ "name": "pack-l1-type",
+ "description": "L1: a type other than vocabulary or kind.",
  "document": "The fee is 5 dollars.",
  "schema": {
   "packs": [
@@ -19,7 +19,7 @@
  "packs": [
   {
    "groundgate_pack": 1,
-   "type": "kind",
+   "type": "words",
    "id": "words-x-test",
    "version": "1.0.0"
   }

@@ -1,0 +1,93 @@
+{
+ "name": "89-kind-schema-wins",
+ "description": "A member that the field gives wins over the template, also aliases: the template does not add its aliases to the field's. A type that is equal to the template's is no conflict (spec 0.10, #335).",
+ "document": "Net sales were $5,200 in 2025. The fee was $90.",
+ "schema": {
+  "packs": [
+   {
+    "id": "filings-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "template": "filings-x-test/net_sales",
+    "type": "integer",
+    "aliases": [
+     "fee"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "filings-x-test",
+   "version": "1.0.0",
+   "fields": {
+    "net_sales": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "net sales",
+      "revenue"
+     ]
+    }
+   }
+  }
+ ],
+ "candidates": [
+  {
+   "id": "w1",
+   "field": "fee",
+   "value": "90",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 43,
+     "end": 46,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "text": "fee"
+    }
+   ]
+  },
+  {
+   "id": "w2",
+   "field": "fee",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 15,
+     "end": 21,
+     "text": "$5,200"
+    },
+    {
+     "role": "field",
+     "text": "Net sales"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

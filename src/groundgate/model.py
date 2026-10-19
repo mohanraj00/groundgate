@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import re
 from collections.abc import Sequence
@@ -59,6 +60,7 @@ class Field:
     aliases: tuple[str, ...] | None = None
     description: str | None = None
     _raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
+    template: str | None = None  # "<pack id>/<field name>" of a kind pack (SPEC §2.3, §4.9)
 
     @classmethod
     def from_dict(cls, name: str, d: object) -> Field:
@@ -75,6 +77,7 @@ class Field:
             "keys",
             "aliases",
             "description",
+            "template",
         }
         if unknown:
             raise PacketError(f"field {name!r} has unknown keys {sorted(unknown)}")
@@ -94,6 +97,10 @@ class Field:
             if not isinstance(description, str) or not description.strip():
                 raise PacketError(f"field {name!r} description must be a non-blank string")
             raw["description"] = description
+        if "template" in d:
+            if not isinstance(d["template"], str):
+                raise PacketError(f"field {name!r} template must be a string (L10)")
+            raw["template"] = d["template"]
         if raw["type"] not in _TYPES:
             raise PacketError(f"field {name!r} has unknown type {raw['type']!r}")
         if raw["comparator"] not in _COMPARATORS:
@@ -131,6 +138,7 @@ class Field:
             aliases=None if aliases is None else tuple(aliases),
             description=raw.get("description"),
             _raw=raw,
+            template=raw.get("template"),
         )
 
 
@@ -228,8 +236,11 @@ class Schema:
         members = {"fields", "units", "relations", "packs"}
         if set(d) - members:
             raise PacketError(f"schema has unknown keys {sorted(set(d) - members)}")
-        fields = {name: Field.from_dict(name, f) for name, f in d["fields"].items()}
-        resolved, vocabulary, marks = _resolve_packs(d.get("packs", []), packs)
+        resolved, vocabulary, marks, kinds = _resolve_packs(d.get("packs", []), packs)
+        fields = {
+            name: Field.from_dict(name, _with_template(name, f, kinds))
+            for name, f in d["fields"].items()
+        }
         user_units = d.get("units", {})
         if not isinstance(user_units, dict):
             raise PacketError("schema units must be an object")
@@ -290,11 +301,36 @@ def _pack_entries(entries: object) -> dict[str, dict[str, str]]:
     return out
 
 
+def _with_template(name: str, f: object, kinds: dict[str, dict[str, Any]]) -> object:
+    """The field with each member that it does not give filled from its template (SPEC §2.3,
+    L10). A member that the field gives wins, but a type or a unit must not differ."""
+    if not isinstance(f, dict) or "template" not in f:
+        return f
+    ref = f["template"]
+    if not isinstance(ref, str) or "/" not in ref:
+        raise PacketError(f"field {name!r}: the template must be '<pack id>/<field>' (L10)")
+    pid, tname = ref.split("/", 1)
+    if pid not in kinds:
+        raise PacketError(f"field {name!r}: {pid!r} is not a kind pack in the schema packs (L10)")
+    template = kinds[pid].get("fields", {}).get(tname)
+    if template is None:
+        raise PacketError(f"field {name!r}: the kind pack {pid!r} has no template {tname!r} (L10)")
+    for k in ("type", "unit"):
+        if k in f and k in template and f[k] != template[k]:
+            raise PacketError(f"field {name!r}: its {k} differs from the template's (L10)")
+    return {**copy.deepcopy(template), **f}
+
+
 def _resolve_packs(
     entries: object, given: Sequence[object]
-) -> tuple[list[dict[str, str]], Vocabulary, tuple[tuple[str, frozenset[str]], ...]]:
-    """Check each given pack and the union (SPEC §4.8). Return the receipt entries, the
-    vocabulary and the words of each pack."""
+) -> tuple[
+    list[dict[str, str]],
+    Vocabulary,
+    tuple[tuple[str, frozenset[str]], ...],
+    dict[str, dict[str, Any]],
+]:
+    """Check each given pack and the union (SPEC §4.8, §4.9). Return the receipt entries, the
+    vocabulary, the words of each vocabulary pack and the kind packs that the schema names."""
     if isinstance(given, (str, bytes, dict)) or not isinstance(given, Sequence):
         raise PacketError("packs must be a list of pack objects")
     by_id: dict[str, tuple[dict[str, Any], str]] = {}
@@ -314,16 +350,32 @@ def _resolve_packs(
             raise PacketError(f"schema packs: {pid!r} {e['version']} is not given")
         if "sha256" in e and e["sha256"] != by_id[pid][1]:
             raise PacketError(f"schema packs: {pid!r} has the digest {by_id[pid][1]}, not the pin")
+    kinds = {pid: by_id[pid][0] for pid in named if by_id[pid][0]["type"] == "kind"}
+    needed: set[str] = set()
+    for kid, k in kinds.items():
+        for e in k.get("needs", []):
+            p = by_id.get(e["id"], ({}, ""))[0]
+            if not p:
+                raise PacketError(f"packs: {kid!r} needs {e['id']!r}, which is not given (L9)")
+            if p["type"] != "vocabulary":
+                raise PacketError(f"packs: {kid!r} needs {e['id']!r}, a kind pack (L9)")
+            if p["version"] != e["version"]:
+                raise PacketError(f"packs: {e['id']!r} is named in two versions (L7)")
+            needed.add(e["id"])
     for pid in by_id:
-        if pid not in named:
+        if pid not in named and pid not in needed:
             raise PacketError(f"packs: {pid!r} is given, but the schema does not name it")
     if not by_id:
-        return [], BASE_VOCABULARY, ()
+        return [], BASE_VOCABULARY, (), {}
     ids = sorted(by_id)
     resolved = [
-        {"id": i, "type": "vocabulary", "version": by_id[i][0]["version"], "sha256": by_id[i][1]}
+        {"id": i, "type": by_id[i][0]["type"], "version": by_id[i][0]["version"], "sha256": s}
         for i in ids
+        for s in (by_id[i][1],)
     ]
+    ids = [i for i in ids if by_id[i][0]["type"] == "vocabulary"]
+    if not ids:
+        return resolved, BASE_VOCABULARY, (), kinds
     key = tuple(by_id[i][1] for i in ids)
     vocabulary = _VOCABULARIES.get(key)
     if vocabulary is None:
@@ -332,7 +384,7 @@ def _resolve_packs(
             _VOCABULARIES.clear()
         _VOCABULARIES[key] = vocabulary
     marks = tuple((i, added_words(BASE, by_id[i][0])) for i in ids)
-    return resolved, vocabulary, marks
+    return resolved, vocabulary, marks, kinds
 
 
 @dataclass(frozen=True)

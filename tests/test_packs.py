@@ -306,3 +306,74 @@ def test_a_shared_list_is_refused_at_once() -> None:
     loop.append(loop)
     with pytest.raises(gg.PacketError, match="two places"):
         gg.admit(DOC, SCHEMA, [], packs=[pack(status=loop)])
+
+
+# ---------------------------------------------------------------- kind packs (#335)
+def kind(pid: str = "grants-x-test", **members: Any) -> dict[str, Any]:
+    return {"groundgate_pack": 1, "type": "kind", "id": pid, "version": "1.0.0", **members}
+
+
+GRANTS = kind(
+    needs=[{"id": "words-x-test", "version": "1.0.0"}],
+    fields={"grant": {"type": "integer", "aliases": ["grant"], "description": "A grant."}},
+)
+KIND_SCHEMA = {
+    "packs": [{"id": "grants-x-test", "version": "1.0.0"}],
+    "fields": {"grant": {"template": "grants-x-test/grant"}, "fee": {"type": "integer"}},
+}
+
+
+def test_a_template_fills_the_field_and_the_resolved_schema_keeps_it() -> None:
+    schema = gg.Schema.from_dict(KIND_SCHEMA, [GRANTS, LAC])
+    grant = schema.to_dict()["fields"]["grant"]
+    assert grant["template"] == "grants-x-test/grant"
+    assert (grant["type"], grant["aliases"], grant["description"]) == (
+        "integer",
+        ["grant"],
+        "A grant.",
+    )
+    assert [p["id"] for p in schema.to_dict()["packs"]] == ["grants-x-test", "words-x-test"]
+    again = gg.Schema.from_dict(schema.to_dict(), [GRANTS, LAC])
+    assert again.to_dict() == schema.to_dict()
+
+
+def test_a_changed_template_changes_the_schema_digest() -> None:
+    other = kind(needs=GRANTS["needs"], fields={"grant": {"type": "integer", "aliases": ["aid"]}})
+    a = gg.admit(DOC, KIND_SCHEMA, CANDS, packs=[GRANTS, LAC]).to_dict()
+    b = gg.admit(DOC, KIND_SCHEMA, CANDS, packs=[other, LAC]).to_dict()
+    assert a["schema_sha256"] != b["schema_sha256"]
+
+
+def test_the_receipt_names_the_kind_pack_and_the_decision_that_took_its_template() -> None:
+    receipt = gg.admit(DOC, KIND_SCHEMA, CANDS, packs=[LAC, GRANTS]).to_dict()
+    assert [(p["id"], p["type"]) for p in receipt["packs"]] == [
+        ("grants-x-test", "kind"),
+        ("words-x-test", "vocabulary"),
+    ]
+    assert receipt["packs"][0]["sha256"] == pack_digest(GRANTS)
+    by_id = {d["candidate_id"]: d["packs"] for d in receipt["decisions"]}
+    assert by_id == {"a": ["grants-x-test", "words-x-test"], "b": ["words-x-test"]}
+
+
+def test_a_kind_pack_with_no_needs_reads_the_base_only() -> None:
+    plain = kind(fields={"grant": {"type": "integer"}})
+    receipt = gg.admit(DOC, KIND_SCHEMA, CANDS, packs=[plain]).to_dict()
+    assert _outcomes(receipt) == {"a": "admitted", "b": "admitted"}
+    assert {d["candidate_id"]: d["packs"] for d in receipt["decisions"]} == {
+        "a": ["grants-x-test"],
+        "b": [],
+    }
+
+
+def test_load_pack_reads_a_kind_pack(tmp_path: Path) -> None:
+    f = tmp_path / "grants.json"
+    f.write_text(json.dumps(GRANTS), encoding="utf-8")
+    assert gg.load_pack(f) == GRANTS
+    f.write_text(json.dumps({**GRANTS, "fields": {"grant": {"keys": ["2025"]}}}), encoding="utf-8")
+    with pytest.raises(gg.PacketError, match="L9"):
+        gg.load_pack(f)
+
+
+def test_the_digest_of_a_kind_pack_reads_it_after_defaults() -> None:
+    assert pack_digest(kind()) == pack_digest(kind(description="", status=[], needs=[], fields={}))
+    assert pack_digest(kind()) != pack_digest({**kind(), "type": "vocabulary"})

@@ -1,0 +1,42 @@
+{
+ "name": "pack-l1-kind-relations",
+ "description": "L1: relations in a kind pack, which #321 adds later.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "filings-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "template": "filings-x-test/net_sales"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "filings-x-test",
+   "version": "1.0.0",
+   "fields": {
+    "net_sales": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "net sales",
+      "revenue"
+     ]
+    }
+   },
+   "relations": []
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

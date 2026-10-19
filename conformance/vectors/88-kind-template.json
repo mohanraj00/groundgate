@@ -1,0 +1,89 @@
+{
+ "name": "88-kind-template",
+ "description": "A field takes a template of a kind pack. The template fills the type, the unit and the aliases, and the field adds multiple. A field item that holds an alias of the template passes, and a field item that holds another word fails (spec 0.10, #335).",
+ "document": "Net sales were $5,200 in 2025. The fee was $90.",
+ "schema": {
+  "packs": [
+   {
+    "id": "filings-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "sales": {
+    "template": "filings-x-test/net_sales",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "filings-x-test",
+   "version": "1.0.0",
+   "fields": {
+    "net_sales": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "net sales",
+      "revenue"
+     ]
+    }
+   }
+  }
+ ],
+ "candidates": [
+  {
+   "id": "t1",
+   "field": "sales",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 15,
+     "end": 21,
+     "text": "$5,200"
+    },
+    {
+     "role": "field",
+     "text": "Net sales"
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "field": "sales",
+   "value": "90",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 43,
+     "end": 46,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "text": "fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

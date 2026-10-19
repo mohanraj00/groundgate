@@ -1,0 +1,41 @@
+{
+ "name": "pack-l10-form",
+ "description": "L10: a template that is not a pack id and a field name.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "filings-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "template": "net_sales"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "filings-x-test",
+   "version": "1.0.0",
+   "fields": {
+    "net_sales": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "net sales",
+      "revenue"
+     ]
+    }
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

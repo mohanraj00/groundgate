@@ -1213,7 +1213,7 @@ def _admit(
                 applied.append(Judgment(sha, j.question, j.answer, j.p))
         cid = cand.get("id") if isinstance(cand, Mapping) else None
         d = _decision(ctx, sha, cand, cid, p)
-        decisions.append(dataclasses.replace(d, packs=read.packs(cand)) if schema.marks else d)
+        decisions.append(dataclasses.replace(d, packs=read.packs(cand)) if schema.packs else d)
 
     live = {d.field for d in decisions if d.outcome != "rejected"}
     coverage = tuple(
@@ -1346,6 +1346,7 @@ class _PackMarks:
 
     def __init__(self, schema: Schema, texts: list[str]) -> None:
         self.marks = schema.marks
+        self.fields = schema.fields
         folded = "\n".join(_fold(t) for t in texts)
         self.found = {pid for pid, words in self.marks if any(w in folded for w in words)}
 
@@ -1356,6 +1357,10 @@ class _PackMarks:
             for pid, words in self.marks
             if pid not in self.found and any(w in folded for w in words)
         }
+        name = cand.get("field") if isinstance(cand, dict) else None
+        field = self.fields.get(name) if isinstance(name, str) else None
+        if field is not None and field.template is not None:
+            more.add(field.template.split("/", 1)[0])  # the kind pack gave the template
         return tuple(sorted(self.found | more))
 
 

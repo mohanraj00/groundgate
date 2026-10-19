@@ -1,0 +1,53 @@
+{
+ "name": "pack-l9-needs-kind",
+ "description": "L9: a needs entry that names a kind pack.",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "filings-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "template": "filings-x-test/net_sales"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "filings-x-test",
+   "version": "1.0.0",
+   "needs": [
+    {
+     "id": "other-x-test",
+     "version": "1.0.0"
+    }
+   ],
+   "fields": {
+    "net_sales": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "net sales",
+      "revenue"
+     ]
+    }
+   }
+  },
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "other-x-test",
+   "version": "1.0.0"
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

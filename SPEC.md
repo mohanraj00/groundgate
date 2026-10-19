@@ -62,8 +62,9 @@ supplies. A reference can hold only the part of its source that matters.
 a non-blank string or null (default). Other keys, or a malformed reference, make the packet
 invalid. A reference's digest is of kind `reference` over `{"text": <text>}`.
 
-A packet may also carry **packs**: the vocabulary packs that the schema names (§2.3, §4.8), as
-pack objects. Each given pack must pass the checks of §4.8, or the packet is invalid.
+A packet may also carry **packs**: the vocabulary packs and kind packs that the schema names
+(§2.3, §4.8, §4.9), and the vocabulary packs that those kind packs need, as pack objects. Each
+given pack must pass the checks of §4.8 and §4.9, or the packet is invalid.
 
 ### 2.2 Offsets
 
@@ -84,7 +85,8 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
   "multiple": false,
   "keys": ["<key>"] | null,
   "aliases": ["<words>"] | null,
-  "description": "<text>"
+  "description": "<text>",
+  "template": "<pack id>/<field name>"
 }},
  "units": {"<unit code>": {"prefix": ["<surface>"], "suffix": ["<surface>"]}},
  "relations": [{"id": "<name>", "total": "<field>",
@@ -110,17 +112,28 @@ operating income field. A field item (§4.6) is checked against them. They follo
 normalisation and lower-casing.
 `units` extends and overrides the built-in table (§4.3). Each unit is an object with only
 `prefix` and `suffix`, each a list of non-empty strings; an absent list is empty.
-`packs` names each vocabulary pack that the packet reads besides the base pack (§4.8), by `id`
-and `version`. An entry can also give `sha256`: then the given pack must have that digest. This
+`packs` names each vocabulary pack and kind pack that the packet reads besides the base pack
+(§4.8, §4.9), by `id` and `version`. The schema does not have to name a vocabulary pack that a
+named kind pack needs. An entry can also give `sha256`: then the given pack must have that digest. This
 pin is optional. The schema never names the base pack, because it always applies. The packet is
 invalid when an entry has other keys, an entry names a built-in pack, two entries name one id
-differently, a named pack is not given, a given pack is not named, or a pin differs. The pack
+differently, a named pack is not given, a given pack is neither named nor needed, or a pin
+differs. The pack
 table of §4.3 and the word lists of §4 are then the union of §4.8, and `units` still extends
 and overrides that table.
-`schema_sha256` is the digest of kind `schema` over the schema object **after** defaults are
-filled in. With packs, the schema object holds `packs` as `{"id", "version", "sha256"}`, sorted by
-`id`, with the digest of each given pack. So a changed pack changes `schema_sha256`. With no pack,
-the schema object holds no `packs`.
+`template` (spec 0.10, #335) takes a field template of a kind pack (§4.9). It is
+`<pack id>/<field name>`, and the schema must name that kind pack in `packs`. The template fills
+each of its members that the field does not give, before the defaults. A member that the field
+gives wins, also `aliases`: the template does not add to the field's aliases. The packet is
+invalid (L10) when `template` is not a string with a `/`, its pack is not a kind pack that the
+schema names, the pack has no template of that name, or the field and the template both give a
+`type` or both give a `unit` and the two differ. Null is a unit here, so a field with `"unit":
+null` and a template in USD is invalid.
+`schema_sha256` is the digest of kind `schema` over the schema object **after** templates and
+defaults are filled in. Each field that takes a template keeps its `template` member. With packs,
+the schema object holds `packs` as `{"id", "version", "sha256"}`, sorted by `id`, with the digest
+of each given pack, also of each pack that a kind pack needs. So a changed pack changes
+`schema_sha256`. With no pack, the schema object holds no `packs`.
 
 `relations` (spec 0.10, #321) is a list of relations between fields, which step 13 checks (§3.4).
 A relation is an object with only these members:
@@ -1013,7 +1026,7 @@ The packet is invalid when a given pack fails one of these checks:
 
 | Check | The packet is invalid with |
 |---|---|
-| L1 closed format | a member that the format does not list, a `groundgate_pack` other than `1`, or a `type` other than `vocabulary` |
+| L1 closed format | a member that the format does not list, a `groundgate_pack` other than `1`, or a `type` other than `vocabulary` or `kind` (§4.9) |
 | L2 data only | a value that is not a string, an integer in [-(2^53), 2^53], null, a list or an object; a boolean or a number with a fraction is not data |
 | L3 words | a word that is not NFC, is blank, has whitespace at an end, holds a line break or a tab, or has more than 64 code points; a scale word, a null literal or an abbreviation that is not in lowercase; an abbreviation with no dot at its end; a currency sign that is not one code point other than a letter, a number, a separator or a control character |
 | L4 size | a pack file of more than 1 MiB, before it is parsed; a JSON nesting depth of more than 8, where the pack object has depth 1; more than 256 KiB as canonical JSON; a list or an object of more than 2,000 entries |
@@ -1032,6 +1045,37 @@ invalid.
 The union takes the base pack, then the given packs. Two words are one entry when they are
 equal. In each list, the words of the base keep their order, and the words that the packs add
 follow, longest first, then by code point. So the order of the packs never changes a match.
+
+### 4.9 Kind packs
+
+A kind pack (spec 0.10, #335) gives knowledge about one kind of document: field templates, and
+the vocabulary packs that the kind needs. It holds no words. A word goes in a vocabulary pack,
+and the kind pack names that pack in `needs`. A kind pack is one JSON object in format 1 with the
+members `groundgate_pack`, `type` (`"kind"`), `id`, `version`, `description` and `status` of
+§4.8, and these:
+
+| Member | Meaning |
+|---|---|
+| `needs` | Optional. A list of `{"id", "version"}`: the vocabulary packs that the kind needs. |
+| `fields` | Optional. An object from a field name to a template. A template holds only `type`, `unit`, `comparator`, `aliases` and `description`, with the rules of §2.3. |
+
+After defaults, an absent `needs` is `[]` and an absent `fields` is `{}`. The digest is the digest
+of §4.7 with the type `kind`. A template has no defaults of its own: a field fills them after it
+takes the template (§2.3).
+
+The packet reads each vocabulary pack that the schema names, and each pack in the `needs` of each
+kind pack that the schema names. The packet must give each one. A pack that is named twice in one
+version is read once. The union of §4.8 takes the vocabulary packs only.
+
+The checks L1, L2, L3, L7, L8, L11 and L12 of §4.8 apply to a kind pack, and L4 applies with one
+more limit. The packet is also invalid when a kind pack fails one of these checks:
+
+| Check | The packet is invalid with |
+|---|---|
+| L4 size | more than 200 field templates |
+| L7 ids and versions | a `needs` entry with an id or a version of the wrong form; a `needs` entry and the schema, or two `needs` entries, that name one id in two versions |
+| L9 kind pack | a `needs` that is not a list of objects with only `id` and `version`; a `needs` entry that names the base pack, the pack itself, an id twice, a kind pack or a pack that is not given; a `fields` that is not an object; a template member other than the five above; a template that breaks a rule of §2.3 |
+| L10 schema | a `template` that breaks a rule of §2.3 |
 
 ## 5. Receipt
 
@@ -1053,8 +1097,9 @@ follow, longest first, then by code point. So the order of the packs never chang
 ```
 
 `document.source` is the document source, or null. `references` lists each reference as
-`{"id", "sha256", "source"}`, sorted by `id`. `packs` lists each pack that the schema names as
-`{"id", "type", "version", "sha256"}`, sorted by `id`. It never lists the base pack.
+`{"id", "sha256", "source"}`, sorted by `id`. `packs` lists each pack that the schema names, and
+each pack that a named kind pack needs, as `{"id", "type", "version", "sha256"}`, sorted by `id`.
+`type` is `vocabulary` or `kind`. It never lists the base pack.
 
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
 code, or the flag codes in the order of the table in §3.3, followed by `EVIDENCE_REANCHORED`,
@@ -1079,7 +1124,8 @@ is a string, otherwise `null`.
   listed with `passed` false.
 - `missing` lists the missing parts in the order `sign`, `scale`, `unit`, `key`.
 - `packs` lists the ids, sorted, of each pack in the receipt's `packs` that adds a word that
-  occurs in the document, in a reference or in a string of the candidate. Both sides are compared
+  occurs in the document, in a reference or in a string of the candidate, and of the kind pack
+  that gave the template of the candidate's field (§2.3). Both sides are compared
   casefolded, with each whitespace run as one space. A word that the base pack gives in the same
   list is not an added word. The list can name a pack that did not change the outcome; it never
   leaves out a pack that changed it.

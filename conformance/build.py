@@ -4616,11 +4616,7 @@ def bad_pack(name: str, description: str, *packs: dict[str, Any], schema: Any = 
 
 bad_pack("pack-l1-unknown-member", "L1: a member that the format does not list.", pack(window=80))
 bad_pack("pack-l1-format", "L1: a pack format other than 1.", {**pack(), "groundgate_pack": 2})
-bad_pack(
-    "pack-l1-kind",
-    "L1: a kind pack, which the format of spec 0.10 adds in #335.",
-    {**pack(), "type": "kind"},
-)
+bad_pack("pack-l1-type", "L1: a type other than vocabulary or kind.", {**pack(), "type": "words"})
 bad_pack(
     "pack-l2-float",
     "L2: a power of ten that is not an integer.",
@@ -4761,6 +4757,120 @@ bad_pack(
 bad_pack("pack-schema-entry", "A schema packs entry with an unknown member.",
          pack(), schema={"packs": [{"id": "words-x-test", "version": "1.0.0", "url": "x"}],
                          "fields": {"fee": {"type": "integer"}}})  # fmt: skip
+
+
+# ---------------------------------------------------------------- kind packs (#335)
+def kind(pid: str = "filings-x-test", version: str = "1.0.0", **members: Any) -> dict[str, Any]:
+    """An app's own kind pack in format 1 (SPEC §4.9)."""
+    return {"groundgate_pack": 1, "type": "kind", "id": pid, "version": version, **members}
+
+
+SALES = {"type": "integer", "unit": "USD", "aliases": ["net sales", "revenue"]}
+FILINGS = kind(fields={"net_sales": SALES})
+TEMPLATE = {"template": "filings-x-test/net_sales"}
+SALES_DOC = "Net sales were $5,200 in 2025. The fee was $90."
+
+vector(
+    "88-kind-template",
+    "A field takes a template of a kind pack. The template fills the type, the unit and the "
+    "aliases, and the field adds multiple. A field item that holds an alias of the template "
+    "passes, and a field item that holds another word fails (spec 0.10, #335).",
+    SALES_DOC,
+    uses(FILINGS, sales={**TEMPLATE, "multiple": True}),
+    [
+        c("t1", "sales", "5200", "USD", [q("$5,200"), row("Net sales")]),
+        c("t2", "sales", "90", "USD", [q("$90"), row("fee")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+    ],
+    packs=[FILINGS],
+)  # fmt: skip
+vector(
+    "89-kind-schema-wins",
+    "A member that the field gives wins over the template, also aliases: the template does not "
+    "add its aliases to the field's. A type that is equal to the template's is no conflict "
+    "(spec 0.10, #335).",
+    SALES_DOC,
+    uses(FILINGS, fee={**TEMPLATE, "type": "integer", "aliases": ["fee"], "multiple": True}),
+    [
+        c("w1", "fee", "90", "USD", [q("$90"), row("fee")]),
+        c("w2", "fee", "5200", "USD", [q("$5,200"), row("Net sales")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+    ],
+    packs=[FILINGS],
+)  # fmt: skip
+GRANTS = kind(
+    "grants-x-test",
+    needs=[{"id": "words-x-test", "version": "1.0.0"}],
+    fields={"grant": {"type": "integer"}},
+)
+vector(
+    "90-kind-needs",
+    "A kind pack names a vocabulary pack in needs. The schema names only the kind pack, and the "
+    "packet gives both. The words of the needed pack apply, so the value before its scale word "
+    "gets SCALE_WORD (spec 0.10, #335).",
+    "The grant is 5 lac. The fee is 9 sites.",
+    {"packs": [{"id": "grants-x-test", "version": "1.0.0"}],
+     "fields": {"grant": {"template": "grants-x-test/grant"}, "fee": {"type": "integer"}}},
+    [
+        c("n1", "grant", "5", None, q("5 lac"), ("needs_verification", ["SCALE_WORD"])),
+        c("n2", "fee", "9", None, q("9 sites")),
+    ],
+    packs=[GRANTS, LAC],
+)  # fmt: skip
+
+
+def bad_kind(
+    name: str, description: str, *packs: dict[str, Any], fields: Any = None, schema: Any = None
+) -> None:
+    """An invalid packet with a kind pack: the schema names the first pack, and its field fee
+    takes the template filings-x-test/net_sales unless ``fields`` says otherwise."""
+    fee = {"fee": TEMPLATE} if fields is None else fields
+    bad_pack(name, description, *packs, schema=uses(packs[0], **fee) if schema is None else schema)
+
+
+# fmt: off
+bad_kind("pack-l1-kind-word", "L1: a kind pack holds no reading words.",
+         kind(fields={"net_sales": SALES}, per_units=["acre"]))
+bad_kind("pack-l1-kind-relations", "L1: relations in a kind pack, which #321 adds later.",
+         kind(fields={"net_sales": SALES}, relations=[]))
+bad_kind("pack-l4-templates", "L4: more than 200 field templates.",
+         kind(fields={"net_sales": SALES, **{f"f{i}": {} for i in range(200)}}))
+bad_kind("pack-l9-template-member", "L9: a template member other than the five of the format.",
+         kind(fields={"net_sales": {**SALES, "keys": ["2025"]}}))
+bad_kind("pack-l9-template-form", "L9: a template that fails the rules of a field.",
+         kind(fields={"net_sales": {**SALES, "type": "date"}}))
+bad_kind("pack-l9-needs-kind", "L9: a needs entry that names a kind pack.",
+         kind(needs=[{"id": "other-x-test", "version": "1.0.0"}], fields={"net_sales": SALES}),
+         kind("other-x-test"))
+bad_kind("pack-l9-needs-missing", "L9: a needs entry that names a pack that is not given.",
+         kind(needs=[{"id": "words-x-test", "version": "1.0.0"}], fields={"net_sales": SALES}))
+bad_kind("pack-l9-needs-base", "L9: a needs entry that names the base pack.",
+         kind(needs=[{"id": "en", "version": "1.0.0"}], fields={"net_sales": SALES}))
+bad_kind("pack-l7-needs-version",
+         "L7: the schema names a pack in one version, and a kind pack needs it in another.",
+         kind(needs=[{"id": "words-x-test", "version": "1.0.0"}], fields={"net_sales": SALES}),
+         pack(version="1.1.0"),
+         schema={"packs": [{"id": "filings-x-test", "version": "1.0.0"},
+                           {"id": "words-x-test", "version": "1.1.0"}],
+                 "fields": {"fee": TEMPLATE}})
+bad_kind("pack-l10-no-pack", "L10: a template whose pack is not in the schema's packs.",
+         pack(), fields={"fee": TEMPLATE})
+bad_kind("pack-l10-no-field", "L10: a template whose field is not in its pack.",
+         FILINGS, fields={"fee": {"template": "filings-x-test/revenue"}})
+bad_kind("pack-l10-form", "L10: a template that is not a pack id and a field name.",
+         FILINGS, fields={"fee": {"template": "net_sales"}})
+bad_kind("pack-l10-vocabulary", "L10: a template that names a vocabulary pack.",
+         pack(), fields={"fee": {"template": "words-x-test/net_sales"}})
+bad_kind("pack-l10-type", "L10: a field type that differs from the template's.",
+         FILINGS, fields={"fee": {**TEMPLATE, "type": "number"}})
+bad_kind("pack-l10-unit", "L10: a field unit that differs from the template's.",
+         FILINGS, fields={"fee": {**TEMPLATE, "unit": "EUR"}})
+bad_kind("pack-l10-pin", "L10: a pinned sha256 of a kind pack that differs from its digest.",
+         FILINGS,
+         schema={"packs": [{"id": "filings-x-test", "version": "1.0.0",
+                            "sha256": "sha256:" + "0" * 64}],
+                 "fields": {"fee": TEMPLATE}})
+# fmt: on
 
 
 def main() -> None:

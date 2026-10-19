@@ -1,0 +1,89 @@
+{
+ "name": "90-kind-needs",
+ "description": "A kind pack names a vocabulary pack in needs. The schema names only the kind pack, and the packet gives both. The words of the needed pack apply, so the value before its scale word gets SCALE_WORD (spec 0.10, #335).",
+ "document": "The grant is 5 lac. The fee is 9 sites.",
+ "schema": {
+  "packs": [
+   {
+    "id": "grants-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "grant": {
+    "template": "grants-x-test/grant"
+   },
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "grants-x-test",
+   "version": "1.0.0",
+   "needs": [
+    {
+     "id": "words-x-test",
+     "version": "1.0.0"
+    }
+   ],
+   "fields": {
+    "grant": {
+     "type": "integer"
+    }
+   }
+  },
+  {
+   "groundgate_pack": 1,
+   "type": "vocabulary",
+   "id": "words-x-test",
+   "version": "1.0.0",
+   "scale": {
+    "words": {
+     "lac": 5
+    }
+   }
+  }
+ ],
+ "candidates": [
+  {
+   "id": "n1",
+   "field": "grant",
+   "value": "5",
+   "evidence": {
+    "start": 13,
+    "end": 18,
+    "text": "5 lac"
+   }
+  },
+  {
+   "id": "n2",
+   "field": "fee",
+   "value": "9",
+   "evidence": {
+    "start": 31,
+    "end": 38,
+    "text": "9 sites"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_WORD"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
