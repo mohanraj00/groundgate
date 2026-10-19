@@ -3788,7 +3788,7 @@ vector(
 
 # ---------------------------------------------------------------- spec 0.10 (#313)
 POUND_000 = "Statement of financial position\n\t£000\t£000\nRevenue\t15,961,328\t14,200,105\n"
-REVENUE_313 = {"type": "number", "aliases": ["Revenue"]}
+REVENUE_313 = {"type": "number", "aliases": ["Revenue"], "multiple": True}
 vector(
     "64-currency-scale-000",
     "A currency sign directly followed by 000 is a currency scale of 10^3, as £'000 is. A scale "

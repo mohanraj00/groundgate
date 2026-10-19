@@ -27,6 +27,7 @@ from .model import (
     Schema,
 )
 from .text import (
+    HeadingUnit,
     Token,
     UnitPlaces,
     brackets_around,
@@ -38,7 +39,9 @@ from .text import (
     gain_word,
     header,
     header_column,
+    heading_currency,
     heading_rows,
+    heading_units,
     holds_form,
     host,
     in_scale,
@@ -139,6 +142,7 @@ class _Text:
     ref: str | None = None
     mentions: dict[tuple[str, ...], list[tuple[int, int, str]]] = field(default_factory=dict)
     rows: list[tuple[int, int]] | None = None  # reached by a heading scale, read once
+    headings: list[HeadingUnit] | None = None  # the heading units (#315), read once
     # the quotes of the candidate being checked, for the many occurrences of one value (#249)
     # and its field items (#300): cleared for each candidate, so that they are at most the value
     # quote, 8 field items and one item of each other role
@@ -185,6 +189,17 @@ def heading_scale(t: _Text, pos: int) -> bool:
         t.rows = heading_rows(t.text)
     i = bisect.bisect_right(t.rows, (pos, len(t.text) + 1)) - 1
     return i >= 0 and t.rows[i][0] <= pos <= t.rows[i][1]
+
+
+def _heading_unit(ctx: _Ctx, t: _Text, unit: str, tok: Token, a: int, b: int) -> bool:
+    """Whether text[a:b] holds a heading unit that reaches the token, and the token's heading
+    currency is ``unit`` (SPEC §4.3, §4.6, spec 0.10, #315)."""
+    if t.headings is None:
+        t.headings = heading_units(t.text)
+    found = [h for h in t.headings if h.reaches(tok.start)]
+    if not any(a <= h.start and h.end <= b for h in found):
+        return False
+    return heading_currency(found, unit, ctx.schema.units)
 
 
 @dataclass
@@ -801,6 +816,12 @@ def _roles(
                             and places(a, b)
                         )
                     )
+                ) or (
+                    f.unit is not None
+                    and passed.get("field", False)
+                    and b <= tok.start
+                    and not ctx.any_unit_at(t, tok)
+                    and _heading_unit(ctx, t, f.unit, tok, a, b)
                 )
         passed[role] = ok or (role == "field" and passed.get("field", False))
         byte_span = None if span is None else _bytes(t, span)

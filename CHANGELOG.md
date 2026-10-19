@@ -31,6 +31,14 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   (`$`, `€`, `£`, `₹`). `€70,471m` is 70471000000. `£m`, `$bn` and `£'000` in a column header are
   a heading scale, and a scale item can cite them. `70 m`, `5m` and `£5 m` stay as written,
   because a bare `m` can be metres.
+- `£000` is a currency scale of 10^3, as `£'000` is (#313). The `000` of a currency scale is no
+  number token, so `£000` and `£'000` are never an amount of zero. `£000s`, `£0001`, `£000,000`
+  and `£ 000` are no scale.
+- A heading unit (#315). A unit item can cite a currency header such as `£m` or `US$000`, or a
+  statement such as "presented in Australian dollars", when it reaches the value as a heading
+  scale does. `$m` under an Australian dollar statement gives `AUD`, and `$m` alone gives only
+  `USD`. When the heading units disagree, the unit item fails and the value goes to review. The
+  currency names are a core list in §4.3 until the pack format (#320) is approved.
 - The LangExtract adapter reads a list in `field_text` (#324). Each entry that holds text becomes
   one field item, up to 8. Before, the adapter skipped a list. A list for any other role now makes
   the candidate `CANDIDATE_INVALID`.

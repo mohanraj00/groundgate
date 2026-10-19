@@ -8,7 +8,8 @@
     "type": "number",
     "aliases": [
      "Revenue"
-    ]
+    ],
+    "multiple": true
    },
    "revenue_gbp": {
     "type": "number",
