@@ -1,0 +1,139 @@
+{
+ "name": "96-change-letters",
+ "description": "A change word and the range words match by the fold of each letter (SPEC §4). After 'increaſed from' and 'INCREASED from', the second number is the new value, and the first keeps its range reading. 'BETWEEN $5 AND $9' is a range (spec 0.10, #356).",
+ "document": "The fee increaſed from $10 to $20. The cap INCREASED from $30 to $40. The levy is BETWEEN $5 AND $9.",
+ "schema": {
+  "fields": {
+   "new_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "old_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "new_cap": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "old_cap": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "low": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "high": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "d1",
+   "field": "new_fee",
+   "value": "20",
+   "unit": "USD",
+   "evidence": {
+    "start": 31,
+    "end": 34,
+    "text": "$20"
+   }
+  },
+  {
+   "id": "d2",
+   "field": "old_fee",
+   "value": "10",
+   "unit": "USD",
+   "evidence": {
+    "start": 24,
+    "end": 27,
+    "text": "$10"
+   }
+  },
+  {
+   "id": "d3",
+   "field": "new_cap",
+   "value": "40",
+   "unit": "USD",
+   "evidence": {
+    "start": 66,
+    "end": 69,
+    "text": "$40"
+   }
+  },
+  {
+   "id": "d4",
+   "field": "old_cap",
+   "value": "30",
+   "unit": "USD",
+   "evidence": {
+    "start": 59,
+    "end": 62,
+    "text": "$30"
+   }
+  },
+  {
+   "id": "d5",
+   "field": "low",
+   "value": "5",
+   "unit": "USD",
+   "evidence": {
+    "start": 91,
+    "end": 93,
+    "text": "$5"
+   }
+  },
+  {
+   "id": "d6",
+   "field": "high",
+   "value": "9",
+   "unit": "USD",
+   "evidence": {
+    "start": 98,
+    "end": 100,
+    "text": "$9"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

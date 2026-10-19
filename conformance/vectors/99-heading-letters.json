@@ -1,0 +1,238 @@
+{
+ "name": "99-heading-letters",
+ "description": "The 'in' of a heading scale, and the words of a currency statement, match by the fold of each letter (SPEC §4). '(ın thousands)' is a heading scale, 'presented in Auſtralian dollars' is a statement of AUD, and 'IN MILLIONS OF CANADIAN DOLLARS' is a statement of CAD by its capital S (spec 0.10, #356).",
+ "document": "Fees (ın thousands)\nFees\t75\n\nThe figures are presented in Auſtralian dollars.\n\t$m\t$m\nRevenue\t5,200\t4,900\n\nINCOME STATEMENT (IN MILLIONS OF CANADIAN DOLLARS)\n\t2025\t2024\nRevenue\t6,300\t5,800\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "aud": {
+    "type": "number",
+    "unit": "AUD",
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "cad": {
+    "type": "number",
+    "unit": "CAD",
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "gbp": {
+    "type": "number",
+    "unit": "GBP",
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "hkd": {
+    "type": "number",
+    "unit": "HKD",
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "fees": {
+    "type": "number"
+   },
+   "fees_scaled": {
+    "type": "number"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "h1",
+   "field": "fees",
+   "value": "75",
+   "evidence": [
+    {
+     "start": 26,
+     "end": 28,
+     "text": "75"
+    }
+   ]
+  },
+  {
+   "id": "h2",
+   "field": "fees_scaled",
+   "value": "75000",
+   "evidence": [
+    {
+     "start": 26,
+     "end": 28,
+     "text": "75"
+    },
+    {
+     "role": "scale",
+     "start": 5,
+     "end": 19,
+     "text": "(ın thousands"
+    }
+   ]
+  },
+  {
+   "id": "h3",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 95,
+     "end": 100,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "start": 87,
+     "end": 94,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "presented in Auſtralian dollars"
+    }
+   ]
+  },
+  {
+   "id": "h4",
+   "field": "aud",
+   "value": "5200000000",
+   "unit": "AUD",
+   "evidence": [
+    {
+     "start": 95,
+     "end": 100,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "start": 87,
+     "end": 94,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "h5",
+   "field": "usd",
+   "value": "5200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 95,
+     "end": 100,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "start": 87,
+     "end": 94,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    },
+    {
+     "role": "unit",
+     "text": "$m"
+    }
+   ]
+  },
+  {
+   "id": "h6",
+   "field": "cad",
+   "value": "6300000000",
+   "unit": "CAD",
+   "evidence": [
+    {
+     "start": 178,
+     "end": 183,
+     "text": "6,300"
+    },
+    {
+     "role": "field",
+     "start": 170,
+     "end": 177,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "start": 126,
+     "end": 137,
+     "text": "IN MILLIONS"
+    },
+    {
+     "role": "unit",
+     "text": "IN MILLIONS OF CANADIAN DOLLARS"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

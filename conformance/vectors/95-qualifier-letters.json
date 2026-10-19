@@ -1,0 +1,141 @@
+{
+ "name": "95-qualifier-letters",
+ "description": "A qualifier matches by the fold of each letter (SPEC §4). 'at leaſt', 'maxımum of', 'or leſs', 'AT LEAST' and 'MAXİMUM OF' each qualify the value (spec 0.10, #356).",
+ "document": "The base is $40. The fee is at leaſt $50. The cap is maxımum of $60. The levy is $70 or leſs. The toll is AT LEAST $80. The rate is MAXİMUM OF $90.",
+ "schema": {
+  "fields": {
+   "base": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "cap": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "levy": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "toll": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "rate": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "q1",
+   "field": "base",
+   "value": "40",
+   "unit": "USD",
+   "evidence": {
+    "start": 12,
+    "end": 15,
+    "text": "$40"
+   }
+  },
+  {
+   "id": "q2",
+   "field": "fee",
+   "value": "50",
+   "unit": "USD",
+   "evidence": {
+    "start": 38,
+    "end": 41,
+    "text": "$50"
+   }
+  },
+  {
+   "id": "q3",
+   "field": "cap",
+   "value": "60",
+   "unit": "USD",
+   "evidence": {
+    "start": 66,
+    "end": 69,
+    "text": "$60"
+   }
+  },
+  {
+   "id": "q4",
+   "field": "levy",
+   "value": "70",
+   "unit": "USD",
+   "evidence": {
+    "start": 83,
+    "end": 86,
+    "text": "$70"
+   }
+  },
+  {
+   "id": "q5",
+   "field": "toll",
+   "value": "80",
+   "unit": "USD",
+   "evidence": {
+    "start": 118,
+    "end": 121,
+    "text": "$80"
+   }
+  },
+  {
+   "id": "q6",
+   "field": "rate",
+   "value": "90",
+   "unit": "USD",
+   "evidence": {
+    "start": 147,
+    "end": 150,
+    "text": "$90"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

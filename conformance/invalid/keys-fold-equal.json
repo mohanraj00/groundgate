@@ -1,0 +1,20 @@
+{
+ "name": "keys-fold-equal",
+ "description": "Two keys with the same fold of each letter (SPEC §2.3, §4) are invalid: 'State' and 'ſtate' match the same text (spec 0.10, #356).",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "dose": {
+    "keys": [
+     "State",
+     "ſtate"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

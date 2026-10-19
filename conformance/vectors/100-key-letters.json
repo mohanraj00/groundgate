@@ -1,0 +1,131 @@
+{
+ "name": "100-key-letters",
+ "description": "Keys and aliases match by the fold of each letter (SPEC §4). 'state income' has a mention in 'ſtate income', 'STATE ıNCOME' and 'state İncome'. A key with the Kelvin sign (U+212A) has a mention in 'KELVIN RATE'. The alias 'State Income' matches 'ſtate income' (spec 0.10, #356).",
+ "document": "The federal rate is 41. The ſtate income rate is 52. The STATE ıNCOME rate is 63. The state İncome rate is 74. The KELVIN RATE is 85.",
+ "schema": {
+  "fields": {
+   "rate": {
+    "type": "integer",
+    "keys": [
+     "state income",
+     "Kelvin rate"
+    ],
+    "aliases": [
+     "State Income"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "k1",
+   "field": "rate",
+   "value": "41",
+   "evidence": {
+    "start": 20,
+    "end": 22,
+    "text": "41"
+   },
+   "key": "state income"
+  },
+  {
+   "id": "k2",
+   "field": "rate",
+   "value": "52",
+   "evidence": {
+    "start": 50,
+    "end": 52,
+    "text": "52"
+   },
+   "key": "state income"
+  },
+  {
+   "id": "k3",
+   "field": "rate",
+   "value": "63",
+   "evidence": {
+    "start": 80,
+    "end": 82,
+    "text": "63"
+   },
+   "key": "state income"
+  },
+  {
+   "id": "k4",
+   "field": "rate",
+   "value": "74",
+   "evidence": {
+    "start": 110,
+    "end": 112,
+    "text": "74"
+   },
+   "key": "state income"
+  },
+  {
+   "id": "k5",
+   "field": "rate",
+   "value": "85",
+   "evidence": {
+    "start": 133,
+    "end": 135,
+    "text": "85"
+   },
+   "key": "Kelvin rate"
+  },
+  {
+   "id": "k6",
+   "field": "rate",
+   "value": "52",
+   "evidence": [
+    {
+     "start": 50,
+     "end": 52,
+     "text": "52"
+    },
+    {
+     "role": "field",
+     "start": 28,
+     "end": 41,
+     "text": "ſtate income"
+    }
+   ],
+   "key": "state income"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE"
+    ],
+    "missing": [
+     "key"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

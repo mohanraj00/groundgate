@@ -1,0 +1,149 @@
+{
+ "name": "98-sign-word-letters",
+ "description": "The loss words, the negations and the gain words of a sign item match by the fold of each letter (SPEC §4). 'loſs' and 'LOSS' are loss words. 'wıthout' and 'WİTHOUT' are negations, and 'gaınſ' is a gain word, so those items fail (spec 0.10, #356).",
+ "document": "Net loſs of $500 in 2024. Net LOSS of $600 in 2024. The plan ended wıthout loss of $700 in 2024. The plan ended WİTHOUT loss of $800 in 2024. Operating loss and gaınſ of $900 in 2024.",
+ "schema": {
+  "packs": [
+   {
+    "id": "finance",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "amount": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "amount",
+   "value": "-500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 13,
+     "end": 17,
+     "text": "$500"
+    },
+    {
+     "role": "sign",
+     "text": "Net loſs"
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "field": "amount",
+   "value": "-600",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 39,
+     "end": 43,
+     "text": "$600"
+    },
+    {
+     "role": "sign",
+     "text": "Net LOSS"
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "field": "amount",
+   "value": "-700",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 85,
+     "end": 89,
+     "text": "$700"
+    },
+    {
+     "role": "sign",
+     "text": "wıthout loss"
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "field": "amount",
+   "value": "-800",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 131,
+     "end": 135,
+     "text": "$800"
+    },
+    {
+     "role": "sign",
+     "text": "WİTHOUT loss"
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "field": "amount",
+   "value": "-900",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 175,
+     "end": 179,
+     "text": "$900"
+    },
+    {
+     "role": "sign",
+     "text": "loss and gaınſ"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": []
+   }
+  ],
+  "coverage": []
+ }
+}
