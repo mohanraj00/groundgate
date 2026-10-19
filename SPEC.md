@@ -6,8 +6,9 @@ groundgate 0.9.0, from commit 23095bf. Spec 0.8 is in the `v0.8.0` tag, spec 0.7
 `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the `v0.2.0` tag, and spec 0.1 in the
 `v0.1.0` tag. Any change to how
 a candidate is decided is a new version with a new version string. An implementation conforms if
-it produces the outcome, codes and missing parts of every decision, the parts where a vector gives
-them, the coverage findings, and the relation results where a vector gives them, in every vector
+it produces the outcome, codes and missing parts of every decision, the parts and the evidence
+units where a vector gives them, the coverage findings, and the relation results where a vector
+gives them, in every vector
 under `conformance/vectors/`, and refuses every packet under `conformance/invalid/` with no
 receipt.
 
@@ -1174,6 +1175,43 @@ is a string, otherwise `null`.
   one space. A word that the base pack gives in the same
   list is not an added word. The list can name a pack that did not change the outcome; it never
   leaves out a pack that changed it.
+- `evidence_units` names the units that groundgate finds for the value's token when the unit
+  check does not pass (spec 0.10, #362). A decision has this member only when it has a number
+  token and one of these holds: its `codes` hold `UNIT_NOT_IN_EVIDENCE`, its `codes` hold
+  `UNIT_CITATION_INVALID`, or its `missing` holds `unit`. Other decisions do not have the
+  member. The member is a report. It never changes the outcome, the codes or `missing`, and
+  groundgate never converts a value.
+
+  ```json
+  "evidence_units": {"token": {"start": 64, "end": 69}, "next": [], "per": false,
+                     "headers": [{"form": "$", "allows": ["AUD", "CAD", "HKD", "NZD", "SGD", "USD"]}],
+                     "statements": ["AUD"], "currency": ["AUD"]}
+  ```
+
+  - `token` is the span of the token in the value item's text, in UTF-8 bytes, as `evidence` is.
+    For `UNIT_NOT_IN_EVIDENCE` it is the first number token in the `evidence` span that step 10
+    matches when a part can be missing (§3.1). Otherwise it is the token that the value is at
+    (§3.1).
+  - `next` lists each code of the unit table (§4.3, built-in and the schema's) that has a form
+    next to the token. A form is next to the token when a prefix of the code ends at the token
+    start, or when the first suffix after the token is a suffix of the code, as §4.3 reads
+    prefixes and the first suffix. A per-unit counts here. A code with no prefixes and no
+    suffixes is never in the list.
+  - `per` is true when the suffix of `next` is a per-unit (§4.3). Otherwise it is false. So
+    "75 mg/m2" gives `"next": ["mg"], "per": true`.
+  - `headers` lists each form of a currency header that reaches the token (§4.3), one time for
+    each form, as `{"form", "allows"}`. `allows` lists the codes that the header allows. It is
+    empty for an unknown header.
+  - `statements` lists the code of each currency statement that reaches the token, one time for
+    each code.
+  - `currency` lists each code X for which the heading currency of the token is X when the
+    field's unit is X (§4.3). X is a code of the unit table or of the currency table of §4.3.
+
+  The lists are sorted in code point order, and `headers` by `form`. When groundgate finds no
+  unit, each list is empty. When the heading units do not agree, `headers` and `statements` name
+  them, and `currency` is empty. groundgate never chooses between them. `currency` holds two
+  codes when the schema gives one prefix to two units, as `$` to `CAD` and to `USD`. groundgate
+  does not choose then either.
 
 Coverage is sorted by field name. `judgments` lists each judgment that applied, as
 `{"candidate_sha256", "question", "answer", "p"}` (`answer` only for `key`), sorted by
