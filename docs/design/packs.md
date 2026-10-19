@@ -345,7 +345,7 @@ These are rules and limits, not lists. A pack that changes them changes a check,
 ### 10.3 How every vector and every bench outcome stays the same
 
 **Stage 1: the base pack (no decision change).** The core builds every pattern from `en` 1.0.0.
-The proof has five parts:
+The proof has six parts:
 
 1. For one PR, a test keeps the old patterns. It compares their matches with the matches of the
    new patterns on every conformance document and on every bench document text in the
@@ -356,10 +356,14 @@ The proof has five parts:
 4. `examples/irs-590a/build.py` rebuilds byte for byte.
 5. A receipt of a packet with no pack is byte for byte the same, because the base pack is not in
    the receipt. I checked: no `results.json` under `bench/` holds a receipt digest.
+6. A test shows that the key scope and the unit search still end a sentence at every dot. Today
+   only the qualifier window reads `_ABBREVIATIONS` (`sentence(..., qualifiers=True)`). The label
+   "guard" of `sentence.abbreviations` holds only while that stays true.
 
 **Stage 2: the loader and kind packs (no decision change).** A packet with no pack decides as
-before. The receipt gets `"packs": []`, so receipt digests change, but no outcome, code, `missing`
-or `parts` changes. The new vectors that use packs are new files, written by hand.
+before. The receipt gets two new members: `"packs": []` at the top, and `"packs": []` in each
+decision (section 6). Both are empty for a packet with no pack. So receipt digests change, but no
+outcome, code, `missing` or `parts` changes. The new vectors that use packs are new files, written by hand.
 
 **Stage 3: kind packs from the bench schemas (no decision change).** The bench sets keep their
 own schema files, so their results do not change. A test writes each set's schema in the
@@ -430,7 +434,9 @@ invalid packet: `admit` raises `PacketError` and makes no receipt.
 The qualifier rule of L6 has a reason. SPEC §4.2 applies the longer of two qualifiers that
 overlap. A pack phrase that holds a base phrase of another comparator then replaces the base
 reading. For example, "less than or equal to" as `le` would hide "less than" as `lt`. The loader
-refuses that, so an added qualifier can only add a reading.
+refuses that, so an added qualifier can only add a reading. Issue 2 gives this case its own
+invalid packet under `conformance/invalid/`, written by hand: a pack that adds "less than or equal
+to" as `le`.
 
 Each limit of extensions.md §6 maps to these checks:
 
