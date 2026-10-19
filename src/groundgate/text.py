@@ -538,20 +538,43 @@ def unit_at(
 # ------------------------------------------------------------------------ keys
 
 _NOT_ALNUM_BEFORE, _NOT_ALNUM_AFTER = r"(?<![^\W_])", r"(?![^\W_])"
+# the dashes that match each other in a key or an alias (SPEC §4.5, spec 0.10): not the minus
+# sign, which is the sign of a number, and not the em dash
+KEY_DASHES = "-\u2010\u2011\u2012\u2013"
+_DASH = "[" + re.escape(KEY_DASHES) + "]"
+_DASH_BREAK = _DASH + r"(?:[ \r]*\n[ \r]*)?"  # a dash, then one line break
+
+
+def _key_pattern(key: str) -> str:
+    """The regex body of a key: each whitespace run matches any whitespace run, each dash any
+    dash, and a dash between two letters also a dash and one line break (SPEC §4.5)."""
+    words = normalize_ws(key)
+    out: list[str] = []
+    for i, ch in enumerate(words):
+        if ch == " ":
+            out.append(r"\s+")
+        elif ch in KEY_DASHES:
+            between = 0 < i < len(words) - 1 and words[i - 1].isalpha() and words[i + 1].isalpha()
+            out.append(_DASH_BREAK if between else _DASH)
+        else:
+            out.append(re.escape(ch))
+    return "".join(out)
 
 
 def key_mentions(text: str, keys: tuple[str, ...]) -> list[tuple[int, int, str]]:
     """(start, end, key) for each mention of a key, the longer of overlapping ones (SPEC §4.5)."""
     hits = []
     for key in keys:
-        body = r"\s+".join(re.escape(w) for w in normalize_ws(key).split(" "))
-        rx = re.compile(_NOT_ALNUM_BEFORE + body + _NOT_ALNUM_AFTER, re.I)
+        rx = re.compile(_NOT_ALNUM_BEFORE + _key_pattern(key) + _NOT_ALNUM_AFTER, re.I)
         hits += [(m.start(), m.end(), key) for m in rx.finditer(text)]
-    return [
-        (a, b, k)
-        for a, b, k in hits
-        if not any(a2 <= a and b <= b2 and (a2, b2) != (a, b) for a2, b2, _ in hits)
-    ]
+    # a sweep in start order, the longer span first: a span is inside another one when an
+    # earlier span with a different extent ends at or after its end
+    inside, reach = set(), -1
+    for a, b in sorted({(a, b) for a, b, _ in hits}, key=lambda s: (s[0], -s[1])):
+        if reach >= b:
+            inside.add((a, b))
+        reach = max(reach, b)
+    return [(a, b, k) for a, b, k in hits if (a, b) not in inside]
 
 
 # a label line (SPEC §4.5): a line of its own, after a blank line or the start of the text and

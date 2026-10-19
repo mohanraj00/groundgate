@@ -115,6 +115,26 @@ def test_alias_in_another_fields_alias(tmp_path: Path, capsys: pytest.CaptureFix
     )
 
 
+def test_aliases_with_other_dashes(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """A dash matches any dash (SPEC §4.5, #317), so the check folds them too."""
+    schema = {
+        "fields": {
+            "oop": {"aliases": ["out-of-pocket limit", "out\u2013of\u2013pocket limit"]},
+            "max": {"aliases": ["out\u2011of\u2011pocket limit"]},
+            "fee": {"aliases": ["co-pay"]},
+            "visit": {"aliases": ["visit co\u2010pay"]},
+            "sign": {"aliases": ["out\u2212of\u2212pocket limit"]},
+        }
+    }
+    assert check(tmp_path, schema, capsys) == (
+        1,
+        "alias 'out-of-pocket limit' is on fields 'oop' and 'max': "
+        "a field item does not tell them apart\n"
+        "alias 'co-pay' of field 'fee' is in alias 'visit co\u2010pay' of field 'visit': "
+        "a field item for 'visit' passes for 'fee'\n",
+    )
+
+
 def test_minimum_above_maximum(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     schema = {"fields": {"rate": {"minimum": "10", "maximum": 9}, "id": {"type": "string"}}}
     assert check(tmp_path, schema, capsys) == (

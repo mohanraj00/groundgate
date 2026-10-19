@@ -27,7 +27,7 @@ from typing import Any
 
 from .admit import admit, verify
 from .model import PacketError, Schema, extractor_schema
-from .text import key_mentions, normalize_ws
+from .text import KEY_DASHES, key_mentions, normalize_ws
 
 
 def _unique(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -347,7 +347,9 @@ def _findings(schema: Schema) -> list[str]:
                     "each mention of the field puts that key at the value"
                 )
             for alias in f.aliases:
-                owners.setdefault(_norm(alias), (alias, []))[1].append(name)
+                names = owners.setdefault(_norm(alias), (alias, []))[1]
+                if name not in names:  # two spellings of one alias on one field
+                    names.append(name)
         low, high = f.minimum, f.maximum
         if f.type != "string" and low is not None and high is not None and low > high:
             out.append(f"field {name!r} has a minimum above its maximum: no value is in range")
@@ -393,13 +395,18 @@ def _findings(schema: Schema) -> list[str]:
     return out
 
 
+_DASH_FOLD = str.maketrans(dict.fromkeys(KEY_DASHES, "-"))
+
+
 def _norm(word: str) -> str:
-    return normalize_ws(word).lower()
+    """The alias as key_mentions compares it: whitespace runs and dashes folded (SPEC §4.5)."""
+    return normalize_ws(word).lower().translate(_DASH_FOLD)
 
 
 def _folded(text: str) -> tuple[str, list[int]]:
-    """The text with each letter folded as re.I matches it and each run of whitespace as one
-    space, as key_mentions reads a key, and the place in the text of each character."""
+    """The text with each letter folded as re.I matches it, each run of whitespace as one space
+    and each dash as "-", as key_mentions reads a key, and the place in the text of each
+    character."""
     out: list[str] = []
     places: list[int] = []
     for i, c in enumerate(text):
@@ -408,7 +415,7 @@ def _folded(text: str) -> tuple[str, list[int]]:
                 out.append(" ")
                 places.append(i)
             continue
-        out.append(_fold(c))
+        out.append("-" if c in KEY_DASHES else _fold(c))
         places.append(i)
     if out and out[-1] == " ":
         out.pop()

@@ -148,6 +148,33 @@ class _Text:
     spans: dict[tuple[str, ...], list[tuple[int, int]]] = field(default_factory=dict)
     letters: dict[int, int] = field(default_factory=dict)  # the first letter at or after each place
     numbers: dict[int, int | None] = field(default_factory=dict)  # the first token end, likewise
+    breaks: list[int] | None = None  # the places of the line breaks, read once
+    tabs: list[int] | None = None  # the places of the tabs, read once
+    words: dict[int, list[int]] = field(default_factory=dict)  # word starts of each answer slot
+
+    def line(self, pos: int) -> tuple[int, int]:
+        """The start and the end of the line that holds ``pos``."""
+        if self.breaks is None:
+            self.breaks = [m.start() for m in re.finditer("\n", self.text)]
+        i = bisect.bisect_left(self.breaks, pos)
+        start = self.breaks[i - 1] + 1 if i else 0
+        return start, self.breaks[i] if i < len(self.breaks) else len(self.text)
+
+    def tab_in(self, a: int, b: int) -> int:
+        """The first tab in text[a:b], or -1."""
+        if self.tabs is None:
+            self.tabs = [m.start() for m in re.finditer("\t", self.text)]
+        i = bisect.bisect_left(self.tabs, a)
+        return self.tabs[i] if i < len(self.tabs) and self.tabs[i] < b else -1
+
+    def words_before(self, slot: int, end: int, pos: int) -> int:
+        """The words in text[slot:pos] of the slot text[slot:end], not the run that holds
+        ``pos`` (SPEC §4.6)."""
+        if slot not in self.words:
+            runs = re.compile(r"\S+").finditer(self.text, slot, end)
+            self.words[slot] = [m.start() for m in runs]
+        n = bisect.bisect_left(self.words[slot], pos)
+        return n - 1 if n and pos > slot and not self.text[pos - 1].isspace() else n
 
     def key_mentions(self, words: tuple[str, ...]) -> list[tuple[int, int, str]]:
         if words not in self.mentions:
@@ -208,6 +235,7 @@ class _Ctx:
     source_host: str | None
     suffixes: frozenset[str] = frozenset()  # of every unit in the table (SPEC §4.3)
     quoted: list[_Text] = field(default_factory=list)  # the text that holds quotes now
+    aliases: tuple[str, ...] = ()  # of every field, for the label cell rule (SPEC §4.6)
 
     def any_unit_at(self, t: _Text, tok: Token) -> bool:
         """Whether a form of any unit in the table is next to the token (SPEC §3.1)."""
@@ -587,7 +615,7 @@ def _checked(
             strict, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=False)
             if by_field:
                 here, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=True)
-                if here is not None and _field_passes(t, f, here, fields, region):
+                if here is not None and _field_passes(ctx, t, f, here, fields, region):
                     named = named or occ
                     if strict is not None:
                         at = strict
@@ -697,16 +725,40 @@ def _repeats(ctx: _Ctx, t: _Text, tok: Token, prefixes: list[str], suffixes: lis
 _CHECK_ORDER = ("sign", "scale", "unit", "key")  # after the field items: the unit check reads them
 
 
-def _field_ok(t: _Text, f: Field, span: tuple[int, int], pos: int) -> tuple[bool, bool]:
+LABEL_CELL_WORDS = 4  # the most words before the value in an answer slot (SPEC §4.6)
+_NOT_SPACE = re.compile(r"\S")
+
+
+def _field_ok(
+    t: _Text, f: Field, span: tuple[int, int], pos: int, names: tuple[str, ...]
+) -> tuple[bool, bool]:
     """Whether a field item at ``span`` passes for a value at ``pos``, and whether it is at the
-    value's row (SPEC §4.6)."""
+    value's row (SPEC §4.6). ``names`` are the aliases of every field of the schema."""
     a, b = span
     if f.aliases is None or b > pos or not t.named(f.aliases, a, b):
         return False, False
     if t.letter_after(b) >= pos:
         return True, True  # at the value's row
     end = t.token_after(b)  # no number token between the item and the value
-    return a >= sentence(t.text, pos)[0] and (end is None or end > pos), False
+    if end is not None and end <= pos:
+        return False, False
+    text = t.text
+    start, line_end = t.line(a)
+    tab = t.tab_in(start, line_end)
+    if tab < 0 or b > tab or pos <= tab:
+        return a >= sentence(text, pos)[0], False  # no label slot, or the value is in it
+    # the item is in a label slot and the value after it: only a label cell passes (#316)
+    slot = tab + 1
+    slot_end = t.tab_in(slot, line_end)
+    slot_end = line_end if slot_end < 0 else slot_end
+    if pos >= slot_end:
+        return False, False  # a later slot or a later line
+    left = sentence(text, pos)[0]
+    return (
+        t.words_before(slot, slot_end, pos) <= LABEL_CELL_WORDS
+        and (left <= slot or _NOT_SPACE.search(text, slot, left) is None)  # no sentence end
+        and not (names and t.named(names, slot, pos))
+    ), False
 
 
 def _unit_at_place(places: UnitPlaces, tok: Token) -> bool:
@@ -722,14 +774,14 @@ def _unit_relief(
     tok = at.token
     if at.missing != {"unit"} or tok is None or f.unit is None:
         return False
-    if not _field_passes(t, f, at, fields, region):
+    if not _field_passes(ctx, t, f, at, fields, region):
         return False
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], []))
     return _unit_at_place(UnitPlaces(t.text, tok, prefixes, suffixes), tok)
 
 
 def _field_passes(
-    t: _Text, f: Field, at: _At, fields: list[_Item], region: tuple[int, int]
+    ctx: _Ctx, t: _Text, f: Field, at: _At, fields: list[_Item], region: tuple[int, int]
 ) -> bool:
     """Whether one of the field items passes at this place of the value (#249, #300)."""
     if f.aliases is None:
@@ -738,7 +790,7 @@ def _field_passes(
         if not _same(item, at.item):
             continue
         span, located = _find(t, item, at, region)
-        if span is not None and located and _field_ok(t, f, span, at.pos)[0]:
+        if span is not None and located and _field_ok(t, f, span, at.pos, ctx.aliases)[0]:
             return True
     return False
 
@@ -773,7 +825,7 @@ def _roles(
                     a <= x and y <= b and k == p.key for x, y, k in t.key_mentions(f.keys or ())
                 )
             elif role == "field":
-                ok, at_row = _field_ok(t, f, span, pos)
+                ok, at_row = _field_ok(t, f, span, pos, ctx.aliases)
                 if ok and at_row and not row:
                     row = True
                     found["field"] = span
@@ -1105,6 +1157,7 @@ def admit(
         policy,
         None if document_source is None else host(document_source),
         suffixes=table,
+        aliases=tuple(dict.fromkeys(a for f in schema.fields.values() for a in f.aliases or ())),
     )
 
     results: list[tuple[str, int, object, _Passed | _Reject]] = []

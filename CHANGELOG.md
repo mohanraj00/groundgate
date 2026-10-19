@@ -42,6 +42,15 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   scale does. `$m` under an Australian dollar statement gives `AUD`, and `$m` alone gives only
   `USD`. When the heading units disagree, the unit item fails and the value goes to review. The
   currency names are a core list in §4.3 until the pack format (#320) is approved.
+- Dash variants in keys and aliases (#317). A dash matches `-`, `‐`, `‑`, `‒` and `–`, so
+  "Out–of–pocket limit" is a mention of "out-of-pocket limit". Between two letters a dash also
+  matches across one line break, as in "out-of-\npocket". The minus sign and the em dash match
+  only themselves. `groundgate schema check` folds the dashes too.
+- Label cells (#316). On a line with a tab, a field item before the first tab, such as "What is
+  the overall deductible?", passes for a value in the next cell, with at most 4 words before the
+  value and no number, sentence end or alias between. Such an item no longer passes through the
+  sentence rule for a value in a later cell or on a later line, so in "What is the overall
+  deductible?\tNone\tThis plan pays after a $40 copay" the 40 goes to review.
 - The LangExtract adapter reads a list in `field_text` (#324). Each entry that holds text becomes
   one field item, up to 8. Before, the adapter skipped a list. A list for any other role now makes
   the candidate `CANDIDATE_INVALID`.

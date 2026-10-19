@@ -1,0 +1,408 @@
+{
+ "name": "74-alias-dash-variants",
+ "description": "A dash in an alias matches any of the five dashes: U+002D, U+2010, U+2011, U+2012 and U+2013. A dash between two letters also matches a dash, one line break and spaces or carriage returns around it. The minus sign, the em dash, a space, a blank line or a tab after the dash, a space for a dash, and a line break in a word with no dash do not match (spec 0.10, #317).",
+ "document": "Out–of–pocket limit\t$3,001\n\nOut‐of‐pocket limit\t$3,002\n\nOut‑of‑pocket limit\t$3,003\n\nOut‒of‒pocket limit\t$3,004\n\nOut-of-pocket limit\t$3,005\n\nOut-of-\npocket limit\t$3,006\n\nOut-of- \r\n  pocket limit\t$3,007\n\nOut−of−pocket limit\t$3,008\n\nOut—of—pocket limit\t$3,009\n\nOut-of- pocket limit\t$3,010\n\nOut-of-\n\npocket limit\t$3,011\n\nOut-of-\tpocket limit\t$3,012\n\nOut of pocket limit\t$3,013\n\nOut-of-pocket limit\t$3,014\n\nOverall deduct-\nible\t$500",
+ "schema": {
+  "fields": {
+   "oop": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "out-of-pocket limit"
+    ]
+   },
+   "oop_en": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "out–of–pocket limit"
+    ]
+   },
+   "oop_space": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "out of pocket limit"
+    ]
+   },
+   "ded": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "deductible"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "d1",
+   "field": "oop",
+   "value": "3001",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 24,
+     "end": 30,
+     "text": "$3,001"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 23,
+     "text": "Out–of–pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d2",
+   "field": "oop",
+   "value": "3002",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 56,
+     "end": 62,
+     "text": "$3,002"
+    },
+    {
+     "role": "field",
+     "start": 32,
+     "end": 55,
+     "text": "Out‐of‐pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d3",
+   "field": "oop",
+   "value": "3003",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 88,
+     "end": 94,
+     "text": "$3,003"
+    },
+    {
+     "role": "field",
+     "start": 64,
+     "end": 87,
+     "text": "Out‑of‑pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d4",
+   "field": "oop",
+   "value": "3004",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 120,
+     "end": 126,
+     "text": "$3,004"
+    },
+    {
+     "role": "field",
+     "start": 96,
+     "end": 119,
+     "text": "Out‒of‒pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d5",
+   "field": "oop_en",
+   "value": "3005",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 148,
+     "end": 154,
+     "text": "$3,005"
+    },
+    {
+     "role": "field",
+     "start": 128,
+     "end": 147,
+     "text": "Out-of-pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d6",
+   "field": "oop",
+   "value": "3006",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 177,
+     "end": 183,
+     "text": "$3,006"
+    },
+    {
+     "role": "field",
+     "text": "Out-of- pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d7",
+   "field": "oop",
+   "value": "3007",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 210,
+     "end": 216,
+     "text": "$3,007"
+    },
+    {
+     "role": "field",
+     "start": 185,
+     "end": 209,
+     "text": "Out-of- \r\n  pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d8",
+   "field": "oop",
+   "value": "3008",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 242,
+     "end": 248,
+     "text": "$3,008"
+    },
+    {
+     "role": "field",
+     "start": 218,
+     "end": 241,
+     "text": "Out−of−pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d9",
+   "field": "oop",
+   "value": "3009",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 274,
+     "end": 280,
+     "text": "$3,009"
+    },
+    {
+     "role": "field",
+     "start": 250,
+     "end": 273,
+     "text": "Out—of—pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d10",
+   "field": "oop",
+   "value": "3010",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 303,
+     "end": 309,
+     "text": "$3,010"
+    },
+    {
+     "role": "field",
+     "start": 282,
+     "end": 302,
+     "text": "Out-of- pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d11",
+   "field": "oop",
+   "value": "3011",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 333,
+     "end": 339,
+     "text": "$3,011"
+    },
+    {
+     "role": "field",
+     "start": 311,
+     "end": 332,
+     "text": "Out-of-\n\npocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d12",
+   "field": "oop",
+   "value": "3012",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 362,
+     "end": 368,
+     "text": "$3,012"
+    },
+    {
+     "role": "field",
+     "start": 341,
+     "end": 361,
+     "text": "Out-of-\tpocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d13",
+   "field": "oop",
+   "value": "3013",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 390,
+     "end": 396,
+     "text": "$3,013"
+    },
+    {
+     "role": "field",
+     "start": 370,
+     "end": 389,
+     "text": "Out of pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d14",
+   "field": "oop_space",
+   "value": "3014",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 418,
+     "end": 424,
+     "text": "$3,014"
+    },
+    {
+     "role": "field",
+     "start": 398,
+     "end": 417,
+     "text": "Out-of-pocket limit"
+    }
+   ]
+  },
+  {
+   "id": "d15",
+   "field": "ded",
+   "value": "500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 447,
+     "end": 451,
+     "text": "$500"
+    },
+    {
+     "role": "field",
+     "start": 426,
+     "end": 446,
+     "text": "Overall deduct-\nible"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

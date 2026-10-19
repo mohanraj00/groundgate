@@ -1,0 +1,330 @@
+{
+ "name": "76-label-cells",
+ "description": "On a line with a tab, a field item in the label slot (before the first tab) is a label cell for a value in the answer slot (the next slot): no number token between, at most 4 words before the value in the answer slot, no sentence end there and no alias mention there. A field item in a label slot reaches a later slot or a later line only at the row. A value in the label slot, and a line with no tab, keep the sentence rule (spec 0.10, #316).",
+ "document": "What is the overall deductible?\tIn-Network: Individual $850 / Family $1,700\tGenerally, you must pay all of the costs.\n\nWhat is the overall deductible?\t$500 individual\n\nWhat is the overall deductible?\tFor all network providers: $500\n\nWhat is the overall deductible?\tFor all of the network providers: $500\n\nWhat is the overall deductible?\tYes. $250 for drugs\n\nWhat is the overall deductible?\tOut-of-pocket limit $3,000\n\nWhat is the overall deductible?\tNone\tThis plan pays after a $40 copay\n\nWhat is the overall deductible?\tNone\nAre there other costs?\tA $40 copay\n\nWhat is the overall deductible?\n\nIn-Network: Individual $850\n\nThe overall deductible is $500 per person.\tSee page 2\n\nWhat is the overall deductible? In-Network: Individual $850\n\nCash\tn/a\t$100",
+ "schema": {
+  "fields": {
+   "ded": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "overall deductible"
+    ]
+   },
+   "oop": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "out-of-pocket limit"
+    ]
+   },
+   "cash": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "cash"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "l1",
+   "field": "ded",
+   "value": "850",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 55,
+     "end": 59,
+     "text": "$850"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l2",
+   "field": "ded",
+   "value": "500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 151,
+     "end": 155,
+     "text": "$500"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l3",
+   "field": "ded",
+   "value": "500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 227,
+     "end": 231,
+     "text": "$500"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l4",
+   "field": "ded",
+   "value": "1700",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 69,
+     "end": 75,
+     "text": "$1,700"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l5",
+   "field": "ded",
+   "value": "500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 299,
+     "end": 303,
+     "text": "$500"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l6",
+   "field": "ded",
+   "value": "250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 342,
+     "end": 346,
+     "text": "$250"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l7",
+   "field": "ded",
+   "value": "3000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 410,
+     "end": 416,
+     "text": "$3,000"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l8",
+   "field": "ded",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 478,
+     "end": 481,
+     "text": "$40"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l9",
+   "field": "ded",
+   "value": "40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 551,
+     "end": 554,
+     "text": "$40"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l10",
+   "field": "ded",
+   "value": "850",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 618,
+     "end": 622,
+     "text": "$850"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l11",
+   "field": "ded",
+   "value": "500",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 650,
+     "end": 654,
+     "text": "$500"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l12",
+   "field": "ded",
+   "value": "850",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 734,
+     "end": 738,
+     "text": "$850"
+    },
+    {
+     "role": "field",
+     "text": "overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "l13",
+   "field": "cash",
+   "value": "100",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 749,
+     "end": 753,
+     "text": "$100"
+    },
+    {
+     "role": "field",
+     "text": "Cash"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

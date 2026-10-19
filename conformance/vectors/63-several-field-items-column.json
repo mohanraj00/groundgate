@@ -1,6 +1,6 @@
 {
  "name": "63-several-field-items-column",
- "description": "The column rule reads the first field item that passes at the value's row. A column header that passes in the value's sentence, but not at the row, does not stop a row label after it from placing the key (spec 0.10, #300).",
+ "description": "The column rule reads the first field item that passes at the value's row (spec 0.10, #300). A column header in the corner slot, before the first tab of the header line, is in a label slot, so it does not pass for a value on a later line (spec 0.10, #316). The row label after it still passes and places the key.",
  "document": "Balances\tCurrent\tPrior\nCash\t$400\t$500",
  "schema": {
   "fields": {
@@ -133,7 +133,7 @@
     "parts": [
      {
       "role": "field",
-      "passed": true
+      "passed": false
      },
      {
       "role": "field",
@@ -169,13 +169,14 @@
    {
     "outcome": "needs_verification",
     "codes": [
+     "FIELD_CITATION_INVALID",
      "KEY_NOT_AT_VALUE"
     ],
     "missing": [],
     "parts": [
      {
       "role": "field",
-      "passed": true
+      "passed": false
      },
      {
       "role": "key",
@@ -192,7 +193,7 @@
     "parts": [
      {
       "role": "field",
-      "passed": true
+      "passed": false
      },
      {
       "role": "field",
