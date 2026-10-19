@@ -108,6 +108,25 @@ def test_long_numbers_are_exact() -> None:
     assert fails["relations"][0]["holds"] is False
 
 
+def test_a_number_of_5000_digits_does_not_crash() -> None:
+    """Python refuses to change an int of more than 4300 digits to a string."""
+    one, three = "1" + "0" * 4999, "3" + "0" * 4999
+    number = {"type": "integer"}
+    schema = {
+        "fields": {"total": number, "part": number, "rest": number},
+        "relations": [
+            {"id": "sum", "total": "total", "parts": [{"field": "part"}, {"field": "rest"}]}
+        ],
+    }
+    doc = f"Total {three}. Part {one}. Rest {one}."
+    cands = [
+        {"field": f, "value": v, "evidence": {"text": f"{f.title()} {v}"}}
+        for f, v in (("total", three), ("part", one), ("rest", one))
+    ]
+    relation = gg.admit(doc, schema, cands).to_dict()["relations"][0]
+    assert (relation["holds"], relation["difference"], relation["allowance"]) == (False, one, "1.5")
+
+
 def test_verify_compares_the_relations() -> None:
     receipt = gg.admit(DOC, SCHEMA, CANDS).to_dict()
     assert gg.verify(receipt, DOC, SCHEMA, CANDS).ok

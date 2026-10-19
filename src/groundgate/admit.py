@@ -10,7 +10,7 @@ from array import array
 from collections import defaultdict
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
-from decimal import Decimal
+from decimal import MAX_PREC, Context, Decimal, Inexact
 from fractions import Fraction
 from typing import Any
 
@@ -1246,7 +1246,9 @@ def _decimal(x: Fraction) -> str:
         b -= 1
     assert 5**b == fives
     digits = max(twos, b)
-    return canonical(Decimal(f"{x.numerator * (10**digits // d)}E-{digits}"))  # exact
+    # Decimal(int) and scaleb do not convert the int to a string, so no digit limit applies.
+    exact = Context(prec=MAX_PREC, traps=[Inexact])
+    return canonical(Decimal(x.numerator * (10**digits // d)).scaleb(-digits, exact))
 
 
 def _relate(relations: tuple[Relation, ...], passed: list[_Passed]) -> tuple[RelationResult, ...]:
@@ -1255,10 +1257,12 @@ def _relate(relations: tuple[Relation, ...], passed: list[_Passed]) -> tuple[Rel
     by: dict[tuple[str, str | None], list[_Passed]] = defaultdict(list)
     for p in passed:
         by[p.field.name, p.key].append(p)
+    keys_of: dict[str, set[str | None]] = defaultdict(set)
+    for name, key in by:
+        keys_of[name].add(key)
     out: list[RelationResult] = []
     for r in sorted(relations, key=lambda r: r.id):
-        keyed = [k for k in by if k[0] == r.total]
-        keys = sorted({k for _, k in keyed}, key=lambda k: "" if k is None else k)
+        keys = sorted(keys_of.get(r.total, set()), key=lambda k: "" if k is None else k)
         for key in keys:
             values: list[tuple[Fraction, Fraction]] = []  # (value, place) of each field
             for name in r.fields:
