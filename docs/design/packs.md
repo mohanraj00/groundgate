@@ -12,7 +12,7 @@ the move of §9. The last section lists the code issues for 0.10.
 | The format of a vocabulary pack | A closed JSON object with a format number, an id, a version, a status table and word lists that add to the base pack `en`. | 4 |
 | The format of a kind pack | The same envelope, with field templates, the vocabulary packs that it needs, and relations (#321). It holds no reading words. | 5 |
 | The version and the digest | A pack version never changes after release. The digest is over the canonical JSON of the pack, with a prefix of the pack format, not of the spec version. | 6 |
-| Where the digest goes in the receipt | A new receipt member `packs`: the id, type, version and digest of each pack that applied, except the base pack. SPEC gives the digest of the base pack. | 6 |
+| Where the digest goes in the receipt | A new receipt member `packs`: the id, type, version and digest of each pack that applied, except the base pack. SPEC gives the digest of the base pack. Each decision names the packs that it read. | 6 |
 | Where packs live (§13, question 1) | Built-in packs are data files in this repository and in the wheel. The app's own packs are files that the app gives. No separate package in 0.10. | 7 |
 | How a kind pack and a vocabulary pack combine (§13, question 3) | A kind pack names vocabulary packs. Every vocabulary pack adds to the base. A word that two packs give two meanings makes the packet invalid. | 8 |
 | When a pack becomes `measured` (§13, question 4) | A route becomes `measured`, not a pack: a bound from blind labels on at least 60 held-out documents of its kind, at or below the limit in its status row. | 9 |
@@ -205,11 +205,13 @@ The digest of each pack is in two places: in `packs`, and in `schema_sha256` thr
 resolved schema. The policy does not change. The document digest and the candidate digests do
 not change.
 
-Rule 2 of extensions.md asks that the receipt names the pack that each check used. In 0.10 the
-receipt names the packs, and the resolved schema names the template of each field. So a field
-from a template is known for each decision. A decision does not yet say which vocabulary word
-helped it. That needs the route measure of 0.11, and I add it to a decision there, with its own
-vectors.
+Rule 2 of extensions.md asks that the receipt names the pack that each check used. So each
+decision gets a new member `packs`: the ids, sorted, of each pack other than the base that the
+decision read. A pack is in the list when it gave the field's template, or when it gave a word
+that matched in any rule for this candidate. A word that the base also gives counts for the base
+only, because the pack added nothing there. The list can name a pack that did not change the
+outcome. That error is safe: the report then marks one value too many, never one too few. The
+report reads this member to mark each value that a draft route helped to admit (issue 7).
 
 ## 7. Where packs live
 
@@ -232,8 +234,9 @@ digests.
 
 1. The loader takes the base pack `en`.
 2. It adds each vocabulary pack in the schema's `packs`, and each pack in the `needs` of each
-   kind pack there. A pack named twice with one version loads once. One id with two versions makes
-   the packet invalid.
+   kind pack there. A pack named twice with one version and one digest loads once. One id with two
+   versions makes the packet invalid. Two copies of one id and version with different digests
+   also make the packet invalid: the loader never keeps one copy and drops the other.
 3. Each list is the union of the same list in all loaded vocabulary packs. A word that is in two
    packs with one meaning is one entry.
 4. A conflict after the union makes the packet invalid (check L6, section 12). For example, a
@@ -364,13 +367,16 @@ template form and checks that it resolves to the same `fields`, member by member
 that the templates hold the sets' knowledge with no change.
 
 **Stage 4: the `finance` pack (a decision change toward review).** The loss words leave the
-base. A packet with no pack then gives no sign from a loss word, and such a value goes to review
-with `sign` in `missing`. That is the one decision change of the move. It goes into SPEC 0.10
+base. A packet with no pack then reads no loss word. A sign item that holds only a loss word
+still gives its part, as SPEC §3.1 and §4.6 say, but it fails its check. So the decision gets
+`SIGN_CITATION_INVALID` and goes to review. `sign` is not in `missing`, because the candidate
+has a sign item. That is the one decision change of the move. It goes into SPEC 0.10
 with vectors written by hand before the code:
 
 - Today 9 vector files hold a loss word. The issue lists the ones where a loss word passes a sign
   check. Each of them names `finance` in its schema, with the same expected outcomes.
-- New vectors show the outcome without `finance`: review, not a wrong admit.
+- New vectors show the outcome without `finance`: `needs_verification` with
+  `SIGN_CITATION_INVALID`, not a wrong admit.
 - The bench scripts of the financial sets name `finance`, and every check stays the same. The
   issue also reports, for each set, how many decisions change without `finance`. That number
   shows how much the current results depend on finance words.
@@ -410,10 +416,10 @@ invalid packet: `admit` raises `PacketError` and makes no receipt.
 | L1 closed format | a key that the format of its `type` does not list, or a `groundgate_pack` other than `1` |
 | L2 data only | a value that is not a string, an integer in its stated range, a list or an object of these. No string is a pattern: the core escapes every word. |
 | L3 words | a word that is not NFC, is blank, has whitespace at an end, holds a line break or a tab, or has more than 64 code points |
-| L4 size | a pack of more than 256 KiB as canonical JSON, a list of more than 2,000 entries, or more than 200 field templates |
+| L4 size | a pack file of more than 1 MiB, before the loader parses it; a JSON nesting depth of more than 8; a pack of more than 256 KiB as canonical JSON; a list of more than 2,000 entries, or more than 200 field templates |
 | L5 add only | a list in a non-base pack that section 4 marks "no", and any member that names a window, a reach, a threshold, a code, a step or a policy member |
 | L6 no conflict | after the union: a word in two comparator lists; a scale word, suffix or currency scale with two powers; a power other than 3, 5, 6, 7, 9 or 12; a scale suffix that is also a unit suffix; a unit form under two unit codes; a loss word that is also a gain word; a qualifier phrase from a pack that holds a phrase of another comparator, or is held in one |
-| L7 ids and versions | an id or a version with the wrong form; a given pack with a built-in id; an id of the app's own pack with no `-x-` name; one id with two versions in one packet |
+| L7 ids and versions | an id or a version with the wrong form; a given pack with a built-in id; an id of the app's own pack with no `-x-` name; one id with two versions in one packet; two copies of one id and version with different digests |
 | L8 status | a malformed row; a `measured` row in a pack that is not built in; a built-in `measured` row with no `results` file or no `bound` |
 | L9 kind pack | a template member other than the five of section 5; a template that fails SPEC §2.3; a `needs` entry that names a kind pack or a pack that does not load |
 | L10 schema | a `template` whose pack is not in `packs`, or whose field is not in that pack; a `type` or `unit` conflict; a pinned `sha256` that differs |
@@ -481,7 +487,8 @@ SPEC.md and `conformance/build.py`, so they merge one at a time with the other s
    The proof of stage 1 (section 10.3): vectors, bench checks, example and receipts stay the same.
 2. **Spec 0.10: the pack loader, its checks and the pack digest.**
    `groundgate.load_pack`, the checks L1 to L12, the digest of section 6 and the union of section 8.
-   The schema member `packs`, `admit(..., packs=)`, the CLI `--pack` and the receipt member `packs`.
+   The schema member `packs`, `admit(..., packs=)`, the CLI `--pack`, the receipt member `packs`,
+   and the decision member `packs` of section 6.
    An invalid packet for each check under `conformance/invalid/`, written by hand before the code.
 3. **Spec 0.10: kind packs and field templates.**
    The kind pack format, `needs`, the schema member `template`, and the resolved schema and its
@@ -501,4 +508,4 @@ SPEC.md and `conformance/build.py`, so they merge one at a time with the other s
    A how-to page: how the app keeps its pack files next to its receipts.
 7. **The report names the packs of a receipt and their status.**
    `groundgate report` lists each pack with its version and digest, and says that it is `draft`.
-   A mark on each value that a draft route helped to admit needs the route measure of 0.11.
+   It marks each admitted value whose decision member `packs` names a pack with a draft route.
