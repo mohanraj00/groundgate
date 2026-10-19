@@ -239,3 +239,29 @@ def test_a_malformed_evidence_item_is_not_quoted() -> None:
         'Field "cost": you gave the value "40" with value "4".\n'
         f"- QUOTE_NOT_FOUND: {DESCRIPTIONS['QUOTE_NOT_FOUND']}"
     )
+
+
+def test_feedback_message_takes_the_packs_of_a_dict_schema() -> None:
+    lac = {
+        "groundgate_pack": 1,
+        "type": "vocabulary",
+        "id": "lac-x-test",
+        "version": "1.0.0",
+        "scale": {"words": {"lac": 5}},
+    }
+    schema = {
+        "packs": [{"id": "lac-x-test", "version": "1.0.0"}],
+        "fields": {"grant": {"type": "integer", "aliases": ["grant"]}},
+    }
+    text = "The grant is 5 lac."
+    cand = {"id": "a", "field": "grant", "value": "5", "evidence": {"text": "5 lac"}}
+    d = gg.admit(text, schema, [cand], packs=[lac]).decisions[0]
+    assert d.codes == ("SCALE_WORD",)
+    built = gg.Schema.from_dict(schema, [lac])
+    assert gg.feedback_message(d, cand, schema, text, packs=[lac]) == gg.feedback_message(
+        d, cand, built, text
+    )
+    with pytest.raises(gg.PacketError, match="not given"):
+        gg.feedback_message(d, cand, schema, text)
+    with pytest.raises(gg.PacketError, match="from_dict"):
+        gg.feedback_message(d, cand, built, text, packs=[lac])

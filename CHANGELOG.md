@@ -28,6 +28,11 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   Both are `[]` for a packet with no pack, so every receipt digest changes, but no outcome or
   code changes. The base pack digest now reads the pack after defaults:
   `sha256:8ee2f5c367baa29969759e3ed3ec5acf39f412a8b4b6afbda6477c1cde7fdeae`.
+- The extract runner and `feedback_message` take packs (#351). `extract`, `replay`,
+  `RunResult.read` and `feedback_message` get a `packs` argument, and the runner keeps a
+  `Schema` that was built with its packs. Before, a schema that named a pack failed in the runner
+  with "is not given". The run record holds the digest of each pack through the schema, so a
+  replay needs the same packs. No decision changes.
 - An app can give kind packs and take field templates from them (#335). A kind pack gives field
   templates and names the vocabulary packs that it needs (SPEC §4.9). A schema field takes a
   template with `"template": "<pack id>/<field>"`. The template fills the members that the field

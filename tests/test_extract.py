@@ -1514,3 +1514,76 @@ def test_rounding_fails_closed_on_numbers_outside_the_digit_bound():
     assert all("CONFLICTING_CANDIDATES" in d.codes for d in result.receipt.decisions)
     assert not any(e["kind"] == "rounding" for e in result.record)
     assert_replays(result, text, ROUND_SCHEMA)
+
+
+# ---------------------------------------------------------------- packs (#351)
+LAC = {
+    "groundgate_pack": 1,
+    "type": "vocabulary",
+    "id": "lac-x-test",
+    "version": "1.0.0",
+    "scale": {"words": {"lac": 5}},
+}
+AMOUNTS = {
+    "groundgate_pack": 1,
+    "type": "kind",
+    "id": "amounts-x-test",
+    "version": "1.0.0",
+    "needs": [{"id": "lac-x-test", "version": "1.0.0"}],
+    "fields": {"amount": {"type": "integer", "aliases": ["amount"]}},
+}
+PACKED = {
+    "packs": [{"id": "amounts-x-test", "version": "1.0.0"}],
+    "fields": {"amount": {"template": "amounts-x-test/amount"}},
+}
+LAC_TEXT = "Amount 5 lac."
+
+
+def test_the_runner_takes_packs_and_replays_with_them(tmp_path):
+    packs = [AMOUNTS, LAC]
+    result = execute(LAC_TEXT, Client(envelope(candidate())), PACKED, packs=packs)
+    d = result.receipt.decisions[0]
+    assert (d.outcome, d.codes, d.packs) == (
+        "needs_verification",
+        ("SCALE_WORD",),
+        ("amounts-x-test", "lac-x-test"),
+    )
+    assert [p["id"] for p in result.receipt.to_dict()["packs"]] == ["amounts-x-test", "lac-x-test"]
+    assert replay(result.record, result.artifacts, LAC_TEXT, PACKED, packs=packs).ok
+    assert not replay(result.record, result.artifacts, LAC_TEXT, PACKED, packs=[AMOUNTS]).ok
+    other = {**LAC, "description": "another copy"}
+    assert not replay(result.record, result.artifacts, LAC_TEXT, PACKED, packs=[AMOUNTS, other]).ok
+    result.write(tmp_path / "run")
+    assert RunResult.read(tmp_path / "run", packs=packs).receipt == result.receipt
+    with pytest.raises(ValueError):
+        RunResult.read(tmp_path / "run")
+
+
+def test_the_runner_keeps_a_schema_built_with_its_packs():
+    schema = gg.Schema.from_dict(PACKED, [AMOUNTS, LAC])
+    result = execute(LAC_TEXT, Client(envelope(candidate())), schema)
+    assert result.receipt.decisions[0].codes == ("SCALE_WORD",)
+    assert replay(result.record, result.artifacts, LAC_TEXT, schema).ok
+    with pytest.raises(ExtractInputError):
+        execute(LAC_TEXT, Client(), schema, packs=[AMOUNTS, LAC])
+
+
+def test_a_schema_that_names_a_pack_needs_the_pack():
+    with pytest.raises((ExtractInputError, gg.PacketError)):
+        execute(LAC_TEXT, Client(), PACKED)
+
+
+def test_a_client_that_changes_the_schema_does_not_change_the_run():
+    schema = gg.Schema.from_dict(PACKED, [AMOUNTS, LAC])
+    plain = execute(LAC_TEXT, Client(envelope(candidate())), schema)
+
+    class Changer(Client):
+        def __call__(self, prompt):
+            schema.to_dict()["fields"]["amount"]["aliases"].append("total")
+            schema.fields["amount"]._raw["type"] = "string"
+            schema.given[1]["scale"]["words"]["lac"] = 7
+            return super().__call__(prompt)
+
+    changed = execute(LAC_TEXT, Changer(envelope(candidate())), schema)
+    assert changed.record == plain.record
+    assert changed.receipt == plain.receipt

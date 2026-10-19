@@ -7,7 +7,7 @@ from typing import Any
 
 from .canonical import digest
 from .codes import DESCRIPTIONS, INFO
-from .model import Decision, Schema
+from .model import Decision, PacketError, Schema
 
 _RETRY = {
     "PART_MISSING",
@@ -52,11 +52,12 @@ def feedback_message(
     schema: Schema | Mapping[str, Any],
     text: str | None = None,
     references: Sequence[object] | None = None,
+    packs: Sequence[object] = (),
 ) -> str | None:
     """Build the text for the extractor, or None when a new answer cannot fix the decision.
 
-    ``candidate`` is the candidate that ``decision`` decided. ``schema`` and ``references``
-    take the same forms as in ``admit``. A missing unit or key needs the field's aliases.
+    ``candidate`` is the candidate that ``decision`` decided. ``schema``, ``references`` and
+    ``packs`` take the same forms as in ``admit``. A missing unit or key needs the field's aliases.
     A missing key with ``KEY_NOT_AT_VALUE`` also needs a table row at the value's byte span
     in ``text`` or in the reference that ``decision.ref`` names.
 
@@ -78,7 +79,9 @@ def feedback_message(
         ):
             continue
         return None
-    s = schema if isinstance(schema, Schema) else Schema.from_dict(schema)
+    if isinstance(schema, Schema) and packs:
+        raise PacketError("give the packs to Schema.from_dict when the schema is a Schema")
+    s = schema if isinstance(schema, Schema) else Schema.from_dict(schema, packs)
     if {"unit", "key"} & set(decision.missing):
         field = s.fields.get(decision.field) if decision.field is not None else None
         if field is None or not field.aliases:

@@ -574,9 +574,10 @@ and `Part.span` are `(start, end)` tuples, and `to_dict()` writes them as `{"sta
 Schemas of [Candidates](#candidates) and [The extractor's output](#the-extractors-output). `gg.digest(kind, obj)` and `gg.jcs(obj)` are the hashing primitives, if you
 need to compute a candidate's hash yourself.
 
-`gg.feedback_message(decision, candidate, schema, text=None, references=None)` builds a message
-for the extractor from one decision. Pass the candidate that the decision decided, the same
-schema and, for a missing key, the document text or references that you gave `admit`.
+`gg.feedback_message(decision, candidate, schema, text=None, references=None, packs=())` builds a
+message for the extractor from one decision. Pass the candidate that the decision decided, the
+same schema and packs and, for a missing key, the document text or references that you gave
+`admit`.
 It returns `None` for an admitted decision or when a new answer cannot fix the reasons.
 It raises `ValueError` when the candidate's digest does not match the decision.
 See [Send reasons back to the extractor](howto/feedback.md) for a feedback loop.
