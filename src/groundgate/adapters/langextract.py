@@ -20,10 +20,13 @@ Mapping, per extraction:
 - ``evidence``: a list of evidence items. The first is the value item: ``char_interval``
   converted to UTF-8 byte offsets, quoting ``extraction_text``. Then one quote for each of the
   attributes ``sign_text``, ``scale_text``, ``unit_text``, ``key_text`` and ``field_text`` that
-  holds text, with the role ``sign``, ``scale``, ``unit``, ``key`` or ``field``. A quote has no
-  offsets: groundgate finds it near the value. Then the outside items: one ``external`` item from
-  ``source_url``, ``source_retrieved`` and ``source_quote`` when all three hold text, and one
-  ``knowledge`` item from ``knowledge``.
+  holds text, with the role ``sign``, ``scale``, ``unit``, ``key`` or ``field``. ``field_text``
+  can also be a list, such as a row label and a column header: each entry that holds text
+  becomes one field item. A candidate can cite up to 8 field items (SPEC §3, #300), so a list
+  with more entries makes the candidate ``CANDIDATE_INVALID``. A list for any other role also
+  makes it ``CANDIDATE_INVALID``. A quote has no offsets: groundgate finds it near the value.
+  Then the outside items: one ``external`` item from ``source_url``, ``source_retrieved`` and
+  ``source_quote`` when all three hold text, and one ``knowledge`` item from ``knowledge``.
 
 An extraction LangExtract could not align has no value item. With outside items, its evidence is
 those items, and groundgate takes the outside path. Without them, it has no evidence and is
@@ -93,11 +96,18 @@ def _names(attributes: Mapping[str, str] | None) -> dict[str, str]:
 
 
 def _role_items(attrs: Mapping[str, Any], names: Mapping[str, str]) -> list[dict[str, Any]]:
-    """One quote for each role attribute that holds text. groundgate finds it."""
-    out = []
+    """One quote for each role attribute that holds text. groundgate finds it. The field
+    attribute can hold a list, with one field item for each entry (#300). admit rejects more
+    than MAX_FIELD_ITEMS of them. A list for another role goes to admit as it is, so admit
+    rejects the candidate CANDIDATE_INVALID."""
+    out: list[dict[str, Any]] = []
     for role, name in ROLES.items():
-        text = _text(attrs.get(names[name]))
-        if text is not None:
+        raw = attrs.get(names[name])
+        if isinstance(raw, list) and role == "field":
+            out.extend({"role": role, "text": t} for t in map(_text, raw) if t is not None)
+        elif isinstance(raw, list):
+            out.append({"role": role, "text": raw})  # not a string: CANDIDATE_INVALID
+        elif (text := _text(raw)) is not None:
             out.append({"role": role, "text": text})
     return out
 

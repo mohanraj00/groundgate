@@ -18,6 +18,9 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   (`$`, `€`, `£`, `₹`). `€70,471m` is 70471000000. `£m`, `$bn` and `£'000` in a column header are
   a heading scale, and a scale item can cite them. `70 m`, `5m` and `£5 m` stay as written,
   because a bare `m` can be metres.
+- The LangExtract adapter reads a list in `field_text` (#324). Each entry that holds text becomes
+  one field item, up to 8. Before, the adapter skipped a list. A list for any other role now makes
+  the candidate `CANDIDATE_INVALID`.
 
 ## 0.9.0 (2026-10-18)
 

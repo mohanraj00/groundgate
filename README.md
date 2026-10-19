@@ -296,7 +296,8 @@ receipt = admit_document(result, schema)
 
 Each extraction's `value` and `unit` attributes are checked at the place LangExtract aligned its
 `extraction_text`. The attributes `sign_text`, `scale_text`, `unit_text`, `field_text` and
-`key_text` become role items, and `source_url` (with `source_quote` and `source_retrieved`) or
+`key_text` become role items. `field_text` can be a list, such as a row label and a column
+header, for up to 8 field items. `source_url` (with `source_quote` and `source_retrieved`) or
 `knowledge` becomes outside evidence. An extraction that LangExtract could not align, with no
 outside evidence, is rejected `NO_EVIDENCE`.
 
