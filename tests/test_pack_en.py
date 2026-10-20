@@ -1,8 +1,10 @@
-"""The base vocabulary pack ``en`` 1.0.0 (SPEC §4.7, #333).
+"""The base vocabulary pack ``en`` 1.1.0 (SPEC §4.7, #333, #368).
 
 The proof of stage 1 of docs/design/packs.md §10.3: the patterns that the core builds from the
 pack match the same text as the patterns that the code held before. The old patterns below are
-the patterns of groundgate before #333, kept for this proof.
+the patterns of groundgate before #333, kept for this proof. The currency names that ``en``
+1.1.0 adds (spec 0.11, #368) are added to the old statement pattern, so the proof still holds
+for every other match.
 """
 
 from __future__ import annotations
@@ -84,6 +86,21 @@ _OLD_CURRENCY_NAMES = {
     "INR": (("Indian rupees",), "\u20b9"),
     "LKR": (("Sri Lankan rupees",), None),
 }
+# the currency names that en 1.1.0 adds, with no sign (spec 0.11, #368). The pack writes each
+# singular, so the old pattern lists it too.
+_NAMES_0_11 = {
+    "JPY": (("Japanese yen", "yen"), None),
+    "CNY": (("Chinese yuan", "yuan", "renminbi"), None),
+    "CHF": (("Swiss francs", "Swiss franc"), None),
+    "KRW": (("Korean won", "South Korean won"), None),
+    "SEK": (("Swedish kronor", "Swedish krona"), None),
+    "NOK": (("Norwegian kroner", "Norwegian krone"), None),
+    "DKK": (("Danish kroner", "Danish krone"), None),
+    "ZAR": (("South African rand",), None),
+    "BRL": (("Brazilian reais", "Brazilian real"), None),
+    "MXN": (("Mexican pesos", "Mexican peso"), None),
+}
+_OLD_CURRENCY_NAMES.update(_NAMES_0_11)
 _OLD_PLURALS = ("dollars", "euros", "pounds", "rupees")
 
 
@@ -284,7 +301,7 @@ def test_the_spec_gives_the_digest_of_the_base_pack() -> None:
     assert found is not None
     assert pack_digest(BASE) == BASE_SHA256 == found.group(1)
     assert (BASE["groundgate_pack"], BASE["type"], BASE["id"], BASE["version"]) == (
-        1, "vocabulary", "en", "1.0.0",
+        1, "vocabulary", "en", "1.1.0",
     )  # fmt: skip
 
 

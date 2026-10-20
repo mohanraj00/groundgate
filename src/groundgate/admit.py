@@ -1019,6 +1019,12 @@ def _outside(
         p.flags.append("KEY_NOT_AT_VALUE")
         if not key_item:
             p.missing.add("key")
+    # The deciding item is chosen as if no heading unit reached a token. Then a heading conflict
+    # in its text makes the unit missing, and the action does not change. A knowledge item has
+    # no text that groundgate reads, so it has no heading conflict (spec 0.11, #367).
+    if at is not None and _conflict(ctx, at.t, f.unit, tok):
+        p.missing.add("unit")
+        p.flags.append("PART_MISSING")
     if act == "review":
         p.flags.append("EVIDENCE_QUOTED" if item.source == "external" else "EVIDENCE_STATED")
     else:
