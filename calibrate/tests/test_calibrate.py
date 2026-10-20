@@ -22,7 +22,11 @@ from groundgate_calibrate import cli, judges, label
 from groundgate_calibrate import questions as q
 from groundgate_calibrate.stats import needed, pick, upper_95
 
+import groundgate as gg
 from groundgate.canonical import SPEC_VERSION
+
+# "0.10" < "0.6" as strings, so the spec version is compared as numbers
+SPEC = tuple(int(n) for n in SPEC_VERSION.split("."))
 
 TEXT = "In fiscal 2024 sales fell.\nRevenue was 4,100.\nIn fiscal 2025 revenue was 5,200.\n"
 SCHEMA = {
@@ -137,7 +141,7 @@ def test_sample_uses_descriptions_in_prompts_and_labels(
     schema_description: str | None,
     override: str | None,
 ) -> None:
-    if schema_description is not None and SPEC_VERSION < "0.6":
+    if schema_description is not None and SPEC < (0, 6):
         pytest.skip("schema descriptions are spec 0.6 (#171)")
     d, c, s = inputs(tmp_path, 1)
     schema = json.loads(s.read_text())
@@ -187,7 +191,7 @@ def test_sample_uses_descriptions_in_prompts_and_labels(
     assert "key" not in state["items"][0]
 
 
-@pytest.mark.skipif(SPEC_VERSION < "0.6", reason="schema descriptions are spec 0.6 (#171)")
+@pytest.mark.skipif(SPEC < (0, 6), reason="schema descriptions are spec 0.6 (#171)")
 def test_a_changed_field_description_needs_a_new_calibration(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -238,6 +242,28 @@ def test_a_changed_field_description_needs_a_new_calibration(
             with pytest.raises(SystemExit, match="description of revenue differs"):
                 cli.main(judge)
     assert (tmp_path / "judgments" / "doc0.json").exists()
+
+
+@pytest.mark.skipif(SPEC < (0, 10), reason="kind packs are spec 0.10 (#335)")
+def test_a_field_takes_its_description_from_its_template(tmp_path: Path) -> None:
+    d, c, s = inputs(tmp_path, 1)
+    template = {"template": "annual-reports/revenue", "multiple": True,
+                "keys": ["fiscal 2025", "fiscal 2024"]}  # fmt: skip
+    schema = {"packs": [{"id": "annual-reports", "version": "1.0.0"}],
+              "fields": {"revenue": template}}  # fmt: skip
+    s.write_text(json.dumps(schema))
+    work = cli.Work(tmp_path / "work")
+    cli.main(["sample", "--work", str(work.path), "--docs", str(d), "--candidates", str(c),
+              "--schema", str(s), "--question", "key"])  # fmt: skip
+    pack = json.loads(
+        (Path(gg.__file__).parent / "packs" / "annual-reports" / "1.0.0.json").read_text()
+    )
+    assert work.config["descriptions"] == {"revenue": pack["fields"]["revenue"]["description"]}
+    assert q.descriptions(schema) == work.config["descriptions"]
+    own = {**template, "description": "Revenue from sales, excluding other income."}
+    assert q.descriptions({**schema, "fields": {"revenue": own}}) == {"revenue": own["description"]}
+    assert q.descriptions(SCHEMA, all_fields=True) == {"revenue": None}
+    assert q.descriptions(SCHEMA) == {}
 
 
 def test_the_steps_from_sample_to_report(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -481,7 +507,7 @@ def test_judge_writes_recorded_judgments(tmp_path: Path, monkeypatch: pytest.Mon
         cli.main(["judge", *run, "--calibration", str(work), "--out", str(out)])
 
 
-@pytest.mark.skipif(SPEC_VERSION < "0.4", reason="recorded judgments are spec 0.4 (#116)")
+@pytest.mark.skipif(SPEC < (0, 4), reason="recorded judgments are spec 0.4 (#116)")
 def test_recorded_judgments_clear_the_flag_in_groundgate(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

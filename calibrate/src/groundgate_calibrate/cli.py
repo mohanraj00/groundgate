@@ -95,12 +95,7 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
         "spec": SPEC_VERSION,
         "question": args.question,
         "context": args.context,
-        "descriptions": {
-            name: field["description"]
-            for name, field in schema["fields"].items()
-            if "description" in field
-        }
-        | descriptions,
+        "descriptions": q.descriptions(schema) | descriptions,
         "schema": schema,
     }
     if not items:
@@ -255,9 +250,10 @@ def judge_packets(args: argparse.Namespace) -> None:
     if wanted["field"]:
         # the field question states the description that was calibrated; a schema that gives the
         # field another meaning needs its own calibration
-        then = cals["field"]["schema"]["fields"]
-        for name, field in schema.get("fields", {}).items():
-            if name in then and field.get("description") != then[name].get("description"):
+        then = q.descriptions(cals["field"]["schema"])
+        calibrated = cals["field"]["schema"]["fields"]
+        for name, description in q.descriptions(schema, all_fields=True).items():
+            if name in calibrated and description != then.get(name):
                 raise SystemExit(
                     f"the description of {name} differs from the one that {paths['field']} "
                     "calibrated; calibrate again"

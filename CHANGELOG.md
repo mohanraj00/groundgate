@@ -3,10 +3,15 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
-## Unreleased
+## 0.10.0 (2026-10-20)
 
-Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses the
-`groundgate/0.10:` prefix, so all hashes differ from 0.9.0.
+Spec 0.10. Receipts name `"groundgate": "0.10"` and every digest uses the `groundgate/0.10:`
+prefix, so all hashes differ from 0.9.0. 0.10 has two parts: fewer reviews of right values, and
+the first part of the 1.0 plan, with packs, relations across fields and the changed-value test. I
+measured the first part on a new held-out set, labeled blind before any model output. The
+extraction loop admits no wrong value, but it misses more right values than the baseline, and
+every arm misses more than 60% of the stated values. So 0.10 does not meet the goal of fewer
+misses yet.
 
 - `report` takes `--pack-dir DIR`, and `render` takes `pack_dir`, as `verify` does (#372). A
   receipt whose pack is only in the pack folder can now be rendered. The folder rules of `verify`
@@ -179,6 +184,25 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   each change breaks the sum. It alone stops 11. Its cost: it sends 504 right values to review
   with them, because it cannot name the wrong value. RESULTS.md gives each count by check, with a
   95% bound that allows for clusters by document.
+
+The measure (#323):
+
+- `bench/requested3` is a new held-out set of 111 documents in four kinds: 18 component
+  datasheets, 23 health plan SBCs, 20 annual reports and 50 safety data sheets. Safety data
+  sheets are a new kind. Two blind passes labeled each field before any model output. No rule of
+  0.10 came from this set.
+- With `gpt-6.1-sol` at medium effort, the released one-pass extraction with its feedback loop
+  (baseline, on the 0.10 core) misses 190 of the 305 stated values (62.30%), with 115 right
+  values admitted and 2 escapes in 117 admits. The 0.10 extraction loop misses 208 of 305
+  (68.20%), with 97 right values admitted, 118 right absences and 0 escapes. So the loop
+  admits no wrong value, but it misses 18 more right values than the baseline. The silent misses
+  are the same (48). The loop sends more right values to review (142 to 160).
+- With `drop_rounded` on (#319), a replay of the loop's calls admits 99 right values with 0
+  escapes and misses 206 of 305 (67.54%).
+- The loop did not complete 15 of the 20 annual reports and 4 of the 18 datasheets. Each stopped
+  at a harness limit, with no transport error, and its present fields count as misses. Its annual
+  miss rate is 97.06%, against 73.53% for the baseline.
+- The miss rate is above 60% for every arm, so 0.10 does not meet the goal on this set.
 
 ## 0.9.0 (2026-10-18)
 
